@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-200 font-body antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(42, 173, 31, 0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(56, 189, 248, 0.04), transparent);
+  }
+
+  ::selection {
+    @apply bg-pitch-500/30 text-white;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-slate-900/80 backdrop-blur-sm border border-slate-800/60 rounded-xl;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-300 hover:border-pitch-500/30 hover:shadow-lg hover:shadow-pitch-500/5;
+  }
+
+  .stat-value {
+    @apply font-display font-bold text-2xl tracking-tight;
+  }
+
+  .stat-label {
+    @apply text-xs uppercase tracking-wider text-slate-500 font-medium;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-green {
+    @apply badge bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/20;
+  }
+
+  .badge-amber {
+    @apply badge bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/20;
+  }
+
+  .badge-red {
+    @apply badge bg-red-500/15 text-red-400 ring-1 ring-red-500/20;
+  }
+
+  .prob-bar {
+    @apply h-2 rounded-full transition-all duration-500;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-400 rounded-lg
+           transition-colors duration-200 hover:text-white hover:bg-slate-800/60;
+  }
+
+  .nav-link-active {
+    @apply nav-link text-white bg-slate-800/80 ring-1 ring-slate-700/50;
+  }
+
+  .glow-line {
+    @apply h-px bg-gradient-to-r from-transparent via-pitch-500/40 to-transparent;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-600;
+}
+
+/* Custom grid pattern for heatmaps */
+.heatmap-cell {
+  @apply transition-all duration-200 cursor-default;
+}
+
+.heatmap-cell:hover {
+  @apply ring-2 ring-white/30 z-10;
+}
