@@ -44,11 +44,14 @@ jobs:
             ${{ github.event.inputs.force_refresh == 'true' && '--force-refresh' || '' }} \
             ${{ github.event.inputs.skip_pymc == 'true' && '--skip-pymc' || '' }}
 
+      - name: Sync predictions to frontend
+        run: cp predictions/*.json frontend/public/predictions/
+
       - name: Commit predictions
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add predictions/
+          git add predictions/ frontend/public/predictions/
           git diff --staged --quiet || git commit -m "Update predictions — $(date -u +%Y-%m-%d)"
           git pull --rebase origin main
           git push

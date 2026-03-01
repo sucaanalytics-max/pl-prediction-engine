@@ -1,354 +1,1312 @@
 {
   "metadata": {
-    "generated_at": "2026-02-28T06:00:00Z",
+    "generated_at": "2026-03-01T03:32:14.110036Z",
     "season": "2025-26",
     "gameweek": 28,
     "pipeline_version": "1.0.0",
-    "models": ["dixon_coles_pymc", "xgboost", "penaltyblog"],
+    "models": [
+      "dixon_coles_pymc",
+      "xgboost",
+      "penaltyblog"
+    ],
     "n_simulations": 10000,
     "calibrated": false
   },
   "predictions": [
     {
-      "match_id": "20260228_Arsenal_vs_Chelsea",
+      "match_id": "20260301_Brighton_Nott'm_Forest",
       "fixture": {
-        "date": "2026-03-01T15:00:00Z",
+        "date": "2026-03-01T14:00:00Z",
+        "home_team": "Brighton",
+        "away_team": "Nott'm Forest",
+        "gameweek": 28
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.468,
+          "draw": 0.25075,
+          "away": 0.28125
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.93225,
+            "under": 0.06775
+          },
+          "1.5": {
+            "over": 0.76125,
+            "under": 0.23875
+          },
+          "2.5": {
+            "over": 0.52475,
+            "under": 0.47525
+          },
+          "3.5": {
+            "over": 0.308,
+            "under": 0.692
+          },
+          "4.5": {
+            "over": 0.15175,
+            "under": 0.84825
+          }
+        },
+        "btts": 0.54275,
+        "clean_sheet": {
+          "home": 0.318,
+          "away": 0.207
+        },
+        "correct_score": {
+          "0-0": 0.06775,
+          "0-1": 0.0725,
+          "0-2": 0.0435,
+          "0-3": 0.0165,
+          "0-4": 0.006,
+          "0-5": 0.00075,
+          "0-6": 0.0,
+          "1-0": 0.0985,
+          "1-1": 0.11475,
+          "1-2": 0.06625,
+          "1-3": 0.0285,
+          "1-4": 0.0085,
+          "1-5": 0.00275,
+          "1-6": 0.00025,
+          "2-0": 0.07825,
+          "2-1": 0.08875,
+          "2-2": 0.052,
+          "2-3": 0.023,
+          "2-4": 0.0055,
+          "2-5": 0.0015,
+          "2-6": 0.00025,
+          "3-0": 0.04525,
+          "3-1": 0.0495,
+          "3-2": 0.03125,
+          "3-3": 0.015,
+          "3-4": 0.00375,
+          "3-5": 0.001,
+          "3-6": 0.0005,
+          "4-0": 0.02025,
+          "4-1": 0.01725,
+          "4-2": 0.01225,
+          "4-3": 0.003,
+          "4-4": 0.00125,
+          "4-5": 0.0,
+          "4-6": 0.0,
+          "5-0": 0.00625,
+          "5-1": 0.00725,
+          "5-2": 0.004,
+          "5-3": 0.00125,
+          "5-4": 0.0,
+          "5-5": 0.0,
+          "5-6": 0.0,
+          "6-0": 0.00125,
+          "6-1": 0.00125,
+          "6-2": 0.00075,
+          "6-3": 0.0,
+          "6-4": 0.0,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.96275,
+          "home_-1.5": 0.88425,
+          "home_-1.0": 0.71875,
+          "home_-0.5": 0.71875,
+          "home_0": 0.468,
+          "home_0.5": 0.468,
+          "home_1.0": 0.2465,
+          "home_1.5": 0.2465,
+          "home_2.5": 0.10525
+        },
+        "ht_ft": {
+          "H/H": 0.175,
+          "H/D": 0.09025,
+          "H/A": 0.1005,
+          "D/H": 0.18875,
+          "D/D": 0.0995,
+          "D/A": 0.116,
+          "A/H": 0.10425,
+          "A/D": 0.061,
+          "A/A": 0.06475
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.82625,
+            "under": 0.17375
+          },
+          "8.5": {
+            "over": 0.732,
+            "under": 0.268
+          },
+          "9.5": {
+            "over": 0.62925,
+            "under": 0.37075
+          },
+          "10.5": {
+            "over": 0.52725,
+            "under": 0.47275
+          },
+          "11.5": {
+            "over": 0.43125,
+            "under": 0.56875
+          },
+          "12.5": {
+            "over": 0.3385,
+            "under": 0.6615
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.78475,
+            "under": 0.21525
+          },
+          "2.5": {
+            "over": 0.5745,
+            "under": 0.4255
+          },
+          "3.5": {
+            "over": 0.37025,
+            "under": 0.62975
+          },
+          "4.5": {
+            "over": 0.2105,
+            "under": 0.7895
+          },
+          "5.5": {
+            "over": 0.111,
+            "under": 0.889
+          },
+          "6.5": {
+            "over": 0.0485,
+            "under": 0.9515
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.5995,
+        "away": 1.173
+      },
+      "expected_corners": 11.16,
+      "expected_cards": 3.05925,
+      "distributions": {
+        "goals_home": [
+          0.207,
+          0.3195,
+          0.2495,
+          0.14625,
+          0.054,
+          0.01875,
+          0.00325,
+          0.00125
+        ],
+        "goals_away": [
+          0.318,
+          0.352,
+          0.21025,
+          0.08725,
+          0.02525,
+          0.006,
+          0.001,
+          0.00025
+        ],
+        "corners": [
+          0.0,
+          0.0,
+          0.003,
+          0.00775,
+          0.013,
+          0.02725,
+          0.04975,
+          0.073,
+          0.09425,
+          0.10275,
+          0.102,
+          0.096,
+          0.09275,
+          0.075,
+          0.07425,
+          0.052,
+          0.0435,
+          0.03175,
+          0.0185,
+          0.01675,
+          0.008
+        ],
+        "cards": [
+          0.069,
+          0.14625,
+          0.21025,
+          0.20425,
+          0.15975,
+          0.0995,
+          0.0625,
+          0.0305,
+          0.01075,
+          0.005,
+          0.00125,
+          0.00075,
+          0.00025
+        ]
+      },
+      "confidence": {
+        "entropy": 1.058977305534921,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          3.0
+        ]
+      },
+      "n_simulations": 4000,
+      "shap_features": [
+        {
+          "feature": "away_ewm_shots_against_5",
+          "value": 11.167591952722821,
+          "shap_value": -0.1339399218559265,
+          "shap_abs": 0.1339399218559265
+        },
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 11.132343507467212,
+          "shap_value": -0.13029654324054718,
+          "shap_abs": 0.13029654324054718
+        },
+        {
+          "feature": "away_ewm_goals_for_10",
+          "value": 0.7924167036045333,
+          "shap_value": -0.10894177854061127,
+          "shap_abs": 0.10894177854061127
+        },
+        {
+          "feature": "away_ewm_goals_for_5",
+          "value": 0.8044741638521128,
+          "shap_value": -0.10797560773789883,
+          "shap_abs": 0.10797560773789883
+        },
+        {
+          "feature": "home_season_xga",
+          "value": 1.5332652592592593,
+          "shap_value": -0.09882363677024841,
+          "shap_abs": 0.09882363677024841
+        },
+        {
+          "feature": "away_season_xg",
+          "value": 1.716164111111111,
+          "shap_value": -0.06687454134225845,
+          "shap_abs": 0.06687454134225845
+        },
+        {
+          "feature": "away_ewm_goals_against_10",
+          "value": 1.5790602003282104,
+          "shap_value": 0.05856475234031677,
+          "shap_abs": 0.05856475234031677
+        },
+        {
+          "feature": "home_ewm_goals_for_5",
+          "value": 1.0977788793729086,
+          "shap_value": 0.001305246725678444,
+          "shap_abs": 0.055600957944989204
+        },
+        {
+          "feature": "away_ewm_shots_for_5",
+          "value": 11.810578540770644,
+          "shap_value": 0.05457647144794464,
+          "shap_abs": 0.05457647144794464
+        },
+        {
+          "feature": "away_form_5",
+          "value": 0.13333333333333333,
+          "shap_value": 0.051022157073020935,
+          "shap_abs": 0.051022157073020935
+        }
+      ],
+      "value_bets": [
+        {
+          "market": "Away Win",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.05952050997782704,
+          "model_prob": 0.28125,
+          "implied_prob": 0.22172949002217296,
+          "expected_value": 0.2684374999999999,
+          "recommendation": "bet",
+          "decimal_odds": 4.51
+        }
+      ],
+      "narrative": "Brighton vs Nott'm Forest \u2014 Matchweek 28\n\nOur model rates Brighton as 47% favorites (fair odds: 2.14), driven primarily by away ewm shots against 5, home ewm shots against 5, away ewm goals for 10. Brighton's expected goals stand at 1.6 while Nott'm Forest are projected for 1.2 xG.\n\nThe match has a 52% chance of going over 2.5 goals, with both teams to score probability at 54%. We expect around 11 total corners and 3 cards."
+    },
+    {
+      "match_id": "20260301_Fulham_Tottenham",
+      "fixture": {
+        "date": "2026-03-01T14:00:00Z",
+        "home_team": "Fulham",
+        "away_team": "Tottenham",
+        "gameweek": 28
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.4115,
+          "draw": 0.22625,
+          "away": 0.36225
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.95725,
+            "under": 0.04275
+          },
+          "1.5": {
+            "over": 0.825,
+            "under": 0.175
+          },
+          "2.5": {
+            "over": 0.628,
+            "under": 0.372
+          },
+          "3.5": {
+            "over": 0.4015,
+            "under": 0.5985
+          },
+          "4.5": {
+            "over": 0.225,
+            "under": 0.775
+          }
+        },
+        "btts": 0.64175,
+        "clean_sheet": {
+          "home": 0.20725,
+          "away": 0.19375
+        },
+        "correct_score": {
+          "0-0": 0.04275,
+          "0-1": 0.0635,
+          "0-2": 0.0455,
+          "0-3": 0.02875,
+          "0-4": 0.01,
+          "0-5": 0.002,
+          "0-6": 0.001,
+          "1-0": 0.06875,
+          "1-1": 0.1015,
+          "1-2": 0.07975,
+          "1-3": 0.045,
+          "1-4": 0.0145,
+          "1-5": 0.00525,
+          "1-6": 0.0015,
+          "2-0": 0.05,
+          "2-1": 0.08875,
+          "2-2": 0.0605,
+          "2-3": 0.02925,
+          "2-4": 0.014,
+          "2-5": 0.00475,
+          "2-6": 0.001,
+          "3-0": 0.02925,
+          "3-1": 0.05,
+          "3-2": 0.03925,
+          "3-3": 0.01925,
+          "3-4": 0.01025,
+          "3-5": 0.00275,
+          "3-6": 0.0005,
+          "4-0": 0.011,
+          "4-1": 0.0205,
+          "4-2": 0.015,
+          "4-3": 0.0095,
+          "4-4": 0.00225,
+          "4-5": 0.0015,
+          "4-6": 0.0005,
+          "5-0": 0.00375,
+          "5-1": 0.007,
+          "5-2": 0.00475,
+          "5-3": 0.003,
+          "5-4": 0.00125,
+          "5-5": 0.0,
+          "5-6": 0.0,
+          "6-0": 0.00125,
+          "6-1": 0.00275,
+          "6-2": 0.003,
+          "6-3": 0.00025,
+          "6-4": 0.00025,
+          "6-5": 0.00025,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.92975,
+          "home_-1.5": 0.822,
+          "home_-1.0": 0.63775,
+          "home_-0.5": 0.63775,
+          "home_0": 0.4115,
+          "home_0.5": 0.4115,
+          "home_1.0": 0.20375,
+          "home_1.5": 0.20375,
+          "home_2.5": 0.0855
+        },
+        "ht_ft": {
+          "H/H": 0.1375,
+          "H/D": 0.08,
+          "H/A": 0.11325,
+          "D/H": 0.157,
+          "D/D": 0.07475,
+          "D/A": 0.13775,
+          "A/H": 0.117,
+          "A/D": 0.0715,
+          "A/A": 0.11125
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.56775,
+            "under": 0.43225
+          },
+          "8.5": {
+            "over": 0.473,
+            "under": 0.527
+          },
+          "9.5": {
+            "over": 0.3745,
+            "under": 0.6255
+          },
+          "10.5": {
+            "over": 0.29575,
+            "under": 0.70425
+          },
+          "11.5": {
+            "over": 0.22425,
+            "under": 0.77575
+          },
+          "12.5": {
+            "over": 0.172,
+            "under": 0.828
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.84975,
+            "under": 0.15025
+          },
+          "2.5": {
+            "over": 0.671,
+            "under": 0.329
+          },
+          "3.5": {
+            "over": 0.48475,
+            "under": 0.51525
+          },
+          "4.5": {
+            "over": 0.30175,
+            "under": 0.69825
+          },
+          "5.5": {
+            "over": 0.168,
+            "under": 0.832
+          },
+          "6.5": {
+            "over": 0.08275,
+            "under": 0.91725
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.668,
+        "away": 1.564
+      },
+      "expected_corners": 8.78925,
+      "expected_cards": 3.57925,
+      "distributions": {
+        "goals_home": [
+          0.19375,
+          0.31675,
+          0.2485,
+          0.15125,
+          0.06025,
+          0.01975,
+          0.00775,
+          0.00175
+        ],
+        "goals_away": [
+          0.20725,
+          0.3345,
+          0.2485,
+          0.135,
+          0.05275,
+          0.0165,
+          0.0045,
+          0.001
+        ],
+        "corners": [
+          0.001,
+          0.004,
+          0.02,
+          0.0425,
+          0.06425,
+          0.08375,
+          0.1015,
+          0.11525,
+          0.09475,
+          0.0985,
+          0.07875,
+          0.0715,
+          0.05225,
+          0.04825,
+          0.0325,
+          0.02825,
+          0.0165,
+          0.01275,
+          0.01,
+          0.0055,
+          0.007
+        ],
+        "cards": [
+          0.03925,
+          0.111,
+          0.17875,
+          0.18625,
+          0.183,
+          0.13375,
+          0.08525,
+          0.04575,
+          0.02125,
+          0.0105,
+          0.0035,
+          0.001,
+          0.00075
+        ]
+      },
+      "confidence": {
+        "entropy": 1.0694594833552205,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          4.0
+        ]
+      },
+      "n_simulations": 4000,
+      "shap_features": [
+        {
+          "feature": "away_ewm_shots_for_5",
+          "value": 9.531483929537563,
+          "shap_value": -0.16300921142101288,
+          "shap_abs": 0.16300921142101288
+        },
+        {
+          "feature": "elo_diff",
+          "value": -2.4153570405924256,
+          "shap_value": -0.1269945502281189,
+          "shap_abs": 0.1269945502281189
+        },
+        {
+          "feature": "home_season_xga",
+          "value": 1.6135130370370372,
+          "shap_value": -0.11220044642686844,
+          "shap_abs": 0.11220044642686844
+        },
+        {
+          "feature": "home_elo",
+          "value": 1508.0159028046849,
+          "shap_value": -0.043637942522764206,
+          "shap_abs": 0.09340905025601387
+        },
+        {
+          "feature": "away_ewm_goals_for_10",
+          "value": 1.080800969680689,
+          "shap_value": -0.05749352276325226,
+          "shap_abs": 0.05749352276325226
+        },
+        {
+          "feature": "home_ewm_goals_against_10",
+          "value": 1.5324206175569095,
+          "shap_value": -0.056045640259981155,
+          "shap_abs": 0.056045640259981155
+        },
+        {
+          "feature": "away_ewm_goals_against_10",
+          "value": 1.0387959472744157,
+          "shap_value": -0.014895778149366379,
+          "shap_abs": 0.05562656745314598
+        },
+        {
+          "feature": "away_ewm_goals_for_5",
+          "value": 1.0661621723291053,
+          "shap_value": -0.043835073709487915,
+          "shap_abs": 0.043835073709487915
+        },
+        {
+          "feature": "away_squad_availability",
+          "value": 0.9047619047619048,
+          "shap_value": -0.04002605751156807,
+          "shap_abs": 0.04002605751156807
+        },
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 12.869507740893761,
+          "shap_value": 0.03867180272936821,
+          "shap_abs": 0.03867180272936821
+        }
+      ],
+      "value_bets": [
+        {
+          "market": "Away Win",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.07896388101983004,
+          "model_prob": 0.36225,
+          "implied_prob": 0.28328611898017,
+          "expected_value": 0.2787424999999999,
+          "recommendation": "bet",
+          "decimal_odds": 3.53
+        }
+      ],
+      "narrative": "Fulham vs Tottenham \u2014 Matchweek 28\n\nOur model rates Fulham as 41% favorites (fair odds: 2.43), driven primarily by away ewm shots for 5, elo diff, home season xga. Fulham's expected goals stand at 1.7 while Tottenham are projected for 1.6 xG.\n\nThe match has a 63% chance of going over 2.5 goals, with both teams to score probability at 64%. We expect around 9 total corners and 4 cards."
+    },
+    {
+      "match_id": "20260301_Man_United_Crystal_Palace",
+      "fixture": {
+        "date": "2026-03-01T14:00:00Z",
+        "home_team": "Man United",
+        "away_team": "Crystal Palace",
+        "gameweek": 28
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.43025,
+          "draw": 0.2615,
+          "away": 0.30825
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.92675,
+            "under": 0.07325
+          },
+          "1.5": {
+            "over": 0.73525,
+            "under": 0.26475
+          },
+          "2.5": {
+            "over": 0.48775,
+            "under": 0.51225
+          },
+          "3.5": {
+            "over": 0.26375,
+            "under": 0.73625
+          },
+          "4.5": {
+            "over": 0.12575,
+            "under": 0.87425
+          }
+        },
+        "btts": 0.52425,
+        "clean_sheet": {
+          "home": 0.3075,
+          "away": 0.2415
+        },
+        "correct_score": {
+          "0-0": 0.07325,
+          "0-1": 0.089,
+          "0-2": 0.049,
+          "0-3": 0.02325,
+          "0-4": 0.0055,
+          "0-5": 0.0015,
+          "0-6": 0.0,
+          "1-0": 0.1025,
+          "1-1": 0.11975,
+          "1-2": 0.076,
+          "1-3": 0.0225,
+          "1-4": 0.007,
+          "1-5": 0.0025,
+          "1-6": 0.00025,
+          "2-0": 0.07875,
+          "2-1": 0.08825,
+          "2-2": 0.05825,
+          "2-3": 0.02225,
+          "2-4": 0.00375,
+          "2-5": 0.0015,
+          "2-6": 0.00025,
+          "3-0": 0.0365,
+          "3-1": 0.04075,
+          "3-2": 0.029,
+          "3-3": 0.00825,
+          "3-4": 0.00275,
+          "3-5": 0.0005,
+          "3-6": 0.0,
+          "4-0": 0.011,
+          "4-1": 0.016,
+          "4-2": 0.00925,
+          "4-3": 0.00275,
+          "4-4": 0.002,
+          "4-5": 0.00075,
+          "4-6": 0.0,
+          "5-0": 0.004,
+          "5-1": 0.003,
+          "5-2": 0.00225,
+          "5-3": 0.0015,
+          "5-4": 0.0,
+          "5-5": 0.0,
+          "5-6": 0.0,
+          "6-0": 0.00125,
+          "6-1": 0.0015,
+          "6-2": 0.0005,
+          "6-3": 0.00025,
+          "6-4": 0.00025,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.95825,
+          "home_-1.5": 0.8825,
+          "home_-1.0": 0.69175,
+          "home_-0.5": 0.69175,
+          "home_0": 0.43025,
+          "home_0.5": 0.43025,
+          "home_1.0": 0.20775,
+          "home_1.5": 0.20775,
+          "home_2.5": 0.07725
+        },
+        "ht_ft": {
+          "H/H": 0.1445,
+          "H/D": 0.0835,
+          "H/A": 0.09775,
+          "D/H": 0.1825,
+          "D/D": 0.10725,
+          "D/A": 0.1275,
+          "A/H": 0.10325,
+          "A/D": 0.07075,
+          "A/A": 0.083
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.618,
+            "under": 0.382
+          },
+          "8.5": {
+            "over": 0.50525,
+            "under": 0.49475
+          },
+          "9.5": {
+            "over": 0.39375,
+            "under": 0.60625
+          },
+          "10.5": {
+            "over": 0.30525,
+            "under": 0.69475
+          },
+          "11.5": {
+            "over": 0.222,
+            "under": 0.778
+          },
+          "12.5": {
+            "over": 0.15425,
+            "under": 0.84575
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.843,
+            "under": 0.157
+          },
+          "2.5": {
+            "over": 0.67575,
+            "under": 0.32425
+          },
+          "3.5": {
+            "over": 0.5035,
+            "under": 0.4965
+          },
+          "4.5": {
+            "over": 0.333,
+            "under": 0.667
+          },
+          "5.5": {
+            "over": 0.1975,
+            "under": 0.8025
+          },
+          "6.5": {
+            "over": 0.103,
+            "under": 0.897
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.44075,
+        "away": 1.17225
+      },
+      "expected_corners": 8.89725,
+      "expected_cards": 3.69875,
+      "distributions": {
+        "goals_home": [
+          0.2415,
+          0.3305,
+          0.253,
+          0.11775,
+          0.04175,
+          0.01075,
+          0.00375,
+          0.00075
+        ],
+        "goals_away": [
+          0.3075,
+          0.3585,
+          0.2245,
+          0.081,
+          0.02125,
+          0.00675,
+          0.0005,
+          0.0
+        ],
+        "corners": [
+          0.0005,
+          0.00425,
+          0.01125,
+          0.0315,
+          0.04675,
+          0.07825,
+          0.09425,
+          0.11525,
+          0.11275,
+          0.1115,
+          0.0885,
+          0.08325,
+          0.06775,
+          0.047,
+          0.03525,
+          0.02575,
+          0.0145,
+          0.01125,
+          0.009,
+          0.00625,
+          0.002
+        ],
+        "cards": [
+          0.04875,
+          0.10825,
+          0.16725,
+          0.17225,
+          0.1705,
+          0.1355,
+          0.0945,
+          0.04925,
+          0.0305,
+          0.0145,
+          0.00525,
+          0.0015,
+          0.0015
+        ]
+      },
+      "confidence": {
+        "entropy": 1.0763856956122007,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          3.0
+        ]
+      },
+      "n_simulations": 4000,
+      "shap_features": [
+        {
+          "feature": "home_ewm_goals_for_10",
+          "value": 2.154670230223103,
+          "shap_value": -0.11239656805992126,
+          "shap_abs": 0.11239656805992126
+        },
+        {
+          "feature": "elo_diff",
+          "value": 50.28031516726196,
+          "shap_value": -0.014611825346946716,
+          "shap_abs": 0.08851474523544312
+        },
+        {
+          "feature": "home_ewm_goals_for_5",
+          "value": 2.4304846006072736,
+          "shap_value": -0.0834425650537014,
+          "shap_abs": 0.0834425650537014
+        },
+        {
+          "feature": "away_squad_availability",
+          "value": 0.6956521739130435,
+          "shap_value": 0.025702878832817078,
+          "shap_abs": 0.07811294496059418
+        },
+        {
+          "feature": "home_season_xga",
+          "value": 1.2816513703703705,
+          "shap_value": 0.06841742247343063,
+          "shap_abs": 0.06841742247343063
+        },
+        {
+          "feature": "home_form_5",
+          "value": 0.7333333333333333,
+          "shap_value": -0.06827427446842194,
+          "shap_abs": 0.06827427446842194
+        },
+        {
+          "feature": "home_ewm_goals_against_5",
+          "value": 1.5394431969586755,
+          "shap_value": 0.06782123446464539,
+          "shap_abs": 0.06782123446464539
+        },
+        {
+          "feature": "home_elo",
+          "value": 1539.5803703998572,
+          "shap_value": 0.0010681990534067154,
+          "shap_abs": 0.06256952695548534
+        },
+        {
+          "feature": "home_season_xg",
+          "value": 1.8983846666666666,
+          "shap_value": -0.0006741490215063095,
+          "shap_abs": 0.061413297429680824
+        },
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 12.082457030891225,
+          "shap_value": -0.009360486641526222,
+          "shap_abs": 0.047311509028077126
+        }
+      ],
+      "value_bets": [],
+      "narrative": "Man United vs Crystal Palace \u2014 Matchweek 28\n\nOur model rates Man United as 43% favorites (fair odds: 2.32), driven primarily by home ewm goals for 10, elo diff, home ewm goals for 5. Man United's expected goals stand at 1.4 while Crystal Palace are projected for 1.2 xG.\n\nThe match has a 49% chance of going over 2.5 goals, with both teams to score probability at 52%. We expect around 9 total corners and 4 cards."
+    },
+    {
+      "match_id": "20260301_Arsenal_Chelsea",
+      "fixture": {
+        "date": "2026-03-01T16:30:00Z",
         "home_team": "Arsenal",
         "away_team": "Chelsea",
         "gameweek": 28
       },
       "probabilities": {
-        "1x2": { "home": 0.52, "draw": 0.24, "away": 0.24 },
-        "over_under": {
-          "2.5": { "over": 0.58, "under": 0.42 },
-          "3.5": { "over": 0.32, "under": 0.68 }
+        "1x2": {
+          "home": 0.6085,
+          "draw": 0.20475,
+          "away": 0.18675
         },
-        "btts": 0.55,
+        "over_under": {
+          "0.5": {
+            "over": 0.95025,
+            "under": 0.04975
+          },
+          "1.5": {
+            "over": 0.80075,
+            "under": 0.19925
+          },
+          "2.5": {
+            "over": 0.57575,
+            "under": 0.42425
+          },
+          "3.5": {
+            "over": 0.3425,
+            "under": 0.6575
+          },
+          "4.5": {
+            "over": 0.1735,
+            "under": 0.8265
+          }
+        },
+        "btts": 0.54125,
+        "clean_sheet": {
+          "home": 0.37325,
+          "away": 0.13525
+        },
         "correct_score": {
-          "grid": [
-            [0.05, 0.08, 0.06, 0.03, 0.01, 0.00, 0.00],
-            [0.07, 0.12, 0.10, 0.05, 0.02, 0.01, 0.00],
-            [0.05, 0.10, 0.08, 0.04, 0.02, 0.01, 0.00],
-            [0.02, 0.05, 0.04, 0.02, 0.01, 0.00, 0.00],
-            [0.01, 0.02, 0.01, 0.01, 0.00, 0.00, 0.00],
-            [0.00, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00],
-            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-          ]
+          "0-0": 0.04975,
+          "0-1": 0.049,
+          "0-2": 0.025,
+          "0-3": 0.00825,
+          "0-4": 0.003,
+          "0-5": 0.00025,
+          "0-6": 0.0,
+          "1-0": 0.1005,
+          "1-1": 0.09825,
+          "1-2": 0.0515,
+          "1-3": 0.0205,
+          "1-4": 0.00425,
+          "1-5": 0.00125,
+          "1-6": 0.0,
+          "2-0": 0.10175,
+          "2-1": 0.10475,
+          "2-2": 0.04525,
+          "2-3": 0.015,
+          "2-4": 0.0055,
+          "2-5": 0.00075,
+          "2-6": 0.0,
+          "3-0": 0.06875,
+          "3-1": 0.0665,
+          "3-2": 0.029,
+          "3-3": 0.00975,
+          "3-4": 0.0015,
+          "3-5": 0.0005,
+          "3-6": 0.0,
+          "4-0": 0.03375,
+          "4-1": 0.02925,
+          "4-2": 0.015,
+          "4-3": 0.00425,
+          "4-4": 0.0015,
+          "4-5": 0.0005,
+          "4-6": 0.0,
+          "5-0": 0.01325,
+          "5-1": 0.01475,
+          "5-2": 0.00775,
+          "5-3": 0.00275,
+          "5-4": 0.00025,
+          "5-5": 0.00025,
+          "5-6": 0.0,
+          "6-0": 0.0035,
+          "6-1": 0.005,
+          "6-2": 0.00225,
+          "6-3": 0.001,
+          "6-4": 0.0,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.98225,
+          "home_-1.5": 0.93075,
+          "home_-1.0": 0.81325,
+          "home_-0.5": 0.81325,
+          "home_0": 0.6085,
+          "home_0.5": 0.6085,
+          "home_1.0": 0.36975,
+          "home_1.5": 0.36975,
+          "home_2.5": 0.18375
+        },
+        "ht_ft": {
+          "H/H": 0.2675,
+          "H/D": 0.084,
+          "H/A": 0.08425,
+          "D/H": 0.23025,
+          "D/D": 0.08425,
+          "D/A": 0.07125,
+          "A/H": 0.11075,
+          "A/D": 0.0365,
+          "A/A": 0.03125
         },
         "corners": {
-          "over_under": {
-            "9.5": { "over": 0.62, "under": 0.38 },
-            "10.5": { "over": 0.48, "under": 0.52 }
+          "7.5": {
+            "over": 0.714,
+            "under": 0.286
+          },
+          "8.5": {
+            "over": 0.616,
+            "under": 0.384
+          },
+          "9.5": {
+            "over": 0.51175,
+            "under": 0.48825
+          },
+          "10.5": {
+            "over": 0.41475,
+            "under": 0.58525
+          },
+          "11.5": {
+            "over": 0.329,
+            "under": 0.671
+          },
+          "12.5": {
+            "over": 0.246,
+            "under": 0.754
           }
         },
         "cards": {
-          "over_under": {
-            "3.5": { "over": 0.55, "under": 0.45 },
-            "4.5": { "over": 0.35, "under": 0.65 }
+          "1.5": {
+            "over": 0.871,
+            "under": 0.129
+          },
+          "2.5": {
+            "over": 0.68875,
+            "under": 0.31125
+          },
+          "3.5": {
+            "over": 0.46625,
+            "under": 0.53375
+          },
+          "4.5": {
+            "over": 0.27825,
+            "under": 0.72175
+          },
+          "5.5": {
+            "over": 0.14175,
+            "under": 0.85825
+          },
+          "6.5": {
+            "over": 0.06925,
+            "under": 0.93075
           }
-        },
-        "asian_handicap": {
-          "-0.5": { "home": 0.52, "away": 0.48 },
-          "-1.0": { "home": 0.38, "away": 0.62 }
-        },
-        "ht_ft": {
-          "HH": 0.30, "HD": 0.10, "HA": 0.05,
-          "DH": 0.15, "DD": 0.12, "DA": 0.08,
-          "AH": 0.04, "AD": 0.06, "AA": 0.10
         }
       },
-      "expected_goals": { "home": 1.72, "away": 1.18 },
-      "expected_corners": 10.8,
-      "expected_cards": 3.9,
-      "distributions": {
-        "goals_home": [0.18, 0.31, 0.27, 0.15, 0.06, 0.02, 0.01],
-        "goals_away": [0.31, 0.36, 0.21, 0.08, 0.03, 0.01, 0.00],
-        "total_goals": [0.05, 0.13, 0.22, 0.25, 0.18, 0.10, 0.04, 0.02, 0.01],
-        "total_corners": [0.01, 0.02, 0.04, 0.06, 0.08, 0.11, 0.13, 0.14, 0.13, 0.11, 0.08, 0.05, 0.03, 0.01],
-        "total_cards": [0.05, 0.12, 0.20, 0.25, 0.18, 0.11, 0.06, 0.02, 0.01]
+      "expected_goals": {
+        "home": 1.986,
+        "away": 0.98975
       },
+      "expected_corners": 10.05125,
+      "expected_cards": 3.5245,
+      "distributions": {
+        "goals_home": [
+          0.13525,
+          0.27625,
+          0.273,
+          0.176,
+          0.08425,
+          0.039,
+          0.01175,
+          0.003
+        ],
+        "goals_away": [
+          0.37325,
+          0.369,
+          0.176,
+          0.06175,
+          0.0165,
+          0.0035,
+          0.0,
+          0.0
+        ],
+        "corners": [
+          0.00025,
+          0.00225,
+          0.0065,
+          0.019,
+          0.03925,
+          0.05875,
+          0.0705,
+          0.0895,
+          0.098,
+          0.10425,
+          0.097,
+          0.08575,
+          0.083,
+          0.065,
+          0.05275,
+          0.0305,
+          0.02875,
+          0.0195,
+          0.0135,
+          0.0105,
+          0.008
+        ],
+        "cards": [
+          0.0315,
+          0.0975,
+          0.18225,
+          0.2225,
+          0.188,
+          0.1365,
+          0.0725,
+          0.0415,
+          0.01875,
+          0.006,
+          0.002,
+          0.001,
+          0.0
+        ]
+      },
+      "confidence": {
+        "entropy": 0.9403675106559211,
+        "home_goals_ci": [
+          0.0,
+          5.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          3.0
+        ]
+      },
+      "n_simulations": 4000,
       "shap_features": [
-        { "feature": "home_attack_elo", "value": 1820, "shap_value": 0.34 },
-        { "feature": "away_defence_elo", "value": 1680, "shap_value": -0.22 },
-        { "feature": "home_xg_rolling_5", "value": 2.1, "shap_value": 0.28 },
-        { "feature": "away_xga_rolling_5", "value": 1.4, "shap_value": 0.18 },
-        { "feature": "h2h_home_wins", "value": 3, "shap_value": 0.12 },
-        { "feature": "home_form_last_5", "value": 12, "shap_value": 0.09 },
-        { "feature": "rest_days_diff", "value": 1, "shap_value": 0.05 },
-        { "feature": "away_goals_rolling_3", "value": 1.7, "shap_value": -0.08 }
+        {
+          "feature": "away_squad_availability",
+          "value": 0.6521739130434783,
+          "shap_value": -0.45875541865825653,
+          "shap_abs": 0.45875541865825653
+        },
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 6.987255066288022,
+          "shap_value": -0.17215605825185776,
+          "shap_abs": 0.17215605825185776
+        },
+        {
+          "feature": "home_ewm_goals_for_10",
+          "value": 2.053903245463042,
+          "shap_value": -0.13389107584953308,
+          "shap_abs": 0.13389107584953308
+        },
+        {
+          "feature": "away_ewm_shots_against_5",
+          "value": 10.07397928503434,
+          "shap_value": -0.11924078315496445,
+          "shap_abs": 0.11924078315496445
+        },
+        {
+          "feature": "elo_diff",
+          "value": 162.58308614028488,
+          "shap_value": -0.10761283338069916,
+          "shap_abs": 0.10761283338069916
+        },
+        {
+          "feature": "home_ewm_goals_for_5",
+          "value": 2.2982124556466226,
+          "shap_value": -0.08922705799341202,
+          "shap_abs": 0.08922705799341202
+        },
+        {
+          "feature": "home_ewm_goals_against_10",
+          "value": 0.9096798079370151,
+          "shap_value": -0.08196285367012024,
+          "shap_abs": 0.08196285367012024
+        },
+        {
+          "feature": "home_ewm_goals_against_5",
+          "value": 0.9122134854969436,
+          "shap_value": -0.07720566540956497,
+          "shap_abs": 0.07720566540956497
+        },
+        {
+          "feature": "home_ewm_shots_for_5",
+          "value": 14.398650441552178,
+          "shap_value": -0.07229883968830109,
+          "shap_abs": 0.07229883968830109
+        },
+        {
+          "feature": "h2h_draw_rate",
+          "value": 1.0,
+          "shap_value": 0.005990717560052872,
+          "shap_abs": 0.07198696956038475
+        }
       ],
       "value_bets": [
         {
           "market": "Over 2.5 Goals",
-          "selection": "over",
-          "model_prob": 0.58,
-          "implied_prob": 0.50,
-          "decimal_odds": 2.00,
-          "edge": 0.08,
-          "kelly_pct": 0.16,
-          "half_kelly_pct": 0.08,
-          "confidence": "medium"
-        }
-      ],
-      "confidence": {
-        "entropy": 1.42,
-        "credible_interval_90": [0.42, 0.62]
-      },
-      "narrative": "Arsenal vs Chelsea — Matchweek 28\n\nOur model rates Arsenal as 52% favorites (fair odds: 1.92), driven primarily by home attack elo, away defence elo, home xg rolling 5. Arsenal's expected goals stand at 1.7 while Chelsea are projected for 1.2 xG.\n\nThe match has a 58% chance of going over 2.5 goals, with both teams to score probability at 55%. We expect around 11 total corners and 4 cards.\n\nValue alert: Over 2.5 Goals at 2.00 implies 50.0% but our model gives 58.0% (edge: 8.0%). Kelly recommends 8.0% of bankroll."
-    },
-    {
-      "match_id": "20260228_Liverpool_vs_Man_City",
-      "fixture": {
-        "date": "2026-03-01T17:30:00Z",
-        "home_team": "Liverpool",
-        "away_team": "Man City",
-        "gameweek": 28
-      },
-      "probabilities": {
-        "1x2": { "home": 0.45, "draw": 0.27, "away": 0.28 },
-        "over_under": {
-          "2.5": { "over": 0.65, "under": 0.35 },
-          "3.5": { "over": 0.40, "under": 0.60 }
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.06789659685863869,
+          "model_prob": 0.57575,
+          "implied_prob": 0.5078534031413613,
+          "expected_value": 0.13369329896907212,
+          "recommendation": "bet",
+          "decimal_odds": 1.9690721649484535
         },
-        "btts": 0.62,
-        "correct_score": {
-          "grid": [
-            [0.04, 0.07, 0.05, 0.02, 0.01, 0.00, 0.00],
-            [0.06, 0.11, 0.09, 0.05, 0.02, 0.01, 0.00],
-            [0.05, 0.10, 0.08, 0.04, 0.02, 0.01, 0.00],
-            [0.03, 0.05, 0.04, 0.02, 0.01, 0.00, 0.00],
-            [0.01, 0.02, 0.02, 0.01, 0.01, 0.00, 0.00],
-            [0.00, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00],
-            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-          ]
-        },
-        "corners": {
-          "over_under": {
-            "9.5": { "over": 0.70, "under": 0.30 },
-            "10.5": { "over": 0.55, "under": 0.45 }
-          }
-        },
-        "cards": {
-          "over_under": {
-            "3.5": { "over": 0.60, "under": 0.40 },
-            "4.5": { "over": 0.40, "under": 0.60 }
-          }
-        },
-        "asian_handicap": {
-          "-0.5": { "home": 0.45, "away": 0.55 },
-          "0.0": { "home": 0.58, "away": 0.42 }
-        },
-        "ht_ft": {
-          "HH": 0.25, "HD": 0.10, "HA": 0.04,
-          "DH": 0.14, "DD": 0.14, "DA": 0.09,
-          "AH": 0.05, "AD": 0.07, "AA": 0.12
-        }
-      },
-      "expected_goals": { "home": 1.65, "away": 1.42 },
-      "expected_corners": 11.4,
-      "expected_cards": 4.2,
-      "distributions": {
-        "goals_home": [0.19, 0.32, 0.26, 0.14, 0.06, 0.02, 0.01],
-        "goals_away": [0.24, 0.34, 0.24, 0.11, 0.04, 0.02, 0.01],
-        "total_goals": [0.04, 0.10, 0.19, 0.24, 0.20, 0.13, 0.06, 0.03, 0.01],
-        "total_corners": [0.00, 0.01, 0.02, 0.04, 0.06, 0.09, 0.12, 0.14, 0.14, 0.13, 0.10, 0.07, 0.05, 0.03],
-        "total_cards": [0.03, 0.10, 0.18, 0.24, 0.20, 0.13, 0.07, 0.03, 0.02]
-      },
-      "shap_features": [
-        { "feature": "home_attack_elo", "value": 1850, "shap_value": 0.38 },
-        { "feature": "away_attack_elo", "value": 1830, "shap_value": 0.32 },
-        { "feature": "home_xg_rolling_5", "value": 2.3, "shap_value": 0.30 },
-        { "feature": "away_xg_rolling_5", "value": 2.1, "shap_value": 0.25 },
-        { "feature": "h2h_draws", "value": 2, "shap_value": 0.15 },
-        { "feature": "home_form_last_5", "value": 10, "shap_value": 0.08 },
-        { "feature": "away_form_last_5", "value": 11, "shap_value": 0.06 },
-        { "feature": "rest_days_diff", "value": 0, "shap_value": 0.01 }
-      ],
-      "value_bets": [
-        {
-          "market": "BTTS Yes",
-          "selection": "yes",
-          "model_prob": 0.62,
-          "implied_prob": 0.53,
-          "decimal_odds": 1.88,
-          "edge": 0.09,
-          "kelly_pct": 0.19,
-          "half_kelly_pct": 0.10,
-          "confidence": "medium"
-        },
-        {
-          "market": "Over 2.5 Goals",
-          "selection": "over",
-          "model_prob": 0.65,
-          "implied_prob": 0.55,
-          "decimal_odds": 1.82,
-          "edge": 0.10,
-          "kelly_pct": 0.22,
-          "half_kelly_pct": 0.11,
-          "confidence": "high"
-        }
-      ],
-      "confidence": {
-        "entropy": 1.55,
-        "credible_interval_90": [0.35, 0.55]
-      },
-      "narrative": "Liverpool vs Man City — Matchweek 28\n\nOur model rates Liverpool as 45% favorites (fair odds: 2.22), driven primarily by home attack elo, away attack elo, home xg rolling 5. Liverpool's expected goals stand at 1.6 while Man City are projected for 1.4 xG.\n\nThe match has a 65% chance of going over 2.5 goals, with both teams to score probability at 62%. We expect around 11 total corners and 4 cards.\n\nValue alert: BTTS Yes at 1.88 implies 53.0% but our model gives 62.0% (edge: 9.0%). Kelly recommends 10.0% of bankroll."
-    },
-    {
-      "match_id": "20260228_Man_Utd_vs_Tottenham",
-      "fixture": {
-        "date": "2026-03-01T12:30:00Z",
-        "home_team": "Man Utd",
-        "away_team": "Tottenham",
-        "gameweek": 28
-      },
-      "probabilities": {
-        "1x2": { "home": 0.40, "draw": 0.28, "away": 0.32 },
-        "over_under": {
-          "2.5": { "over": 0.54, "under": 0.46 },
-          "3.5": { "over": 0.28, "under": 0.72 }
-        },
-        "btts": 0.52,
-        "correct_score": {
-          "grid": [
-            [0.06, 0.09, 0.06, 0.03, 0.01, 0.00, 0.00],
-            [0.08, 0.12, 0.09, 0.04, 0.02, 0.01, 0.00],
-            [0.05, 0.08, 0.06, 0.03, 0.01, 0.01, 0.00],
-            [0.02, 0.04, 0.03, 0.02, 0.01, 0.00, 0.00],
-            [0.01, 0.01, 0.01, 0.01, 0.00, 0.00, 0.00],
-            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
-            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-          ]
-        },
-        "corners": {
-          "over_under": {
-            "9.5": { "over": 0.55, "under": 0.45 },
-            "10.5": { "over": 0.40, "under": 0.60 }
-          }
-        },
-        "cards": {
-          "over_under": {
-            "3.5": { "over": 0.62, "under": 0.38 },
-            "4.5": { "over": 0.42, "under": 0.58 }
-          }
-        },
-        "asian_handicap": {
-          "0.0": { "home": 0.54, "away": 0.46 },
-          "+0.5": { "home": 0.68, "away": 0.32 }
-        },
-        "ht_ft": {
-          "HH": 0.20, "HD": 0.10, "HA": 0.04,
-          "DH": 0.12, "DD": 0.15, "DA": 0.10,
-          "AH": 0.06, "AD": 0.08, "AA": 0.15
-        }
-      },
-      "expected_goals": { "home": 1.35, "away": 1.28 },
-      "expected_corners": 10.1,
-      "expected_cards": 4.5,
-      "distributions": {
-        "goals_home": [0.26, 0.35, 0.24, 0.10, 0.04, 0.01, 0.00],
-        "goals_away": [0.28, 0.36, 0.23, 0.09, 0.03, 0.01, 0.00],
-        "total_goals": [0.07, 0.16, 0.24, 0.24, 0.16, 0.08, 0.03, 0.01, 0.01],
-        "total_corners": [0.01, 0.03, 0.05, 0.08, 0.10, 0.13, 0.14, 0.14, 0.12, 0.09, 0.06, 0.03, 0.02, 0.00],
-        "total_cards": [0.02, 0.08, 0.16, 0.22, 0.22, 0.15, 0.09, 0.04, 0.02]
-      },
-      "shap_features": [
-        { "feature": "away_attack_elo", "value": 1750, "shap_value": 0.20 },
-        { "feature": "home_defence_elo", "value": 1620, "shap_value": -0.18 },
-        { "feature": "away_xg_rolling_5", "value": 1.9, "shap_value": 0.16 },
-        { "feature": "home_xga_rolling_5", "value": 1.6, "shap_value": -0.14 },
-        { "feature": "home_form_last_5", "value": 7, "shap_value": -0.10 },
-        { "feature": "away_form_last_5", "value": 10, "shap_value": 0.08 }
-      ],
-      "value_bets": [],
-      "confidence": {
-        "entropy": 1.57,
-        "credible_interval_90": [0.30, 0.50]
-      },
-      "narrative": "Man Utd vs Tottenham — Matchweek 28\n\nOur model rates Man Utd as 40% favorites (fair odds: 2.50), driven primarily by away attack elo, home defence elo, away xg rolling 5. Man Utd's expected goals stand at 1.4 while Tottenham are projected for 1.3 xG.\n\nThe match has a 54% chance of going over 2.5 goals, with both teams to score probability at 52%. We expect around 10 total corners and 5 cards."
-    },
-    {
-      "match_id": "20260228_Newcastle_vs_Aston_Villa",
-      "fixture": {
-        "date": "2026-03-01T15:00:00Z",
-        "home_team": "Newcastle",
-        "away_team": "Aston Villa",
-        "gameweek": 28
-      },
-      "probabilities": {
-        "1x2": { "home": 0.48, "draw": 0.26, "away": 0.26 },
-        "over_under": {
-          "2.5": { "over": 0.52, "under": 0.48 },
-          "3.5": { "over": 0.28, "under": 0.72 }
-        },
-        "btts": 0.50,
-        "correct_score": {
-          "grid": [
-            [0.06, 0.09, 0.06, 0.03, 0.01, 0.00, 0.00],
-            [0.08, 0.13, 0.09, 0.04, 0.02, 0.01, 0.00],
-            [0.05, 0.09, 0.07, 0.03, 0.01, 0.01, 0.00],
-            [0.02, 0.04, 0.03, 0.02, 0.01, 0.00, 0.00],
-            [0.01, 0.02, 0.01, 0.01, 0.00, 0.00, 0.00],
-            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
-            [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-          ]
-        },
-        "corners": {
-          "over_under": {
-            "9.5": { "over": 0.58, "under": 0.42 },
-            "10.5": { "over": 0.42, "under": 0.58 }
-          }
-        },
-        "cards": {
-          "over_under": {
-            "3.5": { "over": 0.50, "under": 0.50 },
-            "4.5": { "over": 0.30, "under": 0.70 }
-          }
-        },
-        "asian_handicap": {
-          "-0.5": { "home": 0.48, "away": 0.52 },
-          "0.0": { "home": 0.61, "away": 0.39 }
-        },
-        "ht_ft": {
-          "HH": 0.26, "HD": 0.11, "HA": 0.04,
-          "DH": 0.14, "DD": 0.14, "DA": 0.08,
-          "AH": 0.04, "AD": 0.07, "AA": 0.12
-        }
-      },
-      "expected_goals": { "home": 1.52, "away": 1.15 },
-      "expected_corners": 10.3,
-      "expected_cards": 3.6,
-      "distributions": {
-        "goals_home": [0.22, 0.33, 0.25, 0.13, 0.05, 0.02, 0.00],
-        "goals_away": [0.32, 0.37, 0.21, 0.07, 0.02, 0.01, 0.00],
-        "total_goals": [0.06, 0.15, 0.24, 0.24, 0.17, 0.09, 0.03, 0.01, 0.01],
-        "total_corners": [0.01, 0.02, 0.04, 0.07, 0.09, 0.12, 0.14, 0.14, 0.13, 0.10, 0.07, 0.04, 0.02, 0.01],
-        "total_cards": [0.06, 0.14, 0.22, 0.24, 0.17, 0.10, 0.05, 0.02, 0.00]
-      },
-      "shap_features": [
-        { "feature": "home_attack_elo", "value": 1780, "shap_value": 0.28 },
-        { "feature": "home_defence_elo", "value": 1740, "shap_value": 0.22 },
-        { "feature": "home_xg_rolling_5", "value": 1.8, "shap_value": 0.18 },
-        { "feature": "away_defence_elo", "value": 1710, "shap_value": 0.12 }
-      ],
-      "value_bets": [
         {
           "market": "Home Win",
-          "selection": "home",
-          "model_prob": 0.48,
-          "implied_prob": 0.40,
-          "decimal_odds": 2.50,
-          "edge": 0.08,
-          "kelly_pct": 0.13,
-          "half_kelly_pct": 0.07,
-          "confidence": "medium"
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.05601381215469614,
+          "model_prob": 0.6085,
+          "implied_prob": 0.5524861878453039,
+          "expected_value": 0.10138500000000011,
+          "recommendation": "bet",
+          "decimal_odds": 1.81
         }
       ],
-      "confidence": {
-        "entropy": 1.50,
-        "credible_interval_90": [0.38, 0.58]
-      },
-      "narrative": "Newcastle vs Aston Villa — Matchweek 28\n\nOur model rates Newcastle as 48% favorites (fair odds: 2.08), driven primarily by home attack elo, home defence elo, home xg rolling 5. Newcastle's expected goals stand at 1.5 while Aston Villa are projected for 1.2 xG.\n\nThe match has a 52% chance of going over 2.5 goals, with both teams to score probability at 50%. We expect around 10 total corners and 4 cards.\n\nValue alert: Home Win at 2.50 implies 40.0% but our model gives 48.0% (edge: 8.0%). Kelly recommends 7.0% of bankroll."
+      "narrative": "Arsenal vs Chelsea \u2014 Matchweek 28\n\nOur model rates Arsenal as 61% favorites (fair odds: 1.64), driven primarily by away squad availability, home ewm shots against 5, home ewm goals for 10. Arsenal's expected goals stand at 2.0 while Chelsea are projected for 1.0 xG.\n\nThe match has a 58% chance of going over 2.5 goals, with both teams to score probability at 54%. We expect around 10 total corners and 4 cards."
     }
   ]
 }
