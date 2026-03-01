@@ -2,8 +2,8 @@
 Main pipeline orchestrator.
 Runs the full data → features → models → simulate → export flow.
 
-Phase 2: Now includes referee profiles, passing stats, Odds API,
-correlated corners/cards simulation, and player booking model.
+Phase 3: Goalscorer model, stacking meta-learner, devigged edges,
+best-odds selection, portfolio risk limits, and full frontend wiring.
 
 Usage:
     python -m pipeline.run_pipeline
@@ -22,10 +22,13 @@ import numpy as np
 import pandas as pd
 
 from pipeline.config import (
-    PREDICTIONS_DIR, CURRENT_SEASON, SEASONS, N_SIMULATIONS, DERBIES
+    PREDICTIONS_DIR, CURRENT_SEASON, SEASONS, N_SIMULATIONS, DERBIES,
+    ENSEMBLE_WEIGHTS,
 )
 
 logger = logging.getLogger(__name__)
+
+PIPELINE_VERSION = "3.0.0"
 
 
 def _is_derby(home: str, away: str) -> bool:
@@ -56,7 +59,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     """
     start_time = datetime.utcnow()
     logger.info("=" * 60)
-    logger.info("PL PREDICTION ENGINE — PIPELINE START (Phase 2)")
+    logger.info(f"PL PREDICTION ENGINE — PIPELINE START (v{PIPELINE_VERSION})")
     logger.info(f"Timestamp: {start_time.isoformat()}Z")
     logger.info("=" * 60)
 
@@ -155,6 +158,65 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     player_cards_metrics = player_cards_model.fit(player_stats)
     logger.info(f"  Player cards: {player_cards_metrics}")
 
+    # Goalscorer model
+    from pipeline.models.goalscorer import GoalscorerModel
+    goalscorer_model = GoalscorerModel()
+    goalscorer_metrics = goalscorer_model.fit(player_stats)
+    logger.info(f"  Goalscorer: {goalscorer_metrics}")
+
+    # ── Step 7b: Attempt Stacking Meta-Learner ─────────────────────
+    logger.info("\n[7b/12] Training stacking meta-learner...")
+    stacking_weights = None
+    ensemble_method = "weighted_average"  # default
+    meta_learner = None
+
+    try:
+        from pipeline.models.ensemble import StackingMetaLearner, build_oof_predictions
+
+        # Only attempt stacking if we have enough historical data
+        if "season" in matches.columns and matches["season"].nunique() >= 3:
+            # Build model builders for OOF
+            def _build_pb(train_df):
+                from pipeline.models.penaltyblog_baseline import PenaltyblogBaseline
+                m = PenaltyblogBaseline()
+                m.fit(train_df)
+                return m
+
+            model_builders = {"penaltyblog": _build_pb}
+
+            if not skip_pymc:
+                def _build_dc(train_df):
+                    from pipeline.models.dixon_coles import BayesianDixonColes
+                    m = BayesianDixonColes()
+                    m.fit(train_df)
+                    return m
+                model_builders["dixon_coles"] = _build_dc
+
+            # XGBoost builder
+            def _build_xgb(train_df):
+                from pipeline.models.xgboost_model import XGBoostGoalModel
+                m = XGBoostGoalModel()
+                m.fit(train_df)
+                return m
+            model_builders["xgboost"] = _build_xgb
+
+            seasons_list = sorted(matches["season"].unique().tolist())
+            oof_preds, actuals = build_oof_predictions(matches, seasons_list, model_builders)
+
+            meta_learner = StackingMetaLearner()
+            stacking_result = meta_learner.fit(oof_preds, actuals)
+
+            if stacking_result.get("status") == "fitted":
+                stacking_weights = stacking_result["learned_weights"]
+                ensemble_method = "stacking"
+                logger.info(f"  Stacking weights: {stacking_weights}")
+            else:
+                logger.info(f"  Stacking fallback: {stacking_result.get('status')}")
+        else:
+            logger.info("  Insufficient seasons for stacking — using weighted average")
+    except Exception as e:
+        logger.warning(f"  Stacking meta-learner failed: {e}. Using static weights.")
+
     # ── Step 8: Fetch Live Odds ──────────────────────────────────────
     logger.info("\n[8/12] Fetching live odds from The Odds API...")
     all_live_odds = {"main": None, "corners": None, "cards": None}
@@ -224,6 +286,11 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             except Exception as e:
                 logger.warning(f"  DC prediction failed for {home} vs {away}: {e}")
 
+        # Gather per-model lambdas for ensemble blending
+        model_lambdas = {}  # model_name -> (lam, mu)
+        if dc_model is not None:
+            model_lambdas["dixon_coles"] = (lambda_h, mu_a)
+
         if xgb_model is not None:
             try:
                 match_row = features[
@@ -231,13 +298,21 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 ]
                 if len(match_row) > 0:
                     xgb_lam, xgb_mu = xgb_model.predict_single(match_row.iloc[-1].to_dict())
-                    pb_pred = pb_predictions.get(key, {})
-                    pb_lam = pb_pred.get("expected_goals", {}).get("home", lambda_h)
-                    pb_mu = pb_pred.get("expected_goals", {}).get("away", mu_a)
-                    lambda_h = 0.6 * lambda_h + 0.3 * xgb_lam + 0.1 * pb_lam
-                    mu_a = 0.6 * mu_a + 0.3 * xgb_mu + 0.1 * pb_mu
+                    model_lambdas["xgboost"] = (xgb_lam, xgb_mu)
             except Exception as e:
                 logger.warning(f"  XGBoost prediction failed: {e}")
+
+        pb_pred = pb_predictions.get(key, {})
+        pb_lam = pb_pred.get("expected_goals", {}).get("home", lambda_h)
+        pb_mu = pb_pred.get("expected_goals", {}).get("away", mu_a)
+        model_lambdas["penaltyblog"] = (pb_lam, pb_mu)
+
+        # Blend using stacking weights if available, else static weights
+        weights = stacking_weights if stacking_weights else ENSEMBLE_WEIGHTS
+        total_w = sum(weights.get(m, 0) for m in model_lambdas)
+        if total_w > 0 and len(model_lambdas) > 0:
+            lambda_h = sum(weights.get(m, 0) * lam for m, (lam, _) in model_lambdas.items()) / total_w
+            mu_a = sum(weights.get(m, 0) * mu for m, (_, mu) in model_lambdas.items()) / total_w
 
         # Simulate (correlated corners/cards)
         sim_kwargs = dict(
@@ -273,6 +348,46 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             )
         except Exception as e:
             logger.warning(f"  Player cards prediction failed: {e}")
+
+        # Goalscorer predictions
+        goalscorer_pred = {}
+        try:
+            goalscorer_pred = goalscorer_model.predict_match(
+                home, away,
+                home_xg=lambda_h,
+                away_xg=mu_a,
+                top_n=8,
+            )
+        except Exception as e:
+            logger.warning(f"  Goalscorer prediction failed: {e}")
+
+        # Build odds comparison data for frontend
+        odds_comparison = {}
+        if key in parsed_main:
+            live = parsed_main[key]
+            if live.get("h2h_all"):
+                odds_comparison["h2h"] = live["h2h_all"]
+            if live.get("h2h"):
+                for outcome in ["home", "draw", "away"]:
+                    bk_key = live["h2h"].get(f"bookmaker_{outcome}")
+                    if bk_key:
+                        odds_comparison[f"bookmaker_{outcome}"] = bk_key
+
+        # Compute model disagreement
+        model_disagreement = None
+        if len(model_lambdas) >= 2:
+            from scipy.stats import poisson as poisson_dist
+            model_1x2 = {}
+            for mname, (ml, mm) in model_lambdas.items():
+                ph = sum(poisson_dist.pmf(i, ml) * poisson_dist.pmf(j, mm) for i in range(8) for j in range(i))
+                pd_ = sum(poisson_dist.pmf(i, ml) * poisson_dist.pmf(i, mm) for i in range(8))
+                pa = max(0, 1 - ph - pd_)
+                model_1x2[mname] = np.array([ph, pd_, pa])
+            if meta_learner and meta_learner.is_fitted:
+                model_disagreement = meta_learner.model_disagreement(model_1x2)
+            else:
+                stacked = np.array(list(model_1x2.values()))
+                model_disagreement = float(stacked.std(axis=0).mean())
 
         # SHAP explanation
         shap_data = {"combined_features": []}
@@ -319,8 +434,18 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             for b in player_bookings_pred["top_bookings"]:
                 player_booking_probs[b["web_name"]] = b["adjusted_prob"]
 
+        # Build goalscorer probabilities dict for Kelly scanner
+        goalscorer_probs_for_kelly = {}
+        if goalscorer_pred.get("top_scorers"):
+            for gs in goalscorer_pred["top_scorers"]:
+                goalscorer_probs_for_kelly[gs["web_name"]] = gs["anytime_prob"]
+
+        # Combine predictions with goalscorer probs for full market scanning
+        predictions_with_gs = dict(markets)
+        predictions_with_gs["goalscorer_probabilities"] = goalscorer_probs_for_kelly
+
         value_bets = find_value_bets(
-            predictions=markets,
+            predictions=predictions_with_gs,
             odds_benchmark=odds_benchmark,
             corners_odds=corners_odds_match if corners_odds_match else None,
             cards_odds=cards_odds_match if cards_odds_match else None,
@@ -348,6 +473,9 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 "top_bookings": player_bookings_pred.get("top_bookings", []),
                 "adjustments": player_bookings_pred.get("adjustments", {}),
             },
+            "goalscorer": goalscorer_pred if goalscorer_pred else None,
+            "odds_comparison": odds_comparison if odds_comparison else None,
+            "model_disagreement": model_disagreement,
             "shap_features": shap_data.get("combined_features", []),
             "value_bets": value_bets,
             "narrative": narrative,
@@ -363,13 +491,15 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             "generated_at": datetime.utcnow().isoformat() + "Z",
             "season": "2025-26",
             "gameweek": gameweek,
-            "pipeline_version": "2.0.0",
+            "pipeline_version": PIPELINE_VERSION,
             "models": ["dixon_coles_pymc", "xgboost", "penaltyblog"],
-            "sub_models": ["corners_negbin_adj", "cards_zip_referee", "player_cards"],
+            "sub_models": ["corners_negbin_adj", "cards_zip_referee", "player_cards", "goalscorer"],
             "n_simulations": N_SIMULATIONS,
             "calibrated": False,
             "odds_source": "the_odds_api" if any(all_live_odds.values()) else "football_data",
             "referee_profiles_count": len(referee_profiles),
+            "ensemble_method": ensemble_method,
+            "stacking_weights": stacking_weights,
         },
         "predictions": all_predictions,
     }
@@ -413,6 +543,67 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     }
     with open(PREDICTIONS_DIR / "matches.json", "w") as f:
         json.dump(matches_meta, f, indent=2, default=str)
+
+    # ── Player Stats JSON (for frontend Players page) ──────────────
+    logger.info("  Exporting player_stats.json...")
+    try:
+        ps_export = []
+        for _, row in player_stats.iterrows():
+            ps_export.append({
+                "player_id": int(row.get("player_id", 0)),
+                "name": str(row.get("name", "")),
+                "web_name": str(row.get("web_name", "")),
+                "team": str(row.get("team", "")),
+                "position": str(row.get("position", "")),
+                "minutes": int(row.get("minutes", 0)),
+                "goals_scored": int(row.get("goals_scored", 0)),
+                "assists": int(row.get("assists", 0)),
+                "expected_goals": float(row.get("expected_goals", 0)),
+                "expected_assists": float(row.get("expected_assists", 0)) if pd.notna(row.get("expected_assists")) else None,
+                "xg_per_90": float(row.get("expected_goals", 0) / max(row.get("minutes", 1) / 90, 0.1)),
+                "goals_per_90": float(row.get("goals_scored", 0) / max(row.get("minutes", 1) / 90, 0.1)),
+                "assists_per_90": float(row.get("assists", 0) / max(row.get("minutes", 1) / 90, 0.1)),
+                "yellows": int(row.get("yellow_cards", row.get("yellows", 0))),
+                "yellows_per_90": float(row.get("yellow_cards", row.get("yellows", 0)) / max(row.get("minutes", 1) / 90, 0.1)),
+                "fouls_committed": int(row.get("fouls_committed", 0)) if pd.notna(row.get("fouls_committed")) else None,
+                "fouls_per_90": float(row.get("fouls_committed", 0) / max(row.get("minutes", 1) / 90, 0.1)) if pd.notna(row.get("fouls_committed")) else None,
+                "fpl_price": float(row.get("now_cost", 0)) / 10 if row.get("now_cost") else None,
+                "fpl_ownership": float(row.get("selected_by_percent", 0)) if row.get("selected_by_percent") else None,
+                "form": float(row.get("form", 0)) if pd.notna(row.get("form")) else None,
+                "available": bool(row.get("available", True)),
+            })
+        with open(PREDICTIONS_DIR / "player_stats.json", "w") as f:
+            json.dump(ps_export, f, indent=2, default=str)
+        logger.info(f"  player_stats.json: {len(ps_export)} players")
+    except Exception as e:
+        logger.warning(f"  player_stats.json export failed: {e}")
+
+    # ── Health JSON (for frontend Model Health page) ───────────────
+    logger.info("  Exporting health.json...")
+    try:
+        health_data = {
+            "last_updated": datetime.utcnow().isoformat() + "Z",
+            "gameweek": gameweek,
+            "n_predictions": len(all_predictions),
+            "status": "healthy",
+            "pipeline_version": PIPELINE_VERSION,
+            "models": {
+                "dixon_coles": {"status": "active" if dc_model else "skipped"},
+                "xgboost": {"status": "active" if xgb_model else "failed"},
+                "penaltyblog": {"status": "active" if pb_predictions else "failed"},
+                "goalscorer": {"status": "active", "n_players": goalscorer_metrics.get("n_players", 0)},
+            },
+            "ensemble_method": ensemble_method,
+            "stacking_weights": stacking_weights,
+            "n_simulations": N_SIMULATIONS,
+            "odds_source": "the_odds_api" if any(all_live_odds.values()) else "football_data",
+            "referee_profiles_count": len(referee_profiles),
+        }
+        with open(PREDICTIONS_DIR / "health.json", "w") as f:
+            json.dump(health_data, f, indent=2, default=str)
+        logger.info("  health.json exported")
+    except Exception as e:
+        logger.warning(f"  health.json export failed: {e}")
 
     # ── Done ─────────────────────────────────────────────────────────
     elapsed = (datetime.utcnow() - start_time).total_seconds()

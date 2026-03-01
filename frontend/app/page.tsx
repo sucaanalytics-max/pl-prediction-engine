@@ -1,42 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { loadPredictions, type PredictionData } from "@/lib/predictions";
+import { usePredictions } from "@/lib/PredictionsContext";
 import { timeAgo } from "@/lib/formats";
 import FixtureTable from "@/components/FixtureTable";
+import { ErrorBoundary, PageSkeleton, ErrorMessage } from "@/components/ErrorBoundary";
 
-export default function MatchweekPage() {
-  const [data, setData] = useState<PredictionData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+function MatchweekContent() {
+  const { predictions: data, loading, error, refresh } = usePredictions();
 
-  useEffect(() => {
-    loadPredictions()
-      .then(setData)
-      .catch((e) => setError(e.message));
-  }, []);
-
-  if (error) {
-    return (
-      <div className="card p-8 text-center">
-        <p className="text-red-400 font-medium">Failed to load predictions</p>
-        <p className="text-sm text-slate-500 mt-1">{error}</p>
-      </div>
-    );
-  }
-
-  if (!data) {
-    return (
-      <div className="space-y-4">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="card p-6 animate-pulse">
-            <div className="h-4 bg-slate-800 rounded w-1/3 mb-3" />
-            <div className="h-3 bg-slate-800 rounded w-full mb-2" />
-            <div className="h-3 bg-slate-800 rounded w-2/3" />
-          </div>
-        ))}
-      </div>
-    );
-  }
+  if (error) return <ErrorMessage message={error} onRetry={refresh} />;
+  if (loading || !data) return <PageSkeleton rows={4} />;
 
   const valueBetCount = data.predictions.reduce((acc, p) => acc + p.value_bets.length, 0);
   const derbyCount = data.predictions.filter((p) => p.fixture.is_derby).length;
@@ -100,6 +73,9 @@ export default function MatchweekPage() {
               odds: {data.metadata.odds_source.replace("_", " ")}
             </span>
           )}
+          {data.metadata.ensemble_method && (
+            <span className="badge-green text-[9px]">{data.metadata.ensemble_method.toUpperCase()}</span>
+          )}
           {data.metadata.calibrated ? (
             <span className="badge-green">Calibrated</span>
           ) : (
@@ -108,5 +84,13 @@ export default function MatchweekPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MatchweekPage() {
+  return (
+    <ErrorBoundary pageName="Matchweek">
+      <MatchweekContent />
+    </ErrorBoundary>
   );
 }

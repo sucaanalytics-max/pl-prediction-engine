@@ -58,10 +58,21 @@ export default function Navigation() {
 
   return (
     <>
+      {/* Skip to content */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-pitch-600 focus:text-white focus:rounded-lg focus:text-sm"
+      >
+        Skip to content
+      </a>
+
       {/* Mobile toggle */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg"
+        aria-expanded={mobileOpen}
+        aria-controls="sidebar-nav"
+        aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg focus-visible:ring-2 focus-visible:ring-pitch-500 focus-visible:outline-none"
         style={{
           background: "rgba(255,255,255,0.07)",
           border: "1px solid rgba(255,255,255,0.10)",
@@ -69,7 +80,7 @@ export default function Navigation() {
           WebkitBackdropFilter: "blur(12px)",
         }}
       >
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
           {mobileOpen ? (
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           ) : (
@@ -84,11 +95,15 @@ export default function Navigation() {
           className="fixed inset-0 z-30 lg:hidden"
           style={{ background: "rgba(8,13,22,0.70)", backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)" }}
           onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
         />
       )}
 
       {/* Sidebar */}
       <aside
+        id="sidebar-nav"
+        role="navigation"
+        aria-label="Main navigation"
         className={`fixed top-0 left-0 z-40 h-screen w-64 flex flex-col
                      transform transition-transform duration-300 ease-in-out
                      ${mobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
@@ -103,7 +118,7 @@ export default function Navigation() {
         <div className="p-5 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
           <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-pitch-500 to-pitch-700 flex items-center justify-center shadow-lg shadow-pitch-500/20">
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9zm-4 4h2v2H5v-2zm4 0h2v2H9v-2zm4 0h2v2h-2v-2z" />
               </svg>
             </div>
@@ -119,7 +134,7 @@ export default function Navigation() {
         </div>
 
         {/* Nav */}
-        <nav className="p-4 space-y-1">
+        <nav className="p-4 space-y-1" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
             const isActive =
               item.href === "/"
@@ -130,9 +145,10 @@ export default function Navigation() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={isActive ? "nav-link-active" : "nav-link"}
+                className={`${isActive ? "nav-link-active" : "nav-link"} focus-visible:ring-2 focus-visible:ring-pitch-500 focus-visible:outline-none`}
+                aria-current={isActive ? "page" : undefined}
               >
-                {item.icon}
+                <span aria-hidden="true">{item.icon}</span>
                 {item.label}
               </Link>
             );
@@ -142,7 +158,7 @@ export default function Navigation() {
         {/* Footer */}
         <div className="mt-auto p-4" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <div className="flex items-center gap-2 text-[10px] text-slate-600">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
             <span>Pipeline v1.0.0</span>
             <span className="ml-auto">2025-26</span>
           </div>

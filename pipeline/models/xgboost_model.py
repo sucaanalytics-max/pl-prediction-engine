@@ -94,13 +94,31 @@ class XGBoostGoalModel:
         # Filter to matches with all features
         df = features.dropna(subset=["FTHG", "FTAG"]).copy()
 
-        # Use last season as validation
-        n_train = int(len(df) * 0.8)
-        train = df.iloc[:n_train]
-        val = df.iloc[n_train:]
+        # Season-aware temporal split: train on all seasons except last,
+        # validate on the most recent season. This prevents data leakage
+        # (future matches leaking into training set via naive row split).
+        if "season" in df.columns and df["season"].nunique() > 1:
+            seasons = sorted(df["season"].unique())
+            last_season = seasons[-1]
+            train = df[df["season"] != last_season]
+            val = df[df["season"] == last_season]
+            logger.info(
+                f"Temporal split: train seasons {seasons[:-1]}, "
+                f"val season {last_season}"
+            )
+        else:
+            # Fallback: 80/20 chronological split
+            n_train = int(len(df) * 0.8)
+            train = df.iloc[:n_train]
+            val = df.iloc[n_train:]
 
-        X_train = train[self.feature_cols].fillna(0)
-        X_val = val[self.feature_cols].fillna(0)
+        # Fill missing values with column medians instead of 0.
+        # Zero is a meaningful value for features like referee_avg_yellows
+        # or pass_completion, so fillna(0) introduces bias.
+        col_medians = train[self.feature_cols].median()
+        X_train = train[self.feature_cols].fillna(col_medians)
+        X_val = val[self.feature_cols].fillna(col_medians)
+        self._col_medians = col_medians  # Store for prediction time
 
         # Home goals model
         logger.info("Training home goals model...")
@@ -118,6 +136,7 @@ class XGBoostGoalModel:
         self.model_home.fit(
             X_train, train["FTHG"],
             eval_set=[(X_val, val["FTHG"])],
+            early_stopping_rounds=50,
             verbose=False,
         )
 
@@ -137,6 +156,7 @@ class XGBoostGoalModel:
         self.model_away.fit(
             X_train, train["FTAG"],
             eval_set=[(X_val, val["FTAG"])],
+            early_stopping_rounds=50,
             verbose=False,
         )
 
@@ -167,7 +187,9 @@ class XGBoostGoalModel:
         if self.model_home is None:
             raise RuntimeError("Model not fitted")
 
-        X = features[self.feature_cols].fillna(0)
+        # Use stored column medians from training (falls back to 0 if unavailable)
+        medians = getattr(self, "_col_medians", None)
+        X = features[self.feature_cols].fillna(medians if medians is not None else 0)
         lambda_home = self.model_home.predict(X)
         mu_away = self.model_away.predict(X)
 

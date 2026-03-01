@@ -10,9 +10,15 @@ from typing import Dict, Optional, Tuple
 
 import numpy as np
 from sklearn.isotonic import IsotonicRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.calibration import calibration_curve
 
 from pipeline.config import DATA_PROCESSED
+
+# Minimum samples required for fitting a calibrator.
+# Isotonic regression overfits with few samples; Platt scaling (logistic)
+# is more robust but still needs a reasonable sample size.
+MIN_CALIBRATION_SAMPLES = 50
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +34,11 @@ class ProbabilityCalibrator:
 
     def fit(self, predictions: np.ndarray, actuals: np.ndarray, market: str = "1x2_home") -> None:
         """
-        Fit isotonic regression for a specific market.
+        Fit calibrator for a specific market.
+
+        For 1X2 markets, uses Platt scaling (logistic regression on log-odds)
+        which preserves calibration better after re-normalization than isotonic
+        regression. For other markets, uses isotonic regression.
 
         Args:
             predictions: Model predicted probabilities
@@ -40,36 +50,77 @@ class ProbabilityCalibrator:
         preds = predictions[mask]
         acts = actuals[mask]
 
-        if len(preds) < 20:
-            logger.warning(f"Insufficient data for calibration ({len(preds)} samples). Skipping {market}.")
+        if len(preds) < MIN_CALIBRATION_SAMPLES:
+            logger.warning(
+                f"Insufficient data for calibration ({len(preds)} < {MIN_CALIBRATION_SAMPLES} samples). "
+                f"Skipping {market}."
+            )
             return
 
-        calibrator = IsotonicRegression(y_min=0.001, y_max=0.999, out_of_bounds="clip")
-        calibrator.fit(preds, acts)
-        self.calibrators[market] = calibrator
+        is_1x2 = market.startswith("1x2_")
+
+        if is_1x2:
+            # Platt scaling: fit logistic regression on log-odds (logit of predicted prob).
+            # This preserves calibration better after 1X2 re-normalization than isotonic.
+            preds_clipped = np.clip(preds, 0.001, 0.999)
+            logits = np.log(preds_clipped / (1 - preds_clipped))
+            calibrator = LogisticRegression(C=1.0, solver="lbfgs", max_iter=1000)
+            calibrator.fit(logits.reshape(-1, 1), acts)
+            self.calibrators[market] = ("platt", calibrator)
+
+            # Compute calibrated predictions for logging
+            calibrated = calibrator.predict_proba(logits.reshape(-1, 1))[:, 1]
+        else:
+            calibrator = IsotonicRegression(y_min=0.001, y_max=0.999, out_of_bounds="clip")
+            calibrator.fit(preds, acts)
+            self.calibrators[market] = ("isotonic", calibrator)
+            calibrated = calibrator.predict(preds)
 
         # Log calibration quality
-        calibrated = calibrator.predict(preds)
         before_ece = self._expected_calibration_error(preds, acts)
         after_ece = self._expected_calibration_error(calibrated, acts)
-        logger.info(f"Calibration [{market}]: ECE {before_ece:.4f} -> {after_ece:.4f}")
+        method = "Platt" if is_1x2 else "Isotonic"
+        logger.info(f"Calibration [{market}] ({method}): ECE {before_ece:.4f} -> {after_ece:.4f}")
 
     def calibrate(self, probability: float, market: str = "1x2_home") -> float:
         """
         Calibrate a single probability.
         Returns original probability if no calibrator fitted for this market.
         """
-        calibrator = self.calibrators.get(market)
-        if calibrator is None:
+        entry = self.calibrators.get(market)
+        if entry is None:
             return probability
-        return float(calibrator.predict([probability])[0])
+
+        # Handle both new (type, calibrator) tuples and legacy raw calibrators
+        if isinstance(entry, tuple):
+            cal_type, calibrator = entry
+        else:
+            cal_type, calibrator = "isotonic", entry
+
+        if cal_type == "platt":
+            p_clipped = np.clip(probability, 0.001, 0.999)
+            logit = np.log(p_clipped / (1 - p_clipped))
+            return float(calibrator.predict_proba(np.array([[logit]]))[0, 1])
+        else:
+            return float(calibrator.predict([probability])[0])
 
     def calibrate_array(self, probabilities: np.ndarray, market: str = "1x2_home") -> np.ndarray:
         """Calibrate an array of probabilities."""
-        calibrator = self.calibrators.get(market)
-        if calibrator is None:
+        entry = self.calibrators.get(market)
+        if entry is None:
             return probabilities
-        return calibrator.predict(probabilities)
+
+        if isinstance(entry, tuple):
+            cal_type, calibrator = entry
+        else:
+            cal_type, calibrator = "isotonic", entry
+
+        if cal_type == "platt":
+            p_clipped = np.clip(probabilities, 0.001, 0.999)
+            logits = np.log(p_clipped / (1 - p_clipped))
+            return calibrator.predict_proba(logits.reshape(-1, 1))[:, 1]
+        else:
+            return calibrator.predict(probabilities)
 
     def calibrate_match(self, match_pred: Dict) -> Dict:
         """
@@ -97,9 +148,14 @@ class ProbabilityCalibrator:
                 ou["2.5"]["over"] = self.calibrate(ou["2.5"]["over"], "over_2.5")
                 ou["2.5"]["under"] = 1 - ou["2.5"]["over"]
 
-        # Calibrate BTTS
+        # Calibrate BTTS (handles both float and dict format)
         if "probabilities" in pred and "btts" in pred["probabilities"]:
-            pred["probabilities"]["btts"] = self.calibrate(pred["probabilities"]["btts"], "btts")
+            btts = pred["probabilities"]["btts"]
+            if isinstance(btts, dict):
+                btts["yes"] = self.calibrate(btts.get("yes", 0), "btts")
+                btts["no"] = 1 - btts["yes"]
+            else:
+                pred["probabilities"]["btts"] = self.calibrate(btts, "btts")
 
         return pred
 
@@ -140,13 +196,16 @@ class ProbabilityCalibrator:
                 data["over_2.5"][0].append(probs["over_under"]["2.5"]["over"])
                 data["over_2.5"][1].append(1 if result["FTHG"] + result["FTAG"] > 2.5 else 0)
 
-            # BTTS
+            # BTTS (handles both float and dict format)
             if "btts" in probs:
-                data["btts"][0].append(probs["btts"])
+                btts_val = probs["btts"]
+                if isinstance(btts_val, dict):
+                    btts_val = btts_val.get("yes", 0)
+                data["btts"][0].append(btts_val)
                 data["btts"][1].append(1 if result["FTHG"] > 0 and result["FTAG"] > 0 else 0)
 
         for market, (preds, acts) in data.items():
-            if len(preds) >= 20:
+            if len(preds) >= MIN_CALIBRATION_SAMPLES:
                 self.fit(np.array(preds), np.array(acts), market)
 
     @staticmethod

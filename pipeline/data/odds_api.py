@@ -162,12 +162,17 @@ def parse_match_odds(raw_odds: List[Dict]) -> Dict[str, Dict]:
     """
     Parse raw Odds API response into standardized format.
 
+    Iterates ALL bookmakers and selects the best available odds for each
+    outcome. This maximizes expected value without additional API calls
+    (all bookmakers are included in a single response).
+
     Returns:
         Dict[match_key -> {
             home_team, away_team, commence_time,
-            h2h: {home, draw, away},  # best available odds
-            totals: {line: {over, under}},
-            btts: {yes, no},
+            h2h: {home, draw, away, bookmaker_home, bookmaker_draw, bookmaker_away},
+            h2h_all: {bookmaker_key: {home, draw, away}},  # all bookmaker odds
+            totals: {line: {over, under, bookmaker_over, bookmaker_under}},
+            btts: {yes, no, bookmaker_yes, bookmaker_no},
         }]
     """
     if not raw_odds:
@@ -184,9 +189,15 @@ def parse_match_odds(raw_odds: List[Dict]) -> Dict[str, Dict]:
             "away_team": away,
             "commence_time": event.get("commence_time"),
             "h2h": {},
+            "h2h_all": {},  # All bookmaker odds for comparison
             "totals": {},
             "btts": {},
         }
+
+        # Collect all bookmaker odds, then pick the best
+        all_h2h = {}       # bk_key -> {home, draw, away}
+        all_totals = {}    # line_key -> {over: [(price, bk)], under: [(price, bk)]}
+        all_btts = {}      # bk_key -> {yes, no}
 
         for bookmaker in event.get("bookmakers", []):
             bk_key = bookmaker.get("key", "")
@@ -195,30 +206,81 @@ def parse_match_odds(raw_odds: List[Dict]) -> Dict[str, Dict]:
                 market_key = market.get("key", "")
                 outcomes = market.get("outcomes", [])
 
-                if market_key == "h2h" and not match_data["h2h"]:
-                    match_data["h2h"] = _parse_h2h(outcomes, home, away)
-                    match_data["h2h"]["bookmaker"] = bk_key
+                if market_key == "h2h":
+                    parsed = _parse_h2h(outcomes, home, away)
+                    if parsed:
+                        all_h2h[bk_key] = parsed
 
                 elif market_key == "totals":
                     for outcome in outcomes:
                         line = outcome.get("point")
-                        if line is not None:
-                            line_key = str(line)
-                            if line_key not in match_data["totals"]:
-                                match_data["totals"][line_key] = {}
-                            name = outcome.get("name", "").lower()
-                            if name == "over":
-                                match_data["totals"][line_key]["over"] = outcome["price"]
-                            elif name == "under":
-                                match_data["totals"][line_key]["under"] = outcome["price"]
+                        if line is None:
+                            continue
+                        line_key = str(line)
+                        if line_key not in all_totals:
+                            all_totals[line_key] = {"over": [], "under": []}
+                        name = outcome.get("name", "").lower()
+                        if name in ("over", "under"):
+                            all_totals[line_key][name].append((outcome["price"], bk_key))
 
-                elif market_key == "btts" and not match_data["btts"]:
+                elif market_key == "btts":
+                    bk_btts = {}
                     for outcome in outcomes:
                         name = outcome.get("name", "").lower()
-                        if name == "yes":
-                            match_data["btts"]["yes"] = outcome["price"]
-                        elif name == "no":
-                            match_data["btts"]["no"] = outcome["price"]
+                        if name in ("yes", "no"):
+                            bk_btts[name] = outcome["price"]
+                    if bk_btts:
+                        all_btts[bk_key] = bk_btts
+
+        # ── Select best H2H odds ──────────────────────────────────────
+        match_data["h2h_all"] = all_h2h
+        best_h2h = {"home": 0, "draw": 0, "away": 0}
+        best_h2h_bk = {"home": "", "draw": "", "away": ""}
+
+        for bk_key, odds in all_h2h.items():
+            for outcome in ["home", "draw", "away"]:
+                price = odds.get(outcome, 0)
+                if price > best_h2h.get(outcome, 0):
+                    best_h2h[outcome] = price
+                    best_h2h_bk[outcome] = bk_key
+
+        if any(v > 0 for v in best_h2h.values()):
+            match_data["h2h"] = {
+                **best_h2h,
+                "bookmaker_home": best_h2h_bk["home"],
+                "bookmaker_draw": best_h2h_bk["draw"],
+                "bookmaker_away": best_h2h_bk["away"],
+                "bookmaker": best_h2h_bk["home"],  # backward compat
+            }
+
+        # ── Select best totals odds ───────────────────────────────────
+        for line_key, directions in all_totals.items():
+            line_data = {}
+            for direction in ["over", "under"]:
+                prices = directions.get(direction, [])
+                if prices:
+                    best_price, best_bk = max(prices, key=lambda x: x[0])
+                    line_data[direction] = best_price
+                    line_data[f"bookmaker_{direction}"] = best_bk
+            if line_data:
+                match_data["totals"][line_key] = line_data
+
+        # ── Select best BTTS odds ─────────────────────────────────────
+        best_btts = {"yes": 0, "no": 0}
+        best_btts_bk = {"yes": "", "no": ""}
+        for bk_key, odds in all_btts.items():
+            for outcome in ["yes", "no"]:
+                price = odds.get(outcome, 0)
+                if price > best_btts.get(outcome, 0):
+                    best_btts[outcome] = price
+                    best_btts_bk[outcome] = bk_key
+
+        if any(v > 0 for v in best_btts.values()):
+            match_data["btts"] = {
+                **best_btts,
+                "bookmaker_yes": best_btts_bk["yes"],
+                "bookmaker_no": best_btts_bk["no"],
+            }
 
         matches[key] = match_data
 
@@ -229,12 +291,15 @@ def parse_alt_totals(raw_odds: List[Dict], market_name: str) -> Dict[str, Dict]:
     """
     Parse alternate totals (corners or cards) odds.
 
+    Iterates ALL bookmakers and selects the best available odds for each
+    line/direction combination.
+
     Args:
         raw_odds: Raw API response
         market_name: "alternate_totals_corners" or "alternate_totals_cards"
 
     Returns:
-        Dict[match_key -> {line: {over: odds, under: odds}}]
+        Dict[match_key -> {lines: {line: {over, under, bookmaker_over, bookmaker_under}}}]
     """
     if not raw_odds:
         return {}
@@ -245,8 +310,10 @@ def parse_alt_totals(raw_odds: List[Dict], market_name: str) -> Dict[str, Dict]:
         away = normalize_team_name(event.get("away_team", ""))
         key = f"{home}_vs_{away}"
 
-        lines = {}
+        # Collect all prices: line_key -> {over: [(price, bk)], under: [(price, bk)]}
+        all_lines = {}
         for bookmaker in event.get("bookmakers", []):
+            bk_key = bookmaker.get("key", "")
             for market in bookmaker.get("markets", []):
                 if market.get("key") != market_name:
                     continue
@@ -255,13 +322,24 @@ def parse_alt_totals(raw_odds: List[Dict], market_name: str) -> Dict[str, Dict]:
                     if point is None:
                         continue
                     line_key = str(point)
-                    if line_key not in lines:
-                        lines[line_key] = {"bookmaker": bookmaker.get("key", "")}
+                    if line_key not in all_lines:
+                        all_lines[line_key] = {"over": [], "under": []}
                     name = outcome.get("name", "").lower()
-                    if name == "over":
-                        lines[line_key]["over"] = outcome["price"]
-                    elif name == "under":
-                        lines[line_key]["under"] = outcome["price"]
+                    if name in ("over", "under"):
+                        all_lines[line_key][name].append((outcome["price"], bk_key))
+
+        # Select best odds per line/direction
+        lines = {}
+        for line_key, directions in all_lines.items():
+            line_data = {}
+            for direction in ["over", "under"]:
+                prices = directions.get(direction, [])
+                if prices:
+                    best_price, best_bk = max(prices, key=lambda x: x[0])
+                    line_data[direction] = best_price
+                    line_data[f"bookmaker_{direction}"] = best_bk
+            if line_data:
+                lines[line_key] = line_data
 
         if lines:
             matches[key] = {
@@ -303,6 +381,54 @@ def event_away_name(outcomes: list, away: str) -> str:
         if o.get("name", "").lower() != "draw":
             return o.get("name", "")
     return away
+
+
+def find_best_odds(event: Dict) -> Dict[str, Dict]:
+    """
+    Find best available odds across all bookmakers for a single event.
+
+    Convenience wrapper for use in the pipeline — extracts best odds
+    from the full bookmaker list in a raw Odds API event.
+
+    Args:
+        event: Single event dict from raw Odds API response
+
+    Returns:
+        {market: {outcome: {price, bookmaker}}}
+        e.g. {"h2h": {"home": {"price": 2.15, "bookmaker": "bet365"}, ...}}
+    """
+    best = {"h2h": {}, "totals": {}, "btts": {}}
+
+    for bookmaker in event.get("bookmakers", []):
+        bk_key = bookmaker.get("key", "")
+        for market in bookmaker.get("markets", []):
+            mk = market.get("key", "")
+            for outcome in market.get("outcomes", []):
+                price = outcome.get("price", 0)
+                name = outcome.get("name", "").lower()
+
+                if mk == "h2h":
+                    if name in ("home", "draw", "away") or name not in best["h2h"]:
+                        # Map team names to home/draw/away
+                        key = name if name in ("draw",) else name
+                        current = best["h2h"].get(key, {}).get("price", 0)
+                        if price > current:
+                            best["h2h"][key] = {"price": price, "bookmaker": bk_key}
+
+                elif mk == "totals":
+                    point = outcome.get("point")
+                    if point is not None and name in ("over", "under"):
+                        line_key = f"{point}_{name}"
+                        current = best["totals"].get(line_key, {}).get("price", 0)
+                        if price > current:
+                            best["totals"][line_key] = {"price": price, "bookmaker": bk_key, "line": point}
+
+                elif mk == "btts" and name in ("yes", "no"):
+                    current = best["btts"].get(name, {}).get("price", 0)
+                    if price > current:
+                        best["btts"][name] = {"price": price, "bookmaker": bk_key}
+
+    return best
 
 
 def build_odds_comparison(

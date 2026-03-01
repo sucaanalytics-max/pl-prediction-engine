@@ -35,14 +35,19 @@ export interface ValueBet {
   selection?: string;
   model_prob: number;
   implied_prob: number;
+  devigged_prob?: number;
+  raw_implied_prob?: number;
   decimal_odds?: number;
   edge: number;
+  devigged_edge?: number;
   full_kelly?: number;
   half_kelly?: number;
   full_kelly_pct?: number;
   half_kelly_pct?: number;
   recommendation?: string;
   expected_value?: number;
+  bookmaker?: string;
+  confidence_tier?: "high" | "medium" | "low";
   // legacy fields
   kelly_pct?: number;
   confidence?: string;
@@ -56,6 +61,54 @@ export interface PlayerBooking {
   adjusted_prob: number;
   expected_cards?: number;
   foul_rate?: number;
+}
+
+export interface GoalscorerPrediction {
+  player_id: number;
+  name: string;
+  web_name: string;
+  team: string;
+  position: string;
+  side: "home" | "away";
+  lambda_player: number;
+  anytime_prob: number;
+  two_plus_prob: number;
+  first_scorer_prob: number;
+  xg_per_90: number;
+  goals_scored: number;
+  xg_share: number;
+  minutes: number;
+}
+
+export interface OddsComparison {
+  h2h?: Record<string, { home: number; draw: number; away: number }>;
+  bookmaker_home?: string;
+  bookmaker_draw?: string;
+  bookmaker_away?: string;
+}
+
+export interface PlayerStat {
+  player_id: number;
+  name: string;
+  web_name: string;
+  team: string;
+  position: string;
+  minutes: number;
+  goals_scored: number;
+  assists: number;
+  expected_goals: number;
+  expected_assists?: number;
+  xg_per_90: number;
+  goals_per_90: number;
+  assists_per_90?: number;
+  yellows: number;
+  yellows_per_90: number;
+  fouls_committed?: number;
+  fouls_per_90?: number;
+  fpl_price?: number;
+  fpl_ownership?: number;
+  form?: number;
+  available: boolean;
 }
 
 export interface MatchPrediction {
@@ -91,6 +144,14 @@ export interface MatchPrediction {
     top_bookings: PlayerBooking[];
     adjustments?: Record<string, number>;
   };
+  goalscorer?: {
+    home_scorers: GoalscorerPrediction[];
+    away_scorers: GoalscorerPrediction[];
+    top_scorers: GoalscorerPrediction[];
+    match_xg?: { home: number; away: number };
+  };
+  odds_comparison?: OddsComparison;
+  model_disagreement?: number;
   shap_features: ShapFeature[];
   value_bets: ValueBet[];
   confidence?: {
@@ -114,6 +175,8 @@ export interface PredictionData {
     calibrated: boolean;
     odds_source?: string;
     referee_profiles_count?: number;
+    stacking_weights?: Record<string, number>;
+    ensemble_method?: string;
   };
   predictions: MatchPrediction[];
 }
@@ -163,6 +226,12 @@ export async function loadMatches(): Promise<{ matches: MatchSummary[]; gameweek
 export async function loadHealth(): Promise<HealthData> {
   const res = await fetch(`${BASE_PATH}/health.json`);
   if (!res.ok) throw new Error("Failed to load health data");
+  return res.json();
+}
+
+export async function loadPlayerStats(): Promise<PlayerStat[]> {
+  const res = await fetch(`${BASE_PATH}/player_stats.json`);
+  if (!res.ok) throw new Error("Failed to load player stats");
   return res.json();
 }
 
@@ -223,9 +292,12 @@ export function marketLabel(market: string): string {
     "Away Win": "1X2",
     "Over 2.5": "Goals O/U",
     "Under 2.5": "Goals O/U",
+    "BTTS Yes": "BTTS",
+    "BTTS No": "BTTS",
   };
   if (market.includes("Corner")) return "Corners";
   if (market.includes("Card") || market.includes("Booking")) return "Cards";
+  if (market.includes("Goalscorer") || market.includes("Anytime") || market.includes("First Goal")) return "Goalscorer";
   if (market.includes("Player")) return "Player";
   return labels[market] ?? "1X2";
 }
@@ -234,6 +306,19 @@ export function marketLabel(market: string): string {
 export function marketIcon(market: string): string {
   if (market.includes("Corner")) return "⚑";
   if (market.includes("Card") || market.includes("Booking")) return "□";
+  if (market.includes("Goalscorer") || market.includes("Anytime") || market.includes("First Goal")) return "⚽";
   if (market.includes("Player")) return "👤";
   return "⚽";
+}
+
+/** Get confidence tier from edge value */
+export function confidenceTier(edge: number): "high" | "medium" | "low" {
+  if (edge >= 0.10) return "high";
+  if (edge >= 0.05) return "medium";
+  return "low";
+}
+
+/** Get the effective edge (devigged if available, raw otherwise) */
+export function effectiveEdge(bet: ValueBet): number {
+  return bet.devigged_edge ?? bet.edge;
 }

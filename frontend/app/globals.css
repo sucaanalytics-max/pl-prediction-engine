@@ -159,6 +159,28 @@
   background: rgba(255, 255, 255, 0.18);
 }
 
+/* ── Animations ─────────────────────────────────────────────────────────────── */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-up,
+  .animate-pulse,
+  .card-hover,
+  .prob-bar,
+  .heatmap-cell {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 /* ── Heatmap cells ───────────────────────────────────────────────────────────── */
 .heatmap-cell {
   @apply transition-all duration-200 cursor-default;
@@ -168,4 +190,51 @@
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
   z-index: 10;
   position: relative;
+}
+
+/* ── Focus visible (accessibility) ──────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid rgba(42, 173, 31, 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Responsive tables — card stacks below sm ───────────────────────────────── */
+@media (max-width: 639px) {
+  .card table {
+    font-size: 11px;
+  }
+  .card th, .card td {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+/* ── Range input styling ────────────────────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #2aad1f;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #2aad1f;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.15);
 }

@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 def _tau(home_goals, away_goals, lambda_h, mu_a, rho):
     """
-    Dixon-Coles low-score correction factor.
+    Dixon-Coles low-score correction factor (scalar version for post-hoc use).
     Adjusts probabilities for 0-0, 1-0, 0-1, 1-1 scorelines.
     """
     if home_goals == 0 and away_goals == 0:
@@ -35,6 +35,40 @@ def _tau(home_goals, away_goals, lambda_h, mu_a, rho):
         return 1 - rho
     else:
         return 1.0
+
+
+def _log_tau_vectorized(home_goals, away_goals, lambda_h, mu_a, rho):
+    """
+    Vectorized log(tau) for use in PyMC Potential.
+
+    Returns log(tau(x, y, λ, μ, ρ)) for each observation, where tau is the
+    Dixon-Coles low-score adjustment. For scorelines not in {(0,0),(1,0),(0,1),(1,1)},
+    log(tau) = 0 (i.e. tau = 1, no adjustment).
+
+    Uses PyMC-compatible tensor operations.
+    """
+    import pytensor.tensor as pt
+
+    # Build tau for each observation based on scoreline
+    is_00 = pt.eq(home_goals, 0) * pt.eq(away_goals, 0)
+    is_10 = pt.eq(home_goals, 1) * pt.eq(away_goals, 0)
+    is_01 = pt.eq(home_goals, 0) * pt.eq(away_goals, 1)
+    is_11 = pt.eq(home_goals, 1) * pt.eq(away_goals, 1)
+
+    # tau values for each scoreline type
+    tau_00 = 1 - lambda_h * mu_a * rho
+    tau_10 = 1 + mu_a * rho
+    tau_01 = 1 + lambda_h * rho
+    tau_11 = 1 - rho
+
+    # Combine: log(tau) for each obs, defaulting to 0 for non-low-scoring
+    log_tau = (
+        is_00 * pt.log(pt.maximum(tau_00, 1e-10))
+        + is_10 * pt.log(pt.maximum(tau_10, 1e-10))
+        + is_01 * pt.log(pt.maximum(tau_01, 1e-10))
+        + is_11 * pt.log(pt.maximum(tau_11, 1e-10))
+    )
+    return log_tau
 
 
 class BayesianDixonColes:
@@ -86,6 +120,8 @@ class BayesianDixonColes:
         logger.info(f"Fitting Bayesian Dixon-Coles on {len(df)} matches, {self.n_teams} teams...")
 
         with pm.Model() as model:
+            import pytensor.tensor as pt
+
             # Hyperpriors
             sigma_att = pm.HalfNormal("sigma_att", sigma=1.0)
             sigma_def = pm.HalfNormal("sigma_def", sigma=1.0)
@@ -108,6 +144,11 @@ class BayesianDixonColes:
             # Intercept (league average scoring rate)
             intercept = pm.Normal("intercept", mu=0.3, sigma=0.2)
 
+            # ρ (rho) — Dixon-Coles low-score dependence parameter
+            # Typically small and negative (draws slightly less likely than
+            # bivariate Poisson would suggest). Bounded to keep tau > 0.
+            rho = pm.Uniform("rho", lower=-0.5, upper=0.5)
+
             # Goal rates
             log_lambda = intercept + attack[home_idx] - defence[away_idx] + home_adv
             log_mu = intercept + attack[away_idx] - defence[home_idx]
@@ -115,17 +156,35 @@ class BayesianDixonColes:
             lambda_h = pm.math.exp(log_lambda)
             mu_a = pm.math.exp(log_mu)
 
-            # Poisson likelihood (with time decay as observation weights)
-            home_obs = pm.Poisson(
-                "home_goals",
-                mu=lambda_h,
-                observed=home_goals,
+            # ── Weighted log-likelihood via pm.Potential ──────────────────────
+            # Instead of pm.Poisson (which doesn't support observation weights),
+            # we compute the weighted log-likelihood manually.
+            #
+            # log L = Σ_i w_i * [logp(home_goals_i | λ_i) + logp(away_goals_i | μ_i)
+            #                    + log τ(home_goals_i, away_goals_i, λ_i, μ_i, ρ)]
+            #
+            # where w_i = exp(-ξ * days_since_match_i) are the time-decay weights.
+
+            # Poisson log-pmf: k*log(μ) - μ - log(k!)
+            home_logp = (
+                home_goals * pt.log(lambda_h)
+                - lambda_h
+                - pt.gammaln(home_goals + 1)
             )
-            away_obs = pm.Poisson(
-                "away_goals",
-                mu=mu_a,
-                observed=away_goals,
+            away_logp = (
+                away_goals * pt.log(mu_a)
+                - mu_a
+                - pt.gammaln(away_goals + 1)
             )
+
+            # Dixon-Coles low-score correction
+            log_tau = _log_tau_vectorized(home_goals, away_goals, lambda_h, mu_a, rho)
+
+            # Time-decay weighted total log-likelihood
+            weights_tensor = pt.as_tensor_variable(weights.astype(np.float64))
+            total_logp = pt.sum(weights_tensor * (home_logp + away_logp + log_tau))
+
+            pm.Potential("weighted_dc_likelihood", total_logp)
 
             # Sample
             self.trace = pm.sample(
@@ -138,7 +197,7 @@ class BayesianDixonColes:
             )
 
         # Check convergence
-        summary = az.summary(self.trace, var_names=["attack", "defence", "home_adv", "intercept"])
+        summary = az.summary(self.trace, var_names=["attack", "defence", "home_adv", "intercept", "rho"])
         max_rhat = summary["r_hat"].max()
         logger.info(f"PyMC sampling complete. Max R-hat: {max_rhat:.4f}")
 
@@ -182,6 +241,7 @@ class BayesianDixonColes:
         defence = self.trace.posterior["defence"].values
         home_adv = self.trace.posterior["home_adv"].values
         intercept = self.trace.posterior["intercept"].values
+        rho_samples = self.trace.posterior["rho"].values.flatten()
 
         # Flatten chains
         att_h = attack[:, :, h_idx].flatten()
@@ -200,19 +260,22 @@ class BayesianDixonColes:
         log_mu = inter[indices] + att_a[indices] - def_h[indices]
         lambda_h = np.exp(log_lambda)
         mu_a = np.exp(log_mu)
+        rho_vals = rho_samples[indices % len(rho_samples)]
 
-        # Simulate goals
-        h_goals = np.random.poisson(lambda_h)
-        a_goals = np.random.poisson(mu_a)
-
-        # Build scoreline matrix
+        # Build scoreline matrix with ρ correction
+        # For each posterior sample, compute P(i,j) = Poisson(i|λ) * Poisson(j|μ) * τ(i,j,λ,μ,ρ)
         matrix = np.zeros((MAX_GOALS + 1, MAX_GOALS + 1))
-        for hg, ag in zip(h_goals, a_goals):
-            hg_capped = min(hg, MAX_GOALS)
-            ag_capped = min(ag, MAX_GOALS)
-            matrix[hg_capped, ag_capped] += 1
+        from scipy.stats import poisson as poisson_dist
 
-        matrix /= matrix.sum()
+        for lam, mu, rho_val in zip(lambda_h, mu_a, rho_vals):
+            for i in range(MAX_GOALS + 1):
+                for j in range(MAX_GOALS + 1):
+                    p_ij = poisson_dist.pmf(i, lam) * poisson_dist.pmf(j, mu) * _tau(i, j, lam, mu, rho_val)
+                    matrix[i, j] += max(p_ij, 0)
+
+        total = matrix.sum()
+        if total > 0:
+            matrix /= total
         return matrix
 
     def predict_match(self, home: str, away: str) -> Dict:
@@ -224,6 +287,9 @@ class BayesianDixonColes:
         """
         Get posterior samples of (lambda, mu) for Monte Carlo simulation.
         Used by the simulation engine.
+
+        Returns:
+            (lambda_home, mu_away) arrays of posterior samples.
         """
         if self.trace is None:
             raise RuntimeError("Model not fitted")
@@ -250,6 +316,12 @@ class BayesianDixonColes:
         mu_a = np.exp(inter[indices] + att_a[indices] - def_h[indices])
 
         return lambda_h, mu_a
+
+    def get_rho_mean(self) -> float:
+        """Get posterior mean of ρ for use in scoreline correction."""
+        if self.trace is None:
+            return 0.0
+        return float(self.trace.posterior["rho"].values.mean())
 
     def _derive_markets(self, matrix: np.ndarray, home: str, away: str) -> Dict:
         """Derive all betting markets from scoreline matrix."""

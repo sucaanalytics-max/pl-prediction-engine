@@ -70,12 +70,16 @@ class EloRating:
         self.ratings[away] = self.get_rating(away) + self.k * gd_mult * (s_away - e_away)
 
     def season_reset(self):
-        """Regress all ratings toward mean at start of new season."""
-        mean_rating = np.mean(list(self.ratings.values())) if self.ratings else self.initial
+        """Regress all ratings toward neutral (1500) at start of new season.
+
+        Using a fixed neutral point (1500) rather than the current mean prevents
+        a downward spiral for strong teams: if only promoted teams lower the mean,
+        all teams would regress down. Fixed target preserves the Elo zero-sum property.
+        """
         for team in self.ratings:
             self.ratings[team] = (
                 self.ratings[team] * (1 - self.mean_reversion)
-                + mean_rating * self.mean_reversion
+                + self.initial * self.mean_reversion
             )
 
 

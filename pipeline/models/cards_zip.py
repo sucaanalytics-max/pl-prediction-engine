@@ -192,11 +192,9 @@ class CardsZIPModel:
         lam_adj = lam_base * ref_multiplier * opp_factor + derby_add
         lam_adj = max(lam_adj, 0.3)
 
-        # Referee also affects zero-inflation: strict referees → fewer clean games
-        if ref_multiplier > 1.1:
-            p_zero = p_zero * 0.7  # Reduce zero-inflation for strict refs
-        elif ref_multiplier < 0.9:
-            p_zero = min(p_zero * 1.3, 0.5)  # More zero-inflation for lenient refs
+        # Note: p_zero is NOT adjusted for referee. Zero-inflation reflects
+        # structural team behavior (clean discipline games), not referee tendency.
+        # Only λ (the Poisson rate) should vary with referee strictness.
 
         return (p_zero, lam_adj)
 

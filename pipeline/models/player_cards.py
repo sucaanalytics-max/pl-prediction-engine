@@ -118,15 +118,19 @@ class PlayerCardsModel:
             if is_magnet:
                 n_magnets += 1
 
-            # Convert per-90 rate to per-match probability
-            # Assuming ~75 mins average playing time per start
-            # P(booked in match) ≈ 1 - (1 - rate_per_90)^(avg_mins/90)
-            avg_mins_played = min(row["minutes"] / max(row["minutes"] / 90, 1), 90)
-            base_prob = min(row["yellows_per_90"] * (avg_mins_played / 90), 0.95)
+            # Convert per-90 rate to per-match probability using Poisson complement:
+            # P(≥1 yellow in match) = 1 - exp(-rate_per_90 * avg_mins / 90)
+            # Approximate appearances from total minutes (FPL doesn't give appearance count)
+            appearances = max(row["minutes"] / 90, 1)
+            avg_mins_per_app = row["minutes"] / appearances if appearances > 0 else 0
 
-            # Apply position multiplier
-            pos_mult = POSITION_MULTIPLIERS.get(row["position"], 1.0)
-            base_prob = min(base_prob * pos_mult, 0.95)
+            rate_per_min = row["yellows_per_90"] / 90 if row["yellows_per_90"] > 0 else 0
+            base_prob = 1.0 - np.exp(-rate_per_min * avg_mins_per_app)
+            base_prob = min(base_prob, 0.95)
+
+            # Note: position multiplier is NOT applied to base_prob here
+            # to avoid double-counting. It's applied at prediction time in
+            # predict_match() via _adjusted_prob().
 
             profile = PlayerBookingProfile(
                 player_id=row["player_id"],
@@ -201,7 +205,8 @@ class PlayerCardsModel:
             opp_factor = self._opponent_foul_factor(away, team_foul_drawn)
 
             prob = self._adjusted_prob(
-                player.base_booking_prob, ref_multiplier, opp_factor, derby_factor
+                player.base_booking_prob, ref_multiplier, opp_factor, derby_factor,
+                position=player.position,
             )
             all_bookings.append({
                 "player_id": player.player_id,
@@ -222,7 +227,8 @@ class PlayerCardsModel:
             opp_factor = self._opponent_foul_factor(home, team_foul_drawn)
 
             prob = self._adjusted_prob(
-                player.base_booking_prob, ref_multiplier, opp_factor, derby_factor
+                player.base_booking_prob, ref_multiplier, opp_factor, derby_factor,
+                position=player.position,
             )
             all_bookings.append({
                 "player_id": player.player_id,
@@ -264,9 +270,16 @@ class PlayerCardsModel:
         ref_multiplier: float,
         opp_factor: float,
         derby_factor: float,
+        position: str = "",
     ) -> float:
-        """Apply all adjustment factors to base booking probability."""
-        prob = base_prob * ref_multiplier * opp_factor * derby_factor
+        """Apply all adjustment factors to base booking probability.
+
+        Position multiplier is applied here (not at fit time) to avoid
+        double-counting when the base_prob already reflects the player's
+        individual card history.
+        """
+        pos_mult = POSITION_MULTIPLIERS.get(position, 1.0)
+        prob = base_prob * ref_multiplier * opp_factor * derby_factor * pos_mult
         return min(max(prob, 0.01), 0.85)  # Bound between 1% and 85%
 
     def _referee_multiplier(
