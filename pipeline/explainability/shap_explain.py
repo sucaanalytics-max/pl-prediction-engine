@@ -143,7 +143,7 @@ def generate_narrative(
     ou_25 = probs.get("over_under", {}).get("2.5", {})
     p_over = ou_25.get("over", 0.5)
 
-    btts = probs.get("btts", 0.5)
+    btts = probs.get("btts", {}).get("yes", 0.5) if isinstance(probs.get("btts"), dict) else probs.get("btts", 0.5)
 
     # Value bets mention
     value_bets = match_pred.get("value_bets", [])
