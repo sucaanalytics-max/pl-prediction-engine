@@ -5,6 +5,7 @@ import logging
 from typing import Dict, List, Tuple
 
 import numpy as np
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -85,8 +86,6 @@ def evaluate_predictions(
     """
     Comprehensive evaluation of model predictions against actual results.
     """
-    import pandas as pd
-
     # Collect data
     pred_home, pred_draw, pred_away = [], [], []
     act_home, act_draw, act_away = [], [], []

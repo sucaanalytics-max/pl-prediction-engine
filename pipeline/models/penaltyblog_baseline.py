@@ -31,22 +31,25 @@ class PenaltyblogBaseline:
             matches: DataFrame with HomeTeam, AwayTeam, FTHG, FTAG, Date
         """
         try:
-            from penaltyblog.models import DixonColesModel
+            from penaltyblog.models import DixonColesGoalModel, dixon_coles_weights
 
             # Prepare data
-            df = matches.dropna(subset=["FTHG", "FTAG"]).copy()
+            df = matches.dropna(subset=["FTHG", "FTAG", "Date"]).copy()
             df["FTHG"] = df["FTHG"].astype(int)
             df["FTAG"] = df["FTAG"].astype(int)
+            df["Date"] = pd.to_datetime(df["Date"], dayfirst=True)
 
             self.teams = sorted(set(df["HomeTeam"].unique()) | set(df["AwayTeam"].unique()))
 
-            # Fit model with time decay
-            self.model = DixonColesModel(
-                df["HomeTeam"],
-                df["AwayTeam"],
-                df["FTHG"],
-                df["FTAG"],
-                xi=DIXON_COLES["xi_decay"],
+            # Time-decay weights
+            weights = dixon_coles_weights(df["Date"], xi=DIXON_COLES["xi_decay"])
+
+            self.model = DixonColesGoalModel(
+                goals_home=df["FTHG"],
+                goals_away=df["FTAG"],
+                teams_home=df["HomeTeam"],
+                teams_away=df["AwayTeam"],
+                weights=weights,
             )
             self.model.fit()
             logger.info("PenaltyBlog Dixon-Coles model fitted successfully")
@@ -69,14 +72,14 @@ class PenaltyblogBaseline:
             raise RuntimeError("Model not fitted. Call fit() first.")
 
         try:
-            probs = self.model.predict(home, away)
+            grid = self.model.predict(home, away)
 
             # Build scoreline matrix
             matrix = np.zeros((MAX_GOALS + 1, MAX_GOALS + 1))
             for i in range(MAX_GOALS + 1):
                 for j in range(MAX_GOALS + 1):
                     try:
-                        matrix[i, j] = probs.score_proba(i, j)
+                        matrix[i, j] = grid.exact_score(i, j)
                     except Exception:
                         matrix[i, j] = 0.0
 

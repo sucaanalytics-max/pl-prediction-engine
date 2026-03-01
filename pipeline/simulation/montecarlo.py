@@ -53,8 +53,8 @@ class MonteCarloSimulator:
 
         # Corners simulation
         if corners_params:
-            n_h, p_h = corners_params.get("home", (5, 0.5))
-            n_a, p_a = corners_params.get("away", (4, 0.5))
+            n_h, p_h = corners_params.get("home") or (5, 0.5)
+            n_a, p_a = corners_params.get("away") or (4, 0.5)
             home_corners = nbinom.rvs(n_h, p_h, size=self.n_sims)
             away_corners = nbinom.rvs(n_a, p_a, size=self.n_sims)
         else:
@@ -64,8 +64,8 @@ class MonteCarloSimulator:
 
         # Cards simulation (ZIP)
         if cards_params:
-            p0_h, lam_h = cards_params.get("home", (0.1, 1.5))
-            p0_a, lam_a = cards_params.get("away", (0.1, 1.8))
+            p0_h, lam_h = cards_params.get("home") or (0.1, 1.5)
+            p0_a, lam_a = cards_params.get("away") or (0.1, 1.8)
             home_yellows = np.where(
                 np.random.random(self.n_sims) < p0_h, 0,
                 np.random.poisson(lam_h, self.n_sims)
@@ -119,8 +119,8 @@ class MonteCarloSimulator:
 
         # Corners and cards same as point estimate version
         if corners_params:
-            n_h, p_h = corners_params.get("home", (5, 0.5))
-            n_a, p_a = corners_params.get("away", (4, 0.5))
+            n_h, p_h = corners_params.get("home") or (5, 0.5)
+            n_a, p_a = corners_params.get("away") or (4, 0.5)
             home_corners = nbinom.rvs(n_h, p_h, size=n)
             away_corners = nbinom.rvs(n_a, p_a, size=n)
         else:
@@ -128,8 +128,8 @@ class MonteCarloSimulator:
             away_corners = np.random.poisson(4.5, n)
 
         if cards_params:
-            p0_h, lam_h = cards_params.get("home", (0.1, 1.5))
-            p0_a, lam_a = cards_params.get("away", (0.1, 1.8))
+            p0_h, lam_h = cards_params.get("home") or (0.1, 1.5)
+            p0_a, lam_a = cards_params.get("away") or (0.1, 1.8)
             home_yellows = np.where(np.random.random(n) < p0_h, 0, np.random.poisson(lam_h, n))
             away_yellows = np.where(np.random.random(n) < p0_a, 0, np.random.poisson(lam_a, n))
         else:

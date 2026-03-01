@@ -4,6 +4,7 @@ Maps team names from Football-Data.co.uk, FBref, and FPL API to canonical names.
 """
 
 # Canonical name → [aliases from various sources]
+# Includes current 2025-26 PL teams plus historical teams for multi-season training data
 TEAM_ALIASES = {
     "Arsenal": ["Arsenal"],
     "Aston Villa": ["Aston Villa"],
@@ -15,17 +16,19 @@ TEAM_ALIASES = {
     "Crystal Palace": ["Crystal Palace"],
     "Everton": ["Everton"],
     "Fulham": ["Fulham"],
+    # Historical teams (relegated, kept for multi-season training data)
     "Ipswich": ["Ipswich", "Ipswich Town"],
     "Leeds": ["Leeds", "Leeds United"],
     "Leicester": ["Leicester", "Leicester City"],
-    "Liverpool": ["Liverpool"],
     "Luton": ["Luton", "Luton Town"],
+    "Liverpool": ["Liverpool"],
     "Man City": ["Man City", "Manchester City", "Manchester Ct"],
-    "Man United": ["Man United", "Manchester United", "Manchester Utd", "Manchester Un"],
+    "Man United": ["Man United", "Man Utd", "Manchester United", "Manchester Utd", "Manchester Un"],
     "Newcastle": ["Newcastle", "Newcastle United", "Newcastle Utd"],
     "Nott'm Forest": ["Nott'm Forest", "Nottingham Forest", "Nott'ham Forest"],
     "Sheffield United": ["Sheffield United", "Sheffield Utd"],
     "Southampton": ["Southampton"],
+    "Sunderland": ["Sunderland"],
     "Tottenham": ["Tottenham", "Tottenham Hotspur", "Spurs"],
     "West Ham": ["West Ham", "West Ham United"],
     "Wolves": ["Wolves", "Wolverhampton Wanderers", "Wolverhampton"],
@@ -53,25 +56,27 @@ def normalize_team_name(name: str) -> str:
     return name.strip()  # Return original if no match
 
 
-# FPL API team ID → canonical name (updated each season from bootstrap-static)
+# FPL API team ID → canonical name (2025-26 season)
+# Promoted: Burnley (3), Leeds (11), Sunderland (17)
+# Relegated: Ipswich, Leicester, Southampton
 FPL_TEAM_MAP = {
     1: "Arsenal",
     2: "Aston Villa",
-    3: "Bournemouth",
-    4: "Brentford",
-    5: "Brighton",
-    6: "Chelsea",
-    7: "Crystal Palace",
-    8: "Everton",
-    9: "Fulham",
-    10: "Ipswich",
-    11: "Leicester",
+    3: "Burnley",
+    4: "Bournemouth",
+    5: "Brentford",
+    6: "Brighton",
+    7: "Chelsea",
+    8: "Crystal Palace",
+    9: "Everton",
+    10: "Fulham",
+    11: "Leeds",
     12: "Liverpool",
     13: "Man City",
     14: "Man United",
     15: "Newcastle",
     16: "Nott'm Forest",
-    17: "Southampton",
+    17: "Sunderland",
     18: "Tottenham",
     19: "West Ham",
     20: "Wolves",

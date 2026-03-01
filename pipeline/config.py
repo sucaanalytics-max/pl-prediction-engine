@@ -105,9 +105,11 @@ EVAL = {
 }
 
 # ── Premier League Teams 2025-26 ──────────────────────────────────────────
+# Promoted from Championship 2024-25: Burnley, Leeds, Sunderland
+# Relegated after 2024-25: Ipswich, Leicester, Southampton
 PL_TEAMS = [
     "Arsenal", "Aston Villa", "Bournemouth", "Brentford", "Brighton",
-    "Chelsea", "Crystal Palace", "Everton", "Fulham", "Ipswich",
-    "Leicester", "Liverpool", "Man City", "Man United", "Newcastle",
-    "Nott'm Forest", "Southampton", "Tottenham", "West Ham", "Wolves",
+    "Burnley", "Chelsea", "Crystal Palace", "Everton", "Fulham",
+    "Leeds", "Liverpool", "Man City", "Man United", "Newcastle",
+    "Nott'm Forest", "Sunderland", "Tottenham", "West Ham", "Wolves",
 ]

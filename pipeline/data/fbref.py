@@ -17,12 +17,12 @@ logger = logging.getLogger(__name__)
 
 def fetch_fbref_team_stats(season: str = None, force: bool = False) -> Optional[pd.DataFrame]:
     """
-    Fetch team-level advanced stats from FBref via fbrefdata.
+    Fetch team-level xG stats from Understat via soccerdata.
 
-    Returns DataFrame with columns like:
-        team, xG, xGA, npxG, poss, progressive_passes, pressures, etc.
+    Returns DataFrame with columns: team, xg, xga, npxg
+    (season averages per match, aggregated from match-level data).
 
-    Returns None if fbrefdata fails (with warning).
+    Falls back to cache or returns None if unavailable.
     """
     if season is None:
         season = CURRENT_SEASON
@@ -33,44 +33,50 @@ def fetch_fbref_team_stats(season: str = None, force: bool = False) -> Optional[
 
     if cache_path.exists() and not force:
         age_hours = (pd.Timestamp.now() - pd.Timestamp(cache_path.stat().st_mtime, unit="s")).total_seconds() / 3600
-        if age_hours < 48:  # FBref data updates less frequently
-            logger.info(f"Loading cached FBref team stats: {cache_path}")
+        if age_hours < 48:
+            logger.info(f"Loading cached Understat team xG stats: {cache_path}")
             return pd.read_parquet(cache_path)
 
     try:
-        import fbrefdata as fbd
+        from soccerdata import Understat
 
         season_label = SEASON_LABELS.get(season, f"20{season[:2]}-{season[2:]}")
-        logger.info(f"Fetching FBref team stats for {season_label}...")
+        logger.info(f"Fetching Understat xG stats for {season_label}...")
 
-        # fbrefdata API - fetch team season stats
-        loader = fbd.FBref(leagues="ENG-Premier League", seasons=season_label)
+        us = Understat(leagues="ENG-Premier League", seasons=season_label)
+        match_stats = us.read_team_match_stats()
 
-        # Try to get team stats
-        team_stats = loader.read_team_season_stats(stat_type="standard")
+        if match_stats is not None and len(match_stats) > 0:
+            # Build per-team xG averages from both home and away perspectives
+            home = match_stats[["home_team", "home_xg", "home_np_xg", "away_xg"]].copy()
+            home.columns = ["team", "xg", "npxg", "xga"]
 
-        if team_stats is not None and len(team_stats) > 0:
-            # Normalize team names
-            if "team" in team_stats.columns:
-                team_stats["team"] = team_stats["team"].apply(normalize_team_name)
-            elif "squad" in team_stats.columns:
-                team_stats["team"] = team_stats["squad"].apply(normalize_team_name)
+            away = match_stats[["away_team", "away_xg", "away_np_xg", "home_xg"]].copy()
+            away.columns = ["team", "xg", "npxg", "xga"]
+
+            team_stats = (
+                pd.concat([home, away])
+                .groupby("team")[["xg", "xga", "npxg"]]
+                .mean()
+                .reset_index()
+            )
+            team_stats["team"] = team_stats["team"].apply(normalize_team_name)
 
             team_stats.to_parquet(cache_path)
-            logger.info(f"FBref team stats: {len(team_stats)} teams loaded")
+            logger.info(f"Understat xG stats: {len(team_stats)} teams loaded")
             return team_stats
 
     except ImportError:
-        logger.warning("fbrefdata not installed. Skipping FBref data.")
+        logger.warning("soccerdata not installed. Skipping Understat xG data.")
     except Exception as e:
-        logger.warning(f"FBref fetch failed (likely HTML change): {e}")
+        logger.warning(f"Understat fetch failed: {e}")
 
     # Fallback to cache
     if cache_path.exists():
-        logger.warning("Using stale FBref cache")
+        logger.warning("Using stale xG cache")
         return pd.read_parquet(cache_path)
 
-    logger.warning("No FBref data available. Pipeline will proceed without xG features.")
+    logger.warning("No xG data available. Pipeline will proceed without xG features.")
     return None
 
 
@@ -92,30 +98,28 @@ def fetch_fbref_match_stats(season: str = None, force: bool = False) -> Optional
             return pd.read_parquet(cache_path)
 
     try:
-        import fbrefdata as fbd
-
         season_label = SEASON_LABELS.get(season, f"20{season[:2]}-{season[2:]}")
-        logger.info(f"Fetching FBref match stats for {season_label}...")
+        logger.info(f"Fetching Understat match stats for {season_label}...")
 
-        loader = fbd.FBref(leagues="ENG-Premier League", seasons=season_label)
+        from soccerdata import Understat
 
-        # Try match logs
-        match_stats = loader.read_schedule()
+        us = Understat(leagues="ENG-Premier League", seasons=season_label)
+        match_stats = us.read_team_match_stats()
 
         if match_stats is not None and len(match_stats) > 0:
-            # Normalize team names
-            for col in ["home_team", "away_team", "squad"]:
+            match_stats = match_stats.reset_index()
+            for col in ["home_team", "away_team"]:
                 if col in match_stats.columns:
                     match_stats[col] = match_stats[col].apply(normalize_team_name)
 
             match_stats.to_parquet(cache_path)
-            logger.info(f"FBref match stats: {len(match_stats)} matches loaded")
+            logger.info(f"Understat match stats: {len(match_stats)} matches loaded")
             return match_stats
 
     except ImportError:
-        logger.warning("fbrefdata not installed.")
+        logger.warning("soccerdata not installed.")
     except Exception as e:
-        logger.warning(f"FBref match stats fetch failed: {e}")
+        logger.warning(f"Understat match stats fetch failed: {e}")
 
     if cache_path.exists():
         return pd.read_parquet(cache_path)

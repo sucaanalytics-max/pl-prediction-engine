@@ -56,7 +56,7 @@ def fetch_fixtures(force: bool = False) -> list:
 
     if cache_path.exists() and not force:
         age_hours = (pd.Timestamp.now() - pd.Timestamp(cache_path.stat().st_mtime, unit="s")).total_seconds() / 3600
-        if age_hours < 12:
+        if age_hours < 1:
             return json.loads(cache_path.read_text())
 
     logger.info("Fetching FPL fixtures...")
@@ -91,13 +91,29 @@ def get_upcoming_fixtures(bootstrap: dict, fixtures: list) -> pd.DataFrame:
     Get fixtures for the next gameweek.
     Returns DataFrame with home_team, away_team, kickoff, difficulty.
     """
+    import datetime
+
+    now = pd.Timestamp.utcnow().tz_localize(None)
+
+    def is_upcoming(fix: dict) -> bool:
+        """True if the match hasn't started yet (90-min buffer) and isn't marked finished."""
+        if fix.get("finished"):
+            return False
+        kickoff = fix.get("kickoff_time")
+        if kickoff:
+            kt = pd.Timestamp(kickoff).tz_localize(None) if pd.Timestamp(kickoff).tzinfo is None else pd.Timestamp(kickoff).tz_convert(None)
+            return kt > now - pd.Timedelta(minutes=90)
+        return True
+
     gw = get_current_gameweek(bootstrap)
     team_map = update_fpl_team_map(bootstrap["teams"])
 
-    upcoming = [f for f in fixtures if f.get("event") == gw and not f.get("finished")]
+    upcoming = [f for f in fixtures if f.get("event") == gw and is_upcoming(f)]
     if not upcoming:
-        # Try next gameweek
-        upcoming = [f for f in fixtures if f.get("event") == gw + 1 and not f.get("finished")]
+        # Current GW fully played — move to next
+        upcoming = [f for f in fixtures if f.get("event") == gw + 1 and is_upcoming(f)]
+        if upcoming:
+            gw = gw + 1
 
     rows = []
     for fix in upcoming:

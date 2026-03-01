@@ -10,7 +10,7 @@ import pandas as pd
 import requests
 
 from pipeline.config import (
-    DATA_RAW, FOOTBALL_DATA_URL, FOOTBALL_DATA_SEASONS, SEASONS
+    DATA_RAW, FOOTBALL_DATA_URL, FOOTBALL_DATA_SEASONS, SEASONS, CURRENT_SEASON
 )
 from pipeline.data.team_mapping import normalize_team_name
 
@@ -50,8 +50,17 @@ def fetch_season_csv(season_code: str, force: bool = False) -> pd.DataFrame:
     cache_path = cache_dir / f"E0_{season_code}.csv"
 
     if cache_path.exists() and not force:
-        logger.info(f"Loading cached Football-Data CSV: {cache_path}")
-        return pd.read_csv(cache_path, encoding="latin-1")
+        # For the current season, refresh every 6 hours so new results are picked up.
+        # Completed past seasons are immutable — cache indefinitely.
+        if season_code == CURRENT_SEASON:
+            age_hours = (pd.Timestamp.now() - pd.Timestamp(cache_path.stat().st_mtime, unit="s")).total_seconds() / 3600
+            if age_hours < 6:
+                logger.info(f"Loading cached Football-Data CSV: {cache_path}")
+                return pd.read_csv(cache_path, encoding="latin-1")
+            logger.info(f"Current season CSV is {age_hours:.1f}h old — refreshing...")
+        else:
+            logger.info(f"Loading cached Football-Data CSV: {cache_path}")
+            return pd.read_csv(cache_path, encoding="latin-1")
 
     url = FOOTBALL_DATA_URL.format(season=season_code)
     logger.info(f"Fetching Football-Data CSV: {url}")
