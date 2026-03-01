@@ -162,6 +162,22 @@
     border: 1px solid rgba(100, 116, 139, 0.2);
   }
 
+  /* ── Fixture cards ───────────────────────────────────────────────────────── */
+  .fixture-card {
+    border-radius: 12px;
+    outline: 1px solid rgba(255, 255, 255, 0.05);
+    outline-offset: 0px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    transition: outline-color 200ms, box-shadow 200ms, transform 200ms;
+    will-change: transform;
+  }
+
+  .fixture-card:hover {
+    outline-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+  }
+
   /* ── Navigation ──────────────────────────────────────────────────────────── */
   .nav-link {
     @apply flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-slate-400 rounded-lg
