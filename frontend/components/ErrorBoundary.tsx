@@ -31,6 +31,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   handleRetry = () => {
     this.setState({ hasError: false, error: null });
+    // Also trigger a page-level refetch if available
+    window.location.reload();
   };
 
   render() {
@@ -80,6 +82,20 @@ export function PageSkeleton({ rows = 3 }: { rows?: number }) {
   );
 }
 
+function classifyError(message: string): { type: string; hint: string } {
+  const msg = message.toLowerCase();
+  if (msg.includes("fetch") || msg.includes("network") || msg.includes("failed to load") || msg.includes("aborterror")) {
+    return { type: "Network Error", hint: "Check your internet connection and try again." };
+  }
+  if (msg.includes("json") || msg.includes("parse") || msg.includes("unexpected token")) {
+    return { type: "Data Error", hint: "The server returned invalid data. The pipeline may need to re-run." };
+  }
+  if (msg.includes("404") || msg.includes("not found")) {
+    return { type: "Not Found", hint: "The requested data file was not found. Run the prediction pipeline first." };
+  }
+  return { type: "Error", hint: "An unexpected error occurred." };
+}
+
 /** Error message component (non-boundary, for inline use) */
 export function ErrorMessage({
   message,
@@ -88,10 +104,12 @@ export function ErrorMessage({
   message: string;
   onRetry?: () => void;
 }) {
+  const { type, hint } = classifyError(message);
   return (
     <div className="card p-8 text-center">
-      <p className="text-red-400 font-medium">Failed to load data</p>
-      <p className="text-sm text-slate-500 mt-1">{message}</p>
+      <p className="text-red-400 font-display font-bold text-lg">{type}</p>
+      <p className="text-sm text-slate-400 mt-1">{hint}</p>
+      <p className="text-[10px] text-slate-600 mt-2 font-mono">{message}</p>
       {onRetry && (
         <button
           onClick={onRetry}

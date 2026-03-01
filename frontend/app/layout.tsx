@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import { PredictionsProvider } from "@/lib/PredictionsContext";
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
@@ -29,12 +29,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${mono.variable}`}>
+    <html lang="en" className={`dark ${dmSans.variable} ${mono.variable}`}>
+      <head>
+        <meta name="theme-color" content="#070c14" />
+      </head>
       <body className="min-h-screen">
         <PredictionsProvider>
           <div className="flex min-h-screen">
             <Navigation />
-            <main id="main-content" className="flex-1 ml-0 lg:ml-64">
+            <main
+              id="main-content"
+              className="flex-1 ml-0 lg:ml-64"
+              style={{ borderTop: "1px solid rgba(42, 173, 31, 0.08)" }}
+            >
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {children}
               </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { usePredictions } from "@/lib/PredictionsContext";
 
 const NAV_ITEMS = [
   {
@@ -52,9 +53,25 @@ const NAV_ITEMS = [
   },
 ];
 
+function timeAgo(ts: number): string {
+  const diff = Math.floor((Date.now() - ts) / 1000);
+  if (diff < 60) return "just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  return `${Math.floor(diff / 86400)}d ago`;
+}
+
 export default function Navigation() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { predictions, lastUpdated, isStale } = usePredictions();
+
+  const pipelineVersion = predictions?.metadata?.pipeline_version ?? "—";
+  const season = predictions?.metadata?.season ?? "2025-26";
+  const valueBetCount = predictions?.predictions?.reduce(
+    (acc, p) => acc + (p.value_bets?.length ?? 0),
+    0
+  ) ?? 0;
 
   return (
     <>
@@ -145,22 +162,43 @@ export default function Navigation() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={`${isActive ? "nav-link-active" : "nav-link"} focus-visible:ring-2 focus-visible:ring-pitch-500 focus-visible:outline-none`}
+                className={`${isActive ? "nav-link-active" : "nav-link"} relative focus-visible:ring-2 focus-visible:ring-pitch-500 focus-visible:outline-none`}
                 aria-current={isActive ? "page" : undefined}
               >
+                {isActive && (
+                  <span
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r bg-pitch-500"
+                    style={{ boxShadow: "0 0 8px rgba(42,173,31,0.5)" }}
+                    aria-hidden="true"
+                  />
+                )}
                 <span aria-hidden="true">{item.icon}</span>
-                {item.label}
+                <span className="flex-1">{item.label}</span>
+                {item.href === "/value-bets" && valueBetCount > 0 && (
+                  <span className="ml-auto text-[9px] font-mono font-bold text-pitch-400 bg-pitch-500/15 px-1.5 py-0.5 rounded">
+                    {valueBetCount}
+                  </span>
+                )}
               </Link>
             );
           })}
         </nav>
 
         {/* Footer */}
-        <div className="mt-auto p-4" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="mt-auto p-4 space-y-2" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+          {lastUpdated && (
+            <div className="flex items-center gap-1.5 text-[10px] text-slate-600">
+              {isStale ? (
+                <span className="stale-warning !text-[9px] !px-1.5 !py-0.5">STALE</span>
+              ) : (
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" aria-hidden="true" />
+              )}
+              <span>Updated {timeAgo(lastUpdated)}</span>
+            </div>
+          )}
           <div className="flex items-center gap-2 text-[10px] text-slate-600">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
-            <span>Pipeline v1.0.0</span>
-            <span className="ml-auto">2025-26</span>
+            <span>Pipeline {pipelineVersion}</span>
+            <span className="ml-auto">{season}</span>
           </div>
         </div>
       </aside>

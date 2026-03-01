@@ -13,6 +13,7 @@ import {
   type ValueBet,
 } from "@/lib/predictions";
 import { pct, odds, timeAgo, edgeColor } from "@/lib/formats";
+import { CONF_BADGES, MARKET_ICON_LABELS, edgePrefix } from "@/lib/theme";
 import { ErrorBoundary, PageSkeleton, ErrorMessage } from "@/components/ErrorBoundary";
 
 type MarketFilter = "all" | "1X2" | "Goals O/U" | "BTTS" | "Corners" | "Cards" | "Goalscorer" | "Player";
@@ -20,11 +21,6 @@ type ConfFilter = "all" | "high" | "medium" | "low";
 type SortKey = "edge" | "kelly" | "odds" | "model_prob";
 
 const MARKET_FILTERS: MarketFilter[] = ["all", "1X2", "Goals O/U", "BTTS", "Corners", "Cards", "Goalscorer", "Player"];
-const CONF_BADGES: Record<string, { label: string; cls: string }> = {
-  high: { label: "HIGH", cls: "badge-green" },
-  medium: { label: "MED", cls: "badge-amber" },
-  low: { label: "LOW", cls: "text-slate-500 bg-slate-800/60 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider" },
-};
 
 type FlatBet = ValueBet & { match_id: string; home_team: string; away_team: string };
 
@@ -127,6 +123,31 @@ function ValueBetsContent() {
   const sortArrow = (key: SortKey) =>
     sortKey === key ? (sortDir === "desc" ? " ↓" : " ↑") : "";
 
+  function exportCSV() {
+    const header = ["Match", "Market", "Selection", "Model Prob", "Implied Prob", "Devig Prob", "Odds", "Edge", "Half Kelly", "Confidence", "Bookmaker"];
+    const rows = filtered.map((b) => [
+      `${b.home_team} v ${b.away_team}`,
+      marketLabel(b.market),
+      b.selection ?? b.market,
+      (b.model_prob * 100).toFixed(1) + "%",
+      (b.implied_prob * 100).toFixed(1) + "%",
+      b.devigged_prob ? (b.devigged_prob * 100).toFixed(1) + "%" : "",
+      b.decimal_odds?.toFixed(2) ?? "",
+      (effectiveEdge(b) * 100).toFixed(1) + "%",
+      (getHalfKellyPct(b) * 100).toFixed(1) + "%",
+      b.confidence_tier ?? confidenceTier(effectiveEdge(b)),
+      b.bookmaker?.replace(/_/g, " ") ?? "",
+    ]);
+    const csv = [header, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `value-bets-gw${data?.metadata.gameweek ?? "unknown"}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -219,8 +240,10 @@ function ValueBetsContent() {
 
           {/* Min edge slider */}
           <div className="flex items-center gap-2 text-xs text-slate-400">
-            <span>Min edge:</span>
+            <label htmlFor="min-edge-slider" className="sr-only">Minimum edge percentage</label>
+            <span aria-hidden="true">Min edge:</span>
             <input
+              id="min-edge-slider"
               type="range"
               min={0}
               max={20}
@@ -228,13 +251,16 @@ function ValueBetsContent() {
               value={minEdge}
               onChange={(e) => setMinEdge(Number(e.target.value))}
               className="w-20 accent-pitch-500"
+              aria-label={`Minimum edge: ${minEdge}%`}
             />
             <span className="w-8 text-right text-slate-300">{minEdge}%</span>
           </div>
 
           {/* Search */}
           <div className="ml-auto relative">
+            <label htmlFor="vb-search" className="sr-only">Search value bets by team or market</label>
             <input
+              id="vb-search"
               type="text"
               placeholder="Search team or market…"
               value={search}
@@ -254,48 +280,114 @@ function ValueBetsContent() {
         </div>
       </div>
 
-      {/* Results count */}
-      {filtered.length !== allBets.length && (
+      {/* Results count + Export */}
+      <div className="flex items-center justify-between">
         <p className="text-xs text-slate-500">
           Showing {filtered.length} of {allBets.length} bets
+          {minEdge > 0 && <span> · edges ≥ {minEdge}%</span>}
         </p>
-      )}
+        {filtered.length > 0 && (
+          <button
+            onClick={exportCSV}
+            className="text-[11px] text-slate-500 hover:text-white transition-colors flex items-center gap-1"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Export CSV
+          </button>
+        )}
+      </div>
 
-      {/* Table */}
-      <div className="card overflow-x-auto">
-        <table className="w-full text-sm">
+      {/* Mobile card layout (below 640px) */}
+      <div className="sm:hidden space-y-2">
+        {filtered.length === 0 ? (
+          <div className="card p-6 text-center text-slate-500 text-sm">
+            No value bets match the current filters.
+          </div>
+        ) : (
+          filtered.map((bet, i) => {
+            const tier = bet.confidence_tier ?? confidenceTier(effectiveEdge(bet));
+            const badge = CONF_BADGES[tier] ?? CONF_BADGES.low;
+            const edge = effectiveEdge(bet);
+            const icon = marketIcon(bet.market);
+            const kellyPct = getHalfKellyPct(bet);
+
+            return (
+              <div
+                key={`m-${bet.match_id}-${bet.market}-${i}`}
+                className="card p-3.5 space-y-2"
+                style={tier === "high" ? { borderLeft: "3px solid rgba(42,173,31,0.5)" } : undefined}
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="text-xs text-slate-400">{bet.home_team} v {bet.away_team}</div>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="text-xs" role="img" aria-label={MARKET_ICON_LABELS[icon] ?? "Market"}>{icon}</span>
+                      <span className="text-sm font-medium text-white">{bet.selection ?? bet.market}</span>
+                    </div>
+                  </div>
+                  <span className={`${badge.cls} text-[9px]`}>{badge.label}</span>
+                </div>
+                <div className="grid grid-cols-3 gap-2 text-xs">
+                  <div>
+                    <div className="text-slate-500 text-[10px]">Edge</div>
+                    <div className={`font-mono font-semibold ${edgeColor(edge)}`}>{edgePrefix(edge)}{pct(edge)}</div>
+                  </div>
+                  <div>
+                    <div className="text-slate-500 text-[10px]">Odds</div>
+                    <div className="font-mono text-white">{bet.decimal_odds ? odds(bet.decimal_odds) : "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-slate-500 text-[10px]">½ Kelly</div>
+                    <div className="font-mono text-sky-400">{kellyPct > 0 ? pct(kellyPct) : "—"}</div>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* Desktop table (640px+) */}
+      <div className="card overflow-x-auto hidden sm:block">
+        <table className="data-table" aria-label="Value bets">
           <thead>
-            <tr className="border-b border-slate-800/60 text-left text-[11px] text-slate-500 uppercase tracking-wider">
-              <th className="px-4 py-3 font-medium">Match</th>
-              <th className="px-4 py-3 font-medium">Market</th>
+            <tr>
+              <th scope="col">Match</th>
+              <th scope="col">Market</th>
               <th
-                className="px-4 py-3 font-medium cursor-pointer hover:text-white transition-colors"
+                scope="col"
+                className="cursor-pointer hover:text-white transition-colors"
                 onClick={() => toggleSort("model_prob")}
               >
                 Model{sortArrow("model_prob")}
               </th>
-              <th className="px-4 py-3 font-medium hidden sm:table-cell">Implied</th>
-              <th className="px-4 py-3 font-medium hidden md:table-cell">Devig</th>
+              <th scope="col">Implied</th>
+              <th scope="col" className="hidden md:table-cell">Devig</th>
               <th
-                className="px-4 py-3 font-medium cursor-pointer hover:text-white transition-colors"
+                scope="col"
+                className="cursor-pointer hover:text-white transition-colors"
                 onClick={() => toggleSort("odds")}
               >
                 Odds{sortArrow("odds")}
               </th>
               <th
-                className="px-4 py-3 font-medium cursor-pointer hover:text-white transition-colors"
+                scope="col"
+                className="cursor-pointer hover:text-white transition-colors"
                 onClick={() => toggleSort("edge")}
               >
                 Edge{sortArrow("edge")}
               </th>
               <th
-                className="px-4 py-3 font-medium cursor-pointer hover:text-white transition-colors hidden sm:table-cell"
+                scope="col"
+                className="cursor-pointer hover:text-white transition-colors"
                 onClick={() => toggleSort("kelly")}
               >
                 ½ Kelly{sortArrow("kelly")}
               </th>
-              <th className="px-4 py-3 font-medium hidden md:table-cell">Conf</th>
-              <th className="px-4 py-3 font-medium hidden lg:table-cell">Book</th>
+              <th scope="col" className="hidden md:table-cell">Conf</th>
+              <th scope="col" className="hidden lg:table-cell">Book</th>
             </tr>
           </thead>
           <tbody>
@@ -311,72 +403,36 @@ function ValueBetsContent() {
                 const badge = CONF_BADGES[tier] ?? CONF_BADGES.low;
                 const mLabel = marketLabel(bet.market);
                 const edge = effectiveEdge(bet);
+                const icon = marketIcon(bet.market);
                 const kellyPct = getHalfKellyPct(bet);
 
                 return (
                   <tr
                     key={`${bet.match_id}-${bet.market}-${i}`}
-                    className="border-b border-slate-800/30 hover:bg-slate-800/20 transition-colors"
+                    style={tier === "high" ? { borderLeft: "3px solid rgba(42,173,31,0.4)" } : undefined}
                   >
-                    {/* Match */}
-                    <td className="px-4 py-3">
+                    <td>
                       <div className="text-white font-medium text-xs">
                         {bet.home_team} v {bet.away_team}
                       </div>
                     </td>
-
-                    {/* Market */}
-                    <td className="px-4 py-3">
+                    <td>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs opacity-60">{marketIcon(bet.market)}</span>
+                        <span className="text-xs opacity-60" role="img" aria-label={MARKET_ICON_LABELS[icon] ?? "Market"}>{icon}</span>
                         <div>
-                          <div className="text-white text-xs">
-                            {bet.selection ?? bet.market}
-                          </div>
+                          <div className="text-white text-xs">{bet.selection ?? bet.market}</div>
                           <div className="text-[10px] text-slate-500">{mLabel}</div>
                         </div>
                       </div>
                     </td>
-
-                    {/* Model prob */}
-                    <td className="px-4 py-3 text-white font-mono text-xs">
-                      {pct(bet.model_prob)}
-                    </td>
-
-                    {/* Implied prob */}
-                    <td className="px-4 py-3 text-slate-400 font-mono text-xs hidden sm:table-cell">
-                      {pct(bet.implied_prob)}
-                    </td>
-
-                    {/* Devigged prob */}
-                    <td className="px-4 py-3 text-slate-400 font-mono text-xs hidden md:table-cell">
-                      {bet.devigged_prob ? pct(bet.devigged_prob) : "—"}
-                    </td>
-
-                    {/* Odds */}
-                    <td className="px-4 py-3 text-white font-mono text-xs">
-                      {bet.decimal_odds ? odds(bet.decimal_odds) : "—"}
-                    </td>
-
-                    {/* Edge */}
-                    <td className={`px-4 py-3 font-mono text-xs font-semibold ${edgeColor(edge)}`}>
-                      {pct(edge)}
-                    </td>
-
-                    {/* Half Kelly */}
-                    <td className="px-4 py-3 text-sky-400 font-mono text-xs hidden sm:table-cell">
-                      {kellyPct > 0 ? pct(kellyPct) : "—"}
-                    </td>
-
-                    {/* Confidence */}
-                    <td className="px-4 py-3 hidden md:table-cell">
-                      <span className={`${badge.cls} text-[10px]`}>{badge.label}</span>
-                    </td>
-
-                    {/* Bookmaker */}
-                    <td className="px-4 py-3 text-slate-500 text-[11px] hidden lg:table-cell">
-                      {bet.bookmaker?.replace(/_/g, " ") ?? "—"}
-                    </td>
+                    <td className="text-white font-mono text-xs">{pct(bet.model_prob)}</td>
+                    <td className="text-slate-400 font-mono text-xs">{pct(bet.implied_prob)}</td>
+                    <td className="text-slate-400 font-mono text-xs hidden md:table-cell">{bet.devigged_prob ? pct(bet.devigged_prob) : "—"}</td>
+                    <td className="text-white font-mono text-xs">{bet.decimal_odds ? odds(bet.decimal_odds) : "—"}</td>
+                    <td className={`font-mono text-xs font-semibold ${edgeColor(edge)}`}>{edgePrefix(edge)}{pct(edge)}</td>
+                    <td className="text-sky-400 font-mono text-xs">{kellyPct > 0 ? pct(kellyPct) : "—"}</td>
+                    <td className="hidden md:table-cell"><span className={`${badge.cls} text-[10px]`}>{badge.label}</span></td>
+                    <td className="text-slate-500 text-[11px] hidden lg:table-cell">{bet.bookmaker?.replace(/_/g, " ") ?? "—"}</td>
                   </tr>
                 );
               })

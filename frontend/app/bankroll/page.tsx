@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useLocalStorage } from "@/lib/hooks";
 import { pct } from "@/lib/formats";
 import { kellyFraction, currentDrawdown, type KellyResult } from "@/lib/kelly";
@@ -102,6 +102,18 @@ function BankrollContent() {
   const [editingBankroll, setEditingBankroll] = useState(false);
   const [newBankroll, setNewBankroll] = useState(initialBankroll.toString());
 
+  // Toast
+  const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<NodeJS.Timeout | null>(null);
+  const showToast = useCallback((msg: string) => {
+    setToast(msg);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 2500);
+  }, []);
+
+  // Delete confirmation
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+
   // Computed
   const trajectory = useMemo(() => computeTrajectory(initialBankroll, bets), [initialBankroll, bets]);
   const currentValue = trajectory[trajectory.length - 1]?.bankroll ?? initialBankroll;
@@ -135,7 +147,8 @@ function BankrollContent() {
     setFormStake("");
     setFormResult("pending");
     setShowForm(false);
-  }, [formDate, formMatch, formMarket, formSelection, formOdds, formStake, formResult, setState]);
+    showToast("✓ Bet recorded");
+  }, [formDate, formMatch, formMarket, formSelection, formOdds, formStake, formResult, setState, showToast]);
 
   const updateResult = useCallback((id: string, result: BetRecord["result"]) => {
     setState((prev) => ({
@@ -146,7 +159,9 @@ function BankrollContent() {
 
   const removeBet = useCallback((id: string) => {
     setState((prev) => ({ ...prev, bets: prev.bets.filter((b) => b.id !== id) }));
-  }, [setState]);
+    setConfirmDeleteId(null);
+    showToast("Bet removed");
+  }, [setState, showToast]);
 
   const saveBankroll = useCallback(() => {
     const v = parseFloat(newBankroll);
@@ -200,7 +215,7 @@ function BankrollContent() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         <div className="card p-4">
           <div className="stat-label">Current Value</div>
           <div className="stat-value text-white">£{currentValue.toFixed(0)}</div>
@@ -233,6 +248,7 @@ function BankrollContent() {
                 autoFocus
                 onKeyDown={(e) => e.key === "Enter" && saveBankroll()}
                 onBlur={saveBankroll}
+                aria-label="Starting bankroll amount"
               />
             </div>
           ) : (
@@ -269,40 +285,40 @@ function BankrollContent() {
           <h3 className="text-sm font-display font-semibold text-white">Add Bet</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
             <div>
-              <label className="stat-label block mb-1">Date</label>
-              <input type="date" value={formDate} onChange={(e) => setFormDate(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white" />
+              <label htmlFor="bet-date" className="form-label">Date</label>
+              <input id="bet-date" type="date" value={formDate} onChange={(e) => setFormDate(e.target.value)}
+                className="form-input text-xs" />
             </div>
             <div className="col-span-2 sm:col-span-1">
-              <label className="stat-label block mb-1">Match</label>
-              <input type="text" placeholder="e.g. Arsenal v Chelsea" value={formMatch}
+              <label htmlFor="bet-match" className="form-label">Match</label>
+              <input id="bet-match" type="text" placeholder="e.g. Arsenal v Chelsea" value={formMatch}
                 onChange={(e) => setFormMatch(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white placeholder-slate-600" />
+                className="form-input text-xs" />
             </div>
             <div>
-              <label className="stat-label block mb-1">Market</label>
-              <select value={formMarket} onChange={(e) => setFormMarket(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white">
+              <label htmlFor="bet-market" className="form-label">Market</label>
+              <select id="bet-market" value={formMarket} onChange={(e) => setFormMarket(e.target.value)}
+                className="form-select text-xs">
                 {MARKET_TYPES.map((m) => <option key={m} value={m}>{m}</option>)}
               </select>
             </div>
             <div>
-              <label className="stat-label block mb-1">Selection</label>
-              <input type="text" placeholder="e.g. Over 2.5" value={formSelection}
+              <label htmlFor="bet-selection" className="form-label">Selection</label>
+              <input id="bet-selection" type="text" placeholder="e.g. Over 2.5" value={formSelection}
                 onChange={(e) => setFormSelection(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white placeholder-slate-600" />
+                className="form-input text-xs" />
             </div>
             <div>
-              <label className="stat-label block mb-1">Odds</label>
-              <input type="number" step="0.01" min="1" value={formOdds}
+              <label htmlFor="bet-odds" className="form-label">Odds</label>
+              <input id="bet-odds" type="number" step="0.01" min="1" value={formOdds}
                 onChange={(e) => setFormOdds(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs font-mono text-white" />
+                className="form-input text-xs font-mono" />
             </div>
             <div>
-              <label className="stat-label block mb-1">Stake (£)</label>
-              <input type="number" step="0.50" min="0" value={formStake}
+              <label htmlFor="bet-stake" className="form-label">Stake (£)</label>
+              <input id="bet-stake" type="number" step="0.50" min="0" value={formStake}
                 onChange={(e) => setFormStake(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs font-mono text-white" />
+                className="form-input text-xs font-mono" />
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -363,20 +379,20 @@ function BankrollContent() {
       )}
 
       {/* Bet History */}
-      {bets.length > 0 && (
+      {bets.length > 0 ? (
         <div className="card overflow-x-auto">
-          <table className="w-full text-xs">
+          <table className="data-table">
             <thead>
-              <tr className="border-b border-slate-800/60 text-left text-[10px] text-slate-500 uppercase tracking-wider">
-                <th className="px-4 py-3 font-medium">Date</th>
-                <th className="px-4 py-3 font-medium">Match</th>
-                <th className="px-4 py-3 font-medium hidden sm:table-cell">Market</th>
-                <th className="px-4 py-3 font-medium">Selection</th>
-                <th className="px-4 py-3 font-medium">Odds</th>
-                <th className="px-4 py-3 font-medium">Stake</th>
-                <th className="px-4 py-3 font-medium">P&L</th>
-                <th className="px-4 py-3 font-medium">Result</th>
-                <th className="px-4 py-3 font-medium w-8"></th>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Match</th>
+                <th scope="col" className="hidden sm:table-cell">Market</th>
+                <th scope="col">Selection</th>
+                <th scope="col">Odds</th>
+                <th scope="col">Stake</th>
+                <th scope="col">P&L</th>
+                <th scope="col">Result</th>
+                <th scope="col" className="w-8"><span className="sr-only">Actions</span></th>
               </tr>
             </thead>
             <tbody>
@@ -401,6 +417,7 @@ function BankrollContent() {
                       <select
                         value={bet.result}
                         onChange={(e) => updateResult(bet.id, e.target.value as BetRecord["result"])}
+                        aria-label={`Result for ${bet.match}`}
                         className={`bg-transparent border-none text-[10px] font-semibold uppercase ${
                           bet.result === "win" ? "text-emerald-400"
                           : bet.result === "loss" ? "text-red-400"
@@ -415,19 +432,50 @@ function BankrollContent() {
                       </select>
                     </td>
                     <td className="px-4 py-2">
-                      <button
-                        onClick={() => removeBet(bet.id)}
-                        className="text-slate-600 hover:text-red-400 transition-colors"
-                        aria-label="Remove bet"
-                      >
-                        ✕
-                      </button>
+                      {confirmDeleteId === bet.id ? (
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => removeBet(bet.id)}
+                            className="text-[9px] font-semibold uppercase text-red-400 hover:text-red-300 transition-colors"
+                            aria-label="Confirm delete"
+                          >
+                            Yes
+                          </button>
+                          <span className="text-slate-600">/</span>
+                          <button
+                            onClick={() => setConfirmDeleteId(null)}
+                            className="text-[9px] font-semibold uppercase text-slate-500 hover:text-slate-300 transition-colors"
+                            aria-label="Cancel delete"
+                          >
+                            No
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => setConfirmDeleteId(bet.id)}
+                          className="text-slate-600 hover:text-red-400 transition-colors"
+                          aria-label="Remove bet"
+                        >
+                          ✕
+                        </button>
+                      )}
                     </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+        </div>
+      ) : (
+        <div className="card p-8 text-center">
+          <div className="text-slate-500 text-sm">No bets recorded yet.</div>
+          <div className="text-slate-600 text-xs mt-1">Start tracking your bets to see P&L analysis and bankroll trajectory.</div>
+          <button
+            onClick={() => setShowForm(true)}
+            className="mt-4 px-4 py-2 text-xs text-white bg-pitch-600 hover:bg-pitch-500 rounded-lg transition-colors font-medium"
+          >
+            + Add Your First Bet
+          </button>
         </div>
       )}
 
@@ -438,19 +486,19 @@ function BankrollContent() {
         <h3 className="text-sm font-display font-semibold text-white">Kelly Calculator</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="stat-label block mb-1.5">Model Probability</label>
+            <label htmlFor="kelly-prob" className="form-label">Model Probability</label>
             <input
-              type="number" step="0.01" min="0" max="1" value={calcProb}
+              id="kelly-prob" type="number" step="0.01" min="0" max="1" value={calcProb}
               onChange={(e) => setCalcProb(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:ring-1 focus:ring-pitch-500/50"
+              className="form-input font-mono"
             />
           </div>
           <div>
-            <label className="stat-label block mb-1.5">Decimal Odds</label>
+            <label htmlFor="kelly-odds" className="form-label">Decimal Odds</label>
             <input
-              type="number" step="0.01" min="1" value={calcOdds}
+              id="kelly-odds" type="number" step="0.01" min="1" value={calcOdds}
               onChange={(e) => setCalcOdds(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:ring-1 focus:ring-pitch-500/50"
+              className="form-input font-mono"
             />
           </div>
           <div className="flex items-end">
@@ -464,7 +512,7 @@ function BankrollContent() {
         </div>
 
         {kellyResult && (
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
             <div className="bg-slate-800/60 rounded-lg p-3">
               <div className="stat-label">Full Kelly</div>
               <div className="text-lg font-display font-bold text-white">{pct(kellyResult.full_kelly)}</div>
@@ -492,6 +540,13 @@ function BankrollContent() {
           </div>
         )}
       </div>
+
+      {/* Toast notification */}
+      {toast && (
+        <div className="toast" role="status" aria-live="polite">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

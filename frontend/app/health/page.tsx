@@ -2,11 +2,13 @@
 
 import {
   XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine,
-  ScatterChart, Scatter, CartesianGrid, BarChart, Bar, LineChart, Line,
+  ScatterChart, Scatter, CartesianGrid, BarChart, Bar,
 } from "recharts";
 import { usePredictions } from "@/lib/PredictionsContext";
 import { pct, timeAgo } from "@/lib/formats";
 import { ErrorBoundary, PageSkeleton, ErrorMessage } from "@/components/ErrorBoundary";
+
+const STALE_HEALTH_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 const TOOLTIP_STYLE = {
   background: "rgba(10, 15, 28, 0.92)",
@@ -27,6 +29,7 @@ function HealthContent() {
   if (loading || !health) return <PageSkeleton rows={5} />;
 
   const isHealthy = health.status === "healthy";
+  const isStaleHealth = Date.now() - new Date(health.last_updated).getTime() > STALE_HEALTH_MS;
   const metrics = health.model_metrics ?? {};
 
   // Calibration chart data
@@ -73,6 +76,9 @@ function HealthContent() {
           {ensembleMethod && (
             <span className="badge-green text-[9px]">{ensembleMethod.toUpperCase()}</span>
           )}
+          {isStaleHealth && (
+            <span className="stale-warning">DATA &gt; 24H OLD</span>
+          )}
           <span className={isHealthy ? "badge-green" : "text-red-400 bg-red-500/10 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider"}>
             {health.status.toUpperCase()}
           </span>
@@ -94,7 +100,7 @@ function HealthContent() {
       {/* Stacking Weights + Per-Market side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Stacking Weights */}
-        {stackingData && stackingData.length > 0 && (
+        {stackingData && stackingData.length > 0 ? (
           <div className="card p-6">
             <h3 className="text-sm font-display font-semibold text-white mb-4">
               Ensemble Weights (Meta-Learner)
@@ -110,6 +116,18 @@ function HealthContent() {
             </ResponsiveContainer>
             <p className="text-[10px] text-slate-600 mt-2">
               Learned via logistic regression on out-of-fold predictions.
+            </p>
+          </div>
+        ) : (
+          <div className="card p-6">
+            <h3 className="text-sm font-display font-semibold text-white mb-4">
+              Ensemble Weights
+            </h3>
+            <div className="text-sm text-slate-500">
+              Using static ensemble weights — insufficient data for stacking meta-learner.
+            </div>
+            <p className="text-[10px] text-slate-600 mt-3">
+              Stacking weights will be learned automatically once enough out-of-fold predictions are available.
             </p>
           </div>
         )}
@@ -176,7 +194,16 @@ function HealthContent() {
                 formatter={(value: number, name: string) => [value.toFixed(3), name === "actual" ? "Actual" : "Predicted"]}
               />
               <ReferenceLine segment={[{ x: 0, y: 0 }, { x: 1, y: 1 }]} stroke="#475569" strokeDasharray="5 5" />
-              <Scatter data={calData} fill="#2aad1f" fillOpacity={0.8} />
+              <Scatter
+                data={calData}
+                fill="#2aad1f"
+                fillOpacity={0.8}
+                label={({ x, y, value, index }: any) => (
+                  <text x={x} y={y - 10} textAnchor="middle" fill="#94a3b8" fontSize={9} fontFamily="var(--font-mono)">
+                    n={calData[index]?.count}
+                  </text>
+                )}
+              />
             </ScatterChart>
           </ResponsiveContainer>
         </div>

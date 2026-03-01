@@ -14,12 +14,7 @@ import { ErrorBoundary, PageSkeleton, ErrorMessage } from "@/components/ErrorBou
 import ScorelineHeatmap from "@/components/ScorelineHeatmap";
 import DistributionChart from "@/components/DistributionChart";
 import SHAPWaterfall from "@/components/SHAPWaterfall";
-
-const CONF_BADGES: Record<string, { label: string; cls: string }> = {
-  high: { label: "HIGH", cls: "badge-green" },
-  medium: { label: "MED", cls: "badge-amber" },
-  low: { label: "LOW", cls: "text-slate-500 bg-slate-800/60 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider" },
-};
+import { CONF_BADGES, MARKET_ICON_LABELS, edgePrefix } from "@/lib/theme";
 
 function MatchDetailContent() {
   const params = useParams();
@@ -149,10 +144,10 @@ function MatchDetailContent() {
             <table className="w-full text-xs">
               <thead>
                 <tr className="text-left text-[10px] text-slate-500 uppercase tracking-wider border-b border-slate-800/50">
-                  <th className="pb-2 font-medium">Bookmaker</th>
-                  <th className="pb-2 font-medium text-center">Home</th>
-                  <th className="pb-2 font-medium text-center">Draw</th>
-                  <th className="pb-2 font-medium text-center">Away</th>
+                  <th scope="col" className="pb-2 font-medium">Bookmaker</th>
+                  <th scope="col" className="pb-2 font-medium text-center">Home</th>
+                  <th scope="col" className="pb-2 font-medium text-center">Draw</th>
+                  <th scope="col" className="pb-2 font-medium text-center">Away</th>
                 </tr>
               </thead>
               <tbody>
@@ -453,7 +448,7 @@ function MatchDetailContent() {
               return (
                 <div key={i} className="flex items-center justify-between bg-slate-800/40 rounded-lg p-3 gap-2 flex-wrap">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs opacity-60">{marketIcon(bet.market)}</span>
+                    <span className="text-xs opacity-60" role="img" aria-label={MARKET_ICON_LABELS[marketIcon(bet.market)] ?? "Market"}>{marketIcon(bet.market)}</span>
                     <div>
                       <span className="text-sm font-medium text-white">{bet.selection ?? bet.market}</span>
                       {bet.selection && (
@@ -469,7 +464,7 @@ function MatchDetailContent() {
                       <span className="text-slate-400">{pct(bet.devigged_prob)} devig</span>
                     )}
                     <span className={`font-semibold ${edgeColor(effectiveEdge(bet))}`}>
-                      +{pct(effectiveEdge(bet))} edge
+                      {edgePrefix(effectiveEdge(bet))}{pct(effectiveEdge(bet))} edge
                     </span>
                     {(bet.decimal_odds ?? 0) > 0 && (
                       <span className="text-sky-400">{odds(bet.decimal_odds!)}</span>
@@ -489,9 +484,16 @@ function MatchDetailContent() {
       {/* Narrative */}
       <div className="card p-6">
         <h3 className="text-sm font-display font-semibold text-white mb-3">Match Preview</h3>
-        <div className="text-sm text-slate-300 leading-relaxed whitespace-pre-line">
-          {match.narrative}
-        </div>
+        <div
+          className="text-sm text-slate-300 leading-relaxed prose-dark"
+          dangerouslySetInnerHTML={{
+            __html: match.narrative
+              .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
+              .replace(/### (.*?)$/gm, '<h4 class="text-xs uppercase tracking-wider text-slate-500 mt-4 mb-1 font-semibold">$1</h4>')
+              .replace(/## (.*?)$/gm, '<h3 class="text-sm font-display font-semibold text-white mt-4 mb-2">$1</h3>')
+              .replace(/\n/g, "<br />"),
+          }}
+        />
       </div>
 
       {/* Confidence / entropy */}

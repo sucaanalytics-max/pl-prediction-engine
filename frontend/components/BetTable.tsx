@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { pct, odds, edgeColor } from "@/lib/formats";
 import { getHalfKellyPct, marketLabel, marketIcon, effectiveEdge, confidenceTier, type ValueBet } from "@/lib/predictions";
+import { CONF_BADGES, marketBadgeColor, MARKET_ICON_LABELS, edgePrefix } from "@/lib/theme";
 
 interface BetRow extends ValueBet {
   match_id: string;
@@ -13,22 +14,6 @@ interface BetRow extends ValueBet {
 interface BetTableProps {
   bets: BetRow[];
   compact?: boolean;
-}
-
-const CONF_BADGES: Record<string, { label: string; cls: string }> = {
-  high: { label: "HIGH", cls: "badge-green" },
-  medium: { label: "MED", cls: "badge-amber" },
-  low: { label: "LOW", cls: "text-slate-500 bg-slate-800/60 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider" },
-};
-
-function marketBadgeClass(market: string): string {
-  const cat = marketLabel(market);
-  if (cat === "Corners") return "text-violet-400";
-  if (cat === "Cards") return "text-amber-400";
-  if (cat === "Goalscorer") return "text-emerald-400";
-  if (cat === "Player") return "text-sky-400";
-  if (cat === "BTTS") return "text-orange-400";
-  return "text-emerald-400";
 }
 
 export default function BetTable({ bets, compact = false }: BetTableProps) {
@@ -43,21 +28,21 @@ export default function BetTable({ bets, compact = false }: BetTableProps) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm" role="table">
+      <table className="data-table" role="table">
         <thead>
-          <tr className="border-b border-slate-800/60">
-            <th className="text-left py-3 px-3 text-[10px] uppercase tracking-wider text-slate-500 font-medium">Match</th>
-            <th className="text-left py-3 px-3 text-[10px] uppercase tracking-wider text-slate-500 font-medium">Market</th>
-            <th className="text-right py-3 px-3 text-[10px] uppercase tracking-wider text-slate-500 font-medium">Model</th>
-            <th className="text-right py-3 px-3 text-[10px] uppercase tracking-wider text-slate-500 font-medium hidden sm:table-cell">Implied</th>
+          <tr>
+            <th scope="col" className="text-left">Match</th>
+            <th scope="col" className="text-left">Market</th>
+            <th scope="col" className="text-right">Model</th>
+            <th scope="col" className="text-right hidden sm:table-cell">Implied</th>
             {!compact && (
-              <th className="text-right py-3 px-3 text-[10px] uppercase tracking-wider text-slate-500 font-medium hidden md:table-cell">Devig</th>
+              <th scope="col" className="text-right hidden md:table-cell">Devig</th>
             )}
-            <th className="text-right py-3 px-3 text-[10px] uppercase tracking-wider text-slate-500 font-medium">Odds</th>
-            <th className="text-right py-3 px-3 text-[10px] uppercase tracking-wider text-slate-500 font-medium">Edge</th>
-            <th className="text-right py-3 px-3 text-[10px] uppercase tracking-wider text-slate-500 font-medium hidden sm:table-cell">½ Kelly</th>
+            <th scope="col" className="text-right">Odds</th>
+            <th scope="col" className="text-right">Edge</th>
+            <th scope="col" className="text-right hidden sm:table-cell">½ Kelly</th>
             {!compact && (
-              <th className="text-center py-3 px-3 text-[10px] uppercase tracking-wider text-slate-500 font-medium hidden md:table-cell">Conf</th>
+              <th scope="col" className="text-center hidden md:table-cell">Conf</th>
             )}
           </tr>
         </thead>
@@ -84,9 +69,9 @@ export default function BetTable({ bets, compact = false }: BetTableProps) {
                 </td>
                 <td className="py-3 px-3">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs opacity-60" aria-hidden="true">{marketIcon(bet.market)}</span>
+                    <span className="text-xs opacity-60" role="img" aria-label={MARKET_ICON_LABELS[marketIcon(bet.market)] ?? "Market"}>{marketIcon(bet.market)}</span>
                     <div>
-                      <span className={`font-medium text-xs ${marketBadgeClass(bet.market)}`}>
+                      <span className={`font-medium text-xs ${marketBadgeColor(bet.market)}`}>
                         {bet.selection ?? bet.market}
                       </span>
                       <span className="text-slate-600 text-[10px] ml-1 hidden sm:inline">{marketLabel(bet.market)}</span>
@@ -104,7 +89,7 @@ export default function BetTable({ bets, compact = false }: BetTableProps) {
                   {(bet.decimal_odds ?? 0) > 0 ? odds(bet.decimal_odds!) : "—"}
                 </td>
                 <td className={`py-3 px-3 text-right font-mono text-xs font-semibold ${edgeColor(edge)}`}>
-                  +{pct(edge)}
+                  {edgePrefix(edge)}{pct(edge)}
                 </td>
                 <td className="py-3 px-3 text-right font-mono text-xs text-sky-400 hidden sm:table-cell">
                   {getHalfKellyPct(bet) > 0 ? pct(getHalfKellyPct(bet)) : "—"}

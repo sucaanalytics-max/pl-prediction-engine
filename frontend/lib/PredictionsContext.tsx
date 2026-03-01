@@ -6,6 +6,8 @@ import {
   useEffect,
   useState,
   useCallback,
+  useMemo,
+  useRef,
   type ReactNode,
 } from "react";
 import type { PredictionData, HealthData } from "./predictions";
@@ -17,21 +19,29 @@ interface PredictionsContextValue {
   health: HealthData | null;
   /** Loading state */
   loading: boolean;
+  /** Per-resource loading states */
+  loadingPredictions: boolean;
+  loadingHealth: boolean;
   /** Error message if fetch failed */
   error: string | null;
   /** Manually trigger a refetch */
   refresh: () => void;
   /** Timestamp of last successful fetch */
   lastUpdated: number | null;
+  /** Whether data is older than STALE_TIME_MS */
+  isStale: boolean;
 }
 
 const PredictionsContext = createContext<PredictionsContextValue>({
   predictions: null,
   health: null,
   loading: true,
+  loadingPredictions: true,
+  loadingHealth: true,
   error: null,
   refresh: () => {},
   lastUpdated: null,
+  isStale: false,
 });
 
 const BASE_PATH = "/predictions";
@@ -41,59 +51,90 @@ export function PredictionsProvider({ children }: { children: ReactNode }) {
   const [predictions, setPredictions] = useState<PredictionData | null>(null);
   const [health, setHealth] = useState<HealthData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadingPredictions, setLoadingPredictions] = useState(true);
+  const [loadingHealth, setLoadingHealth] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<number | null>(null);
 
+  // Request dedup: prevent concurrent fetches
+  const inflightRef = useRef<Promise<void> | null>(null);
+
   const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+    // If a fetch is already in-flight, return that promise
+    if (inflightRef.current) return inflightRef.current;
 
-    try {
-      const [predRes, healthRes] = await Promise.allSettled([
-        fetch(`${BASE_PATH}/latest.json`).then((r) => {
-          if (!r.ok) throw new Error(`Predictions: ${r.status}`);
-          return r.json() as Promise<PredictionData>;
-        }),
-        fetch(`${BASE_PATH}/health.json`).then((r) => {
-          if (!r.ok) throw new Error(`Health: ${r.status}`);
-          return r.json() as Promise<HealthData>;
-        }),
-      ]);
+    const doFetch = async () => {
+      setLoading(true);
+      setLoadingPredictions(true);
+      setLoadingHealth(true);
+      setError(null);
 
-      if (predRes.status === "fulfilled") {
-        setPredictions(predRes.value);
-      } else {
-        throw new Error(predRes.reason?.message ?? "Failed to load predictions");
+      try {
+        const [predRes, healthRes] = await Promise.allSettled([
+          fetch(`${BASE_PATH}/latest.json`).then((r) => {
+            if (!r.ok) throw new Error(`Predictions: ${r.status}`);
+            return r.json() as Promise<PredictionData>;
+          }),
+          fetch(`${BASE_PATH}/health.json`).then((r) => {
+            if (!r.ok) throw new Error(`Health: ${r.status}`);
+            return r.json() as Promise<HealthData>;
+          }),
+        ]);
+
+        if (predRes.status === "fulfilled") {
+          setPredictions(predRes.value);
+        } else {
+          throw new Error(predRes.reason?.message ?? "Failed to load predictions");
+        }
+        setLoadingPredictions(false);
+
+        if (healthRes.status === "fulfilled") {
+          setHealth(healthRes.value);
+        }
+        setLoadingHealth(false);
+
+        setLastUpdated(Date.now());
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error");
+      } finally {
+        setLoading(false);
+        setLoadingPredictions(false);
+        setLoadingHealth(false);
+        inflightRef.current = null;
       }
+    };
 
-      if (healthRes.status === "fulfilled") {
-        setHealth(healthRes.value);
-      }
-      // Health is optional — don't fail if it's missing
-
-      setLastUpdated(Date.now());
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
-    } finally {
-      setLoading(false);
-    }
+    inflightRef.current = doFetch();
+    return inflightRef.current;
   }, []);
 
   useEffect(() => {
     fetchData();
-
-    // Auto-refresh every STALE_TIME_MS
-    const interval = setInterval(() => {
-      fetchData();
-    }, STALE_TIME_MS);
-
+    const interval = setInterval(fetchData, STALE_TIME_MS);
     return () => clearInterval(interval);
   }, [fetchData]);
 
+  // Compute stale flag
+  const isStale = lastUpdated !== null && Date.now() - lastUpdated > STALE_TIME_MS;
+
+  // Memoize context value to prevent unnecessary re-renders
+  const value = useMemo<PredictionsContextValue>(
+    () => ({
+      predictions,
+      health,
+      loading,
+      loadingPredictions,
+      loadingHealth,
+      error,
+      refresh: fetchData,
+      lastUpdated,
+      isStale,
+    }),
+    [predictions, health, loading, loadingPredictions, loadingHealth, error, fetchData, lastUpdated, isStale]
+  );
+
   return (
-    <PredictionsContext.Provider
-      value={{ predictions, health, loading, error, refresh: fetchData, lastUpdated }}
-    >
+    <PredictionsContext.Provider value={value}>
       {children}
     </PredictionsContext.Provider>
   );

@@ -24,7 +24,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
             key={pred.match_id}
             href={`/matches/${pred.match_id}`}
             className="card-hover block p-4 animate-slide-up focus-visible:ring-2 focus-visible:ring-pitch-500 focus-visible:outline-none"
-            style={{ animationDelay: `${i * 80}ms`, animationFillMode: "both" }}
+            style={{ animationDelay: `${i * 40}ms`, animationFillMode: "both" }}
             role="listitem"
             aria-label={`${pred.fixture.home_team} vs ${pred.fixture.away_team}, ${predictionLabel(prediction)} predicted at ${pct(maxProb, 0)}`}
           >
@@ -43,20 +43,20 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
               <div className="flex-1 px-4">
                 <div className="flex items-center justify-between">
                   <span
-                    className={`font-display font-semibold text-sm ${
+                    className={`font-display font-semibold text-[15px] ${
                       prediction === "home" ? "text-white" : "text-slate-400"
                     }`}
                   >
                     {pred.fixture.home_team}
                   </span>
-                  <div className="flex flex-col items-center mx-2 gap-0.5 flex-shrink-0">
-                    <span className="text-xs font-mono text-slate-600" aria-hidden="true">vs</span>
+                  <div className="flex flex-col items-center mx-3 gap-0.5 flex-shrink-0">
+                    <span className="text-[10px] font-mono text-slate-600" aria-hidden="true">vs</span>
                     {pred.fixture.is_derby && (
-                      <span className="badge-amber text-[8px] px-1 leading-tight">DERBY</span>
+                      <span className="badge-amber text-[9px] px-1.5 leading-tight">DERBY</span>
                     )}
                   </div>
                   <span
-                    className={`font-display font-semibold text-sm ${
+                    className={`font-display font-semibold text-[15px] ${
                       prediction === "away" ? "text-white" : "text-slate-400"
                     }`}
                   >
@@ -78,12 +78,12 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                 {/* Metadata row */}
                 <div className="flex items-center gap-2 mt-1 flex-wrap">
                   {pred.fixture.referee && (
-                    <span className="text-[9px] text-slate-600 truncate">
+                    <span className="text-[10px] text-slate-500 truncate">
                       Ref: {pred.fixture.referee}
                     </span>
                   )}
                   {pred.model_disagreement !== undefined && pred.model_disagreement > 0.15 && (
-                    <span className="text-[8px] text-amber-500/70">MODELS DISAGREE</span>
+                    <span className="text-[9px] text-amber-500/80 font-medium">⚠ MODELS DISAGREE</span>
                   )}
                 </div>
               </div>
