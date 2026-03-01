@@ -51,12 +51,15 @@ export default function DistributionChart({
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#1e293b",
-              border: "1px solid #334155",
+              background: "rgba(10, 15, 28, 0.92)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(255, 255, 255, 0.10)",
               borderRadius: "8px",
               fontSize: "12px",
               color: "#e2e8f0",
               fontFamily: "var(--font-mono)",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
             }}
             formatter={(value: number) => [pct(value), "Probability"]}
             labelFormatter={(l) => `${label}: ${l}`}

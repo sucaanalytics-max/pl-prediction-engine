@@ -61,7 +61,13 @@ export default function Navigation() {
       {/* Mobile toggle */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg bg-slate-800 border border-slate-700"
+        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg"
+        style={{
+          background: "rgba(255,255,255,0.07)",
+          border: "1px solid rgba(255,255,255,0.10)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+        }}
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           {mobileOpen ? (
@@ -75,19 +81,26 @@ export default function Navigation() {
       {/* Overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden"
+          className="fixed inset-0 z-30 lg:hidden"
+          style={{ background: "rgba(8,13,22,0.70)", backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)" }}
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-40 h-screen w-64 bg-slate-950/95 backdrop-blur-md border-r border-slate-800/60
+        className={`fixed top-0 left-0 z-40 h-screen w-64 flex flex-col
                      transform transition-transform duration-300 ease-in-out
                      ${mobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
+        style={{
+          background: "rgba(8, 13, 22, 0.82)",
+          backdropFilter: "blur(20px) saturate(150%)",
+          WebkitBackdropFilter: "blur(20px) saturate(150%)",
+          borderRight: "1px solid rgba(255, 255, 255, 0.07)",
+        }}
       >
         {/* Logo */}
-        <div className="p-6 border-b border-slate-800/60">
+        <div className="p-5 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
           <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-pitch-500 to-pitch-700 flex items-center justify-center shadow-lg shadow-pitch-500/20">
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -127,7 +140,7 @@ export default function Navigation() {
         </nav>
 
         {/* Footer */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-800/60">
+        <div className="mt-auto p-4" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <div className="flex items-center gap-2 text-[10px] text-slate-600">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span>Pipeline v1.0.0</span>

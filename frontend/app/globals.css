@@ -2,20 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 :root {
-  --font-display: 'Outfit', system-ui, sans-serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-display: var(--font-inter), system-ui, sans-serif;
+  --font-body:    var(--font-inter), system-ui, sans-serif;
+  --font-mono:    var(--font-mono), ui-monospace, monospace;
 }
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-200 font-body antialiased;
+    @apply text-slate-200 font-body antialiased;
+    background-color: #070c14;
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(42, 173, 31, 0.08), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(56, 189, 248, 0.04), transparent);
+      radial-gradient(ellipse 72% 58% at 8% 12%,   rgba(42, 173, 31, 0.15) 0%, transparent 65%),
+      radial-gradient(ellipse 58% 48% at 90% 80%,  rgba(56, 189, 248, 0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 48% 58% at 52% 52%,  rgba(139, 92, 246, 0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 68% 38% at 94% 6%,   rgba(42, 173, 31, 0.08) 0%, transparent 55%);
+    background-attachment: fixed;
   }
 
   ::selection {
@@ -24,79 +26,146 @@
 }
 
 @layer components {
+  /* ── Glass card system ───────────────────────────────────────────────────── */
   .card {
-    @apply bg-slate-900/80 backdrop-blur-sm border border-slate-800/60 rounded-xl;
+    background: rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+      0 4px 24px rgba(0, 0, 0, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
   .card-hover {
-    @apply card transition-all duration-300 hover:border-pitch-500/30 hover:shadow-lg hover:shadow-pitch-500/5;
+    background: rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+      0 4px 24px rgba(0, 0, 0, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.5);
+    @apply transition-all duration-200;
   }
 
+  .card-hover:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(42, 173, 31, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.10),
+      inset 0 0 0 1px rgba(42, 173, 31, 0.04),
+      0 6px 28px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(42, 173, 31, 0.06);
+  }
+
+  /* Inset glass — for nested panels inside a card */
+  .glass-inset {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  /* ── Typography utilities ────────────────────────────────────────────────── */
   .stat-value {
     @apply font-display font-bold text-2xl tracking-tight;
   }
 
   .stat-label {
     @apply text-xs uppercase tracking-wider text-slate-500 font-medium;
+    letter-spacing: 0.08em;
   }
 
+  /* ── Badges ──────────────────────────────────────────────────────────────── */
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold tracking-wide;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 
   .badge-green {
-    @apply badge bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/20;
+    @apply badge;
+    background: rgba(52, 211, 153, 0.10);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.18);
   }
 
   .badge-amber {
-    @apply badge bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/20;
+    @apply badge;
+    background: rgba(251, 191, 36, 0.10);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.18);
   }
 
   .badge-red {
-    @apply badge bg-red-500/15 text-red-400 ring-1 ring-red-500/20;
+    @apply badge;
+    background: rgba(248, 113, 113, 0.10);
+    color: #f87171;
+    border: 1px solid rgba(248, 113, 113, 0.18);
   }
 
+  /* ── Probability bars ────────────────────────────────────────────────────── */
   .prob-bar {
-    @apply h-2 rounded-full transition-all duration-500;
+    @apply h-1.5 transition-all duration-500;
   }
 
+  /* ── Navigation ──────────────────────────────────────────────────────────── */
   .nav-link {
-    @apply flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-400 rounded-lg
-           transition-colors duration-200 hover:text-white hover:bg-slate-800/60;
+    @apply flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-slate-400 rounded-lg
+           transition-all duration-150 hover:text-white;
+  }
+
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .nav-link-active {
-    @apply nav-link text-white bg-slate-800/80 ring-1 ring-slate-700/50;
+    @apply flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-white rounded-lg;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 1px 3px rgba(0, 0, 0, 0.3);
   }
 
+  /* ── Dividers ────────────────────────────────────────────────────────────── */
   .glow-line {
-    @apply h-px bg-gradient-to-r from-transparent via-pitch-500/40 to-transparent;
+    @apply h-px bg-gradient-to-r from-transparent via-pitch-500/35 to-transparent;
   }
 }
 
-/* Scrollbar */
+/* ── Scrollbar ───────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-700 rounded-full;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 99px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-600;
+  background: rgba(255, 255, 255, 0.18);
 }
 
-/* Custom grid pattern for heatmaps */
+/* ── Heatmap cells ───────────────────────────────────────────────────────────── */
 .heatmap-cell {
   @apply transition-all duration-200 cursor-default;
 }
 
 .heatmap-cell:hover {
-  @apply ring-2 ring-white/30 z-10;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+  z-index: 10;
+  position: relative;
 }
