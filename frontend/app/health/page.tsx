@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -14,7 +12,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { loadHealth, type HealthData } from "@/lib/predictions";
-import { pct, timeAgo } from "@/lib/formats";
+import { timeAgo } from "@/lib/formats";
 
 export default function HealthPage() {
   const [health, setHealth] = useState<HealthData | null>(null);
@@ -33,19 +31,14 @@ export default function HealthPage() {
   }
 
   const isHealthy = health.status === "healthy";
-  const metrics = health.model_metrics;
+  const metrics = health.model_metrics ?? {};
 
   // Calibration chart data — add perfect calibration line
-  const calData = health.calibration.bins.map((b) => ({
+  const calData = (health.calibration?.bins ?? []).map((b) => ({
     predicted: b.predicted_mean,
     actual: b.actual_mean,
     count: b.count,
   }));
-
-  const perfectLine = [
-    { x: 0, y: 0 },
-    { x: 1, y: 1 },
-  ];
 
   return (
     <div className="space-y-8">
