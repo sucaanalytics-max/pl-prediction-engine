@@ -11,7 +11,8 @@ import pandas as pd
 import requests
 
 from pipeline.config import (
-    DATA_RAW, FPL_BOOTSTRAP, FPL_FIXTURES, FPL_ELEMENT_SUMMARY
+    DATA_RAW, FPL_BOOTSTRAP, FPL_FIXTURES, FPL_ELEMENT_SUMMARY,
+    PLAYER_TEAM_OVERRIDES, EXCLUDED_PLAYERS,
 )
 from pipeline.data.team_mapping import normalize_team_name, update_fpl_team_map
 
@@ -139,12 +140,29 @@ def build_player_stats(bootstrap: dict) -> pd.DataFrame:
 
     rows = []
     for p in players:
+        full_name = f"{p['first_name']} {p['second_name']}"
+
+        # Skip players known to have left the Premier League
+        if full_name in EXCLUDED_PLAYERS:
+            logger.debug(f"Excluding departed player: {full_name}")
+            continue
+
+        # Apply team override if FPL has incorrect team assignment
+        team_name = team_map.get(p["team"], f"Team {p['team']}")
+        if full_name in PLAYER_TEAM_OVERRIDES:
+            corrected = PLAYER_TEAM_OVERRIDES[full_name]
+            if team_name != corrected:
+                logger.warning(
+                    f"Team override: {full_name} FPL→{team_name}, corrected→{corrected}"
+                )
+            team_name = corrected
+
         rows.append({
             "player_id": p["id"],
-            "name": f"{p['first_name']} {p['second_name']}",
+            "name": full_name,
             "web_name": p["web_name"],
             "team_id": p["team"],
-            "team": team_map.get(p["team"], f"Team {p['team']}"),
+            "team": team_name,
             "position": element_types.get(p["element_type"], "UNK"),
             "now_cost": p["now_cost"] / 10,  # Convert to millions
             "total_points": p["total_points"],

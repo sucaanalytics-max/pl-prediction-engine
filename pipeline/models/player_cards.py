@@ -81,6 +81,10 @@ class PlayerCardsModel:
         # Filter to players with meaningful minutes
         df = df[df["minutes"] >= self.min_minutes].copy()
 
+        # Exclude players marked unavailable/departed (status='u')
+        if "available" in df.columns:
+            df = df[df["available"]].copy()
+
         if len(df) == 0:
             logger.warning("No players with sufficient minutes for card model")
             return {"n_players": 0}

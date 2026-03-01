@@ -144,3 +144,16 @@ PL_TEAMS = [
     "Leeds", "Liverpool", "Man City", "Man United", "Newcastle",
     "Nott'm Forest", "Sunderland", "Tottenham", "West Ham", "Wolves",
 ]
+
+# ── Player Data Quality Corrections ──────────────────────────────────────────
+# FPL API sometimes assigns players to wrong teams (post-season reshuffles,
+# data errors). Maps "First Last" (FPL full name) → correct canonical team.
+PLAYER_TEAM_OVERRIDES: dict = {
+    "Alexander Isak": "Newcastle",   # FPL API incorrectly has team_id=12 (Liverpool)
+}
+
+# Players no longer in the Premier League who may still appear in FPL data
+# with status='u'. Exclude them from all player-level model processing.
+EXCLUDED_PLAYERS: set = {
+    "Son Heung-min",   # Left Tottenham; no longer registered in the PL
+}
