@@ -1,16 +1,16 @@
 "use client";
 
-import { useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { usePredictions } from "@/lib/PredictionsContext";
 import {
   getMatchById, correctScoreToGrid, getHalfKellyPct,
   effectiveEdge, confidenceTier, marketLabel, marketIcon,
-  type MatchPrediction,
 } from "@/lib/predictions";
-import { pct, xg, odds, shortDate, kickoffTime, featureName, confidenceColor, edgeColor, impliedOdds } from "@/lib/formats";
-import { ErrorBoundary, PageSkeleton, ErrorMessage } from "@/components/ErrorBoundary";
+import { pct, xg, odds, shortDate, kickoffTime, confidenceColor, edgeColor, impliedOdds } from "@/lib/formats";
+import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
+import { PageSkeleton } from "@/components/ui/Skeleton";
+import ReactMarkdown from "react-markdown";
 import ScorelineHeatmap from "@/components/ScorelineHeatmap";
 import DistributionChart from "@/components/DistributionChart";
 import SHAPWaterfall from "@/components/SHAPWaterfall";
@@ -29,7 +29,7 @@ function MatchDetailContent() {
     return (
       <div className="card p-8 text-center">
         <p className="text-red-400 font-medium">Match not found</p>
-        <Link href="/" className="mt-4 inline-block text-sm text-pitch-400 hover:text-pitch-300">
+        <Link href="/" className="mt-4 inline-block text-sm text-green-400 hover:text-pitch-300">
           Back to fixtures
         </Link>
       </div>
@@ -94,19 +94,19 @@ function MatchDetailContent() {
         {/* Teams & xG */}
         <div className="flex items-center justify-center gap-6 my-6">
           <div className="text-right flex-1">
-            <h2 className={`font-display text-2xl font-bold ${prediction === "home" ? "text-white" : "text-slate-400"}`}>
+            <h2 className={`text-2xl font-bold ${prediction === "home" ? "text-white" : "text-slate-400"}`}>
               {home_team}
             </h2>
             <p className="text-sm font-mono text-slate-500 mt-1">xG {xg(match.expected_goals.home)}</p>
           </div>
           <div className="flex flex-col items-center px-4">
-            <div className="text-3xl font-display font-bold text-pitch-500">
+            <div className="text-3xl font-bold text-green-400">
               {match.expected_goals.home.toFixed(1)} — {match.expected_goals.away.toFixed(1)}
             </div>
             <span className="text-[10px] text-slate-600 uppercase tracking-wider mt-1">Expected</span>
           </div>
           <div className="text-left flex-1">
-            <h2 className={`font-display text-2xl font-bold ${prediction === "away" ? "text-white" : "text-slate-400"}`}>
+            <h2 className={`text-2xl font-bold ${prediction === "away" ? "text-white" : "text-slate-400"}`}>
               {away_team}
             </h2>
             <p className="text-sm font-mono text-slate-500 mt-1">xG {xg(match.expected_goals.away)}</p>
@@ -116,12 +116,12 @@ function MatchDetailContent() {
         {/* 1X2 bar */}
         <div className="space-y-2">
           <div className="flex h-3 rounded-full overflow-hidden bg-slate-800">
-            <div className="prob-bar bg-pitch-500 rounded-l-full" style={{ width: pct(p.home) }} />
+            <div className="prob-bar bg-green-500 rounded-l-full" style={{ width: pct(p.home) }} />
             <div className="prob-bar bg-slate-500" style={{ width: pct(p.draw) }} />
             <div className="prob-bar bg-sky-500 rounded-r-full" style={{ width: pct(p.away) }} />
           </div>
           <div className="flex justify-between text-xs">
-            <span className="text-pitch-400 font-mono">{pct(p.home)} H ({impliedOdds(p.home)})</span>
+            <span className="text-green-400 font-mono">{pct(p.home)} H ({impliedOdds(p.home)})</span>
             <span className="text-slate-400 font-mono">{pct(p.draw)} D ({impliedOdds(p.draw)})</span>
             <span className="text-sky-400 font-mono">{pct(p.away)} A ({impliedOdds(p.away)})</span>
           </div>
@@ -139,7 +139,7 @@ function MatchDetailContent() {
       {/* Model vs Odds Comparison */}
       {oddsComp?.h2h && Object.keys(oddsComp.h2h).length > 0 && (
         <div className="card p-6">
-          <h3 className="text-sm font-display font-semibold text-white mb-4">Model vs Odds</h3>
+          <h3 className="text-sm font-semibold text-white mb-4">Model vs Odds</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
@@ -152,7 +152,7 @@ function MatchDetailContent() {
               </thead>
               <tbody>
                 <tr className="border-b border-slate-800/30">
-                  <td className="py-2 text-pitch-400 font-medium">Model</td>
+                  <td className="py-2 text-green-400 font-medium">Model</td>
                   <td className="py-2 text-center text-white font-mono">{pct(p.home)}</td>
                   <td className="py-2 text-center text-white font-mono">{pct(p.draw)}</td>
                   <td className="py-2 text-center text-white font-mono">{pct(p.away)}</td>
@@ -293,7 +293,7 @@ function MatchDetailContent() {
               .sort(([, a], [, b]) => b - a)
               .slice(0, 6)
               .map(([combo, prob]) => (
-                <div key={combo} className="bg-slate-800/60 rounded px-1.5 py-1.5">
+                <div key={combo} className="glass-inset rounded px-1.5 py-1.5">
                   <span className="text-slate-300">{combo}</span>
                   <span className="text-slate-500 ml-1">{pct(prob, 0)}</span>
                 </div>
@@ -310,7 +310,7 @@ function MatchDetailContent() {
               return (
                 <div key={line} className="flex justify-between text-xs font-mono">
                   <span className="text-slate-400">AH {lineNum}</span>
-                  <span className="text-pitch-400">{pct(prob as number)}</span>
+                  <span className="text-green-400">{pct(prob as number)}</span>
                   <span className="text-sky-400">{pct(1 - (prob as number))}</span>
                 </div>
               );
@@ -322,15 +322,15 @@ function MatchDetailContent() {
       {/* Goalscorer Probabilities */}
       {goalscorer && (goalscorer.home_scorers.length > 0 || goalscorer.away_scorers.length > 0) && (
         <div className="card p-6">
-          <h3 className="text-sm font-display font-semibold text-white mb-4">Goalscorer Probabilities</h3>
+          <h3 className="text-sm font-semibold text-white mb-4">Goalscorer Probabilities</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Home scorers */}
             {goalscorer.home_scorers.length > 0 && (
               <div>
-                <h4 className="text-xs text-pitch-400 uppercase tracking-wider mb-3">{home_team}</h4>
+                <h4 className="text-xs text-green-400 uppercase tracking-wider mb-3">{home_team}</h4>
                 <div className="space-y-2">
                   {goalscorer.home_scorers.slice(0, 6).map((s, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-slate-800/30 rounded-lg px-3 py-2">
+                    <div key={i} className="flex items-center gap-3 glass-inset rounded-lg px-3 py-2">
                       <div className="flex-1 min-w-0">
                         <span className="text-sm font-medium text-white">{s.web_name}</span>
                         <span className="text-[10px] text-slate-500 ml-1.5">{s.position}</span>
@@ -350,7 +350,7 @@ function MatchDetailContent() {
                 <h4 className="text-xs text-sky-400 uppercase tracking-wider mb-3">{away_team}</h4>
                 <div className="space-y-2">
                   {goalscorer.away_scorers.slice(0, 6).map((s, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-slate-800/30 rounded-lg px-3 py-2">
+                    <div key={i} className="flex items-center gap-3 glass-inset rounded-lg px-3 py-2">
                       <div className="flex-1 min-w-0">
                         <span className="text-sm font-medium text-white">{s.web_name}</span>
                         <span className="text-[10px] text-slate-500 ml-1.5">{s.position}</span>
@@ -373,7 +373,7 @@ function MatchDetailContent() {
 
       {/* Scoreline Heatmap */}
       <div className="card p-6">
-        <h3 className="text-sm font-display font-semibold text-white mb-4">Correct Score Probabilities</h3>
+        <h3 className="text-sm font-semibold text-white mb-4">Correct Score Probabilities</h3>
         <ScorelineHeatmap grid={scoreGrid} homeTeam={home_team} awayTeam={away_team} />
       </div>
 
@@ -404,10 +404,10 @@ function MatchDetailContent() {
       {/* Player Bookings */}
       {bookings.length > 0 && (
         <div className="card p-6">
-          <h3 className="text-sm font-display font-semibold text-white mb-4">Player Booking Probabilities</h3>
+          <h3 className="text-sm font-semibold text-white mb-4">Player Booking Probabilities</h3>
           <div className="space-y-2">
             {bookings.map((b, i) => (
-              <div key={i} className="flex items-center gap-3 bg-slate-800/30 rounded-lg px-3 py-2">
+              <div key={i} className="flex items-center gap-3 glass-inset rounded-lg px-3 py-2">
                 <div className="flex-1 min-w-0">
                   <span className="text-sm font-medium text-white">{b.web_name}</span>
                   <span className="text-xs text-slate-500 ml-2">{b.team}</span>
@@ -440,13 +440,13 @@ function MatchDetailContent() {
       {/* Value Bets */}
       {match.value_bets.length > 0 && (
         <div className="card p-6">
-          <h3 className="text-sm font-display font-semibold text-white mb-4">Value Bets</h3>
+          <h3 className="text-sm font-semibold text-white mb-4">Value Bets</h3>
           <div className="space-y-3">
             {match.value_bets.map((bet, i) => {
               const tier = bet.confidence_tier ?? confidenceTier(effectiveEdge(bet));
               const badge = CONF_BADGES[tier] ?? CONF_BADGES.low;
               return (
-                <div key={i} className="flex items-center justify-between bg-slate-800/40 rounded-lg p-3 gap-2 flex-wrap">
+                <div key={i} className="flex items-center justify-between glass-inset rounded-lg p-3 gap-2 flex-wrap">
                   <div className="flex items-center gap-2">
                     <span className="text-xs opacity-60" role="img" aria-label={MARKET_ICON_LABELS[marketIcon(bet.market)] ?? "Market"}>{marketIcon(bet.market)}</span>
                     <div>
@@ -483,17 +483,12 @@ function MatchDetailContent() {
 
       {/* Narrative */}
       <div className="card p-6">
-        <h3 className="text-sm font-display font-semibold text-white mb-3">Match Preview</h3>
-        <div
-          className="text-sm text-slate-300 leading-relaxed prose-dark"
-          dangerouslySetInnerHTML={{
-            __html: match.narrative
-              .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
-              .replace(/### (.*?)$/gm, '<h4 class="text-xs uppercase tracking-wider text-slate-500 mt-4 mb-1 font-semibold">$1</h4>')
-              .replace(/## (.*?)$/gm, '<h3 class="text-sm font-display font-semibold text-white mt-4 mb-2">$1</h3>')
-              .replace(/\n/g, "<br />"),
-          }}
-        />
+        <h3 className="text-sm font-semibold text-white mb-3" style={{ fontFamily: "var(--font-jakarta)" }}>
+          Match Preview
+        </h3>
+        <div className="text-sm text-slate-300 leading-relaxed space-y-2 [&_strong]:text-white [&_strong]:font-semibold [&_h2]:text-sm [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mt-4 [&_h2]:mb-1 [&_h3]:text-xs [&_h3]:uppercase [&_h3]:tracking-wider [&_h3]:text-slate-500 [&_h3]:mt-3 [&_h3]:mb-1 [&_h3]:font-semibold">
+          <ReactMarkdown>{match.narrative}</ReactMarkdown>
+        </div>
       </div>
 
       {/* Confidence / entropy */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { useLocalStorage } from "@/lib/hooks";
 import { pct } from "@/lib/formats";
 import { kellyFraction, currentDrawdown, type KellyResult } from "@/lib/kelly";
@@ -189,7 +189,7 @@ function BankrollContent() {
     <div className="space-y-8">
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div>
-          <h1 className="font-display text-2xl font-bold text-white tracking-tight">
+          <h1 className="text-2xl font-bold text-white tracking-tight">
             Bankroll Tracker
           </h1>
           <p className="text-sm text-slate-500 mt-1">
@@ -200,14 +200,15 @@ function BankrollContent() {
           {bets.length > 0 && (
             <button
               onClick={exportCSV}
-              className="px-3 py-1.5 text-xs text-slate-400 hover:text-white bg-slate-800/50 hover:bg-slate-700/50 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs text-slate-400 hover:text-white rounded-lg transition-colors"
+              style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)" }}
             >
               Export CSV
             </button>
           )}
           <button
             onClick={() => setShowForm(!showForm)}
-            className="px-3 py-1.5 text-xs text-white bg-pitch-600 hover:bg-pitch-500 rounded-lg transition-colors font-medium"
+            className="px-3 py-1.5 text-xs text-white bg-green-700 hover:bg-green-600 rounded-lg transition-colors font-medium"
           >
             {showForm ? "Cancel" : "+ Add Bet"}
           </button>
@@ -282,7 +283,7 @@ function BankrollContent() {
       {/* Add Bet Form */}
       {showForm && (
         <div className="card p-6 space-y-4">
-          <h3 className="text-sm font-display font-semibold text-white">Add Bet</h3>
+          <h3 className="text-sm font-semibold text-white">Add Bet</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
             <div>
               <label htmlFor="bet-date" className="form-label">Date</label>
@@ -330,7 +331,7 @@ function BankrollContent() {
                     ? r === "win" ? "bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/30"
                     : r === "loss" ? "bg-red-500/20 text-red-400 ring-1 ring-red-500/30"
                     : r === "void" ? "bg-slate-700/50 text-slate-300 ring-1 ring-slate-600/30"
-                    : "bg-pitch-600/30 text-pitch-400 ring-1 ring-pitch-500/30"
+                    : "bg-green-500/15 text-green-400 ring-1 ring-green-500/25"
                     : "text-slate-500 hover:text-slate-300"
                 }`}
               >
@@ -338,7 +339,7 @@ function BankrollContent() {
               </button>
             ))}
             <button onClick={addBet}
-              className="ml-auto px-4 py-1.5 bg-pitch-600 hover:bg-pitch-500 text-white rounded-lg text-xs font-medium transition-colors">
+              className="ml-auto px-4 py-1.5 bg-green-700 hover:bg-green-600 text-white rounded-lg text-xs font-medium transition-colors">
               Save Bet
             </button>
           </div>
@@ -348,7 +349,7 @@ function BankrollContent() {
       {/* PnL Chart */}
       {trajectory.length > 1 && (
         <div className="card p-6">
-          <h3 className="text-sm font-display font-semibold text-white mb-4">Bankroll Trajectory</h3>
+          <h3 className="text-sm font-semibold text-white mb-4">Bankroll Trajectory</h3>
           <PnLChart data={trajectory} initialBankroll={initialBankroll} />
         </div>
       )}
@@ -356,12 +357,12 @@ function BankrollContent() {
       {/* Market Breakdown */}
       {Object.keys(markets).length > 0 && (
         <div className="card p-6">
-          <h3 className="text-sm font-display font-semibold text-white mb-4">Performance by Market</h3>
+          <h3 className="text-sm font-semibold text-white mb-4">Performance by Market</h3>
           <div className="space-y-2">
             {Object.entries(markets)
               .sort(([, a], [, b]) => b.pnl - a.pnl)
               .map(([market, stats]) => (
-                <div key={market} className="flex items-center justify-between bg-slate-800/30 rounded-lg px-3 py-2 text-xs">
+                <div key={market} className="flex items-center justify-between glass-inset px-3 py-2 text-xs">
                   <span className="text-white font-medium">{market}</span>
                   <div className="flex items-center gap-4 font-mono">
                     <span className="text-slate-400">{stats.wins}W {stats.losses}L</span>
@@ -422,7 +423,7 @@ function BankrollContent() {
                           bet.result === "win" ? "text-emerald-400"
                           : bet.result === "loss" ? "text-red-400"
                           : bet.result === "void" ? "text-slate-400"
-                          : "text-pitch-400"
+                          : "text-green-400"
                         }`}
                       >
                         <option value="pending">PEND</option>
@@ -472,7 +473,7 @@ function BankrollContent() {
           <div className="text-slate-600 text-xs mt-1">Start tracking your bets to see P&L analysis and bankroll trajectory.</div>
           <button
             onClick={() => setShowForm(true)}
-            className="mt-4 px-4 py-2 text-xs text-white bg-pitch-600 hover:bg-pitch-500 rounded-lg transition-colors font-medium"
+            className="mt-4 px-4 py-2 text-xs text-white bg-green-700 hover:bg-green-600 rounded-lg transition-colors font-medium"
           >
             + Add Your First Bet
           </button>
@@ -483,7 +484,7 @@ function BankrollContent() {
 
       {/* Kelly Calculator */}
       <div className="card p-6 space-y-4">
-        <h3 className="text-sm font-display font-semibold text-white">Kelly Calculator</h3>
+        <h3 className="text-sm font-semibold text-white">Kelly Calculator</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label htmlFor="kelly-prob" className="form-label">Model Probability</label>
@@ -504,7 +505,7 @@ function BankrollContent() {
           <div className="flex items-end">
             <button
               onClick={() => setKellyResult(kellyFraction(parseFloat(calcProb), parseFloat(calcOdds)))}
-              className="w-full bg-pitch-600 hover:bg-pitch-500 text-white rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+              className="w-full bg-green-700 hover:bg-green-600 text-white rounded-lg px-4 py-2 text-sm font-medium transition-colors"
             >
               Calculate
             </button>
@@ -513,27 +514,27 @@ function BankrollContent() {
 
         {kellyResult && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
-            <div className="bg-slate-800/60 rounded-lg p-3">
+            <div className="glass-inset p-3">
               <div className="stat-label">Full Kelly</div>
-              <div className="text-lg font-display font-bold text-white">{pct(kellyResult.full_kelly)}</div>
+              <div className="text-lg font-bold text-white">{pct(kellyResult.full_kelly)}</div>
             </div>
-            <div className="bg-slate-800/60 rounded-lg p-3">
+            <div className="glass-inset p-3">
               <div className="stat-label">Half Kelly</div>
-              <div className="text-lg font-display font-bold text-sky-400">{pct(kellyResult.half_kelly)}</div>
+              <div className="text-lg font-bold text-sky-400">{pct(kellyResult.half_kelly)}</div>
             </div>
-            <div className="bg-slate-800/60 rounded-lg p-3">
+            <div className="glass-inset p-3">
               <div className="stat-label">Quarter Kelly</div>
-              <div className="text-lg font-display font-bold text-slate-400">{pct(kellyResult.quarter_kelly)}</div>
+              <div className="text-lg font-bold text-slate-400">{pct(kellyResult.quarter_kelly)}</div>
             </div>
-            <div className="bg-slate-800/60 rounded-lg p-3">
+            <div className="glass-inset p-3">
               <div className="stat-label">Edge</div>
-              <div className={`text-lg font-display font-bold ${kellyResult.edge > 0 ? "text-emerald-400" : "text-red-400"}`}>
+              <div className={`text-lg font-bold ${kellyResult.edge > 0 ? "text-emerald-400" : "text-red-400"}`}>
                 {kellyResult.edge > 0 ? "+" : ""}{pct(kellyResult.edge)}
               </div>
             </div>
-            <div className="bg-slate-800/60 rounded-lg p-3">
+            <div className="glass-inset p-3">
               <div className="stat-label">EV</div>
-              <div className={`text-lg font-display font-bold ${kellyResult.ev > 0 ? "text-emerald-400" : "text-red-400"}`}>
+              <div className={`text-lg font-bold ${kellyResult.ev > 0 ? "text-emerald-400" : "text-red-400"}`}>
                 {kellyResult.ev > 0 ? "+" : ""}{kellyResult.ev.toFixed(3)}
               </div>
             </div>

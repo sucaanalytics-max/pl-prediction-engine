@@ -2,10 +2,10 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { loadPlayerStats, type PlayerStat } from "@/lib/predictions";
-import { pct } from "@/lib/formats";
 import { useDebounce } from "@/lib/hooks";
 import { POS_COLORS, POS_BG } from "@/lib/theme";
-import { ErrorBoundary, PageSkeleton, ErrorMessage } from "@/components/ErrorBoundary";
+import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
+import { PageSkeleton } from "@/components/ui/Skeleton";
 
 type SortKey =
   | "goals_per_90"
@@ -89,8 +89,26 @@ function PlayersContent() {
     return c;
   }, [players]);
 
-  // Early returns after all hooks
-  if (error) return <ErrorMessage message={error} onRetry={() => window.location.reload()} />;
+  // Early returns after all hooks — show graceful "unavailable" state for 404
+  if (error) {
+    const isNotFound = error.includes("404") || error.toLowerCase().includes("failed");
+    if (isNotFound) {
+      return (
+        <div className="space-y-4">
+          <h1 className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-jakarta)" }}>
+            Player Stats
+          </h1>
+          <div className="card p-10 text-center">
+            <p className="text-slate-400 text-sm font-medium mb-1">Player data not available</p>
+            <p className="text-slate-600 text-xs">
+              Player stats are generated separately from match predictions. Check back after the next pipeline run.
+            </p>
+          </div>
+        </div>
+      );
+    }
+    return <ErrorMessage message={error} onRetry={() => window.location.reload()} />;
+  }
   if (!players) return <PageSkeleton rows={6} />;
 
   // Non-hook computations that require players to be non-null
@@ -108,7 +126,7 @@ function PlayersContent() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-display text-2xl font-bold text-white tracking-tight">
+        <h1 className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-jakarta)" }}>
           Player Stats
         </h1>
         <p className="text-sm text-slate-500 mt-1">
@@ -127,7 +145,7 @@ function PlayersContent() {
               className={`px-2.5 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors border ${
                 posFilter === pos
                   ? pos === "all"
-                    ? "bg-pitch-600 text-white border-pitch-500/30"
+                    ? "bg-green-700 text-white border-green-600/30"
                     : `${POS_BG[pos] ?? "text-white bg-slate-800/60 border-slate-700/50"}`
                   : "text-slate-500 hover:text-slate-300 border-transparent"
               }`}
@@ -146,8 +164,8 @@ function PlayersContent() {
               onClick={() => toggleSort(opt.key)}
               className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-colors ${
                 sortKey === opt.key
-                  ? "bg-pitch-500/20 text-pitch-400 ring-1 ring-pitch-500/30"
-                  : "bg-slate-800/40 text-slate-500 hover:text-white"
+                  ? "bg-green-500/15 text-green-400 ring-1 ring-green-500/25"
+                  : "text-slate-500 hover:text-white"
               }`}
             >
               {opt.label}{sortArrow(opt.key)}
@@ -196,7 +214,7 @@ function PlayersContent() {
                   <button
                     onClick={() => setPage(Math.max(0, page - 1))}
                     disabled={page === 0}
-                    className="px-2 py-1 text-[10px] rounded bg-slate-800/50 text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
+                    className="px-2 py-1 text-[10px] rounded glass-inset text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
                   >
                     ← Prev
                   </button>
@@ -204,7 +222,7 @@ function PlayersContent() {
                   <button
                     onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
                     disabled={page >= totalPages - 1}
-                    className="px-2 py-1 text-[10px] rounded bg-slate-800/50 text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
+                    className="px-2 py-1 text-[10px] rounded glass-inset text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
                   >
                     Next →
                   </button>
@@ -351,7 +369,7 @@ function PlayersContent() {
                   <button
                     onClick={() => setPage(Math.max(0, page - 1))}
                     disabled={page === 0}
-                    className="px-2 py-1 text-[10px] rounded bg-slate-800/50 text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
+                    className="px-2 py-1 text-[10px] rounded glass-inset text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
                   >
                     ← Prev
                   </button>
@@ -359,7 +377,7 @@ function PlayersContent() {
                   <button
                     onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
                     disabled={page >= totalPages - 1}
-                    className="px-2 py-1 text-[10px] rounded bg-slate-800/50 text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
+                    className="px-2 py-1 text-[10px] rounded glass-inset text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
                   >
                     Next →
                   </button>

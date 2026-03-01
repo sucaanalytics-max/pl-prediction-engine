@@ -14,7 +14,9 @@ import {
 } from "@/lib/predictions";
 import { pct, odds, timeAgo, edgeColor } from "@/lib/formats";
 import { CONF_BADGES, MARKET_ICON_LABELS, edgePrefix } from "@/lib/theme";
-import { ErrorBoundary, PageSkeleton, ErrorMessage } from "@/components/ErrorBoundary";
+import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
+import { PageSkeleton } from "@/components/ui/Skeleton";
+import { StatCard } from "@/components/ui/StatCard";
 
 type MarketFilter = "all" | "1X2" | "Goals O/U" | "BTTS" | "Corners" | "Cards" | "Goalscorer" | "Player";
 type ConfFilter = "all" | "high" | "medium" | "low";
@@ -150,10 +152,13 @@ function ValueBetsContent() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 animate-slide-up">
       {/* Header */}
       <div>
-        <h1 className="font-display text-2xl font-bold text-white tracking-tight">
+        <h1
+          className="text-2xl font-bold text-white tracking-tight"
+          style={{ fontFamily: "var(--font-jakarta)" }}
+        >
           Value Bets
         </h1>
         <p className="text-sm text-slate-500 mt-1">
@@ -164,28 +169,21 @@ function ValueBetsContent() {
 
       {/* Summary stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="card p-4">
-          <div className="stat-label">Bets Found</div>
-          <div className="stat-value text-white">{allBets.length}</div>
-        </div>
-        <div className="card p-4">
-          <div className="stat-label">Avg Edge</div>
-          <div className="stat-value text-emerald-400">
-            {allBets.length > 0 ? pct(avgEdge) : "—"}
-          </div>
-        </div>
-        <div className="card p-4">
-          <div className="stat-label">Best Edge</div>
-          <div className="stat-value text-emerald-400">
-            {allBets.length > 0 ? pct(bestEdge) : "—"}
-          </div>
-        </div>
-        <div className="card p-4">
-          <div className="stat-label">Total ½K Stake</div>
-          <div className="stat-value text-sky-400">
-            {allBets.length > 0 ? pct(totalKelly) : "—"}
-          </div>
-        </div>
+        <StatCard label="Bets Found" value={allBets.length} />
+        <StatCard
+          label="Avg Edge"
+          value={allBets.length > 0 ? pct(avgEdge) : "—"}
+          accent={allBets.length > 0}
+        />
+        <StatCard
+          label="Best Edge"
+          value={allBets.length > 0 ? pct(bestEdge) : "—"}
+          accent={allBets.length > 0}
+        />
+        <StatCard
+          label="Total ½K Stake"
+          value={allBets.length > 0 ? pct(totalKelly) : "—"}
+        />
       </div>
 
       <div className="glow-line" />
@@ -203,9 +201,10 @@ function ValueBetsContent() {
                 onClick={() => setMarketFilter(m)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   marketFilter === m
-                    ? "bg-pitch-600 text-white"
-                    : "bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50"
+                    ? "bg-green-700 text-white"
+                    : "text-slate-400 hover:text-white"
                 }`}
+                style={marketFilter !== m ? { background: "var(--color-surface)", border: "1px solid var(--color-border)" } : undefined}
               >
                 {m === "all" ? "All" : m}
                 <span className="ml-1.5 text-[10px] opacity-60">{count}</span>
@@ -266,7 +265,7 @@ function ValueBetsContent() {
               placeholder="Search team or market…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-slate-800/50 border border-slate-700/50 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 w-52 focus:outline-none focus:ring-1 focus:ring-pitch-500"
+              className="form-input text-xs w-52 py-1.5"
             />
             {search && (
               <button
@@ -318,7 +317,7 @@ function ValueBetsContent() {
               <div
                 key={`m-${bet.match_id}-${bet.market}-${i}`}
                 className="card p-3.5 space-y-2"
-                style={tier === "high" ? { borderLeft: "3px solid rgba(42,173,31,0.5)" } : undefined}
+                style={tier === "high" ? { borderLeft: "3px solid #22c55e" } : undefined}
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -410,7 +409,7 @@ function ValueBetsContent() {
                 return (
                   <tr
                     key={`${bet.match_id}-${bet.market}-${i}`}
-                    style={tier === "high" ? { borderLeft: "3px solid rgba(42,173,31,0.4)" } : undefined}
+                    style={tier === "high" ? { borderLeft: "3px solid #22c55e" } : undefined}
                   >
                     <td>
                       <div className="text-white font-medium text-xs">

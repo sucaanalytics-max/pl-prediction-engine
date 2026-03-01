@@ -209,6 +209,37 @@ export interface HealthData {
   };
 }
 
+export interface TeamStanding {
+  position: number;
+  team: string;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  gf: number;
+  ga: number;
+  gd: number;
+  points: number;
+  form: string[]; // last 5: 'W' | 'D' | 'L'
+  logo_url?: string;
+}
+
+export interface H2HMatch {
+  date: string;
+  home_goals: number;
+  away_goals: number;
+  season: string;
+}
+
+export interface H2HRecord {
+  home_team: string;
+  away_team: string;
+  home_wins: number;
+  draws: number;
+  away_wins: number;
+  matches: H2HMatch[];
+}
+
 const BASE_PATH = "/predictions";
 
 export async function loadPredictions(): Promise<PredictionData> {
@@ -231,8 +262,27 @@ export async function loadHealth(): Promise<HealthData> {
 
 export async function loadPlayerStats(): Promise<PlayerStat[]> {
   const res = await fetch(`${BASE_PATH}/player_stats.json`);
-  if (!res.ok) throw new Error("Failed to load player stats");
+  if (!res.ok) throw new Error(`Failed to load player stats (${res.status})`);
   return res.json();
+}
+
+export async function loadTable(): Promise<TeamStanding[]> {
+  const res = await fetch(`${BASE_PATH}/table.json`);
+  if (!res.ok) throw new Error(`Failed to load league table (${res.status})`);
+  return res.json();
+}
+
+export async function loadH2H(homeTeam: string, awayTeam: string): Promise<H2HRecord | null> {
+  const res = await fetch(`${BASE_PATH}/h2h.json`);
+  if (!res.ok) return null;
+  const all: H2HRecord[] = await res.json();
+  return (
+    all.find(
+      (r) =>
+        (r.home_team === homeTeam && r.away_team === awayTeam) ||
+        (r.home_team === awayTeam && r.away_team === homeTeam)
+    ) ?? null
+  );
 }
 
 export function getMatchById(

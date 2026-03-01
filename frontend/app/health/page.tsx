@@ -6,7 +6,9 @@ import {
 } from "recharts";
 import { usePredictions } from "@/lib/PredictionsContext";
 import { pct, timeAgo } from "@/lib/formats";
-import { ErrorBoundary, PageSkeleton, ErrorMessage } from "@/components/ErrorBoundary";
+import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
+import { PageSkeleton } from "@/components/ui/Skeleton";
+import { StatCard } from "@/components/ui/StatCard";
 
 const STALE_HEALTH_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -65,7 +67,7 @@ function HealthContent() {
     <div className="space-y-8">
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div>
-          <h1 className="font-display text-2xl font-bold text-white tracking-tight">
+          <h1 className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-jakarta)" }}>
             Model Health
           </h1>
           <p className="text-sm text-slate-500 mt-1">
@@ -102,7 +104,7 @@ function HealthContent() {
         {/* Stacking Weights */}
         {stackingData && stackingData.length > 0 ? (
           <div className="card p-6">
-            <h3 className="text-sm font-display font-semibold text-white mb-4">
+            <h3 className="text-sm font-semibold text-white mb-4">
               Ensemble Weights (Meta-Learner)
             </h3>
             <ResponsiveContainer width="100%" height={200}>
@@ -111,7 +113,7 @@ function HealthContent() {
                 <XAxis type="number" domain={[0, 1]} tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis type="category" dataKey="name" tick={{ fill: "#94a3b8", fontSize: 11 }} axisLine={false} tickLine={false} width={75} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v: number) => [pct(v), "Weight"]} />
-                <Bar dataKey="weight" fill="#2aad1f" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="weight" fill="#22c55e" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
             <p className="text-[10px] text-slate-600 mt-2">
@@ -120,7 +122,7 @@ function HealthContent() {
           </div>
         ) : (
           <div className="card p-6">
-            <h3 className="text-sm font-display font-semibold text-white mb-4">
+            <h3 className="text-sm font-semibold text-white mb-4">
               Ensemble Weights
             </h3>
             <div className="text-sm text-slate-500">
@@ -135,7 +137,7 @@ function HealthContent() {
         {/* Per-Market Brier */}
         {marketMetrics.length > 0 && (
           <div className="card p-6">
-            <h3 className="text-sm font-display font-semibold text-white mb-4">Per-Market Calibration</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">Per-Market Calibration</h3>
             <div className="space-y-3">
               {marketMetrics.map(({ market, key, target }) => {
                 const val = metrics[key] ?? 0;
@@ -167,7 +169,7 @@ function HealthContent() {
       {/* Calibration Plot */}
       {calData.length > 0 && (
         <div className="card p-6">
-          <h3 className="text-sm font-display font-semibold text-white mb-4">
+          <h3 className="text-sm font-semibold text-white mb-4">
             Calibration Curve
           </h3>
           <p className="text-xs text-slate-500 mb-4">
@@ -196,7 +198,7 @@ function HealthContent() {
               <ReferenceLine segment={[{ x: 0, y: 0 }, { x: 1, y: 1 }]} stroke="#475569" strokeDasharray="5 5" />
               <Scatter
                 data={calData}
-                fill="#2aad1f"
+                fill="#22c55e"
                 fillOpacity={0.8}
                 label={({ x, y, value, index }: any) => (
                   <text x={x} y={y - 10} textAnchor="middle" fill="#94a3b8" fontSize={9} fontFamily="var(--font-mono)">
@@ -211,29 +213,29 @@ function HealthContent() {
 
       {/* Pipeline info */}
       <div className="card p-6 space-y-4">
-        <h3 className="text-sm font-display font-semibold text-white">Pipeline Status</h3>
+        <h3 className="text-sm font-semibold text-white">Pipeline Status</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          <div className="bg-slate-800/40 rounded-lg p-3">
+          <div className="glass-inset p-3">
             <div className="stat-label">Last Run</div>
             <div className="text-sm font-mono text-white mt-1">{new Date(health.last_updated).toLocaleString("en-GB")}</div>
           </div>
-          <div className="bg-slate-800/40 rounded-lg p-3">
+          <div className="glass-inset p-3">
             <div className="stat-label">Gameweek</div>
             <div className="text-sm font-mono text-white mt-1">GW {health.gameweek}</div>
           </div>
-          <div className="bg-slate-800/40 rounded-lg p-3">
+          <div className="glass-inset p-3">
             <div className="stat-label">Predictions</div>
             <div className="text-sm font-mono text-white mt-1">{health.n_predictions} matches</div>
           </div>
           {data && (
             <>
-              <div className="bg-slate-800/40 rounded-lg p-3">
+              <div className="glass-inset p-3">
                 <div className="stat-label">Models</div>
                 <div className="text-sm font-mono text-white mt-1">
                   {(data.metadata.models?.length ?? 0) + (data.metadata.sub_models?.length ?? 0)}
                 </div>
               </div>
-              <div className="bg-slate-800/40 rounded-lg p-3">
+              <div className="glass-inset p-3">
                 <div className="stat-label">Simulations</div>
                 <div className="text-sm font-mono text-white mt-1">{(data.metadata.n_simulations / 1000).toFixed(0)}K</div>
               </div>
@@ -244,7 +246,7 @@ function HealthContent() {
 
       {/* Benchmarks */}
       <div className="card p-6 space-y-3">
-        <h3 className="text-sm font-display font-semibold text-white">Benchmarks</h3>
+        <h3 className="text-sm font-semibold text-white">Benchmarks</h3>
         <div className="text-xs text-slate-400 space-y-2">
           <div className="flex justify-between"><span>Bookmaker consensus Brier (1X2)</span><span className="font-mono text-slate-300">~0.200</span></div>
           <div className="flex justify-between"><span>Naive home-bias model Brier</span><span className="font-mono text-slate-300">~0.250</span></div>
@@ -279,7 +281,7 @@ function MetricCard({ label, value, target, good }: { label: string; value: stri
   return (
     <div className="card p-4">
       <div className="stat-label">{label}</div>
-      <div className={`text-xl font-display font-bold mt-1 ${good ? "text-emerald-400" : "text-amber-400"}`}>{value}</div>
+      <div className={`text-xl font-bold mt-1 ${good ? "text-green-400" : "text-amber-400"}`}>{value}</div>
       <div className="text-[10px] text-slate-600 mt-1">Target: {target}</div>
     </div>
   );

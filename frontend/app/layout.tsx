@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { DM_Sans, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import { PredictionsProvider } from "@/lib/PredictionsContext";
 
-const dmSans = DM_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-jakarta",
   display: "swap",
 });
 
@@ -29,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${dmSans.variable} ${mono.variable}`}>
+    <html lang="en" className={`dark ${jakarta.variable} ${mono.variable}`}>
       <head>
-        <meta name="theme-color" content="#070c14" />
+        <meta name="theme-color" content="#0a0f1c" />
       </head>
       <body className="min-h-screen">
         <PredictionsProvider>

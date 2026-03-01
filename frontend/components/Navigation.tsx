@@ -25,6 +25,24 @@ const NAV_ITEMS = [
     ),
   },
   {
+    href: "/table",
+    label: "League Table",
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M3 6h18M3 14h18M3 18h18" />
+      </svg>
+    ),
+  },
+  {
+    href: "/h2h",
+    label: "Head-to-Head",
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+      </svg>
+    ),
+  },
+  {
     href: "/players",
     label: "Players",
     icon: (
@@ -68,17 +86,15 @@ export default function Navigation() {
 
   const pipelineVersion = predictions?.metadata?.pipeline_version ?? "—";
   const season = predictions?.metadata?.season ?? "2025-26";
-  const valueBetCount = predictions?.predictions?.reduce(
-    (acc, p) => acc + (p.value_bets?.length ?? 0),
-    0
-  ) ?? 0;
+  const valueBetCount =
+    predictions?.predictions?.reduce((acc, p) => acc + (p.value_bets?.length ?? 0), 0) ?? 0;
 
   return (
     <>
       {/* Skip to content */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-pitch-600 focus:text-white focus:rounded-lg focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-green-600 focus:text-white focus:rounded-lg focus:text-sm"
       >
         Skip to content
       </a>
@@ -89,15 +105,20 @@ export default function Navigation() {
         aria-expanded={mobileOpen}
         aria-controls="sidebar-nav"
         aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
-        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg focus-visible:ring-2 focus-visible:ring-pitch-500 focus-visible:outline-none"
+        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg"
         style={{
-          background: "rgba(255,255,255,0.07)",
-          border: "1px solid rgba(255,255,255,0.10)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+          background: "#111827",
+          border: "1px solid rgba(255,255,255,0.08)",
         }}
       >
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+        <svg
+          className="w-5 h-5 text-slate-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+          aria-hidden="true"
+        >
           {mobileOpen ? (
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           ) : (
@@ -106,11 +127,11 @@ export default function Navigation() {
         </svg>
       </button>
 
-      {/* Overlay */}
+      {/* Mobile overlay */}
       {mobileOpen && (
         <div
           className="fixed inset-0 z-30 lg:hidden"
-          style={{ background: "rgba(8,13,22,0.70)", backdropFilter: "blur(4px)", WebkitBackdropFilter: "blur(4px)" }}
+          style={{ background: "rgba(10,15,28,0.75)" }}
           onClick={() => setMobileOpen(false)}
           aria-hidden="true"
         />
@@ -125,57 +146,67 @@ export default function Navigation() {
                      transform transition-transform duration-300 ease-in-out
                      ${mobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
         style={{
-          background: "rgba(8, 13, 22, 0.82)",
-          backdropFilter: "blur(20px) saturate(150%)",
-          WebkitBackdropFilter: "blur(20px) saturate(150%)",
-          borderRight: "1px solid rgba(255, 255, 255, 0.07)",
+          background: "#0d1321",
+          borderRight: "1px solid rgba(255, 255, 255, 0.06)",
         }}
       >
         {/* Logo */}
-        <div className="p-5 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-          <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-pitch-500 to-pitch-700 flex items-center justify-center shadow-lg shadow-pitch-500/20">
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <div
+          className="px-5 py-4 flex-shrink-0"
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        >
+          <Link
+            href="/"
+            className="flex items-center gap-3"
+            onClick={() => setMobileOpen(false)}
+          >
+            <div
+              className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.25)" }}
+            >
+              <svg
+                className="w-5 h-5 text-green-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
                 <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9zm-4 4h2v2H5v-2zm4 0h2v2H9v-2zm4 0h2v2h-2v-2z" />
               </svg>
             </div>
             <div>
-              <h1 className="font-display font-bold text-base text-white tracking-tight">
-                PL Engine
-              </h1>
-              <p className="text-[10px] uppercase tracking-widest text-pitch-500 font-medium">
+              <p className="font-bold text-sm text-white tracking-tight leading-none">PL Engine</p>
+              <p className="text-[10px] uppercase tracking-widest text-green-500 font-semibold mt-0.5">
                 Prediction Model
               </p>
             </div>
           </Link>
         </div>
 
-        {/* Nav */}
-        <nav className="p-4 space-y-1" aria-label="Primary">
+        {/* Nav links */}
+        <nav className="p-3 space-y-0.5 flex-1 overflow-y-auto" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
             const isActive =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
+              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={`${isActive ? "nav-link-active" : "nav-link"} relative focus-visible:ring-2 focus-visible:ring-pitch-500 focus-visible:outline-none`}
+                className={isActive ? "nav-link-active" : "nav-link"}
                 aria-current={isActive ? "page" : undefined}
               >
-                {isActive && (
-                  <span
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r bg-pitch-500"
-                    style={{ boxShadow: "0 0 8px rgba(42,173,31,0.5)" }}
-                    aria-hidden="true"
-                  />
-                )}
                 <span aria-hidden="true">{item.icon}</span>
                 <span className="flex-1">{item.label}</span>
                 {item.href === "/value-bets" && valueBetCount > 0 && (
-                  <span className="ml-auto text-[9px] font-mono font-bold text-pitch-400 bg-pitch-500/15 px-1.5 py-0.5 rounded">
+                  <span
+                    className="ml-auto text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full"
+                    aria-label={`${valueBetCount} value bets available`}
+                    style={{
+                      background: "rgba(34,197,94,0.15)",
+                      color: "#4ade80",
+                      border: "1px solid rgba(34,197,94,0.2)",
+                    }}
+                  >
                     {valueBetCount}
                   </span>
                 )}
@@ -185,13 +216,19 @@ export default function Navigation() {
         </nav>
 
         {/* Footer */}
-        <div className="mt-auto p-4 space-y-2" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <div
+          className="p-4 space-y-2"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+        >
           {lastUpdated && (
             <div className="flex items-center gap-1.5 text-[10px] text-slate-600">
               {isStale ? (
                 <span className="stale-warning !text-[9px] !px-1.5 !py-0.5">STALE</span>
               ) : (
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" aria-hidden="true" />
+                <span
+                  className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse flex-shrink-0"
+                  aria-hidden="true"
+                />
               )}
               <span>Updated {timeAgo(lastUpdated)}</span>
             </div>

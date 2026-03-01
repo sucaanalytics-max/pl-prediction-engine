@@ -5,7 +5,9 @@ import { usePredictions } from "@/lib/PredictionsContext";
 import { timeAgo, pct } from "@/lib/formats";
 import { effectiveEdge, type ValueBet } from "@/lib/predictions";
 import FixtureTable from "@/components/FixtureTable";
-import { ErrorBoundary, PageSkeleton, ErrorMessage } from "@/components/ErrorBoundary";
+import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
+import { PageSkeleton } from "@/components/ui/Skeleton";
+import { StatCard } from "@/components/ui/StatCard";
 
 function MatchweekContent() {
   const { predictions: data, loading, error, refresh } = usePredictions();
@@ -15,9 +17,9 @@ function MatchweekContent() {
 
   const valueBetCount = data.predictions.reduce((acc, p) => acc + p.value_bets.length, 0);
   const derbyCount = data.predictions.filter((p) => p.fixture.is_derby).length;
-  const totalModels = (data.metadata.models?.length ?? 0) + (data.metadata.sub_models?.length ?? 0);
+  const totalModels =
+    (data.metadata.models?.length ?? 0) + (data.metadata.sub_models?.length ?? 0);
 
-  // Find best value bet
   let bestBet: (ValueBet & { home_team: string; away_team: string }) | null = null;
   for (const pred of data.predictions) {
     for (const bet of pred.value_bets) {
@@ -29,101 +31,114 @@ function MatchweekContent() {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <div className="flex items-center gap-3 mb-1">
-          <h1 className="font-display text-2xl font-bold text-white tracking-tight">
-            Matchweek {data.metadata.gameweek}
-          </h1>
-          <span className="badge-green text-[10px]">LIVE</span>
-          {derbyCount > 0 && (
-            <span className="badge-amber text-[10px]">{derbyCount} DERBY</span>
-          )}
+    <div className="space-y-6 animate-slide-up">
+      {/* Page header */}
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <div className="flex items-center gap-2.5 mb-1 flex-wrap">
+            <h1
+              className="text-2xl font-bold text-white tracking-tight"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Matchweek {data.metadata.gameweek}
+            </h1>
+            <span className="badge-green">LIVE</span>
+            {derbyCount > 0 && <span className="badge-amber">{derbyCount} DERBY</span>}
+          </div>
+          <p className="text-sm text-slate-500">
+            {data.metadata.season} · {data.predictions.length} fixtures ·{" "}
+            Updated {timeAgo(data.metadata.generated_at)}
+          </p>
         </div>
-        <p className="text-sm text-slate-500">
-          {data.metadata.season} season · {data.predictions.length} fixtures ·
-          Updated {timeAgo(data.metadata.generated_at)}
-        </p>
+
+        {/* Pipeline pill */}
+        <div
+          className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] text-slate-500"
+          style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)" }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" aria-hidden="true" />
+          <span>v{data.metadata.pipeline_version}</span>
+          {data.metadata.calibrated && <span className="badge-green text-[8px]">CAL</span>}
+        </div>
       </div>
 
-      {/* Summary stats */}
+      {/* KPI row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="card p-4">
-          <div className="stat-label">Fixtures</div>
-          <div className="stat-value text-white">{data.predictions.length}</div>
-        </div>
-        <div className="card p-4">
-          <div className="stat-label">Value Bets</div>
-          <div className="stat-value text-emerald-400">{valueBetCount}</div>
-        </div>
-        <div className="card p-4">
-          <div className="stat-label">Models</div>
-          <div className="stat-value text-sky-400">{totalModels}</div>
-        </div>
-        <div className="card p-4">
-          <div className="stat-label">Simulations</div>
-          <div className="stat-value text-amber-400">
-            {(data.metadata.n_simulations / 1000).toFixed(0)}K
-          </div>
-        </div>
+        <StatCard label="Fixtures" value={data.predictions.length} />
+        <StatCard
+          label="Value Bets"
+          value={valueBetCount}
+          accent
+          sub={valueBetCount > 0 ? "across all markets" : "none found"}
+        />
+        <StatCard
+          label="Models"
+          value={totalModels}
+          sub={data.metadata.ensemble_method ?? undefined}
+        />
+        <StatCard
+          label="Simulations"
+          value={`${(data.metadata.n_simulations / 1000).toFixed(0)}K`}
+          sub="Monte Carlo"
+        />
       </div>
 
       {/* Best value bet callout */}
       {bestBet && (
         <Link href="/value-bets" className="block">
-          <div className="card-hover p-4 flex items-center gap-4" style={{ borderLeft: "3px solid rgba(42,173,31,0.6)" }}>
-            <div className="flex-shrink-0 text-pitch-500 text-lg font-bold font-mono">
+          <div
+            className="card-hover p-4 flex items-center gap-4"
+            style={{ borderLeft: "3px solid #22c55e" }}
+          >
+            <div
+              className="text-xl font-bold text-green-400 flex-shrink-0"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
               +{pct(effectiveEdge(bestBet), 1)}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[10px] uppercase tracking-wider text-slate-500 mb-0.5">Best edge this week</div>
-              <div className="text-sm font-display font-semibold text-white truncate">
-                {bestBet.market}{bestBet.selection ? ` — ${bestBet.selection}` : ""}
+              <div className="text-[10px] uppercase tracking-wider text-slate-500 mb-0.5 font-semibold">
+                Best edge this week
+              </div>
+              <div
+                className="text-sm font-semibold text-white truncate"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                {bestBet.market}
+                {bestBet.selection ? ` — ${bestBet.selection}` : ""}
               </div>
               <div className="text-xs text-slate-500">
                 {bestBet.home_team} vs {bestBet.away_team}
-                {bestBet.decimal_odds && <span className="ml-2 font-mono">@ {bestBet.decimal_odds.toFixed(2)}</span>}
+                {bestBet.decimal_odds && (
+                  <span className="ml-2 font-mono">@ {bestBet.decimal_odds.toFixed(2)}</span>
+                )}
               </div>
             </div>
-            <span className="badge-green text-[9px] flex-shrink-0">{valueBetCount} TOTAL</span>
+            <span className="badge-green flex-shrink-0">{valueBetCount} total</span>
           </div>
         </Link>
       )}
 
       <div className="glow-line" />
 
-      {/* Fixtures */}
+      {/* Fixtures list */}
       {data.predictions.length === 0 ? (
         <div className="card p-8 text-center">
-          <div className="text-slate-500 text-sm">No fixtures scheduled for this gameweek yet.</div>
-          <div className="text-slate-600 text-xs mt-1">Check back closer to the matchday.</div>
+          <p className="text-slate-500 text-sm">No fixtures scheduled for this gameweek yet.</p>
+          <p className="text-slate-600 text-xs mt-1">Check back closer to the matchday.</p>
         </div>
       ) : (
         <FixtureTable predictions={data.predictions} />
       )}
 
-      {/* Pipeline info */}
-      <div className="card p-4 flex items-center justify-between text-xs text-slate-500 gap-2 flex-wrap">
+      {/* Model footer */}
+      <div className="flex items-center justify-between text-xs text-slate-600 gap-2 flex-wrap px-1">
         <span>
-          Pipeline v{data.metadata.pipeline_version} ·{" "}
-          {[...(data.metadata.models ?? []), ...(data.metadata.sub_models ?? [])].join(" + ")}
+          {[...(data.metadata.models ?? []), ...(data.metadata.sub_models ?? [])].join(" · ")}
         </span>
-        <div className="flex items-center gap-2">
-          {data.metadata.odds_source && (
-            <span className="text-slate-600">
-              odds: {data.metadata.odds_source.replace("_", " ")}
-            </span>
-          )}
-          {data.metadata.ensemble_method && (
-            <span className="badge-green text-[9px]">{data.metadata.ensemble_method.toUpperCase()}</span>
-          )}
-          {data.metadata.calibrated ? (
-            <span className="badge-green">Calibrated</span>
-          ) : (
-            <span className="badge-amber">Uncalibrated</span>
-          )}
-        </div>
+        {data.metadata.odds_source && (
+          <span>odds: {data.metadata.odds_source.replace("_", " ")}</span>
+        )}
       </div>
     </div>
   );

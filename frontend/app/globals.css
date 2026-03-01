@@ -2,84 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
 :root {
-  --font-display: var(--font-dm-sans), system-ui, sans-serif;
-  --font-body:    var(--font-dm-sans), system-ui, sans-serif;
-  --font-mono:    var(--font-mono), ui-monospace, monospace;
+  --color-bg:       #0a0f1c;
+  --color-surface:  #111827;
+  --color-surface2: #151d2e;
+  --color-border:   rgba(255, 255, 255, 0.06);
+  --color-accent:   #22c55e;
+  --font-display:   var(--font-jakarta), system-ui, sans-serif;
+  --font-body:      var(--font-jakarta), system-ui, sans-serif;
+  --font-mono:      var(--font-mono), ui-monospace, monospace;
+  --radius-card:    10px;
+  --radius-badge:   9999px;
 }
 
 @layer base {
   body {
-    @apply text-slate-200 font-body antialiased;
-    background-color: #070c14;
-    background-image:
-      radial-gradient(ellipse 72% 58% at 8% 12%, rgba(42, 173, 31, 0.12) 0%, transparent 65%),
-      radial-gradient(ellipse 58% 48% at 90% 80%, rgba(42, 173, 31, 0.06) 0%, transparent 55%);
-    background-attachment: fixed;
+    @apply antialiased;
+    background-color: var(--color-bg);
+    font-family: var(--font-display);
+    color: #e2e8f0;
   }
 
   ::selection {
-    @apply bg-pitch-500/30 text-white;
+    background: rgba(34, 197, 94, 0.25);
+    color: #fff;
   }
 }
 
 @layer components {
   /* ── Card system ────────────────────────────────────────────────────────── */
-  .card,
-  .card-hover {
-    background: rgba(255, 255, 255, 0.045);
-    backdrop-filter: blur(12px) saturate(160%);
-    -webkit-backdrop-filter: blur(12px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 10px;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 2px 16px rgba(0, 0, 0, 0.35),
-      0 1px 2px rgba(0, 0, 0, 0.5);
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
   }
 
   .card-hover {
-    @apply transition-all duration-200;
+    @apply card transition-colors duration-150 cursor-pointer;
   }
 
   .card-hover:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(42, 173, 31, 0.25);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 4px 24px rgba(0, 0, 0, 0.4),
-      0 0 0 1px rgba(42, 173, 31, 0.08);
+    background: var(--color-surface2);
+    border-color: rgba(34, 197, 94, 0.2);
   }
 
-  /* ── Data tables ───────────────────────────────────────────────────────── */
+  /* ── Inset panel (nested inside card) ──────────────────────────────────── */
+  .glass-inset {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+  }
+
+  /* ── Data tables ────────────────────────────────────────────────────────── */
   .data-table {
     @apply w-full text-sm;
   }
+
   .data-table th {
     @apply text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold
            px-3 py-2.5 border-b border-white/5 select-none;
   }
+
   .data-table td {
-    @apply px-3 py-2 border-b border-white/[0.03] text-slate-300;
+    @apply px-3 py-2.5 border-b text-slate-300;
+    border-color: rgba(255, 255, 255, 0.03);
   }
+
   .data-table tbody tr {
     @apply transition-colors duration-100;
   }
+
   .data-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.025);
   }
 
-  /* ── Form inputs ───────────────────────────────────────────────────────── */
+  /* ── Form inputs ────────────────────────────────────────────────────────── */
   .form-label {
-    @apply block text-xs uppercase tracking-wider text-slate-500 font-medium mb-1.5;
+    @apply block text-xs uppercase tracking-wider text-slate-500 font-semibold mb-1.5;
     letter-spacing: 0.06em;
   }
+
   .form-input {
     @apply w-full rounded-lg px-3 py-2 text-sm text-slate-200 placeholder-slate-600
-           border border-white/10 bg-white/[0.04] font-body
-           focus:outline-none focus:border-pitch-500/50 focus:ring-1 focus:ring-pitch-500/25
+           border bg-white/[0.04]
+           focus:outline-none focus:ring-1
            transition-colors duration-150;
+    border-color: var(--color-border);
+    font-family: var(--font-body);
   }
+
+  .form-input:focus {
+    border-color: rgba(34, 197, 94, 0.4);
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.15);
+  }
+
   .form-select {
     @apply form-input appearance-none cursor-pointer;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
@@ -90,76 +108,108 @@
 
   /* ── Typography utilities ────────────────────────────────────────────────── */
   .stat-value {
-    @apply font-display font-bold text-2xl tracking-tight;
+    @apply font-bold text-2xl tracking-tight;
+    font-family: var(--font-display);
   }
 
   .stat-label {
-    @apply text-xs uppercase tracking-wider text-slate-500 font-medium;
+    @apply text-xs uppercase tracking-wider text-slate-500 font-semibold;
     letter-spacing: 0.08em;
+  }
+
+  /* ── Probability bar ─────────────────────────────────────────────────────── */
+  .prob-bar {
+    @apply h-2 rounded-full transition-all duration-500;
   }
 
   /* ── Badges ──────────────────────────────────────────────────────────────── */
   .badge {
-    @apply inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold tracking-wide;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    @apply inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase;
   }
 
   .badge-green {
     @apply badge;
-    background: rgba(52, 211, 153, 0.10);
-    color: #34d399;
-    border: 1px solid rgba(52, 211, 153, 0.18);
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.2);
   }
 
   .badge-amber {
     @apply badge;
-    background: rgba(251, 191, 36, 0.10);
+    background: rgba(251, 191, 36, 0.12);
     color: #fbbf24;
-    border: 1px solid rgba(251, 191, 36, 0.18);
+    border: 1px solid rgba(251, 191, 36, 0.2);
   }
 
   .badge-red {
     @apply badge;
-    background: rgba(248, 113, 113, 0.10);
+    background: rgba(248, 113, 113, 0.12);
     color: #f87171;
-    border: 1px solid rgba(248, 113, 113, 0.18);
+    border: 1px solid rgba(248, 113, 113, 0.2);
   }
 
-  /* ── Probability bars ────────────────────────────────────────────────────── */
-  .prob-bar {
-    @apply h-1.5 transition-all duration-500;
+  .badge-sky {
+    @apply badge;
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+  }
+
+  .badge-slate {
+    @apply badge;
+    background: rgba(100, 116, 139, 0.15);
+    color: #94a3b8;
+    border: 1px solid rgba(100, 116, 139, 0.2);
   }
 
   /* ── Navigation ──────────────────────────────────────────────────────────── */
   .nav-link {
     @apply flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-slate-400 rounded-lg
-           transition-all duration-150 hover:text-white;
+           transition-colors duration-150 hover:text-white;
   }
 
   .nav-link:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .nav-link-active {
-    @apply flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-white rounded-lg;
-    background: rgba(255, 255, 255, 0.09);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.07),
-      0 1px 3px rgba(0, 0, 0, 0.3);
+    @apply flex items-center gap-2.5 px-3 py-2 text-sm font-semibold text-white rounded-lg;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.18);
   }
 
   /* ── Dividers ────────────────────────────────────────────────────────────── */
   .glow-line {
-    @apply h-px bg-gradient-to-r from-transparent via-pitch-500/35 to-transparent;
+    @apply h-px;
+    background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.3), transparent);
+  }
+
+  /* ── Stale data warning ──────────────────────────────────────────────────── */
+  .stale-warning {
+    @apply inline-flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold
+           uppercase tracking-wider text-amber-400;
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.15);
+    animation: stale-pulse 3s ease-in-out infinite;
+  }
+
+  /* ── Toast notification ──────────────────────────────────────────────────── */
+  .toast {
+    @apply fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-lg text-sm font-medium shadow-lg;
+    background: #1a2235;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: toast-in 0.25s ease-out;
+  }
+
+  .toast-exit {
+    animation: toast-out 0.2s ease-in forwards;
   }
 }
 
 /* ── Scrollbar ───────────────────────────────────────────────────────────────── */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.10) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -172,33 +222,46 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 99px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.14);
 }
 
-/* ── Animations ─────────────────────────────────────────────────────────────── */
+/* ── Animations ──────────────────────────────────────────────────────────────── */
 @keyframes slide-up {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes stale-pulse {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(-8px) scale(0.96); }
 }
 
 .animate-slide-up {
   animation: slide-up 0.3s ease-out;
 }
 
-/* ── Reduced motion ─────────────────────────────────────────────────────────── */
+/* ── Reduced motion ──────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .animate-slide-up,
-  .animate-pulse,
-  .card-hover,
-  .prob-bar,
-  .heatmap-cell {
-    animation: none !important;
-    transition: none !important;
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -215,60 +278,12 @@
 
 /* ── Focus visible (accessibility) ──────────────────────────────────────────── */
 *:focus-visible {
-  outline: 2px solid rgba(42, 173, 31, 0.6);
+  outline: 2px solid rgba(34, 197, 94, 0.6);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* ── Responsive tables — card stacks below sm ───────────────────────────────── */
-@media (max-width: 639px) {
-  .card table {
-    font-size: 11px;
-  }
-  .card th, .card td {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-}
-
-/* ── Stale data warning ────────────────────────────────────────────────────── */
-@keyframes stale-pulse {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
-}
-
-.stale-warning {
-  @apply inline-flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-semibold
-         uppercase tracking-wider text-amber-400;
-  background: rgba(251, 191, 36, 0.08);
-  border: 1px solid rgba(251, 191, 36, 0.15);
-  animation: stale-pulse 3s ease-in-out infinite;
-}
-
-/* ── Toast notification ────────────────────────────────────────────────────── */
-@keyframes toast-in {
-  from { opacity: 0; transform: translateY(12px) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes toast-out {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to   { opacity: 0; transform: translateY(-8px) scale(0.96); }
-}
-
-.toast {
-  @apply fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-lg text-sm font-medium shadow-lg;
-  background: rgba(15, 20, 30, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  animation: toast-in 0.25s ease-out;
-}
-
-.toast-exit {
-  animation: toast-out 0.2s ease-in forwards;
-}
-
-/* ── Range input styling ────────────────────────────────────────────────────── */
+/* ── Range input styling ─────────────────────────────────────────────────────── */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -283,7 +298,7 @@ input[type="range"]::-webkit-slider-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #2aad1f;
+  background: #22c55e;
   cursor: pointer;
   border: 2px solid rgba(255, 255, 255, 0.15);
 }
@@ -292,7 +307,19 @@ input[type="range"]::-moz-range-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #2aad1f;
+  background: #22c55e;
   cursor: pointer;
   border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ── Responsive tables ───────────────────────────────────────────────────────── */
+@media (max-width: 639px) {
+  .card table {
+    font-size: 11px;
+  }
+  .card th,
+  .card td {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
