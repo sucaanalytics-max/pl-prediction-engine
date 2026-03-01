@@ -52,12 +52,17 @@ function TableContent() {
     if (isNotFound) {
       return (
         <div className="space-y-4">
-          <h1 className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-jakarta)" }}>
+          <h1
+            className="text-3xl font-extrabold tracking-tight"
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+          >
             League Table
           </h1>
           <div className="card p-10 text-center">
-            <p className="text-slate-400 text-sm font-medium mb-1">League table not yet available</p>
-            <p className="text-slate-600 text-xs">
+            <p className="text-sm font-medium mb-1" style={{ color: "var(--text-2)" }}>
+              League table not yet available
+            </p>
+            <p className="text-xs" style={{ color: "var(--text-4)" }}>
               The standings table is generated separately. Check back after the next pipeline run.
             </p>
           </div>
@@ -73,10 +78,13 @@ function TableContent() {
     <div className="space-y-6 animate-slide-up">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-jakarta)" }}>
+        <h1
+          className="text-3xl font-extrabold tracking-tight"
+          style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+        >
           Premier League Table
         </h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
           {standings.length} clubs · 2024–25 season
         </p>
       </div>
@@ -84,7 +92,7 @@ function TableContent() {
       {/* Zone legend */}
       <div className="flex flex-wrap gap-3">
         {Object.entries(ZONE_STYLES).map(([key, z]) => (
-          <div key={key} className="flex items-center gap-1.5 text-xs text-slate-400">
+          <div key={key} className="flex items-center gap-1.5 text-xs" style={{ color: "var(--text-3)" }}>
             <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: z.color, opacity: 0.7 }} />
             <span>{z.label}</span>
           </div>
@@ -105,7 +113,7 @@ function TableContent() {
               <th scope="col" className="text-center hidden sm:table-cell">GF</th>
               <th scope="col" className="text-center hidden sm:table-cell">GA</th>
               <th scope="col" className="text-center">GD</th>
-              <th scope="col" className="text-center font-bold text-white">Pts</th>
+              <th scope="col" className="text-center font-bold" style={{ color: "var(--text-1)" }}>Pts</th>
               <th scope="col" className="hidden md:table-cell">Form</th>
             </tr>
           </thead>
@@ -121,27 +129,27 @@ function TableContent() {
                   <td className="text-center">
                     <span
                       className="text-xs font-mono font-bold"
-                      style={{ color: zoneStyle?.color ?? "#64748b" }}
+                      style={{ color: zoneStyle?.color ?? "var(--text-3)" }}
                     >
                       {club.position}
                     </span>
                   </td>
                   <td>
-                    <span className="font-medium text-white text-sm">{club.team}</span>
+                    <span className="font-medium text-sm" style={{ color: "var(--text-1)" }}>{club.team}</span>
                   </td>
-                  <td className="text-center font-mono text-slate-400">{club.played}</td>
-                  <td className="text-center font-mono text-green-400">{club.won}</td>
-                  <td className="text-center font-mono text-slate-400">{club.drawn}</td>
-                  <td className="text-center font-mono text-red-400">{club.lost}</td>
-                  <td className="text-center font-mono text-slate-400 hidden sm:table-cell">{club.gf}</td>
-                  <td className="text-center font-mono text-slate-400 hidden sm:table-cell">{club.ga}</td>
+                  <td className="text-center font-mono" style={{ color: "var(--text-3)" }}>{club.played}</td>
+                  <td className="text-center font-mono" style={{ color: "var(--success)" }}>{club.won}</td>
+                  <td className="text-center font-mono" style={{ color: "var(--text-3)" }}>{club.drawn}</td>
+                  <td className="text-center font-mono" style={{ color: "var(--error)" }}>{club.lost}</td>
+                  <td className="text-center font-mono hidden sm:table-cell" style={{ color: "var(--text-3)" }}>{club.gf}</td>
+                  <td className="text-center font-mono hidden sm:table-cell" style={{ color: "var(--text-3)" }}>{club.ga}</td>
                   <td className="text-center font-mono">
-                    <span className={club.gd >= 0 ? "text-green-400" : "text-red-400"}>
+                    <span style={{ color: club.gd >= 0 ? "var(--success)" : "var(--error)" }}>
                       {club.gd >= 0 ? "+" : ""}{club.gd}
                     </span>
                   </td>
                   <td className="text-center">
-                    <span className="font-bold text-white text-sm font-mono">{club.points}</span>
+                    <span className="font-bold text-sm font-mono" style={{ color: "var(--text-1)" }}>{club.points}</span>
                   </td>
                   <td className="hidden md:table-cell">
                     <div className="flex items-center gap-1">
@@ -157,7 +165,7 @@ function TableContent() {
         </table>
       </div>
 
-      <p className="text-[10px] text-slate-600 text-center">
+      <p className="text-[10px] text-center" style={{ color: "var(--text-4)" }}>
         Data from FBref / FPL API · Updated each matchday
       </p>
     </div>

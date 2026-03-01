@@ -24,8 +24,6 @@ type SortKey = "edge" | "kelly" | "odds" | "model_prob";
 
 const MARKET_FILTERS: MarketFilter[] = ["all", "1X2", "Goals O/U", "BTTS", "Corners", "Cards", "Goalscorer", "Player"];
 
-type FlatBet = ValueBet & { match_id: string; home_team: string; away_team: string };
-
 function ValueBetsContent() {
   const { predictions: data, loading, error, refresh } = usePredictions();
 
@@ -156,12 +154,12 @@ function ValueBetsContent() {
       {/* Header */}
       <div>
         <h1
-          className="text-2xl font-bold text-white tracking-tight"
-          style={{ fontFamily: "var(--font-jakarta)" }}
+          className="text-3xl font-extrabold tracking-tight"
+          style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
         >
           Value Bets
         </h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
           Matchweek {data.metadata.gameweek} · {allBets.length} opportunities ·
           Updated {timeAgo(data.metadata.generated_at)}
         </p>
@@ -195,16 +193,17 @@ function ValueBetsContent() {
           {MARKET_FILTERS.map((m) => {
             const count = m === "all" ? allBets.length : (marketCounts[m] ?? 0);
             if (m !== "all" && count === 0) return null;
+            const isActive = marketFilter === m;
             return (
               <button
                 key={m}
                 onClick={() => setMarketFilter(m)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                  marketFilter === m
-                    ? "bg-green-700 text-white"
-                    : "text-slate-400 hover:text-white"
-                }`}
-                style={marketFilter !== m ? { background: "var(--color-surface)", border: "1px solid var(--color-border)" } : undefined}
+                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                style={
+                  isActive
+                    ? { background: "var(--accent)", color: "#fff", border: "1px solid var(--accent)" }
+                    : { background: "var(--surface)", border: "1px solid var(--border)", color: "var(--text-3)" }
+                }
               >
                 {m === "all" ? "All" : m}
                 <span className="ml-1.5 text-[10px] opacity-60">{count}</span>
@@ -229,9 +228,16 @@ function ValueBetsContent() {
                       ? "bg-amber-500/20 text-amber-400 ring-1 ring-amber-500/30"
                       : c === "low"
                       ? "bg-slate-700/50 text-slate-300 ring-1 ring-slate-600/30"
-                      : "bg-pitch-600 text-white"
-                    : "text-slate-500 hover:text-slate-300"
+                      : ""
+                    : ""
                 }`}
+                style={
+                  confFilter === c && c === "all"
+                    ? { background: "var(--accent-muted)", color: "var(--accent-text)", border: "1px solid var(--accent-border)" }
+                    : confFilter !== c
+                    ? { color: "var(--text-4)" }
+                    : undefined
+                }
               >
                 {c === "all" ? "ALL" : c.toUpperCase()}
               </button>
@@ -239,7 +245,7 @@ function ValueBetsContent() {
           </div>
 
           {/* Min edge slider */}
-          <div className="flex items-center gap-2 text-xs text-slate-400">
+          <div className="flex items-center gap-2 text-xs" style={{ color: "var(--text-3)" }}>
             <label htmlFor="min-edge-slider" className="sr-only">Minimum edge percentage</label>
             <span aria-hidden="true">Min edge:</span>
             <input
@@ -253,7 +259,7 @@ function ValueBetsContent() {
               className="w-20 accent-pitch-500"
               aria-label={`Minimum edge: ${minEdge}%`}
             />
-            <span className="w-8 text-right text-slate-300">{minEdge}%</span>
+            <span className="w-8 text-right" style={{ color: "var(--text-2)" }}>{minEdge}%</span>
           </div>
 
           {/* Search */}
@@ -270,7 +276,8 @@ function ValueBetsContent() {
             {search && (
               <button
                 onClick={() => setSearch("")}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white text-xs"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-xs transition-colors"
+                style={{ color: "var(--text-3)" }}
                 aria-label="Clear search"
               >
                 ✕
@@ -282,14 +289,15 @@ function ValueBetsContent() {
 
       {/* Results count + Export */}
       <div className="flex items-center justify-between">
-        <p className="text-xs text-slate-500">
+        <p className="text-xs" style={{ color: "var(--text-3)" }}>
           Showing {filtered.length} of {allBets.length} bets
           {minEdge > 0 && <span> · edges ≥ {minEdge}%</span>}
         </p>
         {filtered.length > 0 && (
           <button
             onClick={exportCSV}
-            className="text-[11px] text-slate-500 hover:text-white transition-colors flex items-center gap-1"
+            className="text-[11px] transition-colors flex items-center gap-1"
+            style={{ color: "var(--text-3)" }}
           >
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -302,7 +310,7 @@ function ValueBetsContent() {
       {/* Mobile card layout (below 640px) */}
       <div className="sm:hidden space-y-2">
         {filtered.length === 0 ? (
-          <div className="card p-6 text-center text-slate-500 text-sm">
+          <div className="card p-6 text-center text-sm" style={{ color: "var(--text-3)" }}>
             No value bets match the current filters.
           </div>
         ) : (
@@ -317,30 +325,30 @@ function ValueBetsContent() {
               <div
                 key={`m-${bet.match_id}-${bet.market}-${i}`}
                 className="card p-3.5 space-y-2"
-                style={tier === "high" ? { borderLeft: "3px solid #22c55e" } : undefined}
+                style={tier === "high" ? { borderLeft: "3px solid var(--accent)" } : undefined}
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="text-xs text-slate-400">{bet.home_team} v {bet.away_team}</div>
+                    <div className="text-xs" style={{ color: "var(--text-3)" }}>{bet.home_team} v {bet.away_team}</div>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <span className="text-xs" role="img" aria-label={MARKET_ICON_LABELS[icon] ?? "Market"}>{icon}</span>
-                      <span className="text-sm font-medium text-white">{bet.selection ?? bet.market}</span>
+                      <span className="text-sm font-medium" style={{ color: "var(--text-1)" }}>{bet.selection ?? bet.market}</span>
                     </div>
                   </div>
                   <span className={`${badge.cls} text-[9px]`}>{badge.label}</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-xs">
                   <div>
-                    <div className="text-slate-500 text-[10px]">Edge</div>
+                    <div className="text-[10px]" style={{ color: "var(--text-3)" }}>Edge</div>
                     <div className={`font-mono font-semibold ${edgeColor(edge)}`}>{edgePrefix(edge)}{pct(edge)}</div>
                   </div>
                   <div>
-                    <div className="text-slate-500 text-[10px]">Odds</div>
-                    <div className="font-mono text-white">{bet.decimal_odds ? odds(bet.decimal_odds) : "—"}</div>
+                    <div className="text-[10px]" style={{ color: "var(--text-3)" }}>Odds</div>
+                    <div className="font-mono" style={{ color: "var(--text-1)" }}>{bet.decimal_odds ? odds(bet.decimal_odds) : "—"}</div>
                   </div>
                   <div>
-                    <div className="text-slate-500 text-[10px]">½ Kelly</div>
-                    <div className="font-mono text-sky-400">{kellyPct > 0 ? pct(kellyPct) : "—"}</div>
+                    <div className="text-[10px]" style={{ color: "var(--text-3)" }}>½ Kelly</div>
+                    <div className="font-mono" style={{ color: "var(--info)" }}>{kellyPct > 0 ? pct(kellyPct) : "—"}</div>
                   </div>
                 </div>
               </div>
@@ -358,7 +366,7 @@ function ValueBetsContent() {
               <th scope="col">Market</th>
               <th
                 scope="col"
-                className="cursor-pointer hover:text-white transition-colors"
+                className="cursor-pointer transition-colors"
                 onClick={() => toggleSort("model_prob")}
               >
                 Model{sortArrow("model_prob")}
@@ -367,21 +375,21 @@ function ValueBetsContent() {
               <th scope="col" className="hidden md:table-cell">Devig</th>
               <th
                 scope="col"
-                className="cursor-pointer hover:text-white transition-colors"
+                className="cursor-pointer transition-colors"
                 onClick={() => toggleSort("odds")}
               >
                 Odds{sortArrow("odds")}
               </th>
               <th
                 scope="col"
-                className="cursor-pointer hover:text-white transition-colors"
+                className="cursor-pointer transition-colors"
                 onClick={() => toggleSort("edge")}
               >
                 Edge{sortArrow("edge")}
               </th>
               <th
                 scope="col"
-                className="cursor-pointer hover:text-white transition-colors"
+                className="cursor-pointer transition-colors"
                 onClick={() => toggleSort("kelly")}
               >
                 ½ Kelly{sortArrow("kelly")}
@@ -393,7 +401,7 @@ function ValueBetsContent() {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={10} className="px-4 py-8 text-center text-slate-500">
+                <td colSpan={10} className="px-4 py-8 text-center" style={{ color: "var(--text-3)" }}>
                   No value bets match the current filters.
                 </td>
               </tr>
@@ -409,10 +417,10 @@ function ValueBetsContent() {
                 return (
                   <tr
                     key={`${bet.match_id}-${bet.market}-${i}`}
-                    style={tier === "high" ? { borderLeft: "3px solid #22c55e" } : undefined}
+                    style={tier === "high" ? { borderLeft: "3px solid var(--accent)" } : undefined}
                   >
                     <td>
-                      <div className="text-white font-medium text-xs">
+                      <div className="font-medium text-xs" style={{ color: "var(--text-1)" }}>
                         {bet.home_team} v {bet.away_team}
                       </div>
                     </td>
@@ -420,19 +428,19 @@ function ValueBetsContent() {
                       <div className="flex items-center gap-1.5">
                         <span className="text-xs opacity-60" role="img" aria-label={MARKET_ICON_LABELS[icon] ?? "Market"}>{icon}</span>
                         <div>
-                          <div className="text-white text-xs">{bet.selection ?? bet.market}</div>
-                          <div className="text-[10px] text-slate-500">{mLabel}</div>
+                          <div className="text-xs" style={{ color: "var(--text-1)" }}>{bet.selection ?? bet.market}</div>
+                          <div className="text-[10px]" style={{ color: "var(--text-3)" }}>{mLabel}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="text-white font-mono text-xs">{pct(bet.model_prob)}</td>
-                    <td className="text-slate-400 font-mono text-xs">{pct(bet.implied_prob)}</td>
-                    <td className="text-slate-400 font-mono text-xs hidden md:table-cell">{bet.devigged_prob ? pct(bet.devigged_prob) : "—"}</td>
-                    <td className="text-white font-mono text-xs">{bet.decimal_odds ? odds(bet.decimal_odds) : "—"}</td>
+                    <td className="font-mono text-xs" style={{ color: "var(--success)" }}>{pct(bet.model_prob)}</td>
+                    <td className="font-mono text-xs" style={{ color: "var(--text-3)" }}>{pct(bet.implied_prob)}</td>
+                    <td className="font-mono text-xs hidden md:table-cell" style={{ color: "var(--text-3)" }}>{bet.devigged_prob ? pct(bet.devigged_prob) : "—"}</td>
+                    <td className="font-mono text-xs" style={{ color: "var(--text-1)" }}>{bet.decimal_odds ? odds(bet.decimal_odds) : "—"}</td>
                     <td className={`font-mono text-xs font-semibold ${edgeColor(edge)}`}>{edgePrefix(edge)}{pct(edge)}</td>
-                    <td className="text-sky-400 font-mono text-xs">{kellyPct > 0 ? pct(kellyPct) : "—"}</td>
+                    <td className="font-mono text-xs" style={{ color: "var(--info)" }}>{kellyPct > 0 ? pct(kellyPct) : "—"}</td>
                     <td className="hidden md:table-cell"><span className={`${badge.cls} text-[10px]`}>{badge.label}</span></td>
-                    <td className="text-slate-500 text-[11px] hidden lg:table-cell">{bet.bookmaker?.replace(/_/g, " ") ?? "—"}</td>
+                    <td className="text-[11px] hidden lg:table-cell" style={{ color: "var(--text-3)" }}>{bet.bookmaker?.replace(/_/g, " ") ?? "—"}</td>
                   </tr>
                 );
               })
@@ -442,7 +450,7 @@ function ValueBetsContent() {
       </div>
 
       {/* Disclaimer */}
-      <div className="text-[10px] text-slate-600 text-center max-w-xl mx-auto">
+      <div className="text-[10px] text-center max-w-xl mx-auto" style={{ color: "var(--text-4)" }}>
         All predictions are model-generated and for informational purposes only.
         Past performance does not guarantee future results. Always bet responsibly.
         Edges shown are devigged where available. Kelly stakes assume independent events.

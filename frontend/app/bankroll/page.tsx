@@ -189,10 +189,13 @@ function BankrollContent() {
     <div className="space-y-8">
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
+          <h1
+            className="text-3xl font-extrabold tracking-tight"
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+          >
             Bankroll Tracker
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
             Performance tracking · Kelly calculator · Risk management
           </p>
         </div>
@@ -200,15 +203,16 @@ function BankrollContent() {
           {bets.length > 0 && (
             <button
               onClick={exportCSV}
-              className="px-3 py-1.5 text-xs text-slate-400 hover:text-white rounded-lg transition-colors"
-              style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)" }}
+              className="px-3 py-1.5 text-xs rounded-lg transition-colors"
+              style={{ color: "var(--text-3)", background: "var(--surface)", border: "1px solid var(--border)" }}
             >
               Export CSV
             </button>
           )}
           <button
             onClick={() => setShowForm(!showForm)}
-            className="px-3 py-1.5 text-xs text-white bg-green-700 hover:bg-green-600 rounded-lg transition-colors font-medium"
+            className="px-3 py-1.5 text-xs text-white rounded-lg transition-colors font-medium"
+            style={{ background: "var(--accent)" }}
           >
             {showForm ? "Cancel" : "+ Add Bet"}
           </button>
@@ -219,7 +223,7 @@ function BankrollContent() {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         <div className="card p-4">
           <div className="stat-label">Current Value</div>
-          <div className="stat-value text-white">£{currentValue.toFixed(0)}</div>
+          <div className="stat-value">£{currentValue.toFixed(0)}</div>
         </div>
         <div className="card p-4">
           <div className="stat-label">ROI</div>
@@ -235,7 +239,7 @@ function BankrollContent() {
         </div>
         <div className="card p-4">
           <div className="stat-label">Win Rate</div>
-          <div className="stat-value text-sky-400">{settledBets.length > 0 ? pct(winRate) : "—"}</div>
+          <div className="stat-value" style={{ color: "var(--info)" }}>{settledBets.length > 0 ? pct(winRate) : "—"}</div>
         </div>
         <div className="card p-4 cursor-pointer" onClick={() => { setEditingBankroll(true); setNewBankroll(initialBankroll.toString()); }}>
           <div className="stat-label">Starting</div>
@@ -245,7 +249,8 @@ function BankrollContent() {
                 type="number"
                 value={newBankroll}
                 onChange={(e) => setNewBankroll(e.target.value)}
-                className="w-16 bg-slate-700 rounded px-1 text-sm text-white font-mono"
+                className="w-16 rounded px-1 text-sm font-mono"
+                style={{ background: "var(--surface2)", color: "var(--text-1)", border: "1px solid var(--border)" }}
                 autoFocus
                 onKeyDown={(e) => e.key === "Enter" && saveBankroll()}
                 onBlur={saveBankroll}
@@ -253,7 +258,7 @@ function BankrollContent() {
               />
             </div>
           ) : (
-            <div className="stat-value text-slate-400">£{initialBankroll}</div>
+            <div className="stat-value" style={{ color: "var(--text-3)" }}>£{initialBankroll}</div>
           )}
         </div>
       </div>
@@ -261,11 +266,11 @@ function BankrollContent() {
       {/* Drawdown limits */}
       <div className="card p-4">
         <div className="flex items-center gap-4 text-xs flex-wrap">
-          <span className="text-slate-500">Risk limits:</span>
-          <span className={drawdown > 0.2 ? "text-red-400 font-semibold" : "text-slate-400"}>
+          <span style={{ color: "var(--text-3)" }}>Risk limits:</span>
+          <span className={drawdown > 0.2 ? "text-red-400 font-semibold" : ""} style={drawdown <= 0.2 ? { color: "var(--text-2)" } : undefined}>
             Soft stop: 20%
           </span>
-          <span className={drawdown > 0.3 ? "text-red-400 font-semibold" : "text-slate-400"}>
+          <span className={drawdown > 0.3 ? "text-red-400 font-semibold" : ""} style={drawdown <= 0.3 ? { color: "var(--text-2)" } : undefined}>
             Hard stop: 30%
           </span>
           <span className="ml-auto">
@@ -283,7 +288,7 @@ function BankrollContent() {
       {/* Add Bet Form */}
       {showForm && (
         <div className="card p-6 space-y-4">
-          <h3 className="text-sm font-semibold text-white">Add Bet</h3>
+          <h3 className="text-sm font-semibold" style={{ color: "var(--text-1)" }}>Add Bet</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
             <div>
               <label htmlFor="bet-date" className="form-label">Date</label>
@@ -331,15 +336,23 @@ function BankrollContent() {
                     ? r === "win" ? "bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/30"
                     : r === "loss" ? "bg-red-500/20 text-red-400 ring-1 ring-red-500/30"
                     : r === "void" ? "bg-slate-700/50 text-slate-300 ring-1 ring-slate-600/30"
-                    : "bg-green-500/15 text-green-400 ring-1 ring-green-500/25"
-                    : "text-slate-500 hover:text-slate-300"
+                    : ""
+                    : ""
                 }`}
+                style={
+                  formResult === r && r === "pending"
+                    ? { background: "var(--accent-muted)", color: "var(--accent-text)", border: "1px solid var(--accent-border)" }
+                    : formResult !== r
+                    ? { color: "var(--text-3)" }
+                    : undefined
+                }
               >
                 {r}
               </button>
             ))}
             <button onClick={addBet}
-              className="ml-auto px-4 py-1.5 bg-green-700 hover:bg-green-600 text-white rounded-lg text-xs font-medium transition-colors">
+              className="ml-auto px-4 py-1.5 text-white rounded-lg text-xs font-medium transition-colors"
+              style={{ background: "var(--accent)" }}>
               Save Bet
             </button>
           </div>
@@ -349,7 +362,7 @@ function BankrollContent() {
       {/* PnL Chart */}
       {trajectory.length > 1 && (
         <div className="card p-6">
-          <h3 className="text-sm font-semibold text-white mb-4">Bankroll Trajectory</h3>
+          <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-1)" }}>Bankroll Trajectory</h3>
           <PnLChart data={trajectory} initialBankroll={initialBankroll} />
         </div>
       )}
@@ -357,16 +370,16 @@ function BankrollContent() {
       {/* Market Breakdown */}
       {Object.keys(markets).length > 0 && (
         <div className="card p-6">
-          <h3 className="text-sm font-semibold text-white mb-4">Performance by Market</h3>
+          <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-1)" }}>Performance by Market</h3>
           <div className="space-y-2">
             {Object.entries(markets)
               .sort(([, a], [, b]) => b.pnl - a.pnl)
               .map(([market, stats]) => (
                 <div key={market} className="flex items-center justify-between glass-inset px-3 py-2 text-xs">
-                  <span className="text-white font-medium">{market}</span>
+                  <span className="font-medium" style={{ color: "var(--text-1)" }}>{market}</span>
                   <div className="flex items-center gap-4 font-mono">
-                    <span className="text-slate-400">{stats.wins}W {stats.losses}L</span>
-                    <span className="text-slate-400">
+                    <span style={{ color: "var(--text-3)" }}>{stats.wins}W {stats.losses}L</span>
+                    <span style={{ color: "var(--text-3)" }}>
                       {((stats.wins / (stats.wins + stats.losses)) * 100).toFixed(0)}%
                     </span>
                     <span className={stats.pnl >= 0 ? "text-emerald-400" : "text-red-400"}>
@@ -404,17 +417,18 @@ function BankrollContent() {
                   ? -bet.stake
                   : 0;
                 return (
-                  <tr key={bet.id} className="border-b border-slate-800/30 hover:bg-slate-800/20 transition-colors">
-                    <td className="px-4 py-2 text-slate-400">{bet.date}</td>
-                    <td className="px-4 py-2 text-white">{bet.match}</td>
-                    <td className="px-4 py-2 text-slate-400 hidden sm:table-cell">{bet.market}</td>
-                    <td className="px-4 py-2 text-white">{bet.selection}</td>
-                    <td className="px-4 py-2 text-white font-mono">{bet.decimalOdds.toFixed(2)}</td>
-                    <td className="px-4 py-2 text-white font-mono">£{bet.stake.toFixed(2)}</td>
-                    <td className={`px-4 py-2 font-mono ${pnl > 0 ? "text-emerald-400" : pnl < 0 ? "text-red-400" : "text-slate-500"}`}>
+                  <tr key={bet.id}>
+                    <td>{bet.date}</td>
+                    <td style={{ color: "var(--text-1)" }}>{bet.match}</td>
+                    <td className="hidden sm:table-cell">{bet.market}</td>
+                    <td style={{ color: "var(--text-1)" }}>{bet.selection}</td>
+                    <td className="font-mono" style={{ color: "var(--text-1)" }}>{bet.decimalOdds.toFixed(2)}</td>
+                    <td className="font-mono" style={{ color: "var(--text-1)" }}>£{bet.stake.toFixed(2)}</td>
+                    <td className={`font-mono ${pnl > 0 ? "text-emerald-400" : pnl < 0 ? "text-red-400" : ""}`}
+                        style={pnl === 0 ? { color: "var(--text-3)" } : undefined}>
                       {bet.result === "pending" ? "—" : `${pnl >= 0 ? "+" : ""}£${pnl.toFixed(2)}`}
                     </td>
-                    <td className="px-4 py-2">
+                    <td>
                       <select
                         value={bet.result}
                         onChange={(e) => updateResult(bet.id, e.target.value as BetRecord["result"])}
@@ -432,7 +446,7 @@ function BankrollContent() {
                         <option value="void">VOID</option>
                       </select>
                     </td>
-                    <td className="px-4 py-2">
+                    <td>
                       {confirmDeleteId === bet.id ? (
                         <div className="flex items-center gap-1">
                           <button
@@ -442,10 +456,11 @@ function BankrollContent() {
                           >
                             Yes
                           </button>
-                          <span className="text-slate-600">/</span>
+                          <span style={{ color: "var(--text-4)" }}>/</span>
                           <button
                             onClick={() => setConfirmDeleteId(null)}
-                            className="text-[9px] font-semibold uppercase text-slate-500 hover:text-slate-300 transition-colors"
+                            className="text-[9px] font-semibold uppercase transition-colors"
+                            style={{ color: "var(--text-3)" }}
                             aria-label="Cancel delete"
                           >
                             No
@@ -454,7 +469,8 @@ function BankrollContent() {
                       ) : (
                         <button
                           onClick={() => setConfirmDeleteId(bet.id)}
-                          className="text-slate-600 hover:text-red-400 transition-colors"
+                          className="transition-colors hover:text-red-400"
+                          style={{ color: "var(--text-4)" }}
                           aria-label="Remove bet"
                         >
                           ✕
@@ -469,11 +485,12 @@ function BankrollContent() {
         </div>
       ) : (
         <div className="card p-8 text-center">
-          <div className="text-slate-500 text-sm">No bets recorded yet.</div>
-          <div className="text-slate-600 text-xs mt-1">Start tracking your bets to see P&L analysis and bankroll trajectory.</div>
+          <div className="text-sm" style={{ color: "var(--text-3)" }}>No bets recorded yet.</div>
+          <div className="text-xs mt-1" style={{ color: "var(--text-4)" }}>Start tracking your bets to see P&L analysis and bankroll trajectory.</div>
           <button
             onClick={() => setShowForm(true)}
-            className="mt-4 px-4 py-2 text-xs text-white bg-green-700 hover:bg-green-600 rounded-lg transition-colors font-medium"
+            className="mt-4 px-4 py-2 text-xs text-white rounded-lg transition-colors font-medium"
+            style={{ background: "var(--accent)" }}
           >
             + Add Your First Bet
           </button>
@@ -484,7 +501,7 @@ function BankrollContent() {
 
       {/* Kelly Calculator */}
       <div className="card p-6 space-y-4">
-        <h3 className="text-sm font-semibold text-white">Kelly Calculator</h3>
+        <h3 className="text-sm font-semibold" style={{ color: "var(--text-1)" }}>Kelly Calculator</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label htmlFor="kelly-prob" className="form-label">Model Probability</label>
@@ -505,7 +522,8 @@ function BankrollContent() {
           <div className="flex items-end">
             <button
               onClick={() => setKellyResult(kellyFraction(parseFloat(calcProb), parseFloat(calcOdds)))}
-              className="w-full bg-green-700 hover:bg-green-600 text-white rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+              className="w-full text-white rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+              style={{ background: "var(--accent)" }}
             >
               Calculate
             </button>
@@ -516,15 +534,15 @@ function BankrollContent() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
             <div className="glass-inset p-3">
               <div className="stat-label">Full Kelly</div>
-              <div className="text-lg font-bold text-white">{pct(kellyResult.full_kelly)}</div>
+              <div className="text-lg font-bold" style={{ color: "var(--text-1)" }}>{pct(kellyResult.full_kelly)}</div>
             </div>
             <div className="glass-inset p-3">
               <div className="stat-label">Half Kelly</div>
-              <div className="text-lg font-bold text-sky-400">{pct(kellyResult.half_kelly)}</div>
+              <div className="text-lg font-bold" style={{ color: "var(--info)" }}>{pct(kellyResult.half_kelly)}</div>
             </div>
             <div className="glass-inset p-3">
               <div className="stat-label">Quarter Kelly</div>
-              <div className="text-lg font-bold text-slate-400">{pct(kellyResult.quarter_kelly)}</div>
+              <div className="text-lg font-bold" style={{ color: "var(--text-3)" }}>{pct(kellyResult.quarter_kelly)}</div>
             </div>
             <div className="glass-inset p-3">
               <div className="stat-label">Edge</div>

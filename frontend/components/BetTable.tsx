@@ -20,8 +20,8 @@ export default function BetTable({ bets, compact = false }: BetTableProps) {
   if (bets.length === 0) {
     return (
       <div className="card p-8 text-center">
-        <div className="text-slate-600 text-sm">No value bets identified this matchweek</div>
-        <p className="text-[10px] text-slate-700 mt-1">Edge threshold: 5% minimum</p>
+        <div className="text-sm" style={{ color: "var(--text-3)" }}>No value bets identified this matchweek</div>
+        <p className="text-[10px] mt-1" style={{ color: "var(--text-4)" }}>Edge threshold: 5% minimum</p>
       </div>
     );
   }
@@ -46,7 +46,7 @@ export default function BetTable({ bets, compact = false }: BetTableProps) {
             )}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-800/40">
+        <tbody>
           {bets.map((bet, i) => {
             const edge = effectiveEdge(bet);
             const tier = bet.confidence_tier ?? confidenceTier(edge);
@@ -55,15 +55,16 @@ export default function BetTable({ bets, compact = false }: BetTableProps) {
             return (
               <tr
                 key={`${bet.match_id}-${bet.market}-${i}`}
-                className="hover:bg-slate-800/30 transition-colors"
+                className="hover:bg-[var(--surface2)] transition-colors"
               >
                 <td className="py-3 px-3">
                   <Link
                     href={`/matches/${bet.match_id}`}
-                    className="text-slate-300 hover:text-white transition-colors focus-visible:ring-1 focus-visible:ring-pitch-500 focus-visible:outline-none rounded"
+                    className="transition-colors focus-visible:ring-1 focus-visible:outline-none rounded"
+                    style={{ color: "var(--text-2)" }}
                   >
                     <span className="font-medium text-xs">{bet.home_team}</span>
-                    <span className="text-slate-600 mx-1 text-xs">v</span>
+                    <span className="mx-1 text-xs" style={{ color: "var(--text-4)" }}>v</span>
                     <span className="font-medium text-xs">{bet.away_team}</span>
                   </Link>
                 </td>
@@ -74,18 +75,18 @@ export default function BetTable({ bets, compact = false }: BetTableProps) {
                       <span className={`font-medium text-xs ${marketBadgeColor(bet.market)}`}>
                         {bet.selection ?? bet.market}
                       </span>
-                      <span className="text-slate-600 text-[10px] ml-1 hidden sm:inline">{marketLabel(bet.market)}</span>
+                      <span className="text-[10px] ml-1 hidden sm:inline" style={{ color: "var(--text-4)" }}>{marketLabel(bet.market)}</span>
                     </div>
                   </div>
                 </td>
-                <td className="py-3 px-3 text-right font-mono text-xs text-emerald-400">{pct(bet.model_prob)}</td>
-                <td className="py-3 px-3 text-right font-mono text-xs text-slate-500 hidden sm:table-cell">{pct(bet.implied_prob)}</td>
+                <td className="py-3 px-3 text-right font-mono text-xs" style={{ color: "var(--success)" }}>{pct(bet.model_prob)}</td>
+                <td className="py-3 px-3 text-right font-mono text-xs hidden sm:table-cell" style={{ color: "var(--text-3)" }}>{pct(bet.implied_prob)}</td>
                 {!compact && (
-                  <td className="py-3 px-3 text-right font-mono text-xs text-slate-400 hidden md:table-cell">
+                  <td className="py-3 px-3 text-right font-mono text-xs hidden md:table-cell" style={{ color: "var(--text-3)" }}>
                     {bet.devigged_prob ? pct(bet.devigged_prob) : "—"}
                   </td>
                 )}
-                <td className="py-3 px-3 text-right font-mono text-xs text-slate-300">
+                <td className="py-3 px-3 text-right font-mono text-xs" style={{ color: "var(--text-2)" }}>
                   {(bet.decimal_odds ?? 0) > 0 ? odds(bet.decimal_odds!) : "—"}
                 </td>
                 <td className={`py-3 px-3 text-right font-mono text-xs font-semibold ${edgeColor(edge)}`}>

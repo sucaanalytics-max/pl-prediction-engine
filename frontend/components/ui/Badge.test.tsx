@@ -40,8 +40,7 @@ describe("Badge", () => {
   it("applies violet inline color style", () => {
     const { container } = render(<Badge variant="violet">CONF</Badge>);
     const el = container.firstChild as HTMLElement;
-    // #a78bfa → rgb(167, 139, 250)
-    expect(el.style.color).toBe("rgb(167, 139, 250)");
+    expect(el.style.color).toBe("var(--info)");
   });
 
   it("does not apply inline styles for non-violet variants", () => {

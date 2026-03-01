@@ -95,12 +95,15 @@ function PlayersContent() {
     if (isNotFound) {
       return (
         <div className="space-y-4">
-          <h1 className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-jakarta)" }}>
+          <h1
+            className="text-3xl font-extrabold tracking-tight"
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+          >
             Player Stats
           </h1>
           <div className="card p-10 text-center">
-            <p className="text-slate-400 text-sm font-medium mb-1">Player data not available</p>
-            <p className="text-slate-600 text-xs">
+            <p className="text-sm font-medium mb-1" style={{ color: "var(--text-2)" }}>Player data not available</p>
+            <p className="text-xs" style={{ color: "var(--text-4)" }}>
               Player stats are generated separately from match predictions. Check back after the next pipeline run.
             </p>
           </div>
@@ -126,10 +129,13 @@ function PlayersContent() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-jakarta)" }}>
+        <h1
+          className="text-3xl font-extrabold tracking-tight"
+          style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+        >
           Player Stats
         </h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
           {players.length} players · FPL API data · Goalscorer & booking analysis
         </p>
       </div>
@@ -145,10 +151,17 @@ function PlayersContent() {
               className={`px-2.5 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors border ${
                 posFilter === pos
                   ? pos === "all"
-                    ? "bg-green-700 text-white border-green-600/30"
-                    : `${POS_BG[pos] ?? "text-white bg-slate-800/60 border-slate-700/50"}`
-                  : "text-slate-500 hover:text-slate-300 border-transparent"
+                    ? "text-white border-transparent"
+                    : `${POS_BG[pos] ?? "text-white border-transparent"}`
+                  : "border-transparent"
               }`}
+              style={
+                posFilter === pos && pos === "all"
+                  ? { background: "var(--accent)" }
+                  : posFilter !== pos
+                  ? { color: "var(--text-3)" }
+                  : undefined
+              }
               aria-pressed={posFilter === pos}
             >
               {pos === "all" ? `ALL (${players.length})` : `${pos} (${posCounts[pos] ?? 0})`}
@@ -165,8 +178,9 @@ function PlayersContent() {
               className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-colors ${
                 sortKey === opt.key
                   ? "bg-green-500/15 text-green-400 ring-1 ring-green-500/25"
-                  : "text-slate-500 hover:text-white"
+                  : ""
               }`}
+              style={sortKey !== opt.key ? { color: "var(--text-3)" } : undefined}
             >
               {opt.label}{sortArrow(opt.key)}
             </button>
@@ -187,7 +201,8 @@ function PlayersContent() {
           {search && (
             <button
               onClick={() => setSearch("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white text-xs"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs transition-colors"
+              style={{ color: "var(--text-3)" }}
               aria-label="Clear search"
             >
               ✕
@@ -206,7 +221,7 @@ function PlayersContent() {
         return (
           <>
             <div className="flex items-center justify-between">
-              <p className="text-xs text-slate-500">
+              <p className="text-xs" style={{ color: "var(--text-3)" }}>
                 {filtered.length === 0 ? "No players match" : `${start}–${end} of ${filtered.length} players`}
               </p>
               {totalPages > 1 && (
@@ -214,15 +229,17 @@ function PlayersContent() {
                   <button
                     onClick={() => setPage(Math.max(0, page - 1))}
                     disabled={page === 0}
-                    className="px-2 py-1 text-[10px] rounded glass-inset text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
+                    className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
+                    style={{ color: "var(--text-3)" }}
                   >
                     ← Prev
                   </button>
-                  <span className="text-[10px] text-slate-500 px-2">{page + 1}/{totalPages}</span>
+                  <span className="text-[10px] px-2" style={{ color: "var(--text-3)" }}>{page + 1}/{totalPages}</span>
                   <button
                     onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
                     disabled={page >= totalPages - 1}
-                    className="px-2 py-1 text-[10px] rounded glass-inset text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
+                    className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
+                    style={{ color: "var(--text-3)" }}
                   >
                     Next →
                   </button>
@@ -233,7 +250,7 @@ function PlayersContent() {
             {/* Mobile card layout */}
             <div className="sm:hidden space-y-2">
               {paged.length === 0 ? (
-                <div className="card p-6 text-center text-slate-500 text-sm">No players match the current filters.</div>
+                <div className="card p-6 text-center text-sm" style={{ color: "var(--text-3)" }}>No players match the current filters.</div>
               ) : paged.map((player) => {
                 const isCardMagnet = (player.yellows_per_90 ?? 0) >= cardMagnetThreshold;
                 const isGoalMachine = player.xg_per_90 >= goalMachineThreshold && player.position !== "GKP";
@@ -243,8 +260,8 @@ function PlayersContent() {
                       {player.position}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-white truncate">{player.web_name}</div>
-                      <div className="text-[10px] text-slate-500">{player.team} · {player.minutes} mins</div>
+                      <div className="text-sm font-medium truncate" style={{ color: "var(--text-1)" }}>{player.web_name}</div>
+                      <div className="text-[10px]" style={{ color: "var(--text-3)" }}>{player.team} · {player.minutes} mins</div>
                     </div>
                     <div className="text-right text-xs font-mono space-y-0.5 flex-shrink-0">
                       <div className="text-emerald-400">{player.xg_per_90.toFixed(2)} xG/90</div>
@@ -267,22 +284,22 @@ function PlayersContent() {
                     <th scope="col">Player</th>
                     <th scope="col">Team</th>
                     <th scope="col" className="text-center">Pos</th>
-                    <th scope="col" className="text-right cursor-pointer hover:text-white" onClick={() => toggleSort("goals_per_90")}>
+                    <th scope="col" className="text-right cursor-pointer" onClick={() => toggleSort("goals_per_90")}>
                       G/90{sortArrow("goals_per_90")}
                     </th>
-                    <th scope="col" className="text-right cursor-pointer hover:text-white" onClick={() => toggleSort("xg_per_90")}>
+                    <th scope="col" className="text-right cursor-pointer" onClick={() => toggleSort("xg_per_90")}>
                       xG/90{sortArrow("xg_per_90")}
                     </th>
-                    <th scope="col" className="text-right cursor-pointer hover:text-white hidden md:table-cell" onClick={() => toggleSort("assists_per_90")}>
+                    <th scope="col" className="text-right cursor-pointer hidden md:table-cell" onClick={() => toggleSort("assists_per_90")}>
                       A/90{sortArrow("assists_per_90")}
                     </th>
-                    <th scope="col" className="text-right cursor-pointer hover:text-white" onClick={() => toggleSort("yellows_per_90")}>
+                    <th scope="col" className="text-right cursor-pointer" onClick={() => toggleSort("yellows_per_90")}>
                       Y/90{sortArrow("yellows_per_90")}
                     </th>
-                    <th scope="col" className="text-right cursor-pointer hover:text-white hidden md:table-cell" onClick={() => toggleSort("fouls_per_90")}>
+                    <th scope="col" className="text-right cursor-pointer hidden md:table-cell" onClick={() => toggleSort("fouls_per_90")}>
                       F/90{sortArrow("fouls_per_90")}
                     </th>
-                    <th scope="col" className="text-right cursor-pointer hover:text-white hidden lg:table-cell" onClick={() => toggleSort("minutes")}>
+                    <th scope="col" className="text-right cursor-pointer hidden lg:table-cell" onClick={() => toggleSort("minutes")}>
                       Mins{sortArrow("minutes")}
                     </th>
                     <th scope="col" className="text-right hidden lg:table-cell">Goals</th>
@@ -293,7 +310,7 @@ function PlayersContent() {
                 <tbody>
                   {paged.length === 0 ? (
                     <tr>
-                      <td colSpan={12} className="px-4 py-8 text-center text-slate-500">
+                      <td colSpan={12} className="px-4 py-8 text-center" style={{ color: "var(--text-3)" }}>
                         No players match the current filters.
                       </td>
                     </tr>
@@ -304,32 +321,33 @@ function PlayersContent() {
                 const xgDiff = player.goals_per_90 - player.xg_per_90;
 
                 return (
-                  <tr key={player.player_id} className="border-b border-slate-800/30 hover:bg-slate-800/20 transition-colors">
+                  <tr key={player.player_id}>
                     <td className="px-4 py-2.5">
-                      <div className="text-white font-medium">{player.web_name}</div>
-                      <div className="text-[10px] text-slate-600 sm:hidden">{player.team}</div>
+                      <div className="font-medium" style={{ color: "var(--text-1)" }}>{player.web_name}</div>
+                      <div className="text-[10px] sm:hidden" style={{ color: "var(--text-4)" }}>{player.team}</div>
                     </td>
-                    <td className="px-3 py-2.5 text-slate-400 hidden sm:table-cell">{player.team}</td>
+                    <td className="px-3 py-2.5 hidden sm:table-cell">{player.team}</td>
                     <td className="px-3 py-2.5 text-center">
                       <span className={`text-[10px] font-mono font-semibold ${POS_COLORS[player.position] ?? "text-slate-400"}`}>
                         {player.position}
                       </span>
                     </td>
                     <td className="px-3 py-2.5 text-right font-mono text-emerald-400">{player.goals_per_90.toFixed(2)}</td>
-                    <td className="px-3 py-2.5 text-right font-mono text-slate-300">{player.xg_per_90.toFixed(2)}</td>
-                    <td className="px-3 py-2.5 text-right font-mono text-sky-400 hidden md:table-cell">
+                    <td className="px-3 py-2.5 text-right font-mono" style={{ color: "var(--text-2)" }}>{player.xg_per_90.toFixed(2)}</td>
+                    <td className="px-3 py-2.5 text-right font-mono hidden md:table-cell" style={{ color: "var(--info)" }}>
                       {(player.assists_per_90 ?? 0).toFixed(2)}
                     </td>
-                    <td className={`px-3 py-2.5 text-right font-mono ${isCardMagnet ? "text-amber-400 font-semibold" : "text-slate-400"}`}>
+                    <td className={`px-3 py-2.5 text-right font-mono ${isCardMagnet ? "text-amber-400 font-semibold" : ""}`}
+                        style={!isCardMagnet ? { color: "var(--text-3)" } : undefined}>
                       {(player.yellows_per_90 ?? 0).toFixed(2)}
                     </td>
-                    <td className="px-3 py-2.5 text-right font-mono text-slate-400 hidden md:table-cell">
+                    <td className="px-3 py-2.5 text-right font-mono hidden md:table-cell" style={{ color: "var(--text-3)" }}>
                       {(player.fouls_per_90 ?? 0).toFixed(2)}
                     </td>
-                    <td className="px-3 py-2.5 text-right font-mono text-slate-500 hidden lg:table-cell">
+                    <td className="px-3 py-2.5 text-right font-mono hidden lg:table-cell" style={{ color: "var(--text-3)" }}>
                       {player.minutes.toLocaleString()}
                     </td>
-                    <td className="px-3 py-2.5 text-right font-mono text-slate-400 hidden lg:table-cell">
+                    <td className="px-3 py-2.5 text-right font-mono hidden lg:table-cell" style={{ color: "var(--text-3)" }}>
                       {player.goals_scored}
                     </td>
                     <td className="px-3 py-2.5 text-center hidden sm:table-cell">
@@ -369,15 +387,17 @@ function PlayersContent() {
                   <button
                     onClick={() => setPage(Math.max(0, page - 1))}
                     disabled={page === 0}
-                    className="px-2 py-1 text-[10px] rounded glass-inset text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
+                    className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
+                    style={{ color: "var(--text-3)" }}
                   >
                     ← Prev
                   </button>
-                  <span className="text-[10px] text-slate-500 px-2 py-1">{page + 1}/{totalPages}</span>
+                  <span className="text-[10px] px-2 py-1" style={{ color: "var(--text-3)" }}>{page + 1}/{totalPages}</span>
                   <button
                     onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
                     disabled={page >= totalPages - 1}
-                    className="px-2 py-1 text-[10px] rounded glass-inset text-slate-400 disabled:opacity-30 hover:text-white transition-colors"
+                    className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
+                    style={{ color: "var(--text-3)" }}
                   >
                     Next →
                   </button>
@@ -387,7 +407,7 @@ function PlayersContent() {
           );
         })()}
 
-      <p className="text-[10px] text-slate-600 text-center">
+      <p className="text-[10px] text-center" style={{ color: "var(--text-4)" }}>
         Stats from FPL API · □ = Card magnet (top 10% Y/90) · ⚽ = Goal threat (top 10% xG/90) · ↑↓ = xG over/underperformance
       </p>
     </div>

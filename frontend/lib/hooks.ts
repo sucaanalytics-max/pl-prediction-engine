@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useTheme } from "next-themes";
 
 // ─── useLocalStorage ──────────────────────────────────────────────────────────
 // Persist state to localStorage with JSON serialization.
@@ -116,4 +117,39 @@ export function useDebounce<T>(value: T, delayMs: number = 300): T {
   }, [value, delayMs]);
 
   return debounced;
+}
+
+// ─── useChartTheme ────────────────────────────────────────────────────────────
+// Returns chart colours keyed to the active theme.
+// Guard with `mounted` to prevent SSR hydration mismatch.
+
+export interface ChartTheme {
+  grid: string;
+  tick: string;
+  tooltip: {
+    background: string;
+    border: string;
+    color: string;
+    shadow: string;
+  };
+}
+
+export function useChartTheme(): ChartTheme {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  // Default to dark until mounted so SSR and first client render match
+  const dark = !mounted || resolvedTheme === "dark";
+
+  return {
+    grid: dark ? "rgba(255,255,255,0.04)" : "rgba(15,23,42,0.06)",
+    tick: dark ? "#475569" : "#94a3b8",
+    tooltip: {
+      background: dark ? "rgba(10,15,28,0.95)" : "#ffffff",
+      border:     dark ? "rgba(255,255,255,0.1)" : "rgba(15,23,42,0.1)",
+      color:      dark ? "#e2e8f0" : "#0f172a",
+      shadow:     dark ? "0 4px 24px rgba(0,0,0,0.4)" : "0 4px 24px rgba(0,0,0,0.1)",
+    },
+  };
 }

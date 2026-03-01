@@ -32,8 +32,8 @@ export function CardHeader({ className, children, ...props }: HTMLAttributes<HTM
 export function CardTitle({ className, children, ...props }: HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h2
-      className={clsx("text-sm font-semibold text-slate-200 uppercase tracking-wider", className)}
-      style={{ letterSpacing: "0.06em" }}
+      className={clsx("text-sm font-semibold uppercase tracking-wider", className)}
+      style={{ color: "var(--text-2)", letterSpacing: "0.06em" }}
       {...props}
     >
       {children}

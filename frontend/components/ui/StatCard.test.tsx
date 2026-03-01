@@ -29,23 +29,26 @@ describe("StatCard", () => {
     expect(sub).toBeNull();
   });
 
-  it("applies text-white to value by default", () => {
+  it("applies CSS var text-1 color to value by default", () => {
     const { container } = render(<StatCard label="Label" value="42" />);
-    const valueEl = container.querySelector(".text-white");
+    const valueEl = container.querySelector("p.font-bold") as HTMLElement;
     expect(valueEl).toBeInTheDocument();
+    expect(valueEl.style.color).toBe("var(--text-1)");
     expect(valueEl).toHaveTextContent("42");
   });
 
-  it("applies text-green-400 to value when accent=true", () => {
+  it("applies CSS var accent-text color to value when accent=true", () => {
     const { container } = render(<StatCard label="Label" value="42" accent />);
-    const valueEl = container.querySelector(".text-green-400");
+    const valueEl = container.querySelector("p.font-bold") as HTMLElement;
     expect(valueEl).toBeInTheDocument();
+    expect(valueEl.style.color).toBe("var(--accent-text)");
     expect(valueEl).toHaveTextContent("42");
   });
 
-  it("does not apply text-green-400 when accent is false", () => {
+  it("applies default color when accent is false", () => {
     const { container } = render(<StatCard label="Label" value="42" accent={false} />);
-    expect(container.querySelector(".text-green-400")).toBeNull();
+    const valueEl = container.querySelector("p.font-bold") as HTMLElement;
+    expect(valueEl.style.color).toBe("var(--text-1)");
   });
 
   it("merges custom className onto outer card div", () => {

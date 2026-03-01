@@ -16,15 +16,12 @@ export function StatCard({ label, value, sub, accent = false, className, ...prop
     >
       <p className="stat-label mb-2">{label}</p>
       <p
-        className={clsx(
-          "font-bold text-2xl tracking-tight leading-none",
-          accent ? "text-green-400" : "text-white"
-        )}
-        style={{ fontFamily: "var(--font-jakarta)" }}
+        className="font-bold text-3xl tracking-tight leading-none"
+        style={{ fontFamily: "var(--font-jakarta)", color: accent ? "var(--accent-text)" : "var(--text-1)" }}
       >
         {value}
       </p>
-      {sub && <p className="text-xs text-slate-500 mt-1">{sub}</p>}
+      {sub && <p className="text-xs mt-1" style={{ color: "var(--text-3)" }}>{sub}</p>}
     </div>
   );
 }

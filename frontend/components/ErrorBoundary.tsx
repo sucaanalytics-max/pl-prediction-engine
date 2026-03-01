@@ -52,7 +52,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
           )}
           <button
             onClick={this.handleRetry}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-pitch-600 hover:bg-pitch-500 text-white rounded-lg text-sm font-medium transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg text-sm font-medium transition-colors"
+            style={{ background: "var(--accent)" }}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -73,9 +74,9 @@ export function PageSkeleton({ rows = 3 }: { rows?: number }) {
     <div className="space-y-4">
       {Array.from({ length: rows }, (_, i) => (
         <div key={i} className="card p-6 animate-pulse">
-          <div className="h-4 bg-slate-800 rounded w-1/3 mb-3" />
-          <div className="h-3 bg-slate-800 rounded w-full mb-2" />
-          <div className="h-3 bg-slate-800 rounded w-2/3" />
+          <div className="skeleton h-4 w-1/3 mb-3" />
+          <div className="skeleton h-3 w-full mb-2" />
+          <div className="skeleton h-3 w-2/3" />
         </div>
       ))}
     </div>
@@ -113,7 +114,8 @@ export function ErrorMessage({
       {onRetry && (
         <button
           onClick={onRetry}
-          className="mt-4 px-4 py-2 bg-pitch-600 hover:bg-pitch-500 text-white rounded-lg text-sm font-medium transition-colors"
+          className="mt-4 px-4 py-2 text-white rounded-lg text-sm font-medium transition-colors"
+            style={{ background: "var(--accent)" }}
         >
           Retry
         </button>

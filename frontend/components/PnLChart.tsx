@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   AreaChart,
   Area,
@@ -9,6 +10,8 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
+import { useTheme } from "next-themes";
+import { useChartTheme } from "@/lib/hooks";
 
 interface PnLChartProps {
   data: Array<{ gameweek: number; bankroll: number; peak: number }>;
@@ -16,49 +19,56 @@ interface PnLChartProps {
 }
 
 export default function PnLChart({ data, initialBankroll }: PnLChartProps) {
+  const chart = useChartTheme();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = !mounted || resolvedTheme === "dark";
+  const accentColor = isDark ? "#22c55e" : "#15803d";
+
   return (
     <div className="space-y-2">
       <ResponsiveContainer width="100%" height={280}>
         <AreaChart data={data} margin={{ top: 10, right: 10, bottom: 0, left: 10 }}>
           <defs>
             <linearGradient id="pnlGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#2aad1f" stopOpacity={0.3} />
-              <stop offset="100%" stopColor="#2aad1f" stopOpacity={0} />
+              <stop offset="0%" stopColor={accentColor} stopOpacity={0.3} />
+              <stop offset="100%" stopColor={accentColor} stopOpacity={0} />
             </linearGradient>
             <linearGradient id="peakGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#64748b" stopOpacity={0.1} />
-              <stop offset="100%" stopColor="#64748b" stopOpacity={0} />
+              <stop offset="0%" stopColor={chart.tick} stopOpacity={0.1} />
+              <stop offset="100%" stopColor={chart.tick} stopOpacity={0} />
             </linearGradient>
           </defs>
           <XAxis
             dataKey="gameweek"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "#64748b", fontSize: 11, fontFamily: "var(--font-mono)" }}
+            tick={{ fill: chart.tick, fontSize: 11, fontFamily: "var(--font-mono)" }}
             label={{
               value: "Gameweek",
               position: "insideBottomRight",
               offset: -5,
-              style: { fill: "#475569", fontSize: 10 },
+              style: { fill: chart.tick, fontSize: 10 },
             }}
           />
           <YAxis
             axisLine={false}
             tickLine={false}
-            tick={{ fill: "#475569", fontSize: 10, fontFamily: "var(--font-mono)" }}
+            tick={{ fill: chart.tick, fontSize: 10, fontFamily: "var(--font-mono)" }}
             tickFormatter={(v: number) => `£${v}`}
           />
           <Tooltip
             contentStyle={{
-              background: "rgba(10, 15, 28, 0.92)",
+              background: chart.tooltip.background,
               backdropFilter: "blur(12px)",
               WebkitBackdropFilter: "blur(12px)",
-              border: "1px solid rgba(255, 255, 255, 0.10)",
+              border: `1px solid ${chart.tooltip.border}`,
               borderRadius: "8px",
               fontSize: "12px",
-              color: "#e2e8f0",
+              color: chart.tooltip.color,
               fontFamily: "var(--font-mono)",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
+              boxShadow: chart.tooltip.shadow,
             }}
             formatter={(value: number, name: string) => [
               `£${value.toFixed(2)}`,
@@ -67,18 +77,18 @@ export default function PnLChart({ data, initialBankroll }: PnLChartProps) {
           />
           <ReferenceLine
             y={initialBankroll}
-            stroke="#475569"
+            stroke={chart.tick}
             strokeDasharray="4 4"
             label={{
               value: "Start",
               position: "right",
-              style: { fill: "#64748b", fontSize: 10 },
+              style: { fill: chart.tick, fontSize: 10 },
             }}
           />
           <Area
             type="monotone"
             dataKey="peak"
-            stroke="#475569"
+            stroke={chart.tick}
             strokeWidth={1}
             fillOpacity={1}
             fill="url(#peakGrad)"
@@ -87,7 +97,7 @@ export default function PnLChart({ data, initialBankroll }: PnLChartProps) {
           <Area
             type="monotone"
             dataKey="bankroll"
-            stroke="#2aad1f"
+            stroke={accentColor}
             strokeWidth={2}
             fillOpacity={1}
             fill="url(#pnlGrad)"

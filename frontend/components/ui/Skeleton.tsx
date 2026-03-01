@@ -10,7 +10,7 @@ export function Skeleton({ className, style }: { className?: string; style?: CSS
   return (
     <div
       aria-hidden="true"
-      className={clsx("animate-pulse rounded bg-white/[0.06]", className)}
+      className={clsx("skeleton", className)}
       style={style}
     />
   );

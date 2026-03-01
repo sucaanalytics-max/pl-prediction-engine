@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, CSSProperties } from "react";
 import clsx from "clsx";
 
 type ButtonVariant = "primary" | "ghost" | "outline";
@@ -10,9 +10,15 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANT_STYLES: Record<ButtonVariant, string> = {
-  primary: "bg-green-600 hover:bg-green-500 text-white border border-green-600 hover:border-green-500",
-  ghost: "bg-transparent hover:bg-white/[0.06] text-slate-400 hover:text-white border border-transparent",
-  outline: "bg-transparent hover:bg-white/[0.04] text-slate-300 border border-white/10 hover:border-white/20",
+  primary: "text-white border",
+  ghost: "bg-transparent border border-transparent",
+  outline: "bg-transparent border",
+};
+
+const VARIANT_INLINE: Record<ButtonVariant, CSSProperties> = {
+  primary: { background: "var(--accent)", borderColor: "var(--accent)" },
+  ghost: { color: "var(--text-3)" },
+  outline: { color: "var(--text-2)", borderColor: "var(--border)" },
 };
 
 const SIZE_STYLES: Record<ButtonSize, string> = {
@@ -38,6 +44,7 @@ export function Button({
         SIZE_STYLES[size],
         className
       )}
+      style={VARIANT_INLINE[variant]}
       {...props}
     >
       {children}

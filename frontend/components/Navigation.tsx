@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { usePredictions } from "@/lib/PredictionsContext";
 
 const NAV_ITEMS = [
@@ -79,6 +80,38 @@ function timeAgo(ts: number): string {
   return `${Math.floor(diff / 86400)}d ago`;
 }
 
+function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return <div className="w-7 h-7" />;
+  const isDark = resolvedTheme === "dark";
+  return (
+    <button
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors duration-150"
+      style={{
+        background: "var(--surface2)",
+        border: "1px solid var(--border)",
+        color: "var(--text-3)",
+      }}
+    >
+      {isDark ? (
+        /* Sun — visible in dark mode, clicking switches to light */
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+        </svg>
+      ) : (
+        /* Moon — visible in light mode, clicking switches to dark */
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 export default function Navigation() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -94,7 +127,8 @@ export default function Navigation() {
       {/* Skip to content */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-green-600 focus:text-white focus:rounded-lg focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:text-white"
+        style={{ background: "var(--accent)" }}
       >
         Skip to content
       </a>
@@ -105,14 +139,15 @@ export default function Navigation() {
         aria-expanded={mobileOpen}
         aria-controls="sidebar-nav"
         aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
-        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg"
+        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg transition-colors"
         style={{
-          background: "#111827",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "var(--surface)",
+          border: "1px solid var(--border)",
+          color: "var(--text-2)",
         }}
       >
         <svg
-          className="w-5 h-5 text-slate-300"
+          className="w-5 h-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -131,7 +166,7 @@ export default function Navigation() {
       {mobileOpen && (
         <div
           className="fixed inset-0 z-30 lg:hidden"
-          style={{ background: "rgba(10,15,28,0.75)" }}
+          style={{ background: "var(--overlay)" }}
           onClick={() => setMobileOpen(false)}
           aria-hidden="true"
         />
@@ -146,14 +181,14 @@ export default function Navigation() {
                      transform transition-transform duration-300 ease-in-out
                      ${mobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
         style={{
-          background: "#0d1321",
-          borderRight: "1px solid rgba(255, 255, 255, 0.06)",
+          background: "var(--surface)",
+          borderRight: "1px solid var(--border)",
         }}
       >
         {/* Logo */}
         <div
           className="px-5 py-4 flex-shrink-0"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+          style={{ borderBottom: "1px solid var(--border)" }}
         >
           <Link
             href="/"
@@ -162,20 +197,23 @@ export default function Navigation() {
           >
             <div
               className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.25)" }}
+              style={{ background: "var(--accent-muted)", border: "1px solid var(--accent-border)" }}
             >
               <svg
-                className="w-5 h-5 text-green-400"
+                className="w-5 h-5"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 aria-hidden="true"
+                style={{ color: "var(--accent-text)" }}
               >
                 <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9zm-4 4h2v2H5v-2zm4 0h2v2H9v-2zm4 0h2v2h-2v-2z" />
               </svg>
             </div>
             <div>
-              <p className="font-bold text-sm text-white tracking-tight leading-none">PL Engine</p>
-              <p className="text-[10px] uppercase tracking-widest text-green-500 font-semibold mt-0.5">
+              <p className="font-bold text-sm tracking-tight leading-none" style={{ color: "var(--text-1)" }}>
+                PL Engine
+              </p>
+              <p className="text-[10px] uppercase tracking-widest font-semibold mt-0.5" style={{ color: "var(--accent-text)" }}>
                 Prediction Model
               </p>
             </div>
@@ -202,9 +240,9 @@ export default function Navigation() {
                     className="ml-auto text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full"
                     aria-label={`${valueBetCount} value bets available`}
                     style={{
-                      background: "rgba(34,197,94,0.15)",
-                      color: "#4ade80",
-                      border: "1px solid rgba(34,197,94,0.2)",
+                      background: "var(--success-muted)",
+                      color: "var(--accent-text)",
+                      border: "1px solid var(--success-border)",
                     }}
                   >
                     {valueBetCount}
@@ -218,24 +256,26 @@ export default function Navigation() {
         {/* Footer */}
         <div
           className="p-4 space-y-2"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+          style={{ borderTop: "1px solid var(--border)" }}
         >
           {lastUpdated && (
-            <div className="flex items-center gap-1.5 text-[10px] text-slate-600">
+            <div className="flex items-center gap-1.5 text-[10px]" style={{ color: "var(--text-4)" }}>
               {isStale ? (
                 <span className="stale-warning !text-[9px] !px-1.5 !py-0.5">STALE</span>
               ) : (
                 <span
-                  className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse flex-shrink-0"
+                  className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0"
+                  style={{ background: "var(--accent)" }}
                   aria-hidden="true"
                 />
               )}
               <span>Updated {timeAgo(lastUpdated)}</span>
             </div>
           )}
-          <div className="flex items-center gap-2 text-[10px] text-slate-600">
-            <span>Pipeline {pipelineVersion}</span>
-            <span className="ml-auto">{season}</span>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px]" style={{ color: "var(--text-4)" }}>Pipeline {pipelineVersion}</span>
+            <span className="text-[10px] ml-auto" style={{ color: "var(--text-4)" }}>{season}</span>
+            <ThemeToggle />
           </div>
         </div>
       </aside>

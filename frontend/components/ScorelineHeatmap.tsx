@@ -11,18 +11,18 @@ interface ScorelineHeatmapProps {
 function cellColor(prob: number): string {
   if (prob >= 0.12) return "bg-pitch-500/80 text-white";
   if (prob >= 0.08) return "bg-pitch-600/60 text-white";
-  if (prob >= 0.05) return "bg-pitch-700/40 text-slate-200";
-  if (prob >= 0.02) return "bg-slate-800/80 text-slate-300";
-  if (prob > 0) return "bg-slate-800/40 text-slate-500";
-  return "bg-slate-900/40 text-slate-700";
+  if (prob >= 0.05) return "bg-pitch-700/40 dark:text-slate-200 text-slate-800";
+  if (prob >= 0.02) return "dark:bg-slate-800/80 bg-slate-100 dark:text-slate-300 text-slate-600";
+  if (prob > 0) return "dark:bg-slate-800/40 bg-slate-100/60 dark:text-slate-500 text-slate-400";
+  return "dark:bg-slate-900/40 bg-transparent dark:text-slate-700 text-slate-300";
 }
 
 export default function ScorelineHeatmap({ grid, homeTeam, awayTeam }: ScorelineHeatmapProps) {
-  const maxGoals = 5; // Show 0-4 goals (5x5)
+  const maxGoals = 5;
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between text-xs text-slate-500 uppercase tracking-wider">
+      <div className="flex items-center justify-between text-xs uppercase tracking-wider" style={{ color: "var(--text-3)" }}>
         <span>{awayTeam} goals →</span>
       </div>
 
@@ -30,7 +30,7 @@ export default function ScorelineHeatmap({ grid, homeTeam, awayTeam }: Scoreline
         {/* Header row */}
         <div />
         {Array.from({ length: maxGoals }, (_, i) => (
-          <div key={`h-${i}`} className="text-center text-xs font-mono text-slate-500 py-1">
+          <div key={`h-${i}`} className="text-center text-xs font-mono py-1" style={{ color: "var(--text-3)" }}>
             {i}
           </div>
         ))}
@@ -40,7 +40,8 @@ export default function ScorelineHeatmap({ grid, homeTeam, awayTeam }: Scoreline
           <>
             <div
               key={`label-${homeGoals}`}
-              className="flex items-center justify-center text-xs font-mono text-slate-500"
+              className="flex items-center justify-center text-xs font-mono"
+              style={{ color: "var(--text-3)" }}
             >
               {homeGoals}
             </div>
@@ -57,21 +58,22 @@ export default function ScorelineHeatmap({ grid, homeTeam, awayTeam }: Scoreline
         ))}
       </div>
 
-      <div className="flex items-center text-xs text-slate-500 uppercase tracking-wider">
-        <span className="-rotate-0">↑ {homeTeam} goals</span>
+      <div className="flex items-center text-xs uppercase tracking-wider" style={{ color: "var(--text-3)" }}>
+        <span>↑ {homeTeam} goals</span>
       </div>
 
       {/* Top scorelines */}
-      <div className="pt-2 border-t border-slate-800/40">
-        <p className="text-xs text-slate-500 mb-2">Most likely scorelines</p>
+      <div className="pt-2" style={{ borderTop: "1px solid var(--border)" }}>
+        <p className="text-xs mb-2" style={{ color: "var(--text-3)" }}>Most likely scorelines</p>
         <div className="flex flex-wrap gap-2">
           {getTopScorelines(grid, homeTeam, awayTeam, 5).map((s, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-800/60 text-xs font-mono"
+              className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-mono"
+              style={{ background: "var(--surface2)", border: "1px solid var(--border)" }}
             >
-              <span className="text-white font-semibold">{s.score}</span>
-              <span className="text-slate-500">{pct(s.prob)}</span>
+              <span className="font-semibold" style={{ color: "var(--text-1)" }}>{s.score}</span>
+              <span style={{ color: "var(--text-3)" }}>{pct(s.prob)}</span>
             </span>
           ))}
         </div>
@@ -82,8 +84,8 @@ export default function ScorelineHeatmap({ grid, homeTeam, awayTeam }: Scoreline
 
 function getTopScorelines(
   grid: number[][],
-  home: string,
-  away: string,
+  _home: string,
+  _away: string,
   n: number
 ): Array<{ score: string; prob: number }> {
   const scores: Array<{ score: string; prob: number }> = [];

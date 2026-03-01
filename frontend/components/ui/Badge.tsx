@@ -23,9 +23,9 @@ const VARIANT_STYLE: Record<BadgeVariant, React.CSSProperties> = {
   sky: {},
   slate: {},
   violet: {
-    background: "rgba(139, 92, 246, 0.12)",
-    color: "#a78bfa",
-    border: "1px solid rgba(139, 92, 246, 0.2)",
+    background: "var(--info-muted)",
+    color: "var(--info)",
+    border: "1px solid var(--info-border)",
   },
 };
 

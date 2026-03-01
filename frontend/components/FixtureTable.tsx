@@ -1,25 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { pct, shortDate, kickoffTime, confidenceColor } from "@/lib/formats";
+import { shortDate, kickoffTime, confidenceColor } from "@/lib/formats";
 import { confidenceTier, type MatchPrediction } from "@/lib/predictions";
 
 interface FixtureTableProps {
   predictions: MatchPrediction[];
 }
 
-// Lookup tables — avoids repeated ternary chains
-const ACCENT: Record<"home" | "draw" | "away", { color: string; bg: string; label: string }> = {
-  home: { color: "#22c55e", bg: "rgba(34,197,94,0.045)", label: "HOME WIN" },
-  draw: { color: "#f59e0b", bg: "rgba(245,158,11,0.040)", label: "DRAW" },
-  away: { color: "#38bdf8", bg: "rgba(56,189,248,0.040)", label: "AWAY WIN" },
+const PRED_CLASS: Record<"home" | "draw" | "away", string> = {
+  home: "fixture-home",
+  draw: "fixture-draw",
+  away: "fixture-away",
 };
 
-const PROB_CELLS = [
-  { key: "home" as const, label: "H", color: "#22c55e" },
-  { key: "draw" as const, label: "X", color: "#94a3b8" },
-  { key: "away" as const, label: "A", color: "#38bdf8" },
+const PROB_CELLS: { key: "home" | "draw" | "away"; label: string; cellClass: string }[] = [
+  { key: "home", label: "H", cellClass: "prob-cell prob-cell-home" },
+  { key: "draw", label: "X", cellClass: "prob-cell prob-cell-draw" },
+  { key: "away", label: "A", cellClass: "prob-cell prob-cell-away" },
 ];
+
+const CELL_COLOR: Record<"home" | "draw" | "away", string> = {
+  home: "var(--home)",
+  draw: "var(--draw)",
+  away: "var(--away)",
+};
 
 export default function FixtureTable({ predictions }: FixtureTableProps) {
   return (
@@ -35,7 +40,6 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
         const dp = Math.round(p.draw * 100);
         const ap = Math.round(p.away * 100);
         const probs = { home: hp, draw: dp, away: ap };
-        const { color, bg } = ACCENT[prediction];
 
         return (
           <Link
@@ -46,23 +50,18 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
             role="listitem"
             aria-label={`${pred.fixture.home_team} vs ${pred.fixture.away_team}, predicted ${prediction}`}
           >
-            <div
-              className="fixture-card relative overflow-hidden"
-              style={{
-                background: `linear-gradient(115deg, ${bg} 0%, #111827 42%)`,
-              }}
-            >
+            <div className={`fixture-card relative overflow-hidden ${PRED_CLASS[prediction]}`}>
               {/* Left accent strip */}
               <div
                 className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-xl"
-                style={{ background: color }}
+                style={{ background: CELL_COLOR[prediction] }}
                 aria-hidden="true"
               />
 
               {/* Top shimmer */}
               <div
                 className="absolute top-0 left-0 right-0 h-px opacity-25"
-                style={{ background: `linear-gradient(90deg, ${color}, transparent 55%)` }}
+                style={{ background: `linear-gradient(90deg, ${CELL_COLOR[prediction]}, transparent 55%)` }}
                 aria-hidden="true"
               />
 
@@ -70,7 +69,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                 {/* ── Meta row ─────────────────────────────────── */}
                 <div className="flex items-center justify-between mb-3.5">
                   <div className="flex items-center gap-2.5 flex-wrap">
-                    <span className="text-[10px] font-mono text-slate-600 uppercase tracking-wider">
+                    <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: "var(--text-4)" }}>
                       {shortDate(pred.fixture.date)}&ensp;·&ensp;{kickoffTime(pred.fixture.date)}
                     </span>
 
@@ -78,9 +77,9 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                       <span
                         className="inline-flex items-center text-[8px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
                         style={{
-                          background: "rgba(245,158,11,0.1)",
-                          color: "#fbbf24",
-                          border: "1px solid rgba(245,158,11,0.2)",
+                          background: "var(--warning-muted)",
+                          color: "var(--warning)",
+                          border: "1px solid var(--warning-border)",
                         }}
                       >
                         DERBY
@@ -88,7 +87,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                     )}
 
                     {pred.model_disagreement !== undefined && pred.model_disagreement > 0.15 && (
-                      <span className="text-[9px] font-mono font-semibold text-amber-500">
+                      <span className="text-[9px] font-mono font-semibold" style={{ color: "var(--warning)" }}>
                         ⚠ SPLIT
                       </span>
                     )}
@@ -99,16 +98,16 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                       <span
                         className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full"
                         style={{
-                          background: "rgba(34,197,94,0.1)",
-                          color: "#4ade80",
-                          border: "1px solid rgba(34,197,94,0.18)",
+                          background: "var(--success-muted)",
+                          color: "var(--accent-text)",
+                          border: "1px solid var(--success-border)",
                         }}
                         aria-label={`${valueBetCount} value bet${valueBetCount > 1 ? "s" : ""}`}
                       >
                         ⚡ {valueBetCount}
                       </span>
                     )}
-                    <span className="text-[9px] font-mono text-slate-700">
+                    <span className="text-[9px] font-mono" style={{ color: "var(--text-4)" }}>
                       GW{pred.fixture.gameweek}
                     </span>
                   </div>
@@ -124,7 +123,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                         className="font-bold leading-tight tracking-tight truncate"
                         style={{
                           fontSize: "17px",
-                          color: prediction === "home" ? "#f8fafc" : "#475569",
+                          color: prediction === "home" ? "var(--text-1)" : "var(--text-3)",
                           fontFamily: "var(--font-jakarta)",
                         }}
                       >
@@ -134,7 +133,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                         className="text-xs font-bold flex-shrink-0"
                         style={{
                           fontFamily: "var(--font-mono)",
-                          color: prediction === "home" ? "#4ade80" : "#1e293b",
+                          color: prediction === "home" ? "var(--home)" : "var(--text-4)",
                         }}
                       >
                         {pred.expected_goals.home.toFixed(1)}
@@ -143,14 +142,14 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
 
                     {/* xG separator */}
                     <div className="flex items-center gap-1.5 my-1.5">
-                      <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.04)" }} />
+                      <div className="h-px flex-1" style={{ background: "var(--border)" }} />
                       <span
                         className="text-[8px] font-bold tracking-[0.18em] uppercase"
-                        style={{ fontFamily: "var(--font-mono)", color: "#1e293b" }}
+                        style={{ fontFamily: "var(--font-mono)", color: "var(--text-4)" }}
                       >
                         xG
                       </span>
-                      <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.04)" }} />
+                      <div className="h-px flex-1" style={{ background: "var(--border)" }} />
                     </div>
 
                     {/* Away */}
@@ -159,7 +158,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                         className="font-bold leading-tight tracking-tight truncate"
                         style={{
                           fontSize: "17px",
-                          color: prediction === "away" ? "#f8fafc" : "#475569",
+                          color: prediction === "away" ? "var(--text-1)" : "var(--text-3)",
                           fontFamily: "var(--font-jakarta)",
                         }}
                       >
@@ -169,17 +168,17 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                         className="text-xs font-bold flex-shrink-0"
                         style={{
                           fontFamily: "var(--font-mono)",
-                          color: prediction === "away" ? "#38bdf8" : "#1e293b",
+                          color: prediction === "away" ? "var(--away)" : "var(--text-4)",
                         }}
                       >
                         {pred.expected_goals.away.toFixed(1)}
                       </span>
                     </div>
 
-                    {/* Referee — only shown on wider viewports */}
+                    {/* Referee */}
                     {pred.fixture.referee && (
-                      <div className="mt-2 text-[10px] text-slate-700 truncate hidden sm:block"
-                        style={{ fontFamily: "var(--font-mono)" }}
+                      <div className="mt-2 text-[10px] truncate hidden sm:block"
+                        style={{ fontFamily: "var(--font-mono)", color: "var(--text-4)" }}
                       >
                         {pred.fixture.referee}
                       </div>
@@ -190,24 +189,21 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                   <div className="flex-shrink-0" style={{ width: "152px" }}>
                     {/* Three probability cells */}
                     <div className="grid grid-cols-3 gap-1 mb-2">
-                      {PROB_CELLS.map(({ key, label, color: cellColor }) => {
+                      {PROB_CELLS.map(({ key, label, cellClass }) => {
                         const active = prediction === key;
                         const val = probs[key];
                         return (
                           <div
                             key={key}
-                            className="flex flex-col items-center py-2 rounded-lg"
-                            style={{
-                              background: active ? `${cellColor}14` : "rgba(255,255,255,0.025)",
-                              border: `1px solid ${active ? `${cellColor}28` : "rgba(255,255,255,0.04)"}`,
-                            }}
+                            className={cellClass}
+                            data-active={active ? "true" : undefined}
                           >
                             <span
                               className="font-bold leading-none"
                               style={{
                                 fontSize: "15px",
                                 fontFamily: "var(--font-mono)",
-                                color: active ? cellColor : "#334155",
+                                color: active ? CELL_COLOR[key] : "var(--text-3)",
                               }}
                             >
                               {val}
@@ -216,7 +212,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                               className="text-[8px] font-semibold tracking-wider mt-0.5 uppercase"
                               style={{
                                 fontFamily: "var(--font-mono)",
-                                color: active ? `${cellColor}88` : "#1e293b",
+                                color: active ? CELL_COLOR[key] : "var(--text-4)",
                               }}
                             >
                               {label}
@@ -229,12 +225,12 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                     {/* Probability bar */}
                     <div className="flex h-[5px] rounded-full overflow-hidden">
                       <div
-                        style={{ width: `${hp}%`, background: "#22c55e", borderRadius: "99px 0 0 99px" }}
+                        style={{ width: `${hp}%`, background: "var(--home)", borderRadius: "99px 0 0 99px" }}
                         aria-hidden="true"
                       />
-                      <div style={{ width: `${dp}%`, background: "#334155" }} aria-hidden="true" />
+                      <div style={{ width: `${dp}%`, background: "var(--border-strong)" }} aria-hidden="true" />
                       <div
-                        style={{ width: `${ap}%`, background: "#38bdf8", borderRadius: "0 99px 99px 0" }}
+                        style={{ width: `${ap}%`, background: "var(--away)", borderRadius: "0 99px 99px 0" }}
                         aria-hidden="true"
                       />
                     </div>
@@ -247,17 +243,15 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                           fontFamily: "var(--font-mono)",
                           color:
                             tier === "high"
-                              ? "#4ade80"
+                              ? "var(--success)"
                               : tier === "medium"
-                              ? "#fbbf24"
-                              : "#334155",
+                              ? "var(--warning)"
+                              : "var(--text-4)",
                         }}
                       >
                         {tier}
                       </span>
-                      <span
-                        className={`text-[9px] font-mono ${confidenceColor(maxProb * 100)}`}
-                      >
+                      <span className={`text-[9px] font-mono ${confidenceColor(maxProb * 100)}`}>
                         {Math.round(maxProb * 100)}%
                       </span>
                     </div>
@@ -265,13 +259,14 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                 </div>
               </div>
 
-              {/* Chevron — appears on hover */}
+              {/* Chevron */}
               <div
                 className="absolute right-3.5 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
                 aria-hidden="true"
               >
                 <svg
-                  className="w-4 h-4 text-slate-600"
+                  className="w-4 h-4"
+                  style={{ color: "var(--text-3)" }}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

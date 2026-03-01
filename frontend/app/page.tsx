@@ -37,15 +37,15 @@ function MatchweekContent() {
         <div>
           <div className="flex items-center gap-2.5 mb-1 flex-wrap">
             <h1
-              className="text-2xl font-bold text-white tracking-tight"
-              style={{ fontFamily: "var(--font-jakarta)" }}
+              className="text-3xl font-extrabold tracking-tight"
+              style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
             >
               Matchweek {data.metadata.gameweek}
             </h1>
             <span className="badge-green">LIVE</span>
             {derbyCount > 0 && <span className="badge-amber">{derbyCount} DERBY</span>}
           </div>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm" style={{ color: "var(--text-3)" }}>
             {data.metadata.season} · {data.predictions.length} fixtures ·{" "}
             Updated {timeAgo(data.metadata.generated_at)}
           </p>
@@ -53,8 +53,8 @@ function MatchweekContent() {
 
         {/* Pipeline pill */}
         <div
-          className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] text-slate-500"
-          style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)" }}
+          className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px]"
+          style={{ color: "var(--text-3)", background: "var(--surface)", border: "1px solid var(--border)" }}
         >
           <span className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" aria-hidden="true" />
           <span>v{data.metadata.pipeline_version}</span>
@@ -88,26 +88,29 @@ function MatchweekContent() {
         <Link href="/value-bets" className="block">
           <div
             className="card-hover p-4 flex items-center gap-4"
-            style={{ borderLeft: "3px solid #22c55e" }}
+            style={{ borderLeft: "3px solid var(--accent)" }}
           >
             <div
-              className="text-xl font-bold text-green-400 flex-shrink-0"
-              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-xl font-bold flex-shrink-0"
+              style={{ color: "var(--success)", fontFamily: "var(--font-mono)" }}
             >
               +{pct(effectiveEdge(bestBet), 1)}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[10px] uppercase tracking-wider text-slate-500 mb-0.5 font-semibold">
+              <div
+                className="text-[10px] uppercase tracking-wider mb-0.5 font-semibold"
+                style={{ color: "var(--text-3)" }}
+              >
                 Best edge this week
               </div>
               <div
-                className="text-sm font-semibold text-white truncate"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+                className="text-sm font-semibold truncate"
+                style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
               >
                 {bestBet.market}
                 {bestBet.selection ? ` — ${bestBet.selection}` : ""}
               </div>
-              <div className="text-xs text-slate-500">
+              <div className="text-xs" style={{ color: "var(--text-3)" }}>
                 {bestBet.home_team} vs {bestBet.away_team}
                 {bestBet.decimal_odds && (
                   <span className="ml-2 font-mono">@ {bestBet.decimal_odds.toFixed(2)}</span>
@@ -124,15 +127,15 @@ function MatchweekContent() {
       {/* Fixtures list */}
       {data.predictions.length === 0 ? (
         <div className="card p-8 text-center">
-          <p className="text-slate-500 text-sm">No fixtures scheduled for this gameweek yet.</p>
-          <p className="text-slate-600 text-xs mt-1">Check back closer to the matchday.</p>
+          <p className="text-sm" style={{ color: "var(--text-3)" }}>No fixtures scheduled for this gameweek yet.</p>
+          <p className="text-xs mt-1" style={{ color: "var(--text-4)" }}>Check back closer to the matchday.</p>
         </div>
       ) : (
         <FixtureTable predictions={data.predictions} />
       )}
 
       {/* Model footer */}
-      <div className="flex items-center justify-between text-xs text-slate-600 gap-2 flex-wrap px-1">
+      <div className="flex items-center justify-between text-xs gap-2 flex-wrap px-1" style={{ color: "var(--text-4)" }}>
         <span>
           {[...(data.metadata.models ?? []), ...(data.metadata.sub_models ?? [])].join(" · ")}
         </span>
