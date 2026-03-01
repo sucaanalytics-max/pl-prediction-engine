@@ -5,6 +5,9 @@ Transforms raw match data into model-ready features:
   - Elo ratings
   - Opponent-adjusted metrics
   - Home/away splits
+  - Referee features
+  - Derby indicator
+  - FBref passing features
 """
 import logging
 from typing import Optional
@@ -12,7 +15,7 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 
-from pipeline.config import ROLLING_WINDOWS, ELO
+from pipeline.config import ROLLING_WINDOWS, ELO, DERBIES
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +56,6 @@ class EloRating:
         e_home = self.expected_score(r_home, r_away)
         e_away = 1 - e_home
 
-        # Actual score (1 = win, 0.5 = draw, 0 = loss)
         if home_goals > away_goals:
             s_home, s_away = 1.0, 0.0
         elif home_goals == away_goals:
@@ -61,7 +63,6 @@ class EloRating:
         else:
             s_home, s_away = 0.0, 1.0
 
-        # Goal difference multiplier
         gd = abs(home_goals - away_goals)
         gd_mult = np.log(max(gd, 1) + 1)
 
@@ -79,10 +80,7 @@ class EloRating:
 
 
 def compute_elo_ratings(matches: pd.DataFrame) -> pd.DataFrame:
-    """
-    Compute Elo ratings for all teams across all matches.
-    Adds home_elo, away_elo, elo_diff columns to matches.
-    """
+    """Compute Elo ratings for all teams across all matches."""
     elo = EloRating()
     elo_home = []
     elo_away = []
@@ -116,10 +114,8 @@ def _team_rolling_stats(
 ) -> pd.DataFrame:
     """
     Compute rolling stats for a single team (both home and away games).
-
-    Returns one row per match for the team with rolling features.
+    Now includes fouls_committed, fouls_drawn for card/corner modeling.
     """
-    # Home games
     home = matches[matches["HomeTeam"] == team].copy()
     home["is_home"] = 1
     home["goals_for"] = home["FTHG"]
@@ -129,8 +125,9 @@ def _team_rolling_stats(
     home["corners_for"] = home.get("HC", pd.Series(dtype=float))
     home["corners_against"] = home.get("AC", pd.Series(dtype=float))
     home["yellows"] = home.get("HY", pd.Series(dtype=float))
+    home["fouls_committed"] = home.get("HF", pd.Series(dtype=float))
+    home["fouls_drawn"] = home.get("AF", pd.Series(dtype=float))
 
-    # Away games
     away = matches[matches["AwayTeam"] == team].copy()
     away["is_home"] = 0
     away["goals_for"] = away["FTAG"]
@@ -140,15 +137,17 @@ def _team_rolling_stats(
     away["corners_for"] = away.get("AC", pd.Series(dtype=float))
     away["corners_against"] = away.get("HC", pd.Series(dtype=float))
     away["yellows"] = away.get("AY", pd.Series(dtype=float))
+    away["fouls_committed"] = away.get("AF", pd.Series(dtype=float))
+    away["fouls_drawn"] = away.get("HF", pd.Series(dtype=float))
 
     team_matches = pd.concat([home, away]).sort_values("Date")
 
     stats_cols = [
         "goals_for", "goals_against", "shots_for", "shots_against",
-        "corners_for", "corners_against", "yellows"
+        "corners_for", "corners_against", "yellows",
+        "fouls_committed", "fouls_drawn",
     ]
 
-    # Exponentially weighted moving average
     for col in stats_cols:
         if col in team_matches.columns:
             team_matches[f"ewm_{col}_{window}"] = (
@@ -163,10 +162,7 @@ def _team_rolling_stats(
 
 
 def compute_rolling_features(matches: pd.DataFrame) -> pd.DataFrame:
-    """
-    Compute rolling features for all teams across all windows.
-    Returns the matches DataFrame with rolling features attached.
-    """
+    """Compute rolling features for all teams across all windows."""
     teams = set(matches["HomeTeam"].unique()) | set(matches["AwayTeam"].unique())
     all_rolling = {}
 
@@ -174,7 +170,6 @@ def compute_rolling_features(matches: pd.DataFrame) -> pd.DataFrame:
         for window in ROLLING_WINDOWS:
             team_stats = _team_rolling_stats(matches, team, window)
 
-            # Store latest rolling stats per match for this team
             for _, row in team_stats.iterrows():
                 mid = row.get("match_id", "")
                 if mid not in all_rolling:
@@ -187,7 +182,6 @@ def compute_rolling_features(matches: pd.DataFrame) -> pd.DataFrame:
                     if col.startswith("ewm_"):
                         all_rolling[mid][f"{prefix}_{col}"] = row[col]
 
-    # Merge rolling features back into matches
     rolling_df = pd.DataFrame.from_dict(all_rolling, orient="index")
     rolling_df.index.name = "match_id"
     rolling_df = rolling_df.reset_index()
@@ -197,12 +191,60 @@ def compute_rolling_features(matches: pd.DataFrame) -> pd.DataFrame:
     return matches
 
 
-# ── Additional Features ────────────────────────────────────────────────────
+# ── Opponent Corner Concession Rate ───────────────────────────────────────
+
+def add_opponent_corner_features(matches: pd.DataFrame) -> pd.DataFrame:
+    """Add opponent-adjusted corner features."""
+    matches = matches.copy()
+
+    corner_conceded = {}
+    h_opp_corners = []
+    a_opp_corners = []
+
+    for _, row in matches.iterrows():
+        h, a = row["HomeTeam"], row["AwayTeam"]
+
+        h_cc = corner_conceded.get(a, [])
+        a_cc = corner_conceded.get(h, [])
+
+        h_opp = np.mean(h_cc[-10:]) if len(h_cc) >= 3 else 5.0
+        a_opp = np.mean(a_cc[-10:]) if len(a_cc) >= 3 else 5.0
+
+        h_opp_corners.append(h_opp)
+        a_opp_corners.append(a_opp)
+
+        if pd.notna(row.get("HC")) and pd.notna(row.get("AC")):
+            corner_conceded.setdefault(h, []).append(row["AC"])
+            corner_conceded.setdefault(a, []).append(row["HC"])
+
+    matches["home_opponent_corners_conceded"] = h_opp_corners
+    matches["away_opponent_corners_conceded"] = a_opp_corners
+
+    return matches
+
+
+# ── Derby Indicator ───────────────────────────────────────────────────────
+
+def add_derby_indicator(matches: pd.DataFrame) -> pd.DataFrame:
+    """Flag matches that are derbies/rivalries."""
+    matches = matches.copy()
+    derby_set = set()
+    for h, a in DERBIES:
+        derby_set.add((h, a))
+        derby_set.add((a, h))
+
+    matches["is_derby"] = matches.apply(
+        lambda r: 1 if (r["HomeTeam"], r["AwayTeam"]) in derby_set else 0,
+        axis=1,
+    )
+    n_derbies = matches["is_derby"].sum()
+    logger.info(f"  Derby matches flagged: {n_derbies}")
+    return matches
+
 
 def add_rest_days(matches: pd.DataFrame) -> pd.DataFrame:
     """Add days since last match for each team."""
     matches = matches.copy()
-
     last_match = {}
     home_rest = []
     away_rest = []
@@ -210,18 +252,15 @@ def add_rest_days(matches: pd.DataFrame) -> pd.DataFrame:
     for _, row in matches.iterrows():
         h, a = row["HomeTeam"], row["AwayTeam"]
         date = row["Date"]
-
         h_rest = (date - last_match[h]).days if h in last_match else 7
         a_rest = (date - last_match[a]).days if a in last_match else 7
-        home_rest.append(min(h_rest, 30))  # Cap at 30 days
+        home_rest.append(min(h_rest, 30))
         away_rest.append(min(a_rest, 30))
-
         last_match[h] = date
         last_match[a] = date
 
     matches["home_rest_days"] = home_rest
     matches["away_rest_days"] = away_rest
-
     return matches
 
 
@@ -229,7 +268,6 @@ def add_h2h_features(matches: pd.DataFrame) -> pd.DataFrame:
     """Add head-to-head historical record."""
     matches = matches.copy()
     h2h_cache = {}
-
     h2h_home_wins = []
     h2h_draws = []
     h2h_away_wins = []
@@ -237,14 +275,12 @@ def add_h2h_features(matches: pd.DataFrame) -> pd.DataFrame:
     for _, row in matches.iterrows():
         h, a = row["HomeTeam"], row["AwayTeam"]
         key = tuple(sorted([h, a]))
-
         record = h2h_cache.get(key, {"hw": 0, "d": 0, "aw": 0, "n": 0})
         total = max(record["n"], 1)
         h2h_home_wins.append(record["hw"] / total)
         h2h_draws.append(record["d"] / total)
         h2h_away_wins.append(record["aw"] / total)
 
-        # Update record
         if pd.notna(row.get("FTR")):
             result = row["FTR"]
             if result == "H":
@@ -259,30 +295,23 @@ def add_h2h_features(matches: pd.DataFrame) -> pd.DataFrame:
     matches["h2h_home_win_rate"] = h2h_home_wins
     matches["h2h_draw_rate"] = h2h_draws
     matches["h2h_away_win_rate"] = h2h_away_wins
-
     return matches
 
 
 def add_form_indicator(matches: pd.DataFrame) -> pd.DataFrame:
-    """
-    Add recent form indicator (points from last 5 games, normalized 0-1).
-    """
+    """Add recent form indicator (points from last 5 games, normalized 0-1)."""
     matches = matches.copy()
-
-    form = {}  # team -> list of recent results (3 pts win, 1 pt draw)
+    form = {}
     home_form = []
     away_form = []
 
     for _, row in matches.iterrows():
         h, a = row["HomeTeam"], row["AwayTeam"]
-
-        # Current form (before this match)
         h_pts = form.get(h, [])
         a_pts = form.get(a, [])
         home_form.append(sum(h_pts[-5:]) / max(len(h_pts[-5:]) * 3, 1))
         away_form.append(sum(a_pts[-5:]) / max(len(a_pts[-5:]) * 3, 1))
 
-        # Update form after match
         if pd.notna(row.get("FTR")):
             result = row["FTR"]
             if result == "H":
@@ -297,7 +326,55 @@ def add_form_indicator(matches: pd.DataFrame) -> pd.DataFrame:
 
     matches["home_form_5"] = home_form
     matches["away_form_5"] = away_form
+    return matches
 
+
+# ── Referee Features ──────────────────────────────────────────────────────
+
+def add_referee_features(
+    matches: pd.DataFrame,
+    referee_profiles: Optional[dict] = None,
+) -> pd.DataFrame:
+    """Add referee-based features to match data."""
+    matches = matches.copy()
+
+    if referee_profiles is None or "Referee" not in matches.columns:
+        matches["referee_avg_yellows"] = np.nan
+        matches["referee_avg_fouls"] = np.nan
+        matches["referee_card_rate"] = 1.0
+        matches["referee_consistency"] = np.nan
+        return matches
+
+    all_avgs = [p.avg_yellows_per_match for p in referee_profiles.values()
+                if p.games_officiated >= 5]
+    league_avg_yellows = np.mean(all_avgs) if all_avgs else 3.5
+
+    avg_yellows = []
+    avg_fouls = []
+    card_rates = []
+    consistency = []
+
+    for _, row in matches.iterrows():
+        ref = row.get("Referee")
+        prof = referee_profiles.get(ref) if ref else None
+
+        if prof and prof.games_officiated >= 3:
+            avg_yellows.append(prof.avg_yellows_per_match)
+            avg_fouls.append(prof.avg_fouls_per_match)
+            card_rates.append(prof.avg_yellows_per_match / league_avg_yellows if league_avg_yellows > 0 else 1.0)
+            consistency.append(prof.card_consistency)
+        else:
+            avg_yellows.append(np.nan)
+            avg_fouls.append(np.nan)
+            card_rates.append(1.0)
+            consistency.append(np.nan)
+
+    matches["referee_avg_yellows"] = avg_yellows
+    matches["referee_avg_fouls"] = avg_fouls
+    matches["referee_card_rate"] = card_rates
+    matches["referee_consistency"] = consistency
+
+    logger.info(f"  Referee features added ({sum(1 for x in avg_yellows if not np.isnan(x))} matches with ref data)")
     return matches
 
 
@@ -307,14 +384,16 @@ def engineer_features(
     matches: pd.DataFrame,
     fbref_features: Optional[dict] = None,
     player_stats: Optional[pd.DataFrame] = None,
+    referee_profiles: Optional[dict] = None,
 ) -> pd.DataFrame:
     """
     Full feature engineering pipeline.
 
     Args:
         matches: Raw match data from Football-Data.co.uk
-        fbref_features: Optional xG features from FBref
+        fbref_features: Optional xG + passing features from FBref
         player_stats: Optional player data from FPL API
+        referee_profiles: Optional referee profile dict
 
     Returns:
         Feature-engineered DataFrame ready for modeling
@@ -325,7 +404,7 @@ def engineer_features(
     matches, elo = compute_elo_ratings(matches)
     logger.info(f"  Elo ratings computed for {len(elo.ratings)} teams")
 
-    # Step 2: Rolling stats
+    # Step 2: Rolling stats (includes corners, fouls, yellows)
     matches = compute_rolling_features(matches)
     logger.info(f"  Rolling features computed (windows: {ROLLING_WINDOWS})")
 
@@ -341,24 +420,42 @@ def engineer_features(
     matches = add_form_indicator(matches)
     logger.info("  Form indicators computed")
 
-    # Step 6: FBref xG features (if available)
+    # Step 6: Derby indicator
+    matches = add_derby_indicator(matches)
+
+    # Step 7: Opponent corner features
+    matches = add_opponent_corner_features(matches)
+    logger.info("  Opponent corner concession features computed")
+
+    # Step 8: Referee features
+    matches = add_referee_features(matches, referee_profiles)
+
+    # Step 9: FBref xG + passing features
     if fbref_features:
         for prefix, team_col in [("home", "HomeTeam"), ("away", "AwayTeam")]:
-            xg_vals = []
-            xga_vals = []
+            xg_vals, xga_vals, pass_comp, prog_passes, key_passes_vals = [], [], [], [], []
+
             for _, row in matches.iterrows():
                 team = row[team_col]
                 fb = fbref_features.get(team, {})
                 xg_vals.append(fb.get("xg"))
                 xga_vals.append(fb.get("xga"))
+                pass_comp.append(fb.get("pass_completion_pct"))
+                prog_passes.append(fb.get("progressive_passes"))
+                key_passes_vals.append(fb.get("key_passes"))
+
             matches[f"{prefix}_season_xg"] = xg_vals
             matches[f"{prefix}_season_xga"] = xga_vals
-        logger.info("  FBref xG features merged")
+            matches[f"{prefix}_pass_completion"] = pass_comp
+            matches[f"{prefix}_progressive_passes"] = prog_passes
+            matches[f"{prefix}_key_passes"] = key_passes_vals
 
-    # Step 7: Squad availability (if player stats available)
+        logger.info("  FBref xG + passing features merged")
+
+    # Step 10: Squad availability
     if player_stats is not None:
         team_availability = (
-            player_stats[player_stats["minutes"] > 90]  # Regular starters
+            player_stats[player_stats["minutes"] > 90]
             .groupby("team")
             .agg(
                 squad_available=("available", "mean"),
@@ -376,13 +473,12 @@ def engineer_features(
             )
         logger.info("  Squad availability features merged")
 
-    # Step 8: Target variables (for training)
+    # Step 11: Target variables
     matches["total_goals"] = matches["FTHG"] + matches["FTAG"]
     matches["btts"] = ((matches["FTHG"] > 0) & (matches["FTAG"] > 0)).astype(int)
     matches["result"] = matches["FTR"].map({"H": 0, "D": 1, "A": 2})
 
     logger.info(f"Feature engineering complete: {matches.shape[1]} columns, {len(matches)} matches")
-
     return matches
 
 

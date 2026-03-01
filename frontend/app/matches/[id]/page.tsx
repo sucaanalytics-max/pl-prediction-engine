@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { loadPredictions, getMatchById, type MatchPrediction, type PredictionData } from "@/lib/predictions";
+import {
+  loadPredictions, getMatchById, correctScoreToGrid, getHalfKellyPct,
+  type MatchPrediction, type PredictionData,
+} from "@/lib/predictions";
 import { pct, xg, odds, shortDate, kickoffTime, featureName, confidenceColor, impliedOdds } from "@/lib/formats";
 import ScorelineHeatmap from "@/components/ScorelineHeatmap";
 import DistributionChart from "@/components/DistributionChart";
@@ -35,7 +38,23 @@ export default function MatchDetailPage() {
   const p = match.probabilities["1x2"];
   const maxProb = Math.max(p.home, p.draw, p.away);
   const prediction = p.home === maxProb ? "home" : p.away === maxProb ? "away" : "draw";
-  const { home_team, away_team } = match.fixture;
+  const { home_team, away_team, referee, is_derby } = match.fixture;
+
+  const scoreGrid = correctScoreToGrid(match.probabilities.correct_score);
+
+  const ahLines = Object.entries(match.probabilities.asian_handicap)
+    .filter(([k]) => k.startsWith("home_"))
+    .sort(([a], [b]) => parseFloat(a.replace("home_", "")) - parseFloat(b.replace("home_", "")));
+
+  const cornerLines = ["8.5", "9.5", "10.5", "11.5"];
+  const cardLines = ["2.5", "3.5", "4.5"];
+
+  const goalsHome = match.distributions.goals_home ?? [];
+  const goalsAway = match.distributions.goals_away ?? [];
+  const cornersDist = match.distributions.corners ?? match.distributions.total_corners ?? [];
+  const cardsDist = match.distributions.cards ?? match.distributions.total_cards ?? [];
+
+  const bookings = match.player_bookings?.top_bookings ?? [];
 
   return (
     <div className="space-y-8">
@@ -50,44 +69,37 @@ export default function MatchDetailPage() {
         Back to fixtures
       </Link>
 
-      {/* Header */}
+      {/* Header card */}
       <div className="card p-6">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xs text-slate-500 uppercase tracking-wider">
-            {shortDate(match.fixture.date)} · {kickoffTime(match.fixture.date)} · GW{match.fixture.gameweek}
-          </span>
+          <div className="flex items-center gap-2 text-xs text-slate-500 uppercase tracking-wider flex-wrap">
+            <span>{shortDate(match.fixture.date)} · {kickoffTime(match.fixture.date)} · GW{match.fixture.gameweek}</span>
+            {is_derby && <span className="badge-amber">DERBY</span>}
+          </div>
           <span className={confidenceColor(maxProb * 100) + " text-xs font-mono"}>
             {pct(maxProb)} confidence
           </span>
         </div>
 
-        {/* Teams & score */}
+        {/* Teams & xG */}
         <div className="flex items-center justify-center gap-6 my-6">
           <div className="text-right flex-1">
             <h2 className={`font-display text-2xl font-bold ${prediction === "home" ? "text-white" : "text-slate-400"}`}>
               {home_team}
             </h2>
-            <p className="text-sm font-mono text-slate-500 mt-1">
-              xG {xg(match.expected_goals.home)}
-            </p>
+            <p className="text-sm font-mono text-slate-500 mt-1">xG {xg(match.expected_goals.home)}</p>
           </div>
-
           <div className="flex flex-col items-center px-4">
             <div className="text-3xl font-display font-bold text-pitch-500">
-              {match.expected_goals.home.toFixed(1)} - {match.expected_goals.away.toFixed(1)}
+              {match.expected_goals.home.toFixed(1)} — {match.expected_goals.away.toFixed(1)}
             </div>
-            <span className="text-[10px] text-slate-600 uppercase tracking-wider mt-1">
-              Expected
-            </span>
+            <span className="text-[10px] text-slate-600 uppercase tracking-wider mt-1">Expected</span>
           </div>
-
           <div className="text-left flex-1">
             <h2 className={`font-display text-2xl font-bold ${prediction === "away" ? "text-white" : "text-slate-400"}`}>
               {away_team}
             </h2>
-            <p className="text-sm font-mono text-slate-500 mt-1">
-              xG {xg(match.expected_goals.away)}
-            </p>
+            <p className="text-sm font-mono text-slate-500 mt-1">xG {xg(match.expected_goals.away)}</p>
           </div>
         </div>
 
@@ -104,6 +116,16 @@ export default function MatchDetailPage() {
             <span className="text-sky-400 font-mono">{pct(p.away)} A ({impliedOdds(p.away)})</span>
           </div>
         </div>
+
+        {/* Referee */}
+        {referee && (
+          <div className="mt-4 pt-4 border-t border-slate-800/40 flex items-center gap-2 text-xs text-slate-500">
+            <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span>Referee: <span className="text-slate-300 font-medium">{referee}</span></span>
+          </div>
+        )}
       </div>
 
       {/* Markets grid */}
@@ -111,26 +133,27 @@ export default function MatchDetailPage() {
         {/* O/U 2.5 */}
         <div className="card p-4 space-y-2">
           <h3 className="text-xs text-slate-500 uppercase tracking-wider">Over/Under 2.5 Goals</h3>
-          <div className="flex justify-between items-center">
-            <div>
-              <span className="text-lg font-display font-bold text-white">
-                {pct(match.probabilities.over_under["2.5"].over)}
-              </span>
-              <span className="text-xs text-slate-500 ml-1">over</span>
-            </div>
-            <div>
-              <span className="text-xs text-slate-500 mr-1">under</span>
-              <span className="text-lg font-display font-bold text-slate-400">
-                {pct(match.probabilities.over_under["2.5"].under)}
-              </span>
-            </div>
-          </div>
-          <div className="flex h-2 rounded-full overflow-hidden bg-slate-800">
-            <div
-              className="prob-bar bg-emerald-500"
-              style={{ width: pct(match.probabilities.over_under["2.5"].over) }}
-            />
-          </div>
+          {match.probabilities.over_under["2.5"] ? (
+            <>
+              <div className="flex justify-between items-center">
+                <div>
+                  <span className="text-lg font-display font-bold text-white">
+                    {pct(match.probabilities.over_under["2.5"].over)}
+                  </span>
+                  <span className="text-xs text-slate-500 ml-1">over</span>
+                </div>
+                <div>
+                  <span className="text-xs text-slate-500 mr-1">under</span>
+                  <span className="text-lg font-display font-bold text-slate-400">
+                    {pct(match.probabilities.over_under["2.5"].under)}
+                  </span>
+                </div>
+              </div>
+              <div className="flex h-2 rounded-full overflow-hidden bg-slate-800">
+                <div className="prob-bar bg-emerald-500" style={{ width: pct(match.probabilities.over_under["2.5"].over) }} />
+              </div>
+            </>
+          ) : <span className="text-slate-600 text-sm">—</span>}
         </div>
 
         {/* BTTS */}
@@ -138,44 +161,66 @@ export default function MatchDetailPage() {
           <h3 className="text-xs text-slate-500 uppercase tracking-wider">Both Teams to Score</h3>
           <div className="flex justify-between items-center">
             <div>
-              <span className="text-lg font-display font-bold text-white">
-                {pct(match.probabilities.btts)}
-              </span>
+              <span className="text-lg font-display font-bold text-white">{pct(match.probabilities.btts)}</span>
               <span className="text-xs text-slate-500 ml-1">yes</span>
             </div>
             <div>
               <span className="text-xs text-slate-500 mr-1">no</span>
-              <span className="text-lg font-display font-bold text-slate-400">
-                {pct(1 - match.probabilities.btts)}
-              </span>
+              <span className="text-lg font-display font-bold text-slate-400">{pct(1 - match.probabilities.btts)}</span>
             </div>
           </div>
           <div className="flex h-2 rounded-full overflow-hidden bg-slate-800">
-            <div
-              className="prob-bar bg-amber-500"
-              style={{ width: pct(match.probabilities.btts) }}
-            />
+            <div className="prob-bar bg-amber-500" style={{ width: pct(match.probabilities.btts) }} />
           </div>
         </div>
 
         {/* Corners */}
         <div className="card p-4 space-y-2">
-          <h3 className="text-xs text-slate-500 uppercase tracking-wider">Expected Corners</h3>
-          <div className="stat-value text-white">{match.expected_corners.toFixed(1)}</div>
-          <div className="text-xs text-slate-500">
-            O/U 9.5: {pct(match.probabilities.corners.over_under["9.5"].over)} /
-            {" "}{pct(match.probabilities.corners.over_under["9.5"].under)}
+          <h3 className="text-xs text-slate-500 uppercase tracking-wider">Corners</h3>
+          <div className="stat-value text-white">
+            {match.expected_corners.toFixed(1)}
+            <span className="text-xs text-slate-500 font-normal ml-1">expected</span>
+          </div>
+          <div className="space-y-1">
+            {cornerLines.map((line) => {
+              const ou = match.probabilities.corners[line];
+              if (!ou) return null;
+              return (
+                <div key={line} className="flex justify-between text-xs font-mono text-slate-500">
+                  <span>O/U {line}</span>
+                  <span className="text-emerald-400">{pct(ou.over)}</span>
+                  <span>/</span>
+                  <span>{pct(ou.under)}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         {/* Cards */}
         <div className="card p-4 space-y-2">
-          <h3 className="text-xs text-slate-500 uppercase tracking-wider">Expected Cards</h3>
-          <div className="stat-value text-white">{match.expected_cards.toFixed(1)}</div>
-          <div className="text-xs text-slate-500">
-            O/U 3.5: {pct(match.probabilities.cards.over_under["3.5"].over)} /
-            {" "}{pct(match.probabilities.cards.over_under["3.5"].under)}
+          <h3 className="text-xs text-slate-500 uppercase tracking-wider">Cards</h3>
+          <div className="stat-value text-white">
+            {match.expected_cards.toFixed(1)}
+            <span className="text-xs text-slate-500 font-normal ml-1">expected</span>
           </div>
+          <div className="space-y-1">
+            {cardLines.map((line) => {
+              const ou = match.probabilities.cards[line];
+              if (!ou) return null;
+              return (
+                <div key={line} className="flex justify-between text-xs font-mono text-slate-500">
+                  <span>O/U {line}</span>
+                  <span className="text-amber-400">{pct(ou.over)}</span>
+                  <span>/</span>
+                  <span>{pct(ou.under)}</span>
+                </div>
+              );
+            })}
+          </div>
+          {is_derby && (
+            <p className="text-[10px] text-amber-500/70 pt-1">Derby boost applied</p>
+          )}
         </div>
 
         {/* HT/FT */}
@@ -196,58 +241,80 @@ export default function MatchDetailPage() {
 
         {/* Asian Handicap */}
         <div className="card p-4 space-y-2">
-          <h3 className="text-xs text-slate-500 uppercase tracking-wider">Asian Handicap</h3>
-          {Object.entries(match.probabilities.asian_handicap).map(([line, probs]) => (
-            <div key={line} className="flex justify-between text-xs font-mono">
-              <span className="text-slate-400">AH {line}</span>
-              <span className="text-pitch-400">{pct(probs.home)} H</span>
-              <span className="text-sky-400">{pct(probs.away)} A</span>
-            </div>
-          ))}
+          <h3 className="text-xs text-slate-500 uppercase tracking-wider">Asian Handicap (Home)</h3>
+          <div className="space-y-1">
+            {ahLines.slice(0, 7).map(([line, prob]) => {
+              const lineNum = line.replace("home_", "");
+              return (
+                <div key={line} className="flex justify-between text-xs font-mono">
+                  <span className="text-slate-400">AH {lineNum}</span>
+                  <span className="text-pitch-400">{pct(prob as number)}</span>
+                  <span className="text-sky-400">{pct(1 - (prob as number))}</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
       {/* Scoreline Heatmap */}
       <div className="card p-6">
         <h3 className="text-sm font-display font-semibold text-white mb-4">Correct Score Probabilities</h3>
-        <ScorelineHeatmap
-          grid={match.probabilities.correct_score.grid}
-          homeTeam={home_team}
-          awayTeam={away_team}
-        />
+        <ScorelineHeatmap grid={scoreGrid} homeTeam={home_team} awayTeam={away_team} />
       </div>
 
       {/* Distributions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="card p-4">
-          <DistributionChart
-            data={match.distributions.goals_home}
-            label={`${home_team} Goals`}
-            color="#2aad1f"
-          />
-        </div>
-        <div className="card p-4">
-          <DistributionChart
-            data={match.distributions.goals_away}
-            label={`${away_team} Goals`}
-            color="#38bdf8"
-          />
-        </div>
-        <div className="card p-4">
-          <DistributionChart
-            data={match.distributions.total_goals}
-            label="Total Goals"
-            color="#fbbf24"
-          />
-        </div>
-        <div className="card p-4">
-          <DistributionChart
-            data={match.distributions.total_corners}
-            label="Total Corners"
-            color="#a78bfa"
-          />
-        </div>
+        {goalsHome.length > 0 && (
+          <div className="card p-4">
+            <DistributionChart data={goalsHome} label={`${home_team} Goals`} color="#2aad1f" />
+          </div>
+        )}
+        {goalsAway.length > 0 && (
+          <div className="card p-4">
+            <DistributionChart data={goalsAway} label={`${away_team} Goals`} color="#38bdf8" />
+          </div>
+        )}
+        {cornersDist.length > 0 && (
+          <div className="card p-4">
+            <DistributionChart data={cornersDist} label="Total Corners" color="#a78bfa" startLabel={0} />
+          </div>
+        )}
+        {cardsDist.length > 0 && (
+          <div className="card p-4">
+            <DistributionChart data={cardsDist} label="Total Cards" color="#fbbf24" startLabel={0} />
+          </div>
+        )}
       </div>
+
+      {/* Player Bookings */}
+      {bookings.length > 0 && (
+        <div className="card p-6">
+          <h3 className="text-sm font-display font-semibold text-white mb-4">Player Booking Probabilities</h3>
+          <div className="space-y-2">
+            {bookings.map((b, i) => (
+              <div key={i} className="flex items-center gap-3 bg-slate-800/30 rounded-lg px-3 py-2">
+                <div className="flex-1 min-w-0">
+                  <span className="text-sm font-medium text-white">{b.web_name}</span>
+                  <span className="text-xs text-slate-500 ml-2">{b.team}</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs font-mono flex-shrink-0">
+                  <div className="w-20 bg-slate-700 rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="h-full bg-amber-500 rounded-full"
+                      style={{ width: `${Math.min(b.adjusted_prob * 400, 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-amber-400 w-10 text-right">{pct(b.adjusted_prob)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-[10px] text-slate-600 mt-3">
+            Adjusted for referee profile{referee ? ` (${referee})` : ""}, derby context, and foul rates.
+          </p>
+        </div>
+      )}
 
       {/* SHAP */}
       {match.shap_features.length > 0 && (
@@ -262,16 +329,21 @@ export default function MatchDetailPage() {
           <h3 className="text-sm font-display font-semibold text-white mb-4">Value Bets</h3>
           <div className="space-y-3">
             {match.value_bets.map((bet, i) => (
-              <div key={i} className="flex items-center justify-between bg-slate-800/40 rounded-lg p-3">
+              <div key={i} className="flex items-center justify-between bg-slate-800/40 rounded-lg p-3 gap-2 flex-wrap">
                 <div>
                   <span className="text-sm font-medium text-white">{bet.market}</span>
-                  <span className="text-xs text-slate-500 ml-2">{bet.selection}</span>
+                  {bet.selection && (
+                    <span className="text-xs text-slate-500 ml-2">{bet.selection}</span>
+                  )}
                 </div>
-                <div className="flex items-center gap-4 text-xs font-mono">
+                <div className="flex items-center gap-3 text-xs font-mono">
                   <span className="text-emerald-400">{pct(bet.model_prob)} model</span>
-                  <span className="text-slate-500">{pct(bet.implied_prob)} implied</span>
+                  <span className="text-slate-500">{pct(bet.implied_prob)} impl.</span>
                   <span className="text-amber-400 font-semibold">+{pct(bet.edge)} edge</span>
-                  <span className="text-sky-400">{odds(bet.decimal_odds)}</span>
+                  {(bet.decimal_odds ?? 0) > 0 && (
+                    <span className="text-sky-400">{odds(bet.decimal_odds!)}</span>
+                  )}
+                  <span className="text-slate-400">½K {pct(getHalfKellyPct(bet))}</span>
                 </div>
               </div>
             ))}

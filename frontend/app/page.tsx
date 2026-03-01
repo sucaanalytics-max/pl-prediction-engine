@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { loadPredictions, type PredictionData } from "@/lib/predictions";
-import { pct, timeAgo } from "@/lib/formats";
+import { timeAgo } from "@/lib/formats";
 import FixtureTable from "@/components/FixtureTable";
 
 export default function MatchweekPage() {
@@ -38,10 +38,9 @@ export default function MatchweekPage() {
     );
   }
 
-  const valueBetCount = data.predictions.reduce(
-    (acc, p) => acc + p.value_bets.length,
-    0
-  );
+  const valueBetCount = data.predictions.reduce((acc, p) => acc + p.value_bets.length, 0);
+  const derbyCount = data.predictions.filter((p) => p.fixture.is_derby).length;
+  const totalModels = (data.metadata.models?.length ?? 0) + (data.metadata.sub_models?.length ?? 0);
 
   return (
     <div className="space-y-8">
@@ -52,6 +51,9 @@ export default function MatchweekPage() {
             Matchweek {data.metadata.gameweek}
           </h1>
           <span className="badge-green text-[10px]">LIVE</span>
+          {derbyCount > 0 && (
+            <span className="badge-amber text-[10px]">{derbyCount} DERBY</span>
+          )}
         </div>
         <p className="text-sm text-slate-500">
           {data.metadata.season} season · {data.predictions.length} fixtures ·
@@ -71,7 +73,7 @@ export default function MatchweekPage() {
         </div>
         <div className="card p-4">
           <div className="stat-label">Models</div>
-          <div className="stat-value text-sky-400">{data.metadata.models.length}</div>
+          <div className="stat-value text-sky-400">{totalModels}</div>
         </div>
         <div className="card p-4">
           <div className="stat-label">Simulations</div>
@@ -87,18 +89,23 @@ export default function MatchweekPage() {
       <FixtureTable predictions={data.predictions} />
 
       {/* Pipeline info */}
-      <div className="card p-4 flex items-center justify-between text-xs text-slate-500">
+      <div className="card p-4 flex items-center justify-between text-xs text-slate-500 gap-2 flex-wrap">
         <span>
           Pipeline v{data.metadata.pipeline_version} ·{" "}
-          {data.metadata.models.join(" + ")}
+          {[...(data.metadata.models ?? []), ...(data.metadata.sub_models ?? [])].join(" + ")}
         </span>
-        <span>
+        <div className="flex items-center gap-2">
+          {data.metadata.odds_source && (
+            <span className="text-slate-600">
+              odds: {data.metadata.odds_source.replace("_", " ")}
+            </span>
+          )}
           {data.metadata.calibrated ? (
             <span className="badge-green">Calibrated</span>
           ) : (
             <span className="badge-amber">Uncalibrated</span>
           )}
-        </span>
+        </div>
       </div>
     </div>
   );

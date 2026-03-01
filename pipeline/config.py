@@ -24,6 +24,11 @@ FOOTBALL_DATA_SEASONS = {
     "2526": "2526",
 }
 
+ODDS_API_KEY = os.environ.get("ODDS_API_KEY", "")
+ODDS_API_BASE = "https://api.the-odds-api.com/v4"
+ODDS_API_SPORT = "soccer_epl"
+ODDS_API_CACHE_MINUTES = 30
+
 FPL_API_BASE = "https://fantasy.premierleague.com/api"
 FPL_BOOTSTRAP = f"{FPL_API_BASE}/bootstrap-static/"
 FPL_FIXTURES = f"{FPL_API_BASE}/fixtures/"
@@ -59,11 +64,15 @@ XGBOOST = {
 CORNERS = {
     "distribution": "negative_binomial",
     "rolling_window": 10,
+    "trailing_boost": 0.20,  # +20% corner rate when trailing
 }
 
 CARDS = {
     "distribution": "zero_inflated_poisson",
     "rolling_window": 10,
+    "trailing_foul_boost": 0.15,  # +15% card rate when trailing
+    "derby_boost": 0.8,  # +0.8 expected cards in derbies
+    "min_player_minutes": 900,  # Min minutes for player card model
 }
 
 # ── Ensemble Weights ───────────────────────────────────────────────────────
@@ -90,11 +99,33 @@ MAX_GOALS = 7                        # Max goals per team in scoreline grid
 RISK = {
     "kelly_fraction": 1.0,           # Full Kelly
     "half_kelly": True,              # Also compute half Kelly
-    "min_edge": 0.05,               # 5% minimum edge to flag
+    "min_edge": 0.05,               # 5% minimum edge to flag (1X2/BTTS)
+    "min_edge_corners": 0.07,       # 7% min edge for corners (semi-liquid)
+    "min_edge_cards": 0.08,         # 8% min edge for cards (less liquid)
+    "min_edge_player_booked": 0.10, # 10% min edge for player booked (thin)
     "max_stake_pct": 0.05,          # 5% max bankroll per bet
     "drawdown_soft_limit": 0.20,    # Reduce stakes at 20% drawdown
     "drawdown_hard_limit": 0.30,    # Pause at 30% drawdown
 }
+
+# ── Derby / Rivalry Matchups ──────────────────────────────────────────────
+# These matchups historically produce more fouls and cards
+DERBIES = [
+    ("Arsenal", "Tottenham"),       # North London derby
+    ("Liverpool", "Everton"),       # Merseyside derby
+    ("Man United", "Man City"),     # Manchester derby
+    ("Man United", "Liverpool"),    # Historic rivalry
+    ("Arsenal", "Chelsea"),         # London derby
+    ("Chelsea", "Tottenham"),       # London derby
+    ("Crystal Palace", "Brighton"), # M23 derby
+    ("Wolves", "Aston Villa"),      # West Midlands derby
+    ("Newcastle", "Sunderland"),    # Tyne-Wear derby
+    ("Leeds", "Man United"),        # Roses rivalry
+    ("Burnley", "Leeds"),           # Pennine derby
+    ("Everton", "Liverpool"),       # (reverse)
+    ("Tottenham", "Arsenal"),       # (reverse)
+    ("Man City", "Man United"),     # (reverse)
+]
 
 # ── Evaluation Targets ─────────────────────────────────────────────────────
 EVAL = {

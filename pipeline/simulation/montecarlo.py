@@ -2,12 +2,18 @@
 Monte Carlo simulation engine.
 Simulates 10,000 matches per fixture using ensemble-blended parameters.
 Generates samples for all random variables (goals, corners, cards).
+
+Phase 2 upgrade:
+- Correlated simulation: corners and cards conditioned on match state (goals)
+- Uses upgraded CornersNegBin and CardsZIP models directly
+- Referee-adjusted card simulation
+- Derby-aware card boost
 """
 import logging
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
-from scipy.stats import poisson, nbinom
+from scipy.stats import poisson, nbinom, entropy as sp_entropy
 
 from pipeline.config import N_SIMULATIONS, MAX_GOALS
 
@@ -18,6 +24,7 @@ class MonteCarloSimulator:
     """
     10K match simulation engine.
     Uses posterior samples from Dixon-Coles + XGBoost adjustments.
+    Corners and cards now correlated with goals (match-state conditioning).
     """
 
     def __init__(self, n_simulations: int = N_SIMULATIONS):
@@ -27,20 +34,19 @@ class MonteCarloSimulator:
         self,
         lambda_home: float,
         mu_away: float,
-        corners_params: Optional[Dict] = None,
-        cards_params: Optional[Dict] = None,
+        corners_model=None,
+        cards_model=None,
+        home_team: str = "",
+        away_team: str = "",
+        referee: Optional[str] = None,
+        is_derby: bool = False,
     ) -> Dict:
         """
         Simulate a single match n_simulations times.
 
-        Args:
-            lambda_home: Expected home goals (Poisson rate)
-            mu_away: Expected away goals (Poisson rate)
-            corners_params: {home: (n, p), away: (n, p)} for NegBin
-            cards_params: {home: (p_zero, lam), away: (p_zero, lam)} for ZIP
-
-        Returns:
-            Dict with all simulation results and derived markets
+        If corners_model/cards_model are provided, uses them for correlated
+        simulation (conditioned on goal results).
+        Falls back to uncorrelated sampling if models not available.
         """
         # Goals simulation
         home_goals = np.random.poisson(lambda_home, self.n_sims)
@@ -51,29 +57,29 @@ class MonteCarloSimulator:
         ht_home = np.random.poisson(lambda_home * 0.45, self.n_sims)
         ht_away = np.random.poisson(mu_away * 0.45, self.n_sims)
 
-        # Corners simulation
-        if corners_params:
-            n_h, p_h = corners_params.get("home") or (5, 0.5)
-            n_a, p_a = corners_params.get("away") or (4, 0.5)
-            home_corners = nbinom.rvs(n_h, p_h, size=self.n_sims)
-            away_corners = nbinom.rvs(n_a, p_a, size=self.n_sims)
+        # Goal sims array for match-state conditioning
+        goal_sims = np.column_stack([home_goals, away_goals])
+
+        # Corners simulation (correlated with goals)
+        if corners_model is not None and home_team and away_team:
+            corners_pred = corners_model.predict(home_team, away_team, goal_sims=goal_sims)
+            home_corners = np.array(corners_pred["simulated_home"])
+            away_corners = np.array(corners_pred["simulated_away"])
         else:
             home_corners = np.random.poisson(5.5, self.n_sims)
             away_corners = np.random.poisson(4.5, self.n_sims)
         total_corners = home_corners + away_corners
 
-        # Cards simulation (ZIP)
-        if cards_params:
-            p0_h, lam_h = cards_params.get("home") or (0.1, 1.5)
-            p0_a, lam_a = cards_params.get("away") or (0.1, 1.8)
-            home_yellows = np.where(
-                np.random.random(self.n_sims) < p0_h, 0,
-                np.random.poisson(lam_h, self.n_sims)
+        # Cards simulation (correlated with goals, referee-adjusted)
+        if cards_model is not None and home_team and away_team:
+            cards_pred = cards_model.predict(
+                home_team, away_team,
+                referee=referee,
+                is_derby=is_derby,
+                goal_sims=goal_sims,
             )
-            away_yellows = np.where(
-                np.random.random(self.n_sims) < p0_a, 0,
-                np.random.poisson(lam_a, self.n_sims)
-            )
+            home_yellows = np.array(cards_pred["simulated_home"])
+            away_yellows = np.array(cards_pred["simulated_away"])
         else:
             home_yellows = np.random.poisson(1.5, self.n_sims)
             away_yellows = np.random.poisson(1.8, self.n_sims)
@@ -97,8 +103,12 @@ class MonteCarloSimulator:
         self,
         lambda_samples: np.ndarray,
         mu_samples: np.ndarray,
-        corners_params: Optional[Dict] = None,
-        cards_params: Optional[Dict] = None,
+        corners_model=None,
+        cards_model=None,
+        home_team: str = "",
+        away_team: str = "",
+        referee: Optional[str] = None,
+        is_derby: bool = False,
     ) -> Dict:
         """
         Simulate using posterior samples of lambda/mu (from PyMC).
@@ -117,21 +127,27 @@ class MonteCarloSimulator:
         ht_home = np.random.poisson(lam * 0.45)
         ht_away = np.random.poisson(mu * 0.45)
 
-        # Corners and cards same as point estimate version
-        if corners_params:
-            n_h, p_h = corners_params.get("home") or (5, 0.5)
-            n_a, p_a = corners_params.get("away") or (4, 0.5)
-            home_corners = nbinom.rvs(n_h, p_h, size=n)
-            away_corners = nbinom.rvs(n_a, p_a, size=n)
+        goal_sims = np.column_stack([home_goals, away_goals])
+
+        # Correlated corners
+        if corners_model is not None and home_team and away_team:
+            corners_pred = corners_model.predict(home_team, away_team, goal_sims=goal_sims)
+            home_corners = np.array(corners_pred["simulated_home"])[:n]
+            away_corners = np.array(corners_pred["simulated_away"])[:n]
         else:
             home_corners = np.random.poisson(5.5, n)
             away_corners = np.random.poisson(4.5, n)
 
-        if cards_params:
-            p0_h, lam_h = cards_params.get("home") or (0.1, 1.5)
-            p0_a, lam_a = cards_params.get("away") or (0.1, 1.8)
-            home_yellows = np.where(np.random.random(n) < p0_h, 0, np.random.poisson(lam_h, n))
-            away_yellows = np.where(np.random.random(n) < p0_a, 0, np.random.poisson(lam_a, n))
+        # Correlated cards
+        if cards_model is not None and home_team and away_team:
+            cards_pred = cards_model.predict(
+                home_team, away_team,
+                referee=referee,
+                is_derby=is_derby,
+                goal_sims=goal_sims,
+            )
+            home_yellows = np.array(cards_pred["simulated_home"])[:n]
+            away_yellows = np.array(cards_pred["simulated_away"])[:n]
         else:
             home_yellows = np.random.poisson(1.5, n)
             away_yellows = np.random.poisson(1.8, n)
@@ -172,7 +188,8 @@ class MonteCarloSimulator:
             }
 
         # ── BTTS ──
-        p_btts = float(np.mean((hg > 0) & (ag > 0)))
+        p_btts_yes = float(np.mean((hg > 0) & (ag > 0)))
+        p_btts_no = 1.0 - p_btts_yes
 
         # ── Clean Sheet ──
         p_home_cs = float(np.mean(ag == 0))
@@ -228,7 +245,6 @@ class MonteCarloSimulator:
         e_cards = float(np.mean(tcd))
 
         # ── Confidence ──
-        from scipy.stats import entropy as sp_entropy
         probs_1x2 = [p_home, p_draw, p_away]
         match_entropy = float(sp_entropy(probs_1x2)) if all(p > 0 for p in probs_1x2) else 0
 
@@ -236,7 +252,7 @@ class MonteCarloSimulator:
             "probabilities": {
                 "1x2": {"home": p_home, "draw": p_draw, "away": p_away},
                 "over_under": over_under_goals,
-                "btts": p_btts,
+                "btts": {"yes": p_btts_yes, "no": p_btts_no},
                 "clean_sheet": {"home": p_home_cs, "away": p_away_cs},
                 "correct_score": correct_score,
                 "asian_handicap": asian_handicap,

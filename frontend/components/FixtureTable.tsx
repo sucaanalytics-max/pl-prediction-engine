@@ -45,7 +45,12 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                   >
                     {pred.fixture.home_team}
                   </span>
-                  <span className="text-xs font-mono text-slate-600 mx-2">vs</span>
+                  <div className="flex flex-col items-center mx-2 gap-0.5 flex-shrink-0">
+                    <span className="text-xs font-mono text-slate-600">vs</span>
+                    {pred.fixture.is_derby && (
+                      <span className="badge-amber text-[8px] px-1 leading-tight">DERBY</span>
+                    )}
+                  </div>
                   <span
                     className={`font-display font-semibold text-sm ${
                       prediction === "away" ? "text-white" : "text-slate-400"
@@ -75,6 +80,11 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                   <span>{pct(p.draw, 0)}</span>
                   <span>{pct(p.away, 0)}</span>
                 </div>
+                {pred.fixture.referee && (
+                  <div className="text-[9px] text-slate-600 mt-1 truncate">
+                    Ref: {pred.fixture.referee}
+                  </div>
+                )}
               </div>
 
               {/* Prediction & xG */}

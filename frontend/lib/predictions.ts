@@ -8,6 +8,8 @@ export interface Fixture {
   home_team: string;
   away_team: string;
   gameweek: number;
+  referee?: string;
+  is_derby?: boolean;
 }
 
 export interface Probabilities1X2 {
@@ -21,26 +23,39 @@ export interface OverUnder {
   under: number;
 }
 
-export interface CorrectScoreGrid {
-  grid: number[][];
-}
-
 export interface ShapFeature {
   feature: string;
   value: number;
   shap_value: number;
+  shap_abs?: number;
 }
 
 export interface ValueBet {
   market: string;
-  selection: string;
+  selection?: string;
   model_prob: number;
   implied_prob: number;
-  decimal_odds: number;
+  decimal_odds?: number;
   edge: number;
-  kelly_pct: number;
-  half_kelly_pct: number;
-  confidence: string;
+  full_kelly?: number;
+  half_kelly?: number;
+  full_kelly_pct?: number;
+  half_kelly_pct?: number;
+  recommendation?: string;
+  expected_value?: number;
+  // legacy fields
+  kelly_pct?: number;
+  confidence?: string;
+}
+
+export interface PlayerBooking {
+  player_id?: number;
+  web_name: string;
+  team: string;
+  base_prob: number;
+  adjusted_prob: number;
+  expected_cards?: number;
+  foul_rate?: number;
 }
 
 export interface MatchPrediction {
@@ -50,11 +65,15 @@ export interface MatchPrediction {
     "1x2": Probabilities1X2;
     over_under: Record<string, OverUnder>;
     btts: number;
-    correct_score: CorrectScoreGrid;
-    corners: { over_under: Record<string, OverUnder> };
-    cards: { over_under: Record<string, OverUnder> };
-    asian_handicap: Record<string, { home: number; away: number }>;
+    clean_sheet?: { home: number; away: number };
+    // flat dict: {"0-0": prob, "1-0": prob, ...}
+    correct_score: Record<string, number>;
+    // flat dict: {"home_-2.5": prob, ...}
+    asian_handicap: Record<string, number>;
     ht_ft: Record<string, number>;
+    // flat dict: {"7.5": {over, under}, ...}
+    corners: Record<string, OverUnder>;
+    cards: Record<string, OverUnder>;
   };
   expected_goals: { home: number; away: number };
   expected_corners: number;
@@ -62,16 +81,24 @@ export interface MatchPrediction {
   distributions: {
     goals_home: number[];
     goals_away: number[];
-    total_goals: number[];
-    total_corners: number[];
-    total_cards: number[];
+    corners?: number[];
+    cards?: number[];
+    total_goals?: number[];
+    total_corners?: number[];
+    total_cards?: number[];
+  };
+  player_bookings?: {
+    top_bookings: PlayerBooking[];
+    adjustments?: Record<string, number>;
   };
   shap_features: ShapFeature[];
   value_bets: ValueBet[];
-  confidence: {
+  confidence?: {
     entropy: number;
-    credible_interval_90: [number, number];
+    home_goals_ci?: [number, number];
+    away_goals_ci?: [number, number];
   };
+  n_simulations?: number;
   narrative: string;
 }
 
@@ -82,8 +109,11 @@ export interface PredictionData {
     gameweek: number;
     pipeline_version: string;
     models: string[];
+    sub_models?: string[];
     n_simulations: number;
     calibrated: boolean;
+    odds_source?: string;
+    referee_profiles_count?: number;
   };
   predictions: MatchPrediction[];
 }
@@ -93,8 +123,11 @@ export interface MatchSummary {
   date: string;
   home_team: string;
   away_team: string;
+  referee?: string;
+  is_derby?: boolean;
   model_prediction: string;
   confidence_pct: number;
+  n_value_bets?: number;
 }
 
 export interface HealthData {
@@ -102,8 +135,8 @@ export interface HealthData {
   gameweek: number;
   n_predictions: number;
   status: string;
-  model_metrics: Record<string, number>;
-  calibration: {
+  model_metrics?: Record<string, number>;
+  calibration?: {
     bins: Array<{
       bin_center: number;
       predicted_mean: number;
@@ -140,7 +173,9 @@ export function getMatchById(
   return predictions.predictions.find((p) => p.match_id === matchId);
 }
 
-export function getAllValueBets(predictions: PredictionData): Array<ValueBet & { match_id: string; home_team: string; away_team: string }> {
+export function getAllValueBets(
+  predictions: PredictionData
+): Array<ValueBet & { match_id: string; home_team: string; away_team: string }> {
   const bets: Array<ValueBet & { match_id: string; home_team: string; away_team: string }> = [];
   for (const pred of predictions.predictions) {
     for (const bet of pred.value_bets) {
@@ -153,4 +188,52 @@ export function getAllValueBets(predictions: PredictionData): Array<ValueBet & {
     }
   }
   return bets.sort((a, b) => b.edge - a.edge);
+}
+
+/** Convert flat correct_score dict {"0-0": prob, ...} to a 2D grid[home][away] */
+export function correctScoreToGrid(
+  correctScore: Record<string, number>,
+  maxGoals = 6
+): number[][] {
+  const grid: number[][] = Array.from({ length: maxGoals + 1 }, () =>
+    new Array(maxGoals + 1).fill(0)
+  );
+  for (const [key, prob] of Object.entries(correctScore)) {
+    const parts = key.split("-");
+    if (parts.length !== 2) continue;
+    const h = parseInt(parts[0], 10);
+    const a = parseInt(parts[1], 10);
+    if (h <= maxGoals && a <= maxGoals && !isNaN(h) && !isNaN(a)) {
+      grid[h][a] = prob;
+    }
+  }
+  return grid;
+}
+
+/** Get half-Kelly stake percentage (handles both pipeline v1 and v2 field names) */
+export function getHalfKellyPct(bet: ValueBet): number {
+  return bet.half_kelly_pct ?? bet.kelly_pct ?? 0;
+}
+
+/** Get market label for display */
+export function marketLabel(market: string): string {
+  const labels: Record<string, string> = {
+    "Home Win": "1X2",
+    "Draw": "1X2",
+    "Away Win": "1X2",
+    "Over 2.5": "Goals O/U",
+    "Under 2.5": "Goals O/U",
+  };
+  if (market.includes("Corner")) return "Corners";
+  if (market.includes("Card") || market.includes("Booking")) return "Cards";
+  if (market.includes("Player")) return "Player";
+  return labels[market] ?? "1X2";
+}
+
+/** Get market icon character */
+export function marketIcon(market: string): string {
+  if (market.includes("Corner")) return "⚑";
+  if (market.includes("Card") || market.includes("Booking")) return "□";
+  if (market.includes("Player")) return "👤";
+  return "⚽";
 }

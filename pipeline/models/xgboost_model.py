@@ -27,6 +27,22 @@ FEATURE_COLS = [
     # Rolling shots
     "home_ewm_shots_for_5", "home_ewm_shots_against_5",
     "away_ewm_shots_for_5", "away_ewm_shots_against_5",
+    # Rolling corners
+    "home_ewm_corners_for_5", "home_ewm_corners_against_5",
+    "away_ewm_corners_for_5", "away_ewm_corners_against_5",
+    "home_ewm_corners_for_10", "home_ewm_corners_against_10",
+    "away_ewm_corners_for_10", "away_ewm_corners_against_10",
+    # Opponent corner concession
+    "home_opponent_corners_conceded", "away_opponent_corners_conceded",
+    # Rolling fouls & yellows
+    "home_ewm_fouls_committed_5", "away_ewm_fouls_committed_5",
+    "home_ewm_fouls_committed_10", "away_ewm_fouls_committed_10",
+    "home_ewm_yellows_5", "away_ewm_yellows_5",
+    "home_ewm_yellows_10", "away_ewm_yellows_10",
+    # Referee features
+    "referee_avg_yellows", "referee_avg_fouls", "referee_card_rate",
+    # Derby indicator
+    "is_derby",
     # Form
     "home_form_5", "away_form_5",
     # Rest
@@ -36,6 +52,10 @@ FEATURE_COLS = [
     # FBref xG (if available)
     "home_season_xg", "away_season_xg",
     "home_season_xga", "away_season_xga",
+    # FBref passing (if available)
+    "home_pass_completion", "away_pass_completion",
+    "home_progressive_passes", "away_progressive_passes",
+    "home_key_passes", "away_key_passes",
     # Squad availability (if available)
     "home_squad_availability", "away_squad_availability",
 ]

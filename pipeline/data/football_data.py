@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 REQUIRED_COLS = [
     "Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR",
     "HTHG", "HTAG", "HTR",
+    "Referee",                   # Match referee
     "HS", "AS", "HST", "AST",  # Shots, shots on target
     "HF", "AF",                 # Fouls
     "HC", "AC",                 # Corners
@@ -106,6 +107,11 @@ def clean_football_data(df: pd.DataFrame, season_code: str) -> pd.DataFrame:
     for col in score_cols:
         if col in df.columns:
             df[col] = df[col].astype(int)
+
+    # Normalize referee name (strip whitespace, title case)
+    if "Referee" in df.columns:
+        df["Referee"] = df["Referee"].astype(str).str.strip().str.title()
+        df["Referee"] = df["Referee"].replace({"Nan": None, "None": None, "": None})
 
     # Cast stats columns
     stat_cols = ["HS", "AS", "HST", "AST", "HF", "AF", "HC", "AC", "HY", "AY", "HR", "AR"]
