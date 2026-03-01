@@ -47,10 +47,9 @@ function PlayersContent() {
       .catch((e) => setError(e.message));
   }, []);
 
-  if (error) return <ErrorMessage message={error} onRetry={() => window.location.reload()} />;
-  if (!players) return <PageSkeleton rows={6} />;
-
+  // All useMemo/hooks must be before any early return (Rules of Hooks)
   const filtered = useMemo(() => {
+    if (!players) return [];
     let data = players;
 
     if (posFilter !== "all") {
@@ -84,6 +83,17 @@ function PlayersContent() {
     }
   }
 
+  const posCounts = useMemo(() => {
+    const c: Record<string, number> = {};
+    for (const p of players ?? []) c[p.position] = (c[p.position] ?? 0) + 1;
+    return c;
+  }, [players]);
+
+  // Early returns after all hooks
+  if (error) return <ErrorMessage message={error} onRetry={() => window.location.reload()} />;
+  if (!players) return <PageSkeleton rows={6} />;
+
+  // Non-hook computations that require players to be non-null
   const sortArrow = (key: SortKey) =>
     sortKey === key ? (sortDir === "desc" ? " ↓" : " ↑") : "";
 
@@ -94,12 +104,6 @@ function PlayersContent() {
   // Goal machine threshold: top 10% xG/90 (excluding GKP)
   const xgSorted = [...players].filter(p => p.position !== "GKP").sort((a, b) => b.xg_per_90 - a.xg_per_90);
   const goalMachineThreshold = xgSorted[Math.floor(xgSorted.length * 0.1)]?.xg_per_90 ?? 999;
-
-  const posCounts = useMemo(() => {
-    const c: Record<string, number> = {};
-    for (const p of players) c[p.position] = (c[p.position] ?? 0) + 1;
-    return c;
-  }, [players]);
 
   return (
     <div className="space-y-8">

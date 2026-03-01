@@ -36,12 +36,9 @@ function ValueBetsContent() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 250);
 
-  if (error) return <ErrorMessage message={error} onRetry={refresh} />;
-  if (loading || !data) return <PageSkeleton rows={5} />;
+  const allBets = useMemo(() => (data ? getAllValueBets(data) : []), [data]);
 
-  const allBets = getAllValueBets(data);
-
-  // Apply filters
+  // Apply filters — must be before any early return (Rules of Hooks)
   const filtered = useMemo(() => {
     let bets = allBets;
 
@@ -95,12 +92,6 @@ function ValueBetsContent() {
     return bets;
   }, [allBets, marketFilter, confFilter, minEdge, debouncedSearch, sortKey, sortDir]);
 
-  // Summary stats
-  const totalEdge = allBets.reduce((s, b) => s + effectiveEdge(b), 0);
-  const avgEdge = allBets.length > 0 ? totalEdge / allBets.length : 0;
-  const bestEdge = allBets.length > 0 ? effectiveEdge(allBets[0]) : 0;
-  const totalKelly = allBets.reduce((s, b) => s + getHalfKellyPct(b), 0);
-
   // Market counts for filter badges
   const marketCounts = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -110,6 +101,16 @@ function ValueBetsContent() {
     }
     return counts;
   }, [allBets]);
+
+  // Early returns after all hooks
+  if (error) return <ErrorMessage message={error} onRetry={refresh} />;
+  if (loading || !data) return <PageSkeleton rows={5} />;
+
+  // Summary stats
+  const totalEdge = allBets.reduce((s, b) => s + effectiveEdge(b), 0);
+  const avgEdge = allBets.length > 0 ? totalEdge / allBets.length : 0;
+  const bestEdge = allBets.length > 0 ? effectiveEdge(allBets[0]) : 0;
+  const totalKelly = allBets.reduce((s, b) => s + getHalfKellyPct(b), 0);
 
   function toggleSort(key: SortKey) {
     if (key === sortKey) {
