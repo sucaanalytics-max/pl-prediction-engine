@@ -262,16 +262,50 @@ class BayesianDixonColes:
         mu_a = np.exp(log_mu)
         rho_vals = rho_samples[indices % len(rho_samples)]
 
-        # Build scoreline matrix with ρ correction
-        # For each posterior sample, compute P(i,j) = Poisson(i|λ) * Poisson(j|μ) * τ(i,j,λ,μ,ρ)
-        matrix = np.zeros((MAX_GOALS + 1, MAX_GOALS + 1))
+        # Build scoreline matrix with ρ correction using NumPy broadcasting
+        # lam and mu have shape (n_samples,). We want matrix of shape (MAX_GOALS+1, MAX_GOALS+1)
+        # Vectorized over samples (s), home goals (i), and away goals (j)
         from scipy.stats import poisson as poisson_dist
-
-        for lam, mu, rho_val in zip(lambda_h, mu_a, rho_vals):
-            for i in range(MAX_GOALS + 1):
-                for j in range(MAX_GOALS + 1):
-                    p_ij = poisson_dist.pmf(i, lam) * poisson_dist.pmf(j, mu) * _tau(i, j, lam, mu, rho_val)
-                    matrix[i, j] += max(p_ij, 0)
+        
+        # Ranges
+        goals_range = np.arange(MAX_GOALS + 1)
+        i_grid, j_grid = np.meshgrid(goals_range, goals_range, indexing='ij')
+        
+        # Reshape for broadcasting:
+        # lambda_h, mu_a, rho_vals -> (n_samples, 1, 1)
+        lam_3d = lambda_h[:, np.newaxis, np.newaxis]
+        mu_3d = mu_a[:, np.newaxis, np.newaxis]
+        rho_3d = rho_vals[:, np.newaxis, np.newaxis]
+        
+        # i_grid, j_grid -> (1, MAX_GOALS+1, MAX_GOALS+1)
+        i_3d = i_grid[np.newaxis, :, :]
+        j_3d = j_grid[np.newaxis, :, :]
+        
+        # Calculate Poisson PMFs
+        pmf_h = poisson_dist.pmf(i_3d, lam_3d)
+        pmf_a = poisson_dist.pmf(j_3d, mu_3d)
+        
+        # Calculate Tau
+        # Default is 1.0
+        tau_3d = np.ones_like(pmf_h)
+        
+        # Masks for specific scorelines
+        mask_00 = (i_3d == 0) & (j_3d == 0)
+        mask_10 = (i_3d == 1) & (j_3d == 0)
+        mask_01 = (i_3d == 0) & (j_3d == 1)
+        mask_11 = (i_3d == 1) & (j_3d == 1)
+        
+        # Apply corrections using np.where to handle broadcasting safely
+        tau_3d = np.where(mask_00, 1 - lam_3d * mu_3d * rho_3d, tau_3d)
+        tau_3d = np.where(mask_10, 1 + mu_3d * rho_3d, tau_3d)
+        tau_3d = np.where(mask_01, 1 + lam_3d * rho_3d, tau_3d)
+        tau_3d = np.where(mask_11, 1 - rho_3d, tau_3d)
+        
+        # Compute joint probabilities for all samples and sum over samples
+        p_ij_3d = pmf_h * pmf_a * tau_3d
+        p_ij_3d = np.maximum(p_ij_3d, 0) # Ensure no negative probabilities
+        
+        matrix = p_ij_3d.sum(axis=0)
 
         total = matrix.sum()
         if total > 0:

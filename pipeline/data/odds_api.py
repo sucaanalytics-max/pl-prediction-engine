@@ -27,6 +27,7 @@ from pipeline.config import (
     DATA_PROCESSED,
 )
 from pipeline.data.team_mapping import normalize_team_name
+from pipeline.utils import fetch_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -83,7 +84,7 @@ class OddsAPIClient:
         params["apiKey"] = self.api_key
 
         try:
-            resp = requests.get(url, params=params, timeout=30)
+            resp = fetch_with_retry(url, max_retries=2, timeout=30, params=params)
 
             # Track usage
             self.remaining_requests = resp.headers.get("x-requests-remaining")
@@ -91,14 +92,13 @@ class OddsAPIClient:
             if self.remaining_requests:
                 logger.info(f"Odds API: {self.remaining_requests} requests remaining")
 
-            resp.raise_for_status()
             data = resp.json()
 
             # Cache response
             cache_path.write_text(json.dumps(data, indent=2))
             return data
 
-        except requests.RequestException as e:
+        except Exception as e:
             logger.error(f"Odds API error: {e}")
             if cache_path.exists():
                 logger.warning("Using stale odds cache")

@@ -77,15 +77,15 @@ function TableContent() {
   return (
     <div className="space-y-6 animate-slide-up">
       {/* Header */}
-      <div>
+      <div className="relative z-10 mb-6">
         <h1
-          className="text-3xl font-extrabold tracking-tight"
-          style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+          className="text-4xl md:text-5xl font-extrabold tracking-tighter bg-clip-text text-transparent drop-shadow-sm mb-2"
+          style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--accent) 100%)", fontFamily: "var(--font-jakarta)" }}
         >
           Premier League Table
         </h1>
-        <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-          {standings.length} clubs · 2024–25 season
+        <p className="text-sm font-medium tracking-wide" style={{ color: "var(--text-3)" }}>
+          {standings.length} clubs <span className="mx-1.5 opacity-50">•</span> 2024–25 season
         </p>
       </div>
 
@@ -100,7 +100,7 @@ function TableContent() {
       </div>
 
       {/* Table */}
-      <div className="card overflow-x-auto">
+      <div className="glass-panel overflow-x-auto rounded-2xl shadow-[var(--shadow-custom)]">
         <table className="data-table" aria-label="Premier League standings">
           <thead>
             <tr>

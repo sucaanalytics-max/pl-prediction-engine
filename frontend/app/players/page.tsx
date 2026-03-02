@@ -128,15 +128,15 @@ function PlayersContent() {
 
   return (
     <div className="space-y-8">
-      <div>
+      <div className="relative z-10 mb-6">
         <h1
-          className="text-3xl font-extrabold tracking-tight"
-          style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+          className="text-4xl md:text-5xl font-extrabold tracking-tighter bg-clip-text text-transparent drop-shadow-sm mb-2"
+          style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--accent) 100%)", fontFamily: "var(--font-jakarta)" }}
         >
           Player Stats
         </h1>
-        <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-          {players.length} players · FPL API data · Goalscorer & booking analysis
+        <p className="text-sm font-medium tracking-wide" style={{ color: "var(--text-3)" }}>
+          {players.length} players <span className="mx-1.5 opacity-50">•</span> FPL API data <span className="mx-1.5 opacity-50">•</span> Goalscorer & booking analysis
         </p>
       </div>
 
@@ -148,19 +148,18 @@ function PlayersContent() {
             <button
               key={pos}
               onClick={() => { setPosFilter(pos); setPage(0); }}
-              className={`px-2.5 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors border ${
-                posFilter === pos
+              className={`px-2.5 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors border ${posFilter === pos
                   ? pos === "all"
                     ? "text-white border-transparent"
                     : `${POS_BG[pos] ?? "text-white border-transparent"}`
                   : "border-transparent"
-              }`}
+                }`}
               style={
                 posFilter === pos && pos === "all"
                   ? { background: "var(--accent)" }
                   : posFilter !== pos
-                  ? { color: "var(--text-3)" }
-                  : undefined
+                    ? { color: "var(--text-3)" }
+                    : undefined
               }
               aria-pressed={posFilter === pos}
             >
@@ -175,11 +174,10 @@ function PlayersContent() {
             <button
               key={opt.key}
               onClick={() => toggleSort(opt.key)}
-              className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-colors ${
-                sortKey === opt.key
+              className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-colors ${sortKey === opt.key
                   ? "bg-green-500/15 text-green-400 ring-1 ring-green-500/25"
                   : ""
-              }`}
+                }`}
               style={sortKey !== opt.key ? { color: "var(--text-3)" } : undefined}
             >
               {opt.label}{sortArrow(opt.key)}
@@ -188,26 +186,30 @@ function PlayersContent() {
         </div>
 
         {/* Search */}
-        <div className="ml-auto relative">
+        <div className="ml-auto relative w-full sm:w-auto mt-2 sm:mt-0">
           <label htmlFor="player-search" className="sr-only">Search player or team</label>
-          <input
-            id="player-search"
-            type="text"
-            placeholder="Search player or team…"
-            value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(0); }}
-            className="form-input !w-52 !text-xs !py-1.5"
-          />
-          {search && (
-            <button
-              onClick={() => setSearch("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs transition-colors"
-              style={{ color: "var(--text-3)" }}
-              aria-label="Clear search"
-            >
-              ✕
-            </button>
-          )}
+          <div className="relative">
+            <svg className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-4)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              id="player-search"
+              type="text"
+              placeholder="Search player or team…"
+              value={search}
+              onChange={(e) => { setSearch(e.target.value); setPage(0); }}
+              className="w-full sm:w-64 pl-9 pr-8 py-2 text-xs bg-[var(--surface)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)] transition-shadow text-[var(--text-1)] placeholder-[var(--text-4)] shadow-inner"
+            />
+            {search && (
+              <button
+                onClick={() => setSearch("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-4)] hover:text-[var(--text-2)] transition-colors"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -277,7 +279,7 @@ function PlayersContent() {
             </div>
 
             {/* Desktop table */}
-            <div className="card overflow-x-auto hidden sm:block">
+            <div className="glass-panel overflow-x-auto hidden sm:block rounded-2xl shadow-[var(--shadow-custom)]">
               <table className="data-table" aria-label="Player statistics">
                 <thead>
                   <tr>
@@ -316,96 +318,96 @@ function PlayersContent() {
                     </tr>
                   ) : (
                     paged.map((player) => {
-                const isCardMagnet = (player.yellows_per_90 ?? 0) >= cardMagnetThreshold;
-                const isGoalMachine = player.xg_per_90 >= goalMachineThreshold && player.position !== "GKP";
-                const xgDiff = player.goals_per_90 - player.xg_per_90;
+                      const isCardMagnet = (player.yellows_per_90 ?? 0) >= cardMagnetThreshold;
+                      const isGoalMachine = player.xg_per_90 >= goalMachineThreshold && player.position !== "GKP";
+                      const xgDiff = player.goals_per_90 - player.xg_per_90;
 
-                return (
-                  <tr key={player.player_id}>
-                    <td className="px-4 py-2.5">
-                      <div className="font-medium" style={{ color: "var(--text-1)" }}>{player.web_name}</div>
-                      <div className="text-[10px] sm:hidden" style={{ color: "var(--text-4)" }}>{player.team}</div>
-                    </td>
-                    <td className="px-3 py-2.5 hidden sm:table-cell">{player.team}</td>
-                    <td className="px-3 py-2.5 text-center">
-                      <span className={`text-[10px] font-mono font-semibold ${POS_COLORS[player.position] ?? "text-slate-400"}`}>
-                        {player.position}
-                      </span>
-                    </td>
-                    <td className="px-3 py-2.5 text-right font-mono text-emerald-400">{player.goals_per_90.toFixed(2)}</td>
-                    <td className="px-3 py-2.5 text-right font-mono" style={{ color: "var(--text-2)" }}>{player.xg_per_90.toFixed(2)}</td>
-                    <td className="px-3 py-2.5 text-right font-mono hidden md:table-cell" style={{ color: "var(--info)" }}>
-                      {(player.assists_per_90 ?? 0).toFixed(2)}
-                    </td>
-                    <td className={`px-3 py-2.5 text-right font-mono ${isCardMagnet ? "text-amber-400 font-semibold" : ""}`}
-                        style={!isCardMagnet ? { color: "var(--text-3)" } : undefined}>
-                      {(player.yellows_per_90 ?? 0).toFixed(2)}
-                    </td>
-                    <td className="px-3 py-2.5 text-right font-mono hidden md:table-cell" style={{ color: "var(--text-3)" }}>
-                      {(player.fouls_per_90 ?? 0).toFixed(2)}
-                    </td>
-                    <td className="px-3 py-2.5 text-right font-mono hidden lg:table-cell" style={{ color: "var(--text-3)" }}>
-                      {player.minutes.toLocaleString()}
-                    </td>
-                    <td className="px-3 py-2.5 text-right font-mono hidden lg:table-cell" style={{ color: "var(--text-3)" }}>
-                      {player.goals_scored}
-                    </td>
-                    <td className="px-3 py-2.5 text-center hidden sm:table-cell">
-                      {player.available ? (
-                        <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" title="Available" />
-                      ) : (
-                        <span className="w-2 h-2 rounded-full bg-red-500 inline-block" title="Unavailable" />
-                      )}
-                    </td>
-                    <td className="px-3 py-2.5 text-center">
-                      <div className="flex items-center justify-center gap-1">
-                        {isCardMagnet && (
-                          <span className="badge-amber text-[8px]" title="Card magnet — top 10% yellows/90">□</span>
-                        )}
-                        {isGoalMachine && (
-                          <span className="badge-green text-[8px]" title="Goal threat — top 10% xG/90">⚽</span>
-                        )}
-                        {xgDiff > 0.15 && (
-                          <span className="text-[8px] text-emerald-500 bg-emerald-500/10 px-1 rounded" title="Overperforming xG">↑</span>
-                        )}
-                        {xgDiff < -0.15 && (
-                          <span className="text-[8px] text-red-400 bg-red-500/10 px-1 rounded" title="Underperforming xG">↓</span>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-                  </tbody>
-                </table>
+                      return (
+                        <tr key={player.player_id}>
+                          <td className="px-4 py-2.5">
+                            <div className="font-medium" style={{ color: "var(--text-1)" }}>{player.web_name}</div>
+                            <div className="text-[10px] sm:hidden" style={{ color: "var(--text-4)" }}>{player.team}</div>
+                          </td>
+                          <td className="px-3 py-2.5 hidden sm:table-cell">{player.team}</td>
+                          <td className="px-3 py-2.5 text-center">
+                            <span className={`text-[10px] font-mono font-semibold ${POS_COLORS[player.position] ?? "text-slate-400"}`}>
+                              {player.position}
+                            </span>
+                          </td>
+                          <td className="px-3 py-2.5 text-right font-mono text-emerald-400">{player.goals_per_90.toFixed(2)}</td>
+                          <td className="px-3 py-2.5 text-right font-mono" style={{ color: "var(--text-2)" }}>{player.xg_per_90.toFixed(2)}</td>
+                          <td className="px-3 py-2.5 text-right font-mono hidden md:table-cell" style={{ color: "var(--info)" }}>
+                            {(player.assists_per_90 ?? 0).toFixed(2)}
+                          </td>
+                          <td className={`px-3 py-2.5 text-right font-mono ${isCardMagnet ? "text-amber-400 font-semibold" : ""}`}
+                            style={!isCardMagnet ? { color: "var(--text-3)" } : undefined}>
+                            {(player.yellows_per_90 ?? 0).toFixed(2)}
+                          </td>
+                          <td className="px-3 py-2.5 text-right font-mono hidden md:table-cell" style={{ color: "var(--text-3)" }}>
+                            {(player.fouls_per_90 ?? 0).toFixed(2)}
+                          </td>
+                          <td className="px-3 py-2.5 text-right font-mono hidden lg:table-cell" style={{ color: "var(--text-3)" }}>
+                            {player.minutes.toLocaleString()}
+                          </td>
+                          <td className="px-3 py-2.5 text-right font-mono hidden lg:table-cell" style={{ color: "var(--text-3)" }}>
+                            {player.goals_scored}
+                          </td>
+                          <td className="px-3 py-2.5 text-center hidden sm:table-cell">
+                            {player.available ? (
+                              <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" title="Available" />
+                            ) : (
+                              <span className="w-2 h-2 rounded-full bg-red-500 inline-block" title="Unavailable" />
+                            )}
+                          </td>
+                          <td className="px-3 py-2.5 text-center">
+                            <div className="flex items-center justify-center gap-1">
+                              {isCardMagnet && (
+                                <span className="badge-amber text-[8px]" title="Card magnet — top 10% yellows/90">□</span>
+                              )}
+                              {isGoalMachine && (
+                                <span className="badge-green text-[8px]" title="Goal threat — top 10% xG/90">⚽</span>
+                              )}
+                              {xgDiff > 0.15 && (
+                                <span className="text-[8px] text-emerald-500 bg-emerald-500/10 px-1 rounded" title="Overperforming xG">↑</span>
+                              )}
+                              {xgDiff < -0.15 && (
+                                <span className="text-[8px] text-red-400 bg-red-500/10 px-1 rounded" title="Underperforming xG">↓</span>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Bottom pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center gap-1 pt-2">
+                <button
+                  onClick={() => setPage(Math.max(0, page - 1))}
+                  disabled={page === 0}
+                  className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
+                  style={{ color: "var(--text-3)" }}
+                >
+                  ← Prev
+                </button>
+                <span className="text-[10px] px-2 py-1" style={{ color: "var(--text-3)" }}>{page + 1}/{totalPages}</span>
+                <button
+                  onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
+                  disabled={page >= totalPages - 1}
+                  className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
+                  style={{ color: "var(--text-3)" }}
+                >
+                  Next →
+                </button>
               </div>
-
-              {/* Bottom pagination */}
-              {totalPages > 1 && (
-                <div className="flex justify-center gap-1 pt-2">
-                  <button
-                    onClick={() => setPage(Math.max(0, page - 1))}
-                    disabled={page === 0}
-                    className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
-                    style={{ color: "var(--text-3)" }}
-                  >
-                    ← Prev
-                  </button>
-                  <span className="text-[10px] px-2 py-1" style={{ color: "var(--text-3)" }}>{page + 1}/{totalPages}</span>
-                  <button
-                    onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
-                    disabled={page >= totalPages - 1}
-                    className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
-                    style={{ color: "var(--text-3)" }}
-                  >
-                    Next →
-                  </button>
-                </div>
-              )}
-            </>
-          );
-        })()}
+            )}
+          </>
+        );
+      })()}
 
       <p className="text-[10px] text-center" style={{ color: "var(--text-4)" }}>
         Stats from FPL API · □ = Card magnet (top 10% Y/90) · ⚽ = Goal threat (top 10% xG/90) · ↑↓ = xG over/underperformance

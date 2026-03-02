@@ -57,18 +57,18 @@ function H2HContent() {
   return (
     <div className="space-y-6 animate-slide-up">
       {/* Header */}
-      <div>
+      <div className="relative z-10 mb-6">
         <h1
-          className="text-3xl font-extrabold tracking-tight"
-          style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+          className="text-4xl md:text-5xl font-extrabold tracking-tighter bg-clip-text text-transparent drop-shadow-sm mb-2"
+          style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--accent) 100%)", fontFamily: "var(--font-jakarta)" }}
         >
           Head-to-Head
         </h1>
-        <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>Compare two clubs across recent meetings</p>
+        <p className="text-sm font-medium tracking-wide" style={{ color: "var(--text-3)" }}>Compare two clubs across recent meetings</p>
       </div>
 
       {/* Team selectors */}
-      <div className="card p-5 space-y-4">
+      <div className="glass-panel rounded-2xl shadow-[var(--shadow-custom)] p-6 space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label htmlFor="home-team" className="form-label">Home Team</label>
@@ -112,7 +112,8 @@ function H2HContent() {
 
       {/* Upcoming fixture preview */}
       {upcomingFixture && (
-        <div className="card p-4" style={{ borderLeft: "3px solid var(--accent)" }}>
+        <div className="glass-panel p-5 rounded-2xl relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]" />
           <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{ color: "var(--text-3)" }}>
             Upcoming — GW{upcomingFixture.fixture.gameweek}
           </p>
@@ -158,9 +159,9 @@ function H2HContent() {
 
       {/* H2H Results */}
       {record && record !== "not-found" && (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {/* Summary */}
-          <div className="card p-5">
+          <div className="glass-panel rounded-2xl shadow-[var(--shadow-custom)] p-6">
             <h2 className="text-sm font-semibold mb-4" style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}>
               {record.home_team} vs {record.away_team} — All Time
             </h2>
@@ -197,8 +198,8 @@ function H2HContent() {
 
           {/* Recent meetings */}
           {record.matches.length > 0 && (
-            <div className="card overflow-hidden">
-              <div className="px-4 py-3" style={{ borderBottom: "1px solid var(--border)" }}>
+            <div className="glass-panel rounded-2xl shadow-[var(--shadow-custom)] overflow-hidden">
+              <div className="px-5 py-4 bg-[var(--surface2)]" style={{ borderBottom: "1px solid var(--border)" }}>
                 <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-3)" }}>
                   Recent Meetings
                 </h3>

@@ -187,16 +187,16 @@ function BankrollContent() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between flex-wrap gap-2">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between flex-wrap gap-4 relative z-10 mb-6">
         <div>
           <h1
-            className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            className="text-4xl md:text-5xl font-extrabold tracking-tighter bg-clip-text text-transparent drop-shadow-sm mb-2"
+            style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--accent) 100%)", fontFamily: "var(--font-jakarta)" }}
           >
             Bankroll Tracker
           </h1>
-          <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-            Performance tracking · Kelly calculator · Risk management
+          <p className="text-sm font-medium tracking-wide" style={{ color: "var(--text-3)" }}>
+            Performance tracking <span className="mx-1.5 opacity-50">•</span> Kelly calculator <span className="mx-1.5 opacity-50">•</span> Risk management
           </p>
         </div>
         <div className="flex gap-2">
@@ -220,37 +220,39 @@ function BankrollContent() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        <div className="card p-4">
-          <div className="stat-label">Current Value</div>
-          <div className="stat-value">£{currentValue.toFixed(0)}</div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)]">
+          <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>Current Value</div>
+          <div className="text-2xl sm:text-3xl font-black tabular-nums" style={{ color: "var(--text-1)" }}>£{currentValue.toFixed(0)}</div>
         </div>
-        <div className="card p-4">
-          <div className="stat-label">ROI</div>
-          <div className={`stat-value ${roi >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)] relative overflow-hidden">
+          <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>ROI</div>
+          <div className={`text-2xl sm:text-3xl font-black tabular-nums drop-shadow-sm ${roi >= 0 ? "text-emerald-400" : "text-red-400"}`}>
             {roi >= 0 ? "+" : ""}{roi.toFixed(1)}%
           </div>
+          <div className={`absolute -bottom-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-20 pointer-events-none ${roi >= 0 ? "bg-emerald-500" : "bg-red-500"}`} />
         </div>
-        <div className="card p-4">
-          <div className="stat-label">Drawdown</div>
-          <div className={`stat-value ${drawdown > 0.2 ? "text-red-400" : drawdown > 0.1 ? "text-amber-400" : "text-emerald-400"}`}>
+        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)] relative overflow-hidden">
+          <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>Drawdown</div>
+          <div className={`text-2xl sm:text-3xl font-black tabular-nums drop-shadow-sm ${drawdown > 0.2 ? "text-red-400" : drawdown > 0.1 ? "text-amber-400" : "text-emerald-400"}`}>
             {pct(drawdown)}
           </div>
+          <div className={`absolute -bottom-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-20 pointer-events-none ${drawdown > 0.2 ? "bg-red-500" : drawdown > 0.1 ? "bg-amber-500" : "bg-emerald-500"}`} />
         </div>
-        <div className="card p-4">
-          <div className="stat-label">Win Rate</div>
-          <div className="stat-value" style={{ color: "var(--info)" }}>{settledBets.length > 0 ? pct(winRate) : "—"}</div>
+        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)]">
+          <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>Win Rate</div>
+          <div className="text-2xl sm:text-3xl font-black tabular-nums" style={{ color: "var(--info)" }}>{settledBets.length > 0 ? pct(winRate) : "—"}</div>
         </div>
-        <div className="card p-4 cursor-pointer" onClick={() => { setEditingBankroll(true); setNewBankroll(initialBankroll.toString()); }}>
-          <div className="stat-label">Starting</div>
+        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)] cursor-pointer hover:bg-[var(--surface2)] transition-colors" onClick={() => { setEditingBankroll(true); setNewBankroll(initialBankroll.toString()); }}>
+          <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>Starting</div>
           {editingBankroll ? (
-            <div className="flex gap-1">
+            <div className="flex justify-center w-full">
               <input
                 type="number"
                 value={newBankroll}
                 onChange={(e) => setNewBankroll(e.target.value)}
-                className="w-16 rounded px-1 text-sm font-mono"
-                style={{ background: "var(--surface2)", color: "var(--text-1)", border: "1px solid var(--border)" }}
+                className="w-20 rounded bg-black/20 px-2 py-1 text-base sm:text-lg font-mono font-bold text-center border focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+                style={{ color: "var(--text-1)", border: "1px solid var(--border)" }}
                 autoFocus
                 onKeyDown={(e) => e.key === "Enter" && saveBankroll()}
                 onBlur={saveBankroll}
@@ -258,13 +260,13 @@ function BankrollContent() {
               />
             </div>
           ) : (
-            <div className="stat-value" style={{ color: "var(--text-3)" }}>£{initialBankroll}</div>
+            <div className="text-2xl sm:text-3xl font-black tabular-nums" style={{ color: "var(--text-3)" }}>£{initialBankroll}</div>
           )}
         </div>
       </div>
 
       {/* Drawdown limits */}
-      <div className="card p-4">
+      <div className="glass-panel p-4 rounded-xl shadow-sm border border-[var(--border)]">
         <div className="flex items-center gap-4 text-xs flex-wrap">
           <span style={{ color: "var(--text-3)" }}>Risk limits:</span>
           <span className={drawdown > 0.2 ? "text-red-400 font-semibold" : ""} style={drawdown <= 0.2 ? { color: "var(--text-2)" } : undefined}>
@@ -287,8 +289,9 @@ function BankrollContent() {
 
       {/* Add Bet Form */}
       {showForm && (
-        <div className="card p-6 space-y-4">
-          <h3 className="text-sm font-semibold" style={{ color: "var(--text-1)" }}>Add Bet</h3>
+        <div className="glass-panel p-6 space-y-5 rounded-2xl shadow-[var(--shadow-custom)] border border-[var(--border)] relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]" />
+          <h3 className="text-lg font-bold tracking-tight" style={{ color: "var(--text-1)" }}>Add Bet</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
             <div>
               <label htmlFor="bet-date" className="form-label">Date</label>
@@ -331,20 +334,19 @@ function BankrollContent() {
             <label className="stat-label">Result:</label>
             {(["pending", "win", "loss", "void"] as const).map((r) => (
               <button key={r} onClick={() => setFormResult(r)}
-                className={`px-2.5 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors ${
-                  formResult === r
+                className={`px-2.5 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors ${formResult === r
                     ? r === "win" ? "bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/30"
-                    : r === "loss" ? "bg-red-500/20 text-red-400 ring-1 ring-red-500/30"
-                    : r === "void" ? "bg-slate-700/50 text-slate-300 ring-1 ring-slate-600/30"
+                      : r === "loss" ? "bg-red-500/20 text-red-400 ring-1 ring-red-500/30"
+                        : r === "void" ? "bg-slate-700/50 text-slate-300 ring-1 ring-slate-600/30"
+                          : ""
                     : ""
-                    : ""
-                }`}
+                  }`}
                 style={
                   formResult === r && r === "pending"
                     ? { background: "var(--accent-muted)", color: "var(--accent-text)", border: "1px solid var(--accent-border)" }
                     : formResult !== r
-                    ? { color: "var(--text-3)" }
-                    : undefined
+                      ? { color: "var(--text-3)" }
+                      : undefined
                 }
               >
                 {r}
@@ -361,16 +363,17 @@ function BankrollContent() {
 
       {/* PnL Chart */}
       {trajectory.length > 1 && (
-        <div className="card p-6">
-          <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-1)" }}>Bankroll Trajectory</h3>
-          <PnLChart data={trajectory} initialBankroll={initialBankroll} />
+        <div className="glass-panel p-6 rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--border)] relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)] opacity-[0.03] blur-3xl rounded-full pointer-events-none" />
+          <h3 className="text-lg font-bold mb-6 tracking-tight relative z-10" style={{ color: "var(--text-1)" }}>Bankroll Trajectory</h3>
+          <div className="relative z-10"><PnLChart data={trajectory} initialBankroll={initialBankroll} /></div>
         </div>
       )}
 
       {/* Market Breakdown */}
       {Object.keys(markets).length > 0 && (
-        <div className="card p-6">
-          <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-1)" }}>Performance by Market</h3>
+        <div className="glass-panel p-6 rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--border)] relative overflow-hidden">
+          <h3 className="text-lg font-bold mb-6 tracking-tight" style={{ color: "var(--text-1)" }}>Performance by Market</h3>
           <div className="space-y-2">
             {Object.entries(markets)
               .sort(([, a], [, b]) => b.pnl - a.pnl)
@@ -394,7 +397,7 @@ function BankrollContent() {
 
       {/* Bet History */}
       {bets.length > 0 ? (
-        <div className="card overflow-x-auto">
+        <div className="glass-panel overflow-x-auto rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--border)]">
           <table className="data-table">
             <thead>
               <tr>
@@ -414,8 +417,8 @@ function BankrollContent() {
                 const pnl = bet.result === "win"
                   ? bet.stake * (bet.decimalOdds - 1)
                   : bet.result === "loss"
-                  ? -bet.stake
-                  : 0;
+                    ? -bet.stake
+                    : 0;
                 return (
                   <tr key={bet.id}>
                     <td>{bet.date}</td>
@@ -425,7 +428,7 @@ function BankrollContent() {
                     <td className="font-mono" style={{ color: "var(--text-1)" }}>{bet.decimalOdds.toFixed(2)}</td>
                     <td className="font-mono" style={{ color: "var(--text-1)" }}>£{bet.stake.toFixed(2)}</td>
                     <td className={`font-mono ${pnl > 0 ? "text-emerald-400" : pnl < 0 ? "text-red-400" : ""}`}
-                        style={pnl === 0 ? { color: "var(--text-3)" } : undefined}>
+                      style={pnl === 0 ? { color: "var(--text-3)" } : undefined}>
                       {bet.result === "pending" ? "—" : `${pnl >= 0 ? "+" : ""}£${pnl.toFixed(2)}`}
                     </td>
                     <td>
@@ -433,12 +436,11 @@ function BankrollContent() {
                         value={bet.result}
                         onChange={(e) => updateResult(bet.id, e.target.value as BetRecord["result"])}
                         aria-label={`Result for ${bet.match}`}
-                        className={`bg-transparent border-none text-[10px] font-semibold uppercase ${
-                          bet.result === "win" ? "text-emerald-400"
-                          : bet.result === "loss" ? "text-red-400"
-                          : bet.result === "void" ? "text-slate-400"
-                          : "text-green-400"
-                        }`}
+                        className={`bg-transparent border-none text-[10px] font-semibold uppercase ${bet.result === "win" ? "text-emerald-400"
+                            : bet.result === "loss" ? "text-red-400"
+                              : bet.result === "void" ? "text-slate-400"
+                                : "text-green-400"
+                          }`}
                       >
                         <option value="pending">PEND</option>
                         <option value="win">WIN</option>
@@ -500,8 +502,9 @@ function BankrollContent() {
       <div className="glow-line" />
 
       {/* Kelly Calculator */}
-      <div className="card p-6 space-y-4">
-        <h3 className="text-sm font-semibold" style={{ color: "var(--text-1)" }}>Kelly Calculator</h3>
+      <div className="glass-panel p-6 space-y-5 rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--border)] relative overflow-hidden mt-8">
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-[var(--info)] opacity-10 blur-3xl pointer-events-none" />
+        <h3 className="text-lg font-bold tracking-tight relative z-10" style={{ color: "var(--text-1)" }}>Kelly Calculator</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label htmlFor="kelly-prob" className="form-label">Model Probability</label>

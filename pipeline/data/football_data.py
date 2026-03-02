@@ -7,12 +7,12 @@ from pathlib import Path
 from typing import Optional
 
 import pandas as pd
-import requests
 
 from pipeline.config import (
     DATA_RAW, FOOTBALL_DATA_URL, FOOTBALL_DATA_SEASONS, SEASONS, CURRENT_SEASON
 )
 from pipeline.data.team_mapping import normalize_team_name
+from pipeline.utils import fetch_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -67,9 +67,8 @@ def fetch_season_csv(season_code: str, force: bool = False) -> pd.DataFrame:
     logger.info(f"Fetching Football-Data CSV: {url}")
 
     try:
-        resp = requests.get(url, timeout=30)
-        resp.raise_for_status()
-    except requests.RequestException as e:
+        resp = fetch_with_retry(url, max_retries=3, timeout=30)
+    except Exception as e:
         logger.error(f"Failed to fetch {url}: {e}")
         if cache_path.exists():
             logger.warning("Falling back to stale cache")

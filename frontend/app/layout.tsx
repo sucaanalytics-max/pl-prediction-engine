@@ -41,10 +41,10 @@ export default function RootLayout({
               <Navigation />
               <main
                 id="main-content"
-                className="flex-1 ml-0 lg:ml-64"
-                style={{ borderTop: "1px solid var(--accent-border)" }}
+                className="flex-1 ml-0 lg:ml-72 transition-all duration-500"
               >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-50 shadow-[0_0_20px_var(--accent)]"></div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
                   {children}
                 </div>
               </main>

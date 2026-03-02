@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: prediction-validation
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -32,36 +36,56 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: |
           python -c "
-          import json, logging
-          from pipeline.data.football_data import load_all_seasons
+          import json, logging, sys
+          from datetime import datetime, timezone
           from pipeline.validation.metrics import brier_score, expected_calibration_error
           import numpy as np
 
           logging.basicConfig(level=logging.INFO)
 
-          # Load predictions and actuals
           try:
               with open('predictions/latest.json') as f:
                   preds = json.load(f)
               print(f'Loaded {len(preds.get(\"predictions\", []))} predictions')
               print(f'Gameweek: {preds.get(\"metadata\", {}).get(\"gameweek\")}')
 
+              generated_at = preds.get('metadata', {}).get('generated_at', '')
+              stale = False
+              if generated_at:
+                  try:
+                      gen_dt = datetime.fromisoformat(generated_at.rstrip('Z')).replace(tzinfo=timezone.utc)
+                      age_hours = (datetime.now(timezone.utc) - gen_dt).total_seconds() / 3600
+                      stale = age_hours > 48
+                      print(f'Predictions age: {age_hours:.1f} hours (stale={stale})')
+                  except Exception:
+                      pass
+
               health = {
-                  'last_updated': preds.get('metadata', {}).get('generated_at'),
+                  'last_updated': generated_at,
                   'gameweek': preds.get('metadata', {}).get('gameweek'),
                   'n_predictions': len(preds.get('predictions', [])),
-                  'status': 'healthy',
+                  'status': 'stale' if stale else 'healthy',
+                  'pipeline_version': preds.get('metadata', {}).get('pipeline_version'),
+                  'validated_at': datetime.now(timezone.utc).isoformat() + 'Z',
               }
 
               with open('predictions/health.json', 'w') as f:
                   json.dump(health, f, indent=2)
 
               print('Health check passed')
-          except Exception as e:
-              print(f'Validation error: {e}')
-              health = {'status': 'error', 'error': str(e)}
+          except FileNotFoundError:
+              print('No predictions/latest.json found — pipeline may not have run yet')
+              health = {'status': 'no_predictions', 'validated_at': datetime.now(timezone.utc).isoformat() + 'Z'}
+              import os; os.makedirs('predictions', exist_ok=True)
               with open('predictions/health.json', 'w') as f:
                   json.dump(health, f, indent=2)
+          except Exception as e:
+              print(f'Validation error: {e}')
+              health = {'status': 'error', 'error': str(e), 'validated_at': datetime.now(timezone.utc).isoformat() + 'Z'}
+              import os; os.makedirs('predictions', exist_ok=True)
+              with open('predictions/health.json', 'w') as f:
+                  json.dump(health, f, indent=2)
+              sys.exit(1)
           "
 
       - name: Commit health metrics

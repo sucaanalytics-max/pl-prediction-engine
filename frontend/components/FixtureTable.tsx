@@ -50,87 +50,80 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
             role="listitem"
             aria-label={`${pred.fixture.home_team} vs ${pred.fixture.away_team}, predicted ${prediction}`}
           >
-            <div className={`fixture-card relative overflow-hidden ${PRED_CLASS[prediction]}`}>
+            <div className={`fixture-card relative overflow-hidden ${PRED_CLASS[prediction]} group-hover:scale-[1.02] transition-transform duration-400`}>
               {/* Left accent strip */}
               <div
-                className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-xl"
-                style={{ background: CELL_COLOR[prediction] }}
+                className="absolute left-0 top-0 bottom-0 w-1.5"
+                style={{ background: CELL_COLOR[prediction], boxShadow: `0 0 15px ${CELL_COLOR[prediction]}` }}
                 aria-hidden="true"
               />
 
-              {/* Top shimmer */}
+              {/* Shimmer effect on hover */}
               <div
-                className="absolute top-0 left-0 right-0 h-px opacity-25"
-                style={{ background: `linear-gradient(90deg, ${CELL_COLOR[prediction]}, transparent 55%)` }}
+                className="absolute inset-0 translate-x-[-100%] group-hover:animate-[pulse-shimmer_2s_infinite]"
+                style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)' }}
                 aria-hidden="true"
               />
 
               <div className="pl-6 pr-5 py-4">
                 {/* ── Meta row ─────────────────────────────────── */}
-                <div className="flex items-center justify-between mb-3.5">
-                  <div className="flex items-center gap-2.5 flex-wrap">
-                    <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: "var(--text-4)" }}>
-                      {shortDate(pred.fixture.date)}&ensp;·&ensp;{kickoffTime(pred.fixture.date)}
+                <div className="flex items-center justify-between mb-4 border-b border-[var(--border)] pb-3">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-[11px] font-mono uppercase tracking-[0.1em] font-semibold" style={{ color: "var(--text-4)" }}>
+                      {shortDate(pred.fixture.date)} <span className="opacity-50 mx-1">•</span> {kickoffTime(pred.fixture.date)}
                     </span>
 
                     {pred.fixture.is_derby && (
-                      <span
-                        className="inline-flex items-center text-[8px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
-                        style={{
-                          background: "var(--warning-muted)",
-                          color: "var(--warning)",
-                          border: "1px solid var(--warning-border)",
-                        }}
-                      >
-                        DERBY
-                      </span>
+                      <span className="badge-amber shadow-[var(--glow-draw)]">DERBY</span>
                     )}
 
                     {pred.model_disagreement !== undefined && pred.model_disagreement > 0.15 && (
-                      <span className="text-[9px] font-mono font-semibold" style={{ color: "var(--warning)" }}>
-                        ⚠ SPLIT
+                      <span className="badge-red shadow-[var(--glow-away)] flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" /> SPLIT
                       </span>
                     )}
                   </div>
 
-                  <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className="flex items-center gap-3 flex-shrink-0">
                     {valueBetCount > 0 && (
                       <span
-                        className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full"
+                        className="text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full relative overflow-hidden group/badge"
                         style={{
                           background: "var(--success-muted)",
-                          color: "var(--accent-text)",
-                          border: "1px solid var(--success-border)",
+                          color: "var(--accent)",
+                          border: "1px solid var(--accent-border)",
+                          boxShadow: "var(--glow-accent)"
                         }}
                         aria-label={`${valueBetCount} value bet${valueBetCount > 1 ? "s" : ""}`}
                       >
-                        ⚡ {valueBetCount}
+                        <span className="mr-1 group-hover/badge:animate-pulse">⚡</span>{valueBetCount} EV+
                       </span>
                     )}
-                    <span className="text-[9px] font-mono" style={{ color: "var(--text-4)" }}>
+                    <span className="text-[10px] font-mono font-bold tracking-widest uppercase px-2 py-0.5 rounded-md glass-panel" style={{ color: "var(--text-3)" }}>
                       GW{pred.fixture.gameweek}
                     </span>
                   </div>
                 </div>
 
                 {/* ── Main content ──────────────────────────────── */}
-                <div className="flex items-stretch gap-5">
+                <div className="flex items-stretch gap-6">
                   {/* Teams + xG column */}
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 flex flex-col justify-center">
                     {/* Home */}
-                    <div className="flex items-baseline gap-2 mb-1.5">
+                    <div className="flex items-baseline gap-3 mb-2">
                       <span
-                        className="font-bold leading-tight tracking-tight truncate"
+                        className="font-extrabold leading-tight tracking-tight truncate group-hover:pl-1 transition-all duration-300"
                         style={{
-                          fontSize: "17px",
+                          fontSize: "19px",
                           color: prediction === "home" ? "var(--text-1)" : "var(--text-3)",
                           fontFamily: "var(--font-jakarta)",
+                          textShadow: prediction === "home" ? "0 0 10px rgba(255,255,255,0.1)" : "none"
                         }}
                       >
                         {pred.fixture.home_team}
                       </span>
                       <span
-                        className="text-xs font-bold flex-shrink-0"
+                        className="text-sm font-bold flex-shrink-0 ml-auto glass-panel px-2 py-0.5 rounded"
                         style={{
                           fontFamily: "var(--font-mono)",
                           color: prediction === "home" ? "var(--home)" : "var(--text-4)",
@@ -141,31 +134,32 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                     </div>
 
                     {/* xG separator */}
-                    <div className="flex items-center gap-1.5 my-1.5">
-                      <div className="h-px flex-1" style={{ background: "var(--border)" }} />
+                    <div className="flex items-center gap-2 my-2">
+                      <div className="h-[2px] rounded-full flex-1 opacity-50" style={{ background: "linear-gradient(90deg, transparent, var(--border-strong))" }} />
                       <span
-                        className="text-[8px] font-bold tracking-[0.18em] uppercase"
-                        style={{ fontFamily: "var(--font-mono)", color: "var(--text-4)" }}
+                        className="text-[9px] font-extrabold tracking-[0.2em] uppercase px-2 py-0.5 rounded-full glass-panel"
+                        style={{ fontFamily: "var(--font-mono)", color: "var(--accent)" }}
                       >
                         xG
                       </span>
-                      <div className="h-px flex-1" style={{ background: "var(--border)" }} />
+                      <div className="h-[2px] rounded-full flex-1 opacity-50" style={{ background: "linear-gradient(90deg, var(--border-strong), transparent)" }} />
                     </div>
 
                     {/* Away */}
-                    <div className="flex items-baseline gap-2 mt-1.5">
+                    <div className="flex items-baseline gap-3 mt-2">
                       <span
-                        className="font-bold leading-tight tracking-tight truncate"
+                        className="font-extrabold leading-tight tracking-tight truncate group-hover:pl-1 transition-all duration-300"
                         style={{
-                          fontSize: "17px",
+                          fontSize: "19px",
                           color: prediction === "away" ? "var(--text-1)" : "var(--text-3)",
                           fontFamily: "var(--font-jakarta)",
+                          textShadow: prediction === "away" ? "0 0 10px rgba(255,255,255,0.1)" : "none"
                         }}
                       >
                         {pred.fixture.away_team}
                       </span>
                       <span
-                        className="text-xs font-bold flex-shrink-0"
+                        className="text-sm font-bold flex-shrink-0 ml-auto glass-panel px-2 py-0.5 rounded"
                         style={{
                           fontFamily: "var(--font-mono)",
                           color: prediction === "away" ? "var(--away)" : "var(--text-4)",
@@ -177,31 +171,31 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
 
                     {/* Referee */}
                     {pred.fixture.referee && (
-                      <div className="mt-2 text-[10px] truncate hidden sm:block"
+                      <div className="mt-4 pt-3 border-t border-[var(--border)] text-[10px] truncate hidden sm:flex items-center gap-2"
                         style={{ fontFamily: "var(--font-mono)", color: "var(--text-4)" }}
                       >
-                        {pred.fixture.referee}
+                        <span className="opacity-50 tracking-widest uppercase">REF:</span> {pred.fixture.referee}
                       </div>
                     )}
                   </div>
 
                   {/* Probability panel */}
-                  <div className="flex-shrink-0" style={{ width: "152px" }}>
+                  <div className="flex-shrink-0" style={{ width: "160px" }}>
                     {/* Three probability cells */}
-                    <div className="grid grid-cols-3 gap-1 mb-2">
+                    <div className="grid grid-cols-3 gap-1.5 mb-3">
                       {PROB_CELLS.map(({ key, label, cellClass }) => {
                         const active = prediction === key;
                         const val = probs[key];
                         return (
                           <div
                             key={key}
-                            className={cellClass}
+                            className={`${cellClass} ${active ? 'scale-105 z-10' : ''}`}
                             data-active={active ? "true" : undefined}
                           >
                             <span
-                              className="font-bold leading-none"
+                              className="font-extrabold leading-none prob-val"
                               style={{
-                                fontSize: "15px",
+                                fontSize: "16px",
                                 fontFamily: "var(--font-mono)",
                                 color: active ? CELL_COLOR[key] : "var(--text-3)",
                               }}
@@ -209,7 +203,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                               {val}
                             </span>
                             <span
-                              className="text-[8px] font-semibold tracking-wider mt-0.5 uppercase"
+                              className="text-[9px] font-bold tracking-wider mt-1 uppercase"
                               style={{
                                 fontFamily: "var(--font-mono)",
                                 color: active ? CELL_COLOR[key] : "var(--text-4)",
@@ -223,35 +217,37 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                     </div>
 
                     {/* Probability bar */}
-                    <div className="flex h-[5px] rounded-full overflow-hidden">
+                    <div className="flex h-2 rounded-full overflow-hidden shadow-inner glass-panel border border-[var(--border)]">
                       <div
-                        style={{ width: `${hp}%`, background: "var(--home)", borderRadius: "99px 0 0 99px" }}
+                        style={{ width: `${hp}%`, background: "var(--home)", boxShadow: "0 0 10px var(--home)" }}
+                        className="transition-all duration-1000 ease-out"
                         aria-hidden="true"
                       />
-                      <div style={{ width: `${dp}%`, background: "var(--border-strong)" }} aria-hidden="true" />
+                      <div style={{ width: `${dp}%`, background: "var(--draw)" }} className="transition-all duration-1000 ease-out" aria-hidden="true" />
                       <div
-                        style={{ width: `${ap}%`, background: "var(--away)", borderRadius: "0 99px 99px 0" }}
+                        style={{ width: `${ap}%`, background: "var(--away)", boxShadow: "0 0 10px var(--away)" }}
+                        className="transition-all duration-1000 ease-out"
                         aria-hidden="true"
                       />
                     </div>
 
                     {/* Confidence row */}
-                    <div className="flex items-center justify-between mt-1.5">
+                    <div className="flex items-center justify-between mt-3 px-1">
                       <span
-                        className="text-[9px] font-semibold uppercase tracking-wider"
+                        className="text-[10px] font-extrabold uppercase tracking-[0.1em]"
                         style={{
                           fontFamily: "var(--font-mono)",
                           color:
                             tier === "high"
                               ? "var(--success)"
                               : tier === "medium"
-                              ? "var(--warning)"
-                              : "var(--text-4)",
+                                ? "var(--warning)"
+                                : "var(--text-4)",
                         }}
                       >
-                        {tier}
+                        {tier} CONF
                       </span>
-                      <span className={`text-[9px] font-mono ${confidenceColor(maxProb * 100)}`}>
+                      <span className={`text-[11px] font-bold font-mono ${confidenceColor(maxProb * 100)}`}>
                         {Math.round(maxProb * 100)}%
                       </span>
                     </div>

@@ -139,11 +139,9 @@ export default function Navigation() {
         aria-expanded={mobileOpen}
         aria-controls="sidebar-nav"
         aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
-        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg transition-colors"
+        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-xl transition-all duration-300 glass-panel hover:scale-105"
         style={{
-          background: "var(--surface)",
-          border: "1px solid var(--border)",
-          color: "var(--text-2)",
+          color: "var(--text-1)",
         }}
       >
         <svg
@@ -177,12 +175,16 @@ export default function Navigation() {
         id="sidebar-nav"
         role="navigation"
         aria-label="Main navigation"
-        className={`fixed top-0 left-0 z-40 h-screen w-64 flex flex-col
-                     transform transition-transform duration-300 ease-in-out
+        className={`fixed top-0 left-0 z-40 h-screen w-72 flex flex-col glass-panel shadow-2xl
+                     transform transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1)
                      ${mobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
         style={{
-          background: "var(--surface)",
           borderRight: "1px solid var(--border)",
+          borderTop: "none",
+          borderBottom: "none",
+          borderLeft: "none",
+          backdropFilter: "blur(40px)",
+          WebkitBackdropFilter: "blur(40px)"
         }}
       >
         {/* Logo */}
@@ -196,24 +198,24 @@ export default function Navigation() {
             onClick={() => setMobileOpen(false)}
           >
             <div
-              className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: "var(--accent-muted)", border: "1px solid var(--accent-border)" }}
+              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 hover:scale-110"
+              style={{ background: "var(--accent-muted)", border: "1px solid var(--accent-border)", boxShadow: "var(--glow-accent)" }}
             >
               <svg
-                className="w-5 h-5"
+                className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 aria-hidden="true"
-                style={{ color: "var(--accent-text)" }}
+                style={{ color: "var(--accent-text)", filter: "drop-shadow(0 0 8px var(--accent))" }}
               >
                 <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9zm-4 4h2v2H5v-2zm4 0h2v2H9v-2zm4 0h2v2h-2v-2z" />
               </svg>
             </div>
             <div>
-              <p className="font-bold text-sm tracking-tight leading-none" style={{ color: "var(--text-1)" }}>
+              <p className="font-extrabold text-base tracking-tight leading-none bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--text-3) 100%)" }}>
                 PL Engine
               </p>
-              <p className="text-[10px] uppercase tracking-widest font-semibold mt-0.5" style={{ color: "var(--accent-text)" }}>
+              <p className="text-[10px] uppercase tracking-[0.2em] font-bold mt-1" style={{ color: "var(--accent)", textShadow: "0 0 10px var(--accent-muted)" }}>
                 Prediction Model
               </p>
             </div>
@@ -221,8 +223,8 @@ export default function Navigation() {
         </div>
 
         {/* Nav links */}
-        <nav className="p-3 space-y-0.5 flex-1 overflow-y-auto" aria-label="Primary">
-          {NAV_ITEMS.map((item) => {
+        <nav className="p-4 space-y-1.5 flex-1 overflow-y-auto" aria-label="Primary">
+          {NAV_ITEMS.map((item, idx) => {
             const isActive =
               item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
@@ -230,19 +232,21 @@ export default function Navigation() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={isActive ? "nav-link-active" : "nav-link"}
+                className={`${isActive ? "nav-link-active" : "nav-link"} stagger-${(idx % 5) + 1} animate-slide-up`}
                 aria-current={isActive ? "page" : undefined}
+                style={{ animationFillMode: 'both' }}
               >
-                <span aria-hidden="true">{item.icon}</span>
-                <span className="flex-1">{item.label}</span>
+                <span aria-hidden="true" className="transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
+                <span className="flex-1 tracking-wide">{item.label}</span>
                 {item.href === "/value-bets" && valueBetCount > 0 && (
                   <span
-                    className="ml-auto text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full"
+                    className="ml-auto text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full shadow-lg"
                     aria-label={`${valueBetCount} value bets available`}
                     style={{
                       background: "var(--success-muted)",
-                      color: "var(--accent-text)",
-                      border: "1px solid var(--success-border)",
+                      color: "var(--accent)",
+                      border: "1px solid var(--accent-border)",
+                      boxShadow: "var(--glow-accent)"
                     }}
                   >
                     {valueBetCount}
@@ -255,26 +259,25 @@ export default function Navigation() {
 
         {/* Footer */}
         <div
-          className="p-4 space-y-2"
-          style={{ borderTop: "1px solid var(--border)" }}
+          className="p-5 space-y-3 glass-panel mt-auto rounded-none border-x-0 border-b-0"
         >
           {lastUpdated && (
-            <div className="flex items-center gap-1.5 text-[10px]" style={{ color: "var(--text-4)" }}>
+            <div className="flex items-center gap-2 text-[11px] font-medium" style={{ color: "var(--text-3)" }}>
               {isStale ? (
                 <span className="stale-warning !text-[9px] !px-1.5 !py-0.5">STALE</span>
               ) : (
                 <span
-                  className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0"
-                  style={{ background: "var(--accent)" }}
+                  className="w-2 h-2 rounded-full animate-pulse flex-shrink-0"
+                  style={{ background: "var(--accent)", boxShadow: "var(--glow-accent)" }}
                   aria-hidden="true"
                 />
               )}
               <span>Updated {timeAgo(lastUpdated)}</span>
             </div>
           )}
-          <div className="flex items-center gap-2">
-            <span className="text-[10px]" style={{ color: "var(--text-4)" }}>Pipeline {pipelineVersion}</span>
-            <span className="text-[10px] ml-auto" style={{ color: "var(--text-4)" }}>{season}</span>
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-bold tracking-wider uppercase" style={{ color: "var(--text-4)" }}>v{pipelineVersion}</span>
+            <span className="text-[10px] font-bold tracking-wider uppercase ml-auto" style={{ color: "var(--text-4)" }}>{season}</span>
             <ThemeToggle />
           </div>
         </div>

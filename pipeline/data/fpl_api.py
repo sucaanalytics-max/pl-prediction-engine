@@ -8,13 +8,13 @@ from pathlib import Path
 from typing import Optional
 
 import pandas as pd
-import requests
 
 from pipeline.config import (
     DATA_RAW, FPL_BOOTSTRAP, FPL_FIXTURES, FPL_ELEMENT_SUMMARY,
     PLAYER_TEAM_OVERRIDES, EXCLUDED_PLAYERS,
 )
 from pipeline.data.team_mapping import normalize_team_name, update_fpl_team_map
+from pipeline.utils import fetch_with_retry
 
 logger = logging.getLogger(__name__)
 
@@ -36,12 +36,11 @@ def fetch_bootstrap_static(force: bool = False) -> dict:
 
     logger.info("Fetching FPL bootstrap-static...")
     try:
-        resp = requests.get(FPL_BOOTSTRAP, timeout=30)
-        resp.raise_for_status()
+        resp = fetch_with_retry(FPL_BOOTSTRAP, max_retries=3, timeout=30)
         data = resp.json()
         cache_path.write_text(json.dumps(data))
         return data
-    except requests.RequestException as e:
+    except Exception as e:
         logger.error(f"FPL API error: {e}")
         if cache_path.exists():
             logger.warning("Falling back to stale cache")
@@ -62,12 +61,11 @@ def fetch_fixtures(force: bool = False) -> list:
 
     logger.info("Fetching FPL fixtures...")
     try:
-        resp = requests.get(FPL_FIXTURES, timeout=30)
-        resp.raise_for_status()
+        resp = fetch_with_retry(FPL_FIXTURES, max_retries=3, timeout=30)
         data = resp.json()
         cache_path.write_text(json.dumps(data))
         return data
-    except requests.RequestException as e:
+    except Exception as e:
         logger.error(f"FPL fixtures error: {e}")
         if cache_path.exists():
             return json.loads(cache_path.read_text())

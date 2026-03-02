@@ -20,50 +20,53 @@ function MatchweekContent() {
   const totalModels =
     (data.metadata.models?.length ?? 0) + (data.metadata.sub_models?.length ?? 0);
 
-  let bestBet: (ValueBet & { home_team: string; away_team: string }) | null = null;
-  for (const pred of data.predictions) {
-    for (const bet of pred.value_bets) {
-      const edge = effectiveEdge(bet);
-      if (!bestBet || edge > effectiveEdge(bestBet)) {
-        bestBet = { ...bet, home_team: pred.fixture.home_team, away_team: pred.fixture.away_team };
-      }
-    }
-  }
+  const bestBet = data.predictions
+    .flatMap((pred) =>
+      pred.value_bets.map((bet) => ({
+        ...bet,
+        home_team: pred.fixture.home_team,
+        away_team: pred.fixture.away_team,
+      }))
+    )
+    .reduce<(ValueBet & { home_team: string; away_team: string }) | null>((best, current) => {
+      if (!best) return current;
+      return effectiveEdge(current) > effectiveEdge(best) ? current : best;
+    }, null);
 
   return (
     <div className="space-y-6 animate-slide-up">
       {/* Page header */}
-      <div className="flex items-start justify-between gap-4 flex-wrap">
+      <div className="flex items-start justify-between gap-4 flex-wrap relative z-10">
         <div>
-          <div className="flex items-center gap-2.5 mb-1 flex-wrap">
+          <div className="flex items-center gap-3 mb-1.5 flex-wrap">
             <h1
-              className="text-3xl font-extrabold tracking-tight"
-              style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+              className="text-4xl font-extrabold tracking-tighter bg-clip-text text-transparent drop-shadow-sm"
+              style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--text-3) 100%)", fontFamily: "var(--font-jakarta)" }}
             >
               Matchweek {data.metadata.gameweek}
             </h1>
-            <span className="badge-green">LIVE</span>
+            <span className="badge-green animate-pulse">LIVE</span>
             {derbyCount > 0 && <span className="badge-amber">{derbyCount} DERBY</span>}
           </div>
-          <p className="text-sm" style={{ color: "var(--text-3)" }}>
-            {data.metadata.season} · {data.predictions.length} fixtures ·{" "}
+          <p className="text-sm font-medium tracking-wide" style={{ color: "var(--text-3)" }}>
+            {data.metadata.season} <span className="mx-1.5 opacity-50">•</span> {data.predictions.length} fixtures <span className="mx-1.5 opacity-50">•</span>{" "}
             Updated {timeAgo(data.metadata.generated_at)}
           </p>
         </div>
 
         {/* Pipeline pill */}
         <div
-          className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px]"
-          style={{ color: "var(--text-3)", background: "var(--surface)", border: "1px solid var(--border)" }}
+          className="flex-shrink-0 flex items-center gap-2.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold glass-panel hover:scale-105 transition-transform"
+          style={{ color: "var(--text-2)" }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" aria-hidden="true" />
+          <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] flex-shrink-0 animate-pulse" aria-hidden="true" />
           <span>v{data.metadata.pipeline_version}</span>
-          {data.metadata.calibrated && <span className="badge-green text-[8px]">CAL</span>}
+          {data.metadata.calibrated && <span className="badge-green text-[9px] ml-1">CAL</span>}
         </div>
       </div>
 
       {/* KPI row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
         <StatCard label="Fixtures" value={data.predictions.length} />
         <StatCard
           label="Value Bets"
@@ -85,39 +88,36 @@ function MatchweekContent() {
 
       {/* Best value bet callout */}
       {bestBet && (
-        <Link href="/value-bets" className="block">
-          <div
-            className="card-hover p-4 flex items-center gap-4"
-            style={{ borderLeft: "3px solid var(--accent)" }}
-          >
+        <Link href="/value-bets" className="block relative z-10">
+          <div className="premium-glow-border p-5 flex items-center gap-5 group hover:scale-[1.01] transition-transform duration-300">
             <div
-              className="text-xl font-bold flex-shrink-0"
-              style={{ color: "var(--success)", fontFamily: "var(--font-mono)" }}
+              className="text-3xl font-extrabold flex-shrink-0 bg-clip-text text-transparent drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
+              style={{ backgroundImage: "linear-gradient(135deg, var(--success) 0%, #3b82f6 100%)", fontFamily: "var(--font-mono)" }}
             >
               +{pct(effectiveEdge(bestBet), 1)}
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 border-l border-[var(--border)] pl-5">
               <div
-                className="text-[10px] uppercase tracking-wider mb-0.5 font-semibold"
-                style={{ color: "var(--text-3)" }}
+                className="text-[10px] uppercase tracking-[0.2em] mb-1 font-bold flex items-center gap-2"
+                style={{ color: "var(--accent)" }}
               >
-                Best edge this week
+                Top Value Pick <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent)] animate-pulse" />
               </div>
               <div
-                className="text-sm font-semibold truncate"
+                className="text-lg font-bold truncate mb-0.5"
                 style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
               >
                 {bestBet.market}
                 {bestBet.selection ? ` — ${bestBet.selection}` : ""}
               </div>
-              <div className="text-xs" style={{ color: "var(--text-3)" }}>
+              <div className="text-sm font-medium" style={{ color: "var(--text-3)" }}>
                 {bestBet.home_team} vs {bestBet.away_team}
                 {bestBet.decimal_odds && (
-                  <span className="ml-2 font-mono">@ {bestBet.decimal_odds.toFixed(2)}</span>
+                  <span className="ml-2 font-mono px-2 py-0.5 rounded-md glass-panel text-xs text-[var(--text-1)]">@ {bestBet.decimal_odds.toFixed(2)}</span>
                 )}
               </div>
             </div>
-            <span className="badge-green flex-shrink-0">{valueBetCount} total</span>
+            <span className="badge-green flex-shrink-0 shadow-lg group-hover:shadow-[var(--glow-accent)] transition-shadow">Explore all {valueBetCount}</span>
           </div>
         </Link>
       )}
@@ -125,22 +125,26 @@ function MatchweekContent() {
       <div className="glow-line" />
 
       {/* Fixtures list */}
-      {data.predictions.length === 0 ? (
-        <div className="card p-8 text-center">
-          <p className="text-sm" style={{ color: "var(--text-3)" }}>No fixtures scheduled for this gameweek yet.</p>
-          <p className="text-xs mt-1" style={{ color: "var(--text-4)" }}>Check back closer to the matchday.</p>
-        </div>
-      ) : (
-        <FixtureTable predictions={data.predictions} />
-      )}
+      <div className="relative z-10">
+        {data.predictions.length === 0 ? (
+          <div className="glass-panel p-12 text-center rounded-2xl border-dashed border-2">
+            <p className="text-lg font-medium" style={{ color: "var(--text-2)" }}>No fixtures scheduled for this gameweek yet.</p>
+            <p className="text-sm mt-2" style={{ color: "var(--text-4)" }}>Check back closer to the matchday as odds become available.</p>
+          </div>
+        ) : (
+          <FixtureTable predictions={data.predictions} />
+        )}
+      </div>
 
       {/* Model footer */}
-      <div className="flex items-center justify-between text-xs gap-2 flex-wrap px-1" style={{ color: "var(--text-4)" }}>
-        <span>
-          {[...(data.metadata.models ?? []), ...(data.metadata.sub_models ?? [])].join(" · ")}
+      <div className="flex items-center justify-between text-xs gap-4 flex-wrap px-2 py-4 mt-8 border-t border-[var(--border)] relative z-10" style={{ color: "var(--text-4)" }}>
+        <span className="font-mono tracking-wider opacity-80 uppercase text-[10px]">
+          Engine: {[...(data.metadata.models ?? []), ...(data.metadata.sub_models ?? [])].join(" + ")}
         </span>
         {data.metadata.odds_source && (
-          <span>odds: {data.metadata.odds_source.replace("_", " ")}</span>
+          <span className="font-mono tracking-wider opacity-80 uppercase text-[10px] glass-panel px-2 py-1 rounded">
+            Odds: {data.metadata.odds_source.replace("_", " ")}
+          </span>
         )}
       </div>
     </div>
