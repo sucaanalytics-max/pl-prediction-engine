@@ -17,10 +17,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: prediction-pipeline
+  cancel-in-progress: true
+
 jobs:
   predict:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 180
 
     steps:
       - name: Checkout
@@ -33,19 +37,46 @@ jobs:
           cache: 'pip'
           cache-dependency-path: 'pipeline/requirements.txt'
 
+      - name: Cache model artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/raw
+            data/processed
+          key: pipeline-data-${{ hashFiles('pipeline/requirements.txt') }}-${{ github.run_number }}
+          restore-keys: |
+            pipeline-data-${{ hashFiles('pipeline/requirements.txt') }}-
+            pipeline-data-
+
       - name: Install dependencies
-        run: pip install -r pipeline/requirements.txt
+        run: |
+          pip install -r pipeline/requirements.txt
+          # Verify critical imports
+          python -c "import pandas, numpy, requests; print('Core deps OK')"
+          python -c "import penaltyblog; print('PenaltyBlog OK')"
+          python -c "
+          try:
+              import pymc; print('PyMC OK')
+          except ImportError:
+              print('PyMC UNAVAILABLE — will use PenaltyBlog+XGBoost only')
+          "
 
       - name: Run prediction pipeline
         env:
           PYTHONPATH: ${{ github.workspace }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          PIPELINE_TIMEOUT: "7200"
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           python -m pipeline.run_pipeline \
             ${{ github.event.inputs.force_refresh == 'true' && '--force-refresh' || '' }} \
             ${{ github.event.inputs.skip_pymc == 'true' && '--skip-pymc' || '' }}
 
       - name: Sync predictions to frontend
-        run: cp predictions/*.json frontend/public/predictions/
+        run: |
+          mkdir -p frontend/public/predictions
+          cp predictions/*.json frontend/public/predictions/
 
       - name: Commit predictions
         run: |
@@ -53,5 +84,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add predictions/ frontend/public/predictions/
           git diff --staged --quiet || git commit -m "Update predictions — $(date -u +%Y-%m-%d)"
-          git pull --rebase origin main
-          git push
+          # Retry push with rebase (handle concurrent commits)
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && break
+            echo "Push attempt $i failed, retrying..."
+            sleep 5
+          done

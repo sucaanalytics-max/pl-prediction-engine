@@ -240,40 +240,43 @@ export interface H2HRecord {
   matches: H2HMatch[];
 }
 
-const BASE_PATH = "/predictions";
+const getBasePath = () =>
+  process.env.NEXT_PUBLIC_SUPABASE_URL
+    ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/predictions`
+    : "/predictions";
 
 export async function loadPredictions(): Promise<PredictionData> {
-  const res = await fetch(`${BASE_PATH}/latest.json`);
+  const res = await fetch(`${getBasePath()}/latest.json`, { next: { revalidate: 3600 } });
   if (!res.ok) throw new Error("Failed to load predictions");
   return res.json();
 }
 
 export async function loadMatches(): Promise<{ matches: MatchSummary[]; gameweek: number }> {
-  const res = await fetch(`${BASE_PATH}/matches.json`);
+  const res = await fetch(`${getBasePath()}/matches.json`, { next: { revalidate: 3600 } });
   if (!res.ok) throw new Error("Failed to load matches");
   return res.json();
 }
 
 export async function loadHealth(): Promise<HealthData> {
-  const res = await fetch(`${BASE_PATH}/health.json`);
+  const res = await fetch(`${getBasePath()}/health.json`, { next: { revalidate: 3600 } });
   if (!res.ok) throw new Error("Failed to load health data");
   return res.json();
 }
 
 export async function loadPlayerStats(): Promise<PlayerStat[]> {
-  const res = await fetch(`${BASE_PATH}/player_stats.json`);
+  const res = await fetch(`${getBasePath()}/player_stats.json`, { next: { revalidate: 3600 } });
   if (!res.ok) throw new Error(`Failed to load player stats (${res.status})`);
   return res.json();
 }
 
 export async function loadTable(): Promise<TeamStanding[]> {
-  const res = await fetch(`${BASE_PATH}/table.json`);
+  const res = await fetch(`${getBasePath()}/table.json`, { next: { revalidate: 3600 } });
   if (!res.ok) throw new Error(`Failed to load league table (${res.status})`);
   return res.json();
 }
 
 export async function loadH2H(homeTeam: string, awayTeam: string): Promise<H2HRecord | null> {
-  const res = await fetch(`${BASE_PATH}/h2h.json`);
+  const res = await fetch(`${getBasePath()}/h2h.json`, { next: { revalidate: 3600 } });
   if (!res.ok) return null;
   const all: H2HRecord[] = await res.json();
   return (

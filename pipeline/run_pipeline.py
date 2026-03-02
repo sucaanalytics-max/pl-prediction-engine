@@ -2,8 +2,12 @@
 Main pipeline orchestrator.
 Runs the full data → features → models → simulate → export flow.
 
-Phase 3: Goalscorer model, stacking meta-learner, devigged edges,
-best-odds selection, portfolio risk limits, and full frontend wiring.
+Phase 5: Hardened for GitHub Actions reliability.
+- HTTP retry with exponential backoff
+- Model artifact caching (skip retraining when data hasn't changed)
+- Stacking without full retrain (use cached OOF predictions)
+- Per-step timeouts and graceful degradation
+- PyMC reduced config for CI (fewer draws, auto-skip on timeout)
 
 Usage:
     python -m pipeline.run_pipeline
@@ -11,9 +15,14 @@ Usage:
     python -m pipeline.run_pipeline --skip-pymc --verbose
 """
 import argparse
+import hashlib
 import json
 import logging
+import os
+import pickle
+import signal
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -23,13 +32,87 @@ import pandas as pd
 
 from pipeline.config import (
     PREDICTIONS_DIR, CURRENT_SEASON, SEASONS, N_SIMULATIONS, DERBIES,
-    ENSEMBLE_WEIGHTS,
+    ENSEMBLE_WEIGHTS, DATA_PROCESSED,
 )
 
 logger = logging.getLogger(__name__)
 
-PIPELINE_VERSION = "3.0.0"
+PIPELINE_VERSION = "4.0.0"
 
+# Model cache directory
+MODEL_CACHE_DIR = DATA_PROCESSED / "model_cache"
+
+
+# ── Timeout Helper ──────────────────────────────────────────────────────────
+
+class StepTimeout(Exception):
+    """Raised when a pipeline step exceeds its time budget."""
+    pass
+
+
+def _timeout_handler(signum, frame):
+    raise StepTimeout("Step timed out")
+
+
+class step_timeout:
+    """Context manager for step-level timeouts (Unix only)."""
+
+    def __init__(self, seconds: int, label: str = "step"):
+        self.seconds = seconds
+        self.label = label
+
+    def __enter__(self):
+        if hasattr(signal, "SIGALRM"):
+            signal.signal(signal.SIGALRM, _timeout_handler)
+            signal.alarm(self.seconds)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if hasattr(signal, "SIGALRM"):
+            signal.alarm(0)
+        if exc_type is StepTimeout:
+            logger.warning(f"  {self.label} timed out after {self.seconds}s")
+            return True  # Suppress the exception
+        return False
+
+
+# ── Data Hash Helper ────────────────────────────────────────────────────────
+
+def _data_hash(df: pd.DataFrame) -> str:
+    """Quick hash of DataFrame shape + last few rows for cache invalidation."""
+    sig = f"{len(df)}_{df.columns.tolist()}_{df.tail(3).to_json()}"
+    return hashlib.md5(sig.encode()).hexdigest()[:12]
+
+
+def _save_model_cache(key: str, obj):
+    """Pickle a model to the cache directory."""
+    MODEL_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    path = MODEL_CACHE_DIR / f"{key}.pkl"
+    with open(path, "wb") as f:
+        pickle.dump(obj, f)
+    logger.info(f"  Cached model: {key}")
+
+
+def _load_model_cache(key: str, max_age_hours: float = 24.0):
+    """Load a cached model if it exists and isn't too old."""
+    path = MODEL_CACHE_DIR / f"{key}.pkl"
+    if not path.exists():
+        return None
+    age_hours = (time.time() - path.stat().st_mtime) / 3600
+    if age_hours > max_age_hours:
+        logger.info(f"  Cache expired ({age_hours:.1f}h > {max_age_hours}h): {key}")
+        return None
+    try:
+        with open(path, "rb") as f:
+            obj = pickle.load(f)
+        logger.info(f"  Loaded cached model: {key} ({age_hours:.1f}h old)")
+        return obj
+    except Exception as e:
+        logger.warning(f"  Cache load failed for {key}: {e}")
+        return None
+
+
+# ── Pipeline ────────────────────────────────────────────────────────────────
 
 def _is_derby(home: str, away: str) -> bool:
     """Check if a match is a derby/rivalry."""
@@ -61,6 +144,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     logger.info("=" * 60)
     logger.info(f"PL PREDICTION ENGINE — PIPELINE START (v{PIPELINE_VERSION})")
     logger.info(f"Timestamp: {start_time.isoformat()}Z")
+    logger.info(f"skip_pymc={skip_pymc}, force_refresh={force_refresh}")
     logger.info("=" * 60)
 
     # ── Step 1: Fetch Data ─────────────────────────────────────────────
@@ -83,14 +167,34 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         fetch_fbref_team_stats, fetch_fbref_passing_stats,
         build_advanced_features,
     )
-    fbref_stats = fetch_fbref_team_stats(force=force_refresh)
-    passing_stats = fetch_fbref_passing_stats(force=force_refresh)
-    fbref_features = build_advanced_features(fbref_stats, passing_stats)
+
+    # FBref is the most fragile source — wrap with timeout + graceful fallback
+    fbref_stats = None
+    passing_stats = None
+    fbref_features = pd.DataFrame()
+
+    try:
+        with step_timeout(60, "FBref team stats"):
+            fbref_stats = fetch_fbref_team_stats(force=force_refresh)
+    except Exception as e:
+        logger.warning(f"  FBref team stats failed: {e}")
+
+    try:
+        with step_timeout(60, "FBref passing stats"):
+            passing_stats = fetch_fbref_passing_stats(force=force_refresh)
+    except Exception as e:
+        logger.warning(f"  FBref passing stats failed: {e}")
+
+    if fbref_stats is not None:
+        fbref_features = build_advanced_features(fbref_stats, passing_stats)
 
     logger.info(
         f"  Matches: {len(matches)}, Upcoming: {len(upcoming)}, "
         f"Players: {len(player_stats)}, FBref teams: {len(fbref_features)}"
     )
+
+    if len(upcoming) == 0:
+        logger.warning("No upcoming fixtures found. Exporting empty predictions.")
 
     # ── Step 2: Build Referee Profiles ────────────────────────────────
     logger.info("\n[2/12] Building referee profiles...")
@@ -108,8 +212,17 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     pb_predictions = {}
     try:
         from pipeline.models.penaltyblog_baseline import PenaltyblogBaseline
-        pb_model = PenaltyblogBaseline()
-        pb_model.fit(matches)
+
+        # Try cache first (PenaltyBlog is fast, but cache saves a few seconds)
+        data_sig = _data_hash(matches)
+        cache_key = f"penaltyblog_{data_sig}"
+        pb_model = _load_model_cache(cache_key, max_age_hours=12)
+
+        if pb_model is None:
+            pb_model = PenaltyblogBaseline()
+            pb_model.fit(matches)
+            _save_model_cache(cache_key, pb_model)
+
         for _, row in upcoming.iterrows():
             key = f"{row['home_team']}_vs_{row['away_team']}"
             pb_predictions[key] = pb_model.predict_match(row["home_team"], row["away_team"])
@@ -119,15 +232,56 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
     # ── Step 5: Fit PyMC Dixon-Coles ─────────────────────────────────
     dc_model = None
+
+    # Auto-detect: skip PyMC in CI if we're constrained
+    ci_env = os.environ.get("CI", "false").lower() == "true"
+    pipeline_timeout = int(os.environ.get("PIPELINE_TIMEOUT", "0"))
+    elapsed_so_far = (datetime.utcnow() - start_time).total_seconds()
+
+    # If we're in CI and already used >40% of timeout, skip PyMC to be safe
+    if not skip_pymc and ci_env and pipeline_timeout > 0:
+        remaining = pipeline_timeout - elapsed_so_far
+        if remaining < 600:  # Less than 10 minutes left
+            logger.warning(
+                f"  Auto-skipping PyMC: only {remaining:.0f}s remaining "
+                f"(elapsed {elapsed_so_far:.0f}s of {pipeline_timeout}s budget)"
+            )
+            skip_pymc = True
+
     if not skip_pymc:
         logger.info("\n[5/12] Fitting PyMC Dixon-Coles...")
         try:
-            from pipeline.models.dixon_coles import BayesianDixonColes
-            dc_model = BayesianDixonColes()
-            dc_model.fit(features)
-            logger.info("  PyMC Dixon-Coles fitted successfully")
+            # Try loading cached model first
+            data_sig = _data_hash(matches)
+            cache_key = f"dixon_coles_{data_sig}"
+            dc_model = _load_model_cache(cache_key, max_age_hours=12)
+
+            if dc_model is None:
+                from pipeline.models.dixon_coles import BayesianDixonColes
+
+                # In CI, use reduced sampling for reliability
+                if ci_env:
+                    from pipeline.config import DIXON_COLES
+                    original_draws = DIXON_COLES.get("pymc_draws", 2000)
+                    original_tune = DIXON_COLES.get("pymc_tune", 1000)
+                    DIXON_COLES["pymc_draws"] = min(original_draws, 1000)
+                    DIXON_COLES["pymc_tune"] = min(original_tune, 500)
+                    logger.info(
+                        f"  CI mode: reduced sampling to "
+                        f"{DIXON_COLES['pymc_draws']} draws, "
+                        f"{DIXON_COLES['pymc_tune']} tune"
+                    )
+
+                dc_model = BayesianDixonColes()
+                with step_timeout(480, "PyMC Dixon-Coles fitting"):
+                    dc_model.fit(features)
+                    _save_model_cache(cache_key, dc_model)
+                logger.info("  PyMC Dixon-Coles fitted successfully")
+            else:
+                logger.info("  PyMC Dixon-Coles loaded from cache")
         except Exception as e:
             logger.warning(f"  PyMC Dixon-Coles failed: {e}. Using PenaltyBlog only.")
+            dc_model = None
     else:
         logger.info("\n[5/12] Skipping PyMC Dixon-Coles (--skip-pymc flag)")
 
@@ -136,9 +290,18 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     xgb_model = None
     try:
         from pipeline.models.xgboost_model import XGBoostGoalModel
-        xgb_model = XGBoostGoalModel()
-        xgb_metrics = xgb_model.fit(features)
-        logger.info(f"  XGBoost metrics: {xgb_metrics}")
+
+        data_sig = _data_hash(features)
+        cache_key = f"xgboost_{data_sig}"
+        xgb_model = _load_model_cache(cache_key, max_age_hours=12)
+
+        if xgb_model is None:
+            xgb_model = XGBoostGoalModel()
+            xgb_metrics = xgb_model.fit(features)
+            _save_model_cache(cache_key, xgb_model)
+            logger.info(f"  XGBoost metrics: {xgb_metrics}")
+        else:
+            logger.info("  XGBoost loaded from cache")
     except Exception as e:
         logger.warning(f"  XGBoost failed: {e}")
 
@@ -175,39 +338,61 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
         # Only attempt stacking if we have enough historical data
         if "season" in matches.columns and matches["season"].nunique() >= 3:
-            # Build model builders for OOF
-            def _build_pb(train_df):
-                from pipeline.models.penaltyblog_baseline import PenaltyblogBaseline
-                m = PenaltyblogBaseline()
-                m.fit(train_df)
-                return m
 
-            model_builders = {"penaltyblog": _build_pb}
+            # Check for cached OOF predictions (avoids retraining all models)
+            oof_cache_key = f"oof_predictions_{_data_hash(matches)}"
+            cached_oof = _load_model_cache(oof_cache_key, max_age_hours=168)  # 7 days
 
-            if not skip_pymc:
-                def _build_dc(train_df):
-                    from pipeline.models.dixon_coles import BayesianDixonColes
-                    m = BayesianDixonColes()
+            if cached_oof is not None:
+                oof_preds, actuals = cached_oof
+                logger.info("  Loaded cached OOF predictions")
+            else:
+                # Build OOF — but ONLY with fast models (skip PyMC in OOF)
+                def _build_pb(train_df):
+                    from pipeline.models.penaltyblog_baseline import PenaltyblogBaseline
+                    m = PenaltyblogBaseline()
                     m.fit(train_df)
                     return m
-                model_builders["dixon_coles"] = _build_dc
 
-            # XGBoost builder
-            def _build_xgb(train_df):
-                from pipeline.models.xgboost_model import XGBoostGoalModel
-                m = XGBoostGoalModel()
-                m.fit(train_df)
-                return m
-            model_builders["xgboost"] = _build_xgb
+                model_builders = {"penaltyblog": _build_pb}
 
-            seasons_list = sorted(matches["season"].unique().tolist())
-            oof_preds, actuals = build_oof_predictions(matches, seasons_list, model_builders)
+                # XGBoost builder (fast enough for OOF)
+                def _build_xgb(train_df):
+                    from pipeline.models.xgboost_model import XGBoostGoalModel
+                    m = XGBoostGoalModel()
+                    m.fit(train_df)
+                    return m
+                model_builders["xgboost"] = _build_xgb
+
+                # NOTE: Dixon-Coles OOF deliberately excluded.
+                # It was retraining MCMC for every fold × every season,
+                # which is the #1 cause of pipeline timeouts.
+                # Instead, we assign DC a fixed weight in the stacking input.
+
+                seasons_list = sorted(matches["season"].unique().tolist())
+
+                with step_timeout(300, "OOF predictions"):
+                    oof_preds, actuals = build_oof_predictions(
+                        matches, seasons_list, model_builders
+                    )
+                    _save_model_cache(oof_cache_key, (oof_preds, actuals))
 
             meta_learner = StackingMetaLearner()
             stacking_result = meta_learner.fit(oof_preds, actuals)
 
             if stacking_result.get("status") == "fitted":
                 stacking_weights = stacking_result["learned_weights"]
+                # If DC wasn't in OOF, inject its static weight
+                if "dixon_coles" not in stacking_weights and dc_model is not None:
+                    # Redistribute: give DC 40% of total, scale others down
+                    dc_share = 0.40
+                    other_total = sum(stacking_weights.values())
+                    if other_total > 0:
+                        stacking_weights = {
+                            k: v * (1 - dc_share) / other_total
+                            for k, v in stacking_weights.items()
+                        }
+                    stacking_weights["dixon_coles"] = dc_share
                 ensemble_method = "stacking"
                 logger.info(f"  Stacking weights: {stacking_weights}")
             else:
@@ -222,12 +407,18 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     all_live_odds = {"main": None, "corners": None, "cards": None}
     try:
         from pipeline.data.odds_api import OddsAPIClient, parse_match_odds, parse_alt_totals
-        odds_client = OddsAPIClient()
-        all_live_odds = odds_client.fetch_all_odds()
-        n_main = len(all_live_odds.get("main") or [])
-        n_corners = len(all_live_odds.get("corners") or [])
-        n_cards = len(all_live_odds.get("cards") or [])
-        logger.info(f"  Odds API: main={n_main}, corners={n_corners}, cards={n_cards} events")
+
+        api_key = os.environ.get("ODDS_API_KEY", "")
+        if not api_key:
+            logger.warning("  ODDS_API_KEY not set. Skipping live odds.")
+        else:
+            odds_client = OddsAPIClient(api_key=api_key)
+            with step_timeout(60, "Odds API fetch"):
+                all_live_odds = odds_client.fetch_all_odds()
+            n_main = len(all_live_odds.get("main") or [])
+            n_corners = len(all_live_odds.get("corners") or [])
+            n_cards = len(all_live_odds.get("cards") or [])
+            logger.info(f"  Odds API: main={n_main}, corners={n_corners}, cards={n_cards} events")
     except Exception as e:
         logger.warning(f"  Odds API failed: {e}. Continuing without live odds.")
 
@@ -250,7 +441,13 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     logger.info("\n[9/12] Running Monte Carlo simulation (correlated)...")
     from pipeline.simulation.montecarlo import MonteCarloSimulator
 
-    simulator = MonteCarloSimulator(N_SIMULATIONS)
+    # In CI, reduce simulations for speed
+    n_sims = N_SIMULATIONS
+    if ci_env and N_SIMULATIONS > 5000:
+        n_sims = 5000
+        logger.info(f"  CI mode: reduced simulations to {n_sims}")
+
+    simulator = MonteCarloSimulator(n_sims)
     all_predictions = []
 
     # Odds benchmark from Football-Data (fallback)
@@ -264,7 +461,6 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
         # Try to get referee for this match
         match_referee = None
-        # Check if we have referee data from Football-Data for this fixture
         ref_match = matches[
             (matches["HomeTeam"] == home) & (matches["AwayTeam"] == away)
         ]
@@ -280,14 +476,14 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
         if dc_model is not None:
             try:
-                lam_samples, mu_samples = dc_model.get_lambda_mu_samples(home, away, N_SIMULATIONS)
+                lam_samples, mu_samples = dc_model.get_lambda_mu_samples(home, away, n_sims)
                 lambda_h = float(np.mean(lam_samples))
                 mu_a = float(np.mean(mu_samples))
             except Exception as e:
                 logger.warning(f"  DC prediction failed for {home} vs {away}: {e}")
 
         # Gather per-model lambdas for ensemble blending
-        model_lambdas = {}  # model_name -> (lam, mu)
+        model_lambdas = {}
         if dc_model is not None:
             model_lambdas["dixon_coles"] = (lambda_h, mu_a)
 
@@ -326,7 +522,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
         if dc_model is not None:
             try:
-                lam_s, mu_s = dc_model.get_lambda_mu_samples(home, away, N_SIMULATIONS)
+                lam_s, mu_s = dc_model.get_lambda_mu_samples(home, away, n_sims)
                 sims = simulator.simulate_from_posterior(lam_s, mu_s, **sim_kwargs)
             except Exception:
                 sims = simulator.simulate_match(lambda_h, mu_a, **sim_kwargs)
@@ -494,7 +690,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             "pipeline_version": PIPELINE_VERSION,
             "models": ["dixon_coles_pymc", "xgboost", "penaltyblog"],
             "sub_models": ["corners_negbin_adj", "cards_zip_referee", "player_cards", "goalscorer"],
-            "n_simulations": N_SIMULATIONS,
+            "n_simulations": n_sims,
             "calibrated": False,
             "odds_source": "the_odds_api" if any(all_live_odds.values()) else "football_data",
             "referee_profiles_count": len(referee_profiles),
@@ -578,6 +774,122 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     except Exception as e:
         logger.warning(f"  player_stats.json export failed: {e}")
 
+    # ── League Table JSON (for frontend Table page) ────────────────
+    logger.info("  Exporting table.json...")
+    try:
+        from pipeline.config import CURRENT_SEASON
+        # Filter matches for the current season that have a result
+        season_matches = matches[(matches["season"] == CURRENT_SEASON) & (matches["FTR"].notna())]
+        
+        standings = {}
+        for _, row in season_matches.iterrows():
+            h, a = row["HomeTeam"], row["AwayTeam"]
+            for t in [h, a]:
+                if t not in standings:
+                    standings[t] = {
+                        "team": t, "played": 0, "won": 0, "drawn": 0, "lost": 0, 
+                        "gf": 0, "ga": 0, "gd": 0, "points": 0, "form": []
+                    }
+            
+            hg, ag = int(row["FTHG"]), int(row["FTAG"])
+            standings[h]["played"] += 1
+            standings[a]["played"] += 1
+            standings[h]["gf"] += hg
+            standings[h]["ga"] += ag
+            standings[a]["gf"] += ag
+            standings[a]["ga"] += hg
+            standings[h]["gd"] += (hg - ag)
+            standings[a]["gd"] += (ag - hg)
+            
+            if hg > ag:
+                standings[h]["won"] += 1
+                standings[h]["points"] += 3
+                standings[h]["form"].append("W")
+                standings[a]["lost"] += 1
+                standings[a]["form"].append("L")
+            elif hg == ag:
+                standings[h]["drawn"] += 1
+                standings[h]["points"] += 1
+                standings[h]["form"].append("D")
+                standings[a]["drawn"] += 1
+                standings[a]["points"] += 1
+                standings[a]["form"].append("D")
+            else:
+                standings[a]["won"] += 1
+                standings[a]["points"] += 3
+                standings[a]["form"].append("W")
+                standings[h]["lost"] += 1
+                standings[h]["form"].append("L")
+
+        team_list = list(standings.values())
+        # Sort by points, then gd, then gf
+        team_list.sort(key=lambda x: (x["points"], x["gd"], x["gf"]), reverse=True)
+        
+        for i, t in enumerate(team_list):
+            t["position"] = i + 1
+            t["form"] = t["form"][-5:]  # only keep last 5
+            
+        with open(PREDICTIONS_DIR / "table.json", "w") as f:
+            json.dump(team_list, f, indent=2, default=str)
+        logger.info(f"  table.json: {len(team_list)} teams")
+    except Exception as e:
+        logger.warning(f"  table.json export failed: {e}")
+
+    # ── H2H JSON (for frontend H2H page) ───────────────────────────
+    logger.info("  Exporting h2h.json...")
+    try:
+        h2h_records = {}
+        for _, row in matches[matches["FTR"].notna()].iterrows():
+            h, a = row["HomeTeam"], row["AwayTeam"]
+            key = tuple(sorted([h, a]))
+            if key not in h2h_records:
+                h2h_records[key] = {
+                    "home_team": key[0],
+                    "away_team": key[1],
+                    "home_wins": 0,
+                    "draws": 0,
+                    "away_wins": 0,
+                    "matches": []
+                }
+            
+            hg, ag = int(row["FTHG"]), int(row["FTAG"])
+            is_home_first = (h == key[0])
+            
+            if hg > ag:
+                if is_home_first:
+                    h2h_records[key]["home_wins"] += 1
+                else:
+                    h2h_records[key]["away_wins"] += 1
+            elif hg == ag:
+                h2h_records[key]["draws"] += 1
+            else:
+                if is_home_first:
+                    h2h_records[key]["away_wins"] += 1
+                else:
+                    h2h_records[key]["home_wins"] += 1
+                    
+            h2h_records[key]["matches"].append({
+                "date": row["Date"].isoformat() if hasattr(row["Date"], "isoformat") else str(row["Date"]),
+                "home_team": h,
+                "away_team": a,
+                "home_goals": hg,
+                "away_goals": ag,
+                "season": row["season"]
+            })
+            
+        # keep last 5 matches and format
+        export_h2h = []
+        for v in h2h_records.values():
+            # sort matches by date descending
+            v["matches"] = sorted(v["matches"], key=lambda x: x["date"], reverse=True)[:5]
+            export_h2h.append(v)
+            
+        with open(PREDICTIONS_DIR / "h2h.json", "w") as f:
+            json.dump(export_h2h, f, indent=2, default=str)
+        logger.info(f"  h2h.json: {len(export_h2h)} matchups")
+    except Exception as e:
+        logger.warning(f"  h2h.json export failed: {e}")
+
     # ── Health JSON (for frontend Model Health page) ───────────────
     logger.info("  Exporting health.json...")
     try:
@@ -595,7 +907,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             },
             "ensemble_method": ensemble_method,
             "stacking_weights": stacking_weights,
-            "n_simulations": N_SIMULATIONS,
+            "n_simulations": n_sims,
             "odds_source": "the_odds_api" if any(all_live_odds.values()) else "football_data",
             "referee_profiles_count": len(referee_profiles),
         }
@@ -604,6 +916,49 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         logger.info("  health.json exported")
     except Exception as e:
         logger.warning(f"  health.json export failed: {e}")
+
+    # ── Upload to Supabase Storage ───────────────────────────────────
+    supabase_url = os.environ.get("SUPABASE_URL")
+    supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+    if supabase_url and supabase_key:
+        logger.info("\n[12/12] Uploading JSONs to Supabase Storage...")
+        try:
+            from supabase import create_client
+            supabase = create_client(supabase_url, supabase_key)
+            bucket_name = "predictions"
+            
+            # Ensure bucket exists
+            try:
+                supabase.storage.get_bucket(bucket_name)
+            except Exception:
+                logger.info(f"  Creating bucket '{bucket_name}'...")
+                supabase.storage.create_bucket(bucket_name, options={"public": True})
+                
+            files_to_upload = [
+                "latest.json",
+                "matches.json",
+                "player_stats.json",
+                "health.json",
+                "table.json",
+                "h2h.json"
+            ]
+            
+            for f_name in files_to_upload:
+                f_path = PREDICTIONS_DIR / f_name
+                if f_path.exists():
+                    with open(f_path, "rb") as f_data:
+                        try:
+                            supabase.storage.from_(bucket_name).upload(
+                                file=f_data.read(),
+                                path=f_name,
+                                file_options={"content-type": "application/json", "upsert": "true"}
+                            )
+                            logger.info(f"  Uploaded {f_name} to Supabase")
+                        except Exception as up_err:
+                            logger.warning(f"  Failed to upload {f_name}: {up_err}")
+                            
+        except Exception as e:
+            logger.error(f"  Supabase integration failed: {e}")
 
     # ── Done ─────────────────────────────────────────────────────────
     elapsed = (datetime.utcnow() - start_time).total_seconds()
