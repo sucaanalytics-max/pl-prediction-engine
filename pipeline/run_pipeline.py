@@ -171,7 +171,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # FBref is the most fragile source — wrap with timeout + graceful fallback
     fbref_stats = None
     passing_stats = None
-    fbref_features = pd.DataFrame()
+    fbref_features = {}
 
     try:
         with step_timeout(60, "FBref team stats"):

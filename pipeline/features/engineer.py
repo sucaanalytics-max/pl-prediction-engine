@@ -435,7 +435,8 @@ def engineer_features(
     matches = add_referee_features(matches, referee_profiles)
 
     # Step 9: FBref xG + passing features
-    if fbref_features:
+    has_fbref = fbref_features is not None and len(fbref_features) > 0
+    if has_fbref:
         for prefix, team_col in [("home", "HomeTeam"), ("away", "AwayTeam")]:
             xg_vals, xga_vals, pass_comp, prog_passes, key_passes_vals = [], [], [], [], []
 
