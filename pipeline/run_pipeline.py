@@ -777,58 +777,28 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # ── League Table JSON (for frontend Table page) ────────────────
     logger.info("  Exporting table.json...")
     try:
-        from pipeline.config import CURRENT_SEASON
-        # Filter matches for the current season that have a result
-        season_matches = matches[(matches["season"] == CURRENT_SEASON) & (matches["FTR"].notna())]
+        from pipeline.data.team_mapping import update_fpl_team_map
+        team_map = update_fpl_team_map(bootstrap["teams"])
         
-        standings = {}
-        for _, row in season_matches.iterrows():
-            h, a = row["HomeTeam"], row["AwayTeam"]
-            for t in [h, a]:
-                if t not in standings:
-                    standings[t] = {
-                        "team": t, "played": 0, "won": 0, "drawn": 0, "lost": 0, 
-                        "gf": 0, "ga": 0, "gd": 0, "points": 0, "form": []
-                    }
+        team_list = []
+        for t in bootstrap.get("teams", []):
+            team_list.append({
+                "team": team_map.get(t["id"], t["name"]),
+                "played": t.get("played", 0),
+                "won": t.get("win", 0),
+                "drawn": t.get("draw", 0),
+                "lost": t.get("loss", 0),
+                "gf": 0,  # FPL doesn't directly expose gf/ga in bootstrap, defaulting
+                "ga": 0,
+                "gd": 0,
+                "points": t.get("points", 0),
+                "position": t.get("position", 0),
+                "form": list(t.get("form", "")) if t.get("form") else []
+            })
             
-            hg, ag = int(row["FTHG"]), int(row["FTAG"])
-            standings[h]["played"] += 1
-            standings[a]["played"] += 1
-            standings[h]["gf"] += hg
-            standings[h]["ga"] += ag
-            standings[a]["gf"] += ag
-            standings[a]["ga"] += hg
-            standings[h]["gd"] += (hg - ag)
-            standings[a]["gd"] += (ag - hg)
-            
-            if hg > ag:
-                standings[h]["won"] += 1
-                standings[h]["points"] += 3
-                standings[h]["form"].append("W")
-                standings[a]["lost"] += 1
-                standings[a]["form"].append("L")
-            elif hg == ag:
-                standings[h]["drawn"] += 1
-                standings[h]["points"] += 1
-                standings[h]["form"].append("D")
-                standings[a]["drawn"] += 1
-                standings[a]["points"] += 1
-                standings[a]["form"].append("D")
-            else:
-                standings[a]["won"] += 1
-                standings[a]["points"] += 3
-                standings[a]["form"].append("W")
-                standings[h]["lost"] += 1
-                standings[h]["form"].append("L")
+        # Sort by FPL position
+        team_list.sort(key=lambda x: x["position"])
 
-        team_list = list(standings.values())
-        # Sort by points, then gd, then gf
-        team_list.sort(key=lambda x: (x["points"], x["gd"], x["gf"]), reverse=True)
-        
-        for i, t in enumerate(team_list):
-            t["position"] = i + 1
-            t["form"] = t["form"][-5:]  # only keep last 5
-            
         with open(PREDICTIONS_DIR / "table.json", "w") as f:
             json.dump(team_list, f, indent=2, default=str)
         logger.info(f"  table.json: {len(team_list)} teams")

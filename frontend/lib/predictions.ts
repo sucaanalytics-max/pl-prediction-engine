@@ -245,47 +245,70 @@ const getBasePath = () =>
     ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/predictions`
     : "/predictions";
 
+async function fetchWithFallback<T>(filename: string): Promise<T> {
+  const basePath = getBasePath();
+
+  if (basePath !== "/predictions") {
+    try {
+      // Create a 5-second timeout for Supabase
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+      const res = await fetch(`${basePath}/${filename}`, {
+        next: { revalidate: 3600 },
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        return await res.json();
+      }
+      console.warn(`Supabase fetch failed (${res.status}) for ${filename}, falling back to local.`);
+    } catch (err) {
+      console.warn(`Supabase fetch error for ${filename}, falling back to local:`, err);
+    }
+  }
+
+  // Fallback to local /predictions directory
+  const localRes = await fetch(`/predictions/${filename}`, { next: { revalidate: 3600 } });
+  if (!localRes.ok) throw new Error(`Failed to load ${filename} locally (${localRes.status})`);
+  return await localRes.json();
+}
+
 export async function loadPredictions(): Promise<PredictionData> {
-  const res = await fetch(`${getBasePath()}/latest.json`, { next: { revalidate: 3600 } });
-  if (!res.ok) throw new Error("Failed to load predictions");
-  return res.json();
+  return fetchWithFallback<PredictionData>("latest.json");
 }
 
 export async function loadMatches(): Promise<{ matches: MatchSummary[]; gameweek: number }> {
-  const res = await fetch(`${getBasePath()}/matches.json`, { next: { revalidate: 3600 } });
-  if (!res.ok) throw new Error("Failed to load matches");
-  return res.json();
+  return fetchWithFallback<{ matches: MatchSummary[]; gameweek: number }>("matches.json");
 }
 
 export async function loadHealth(): Promise<HealthData> {
-  const res = await fetch(`${getBasePath()}/health.json`, { next: { revalidate: 3600 } });
-  if (!res.ok) throw new Error("Failed to load health data");
-  return res.json();
+  return fetchWithFallback<HealthData>("health.json");
 }
 
 export async function loadPlayerStats(): Promise<PlayerStat[]> {
-  const res = await fetch(`${getBasePath()}/player_stats.json`, { next: { revalidate: 3600 } });
-  if (!res.ok) throw new Error(`Failed to load player stats (${res.status})`);
-  return res.json();
+  return fetchWithFallback<PlayerStat[]>("player_stats.json");
 }
 
 export async function loadTable(): Promise<TeamStanding[]> {
-  const res = await fetch(`${getBasePath()}/table.json`, { next: { revalidate: 3600 } });
-  if (!res.ok) throw new Error(`Failed to load league table (${res.status})`);
-  return res.json();
+  return fetchWithFallback<TeamStanding[]>("table.json");
 }
 
 export async function loadH2H(homeTeam: string, awayTeam: string): Promise<H2HRecord | null> {
-  const res = await fetch(`${getBasePath()}/h2h.json`, { next: { revalidate: 3600 } });
-  if (!res.ok) return null;
-  const all: H2HRecord[] = await res.json();
-  return (
-    all.find(
-      (r) =>
-        (r.home_team === homeTeam && r.away_team === awayTeam) ||
-        (r.home_team === awayTeam && r.away_team === homeTeam)
-    ) ?? null
-  );
+  try {
+    const all = await fetchWithFallback<H2HRecord[]>("h2h.json");
+    return (
+      all.find(
+        (r) =>
+          (r.home_team === homeTeam && r.away_team === awayTeam) ||
+          (r.home_team === awayTeam && r.away_team === homeTeam)
+      ) ?? null
+    );
+  } catch (err) {
+    console.error("Failed to load H2H:", err);
+    return null;
+  }
 }
 
 export function getMatchById(
