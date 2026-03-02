@@ -190,6 +190,10 @@ class XGBoostGoalModel:
         # Use stored column medians from training (falls back to 0 if unavailable)
         medians = getattr(self, "_col_medians", None)
         X = features[self.feature_cols].fillna(medians if medians is not None else 0)
+        
+        # Enforce numeric types to prevent "ValueError: DataFrame.dtypes" in XGBoost > 3.0
+        X = X.apply(pd.to_numeric, errors="coerce").fillna(0)
+        
         lambda_home = self.model_home.predict(X)
         mu_away = self.model_away.predict(X)
 
