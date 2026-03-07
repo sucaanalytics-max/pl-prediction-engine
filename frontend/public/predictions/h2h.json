@@ -3892,10 +3892,18 @@
   {
     "home_team": "Crystal Palace",
     "away_team": "Tottenham",
-    "home_wins": 2,
+    "home_wins": 3,
     "draws": 0,
     "away_wins": 3,
     "matches": [
+      {
+        "date": "2026-03-05T00:00:00",
+        "home_team": "Tottenham",
+        "away_team": "Crystal Palace",
+        "home_goals": 1,
+        "away_goals": 3,
+        "season": "2526"
+      },
       {
         "date": "2025-12-28T00:00:00",
         "home_team": "Crystal Palace",
@@ -3926,14 +3934,6 @@
         "away_team": "Crystal Palace",
         "home_goals": 3,
         "away_goals": 1,
-        "season": "2324"
-      },
-      {
-        "date": "2023-10-27T00:00:00",
-        "home_team": "Crystal Palace",
-        "away_team": "Tottenham",
-        "home_goals": 1,
-        "away_goals": 2,
         "season": "2324"
       }
     ]
@@ -9622,6 +9622,31 @@
     ]
   },
   {
+    "home_team": "Burnley",
+    "away_team": "Sunderland",
+    "home_wins": 1,
+    "draws": 0,
+    "away_wins": 1,
+    "matches": [
+      {
+        "date": "2026-02-02T00:00:00",
+        "home_team": "Sunderland",
+        "away_team": "Burnley",
+        "home_goals": 3,
+        "away_goals": 0,
+        "season": "2526"
+      },
+      {
+        "date": "2025-08-23T00:00:00",
+        "home_team": "Burnley",
+        "away_team": "Sunderland",
+        "home_goals": 2,
+        "away_goals": 0,
+        "season": "2526"
+      }
+    ]
+  },
+  {
     "home_team": "Arsenal",
     "away_team": "Leeds",
     "home_wins": 2,
@@ -9647,25 +9672,25 @@
     ]
   },
   {
-    "home_team": "Burnley",
-    "away_team": "Sunderland",
-    "home_wins": 1,
-    "draws": 0,
+    "home_team": "Leeds",
+    "away_team": "Newcastle",
+    "home_wins": 0,
+    "draws": 1,
     "away_wins": 1,
     "matches": [
       {
-        "date": "2026-02-02T00:00:00",
-        "home_team": "Sunderland",
-        "away_team": "Burnley",
-        "home_goals": 3,
-        "away_goals": 0,
+        "date": "2026-01-07T00:00:00",
+        "home_team": "Newcastle",
+        "away_team": "Leeds",
+        "home_goals": 4,
+        "away_goals": 3,
         "season": "2526"
       },
       {
-        "date": "2025-08-23T00:00:00",
-        "home_team": "Burnley",
-        "away_team": "Sunderland",
-        "home_goals": 2,
+        "date": "2025-08-30T00:00:00",
+        "home_team": "Leeds",
+        "away_team": "Newcastle",
+        "home_goals": 0,
         "away_goals": 0,
         "season": "2526"
       }
@@ -9692,31 +9717,6 @@
         "away_team": "Brentford",
         "home_goals": 2,
         "away_goals": 1,
-        "season": "2526"
-      }
-    ]
-  },
-  {
-    "home_team": "Leeds",
-    "away_team": "Newcastle",
-    "home_wins": 0,
-    "draws": 1,
-    "away_wins": 1,
-    "matches": [
-      {
-        "date": "2026-01-07T00:00:00",
-        "home_team": "Newcastle",
-        "away_team": "Leeds",
-        "home_goals": 4,
-        "away_goals": 3,
-        "season": "2526"
-      },
-      {
-        "date": "2025-08-30T00:00:00",
-        "home_team": "Leeds",
-        "away_team": "Newcastle",
-        "home_goals": 0,
-        "away_goals": 0,
         "season": "2526"
       }
     ]
@@ -9874,23 +9874,6 @@
     ]
   },
   {
-    "home_team": "Burnley",
-    "away_team": "Leeds",
-    "home_wins": 1,
-    "draws": 0,
-    "away_wins": 0,
-    "matches": [
-      {
-        "date": "2025-10-18T00:00:00",
-        "home_team": "Burnley",
-        "away_team": "Leeds",
-        "home_goals": 2,
-        "away_goals": 0,
-        "season": "2526"
-      }
-    ]
-  },
-  {
     "home_team": "Sunderland",
     "away_team": "Wolves",
     "home_wins": 1,
@@ -9901,6 +9884,23 @@
         "date": "2025-10-18T00:00:00",
         "home_team": "Sunderland",
         "away_team": "Wolves",
+        "home_goals": 2,
+        "away_goals": 0,
+        "season": "2526"
+      }
+    ]
+  },
+  {
+    "home_team": "Burnley",
+    "away_team": "Leeds",
+    "home_wins": 1,
+    "draws": 0,
+    "away_wins": 0,
+    "matches": [
+      {
+        "date": "2025-10-18T00:00:00",
+        "home_team": "Burnley",
+        "away_team": "Leeds",
         "home_goals": 2,
         "away_goals": 0,
         "season": "2526"
@@ -10226,23 +10226,6 @@
     ]
   },
   {
-    "home_team": "Brentford",
-    "away_team": "Leeds",
-    "home_wins": 0,
-    "draws": 1,
-    "away_wins": 0,
-    "matches": [
-      {
-        "date": "2025-12-14T00:00:00",
-        "home_team": "Brentford",
-        "away_team": "Leeds",
-        "home_goals": 1,
-        "away_goals": 1,
-        "season": "2526"
-      }
-    ]
-  },
-  {
     "home_team": "Newcastle",
     "away_team": "Sunderland",
     "home_wins": 0,
@@ -10260,18 +10243,18 @@
     ]
   },
   {
-    "home_team": "Brighton",
-    "away_team": "Sunderland",
+    "home_team": "Brentford",
+    "away_team": "Leeds",
     "home_wins": 0,
     "draws": 1,
     "away_wins": 0,
     "matches": [
       {
-        "date": "2025-12-20T00:00:00",
-        "home_team": "Brighton",
-        "away_team": "Sunderland",
-        "home_goals": 0,
-        "away_goals": 0,
+        "date": "2025-12-14T00:00:00",
+        "home_team": "Brentford",
+        "away_team": "Leeds",
+        "home_goals": 1,
+        "away_goals": 1,
         "season": "2526"
       }
     ]
@@ -10289,6 +10272,23 @@
         "away_team": "Crystal Palace",
         "home_goals": 4,
         "away_goals": 1,
+        "season": "2526"
+      }
+    ]
+  },
+  {
+    "home_team": "Brighton",
+    "away_team": "Sunderland",
+    "home_wins": 0,
+    "draws": 1,
+    "away_wins": 0,
+    "matches": [
+      {
+        "date": "2025-12-20T00:00:00",
+        "home_team": "Brighton",
+        "away_team": "Sunderland",
+        "home_goals": 0,
+        "away_goals": 0,
         "season": "2526"
       }
     ]
@@ -10319,23 +10319,6 @@
     ]
   },
   {
-    "home_team": "Sunderland",
-    "away_team": "Tottenham",
-    "home_wins": 0,
-    "draws": 1,
-    "away_wins": 0,
-    "matches": [
-      {
-        "date": "2026-01-04T00:00:00",
-        "home_team": "Tottenham",
-        "away_team": "Sunderland",
-        "home_goals": 1,
-        "away_goals": 1,
-        "season": "2526"
-      }
-    ]
-  },
-  {
     "home_team": "Leeds",
     "away_team": "Man United",
     "home_wins": 0,
@@ -10346,6 +10329,23 @@
         "date": "2026-01-04T00:00:00",
         "home_team": "Leeds",
         "away_team": "Man United",
+        "home_goals": 1,
+        "away_goals": 1,
+        "season": "2526"
+      }
+    ]
+  },
+  {
+    "home_team": "Sunderland",
+    "away_team": "Tottenham",
+    "home_wins": 0,
+    "draws": 1,
+    "away_wins": 0,
+    "matches": [
+      {
+        "date": "2026-01-04T00:00:00",
+        "home_team": "Tottenham",
+        "away_team": "Sunderland",
         "home_goals": 1,
         "away_goals": 1,
         "season": "2526"
