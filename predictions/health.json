@@ -1,8 +1,27 @@
 {
-  "last_updated": "2026-03-08T06:30:11.895731Z",
+  "last_updated": "2026-03-09T06:47:42.106461Z",
   "gameweek": 29,
   "n_predictions": 10,
   "status": "healthy",
   "pipeline_version": "4.0.0",
-  "validated_at": "2026-03-08T10:30:54.344673+00:00Z"
+  "models": {
+    "dixon_coles": {
+      "status": "active"
+    },
+    "xgboost": {
+      "status": "active"
+    },
+    "penaltyblog": {
+      "status": "active"
+    },
+    "goalscorer": {
+      "status": "active",
+      "n_players": 366
+    }
+  },
+  "ensemble_method": "weighted_average",
+  "stacking_weights": null,
+  "n_simulations": 5000,
+  "odds_source": "football_data",
+  "referee_profiles_count": 27
 }
