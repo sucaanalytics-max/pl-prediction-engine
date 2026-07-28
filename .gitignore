@@ -25,6 +25,10 @@ node_modules/
 .next/
 out/
 frontend/.env*.local
+*.tsbuildinfo
+
+# Vercel
+.vercel/
 
 # IDE
 .vscode/
