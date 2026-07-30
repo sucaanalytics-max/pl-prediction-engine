@@ -24,20 +24,19 @@ import signal
 import sys
 import time
 from datetime import datetime
-from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict
 
 import numpy as np
 import pandas as pd
 
 from pipeline.config import (
-    PREDICTIONS_DIR, CURRENT_SEASON, SEASONS, N_SIMULATIONS, DERBIES,
-    ENSEMBLE_WEIGHTS, DATA_PROCESSED,
+    PREDICTIONS_DIR, CURRENT_SEASON, CURRENT_SEASON_LABEL,
+    N_SIMULATIONS, DERBIES, ENSEMBLE_WEIGHTS, ENABLE_STACKING, DATA_PROCESSED,
 )
 
 logger = logging.getLogger(__name__)
 
-PIPELINE_VERSION = "4.0.0"
+PIPELINE_VERSION = "4.1.0"
 
 # Model cache directory
 MODEL_CACHE_DIR = DATA_PROCESSED / "model_cache"
@@ -72,7 +71,7 @@ class step_timeout:
             signal.alarm(0)
         if exc_type is StepTimeout:
             logger.warning(f"  {self.label} timed out after {self.seconds}s")
-            return True  # Suppress the exception
+            return False
         return False
 
 
@@ -150,7 +149,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # ── Step 1: Fetch Data ─────────────────────────────────────────────
     logger.info("\n[1/12] Fetching data...")
 
-    from pipeline.data.football_data import load_all_seasons, extract_odds_benchmark
+    from pipeline.data.football_data import load_all_seasons
     matches = load_all_seasons(force=force_refresh)
 
     from pipeline.data.fpl_api import (
@@ -204,12 +203,22 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
     # ── Step 3: Engineer Features ────────────────────────────────────
     logger.info("\n[3/12] Engineering features...")
-    from pipeline.features.engineer import engineer_features
-    features = engineer_features(matches, fbref_features, player_stats, referee_profiles)
+    from pipeline.features.engineer import engineer_training_and_upcoming_features
+    features, upcoming_features = engineer_training_and_upcoming_features(
+        matches,
+        upcoming,
+        fbref_features=fbref_features,
+        player_stats=player_stats,
+        referee_profiles=referee_profiles,
+    )
+    logger.info(
+        f"  Feature rows: training={len(features)}, upcoming={len(upcoming_features)}"
+    )
 
     # ── Step 4: Fit PenaltyBlog Baseline ─────────────────────────────
     logger.info("\n[4/12] Fitting PenaltyBlog baseline...")
     pb_predictions = {}
+    pb_model = None
     try:
         from pipeline.models.penaltyblog_baseline import PenaltyblogBaseline
 
@@ -225,7 +234,13 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
         for _, row in upcoming.iterrows():
             key = f"{row['home_team']}_vs_{row['away_team']}"
-            pb_predictions[key] = pb_model.predict_match(row["home_team"], row["away_team"])
+            home, away = row["home_team"], row["away_team"]
+            if home in pb_model.teams and away in pb_model.teams:
+                pb_predictions[key] = pb_model.predict_match(home, away)
+            else:
+                logger.info(
+                    f"  PenaltyBlog skipped for unseen team(s): {home} vs {away}"
+                )
         logger.info(f"  PenaltyBlog: {len(pb_predictions)} fixtures predicted")
     except Exception as e:
         logger.warning(f"  PenaltyBlog failed: {e}")
@@ -336,8 +351,8 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     try:
         from pipeline.models.ensemble import StackingMetaLearner, build_oof_predictions
 
-        # Only attempt stacking if we have enough historical data
-        if "season" in matches.columns and matches["season"].nunique() >= 3:
+        # Only attempt the experimental path when explicitly enabled.
+        if ENABLE_STACKING and "season" in matches.columns and matches["season"].nunique() >= 3:
 
             # Check for cached OOF predictions (avoids retraining all models)
             oof_cache_key = f"oof_predictions_{_data_hash(matches)}"
@@ -397,6 +412,8 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 logger.info(f"  Stacking weights: {stacking_weights}")
             else:
                 logger.info(f"  Stacking fallback: {stacking_result.get('status')}")
+        elif not ENABLE_STACKING:
+            logger.info("  Stacking disabled — using validated static weights")
         else:
             logger.info("  Insufficient seasons for stacking — using weighted average")
     except Exception as e:
@@ -404,7 +421,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
     # ── Step 8: Fetch Live Odds ──────────────────────────────────────
     logger.info("\n[8/12] Fetching live odds from The Odds API...")
-    all_live_odds = {"main": None, "corners": None, "cards": None}
+    all_live_odds = {"main": None, "additional": []}
     try:
         from pipeline.data.odds_api import OddsAPIClient, parse_match_odds, parse_alt_totals
 
@@ -416,9 +433,11 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             with step_timeout(60, "Odds API fetch"):
                 all_live_odds = odds_client.fetch_all_odds()
             n_main = len(all_live_odds.get("main") or [])
-            n_corners = len(all_live_odds.get("corners") or [])
-            n_cards = len(all_live_odds.get("cards") or [])
-            logger.info(f"  Odds API: main={n_main}, corners={n_corners}, cards={n_cards} events")
+            n_additional = len(all_live_odds.get("additional") or [])
+            logger.info(
+                f"  Odds API: featured={n_main}, "
+                f"additional={n_additional} events"
+            )
     except Exception as e:
         logger.warning(f"  Odds API failed: {e}. Continuing without live odds.")
 
@@ -430,10 +449,19 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         from pipeline.data.odds_api import parse_match_odds, parse_alt_totals
         if all_live_odds.get("main"):
             parsed_main = parse_match_odds(all_live_odds["main"])
-        if all_live_odds.get("corners"):
-            parsed_corners = parse_alt_totals(all_live_odds["corners"], "alternate_totals_corners")
-        if all_live_odds.get("cards"):
-            parsed_cards = parse_alt_totals(all_live_odds["cards"], "alternate_totals_cards")
+        if all_live_odds.get("additional"):
+            parsed_additional = parse_match_odds(all_live_odds["additional"])
+            for match_key, extra in parsed_additional.items():
+                if match_key not in parsed_main:
+                    parsed_main[match_key] = extra
+                elif extra.get("btts"):
+                    parsed_main[match_key]["btts"] = extra["btts"]
+            parsed_corners = parse_alt_totals(
+                all_live_odds["additional"], "alternate_totals_corners"
+            )
+            parsed_cards = parse_alt_totals(
+                all_live_odds["additional"], "alternate_totals_cards"
+            )
     except Exception as e:
         logger.warning(f"  Odds parsing failed: {e}")
 
@@ -450,58 +478,75 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     simulator = MonteCarloSimulator(n_sims)
     all_predictions = []
 
-    # Odds benchmark from Football-Data (fallback)
-    odds_bench = extract_odds_benchmark(matches)
-
     for _, row in upcoming.iterrows():
         home, away = row["home_team"], row["away_team"]
         key = f"{home}_vs_{away}"
-        match_id = f"{datetime.utcnow().strftime('%Y%m%d')}_{home}_{away}".replace(" ", "_")
+        kickoff = pd.to_datetime(row.get("kickoff"), utc=True, errors="coerce")
+        fixture_date = (
+            kickoff.strftime("%Y%m%d")
+            if pd.notna(kickoff)
+            else CURRENT_SEASON
+        )
+        match_id = f"{fixture_date}_{home}_{away}".replace(" ", "_")
         derby = _is_derby(home, away)
 
-        # Try to get referee for this match
-        match_referee = None
-        ref_match = matches[
-            (matches["HomeTeam"] == home) & (matches["AwayTeam"] == away)
+        # Referees must come from the upcoming fixture itself. Reusing the
+        # referee from a historical meeting creates false precision.
+        match_referee = row.get("referee")
+        if pd.isna(match_referee):
+            match_referee = None
+
+        match_feature_row = upcoming_features[
+            upcoming_features["match_id"] == match_id
         ]
-        if len(ref_match) > 0 and "Referee" in ref_match.columns:
-            last_ref = ref_match.iloc[-1].get("Referee")
-            if pd.notna(last_ref):
-                match_referee = last_ref
+
+        # Make unchanged inputs reproducible across daily runs.
+        fixture_seed = int(
+            hashlib.sha256(f"{match_id}_{PIPELINE_VERSION}".encode()).hexdigest()[:8],
+            16,
+        )
+        np.random.seed(fixture_seed)
 
         logger.info(f"  Simulating: {home} vs {away} (derby={derby}, ref={match_referee})...")
 
         # Get lambda/mu from available models
         lambda_h, mu_a = 1.4, 1.1  # Default
+        dc_lam_samples = None
+        dc_mu_samples = None
 
         if dc_model is not None:
             try:
-                lam_samples, mu_samples = dc_model.get_lambda_mu_samples(home, away, n_sims)
-                lambda_h = float(np.mean(lam_samples))
-                mu_a = float(np.mean(mu_samples))
+                dc_lam_samples, dc_mu_samples = dc_model.get_lambda_mu_samples(
+                    home, away, n_sims
+                )
+                lambda_h = float(np.mean(dc_lam_samples))
+                mu_a = float(np.mean(dc_mu_samples))
             except Exception as e:
                 logger.warning(f"  DC prediction failed for {home} vs {away}: {e}")
 
         # Gather per-model lambdas for ensemble blending
         model_lambdas = {}
-        if dc_model is not None:
+        if dc_lam_samples is not None and dc_mu_samples is not None:
             model_lambdas["dixon_coles"] = (lambda_h, mu_a)
 
         if xgb_model is not None:
             try:
-                match_row = features[
-                    (features["HomeTeam"] == home) & (features["AwayTeam"] == away)
-                ]
-                if len(match_row) > 0:
-                    xgb_lam, xgb_mu = xgb_model.predict_single(match_row.iloc[-1].to_dict())
+                if len(match_feature_row) > 0:
+                    xgb_lam, xgb_mu = xgb_model.predict_single(
+                        match_feature_row.iloc[0].to_dict()
+                    )
                     model_lambdas["xgboost"] = (xgb_lam, xgb_mu)
+                else:
+                    logger.warning(f"  No upcoming feature row found for {match_id}")
             except Exception as e:
                 logger.warning(f"  XGBoost prediction failed: {e}")
 
-        pb_pred = pb_predictions.get(key, {})
-        pb_lam = pb_pred.get("expected_goals", {}).get("home", lambda_h)
-        pb_mu = pb_pred.get("expected_goals", {}).get("away", mu_a)
-        model_lambdas["penaltyblog"] = (pb_lam, pb_mu)
+        pb_pred = pb_predictions.get(key)
+        if pb_pred:
+            pb_lam = pb_pred.get("expected_goals", {}).get("home")
+            pb_mu = pb_pred.get("expected_goals", {}).get("away")
+            if pb_lam is not None and pb_mu is not None:
+                model_lambdas["penaltyblog"] = (pb_lam, pb_mu)
 
         # Blend using stacking weights if available, else static weights
         weights = stacking_weights if stacking_weights else ENSEMBLE_WEIGHTS
@@ -520,12 +565,16 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             is_derby=derby,
         )
 
-        if dc_model is not None:
-            try:
-                lam_s, mu_s = dc_model.get_lambda_mu_samples(home, away, n_sims)
-                sims = simulator.simulate_from_posterior(lam_s, mu_s, **sim_kwargs)
-            except Exception:
-                sims = simulator.simulate_match(lambda_h, mu_a, **sim_kwargs)
+        if dc_lam_samples is not None and dc_mu_samples is not None:
+            # Preserve the Bayesian posterior's relative uncertainty while
+            # centring it on the actual ensemble-blended goal rates.
+            lam_mean = max(float(np.mean(dc_lam_samples)), 1e-6)
+            mu_mean = max(float(np.mean(dc_mu_samples)), 1e-6)
+            blended_lam_samples = dc_lam_samples * (lambda_h / lam_mean)
+            blended_mu_samples = dc_mu_samples * (mu_a / mu_mean)
+            sims = simulator.simulate_from_posterior(
+                blended_lam_samples, blended_mu_samples, **sim_kwargs
+            )
         else:
             sims = simulator.simulate_match(lambda_h, mu_a, **sim_kwargs)
 
@@ -563,6 +612,10 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             live = parsed_main[key]
             if live.get("h2h_all"):
                 odds_comparison["h2h"] = live["h2h_all"]
+            if live.get("totals"):
+                odds_comparison["totals"] = live["totals"]
+            if live.get("btts"):
+                odds_comparison["btts"] = live["btts"]
             if live.get("h2h"):
                 for outcome in ["home", "draw", "away"]:
                     bk_key = live["h2h"].get(f"bookmaker_{outcome}")
@@ -590,11 +643,10 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         if xgb_model is not None:
             try:
                 from pipeline.explainability.shap_explain import explain_match
-                match_row = features[(features["HomeTeam"] == home)].tail(1)
-                if len(match_row) > 0:
+                if len(match_feature_row) > 0:
                     shap_data = explain_match(
                         xgb_model.model_home, xgb_model.model_away,
-                        match_row, xgb_model.feature_cols
+                        match_feature_row, xgb_model.feature_cols
                     )
             except Exception as e:
                 logger.warning(f"  SHAP failed: {e}")
@@ -602,21 +654,20 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         # Value bets (with all markets)
         from pipeline.risk.kelly import find_value_bets
 
-        # Build odds benchmark dict
+        # Current recommendations are based exclusively on current Odds API
+        # prices. Historical closing odds remain evaluation benchmarks only.
         odds_benchmark = {}
-        match_odds_fd = odds_bench[
-            (odds_bench["HomeTeam"] == home) & (odds_bench["AwayTeam"] == away)
-        ]
-        if len(match_odds_fd) > 0:
-            odds_benchmark = match_odds_fd.iloc[-1].to_dict()
-
-        # Merge in live odds if available
         if key in parsed_main:
             live = parsed_main[key]
             if live.get("h2h"):
                 odds_benchmark["odds_home_bet365"] = live["h2h"].get("home")
                 odds_benchmark["odds_draw_bet365"] = live["h2h"].get("draw")
                 odds_benchmark["odds_away_bet365"] = live["h2h"].get("away")
+                odds_benchmark["bookmaker_home"] = live["h2h"].get("bookmaker_home")
+                odds_benchmark["bookmaker_draw"] = live["h2h"].get("bookmaker_draw")
+                odds_benchmark["bookmaker_away"] = live["h2h"].get("bookmaker_away")
+            if live.get("totals"):
+                odds_benchmark["totals"] = live["totals"]
             if live.get("btts"):
                 odds_benchmark["btts"] = live["btts"]
 
@@ -685,14 +736,22 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     output = {
         "metadata": {
             "generated_at": datetime.utcnow().isoformat() + "Z",
-            "season": "2025-26",
+            "season": CURRENT_SEASON_LABEL,
             "gameweek": gameweek,
             "pipeline_version": PIPELINE_VERSION,
-            "models": ["dixon_coles_pymc", "xgboost", "penaltyblog"],
+            "models": [
+                name
+                for name, active in [
+                    ("dixon_coles_pymc", dc_model is not None),
+                    ("xgboost", xgb_model is not None),
+                    ("penaltyblog", bool(pb_predictions)),
+                ]
+                if active
+            ],
             "sub_models": ["corners_negbin_adj", "cards_zip_referee", "player_cards", "goalscorer"],
             "n_simulations": n_sims,
             "calibrated": False,
-            "odds_source": "the_odds_api" if any(all_live_odds.values()) else "football_data",
+            "odds_source": "the_odds_api" if parsed_main else "unavailable",
             "referee_profiles_count": len(referee_profiles),
             "ensemble_method": ensemble_method,
             "stacking_weights": stacking_weights,
@@ -700,7 +759,34 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         "predictions": all_predictions,
     }
 
+    from pipeline.validation.artifacts import assert_valid_prediction_output
+    assert_valid_prediction_output(output)
+
     PREDICTIONS_DIR.mkdir(parents=True, exist_ok=True)
+    forecast_metrics = {}
+    calibration_data = {"bins": []}
+
+    from pipeline.validation.ledger import update_forecast_ledger, evaluate_ledger
+
+    # The ledger WRITE must fail loudly. It is the only artifact proving a
+    # forecast predated kickoff, and CLAUDE.md forbids sourcing any accuracy
+    # claim from latest.json. This call used to sit inside a try/except that
+    # only warned, which is exactly why forecast_ledger.json never existed for
+    # the pipeline's entire history: every failure was invisible.
+    forecast_ledger = update_forecast_ledger(
+        output, PREDICTIONS_DIR / "forecast_ledger.json"
+    )
+
+    # Scoring the ledger is reporting, not a durability guarantee, and it
+    # depends on live outcome data that may legitimately be unavailable
+    # (off-season, unsettled fixtures). This half may degrade.
+    try:
+        forecast_metrics, calibration_data = evaluate_ledger(
+            forecast_ledger, bootstrap, fixtures_raw
+        )
+    except Exception as e:
+        logger.warning(f"  Forecast ledger evaluation failed: {e}")
+
     latest_path = PREDICTIONS_DIR / "latest.json"
     with open(latest_path, "w") as f:
         json.dump(output, f, indent=2, default=str)
@@ -714,7 +800,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
     # Matches metadata
     matches_meta = {
-        "season": "2025-26",
+        "season": CURRENT_SEASON_LABEL,
         "gameweek": gameweek,
         "generated_at": datetime.utcnow().isoformat() + "Z",
         "matches": [
@@ -763,7 +849,8 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 "yellows_per_90": float(row.get("yellow_cards", row.get("yellows", 0)) / max(row.get("minutes", 1) / 90, 0.1)),
                 "fouls_committed": int(row.get("fouls_committed", 0)) if pd.notna(row.get("fouls_committed")) else None,
                 "fouls_per_90": float(row.get("fouls_committed", 0) / max(row.get("minutes", 1) / 90, 0.1)) if pd.notna(row.get("fouls_committed")) else None,
-                "fpl_price": float(row.get("now_cost", 0)) / 10 if row.get("now_cost") else None,
+                # build_player_stats already converts FPL's integer tenths to £m.
+                "fpl_price": float(row.get("now_cost", 0)) if row.get("now_cost") else None,
                 "fpl_ownership": float(row.get("selected_by_percent", 0)) if row.get("selected_by_percent") else None,
                 "form": float(row.get("form", 0)) if pd.notna(row.get("form")) else None,
                 "available": bool(row.get("available", True)),
@@ -777,27 +864,8 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # ── League Table JSON (for frontend Table page) ────────────────
     logger.info("  Exporting table.json...")
     try:
-        from pipeline.data.team_mapping import update_fpl_team_map
-        team_map = update_fpl_team_map(bootstrap["teams"])
-        
-        team_list = []
-        for t in bootstrap.get("teams", []):
-            team_list.append({
-                "team": team_map.get(t["id"], t["name"]),
-                "played": t.get("played", 0),
-                "won": t.get("win", 0),
-                "drawn": t.get("draw", 0),
-                "lost": t.get("loss", 0),
-                "gf": 0,  # FPL doesn't directly expose gf/ga in bootstrap, defaulting
-                "ga": 0,
-                "gd": 0,
-                "points": t.get("points", 0),
-                "position": t.get("position", 0),
-                "form": list(t.get("form", "")) if t.get("form") else []
-            })
-            
-        # Sort by FPL position
-        team_list.sort(key=lambda x: x["position"])
+        from pipeline.data.fpl_api import build_league_table
+        team_list = build_league_table(bootstrap, fixtures_raw)
 
         with open(PREDICTIONS_DIR / "table.json", "w") as f:
             json.dump(team_list, f, indent=2, default=str)
@@ -868,6 +936,13 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             "gameweek": gameweek,
             "n_predictions": len(all_predictions),
             "status": "healthy",
+            "forecast_validation_status": (
+                "evaluated"
+                if forecast_metrics.get("n_evaluated_matches", 0) >= 100
+                else "collecting"
+            ),
+            "model_metrics": forecast_metrics,
+            "calibration": calibration_data,
             "pipeline_version": PIPELINE_VERSION,
             "models": {
                 "dixon_coles": {"status": "active" if dc_model else "skipped"},
@@ -878,7 +953,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             "ensemble_method": ensemble_method,
             "stacking_weights": stacking_weights,
             "n_simulations": n_sims,
-            "odds_source": "the_odds_api" if any(all_live_odds.values()) else "football_data",
+            "odds_source": "the_odds_api" if parsed_main else "unavailable",
             "referee_profiles_count": len(referee_profiles),
         }
         with open(PREDICTIONS_DIR / "health.json", "w") as f:
