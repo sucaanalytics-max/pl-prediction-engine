@@ -3,6 +3,13 @@ Probability calibration using isotonic regression.
 Ensures model probabilities are well-calibrated
 (e.g., events predicted at 30% actually occur ~30% of the time).
 """
+# Required: `fit_from_historical` annotates a parameter as `pd.DataFrame` while
+# pandas is imported only inside the function body. On Python 3.13 and earlier
+# annotations are evaluated eagerly at definition time, so importing this module
+# raised NameError — and CI runs 3.11. Deferring annotation evaluation makes the
+# module importable on every supported version.
+from __future__ import annotations
+
 import logging
 import pickle
 from pathlib import Path

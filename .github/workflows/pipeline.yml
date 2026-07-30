@@ -61,6 +61,11 @@ jobs:
               print('PyMC UNAVAILABLE — will use PenaltyBlog+XGBoost only')
           "
 
+      - name: Run pipeline contract tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m unittest discover -s pipeline/tests -v
+
       - name: Run prediction pipeline
         env:
           PYTHONPATH: ${{ github.workspace }}
@@ -75,18 +80,28 @@ jobs:
 
       - name: Sync predictions to frontend
         run: |
+          set -euo pipefail
           mkdir -p frontend/public/predictions
-          cp predictions/*.json frontend/public/predictions/
+          # Explicit list, not `cp predictions/*.json`. A glob silently
+          # publishes every new artifact the pipeline learns to write —
+          # including forecast_ledger.json, which grows all season and belongs
+          # in predictions/ only.
+          for f in latest.json matches.json player_stats.json health.json table.json h2h.json; do
+            cp "predictions/$f" "frontend/public/predictions/$f"
+          done
 
       - name: Commit predictions
+        env:
+          # Path ownership keeps two writers to main safe: this job owns
+          # predictions/*.json and predictions/archive/, the FPL agent owns
+          # predictions/fpl/**. Git rebases at file granularity, so writers on
+          # disjoint paths cannot conflict.
+          FORBID_PATHS: '^(predictions|frontend/public/predictions)/fpl/'
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add predictions/ frontend/public/predictions/
-          git diff --staged --quiet || git commit -m "Update predictions — $(date -u +%Y-%m-%d)"
-          # Retry push with rebase (handle concurrent commits)
-          for i in 1 2 3; do
-            git pull --rebase origin main && git push && break
-            echo "Push attempt $i failed, retrying..."
-            sleep 5
-          done
+          .github/scripts/commit_and_push.sh \
+            "Update predictions — $(date -u +%Y-%m-%d)" \
+            predictions ':(exclude)predictions/fpl' \
+            frontend/public/predictions ':(exclude)frontend/public/predictions/fpl'

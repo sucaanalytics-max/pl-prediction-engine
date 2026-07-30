@@ -1,0 +1,12 @@
+# Committed FPL agent artifacts and priors.
+#
+# `-text` disables newline normalisation: these files are read back and their
+# digests are compared against values recorded at write time, so a checkout that
+# silently rewrites line endings would break verification on a different
+# platform. `-diff` keeps generated payloads out of diffs, where they are noise.
+predictions/fpl/**          -text -diff
+pipeline/data/priors/*.gz   -text -diff binary
+pipeline/data/priors/*.json -text
+
+# Shell entrypoints must stay LF regardless of platform.
+*.sh text eol=lf
