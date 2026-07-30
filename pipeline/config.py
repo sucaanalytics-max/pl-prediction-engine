@@ -12,9 +12,19 @@ DATA_PROCESSED = ROOT_DIR / "data" / "processed"
 PREDICTIONS_DIR = ROOT_DIR / "predictions"
 
 # ── Seasons ────────────────────────────────────────────────────────────────
+# SEASONS are completed Premier League seasons used for model training.
+# CURRENT_SEASON identifies the season served by the live FPL API. Keeping
+# these concepts separate avoids labelling a new season with the final
+# training season.
 SEASONS = ["2324", "2425", "2526"]
-SEASON_LABELS = {"2324": "2023-24", "2425": "2024-25", "2526": "2025-26"}
-CURRENT_SEASON = "2526"
+SEASON_LABELS = {
+    "2324": "2023-24",
+    "2425": "2024-25",
+    "2526": "2025-26",
+    "2627": "2026-27",
+}
+CURRENT_SEASON = os.environ.get("PL_CURRENT_SEASON", "2627")
+CURRENT_SEASON_LABEL = SEASON_LABELS.get(CURRENT_SEASON, CURRENT_SEASON)
 
 # ── Data Sources ───────────────────────────────────────────────────────────
 FOOTBALL_DATA_URL = "https://www.football-data.co.uk/mmz4281/{season}/E0.csv"
@@ -28,11 +38,41 @@ ODDS_API_KEY = os.environ.get("ODDS_API_KEY", "")
 ODDS_API_BASE = "https://api.the-odds-api.com/v4"
 ODDS_API_SPORT = "soccer_epl"
 ODDS_API_CACHE_MINUTES = 30
+# Additional soccer markets use the per-event endpoint and consume materially
+# more quota than featured h2h/totals. They are opt-in for scheduled runs.
+ODDS_FETCH_ADDITIONAL = os.environ.get("ODDS_FETCH_ADDITIONAL", "false").lower() == "true"
+ODDS_ADDITIONAL_REGIONS = os.environ.get("ODDS_ADDITIONAL_REGIONS", "uk")
+ODDS_ADDITIONAL_HORIZON_HOURS = int(os.environ.get("ODDS_ADDITIONAL_HORIZON_HOURS", "72"))
 
 FPL_API_BASE = "https://fantasy.premierleague.com/api"
 FPL_BOOTSTRAP = f"{FPL_API_BASE}/bootstrap-static/"
 FPL_FIXTURES = f"{FPL_API_BASE}/fixtures/"
 FPL_ELEMENT_SUMMARY = f"{FPL_API_BASE}/element-summary/{{player_id}}/"
+FPL_EVENT_LIVE = f"{FPL_API_BASE}/event/{{gameweek}}/live/"
+
+# Manager-specific ("entry") endpoints. All unauthenticated GETs.
+FPL_ENTRY = f"{FPL_API_BASE}/entry/{{entry_id}}/"
+FPL_ENTRY_HISTORY = f"{FPL_API_BASE}/entry/{{entry_id}}/history/"
+FPL_ENTRY_TRANSFERS = f"{FPL_API_BASE}/entry/{{entry_id}}/transfers/"
+FPL_ENTRY_PICKS = f"{FPL_API_BASE}/entry/{{entry_id}}/event/{{gameweek}}/picks/"
+
+# ── FPL agent: prior-season priors and archive backfill ────────────────────
+# The pre-season bootstrap carries LAST season's per-player aggregates
+# (total_points, minutes, starts, defensive_contribution, ...). FPL zeroes
+# them the moment the new season starts, with no recovery path from the API.
+# PRIORS_DIR is committed to git deliberately: it is the only durable copy.
+PRIORS_DIR = ROOT_DIR / "pipeline" / "data" / "priors"
+
+# Community mirror of settled per-gameweek player data. Used only for
+# training priors, baselines and the scoring-function replay oracle — never
+# in a live decision path, and never as a source of rules.
+FPL_ARCHIVE_URL = (
+    "https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League"
+    "/master/data/{season_label}/gws/merged_gw.csv"
+)
+# 2425 lacks the defensive-contribution columns (the mechanic did not exist),
+# so it supports the minutes and goal-share blocks only.
+FPL_ARCHIVE_SEASONS = ["2526", "2425"]
 
 # ── Team Name Mapping ──────────────────────────────────────────────────────
 # Maps Football-Data.co.uk names → canonical names
@@ -81,6 +121,9 @@ ENSEMBLE_WEIGHTS = {
     "xgboost": 0.30,
     "penaltyblog": 0.10,
 }
+# Stacking remains experimental until its OOF path uses the same engineered
+# fixture features as production inference.
+ENABLE_STACKING = os.environ.get("ENABLE_STACKING", "false").lower() == "true"
 
 # ── Feature Engineering ────────────────────────────────────────────────────
 ROLLING_WINDOWS = [3, 5, 10]
@@ -135,25 +178,19 @@ EVAL = {
     "backtest_min_matches": 100,
 }
 
-# ── Premier League Teams 2025-26 ──────────────────────────────────────────
-# Promoted from Championship 2024-25: Burnley, Leeds, Sunderland
-# Relegated after 2024-25: Ipswich, Leicester, Southampton
+# ── Premier League Teams 2026-27 ──────────────────────────────────────────
+# The live pipeline derives the authoritative mapping from FPL bootstrap data;
+# this list is a documented fallback for offline use.
 PL_TEAMS = [
     "Arsenal", "Aston Villa", "Bournemouth", "Brentford", "Brighton",
-    "Burnley", "Chelsea", "Crystal Palace", "Everton", "Fulham",
-    "Leeds", "Liverpool", "Man City", "Man United", "Newcastle",
-    "Nott'm Forest", "Sunderland", "Tottenham", "West Ham", "Wolves",
+    "Chelsea", "Coventry City", "Crystal Palace", "Everton", "Fulham",
+    "Hull City", "Ipswich", "Leeds", "Liverpool", "Man City",
+    "Man United", "Newcastle", "Nott'm Forest", "Sunderland", "Tottenham",
 ]
 
 # ── Player Data Quality Corrections ──────────────────────────────────────────
-# FPL API sometimes assigns players to wrong teams (post-season reshuffles,
-# data errors). Maps "First Last" (FPL full name) → correct canonical team.
-PLAYER_TEAM_OVERRIDES: dict = {
-    "Alexander Isak": "Newcastle",   # FPL API incorrectly has team_id=12 (Liverpool)
-}
-
-# Players no longer in the Premier League who may still appear in FPL data
-# with status='u'. Exclude them from all player-level model processing.
-EXCLUDED_PLAYERS: set = {
-    "Son Heung-min",   # Left Tottenham; no longer registered in the PL
-}
+# Keep season-specific corrections empty by default. The live FPL roster and
+# status fields are authoritative; hardcoded transfer overrides become harmful
+# when team IDs and squads roll into a new season.
+PLAYER_TEAM_OVERRIDES: dict = {}
+EXCLUDED_PLAYERS: set = set()
