@@ -92,16 +92,25 @@ jobs:
 
       - name: Commit predictions
         env:
-          # Path ownership keeps two writers to main safe: this job owns
-          # predictions/*.json and predictions/archive/, the FPL agent owns
-          # predictions/fpl/**. Git rebases at file granularity, so writers on
-          # disjoint paths cannot conflict.
-          FORBID_PATHS: '^(predictions|frontend/public/predictions)/fpl/'
+          # Path ownership keeps two writers to main safe, and OWNERSHIP FOLLOWS
+          # PRODUCTION. This job produces the xp artifact — it holds the models
+          # and the blended goal rates — so it commits it. The agent owns only
+          # what it produces: the ledger and the decision.
+          #
+          # The previous split forbade this job from committing its own output
+          # while still writing it into the tree, which left the worktree
+          # permanently dirty and made `git pull --rebase` refuse outright. From
+          # the second agent-managed gameweek onward nothing was publishable at
+          # all — including forecast_ledger.json, the one artifact that proves a
+          # prediction predated kickoff.
+          FORBID_PATHS: '^predictions/fpl/(ledger|decision)'
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           .github/scripts/commit_and_push.sh \
             "Update predictions — $(date -u +%Y-%m-%d)" \
-            predictions ':(exclude)predictions/fpl' \
-            frontend/public/predictions ':(exclude)frontend/public/predictions/fpl'
+            predictions \
+            ':(exclude)predictions/fpl/ledger' \
+            ':(exclude)predictions/fpl/decision_latest.json' \
+            frontend/public/predictions

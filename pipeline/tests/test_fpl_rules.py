@@ -167,6 +167,34 @@ class BootstrapVerificationTests(unittest.TestCase):
         # And the live value is used, not the stale expectation.
         self.assertEqual(rules.assist_points, 4)
 
+    def test_a_null_scoring_value_degrades_instead_of_raising(self):
+        """
+        int(None) raised a bare TypeError, breaking the documented contract that
+        SCORING-tier drift degrades while the daily pipeline keeps running. FPL
+        is free to null a field mid-season.
+        """
+        bootstrap = _bootstrap()
+        bootstrap["game_config"]["scoring"]["assists"] = None
+        rules = load_rules(bootstrap)
+        self.assertTrue(rules.degraded)
+        self.assertEqual(rules.assist_points, 3)
+
+    def test_a_null_inside_a_positional_map_degrades(self):
+        bootstrap = _bootstrap()
+        bootstrap["game_config"]["scoring"]["goals_scored"] = {
+            "GKP": 10, "DEF": None, "MID": 5, "FWD": 4,
+        }
+        rules = load_rules(bootstrap)
+        self.assertTrue(rules.degraded)
+        self.assertEqual(rules.goal_points["DEF"], 6)
+
+    def test_a_positional_map_replaced_by_a_scalar_degrades(self):
+        bootstrap = _bootstrap()
+        bootstrap["game_config"]["scoring"]["clean_sheets"] = "nope"
+        rules = load_rules(bootstrap)
+        self.assertTrue(rules.degraded)
+        self.assertEqual(rules.clean_sheet_points["GKP"], 4)
+
     def test_unknown_chip_is_recorded_not_raised(self):
         bootstrap = _bootstrap()
         bootstrap["chips"] = list(bootstrap["chips"]) + [

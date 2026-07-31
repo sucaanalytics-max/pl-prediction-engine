@@ -30,13 +30,12 @@ import pandas as pd
 
 from pipeline.config import PARAM_REGISTRY
 from pipeline.fpl.rules import POSITIONS, Rules, load_rules, normalise_position
-from pipeline.fpl.scoring import defcon_count
 
 logger = logging.getLogger(__name__)
 
 # Per-90 quantities the simulator needs, and the archive column each derives
-# from. Defensive contribution is recomputed from components rather than read,
-# because the counted set follows the player's CURRENT position.
+# from. Defensive contribution is deliberately absent: it is stored as component
+# rates and summed for whichever position is being scored.
 RATE_COLUMNS = {
     "xg_per_90": "expected_goals",
     "xa_per_90": "expected_assists",
@@ -48,13 +47,17 @@ RATE_COLUMNS = {
 # Deliberately modest: an unknown player should not out-project a known one.
 FALLBACK_RATES = {
     "GKP": {"xg_per_90": 0.002, "xa_per_90": 0.01, "saves_per_90": 2.6,
-            "yellow_per_90": 0.06, "dc_per_90": 0.0},
+            "yellow_per_90": 0.06, "cbi_per_90": 1.2,
+            "tackles_per_90": 0.05, "recoveries_per_90": 4.0},
     "DEF": {"xg_per_90": 0.05, "xa_per_90": 0.06, "saves_per_90": 0.0,
-            "yellow_per_90": 0.20, "dc_per_90": 6.5},
+            "yellow_per_90": 0.20, "cbi_per_90": 4.8,
+            "tackles_per_90": 1.7, "recoveries_per_90": 3.5},
     "MID": {"xg_per_90": 0.15, "xa_per_90": 0.15, "saves_per_90": 0.0,
-            "yellow_per_90": 0.18, "dc_per_90": 7.5},
+            "yellow_per_90": 0.18, "cbi_per_90": 1.9,
+            "tackles_per_90": 1.6, "recoveries_per_90": 4.0},
     "FWD": {"xg_per_90": 0.35, "xa_per_90": 0.15, "saves_per_90": 0.0,
-            "yellow_per_90": 0.14, "dc_per_90": 5.0},
+            "yellow_per_90": 0.14, "cbi_per_90": 1.1,
+            "tackles_per_90": 0.9, "recoveries_per_90": 3.0},
 }
 
 
@@ -64,16 +67,54 @@ def _param(name: str) -> float:
 
 @dataclass(frozen=True)
 class PlayerRates:
-    """Shrunk per-90 rates for one player."""
+    """
+    Shrunk per-90 rates for one player.
+
+    Defensive contribution is stored as its COMPONENT rates, never as a single
+    pre-summed ``dc_per_90``. The counted set is position-dependent — recoveries
+    count for midfielders and forwards but not defenders — so a summed rate is
+    silently wrong for any player FPL has reclassified between seasons, and it is
+    wrong in the direction that matters: a midfielder's recovery-inflated rate
+    judged against a defender's lower threshold.
+
+    Measured before this was restructured: 10 players had rates fitted under
+    their old position while the simulator applied their new one. Mats Wieffer
+    (MID -> DEF) carried dc_per_90 11.94 from the midfield counted set against
+    the defender threshold of 10, giving P(+2 | 90 min) of 0.752 where 0.269 was
+    correct — overstating his expected points by roughly one per 90.
+
+    ``position`` here records what the rates were FITTED on, for provenance.
+    ``defcon_rate`` takes the position to apply.
+    """
 
     position: str
     xg_per_90: float
     xa_per_90: float
     saves_per_90: float
     yellow_per_90: float
-    dc_per_90: float
+    cbi_per_90: float
+    tackles_per_90: float
+    recoveries_per_90: float
     minutes_observed: float
     evidence_weight: float
+
+    def defcon_rate(self, position: str, rules: Optional[Rules] = None) -> float:
+        """
+        Qualifying defensive actions per 90 for the GIVEN position.
+
+        Always computed from components against the position actually being
+        scored, so a reclassified player cannot carry a stale counted set.
+        """
+        rules = rules or load_rules()
+        canonical = normalise_position(position)
+        if canonical is None:
+            return 0.0
+        available = {
+            "clearances_blocks_interceptions": self.cbi_per_90,
+            "tackles": self.tackles_per_90,
+            "recoveries": self.recoveries_per_90,
+        }
+        return sum(available[name] for name in rules.defcon[canonical].counts)
 
     def as_dict(self) -> Dict[str, float]:
         return {
@@ -81,7 +122,9 @@ class PlayerRates:
             "xa_per_90": self.xa_per_90,
             "saves_per_90": self.saves_per_90,
             "yellow_per_90": self.yellow_per_90,
-            "dc_per_90": self.dc_per_90,
+            "cbi_per_90": self.cbi_per_90,
+            "tackles_per_90": self.tackles_per_90,
+            "recoveries_per_90": self.recoveries_per_90,
             "minutes_observed": self.minutes_observed,
             "evidence_weight": self.evidence_weight,
         }
@@ -130,23 +173,9 @@ class PlayerEventRates:
                 frame[column] = pd.to_numeric(
                     frame[column], errors="coerce"
                 ).fillna(0)
-            frame["dc_actions"] = [
-                defcon_count(
-                    position,
-                    int(cbi),
-                    int(tackles),
-                    int(recoveries),
-                    rules,
-                )
-                for position, cbi, tackles, recoveries in zip(
-                    frame["position_resolved"],
-                    frame["clearances_blocks_interceptions"],
-                    frame["tackles"],
-                    frame["recoveries"],
-                )
-            ]
         else:
-            frame["dc_actions"] = 0.0
+            for column in ("clearances_blocks_interceptions", "tackles", "recoveries"):
+                frame[column] = 0.0
 
         # Position priors, over players with meaningful exposure so that the
         # prior reflects footballers rather than the mass of unused substitutes.
@@ -163,7 +192,10 @@ class PlayerEventRates:
                 "xa_per_90": 90.0 * float(rows["expected_assists"].sum()) / minutes,
                 "saves_per_90": 90.0 * float(rows["saves"].sum()) / minutes,
                 "yellow_per_90": 90.0 * float(rows["yellow_cards"].sum()) / minutes,
-                "dc_per_90": 90.0 * float(rows["dc_actions"].sum()) / minutes,
+                "cbi_per_90": 90.0
+                * float(rows["clearances_blocks_interceptions"].sum()) / minutes,
+                "tackles_per_90": 90.0 * float(rows["tackles"].sum()) / minutes,
+                "recoveries_per_90": 90.0 * float(rows["recoveries"].sum()) / minutes,
             }
 
         strength = _param("events.rate_shrinkage_per90")
@@ -185,7 +217,9 @@ class PlayerEventRates:
                 xa_per_90=rate("expected_assists", "xa_per_90"),
                 saves_per_90=rate("saves", "saves_per_90"),
                 yellow_per_90=rate("yellow_cards", "yellow_per_90"),
-                dc_per_90=rate("dc_actions", "dc_per_90"),
+                cbi_per_90=rate("clearances_blocks_interceptions", "cbi_per_90"),
+                tackles_per_90=rate("tackles", "tackles_per_90"),
+                recoveries_per_90=rate("recoveries", "recoveries_per_90"),
                 minutes_observed=minutes,
                 evidence_weight=minutes / (minutes + strength),
             )
@@ -237,7 +271,9 @@ class PlayerEventRates:
             xa_per_90=prior["xa_per_90"],
             saves_per_90=prior["saves_per_90"],
             yellow_per_90=prior["yellow_per_90"],
-            dc_per_90=prior["dc_per_90"],
+            cbi_per_90=prior["cbi_per_90"],
+            tackles_per_90=prior["tackles_per_90"],
+            recoveries_per_90=prior["recoveries_per_90"],
             minutes_observed=0.0,
             evidence_weight=0.0,
         )

@@ -499,10 +499,11 @@ def _simulate_side(
             saves[:, index] = rng.poisson(
                 np.maximum(player.rates.saves_per_90, 0.0) * exposure
             )
-        if player.rates.dc_per_90 > 0:
-            defcon_actions[:, index] = rng.poisson(
-                player.rates.dc_per_90 * exposure
-            )
+        # Computed against the position being SCORED, not the one the rates were
+        # fitted on. A reclassified player must not carry his old counted set.
+        dc_rate = player.rates.defcon_rate(player.position, rules)
+        if dc_rate > 0:
+            defcon_actions[:, index] = rng.poisson(dc_rate * exposure)
 
     # ── Bonus and scoring ──────────────────────────────────────────────────
     bonus = np.zeros((n_draws, n_players), dtype=np.int64)

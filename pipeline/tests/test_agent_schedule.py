@@ -151,6 +151,35 @@ class PhaseFromStateTests(unittest.TestCase):
         self.assertEqual(state.phase, Phase.MISSED_SEAL)
         self.assertIn("cannot be recovered", state.reason)
 
+    def test_a_missed_seal_does_not_block_the_next_gameweek(self):
+        """
+        The livelock. Checked BEFORE the forward-looking phases, the missed-seal
+        report outlived the miss: its window was longer than the gap between
+        deadlines minus the seal window, so one miss preempted SEAL and REFRESH
+        for every later gameweek. Reproduced at three hours before GW2's deadline
+        still returning `missed_seal gw=1`. Nothing writes forecast.jsonl yet, so
+        `sealed` is always empty — the agent would have gone red every three
+        hours forever without ever working.
+        """
+        # 165h after GW1 = 3h before GW2's deadline, GW1 never sealed.
+        state = determine_phase(_at(165), _events(), sealed=set())
+        self.assertEqual(state.phase, Phase.SEAL)
+        self.assertEqual(state.gameweek, 2)
+
+    def test_a_missed_seal_does_not_block_a_refresh_either(self):
+        state = determine_phase(_at(128), _events(), sealed=set())
+        self.assertEqual(state.phase, Phase.REFRESH)
+        self.assertEqual(state.gameweek, 2)
+
+    def test_the_missed_seal_window_is_shorter_than_the_deadline_gap(self):
+        """Structural guard: a longer window would recreate the livelock."""
+        from pipeline.learning.schedule import (
+            MISSED_SEAL_REPORT_WINDOW, SEAL_WINDOW,
+        )
+        from datetime import timedelta
+
+        self.assertLess(MISSED_SEAL_REPORT_WINDOW, timedelta(days=7) - SEAL_WINDOW)
+
     def test_an_old_missed_seal_stops_being_reported(self):
         """Otherwise the agent would report the same loss forever."""
         state = determine_phase(_at(24 * 30), _events(), sealed=set())

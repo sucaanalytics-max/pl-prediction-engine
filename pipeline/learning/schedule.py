@@ -45,6 +45,9 @@ IDLE_HORIZON = timedelta(days=45)
 # FPL locks points at 09:00 UK the day after a gameweek's final match. Before
 # that, bonus and defensive contributions can still move.
 FINAL_SETTLEMENT_DELAY = timedelta(hours=12)
+# How long a missed seal keeps being reported. Must stay SHORTER than the gap
+# between deadlines, or the report outlives the miss and starves the next one.
+MISSED_SEAL_REPORT_WINDOW = timedelta(days=3)
 
 
 class Phase(str, Enum):
@@ -231,25 +234,6 @@ def determine_phase(
     remaining = deadline - now
     seconds = remaining.total_seconds()
 
-    # A deadline that has passed without a seal is a permanent loss. Say so
-    # rather than producing a forecast that pretends to predate it.
-    for event in parsed:
-        if (
-            event["deadline"] < now
-            and event["id"] not in sealed
-            and (now - event["deadline"]) < timedelta(days=7)
-        ):
-            return ScheduleState(
-                phase=Phase.MISSED_SEAL,
-                gameweek=event["id"],
-                deadline=event["deadline"],
-                reason=(
-                    f"GW{event['id']} deadline passed with no sealed forecast. "
-                    "This observation cannot be recovered: a seal is only "
-                    "meaningful if it provably predated the deadline."
-                ),
-            )
-
     if remaining > IDLE_HORIZON:
         return ScheduleState(
             phase=Phase.IDLE,
@@ -297,6 +281,36 @@ def determine_phase(
             seconds_to_deadline=seconds,
             reason=f"GW{gameweek} deadline in {seconds / 3600:.1f}h",
         )
+
+    # A deadline that passed without a seal is a permanent loss, reported so it
+    # is visible rather than silent. It is checked LAST, and deliberately so.
+    #
+    # Placed before the forward-looking checks it starved the agent completely:
+    # the report window is longer than the interval between deadlines minus the
+    # seal window, so one miss preempted SEAL and REFRESH for every subsequent
+    # gameweek — a livelock, not a warning. Reproduced: at three hours before
+    # GW2's deadline the phase was still `missed_seal gw=1`. And because nothing
+    # writes forecast.jsonl yet, `sealed` is always empty, so the agent would
+    # have gone red every three hours forever without ever doing any work.
+    #
+    # The window is also shortened to three days: long enough to be noticed,
+    # short enough not to shout about the same loss for a week.
+    for event in parsed:
+        if (
+            event["deadline"] < now
+            and event["id"] not in sealed
+            and (now - event["deadline"]) < MISSED_SEAL_REPORT_WINDOW
+        ):
+            return ScheduleState(
+                phase=Phase.MISSED_SEAL,
+                gameweek=event["id"],
+                deadline=event["deadline"],
+                reason=(
+                    f"GW{event['id']} deadline passed with no sealed forecast. "
+                    "This observation cannot be recovered: a seal is only "
+                    "meaningful if it provably predated the deadline."
+                ),
+            )
 
     return ScheduleState(
         phase=Phase.IDLE,

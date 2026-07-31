@@ -275,6 +275,36 @@ class BenchCalibrationTests(unittest.TestCase):
         self.assertFalse(FIXTURE.draws.notes["bench_saturated"])
 
 
+class DefensiveContributionPositionTests(unittest.TestCase):
+    """
+    A reclassified player must not carry his old counted set.
+
+    Recoveries count for midfielders and forwards but not defenders, so a summed
+    dc_per_90 fitted under one position and applied under another is wrong in the
+    damaging direction. Measured before the restructure: 10 players affected, and
+    Mats Wieffer (MID -> DEF) had P(+2 defcon | 90 min) of 0.752 where 0.269 was
+    correct.
+    """
+
+    def test_defcon_rate_follows_the_position_it_is_asked_for(self):
+        rates = FIXTURE.events.rates("MID", "hm1")
+        as_def = rates.defcon_rate("DEF", RULES)
+        as_mid = rates.defcon_rate("MID", RULES)
+        # The midfield set adds recoveries, so it must be strictly larger.
+        self.assertGreater(as_mid, as_def)
+
+    def test_goalkeepers_never_accumulate_defensive_contribution(self):
+        rates = FIXTURE.events.rates("DEF", "hd1")
+        self.assertEqual(rates.defcon_rate("GKP", RULES), 0.0)
+
+    def test_rates_expose_components_not_a_presummed_total(self):
+        """A pre-summed total is what made the stale-position bug possible."""
+        rates = FIXTURE.events.rates("MID", "hm1")
+        self.assertFalse(hasattr(rates, "dc_per_90"))
+        for field in ("cbi_per_90", "tackles_per_90", "recoveries_per_90"):
+            self.assertTrue(hasattr(rates, field))
+
+
 class GoalAllocationTests(unittest.TestCase):
     def test_allocated_goals_equal_drawn_goals_in_every_draw(self):
         for side, players in (("home", FIXTURE.home), ("away", FIXTURE.away)):

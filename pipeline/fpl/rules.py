@@ -240,11 +240,66 @@ def load_signed_rules(path: Optional[Path] = None) -> Dict[str, Any]:
     }
 
 
-def _positional(raw: Any, expected: Dict[str, Any], label: str) -> Dict[str, int]:
-    """Coerce a per-position API mapping, falling back to expectations."""
+def _coerce_int(raw: Any, expected: int, label: str, drift: List[Dict[str, Any]]) -> int:
+    """
+    Coerce an API scoring value to int, recording drift rather than raising.
+
+    A null or non-numeric value must degrade, not crash. The documented contract
+    is that SCORING-tier drift is reported and marks the layer degraded while the
+    daily match-prediction pipeline keeps running; a bare TypeError out of
+    int(None) breaks that promise, and FPL has every freedom to null a field
+    mid-season.
+    """
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        drift.append(
+            {
+                "tier": SCORING,
+                "rule": f"scoring.{label}",
+                "expected": expected,
+                "actual": raw,
+                "detail": "not coercible to int; using expected value",
+            }
+        )
+        logger.error(
+            "scoring.%s is %r, not a number; falling back to %s and marking the "
+            "FPL layer degraded",
+            label,
+            raw,
+            expected,
+        )
+        return int(expected)
+
+
+def _positional(
+    raw: Any,
+    expected: Dict[str, Any],
+    label: str,
+    drift: Optional[List[Dict[str, Any]]] = None,
+) -> Dict[str, int]:
+    """Coerce a per-position API mapping, recording drift on anything unusable."""
+    drift = drift if drift is not None else []
     if isinstance(raw, dict):
-        return {p: int(raw.get(p, expected[p])) for p in POSITIONS}
-    logger.warning("scoring.%s is not a mapping; using expected values", label)
+        return {
+            p: _coerce_int(raw.get(p, expected[p]), expected[p], f"{label}.{p}", drift)
+            for p in POSITIONS
+        }
+    drift.append(
+        {
+            "tier": SCORING,
+            "rule": f"scoring.{label}",
+            "expected": "per-position mapping",
+            "actual": type(raw).__name__,
+            "detail": "not a mapping; using expected values",
+        }
+    )
+    logger.error(
+        "scoring.%s is not a mapping (%r); using expected values and marking the "
+        "FPL layer degraded",
+        label,
+        raw,
+    )
     return dict(expected)
 
 
@@ -379,37 +434,31 @@ def load_rules(
 
         live_scoring = (bootstrap.get("game_config", {}) or {}).get("scoring", {}) or {}
         if live_scoring:
+            scalars = (
+                "short_play", "long_play", "assists", "saves", "penalties_saved",
+                "penalties_missed", "yellow_cards", "red_cards", "own_goals",
+            )
+            positional = (
+                "goals_scored", "clean_sheets", "goals_conceded",
+                "defensive_contribution",
+            )
             scoring = {
-                "short_play": int(live_scoring.get("short_play", EXPECTED_SCORING["short_play"])),
-                "long_play": int(live_scoring.get("long_play", EXPECTED_SCORING["long_play"])),
-                "assists": int(live_scoring.get("assists", EXPECTED_SCORING["assists"])),
-                "saves": int(live_scoring.get("saves", EXPECTED_SCORING["saves"])),
-                "penalties_saved": int(
-                    live_scoring.get("penalties_saved", EXPECTED_SCORING["penalties_saved"])
-                ),
-                "penalties_missed": int(
-                    live_scoring.get("penalties_missed", EXPECTED_SCORING["penalties_missed"])
-                ),
-                "yellow_cards": int(
-                    live_scoring.get("yellow_cards", EXPECTED_SCORING["yellow_cards"])
-                ),
-                "red_cards": int(live_scoring.get("red_cards", EXPECTED_SCORING["red_cards"])),
-                "own_goals": int(live_scoring.get("own_goals", EXPECTED_SCORING["own_goals"])),
-                "goals_scored": _positional(
-                    live_scoring.get("goals_scored"), EXPECTED_SCORING["goals_scored"], "goals_scored"
-                ),
-                "clean_sheets": _positional(
-                    live_scoring.get("clean_sheets"), EXPECTED_SCORING["clean_sheets"], "clean_sheets"
-                ),
-                "goals_conceded": _positional(
-                    live_scoring.get("goals_conceded"),
-                    EXPECTED_SCORING["goals_conceded"], "goals_conceded"
-                ),
-                "defensive_contribution": _positional(
-                    live_scoring.get("defensive_contribution"),
-                    EXPECTED_SCORING["defensive_contribution"], "defensive_contribution"
-                ),
+                key: _coerce_int(
+                    live_scoring.get(key, EXPECTED_SCORING[key]),
+                    EXPECTED_SCORING[key],
+                    key,
+                    drift,
+                )
+                for key in scalars
             }
+            scoring.update(
+                {
+                    key: _positional(
+                        live_scoring.get(key), EXPECTED_SCORING[key], key, drift
+                    )
+                    for key in positional
+                }
+            )
 
         live_settings = bootstrap.get("game_settings", {}) or {}
         for key in EXPECTED_SETTINGS:

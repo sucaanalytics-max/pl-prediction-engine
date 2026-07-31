@@ -82,7 +82,12 @@ for attempt in $(seq 1 "${ATTEMPTS}"); do
     # next attempt fails for an unrelated reason and the real cause is masked.
     git rebase --abort 2>/dev/null || true
 
-    if git pull --rebase origin "${BRANCH}" && git push; then
+    # --autostash: the working tree can legitimately hold unstaged changes to
+    # files this job does not own (the daily pipeline regenerates the agent's
+    # xp artifact but must not commit it). Without it `git pull --rebase`
+    # refuses outright — "cannot pull with rebase: You have unstaged changes" —
+    # so every attempt fails identically and nothing is ever published.
+    if git pull --rebase --autostash origin "${BRANCH}" && git push; then
         pushed=1
         break
     fi
