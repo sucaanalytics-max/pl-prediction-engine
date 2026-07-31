@@ -301,6 +301,24 @@ class ArtifactContractTests(unittest.TestCase):
             any("duplicate" in problem for problem in validate_xp_artifact(broken))
         )
 
+    def test_non_finite_values_are_rejected(self):
+        """
+        json.dumps emits bare NaN and Infinity. Python re-reads them; the
+        browser's JSON.parse does not. Without this the file looks fine on this
+        side and breaks the page silently.
+        """
+        broken = json.loads(json.dumps(self.artifact))
+        broken["players"][0]["xp"] = float("nan")
+        problems = validate_xp_artifact(broken)
+        self.assertTrue(any("finite" in problem for problem in problems), problems)
+
+    def test_infinity_is_rejected(self):
+        broken = json.loads(json.dumps(self.artifact))
+        broken["players"][0]["q90"] = float("inf")
+        self.assertTrue(
+            any("finite" in problem for problem in validate_xp_artifact(broken))
+        )
+
     def test_missing_metadata_is_rejected(self):
         self.assertTrue(validate_xp_artifact({"players": []}))
 
@@ -347,6 +365,15 @@ class ExportTests(unittest.TestCase):
         self.assertIn("minutes.start_shrinkage", params["parameters"])
         # Regenerable by construction: the payload must stay small.
         self.assertLess(len(json.dumps(params)), 20_000)
+
+    def test_a_non_finite_payload_raises_and_leaves_no_file(self):
+        """The write must refuse rather than emit JSON the browser cannot parse."""
+        with TemporaryDirectory() as tmp:
+            target = Path(tmp) / "out.json"
+            with self.assertRaises(ArtifactContractError):
+                write_json_atomically({"xp": float("nan")}, target)
+            self.assertFalse(target.exists())
+            self.assertEqual(list(target.parent.glob("*.tmp")), [])
 
     def test_atomic_write_leaves_no_temporary_file(self):
         with TemporaryDirectory() as tmp:

@@ -32,6 +32,7 @@ import pandas as pd
 from pipeline.config import (
     PREDICTIONS_DIR, CURRENT_SEASON, CURRENT_SEASON_LABEL,
     N_SIMULATIONS, DERBIES, ENSEMBLE_WEIGHTS, ENABLE_STACKING, DATA_PROCESSED,
+    FPL_SIM,
 )
 
 logger = logging.getLogger(__name__)
@@ -951,9 +952,13 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     #
     # Reuses `all_predictions`: expected_goals is the already-blended ensemble
     # expectation, so this hooks in without touching the Monte Carlo loop.
+    # FPL_SIM is imported at MODULE scope, not here. The except clause below
+    # reads it, and an ImportError inside this try — the very case the handler
+    # exists to tolerate — would otherwise leave the name unbound and raise
+    # NameError out of the handler, crashing the whole pipeline and taking the
+    # betting pages down. That is the exact opposite of the intended behaviour.
     fpl_status: Dict = {"status": "skipped", "reason": "not attempted"}
     try:
-        from pipeline.config import FPL_SIM
         from pipeline.data.priors.snapshot import load_player_priors
         from pipeline.fpl.artifacts import export_gameweek_xp
         from pipeline.fpl.rules import load_rules as load_fpl_rules

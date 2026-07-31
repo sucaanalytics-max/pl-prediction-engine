@@ -72,6 +72,23 @@ class CommitAndPushTests(unittest.TestCase):
     def test_usage_error_exits_two(self):
         self.assertEqual(self._run("only-a-message").returncode, 2)
 
+    def test_a_pathspec_that_does_not_exist_yet_exits_zero(self):
+        """
+        `git add` exits 128 on a pathspec matching nothing, which under set -e
+        aborted the whole job. On the agent's first run — or any run whose phase
+        writes no artifact — predictions/fpl does not exist yet. That is not a
+        failure.
+        """
+        # setUp creates the directory, so remove it to reach the real case.
+        (self.work / "predictions" / "fpl").rmdir()
+        result = self._run("nothing", "predictions/fpl")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("No matching paths exist yet", result.stdout)
+
+    def test_exclude_only_pathspecs_do_not_count_as_present(self):
+        result = self._run("nothing", ":(exclude)predictions/fpl")
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_nothing_to_commit_exits_zero(self):
         result = self._run("nothing", "predictions")
         self.assertEqual(result.returncode, 0, result.stderr)

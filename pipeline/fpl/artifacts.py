@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -76,6 +77,12 @@ def validate_xp_artifact(artifact: Dict[str, Any]) -> List[str]:
         if element_id in seen_ids:
             problems.append(f"{label}: duplicate element_id")
         seen_ids.add(element_id)
+
+        # Catch non-finite values here rather than at serialisation, so the
+        # message names the player and field instead of the whole payload.
+        for key, value in player.items():
+            if isinstance(value, float) and not math.isfinite(value):
+                problems.append(f"{label}: {key} is {value}, not a finite number")
 
         # Probabilities in range.
         for key in ("p_appears", "p_60", "p_goal", "p_multi_goal",
@@ -250,7 +257,22 @@ def write_json_atomically(payload: Dict[str, Any], path: Path) -> Path:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(json.dumps(payload, indent=2, sort_keys=False) + "\n")
+    try:
+        # allow_nan=False is the point. Python happily emits bare NaN and
+        # Infinity, which Python itself re-reads but which are NOT valid JSON —
+        # the browser's JSON.parse rejects them. Without this a single
+        # non-finite value produces a file that looks fine on this side and
+        # breaks the page silently. Better to raise here.
+        serialised = json.dumps(
+            payload, indent=2, sort_keys=False, allow_nan=False
+        )
+    except ValueError as exc:
+        temporary.unlink(missing_ok=True)
+        raise ArtifactContractError(
+            f"refusing to write {path.name}: payload is not valid JSON ({exc}). "
+            "A non-finite value would parse in Python and fail in the browser."
+        ) from exc
+    temporary.write_text(serialised + "\n")
     os.replace(temporary, path)
     return path
 

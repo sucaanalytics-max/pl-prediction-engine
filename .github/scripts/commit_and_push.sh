@@ -35,7 +35,26 @@ BRANCH="${TARGET_BRANCH:-main}"
 ATTEMPTS="${PUSH_ATTEMPTS:-3}"
 RETRY_DELAY="${PUSH_RETRY_DELAY:-5}"
 
-git add -- "$@"
+# A pathspec that matches nothing makes `git add` exit 128, which under
+# `set -e` aborts the whole job. That is not a failure: on the agent's first
+# run — or any run whose phase writes no artifact — predictions/fpl simply does
+# not exist yet. Keep only pathspecs that are present, leaving git's magic
+# pathspecs (":(exclude)...") alone since they need not exist on disk.
+present=()
+for pathspec in "$@"; do
+    case "${pathspec}" in
+        :*) present+=("${pathspec}") ;;
+        *)  if [ -e "${pathspec}" ]; then present+=("${pathspec}"); fi ;;
+    esac
+done
+
+# Nothing real to stage. Magic-only would make `git add` a no-op anyway.
+if [ ${#present[@]} -eq 0 ] || [ -z "$(printf '%s\n' "${present[@]}" | grep -v '^:' || true)" ]; then
+    echo "No matching paths exist yet; nothing to commit."
+    exit 0
+fi
+
+git add -- "${present[@]}"
 
 if git diff --staged --quiet; then
     echo "Nothing to commit."
