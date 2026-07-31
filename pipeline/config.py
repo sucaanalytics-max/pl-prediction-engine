@@ -249,6 +249,26 @@ PARAM_REGISTRY = {
             "season there is no power to fit a decay curve."
         ),
     },
+    "minutes.substitutes_per_fixture": {
+        "value": 4.14,
+        "bounds": (2.0, 6.0),
+        "tier": "F",
+        "source": (
+            "Measured directly: 4.14 substitutes appear per fixture-team across "
+            "the settled 2025-26 season (760 fixture-team observations, grouped "
+            "by fixture so a double gameweek is not merged). Used to calibrate "
+            "the bench-appearance layer at squad level.\n\n"
+            "This corrects a genuine data limitation rather than tuning a taste "
+            "parameter. The quantity the simulator needs is P(appear | named "
+            "among the substitutes), but the archive lists the whole registered "
+            "squad — about 39 rows per fixture-team — so the estimable quantity "
+            "P(appear | did not start) is diluted by players who were never in "
+            "the matchday squad. Uncalibrated, the model produced 2.99 "
+            "substitute appearances against a real 4.14, a 28% shortfall. One "
+            "aggregate against 760 observations is comfortably identifiable, "
+            "unlike the per-player conditional it stands in for."
+        ),
+    },
     "events.rate_shrinkage_per90": {
         "value": 450.0,
         "bounds": (90.0, 2000.0),

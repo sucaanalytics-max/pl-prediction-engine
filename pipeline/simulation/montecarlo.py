@@ -13,7 +13,6 @@ import logging
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
-from scipy.stats import poisson, nbinom, entropy as sp_entropy
 
 from pipeline.config import N_SIMULATIONS, MAX_GOALS
 
@@ -53,9 +52,10 @@ class MonteCarloSimulator:
         away_goals = np.random.poisson(mu_away, self.n_sims)
         total_goals = home_goals + away_goals
 
-        # HT goals (approximate: ~45% of goals in first half)
-        ht_home = np.random.poisson(lambda_home * 0.45, self.n_sims)
-        ht_away = np.random.poisson(mu_away * 0.45, self.n_sims)
+        # Allocate simulated full-time goals to the first half. This preserves
+        # HT <= FT for each team while retaining the full-time goal samples.
+        ht_home = np.random.binomial(home_goals, 0.45)
+        ht_away = np.random.binomial(away_goals, 0.45)
 
         # Goal sims array for match-state conditioning
         goal_sims = np.column_stack([home_goals, away_goals])
@@ -99,6 +99,69 @@ class MonteCarloSimulator:
             "total_cards": total_cards,
         }
 
+    # ── Player-level extension ─────────────────────────────────────────────
+    # Additive: simulate_match above is untouched, returns the same keys, and
+    # its existing tests still pass. simulate_match_state wraps it and adds the
+    # per-goal timings the player layer needs.
+
+    def simulate_match_state(
+        self,
+        lambda_home: float,
+        mu_away: float,
+        rng: Optional[np.random.Generator] = None,
+        max_goals: int = MAX_GOALS,
+        **kwargs,
+    ) -> Dict:
+        """
+        As :meth:`simulate_match`, plus a drawn minute for every simulated goal.
+
+        Goal timings are what make the player layer correct rather than
+        approximate. With them, "goals conceded while this player was on the
+        pitch" is exact for a substituted defender, a penalty is awarded to
+        whoever was on the pitch *at that minute*, and scoring eligibility
+        respects the same interval. Without them all three are fudged.
+
+        Returned as ``home_goal_minutes`` / ``away_goal_minutes``, each
+        ``(n_sims, max_goals)``. A slot holds 0 where that draw produced no such
+        goal, so ``minute > 0`` identifies a real goal — minute 0 is not a valid
+        match minute, which makes the sentinel unambiguous.
+
+        Minutes are drawn uniformly over 1..90. Goals genuinely cluster late, so
+        this slightly misprices concessions for players withdrawn around the
+        hour; the model used is recorded as ``goal_minute_model`` so the
+        assumption travels with the output rather than living only here.
+        """
+        sims = self.simulate_match(lambda_home, mu_away, **kwargs)
+        generator = rng if rng is not None else np.random.default_rng()
+
+        sims["home_goal_minutes"] = self._goal_minutes(
+            sims["home_goals"], generator, max_goals
+        )
+        sims["away_goal_minutes"] = self._goal_minutes(
+            sims["away_goals"], generator, max_goals
+        )
+        sims["goal_minute_model"] = "uniform_1_90"
+        sims["max_goals"] = max_goals
+        return sims
+
+    @staticmethod
+    def _goal_minutes(
+        goal_counts: np.ndarray, rng: np.random.Generator, max_goals: int
+    ) -> np.ndarray:
+        """
+        Draw a minute for each goal. ``(n_sims, max_goals)``, 0 where no goal.
+
+        Goals beyond ``max_goals`` in a single draw are dropped rather than
+        silently folded into the last slot; that costs a negligible amount of
+        probability mass (a 7-goal haul by one team) and keeps the invariant
+        "allocated goals never exceed drawn goals" exact.
+        """
+        n_sims = len(goal_counts)
+        minutes = rng.integers(1, 91, size=(n_sims, max_goals))
+        slots = np.arange(max_goals)[None, :]
+        active = slots < np.minimum(goal_counts, max_goals)[:, None]
+        return np.where(active, minutes, 0).astype(np.int16)
+
     def simulate_from_posterior(
         self,
         lambda_samples: np.ndarray,
@@ -124,8 +187,8 @@ class MonteCarloSimulator:
         away_goals = np.random.poisson(mu)
         total_goals = home_goals + away_goals
 
-        ht_home = np.random.poisson(lam * 0.45)
-        ht_away = np.random.poisson(mu * 0.45)
+        ht_home = np.random.binomial(home_goals, 0.45)
+        ht_away = np.random.binomial(away_goals, 0.45)
 
         goal_sims = np.column_stack([home_goals, away_goals])
 
@@ -205,7 +268,9 @@ class MonteCarloSimulator:
         asian_handicap = {}
         for line in [-2.5, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.5]:
             gd = hg.astype(float) - ag.astype(float)
-            asian_handicap[f"home_{line}"] = float(np.mean(gd > line))
+            # The quoted line is applied to the home score:
+            # home goals + handicap > away goals.
+            asian_handicap[f"home_{line}"] = float(np.mean(gd + line > 0))
 
         # ── HT/FT ──
         ht_h, ht_a = sims["ht_home"], sims["ht_away"]
@@ -246,7 +311,11 @@ class MonteCarloSimulator:
 
         # ── Confidence ──
         probs_1x2 = [p_home, p_draw, p_away]
-        match_entropy = float(sp_entropy(probs_1x2)) if all(p > 0 for p in probs_1x2) else 0
+        match_entropy = (
+            float(-sum(p * np.log(p) for p in probs_1x2))
+            if all(p > 0 for p in probs_1x2)
+            else 0
+        )
 
         return {
             "probabilities": {

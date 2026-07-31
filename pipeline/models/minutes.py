@@ -336,13 +336,12 @@ class MinutesModel:
         # Roles are exhaustive before gating; the gate then scales the two
         # appearing branches and the residual accrues to "unused". This ordering
         # is what keeps every probability inside [0, 1] by construction.
-        p_start = float(np.clip(p_start, 0.0, 1.0)) * avail
-        p_bench_appear = (
-            float(np.clip(p_bench_given_not_start, 0.0, 1.0))
-            * (1.0 - float(np.clip(p_start / avail, 0.0, 1.0)) if avail > 0 else 0.0)
-            * avail
+        ungated_start = float(np.clip(p_start, 0.0, 1.0))
+        ungated_bench = float(np.clip(p_bench_given_not_start, 0.0, 1.0)) * (
+            1.0 - ungated_start
         )
-        p_start = float(np.clip(p_start, 0.0, 1.0))
+        p_start = ungated_start * avail
+        p_bench_appear = ungated_bench * avail
         p_bench_appear = float(np.clip(p_bench_appear, 0.0, 1.0 - p_start))
         p_unused = 1.0 - p_start - p_bench_appear
 
