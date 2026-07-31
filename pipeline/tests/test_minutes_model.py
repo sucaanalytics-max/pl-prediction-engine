@@ -284,9 +284,15 @@ class BacktestAcceptanceTests(unittest.TestCase):
 
     def test_model_beats_every_baseline_on_brier(self):
         """
-        Absolute error is not enough. `last5` posts a lower band MAE by being a
-        confident point predictor, but its ECE is roughly 4x worse — it is not a
-        probability model, and the simulator samples from these numbers.
+        The `last5` baseline was crippled until its ordering was fixed: `past`
+        concatenates two seasons, so sorting on gameweek NUMBER alone put last
+        season's GW34-38 after this season's GW1-9, and 470 of 472 dual-season
+        players had a tail(5) drawn entirely from the prior season. Against the
+        corrected baseline the model initially LOST on Brier, 0.1313 to 0.1069.
+
+        That was a real deficiency, not a metric artefact: the model weighted a
+        player's whole history uniformly, so a benched regular still projected as
+        a starter. Recency weighting fixed it — Brier 0.1313 -> 0.0931.
         """
         for name, metric in self.result.metrics.items():
             if name == "model":
@@ -297,6 +303,23 @@ class BacktestAcceptanceTests(unittest.TestCase):
                     metric["brier_appears"],
                     self.result.summary(),
                 )
+
+    def test_recency_baseline_still_wins_on_raw_absolute_error(self):
+        """
+        Recorded rather than hidden. `last5` is a sharper POINT predictor — it
+        emits near 0/1 — so it posts lower MAE on each band while being far worse
+        calibrated (ECE roughly 2.7x) and worse on Brier. The simulator SAMPLES
+        from these numbers, so calibration and Brier are the binding
+        requirements; absolute error on a thresholded band is not.
+
+        If this test ever fails because the model also wins MAE, that is good
+        news and the test should be deleted, not adjusted.
+        """
+        model = self.model
+        last5 = self.result.metrics["last5"]
+        self.assertLess(last5["zero_band_mae"], model["zero_band_mae"])
+        self.assertLess(model["brier_appears"], last5["brier_appears"])
+        self.assertLess(model["ece_appears"], last5["ece_appears"])
 
     def test_model_beats_every_baseline_on_calibration_except_the_constants(self):
         """

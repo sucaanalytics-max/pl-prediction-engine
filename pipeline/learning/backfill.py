@@ -191,15 +191,24 @@ def link_archive_to_priors(
         by_full[full].append(player)
         by_web[_normalise_name(player["web_name"])].append(player)
 
-    # The archive carries full registered names where FPL carries short forms
-    # ("Marc Cucurella Saseta" vs "Cucurella", "Bernardo Mota Veiga de Carvalho
-    # e Silva" vs "Bernardo Silva"). Without a token-level fallback these
-    # resolve to nothing, and they are disproportionately premium assets whose
-    # rotation history the minutes model most needs.
-    web_tokens = [
-        (player, set(_normalise_name(player["web_name"]).split()))
-        for player in priors["players"]
-    ]
+    # NOTE: a `web_name`-token-containment stage used to live here, intended to
+    # catch the archive's full registered names against FPL's short forms
+    # ("Marc Cucurella Saseta" vs "Cucurella"). IT WAS REMOVED because it was
+    # unsound in the containment direction it actually tested.
+    #
+    # The test was `web_tokens ⊆ archive_tokens`, so a single-token short name
+    # matched ANY archive player whose registered name contained that token
+    # anywhere — and `_disambiguate` accepted it whenever exactly one current
+    # player carried that web_name, which is the normal case. Measured against
+    # the committed archive: 41 of its 42 links were different people, including
+    # "Lewis Dobbin" -> Rico Lewis, "Simon Moore" -> Mikey Moore, "John Stones"
+    # -> John Victor (an outfielder's history onto a goalkeeper) and three
+    # separate Gomeses collapsed onto one player.
+    #
+    # This function's own contract says a wrong link is worse than a missing one,
+    # because it attributes one player's history to another. Deleting an unsound
+    # heuristic is the correct fix; patching it into something subtler and still
+    # wrong is not. The honest match rate is lower and is reported as such.
 
     def _disambiguate(
         candidates: List[dict], team_canonical: str
@@ -231,20 +240,6 @@ def link_archive_to_priors(
             match = _disambiguate(by_full.get(first_last, []), team_canonical)
             if match:
                 return match, "first_last"
-
-        if tokens:
-            # Every token of the short FPL name appears in the full archive
-            # name. Requires at least one token and full containment, so
-            # "Silva" alone cannot swallow every Silva in the league.
-            token_set = set(tokens)
-            contained = [
-                player
-                for player, web in web_tokens
-                if web and web <= token_set
-            ]
-            match = _disambiguate(contained, team_canonical)
-            if match:
-                return match, "web_token_subset"
 
         return None, "unmatched"
 

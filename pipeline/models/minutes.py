@@ -179,6 +179,24 @@ class MinutesModel:
         self.by_position: Dict[str, Dict[str, float]] = {}
         self.fitted = False
 
+    @staticmethod
+    def _fixture_index(frame: pd.DataFrame) -> pd.Series:
+        """
+        A monotonic ordering of fixtures within and across seasons.
+
+        Built from (season, GW) when a season column exists. Ordering on GW alone
+        across concatenated seasons interleaves them — last season's GW38 would
+        sort after this season's GW1 — which is exactly the defect that crippled
+        the recency baseline in the backtest.
+        """
+        gameweek = pd.to_numeric(frame.get("GW", 0), errors="coerce").fillna(0)
+        if "season" in frame.columns:
+            seasons = sorted(str(s) for s in frame["season"].dropna().unique())
+            rank = {season: index for index, season in enumerate(seasons)}
+            offset = frame["season"].astype(str).map(rank).fillna(0) * 38
+            return offset + gameweek
+        return gameweek
+
     def fit(
         self,
         history: pd.DataFrame,
@@ -203,6 +221,21 @@ class MinutesModel:
         frame["starts"] = pd.to_numeric(frame["starts"], errors="coerce").fillna(0)
         frame["_position"] = frame[position_column].map(normalise_position)
         frame = frame[frame["_position"].notna()]
+
+        # Recency weighting. Without it every fixture counts equally, so a player
+        # who started 30 of 38 last season but has been benched for the last five
+        # still projects as a starter. Measured consequence: a trivial
+        # five-fixture recency heuristic beat this model on Brier and on both MAE
+        # bands, losing only on calibration. Uniform weighting was the deficiency.
+        #
+        # Weights are relative to the most recent fixture in the TRAINING data,
+        # shared across players, so someone who stopped playing months ago is
+        # correctly discounted rather than merely having fewer rows.
+        frame["_fixture_index"] = self._fixture_index(frame)
+        half_life = _param("minutes.recency_half_life_fixtures")
+        latest = float(frame["_fixture_index"].max()) if len(frame) else 0.0
+        age = latest - frame["_fixture_index"].astype(float)
+        frame["_w"] = 0.5 ** (age / max(half_life, 1e-6))
 
         started = frame["starts"] > 0
         appeared = frame["minutes"] > 0
@@ -245,15 +278,26 @@ class MinutesModel:
             rows_not_started = rows[rows["starts"] == 0]
             rows_bench = rows_not_started[rows_not_started["minutes"] > 0]
             positions = rows["_position"].dropna()
+            # Every count is a recency-weighted sum. `n_fixtures` becomes an
+            # effective sample size, which is also the right input to the
+            # evidence weight surfaced downstream: thirty stale fixtures should
+            # not read as strong evidence.
             self.by_player[player_key] = {
-                "n_fixtures": float(len(rows)),
-                "n_starts": float((rows["starts"] > 0).sum()),
-                "n_not_started": float(len(rows_not_started)),
-                "n_bench_appearances": float(len(rows_bench)),
-                "sum_minutes_if_start": float(rows_started["minutes"].sum()),
-                "n_started_rows": float(len(rows_started)),
-                "sum_minutes_if_bench": float(rows_bench["minutes"].sum()),
-                "n_60_starts": float((rows_started["minutes"] >= 60).sum()),
+                "n_fixtures": float(rows["_w"].sum()),
+                "n_starts": float(rows.loc[rows["starts"] > 0, "_w"].sum()),
+                "n_not_started": float(rows_not_started["_w"].sum()),
+                "n_bench_appearances": float(rows_bench["_w"].sum()),
+                "sum_minutes_if_start": float(
+                    (rows_started["minutes"] * rows_started["_w"]).sum()
+                ),
+                "n_started_rows": float(rows_started["_w"].sum()),
+                "sum_minutes_if_bench": float(
+                    (rows_bench["minutes"] * rows_bench["_w"]).sum()
+                ),
+                "n_60_starts": float(
+                    rows_started.loc[rows_started["minutes"] >= 60, "_w"].sum()
+                ),
+                "raw_fixtures": int(len(rows)),
                 "position": positions.iloc[-1] if len(positions) else None,
             }
 
@@ -301,7 +345,8 @@ class MinutesModel:
             start_prior = float(np.clip(fallback_start_rate, 0.0, 1.0))
 
         stats = self.by_player.get(player_key) if player_key is not None else None
-        n_fixtures = int(stats["n_fixtures"]) if stats else 0
+        n_fixtures = int(stats.get("raw_fixtures", 0)) if stats else 0
+        n_effective = float(stats["n_fixtures"]) if stats else 0.0
 
         if stats:
             p_start = _shrink(
@@ -346,7 +391,9 @@ class MinutesModel:
         p_unused = 1.0 - p_start - p_bench_appear
 
         strength = _param("minutes.start_shrinkage")
-        evidence_weight = n_fixtures / (n_fixtures + strength) if strength > 0 else 0.0
+        evidence_weight = (
+            n_effective / (n_effective + strength) if strength > 0 else 0.0
+        )
 
         result = RoleProbabilities(
             p_start=p_start,

@@ -173,7 +173,15 @@ def backtest_minutes(
         model = MinutesModel().fit(past, key=key, position_column="position_norm")
 
         # Rolling last-5 appearance rate per player, from the same past-only data.
-        recent = past.sort_values("GW").groupby(key)["minutes"].apply(
+        #
+        # Sort by (season, GW), not GW alone. `past` concatenates the prior season
+        # with the current one, so sorting on gameweek NUMBER interleaves them and
+        # GW34-38 of last season sorts after GW1-9 of this one. Measured: 470 of
+        # 472 players present in both seasons had a tail(5) drawn entirely from
+        # the prior season, making this "did he finish last season playing"
+        # rather than "did he start recently" — and crippling the one baseline
+        # that varies by player.
+        recent = past.sort_values(["season", "GW"]).groupby(key)["minutes"].apply(
             lambda s: float((s.tail(5) > 0).mean())
         )
         global_rate = float((past["minutes"] > 0).mean())
