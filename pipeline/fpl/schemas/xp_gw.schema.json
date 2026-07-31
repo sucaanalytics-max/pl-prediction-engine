@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/sucaanalytics-max/pl-prediction-engine/schemas/xp_gw.schema.json",
+  "title": "FPL gameweek expected-points artifact",
+  "description": "Per-player point distributions for one gameweek, derived from the joint player simulator. Validated from Python before the file is written and from vitest against a committed fixture, so drift between the two consumers fails a build rather than rendering a blank page.",
+  "type": "object",
+  "required": ["metadata", "fixtures", "players"],
+  "additionalProperties": true,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "season",
+        "gameweek",
+        "generated_at",
+        "n_draws",
+        "bonus_method",
+        "goal_minute_model",
+        "fpl_rules_source"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "schema_version": { "type": "integer", "minimum": 1 },
+        "season": { "type": "string" },
+        "gameweek": { "type": "integer", "minimum": 1, "maximum": 38 },
+        "generated_at": { "type": "string" },
+        "n_draws": { "type": "integer", "minimum": 1 },
+        "n_players": { "type": "integer", "minimum": 0 },
+        "bonus_method": {
+          "type": "string",
+          "description": "How expected bonus was produced. Not a free-text note: a consumer must be able to tell whether the tail is trustworthy."
+        },
+        "bonus_tail_claim": {
+          "type": "boolean",
+          "description": "False while bonus comes from an empirical bucket rather than a BPS model. The weekly objective maximises a tail, so it must not silently trust one that is approximated."
+        },
+        "goal_minute_model": { "type": "string" },
+        "substitution_count_exact": { "type": "boolean" },
+        "dgw_rotation_correlation_modelled": { "type": "boolean" },
+        "fpl_rules_source": {
+          "type": "string",
+          "enum": ["bootstrap+signed_yaml", "signed_yaml_only"]
+        },
+        "fpl_rules_degraded": { "type": "boolean" },
+        "unmodelled_chips": { "type": "array", "items": { "type": "string" } },
+        "required": { "type": "boolean" },
+        "parameters": { "type": "object" }
+      }
+    },
+    "fixtures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["match_id", "home_team", "away_team"],
+        "additionalProperties": true,
+        "properties": {
+          "match_id": { "type": "string" },
+          "home_team": { "type": "string" },
+          "away_team": { "type": "string" },
+          "kickoff": { "type": ["string", "null"] },
+          "lambda_home": { "type": "number", "minimum": 0 },
+          "mu_away": { "type": "number", "minimum": 0 }
+        }
+      }
+    },
+    "players": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "element_id",
+          "fixtures",
+          "blank",
+          "xp",
+          "xp_sd",
+          "p_appears",
+          "p_60",
+          "e_minutes",
+          "p_goal",
+          "p_multi_goal",
+          "p_clean_sheet",
+          "p_ge_2",
+          "p_ge_5",
+          "p_ge_10",
+          "p_ge_15",
+          "q10",
+          "q50",
+          "q90",
+          "q99"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "element_id": { "type": "integer" },
+          "fixtures": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Match ids this player features in. Empty for a blank gameweek; two entries for a double. Per-fixture rather than per-player so a double is representable at all."
+          },
+          "n_fixtures": { "type": "integer", "minimum": 0 },
+          "blank": {
+            "type": "boolean",
+            "description": "True when the player's club has no fixture. The player is still present with xp 0 — never omitted, because a universe that changes shape between gameweeks cannot be scored consistently."
+          },
+          "xp": { "type": "number" },
+          "xp_sd": { "type": "number", "minimum": 0 },
+          "mc_se": { "type": "number", "minimum": 0 },
+          "p_appears": { "type": "number", "minimum": 0, "maximum": 1 },
+          "p_60": { "type": "number", "minimum": 0, "maximum": 1 },
+          "e_minutes": { "type": "number", "minimum": 0 },
+          "e_goals": { "type": "number", "minimum": 0 },
+          "e_assists": { "type": "number", "minimum": 0 },
+          "p_goal": { "type": "number", "minimum": 0, "maximum": 1 },
+          "p_multi_goal": { "type": "number", "minimum": 0, "maximum": 1 },
+          "p_clean_sheet": { "type": "number", "minimum": 0, "maximum": 1 },
+          "p_ge_2": { "type": "number", "minimum": 0, "maximum": 1 },
+          "p_ge_5": { "type": "number", "minimum": 0, "maximum": 1 },
+          "p_ge_10": { "type": "number", "minimum": 0, "maximum": 1 },
+          "p_ge_15": { "type": "number", "minimum": 0, "maximum": 1 },
+          "q10": { "type": "number" },
+          "q50": { "type": "number" },
+          "q90": { "type": "number" },
+          "q99": { "type": "number" }
+        }
+      }
+    },
+    "diagnostics": { "type": "object" }
+  }
+}

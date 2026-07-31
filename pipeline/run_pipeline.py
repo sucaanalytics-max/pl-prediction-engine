@@ -38,6 +38,20 @@ logger = logging.getLogger(__name__)
 
 PIPELINE_VERSION = "4.1.0"
 
+
+def stable_seed_entropy(season: str, gameweek: int) -> int:
+    """
+    Deterministic simulation entropy for a (season, gameweek).
+
+    Derived rather than random so a rerun reproduces the artifact bit-for-bit:
+    a diff then means a real parameter change, not a reseed. Python's built-in
+    hash is salted per process and cannot be used for this.
+    """
+    import hashlib
+
+    digest = hashlib.sha256(f"{season}:{gameweek}:fpl".encode()).digest()
+    return int.from_bytes(digest[:4], "big")
+
 # Model cache directory
 MODEL_CACHE_DIR = DATA_PROCESSED / "model_cache"
 
@@ -928,6 +942,83 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     except Exception as e:
         logger.warning(f"  h2h.json export failed: {e}")
 
+    # ── FPL player-level expected points ─────────────────────────────
+    # Additive and deliberately non-fatal. FPL_SIM["required"] stays False until
+    # several gameweeks have been scored, so until then a failure here records
+    # itself in health.json and leaves every match-prediction artifact — and the
+    # Kelly path — completely untouched. The FPL layer must not be able to take
+    # the betting pages down.
+    #
+    # Reuses `all_predictions`: expected_goals is the already-blended ensemble
+    # expectation, so this hooks in without touching the Monte Carlo loop.
+    fpl_status: Dict = {"status": "skipped", "reason": "not attempted"}
+    try:
+        from pipeline.config import FPL_SIM
+        from pipeline.data.priors.snapshot import load_player_priors
+        from pipeline.fpl.artifacts import export_gameweek_xp
+        from pipeline.fpl.rules import load_rules as load_fpl_rules
+        from pipeline.learning.backfill import load_archive_season
+        from pipeline.models.fpl_inputs import (
+            build_fpl_inputs,
+            fixture_specs_from_predictions,
+        )
+        from pipeline.simulation.gameweek_sim import simulate_gameweek
+
+        logger.info("\n[10b] FPL player-level expected points...")
+        fpl_rules = load_fpl_rules(bootstrap)
+
+        try:
+            fpl_priors = load_player_priors()
+        except FileNotFoundError:
+            fpl_priors = None
+            logger.warning("  no committed prior-season snapshot; using archive only")
+
+        fpl_specs = fixture_specs_from_predictions(all_predictions, gameweek)
+        if not fpl_specs:
+            fpl_status = {"status": "skipped", "reason": "no fixtures with expected goals"}
+        else:
+            fpl_archive = load_archive_season("2526")
+            fpl_inputs = build_fpl_inputs(
+                bootstrap, fpl_archive, fpl_priors, fpl_rules
+            )
+            n_fpl_draws = (
+                FPL_SIM["n_draws_ci"] if ci_env else FPL_SIM["n_draws_decision"]
+            )
+            fpl_draws = simulate_gameweek(
+                fpl_specs,
+                fpl_inputs.squads,
+                fpl_inputs.events,
+                fpl_rules,
+                n_draws=n_fpl_draws,
+                seed_entropy=stable_seed_entropy(CURRENT_SEASON, gameweek),
+                all_element_ids=fpl_inputs.all_element_ids,
+            )
+            export_gameweek_xp(
+                fpl_draws,
+                CURRENT_SEASON,
+                datetime.utcnow().isoformat() + "Z",
+                fpl_rules,
+                PREDICTIONS_DIR,
+                stable_seed_entropy(CURRENT_SEASON, gameweek),
+                fpl_specs,
+            )
+            fpl_status = {
+                "status": "degraded" if fpl_rules.degraded else "ok",
+                "gameweek": int(fpl_draws.gameweek),
+                "n_players": len(fpl_draws.element_ids),
+                "n_draws": n_fpl_draws,
+                "rules_source": fpl_rules.source,
+                "rules_degraded": bool(fpl_rules.degraded),
+                "diagnostics": fpl_inputs.diagnostics,
+                "simulation": fpl_draws.notes,
+            }
+            logger.info(f"  FPL xp exported for GW{fpl_draws.gameweek}")
+    except Exception as e:
+        if FPL_SIM.get("required"):
+            raise
+        fpl_status = {"status": "failed", "reason": str(e)[:300]}
+        logger.warning(f"  FPL expected-points step failed (non-fatal): {e}")
+
     # ── Health JSON (for frontend Model Health page) ───────────────
     logger.info("  Exporting health.json...")
     try:
@@ -955,6 +1046,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             "n_simulations": n_sims,
             "odds_source": "the_odds_api" if parsed_main else "unavailable",
             "referee_profiles_count": len(referee_profiles),
+            "fpl": fpl_status,
         }
         with open(PREDICTIONS_DIR / "health.json", "w") as f:
             json.dump(health_data, f, indent=2, default=str)
