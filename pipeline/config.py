@@ -151,6 +151,115 @@ RISK = {
     "drawdown_hard_limit": 0.30,    # Pause at 30% drawdown
 }
 
+# ── FPL agent: simulation ──────────────────────────────────────────────────
+FPL_SIM = {
+    # Stays False until four gameweeks have been scored. While False, an FPL
+    # layer failure must not block the match-prediction artifacts.
+    "required": False,
+    "n_draws_decision": 10_000,
+    "n_draws_horizon": 5_000,
+    "n_draws_ci": 5_000,
+    "horizon": 6,
+}
+
+# ── FPL agent: learnable parameters ────────────────────────────────────────
+# Every parameter the learning loop may touch is declared here with a tier,
+# hard bounds and a stated provenance. Anything not in this registry is not
+# refit-eligible, by construction.
+#
+# Tiers:
+#   F  fittable — enough independent observations to identify it. Refit is
+#      gated on out-of-sample improvement plus the guardrails below.
+#   S  shrunk — fitted only as a deviation from a prior, never freely.
+#   C  constant — human-authored. There is not enough signal in 38 noisy
+#      gameweeks a season to identify these, and fitting them is precisely how
+#      a system convinces itself it is improving. Never refit-eligible.
+#
+# `bounds` are hard clamps: a refit outside them is rejected, not clipped.
+# `source` is required and tested — an unsourced parameter is a magic number.
+#
+# INVARIANT (tested): set(PARAM_REGISTRY) and set(RISK) are disjoint. Nothing
+# the learning loop can move may touch staking.
+PARAM_REGISTRY = {
+    "minutes.start_shrinkage": {
+        "value": 0.75,
+        "bounds": (0.1, 40.0),
+        "tier": "F",
+        "source": (
+            "Beta-binomial pseudo-count in fixtures. Selected on the 2024-25 "
+            "walk-forward backtest and validated on held-out 2025-26; the "
+            "validation season was not consulted during selection. A clear "
+            "interior optimum: Brier bottoms at 0.5-0.75 and ECE at 0.75, "
+            "degrading both above (fringe players dragged toward the position "
+            "mean) and below 0.5 (single observations become overconfident). "
+            "The initial guess of 8.0 over-predicted appearance by 5.7x in the "
+            "lowest calibration bin — 0.068 against a realised 0.012 — which "
+            "is exactly the error that makes cheap bench filler look playable."
+        ),
+    },
+    "minutes.minutes_shrinkage": {
+        "value": 2.0,
+        "bounds": (0.1, 40.0),
+        "tier": "F",
+        "source": (
+            "As start_shrinkage, for mean minutes conditional on role. WEAKLY "
+            "IDENTIFIED: minutes MAE moves only 17.36 to 17.69 across a 21x "
+            "range of this parameter on the tuning season, so the data does not "
+            "distinguish values in it. Set to a non-boundary value within noise "
+            "of the optimum rather than to the argmin, which would be false "
+            "precision."
+        ),
+    },
+    "minutes.p60_shrinkage": {
+        "value": 0.75,
+        "bounds": (0.1, 40.0),
+        "tier": "F",
+        "source": (
+            "As start_shrinkage, for P(60+ minutes | started), and selected "
+            "jointly with it on the 2024-25 tuning season."
+        ),
+    },
+    "minutes.doubtful_default": {
+        "value": 0.75,
+        "bounds": (0.3, 0.95),
+        "tier": "S",
+        "source": (
+            "Applied only when status is 'd' and chance_of_playing is absent. "
+            "FPL's own field is sparse and lags, so this fills a gap rather "
+            "than replacing data. Never 1.0: a doubt is information."
+        ),
+    },
+    "minutes.injured_default": {
+        "value": 0.10,
+        "bounds": (0.0, 0.4),
+        "tier": "S",
+        "source": (
+            "Applied when status is 'i' or 's' and chance_of_playing is absent. "
+            "Deliberately low but non-zero, because FPL sometimes clears a "
+            "player without updating the chance field."
+        ),
+    },
+    "minutes.news_staleness_days": {
+        "value": 21.0,
+        "bounds": (7.0, 60.0),
+        "tier": "C",
+        "source": (
+            "Age at which an unchanged injury note stops suppressing "
+            "availability. Constant: with a handful of long-term absences per "
+            "season there is no power to fit a decay curve."
+        ),
+    },
+    "events.rate_shrinkage_per90": {
+        "value": 450.0,
+        "bounds": (90.0, 2000.0),
+        "tier": "F",
+        "source": (
+            "Pseudo-minutes for shrinking a per-90 rate toward its position "
+            "prior. 450 is five full matches. Unfitted."
+        ),
+    },
+}
+
 # ── Derby / Rivalry Matchups ──────────────────────────────────────────────
 # These matchups historically produce more fouls and cards
 DERBIES = [
