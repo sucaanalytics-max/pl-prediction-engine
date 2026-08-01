@@ -50,6 +50,11 @@ def refresh_expected_points(
     from pipeline.fpl.artifacts import export_gameweek_xp
     from pipeline.fpl.rules import load_rules
     from pipeline.learning.backfill import load_archive_season
+    from pipeline.models.fixture_rates import (
+        TeamStrengths,
+        load_exported_rates,
+        resolve_rates,
+    )
     from pipeline.models.fpl_inputs import build_fpl_inputs
     from pipeline.run_pipeline import stable_seed_entropy
     from pipeline.simulation.gameweek_sim import FixtureSpec, simulate_gameweek
@@ -68,12 +73,29 @@ def refresh_expected_points(
         priors = None
         logger.warning("no committed prior-season snapshot; using archive only")
 
-    inputs = build_fpl_inputs(bootstrap, load_archive_season("2526"), priors, rules)
+    archive = load_archive_season("2526")
+    inputs = build_fpl_inputs(bootstrap, archive, priors, rules)
+
+    # Per-fixture goal rates, best source first. A flat rate for every fixture
+    # gives a promoted side and the champions identical clean-sheet
+    # probabilities, which measured as 0.066 predicted against 0.120 actual --
+    # under-predicted by nearly half, with goals correspondingly over-predicted.
+    exported = load_exported_rates(Path(predictions_dir) / "fixture_xg.json")
+    strengths = None
+    if not exported:
+        try:
+            strengths = TeamStrengths().fit(archive)
+        except ValueError as exc:
+            # Not fatal: resolve_rates falls back to a flat default and records
+            # that provenance on every fixture, so a degraded run is visible in
+            # the artifact rather than silently indistinguishable from a good one.
+            logger.warning("could not fit team strengths (%s); rates will be flat", exc)
 
     teams = {team["id"]: team for team in bootstrap.get("teams", [])}
     from pipeline.data.team_mapping import normalize_team_name
 
     specs = []
+    sources: Dict[str, int] = {}
     for fixture in fixtures_raw:
         if fixture.get("event") != gameweek or fixture.get("finished"):
             continue
@@ -81,23 +103,25 @@ def refresh_expected_points(
         away = normalize_team_name(teams.get(fixture["team_a"], {}).get("name", ""))
         if not home or not away:
             continue
+        match_id = str(fixture.get("id", f"{home}_{away}"))
+        rates = resolve_rates(match_id, home, away, exported, strengths)
+        sources[rates.source] = sources.get(rates.source, 0) + 1
         specs.append(
             FixtureSpec(
-                match_id=str(fixture.get("id", f"{home}_{away}")),
+                match_id=match_id,
                 gameweek=int(gameweek),
                 home_team=home,
                 away_team=away,
-                # Placeholder rates until the horizon export lands in
-                # Increment 8. Recorded in the artifact so nobody mistakes these
-                # for model output.
-                lambda_home=1.45,
-                mu_away=1.20,
+                lambda_home=rates.lambda_home,
+                mu_away=rates.mu_away,
                 kickoff=fixture.get("kickoff_time"),
             )
         )
 
     if not specs:
         return {"status": "skipped", "reason": f"no unplayed fixtures in GW{gameweek}"}
+
+    logger.info("fixture goal rates by source: %s", sources)
 
     def run_stream(stream: str):
         return simulate_gameweek(
@@ -126,7 +150,7 @@ def refresh_expected_points(
         "gameweek": int(draws.gameweek),
         "n_players": len(draws.element_ids),
         "artifact": str(written["xp"]),
-        "goal_rates": "placeholder_until_horizon_export",
+        "goal_rates": sources,
         # In-memory only, for the decision stage. Deliberately not serialised:
         # draws are a deterministic function of the committed params plus the
         # seed, so persisting ~45 MB/day would buy nothing over regenerating.

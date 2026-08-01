@@ -752,6 +752,25 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
         all_predictions.append(prediction)
 
+    # ── Step 9b: Export horizon goal rates for the FPL agent ──────────
+    # Purely additive: writes predictions/fixture_xg.json and touches nothing
+    # else, so latest.json and every staking artifact are unchanged. The
+    # posterior already yields lambda/mu for any pair at any future date — this
+    # is simply the first time it is queried beyond the current matchweek.
+    #
+    # Wrapped because the FPL layer is downstream of everything that matters
+    # here. A failure to export must degrade the agent, never the daily match
+    # predictions or the Kelly path.
+    try:
+        from pipeline.models.fixture_rates import export_fixture_xg
+
+        export_fixture_xg(
+            dc_model, bootstrap, fixtures_raw, PREDICTIONS_DIR,
+            horizon=FPL_SIM["horizon"],
+        )
+    except Exception as exc:
+        logger.warning(f"  fixture_xg export failed ({exc}); FPL agent will use fallback rates")
+
     # ── Step 10: Export JSON ──────────────────────────────────────────
     logger.info("\n[10/12] Exporting predictions JSON...")
 
