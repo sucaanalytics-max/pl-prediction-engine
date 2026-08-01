@@ -204,3 +204,63 @@ class TestWalkForward(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestBlankGameweekUniverse(unittest.TestCase):
+    """
+    A player whose club blanks has no archive row that gameweek. Restricting the
+    universe to rows deletes him from the game, so a squad holding him shrinks
+    below fifteen and, on an empty bank, becomes genuinely unsolvable — which is
+    what silently truncated a season backtest at GW31.
+    """
+
+    def _archive_with_blank(self):
+        archive = _archive(6)
+        # Chelsea does not play in GW4.
+        return archive[~((archive["GW"] == 4) & (archive["team_canonical"] == "Chelsea"))]
+
+    def test_blanking_players_stay_in_the_universe(self):
+        archive = self._archive_with_blank()
+        bootstrap = synthetic_bootstrap(archive, 4)
+        ids = {e["id"] for e in bootstrap["elements"]}
+        chelsea = set(archive[archive["team_canonical"] == "Chelsea"]["element"])
+        self.assertTrue(
+            chelsea <= ids,
+            "players whose club blanked were deleted from the universe",
+        )
+
+    def test_blanking_players_keep_their_last_observed_price(self):
+        archive = self._archive_with_blank()
+        bootstrap = synthetic_bootstrap(archive, 4)
+        by_id = {e["id"]: e["now_cost"] for e in bootstrap["elements"]}
+        chelsea = sorted(archive[archive["team_canonical"] == "Chelsea"]["element"])
+        # Their last row is GW3, where value is 50 + 3.
+        self.assertEqual(by_id[chelsea[0]], 53)
+        # A club that did play carries this gameweek's price.
+        arsenal = sorted(archive[archive["team_canonical"] == "Arsenal"]["element"])
+        self.assertEqual(by_id[arsenal[0]], 54)
+
+    def test_the_blank_fixture_itself_is_not_simulated(self):
+        """
+        The player stays ownable, but his club's non-existent fixture must not
+        be invented — that would hand him a clean sheet he never played for.
+        """
+        archive = self._archive_with_blank()
+        self.assertEqual(fixture_specs(archive, 4), [])
+
+    def test_future_players_do_not_leak_into_an_earlier_universe(self):
+        """
+        The universe is everyone up to and including the gameweek, never after.
+        A player who debuts in GW5 must not be buyable in GW3.
+        """
+        archive = _archive(6)
+        late = archive[archive["GW"] >= 5].copy()
+        late["element"] = 99
+        late["name"] = "debutant"
+        late["name_key"] = "debutant"
+        archive = pd.concat([archive, late])
+
+        early = {e["id"] for e in synthetic_bootstrap(archive, 3)["elements"]}
+        later = {e["id"] for e in synthetic_bootstrap(archive, 5)["elements"]}
+        self.assertNotIn(99, early)
+        self.assertIn(99, later)

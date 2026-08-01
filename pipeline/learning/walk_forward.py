@@ -88,9 +88,20 @@ def synthetic_bootstrap(archive: pd.DataFrame, gameweek: int) -> Dict[str, Any]:
     Taking a price from the future would be leakage in the transfer decision,
     but this harness never makes a transfer decision — it measures projections.
     """
-    rows = archive[archive["GW"] == gameweek].drop_duplicates(subset=["element"])
-    if rows.empty:
+    if archive[archive["GW"] == gameweek].empty:
         raise ValueError(f"no archive rows for GW{gameweek}")
+
+    # The universe is everyone active in the season up to and including this
+    # gameweek, NOT only those with a row in it. A player whose club has a blank
+    # gameweek has no row, and restricting to rows would delete him from the
+    # game entirely — a squad holding him would shrink below fifteen and, on an
+    # empty bank, become genuinely unsolvable. Real FPL lists every player
+    # whether or not his team plays; he simply scores nothing.
+    #
+    # Prices come from his most recent appearance on or before this gameweek,
+    # which is the last price actually observed.
+    history = archive[archive["GW"] <= gameweek].sort_values("GW")
+    rows = history.drop_duplicates(subset=["element"], keep="last")
 
     teams = sorted(archive["team_canonical"].dropna().unique())
     team_ids = {name: i + 1 for i, name in enumerate(teams)}
