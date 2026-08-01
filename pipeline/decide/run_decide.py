@@ -45,6 +45,47 @@ SHORTLIST_SIZE = 8
 # wrong recommendation gets made.
 MAX_CREDIBLE_OPTIMISM = 2.0
 
+# What the decision engine is measured to be worth, travelling with every
+# proposal it makes. Buried in a docstring this gets read once; on the artifact
+# it is in front of whoever is deciding whether to follow the recommendation.
+#
+# Established by pipeline/learning/backtest_decisions.py over both archive
+# seasons, with every strategy sharing identical projections so the comparison
+# is paired.
+EVIDENCE = {
+    "beats_doing_nothing": {
+        "verdict": "established",
+        "margin_2025_26": 150,
+        "margin_2024_25": 560,
+        "note": "same sign both seasons, t=+2.50 and t=+4.72",
+    },
+    "beats_greedy_transfers": {
+        # Stated as a failure, deliberately. The pre-registered criterion was
+        # +30 and the margin flipped sign between seasons, so the agent is not
+        # shown to be better than simply spending a free transfer whenever the
+        # projection improves.
+        "verdict": "not established",
+        "margin_2025_26": -35,
+        "margin_2024_25": 60,
+        "note": (
+            "sign does not hold across seasons; pooled ~+0.4/GW against a "
+            "standard error near 1.6, i.e. indistinguishable from zero"
+        ),
+    },
+    "why_unresolved": (
+        "Paired gameweek differences carry a standard deviation of 5-8 points, "
+        "so separating a one-point-a-gameweek effect needs on the order of 200 "
+        "gameweeks. Two seasons cannot settle it."
+    ),
+    "projection_calibration": {
+        "verdict": "established",
+        "note": (
+            "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published "
+            "tail within 0.0024 of realised frequency"
+        ),
+    },
+}
+
 
 @dataclass
 class Decision:
@@ -88,6 +129,10 @@ class Decision:
             "horizon": self.horizon,
             "warnings": list(self.warnings),
             "execution": "propose_only",
+            # What this engine is measured to be worth, including the criterion
+            # it FAILS. A proposal that travels without its evidence invites
+            # more confidence than the evidence supports.
+            "evidence": EVIDENCE,
         }
 
 

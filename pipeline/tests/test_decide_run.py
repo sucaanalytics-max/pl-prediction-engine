@@ -356,3 +356,46 @@ class TestHorizonIntegration(unittest.TestCase):
         decision = self._decide(xp_by_week=self._weekly_xp(3))
         payload = json.loads(json.dumps(decision.as_dict(), allow_nan=False))
         self.assertEqual(payload["horizon"]["eval_horizon"], 3)
+
+
+class TestEvidenceTravelsWithTheDecision(unittest.TestCase):
+    """
+    A proposal that travels without its evidence invites more confidence than
+    the evidence supports. The criterion the agent FAILS must be as visible as
+    the one it passes — including on the public copy, which is the version most
+    likely to be read.
+    """
+
+    def _payload(self):
+        decision = decide(
+            gameweek=3, draws_select=_draws(11), draws_report=_draws(12),
+            bootstrap=BOOTSTRAP, rules=RULES, xp_rows=XP_ROWS, shortlist_size=2,
+        )
+        return decision.as_dict(), strip_for_publication(decision)
+
+    def test_the_failed_criterion_is_present_and_labelled_a_failure(self):
+        private, _ = self._payload()
+        greedy = private["evidence"]["beats_greedy_transfers"]
+        self.assertEqual(greedy["verdict"], "not established")
+        self.assertLess(greedy["margin_2025_26"], 0)
+
+    def test_the_established_claim_is_not_overstated_into_the_failed_one(self):
+        private, _ = self._payload()
+        self.assertEqual(
+            private["evidence"]["beats_doing_nothing"]["verdict"], "established"
+        )
+        self.assertNotEqual(
+            private["evidence"]["beats_greedy_transfers"]["verdict"], "established"
+        )
+
+    def test_evidence_survives_publication(self):
+        """Stripping counterfactuals must not strip the caveats with them."""
+        _, public = self._payload()
+        self.assertIn("evidence", public)
+        self.assertEqual(
+            public["evidence"]["beats_greedy_transfers"]["verdict"], "not established"
+        )
+
+    def test_evidence_serialises(self):
+        private, _ = self._payload()
+        json.loads(json.dumps(private, allow_nan=False))
