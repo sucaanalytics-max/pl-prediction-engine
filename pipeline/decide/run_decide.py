@@ -106,7 +106,7 @@ def decide(
     purchase_prices: Optional[Mapping[int, int]] = None,
     shortlist_size: int = SHORTLIST_SIZE,
     tail_threshold: int = 70,
-    xp_by_week: Optional[Sequence[Sequence[float]]] = None,
+    xp_by_week: Optional[Sequence[Mapping[int, float]]] = None,
     transfer_horizon: Optional[int] = None,
 ) -> Decision:
     """
@@ -147,11 +147,31 @@ def decide(
         )
 
     if xp_by_week:
+        # Keyed by element id and aligned HERE, not by the caller. The caller
+        # cannot know the pool's ordering until build_pool has run, so a
+        # positional interface would invite exactly the R11 failure: a plan that
+        # is legal, plausible, and about the wrong players. A player absent from
+        # a week's projection scores zero for that week — a blank, which is what
+        # a missing fixture means.
+        aligned = [
+            [float(week.get(c.element_id, 0.0)) for c in candidates]
+            for week in xp_by_week
+        ]
+        thin = [
+            w for w, week in enumerate(xp_by_week)
+            if len(set(week) & {c.element_id for c in candidates}) < len(candidates) // 2
+        ]
+        if thin:
+            warnings.append(
+                f"weeks {thin} project fewer than half the pool; those gameweeks "
+                f"are mostly zeros and the horizon will avoid them for the wrong reason"
+            )
+
         # Plan over the horizon, act on week 0. A one-week solve cannot buy a
         # player whose run starts in three weeks, nor decline a marginal upgrade
         # now to hold the cash for a better one later.
         horizon_plans = solve_horizon(
-            candidates, xp_by_week, rules, current_squad=held, bank=bank,
+            candidates, aligned, rules, current_squad=held, bank=bank,
             free_transfers=free_transfers, top_k=shortlist_size,
             transfer_horizon=transfer_horizon,
         )

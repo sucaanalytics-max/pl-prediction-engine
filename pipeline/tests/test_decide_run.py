@@ -314,8 +314,11 @@ class TestHorizonIntegration(unittest.TestCase):
         return decide(**params)
 
     def _weekly_xp(self, weeks=4):
-        base = [row["xp"] for row in XP_ROWS]
-        return [[v * (1.0 + 0.05 * w) for v in base] for w in range(weeks)]
+        """Per-week {element_id: xp}, which is the interface decide() takes."""
+        return [
+            {row["element_id"]: row["xp"] * (1.0 + 0.05 * w) for row in XP_ROWS}
+            for w in range(weeks)
+        ]
 
     def test_horizon_decision_records_both_horizons(self):
         decision = self._decide(xp_by_week=self._weekly_xp(4), transfer_horizon=2)

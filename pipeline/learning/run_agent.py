@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS_DIR
+from pipeline.decide.horizon import EVAL_HORIZON
 from pipeline.learning.schedule import Phase, ScheduleState, resolve
 
 logger = logging.getLogger(__name__)
@@ -136,6 +137,10 @@ def refresh_expected_points(
 
     seed = stable_seed_entropy(CURRENT_SEASON, gameweek)
     draws = run_stream("fpl")
+
+    xp_by_week = _project_horizon(
+        gameweek, fixtures_raw, teams, inputs, rules, exported, strengths,
+    )
     written = export_gameweek_xp(
         draws,
         CURRENT_SEASON,
@@ -160,7 +165,100 @@ def refresh_expected_points(
         # Built lazily by the caller — a REFRESH run has no use for a second
         # stream and simulating one would double the cost of the common path.
         "_second_stream": run_stream,
+        "_xp_by_week": xp_by_week,
     }
+
+
+def _project_horizon(
+    gameweek: int,
+    fixtures_raw: Any,
+    teams: Dict[int, Any],
+    inputs: Any,
+    rules: Any,
+    exported: Any,
+    strengths: Any,
+) -> Optional[list]:
+    """
+    Expected points per player for each gameweek across the horizon.
+
+    Returns a list of ``{element_id: xp}``, one per week starting at ``gameweek``.
+    Keyed by id rather than position because the consumer aligns against a pool
+    it builds itself, and a positional handoff between two modules that each
+    order players independently is the R11 failure waiting to happen.
+
+    Two things make a horizon projection different from repeating week 0:
+
+    * **Fixtures differ per week**, which is the entire point. Rates come from
+      the exported Dixon-Coles posterior, which now covers the horizon.
+    * **Availability decays with distance.** A player nailed today is less
+      certain to start in six weeks — injuries, rotation and transfers all
+      accumulate. Measured in our own archive at 82.6 minutes for the current
+      week falling to 56.3 by the sixth. Without this the horizon would treat a
+      week-six projection as being as reliable as this week's and plan
+      confidently on it.
+
+    Returns ``None`` rather than raising if the horizon cannot be built: a
+    myopic decision is worse than a planned one but far better than none, and
+    the caller labels it as such.
+    """
+    from pipeline.data.team_mapping import normalize_team_name
+    from pipeline.models.fixture_rates import resolve_rates
+    from pipeline.models.minutes import horizon_availability_factor
+    from pipeline.run_pipeline import stable_seed_entropy
+    from pipeline.simulation.gameweek_sim import FixtureSpec, simulate_gameweek
+
+    weeks: list = []
+    for offset in range(EVAL_HORIZON):
+        target = int(gameweek) + offset
+        specs = []
+        for fixture in fixtures_raw:
+            if fixture.get("event") != target or fixture.get("finished"):
+                continue
+            home = normalize_team_name(teams.get(fixture["team_h"], {}).get("name", ""))
+            away = normalize_team_name(teams.get(fixture["team_a"], {}).get("name", ""))
+            if not home or not away:
+                continue
+            match_id = str(fixture.get("id", f"{home}_{away}"))
+            rates = resolve_rates(match_id, home, away, exported, strengths)
+            specs.append(
+                FixtureSpec(
+                    match_id=match_id, gameweek=target,
+                    home_team=home, away_team=away,
+                    lambda_home=rates.lambda_home, mu_away=rates.mu_away,
+                    kickoff=fixture.get("kickoff_time"),
+                )
+            )
+
+        if not specs:
+            # A genuinely empty gameweek (or one past the published schedule).
+            # Stopping is right: padding with zeros would tell the optimiser
+            # every player blanks, and it would plan around a fiction.
+            break
+
+        # Fewer draws than the decision week. These feed a linear surrogate that
+        # only has to rank candidates into a shortlist, and the simulator
+        # re-scores the winner properly on full draws.
+        week_draws = simulate_gameweek(
+            specs, inputs.squads, inputs.events, rules,
+            n_draws=FPL_SIM["n_draws_horizon"],
+            seed_entropy=stable_seed_entropy(CURRENT_SEASON, target, "horizon"),
+            all_element_ids=inputs.all_element_ids,
+        )
+        decay = horizon_availability_factor(offset)
+        weeks.append(
+            {
+                int(row["element_id"]): float(row["xp"]) * decay
+                for row in week_draws.summary_rows()
+            }
+        )
+
+    if len(weeks) < 2:
+        logger.warning(
+            "horizon covers %d gameweek(s); the decision will be myopic", len(weeks)
+        )
+        return None
+    logger.info("horizon projected over %d gameweeks from GW%s", len(weeks), gameweek)
+    return weeks
 
 
 def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
@@ -233,6 +331,7 @@ def _decide_for_entries(
 
     artifact = json.loads(Path(outcome["artifact"]).read_text())
     draws_select = outcome["_draws"]
+    xp_by_week = outcome.get("_xp_by_week") or None
     # A second stream costs one more simulation and is what makes the reported
     # score honest rather than the maximum of a noisy sample.
     draws_report = outcome["_second_stream"]("fpl_report")
@@ -256,6 +355,7 @@ def _decide_for_entries(
             bank=config.get("bank") if held else None,
             free_transfers=config.get("free_transfers", 1),
             purchase_prices=config.get("purchase_prices"),
+            xp_by_week=xp_by_week,
         )
         for warning in decision.warnings:
             logger.warning("[%s] %s", label, warning)
