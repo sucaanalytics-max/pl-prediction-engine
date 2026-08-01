@@ -311,6 +311,62 @@ def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
 
     for label, written in decisions.items():
         logger.info("decision (%s) -> %s", label, written["decision"])
+
+    return _deliver(state, decisions, dry_run)
+
+
+def _deliver(
+    state: ScheduleState, decisions: Dict[str, Dict[str, Path]], dry_run: bool
+) -> int:
+    """
+    Send the proposal, and make a delivery failure visible.
+
+    **Ordering is the point.** The forecast is already sealed and the artifacts
+    are already on disk before this runs, so a mail server outage costs a red
+    build rather than a lost observation — the gameweek stays measurable either
+    way. But it does return non-zero: a decision nobody received is not a
+    decision, and a green run would say it was delivered when it was not.
+
+    That is also why a missing SMTP configuration fails here rather than being
+    checked up front. Refusing to seal because mail is unconfigured would trade
+    the irreplaceable thing for the recoverable one.
+    """
+    from pipeline.learning.notify import NotificationError, notify
+
+    if not decisions:
+        logger.warning("nothing to deliver: no decision artifacts were written")
+        return 0
+
+    site_url = os.environ.get("FPL_SITE_URL", DEFAULT_SITE_URL)
+    hours_left = max(
+        0.0, (state.deadline - datetime.now(timezone.utc)).total_seconds() / 3600.0
+    )
+    payload = {
+        "gameweek": state.gameweek,
+        "deadline": state.deadline.isoformat(),
+        "teams": [
+            json.loads(Path(written["decision"]).read_text())
+            for written in decisions.values()
+        ],
+    }
+
+    try:
+        result = notify(
+            payload, site_url, hours_left,
+            # A dry run must never mail a real recipient, and must not fail the
+            # run for not having done so.
+            require_delivery=not dry_run,
+        )
+    except NotificationError as exc:
+        logger.error(
+            "decision NOT delivered for GW%s (%s). The forecast is sealed and "
+            "the artifacts are written, so the gameweek remains measurable — but "
+            "nobody was told, so this run is a failure.",
+            state.gameweek, exc,
+        )
+        return 1
+
+    logger.info("delivered via %s", result.delivered or "nothing (dry run)")
     return 0
 
 
