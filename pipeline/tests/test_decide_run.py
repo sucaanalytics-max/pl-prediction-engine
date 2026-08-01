@@ -452,3 +452,60 @@ class TestEvidenceIsInternallyConsistent(unittest.TestCase):
         self.assertIn("measured_on", EVIDENCE)
         self.assertTrue(EVIDENCE["measured_on"]["seasons"])
         self.assertIn("backtest_decisions", EVIDENCE["measured_on"]["harness"])
+
+
+@unittest.skipUnless(HAVE_SCIPY, "scipy/HiGHS not installed")
+class TestFieldGate(unittest.TestCase):
+    """
+    The weekly team ranks on a modelled right tail. Presenting that as measured
+    would be worse than having no weekly team, because it would be acted on with
+    confidence it has not earned.
+    """
+
+    def _decide(self, **kwargs):
+        params = dict(
+            gameweek=1, draws_select=_draws(21), draws_report=_draws(22),
+            bootstrap=BOOTSTRAP, rules=RULES, xp_rows=XP_ROWS, shortlist_size=2,
+            objective="weekly",
+        )
+        params.update(kwargs)
+        return decide(**params)
+
+    def test_weekly_falls_back_to_expected_points_while_uncalibrated(self):
+        decision = self._decide(field_calibrated_gameweeks=0)
+        self.assertEqual(decision.objective, "season")
+        self.assertEqual(decision.field_model, "uncalibrated")
+        self.assertTrue(
+            any("UNCALIBRATED" in w for w in decision.warnings),
+            f"no uncalibrated warning: {decision.warnings}",
+        )
+
+    def test_a_partial_run_of_passes_does_not_open_the_gate(self):
+        from pipeline.decide.field import REQUIRED_CALIBRATED_GAMEWEEKS
+
+        decision = self._decide(
+            field_calibrated_gameweeks=REQUIRED_CALIBRATED_GAMEWEEKS - 1
+        )
+        self.assertEqual(decision.objective, "season")
+        self.assertEqual(decision.field_model, "uncalibrated")
+
+    def test_the_gate_opens_after_the_required_run(self):
+        from pipeline.decide.field import REQUIRED_CALIBRATED_GAMEWEEKS
+
+        decision = self._decide(
+            field_calibrated_gameweeks=REQUIRED_CALIBRATED_GAMEWEEKS
+        )
+        self.assertEqual(decision.objective, "weekly")
+        self.assertEqual(decision.field_model, "calibrated")
+        self.assertFalse(any("UNCALIBRATED" in w for w in decision.warnings))
+
+    def test_the_season_team_is_unaffected_by_the_gate(self):
+        decision = self._decide(objective="season", field_calibrated_gameweeks=0)
+        self.assertEqual(decision.objective, "season")
+        self.assertFalse(any("UNCALIBRATED" in w for w in decision.warnings))
+
+    def test_field_status_reaches_the_public_artifact(self):
+        decision = self._decide(field_calibrated_gameweeks=0)
+        self.assertEqual(
+            strip_for_publication(decision)["field_model"], "uncalibrated"
+        )

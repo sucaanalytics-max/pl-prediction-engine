@@ -26,6 +26,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence
 
+from pipeline.decide.field import REQUIRED_CALIBRATED_GAMEWEEKS, field_is_usable
 from pipeline.decide.horizon import solve_horizon
 from pipeline.decide.milp import Plan, solve
 from pipeline.decide.plan_eval import PlanEvaluation, adjudicate, evaluate_plan
@@ -116,6 +117,7 @@ class Decision:
     pool: Optional[PoolReport] = None
     warnings: List[str] = field(default_factory=list)
     horizon: Optional[Dict[str, Any]] = None
+    field_model: str = "uncalibrated"
     generated_at: str = ""
 
     @property
@@ -141,6 +143,8 @@ class Decision:
             # None means the decision was made on a single gameweek and is
             # myopic. Recorded so that is never inferred from silence.
             "horizon": self.horizon,
+            # Whether the weekly right tail was measured or merely modelled.
+            "field_model": self.field_model,
             "warnings": list(self.warnings),
             "execution": "propose_only",
             # What this engine is measured to be worth, including the criterion
@@ -167,6 +171,7 @@ def decide(
     tail_threshold: int = 70,
     xp_by_week: Optional[Sequence[Mapping[int, float]]] = None,
     transfer_horizon: Optional[int] = None,
+    field_calibrated_gameweeks: int = 0,
 ) -> Decision:
     """
     Produce one entry's proposal.
@@ -258,6 +263,20 @@ def decide(
             f"{shortlist_size} requested; the pool may be too constrained"
         )
 
+    # The weekly objective ranks on a modelled right tail. Until the field model
+    # has held its calibration band for six consecutive gameweeks that tail is
+    # not measured, and presenting it as though it were would be worse than
+    # having no weekly team — it would be acted on with confidence it has not
+    # earned. Fall back to expected points, and say so loudly.
+    if objective == "weekly" and not field_is_usable(field_calibrated_gameweeks):
+        warnings.append(
+            f"field model is UNCALIBRATED ({field_calibrated_gameweeks} of "
+            f"{REQUIRED_CALIBRATED_GAMEWEEKS} consecutive gameweeks inside the "
+            f"band); the weekly team fell back to the EV-optimal plan, and any "
+            f"tail figure below is modelled rather than measured"
+        )
+        objective = "season"
+
     ranked = adjudicate(
         plans, draws_select, positions, rules=rules, xp=xp,
         objective=objective, tail_threshold=tail_threshold,
@@ -294,6 +313,10 @@ def decide(
         pool=pool_report,
         warnings=warnings,
         horizon=horizon_meta,
+        field_model=(
+            "calibrated" if field_is_usable(field_calibrated_gameweeks)
+            else "uncalibrated"
+        ),
         generated_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
     )
 
