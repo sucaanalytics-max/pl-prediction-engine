@@ -19,6 +19,8 @@ from __future__ import annotations
 
 import unittest
 
+import numpy as np
+
 from pipeline.decide.milp import Candidate
 from pipeline.fpl.rules import load_rules
 
@@ -134,16 +136,29 @@ class TestBuildHorizon(unittest.TestCase):
         Never discounted. With a decay a hit five weeks out would cost about two
         points, and the solver would plan hits it never takes — distorting this
         week's decision through a phantom future.
+
+        The cost is split across two columns: the purchase carries
+        -FT_USE_COST and the hit carries +FT_USE_COST, so a hit nets exactly -4
+        rather than paying the free-transfer cost it never consumed. The NET is
+        what must be four, which is why this sums them rather than reading the
+        hits column alone.
         """
         pool = _pool()
         c, _, _, _, index = build_horizon(pool, _flat(pool, 5), RULES)
         for w in range(5):
-            self.assertEqual(c[index.week(w).hits], -4.0, f"week {w}")
+            wi = index.week(w)
+            self.assertAlmostEqual(
+                c[wi.hits] + c[wi.buy][0], -4.0, places=9, msg=f"week {w}"
+            )
 
     def test_only_the_final_week_banks_transfer_value(self):
         """
-        Crediting every week would pay the solver repeatedly for carrying the
-        same transfer forward, making banking dominate any use of it.
+        The terminal bank is a boundary value — what transfers carried past the
+        end of the horizon are worth — so it belongs in the last week only.
+
+        It is NOT the anti-churn term. Over a long horizon it saturates at the
+        cap regardless of early spending, which is what FT_USE_COST exists to
+        fix; see test_negligible_gain_does_not_burn_a_transfer_at_any_horizon.
         """
         pool = _pool()
         c, _, _, _, index = build_horizon(pool, _flat(pool, 4), RULES)
@@ -340,9 +355,17 @@ class TestHorizonShortlist(unittest.TestCase):
         self.assertEqual(len(set(squads)), 4, "week-0 squads repeated")
 
     def test_shortlist_is_ordered_by_objective(self):
+        """
+        Non-increasing to within solver tolerance. Exact comparison is wrong
+        here: genuinely tied plans come back differing at the 1e-14 level, which
+        is HiGHS arithmetic rather than a real ordering violation.
+        """
         plans = solve_horizon(self.pool, _flat(self.pool, 3), RULES, top_k=3)
         objectives = [p.objective for p in plans]
-        self.assertEqual(objectives, sorted(objectives, reverse=True))
+        for better, worse in zip(objectives, objectives[1:]):
+            self.assertGreaterEqual(
+                better, worse - 1e-6, f"shortlist out of order: {objectives}"
+            )
 
     def test_default_returns_a_single_plan(self):
         self.assertEqual(len(solve_horizon(self.pool, _flat(self.pool, 2), RULES)), 1)
@@ -415,23 +438,163 @@ class TestAccrualChain(unittest.TestCase):
         )[0]
         self._check_chain(plan, 0)
 
-    def test_hit_is_never_taken_to_unlock_bank_value(self):
+    def test_solver_columns_agree_with_the_replayed_chain(self):
         """
-        The solver could in principle inflate a hit to raise 'remaining'. Each
-        hit costs 4 and the largest single banked marginal is 1.75, so it never
-        pays — but that is an argument about the objective, so it is asserted:
-        no week may take a hit while also banking transfers, since a genuine hit
-        means the allowance was exhausted.
+        Read the MILP's OWN hits and remaining columns, not the replayed values.
+
+        The previous version of this test compared two numbers ``_extract``
+        derives from the same pair of scalars, so at most one could ever be
+        positive and it could not fail for any solver output whatsoever. The
+        formulation permits hits and remaining to be simultaneously large — the
+        only bound is ``remaining <= ft - used + hits`` — and nothing would have
+        noticed.
         """
-        for initial in (0, 1, 3, 5):
+        from scipy.optimize import Bounds, LinearConstraint, milp
+
+        from pipeline.decide.horizon import build_horizon
+
+        initial = 3
+        c, rows, lo, hi, index = build_horizon(
+            self.pool, _flat(self.pool, 4), RULES,
+            current_squad=self.squad, bank=0, free_transfers=initial,
+        )
+        lower, upper = np.zeros(index.size), np.ones(index.size)
+        integrality = np.ones(index.size)
+        for w in range(index.weeks):
+            wi = index.week(w)
+            upper[wi.hits] = float(RULES.squad_size)
+            upper[wi.free_transfers] = float(RULES.max_banked_free_transfers)
+            upper[wi.remaining] = float(RULES.max_banked_free_transfers)
+            integrality[wi.ft_bank] = 0.0
+
+        result = milp(
+            c=-c,
+            constraints=[LinearConstraint(np.array(rows), np.array(lo), np.array(hi))],
+            integrality=integrality, bounds=Bounds(lower, upper),
+            options={"mip_rel_gap": 0.0, "time_limit": 120.0},
+        )
+        self.assertTrue(result.success)
+
+        held = initial
+        for w in range(index.weeks):
+            wi = index.week(w)
+            solver_hits = int(round(result.x[wi.hits]))
+            solver_remaining = int(round(result.x[wi.remaining]))
+            solver_held = int(round(result.x[wi.free_transfers]))
+            bought = int(round(result.x[wi.buy].sum()))
+            used = bought - (RULES.squad_size - len(self.squad) if w == 0 else 0)
+
+            self.assertEqual(solver_held, held, f"week {w}: held column drifted")
+            self.assertEqual(
+                solver_hits, max(0, used - held),
+                f"week {w}: solver charged {solver_hits} hits for {used} transfers "
+                f"on {held} free",
+            )
+            self.assertEqual(
+                solver_remaining, max(0, held - used),
+                f"week {w}: solver's remaining column is {solver_remaining}, "
+                f"true value {max(0, held - used)}",
+            )
+            self.assertFalse(
+                solver_hits > 0 and solver_remaining > 0,
+                f"week {w}: {solver_hits} hits alongside {solver_remaining} banked "
+                f"— the solver inflated a hit to unlock bank value",
+            )
+            held = min(RULES.max_banked_free_transfers, max(0, held - used) + 1)
+
+    def test_negligible_gain_does_not_burn_a_transfer_at_any_horizon(self):
+        """
+        The churn regression. A terminal-bank credit cannot carry the anti-churn
+        threshold over a long horizon: one transfer accrues weekly and the bank
+        caps at five, so by week five the terminal bank saturates whether or not
+        early transfers were spent, and spending one became free.
+
+        Measured before the fix: offered +0.01 a week, the single-week MILP
+        declined while the six- and eight-week horizons both spent the transfer
+        — churning for 0.08 projected points against a transfer worth 1.75.
+        """
+        held = set(self.squad)
+        worst = min(
+            (c for c in self.pool if c.element_id in held and c.position == "MID"),
+            key=lambda c: c.xp,
+        )
+        pool = []
+        for c in self.pool:
+            if c.element_id in held:
+                pool.append(c)
+            elif c.position == "MID" and c.team == worst.team:
+                pool.append(Candidate(**{
+                    **c.__dict__, "buy_price": worst.sell_price,
+                    "sell_price": worst.sell_price, "xp": worst.xp + 0.01,
+                }))
+            else:
+                pool.append(Candidate(**{**c.__dict__, "buy_price": 2000, "xp": 0.0}))
+
+        for weeks in (2, 4, 6, 8):
             plan = solve_horizon(
-                self.pool, _flat(self.pool, 4), RULES, current_squad=self.squad,
-                bank=0, free_transfers=initial,
+                pool, [[c.xp for c in pool] for _ in range(weeks)], RULES,
+                current_squad=self.squad, bank=0, free_transfers=1,
             )[0]
-            for w, week in enumerate(plan.weeks):
-                if week.hits > 0:
-                    self.assertEqual(
-                        week.free_transfers_banked, 0,
-                        f"ft0={initial} week {w}: took a hit while banking "
-                        f"{week.free_transfers_banked} transfers",
-                    )
+            self.assertEqual(
+                plan.now.transfers_in, [],
+                f"eval={weeks}: burned a free transfer for +0.01 a week",
+            )
+
+    def test_worthwhile_gain_is_still_taken_at_every_horizon(self):
+        """
+        The companion. Without it the test above would pass on a horizon that
+        simply never transfers, which is a different failure with one symptom.
+        """
+        held = set(self.squad)
+        worst = min(
+            (c for c in self.pool if c.element_id in held and c.position == "MID"),
+            key=lambda c: c.xp,
+        )
+        pool = []
+        for c in self.pool:
+            if c.element_id in held:
+                pool.append(c)
+            elif c.position == "MID" and c.team == worst.team:
+                pool.append(Candidate(**{
+                    **c.__dict__, "buy_price": worst.sell_price,
+                    "sell_price": worst.sell_price, "xp": worst.xp + 5.0,
+                }))
+            else:
+                pool.append(Candidate(**{**c.__dict__, "buy_price": 2000, "xp": 0.0}))
+
+        for weeks in (2, 4, 6, 8):
+            plan = solve_horizon(
+                pool, [[c.xp for c in pool] for _ in range(weeks)], RULES,
+                current_squad=self.squad, bank=0, free_transfers=1,
+            )[0]
+            self.assertEqual(
+                len(plan.now.transfers_in), 1,
+                f"eval={weeks}: declined a +5.0/week upgrade",
+            )
+
+    def test_hit_costs_exactly_four_not_four_plus_the_use_cost(self):
+        """
+        A hit is not a free transfer being consumed. Charging both would price
+        it at -5.75 and make the agent far too reluctant to take a correct hit.
+        """
+        c, _, _, _, index = build_horizon(self.pool, _flat(self.pool, 3), RULES)
+        for w in range(3):
+            wi = index.week(w)
+            # buy carries -FT_USE_COST and hits carries +FT_USE_COST, so a hit
+            # nets exactly -4 once its purchase is accounted for.
+            self.assertAlmostEqual(
+                c[wi.hits] + c[wi.buy][0], -4.0, places=9,
+                msg=f"week {w}: a hit does not net -4",
+            )
+
+    def test_explicit_zero_transfer_horizon_is_reported_honestly(self):
+        """
+        `or` would treat 0 as unset. A plan solved with transfers forbidden
+        everywhere would then be published claiming six weeks were available.
+        """
+        plan = solve_horizon(
+            self.pool, _flat(self.pool, 4), RULES, current_squad=self.squad,
+            bank=0, transfer_horizon=0,
+        )[0]
+        self.assertEqual(plan.transfer_horizon, 0)
+        self.assertEqual(sum(len(w.transfers_in) for w in plan.weeks), 0)

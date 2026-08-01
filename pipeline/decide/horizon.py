@@ -68,6 +68,31 @@ logger = logging.getLogger(__name__)
 TRANSFER_HORIZON = 6
 EVAL_HORIZON = 8
 
+# Cost of consuming a free transfer, charged in the week it is used.
+#
+# This exists because the terminal-bank credit CANNOT carry the anti-churn
+# threshold over a long horizon, which is a property of the accrual rule rather
+# than a coding slip. One transfer accrues every week and the bank caps at five,
+# so over eight weeks the terminal bank saturates at the cap whether or not
+# early transfers were spent. Measured, with all projections zeroed so the
+# objective is nothing but the free-transfer term:
+#
+#     eval weeks   1      2      3      4      5      6      8
+#     objective  1.750  3.100  4.100  4.700  5.000  5.000  5.000
+#
+# Flat from week five on. The consequence was live at the production default:
+# offered an upgrade worth +0.01 a week, the single-week MILP correctly declined
+# it while the eight-week horizon spent the transfer — churning for 0.08
+# projected points against a transfer worth 1.75.
+#
+# Charging at the point of USE does not telescope through the accrual identity,
+# so it cannot saturate. At H=1 it reproduces the single-week behaviour exactly:
+# the objectives differ by a constant, which cannot move the argmax.
+#
+# Hits are exempt. A hit already costs its full -4 and is not a free transfer
+# being consumed, so charging both would price it at -5.75.
+FT_USE_COST = FT_MARGINAL_VALUE[0]
+
 
 @dataclass
 class WeekIndex:
@@ -268,8 +293,18 @@ def build_horizon(
         # two points — so the solver would plan hits it never takes and distort
         # today's decision through a phantom future.
         c[wi.hits] = -4.0
-        # Only the final week's bank carries value. Crediting every week would
-        # pay the solver repeatedly for carrying the same transfer forward.
+
+        # Consuming a free transfer costs FT_USE_COST, charged where it is
+        # spent. Written as (buy - hits) so that a HIT pays -4 and nothing more:
+        # the -FT_USE_COST on the purchase and the +FT_USE_COST on the hit
+        # cancel, leaving a hit at exactly its face value.
+        c[wi.buy] -= FT_USE_COST
+        c[wi.hits] += FT_USE_COST
+
+        # The terminal bank still carries value: transfers held past the end of
+        # the horizon are worth something, and the horizon has to stop
+        # somewhere. It is NOT the anti-churn term — it saturates over a long
+        # horizon, which is what FT_USE_COST exists to fix.
         if w == weeks - 1:
             c[wi.ft_bank] = np.array(FT_MARGINAL_VALUE, dtype=float)
 
@@ -492,7 +527,13 @@ def solve_horizon(
         plans.append(
             _extract_horizon(
                 result.x, candidates, index, rules, bank_value, free_transfers,
-                len(current_squad), transfer_horizon or TRANSFER_HORIZON, -result.fun,
+                # `or` would treat an explicit 0 as unset, so a plan solved with
+                # transfers forbidden in every week would be published claiming
+                # six weeks of transfers were available — the audit record
+                # misstating the constraint the plan was produced under.
+                len(current_squad),
+                TRANSFER_HORIZON if transfer_horizon is None else transfer_horizon,
+                -result.fun,
             )
         )
 
