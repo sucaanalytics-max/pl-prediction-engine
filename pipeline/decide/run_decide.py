@@ -131,6 +131,14 @@ def decide(
     positions = positions_of(candidates)
     xp = xp_of(candidates)
 
+    # Bank is cash in hand. With a squad held it cannot be defaulted to the full
+    # budget without inventing 100.0m, so the MILP refuses; make the omission a
+    # clear error here rather than letting it surface from two layers down.
+    if held and bank is None:
+        raise ValueError(
+            "bank (cash in hand, in tenths) is required when a squad is held"
+        )
+
     plans: List[Plan] = solve(
         candidates, rules, current_squad=held, bank=bank,
         free_transfers=free_transfers, top_k=shortlist_size,

@@ -88,6 +88,17 @@ class InfeasibleError(RuntimeError):
     """The MILP has no feasible solution. Never return a squad in this case."""
 
 
+class SolverLimitError(RuntimeError):
+    """
+    HiGHS stopped on a time or iteration limit, not on a proof.
+
+    Deliberately distinct from :class:`InfeasibleError`. A limit means "I could
+    not finish", infeasibility means "there is no answer", and conflating them
+    sends whoever reads the failure to the wrong place entirely — the pool
+    builder instead of the time budget.
+    """
+
+
 @dataclass(frozen=True)
 class Candidate:
     """One player the optimiser may select."""
@@ -512,9 +523,51 @@ def solve(
     if not candidates:
         raise InfeasibleError("no candidates supplied")
 
+    ids = [c.element_id for c in candidates]
+    duplicates = {e for e in ids if ids.count(e) > 1} if len(set(ids)) != len(ids) else set()
+    if duplicates:
+        # Two columns for one footballer: the quota, club-limit and budget rows
+        # treat them as different players, so he can be selected twice and his
+        # points counted twice while len(squad) == 15 still passes. Exactly the
+        # R11 shape — legal-looking, plausible, and about the wrong players.
+        raise InfeasibleError(f"duplicate element_ids in the pool: {sorted(duplicates)}")
+
     index = VarIndex(n=len(candidates))
-    bank = rules.budget_tenths if bank is None else int(bank)
-    owned_count = len({c.element_id for c in candidates} & set(current_squad))
+    held = set(current_squad)
+    owned_count = len({c.element_id for c in candidates} & held)
+
+    # `bank` is CASH IN HAND, not the total budget. Defaulting it to the full
+    # budget while a squad is held hands the optimiser a second 100.0m: measured
+    # on a 73.0m held squad, it returned a 115.0m team, over budget, with every
+    # assertion passing and nothing downstream re-checking cost. Refuse instead —
+    # inventing money silently is the failure this module exists to prevent.
+    if bank is None:
+        if owned_count:
+            raise ValueError(
+                f"bank must be given when a squad is held ({owned_count} players); "
+                f"it is cash in hand, and defaulting it to the full budget would "
+                f"invent {rules.budget_tenths / 10:.1f}m that does not exist"
+            )
+        bank = rules.budget_tenths
+    bank = int(bank)
+
+    # Ownership is derived from current_squad. Candidate.owned is a second record
+    # of the same fact, so the two can disagree — and the dangerous direction is
+    # the pool flagging players as owned while the caller passes no squad: the
+    # solver then builds from scratch and reports fifteen transfers in, i.e. a
+    # full wildcard presented as this week's routine decision, with no error.
+    #
+    # Checked only when the field is actually populated. Callers that leave it at
+    # its default are not asserting anything, and demanding they mirror
+    # current_squad would be requiring the duplicate record rather than guarding
+    # against it.
+    flagged = {c.element_id for c in candidates if c.owned}
+    if flagged and flagged != held:
+        raise ValueError(
+            f"Candidate.owned disagrees with current_squad: "
+            f"{len(flagged - held)} flagged owned but not held, "
+            f"{len(held - flagged)} held but not flagged owned"
+        )
 
     # milp minimises, so the maximisation objective is negated exactly once,
     # here, and the sign is undone when reporting.
@@ -548,15 +601,28 @@ def solve(
             bounds=Bounds(lower, upper),
             options={"mip_rel_gap": mip_gap, "time_limit": time_limit},
         )
+        # scipy status: 0 optimal, 1 iteration/time limit, 2 infeasible,
+        # 3 unbounded, 4 other. `success` is (status == 0), so testing it alone
+        # reports a solve that merely ran out of time as "no legal squad exists"
+        # — pointing the operator at the pool builder when the real cause is the
+        # time limit, and on a later iteration silently truncating the shortlist.
+        status = int(getattr(result, "status", 4))
+        if status == 1:
+            raise SolverLimitError(
+                f"HiGHS hit a limit after {k} of {top_k} plans: {result.message}. "
+                f"A legal squad may well exist — raise time_limit or shrink the "
+                f"pool. This is NOT infeasibility."
+            )
         if not result.success or result.x is None:
-            if k == 0:
-                raise InfeasibleError(
-                    f"no legal squad exists: {result.message} "
-                    f"(pool={len(candidates)}, bank={bank}, ft={free_transfers})"
-                )
-            # Running out of distinct squads is normal when the pool is small.
-            logger.info("only %d distinct plans available (asked for %d)", k, top_k)
-            break
+            if status == 2 and k > 0:
+                # Genuinely out of distinct squads: every remaining one is
+                # excluded by a no-good cut. Normal on a small pool.
+                logger.info("only %d distinct plans available (asked for %d)", k, top_k)
+                break
+            raise InfeasibleError(
+                f"no legal squad exists (status {status}): {result.message} "
+                f"(pool={len(candidates)}, bank={bank}, ft={free_transfers})"
+            )
 
         plan = _extract(
             result.x, candidates, index, rules, bank, free_transfers, owned_count,
@@ -573,6 +639,19 @@ def solve(
             LinearConstraint(cut.reshape(1, -1), -np.inf, float(rules.squad_size - 1))
         )
 
+    if mip_gap > 0 and len(plans) > 1:
+        # HiGHS terminates at kOptimal once inside a relative gap, so each plan
+        # is an incumbent rather than a proven optimum and the sequence can come
+        # back out of order — measured on a 230-player pool at gap 0.20, plan 2
+        # scored below plan 3. Sorting restores a usable shortlist; it cannot
+        # restore the guarantee, so say so rather than let the docstring's
+        # "true optimum" claim stand silently false.
+        plans.sort(key=lambda p: -p.objective)
+        logger.warning(
+            "mip_gap=%.3f: plans are incumbents within the gap, not proven "
+            "optima; re-sorted by objective and the shortlist may omit the true best",
+            mip_gap,
+        )
     return plans
 
 
@@ -646,6 +725,7 @@ def recompute_objective(
     candidates: Sequence[Candidate],
     bench_weight: float = BENCH_WEIGHT,
     vice_weight: float = VICE_WEIGHT,
+    ft_marginals: Optional[Sequence[float]] = None,
 ) -> float:
     """
     Recompute a plan's objective directly from its player lists.
@@ -653,6 +733,13 @@ def recompute_objective(
     Independent of the matrix algebra, and deliberately so — this is the check
     that the coefficients land in the columns the constraints think they do. If
     this and the solver disagree, the index is wrong.
+
+    The weights must be the ones the solve actually used. They are parameters
+    rather than module constants because ``solve`` exposes both, and a check
+    hardcoded to the defaults disagrees by construction on any other setting —
+    measured at ``bench_weight=0.30``, a 3.42-point gap that is purely the
+    mismatch. That turns the one tripwire for a mis-indexed column into either a
+    permanent false alarm or a check nobody runs on the tuned path.
     """
     xp = {c.element_id: c.xp for c in candidates}
     starters = sum(xp[p] for p in plan.xi)
@@ -663,5 +750,13 @@ def recompute_objective(
         + xp[plan.captain]
         + vice_weight * xp[plan.vice]
         - 4.0 * plan.hits
-        + ft_value(plan.free_transfers_banked)
+        + _banked_value(plan.free_transfers_banked, ft_marginals)
     )
+
+
+def _banked_value(banked: int, marginals: Optional[Sequence[float]]) -> float:
+    """Value of banked transfers under a specific schedule, defaulting to ours."""
+    if marginals is None:
+        return ft_value(banked)
+    banked = max(0, int(banked))
+    return float(sum(marginals[: min(banked, len(marginals))]))

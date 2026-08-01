@@ -38,6 +38,7 @@ from pipeline.decide.milp import (
     VarIndex,
     build_constraints,
     build_objective,
+    derive_ft_schedule,
     ft_value,
     recompute_objective,
     solve,
@@ -56,8 +57,13 @@ def _pool(xp_scale: float = 1.0) -> list[Candidate]:
     """
     A deterministic candidate pool.
 
-    Expected points rise with price so the optimiser has a real trade-off rather
-    than a dominant pick, and prices vary enough that the budget binds.
+    Price and expected points are deliberately DECOUPLED. When xp is an affine
+    function of price the most expensive player is always also the best and the
+    best value, so an objective that ranked by cost would satisfy every test
+    here — including the one asserting the captain is the highest scorer. The
+    price tier is keyed on ``i % 8`` and the points tier on ``(i * 3) % 8``, a
+    permutation of the same eight levels, so a genuine points-versus-cost
+    trade-off exists and the budget still binds.
     """
     candidates: list[Candidate] = []
     element_id = 1
@@ -76,7 +82,7 @@ def _pool(xp_scale: float = 1.0) -> list[Candidate]:
                     # forbids -- passes every test in this file. Verified by
                     # mutation: with buy == sell it was undetectable.
                     sell_price=price - 5,
-                    xp=xp_scale * (1.0 + 0.9 * (i % 8)),
+                    xp=xp_scale * (1.0 + 0.9 * ((i * 3) % 8)),
                 )
             )
             element_id += 1
@@ -516,6 +522,108 @@ class TestSolve(unittest.TestCase):
             plan.objective, recompute_objective(plan, self.pool), delta=1e-6
         )
 
+    def test_bank_must_be_given_when_a_squad_is_held(self):
+        """
+        Bank is cash in hand, not the total budget. Defaulting it to the budget
+        with a squad held hands the optimiser a second 100.0m: measured on a
+        73.0m held squad it returned a 115.0m team, over budget, with every
+        assertion passing and nothing downstream re-checking cost.
+        """
+        squad = _cheapest_legal_squad(self.pool)
+        with self.assertRaises(ValueError):
+            solve(self.pool, RULES, current_squad=squad, free_transfers=5)
+
+    def test_opening_build_still_defaults_to_the_full_budget(self):
+        """The default is right when nothing is held — that case must not regress."""
+        plan = solve(self.pool, RULES)[0]
+        spend = sum(self.by_id[p].buy_price for p in plan.squad)
+        self.assertLessEqual(spend, RULES.budget_tenths)
+
+    def test_held_squad_cannot_exceed_the_budget(self):
+        """
+        The closure that the phantom-bank bug broke: whatever the solver does,
+        the resulting squad must cost no more than budget minus remaining bank.
+        """
+        squad = _cheapest_legal_squad(self.pool)
+        held_cost = sum(self.by_id[p].buy_price for p in squad)
+        bank = RULES.budget_tenths - held_cost
+
+        plan = solve(
+            self.pool, RULES, current_squad=squad, bank=bank, free_transfers=5,
+        )[0]
+        cost = sum(self.by_id[p].buy_price for p in plan.squad)
+        self.assertLessEqual(cost, RULES.budget_tenths)
+
+    def test_owned_flags_disagreeing_with_current_squad_raise(self):
+        """
+        A pool flagging players owned while no squad is passed would build from
+        scratch and report fifteen transfers in — a wildcard presented as a
+        routine week.
+        """
+        squad = set(_cheapest_legal_squad(self.pool))
+        pool = [
+            Candidate(**{**c.__dict__, "owned": c.element_id in squad})
+            for c in self.pool
+        ]
+        with self.assertRaises(ValueError):
+            solve(pool, RULES, current_squad=(), bank=0)
+
+    def test_duplicate_element_ids_raise(self):
+        """
+        Two columns for one footballer: the quota, club-limit and budget rows
+        treat them as separate players, so he is selectable twice and his points
+        counted twice while len(squad) == 15 still passes.
+        """
+        pool = list(self.pool) + [self.pool[0]]
+        with self.assertRaises(InfeasibleError):
+            solve(pool, RULES)
+
+    def test_partial_squad_arithmetic(self):
+        """
+        slots_to_fill is otherwise only ever 15 or 0, so the mid-season
+        partial-squad case the transfer-flow comment exists to justify is
+        untested. Proven by mutation: replacing the formula with one that is
+        identical at 15 and 0 passed every other test in this file.
+
+        A 14-man squad must buy one player as a SLOT FILL, not a transfer.
+        """
+        full = _cheapest_legal_squad(self.pool)
+        partial = full[:-1]
+        dropped = self.by_id[full[-1]]
+
+        plan = solve(
+            self.pool, RULES, current_squad=partial,
+            bank=dropped.buy_price, free_transfers=1, max_transfers=0,
+        )[0]
+
+        self.assertEqual(len(plan.squad), RULES.squad_size)
+        self.assertEqual(len(plan.transfers_in), 1, "the empty slot was not filled")
+        self.assertEqual(plan.transfers_out, [])
+        self.assertEqual(plan.hits, 0, "filling an empty slot is not a transfer")
+        self.assertEqual(plan.free_transfers_banked, 1, "the free transfer was spent")
+
+    def test_armband_cannot_sit_on_the_bench(self):
+        """
+        The captain/vice row binds to the XI, not to the squad. Binding it to
+        the squad is invisible on a pool where the best player always starts, so
+        this uses two elite keepers — only one of whom can play.
+
+        A benched vice can never inherit the armband, so the mutant produces a
+        selection FPL would reject.
+        """
+        pool = [
+            Candidate(**{**c.__dict__, "xp": 60.0}) if c.position == "GKP" and c.element_id <= 2
+            else c
+            for c in self.pool
+        ]
+        by_id = {c.element_id: c for c in pool}
+        plan = solve(pool, RULES)[0]
+
+        self.assertIn(plan.captain, plan.xi)
+        self.assertIn(plan.vice, plan.xi)
+        keepers_starting = [p for p in plan.xi if by_id[p].position == "GKP"]
+        self.assertEqual(len(keepers_starting), 1, "more than one keeper started")
+
     def test_solver_failure_raises_not_returns(self):
         """
         An impossible pool must raise. Returning [] would be read by the caller
@@ -550,6 +658,79 @@ class TestSolve(unittest.TestCase):
         self.assertLessEqual(poor_cost, tight)
         self.assertGreater(rich_cost, poor_cost)
         self.assertGreater(rich.objective, poor.objective)
+
+
+@unittest.skipUnless(HAVE_SCIPY, "scipy/HiGHS not installed")
+class TestDeriveFtSchedule(unittest.TestCase):
+    """
+    The schedule this derives decides, every week, whether a transfer is taken
+    or banked. It had no test at all, so an off-by-one in the differencing or a
+    hit leaking into V(n) would have shifted all five marginals in the same
+    direction while ``monotone_non_increasing`` stayed True — and the docstring
+    invites a human to adopt the result.
+    """
+
+    def setUp(self):
+        self.pool = _pool()
+        self.by_id = {c.element_id: c for c in self.pool}
+        squad = _cheapest_legal_squad(self.pool)
+        held_cost = sum(self.by_id[p].buy_price for p in squad)
+        self.scenario = (self.pool, squad, RULES.budget_tenths - held_cost)
+
+    def test_returns_one_marginal_per_transfer(self):
+        result = derive_ft_schedule([self.scenario], RULES, max_transfers=3)
+        self.assertEqual(len(result["marginals"]), 3)
+        self.assertEqual(result["n_scenarios"], 1)
+
+    def test_marginals_are_never_negative(self):
+        """
+        V(n) is a maximum over a feasible set that grows with n, so it cannot
+        fall. A negative marginal means a hit leaked into the objective — which
+        is exactly what would happen if free_transfers and max_transfers were
+        not pinned together.
+        """
+        result = derive_ft_schedule([self.scenario], RULES, max_transfers=4)
+        for i, value in enumerate(result["marginals"], 1):
+            self.assertGreaterEqual(value, -1e-9, f"marginal {i} is negative")
+
+    def test_no_hit_is_ever_charged_during_derivation(self):
+        """
+        The measurement is of squad improvement. If a -4 were included, every
+        marginal would be understated by up to 4 points with no outward sign.
+        """
+        pool, squad, bank = self.scenario
+        for n in range(4):
+            plan = solve(
+                pool, RULES, current_squad=squad, bank=bank,
+                free_transfers=n, max_transfers=n,
+                ft_marginals=[0.0] * len(FT_MARGINAL_VALUE),
+            )[0]
+            self.assertEqual(plan.hits, 0, f"a hit was charged at n={n}")
+
+    def test_ft_value_is_switched_off_during_derivation(self):
+        """
+        Leaving the value term on would pay the solver for banking and then
+        report the payment back as the finding. Verified by checking a zeroed
+        schedule really reaches the objective.
+        """
+        index = VarIndex(n=len(self.pool))
+        zeroed = build_objective(
+            self.pool, index, RULES, ft_marginals=[0.0] * len(FT_MARGINAL_VALUE)
+        )
+        self.assertTrue((zeroed[index.ft_bank] == 0.0).all())
+
+        default = build_objective(self.pool, index, RULES)
+        self.assertTrue((default[index.ft_bank] > 0.0).all())
+
+    def test_wrong_length_schedule_is_rejected(self):
+        """A short schedule would silently truncate the banked value."""
+        index = VarIndex(n=len(self.pool))
+        with self.assertRaises(ValueError):
+            build_objective(self.pool, index, RULES, ft_marginals=[1.0, 0.5])
+
+    def test_empty_scenarios_raise(self):
+        with self.assertRaises(ValueError):
+            derive_ft_schedule([], RULES)
 
 
 if __name__ == "__main__":
