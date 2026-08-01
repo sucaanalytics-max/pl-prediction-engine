@@ -11,6 +11,7 @@ What works today: refreshing the expected-points artifact, and delivering it.
 """
 from __future__ import annotations
 
+import json
 import logging
 import os
 import sys
@@ -27,12 +28,7 @@ DEFAULT_SITE_URL = "https://example.invalid/decisions"
 
 # Phases whose implementation lands in a later increment. Listed explicitly so a
 # run reports "not built" instead of silently doing nothing and exiting green.
-NOT_YET_IMPLEMENTED = {
-    Phase.SEAL: "sealing requires the ledger (Increment 6) and the optimiser (Increment 7)",
-    Phase.SETTLE_PROVISIONAL: "settlement requires the ledger (Increment 6)",
-    Phase.SETTLE_FINAL: "settlement requires the ledger (Increment 6)",
-    Phase.REFIT: "the gated refit is Increment 9",
-}
+NOT_YET_IMPLEMENTED: Dict[Phase, str] = {}
 
 
 def refresh_expected_points(
@@ -127,6 +123,101 @@ def refresh_expected_points(
     }
 
 
+def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
+    """
+    Produce and seal the pre-deadline forecast.
+
+    The seal happens BEFORE notification and the notification failing is fatal:
+    a forecast nobody received is not a decision, and the ledger would otherwise
+    record a delivery that never happened.
+    """
+    from pipeline.data.fpl_api import fetch_bootstrap_static
+    from pipeline.learning.ledger import resolve_universe, seal_forecast
+
+    outcome = refresh_expected_points(predictions_dir, state.gameweek)
+    if outcome.get("status") != "ok":
+        logger.error("cannot seal: projection unavailable (%s)", outcome)
+        return 1
+
+    artifact = json.loads(Path(outcome["artifact"]).read_text())
+    bootstrap = fetch_bootstrap_static(force=True, allow_stale=False)
+
+    path = seal_forecast(
+        gameweek=state.gameweek,
+        deadline=state.deadline.isoformat(),
+        projections=artifact["players"],
+        universe=resolve_universe(bootstrap),
+        bootstrap=bootstrap,
+        predictions_dir=predictions_dir,
+        metadata={
+            "artifact_metadata": artifact.get("metadata", {}),
+            "goal_rates": outcome.get("goal_rates"),
+        },
+        dry_run=dry_run,
+    )
+    logger.info("sealed GW%s -> %s", state.gameweek, path)
+
+    # The decision itself needs the optimiser (Increment 7). The forecast is
+    # sealed regardless, because a gameweek without a sealed projection is a
+    # permanently lost observation whether or not a decision existed.
+    logger.warning(
+        "no decision published: the optimiser is not built yet. The FORECAST is "
+        "sealed, so this gameweek is still measurable."
+    )
+    return 0
+
+
+def _settle(predictions_dir: Path, state: ScheduleState, final: bool) -> int:
+    """Fetch settled outcomes and record them against the seal."""
+    import urllib.request
+
+    from pipeline.config import FPL_EVENT_LIVE
+    from pipeline.learning.outcomes import settle_gameweek
+
+    url = FPL_EVENT_LIVE.format(gameweek=state.gameweek)
+    request = urllib.request.Request(
+        url, headers={"User-Agent": "pl-prediction-engine/1.0"}
+    )
+    with urllib.request.urlopen(request, timeout=60) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+
+    path = settle_gameweek(
+        state.gameweek, predictions_dir, payload, provisional=not final
+    )
+    logger.info(
+        "settled GW%s (%s) -> %s",
+        state.gameweek,
+        "final" if final else "provisional",
+        path,
+    )
+    return 0
+
+
+def _score(predictions_dir: Path, state: ScheduleState) -> int:
+    """Score a settled gameweek. The gated refit itself is Increment 9."""
+    from pipeline.learning.scoring import UnscoreableError, score_gameweek
+
+    try:
+        report = score_gameweek(state.gameweek, predictions_dir)
+    except UnscoreableError as exc:
+        # Not a crash: an honest refusal. Exits non-zero so it is visible rather
+        # than scrolling past in a log.
+        logger.error("GW%s is unscoreable: %s", state.gameweek, exc)
+        return 1
+
+    logger.info(
+        "scored GW%s: %d players, points MAE %.3f",
+        state.gameweek,
+        report.n_scored,
+        report.metrics["points"]["mae"],
+    )
+    logger.warning(
+        "no parameter refit attempted: the gated refit is Increment 9. The "
+        "score is recorded, so the evidence accumulates meanwhile."
+    )
+    return 0
+
+
 def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
     """Execute the resolved phase. Returns a process exit code."""
     predictions_dir = Path(PREDICTIONS_DIR)
@@ -154,6 +245,17 @@ def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
         outcome = refresh_expected_points(predictions_dir, state.gameweek)
         logger.info("refresh: %s", outcome)
         return 0
+
+    if state.phase is Phase.SEAL:
+        return _seal(predictions_dir, state, dry_run=dry_run)
+
+    if state.phase in (Phase.SETTLE_PROVISIONAL, Phase.SETTLE_FINAL):
+        return _settle(
+            predictions_dir, state, final=state.phase is Phase.SETTLE_FINAL
+        )
+
+    if state.phase is Phase.REFIT:
+        return _score(predictions_dir, state)
 
     reason = NOT_YET_IMPLEMENTED.get(state.phase)
     if reason:
