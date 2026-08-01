@@ -109,34 +109,88 @@ class TestBenchOrder(unittest.TestCase):
 
 
 class TestEvaluatePlan(unittest.TestCase):
+    def _exact(self, draws, plan, chip=None):
+        """Every draw forced through the resolver — the oracle for the fast path."""
+        bench = order_bench(plan, POSITIONS, XP)
+        column = {e: i for i, e in enumerate(draws.element_ids)}
+        return [
+            score_squad(
+                XI, bench, plan.captain, plan.vice, POSITIONS,
+                {p: int(draws.points[d, column[p]]) for p in SQUAD},
+                {p: bool(draws.minutes[d, column[p]] >= 1) for p in SQUAD},
+                rules=RULES, chip=chip, transfer_cost=4 * plan.hits,
+            ).total
+            for d in range(draws.points.shape[0])
+        ]
+
     def test_fast_path_equals_score_squad(self):
         """
         The vectorised path and the exact resolver must agree on every draw.
 
-        Computed here by forcing every draw through score_squad and comparing
-        against evaluate_plan's mean. Any divergence means the fast path is
-        scoring a different team than the resolver would.
+        Any divergence means the fast path is scoring a different team than the
+        resolver would, for the majority of draws, invisibly.
         """
         draws = _draws()
         plan = _plan()
-        bench = order_bench(plan, POSITIONS, XP)
-        column = {e: i for i, e in enumerate(draws.element_ids)}
-
-        expected = []
-        for d in range(draws.points.shape[0]):
-            played = {p: bool(draws.minutes[d, column[p]] >= 1) for p in SQUAD}
-            row = {p: int(draws.points[d, column[p]]) for p in SQUAD}
-            expected.append(
-                score_squad(
-                    XI, bench, plan.captain, plan.vice, POSITIONS, row, played,
-                    rules=RULES, transfer_cost=0,
-                ).total
-            )
+        expected = self._exact(draws, plan)
 
         result = evaluate_plan(plan, draws, POSITIONS, rules=RULES, xp=XP)
         self.assertAlmostEqual(result.mean_points, float(np.mean(expected)), places=9)
         self.assertAlmostEqual(
             result.sd_points, float(np.std(expected, ddof=1)), places=9
+        )
+
+    def test_fast_path_equals_score_squad_under_every_chip(self):
+        """
+        The same equivalence must hold with a chip active, and it does not hold
+        via the fast path: Bench Boost counts all fifteen and Triple Captain
+        multiplies by three, neither of which a plain XI sum expresses.
+
+        Without this test the chip was silently dropped for every draw in which
+        all eleven starters appeared -- most of them -- so a Bench Boost week
+        scored 54.5 against a true 60.5, understating the bench that is the
+        entire point of the chip, and the agent would have ranked playing it as
+        strictly worse than not playing it.
+        """
+        draws = _draws()
+        plan = _plan()
+        for chip in (None, "3xc", "bboost"):
+            with self.subTest(chip=chip):
+                expected = float(np.mean(self._exact(draws, plan, chip=chip)))
+                result = evaluate_plan(
+                    plan, draws, POSITIONS, rules=RULES, xp=XP, chip=chip
+                )
+                self.assertAlmostEqual(result.mean_points, expected, places=9)
+
+    def test_bench_boost_is_worth_more_than_no_chip(self):
+        """
+        A directional sanity check independent of the resolver: counting four
+        extra players cannot lower the score. This would have failed on the old
+        code, which dropped the bench on most draws.
+        """
+        draws = _draws()
+        plain = evaluate_plan(_plan(), draws, POSITIONS, rules=RULES, xp=XP)
+        boosted = evaluate_plan(
+            _plan(), draws, POSITIONS, rules=RULES, xp=XP, chip="bboost"
+        )
+        self.assertGreater(boosted.mean_points, plain.mean_points)
+
+    def test_triple_captain_adds_exactly_one_more_captain_share(self):
+        """
+        With everyone appearing, 3xc minus 2x is exactly the captain's mean.
+        Anything else means the multiplier is being applied inconsistently
+        across the two scoring paths.
+        """
+        draws = _draws(force_absence=False)
+        column = {e: i for i, e in enumerate(draws.element_ids)}
+        plain = evaluate_plan(_plan(captain=31), draws, POSITIONS, rules=RULES, xp=XP)
+        tripled = evaluate_plan(
+            _plan(captain=31), draws, POSITIONS, rules=RULES, xp=XP, chip="3xc"
+        )
+        self.assertAlmostEqual(
+            tripled.mean_points - plain.mean_points,
+            float(draws.points[:, column[31]].mean()),
+            places=9,
         )
 
     def test_autosub_path_is_actually_exercised(self):

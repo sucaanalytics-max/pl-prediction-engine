@@ -70,7 +70,12 @@ def _pool(xp_scale: float = 1.0) -> list[Candidate]:
                     position=position,
                     team=CLUBS[element_id % len(CLUBS)],
                     buy_price=price,
-                    sell_price=price,
+                    # Deliberately NOT equal to buy_price. When the two are the
+                    # same the budget row cannot distinguish them, and crediting
+                    # sales at now_cost -- the exact error the sell-on fee rule
+                    # forbids -- passes every test in this file. Verified by
+                    # mutation: with buy == sell it was undetectable.
+                    sell_price=price - 5,
                     xp=xp_scale * (1.0 + 0.9 * (i % 8)),
                 )
             )
@@ -337,31 +342,74 @@ class TestSolve(unittest.TestCase):
         for better, worse in zip(plans, plans[1:]):
             self.assertGreaterEqual(better.objective + 1e-9, worse.objective)
 
-    def test_selling_price_is_used_not_buy_price(self):
+    def _sell_price_scenario(self, target_price: int):
         """
-        A player who has risen sells for less than he now costs. Using now_cost
-        would overstate the bank on every sale and let the solver buy a squad it
-        cannot afford — the error compounds across a season of transfers.
+        A squad with exactly one possible transfer, priced at the boundary.
+
+        The held midfielder was bought at 40 and is now worth 60, so he sells for
+        40 + floor(20 * 0.5) = 50, NOT 60. With a bank of zero, an upgrade priced
+        between 51 and 60 is affordable if and only if the solver wrongly credits
+        the sale at now_cost.
         """
         squad = _cheapest_legal_squad(self.pool)
-        # Mark one held player as having risen 1.0m since purchase.
-        held = squad[0]
-        pool = [
-            Candidate(**{**c.__dict__, "buy_price": c.buy_price + 10})
-            if c.element_id == held else c
-            for c in self.pool
-        ]
-        by_id = {c.element_id: c for c in pool}
+        held_id = next(
+            c.element_id for c in self.pool
+            if c.element_id in set(squad) and c.position == "MID"
+        )
+        club = next(c.team for c in self.pool if c.element_id == held_id)
+        target_id = next(
+            c.element_id for c in self.pool
+            if c.element_id not in set(squad) and c.position == "MID" and c.team == club
+        )
 
-        plan = solve(
-            pool, RULES, current_squad=squad, bank=0, free_transfers=1,
-            max_transfers=1,
-        )[0]
+        pool = []
+        for c in self.pool:
+            if c.element_id == held_id:
+                pool.append(Candidate(**{**c.__dict__, "buy_price": 60, "sell_price": 50}))
+            elif c.element_id == target_id:
+                # Same club, so the club limit cannot be what blocks the move,
+                # and a large xp gain so the FT value cannot be what blocks it.
+                pool.append(Candidate(**{
+                    **c.__dict__, "buy_price": target_price,
+                    "sell_price": target_price, "xp": 30.0,
+                }))
+            else:
+                # Everyone else priced out of reach, so this is the ONLY move
+                # available and the test cannot pass via some unrelated transfer.
+                pool.append(Candidate(**{**c.__dict__, "buy_price": 2000, "xp": 0.0}))
+        return squad, pool, held_id, target_id
 
-        spend = sum(by_id[p].buy_price for p in plan.transfers_in)
-        raised = sum(by_id[p].sell_price for p in plan.transfers_out)
-        self.assertEqual(plan.bank_after, 0 - spend + raised)
-        self.assertGreaterEqual(plan.bank_after, 0, "solver spent money it lacked")
+    def test_sale_credited_at_selling_price_not_now_cost(self):
+        """
+        A player who has risen sells for less than he now costs. Crediting the
+        sale at now_cost overstates the bank on every sale, and the error
+        compounds across a season into a squad FPL would reject.
+
+        Priced at 55: affordable only on the wrong (now_cost = 60) credit, so the
+        correct solver must decline despite a 30-point gain on offer.
+        """
+        squad, pool, _, target_id = self._sell_price_scenario(target_price=55)
+        plan = solve(pool, RULES, current_squad=squad, bank=0, free_transfers=1)[0]
+
+        self.assertEqual(
+            plan.transfers_in, [],
+            "solver bought a 55 player with only 50 raised: sale credited at now_cost",
+        )
+        self.assertEqual(plan.bank_after, 0)
+
+    def test_the_same_move_is_taken_when_genuinely_affordable(self):
+        """
+        The companion direction. Without it the test above would pass on a solver
+        that simply never transfers, which is a different bug with the same
+        symptom.
+        """
+        squad, pool, held_id, target_id = self._sell_price_scenario(target_price=50)
+        plan = solve(pool, RULES, current_squad=squad, bank=0, free_transfers=1)[0]
+
+        self.assertEqual(plan.transfers_in, [target_id])
+        self.assertEqual(plan.transfers_out, [held_id])
+        self.assertEqual(plan.bank_after, 0, "50 raised, 50 spent")
+        self.assertEqual(plan.hits, 0)
 
     def test_free_transfers_after_accrues_and_caps(self):
         squad = _cheapest_legal_squad(self.pool)
@@ -398,12 +446,14 @@ class TestSolve(unittest.TestCase):
             if c.element_id in held:
                 pool.append(c)
             elif c.position == "MID" and c.team == worst.team:
-                # The single legal upgrade: same club and price, so neither the
-                # budget nor the club limit can block it.
+                # The single legal upgrade. Priced at what the outgoing player
+                # actually RAISES, not at what he now costs, so the swap is
+                # exactly affordable from a zero bank and the test measures the
+                # transfer threshold rather than the budget.
                 pool.append(
                     Candidate(
                         element_id=c.element_id, position="MID", team=worst.team,
-                        buy_price=worst.buy_price, sell_price=worst.buy_price,
+                        buy_price=worst.sell_price, sell_price=worst.sell_price,
                         xp=worst.xp + upgrade_gain,
                     )
                 )

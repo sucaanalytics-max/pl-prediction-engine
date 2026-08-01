@@ -150,11 +150,19 @@ def evaluate_plan(
     totals = np.empty(n_draws, dtype=np.float64)
 
     # Fast path: when all eleven starters appear there is no substitution and no
-    # captaincy fallback, so the score is a plain sum. This is not an
-    # approximation -- it is the same arithmetic score_squad would perform, and
-    # a test asserts the two agree draw for draw. It matters because the fast
-    # path covers most draws and the slow path is a Python loop.
-    fast = np.where(all_xi_played)[0]
+    # captaincy fallback, so the score is a plain sum. This is the same
+    # arithmetic score_squad would perform, asserted draw for draw by a test. It
+    # matters because the fast path covers most draws and the slow path is a
+    # Python loop.
+    #
+    # It is CORRECT ONLY WITH NO CHIP, and that is why a chip disables it
+    # entirely. Bench Boost counts all fifteen and Triple Captain multiplies by
+    # three, neither of which this sum expresses; applying it to some draws and
+    # the resolver to others would score one squad under two different rulebooks
+    # and silently understate a Bench Boost week by most of its bench. Chips are
+    # played about four times a season, so routing them through the exact
+    # resolver costs nothing that matters.
+    fast = np.array([], dtype=int) if chip else np.where(all_xi_played)[0]
     if fast.size:
         totals[fast] = (
             points[np.ix_(fast, xi_cols)].sum(axis=1)
@@ -164,7 +172,7 @@ def evaluate_plan(
 
     n_autosub = 0
     n_vice = 0
-    slow = np.where(~all_xi_played)[0]
+    slow = np.setdiff1d(np.arange(n_draws), fast, assume_unique=False)
     for d in slow:
         played = {p: bool(appeared[d, i]) for i, p in enumerate(squad)}
         row = {p: int(points[d, column[p]]) for p in squad}
@@ -205,6 +213,7 @@ def adjudicate(
     xp: Optional[Mapping[int, float]] = None,
     objective: str = "season",
     tail_threshold: int = 70,
+    chip: Optional[str] = None,
 ) -> List[PlanEvaluation]:
     """
     Rank the MILP's shortlist on the true objective. Best first.
@@ -239,7 +248,8 @@ def adjudicate(
 
     key = f"p_ge_{tail_threshold}"
     evaluations = [
-        evaluate_plan(p, draws, positions, rules=rules, xp=xp) for p in plans
+        evaluate_plan(p, draws, positions, rules=rules, xp=xp, chip=chip)
+        for p in plans
     ]
 
     if objective == "season":
