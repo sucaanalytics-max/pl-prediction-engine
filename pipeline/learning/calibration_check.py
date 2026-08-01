@@ -22,6 +22,30 @@ them. Reporting one alone would let ties flatter or damn the model arbitrarily.
 **Tail reliability.** The forecast states P(>=5), P(>=10) and P(>=15) explicitly.
 Those are exactly the numbers a captaincy or differential decision keys on, and
 they are directly checkable against realised frequency.
+
+Findings so far on the ``p_ge_2`` miss, recorded because two of the three are
+REFUTED hypotheses and re-testing them would be wasted work:
+
+* **Not the minutes model.** Measured on GW25 of the 2025-26 archive, walk-
+  forward from data before it: P(appears) 0.3744 predicted against 0.3709
+  realised, P(60+) 0.2550 against 0.2509, cameo share of appearing players
+  0.3189 against 0.3234, starters per fixture-team 11.22 against 11.00. The
+  "cameo versus start mass split" this file's earlier note blamed does not
+  exist — the minutes layer is calibrated at every level that can be checked.
+
+* **Not the flat goal rates.** Replacing the flat 1.45/1.20 with fitted
+  per-fixture rates moves the p_ge_2 bias from +0.0727 to +0.0718 on the same
+  universe. Fitted rates matter enormously for WHICH defender to pick, and the
+  clean-sheet spread they produce runs 0.05 to 0.60 against a flat 0.24 — but
+  they do not fix this tail.
+
+* **It is a defender-and-keeper effect, through goals conceded.** Of the 1,371
+  sixty-minute appearances that scored under two points, 79% are DEF or GKP and
+  86% of those conceded two or more. P(>=2 | 60+) is 0.699 for defenders and
+  0.773 for keepers against 0.926 for midfielders and 0.941 for forwards. A
+  sixty-minute appearance pays two points automatically, so the whole of this
+  tail is about what claws them back — which is the conceded penalty, not
+  minutes and not cards (only 41% of the sub-two cases carried a yellow).
 """
 from __future__ import annotations
 
