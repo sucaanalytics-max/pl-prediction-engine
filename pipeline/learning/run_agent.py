@@ -413,9 +413,26 @@ def _score(predictions_dir: Path, state: ScheduleState) -> int:
         report.n_scored,
         report.metrics["points"]["mae"],
     )
+    from pipeline.learning.gates import MIN_OBSERVATIONS
+    from pipeline.learning.params import active
+
+    current = active(predictions_dir)
+    logger.info(
+        "active parameter set: v%d (%s)", current.version,
+        current.reason or "no reason recorded",
+    )
+
+    # The gates exist and the store exists; what is missing is the block fitter
+    # that proposes a candidate. Until then this reports the position honestly
+    # rather than doing something approximate — an agent that appears to have
+    # refitted is worse than one that plainly has not.
     logger.warning(
-        "no parameter refit attempted: the gated refit is Increment 9. The "
-        "score is recorded, so the evidence accumulates meanwhile."
+        "no refit proposed: the per-block fitter is not built. The gates "
+        "(pipeline/learning/gates.py) and the versioned store "
+        "(pipeline/learning/params.py) are in place, and a candidate needs at "
+        "least %d scored gameweeks before the confidence sequence can promote "
+        "anything, so the evidence accumulates meanwhile.",
+        MIN_OBSERVATIONS,
     )
     return 0
 
