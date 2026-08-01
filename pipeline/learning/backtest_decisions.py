@@ -44,6 +44,38 @@ the -35 is well inside noise — the two are indistinguishable on one season —
 it is not the result the criteria asked for and it should not be dressed up as
 one.
 
+The gap is not a few bad weeks. Per-gameweek differences against greedy have
+median -2.0, behind in 18 of 31 weeks and ahead in 10, with the same captain
+picked in 28 of 31 and near-identical transfer counts (44 against 46). The
+squads simply drift apart; nothing in the decomposition localises it.
+
+**Second season, and the sign does not hold.** 2024-25 predates the defensive
+contribution, so it was run with DefCon scoring switched off — otherwise the
+projection would credit defenders with points that could not be realised, which
+is the position most transfers turn on. Rule-compatible, gameweeks 8-38:
+
+    strategy        total
+    do_nothing       1257
+    greedy_churn     1757
+    agent            1817
+
+    agent vs do_nothing    +560 total, +18.06/GW (se 3.83, t=+4.72), ahead 25/31
+    agent vs greedy_churn   +60 total,  +1.94/GW (se 2.93, t=+0.66), ahead 13/31
+
+Against do-nothing the result is robust: +150 and +560, same sign, both
+significant, criterion met twice. Against greedy the margin is -35 one season
+and +60 the next. The plan required the sign to hold on both, and it does not.
+Pooled over 62 gameweeks the difference is roughly +0.4 a gameweek against a
+standard error of about 1.6 — indistinguishable from zero, which is the honest
+summary.
+
+This is exactly the situation R1 predicted: at a paired standard deviation
+around 5-8 points a gameweek, separating a one-point-a-gameweek effect needs on
+the order of 200 gameweeks. Two seasons cannot settle it, and no amount of
+re-running will change that. What the backtest DOES establish is the thing it
+can establish — that the agent is far better than inertia, on both seasons, by a
+margin large relative to its own error.
+
 The obvious suspect is the free-transfer cost making the agent too cautious, so
 it was swept. It cannot be tuned here, and the reason is worth keeping:
 
