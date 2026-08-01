@@ -30,6 +30,7 @@ import pandas as pd
 
 from pipeline.config import PARAM_REGISTRY
 from pipeline.fpl.rules import POSITIONS, Rules, load_rules, normalise_position
+from pipeline.models.minutes import MinutesModel
 
 logger = logging.getLogger(__name__)
 
@@ -198,15 +199,29 @@ class PlayerEventRates:
                 "recoveries_per_90": 90.0 * float(rows["recoveries"].sum()) / minutes,
             }
 
+        # Recency weighting, in exposure terms. The minutes model already does
+        # this and it improved its Brier by 29%; the identical defect sat here
+        # untouched, so a player's form from eight months ago counted as heavily
+        # as last week. Weights multiply MINUTES, because these are per-90 rates:
+        # down-weighting a stale appearance must shrink its exposure and its
+        # events together or the ratio is unchanged.
+        frame["_fixture_index"] = MinutesModel._fixture_index(frame)
+        half_life = _param("events.recency_half_life_fixtures")
+        latest = float(frame["_fixture_index"].max()) if len(frame) else 0.0
+        frame["_w"] = 0.5 ** (
+            (latest - frame["_fixture_index"].astype(float)) / max(half_life, 1e-6)
+        )
+
         strength = _param("events.rate_shrinkage_per90")
         for player_key, rows in frame.groupby(key, dropna=True):
             positions = rows["position_resolved"].dropna()
             position = positions.iloc[-1] if len(positions) else "MID"
             prior = self.by_position.get(position, FALLBACK_RATES[position])
-            minutes = float(rows["minutes"].sum())
+            weights = rows["_w"]
+            minutes = float((rows["minutes"] * weights).sum())
 
             def rate(column: str, prior_key: str) -> float:
-                total = float(rows[column].sum())
+                total = float((rows[column] * weights).sum())
                 return (90.0 * total + strength * prior[prior_key]) / (
                     minutes + strength
                 )

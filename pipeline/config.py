@@ -292,6 +292,21 @@ PARAM_REGISTRY = {
             "unlike the per-player conditional it stands in for."
         ),
     },
+    "events.recency_half_life_fixtures": {
+        "value": 40.0,
+        "bounds": (1.0, 80.0),
+        "tier": "F",
+        "source": (
+            "Half-life in fixtures for exponentially down-weighting a player's "
+            "older event exposure. Selected on the 2024-25 walk-forward "
+            "backtest, validated on held-out 2025-26.\n\n"
+            "Longer than the minutes half-life of 1.5 on purpose. Team selection "
+            "is a decision that flips week to week, so the last one or two "
+            "matter most; scoring RATES are a slower-moving property of a "
+            "player and averaging them over one or two games would be almost "
+            "pure noise. Same mechanism, different natural timescale."
+        ),
+    },
     "events.rate_shrinkage_per90": {
         "value": 450.0,
         "bounds": (90.0, 2000.0),
