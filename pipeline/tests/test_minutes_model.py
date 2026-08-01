@@ -336,3 +336,60 @@ class BacktestAcceptanceTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class HorizonAvailabilityTests(unittest.TestCase):
+    """
+    Availability must decay with forecast horizon.
+
+    Measured in our own archive over both seasons: players who started gameweek
+    g average 69.4 minutes at g+1 and 56.3 at g+9. Without this the horizon
+    treats a GW+6 projection as being as certain as a GW+1 one, overstating
+    far-horizon availability by ~15% and making distant fixtures look better
+    than they are.
+    """
+
+    def setUp(self):
+        self.model = MinutesModel().fit(
+            _history(_regular_starter() + _never_plays()),
+            key="name_key", position_column="position_norm",
+        )
+
+    def test_the_immediate_gameweek_is_undiscounted(self):
+        from pipeline.models.minutes import horizon_availability_factor
+
+        self.assertEqual(horizon_availability_factor(0), 1.0)
+
+    def test_availability_falls_monotonically_with_horizon(self):
+        from pipeline.models.minutes import horizon_availability_factor
+
+        values = [horizon_availability_factor(h) for h in range(8)]
+        self.assertTrue(all(b <= a for a, b in zip(values, values[1:])), values)
+
+    def test_the_decay_flattens_rather_than_compounding_to_zero(self):
+        """Risk accumulates toward a base rate; it does not compound forever."""
+        from pipeline.models.minutes import horizon_availability_factor
+
+        far = horizon_availability_factor(30)
+        self.assertGreater(far, 0.5)
+        self.assertLess(
+            horizon_availability_factor(6) - horizon_availability_factor(7),
+            horizon_availability_factor(0) - horizon_availability_factor(1),
+        )
+
+    def test_a_distant_projection_is_less_confident_than_a_near_one(self):
+        near = self.model.predict("MID", "nailed on", horizon=0)
+        far = self.model.predict("MID", "nailed on", horizon=6)
+        self.assertLess(far.p_appears, near.p_appears)
+        self.assertAlmostEqual(
+            far.p_start + far.p_bench_appear + far.p_unused, 1.0, places=6
+        )
+
+    def test_a_hard_gated_player_stays_gated_at_every_horizon(self):
+        """The decay scales availability; it must not resurrect an unavailable player."""
+        for horizon in (0, 3, 6):
+            with self.subTest(horizon=horizon):
+                roles = self.model.predict(
+                    "MID", "nailed on", status="u", horizon=horizon
+                )
+                self.assertEqual(roles.p_appears, 0.0)

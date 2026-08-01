@@ -152,6 +152,25 @@ def availability(
     return 0.0, f"unrecognised_status_{code}"
 
 
+def horizon_availability_factor(horizon: int) -> float:
+    """
+    How much a current availability estimate should be discounted ``horizon``
+    gameweeks ahead. 1.0 for the immediate gameweek.
+
+    A player fit today may be injured, rested or out of the side in six weeks.
+    That risk accumulates but does not compound forever — it reverts toward a
+    long-run base rate — so this is ``floor + (1 - floor) * rho^h`` rather than a
+    geometric decay.
+
+    Without this, the horizon treats a GW+6 projection as being as certain as a
+    GW+1 one, which measurably overstates far-horizon availability by around
+    15% and makes distant fixtures look more attractive than they are.
+    """
+    floor = _param("minutes.horizon_availability_floor")
+    rho = _param("minutes.horizon_availability_rho")
+    return float(floor + (1.0 - floor) * rho ** max(0, int(horizon)))
+
+
 def _shrink(
     observed_numerator: float,
     observed_denominator: float,
@@ -318,6 +337,7 @@ class MinutesModel:
         chance_of_playing: Optional[float] = None,
         news_age_days: Optional[float] = None,
         fallback_start_rate: Optional[float] = None,
+        horizon: int = 0,
     ) -> RoleProbabilities:
         """
         Role probabilities for one player-fixture.
@@ -377,6 +397,13 @@ class MinutesModel:
             p_60_if_start = prior["p_60_if_start"]
 
         avail, gate_reason = availability(status, chance_of_playing, news_age_days)
+
+        # Discount availability with forecast horizon. Applied to the AVAILABILITY
+        # term rather than to the role split, so it reduces the chance of
+        # featuring at all without distorting the start-versus-bench mix — which
+        # is what an accumulating injury and rotation hazard actually does.
+        if horizon > 0:
+            avail *= horizon_availability_factor(horizon)
 
         # Roles are exhaustive before gating; the gate then scales the two
         # appearing branches and the residual accrues to "unused". This ordering

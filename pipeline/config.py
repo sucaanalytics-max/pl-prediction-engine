@@ -262,6 +262,37 @@ PARAM_REGISTRY = {
             "player without updating the chance field."
         ),
     },
+    "minutes.horizon_availability_floor": {
+        "value": 0.80,
+        "bounds": (0.5, 1.0),
+        "tier": "F",
+        "source": (
+            "Availability decays with forecast horizon and then flattens: a "
+            "player fit today may be injured, rested or out of favour in six "
+            "weeks, but the risk accumulates toward a long-run base rate rather "
+            "than compounding forever.\n\n"
+            "Measured in our own archive over both seasons (12,000+ anchors per "
+            "step): players who started gameweek g average 69.4 minutes at g+1 "
+            "and 56.3 at g+9, a ratio of 0.811 with a steep-then-flat shape. "
+            "Fitted floor + (1-floor)*rho^h gives floor 0.80, rho 0.73, RMSE "
+            "0.0025 across nine steps.\n\n"
+            "The structure was noticed in FPL Review's own exported projections, "
+            "whose xMins for GW1 starters falls 87.8 to 74.1 across ten "
+            "gameweeks (ratio 0.844) — broad-based, monotone, with no player "
+            "collapsing to zero. The INSIGHT is theirs; these PARAMETERS are "
+            "fitted to our data, not copied."
+        ),
+    },
+    "minutes.horizon_availability_rho": {
+        "value": 0.73,
+        "bounds": (0.3, 0.99),
+        "tier": "F",
+        "source": (
+            "Rate of reversion toward minutes.horizon_availability_floor. See "
+            "that parameter for the fit. Governs how fast current team-selection "
+            "information stops being informative about a future gameweek."
+        ),
+    },
     "minutes.news_staleness_days": {
         "value": 21.0,
         "bounds": (7.0, 60.0),
