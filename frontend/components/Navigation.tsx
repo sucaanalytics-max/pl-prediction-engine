@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import {
   Activity,
+  ArrowUpRight,
   BarChart3,
   BookOpenText,
   Crown,
   ChevronRight,
+  Flag,
   GitCompareArrows,
   LayoutDashboard,
   Layers3,
@@ -77,6 +79,10 @@ const NAV_GROUPS: NavGroup[] = [
     items: [{ href: "/health", label: "Model Health", icon: Activity }],
   },
 ];
+
+// Paddock is a separate static dashboard for the sports outside this engine.
+// Deliberately a plain external link: it shares no data, code or deploy with us.
+const PADDOCK_URL = "https://suca-paddock.netlify.app";
 
 function timeAgo(timestamp: number) {
   const diff = Math.floor((Date.now() - timestamp) / 1000);
@@ -201,6 +207,21 @@ export default function Navigation() {
         </nav>
 
         <div className="portal-sidebar-footer">
+          <a
+            className="cross-app-link"
+            href={PADDOCK_URL}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMobileOpen(false)}
+          >
+            <span className="cross-app-mark"><Flag size={14} /></span>
+            <span>
+              <strong>Other sports</strong>
+              <small>F1 · Darts · Cricket</small>
+            </span>
+            <ArrowUpRight size={13} aria-hidden="true" />
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
           <div className="deadline-mini">
             <span><ShieldCheck size={14} /> GW{fplState?.event.id ?? 1} planning</span>
             <strong>{compactDeadline(fplState?.event.deadlineTime)}</strong>
