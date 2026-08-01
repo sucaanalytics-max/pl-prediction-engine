@@ -162,7 +162,27 @@ def load_archive_season(
     frame["team_canonical"] = frame["team"].map(normalize_team_name)
     frame["name_key"] = frame["name"].map(_normalise_name)
     frame["season"] = season
-    return frame
+
+    # Upstream occasionally emits a player-fixture row twice. (element, GW,
+    # fixture) is the natural primary key: a double gameweek shares element and
+    # GW but has DISTINCT fixtures, so this cannot drop a legitimate second
+    # match.
+    #
+    # Silent and damaging if left. The rows are byte-identical, so the replay
+    # oracle passes — it checks each row against itself — while every per-player
+    # AGGREGATE double-counts. Measured on 2025-26: Junior Kroupi's season total
+    # reads 140 instead of 113, a 24% overstatement, which flows straight into
+    # the backtest's realised scoring and the event-rate fits.
+    before = len(frame)
+    frame = frame.drop_duplicates(subset=["element", "GW", "fixture"], keep="first")
+    dropped = before - len(frame)
+    if dropped:
+        logger.warning(
+            "%s: dropped %d duplicate player-fixture row(s); upstream emitted "
+            "them twice and every per-player aggregate would double-count",
+            season, dropped,
+        )
+    return frame.reset_index(drop=True)
 
 
 def has_defcon(frame: pd.DataFrame) -> bool:
