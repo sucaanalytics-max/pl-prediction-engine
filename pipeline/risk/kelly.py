@@ -367,26 +367,42 @@ def find_value_bets(
                     "market": market_name,
                     "market_type": "1x2",
                     "confidence": _confidence_tier(stake["edge"], "1x2"),
+                    "confidence_tier": _confidence_tier(stake["edge"], "1x2"),
+                    "bookmaker": odds_benchmark.get(f"bookmaker_{outcome_key}"),
                     **stake,
                 })
 
     # ── Over/Under Goals ─────────────────────────────────────────────────
+    totals_odds = odds_benchmark.get("totals", {})
     for line in ["2.5", "3.5"]:
         ou = probs.get("over_under", {}).get(line, {})
+        line_odds = totals_odds.get(line, {})
+        devig_context = {
+            direction: line_odds.get(direction)
+            for direction in ("over", "under")
+            if line_odds.get(direction)
+        }
         for direction_label, direction_key in [("Over", "over"), ("Under", "under")]:
             prob = ou.get(direction_key, 0)
             if prob <= 0:
                 continue
-            odds_key = f"implied_{direction_key}{line.replace('.', '')}"
-            implied = odds_benchmark.get(odds_key)
-            if implied and implied > 0:
-                odds = 1 / implied
-                stake = kelly_stake(prob, odds, bankroll, min_edge=min_edge_1x2)
+            decimal_odds = line_odds.get(direction_key)
+            if decimal_odds and decimal_odds > 1:
+                stake = kelly_stake(
+                    prob,
+                    decimal_odds,
+                    bankroll,
+                    min_edge=min_edge_1x2,
+                    market_odds=devig_context,
+                    outcome_key=direction_key,
+                )
                 if stake["recommendation"] == "bet":
                     value_bets.append({
                         "market": f"{direction_label} {line} Goals",
                         "market_type": "over_under",
                         "confidence": _confidence_tier(stake["edge"], "over_under"),
+                        "confidence_tier": _confidence_tier(stake["edge"], "over_under"),
+                        "bookmaker": line_odds.get(f"bookmaker_{direction_key}"),
                         **stake,
                     })
 
@@ -394,7 +410,13 @@ def find_value_bets(
     btts_probs = probs.get("btts", {})
     btts_odds_data = odds_benchmark.get("btts", {})
     if isinstance(btts_probs, dict) and isinstance(btts_odds_data, dict):
-        btts_devig_odds = {k: v for k, v in btts_odds_data.items() if v and v > 1}
+        btts_devig_odds = {
+            key: value
+            for key, value in btts_odds_data.items()
+            if key in ("yes", "no")
+            and isinstance(value, (int, float))
+            and value > 1
+        }
         for direction, prob in [("BTTS Yes", btts_probs.get("yes", 0)), ("BTTS No", btts_probs.get("no", 0))]:
             bk_key = "yes" if "Yes" in direction else "no"
             bk_odds = btts_odds_data.get(bk_key)
@@ -408,6 +430,8 @@ def find_value_bets(
                         "market": direction,
                         "market_type": "btts",
                         "confidence": _confidence_tier(stake["edge"], "btts"),
+                        "confidence_tier": _confidence_tier(stake["edge"], "btts"),
+                        "bookmaker": btts_odds_data.get(f"bookmaker_{bk_key}"),
                         **stake,
                     })
 
@@ -418,15 +442,33 @@ def find_value_bets(
         for line_str, line_odds in corners_odds.items():
             line = float(line_str)
             for direction in ["over", "under"]:
-                model_prob = corner_probs.get(f"{direction}_{line}", 0)
+                model_prob = (
+                    corner_probs.get(str(line), {}).get(direction, 0)
+                    if isinstance(corner_probs.get(str(line)), dict)
+                    else corner_probs.get(f"{direction}_{line}", 0)
+                )
                 bk_odds = line_odds.get(direction)
                 if model_prob > 0 and bk_odds and bk_odds > 1:
-                    stake = kelly_stake(model_prob, bk_odds, bankroll, min_edge=min_edge_corners)
+                    market_context = {
+                        key: line_odds.get(key)
+                        for key in ("over", "under")
+                        if line_odds.get(key)
+                    }
+                    stake = kelly_stake(
+                        model_prob,
+                        bk_odds,
+                        bankroll,
+                        min_edge=min_edge_corners,
+                        market_odds=market_context,
+                        outcome_key=direction,
+                    )
                     if stake["recommendation"] == "bet":
                         value_bets.append({
                             "market": f"Corners {direction.title()} {line}",
                             "market_type": "corners",
                             "confidence": _confidence_tier(stake["edge"], "corners"),
+                            "confidence_tier": _confidence_tier(stake["edge"], "corners"),
+                            "bookmaker": line_odds.get(f"bookmaker_{direction}"),
                             **stake,
                         })
 
@@ -437,15 +479,33 @@ def find_value_bets(
         for line_str, line_odds in cards_odds.items():
             line = float(line_str)
             for direction in ["over", "under"]:
-                model_prob = card_probs.get(f"{direction}_{line}", 0)
+                model_prob = (
+                    card_probs.get(str(line), {}).get(direction, 0)
+                    if isinstance(card_probs.get(str(line)), dict)
+                    else card_probs.get(f"{direction}_{line}", 0)
+                )
                 bk_odds = line_odds.get(direction)
                 if model_prob > 0 and bk_odds and bk_odds > 1:
-                    stake = kelly_stake(model_prob, bk_odds, bankroll, min_edge=min_edge_cards)
+                    market_context = {
+                        key: line_odds.get(key)
+                        for key in ("over", "under")
+                        if line_odds.get(key)
+                    }
+                    stake = kelly_stake(
+                        model_prob,
+                        bk_odds,
+                        bankroll,
+                        min_edge=min_edge_cards,
+                        market_odds=market_context,
+                        outcome_key=direction,
+                    )
                     if stake["recommendation"] == "bet":
                         value_bets.append({
                             "market": f"Cards {direction.title()} {line}",
                             "market_type": "cards",
                             "confidence": _confidence_tier(stake["edge"], "cards"),
+                            "confidence_tier": _confidence_tier(stake["edge"], "cards"),
+                            "bookmaker": line_odds.get(f"bookmaker_{direction}"),
                             **stake,
                         })
 
@@ -461,6 +521,7 @@ def find_value_bets(
                         "market": f"{player_name} to be Booked",
                         "market_type": "player_booked",
                         "confidence": _confidence_tier(stake["edge"], "player_booked"),
+                        "confidence_tier": _confidence_tier(stake["edge"], "player_booked"),
                         **stake,
                     })
 
@@ -478,6 +539,7 @@ def find_value_bets(
                         "market": f"{player_name} Anytime Goalscorer",
                         "market_type": "goalscorer",
                         "confidence": _confidence_tier(stake["edge"], "goalscorer"),
+                        "confidence_tier": _confidence_tier(stake["edge"], "goalscorer"),
                         **stake,
                     })
 

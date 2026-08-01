@@ -131,12 +131,12 @@ class XGBoostGoalModel:
             colsample_bytree=XGBOOST["colsample_bytree"],
             reg_alpha=XGBOOST["reg_alpha"],
             reg_lambda=XGBOOST["reg_lambda"],
+            early_stopping_rounds=XGBOOST["early_stopping_rounds"],
             random_state=42,
         )
         self.model_home.fit(
             X_train, train["FTHG"],
             eval_set=[(X_val, val["FTHG"])],
-            early_stopping_rounds=50,
             verbose=False,
         )
 
@@ -151,12 +151,12 @@ class XGBoostGoalModel:
             colsample_bytree=XGBOOST["colsample_bytree"],
             reg_alpha=XGBOOST["reg_alpha"],
             reg_lambda=XGBOOST["reg_lambda"],
+            early_stopping_rounds=XGBOOST["early_stopping_rounds"],
             random_state=42,
         )
         self.model_away.fit(
             X_train, train["FTAG"],
             eval_set=[(X_val, val["FTAG"])],
-            early_stopping_rounds=50,
             verbose=False,
         )
 

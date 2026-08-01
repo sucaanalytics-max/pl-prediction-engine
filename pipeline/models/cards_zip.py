@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import poisson
 
-from pipeline.config import CARDS, DERBIES
+from pipeline.config import CARDS, DERBIES, N_SIMULATIONS
 
 logger = logging.getLogger(__name__)
 
@@ -233,7 +233,7 @@ class CardsZIPModel:
         e_away = (1 - p0_a) * lam_a
 
         # Simulate
-        n_sims = 10000
+        n_sims = len(goal_sims) if goal_sims is not None else N_SIMULATIONS
         # ZIP sampling: with prob p_zero, emit 0; otherwise sample Poisson
         sim_home = np.where(
             np.random.random(n_sims) < p0_h,
@@ -247,7 +247,7 @@ class CardsZIPModel:
         )
 
         # Match-state correlation: trailing teams foul more → more cards
-        if goal_sims is not None and len(goal_sims) == n_sims:
+        if goal_sims is not None:
             home_goals = goal_sims[:, 0] if goal_sims.ndim == 2 else goal_sims
             away_goals = goal_sims[:, 1] if goal_sims.ndim == 2 else np.zeros(n_sims)
 

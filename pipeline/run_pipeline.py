@@ -40,17 +40,24 @@ logger = logging.getLogger(__name__)
 PIPELINE_VERSION = "4.1.0"
 
 
-def stable_seed_entropy(season: str, gameweek: int) -> int:
+def stable_seed_entropy(season: str, gameweek: int, stream: str = "fpl") -> int:
     """
-    Deterministic simulation entropy for a (season, gameweek).
+    Deterministic simulation entropy for a (season, gameweek, stream).
 
     Derived rather than random so a rerun reproduces the artifact bit-for-bit:
     a diff then means a real parameter change, not a reseed. Python's built-in
     hash is salted per process and cannot be used for this.
+
+    ``stream`` separates independent draw sets for the same gameweek. The
+    decision path needs two: one the optimiser selects on, and one nothing
+    selected on, so the reported score is not the winner's-curse-inflated
+    number. Passing the same stream label for both would make the measured
+    optimism gap identically zero — which reads as "no selection bias" when it
+    means "not measured".
     """
     import hashlib
 
-    digest = hashlib.sha256(f"{season}:{gameweek}:fpl".encode()).digest()
+    digest = hashlib.sha256(f"{season}:{gameweek}:{stream}".encode()).digest()
     return int.from_bytes(digest[:4], "big")
 
 # Model cache directory

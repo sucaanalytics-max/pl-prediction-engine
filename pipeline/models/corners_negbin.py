@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import nbinom
 
-from pipeline.config import CORNERS, MAX_GOALS
+from pipeline.config import CORNERS, N_SIMULATIONS
 
 logger = logging.getLogger(__name__)
 
@@ -162,12 +162,12 @@ class CornersNegBinModel:
         e_away = n_a * (1 - p_a) / p_a
 
         # Simulate total corners
-        n_sims = 10000
+        n_sims = len(goal_sims) if goal_sims is not None else N_SIMULATIONS
         sim_home = nbinom.rvs(n_h, p_h, size=n_sims)
         sim_away = nbinom.rvs(n_a, p_a, size=n_sims)
 
         # Match-state correlation: boost corners when trailing
-        if goal_sims is not None and len(goal_sims) == n_sims:
+        if goal_sims is not None:
             home_goals = goal_sims[:, 0] if goal_sims.ndim == 2 else goal_sims
             away_goals = goal_sims[:, 1] if goal_sims.ndim == 2 else np.zeros(n_sims)
 

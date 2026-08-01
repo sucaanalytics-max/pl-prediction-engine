@@ -261,3 +261,37 @@ class TestArtifact(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestSeedStreams(unittest.TestCase):
+    """
+    The two draw streams must be independent, and the default must not move.
+
+    A changed default seed would silently alter every existing artifact, turning
+    the reproducibility guarantee -- "a diff means a real parameter change, not a
+    reseed" -- into a false claim.
+    """
+
+    def test_default_stream_is_unchanged_by_the_new_parameter(self):
+        import hashlib
+
+        from pipeline.run_pipeline import stable_seed_entropy
+
+        for gameweek in range(1, 39):
+            legacy = int.from_bytes(
+                hashlib.sha256(f"2627:{gameweek}:fpl".encode()).digest()[:4], "big"
+            )
+            self.assertEqual(stable_seed_entropy("2627", gameweek), legacy)
+
+    def test_streams_are_distinct(self):
+        """
+        Identical streams would make the optimism gap identically zero, which
+        reads as "no selection bias" when it means "not measured".
+        """
+        from pipeline.run_pipeline import stable_seed_entropy
+
+        for gameweek in range(1, 39):
+            self.assertNotEqual(
+                stable_seed_entropy("2627", gameweek),
+                stable_seed_entropy("2627", gameweek, "fpl_report"),
+            )

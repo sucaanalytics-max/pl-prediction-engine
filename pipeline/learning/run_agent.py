@@ -1,13 +1,17 @@
 """
 Agent entry point. Dispatches on the phase the scheduler resolved.
 
-Deliberately incomplete, and loud about it. Sealing needs the ledger
-(Increment 6) and a decision needs the optimiser (Increment 7); neither exists
-yet. Every unbuilt phase exits cleanly with an explicit message rather than
-doing something approximate, because the one thing worse than an agent that
-cannot yet seal is an agent that appears to have sealed.
+The full pre-deadline path now runs: refresh the projection, seal it, then
+propose a squad for each entry. The one remaining stub is the gated refit
+(Increment 9), which exits with an explicit message rather than doing something
+approximate — the one thing worse than an agent that cannot yet refit is an
+agent that appears to have refitted.
 
-What works today: refreshing the expected-points artifact, and delivering it.
+**Ordering is deliberate: seal first, decide second.** Every gameweek without a
+sealed projection is a permanently lost observation, and at 38 a season that is
+the scarcest resource in the project. A decision can be recomputed from the same
+inputs tomorrow; the proof that a forecast predated kickoff cannot. So the
+decision runs inside a try and its failure never un-seals the forecast.
 """
 from __future__ import annotations
 
@@ -19,7 +23,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from pipeline.config import CURRENT_SEASON, FPL_SIM, PREDICTIONS_DIR
+from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS_DIR
 from pipeline.learning.schedule import Phase, ScheduleState, resolve
 
 logger = logging.getLogger(__name__)
@@ -95,16 +99,19 @@ def refresh_expected_points(
     if not specs:
         return {"status": "skipped", "reason": f"no unplayed fixtures in GW{gameweek}"}
 
+    def run_stream(stream: str):
+        return simulate_gameweek(
+            specs,
+            inputs.squads,
+            inputs.events,
+            rules,
+            n_draws=FPL_SIM["n_draws_decision"],
+            seed_entropy=stable_seed_entropy(CURRENT_SEASON, gameweek, stream),
+            all_element_ids=inputs.all_element_ids,
+        )
+
     seed = stable_seed_entropy(CURRENT_SEASON, gameweek)
-    draws = simulate_gameweek(
-        specs,
-        inputs.squads,
-        inputs.events,
-        rules,
-        n_draws=FPL_SIM["n_draws_decision"],
-        seed_entropy=seed,
-        all_element_ids=inputs.all_element_ids,
-    )
+    draws = run_stream("fpl")
     written = export_gameweek_xp(
         draws,
         CURRENT_SEASON,
@@ -120,6 +127,15 @@ def refresh_expected_points(
         "n_players": len(draws.element_ids),
         "artifact": str(written["xp"]),
         "goal_rates": "placeholder_until_horizon_export",
+        # In-memory only, for the decision stage. Deliberately not serialised:
+        # draws are a deterministic function of the committed params plus the
+        # seed, so persisting ~45 MB/day would buy nothing over regenerating.
+        "_draws": draws,
+        "_bootstrap": bootstrap,
+        "_rules": rules,
+        # Built lazily by the caller — a REFRESH run has no use for a second
+        # stream and simulating one would double the cost of the common path.
+        "_second_stream": run_stream,
     }
 
 
@@ -157,14 +173,76 @@ def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
     )
     logger.info("sealed GW%s -> %s", state.gameweek, path)
 
-    # The decision itself needs the optimiser (Increment 7). The forecast is
-    # sealed regardless, because a gameweek without a sealed projection is a
-    # permanently lost observation whether or not a decision existed.
-    logger.warning(
-        "no decision published: the optimiser is not built yet. The FORECAST is "
-        "sealed, so this gameweek is still measurable."
-    )
+    # The forecast is sealed BEFORE any decision is attempted, and stays sealed
+    # even if the decision fails. A gameweek without a sealed projection is a
+    # permanently lost observation, and losing it because an optimiser raised
+    # would be trading the irreplaceable record for the replaceable output.
+    try:
+        decisions = _decide_for_entries(predictions_dir, state, outcome, dry_run)
+    except Exception:
+        logger.exception(
+            "decision failed for GW%s; the FORECAST is sealed so the gameweek "
+            "remains measurable, but no proposal was published",
+            state.gameweek,
+        )
+        return 1
+
+    for label, written in decisions.items():
+        logger.info("decision (%s) -> %s", label, written["decision"])
     return 0
+
+
+def _decide_for_entries(
+    predictions_dir: Path, state: ScheduleState, outcome: Dict[str, Any], dry_run: bool
+) -> Dict[str, Dict[str, Path]]:
+    """
+    Produce a proposal for each entry, on two independent draw streams.
+
+    The two mandates use the SAME draws and differ only in the functional
+    applied to them: the season team maximises expected points, the weekly team
+    maximises a right-tail probability. That is only coherent because clean
+    sheets are drawn jointly — with independent marginals the tail would be a
+    function of the mean and the two teams would be the same squad.
+    """
+    from pipeline.config import FPL_ENTRIES
+    from pipeline.decide.run_decide import decide, write_decision
+
+    artifact = json.loads(Path(outcome["artifact"]).read_text())
+    draws_select = outcome["_draws"]
+    # A second stream costs one more simulation and is what makes the reported
+    # score honest rather than the maximum of a noisy sample.
+    draws_report = outcome["_second_stream"]("fpl_report")
+
+    written: Dict[str, Dict[str, Path]] = {}
+    for label, config in FPL_ENTRIES.items():
+        held = config.get("squad") or []
+        decision = decide(
+            gameweek=state.gameweek,
+            draws_select=draws_select,
+            draws_report=draws_report,
+            bootstrap=outcome["_bootstrap"],
+            rules=outcome["_rules"],
+            xp_rows=artifact["players"],
+            entry_label=label,
+            objective=config["objective"],
+            held=held,
+            # No squad held means the opening build, where the whole budget is
+            # cash. With a squad, the bank must be supplied — defaulting it
+            # would invent 100.0m that does not exist.
+            bank=config.get("bank") if held else None,
+            free_transfers=config.get("free_transfers", 1),
+            purchase_prices=config.get("purchase_prices"),
+        )
+        for warning in decision.warnings:
+            logger.warning("[%s] %s", label, warning)
+
+        if dry_run:
+            logger.info("[%s] dry run: not writing the decision artifact", label)
+            continue
+        written[label] = write_decision(
+            decision, predictions_dir, public_dir=FPL_PUBLIC_DIR
+        )
+    return written
 
 
 def _settle(predictions_dir: Path, state: ScheduleState, final: bool) -> int:

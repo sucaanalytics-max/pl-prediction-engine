@@ -4,6 +4,7 @@ All hyperparameters, URLs, paths, and constants.
 """
 import os
 from pathlib import Path
+from typing import Any, Dict
 
 # ── Paths ──────────────────────────────────────────────────────────────────
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -160,6 +161,47 @@ FPL_SIM = {
     "n_draws_horizon": 5_000,
     "n_draws_ci": 5_000,
     "horizon": 6,
+}
+
+# Where the stripped, publishable copy of a decision goes. The frontend reads
+# from here; the private artifact with counterfactuals and the selection-stream
+# score stays under predictions/fpl/.
+FPL_PUBLIC_DIR = ROOT_DIR / "frontend" / "public" / "predictions" / "fpl"
+
+# ── FPL agent: the two entries ─────────────────────────────────────────────
+# Two teams, two mandates, one simulator. The objectives are mathematically
+# opposed and that is the point: writing your margin over the field as
+# D = sum_j (m_j - EO_j) * P_j, the term sum_j EO_j * xP_j is a constant nobody
+# can influence, so effective ownership CANNOT change the EV-optimal pick — it
+# only changes Var[D]. The season team therefore ignores ownership entirely and
+# the weekly team is entirely about it. Three players from one attack is wrong
+# for one squad and right for the other, from identical projections.
+#
+# `entry_id` stays None until the accounts exist. `squad` empty means the
+# opening build, where the whole budget is cash; once a squad is held, `bank`
+# (cash in hand, in TENTHS) and `purchase_prices` must both be supplied, because
+# selling price is purchase plus half the rise and cannot be recovered from
+# now_cost alone.
+FPL_ENTRIES: Dict[str, Dict[str, Any]] = {
+    "season": {
+        "entry_id": None,
+        "objective": "season",       # maximise expected points; variance is a cost
+        "squad": [],
+        "bank": None,
+        "free_transfers": 1,
+        "purchase_prices": None,
+    },
+    "weekly": {
+        "entry_id": None,
+        # Maximise P(score >= threshold). Variance is an ASSET here: a weekly
+        # prize needs a right-tail outcome, and correlated players are how a
+        # tail is reached.
+        "objective": "weekly",
+        "squad": [],
+        "bank": None,
+        "free_transfers": 1,
+        "purchase_prices": None,
+    },
 }
 
 # ── FPL agent: learnable parameters ────────────────────────────────────────

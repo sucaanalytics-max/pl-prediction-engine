@@ -332,7 +332,7 @@ class EnsemblePredictor:
         for line in [-2.5, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.5]:
             p_cover = sum(
                 matrix[i, j] for i in range(n) for j in range(n)
-                if (i - j) > line
+                if (i - j) + line > 0
             )
             asian_handicap[f"home_{line}"] = float(p_cover)
 

@@ -14,6 +14,7 @@ Free tier: 500 requests/month → ~100 calls/month with caching.
 import json
 import logging
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -24,6 +25,9 @@ from pipeline.config import (
     ODDS_API_BASE,
     ODDS_API_SPORT,
     ODDS_API_CACHE_MINUTES,
+    ODDS_FETCH_ADDITIONAL,
+    ODDS_ADDITIONAL_REGIONS,
+    ODDS_ADDITIONAL_HORIZON_HOURS,
     DATA_PROCESSED,
 )
 from pipeline.data.team_mapping import normalize_team_name
@@ -31,11 +35,11 @@ from pipeline.utils import fetch_with_retry
 
 logger = logging.getLogger(__name__)
 
-# Markets we fetch
+# Featured markets are supported by the bulk /odds endpoint. Additional soccer
+# markets must be requested one event at a time.
 MARKETS = {
-    "main": "h2h,totals,btts",
-    "corners": "alternate_totals_corners",
-    "cards": "alternate_totals_cards",
+    "featured": "h2h,totals",
+    "additional": "btts,alternate_totals_corners,alternate_totals_cards",
 }
 
 # Bookmaker priority (UK-focused, ordered by reliability)
@@ -65,7 +69,7 @@ class OddsAPIClient:
         age_minutes = (time.time() - cache_path.stat().st_mtime) / 60
         return age_minutes < ODDS_API_CACHE_MINUTES
 
-    def _get(self, endpoint: str, params: dict, cache_key: str) -> Optional[dict]:
+    def _get(self, endpoint: str, params: dict, cache_key: str):
         """Make API request with caching."""
         cache_path = self.cache_dir / f"{cache_key}.json"
 
@@ -76,8 +80,7 @@ class OddsAPIClient:
         if not self.api_key:
             logger.warning("No ODDS_API_KEY set. Skipping odds fetch.")
             if cache_path.exists():
-                logger.warning("Using stale odds cache")
-                return json.loads(cache_path.read_text())
+                logger.warning("Stale odds cache exists but will not be used for recommendations")
             return None
 
         url = f"{self.base_url}{endpoint}"
@@ -101,13 +104,12 @@ class OddsAPIClient:
         except Exception as e:
             logger.error(f"Odds API error: {e}")
             if cache_path.exists():
-                logger.warning("Using stale odds cache")
-                return json.loads(cache_path.read_text())
+                logger.warning("Stale odds cache exists but will not be used for recommendations")
             return None
 
     def fetch_match_odds(self, regions: str = "uk") -> Optional[List[Dict]]:
         """
-        Fetch main market odds (1X2, O/U, BTTS) for upcoming EPL matches.
+        Fetch featured 1X2 and total-goals odds for upcoming EPL matches.
 
         Returns list of match dicts with nested bookmaker odds.
         """
@@ -115,47 +117,69 @@ class OddsAPIClient:
             f"/sports/{self.sport}/odds",
             {
                 "regions": regions,
-                "markets": MARKETS["main"],
+                "markets": MARKETS["featured"],
                 "oddsFormat": "decimal",
             },
             cache_key="main_odds",
         )
 
-    def fetch_corners_odds(self, regions: str = "uk") -> Optional[List[Dict]]:
-        """Fetch corners O/U odds for upcoming EPL matches."""
+    def fetch_events(self) -> Optional[List[Dict]]:
+        """Fetch upcoming EPL event identifiers (no market quota cost)."""
         return self._get(
-            f"/sports/{self.sport}/odds",
-            {
-                "regions": regions,
-                "markets": MARKETS["corners"],
-                "oddsFormat": "decimal",
-            },
-            cache_key="corners_odds",
+            f"/sports/{self.sport}/events",
+            {},
+            cache_key="events",
         )
 
-    def fetch_cards_odds(self, regions: str = "uk") -> Optional[List[Dict]]:
-        """Fetch cards O/U odds for upcoming EPL matches."""
+    def fetch_event_additional_odds(
+        self,
+        event_id: str,
+        regions: str = ODDS_ADDITIONAL_REGIONS,
+    ) -> Optional[Dict]:
+        """Fetch opt-in BTTS/corners/cards odds for one event."""
         return self._get(
-            f"/sports/{self.sport}/odds",
+            f"/sports/{self.sport}/events/{event_id}/odds",
             {
                 "regions": regions,
-                "markets": MARKETS["cards"],
+                "markets": MARKETS["additional"],
                 "oddsFormat": "decimal",
             },
-            cache_key="cards_odds",
+            cache_key=f"additional_{event_id}_{regions.replace(',', '-')}",
         )
 
     def fetch_all_odds(self, regions: str = "uk") -> Dict[str, Optional[List[Dict]]]:
         """
-        Fetch all market odds in one go (3 API calls).
+        Fetch low-cost featured odds and optional per-event additional markets.
 
-        Returns dict with keys: main, corners, cards.
+        Additional markets are disabled by default because their per-event quota
+        cost is unsuitable for an unconditional daily gameweek-wide fetch.
         """
-        return {
-            "main": self.fetch_match_odds(regions),
-            "corners": self.fetch_corners_odds(regions),
-            "cards": self.fetch_cards_odds(regions),
-        }
+        main = self.fetch_match_odds(regions)
+        additional = []
+
+        if ODDS_FETCH_ADDITIONAL:
+            events = self.fetch_events() or []
+            now = datetime.now(timezone.utc)
+            horizon_seconds = ODDS_ADDITIONAL_HORIZON_HOURS * 3600
+            for event in events:
+                commence_raw = event.get("commence_time")
+                if not commence_raw:
+                    continue
+                try:
+                    commence = datetime.fromisoformat(
+                        commence_raw.replace("Z", "+00:00")
+                    )
+                except ValueError:
+                    continue
+                seconds_until = (commence - now).total_seconds()
+                if seconds_until < 0 or seconds_until > horizon_seconds:
+                    continue
+
+                event_odds = self.fetch_event_additional_odds(event["id"])
+                if event_odds:
+                    additional.append(event_odds)
+
+        return {"main": main, "additional": additional}
 
 
 def parse_match_odds(raw_odds: List[Dict]) -> Dict[str, Dict]:
@@ -471,7 +495,13 @@ def build_odds_comparison(
             corner_lines = corners_odds[match_key].get("lines", {})
             for line_str, bk_line in corner_lines.items():
                 line = float(line_str)
-                model_over = model.get("probabilities", {}).get("corners", {}).get(f"over_{line}")
+                corner_probs = model.get("probabilities", {}).get("corners", {})
+                line_probs = corner_probs.get(str(line), {})
+                model_over = (
+                    line_probs.get("over")
+                    if isinstance(line_probs, dict)
+                    else corner_probs.get(f"over_{line}")
+                )
                 if model_over and bk_line.get("over"):
                     implied = 1.0 / bk_line["over"]
                     edge = model_over - implied
@@ -485,7 +515,11 @@ def build_odds_comparison(
                             "bookmaker_odds": bk_line["over"],
                             "edge": edge,
                         })
-                model_under = model.get("probabilities", {}).get("corners", {}).get(f"under_{line}")
+                model_under = (
+                    line_probs.get("under")
+                    if isinstance(line_probs, dict)
+                    else corner_probs.get(f"under_{line}")
+                )
                 if model_under and bk_line.get("under"):
                     implied = 1.0 / bk_line["under"]
                     edge = model_under - implied
@@ -505,7 +539,13 @@ def build_odds_comparison(
             card_lines = cards_odds[match_key].get("lines", {})
             for line_str, bk_line in card_lines.items():
                 line = float(line_str)
-                model_over = model.get("probabilities", {}).get("cards", {}).get(f"over_{line}")
+                card_probs = model.get("probabilities", {}).get("cards", {})
+                line_probs = card_probs.get(str(line), {})
+                model_over = (
+                    line_probs.get("over")
+                    if isinstance(line_probs, dict)
+                    else card_probs.get(f"over_{line}")
+                )
                 if model_over and bk_line.get("over"):
                     implied = 1.0 / bk_line["over"]
                     edge = model_over - implied
@@ -519,7 +559,11 @@ def build_odds_comparison(
                             "bookmaker_odds": bk_line["over"],
                             "edge": edge,
                         })
-                model_under = model.get("probabilities", {}).get("cards", {}).get(f"under_{line}")
+                model_under = (
+                    line_probs.get("under")
+                    if isinstance(line_probs, dict)
+                    else card_probs.get(f"under_{line}")
+                )
                 if model_under and bk_line.get("under"):
                     implied = 1.0 / bk_line["under"]
                     edge = model_under - implied

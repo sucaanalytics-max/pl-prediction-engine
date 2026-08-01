@@ -192,6 +192,7 @@ class BayesianDixonColes:
                 tune=DIXON_COLES["pymc_tune"],
                 chains=DIXON_COLES["pymc_chains"],
                 target_accept=DIXON_COLES["pymc_target_accept"],
+                random_seed=42,
                 return_inferencedata=True,
                 progressbar=True,
             )
@@ -328,23 +329,34 @@ class BayesianDixonColes:
         if self.trace is None:
             raise RuntimeError("Model not fitted")
 
-        h_idx = self.team_index[home]
-        a_idx = self.team_index[away]
-
         attack = self.trace.posterior["attack"].values
         defence = self.trace.posterior["defence"].values
         home_adv = self.trace.posterior["home_adv"].values
         intercept = self.trace.posterior["intercept"].values
-
-        att_h = attack[:, :, h_idx].flatten()
-        att_a = attack[:, :, a_idx].flatten()
-        def_h = defence[:, :, h_idx].flatten()
-        def_a = defence[:, :, a_idx].flatten()
         ha = home_adv.flatten()
         inter = intercept.flatten()
 
-        n_total = len(att_h)
-        indices = np.random.choice(n_total, size=min(n_samples, n_total), replace=True)
+        h_idx = self.team_index.get(home)
+        a_idx = self.team_index.get(away)
+        neutral = np.zeros_like(inter)
+
+        # Promoted/unseen clubs use the hierarchical league-average prior
+        # (attack=defence=0) while known opponents retain their posterior
+        # strength. This is materially more informative than replacing the
+        # entire fixture with fixed 1.4/1.1 rates.
+        att_h = attack[:, :, h_idx].flatten() if h_idx is not None else neutral
+        att_a = attack[:, :, a_idx].flatten() if a_idx is not None else neutral
+        def_h = defence[:, :, h_idx].flatten() if h_idx is not None else neutral
+        def_a = defence[:, :, a_idx].flatten() if a_idx is not None else neutral
+
+        if h_idx is None or a_idx is None:
+            logger.info(
+                f"Using neutral promoted-team prior for {home} vs {away} "
+                f"(unknown: {[t for t, idx in ((home, h_idx), (away, a_idx)) if idx is None]})"
+            )
+
+        n_total = len(inter)
+        indices = np.random.choice(n_total, size=n_samples, replace=True)
 
         lambda_h = np.exp(inter[indices] + att_h[indices] - def_a[indices] + ha[indices])
         mu_a = np.exp(inter[indices] + att_a[indices] - def_h[indices])
