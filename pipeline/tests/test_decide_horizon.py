@@ -346,3 +346,92 @@ class TestHorizonShortlist(unittest.TestCase):
 
     def test_default_returns_a_single_plan(self):
         self.assertEqual(len(solve_horizon(self.pool, _flat(self.pool, 2), RULES)), 1)
+
+
+@unittest.skipUnless(HAVE_SCIPY, "scipy/HiGHS not installed")
+class TestAccrualChain(unittest.TestCase):
+    """
+    The accrual chain against the real rule, week by week.
+
+    ft[w+1] = min(5, max(0, ft[w] - used[w]) + 1) has two non-linearities, both
+    encoded as inequalities that are tight only because the objective pushes
+    them there. That is an argument, not a proof, so it is checked numerically
+    against the rule on every week of several scenarios.
+    """
+
+    def setUp(self):
+        self.pool = _pool()
+        self.squad = _cheapest_legal_squad(self.pool)
+
+    def _check_chain(self, plan, initial_ft):
+        held = initial_ft
+        for w, week in enumerate(plan.weeks):
+            used = len(week.transfers_in) - (
+                RULES.squad_size - len(self.squad) if w == 0 else 0
+            )
+            self.assertGreaterEqual(used, 0, f"week {w}: negative transfer count")
+
+            self.assertEqual(
+                week.hits, max(0, used - held),
+                f"week {w}: hits {week.hits} != max(0, {used} - {held})",
+            )
+            self.assertEqual(
+                week.free_transfers_banked, max(0, held - used),
+                f"week {w}: banked {week.free_transfers_banked} != max(0, {held} - {used})",
+            )
+            self.assertLessEqual(
+                week.free_transfers_banked, RULES.max_banked_free_transfers,
+                f"week {w}: banked past the cap",
+            )
+            expected_next = min(
+                RULES.max_banked_free_transfers, max(0, held - used) + 1
+            )
+            self.assertEqual(
+                week.free_transfers_after, expected_next,
+                f"week {w}: next-week FT {week.free_transfers_after} != {expected_next}",
+            )
+            held = week.free_transfers_after
+
+    def test_chain_holds_from_one_free_transfer(self):
+        plan = solve_horizon(
+            self.pool, _flat(self.pool, 5), RULES,
+            current_squad=self.squad, bank=0, free_transfers=1,
+        )[0]
+        self._check_chain(plan, 1)
+
+    def test_chain_holds_starting_at_the_cap(self):
+        """Starting full, the bank must never exceed five however many weeks pass."""
+        plan = solve_horizon(
+            self.pool, _flat(self.pool, 5), RULES, current_squad=self.squad,
+            bank=0, free_transfers=RULES.max_banked_free_transfers,
+        )[0]
+        self._check_chain(plan, RULES.max_banked_free_transfers)
+
+    def test_chain_holds_with_zero_free_transfers(self):
+        """From zero, any transfer at all is a hit."""
+        plan = solve_horizon(
+            self.pool, _flat(self.pool, 4), RULES,
+            current_squad=self.squad, bank=0, free_transfers=0,
+        )[0]
+        self._check_chain(plan, 0)
+
+    def test_hit_is_never_taken_to_unlock_bank_value(self):
+        """
+        The solver could in principle inflate a hit to raise 'remaining'. Each
+        hit costs 4 and the largest single banked marginal is 1.75, so it never
+        pays — but that is an argument about the objective, so it is asserted:
+        no week may take a hit while also banking transfers, since a genuine hit
+        means the allowance was exhausted.
+        """
+        for initial in (0, 1, 3, 5):
+            plan = solve_horizon(
+                self.pool, _flat(self.pool, 4), RULES, current_squad=self.squad,
+                bank=0, free_transfers=initial,
+            )[0]
+            for w, week in enumerate(plan.weeks):
+                if week.hits > 0:
+                    self.assertEqual(
+                        week.free_transfers_banked, 0,
+                        f"ft0={initial} week {w}: took a hit while banking "
+                        f"{week.free_transfers_banked} transfers",
+                    )

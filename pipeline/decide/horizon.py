@@ -366,6 +366,24 @@ def build_horizon(
         r[wi.hits] = -1.0
         rows.append(r); lo.append(-np.inf); hi.append(slots)
 
+        # remaining >= held - transfers, the matching LOWER bound.
+        #
+        # Without it `remaining` is only capped from above, and in any week where
+        # it does not bind the objective the solver is free to leave it slack.
+        # Measured: a five-week plan starting on a full bank reported [3,3,4,5]
+        # banked transfers when the true chain is [3,4,5,5]. The decision was
+        # still correct — the chain is pulled tight from the valued final week —
+        # but a plan that understates the bank misinforms whoever reads it and
+        # feeds a wrong starting position into next week's solve.
+        #
+        # Non-binding when a hit is taken (the right-hand side goes negative and
+        # the variable's own zero lower bound takes over), which is exactly right.
+        r = row()
+        r[wi.remaining] = 1.0
+        r[wi.buy] = 1.0
+        r[wi.free_transfers] = -1.0
+        rows.append(r); lo.append(slots); hi.append(np.inf)
+
         # Entering week 0 we hold what we hold; later weeks accrue one, capped.
         if w == 0:
             r = row(); r[wi.free_transfers] = 1.0
@@ -503,6 +521,12 @@ def _extract_horizon(
     by_id = {c.element_id: c for c in candidates}
     plans: List[Plan] = []
     running_bank = bank
+    # The free-transfer chain is REPLAYED here from the transfers actually made,
+    # not read out of the solver. A MILP variable only has to be correct where it
+    # binds the objective, so an unbinding week can carry a slack value that is
+    # feasible but not the truth. The rule is deterministic given the transfers,
+    # so replaying it is both simpler and exact.
+    held_ft = int(free_transfers)
 
     for w in range(index.weeks):
         wi = index.week(w)
@@ -531,8 +555,8 @@ def _extract_horizon(
 
         slots = rules.squad_size - owned_count if w == 0 else 0
         transfers = len(ins) - slots
-        held_ft = int(round(x[wi.free_transfers]))
         remaining = max(0, held_ft - transfers)
+        after = min(rules.max_banked_free_transfers, remaining + 1)
 
         plans.append(
             Plan(
@@ -542,9 +566,10 @@ def _extract_horizon(
                 bank_after=int(running_bank),
                 objective=0.0,
                 free_transfers_banked=remaining,
-                free_transfers_after=min(rules.max_banked_free_transfers, remaining + 1),
+                free_transfers_after=after,
             )
         )
+        held_ft = after
 
     return HorizonPlan(
         weeks=plans,
