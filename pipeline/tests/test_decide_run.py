@@ -295,3 +295,61 @@ class TestSeedStreams(unittest.TestCase):
                 stable_seed_entropy("2627", gameweek),
                 stable_seed_entropy("2627", gameweek, "fpl_report"),
             )
+
+
+@unittest.skipUnless(HAVE_SCIPY, "scipy/HiGHS not installed")
+class TestHorizonIntegration(unittest.TestCase):
+    """The horizon must reach the artifact, or it is dead code."""
+
+    def setUp(self):
+        self.select = _draws(seed=5)
+        self.report = _draws(seed=6)
+
+    def _decide(self, **kwargs):
+        params = dict(
+            gameweek=1, draws_select=self.select, draws_report=self.report,
+            bootstrap=BOOTSTRAP, rules=RULES, xp_rows=XP_ROWS, shortlist_size=3,
+        )
+        params.update(kwargs)
+        return decide(**params)
+
+    def _weekly_xp(self, weeks=4):
+        base = [row["xp"] for row in XP_ROWS]
+        return [[v * (1.0 + 0.05 * w) for v in base] for w in range(weeks)]
+
+    def test_horizon_decision_records_both_horizons(self):
+        decision = self._decide(xp_by_week=self._weekly_xp(4), transfer_horizon=2)
+        self.assertIsNotNone(decision.horizon)
+        self.assertEqual(decision.horizon["eval_horizon"], 4)
+        self.assertEqual(decision.horizon["transfer_horizon"], 2)
+        self.assertEqual(len(decision.horizon["provisional"]), 3)
+
+    def test_horizon_decision_is_still_a_legal_squad(self):
+        decision = self._decide(xp_by_week=self._weekly_xp(3))
+        plan = decision.reported.plan
+        self.assertEqual(len(plan.squad), RULES.squad_size)
+        self.assertEqual(len(plan.xi), RULES.lineup_size)
+        self.assertIn(plan.captain, plan.xi)
+
+    def test_single_week_run_is_labelled_myopic(self):
+        """
+        A horizon-less decision must never be mistaken for a planned one. The
+        absence of a horizon is recorded explicitly rather than inferred from a
+        missing field.
+        """
+        decision = self._decide()
+        self.assertIsNone(decision.horizon)
+        self.assertTrue(
+            any("myopic" in w for w in decision.warnings),
+            f"no myopia warning: {decision.warnings}",
+        )
+        self.assertIsNone(decision.as_dict()["horizon"])
+
+    def test_horizon_run_carries_no_myopia_warning(self):
+        decision = self._decide(xp_by_week=self._weekly_xp(3))
+        self.assertFalse(any("myopic" in w for w in decision.warnings))
+
+    def test_artifact_serialises_with_the_horizon(self):
+        decision = self._decide(xp_by_week=self._weekly_xp(3))
+        payload = json.loads(json.dumps(decision.as_dict(), allow_nan=False))
+        self.assertEqual(payload["horizon"]["eval_horizon"], 3)

@@ -26,6 +26,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence
 
+from pipeline.decide.horizon import solve_horizon
 from pipeline.decide.milp import Plan, solve
 from pipeline.decide.plan_eval import PlanEvaluation, adjudicate, evaluate_plan
 from pipeline.decide.pool import PoolReport, build_pool, positions_of, xp_of
@@ -59,6 +60,7 @@ class Decision:
     shortlist: List[PlanEvaluation] = field(default_factory=list)
     pool: Optional[PoolReport] = None
     warnings: List[str] = field(default_factory=list)
+    horizon: Optional[Dict[str, Any]] = None
     generated_at: str = ""
 
     @property
@@ -81,6 +83,9 @@ class Decision:
             "credible_margin": self.credible,
             "runners_up": [e.as_dict() for e in self.shortlist[1:]],
             "pool": self.pool.as_dict() if self.pool else None,
+            # None means the decision was made on a single gameweek and is
+            # myopic. Recorded so that is never inferred from silence.
+            "horizon": self.horizon,
             "warnings": list(self.warnings),
             "execution": "propose_only",
         }
@@ -101,6 +106,8 @@ def decide(
     purchase_prices: Optional[Mapping[int, int]] = None,
     shortlist_size: int = SHORTLIST_SIZE,
     tail_threshold: int = 70,
+    xp_by_week: Optional[Sequence[Sequence[float]]] = None,
+    transfer_horizon: Optional[int] = None,
 ) -> Decision:
     """
     Produce one entry's proposal.
@@ -139,10 +146,33 @@ def decide(
             "bank (cash in hand, in tenths) is required when a squad is held"
         )
 
-    plans: List[Plan] = solve(
-        candidates, rules, current_squad=held, bank=bank,
-        free_transfers=free_transfers, top_k=shortlist_size,
-    )
+    if xp_by_week:
+        # Plan over the horizon, act on week 0. A one-week solve cannot buy a
+        # player whose run starts in three weeks, nor decline a marginal upgrade
+        # now to hold the cash for a better one later.
+        horizon_plans = solve_horizon(
+            candidates, xp_by_week, rules, current_squad=held, bank=bank,
+            free_transfers=free_transfers, top_k=shortlist_size,
+            transfer_horizon=transfer_horizon,
+        )
+        plans: List[Plan] = [p.now for p in horizon_plans]
+        horizon_meta: Optional[Dict[str, Any]] = {
+            "eval_horizon": horizon_plans[0].eval_horizon,
+            "transfer_horizon": horizon_plans[0].transfer_horizon,
+            "provisional": horizon_plans[0].as_dict()["provisional"],
+        }
+    else:
+        # Single-week fallback. Correct but myopic, and labelled as such in the
+        # artifact so a horizon-less run is never mistaken for a planned one.
+        plans = solve(
+            candidates, rules, current_squad=held, bank=bank,
+            free_transfers=free_transfers, top_k=shortlist_size,
+        )
+        horizon_meta = None
+        warnings.append(
+            "no multi-gameweek projection available; this decision is myopic and "
+            "cannot see a fixture swing beyond the current gameweek"
+        )
     if len(plans) < shortlist_size:
         warnings.append(
             f"MILP returned {len(plans)} distinct plans, fewer than the "
@@ -184,6 +214,7 @@ def decide(
         shortlist=ranked,
         pool=pool_report,
         warnings=warnings,
+        horizon=horizon_meta,
         generated_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
     )
 

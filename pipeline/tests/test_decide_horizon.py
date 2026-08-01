@@ -159,7 +159,7 @@ class TestSolveHorizon(unittest.TestCase):
         self.by_id = {c.element_id: c for c in self.pool}
 
     def test_every_week_is_a_legal_squad(self):
-        plan = solve_horizon(self.pool, _flat(self.pool, 3), RULES)
+        plan = solve_horizon(self.pool, _flat(self.pool, 3), RULES)[0]
         self.assertEqual(len(plan.weeks), 3)
         for w, week in enumerate(plan.weeks):
             self.assertEqual(len(week.squad), RULES.squad_size, f"week {w}")
@@ -177,7 +177,7 @@ class TestSolveHorizon(unittest.TestCase):
         break in that chain would let the optimiser teleport into a squad it
         never paid for.
         """
-        plan = solve_horizon(self.pool, _flat(self.pool, 3), RULES)
+        plan = solve_horizon(self.pool, _flat(self.pool, 3), RULES)[0]
         for w in range(1, len(plan.weeks)):
             previous = set(plan.weeks[w - 1].squad)
             expected = (previous - set(plan.weeks[w].transfers_out)) | set(
@@ -190,13 +190,13 @@ class TestSolveHorizon(unittest.TestCase):
         With identical points every week there is nothing to gain by
         transferring, so any move is the solver paying for noise.
         """
-        plan = solve_horizon(self.pool, _flat(self.pool, 4), RULES)
+        plan = solve_horizon(self.pool, _flat(self.pool, 4), RULES)[0]
         for w, week in enumerate(plan.weeks[1:], start=1):
             self.assertEqual(week.transfers_in, [], f"week {w} churned")
             self.assertEqual(week.hits, 0, f"week {w} took a gratuitous hit")
 
     def test_opening_build_is_not_charged_transfers(self):
-        plan = solve_horizon(self.pool, _flat(self.pool, 3), RULES, free_transfers=1)
+        plan = solve_horizon(self.pool, _flat(self.pool, 3), RULES, free_transfers=1)[0]
         self.assertEqual(plan.now.hits, 0)
         self.assertEqual(len(plan.now.transfers_in), RULES.squad_size)
 
@@ -205,7 +205,7 @@ class TestSolveHorizon(unittest.TestCase):
         Cumulative, not per-week: a per-week-only constraint would let the
         solver overdraw in week two and repay in week four.
         """
-        plan = solve_horizon(self.pool, _flat(self.pool, 4), RULES)
+        plan = solve_horizon(self.pool, _flat(self.pool, 4), RULES)[0]
         for w, week in enumerate(plan.weeks):
             self.assertGreaterEqual(week.bank_after, 0, f"week {w} overdrawn")
 
@@ -251,7 +251,7 @@ class TestSolveHorizon(unittest.TestCase):
 
         plan = solve_horizon(
             pool, xp_by_week, RULES, current_squad=squad, bank=0, free_transfers=1,
-        )
+        )[0]
         bought = {p for week in plan.weeks for p in week.transfers_in}
         self.assertIn(
             target.element_id, bought,
@@ -270,7 +270,7 @@ class TestSolveHorizon(unittest.TestCase):
         """
         plan = solve_horizon(
             self.pool, _flat(self.pool, 4), RULES, transfer_horizon=2,
-        )
+        )[0]
         self.assertEqual(plan.transfer_horizon, 2)
         self.assertEqual(plan.eval_horizon, 4)
         for w in (2, 3):
@@ -284,7 +284,7 @@ class TestSolveHorizon(unittest.TestCase):
     def test_transfer_horizon_is_clamped_to_the_evaluation_horizon(self):
         plan = solve_horizon(
             self.pool, _flat(self.pool, 2), RULES, transfer_horizon=6,
-        )
+        )[0]
         self.assertEqual(plan.transfer_horizon, 2)
 
     def test_free_transfers_accrue_one_a_week_and_cap(self):
@@ -297,7 +297,7 @@ class TestSolveHorizon(unittest.TestCase):
         plan = solve_horizon(
             self.pool, _flat(self.pool, 5), RULES,
             current_squad=squad, bank=0, free_transfers=1,
-        )
+        )[0]
         # Nothing is worth transferring, so the bank should climb 1,2,3... and stop.
         banked = [w.free_transfers_banked for w in plan.weeks]
         for earlier, later in zip(banked, banked[1:]):
@@ -308,7 +308,7 @@ class TestSolveHorizon(unittest.TestCase):
         )
 
     def test_only_the_first_week_is_presented_as_a_commitment(self):
-        plan = solve_horizon(self.pool, _flat(self.pool, 3), RULES)
+        plan = solve_horizon(self.pool, _flat(self.pool, 3), RULES)[0]
         payload = plan.as_dict()
         self.assertIn("now", payload)
         self.assertEqual(len(payload["provisional"]), 2)
@@ -320,3 +320,29 @@ class TestSolveHorizon(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+@unittest.skipUnless(HAVE_SCIPY, "scipy/HiGHS not installed")
+class TestHorizonShortlist(unittest.TestCase):
+    def setUp(self):
+        self.pool = _pool()
+
+    def test_top_k_returns_distinct_week_zero_squads(self):
+        """
+        Distinctness is on week 0 because week 0 is the only commitment. Two
+        plans that field the same squad now and diverge in week four are the
+        same decision, and offering both would fill the shortlist with choices
+        nobody makes.
+        """
+        plans = solve_horizon(self.pool, _flat(self.pool, 3), RULES, top_k=4)
+        self.assertEqual(len(plans), 4)
+        squads = [tuple(sorted(p.now.squad)) for p in plans]
+        self.assertEqual(len(set(squads)), 4, "week-0 squads repeated")
+
+    def test_shortlist_is_ordered_by_objective(self):
+        plans = solve_horizon(self.pool, _flat(self.pool, 3), RULES, top_k=3)
+        objectives = [p.objective for p in plans]
+        self.assertEqual(objectives, sorted(objectives, reverse=True))
+
+    def test_default_returns_a_single_plan(self):
+        self.assertEqual(len(solve_horizon(self.pool, _flat(self.pool, 2), RULES)), 1)

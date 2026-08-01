@@ -397,8 +397,21 @@ def solve_horizon(
     time_limit: float = 300.0,
     mip_gap: float = 0.0,
     bench_weight: float = BENCH_WEIGHT,
-) -> HorizonPlan:
-    """Solve the horizon and return the plan. Only ``plan.now`` is acted on."""
+    top_k: int = 1,
+) -> List[HorizonPlan]:
+    """
+    Solve the horizon. Returns ``top_k`` plans, best first.
+
+    Distinctness is enforced on **week 0's squad**, not on the whole plan. Week 0
+    is the only part that is acted on, so two plans that field the same eleven
+    this week and diverge in week four are the same decision — offering both as
+    alternatives would fill the shortlist with choices nobody makes.
+
+    Each returned plan is the best plan *conditional on* a different week-0
+    squad, which is exactly the shortlist the simulator should adjudicate: the
+    horizon decides which squads are worth considering given the future, and the
+    simulator picks among them on the true objective for the week being played.
+    """
     from scipy.optimize import Bounds, LinearConstraint, milp
 
     c, rows, lo, hi, index = build_horizon(
@@ -421,29 +434,58 @@ def solve_horizon(
         # nothing — and with H weeks that cost is multiplied by H.
         integrality[wi.ft_bank] = 0.0
 
-    result = milp(
-        c=-c,
-        constraints=[LinearConstraint(np.array(rows), np.array(lo), np.array(hi))],
-        integrality=integrality,
-        bounds=Bounds(lower, upper),
-        options={"mip_rel_gap": mip_gap, "time_limit": time_limit},
-    )
+    constraints = [LinearConstraint(np.array(rows), np.array(lo), np.array(hi))]
+    plans: List[HorizonPlan] = []
+    first_week = index.week(0)
 
-    status = int(getattr(result, "status", 4))
-    if status == 1:
-        raise SolverLimitError(
-            f"horizon solve hit a limit: {result.message}. A legal plan may well "
-            f"exist — raise time_limit or shorten the horizon. NOT infeasibility."
-        )
-    if not result.success or result.x is None:
-        raise InfeasibleError(
-            f"no legal plan over {weeks} weeks (status {status}): {result.message}"
+    for k in range(top_k):
+        result = milp(
+            c=-c,
+            constraints=constraints,
+            integrality=integrality,
+            bounds=Bounds(lower, upper),
+            options={"mip_rel_gap": mip_gap, "time_limit": time_limit},
         )
 
-    return _extract_horizon(
-        result.x, candidates, index, rules, bank_value, free_transfers,
-        len(current_squad), transfer_horizon or TRANSFER_HORIZON, -result.fun,
-    )
+        status = int(getattr(result, "status", 4))
+        if status == 1:
+            if k == 0:
+                raise SolverLimitError(
+                    f"horizon solve hit a limit: {result.message}. A legal plan may "
+                    f"well exist — raise time_limit or shorten the horizon. NOT "
+                    f"infeasibility."
+                )
+            # Later iterations are shortlist depth, not correctness. Log loudly
+            # rather than silently returning a shorter list that reads as
+            # "these were all the options".
+            logger.warning(
+                "horizon hit a limit after %d of %d plans; the shortlist is "
+                "TRUNCATED, not exhausted", k, top_k,
+            )
+            break
+        if not result.success or result.x is None:
+            if k == 0:
+                raise InfeasibleError(
+                    f"no legal plan over {weeks} weeks (status {status}): {result.message}"
+                )
+            logger.info("only %d distinct week-0 squads available (asked %d)", k, top_k)
+            break
+
+        plans.append(
+            _extract_horizon(
+                result.x, candidates, index, rules, bank_value, free_transfers,
+                len(current_squad), transfer_horizon or TRANSFER_HORIZON, -result.fun,
+            )
+        )
+
+        chosen = np.where(result.x[first_week.squad] > 0.5)[0]
+        cut = np.zeros(index.size)
+        cut[first_week.squad.start + chosen] = 1.0
+        constraints.append(
+            LinearConstraint(cut.reshape(1, -1), -np.inf, float(rules.squad_size - 1))
+        )
+
+    return plans
 
 
 def _extract_horizon(
