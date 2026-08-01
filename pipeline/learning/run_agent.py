@@ -448,6 +448,36 @@ def _settle(predictions_dir: Path, state: ScheduleState, final: bool) -> int:
         "final" if final else "provisional",
         path,
     )
+
+    # Record what the FIELD scored, while it is still available. Both figures
+    # live on bootstrap-static's events array for the current season only: they
+    # are not in the public archive and cannot be recovered later, so a gameweek
+    # that goes unrecorded is gone for good. Without them the weekly team's
+    # calibration gate can never open.
+    #
+    # Deliberately non-fatal. Settlement is the load-bearing step here; losing
+    # one field observation is a cost, but failing the settle over it would risk
+    # the outcome record that everything else is scored against.
+    try:
+        from pipeline.data.fpl_api import fetch_bootstrap_static
+        from pipeline.learning.field_observations import extract, record
+
+        observation = extract(
+            fetch_bootstrap_static(force=True, allow_stale=False),
+            state.gameweek,
+            datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            provisional=not final,
+        )
+        if observation is not None:
+            record(observation, predictions_dir)
+    except Exception:
+        logger.exception(
+            "could not record the field observation for GW%s; settlement stands, "
+            "but this gameweek's average_entry_score and highest_score are lost "
+            "and the field model has one fewer calibration point",
+            state.gameweek,
+        )
+
     return 0
 
 
