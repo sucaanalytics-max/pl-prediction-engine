@@ -53,6 +53,20 @@ MAX_CREDIBLE_OPTIMISM = 2.0
 # seasons, with every strategy sharing identical projections so the comparison
 # is paired.
 EVIDENCE = {
+    # Provenance, so staleness is visible rather than inferred. These numbers
+    # are transcribed by hand from a manually-run backtest — nothing recomputes
+    # them — so a reader must be able to see WHAT they were measured on and
+    # judge whether that still describes the current code.
+    "measured_on": {
+        "seasons": ["2025-26", "2024-25"],
+        "gameweeks": "8-38",
+        "harness": "pipeline/learning/backtest_decisions.py",
+        "note": (
+            "transcribed by hand from a manual run; re-run the harness after any "
+            "change to the projection or the optimiser, and update these figures "
+            "with it"
+        ),
+    },
     "beats_doing_nothing": {
         "verdict": "established",
         "margin_2025_26": 150,

@@ -399,3 +399,56 @@ class TestEvidenceTravelsWithTheDecision(unittest.TestCase):
     def test_evidence_serialises(self):
         private, _ = self._payload()
         json.loads(json.dumps(private, allow_nan=False))
+
+
+class TestEvidenceIsInternallyConsistent(unittest.TestCase):
+    """
+    The evidence block is transcribed by hand and nothing recomputes it, so the
+    realistic failure is someone updating a margin after a re-run and leaving
+    the verdict alone — leaving the artifact claiming an edge the numbers no
+    longer support. These assert the verdicts follow from the numbers beside
+    them.
+    """
+
+    def _claims(self):
+        from pipeline.decide.run_decide import EVIDENCE
+
+        return {
+            k: v for k, v in EVIDENCE.items()
+            if isinstance(v, dict) and "verdict" in v
+        }
+
+    def test_a_sign_flip_across_seasons_cannot_be_called_established(self):
+        for name, claim in self._claims().items():
+            margins = [
+                claim[k] for k in ("margin_2025_26", "margin_2024_25") if k in claim
+            ]
+            if len(margins) == 2 and margins[0] * margins[1] < 0:
+                self.assertEqual(
+                    claim["verdict"], "not established",
+                    f"{name} has margins {margins} of opposite sign but claims "
+                    f"{claim['verdict']!r}",
+                )
+
+    def test_an_established_claim_has_no_negative_margin(self):
+        for name, claim in self._claims().items():
+            if claim["verdict"] != "established":
+                continue
+            for key in ("margin_2025_26", "margin_2024_25"):
+                if key in claim:
+                    self.assertGreater(
+                        claim[key], 0,
+                        f"{name} is called established but {key} is {claim[key]}",
+                    )
+
+    def test_every_verdict_uses_a_known_value(self):
+        for name, claim in self._claims().items():
+            self.assertIn(claim["verdict"], ("established", "not established"), name)
+
+    def test_provenance_is_recorded(self):
+        """Numbers with no stated origin cannot be judged stale."""
+        from pipeline.decide.run_decide import EVIDENCE
+
+        self.assertIn("measured_on", EVIDENCE)
+        self.assertTrue(EVIDENCE["measured_on"]["seasons"])
+        self.assertIn("backtest_decisions", EVIDENCE["measured_on"]["harness"])
