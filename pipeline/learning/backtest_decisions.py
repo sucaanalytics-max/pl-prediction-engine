@@ -26,6 +26,41 @@ gameweek-level differences are far more informative than the season total, so
 those are what get reported with a standard error — and per the plan, none of
 this ever gates a parameter change.
 
+**How much archive there is, and why it is not more.** The public archive runs
+back to 2016-17, but only seasons from 2023-24 are usable for a DECISION
+backtest: 2019-20 through 2021-22 have no ``starts`` column at all, and 2022-23
+only populates it from GW16. Without ``starts`` the minutes model cannot tell a
+starter substituted at 55 minutes from a substitute who played 60 — a
+distinction measured elsewhere as load-bearing — so those seasons would corrupt
+the projection rather than extend the evidence. Three usable seasons give 93
+paired gameweek observations.
+
+Results over 2023-24, 2024-25 and 2025-26, gameweeks 8 to 38, every strategy
+sharing identical projections (DefCon scoring disabled before 2025-26, which
+predates the rule):
+
+    season      do_nothing   greedy    agent   vs_nothing   vs_greedy
+    2023-24           1437     1781     1848         +411         +67
+    2024-25           1257     1757     1817         +560         +60
+    2025-26           1478     1728     1662         +184         -66
+
+    pooled, 93 gameweeks
+      agent vs do_nothing    +12.42/GW, se 1.91, t=+6.49
+      agent vs greedy         +0.66/GW, se 1.20, t=+0.55
+
+**Beating inertia is established.** Positive in all three seasons, t=+6.49, and
+the margin is large relative to its own error.
+
+**Beating greedy transfers is not, and cannot be.** Three seasons moved the
+pooled sign positive — it was negative on 2025-26 alone — but the estimate is
+0.66 points a gameweek against a standard error of 1.20. Resolving that at t=2
+would need on the order of 1,200 gameweeks, roughly thirty seasons. Every usable
+season of FPL archive data put together is 93. This is not a gap more
+backtesting can close, and no amount of re-running will change it.
+
+The earlier single-season detail is kept below, since it is what the free-transfer
+sweep was run against.
+
 Results on 2025-26, gameweeks 8 to 38, all three strategies sharing identical
 projections:
 

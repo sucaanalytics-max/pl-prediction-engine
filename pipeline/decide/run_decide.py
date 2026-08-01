@@ -59,39 +59,39 @@ EVIDENCE = {
     # them — so a reader must be able to see WHAT they were measured on and
     # judge whether that still describes the current code.
     "measured_on": {
-        "seasons": ["2025-26", "2024-25"],
-        "gameweeks": "8-38",
+        "seasons": ["2023-24", "2024-25", "2025-26"],
+        "gameweeks": "8-38 each, 93 paired observations",
         "harness": "pipeline/learning/backtest_decisions.py",
         "note": (
             "transcribed by hand from a manual run; re-run the harness after any "
             "change to the projection or the optimiser, and update these figures "
-            "with it"
+            "with it. Seasons before 2022-23 are unusable: the archive has no "
+            "`starts` column, and 2022-23 only populates it from GW16"
         ),
     },
     "beats_doing_nothing": {
         "verdict": "established",
-        "margin_2025_26": 150,
+        "margin_2023_24": 411,
         "margin_2024_25": 560,
-        "note": "same sign both seasons, t=+2.50 and t=+4.72",
-    },
-    "beats_greedy_transfers": {
-        # Stated as a failure, deliberately. The pre-registered criterion was
-        # +30 and the margin flipped sign between seasons, so the agent is not
-        # shown to be better than simply spending a free transfer whenever the
-        # projection improves.
-        "verdict": "not established",
-        "margin_2025_26": -35,
-        "margin_2024_25": 60,
+        "margin_2025_26": 184,
         "note": (
-            "sign does not hold across seasons; pooled ~+0.4/GW against a "
-            "standard error near 1.6, i.e. indistinguishable from zero"
+            "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, "
+            "se 1.91, t=+6.49"
         ),
     },
-    "why_unresolved": (
-        "Paired gameweek differences carry a standard deviation of 5-8 points, "
-        "so separating a one-point-a-gameweek effect needs on the order of 200 "
-        "gameweeks. Two seasons cannot settle it."
-    ),
+    "beats_greedy_transfers": {
+        # Still stated as a failure. Three seasons moved the pooled sign
+        # positive but came nowhere near resolving it.
+        "verdict": "not established",
+        "margin_2023_24": 67,
+        "margin_2024_25": 60,
+        "margin_2025_26": -66,
+        "note": (
+            "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 — positive in "
+            "two seasons of three. At this effect size and variance, resolving "
+            "it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+        ),
+    },
     "projection_calibration": {
         "verdict": "established",
         "note": (
