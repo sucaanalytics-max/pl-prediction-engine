@@ -187,6 +187,17 @@ def send_email(
     Configuration comes from the environment so no credential is ever written to
     an artifact: SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD,
     NOTIFY_EMAIL_FROM, NOTIFY_EMAIL_TO.
+
+    Plain STARTTLS on the configured port, which is what every provider worth
+    using offers. Verified against Resend (the configured provider):
+    smtp.resend.com:587 advertises STARTTLS and PLAIN/LOGIN after the upgrade,
+    with the username the literal string "resend" and the password an API key.
+    Resend is a deliberate choice over a mailbox provider — Microsoft 365
+    disables SMTP AUTH by default and Gmail needs an app password, both of which
+    make an unattended pipeline depend on someone's account settings.
+
+    Nothing here is provider-specific, and it must stay that way: this is the
+    optional push channel, and the site is what actually delivers the decision.
     """
     settings = config or {
         "host": os.environ.get("SMTP_HOST", ""),
