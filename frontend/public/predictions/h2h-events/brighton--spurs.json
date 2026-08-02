@@ -1,0 +1,1101 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-02-10|spurs|brighton": {
+      "fixtureId": 238,
+      "season": "2324",
+      "date": "2024-02-10",
+      "kickoffTime": "2024-02-10T15:00:00Z",
+      "homeTeam": "Spurs",
+      "awayTeam": "Brighton",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Pervis Estupiñán",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jason Steele",
+          "team": "Brighton",
+          "value": 4
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 3
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 0.79
+        },
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 0.5
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.39
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 0.23
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "value": 0.22
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 0.44
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 0.16
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "value": 0.15
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 0.14
+        },
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "points": 10,
+          "bonus": 3,
+          "bps": 36,
+          "xg": 0.79,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "points": 8,
+          "bonus": 2,
+          "bps": 25,
+          "xg": 0.23,
+          "xa": 0.09,
+          "minutes": 79
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "points": 7,
+          "bonus": 1,
+          "bps": 23,
+          "xg": 0.39,
+          "xa": 0,
+          "minutes": 28
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "points": 5,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0.06,
+          "xa": 0.03,
+          "minutes": 82
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "points": 4,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0,
+          "xa": 0.44,
+          "minutes": 28
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-10-06|brighton|spurs": {
+      "fixtureId": 64,
+      "season": "2425",
+      "date": "2024-10-06",
+      "kickoffTime": "2024-10-06T15:30:00Z",
+      "homeTeam": "Brighton",
+      "awayTeam": "Spurs",
+      "homeGoals": 3,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Georginio Rutter",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Dominic Solanke-Mitchell",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Georginio Rutter",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Destiny Udogie",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Igor Julio dos Santos de Paulo",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 2
+        },
+        {
+          "name": "Georginio Rutter",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 1.13
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.69
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 0.27
+        },
+        {
+          "name": "Georginio Rutter",
+          "team": "Brighton",
+          "value": 0.25
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Dominic Solanke-Mitchell",
+          "team": "Spurs",
+          "value": 0.29
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 0.2
+        },
+        {
+          "name": "Pedro Porro",
+          "team": "Spurs",
+          "value": 0.19
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "value": 0.19
+        },
+        {
+          "name": "Ferdi Kadioglu",
+          "team": "Brighton",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Georginio Rutter",
+          "team": "Brighton",
+          "points": 11,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.25,
+          "xa": 0.01,
+          "minutes": 73
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "points": 10,
+          "bonus": 3,
+          "bps": 33,
+          "xg": 0.23,
+          "xa": 0.03,
+          "minutes": 84
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "points": 8,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 1.13,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "points": 7,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.27,
+          "xa": 0.02,
+          "minutes": 86
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "points": 7,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.69,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-05-25|spurs|brighton": {
+      "fixtureId": 379,
+      "season": "2425",
+      "date": "2025-05-25",
+      "kickoffTime": "2025-05-25T15:00:00Z",
+      "homeTeam": "Spurs",
+      "awayTeam": "Brighton",
+      "homeGoals": 1,
+      "awayGoals": 4,
+      "scorers": [
+        {
+          "name": "Jack Hinshelwood",
+          "team": "Brighton",
+          "value": 2
+        },
+        {
+          "name": "Dominic Solanke-Mitchell",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Matt O'Riley",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Diego Gómez",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Adam Webster",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Diego Gómez",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Pedro Porro",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Ben Davies",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Joël Veltman",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 4
+        },
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Jack Hinshelwood",
+          "team": "Brighton",
+          "value": 3
+        },
+        {
+          "name": "Diego Gómez",
+          "team": "Brighton",
+          "value": 2
+        },
+        {
+          "name": "Dominic Solanke-Mitchell",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Solanke-Mitchell",
+          "team": "Spurs",
+          "value": 0.79
+        },
+        {
+          "name": "Matt O'Riley",
+          "team": "Brighton",
+          "value": 0.79
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 0.68
+        },
+        {
+          "name": "Jack Hinshelwood",
+          "team": "Brighton",
+          "value": 0.67
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.48
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 0.32
+        },
+        {
+          "name": "Brajan Gruda",
+          "team": "Brighton",
+          "value": 0.28
+        },
+        {
+          "name": "Yasin Ayari",
+          "team": "Brighton",
+          "value": 0.23
+        },
+        {
+          "name": "Diego Gómez",
+          "team": "Brighton",
+          "value": 0.16
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jack Hinshelwood",
+          "team": "Brighton",
+          "points": 15,
+          "bonus": 3,
+          "bps": 59,
+          "xg": 0.67,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Diego Gómez",
+          "team": "Brighton",
+          "points": 11,
+          "bonus": 2,
+          "bps": 44,
+          "xg": 0.09,
+          "xa": 0.16,
+          "minutes": 45
+        },
+        {
+          "name": "Dominic Solanke-Mitchell",
+          "team": "Spurs",
+          "points": 7,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0.79,
+          "xa": 0,
+          "minutes": 65
+        },
+        {
+          "name": "Matt O'Riley",
+          "team": "Brighton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.79,
+          "xa": 0.01,
+          "minutes": 14
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "points": 5,
+          "bonus": 0,
+          "bps": 17,
+          "xg": 0.68,
+          "xa": 0.15,
+          "minutes": 82
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-09-20|brighton|spurs": {
+      "fixtureId": 43,
+      "season": "2526",
+      "date": "2025-09-20",
+      "kickoffTime": "2025-09-20T14:00:00Z",
+      "homeTeam": "Brighton",
+      "awayTeam": "Spurs",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Yasin Ayari",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Georginio Rutter",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Jan Paul van Hecke",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Diego Gómez Amarilla",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 2
+        },
+        {
+          "name": "Yasin Ayari",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 0.76
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 0.74
+        },
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 0.25
+        },
+        {
+          "name": "Yasin Ayari",
+          "team": "Brighton",
+          "value": 0.24
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "value": 0.31
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 0.16
+        },
+        {
+          "name": "Wilson Odobert",
+          "team": "Spurs",
+          "value": 0.1
+        },
+        {
+          "name": "Destiny Udogie",
+          "team": "Spurs",
+          "value": 0.08
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 0.07
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "points": 9,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0.76,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "points": 9,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.74,
+          "xa": 0,
+          "minutes": 75
+        },
+        {
+          "name": "Yasin Ayari",
+          "team": "Brighton",
+          "points": 8,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0.24,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "points": 7,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.11,
+          "xa": 0.16,
+          "minutes": 90
+        },
+        {
+          "name": "Georginio Rutter",
+          "team": "Brighton",
+          "points": 5,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 74
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-04-18|spurs|brighton": {
+      "fixtureId": 330,
+      "season": "2526",
+      "date": "2026-04-18",
+      "kickoffTime": "2026-04-18T16:30:00Z",
+      "homeTeam": "Spurs",
+      "awayTeam": "Brighton",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Georginio Rutter",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Lucas Bergvall",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Jan Paul van Hecke",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Mats Wieffer",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Yves Bissouma",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Kevin Danso",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 4
+        },
+        {
+          "name": "Antonín Kinský",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 3
+        },
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 0.63
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 0.21
+        },
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 0.18
+        },
+        {
+          "name": "Ferdi Kadıoğlu",
+          "team": "Brighton",
+          "value": 0.14
+        },
+        {
+          "name": "João Maria Lobo Alves Palhares Costa Palhinha Gonçalves",
+          "team": "Spurs",
+          "value": 0.12
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 0.34
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 0.31
+        },
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 0.27
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 0.1
+        },
+        {
+          "name": "Jan Paul van Hecke",
+          "team": "Brighton",
+          "value": 0.07
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "points": 11,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.63,
+          "xa": 0.27,
+          "minutes": 90
+        },
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "points": 10,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0.18,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "points": 8,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0,
+          "xa": 0.31,
+          "minutes": 90
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.09,
+          "xa": 0.1,
+          "minutes": 54
+        },
+        {
+          "name": "Georginio Rutter",
+          "team": "Brighton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.08,
+          "xa": 0.01,
+          "minutes": 15
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

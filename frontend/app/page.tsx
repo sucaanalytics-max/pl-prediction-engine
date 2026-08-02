@@ -1,160 +1,337 @@
 "use client";
 
 import Link from "next/link";
-import { usePredictions } from "@/lib/PredictionsContext";
-import { timeAgo, pct } from "@/lib/formats";
-import { effectiveEdge, type ValueBet } from "@/lib/predictions";
-import FixtureTable from "@/components/FixtureTable";
-import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
-import { PageSkeleton } from "@/components/ui/Skeleton";
-import { StatCard } from "@/components/ui/StatCard";
+import {
+  Activity,
+  ArrowRight,
+  CalendarClock,
+  ChevronRight,
+  CircleAlert,
+  Clock3,
+  ExternalLink,
+  Lightbulb,
+  MoveRight,
+  Newspaper,
+  RefreshCw,
+  ShieldCheck,
+  Sparkles,
+  TrendingUp,
+  Users,
+  WalletCards,
+} from "lucide-react";
+import { FplPlayerChip } from "@/components/FplPlayerChip";
+import { useFplLive } from "@/lib/FplLiveContext";
+import { asSquadPlayers } from "@/lib/fpl-live";
+import {
+  currentSquad,
+  fixtureRuns,
+  intelligenceItems,
+  radarPlayers,
+  transferScenarios,
+} from "@/lib/fpl-portal";
 
-function MatchweekContent() {
-  const { predictions: data, loading, error, refresh } = usePredictions();
+const scenario = transferScenarios[0];
 
-  if (error) return <ErrorMessage message={error} onRetry={refresh} />;
-  if (loading || !data) return <PageSkeleton rows={4} />;
+const fixtureTone: Record<number, string> = {
+  1: "fdr-cell-1",
+  2: "fdr-cell-2",
+  3: "fdr-cell-3",
+  4: "fdr-cell-4",
+  5: "fdr-cell-5",
+};
 
-  const valueBetCount = data.predictions.reduce((acc, p) => acc + p.value_bets.length, 0);
-  const derbyCount = data.predictions.filter((p) => p.fixture.is_derby).length;
-  const totalModels =
-    (data.metadata.models?.length ?? 0) + (data.metadata.sub_models?.length ?? 0);
-
-  const bestBet = data.predictions
-    .flatMap((pred) =>
-      pred.value_bets.map((bet) => ({
-        ...bet,
-        home_team: pred.fixture.home_team,
-        away_team: pred.fixture.away_team,
-      }))
-    )
-    .reduce<(ValueBet & { home_team: string; away_team: string }) | null>((best, current) => {
-      if (!best) return current;
-      return effectiveEdge(current) > effectiveEdge(best) ? current : best;
-    }, null);
-
-  return (
-    <div className="space-y-6 animate-slide-up">
-      {/* Page header */}
-      <div className="flex items-start justify-between gap-4 flex-wrap relative z-10">
-        <div>
-          <div className="flex items-center gap-3 mb-1.5 flex-wrap">
-            <h1
-              className="text-4xl font-extrabold tracking-tighter bg-clip-text text-transparent drop-shadow-sm"
-              style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--text-3) 100%)", fontFamily: "var(--font-jakarta)" }}
-            >
-              Matchweek {data.metadata.gameweek}
-            </h1>
-            <span className="badge-green animate-pulse">LIVE</span>
-            {derbyCount > 0 && <span className="badge-amber">{derbyCount} DERBY</span>}
-          </div>
-          <p className="text-sm font-medium tracking-wide" style={{ color: "var(--text-3)" }}>
-            {data.metadata.season} <span className="mx-1.5 opacity-50">•</span> {data.predictions.length} fixtures <span className="mx-1.5 opacity-50">•</span>{" "}
-            Updated {timeAgo(data.metadata.generated_at)}
-          </p>
-        </div>
-
-        {/* Pipeline pill */}
-        <div
-          className="flex-shrink-0 flex items-center gap-2.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold glass-panel hover:scale-105 transition-transform"
-          style={{ color: "var(--text-2)" }}
-        >
-          <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] flex-shrink-0 animate-pulse" aria-hidden="true" />
-          <span>v{data.metadata.pipeline_version}</span>
-          {data.metadata.calibrated && <span className="badge-green text-[9px] ml-1">CAL</span>}
-        </div>
-      </div>
-
-      {/* KPI row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
-        <StatCard label="Fixtures" value={data.predictions.length} />
-        <StatCard
-          label="Value Bets"
-          value={valueBetCount}
-          accent
-          sub={valueBetCount > 0 ? "across all markets" : "none found"}
-        />
-        <StatCard
-          label="Models"
-          value={totalModels}
-          sub={data.metadata.ensemble_method ?? undefined}
-        />
-        <StatCard
-          label="Simulations"
-          value={`${(data.metadata.n_simulations / 1000).toFixed(0)}K`}
-          sub="Monte Carlo"
-        />
-      </div>
-
-      {/* Best value bet callout */}
-      {bestBet && (
-        <Link href="/value-bets" className="block relative z-10">
-          <div className="premium-glow-border p-5 flex items-center gap-5 group hover:scale-[1.01] transition-transform duration-300">
-            <div
-              className="text-3xl font-extrabold flex-shrink-0 bg-clip-text text-transparent drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
-              style={{ backgroundImage: "linear-gradient(135deg, var(--success) 0%, #3b82f6 100%)", fontFamily: "var(--font-mono)" }}
-            >
-              +{pct(effectiveEdge(bestBet), 1)}
-            </div>
-            <div className="flex-1 min-w-0 border-l border-[var(--border)] pl-5">
-              <div
-                className="text-[10px] uppercase tracking-[0.2em] mb-1 font-bold flex items-center gap-2"
-                style={{ color: "var(--accent)" }}
-              >
-                Top Value Pick <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent)] animate-pulse" />
-              </div>
-              <div
-                className="text-lg font-bold truncate mb-0.5"
-                style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
-              >
-                {bestBet.market}
-                {bestBet.selection ? ` — ${bestBet.selection}` : ""}
-              </div>
-              <div className="text-sm font-medium" style={{ color: "var(--text-3)" }}>
-                {bestBet.home_team} vs {bestBet.away_team}
-                {bestBet.decimal_odds && (
-                  <span className="ml-2 font-mono px-2 py-0.5 rounded-md glass-panel text-xs text-[var(--text-1)]">@ {bestBet.decimal_odds.toFixed(2)}</span>
-                )}
-              </div>
-            </div>
-            <span className="badge-green flex-shrink-0 shadow-lg group-hover:shadow-[var(--glow-accent)] transition-shadow">Explore all {valueBetCount}</span>
-          </div>
-        </Link>
-      )}
-
-      <div className="glow-line" />
-
-      {/* Fixtures list */}
-      <div className="relative z-10">
-        {data.predictions.length === 0 ? (
-          <div className="glass-panel p-12 text-center rounded-2xl border-dashed border-2">
-            <p className="text-lg font-medium" style={{ color: "var(--text-2)" }}>No fixtures scheduled for this gameweek yet.</p>
-            <p className="text-sm mt-2" style={{ color: "var(--text-4)" }}>Check back closer to the matchday as odds become available.</p>
-          </div>
-        ) : (
-          <FixtureTable predictions={data.predictions} />
-        )}
-      </div>
-
-      {/* Model footer */}
-      <div className="flex items-center justify-between text-xs gap-4 flex-wrap px-2 py-4 mt-8 border-t border-[var(--border)] relative z-10" style={{ color: "var(--text-4)" }}>
-        <span className="font-mono tracking-wider opacity-80 uppercase text-[10px]">
-          Engine: {[...(data.metadata.models ?? []), ...(data.metadata.sub_models ?? [])].join(" + ")}
-        </span>
-        {data.metadata.odds_source && (
-          <span className="font-mono tracking-wider opacity-80 uppercase text-[10px] glass-panel px-2 py-1 rounded">
-            Odds: {data.metadata.odds_source.replace("_", " ")}
-          </span>
-        )}
-      </div>
-    </div>
-  );
+function PositionBadge({ position }: { position: string }) {
+  return <span className={`position-badge position-${position.toLowerCase()}`}>{position}</span>;
 }
 
-export default function MatchweekPage() {
+function deadlineParts(deadlineTime?: string) {
+  if (!deadlineTime) return { date: "Fri 21 Aug", time: "23:00 IST" };
+  const date = new Date(deadlineTime);
+  return {
+    date: new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Kolkata",
+      weekday: "short",
+      day: "2-digit",
+      month: "short",
+    }).format(date),
+    time: `${new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }).format(date)} IST`,
+  };
+}
+
+export default function DecisionHubPage() {
+  const { state: liveState, loading: liveLoading, error: liveError, refresh } =
+    useFplLive();
+  const squad = liveState ? asSquadPlayers(liveState.squad.players) : currentSquad;
+  const starters = squad.filter((player) => !player.bench);
+  const bench = squad.filter((player) => player.bench);
+  const lines = [
+    starters.filter((player) => player.position === "GKP"),
+    starters.filter((player) => player.position === "DEF"),
+    starters.filter((player) => player.position === "MID"),
+    starters.filter((player) => player.position === "FWD"),
+  ];
+  const defenceSpend = squad
+    .filter((player) => player.position === "DEF")
+    .reduce((total, player) => total + player.price, 0);
+  const deadline = deadlineParts(liveState?.event.deadlineTime);
+  const sourceLabel = liveState?.squad.isOfficial
+    ? "Official public squad"
+    : "Captured draft · live prices";
+  const pulseScore = liveState ? (liveState.squad.isOfficial ? 88 : 76) : 68;
+
   return (
-    <ErrorBoundary pageName="Matchweek">
-      <MatchweekContent />
-    </ErrorBoundary>
+    <div className="portal-page space-y-6 animate-slide-up">
+      <header className="decision-hero">
+        <div className="hero-copy">
+          <div className="eyebrow"><Sparkles size={13} /> Personal decision room · Team {liveState?.entry.id ?? 20945}</div>
+          <h1>Build the right GW{liveState?.event.id ?? 1} team.<br /><span>Know why it is right.</span></h1>
+          <p>
+            Your squad, projections, fixtures, injuries and trusted weekly research—
+            reduced to the decisions that can actually change your rank.
+          </p>
+          <div className="hero-actions">
+            <Link href="/transfers" className="primary-action">See transfer recommendations <ArrowRight size={16} /></Link>
+            <Link href="/intelligence" className="secondary-action">Review intelligence <Newspaper size={16} /></Link>
+          </div>
+        </div>
+        <div className="deadline-panel">
+          <div className="deadline-top"><CalendarClock size={17} /><span>GW{liveState?.event.id ?? 1} deadline</span></div>
+          <strong>{deadline.date}</strong>
+          <span className="deadline-time">{deadline.time}</span>
+          <div className="deadline-rule"><i style={{ width: "32%" }} /></div>
+          <small>{liveState?.event.phase === "preseason" ? "Preseason · unlimited changes" : "Official gameweek data"}</small>
+        </div>
+      </header>
+
+      <section className={`live-source-banner ${liveError ? "has-error" : ""}`}>
+        <span className={liveState?.squad.isOfficial ? "live-dot" : "manual-dot"} />
+        <div>
+          <strong>{liveError ? "Official FPL sync unavailable" : sourceLabel}</strong>
+          <small>
+            {liveError
+              ? `${liveError}. Showing the last captured portal squad.`
+              : liveState?.notices[0] ??
+                "Connecting your team to official 2026/27 prices and fixtures."}
+          </small>
+        </div>
+        <button onClick={() => void refresh()} disabled={liveLoading}>
+          <RefreshCw size={13} className={liveLoading ? "animate-spin" : ""} />
+          {liveLoading ? "Syncing" : "Sync now"}
+        </button>
+      </section>
+
+      <section className="metric-rail" aria-label="Team summary">
+        <div><span><WalletCards size={15} /> Squad value</span><strong>£{(liveState?.squad.value ?? 100).toFixed(1)}m</strong><small>£{(liveState?.squad.bank ?? 0).toFixed(1)}m in bank</small></div>
+        <div><span><Users size={15} /> Structure</span><strong>{defenceSpend.toFixed(1)}m</strong><small>budget in defence · {liveState?.squad.formation ?? "4-4-2"}</small></div>
+        <div><span><TrendingUp size={15} /> Best transfer uplift</span><strong>+{(liveState?.recommendations?.transfers4?.[0]?.delta4 ?? 0).toFixed(1)}</strong><small>provisional pts · 4 GW</small></div>
+        <div className="metric-alert"><span><CircleAlert size={15} /> Action queue</span><strong>3</strong><small>1 urgent · 2 monitor</small></div>
+      </section>
+
+      <div className="grid xl:grid-cols-[1.32fr_.68fr] gap-6">
+        <section className="decision-brief">
+          <div className="brief-number">01</div>
+          <div className="brief-content">
+            <div className="eyebrow">Highest-leverage decision</div>
+            <h2>
+              {liveState?.recommendations?.transfers6?.[0]
+                ? `${liveState.recommendations.transfers6[0].playerOut.name} → ${liveState.recommendations.transfers6[0].playerIn.name} leads the six-week shortlist.`
+                : "Move from distributed value to a reliable captaincy spine."}
+            </h2>
+            <p>
+              {liveState?.recommendations?.transfers6?.[0]?.rationale.join(" ") ??
+                "The current squad spends premium money across defence and mid-price slots, but needs a stronger captaincy spine."}
+            </p>
+            <div className="brief-moves">
+              <div><span>Build around</span><strong>Haaland · Bruno · Gabriel</strong></div>
+              <MoveRight size={20} />
+              <div><span>Keep value</span><strong>Rogers · Gyökeres</strong></div>
+            </div>
+            <Link href="/transfers">Open ranked recommendations <ArrowRight size={15} /></Link>
+          </div>
+          <div className="confidence-dial">
+            <div><strong>82</strong><span>%</span></div>
+            <small>decision confidence</small>
+          </div>
+        </section>
+
+        <section className="decision-card action-queue">
+          <div className="section-title-row">
+            <div><span className="kicker">Triage first</span><h2>Action queue</h2></div>
+            <span className="status-pill">GW1</span>
+          </div>
+          <div className="queue-item urgent">
+            <span className="queue-priority">Now</span>
+            <div><strong>Start Gyökeres</strong><p>Home to Coventry; currently third on your bench.</p></div>
+            <ChevronRight size={16} />
+          </div>
+          <div className="queue-item">
+            <span className="queue-priority">Plan</span>
+            <div><strong>Add a premium captain</strong><p>Haaland covers three standout fixtures in six.</p></div>
+            <ChevronRight size={16} />
+          </div>
+          <div className="queue-item">
+            <span className="queue-priority">Watch</span>
+            <div><strong>Verify Kinsky minutes</strong><p>Goalkeeper value depends on preseason hierarchy.</p></div>
+            <ChevronRight size={16} />
+          </div>
+        </section>
+      </div>
+
+      <div className="grid xl:grid-cols-[.9fr_1.1fr] gap-6">
+        <section className="squad-section decision-card p-0 overflow-hidden">
+          <div className="section-title-row squad-heading">
+            <div>
+              <span className="kicker">{sourceLabel}</span>
+              <h2>Your GW{liveState?.event.id ?? 1} squad</h2>
+            </div>
+            <a href="https://fantasy.premierleague.com/en/entry/20945/history" target="_blank" rel="noreferrer" className="icon-link" aria-label="Open official FPL team">
+              <ExternalLink size={16} />
+            </a>
+          </div>
+          <div className="mini-pitch">
+            {lines.map((line, index) => (
+              <div className={`pitch-line pitch-line-${index}`} key={index}>
+                {line.map((player) => <FplPlayerChip player={player} key={player.name} />)}
+              </div>
+            ))}
+          </div>
+          <div className="bench-strip">
+            <span className="bench-label">Bench</span>
+            {bench.map((player) => <FplPlayerChip player={player} key={player.name} />)}
+          </div>
+          <div className="squad-warning"><CircleAlert size={14} /> Gyökeres has the easiest fixture in your squad but is benched.</div>
+        </section>
+
+        <section className="decision-card fixture-horizon">
+          <div className="section-title-row">
+            <div><span className="kicker">Next six</span><h2>Captaincy & fixture runway</h2></div>
+            <Link href="/planner" className="text-link">Plan moves <ArrowRight size={14} /></Link>
+          </div>
+          <div className="fixture-grid" role="table" aria-label="Six gameweek fixture difficulty">
+            <div className="fixture-row fixture-header" role="row">
+              <span>Target</span>
+              {[1, 2, 3, 4, 5, 6].map((gw) => <span key={gw}>GW{gw}</span>)}
+            </div>
+            {fixtureRuns.map((row) => (
+              <div className="fixture-row" role="row" key={row.team}>
+                <span><b>{row.player}</b><small>{row.team}</small></span>
+                {row.fixtures.map((fixture, index) => (
+                  <span className={fixtureTone[row.scores[index]]} key={fixture}>{fixture}</span>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div className="fixture-legend">
+            <span><i className="fdr-cell-1" /> Target</span>
+            <span><i className="fdr-cell-3" /> Neutral</span>
+            <span><i className="fdr-cell-5" /> Avoid</span>
+          </div>
+        </section>
+      </div>
+
+      <section className="decision-card">
+        <div className="section-title-row mb-5">
+          <div><span className="kicker">Shortlist</span><h2>Player radar</h2></div>
+          <Link href="/rankings" className="text-link">Open all Top 10 lists <ArrowRight size={14} /></Link>
+        </div>
+        <div className="radar-table-wrap">
+          <table className="radar-table">
+            <thead><tr><th>Player</th><th>Next</th><th>Price</th><th>4 GW EV</th><th>6 GW EV</th><th>xMins</th><th>Ownership</th><th>Read</th></tr></thead>
+            <tbody>
+              {(liveState?.rankings?.overall ?? []).slice(0, 6).map((player) => (
+                <tr key={player.elementId}>
+                  <td><PositionBadge position={player.position} /><span><strong>{player.name}</strong><small>{player.team}</small></span></td>
+                  <td><span className="fixture-pill">{player.fixtures[0]?.label ?? "TBC"}</span></td>
+                  <td>£{player.price.toFixed(1)}</td>
+                  <td><strong>{player.projected4.toFixed(1)}</strong></td>
+                  <td><strong>{player.projected6.toFixed(1)}</strong></td>
+                  <td>{player.expectedMinutes}&apos;</td>
+                  <td>{player.ownership.toFixed(1)}%</td>
+                  <td><span className="trend trend-rising"><TrendingUp size={12} />ranked</span></td>
+                </tr>
+              ))}
+              {!liveState?.rankings?.overall?.length
+                ? radarPlayers.map((player) => (
+                    <tr key={player.name}>
+                      <td><PositionBadge position={player.position} /><span><strong>{player.name}</strong><small>{player.team}</small></span></td>
+                      <td><span className="fixture-pill">{player.next}</span></td>
+                      <td>£{player.price.toFixed(1)}</td>
+                      <td><strong>{player.ev4.toFixed(1)}</strong></td>
+                      <td><strong>{player.ev6.toFixed(1)}</strong></td>
+                      <td>{player.xMins}&apos;</td>
+                      <td>{player.ownership.toFixed(1)}%</td>
+                      <td><span className={`trend trend-${player.trend}`}><TrendingUp size={12} />{player.trend}</span></td>
+                    </tr>
+                  ))
+                : null}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div className="grid lg:grid-cols-[1fr_360px] gap-6">
+        <section className="decision-card">
+          <div className="section-title-row mb-4">
+            <div><span className="kicker">Research brief</span><h2>What deserves your attention</h2></div>
+            <Link href="/intelligence" className="text-link">View all <ArrowRight size={14} /></Link>
+          </div>
+          <div className="research-brief-list">
+            {intelligenceItems.slice(0, 4).map((item) => (
+              <a href={item.url} target={item.url.startsWith("http") ? "_blank" : undefined} rel="noreferrer" key={item.id}>
+                <span className="research-source">{item.source.slice(0, 2).toUpperCase()}</span>
+                <div><strong>{item.title}</strong><p>{item.summary}</p></div>
+                <span className="research-age"><Clock3 size={11} />{item.age}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <aside className="decision-card system-pulse">
+          <div className="section-title-row">
+            <div><span className="kicker">Trust layer</span><h2>Data pulse</h2></div>
+            <Activity size={20} />
+          </div>
+          <div className="pulse-score"><strong>{pulseScore}</strong><span>/100</span></div>
+          <p>
+            {liveState?.squad.isOfficial
+              ? "Official squad, prices and fixtures are aligned."
+              : "Live catalogue and fixtures are aligned; your draft remains private until the deadline."}
+          </p>
+          <div className="pulse-list">
+            <div><ShieldCheck size={14} /><span>Official prices & fixtures</span><strong>{liveState ? "Live" : "Connecting"}</strong></div>
+            <div><Users size={14} /><span>Squad source</span><strong>{liveState?.freshness.squad === "live" ? "Official" : "Captured"}</strong></div>
+            <div><RefreshCw size={14} /><span>Player projections</span><strong>Preview</strong></div>
+            <div><Lightbulb size={14} /><span>Editorial context</span><strong>Review</strong></div>
+          </div>
+          <Link href="/health">Inspect model health <ArrowRight size={14} /></Link>
+        </aside>
+      </div>
+
+      <section className="recommendation-footer">
+        <div>
+          <span className="kicker">Current recommendation</span>
+          <strong>
+            {liveState?.recommendations?.transfers6?.[0]
+              ? `${liveState.recommendations.transfers6[0].playerOut.name} → ${liveState.recommendations.transfers6[0].playerIn.name}`
+              : scenario.name}
+          </strong>
+          <p>
+            {liveState?.recommendations?.transfers6?.[0]?.rationale[0] ?? scenario.summary}
+          </p>
+        </div>
+        <div className="rec-projection"><span>6-GW uplift</span><strong>+{(liveState?.recommendations?.transfers6?.[0]?.delta6 ?? 0).toFixed(1)}</strong><small>provisional points</small></div>
+        <Link href="/transfers" className="primary-action">Review the evidence <ArrowRight size={16} /></Link>
+      </section>
+
+      <p className="data-disclaimer">
+        Built for decisions, not certainty. Official FPL catalogue data is live; projections remain
+        provisional until the 2026/27 model is regenerated and late preseason team news is incorporated.
+      </p>
+    </div>
   );
 }

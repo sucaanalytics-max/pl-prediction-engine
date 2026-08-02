@@ -1,0 +1,1015 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-03-02|nottmforest|liverpool": {
+      "fixtureId": 268,
+      "season": "2324",
+      "date": "2024-03-02",
+      "kickoffTime": "2024-03-02T15:00:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Liverpool",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Darwin Núñez Ribeiro",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Danilo dos Santos de Oliveira",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Felipe Augusto de Almeida Monteiro",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Jayden Danns",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Caoimhin Kelleher",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Caoimhin Kelleher",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Ibrahima Konaté",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Conor Bradley",
+          "team": "Liverpool",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 0.72
+        },
+        {
+          "name": "Darwin Núñez Ribeiro",
+          "team": "Liverpool",
+          "value": 0.71
+        },
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 0.52
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.25
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.99
+        },
+        {
+          "name": "Harvey Elliott",
+          "team": "Liverpool",
+          "value": 0.17
+        },
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 0.1
+        },
+        {
+          "name": "Konstantinos Tsimikas",
+          "team": "Liverpool",
+          "value": 0.08
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 0.06
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Caoimhin Kelleher",
+          "team": "Liverpool",
+          "points": 9,
+          "bonus": 3,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Ibrahima Konaté",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Conor Bradley",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 83
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.25,
+          "xa": 0.99,
+          "minutes": 90
+        },
+        {
+          "name": "Joe Gomez",
+          "team": "Liverpool",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-09-14|liverpool|nottmforest": {
+      "fixtureId": 36,
+      "season": "2425",
+      "date": "2024-09-14",
+      "kickoffTime": "2024-09-14T14:00:00Z",
+      "homeTeam": "Liverpool",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Álex Moreno Lopera",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Trent Alexander-Arnold",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Ryan Gravenberch",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 5
+        },
+        {
+          "name": "Alisson Ramses Becker",
+          "team": "Liverpool",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Álex Moreno Lopera",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "value": 0.3
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 0.23
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 0.16
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 0.14
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 0.13
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.6
+        },
+        {
+          "name": "Trent Alexander-Arnold",
+          "team": "Liverpool",
+          "value": 0.33
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.13
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 0.09
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "points": 9,
+          "bonus": 3,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "points": 7,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.07,
+          "xa": 0.02,
+          "minutes": 36
+        },
+        {
+          "name": "Álex Moreno Lopera",
+          "team": "Nott'm Forest",
+          "points": 6,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 79
+        },
+        {
+          "name": "Nikola Milenković",
+          "team": "Nott'm Forest",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-01-14|nottmforest|liverpool": {
+      "fixtureId": 206,
+      "season": "2425",
+      "date": "2025-01-14",
+      "kickoffTime": "2025-01-14T20:00:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Liverpool",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Konstantinos Tsimikas",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 5
+        },
+        {
+          "name": "Alisson Ramses Becker",
+          "team": "Liverpool",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Murillo Santiago Costa dos Santos",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "value": 0.91
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.47
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 0.3
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 0.16
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.52
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.34
+        },
+        {
+          "name": "Trent Alexander-Arnold",
+          "team": "Liverpool",
+          "value": 0.29
+        },
+        {
+          "name": "Konstantinos Tsimikas",
+          "team": "Liverpool",
+          "value": 0.25
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "points": 9,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0.16,
+          "xa": 0,
+          "minutes": 89
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "points": 7,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0.05,
+          "xa": 0.14,
+          "minutes": 90
+        },
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "points": 7,
+          "bonus": 1,
+          "bps": 22,
+          "xg": 0.91,
+          "xa": 0.03,
+          "minutes": 24
+        },
+        {
+          "name": "Konstantinos Tsimikas",
+          "team": "Liverpool",
+          "points": 4,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0,
+          "xa": 0.25,
+          "minutes": 25
+        },
+        {
+          "name": "Murillo Santiago Costa dos Santos",
+          "team": "Nott'm Forest",
+          "points": 3,
+          "bonus": 1,
+          "bps": 22,
+          "xg": 0.03,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-11-22|liverpool|nottmforest": {
+      "fixtureId": 117,
+      "season": "2526",
+      "date": "2025-11-22",
+      "kickoffTime": "2025-11-22T15:00:00Z",
+      "homeTeam": "Liverpool",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 0,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Nicolò Savona",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Murillo Costa dos Santos",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Elliot Anderson",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Omari Hutchinson",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Federico Chiesa",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Ryan Gravenberch",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alisson Becker",
+          "team": "Liverpool",
+          "value": 4
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Murillo Costa dos Santos",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Elliot Anderson",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.58
+        },
+        {
+          "name": "Nicolò Savona",
+          "team": "Nott'm Forest",
+          "value": 0.44
+        },
+        {
+          "name": "Omari Hutchinson",
+          "team": "Nott'm Forest",
+          "value": 0.42
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.36
+        },
+        {
+          "name": "Federico Chiesa",
+          "team": "Liverpool",
+          "value": 0.3
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 0.43
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.3
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.17
+        },
+        {
+          "name": "Milos Kerkez",
+          "team": "Liverpool",
+          "value": 0.12
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Murillo Costa dos Santos",
+          "team": "Nott'm Forest",
+          "points": 17,
+          "bonus": 3,
+          "bps": 55,
+          "xg": 0.19,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "points": 13,
+          "bonus": 2,
+          "bps": 47,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Nicolò Savona",
+          "team": "Nott'm Forest",
+          "points": 12,
+          "bonus": 0,
+          "bps": 38,
+          "xg": 0.44,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Elliot Anderson",
+          "team": "Nott'm Forest",
+          "points": 9,
+          "bonus": 1,
+          "bps": 42,
+          "xg": 0.11,
+          "xa": 0.08,
+          "minutes": 90
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "points": 8,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.25,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-02-22|nottmforest|liverpool": {
+      "fixtureId": 267,
+      "season": "2526",
+      "date": "2026-02-22",
+      "kickoffTime": "2026-02-22T14:00:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Liverpool",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Stefan Ortega Moreno",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Alisson Becker",
+          "team": "Liverpool",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Ibrahima Konaté",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Alisson Becker",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Hugo Ekitiké",
+          "team": "Liverpool",
+          "value": 0.71
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.63
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 0.44
+        },
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "value": 0.3
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.24
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Rio Ngumoha",
+          "team": "Liverpool",
+          "value": 0.42
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 0.35
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.23
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 0.16
+        },
+        {
+          "name": "Ibrahim Sangaré",
+          "team": "Nott'm Forest",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "points": 13,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 0.63,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "points": 11,
+          "bonus": 2,
+          "bps": 34,
+          "xg": 0.13,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Ibrahima Konaté",
+          "team": "Liverpool",
+          "points": 9,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Alisson Becker",
+          "team": "Liverpool",
+          "points": 7,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Milos Kerkez",
+          "team": "Liverpool",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 82
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

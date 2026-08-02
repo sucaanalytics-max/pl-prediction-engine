@@ -1,0 +1,440 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-12-15|southampton|spurs": {
+      "fixtureId": 159,
+      "season": "2425",
+      "date": "2024-12-15",
+      "kickoffTime": "2024-12-15T19:00:00Z",
+      "homeTeam": "Southampton",
+      "awayTeam": "Spurs",
+      "homeGoals": 0,
+      "awayGoals": 5,
+      "scorers": [
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Dominic Solanke-Mitchell",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Djed Spence",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Lucas Bergvall",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alex McCarthy",
+          "team": "Southampton",
+          "value": 4
+        },
+        {
+          "name": "Fraser Forster",
+          "team": "Spurs",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 0.65
+        },
+        {
+          "name": "Adam Armstrong",
+          "team": "Southampton",
+          "value": 0.54
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.43
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "value": 0.37
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 0.37
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ryan Manning",
+          "team": "Southampton",
+          "value": 0.67
+        },
+        {
+          "name": "Djed Spence",
+          "team": "Spurs",
+          "value": 0.3
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 0.3
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 0.22
+        },
+        {
+          "name": "Joe Aribo",
+          "team": "Southampton",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "points": 15,
+          "bonus": 3,
+          "bps": 55,
+          "xg": 0.65,
+          "xa": 0.04,
+          "minutes": 76
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "points": 14,
+          "bonus": 2,
+          "bps": 51,
+          "xg": 0.37,
+          "xa": 0.3,
+          "minutes": 45
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "points": 9,
+          "bonus": 1,
+          "bps": 48,
+          "xg": 0.27,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Djed Spence",
+          "team": "Spurs",
+          "points": 9,
+          "bonus": 0,
+          "bps": 44,
+          "xg": 0.06,
+          "xa": 0.3,
+          "minutes": 76
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "points": 8,
+          "bonus": 0,
+          "bps": 35,
+          "xg": 0.37,
+          "xa": 0.09,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-06|spurs|southampton": {
+      "fixtureId": 309,
+      "season": "2425",
+      "date": "2025-04-06",
+      "kickoffTime": "2025-04-06T13:00:00Z",
+      "homeTeam": "Spurs",
+      "awayTeam": "Southampton",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Djed Spence",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Kamaldeen Sulemana",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Pedro Porro",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 5
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 2
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 0.79
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.58
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 0.4
+        },
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Southampton",
+          "value": 0.35
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Djed Spence",
+          "team": "Spurs",
+          "value": 0.3
+        },
+        {
+          "name": "Pedro Porro",
+          "team": "Spurs",
+          "value": 0.26
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 0.2
+        },
+        {
+          "name": "Kamaldeen Sulemana",
+          "team": "Southampton",
+          "value": 0.18
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 0.14
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "points": 18,
+          "bonus": 3,
+          "bps": 60,
+          "xg": 0.58,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "points": 9,
+          "bonus": 2,
+          "bps": 38,
+          "xg": 0.4,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "points": 7,
+          "bonus": 1,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.14,
+          "minutes": 79
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.79,
+          "xa": 0,
+          "minutes": 3
+        },
+        {
+          "name": "Djed Spence",
+          "team": "Spurs",
+          "points": 5,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.15,
+          "xa": 0.3,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

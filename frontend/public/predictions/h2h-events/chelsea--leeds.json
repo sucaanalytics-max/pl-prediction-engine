@@ -1,0 +1,465 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2526|2025-12-03|leeds|chelsea": {
+      "fixtureId": 136,
+      "season": "2526",
+      "date": "2025-12-03",
+      "kickoffTime": "2025-12-03T20:15:00Z",
+      "homeTeam": "Leeds",
+      "awayTeam": "Chelsea",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Tanaka Ao",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Jamie Bynoe-Gittens",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Lucas Estella Perri",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 3
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 2
+        },
+        {
+          "name": "Tanaka Ao",
+          "team": "Leeds",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1.38
+        },
+        {
+          "name": "Lukas Nmecha",
+          "team": "Leeds",
+          "value": 0.46
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 0.35
+        },
+        {
+          "name": "Liam Delap",
+          "team": "Chelsea",
+          "value": 0.26
+        },
+        {
+          "name": "Tanaka Ao",
+          "team": "Leeds",
+          "value": 0.24
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.45
+        },
+        {
+          "name": "Jamie Bynoe-Gittens",
+          "team": "Chelsea",
+          "value": 0.4
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 0.35
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 0.29
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.21
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "points": 12,
+          "bonus": 2,
+          "bps": 26,
+          "xg": 0.09,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "points": 9,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 1.38,
+          "xa": 0.02,
+          "minutes": 85
+        },
+        {
+          "name": "Tanaka Ao",
+          "team": "Leeds",
+          "points": 9,
+          "bonus": 2,
+          "bps": 26,
+          "xg": 0.24,
+          "xa": 0.01,
+          "minutes": 66
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.16,
+          "xa": 0.01,
+          "minutes": 45
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "points": 6,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.11,
+          "xa": 0.21,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-02-10|chelsea|leeds": {
+      "fixtureId": 253,
+      "season": "2526",
+      "date": "2026-02-10",
+      "kickoffTime": "2026-02-10T19:30:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Leeds",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Lukas Nmecha",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Lukas Nmecha",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Sebastiaan Bornauw",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "James Justin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Sean Longstaff",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Gabriel Gudmundsson",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Josh Acheampong",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Karl Darlow",
+          "team": "Leeds",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Lukas Nmecha",
+          "team": "Leeds",
+          "value": 2
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1.69
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 1.03
+        },
+        {
+          "name": "Lukas Nmecha",
+          "team": "Leeds",
+          "value": 0.79
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 0.61
+        },
+        {
+          "name": "Liam Delap",
+          "team": "Chelsea",
+          "value": 0.17
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.69
+        },
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "value": 0.61
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.52
+        },
+        {
+          "name": "Lukas Nmecha",
+          "team": "Leeds",
+          "value": 0.46
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 0.22
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "points": 12,
+          "bonus": 3,
+          "bps": 43,
+          "xg": 1.69,
+          "xa": 0.52,
+          "minutes": 90
+        },
+        {
+          "name": "Lukas Nmecha",
+          "team": "Leeds",
+          "points": 11,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.79,
+          "xa": 0.46,
+          "minutes": 81
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "points": 10,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 1.03,
+          "xa": 0.15,
+          "minutes": 90
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "points": 6,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.61,
+          "xa": 0,
+          "minutes": 35
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "points": 4,
+          "bonus": 0,
+          "bps": 7,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

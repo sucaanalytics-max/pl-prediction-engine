@@ -158,16 +158,18 @@ class TestEndToEnd(unittest.TestCase):
             "the failed criterion did not survive publication",
         )
 
-        # ── deliver, dry run ─────────────────────────────────────────────
-        from pipeline.learning.notify import notify
+        # ── publish the message feed ─────────────────────────────────────
+        from pipeline.learning.messages import decision_messages, load_feed, publish
 
-        payload = {
-            "gameweek": GAMEWEEK,
-            "deadline": state.deadline.isoformat(),
-            "teams": [private],
-        }
-        result = notify(payload, "https://example.invalid", 2.0, require_delivery=False)
-        self.assertIsNotNone(result)
+        messages = decision_messages(private, 2.0, "2026-10-01T09:00:00Z")
+        self.assertTrue(messages, "a decision produced no messages")
+        publish(messages, self.dir, self.dir / "public")
+
+        feed = load_feed(self.dir)
+        self.assertTrue(
+            any(m["kind"] == "decision" for m in feed),
+            "the decision never reached the feed, which is the only channel",
+        )
 
         # ── settle from the archive, and score ────────────────────────────
         realised = (
@@ -212,185 +214,97 @@ class TestEndToEnd(unittest.TestCase):
         self.assertAlmostEqual(active(self.dir).values[name], base * 1.01)
 
 
+class TestPublicationIsTheOnlyChannel(unittest.TestCase):
+    """
+    Email was removed, so the feed is the agent's only way to say anything.
+
+    That raises the bar on publication: with a second channel a failed write was
+    an inconvenience; now it is the difference between being told and not. These
+    assert publication is verified rather than assumed.
+    """
+
+    def setUp(self):
+        self._tmp = TemporaryDirectory()
+        self.dir = Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+
+    def _message(self, **over):
+        from pipeline.learning.messages import Message
+
+        params = dict(
+            id="gw7-status", gameweek=7, kind="status", severity="info",
+            title="t", body="b", created_at="2026-10-01T09:00:00Z",
+        )
+        params.update(over)
+        return Message(**params)
+
+    def test_publishing_writes_and_verifies_both_copies(self):
+        from pipeline.learning.messages import load_feed, publish
+
+        written = publish([self._message()], self.dir, self.dir / "public")
+        self.assertIn("private", written)
+        self.assertIn("public", written)
+        self.assertEqual(len(load_feed(self.dir)), 1)
+
+    def test_republishing_an_id_replaces_rather_than_duplicates(self):
+        """
+        The scheduler is state-derived and re-enters phases after a missed cron,
+        so without this a caught-up run would fill the feed with duplicates.
+        """
+        from pipeline.learning.messages import load_feed, publish
+
+        publish([self._message(body="first")], self.dir)
+        publish([self._message(body="second")], self.dir)
+
+        feed = load_feed(self.dir)
+        self.assertEqual(len(feed), 1)
+        self.assertEqual(feed[0]["body"], "second")
+
+    def test_an_empty_message_set_is_refused(self):
+        from pipeline.learning.messages import PublicationError, publish
+
+        with self.assertRaises(PublicationError):
+            publish([], self.dir)
+
+    def test_private_fields_never_reach_the_feed(self):
+        """The published feed is world-readable."""
+        from pipeline.learning.messages import load_feed, publish
+
+        publish(
+            [self._message(detail={
+                "entry_id": 2561567,
+                "runners_up": [{"squad": [1, 2]}],
+                "gameweek": 7,
+            })],
+            self.dir,
+        )
+        detail = load_feed(self.dir)[0]["detail"]
+        self.assertNotIn("entry_id", detail)
+        self.assertNotIn("runners_up", detail)
+        self.assertEqual(detail["gameweek"], 7)
+
+    def test_a_corrupt_feed_raises_rather_than_reading_as_empty(self):
+        """
+        An unreadable feed that returned [] would look exactly like an agent
+        that had nothing to say.
+        """
+        from pipeline.learning.messages import PublicationError, load_feed, publish
+
+        publish([self._message()], self.dir)
+        path = self.dir / "fpl" / "messages.json"
+        path.write_text('{"messages": [')
+        with self.assertRaises(PublicationError):
+            load_feed(self.dir)
+
+    def test_an_unknown_kind_is_rejected_at_construction(self):
+        from pipeline.learning.messages import Message
+
+        with self.assertRaises(ValueError):
+            Message(
+                id="x", gameweek=1, kind="telegram", severity="info",
+                title="t", body="b", created_at="",
+            )
+
+
 if __name__ == "__main__":
     unittest.main()
-
-
-class TestDeliveryIsWired(unittest.TestCase):
-    """
-    The notifier was built, tested, and called by nothing — the third module in
-    this session found in that state. These assert the seal actually reaches it,
-    which no test of notify.py itself could ever show.
-    """
-
-    def _state(self):
-        return ScheduleState(
-            phase=Phase.SEAL, gameweek=7,
-            deadline=datetime.now(timezone.utc) + timedelta(hours=3),
-            reason="delivery wiring test",
-        )
-
-    def test_seal_reaches_the_delivery_hook(self):
-        """
-        A seal that never attempts delivery is a decision nobody receives.
-
-        Checked against _seal's own compiled constants and names, not by
-        monkeypatching _deliver and then calling it directly — that variant
-        passes whether or not _seal has ever heard of it, which is exactly the
-        kind of test that let the notifier sit unwired in the first place.
-        """
-        import pipeline.learning.run_agent as agent
-
-        referenced = set(agent._seal.__code__.co_names)
-        self.assertIn(
-            "_deliver", referenced,
-            "_seal does not reference _deliver; the notifier is unwired again",
-        )
-
-    def test_deliver_is_the_last_thing_seal_does(self):
-        """
-        Its return value must be the seal's exit code, or a delivery failure
-        would be swallowed and the run would report success.
-        """
-        import inspect
-
-        import pipeline.learning.run_agent as agent
-
-        source = inspect.getsource(agent._seal)
-        self.assertIn(
-            "return _deliver(", source,
-            "_seal calls _deliver but discards its exit code",
-        )
-
-    def test_delivery_failure_returns_non_zero_without_unsealing(self):
-        """
-        Ordering: the forecast is already sealed and the artifacts written, so a
-        mail outage costs a red build rather than a lost observation — but it
-        must NOT report success, or a green run would claim a delivery that
-        never happened.
-        """
-        import pipeline.learning.run_agent as agent
-        from pipeline.learning.notify import NotificationError
-
-        with TemporaryDirectory() as tmp:
-            path = Path(tmp) / "decision.json"
-            path.write_text(json.dumps({"gameweek": 7, "teams": []}))
-
-            original = agent.__dict__.get("notify")
-            import pipeline.learning.notify as notify_module
-
-            def boom(*args, **kwargs):
-                raise NotificationError("no mail server configured")
-
-            real = notify_module.notify
-            notify_module.notify = boom
-            try:
-                code = agent._deliver(
-                    self._state(), {"season": {"decision": path}}, dry_run=False
-                )
-            finally:
-                notify_module.notify = real
-
-        self.assertEqual(code, 1, "a failed delivery reported success")
-
-    def test_no_decisions_is_not_a_delivery_failure(self):
-        """
-        A gameweek with no unplayed fixtures produces no proposal. That is not
-        an error, and failing the run would make an ordinary blank look broken.
-        """
-        import pipeline.learning.run_agent as agent
-
-        self.assertEqual(agent._deliver(self._state(), {}, dry_run=False), 0)
-
-
-class TestSiteIsThePrimaryChannel(unittest.TestCase):
-    """
-    Email is a push convenience, not a precondition for deciding.
-
-    An unreachable mail server must not cost a gameweek — that is a far worse
-    outcome than an unsent reminder. But the site channel has to actually verify
-    something, or it is a rubber stamp that would let the agent confirm delivery
-    of a decision it never published.
-    """
-
-    def _payload(self):
-        return {"gameweek": 7, "deadline": "2026-10-01T10:00:00Z", "teams": []}
-
-    def test_publication_alone_satisfies_delivery(self):
-        from pipeline.learning.notify import notify
-
-        with TemporaryDirectory() as tmp:
-            path = Path(tmp) / "public.json"
-            path.write_text(json.dumps({"gameweek": 7, "teams": []}))
-
-            result = notify(
-                self._payload(), "https://example.invalid", 4.0,
-                channels=("site", "email"), require_delivery=True,
-                published_paths=[path],
-            )
-        self.assertIn("site", result.delivered)
-        # Email is expected to fail with no SMTP configured, and that is fine.
-        self.assertIn("email", result.failed)
-
-    def test_a_missing_artifact_is_not_delivery(self):
-        """The rubber-stamp guard: nothing published means nothing delivered."""
-        from pipeline.learning.notify import NotificationError, notify
-
-        with TemporaryDirectory() as tmp:
-            with self.assertRaises(NotificationError):
-                notify(
-                    self._payload(), "https://example.invalid", 4.0,
-                    channels=("site",), require_delivery=True,
-                    published_paths=[Path(tmp) / "never_written.json"],
-                )
-
-    def test_a_corrupt_artifact_is_not_delivery(self):
-        """
-        Existence is not enough. A truncated file is present on disk and
-        unreadable by the page, which to whoever is trying to act before a
-        deadline is the same as no decision at all.
-        """
-        from pipeline.learning.notify import NotificationError, notify
-
-        with TemporaryDirectory() as tmp:
-            path = Path(tmp) / "public.json"
-            path.write_text('{"gameweek": 7, "teams": [')  # truncated
-            with self.assertRaises(NotificationError):
-                notify(
-                    self._payload(), "https://example.invalid", 4.0,
-                    channels=("site",), require_delivery=True,
-                    published_paths=[path],
-                )
-
-    def test_no_paths_supplied_is_not_delivery(self):
-        from pipeline.learning.notify import NotificationError, notify
-
-        with self.assertRaises(NotificationError):
-            notify(
-                self._payload(), "https://example.invalid", 4.0,
-                channels=("site",), require_delivery=True, published_paths=[],
-            )
-
-    def test_deliver_succeeds_without_smtp(self):
-        """
-        The end of the blocker: a seal completes green with no mail server
-        configured at all, because the decision reached the site.
-        """
-        import pipeline.learning.run_agent as agent
-
-        with TemporaryDirectory() as tmp:
-            private = Path(tmp) / "decision.json"
-            public = Path(tmp) / "public.json"
-            for p in (private, public):
-                p.write_text(json.dumps({"gameweek": 7, "teams": []}))
-
-            code = agent._deliver(
-                ScheduleState(
-                    phase=Phase.SEAL, gameweek=7,
-                    deadline=datetime.now(timezone.utc) + timedelta(hours=4),
-                    reason="site-primary test",
-                ),
-                {"season": {"decision": private, "public": public}},
-                dry_run=False,
-            )
-        self.assertEqual(code, 0, "a published decision was reported as undelivered")

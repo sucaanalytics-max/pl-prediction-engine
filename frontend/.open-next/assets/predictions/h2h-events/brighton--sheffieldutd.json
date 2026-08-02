@@ -1,0 +1,469 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-11-12|brighton|sheffieldutd": {
+      "fixtureId": 114,
+      "season": "2324",
+      "date": "2023-11-12",
+      "kickoffTime": "2023-11-12T14:00:00Z",
+      "homeTeam": "Brighton",
+      "awayTeam": "Sheffield Utd",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jayden Bogle",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Adam Webster",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Carlos Baleba",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Mahmoud Dahoud",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "value": 5
+        },
+        {
+          "name": "Jason Steele",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 3
+        },
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "value": 2
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Igor Julio dos Santos de Paulo",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 0.61
+        },
+        {
+          "name": "Anssumane Fati Vieira",
+          "team": "Brighton",
+          "value": 0.45
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 0.43
+        },
+        {
+          "name": "James McAtee",
+          "team": "Sheffield Utd",
+          "value": 0.33
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Sheffield Utd",
+          "value": 0.29
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "value": 0.19
+        },
+        {
+          "name": "Adam Lallana",
+          "team": "Brighton",
+          "value": 0.18
+        },
+        {
+          "name": "Mahmoud Dahoud",
+          "team": "Brighton",
+          "value": 0.17
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Brighton",
+          "value": 0.16
+        },
+        {
+          "name": "Cameron Archer",
+          "team": "Sheffield Utd",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "points": 9,
+          "bonus": 3,
+          "bps": 25,
+          "xg": 0.43,
+          "xa": 0.1,
+          "minutes": 90
+        },
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "points": 5,
+          "bonus": 2,
+          "bps": 20,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Sheffield Utd",
+          "points": 4,
+          "bonus": 0,
+          "bps": 10,
+          "xg": 0.29,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "points": 3,
+          "bonus": 1,
+          "bps": 15,
+          "xg": 0,
+          "xa": 0.09,
+          "minutes": 90
+        },
+        {
+          "name": "Igor Julio dos Santos de Paulo",
+          "team": "Brighton",
+          "points": 3,
+          "bonus": 1,
+          "bps": 15,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-02-18|sheffieldutd|brighton": {
+      "fixtureId": 249,
+      "season": "2324",
+      "date": "2024-02-18",
+      "kickoffTime": "2024-02-18T14:00:00Z",
+      "homeTeam": "Sheffield Utd",
+      "awayTeam": "Brighton",
+      "homeGoals": 0,
+      "awayGoals": 5,
+      "scorers": [
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 2
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Kaoru Mitoma",
+          "team": "Brighton",
+          "value": 2
+        },
+        {
+          "name": "Anssumane Fati Vieira",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Billy Gilmour",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Tom Davies",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Tariq Lamptey",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Mason Holgate",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "value": 7
+        },
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "value": 3
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 2
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 0.9
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 0.64
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 0.49
+        },
+        {
+          "name": "Anel Ahmedhodžić",
+          "team": "Sheffield Utd",
+          "value": 0.36
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Brighton",
+          "value": 0.35
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 0.79
+        },
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "value": 0.5
+        },
+        {
+          "name": "Jan Paul van Hecke",
+          "team": "Brighton",
+          "value": 0.34
+        },
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "value": 0.19
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 0.16
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "points": 15,
+          "bonus": 2,
+          "bps": 39,
+          "xg": 0.49,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "points": 12,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0.12,
+          "xa": 0.5,
+          "minutes": 90
+        },
+        {
+          "name": "Kaoru Mitoma",
+          "team": "Brighton",
+          "points": 9,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0.19,
+          "xa": 0.12,
+          "minutes": 75
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "points": 8,
+          "bonus": 2,
+          "bps": 39,
+          "xg": 0.9,
+          "xa": 0.79,
+          "minutes": 90
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Brighton",
+          "points": 7,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.35,
+          "xa": 0.04,
+          "minutes": 65
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

@@ -1,0 +1,440 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-08-31|brentford|southampton": {
+      "fixtureId": 22,
+      "season": "2425",
+      "date": "2024-08-31",
+      "kickoffTime": "2024-08-31T14:00:00Z",
+      "homeTeam": "Brentford",
+      "awayTeam": "Southampton",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Sugawara Yukinari",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Adam Lallana",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Nathan Collins",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Taylor Harwood-Bellis",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Ethan Pinnock",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Mark Flekken",
+          "team": "Brentford",
+          "value": 5
+        },
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 3
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 1.09
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 0.81
+        },
+        {
+          "name": "Joe Aribo",
+          "team": "Southampton",
+          "value": 0.48
+        },
+        {
+          "name": "Christian Nørgaard",
+          "team": "Brentford",
+          "value": 0.27
+        },
+        {
+          "name": "Jack Stephens",
+          "team": "Southampton",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 0.34
+        },
+        {
+          "name": "Sugawara Yukinari",
+          "team": "Southampton",
+          "value": 0.33
+        },
+        {
+          "name": "Flynn Downes",
+          "team": "Southampton",
+          "value": 0.33
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 0.3
+        },
+        {
+          "name": "Will Smallbone",
+          "team": "Southampton",
+          "value": 0.28
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "points": 14,
+          "bonus": 3,
+          "bps": 64,
+          "xg": 0.81,
+          "xa": 0.34,
+          "minutes": 90
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "points": 8,
+          "bonus": 2,
+          "bps": 36,
+          "xg": 1.09,
+          "xa": 0.25,
+          "minutes": 90
+        },
+        {
+          "name": "Sugawara Yukinari",
+          "team": "Southampton",
+          "points": 7,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.18,
+          "xa": 0.33,
+          "minutes": 90
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "points": 6,
+          "bonus": 1,
+          "bps": 24,
+          "xg": 0.08,
+          "xa": 0.3,
+          "minutes": 90
+        },
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "points": 6,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0.23,
+          "xa": 0,
+          "minutes": 74
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-01-04|southampton|brentford": {
+      "fixtureId": 198,
+      "season": "2425",
+      "date": "2025-01-04",
+      "kickoffTime": "2025-01-04T15:00:00Z",
+      "homeTeam": "Southampton",
+      "awayTeam": "Brentford",
+      "homeGoals": 0,
+      "awayGoals": 5,
+      "scorers": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Sepp van den Berg",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Mikkel Damsgaard",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Taylor Harwood-Bellis",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Kyle Walker-Peters",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 5
+        },
+        {
+          "name": "Mark Flekken",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 3
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Sepp van den Berg",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 1.38
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 1.28
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "value": 0.75
+        },
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 0.52
+        },
+        {
+          "name": "Christian Nørgaard",
+          "team": "Brentford",
+          "value": 0.34
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 0.48
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "value": 0.37
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 0.3
+        },
+        {
+          "name": "Mikkel Damsgaard",
+          "team": "Brentford",
+          "value": 0.21
+        },
+        {
+          "name": "James Bree",
+          "team": "Southampton",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "points": 19,
+          "bonus": 3,
+          "bps": 73,
+          "xg": 1.28,
+          "xa": 0.48,
+          "minutes": 90
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "points": 11,
+          "bonus": 2,
+          "bps": 37,
+          "xg": 1.38,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Sepp van den Berg",
+          "team": "Brentford",
+          "points": 10,
+          "bonus": 1,
+          "bps": 36,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "points": 8,
+          "bonus": 0,
+          "bps": 31,
+          "xg": 0.75,
+          "xa": 0.37,
+          "minutes": 90
+        },
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "points": 8,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.52,
+          "xa": 0.02,
+          "minutes": 80
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

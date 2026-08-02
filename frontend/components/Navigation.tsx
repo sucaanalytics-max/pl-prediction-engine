@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Flag,
   GitCompareArrows,
+  Inbox,
   LayoutDashboard,
   Layers3,
   Menu,
@@ -50,6 +51,7 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/", label: "Overview", icon: LayoutDashboard },
       { href: "/decisions", label: "Agent Decision", icon: Sparkles },
+      { href: "/inbox", label: "Agent Inbox", icon: Inbox },
       { href: "/transfers", label: "Recommendations", icon: Sparkles, badge: "10" },
       { href: "/optimizer", label: "Squad Optimizer", icon: Layers3 },
       { href: "/captaincy", label: "Captaincy Planner", icon: Crown },

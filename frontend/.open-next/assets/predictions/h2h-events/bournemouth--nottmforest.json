@@ -1,0 +1,1016 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-02-04|bournemouth|nottmforest": {
+      "fixtureId": 222,
+      "season": "2324",
+      "date": "2024-02-04",
+      "kickoffTime": "2024-02-04T14:00:00Z",
+      "homeTeam": "Bournemouth",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Luis Sinisterra",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Marcos Senesi",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Andrew Omobamidele",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Philip Billing",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "value": 5
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Luis Sinisterra",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 0.67
+        },
+        {
+          "name": "Luis Sinisterra",
+          "team": "Bournemouth",
+          "value": 0.32
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 0.29
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 0.18
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.06
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 0.31
+        },
+        {
+          "name": "Murillo Santiago Costa dos Santos",
+          "team": "Nott'm Forest",
+          "value": 0.2
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.19
+        },
+        {
+          "name": "Luis Sinisterra",
+          "team": "Bournemouth",
+          "value": 0.14
+        },
+        {
+          "name": "Nuno Varela Tavares",
+          "team": "Nott'm Forest",
+          "value": 0.04
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "points": 10,
+          "bonus": 3,
+          "bps": 26,
+          "xg": 0.03,
+          "xa": 0.01,
+          "minutes": 89
+        },
+        {
+          "name": "Luis Sinisterra",
+          "team": "Bournemouth",
+          "points": 7,
+          "bonus": 2,
+          "bps": 22,
+          "xg": 0.32,
+          "xa": 0.14,
+          "minutes": 70
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "points": 5,
+          "bonus": 0,
+          "bps": 10,
+          "xg": 0.67,
+          "xa": 0.02,
+          "minutes": 55
+        },
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "points": 3,
+          "bonus": 1,
+          "bps": 17,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "points": 2,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0,
+          "xa": 0.31,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-08-17|nottmforest|bournemouth": {
+      "fixtureId": 6,
+      "season": "2425",
+      "date": "2024-08-17",
+      "kickoffTime": "2024-08-17T14:00:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Bournemouth",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Milos Kerkez",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "value": 7
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 0.71
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.44
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.42
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 0.24
+        },
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 0.22
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 0.21
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 0.2
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 0.16
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 0.13
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "points": 9,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0.71,
+          "xa": 0.02,
+          "minutes": 71
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "points": 8,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0.44,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "points": 7,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0.24,
+          "xa": 0.03,
+          "minutes": 75
+        },
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "points": 4,
+          "bonus": 0,
+          "bps": 17,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "points": 3,
+          "bonus": 0,
+          "bps": 13,
+          "xg": 0.07,
+          "xa": 0.2,
+          "minutes": 71
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-01-25|bournemouth|nottmforest": {
+      "fixtureId": 222,
+      "season": "2425",
+      "date": "2025-01-25",
+      "kickoffTime": "2025-01-25T15:00:00Z",
+      "homeTeam": "Bournemouth",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 5,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 3
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Tyler Adams",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Felipe Rodrigues da Silva",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "João Pedro Ferreira Silva",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Illia Zabarnyi",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Ramón Sosa",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 5
+        },
+        {
+          "name": "Kepa Arrizabalaga",
+          "team": "Bournemouth",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 3
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 0.95
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.32
+        },
+        {
+          "name": "Nikola Milenković",
+          "team": "Nott'm Forest",
+          "value": 0.24
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.23
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.22
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 0.43
+        },
+        {
+          "name": "Elliot Anderson",
+          "team": "Nott'm Forest",
+          "value": 0.37
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 0.2
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.19
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.17
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "points": 21,
+          "bonus": 3,
+          "bps": 67,
+          "xg": 0.95,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "points": 13,
+          "bonus": 2,
+          "bps": 45,
+          "xg": 0.18,
+          "xa": 0.43,
+          "minutes": 87
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "points": 9,
+          "bonus": 1,
+          "bps": 38,
+          "xg": 0.23,
+          "xa": 0.19,
+          "minutes": 90
+        },
+        {
+          "name": "Tyler Adams",
+          "team": "Bournemouth",
+          "points": 9,
+          "bonus": 0,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Kepa Arrizabalaga",
+          "team": "Bournemouth",
+          "points": 7,
+          "bonus": 0,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-10-26|bournemouth|nottmforest": {
+      "fixtureId": 83,
+      "season": "2526",
+      "date": "2025-10-26",
+      "kickoffTime": "2025-10-26T14:00:00Z",
+      "homeTeam": "Bournemouth",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Junior Kroupi",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Tyler Adams",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Marcos Senesi Barón",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Douglas Luiz Soares de Paulo",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Đorđe Petrović",
+          "team": "Bournemouth",
+          "value": 4
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 3
+        },
+        {
+          "name": "Adrien Truffert",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Đorđe Petrović",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Junior Kroupi",
+          "team": "Bournemouth",
+          "value": 0.15
+        },
+        {
+          "name": "Alex Scott",
+          "team": "Bournemouth",
+          "value": 0.12
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 0.11
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.1
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.09
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Elliot Anderson",
+          "team": "Nott'm Forest",
+          "value": 0.14
+        },
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 0.09
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.08
+        },
+        {
+          "name": "Junior Kroupi",
+          "team": "Bournemouth",
+          "value": 0.06
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 0.06
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "points": 11,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0.09,
+          "xa": 0.08,
+          "minutes": 90
+        },
+        {
+          "name": "Adrien Truffert",
+          "team": "Bournemouth",
+          "points": 10,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.02,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Đorđe Petrović",
+          "team": "Bournemouth",
+          "points": 8,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Junior Kroupi",
+          "team": "Bournemouth",
+          "points": 6,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.15,
+          "xa": 0.06,
+          "minutes": 68
+        },
+        {
+          "name": "Álex Jiménez Sánchez",
+          "team": "Bournemouth",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-05-24|nottmforest|bournemouth": {
+      "fixtureId": 377,
+      "season": "2526",
+      "date": "2026-05-24",
+      "kickoffTime": "2026-05-24T15:00:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Bournemouth",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Omari Hutchinson",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Adrien Truffert",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "James Hill",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Đorđe Petrović",
+          "team": "Bournemouth",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 3
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Adrien Truffert",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 0.58
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.47
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.24
+        },
+        {
+          "name": "Junior Kroupi",
+          "team": "Bournemouth",
+          "value": 0.21
+        },
+        {
+          "name": "Igor Jesus Maciel da Cruz",
+          "team": "Nott'm Forest",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Elliot Anderson",
+          "team": "Nott'm Forest",
+          "value": 0.39
+        },
+        {
+          "name": "Nikola Milenković",
+          "team": "Nott'm Forest",
+          "value": 0.21
+        },
+        {
+          "name": "Omari Hutchinson",
+          "team": "Nott'm Forest",
+          "value": 0.16
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.15
+        },
+        {
+          "name": "Adrien Truffert",
+          "team": "Bournemouth",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "points": 10,
+          "bonus": 3,
+          "bps": 38,
+          "xg": 0.24,
+          "xa": 0.15,
+          "minutes": 90
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "points": 9,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0.47,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Adrien Truffert",
+          "team": "Bournemouth",
+          "points": 6,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Omari Hutchinson",
+          "team": "Nott'm Forest",
+          "points": 5,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0,
+          "xa": 0.16,
+          "minutes": 77
+        },
+        {
+          "name": "Tyler Adams",
+          "team": "Bournemouth",
+          "points": 4,
+          "bonus": 0,
+          "bps": 14,
+          "xg": 0.02,
+          "xa": 0.02,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

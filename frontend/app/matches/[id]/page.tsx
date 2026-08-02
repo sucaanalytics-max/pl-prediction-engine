@@ -4,10 +4,10 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { usePredictions } from "@/lib/PredictionsContext";
 import {
-  getMatchById, correctScoreToGrid, getHalfKellyPct,
+  getMatchById, correctScoreToGrid,
   effectiveEdge, confidenceTier, marketLabel, marketIcon,
 } from "@/lib/predictions";
-import { pct, xg, odds, shortDate, kickoffTime, confidenceColor, edgeColor, impliedOdds } from "@/lib/formats";
+import { pct, xg, odds, shortDate, kickoffTime, confidenceColor, edgeColor } from "@/lib/formats";
 import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/Skeleton";
 import ReactMarkdown from "react-markdown";
@@ -265,15 +265,15 @@ function MatchDetailContent() {
           <div className="flex justify-between items-end">
             <div>
               <div className="text-[10px] uppercase font-bold tracking-widest mb-1" style={{ color: "var(--text-4)" }}>Yes</div>
-              <span className="text-3xl font-display font-black bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--text-3) 100%)" }}>{pct(match.probabilities.btts)}</span>
+              <span className="text-3xl font-display font-black bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--text-3) 100%)" }}>{pct(match.probabilities.btts.yes)}</span>
             </div>
             <div className="text-right">
               <div className="text-[10px] uppercase font-bold tracking-widest mb-1" style={{ color: "var(--text-4)" }}>No</div>
-              <span className="text-3xl font-display font-black" style={{ color: "var(--text-3)" }}>{pct(1 - match.probabilities.btts)}</span>
+              <span className="text-3xl font-display font-black" style={{ color: "var(--text-3)" }}>{pct(match.probabilities.btts.no)}</span>
             </div>
           </div>
           <div className="flex h-2.5 rounded-full overflow-hidden shadow-inner border border-[var(--border)]" style={{ background: "var(--surface2)" }}>
-            <div className="prob-bar bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]" style={{ width: pct(match.probabilities.btts) }} />
+            <div className="prob-bar bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]" style={{ width: pct(match.probabilities.btts.yes) }} />
           </div>
         </div>
 

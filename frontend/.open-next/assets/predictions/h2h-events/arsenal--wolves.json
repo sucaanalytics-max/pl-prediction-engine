@@ -1,0 +1,1011 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-04-20|wolves|arsenal": {
+      "fixtureId": 340,
+      "season": "2324",
+      "date": "2024-04-20",
+      "kickoffTime": "2024-04-20T18:30:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Toti António Gomes",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Max Kilman",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 7
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.3
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.16
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.28
+        },
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.17
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.13
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "points": 10,
+          "bonus": 3,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0.21,
+          "xa": 0.17,
+          "minutes": 90
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.07,
+          "xa": 0.05,
+          "minutes": 71
+        },
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.05,
+          "xa": 0.21,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-08-17|arsenal|wolves": {
+      "fixtureId": 2,
+      "season": "2425",
+      "date": "2024-08-17",
+      "kickoffTime": "2024-08-17T14:00:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Wolves",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Toti António Gomes",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 4
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.45
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.35
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.12
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.09
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.08
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.37
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.19
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 0.11
+        },
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 0.06
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.06
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "points": 12,
+          "bonus": 3,
+          "bps": 48,
+          "xg": 0.45,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 12,
+          "bonus": 2,
+          "bps": 42,
+          "xg": 0.35,
+          "xa": 0.37,
+          "minutes": 79
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.12,
+          "xa": 0.02,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-01-25|wolves|arsenal": {
+      "fixtureId": 230,
+      "season": "2425",
+      "date": "2025-01-25",
+      "kickoffTime": "2025-01-25T15:00:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Myles Lewis-Skelly",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 4
+        },
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.53
+        },
+        {
+          "name": "Pablo Sarabia",
+          "team": "Wolves",
+          "value": 0.5
+        },
+        {
+          "name": "Ethan Nwaneri",
+          "team": "Arsenal",
+          "value": 0.24
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.13
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 0.1
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.27
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.23
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "value": 0.04
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.03
+        },
+        {
+          "name": "Myles Lewis-Skelly",
+          "team": "Arsenal",
+          "value": 0.03
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.06,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0.1,
+          "xa": 0.01,
+          "minutes": 45
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "points": 5,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-12-13|arsenal|wolves": {
+      "fixtureId": 151,
+      "season": "2526",
+      "date": "2025-12-13",
+      "kickoffTime": "2025-12-13T20:00:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Wolves",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Tolu Arokodare",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Mateus Mané",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Yerson Mosquera Valdelamar",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Sam Johnstone",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Emmanuel Agbadou",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Yerson Mosquera Valdelamar",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Matt Doherty",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Sam Johnstone",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Tolu Arokodare",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.34
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 0.19
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.14
+        },
+        {
+          "name": "Jørgen Strand Larsen",
+          "team": "Wolves",
+          "value": 0.14
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.42
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Mateus Mané",
+          "team": "Wolves",
+          "value": 0.14
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.13
+        },
+        {
+          "name": "Fer López González",
+          "team": "Wolves",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 11,
+          "bonus": 3,
+          "bps": 52,
+          "xg": 0.03,
+          "xa": 0.42,
+          "minutes": 90
+        },
+        {
+          "name": "Tolu Arokodare",
+          "team": "Wolves",
+          "points": 7,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.09,
+          "xa": 0,
+          "minutes": 21
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "points": 5,
+          "bonus": 1,
+          "bps": 17,
+          "xg": 0,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Matt Doherty",
+          "team": "Wolves",
+          "points": 5,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 68
+        },
+        {
+          "name": "André Trindade da Costa Neto",
+          "team": "Wolves",
+          "points": 4,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-02-18|wolves|arsenal": {
+      "fixtureId": 310,
+      "season": "2526",
+      "date": "2026-02-18",
+      "kickoffTime": "2026-02-18T20:00:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Arsenal",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Hugo Bueno López",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Tom Edozie",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Piero Hincapié",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jean-Ricner Bellegarde",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Piero Hincapié",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.63
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.55
+        },
+        {
+          "name": "Piero Hincapié",
+          "team": "Arsenal",
+          "value": 0.31
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Arsenal",
+          "value": 0.2
+        },
+        {
+          "name": "Tom Edozie",
+          "team": "Wolves",
+          "value": 0.17
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.58
+        },
+        {
+          "name": "Piero Hincapié",
+          "team": "Arsenal",
+          "value": 0.17
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.14
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.13
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 12,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 0.55,
+          "xa": 0.13,
+          "minutes": 72
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0.03,
+          "xa": 0.58,
+          "minutes": 90
+        },
+        {
+          "name": "Piero Hincapié",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.31,
+          "xa": 0.17,
+          "minutes": 90
+        },
+        {
+          "name": "Hugo Bueno López",
+          "team": "Wolves",
+          "points": 7,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.04,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Tom Edozie",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.17,
+          "xa": 0,
+          "minutes": 6
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2526|2025-10-18|sunderland|wolves": {
+      "fixtureId": 78,
+      "season": "2526",
+      "date": "2025-10-18",
+      "kickoffTime": "2025-10-18T14:00:00Z",
+      "homeTeam": "Sunderland",
+      "awayTeam": "Wolves",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Nordi Mukiele",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Chemsdine Talbi",
+          "team": "Sunderland",
+          "value": 1
+        },
+        {
+          "name": "Trai Hume",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Ladislav Krejcí",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "yellowCards": [],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robin Roefs",
+          "team": "Sunderland",
+          "value": 3
+        },
+        {
+          "name": "Sam Johnstone",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Nordi Mukiele",
+          "team": "Sunderland",
+          "value": 3
+        },
+        {
+          "name": "Daniel Ballard",
+          "team": "Sunderland",
+          "value": 2
+        },
+        {
+          "name": "Trai Hume",
+          "team": "Sunderland",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jackson Tchatchoua",
+          "team": "Wolves",
+          "value": 0.26
+        },
+        {
+          "name": "Nordi Mukiele",
+          "team": "Sunderland",
+          "value": 0.24
+        },
+        {
+          "name": "Trai Hume",
+          "team": "Sunderland",
+          "value": 0.24
+        },
+        {
+          "name": "Marshall Munetsi",
+          "team": "Wolves",
+          "value": 0.13
+        },
+        {
+          "name": "Tolu Arokodare",
+          "team": "Wolves",
+          "value": 0.12
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 0.36
+        },
+        {
+          "name": "Hugo Bueno López",
+          "team": "Wolves",
+          "value": 0.3
+        },
+        {
+          "name": "Marshall Munetsi",
+          "team": "Wolves",
+          "value": 0.18
+        },
+        {
+          "name": "Daniel Ballard",
+          "team": "Sunderland",
+          "value": 0.13
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Nordi Mukiele",
+          "team": "Sunderland",
+          "points": 17,
+          "bonus": 3,
+          "bps": 47,
+          "xg": 0.24,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Trai Hume",
+          "team": "Sunderland",
+          "points": 11,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.24,
+          "xa": 0.12,
+          "minutes": 90
+        },
+        {
+          "name": "Daniel Ballard",
+          "team": "Sunderland",
+          "points": 10,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.06,
+          "xa": 0.13,
+          "minutes": 90
+        },
+        {
+          "name": "Robin Roefs",
+          "team": "Sunderland",
+          "points": 7,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Omar Alderete",
+          "team": "Sunderland",
+          "points": 6,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-05-02|wolves|sunderland": {
+      "fixtureId": 350,
+      "season": "2526",
+      "date": "2026-05-02",
+      "kickoffTime": "2026-05-02T14:00:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Sunderland",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Nordi Mukiele",
+          "team": "Sunderland",
+          "value": 1
+        },
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Hugo Bueno López",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Granit Xhaka",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Granit Xhaka",
+          "team": "Sunderland",
+          "value": 1
+        },
+        {
+          "name": "Robin Roefs",
+          "team": "Sunderland",
+          "value": 1
+        },
+        {
+          "name": "Dennis Cirkin",
+          "team": "Sunderland",
+          "value": 1
+        },
+        {
+          "name": "Brian Brobbey",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Daniel Ballard",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Robin Roefs",
+          "team": "Sunderland",
+          "value": 6
+        },
+        {
+          "name": "Daniel Bentley",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Granit Xhaka",
+          "team": "Sunderland",
+          "value": 3
+        },
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "Nordi Mukiele",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Tolu Arokodare",
+          "team": "Wolves",
+          "value": 0.58
+        },
+        {
+          "name": "Adam Armstrong",
+          "team": "Wolves",
+          "value": 0.32
+        },
+        {
+          "name": "Toti Gomes",
+          "team": "Wolves",
+          "value": 0.31
+        },
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 0.2
+        },
+        {
+          "name": "Nordi Mukiele",
+          "team": "Sunderland",
+          "value": 0.19
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 0.38
+        },
+        {
+          "name": "Hugo Bueno López",
+          "team": "Wolves",
+          "value": 0.35
+        },
+        {
+          "name": "Granit Xhaka",
+          "team": "Sunderland",
+          "value": 0.26
+        },
+        {
+          "name": "Pedro Cardoso de Lima",
+          "team": "Wolves",
+          "value": 0.25
+        },
+        {
+          "name": "Mateus Mané",
+          "team": "Wolves",
+          "value": 0.2
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Nordi Mukiele",
+          "team": "Sunderland",
+          "points": 11,
+          "bonus": 1,
+          "bps": 24,
+          "xg": 0.19,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "points": 10,
+          "bonus": 2,
+          "bps": 26,
+          "xg": 0.2,
+          "xa": 0.38,
+          "minutes": 90
+        },
+        {
+          "name": "Granit Xhaka",
+          "team": "Sunderland",
+          "points": 9,
+          "bonus": 3,
+          "bps": 27,
+          "xg": 0.08,
+          "xa": 0.26,
+          "minutes": 90
+        },
+        {
+          "name": "Hugo Bueno López",
+          "team": "Wolves",
+          "points": 5,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.09,
+          "xa": 0.35,
+          "minutes": 77
+        },
+        {
+          "name": "Toti Gomes",
+          "team": "Wolves",
+          "points": 4,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0.31,
+          "xa": 0.08,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

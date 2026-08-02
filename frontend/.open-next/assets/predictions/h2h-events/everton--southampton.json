@@ -1,0 +1,405 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-11-02|southampton|everton": {
+      "fixtureId": 98,
+      "season": "2425",
+      "date": "2024-11-02",
+      "kickoffTime": "2024-11-02T15:00:00Z",
+      "homeTeam": "Southampton",
+      "awayTeam": "Everton",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Adam Armstrong",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Sugawara Yukinari",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Tyler Dibling",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Paul Onuachu",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Michael Keane",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jan Bednarek",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 5
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Kyle Walker-Peters",
+          "team": "Southampton",
+          "value": 3
+        },
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 2
+        },
+        {
+          "name": "Adam Armstrong",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 0.69
+        },
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 0.33
+        },
+        {
+          "name": "Taylor Harwood-Bellis",
+          "team": "Southampton",
+          "value": 0.32
+        },
+        {
+          "name": "Adam Armstrong",
+          "team": "Southampton",
+          "value": 0.29
+        },
+        {
+          "name": "Orel Mangala",
+          "team": "Everton",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 0.45
+        },
+        {
+          "name": "Ryan Manning",
+          "team": "Southampton",
+          "value": 0.24
+        },
+        {
+          "name": "Flynn Downes",
+          "team": "Southampton",
+          "value": 0.19
+        },
+        {
+          "name": "Jesper Lindstrøm",
+          "team": "Everton",
+          "value": 0.14
+        },
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Kyle Walker-Peters",
+          "team": "Southampton",
+          "points": 9,
+          "bonus": 3,
+          "bps": 39,
+          "xg": 0.02,
+          "xa": 0.09,
+          "minutes": 90
+        },
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "points": 9,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Adam Armstrong",
+          "team": "Southampton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0.29,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Jack Stephens",
+          "team": "Southampton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 78
+        },
+        {
+          "name": "Taylor Harwood-Bellis",
+          "team": "Southampton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.32,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-05-18|everton|southampton": {
+      "fixtureId": 367,
+      "season": "2425",
+      "date": "2025-05-18",
+      "kickoffTime": "2025-05-18T11:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Southampton",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 2
+        }
+      ],
+      "assists": [
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Flynn Downes",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 2
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Ashley Young",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 1.03
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Cameron Archer",
+          "team": "Southampton",
+          "value": 0.62
+        },
+        {
+          "name": "Ross Stewart",
+          "team": "Southampton",
+          "value": 0.51
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 0.28
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jay Robinson",
+          "team": "Southampton",
+          "value": 0.52
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.38
+        },
+        {
+          "name": "Ashley Young",
+          "team": "Everton",
+          "value": 0.35
+        },
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 0.17
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "points": 13,
+          "bonus": 3,
+          "bps": 74,
+          "xg": 1,
+          "xa": 0.12,
+          "minutes": 74
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 2,
+          "bps": 41,
+          "xg": 0.02,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0.08,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Ashley Young",
+          "team": "Everton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.35,
+          "minutes": 72
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.05,
+          "xa": 0.01,
+          "minutes": 73
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

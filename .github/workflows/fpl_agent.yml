@@ -95,12 +95,6 @@ jobs:
           FPL_AGENT_PHASE: ${{ needs.decide.outputs.phase }}
           FPL_AGENT_GAMEWEEK: ${{ needs.decide.outputs.gameweek }}
           FPL_AGENT_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          NOTIFY_EMAIL_FROM: ${{ secrets.NOTIFY_EMAIL_FROM }}
-          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
           FPL_SITE_URL: ${{ secrets.FPL_SITE_URL }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

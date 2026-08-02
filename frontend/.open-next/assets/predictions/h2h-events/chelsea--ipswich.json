@@ -1,0 +1,456 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-12-30|ipswich|chelsea": {
+      "fixtureId": 186,
+      "season": "2425",
+      "date": "2024-12-30",
+      "kickoffTime": "2024-12-30T19:45:00Z",
+      "homeTeam": "Ipswich",
+      "awayTeam": "Chelsea",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Omari Giraud-Hutchinson",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Liam Delap",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Liam Delap",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Leif Davis",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Dara O'Shea",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Liam Delap",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Sam Morsy",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Christian Walton",
+          "team": "Ipswich",
+          "value": 4
+        },
+        {
+          "name": "Filip Jørgensen",
+          "team": "Chelsea",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Liam Delap",
+          "team": "Ipswich",
+          "value": 3
+        },
+        {
+          "name": "Christian Walton",
+          "team": "Ipswich",
+          "value": 2
+        },
+        {
+          "name": "Omari Giraud-Hutchinson",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Liam Delap",
+          "team": "Ipswich",
+          "value": 0.99
+        },
+        {
+          "name": "Christopher Nkunku",
+          "team": "Chelsea",
+          "value": 0.72
+        },
+        {
+          "name": "Nathan Broadhead",
+          "team": "Ipswich",
+          "value": 0.41
+        },
+        {
+          "name": "João Félix Sequeira",
+          "team": "Chelsea",
+          "value": 0.39
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.25
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.68
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.53
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 0.18
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 0.13
+        },
+        {
+          "name": "Christopher Nkunku",
+          "team": "Chelsea",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Liam Delap",
+          "team": "Ipswich",
+          "points": 11,
+          "bonus": 3,
+          "bps": 46,
+          "xg": 0.99,
+          "xa": 0.08,
+          "minutes": 90
+        },
+        {
+          "name": "Christian Walton",
+          "team": "Ipswich",
+          "points": 9,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Omari Giraud-Hutchinson",
+          "team": "Ipswich",
+          "points": 9,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0.13,
+          "xa": 0.08,
+          "minutes": 90
+        },
+        {
+          "name": "Luke Woolfenden",
+          "team": "Ipswich",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jacob Greaves",
+          "team": "Ipswich",
+          "points": 6,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-13|chelsea|ipswich": {
+      "fixtureId": 314,
+      "season": "2425",
+      "date": "2025-04-13",
+      "kickoffTime": "2025-04-13T13:00:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Ipswich",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Jadon Sancho",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Ben Johnson",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Julio Enciso",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Ben Johnson",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Julio Enciso",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Axel Tuanzebe",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Alex Palmer",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Sam Morsy",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alex Palmer",
+          "team": "Ipswich",
+          "value": 8
+        },
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Julio Enciso",
+          "team": "Ipswich",
+          "value": 3
+        },
+        {
+          "name": "Ben Johnson",
+          "team": "Ipswich",
+          "value": 2
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Chelsea",
+          "value": 0.49
+        },
+        {
+          "name": "Julio Enciso",
+          "team": "Ipswich",
+          "value": 0.47
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 0.39
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 0.31
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.27
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 0.63
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.42
+        },
+        {
+          "name": "Ben Johnson",
+          "team": "Ipswich",
+          "value": 0.36
+        },
+        {
+          "name": "Julio Enciso",
+          "team": "Ipswich",
+          "value": 0.33
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 0.23
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Julio Enciso",
+          "team": "Ipswich",
+          "points": 13,
+          "bonus": 3,
+          "bps": 45,
+          "xg": 0.47,
+          "xa": 0.33,
+          "minutes": 75
+        },
+        {
+          "name": "Ben Johnson",
+          "team": "Ipswich",
+          "points": 12,
+          "bonus": 2,
+          "bps": 34,
+          "xg": 0.17,
+          "xa": 0.36,
+          "minutes": 90
+        },
+        {
+          "name": "Jadon Sancho",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.05,
+          "xa": 0.05,
+          "minutes": 22
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "points": 5,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.25,
+          "xa": 0.14,
+          "minutes": 67
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "points": 4,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.27,
+          "xa": 0.16,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

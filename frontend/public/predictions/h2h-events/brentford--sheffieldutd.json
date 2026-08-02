@@ -1,0 +1,421 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-12-09|sheffieldutd|brentford": {
+      "fixtureId": 158,
+      "season": "2324",
+      "date": "2023-12-09",
+      "kickoffTime": "2023-12-09T15:00:00Z",
+      "homeTeam": "Sheffield Utd",
+      "awayTeam": "Brentford",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "James McAtee",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "William Osula",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Auston Trusty",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Frank Onyeka",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "value": 4
+        },
+        {
+          "name": "Mark Flekken",
+          "team": "Brentford",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "value": 3
+        },
+        {
+          "name": "Anel Ahmedhodžić",
+          "team": "Sheffield Utd",
+          "value": 2
+        },
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Anis Slimane",
+          "team": "Sheffield Utd",
+          "value": 0.64
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 0.15
+        },
+        {
+          "name": "Christian Nørgaard",
+          "team": "Brentford",
+          "value": 0.14
+        },
+        {
+          "name": "Ben Mee",
+          "team": "Brentford",
+          "value": 0.12
+        },
+        {
+          "name": "Cameron Archer",
+          "team": "Sheffield Utd",
+          "value": 0.12
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Christian Nørgaard",
+          "team": "Brentford",
+          "value": 0.22
+        },
+        {
+          "name": "Vitaly Janelt",
+          "team": "Brentford",
+          "value": 0.21
+        },
+        {
+          "name": "Cameron Archer",
+          "team": "Sheffield Utd",
+          "value": 0.1
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "value": 0.06
+        },
+        {
+          "name": "Neal Maupay",
+          "team": "Brentford",
+          "value": 0.05
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "points": 9,
+          "bonus": 3,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Anel Ahmedhodžić",
+          "team": "Sheffield Utd",
+          "points": 8,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "James McAtee",
+          "team": "Sheffield Utd",
+          "points": 8,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.03,
+          "xa": 0.05,
+          "minutes": 80
+        },
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "points": 6,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.02,
+          "xa": 0.05,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-04-13|brentford|sheffieldutd": {
+      "fixtureId": 323,
+      "season": "2324",
+      "date": "2024-04-13",
+      "kickoffTime": "2024-04-13T14:00:00Z",
+      "homeTeam": "Brentford",
+      "awayTeam": "Sheffield Utd",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Frank Onyeka",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Mikkel Damsgaard",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Oliver Arblaster",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Vitaly Janelt",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Neal Maupay",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Ben Brereton",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Mads Roerslev Rasmussen",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Ivo Grbic",
+          "team": "Sheffield Utd",
+          "value": 4
+        },
+        {
+          "name": "Mark Flekken",
+          "team": "Brentford",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Mathias Jorgensen",
+          "team": "Brentford",
+          "value": 3
+        },
+        {
+          "name": "Sergio Reguilón",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Mark Flekken",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Ben Brereton",
+          "team": "Sheffield Utd",
+          "value": 0.46
+        },
+        {
+          "name": "Neal Maupay",
+          "team": "Brentford",
+          "value": 0.41
+        },
+        {
+          "name": "Frank Onyeka",
+          "team": "Brentford",
+          "value": 0.29
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Sheffield Utd",
+          "value": 0.16
+        },
+        {
+          "name": "Cameron Archer",
+          "team": "Sheffield Utd",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 0.35
+        },
+        {
+          "name": "Oliver McBurnie",
+          "team": "Sheffield Utd",
+          "value": 0.26
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 0.24
+        },
+        {
+          "name": "Ben Osborn",
+          "team": "Sheffield Utd",
+          "value": 0.2
+        },
+        {
+          "name": "Sergio Reguilón",
+          "team": "Brentford",
+          "value": 0.14
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Mathias Jorgensen",
+          "team": "Brentford",
+          "points": 9,
+          "bonus": 3,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Sergio Reguilón",
+          "team": "Brentford",
+          "points": 8,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0.08,
+          "xa": 0.14,
+          "minutes": 90
+        },
+        {
+          "name": "Mark Flekken",
+          "team": "Brentford",
+          "points": 7,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Nathan Collins",
+          "team": "Brentford",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Frank Onyeka",
+          "team": "Brentford",
+          "points": 6,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.29,
+          "xa": 0,
+          "minutes": 1
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

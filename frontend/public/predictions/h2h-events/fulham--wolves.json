@@ -1,0 +1,1063 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-03-09|wolves|fulham": {
+      "fixtureId": 280,
+      "season": "2324",
+      "date": "2024-03-09",
+      "kickoffTime": "2024-03-09T15:00:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Fulham",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Toti António Gomes",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Armando Broja",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Tom Cairney",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Harrison Reed",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Santiago Bueno",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 5
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "value": 0.63
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 0.58
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.56
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.53
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "value": 0.29
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Willian Borges da Silva",
+          "team": "Fulham",
+          "value": 0.6
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.36
+        },
+        {
+          "name": "Toti António Gomes",
+          "team": "Wolves",
+          "value": 0.33
+        },
+        {
+          "name": "Harrison Reed",
+          "team": "Fulham",
+          "value": 0.31
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 0.21
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "points": 10,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 0.56,
+          "xa": 0.36,
+          "minutes": 90
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "points": 10,
+          "bonus": 2,
+          "bps": 26,
+          "xg": 0.29,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Toti António Gomes",
+          "team": "Wolves",
+          "points": 4,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0,
+          "xa": 0.33,
+          "minutes": 45
+        },
+        {
+          "name": "Armando Broja",
+          "team": "Fulham",
+          "points": 4,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 10
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "points": 4,
+          "bonus": 0,
+          "bps": 14,
+          "xg": 0.07,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-11-23|fulham|wolves": {
+      "fixtureId": 115,
+      "season": "2425",
+      "date": "2024-11-23",
+      "kickoffTime": "2024-11-23T15:00:00Z",
+      "homeTeam": "Fulham",
+      "awayTeam": "Wolves",
+      "homeGoals": 1,
+      "awayGoals": 4,
+      "scorers": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Gonçalo Manuel Ganchinho Guedes",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Mario Lemina",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Jørgen Strand Larsen",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 3
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "Mario Lemina",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.77
+        },
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 0.72
+        },
+        {
+          "name": "Gonçalo Manuel Ganchinho Guedes",
+          "team": "Wolves",
+          "value": 0.24
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 0.22
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Mario Lemina",
+          "team": "Wolves",
+          "value": 0.29
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 0.27
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "value": 0.18
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 0.15
+        },
+        {
+          "name": "Reiss Nelson",
+          "team": "Fulham",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "points": 16,
+          "bonus": 3,
+          "bps": 68,
+          "xg": 0.77,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "points": 12,
+          "bonus": 2,
+          "bps": 48,
+          "xg": 0.22,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0.16,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Mario Lemina",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0.29,
+          "minutes": 90
+        },
+        {
+          "name": "Gonçalo Manuel Ganchinho Guedes",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.24,
+          "xa": 0,
+          "minutes": 1
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-02-25|wolves|fulham": {
+      "fixtureId": 267,
+      "season": "2425",
+      "date": "2025-02-25",
+      "kickoffTime": "2025-02-25T19:30:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Fulham",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Santiago Bueno",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 4
+        },
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 0.63
+        },
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 0.5
+        },
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "value": 0.41
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 0.4
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.35
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jean-Ricner Bellegarde",
+          "team": "Wolves",
+          "value": 0.38
+        },
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "value": 0.25
+        },
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "value": 0.25
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 0.2
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "points": 9,
+          "bonus": 3,
+          "bps": 33,
+          "xg": 0.63,
+          "xa": 0.01,
+          "minutes": 71
+        },
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "points": 8,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.41,
+          "xa": 0.25,
+          "minutes": 71
+        },
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0.01,
+          "xa": 0.25,
+          "minutes": 66
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "points": 7,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0.4,
+          "xa": 0.2,
+          "minutes": 90
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "points": 6,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.1,
+          "xa": 0.08,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-11-01|fulham|wolves": {
+      "fixtureId": 94,
+      "season": "2526",
+      "date": "2025-11-01",
+      "kickoffTime": "2025-11-01T15:00:00Z",
+      "homeTeam": "Fulham",
+      "awayTeam": "Wolves",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Yerson Mosquera Valdelamar",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Toti Gomes",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Yerson Mosquera Valdelamar",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Emmanuel Agbadou",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Sam Johnstone",
+          "team": "Wolves",
+          "value": 4
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Samuel Chukwueze",
+          "team": "Fulham",
+          "value": 0.42
+        },
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "value": 0.22
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.18
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 0.13
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Fulham",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.3
+        },
+        {
+          "name": "Joachim Andersen",
+          "team": "Fulham",
+          "value": 0.22
+        },
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "value": 0.22
+        },
+        {
+          "name": "Toti Gomes",
+          "team": "Wolves",
+          "value": 0.14
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "points": 14,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0.22,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "points": 10,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.18,
+          "xa": 0.1,
+          "minutes": 76
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.1,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Joachim Andersen",
+          "team": "Fulham",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.05,
+          "xa": 0.22,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-05-17|wolves|fulham": {
+      "fixtureId": 370,
+      "season": "2526",
+      "date": "2026-05-17",
+      "kickoffTime": "2026-05-17T14:00:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Fulham",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Mateus Mané",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "André Trindade da Costa Neto",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 4
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Mateus Mané",
+          "team": "Wolves",
+          "value": 3
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 0.79
+        },
+        {
+          "name": "Adam Armstrong",
+          "team": "Wolves",
+          "value": 0.42
+        },
+        {
+          "name": "Yerson Mosquera Valdelamar",
+          "team": "Wolves",
+          "value": 0.35
+        },
+        {
+          "name": "Rodrigo Martins Gomes",
+          "team": "Wolves",
+          "value": 0.28
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.24
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Mateus Mané",
+          "team": "Wolves",
+          "value": 0.4
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 0.3
+        },
+        {
+          "name": "Oscar Bobb",
+          "team": "Fulham",
+          "value": 0.29
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "value": 0.15
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "points": 12,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.79,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Mateus Mané",
+          "team": "Wolves",
+          "points": 11,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0.12,
+          "xa": 0.4,
+          "minutes": 90
+        },
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "points": 5,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.09,
+          "minutes": 90
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.05,
+          "xa": 0.15,
+          "minutes": 90
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "points": 5,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.05,
+          "xa": 0.3,
+          "minutes": 78
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

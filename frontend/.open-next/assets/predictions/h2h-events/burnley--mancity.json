@@ -1,0 +1,820 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-08-11|burnley|mancity": {
+      "fixtureId": 1,
+      "season": "2324",
+      "date": "2023-08-11",
+      "kickoffTime": "2023-08-11T19:00:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Man City",
+      "homeGoals": 0,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [],
+      "redCards": [
+        {
+          "name": "Anass Zaroury",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 5
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Nathan Aké",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.6
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 0.5
+        },
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 0.39
+        },
+        {
+          "name": "Nathan Aké",
+          "team": "Man City",
+          "value": 0.31
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.27
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 0.37
+        },
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "value": 0.24
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 0.17
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 0.16
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 13,
+          "bonus": 3,
+          "bps": 56,
+          "xg": 0.6,
+          "xa": 0.05,
+          "minutes": 79
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "points": 13,
+          "bonus": 2,
+          "bps": 42,
+          "xg": 0.5,
+          "xa": 0.17,
+          "minutes": 90
+        },
+        {
+          "name": "Nathan Aké",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0.31,
+          "xa": 0.01,
+          "minutes": 78
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Kyle Walker",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-01-31|mancity|burnley": {
+      "fixtureId": 220,
+      "season": "2324",
+      "date": "2024-01-31",
+      "kickoffTime": "2024-01-31T19:30:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Burnley",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Ameen Al-Dakhil",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "David Datro Fofana",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Matheus Luiz Nunes",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Connor Roberts",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Hjalmar Ekdal",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Matheus Luiz Nunes",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Ameen Al-Dakhil",
+          "team": "Burnley",
+          "value": 0.96
+        },
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 0.93
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.23
+        },
+        {
+          "name": "Zeki Amdouni",
+          "team": "Burnley",
+          "value": 0.22
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Matheus Luiz Nunes",
+          "team": "Man City",
+          "value": 0.82
+        },
+        {
+          "name": "Josh Brownhill",
+          "team": "Burnley",
+          "value": 0.26
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 0.23
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 0.2
+        },
+        {
+          "name": "Jóhann Berg Gudmundsson",
+          "team": "Burnley",
+          "value": 0.14
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "points": 13,
+          "bonus": 3,
+          "bps": 56,
+          "xg": 0.93,
+          "xa": 0.01,
+          "minutes": 86
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "points": 10,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.11,
+          "xa": 0.04,
+          "minutes": 86
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0.09,
+          "xa": 0.2,
+          "minutes": 70
+        },
+        {
+          "name": "Ameen Al-Dakhil",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.96,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Matheus Luiz Nunes",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0.13,
+          "xa": 0.82,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-09-27|mancity|burnley": {
+      "fixtureId": 57,
+      "season": "2526",
+      "date": "2025-09-27",
+      "kickoffTime": "2025-09-27T14:00:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Burnley",
+      "homeGoals": 5,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Matheus Nunes",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Jaidon Anthony",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Matheus Nunes",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Quilindschy Hartman",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Maxime Estève",
+          "team": "Burnley",
+          "value": 2
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Kyle Walker",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Jaidon Anthony",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Quilindschy Hartman",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Martin Dúbravka",
+          "team": "Burnley",
+          "value": 5
+        },
+        {
+          "name": "Gianluigi Donnarumma",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Matheus Nunes",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1.17
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.34
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 0.18
+        },
+        {
+          "name": "Matheus Nunes",
+          "team": "Man City",
+          "value": 0.18
+        },
+        {
+          "name": "Tijjani Reijnders",
+          "team": "Man City",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.28
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.24
+        },
+        {
+          "name": "Nico González Iglesias",
+          "team": "Man City",
+          "value": 0.23
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 0.19
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.17
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 16,
+          "bonus": 3,
+          "bps": 68,
+          "xg": 1.17,
+          "xa": 0.24,
+          "minutes": 90
+        },
+        {
+          "name": "Matheus Nunes",
+          "team": "Man City",
+          "points": 12,
+          "bonus": 1,
+          "bps": 33,
+          "xg": 0.18,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "points": 10,
+          "bonus": 2,
+          "bps": 43,
+          "xg": 0.34,
+          "xa": 0.28,
+          "minutes": 90
+        },
+        {
+          "name": "Jaidon Anthony",
+          "team": "Burnley",
+          "points": 6,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.1,
+          "xa": 0.08,
+          "minutes": 87
+        },
+        {
+          "name": "Josh Cullen",
+          "team": "Burnley",
+          "points": 4,
+          "bonus": 0,
+          "bps": 17,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 78
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-04-22|burnley|mancity": {
+      "fixtureId": 334,
+      "season": "2526",
+      "date": "2026-04-22",
+      "kickoffTime": "2026-04-22T19:00:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Man City",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Martin Dúbravka",
+          "team": "Burnley",
+          "value": 8
+        },
+        {
+          "name": "Gianluigi Donnarumma",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Abdukodir Khusanov",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Marc Guéhi",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1.07
+        },
+        {
+          "name": "Rayan Cherki",
+          "team": "Man City",
+          "value": 0.85
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 0.8
+        },
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 0.27
+        },
+        {
+          "name": "Bernardo Mota Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 0.27
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Rayan Cherki",
+          "team": "Man City",
+          "value": 0.41
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Man City",
+          "value": 0.27
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.26
+        },
+        {
+          "name": "Bernardo Mota Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 0.21
+        },
+        {
+          "name": "Abdukodir Khusanov",
+          "team": "Man City",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Abdukodir Khusanov",
+          "team": "Man City",
+          "points": 11,
+          "bonus": 3,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0.1,
+          "minutes": 90
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Man City",
+          "points": 8,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0.07,
+          "xa": 0.03,
+          "minutes": 64
+        },
+        {
+          "name": "Marc Guéhi",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 1.07,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Matheus Nunes",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

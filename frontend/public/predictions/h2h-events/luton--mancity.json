@@ -1,0 +1,441 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-12-10|luton|mancity": {
+      "fixtureId": 156,
+      "season": "2324",
+      "date": "2023-12-10",
+      "kickoffTime": "2023-12-10T14:00:00Z",
+      "homeTeam": "Luton",
+      "awayTeam": "Man City",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Andros Townsend",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Marvelous Nakamba",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Thomas Kaminski",
+          "team": "Luton",
+          "value": 4
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 0.47
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "value": 0.42
+        },
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "value": 0.25
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 0.18
+        },
+        {
+          "name": "Rúben Gato Alves Dias",
+          "team": "Man City",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "value": 0.39
+        },
+        {
+          "name": "Andros Townsend",
+          "team": "Luton",
+          "value": 0.34
+        },
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 0.3
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 0.2
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "points": 10,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0.42,
+          "xa": 0.39,
+          "minutes": 90
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "points": 9,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.14,
+          "xa": 0.15,
+          "minutes": 90
+        },
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.25,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Andros Townsend",
+          "team": "Luton",
+          "points": 5,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.02,
+          "xa": 0.34,
+          "minutes": 71
+        },
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "points": 5,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0.47,
+          "xa": 0.3,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-04-13|mancity|luton": {
+      "fixtureId": 327,
+      "season": "2324",
+      "date": "2024-04-13",
+      "kickoffTime": "2024-04-13T14:00:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Luton",
+      "homeGoals": 5,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Daiki Hashioka",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Thomas Kaminski",
+          "team": "Luton",
+          "value": 9
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1.8
+        },
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 0.57
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.48
+        },
+        {
+          "name": "Matheus Luiz Nunes",
+          "team": "Man City",
+          "value": 0.39
+        },
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "value": 0.38
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 1.04
+        },
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 0.48
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.35
+        },
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "value": 0.21
+        },
+        {
+          "name": "Manuel Akanji",
+          "team": "Man City",
+          "value": 0.17
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "points": 16,
+          "bonus": 3,
+          "bps": 52,
+          "xg": 0.48,
+          "xa": 0.35,
+          "minutes": 90
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "points": 12,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0.31,
+          "xa": 0.14,
+          "minutes": 90
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 10,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 1.8,
+          "xa": 0.15,
+          "minutes": 80
+        },
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "points": 9,
+          "bonus": 2,
+          "bps": 44,
+          "xg": 0.38,
+          "xa": 0.21,
+          "minutes": 90
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "points": 7,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.17,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

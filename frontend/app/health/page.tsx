@@ -9,7 +9,6 @@ import { useChartTheme } from "@/lib/hooks";
 import { pct, timeAgo } from "@/lib/formats";
 import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/Skeleton";
-import { StatCard } from "@/components/ui/StatCard";
 
 const STALE_HEALTH_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -86,6 +85,11 @@ function HealthContent() {
           {isStaleHealth && (
             <span className="stale-warning">DATA &gt; 24H OLD</span>
           )}
+          {health.forecast_validation_status === "collecting" && (
+            <span className="badge-amber text-[9px]">
+              COLLECTING FORWARD RESULTS
+            </span>
+          )}
           <span className={isHealthy ? "badge-green" : "text-red-400 bg-red-500/10 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider"}>
             {health.status.toUpperCase()}
           </span>
@@ -103,6 +107,13 @@ function HealthContent() {
       </div>
 
       <div className="glow-line" />
+
+      {health.forecast_validation_status === "collecting" && (
+        <div className="card p-4 text-sm" style={{ color: "var(--text-3)" }}>
+          Forecast scoring has started, but fewer than 100 completed matches are
+          available. Calibration and betting decisions should remain provisional.
+        </div>
+      )}
 
       {/* Stacking Weights + Per-Market side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

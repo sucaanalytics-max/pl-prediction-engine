@@ -1,0 +1,476 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-11-25|sheffieldutd|bournemouth": {
+      "fixtureId": 129,
+      "season": "2324",
+      "date": "2023-11-25",
+      "kickoffTime": "2023-11-25T15:00:00Z",
+      "homeTeam": "Sheffield Utd",
+      "awayTeam": "Bournemouth",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Oliver McBurnie",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Adam Smith",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "George Baldock",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Oliver Norwood",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Philip Billing",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Luke Thomas",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "George Baldock",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "value": 8
+        },
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 3
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "George Baldock",
+          "team": "Sheffield Utd",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 1.22
+        },
+        {
+          "name": "Dominic Solanke",
+          "team": "Bournemouth",
+          "value": 0.62
+        },
+        {
+          "name": "Oliver McBurnie",
+          "team": "Sheffield Utd",
+          "value": 0.56
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 0.26
+        },
+        {
+          "name": "Luis Sinisterra",
+          "team": "Bournemouth",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "George Baldock",
+          "team": "Sheffield Utd",
+          "value": 0.38
+        },
+        {
+          "name": "Adam Smith",
+          "team": "Bournemouth",
+          "value": 0.37
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.19
+        },
+        {
+          "name": "Oliver Norwood",
+          "team": "Sheffield Utd",
+          "value": 0.17
+        },
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "points": 16,
+          "bonus": 3,
+          "bps": 48,
+          "xg": 1.22,
+          "xa": 0.19,
+          "minutes": 81
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "points": 10,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0.26,
+          "xa": 0.01,
+          "minutes": 65
+        },
+        {
+          "name": "George Baldock",
+          "team": "Sheffield Utd",
+          "points": 5,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0.38,
+          "minutes": 90
+        },
+        {
+          "name": "Oliver McBurnie",
+          "team": "Sheffield Utd",
+          "points": 5,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.56,
+          "xa": 0,
+          "minutes": 45
+        },
+        {
+          "name": "Adam Smith",
+          "team": "Bournemouth",
+          "points": 5,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0,
+          "xa": 0.37,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-03-09|bournemouth|sheffieldutd": {
+      "fixtureId": 273,
+      "season": "2324",
+      "date": "2024-03-09",
+      "kickoffTime": "2024-03-09T15:00:00Z",
+      "homeTeam": "Bournemouth",
+      "awayTeam": "Sheffield Utd",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Oliver Norwood",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Ivo Grbic",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Ben Brereton",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Chris Mepham",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Milos Kerkez",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Oliver McBurnie",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Adam Smith",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Ivo Grbic",
+          "team": "Sheffield Utd",
+          "value": 9
+        },
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "value": 7
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [
+        {
+          "name": "Dominic Solanke",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "bonus": [
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 3
+        },
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Solanke",
+          "team": "Bournemouth",
+          "value": 0.83
+        },
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 0.7
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.54
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 0.36
+        },
+        {
+          "name": "Oliver McBurnie",
+          "team": "Sheffield Utd",
+          "value": 0.32
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 0.44
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 0.38
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.33
+        },
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 0.17
+        },
+        {
+          "name": "Philip Billing",
+          "team": "Bournemouth",
+          "value": 0.17
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "points": 12,
+          "bonus": 3,
+          "bps": 41,
+          "xg": 0.7,
+          "xa": 0.15,
+          "minutes": 45
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Sheffield Utd",
+          "points": 9,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.14,
+          "xa": 0,
+          "minutes": 68
+        },
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "points": 7,
+          "bonus": 2,
+          "bps": 36,
+          "xg": 0.31,
+          "xa": 0.44,
+          "minutes": 73
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "points": 7,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.36,
+          "xa": 0.38,
+          "minutes": 90
+        },
+        {
+          "name": "Jack Robinson",
+          "team": "Sheffield Utd",
+          "points": 7,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0.14,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

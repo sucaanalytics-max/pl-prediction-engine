@@ -10,7 +10,12 @@ import {
   useRef,
   type ReactNode,
 } from "react";
-import type { PredictionData, HealthData } from "./predictions";
+import {
+  loadPredictions,
+  loadHealth,
+  type PredictionData,
+  type HealthData,
+} from "./predictions";
 
 interface PredictionsContextValue {
   /** Main prediction data (latest.json) */
@@ -44,7 +49,6 @@ const PredictionsContext = createContext<PredictionsContextValue>({
   isStale: false,
 });
 
-const BASE_PATH = "/predictions";
 const STALE_TIME_MS = 5 * 60 * 1000; // 5 minutes
 
 export function PredictionsProvider({ children }: { children: ReactNode }) {
@@ -71,14 +75,8 @@ export function PredictionsProvider({ children }: { children: ReactNode }) {
 
       try {
         const [predRes, healthRes] = await Promise.allSettled([
-          fetch(`${BASE_PATH}/latest.json`).then((r) => {
-            if (!r.ok) throw new Error(`Predictions: ${r.status}`);
-            return r.json() as Promise<PredictionData>;
-          }),
-          fetch(`${BASE_PATH}/health.json`).then((r) => {
-            if (!r.ok) throw new Error(`Health: ${r.status}`);
-            return r.json() as Promise<HealthData>;
-          }),
+          loadPredictions(),
+          loadHealth(),
         ]);
 
         if (predRes.status === "fulfilled") {

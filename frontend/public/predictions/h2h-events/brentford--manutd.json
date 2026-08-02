@@ -1,0 +1,1113 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-03-30|brentford|manutd": {
+      "fixtureId": 293,
+      "season": "2324",
+      "date": "2024-03-30",
+      "kickoffTime": "2024-03-30T20:00:00Z",
+      "homeTeam": "Brentford",
+      "awayTeam": "Man Utd",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Kristoffer Ajer",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Mason Mount",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Ivan Toney",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Neal Maupay",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Scott McTominay",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Mathias Jorgensen",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Mark Flekken",
+          "team": "Brentford",
+          "value": 4
+        },
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Victor Lindelöf",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Kristoffer Ajer",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "value": 0.92
+        },
+        {
+          "name": "Ivan Toney",
+          "team": "Brentford",
+          "value": 0.48
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 0.45
+        },
+        {
+          "name": "Kristoffer Ajer",
+          "team": "Brentford",
+          "value": 0.28
+        },
+        {
+          "name": "Yegor Yarmoliuk",
+          "team": "Brentford",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 0.45
+        },
+        {
+          "name": "Ivan Toney",
+          "team": "Brentford",
+          "value": 0.33
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.31
+        },
+        {
+          "name": "Vitaly Janelt",
+          "team": "Brentford",
+          "value": 0.16
+        },
+        {
+          "name": "Mads Roerslev Rasmussen",
+          "team": "Brentford",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Victor Lindelöf",
+          "team": "Man Utd",
+          "points": 9,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 68
+        },
+        {
+          "name": "Kristoffer Ajer",
+          "team": "Brentford",
+          "points": 9,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.28,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Mads Roerslev Rasmussen",
+          "team": "Brentford",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0,
+          "xa": 0.15,
+          "minutes": 86
+        },
+        {
+          "name": "Mason Mount",
+          "team": "Man Utd",
+          "points": 6,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.09,
+          "xa": 0,
+          "minutes": 10
+        },
+        {
+          "name": "Ivan Toney",
+          "team": "Brentford",
+          "points": 5,
+          "bonus": 0,
+          "bps": 9,
+          "xg": 0.48,
+          "xa": 0.33,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-10-19|manutd|brentford": {
+      "fixtureId": 75,
+      "season": "2425",
+      "date": "2024-10-19",
+      "kickoffTime": "2024-10-19T14:00:00Z",
+      "homeTeam": "Man Utd",
+      "awayTeam": "Brentford",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Rasmus Højlund",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Ethan Pinnock",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Mikkel Damsgaard",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Marcus Rashford",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jonny Evans",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Christian Nørgaard",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Diogo Dalot Teixeira",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Kristoffer Ajer",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Mark Flekken",
+          "team": "Brentford",
+          "value": 9
+        },
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Rasmus Højlund",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Marcus Rashford",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Rasmus Højlund",
+          "team": "Man Utd",
+          "value": 0.42
+        },
+        {
+          "name": "Ethan Pinnock",
+          "team": "Brentford",
+          "value": 0.42
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 0.39
+        },
+        {
+          "name": "Diogo Dalot Teixeira",
+          "team": "Man Utd",
+          "value": 0.17
+        },
+        {
+          "name": "Fábio Freitas Gouveia Carvalho",
+          "team": "Brentford",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Marcus Rashford",
+          "team": "Man Utd",
+          "value": 0.35
+        },
+        {
+          "name": "Mikkel Damsgaard",
+          "team": "Brentford",
+          "value": 0.24
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 0.19
+        },
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 0.19
+        },
+        {
+          "name": "Vitaly Janelt",
+          "team": "Brentford",
+          "value": 0.16
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "points": 10,
+          "bonus": 3,
+          "bps": 45,
+          "xg": 0.39,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Rasmus Højlund",
+          "team": "Man Utd",
+          "points": 8,
+          "bonus": 2,
+          "bps": 35,
+          "xg": 0.42,
+          "xa": 0.01,
+          "minutes": 73
+        },
+        {
+          "name": "Ethan Pinnock",
+          "team": "Brentford",
+          "points": 7,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.42,
+          "xa": 0.13,
+          "minutes": 90
+        },
+        {
+          "name": "Marcus Rashford",
+          "team": "Man Utd",
+          "points": 6,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.07,
+          "xa": 0.35,
+          "minutes": 90
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "points": 5,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.12,
+          "xa": 0.05,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-05-04|brentford|manutd": {
+      "fixtureId": 343,
+      "season": "2425",
+      "date": "2025-05-04",
+      "kickoffTime": "2025-05-04T13:00:00Z",
+      "homeTeam": "Brentford",
+      "awayTeam": "Man Utd",
+      "homeGoals": 4,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Mason Mount",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Christian Eriksen",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Manuel Ugarte",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Christian Nørgaard",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Michael Kayode",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Mikkel Damsgaard",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Luke Shaw",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Manuel Ugarte",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Altay Bayindir",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Mark Flekken",
+          "team": "Brentford",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 1.21
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "value": 1.2
+        },
+        {
+          "name": "Mason Mount",
+          "team": "Man Utd",
+          "value": 0.83
+        },
+        {
+          "name": "Chido Obi-Martin",
+          "team": "Man Utd",
+          "value": 0.34
+        },
+        {
+          "name": "Christian Nørgaard",
+          "team": "Brentford",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 0.39
+        },
+        {
+          "name": "Michael Kayode",
+          "team": "Brentford",
+          "value": 0.29
+        },
+        {
+          "name": "Mikkel Damsgaard",
+          "team": "Brentford",
+          "value": 0.29
+        },
+        {
+          "name": "Christian Nørgaard",
+          "team": "Brentford",
+          "value": 0.28
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 0.26
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "points": 14,
+          "bonus": 2,
+          "bps": 41,
+          "xg": 1.21,
+          "xa": 0,
+          "minutes": 71
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "points": 12,
+          "bonus": 3,
+          "bps": 43,
+          "xg": 0.15,
+          "xa": 0.39,
+          "minutes": 90
+        },
+        {
+          "name": "Yoane Wissa",
+          "team": "Brentford",
+          "points": 7,
+          "bonus": 1,
+          "bps": 33,
+          "xg": 1.2,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "points": 6,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.1,
+          "xa": 0.07,
+          "minutes": 45
+        },
+        {
+          "name": "Mason Mount",
+          "team": "Man Utd",
+          "points": 6,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0.83,
+          "xa": 0.05,
+          "minutes": 56
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-09-27|brentford|manutd": {
+      "fixtureId": 52,
+      "season": "2526",
+      "date": "2025-09-27",
+      "kickoffTime": "2025-09-27T11:30:00Z",
+      "homeTeam": "Brentford",
+      "awayTeam": "Man Utd",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Igor Thiago Nascimento Rodrigues",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jordan Henderson",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Yehor Yarmoliuk",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Nathan Collins",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Altay Bayındır",
+          "team": "Man Utd",
+          "value": 5
+        },
+        {
+          "name": "Caoimhín Kelleher",
+          "team": "Brentford",
+          "value": 5
+        }
+      ],
+      "penaltiesSaved": [
+        {
+          "name": "Caoimhín Kelleher",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "penaltiesMissed": [
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "bonus": [
+        {
+          "name": "Igor Thiago Nascimento Rodrigues",
+          "team": "Brentford",
+          "value": 3
+        },
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Jordan Henderson",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "value": 0.89
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.79
+        },
+        {
+          "name": "Igor Thiago Nascimento Rodrigues",
+          "team": "Brentford",
+          "value": 0.7
+        },
+        {
+          "name": "Sepp van den Berg",
+          "team": "Brentford",
+          "value": 0.66
+        },
+        {
+          "name": "Dango Ouattara",
+          "team": "Brentford",
+          "value": 0.42
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Nathan Collins",
+          "team": "Brentford",
+          "value": 0.32
+        },
+        {
+          "name": "Jordan Henderson",
+          "team": "Brentford",
+          "value": 0.27
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 0.27
+        },
+        {
+          "name": "Dango Ouattara",
+          "team": "Brentford",
+          "value": 0.26
+        },
+        {
+          "name": "Mikkel Damsgaard",
+          "team": "Brentford",
+          "value": 0.24
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Igor Thiago Nascimento Rodrigues",
+          "team": "Brentford",
+          "points": 13,
+          "bonus": 3,
+          "bps": 62,
+          "xg": 0.7,
+          "xa": 0,
+          "minutes": 89
+        },
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "points": 8,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.89,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Caoimhín Kelleher",
+          "team": "Brentford",
+          "points": 8,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Yehor Yarmoliuk",
+          "team": "Brentford",
+          "points": 7,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.09,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Henderson",
+          "team": "Brentford",
+          "points": 6,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0.27,
+          "minutes": 80
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-04-27|manutd|brentford": {
+      "fixtureId": 337,
+      "season": "2526",
+      "date": "2026-04-27",
+      "kickoffTime": "2026-04-27T19:00:00Z",
+      "homeTeam": "Man Utd",
+      "awayTeam": "Brentford",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Harry Maguire",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Reiss Nelson",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Nathan Collins",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Sepp van den Berg",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Joshua Zirkzee",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Igor Thiago Nascimento Rodrigues",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Dango Ouattara",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Luke Shaw",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Senne Lammens",
+          "team": "Man Utd",
+          "value": 5
+        },
+        {
+          "name": "Caoimhín Kelleher",
+          "team": "Brentford",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dango Ouattara",
+          "team": "Brentford",
+          "value": 0.63
+        },
+        {
+          "name": "Michael Kayode",
+          "team": "Brentford",
+          "value": 0.56
+        },
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "value": 0.5
+        },
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "value": 0.43
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.61
+        },
+        {
+          "name": "Mikkel Damsgaard",
+          "team": "Brentford",
+          "value": 0.44
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 0.4
+        },
+        {
+          "name": "Kobbie Mainoo",
+          "team": "Man Utd",
+          "value": 0.33
+        },
+        {
+          "name": "Harry Maguire",
+          "team": "Man Utd",
+          "value": 0.2
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "points": 12,
+          "bonus": 3,
+          "bps": 44,
+          "xg": 0.18,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "points": 10,
+          "bonus": 1,
+          "bps": 34,
+          "xg": 0.06,
+          "xa": 0.4,
+          "minutes": 90
+        },
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "points": 8,
+          "bonus": 2,
+          "bps": 39,
+          "xg": 0.43,
+          "xa": 0.03,
+          "minutes": 87
+        },
+        {
+          "name": "Harry Maguire",
+          "team": "Man Utd",
+          "points": 7,
+          "bonus": 0,
+          "bps": 32,
+          "xg": 0.11,
+          "xa": 0.2,
+          "minutes": 90
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "points": 5,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.61,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

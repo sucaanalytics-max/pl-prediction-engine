@@ -1,0 +1,420 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2526|2025-12-20|leeds|crystalpalace": {
+      "fixtureId": 166,
+      "season": "2526",
+      "date": "2025-12-20",
+      "kickoffTime": "2025-12-20T20:00:00Z",
+      "homeTeam": "Leeds",
+      "awayTeam": "Crystal Palace",
+      "homeGoals": 4,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 2
+        },
+        {
+          "name": "Justin Devenny",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Ilia Gruev",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Christantus Uche",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Marc Guéhi",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Maxence Lacroix",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Adam Wharton",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Lucas Estella Perri",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Lucas Estella Perri",
+          "team": "Leeds",
+          "value": 2
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 3
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 2
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1.29
+        },
+        {
+          "name": "Justin Devenny",
+          "team": "Crystal Palace",
+          "value": 1.16
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 0.49
+        },
+        {
+          "name": "Gabriel Gudmundsson",
+          "team": "Leeds",
+          "value": 0.41
+        },
+        {
+          "name": "Joe Rodon",
+          "team": "Leeds",
+          "value": 0.25
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.56
+        },
+        {
+          "name": "Adam Wharton",
+          "team": "Crystal Palace",
+          "value": 0.37
+        },
+        {
+          "name": "Gabriel Gudmundsson",
+          "team": "Leeds",
+          "value": 0.3
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 0.29
+        },
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "value": 0.22
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "points": 13,
+          "bonus": 3,
+          "bps": 60,
+          "xg": 1.29,
+          "xa": 0.08,
+          "minutes": 86
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "points": 12,
+          "bonus": 2,
+          "bps": 40,
+          "xg": 0.13,
+          "xa": 0.03,
+          "minutes": 86
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "points": 8,
+          "bonus": 1,
+          "bps": 36,
+          "xg": 0.11,
+          "xa": 0.56,
+          "minutes": 90
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "points": 6,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 79
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "points": 6,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0.02,
+          "xa": 0.01,
+          "minutes": 76
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-03-15|crystalpalace|leeds": {
+      "fixtureId": 295,
+      "season": "2526",
+      "date": "2026-03-15",
+      "kickoffTime": "2026-03-15T14:00:00Z",
+      "homeTeam": "Crystal Palace",
+      "awayTeam": "Leeds",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Gabriel Gudmundsson",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Walter Benítez",
+          "team": "Crystal Palace",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "bonus": [
+        {
+          "name": "Jaydee Canvot",
+          "team": "Crystal Palace",
+          "value": 3
+        },
+        {
+          "name": "Chris Richards",
+          "team": "Crystal Palace",
+          "value": 2
+        },
+        {
+          "name": "Maxence Lacroix",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 0.94
+        },
+        {
+          "name": "Maxence Lacroix",
+          "team": "Crystal Palace",
+          "value": 0.27
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 0.11
+        },
+        {
+          "name": "Adam Wharton",
+          "team": "Crystal Palace",
+          "value": 0.08
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Crystal Palace",
+          "value": 0.07
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.19
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 0.12
+        },
+        {
+          "name": "Adam Wharton",
+          "team": "Crystal Palace",
+          "value": 0.11
+        },
+        {
+          "name": "Chris Richards",
+          "team": "Crystal Palace",
+          "value": 0.11
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Crystal Palace",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jaydee Canvot",
+          "team": "Crystal Palace",
+          "points": 11,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 79
+        },
+        {
+          "name": "Chris Richards",
+          "team": "Crystal Palace",
+          "points": 10,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.05,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Maxence Lacroix",
+          "team": "Crystal Palace",
+          "points": 9,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0.27,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Joe Rodon",
+          "team": "Leeds",
+          "points": 8,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "points": 8,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

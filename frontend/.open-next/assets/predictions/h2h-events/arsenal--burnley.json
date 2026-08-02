@@ -1,0 +1,811 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-11-11|arsenal|burnley": {
+      "fixtureId": 111,
+      "season": "2324",
+      "date": "2023-11-11",
+      "kickoffTime": "2023-11-11T15:00:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Burnley",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Oleksandr Zinchenko",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Josh Brownhill",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jóhann Berg Gudmundsson",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Fábio Ferreira Vieira",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 4
+        },
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Oleksandr Zinchenko",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 0.64
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.55
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.36
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.15
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.4
+        },
+        {
+          "name": "Oleksandr Zinchenko",
+          "team": "Arsenal",
+          "value": 0.24
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.23
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Jóhann Berg Gudmundsson",
+          "team": "Burnley",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "points": 13,
+          "bonus": 3,
+          "bps": 36,
+          "xg": 0.55,
+          "xa": 0.23,
+          "minutes": 80
+        },
+        {
+          "name": "Oleksandr Zinchenko",
+          "team": "Arsenal",
+          "points": 10,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.04,
+          "xa": 0.24,
+          "minutes": 90
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.64,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Josh Brownhill",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.09,
+          "xa": 0,
+          "minutes": 84
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 5,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.15,
+          "xa": 0.4,
+          "minutes": 80
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-02-17|burnley|arsenal": {
+      "fixtureId": 242,
+      "season": "2324",
+      "date": "2024-02-17",
+      "kickoffTime": "2024-02-17T15:00:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 5,
+      "scorers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Jakub Kiwior",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Lorenz Assignon",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Aaron Ramsey",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.86
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.78
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.29
+        },
+        {
+          "name": "Eddie Nketiah",
+          "team": "Arsenal",
+          "value": 0.26
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.13
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.41
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.24
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.17
+        },
+        {
+          "name": "Jóhann Berg Gudmundsson",
+          "team": "Burnley",
+          "value": 0.1
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.05
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 15,
+          "bonus": 3,
+          "bps": 45,
+          "xg": 0.86,
+          "xa": 0.24,
+          "minutes": 68
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "points": 14,
+          "bonus": 3,
+          "bps": 45,
+          "xg": 0.13,
+          "xa": 0.41,
+          "minutes": 90
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "points": 12,
+          "bonus": 1,
+          "bps": 38,
+          "xg": 0.78,
+          "xa": 0.05,
+          "minutes": 83
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "points": 11,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.29,
+          "xa": 0,
+          "minutes": 68
+        },
+        {
+          "name": "Jakub Kiwior",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 0,
+          "bps": 34,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-11-01|burnley|arsenal": {
+      "fixtureId": 92,
+      "season": "2526",
+      "date": "2025-11-01",
+      "kickoffTime": "2025-11-01T15:00:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Josh Cullen",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Martin Dúbravka",
+          "team": "Burnley",
+          "value": 5
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "value": 0.87
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.58
+        },
+        {
+          "name": "Florentino Ibrain Morris Luís",
+          "team": "Burnley",
+          "value": 0.34
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.27
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.24
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.52
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.33
+        },
+        {
+          "name": "Maxime Estève",
+          "team": "Burnley",
+          "value": 0.29
+        },
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "value": 0.17
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "points": 13,
+          "bonus": 3,
+          "bps": 47,
+          "xg": 0.24,
+          "xa": 0.33,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 12,
+          "bonus": 2,
+          "bps": 39,
+          "xg": 0,
+          "xa": 0.52,
+          "minutes": 90
+        },
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 2,
+          "bps": 39,
+          "xg": 0.87,
+          "xa": 0.17,
+          "minutes": 45
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 33,
+          "xg": 0.06,
+          "xa": 0.01,
+          "minutes": 71
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-05-18|arsenal|burnley": {
+      "fixtureId": 361,
+      "season": "2526",
+      "date": "2026-05-18",
+      "kickoffTime": "2026-05-18T19:00:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Burnley",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Lucas Pires Silva",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Max Weiß",
+          "team": "Burnley",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Eberechi Eze",
+          "team": "Arsenal",
+          "value": 0.41
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.39
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.2
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "team": "Burnley",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.33
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.29
+        },
+        {
+          "name": "Lucas Pires Silva",
+          "team": "Burnley",
+          "value": 0.14
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 0.13
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 10,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0.2,
+          "xa": 0.29,
+          "minutes": 90
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0.39,
+          "xa": 0.33,
+          "minutes": 72
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.13,
+          "minutes": 71
+        },
+        {
+          "name": "Cristhian Mosquera",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.08,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

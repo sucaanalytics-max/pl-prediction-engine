@@ -1,0 +1,976 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-01-14|everton|astonvilla": {
+      "fixtureId": 207,
+      "season": "2324",
+      "date": "2024-01-14",
+      "kickoffTime": "2024-01-14T14:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Aston Villa",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Youri Tielemans",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Clément Lenglet",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Diego Carlos Santos Silva",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 4
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 3
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Alexandre Moreno Lopera",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Everton",
+          "value": 0.66
+        },
+        {
+          "name": "Jhon Durán",
+          "team": "Aston Villa",
+          "value": 0.42
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 0.3
+        },
+        {
+          "name": "Arnaut Danjuma Groeneveld",
+          "team": "Everton",
+          "value": 0.16
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "John McGinn",
+          "team": "Aston Villa",
+          "value": 0.23
+        },
+        {
+          "name": "Matty Cash",
+          "team": "Aston Villa",
+          "value": 0.22
+        },
+        {
+          "name": "Arnaut Danjuma Groeneveld",
+          "team": "Everton",
+          "value": 0.2
+        },
+        {
+          "name": "Alexandre Moreno Lopera",
+          "team": "Aston Villa",
+          "value": 0.17
+        },
+        {
+          "name": "Douglas Luiz Soares de Paulo",
+          "team": "Aston Villa",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "points": 9,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Alexandre Moreno Lopera",
+          "team": "Aston Villa",
+          "points": 7,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.17,
+          "minutes": 90
+        },
+        {
+          "name": "Seamus Coleman",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Ezri Konsa Ngoyo",
+          "team": "Aston Villa",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-09-14|astonvilla|everton": {
+      "fixtureId": 31,
+      "season": "2425",
+      "date": "2024-09-14",
+      "kickoffTime": "2024-09-14T16:30:00Z",
+      "homeTeam": "Aston Villa",
+      "awayTeam": "Everton",
+      "homeGoals": 3,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 2
+        },
+        {
+          "name": "Jhon Durán",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Tim Iroegbunam",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Ashley Young",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 3
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Jhon Durán",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 1.18
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Everton",
+          "value": 0.76
+        },
+        {
+          "name": "Jhon Durán",
+          "team": "Aston Villa",
+          "value": 0.33
+        },
+        {
+          "name": "Jacob Ramsey",
+          "team": "Aston Villa",
+          "value": 0.26
+        },
+        {
+          "name": "Morgan Rogers",
+          "team": "Aston Villa",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.87
+        },
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "value": 0.68
+        },
+        {
+          "name": "Youri Tielemans",
+          "team": "Aston Villa",
+          "value": 0.42
+        },
+        {
+          "name": "Ian Maatsen",
+          "team": "Aston Villa",
+          "value": 0.4
+        },
+        {
+          "name": "John McGinn",
+          "team": "Aston Villa",
+          "value": 0.32
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "points": 13,
+          "bonus": 3,
+          "bps": 52,
+          "xg": 1.18,
+          "xa": 0.07,
+          "minutes": 83
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "points": 12,
+          "bonus": 2,
+          "bps": 47,
+          "xg": 0.02,
+          "xa": 0.87,
+          "minutes": 90
+        },
+        {
+          "name": "Jhon Durán",
+          "team": "Aston Villa",
+          "points": 6,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.33,
+          "xa": 0,
+          "minutes": 21
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.76,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "points": 4,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.68,
+          "minutes": 68
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-01-15|everton|astonvilla": {
+      "fixtureId": 203,
+      "season": "2425",
+      "date": "2025-01-15",
+      "kickoffTime": "2025-01-15T19:30:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Aston Villa",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Morgan Rogers",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Amadou Onana",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 2
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Tyrone Mings",
+          "team": "Aston Villa",
+          "value": 3
+        },
+        {
+          "name": "Ezri Konsa Ngoyo",
+          "team": "Aston Villa",
+          "value": 2
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Everton",
+          "value": 0.5
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 0.46
+        },
+        {
+          "name": "Jacob Ramsey",
+          "team": "Aston Villa",
+          "value": 0.32
+        },
+        {
+          "name": "Youri Tielemans",
+          "team": "Aston Villa",
+          "value": 0.22
+        },
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 0.19
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 0.3
+        },
+        {
+          "name": "Jesper Lindstrøm",
+          "team": "Everton",
+          "value": 0.12
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "value": 0.07
+        },
+        {
+          "name": "Morgan Rogers",
+          "team": "Aston Villa",
+          "value": 0.06
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 0.05
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Tyrone Mings",
+          "team": "Aston Villa",
+          "points": 9,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Ezri Konsa Ngoyo",
+          "team": "Aston Villa",
+          "points": 8,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "points": 8,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0.46,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "points": 6,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0.07,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "points": 6,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-09-13|everton|astonvilla": {
+      "fixtureId": 36,
+      "season": "2526",
+      "date": "2025-09-13",
+      "kickoffTime": "2025-09-13T14:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Aston Villa",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Tim Iroegbunam",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Emiliano Buendía Stati",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Matty Cash",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 2
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Lamare Bogarde",
+          "team": "Aston Villa",
+          "value": 3
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Tyrone Mings",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 0.97
+        },
+        {
+          "name": "Michael Keane",
+          "team": "Everton",
+          "value": 0.55
+        },
+        {
+          "name": "Tyrone Mings",
+          "team": "Aston Villa",
+          "value": 0.22
+        },
+        {
+          "name": "Emiliano Buendía Stati",
+          "team": "Aston Villa",
+          "value": 0.16
+        },
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 0.31
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Everton",
+          "value": 0.3
+        },
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 0.26
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.19
+        },
+        {
+          "name": "Matty Cash",
+          "team": "Aston Villa",
+          "value": 0.14
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Lamare Bogarde",
+          "team": "Aston Villa",
+          "points": 9,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 82
+        },
+        {
+          "name": "Tyrone Mings",
+          "team": "Aston Villa",
+          "points": 9,
+          "bonus": 1,
+          "bps": 30,
+          "xg": 0.22,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Ezri Konsa Ngoyo",
+          "team": "Aston Villa",
+          "points": 6,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-01-18|astonvilla|everton": {
+      "fixtureId": 211,
+      "season": "2526",
+      "date": "2026-01-18",
+      "kickoffTime": "2026-01-18T16:30:00Z",
+      "homeTeam": "Aston Villa",
+      "awayTeam": "Everton",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Lamare Bogarde",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 5
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Morgan Rogers",
+          "team": "Aston Villa",
+          "value": 0.82
+        },
+        {
+          "name": "Evann Guessand",
+          "team": "Aston Villa",
+          "value": 0.22
+        },
+        {
+          "name": "Merlin Röhl",
+          "team": "Everton",
+          "value": 0.13
+        },
+        {
+          "name": "Emiliano Buendía Stati",
+          "team": "Aston Villa",
+          "value": 0.12
+        },
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Youri Tielemans",
+          "team": "Aston Villa",
+          "value": 0.43
+        },
+        {
+          "name": "Ian Maatsen",
+          "team": "Aston Villa",
+          "value": 0.31
+        },
+        {
+          "name": "Emiliano Buendía Stati",
+          "team": "Aston Villa",
+          "value": 0.19
+        },
+        {
+          "name": "Matty Cash",
+          "team": "Aston Villa",
+          "value": 0.15
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "points": 10,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.11,
+          "xa": 0,
+          "minutes": 83
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.1,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Nathan Patterson",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

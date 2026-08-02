@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "main": "dist/server/index.js",
+  "name": "suca-fpl-decision-os-local-check",
+  "compatibility_date": "2026-07-28",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist/assets",
+    "binding": "ASSETS"
+  }
+}

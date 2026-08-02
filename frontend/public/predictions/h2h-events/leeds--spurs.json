@@ -1,0 +1,445 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2526|2025-10-04|leeds|spurs": {
+      "fixtureId": 67,
+      "season": "2526",
+      "date": "2025-10-04",
+      "kickoffTime": "2025-10-04T11:30:00Z",
+      "homeTeam": "Leeds",
+      "awayTeam": "Spurs",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "João Maria Lobo Alves Palhares Costa Palhinha Gonçalves",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Karl Darlow",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 0.77
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 0.3
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 0.27
+        },
+        {
+          "name": "Sean Longstaff",
+          "team": "Leeds",
+          "value": 0.22
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 0.32
+        },
+        {
+          "name": "Sean Longstaff",
+          "team": "Leeds",
+          "value": 0.2
+        },
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 0.17
+        },
+        {
+          "name": "Wilson Odobert",
+          "team": "Spurs",
+          "value": 0.12
+        },
+        {
+          "name": "Jack Harrison",
+          "team": "Leeds",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "points": 12,
+          "bonus": 3,
+          "bps": 36,
+          "xg": 0.27,
+          "xa": 0.04,
+          "minutes": 89
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "points": 9,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.12,
+          "xa": 0.01,
+          "minutes": 72
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.77,
+          "xa": 0.04,
+          "minutes": 78
+        },
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "points": 7,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "points": 5,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.09,
+          "xa": 0.02,
+          "minutes": 66
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-05-11|spurs|leeds": {
+      "fixtureId": 359,
+      "season": "2526",
+      "date": "2026-05-11",
+      "kickoffTime": "2026-05-11T19:00:00Z",
+      "homeTeam": "Spurs",
+      "awayTeam": "Leeds",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "João Maria Lobo Alves Palhares Costa Palhinha Gonçalves",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Joe Rodon",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Kevin Danso",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Antonín Kinský",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Karl Darlow",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 3
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Tanaka Ao",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 0.82
+        },
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 0.53
+        },
+        {
+          "name": "Sean Longstaff",
+          "team": "Leeds",
+          "value": 0.25
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "value": 0.21
+        },
+        {
+          "name": "João Maria Lobo Alves Palhares Costa Palhinha Gonçalves",
+          "team": "Spurs",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 0.39
+        },
+        {
+          "name": "Randal Kolo Muani",
+          "team": "Spurs",
+          "value": 0.22
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 0.15
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 0.12
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "points": 10,
+          "bonus": 3,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "points": 9,
+          "bonus": 2,
+          "bps": 26,
+          "xg": 0.1,
+          "xa": 0.12,
+          "minutes": 84
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "points": 7,
+          "bonus": 1,
+          "bps": 17,
+          "xg": 0.82,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "points": 5,
+          "bonus": 1,
+          "bps": 17,
+          "xg": 0,
+          "xa": 0.1,
+          "minutes": 90
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "points": 5,
+          "bonus": 1,
+          "bps": 17,
+          "xg": 0.21,
+          "xa": 0.01,
+          "minutes": 80
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

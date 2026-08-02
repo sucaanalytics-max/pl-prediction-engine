@@ -1,0 +1,435 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-11-05|luton|liverpool": {
+      "fixtureId": 105,
+      "season": "2324",
+      "date": "2023-11-05",
+      "kickoffTime": "2023-11-05T16:30:00Z",
+      "homeTeam": "Luton",
+      "awayTeam": "Liverpool",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Tahith Chong",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Harvey Elliott",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Issa Kaboré",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Marvelous Nakamba",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Thomas Kaminski",
+          "team": "Luton",
+          "value": 5
+        },
+        {
+          "name": "Alisson Ramses Becker",
+          "team": "Liverpool",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Alisson Ramses Becker",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Issa Kaboré",
+          "team": "Luton",
+          "value": 3
+        },
+        {
+          "name": "Joe Gomez",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Darwin Núñez Ribeiro",
+          "team": "Liverpool",
+          "value": 0.9
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.6
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.59
+        },
+        {
+          "name": "Tahith Chong",
+          "team": "Luton",
+          "value": 0.42
+        },
+        {
+          "name": "Joe Gomez",
+          "team": "Liverpool",
+          "value": 0.36
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Harvey Elliott",
+          "team": "Liverpool",
+          "value": 0.79
+        },
+        {
+          "name": "Trent Alexander-Arnold",
+          "team": "Liverpool",
+          "value": 0.69
+        },
+        {
+          "name": "Issa Kaboré",
+          "team": "Luton",
+          "value": 0.25
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.09
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Issa Kaboré",
+          "team": "Luton",
+          "points": 8,
+          "bonus": 3,
+          "bps": 23,
+          "xg": 0.09,
+          "xa": 0.25,
+          "minutes": 90
+        },
+        {
+          "name": "Joe Gomez",
+          "team": "Liverpool",
+          "points": 7,
+          "bonus": 1,
+          "bps": 22,
+          "xg": 0.36,
+          "xa": 0.01,
+          "minutes": 66
+        },
+        {
+          "name": "Alisson Ramses Becker",
+          "team": "Liverpool",
+          "points": 6,
+          "bonus": 3,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Tahith Chong",
+          "team": "Luton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.42,
+          "xa": 0,
+          "minutes": 29
+        },
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "points": 6,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0.15,
+          "xa": 0.02,
+          "minutes": 7
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-02-21|liverpool|luton": {
+      "fixtureId": 257,
+      "season": "2324",
+      "date": "2024-02-21",
+      "kickoffTime": "2024-02-21T19:30:00Z",
+      "homeTeam": "Liverpool",
+      "awayTeam": "Luton",
+      "homeGoals": 4,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Chiedozie Ogbene",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Harvey Elliott",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Tahith Chong",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Joe Gomez",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Issa Kaboré",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Cauley Woodrow",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Thomas Kaminski",
+          "team": "Luton",
+          "value": 9
+        },
+        {
+          "name": "Caoimhin Kelleher",
+          "team": "Liverpool",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Chiedozie Ogbene",
+          "team": "Luton",
+          "value": 3
+        },
+        {
+          "name": "Harvey Elliott",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 1.81
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.84
+        },
+        {
+          "name": "Chiedozie Ogbene",
+          "team": "Luton",
+          "value": 0.7
+        },
+        {
+          "name": "Harvey Elliott",
+          "team": "Liverpool",
+          "value": 0.29
+        },
+        {
+          "name": "Conor Bradley",
+          "team": "Liverpool",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.44
+        },
+        {
+          "name": "Harvey Elliott",
+          "team": "Liverpool",
+          "value": 0.4
+        },
+        {
+          "name": "Wataru Endo",
+          "team": "Liverpool",
+          "value": 0.38
+        },
+        {
+          "name": "Issa Kaboré",
+          "team": "Luton",
+          "value": 0.23
+        },
+        {
+          "name": "Conor Bradley",
+          "team": "Liverpool",
+          "value": 0.21
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Harvey Elliott",
+          "team": "Liverpool",
+          "points": 10,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0.29,
+          "xa": 0.4,
+          "minutes": 90
+        },
+        {
+          "name": "Chiedozie Ogbene",
+          "team": "Luton",
+          "points": 9,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0.7,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "points": 9,
+          "bonus": 1,
+          "bps": 38,
+          "xg": 0,
+          "xa": 0.44,
+          "minutes": 88
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0.13,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "points": 7,
+          "bonus": 0,
+          "bps": 13,
+          "xg": 1.81,
+          "xa": 0.05,
+          "minutes": 88
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

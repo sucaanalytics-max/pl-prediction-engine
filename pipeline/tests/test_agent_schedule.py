@@ -19,13 +19,6 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from pipeline.learning.notify import (
-    DeliveryResult,
-    NotificationError,
-    notify,
-    render_email,
-    strip_for_publication,
-)
 from pipeline.learning.schedule import (
     Phase,
     determine_phase,
@@ -253,164 +246,11 @@ class StdlibOnlyTests(unittest.TestCase):
         self.assertIn("ok", result.stdout)
 
 
-class PublicationStrippingTests(unittest.TestCase):
-    def test_private_fields_are_removed(self):
-        """The site artifact is world-readable once published."""
-        decision = {
-            "gameweek": 5,
-            "entry_id": 20945,
-            "manager_name": "someone",
-            "counterfactuals": [{"alternative": "x"}],
-            "teams": [{"label": "season", "entry_id": 20945, "captain": "Haaland"}],
-        }
-        public = strip_for_publication(decision)
-        self.assertNotIn("entry_id", public)
-        self.assertNotIn("manager_name", public)
-        self.assertNotIn("counterfactuals", public)
-        self.assertNotIn("entry_id", public["teams"][0])
-        self.assertEqual(public["teams"][0]["captain"], "Haaland")
-
-
-class EmailRenderingTests(unittest.TestCase):
-    def _decision(self, **overrides):
-        decision = {
-            "gameweek": 5,
-            "deadline": "2026-09-12T10:30:00Z",
-            "generated_at": "2026-09-12T06:00:00Z",
-            "entry_id": 20945,
-            "teams": [
-                {
-                    "label": "season",
-                    "captain": "Haaland",
-                    "vice_captain": "Saka",
-                    "transfers": [{"out": "Smith", "in": "Jones", "note": "-4 hit"}],
-                    "chip": None,
-                    "projected_points": 61.2,
-                    "projected_interval": "[42, 84]",
-                    "status": "ok",
-                },
-                {
-                    "label": "weekly",
-                    "captain": "Saka",
-                    "transfers": [],
-                    "projected_points": 58.9,
-                    "status": "field_model_uncalibrated",
-                },
-            ],
-        }
-        decision.update(overrides)
-        return decision
-
-    def test_subject_carries_gameweek_and_urgency(self):
-        subject, _ = render_email(self._decision(), "https://x.test/decisions", 4.0)
-        self.assertIn("GW5", subject)
-        self.assertIn("4.0", subject)
-
-    def test_body_contains_both_teams_and_their_decisions(self):
-        _, body = render_email(self._decision(), "https://x.test/decisions", 4.0)
-        self.assertIn("SEASON", body)
-        self.assertIn("WEEKLY", body)
-        self.assertIn("Haaland", body)
-        self.assertIn("Smith -> Jones", body)
-
-    def test_no_transfers_is_stated_explicitly(self):
-        """Silence about transfers would read as an omission, not a decision."""
-        _, body = render_email(self._decision(), "https://x.test", 4.0)
-        self.assertIn("Transfers: none (roll)", body)
-
-    def test_a_degraded_team_status_is_surfaced(self):
-        _, body = render_email(self._decision(), "https://x.test", 4.0)
-        self.assertIn("FIELD_MODEL_UNCALIBRATED", body)
-
-    def test_private_fields_never_reach_the_body(self):
-        _, body = render_email(self._decision(), "https://x.test", 4.0)
-        self.assertNotIn("20945", body)
-
-    def test_degraded_rules_are_called_out(self):
-        decision = self._decision(metadata={"fpl_rules_degraded": True})
-        _, body = render_email(decision, "https://x.test", 4.0)
-        self.assertIn("drift detected", body)
-
-    def test_body_states_that_nothing_was_submitted(self):
-        """Propose-and-approve must be unambiguous in the message itself."""
-        _, body = render_email(self._decision(), "https://x.test", 4.0)
-        self.assertIn("Nothing has been submitted", body)
-
-
-class DeliveryTests(unittest.TestCase):
-    def test_delivery_failure_raises_rather_than_returning_quietly(self):
-        """
-        A decision nobody received is not a decision, and a missed FPL deadline
-        cannot be made up later.
-        """
-        with self.assertRaises(NotificationError):
-            notify(
-                {"gameweek": 5, "teams": []},
-                "https://x.test",
-                4.0,
-                channels=("email",),
-                email_config={"host": "", "sender": "", "recipient": ""},
-            )
-
-    def test_dry_run_may_tolerate_no_delivery(self):
-        result = notify(
-            {"gameweek": 5, "teams": []},
-            "https://x.test",
-            4.0,
-            channels=("email",),
-            email_config={"host": "", "sender": "", "recipient": ""},
-            require_delivery=False,
-        )
-        self.assertFalse(result.any_delivered)
-        self.assertIn("email", result.failed)
-
-    def _published(self, directory):
-        """A real published artifact, since the site channel now verifies one."""
-        import json
-
-        path = Path(directory) / "public.json"
-        path.write_text(json.dumps({"gameweek": 5, "teams": []}))
-        return [path]
-
-    def test_site_channel_counts_as_delivered(self):
-        """
-        Delivery via the site requires a readable artifact. This test used to
-        pass with none at all, which made the site channel a rubber stamp — the
-        one channel that could never fail, and so the one that proved nothing.
-        """
-        with TemporaryDirectory() as tmp:
-            result = notify(
-                {"gameweek": 5, "teams": []},
-                "https://x.test",
-                4.0,
-                channels=("site",),
-                published_paths=self._published(tmp),
-            )
-        self.assertEqual(result.delivered, ["site"])
-
-    def test_site_channel_fails_without_a_published_artifact(self):
-        """Nothing published means nothing delivered."""
-        result = notify(
-            {"gameweek": 5, "teams": []},
-            "https://x.test",
-            4.0,
-            channels=("site",),
-            require_delivery=False,
-            published_paths=[],
-        )
-        self.assertFalse(result.any_delivered)
-        self.assertIn("site", result.failed)
-
-    def test_unknown_channel_is_skipped_not_silently_ignored(self):
-        with TemporaryDirectory() as tmp:
-            result = notify(
-                {"gameweek": 5, "teams": []},
-                "https://x.test",
-                4.0,
-                channels=("site", "carrier-pigeon"),
-                published_paths=self._published(tmp),
-            )
-        self.assertIn("carrier-pigeon", result.skipped)
+# PublicationStrippingTests and EmailRenderingTests were removed with the email
+# channel. Their subject matter did not disappear with it: stripping private
+# fields before publication now lives in pipeline/learning/messages.py and is
+# tested in test_end_to_end.py, because the feed is world-readable and is now
+# the agent's ONLY channel.
 
 
 if __name__ == "__main__":

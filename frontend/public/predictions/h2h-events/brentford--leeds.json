@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2526|2025-12-14|brentford|leeds": {
+      "fixtureId": 152,
+      "season": "2526",
+      "date": "2025-12-14",
+      "kickoffTime": "2025-12-14T16:30:00Z",
+      "homeTeam": "Brentford",
+      "awayTeam": "Leeds",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Jordan Henderson",
+          "team": "Brentford",
+          "value": 1
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Wilfried Gnonto",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Rico Henry",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Caoimhín Kelleher",
+          "team": "Brentford",
+          "value": 3
+        },
+        {
+          "name": "Lucas Estella Perri",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 3
+        },
+        {
+          "name": "Jordan Henderson",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Michael Kayode",
+          "team": "Brentford",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 0.55
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 0.5
+        },
+        {
+          "name": "Jordan Henderson",
+          "team": "Brentford",
+          "value": 0.26
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.24
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "value": 0.21
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 0.36
+        },
+        {
+          "name": "Wilfried Gnonto",
+          "team": "Leeds",
+          "value": 0.33
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 0.2
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 0.1
+        },
+        {
+          "name": "Tanaka Ao",
+          "team": "Leeds",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "points": 9,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0.5,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Henderson",
+          "team": "Brentford",
+          "points": 9,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0.26,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Aaron Hickey",
+          "team": "Brentford",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 60
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "points": 6,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.21,
+          "xa": 0.03,
+          "minutes": 60
+        },
+        {
+          "name": "Michael Kayode",
+          "team": "Brentford",
+          "points": 5,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-03-21|leeds|brentford": {
+      "fixtureId": 306,
+      "season": "2526",
+      "date": "2026-03-21",
+      "kickoffTime": "2026-03-21T20:00:00Z",
+      "homeTeam": "Leeds",
+      "awayTeam": "Brentford",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Caoimhín Kelleher",
+          "team": "Brentford",
+          "value": 4
+        },
+        {
+          "name": "Karl Darlow",
+          "team": "Leeds",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 3
+        },
+        {
+          "name": "Caoimhín Kelleher",
+          "team": "Brentford",
+          "value": 2
+        },
+        {
+          "name": "Ethan Pinnock",
+          "team": "Brentford",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Kevin Schade",
+          "team": "Brentford",
+          "value": 0.17
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 0.14
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.1
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "value": 0.1
+        },
+        {
+          "name": "Mathias Jensen",
+          "team": "Brentford",
+          "value": 0.09
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 0.3
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 0.18
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.11
+        },
+        {
+          "name": "Joe Rodon",
+          "team": "Leeds",
+          "value": 0.09
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "points": 11,
+          "bonus": 3,
+          "bps": 33,
+          "xg": 0,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Ethan Pinnock",
+          "team": "Brentford",
+          "points": 10,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.01,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Caoimhín Kelleher",
+          "team": "Brentford",
+          "points": 9,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Karl Darlow",
+          "team": "Leeds",
+          "points": 6,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "team": "Brentford",
+          "points": 6,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0.1,
+          "xa": 0.04,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

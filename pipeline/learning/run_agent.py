@@ -315,73 +315,91 @@ def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
     return _deliver(state, decisions, dry_run)
 
 
+
+def _announce(
+    gameweek: int, title: str, body: str, severity: str = "info",
+    suffix: str = "", detail: Optional[Dict[str, Any]] = None,
+) -> None:
+    """
+    Put a phase outcome in the feed.
+
+    Non-fatal by design: these are status notes, and failing a settle or a
+    score because the feed could not be written would trade the load-bearing
+    step for the commentary about it. The decision path is different — there
+    publication failure IS the failure, because the app is the only channel.
+    """
+    from pipeline.learning.messages import publish, status_message
+
+    try:
+        publish(
+            [status_message(
+                gameweek, title, body,
+                datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+                severity=severity, suffix=suffix, detail=detail,
+            )],
+            Path(PREDICTIONS_DIR), FPL_PUBLIC_DIR,
+        )
+    except Exception:
+        logger.exception("could not publish the '%s' message for GW%s", title, gameweek)
+
+
 def _deliver(
     state: ScheduleState, decisions: Dict[str, Dict[str, Path]], dry_run: bool
 ) -> int:
     """
-    Send the proposal, and make a delivery failure visible.
+    Publish everything the agent has to say, to the app.
 
-    **Ordering is the point.** The forecast is already sealed and the artifacts
-    are already on disk before this runs, so a mail server outage costs a red
-    build rather than a lost observation — the gameweek stays measurable either
-    way. But it does return non-zero: a decision nobody received is not a
-    decision, and a green run would say it was delivered when it was not.
-
-    That is also why a missing SMTP configuration fails here rather than being
-    checked up front. Refusing to seal because mail is unconfigured would trade
-    the irreplaceable thing for the recoverable one.
+    **Ordering is the point.** The forecast is already sealed and the decision
+    artifacts are already on disk before this runs, so a publication failure
+    costs a red build rather than a lost observation — the gameweek stays
+    measurable either way. But it returns non-zero, because the app is now the
+    ONLY channel: a decision nobody can read is not a decision, and a green run
+    would claim otherwise.
     """
-    from pipeline.learning.notify import NotificationError, notify
+    from pipeline.learning.messages import (
+        PublicationError,
+        decision_messages,
+        publish,
+        status_message,
+    )
 
-    if not decisions:
-        logger.warning("nothing to deliver: no decision artifacts were written")
-        return 0
-
-    site_url = os.environ.get("FPL_SITE_URL", DEFAULT_SITE_URL)
+    created_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     hours_left = max(
         0.0, (state.deadline - datetime.now(timezone.utc)).total_seconds() / 3600.0
     )
-    payload = {
-        "gameweek": state.gameweek,
-        "deadline": state.deadline.isoformat(),
-        "teams": [
-            json.loads(Path(written["decision"]).read_text())
-            for written in decisions.values()
-        ],
-    }
 
-    # Publication is the PRIMARY channel and email is a push convenience. The
-    # published artifact carries everything the email does — squad, transfers,
-    # captain, evidence, warnings — so a decision that reaches the site has
-    # reached the human, whether or not a mail server was reachable.
-    #
-    # Email still matters and is still attempted: a site cannot tell you the
-    # deadline is in four hours. But making SMTP a precondition for deciding at
-    # all would let an unreachable mail server cost a gameweek, which is a far
-    # worse outcome than an unsent reminder.
-    published = [
-        written["public"] for written in decisions.values() if "public" in written
-    ] or [written["decision"] for written in decisions.values()]
+    messages = []
+    for label, written in decisions.items():
+        payload = json.loads(Path(written["decision"]).read_text())
+        messages.extend(decision_messages(payload, hours_left, created_at))
+
+    if not messages:
+        # A gameweek with no unplayed fixtures produces no proposal. Say so
+        # rather than publishing nothing, or the feed goes quiet and silence is
+        # indistinguishable from a broken agent.
+        messages.append(
+            status_message(
+                state.gameweek,
+                f"GW{state.gameweek} — no decision produced",
+                "No unplayed fixtures were found for this gameweek, so there was "
+                "nothing to decide. This is normal for a blank or completed week.",
+                created_at,
+                suffix="no-decision",
+            )
+        )
 
     try:
-        result = notify(
-            payload, site_url, hours_left,
-            channels=("site", "email"),
-            # A dry run must never mail a real recipient, and must not fail the
-            # run for not having done so.
-            require_delivery=not dry_run,
-            published_paths=published,
-        )
-    except NotificationError as exc:
+        publish(messages, Path(PREDICTIONS_DIR), FPL_PUBLIC_DIR, dry_run=dry_run)
+    except PublicationError as exc:
         logger.error(
-            "decision NOT delivered for GW%s (%s). The forecast is sealed and "
-            "the artifacts are written, so the gameweek remains measurable — but "
-            "nobody was told, so this run is a failure.",
+            "could NOT publish the GW%s messages (%s). The forecast is sealed and "
+            "the decision artifacts are written, so the gameweek remains "
+            "measurable — but nobody can read it, so this run is a failure.",
             state.gameweek, exc,
         )
         return 1
 
-    logger.info("delivered via %s", result.delivered or "nothing (dry run)")
+    logger.info("published %d message(s) for GW%s", len(messages), state.gameweek)
     return 0
 
 
@@ -462,6 +480,14 @@ def _settle(predictions_dir: Path, state: ScheduleState, final: bool) -> int:
         state.gameweek,
         "final" if final else "provisional",
         path,
+    )
+    _announce(
+        state.gameweek,
+        f"GW{state.gameweek} — results are in"
+        + ("" if final else " (provisional)"),
+        "Outcomes have been recorded against the sealed forecast."
+        + ("" if final else " Bonus points are still settling, so these may move."),
+        suffix="settled" if final else "settled-provisional",
     )
 
     # Record what the FIELD scored, while it is still available. Both figures
@@ -559,6 +585,15 @@ def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
         # Exit non-zero: this is a permanent loss of an observation and should
         # raise a visible CI failure rather than scroll past in a log.
         logger.error(state.reason)
+        _announce(
+            state.gameweek or 0,
+            f"GW{state.gameweek} was never sealed",
+            "No pre-deadline forecast exists for this gameweek, so it can never "
+            "be scored. This observation is permanently lost — it is one of 38 "
+            "in a season and cannot be recovered. " + str(state.reason),
+            severity="critical",
+            suffix="missed-seal",
+        )
         return 1
 
     if state.phase is Phase.REFRESH:

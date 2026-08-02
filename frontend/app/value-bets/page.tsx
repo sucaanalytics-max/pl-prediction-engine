@@ -10,7 +10,6 @@ import {
   confidenceTier,
   effectiveEdge,
   getHalfKellyPct,
-  type ValueBet,
 } from "@/lib/predictions";
 import { pct, odds, timeAgo, edgeColor } from "@/lib/formats";
 import { CONF_BADGES, MARKET_ICON_LABELS, edgePrefix } from "@/lib/theme";

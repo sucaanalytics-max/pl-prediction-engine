@@ -1,0 +1,1031 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-04-21|everton|nottmforest": {
+      "fixtureId": 334,
+      "season": "2324",
+      "date": "2024-04-21",
+      "kickoffTime": "2024-04-21T12:30:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Murillo Santiago Costa dos Santos",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Youssef Ramalho Chermiti",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 0.38
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.36
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Everton",
+          "value": 0.26
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 0.06
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.06
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Olu Aina",
+          "team": "Nott'm Forest",
+          "value": 0.14
+        },
+        {
+          "name": "Giovanni Reyna",
+          "team": "Nott'm Forest",
+          "value": 0.1
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.09
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 0.05
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.05
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "points": 11,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0.04,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "points": 10,
+          "bonus": 2,
+          "bps": 34,
+          "xg": 0.06,
+          "xa": 0.09,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.02,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-12-29|everton|nottmforest": {
+      "fixtureId": 184,
+      "season": "2425",
+      "date": "2024-12-29",
+      "kickoffTime": "2024-12-29T15:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 0,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Willy Boly",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 5
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Felipe Rodrigues da Silva",
+          "team": "Nott'm Forest",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 0.34
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 0.32
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.3
+        },
+        {
+          "name": "Ramón Sosa",
+          "team": "Nott'm Forest",
+          "value": 0.23
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 0.22
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.53
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "value": 0.18
+        },
+        {
+          "name": "Nathan Patterson",
+          "team": "Everton",
+          "value": 0.18
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 0.13
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "points": 12,
+          "bonus": 3,
+          "bps": 38,
+          "xg": 0.32,
+          "xa": 0.08,
+          "minutes": 75
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "points": 10,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.3,
+          "xa": 0.53,
+          "minutes": 75
+        },
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Felipe Rodrigues da Silva",
+          "team": "Nott'm Forest",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.22,
+          "xa": 0.01,
+          "minutes": 81
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-12|nottmforest|everton": {
+      "fixtureId": 318,
+      "season": "2425",
+      "date": "2025-04-12",
+      "kickoffTime": "2025-04-12T14:00:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Everton",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 5
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.46
+        },
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 0.33
+        },
+        {
+          "name": "João Pedro Ferreira Silva",
+          "team": "Nott'm Forest",
+          "value": 0.25
+        },
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 0.23
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 0.32
+        },
+        {
+          "name": "Álex Moreno Lopera",
+          "team": "Nott'm Forest",
+          "value": 0.22
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 0.17
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 0.16
+        },
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 0.14
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "points": 10,
+          "bonus": 3,
+          "bps": 33,
+          "xg": 0.33,
+          "xa": 0.08,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.17,
+          "minutes": 90
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.1,
+          "minutes": 90
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.03,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-12-06|everton|nottmforest": {
+      "fixtureId": 144,
+      "season": "2526",
+      "date": "2025-12-06",
+      "kickoffTime": "2025-12-06T15:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Nikola Milenković",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Nicolò Savona",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Felipe Rodrigues da Silva",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Nikola Milenković",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Michael Keane",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 0.36
+        },
+        {
+          "name": "Nicolás Domínguez",
+          "team": "Nott'm Forest",
+          "value": 0.29
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 0.19
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.18
+        },
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 0.17
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jack Grealish",
+          "team": "Everton",
+          "value": 0.25
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.16
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.12
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 0.11
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "points": 16,
+          "bonus": 3,
+          "bps": 44,
+          "xg": 0.17,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Michael Keane",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.18,
+          "xa": 0.16,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-12-30|nottmforest|everton": {
+      "fixtureId": 188,
+      "season": "2526",
+      "date": "2025-12-30",
+      "kickoffTime": "2025-12-30T19:30:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Everton",
+      "homeGoals": 0,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Douglas Luiz Soares de Paulo",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 6
+        },
+        {
+          "name": "John Victor Maciel Furtado",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.54
+        },
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 0.52
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 0.36
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 0.27
+        },
+        {
+          "name": "Igor Jesus Maciel da Cruz",
+          "team": "Nott'm Forest",
+          "value": 0.21
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 0.67
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 0.62
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 0.36
+        },
+        {
+          "name": "Omari Hutchinson",
+          "team": "Nott'm Forest",
+          "value": 0.34
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.29
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "points": 16,
+          "bonus": 3,
+          "bps": 60,
+          "xg": 0.19,
+          "xa": 0.62,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "points": 10,
+          "bonus": 2,
+          "bps": 37,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0.36,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

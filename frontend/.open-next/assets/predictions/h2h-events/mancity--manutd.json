@@ -1,0 +1,977 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-03-03|mancity|manutd": {
+      "fixtureId": 266,
+      "season": "2324",
+      "date": "2024-03-03",
+      "kickoffTime": "2024-03-03T15:30:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Man Utd",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Marcus Rashford",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Raphaël Varane",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 5
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1.58
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 1.04
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 0.29
+        },
+        {
+          "name": "Marcus Rashford",
+          "team": "Man Utd",
+          "value": 0.22
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.73
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 0.41
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 0.39
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 0.29
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.19
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "points": 15,
+          "bonus": 3,
+          "bps": 54,
+          "xg": 1.04,
+          "xa": 0.73,
+          "minutes": 90
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "points": 10,
+          "bonus": 2,
+          "bps": 37,
+          "xg": 0.1,
+          "xa": 0.41,
+          "minutes": 90
+        },
+        {
+          "name": "Marcus Rashford",
+          "team": "Man Utd",
+          "points": 7,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.22,
+          "xa": 0.01,
+          "minutes": 74
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 1.58,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "points": 5,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0.12,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-12-15|mancity|manutd": {
+      "fixtureId": 156,
+      "season": "2425",
+      "date": "2024-12-15",
+      "kickoffTime": "2024-12-15T16:30:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Man Utd",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Lisandro Martínez",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Rasmus Højlund",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Kyle Walker",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Lisandro Martínez",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1.24
+        },
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "value": 0.67
+        },
+        {
+          "name": "Rúben Gato Alves Dias",
+          "team": "Man City",
+          "value": 0.48
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.19
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Lisandro Martínez",
+          "team": "Man Utd",
+          "value": 0.4
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.25
+        },
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "value": 0.23
+        },
+        {
+          "name": "Rasmus Højlund",
+          "team": "Man Utd",
+          "value": 0.2
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "points": 13,
+          "bonus": 3,
+          "bps": 51,
+          "xg": 0.67,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "points": 9,
+          "bonus": 2,
+          "bps": 35,
+          "xg": 1.24,
+          "xa": 0.13,
+          "minutes": 90
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.08,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Lisandro Martínez",
+          "team": "Man Utd",
+          "points": 6,
+          "bonus": 1,
+          "bps": 24,
+          "xg": 0.03,
+          "xa": 0.4,
+          "minutes": 90
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.06,
+          "xa": 0.03,
+          "minutes": 67
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-06|manutd|mancity": {
+      "fixtureId": 308,
+      "season": "2425",
+      "date": "2025-04-06",
+      "kickoffTime": "2025-04-06T15:30:00Z",
+      "homeTeam": "Man Utd",
+      "awayTeam": "Man City",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Mason Mount",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Rúben Gato Alves Dias",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Diogo Dalot Teixeira",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Leny Yoro",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 6
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Noussair Mazraoui",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Manuel Ugarte",
+          "team": "Man Utd",
+          "value": 0.28
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.26
+        },
+        {
+          "name": "Mason Mount",
+          "team": "Man Utd",
+          "value": 0.18
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.17
+        },
+        {
+          "name": "Joshua Zirkzee",
+          "team": "Man Utd",
+          "value": 0.17
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.5
+        },
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "value": 0.32
+        },
+        {
+          "name": "Diogo Dalot Teixeira",
+          "team": "Man Utd",
+          "value": 0.19
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 0.17
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "points": 11,
+          "bonus": 3,
+          "bps": 33,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "points": 9,
+          "bonus": 3,
+          "bps": 33,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Noussair Mazraoui",
+          "team": "Man Utd",
+          "points": 7,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.01,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.05,
+          "xa": 0.32,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-09-14|mancity|manutd": {
+      "fixtureId": 38,
+      "season": "2526",
+      "date": "2025-09-14",
+      "kickoffTime": "2025-09-14T15:30:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Man Utd",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Bernardo Mota Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Altay Bayındır",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Gianluigi Donnarumma",
+          "team": "Man City",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1.8
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 0.68
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 0.49
+        },
+        {
+          "name": "Tijjani Reijnders",
+          "team": "Man City",
+          "value": 0.35
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.28
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.75
+        },
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "value": 0.57
+        },
+        {
+          "name": "Bernardo Mota Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 0.55
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.32
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 0.17
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 13,
+          "bonus": 3,
+          "bps": 63,
+          "xg": 1.8,
+          "xa": 0.01,
+          "minutes": 86
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "points": 12,
+          "bonus": 2,
+          "bps": 37,
+          "xg": 0.28,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "points": 10,
+          "bonus": 1,
+          "bps": 33,
+          "xg": 0,
+          "xa": 0.75,
+          "minutes": 76
+        },
+        {
+          "name": "Abdukodir Khusanov",
+          "team": "Man City",
+          "points": 8,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Gianluigi Donnarumma",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-01-17|manutd|mancity": {
+      "fixtureId": 216,
+      "season": "2526",
+      "date": "2026-01-17",
+      "kickoffTime": "2026-01-17T12:30:00Z",
+      "homeTeam": "Man Utd",
+      "awayTeam": "Man City",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Rico Lewis",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo 'Rodri' Hernandez Cascante",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Diogo Dalot Teixeira",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Luke Shaw",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Gianluigi Donnarumma",
+          "team": "Man City",
+          "value": 5
+        },
+        {
+          "name": "Senne Lammens",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 0.8
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 0.61
+        },
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "value": 0.47
+        },
+        {
+          "name": "Amad Diallo",
+          "team": "Man Utd",
+          "value": 0.23
+        },
+        {
+          "name": "Harry Maguire",
+          "team": "Man Utd",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.53
+        },
+        {
+          "name": "Rayan Cherki",
+          "team": "Man City",
+          "value": 0.27
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 0.17
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Man City",
+          "value": 0.15
+        },
+        {
+          "name": "Rodrigo 'Rodri' Hernandez Cascante",
+          "team": "Man City",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "points": 15,
+          "bonus": 3,
+          "bps": 44,
+          "xg": 0.47,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "points": 10,
+          "bonus": 2,
+          "bps": 38,
+          "xg": 0,
+          "xa": 0.53,
+          "minutes": 90
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "points": 9,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0.8,
+          "xa": 0,
+          "minutes": 70
+        },
+        {
+          "name": "Lisandro Martínez",
+          "team": "Man Utd",
+          "points": 8,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Senne Lammens",
+          "team": "Man Utd",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

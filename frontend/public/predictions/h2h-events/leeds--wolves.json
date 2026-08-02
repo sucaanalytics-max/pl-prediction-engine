@@ -1,0 +1,430 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2526|2025-09-20|wolves|leeds": {
+      "fixtureId": 50,
+      "season": "2526",
+      "date": "2025-09-20",
+      "kickoffTime": "2025-09-20T14:00:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Leeds",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Ladislav Krejcí",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Fer López González",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Fer López González",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Karl Darlow",
+          "team": "Leeds",
+          "value": 5
+        },
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 3
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 2
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Ladislav Krejcí",
+          "team": "Wolves",
+          "value": 0.68
+        },
+        {
+          "name": "Marshall Munetsi",
+          "team": "Wolves",
+          "value": 0.38
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 0.23
+        },
+        {
+          "name": "Tolu Arokodare",
+          "team": "Wolves",
+          "value": 0.22
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Fer López González",
+          "team": "Wolves",
+          "value": 0.4
+        },
+        {
+          "name": "Hugo Bueno López",
+          "team": "Wolves",
+          "value": 0.27
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 0.19
+        },
+        {
+          "name": "Rodrigo Martins Gomes",
+          "team": "Wolves",
+          "value": 0.13
+        },
+        {
+          "name": "Gabriel Gudmundsson",
+          "team": "Leeds",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "points": 15,
+          "bonus": 3,
+          "bps": 55,
+          "xg": 0.08,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "points": 11,
+          "bonus": 2,
+          "bps": 38,
+          "xg": 0.12,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "points": 8,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0.15,
+          "xa": 0.02,
+          "minutes": 69
+        },
+        {
+          "name": "Ladislav Krejcí",
+          "team": "Wolves",
+          "points": 7,
+          "bonus": 0,
+          "bps": 8,
+          "xg": 0.68,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "points": 4,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.02,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-04-18|leeds|wolves": {
+      "fixtureId": 326,
+      "season": "2526",
+      "date": "2026-04-18",
+      "kickoffTime": "2026-04-18T14:00:00Z",
+      "homeTeam": "Leeds",
+      "awayTeam": "Wolves",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "James Justin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Hugo Bueno López",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "James Justin",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Daniel Bentley",
+          "team": "Wolves",
+          "value": 3
+        },
+        {
+          "name": "Karl Darlow",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "James Justin",
+          "team": "Leeds",
+          "value": 3
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 3
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1.09
+        },
+        {
+          "name": "James Justin",
+          "team": "Leeds",
+          "value": 0.56
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 0.51
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 0.36
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 0.17
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 0.17
+        },
+        {
+          "name": "Tanaka Ao",
+          "team": "Leeds",
+          "value": 0.16
+        },
+        {
+          "name": "Sean Longstaff",
+          "team": "Leeds",
+          "value": 0.13
+        },
+        {
+          "name": "Hugo Bueno López",
+          "team": "Wolves",
+          "value": 0.11
+        },
+        {
+          "name": "James Justin",
+          "team": "Leeds",
+          "value": 0.07
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "James Justin",
+          "team": "Leeds",
+          "points": 16,
+          "bonus": 3,
+          "bps": 42,
+          "xg": 0.56,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "points": 14,
+          "bonus": 3,
+          "bps": 42,
+          "xg": 0.36,
+          "xa": 0.17,
+          "minutes": 66
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "points": 7,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0.17,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.06,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Karl Darlow",
+          "team": "Leeds",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

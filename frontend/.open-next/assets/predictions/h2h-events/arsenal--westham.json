@@ -1,0 +1,1076 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-02-11|westham|arsenal": {
+      "fixtureId": 239,
+      "season": "2324",
+      "date": "2024-02-11",
+      "kickoffTime": "2024-02-11T14:00:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 6,
+      "scorers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Edson Álvarez Velázquez",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Kalvin Phillips",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 6
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1.72
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.63
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.62
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 0.25
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.13
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.8
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.52
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.47
+        },
+        {
+          "name": "Jakub Kiwior",
+          "team": "Arsenal",
+          "value": 0.29
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.24
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "points": 17,
+          "bonus": 3,
+          "bps": 60,
+          "xg": 0.03,
+          "xa": 0.8,
+          "minutes": 66
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 15,
+          "bonus": 2,
+          "bps": 50,
+          "xg": 1.72,
+          "xa": 0.47,
+          "minutes": 66
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 12,
+          "bonus": 0,
+          "bps": 44,
+          "xg": 0.25,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 12,
+          "bonus": 0,
+          "bps": 38,
+          "xg": 0.63,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "points": 10,
+          "bonus": 1,
+          "bps": 45,
+          "xg": 0.05,
+          "xa": 0.52,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-11-30|westham|arsenal": {
+      "fixtureId": 129,
+      "season": "2425",
+      "date": "2024-11-30",
+      "kickoffTime": "2024-11-30T17:30:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Arsenal",
+      "homeGoals": 2,
+      "awayGoals": 5,
+      "scorers": [
+        {
+          "name": "Emerson Palmieri dos Santos",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Carlos Soler",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Emerson Palmieri dos Santos",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Tomáš Souček",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Łukasz Fabiański",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Łukasz Fabiański",
+          "team": "West Ham",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.87
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.82
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.69
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.66
+        },
+        {
+          "name": "Danny Ings",
+          "team": "West Ham",
+          "value": 0.57
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1.11
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.33
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.23
+        },
+        {
+          "name": "Carlos Soler",
+          "team": "West Ham",
+          "value": 0.23
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 18,
+          "bonus": 3,
+          "bps": 57,
+          "xg": 0.87,
+          "xa": 1.11,
+          "minutes": 73
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "points": 12,
+          "bonus": 2,
+          "bps": 40,
+          "xg": 0.69,
+          "xa": 0.23,
+          "minutes": 84
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.2,
+          "xa": 0,
+          "minutes": 45
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 1,
+          "bps": 38,
+          "xg": 0.82,
+          "xa": 0.33,
+          "minutes": 73
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0.66,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-02-22|arsenal|westham": {
+      "fixtureId": 251,
+      "season": "2425",
+      "date": "2025-02-22",
+      "kickoffTime": "2025-02-22T15:00:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "West Ham",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Ollie Scarles",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Jean-Clair Todibo",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Myles Lewis-Skelly",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Max Kilman",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Ollie Scarles",
+          "team": "West Ham",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.92
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.31
+        },
+        {
+          "name": "Mikel Merino",
+          "team": "Arsenal",
+          "value": 0.29
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.14
+        },
+        {
+          "name": "Raheem Sterling",
+          "team": "Arsenal",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 0.4
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 0.33
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.22
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.22
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.17
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "points": 12,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0.03,
+          "xa": 0.33,
+          "minutes": 90
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "points": 10,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.92,
+          "xa": 0.02,
+          "minutes": 81
+        },
+        {
+          "name": "Max Kilman",
+          "team": "West Ham",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Ollie Scarles",
+          "team": "West Ham",
+          "points": 7,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-10-04|arsenal|westham": {
+      "fixtureId": 61,
+      "season": "2526",
+      "date": "2025-10-04",
+      "kickoffTime": "2025-10-04T14:00:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "West Ham",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.84
+        },
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "value": 0.63
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Arsenal",
+          "value": 0.49
+        },
+        {
+          "name": "Niclas Füllkrug",
+          "team": "West Ham",
+          "value": 0.33
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.32
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1.11
+        },
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 0.34
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Martín Zubimendi Ibáñez",
+          "team": "Arsenal",
+          "value": 0.16
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "points": 11,
+          "bonus": 3,
+          "bps": 45,
+          "xg": 0.32,
+          "xa": 0.12,
+          "minutes": 78
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "points": 11,
+          "bonus": 2,
+          "bps": 43,
+          "xg": 0.16,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 1,
+          "bps": 33,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.84,
+          "xa": 1.11,
+          "minutes": 90
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-05-10|westham|arsenal": {
+      "fixtureId": 360,
+      "season": "2526",
+      "date": "2026-05-10",
+      "kickoffTime": "2026-05-10T15:30:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Cristhian Mosquera",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Jean-Clair Todibo",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Valentín Castellanos",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Mads Hermansen",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "West Ham",
+          "value": 0.56
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.45
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.3
+        },
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "value": 0.21
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 0.21
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pablo Felipe Pereira de Jesus",
+          "team": "West Ham",
+          "value": 0.54
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.38
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.25
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 0.16
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "West Ham",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 11,
+          "bonus": 3,
+          "bps": 32,
+          "xg": 0.3,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.45,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Myles Lewis-Skelly",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 5,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.16,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

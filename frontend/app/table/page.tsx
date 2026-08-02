@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { loadTable, type TeamStanding } from "@/lib/predictions";
+import { usePredictions } from "@/lib/PredictionsContext";
 import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/Skeleton";
 
@@ -38,6 +39,7 @@ function FormDot({ result }: { result: string }) {
 }
 
 function TableContent() {
+  const { predictions } = usePredictions();
   const [standings, setStandings] = useState<TeamStanding[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -85,7 +87,8 @@ function TableContent() {
           Premier League Table
         </h1>
         <p className="text-sm font-medium tracking-wide" style={{ color: "var(--text-3)" }}>
-          {standings.length} clubs <span className="mx-1.5 opacity-50">•</span> 2024–25 season
+          {standings.length} clubs <span className="mx-1.5 opacity-50">•</span>{" "}
+          {predictions?.metadata.season ?? "Current season"}
         </p>
       </div>
 

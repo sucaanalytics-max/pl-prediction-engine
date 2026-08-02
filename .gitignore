@@ -8,6 +8,9 @@ build/
 *.egg
 .venv/
 venv/
+.env
+.env.*
+!.env.example
 
 # Data (fetched fresh by pipeline)
 data/raw/

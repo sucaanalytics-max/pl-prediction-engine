@@ -1,0 +1,1025 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-03-16|fulham|spurs": {
+      "fixtureId": 286,
+      "season": "2324",
+      "date": "2024-03-16",
+      "kickoffTime": "2024-03-16T17:30:00Z",
+      "homeTeam": "Fulham",
+      "awayTeam": "Spurs",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Harrison Reed",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Yves Bissouma",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 5
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 1.42
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 0.88
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.75
+        },
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "value": 0.41
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 0.35
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.63
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 0.57
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 0.56
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "value": 0.3
+        },
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 0.16
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "points": 13,
+          "bonus": 3,
+          "bps": 55,
+          "xg": 1.42,
+          "xa": 0,
+          "minutes": 63
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "points": 11,
+          "bonus": 2,
+          "bps": 37,
+          "xg": 0,
+          "xa": 0.57,
+          "minutes": 90
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "points": 10,
+          "bonus": 1,
+          "bps": 34,
+          "xg": 0.08,
+          "xa": 0.3,
+          "minutes": 81
+        },
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "points": 8,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.41,
+          "xa": 0.01,
+          "minutes": 80
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 0,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-12-01|spurs|fulham": {
+      "fixtureId": 128,
+      "season": "2425",
+      "date": "2024-12-01",
+      "kickoffTime": "2024-12-01T13:30:00Z",
+      "homeTeam": "Spurs",
+      "awayTeam": "Fulham",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Tom Cairney",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Tom Cairney",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Fraser Forster",
+          "team": "Spurs",
+          "value": 5
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Reiss Nelson",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 0.58
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.31
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.27
+        },
+        {
+          "name": "Issa Diop",
+          "team": "Fulham",
+          "value": 0.25
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 0.58
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.33
+        },
+        {
+          "name": "Reiss Nelson",
+          "team": "Fulham",
+          "value": 0.22
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 0.09
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "points": 10,
+          "bonus": 3,
+          "bps": 27,
+          "xg": 0.31,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "points": 7,
+          "bonus": 2,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0.58,
+          "minutes": 67
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.27,
+          "xa": 0.33,
+          "minutes": 85
+        },
+        {
+          "name": "Reiss Nelson",
+          "team": "Fulham",
+          "points": 3,
+          "bonus": 1,
+          "bps": 23,
+          "xg": 0.14,
+          "xa": 0.22,
+          "minutes": 61
+        },
+        {
+          "name": "Tom Cairney",
+          "team": "Fulham",
+          "points": 3,
+          "bonus": 0,
+          "bps": 13,
+          "xg": 0.03,
+          "xa": 0.02,
+          "minutes": 21
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-03-16|fulham|spurs": {
+      "fixtureId": 285,
+      "season": "2425",
+      "date": "2025-03-16",
+      "kickoffTime": "2025-03-16T13:30:00Z",
+      "homeTeam": "Fulham",
+      "awayTeam": "Spurs",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 4
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Solanke-Mitchell",
+          "team": "Spurs",
+          "value": 0.61
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 0.2
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "value": 0.18
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 0.15
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 0.29
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 0.15
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 0.15
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 0.13
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "points": 13,
+          "bonus": 3,
+          "bps": 38,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 2,
+          "bps": 36,
+          "xg": 0.2,
+          "xa": 0.08,
+          "minutes": 27
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0.15,
+          "minutes": 90
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "points": 7,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 67
+        },
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0.13,
+          "xa": 0.1,
+          "minutes": 3
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-11-29|spurs|fulham": {
+      "fixtureId": 129,
+      "season": "2526",
+      "date": "2025-11-29",
+      "kickoffTime": "2025-11-29T20:00:00Z",
+      "homeTeam": "Spurs",
+      "awayTeam": "Fulham",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Samuel Chukwueze",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Lucas Bergvall",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Josh King",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Destiny Udogie",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Micky van de Ven",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Randal Kolo Muani",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Randal Kolo Muani",
+          "team": "Spurs",
+          "value": 0.4
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.15
+        },
+        {
+          "name": "Samuel Chukwueze",
+          "team": "Fulham",
+          "value": 0.11
+        },
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 0.1
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 0.09
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Samuel Chukwueze",
+          "team": "Fulham",
+          "value": 0.69
+        },
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 0.43
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "value": 0.14
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 0.09
+        },
+        {
+          "name": "Ryan Sessegnon",
+          "team": "Fulham",
+          "value": 0.06
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "points": 12,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0.06,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "points": 10,
+          "bonus": 3,
+          "bps": 32,
+          "xg": 0.15,
+          "xa": 0.03,
+          "minutes": 67
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "points": 8,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0.02,
+          "xa": 0.09,
+          "minutes": 90
+        },
+        {
+          "name": "Lucas Bergvall",
+          "team": "Spurs",
+          "points": 5,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.04,
+          "xa": 0.03,
+          "minutes": 76
+        },
+        {
+          "name": "Samuel Chukwueze",
+          "team": "Fulham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 17,
+          "xg": 0.11,
+          "xa": 0.69,
+          "minutes": 80
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-03-01|fulham|spurs": {
+      "fixtureId": 275,
+      "season": "2526",
+      "date": "2026-03-01",
+      "kickoffTime": "2026-03-01T14:00:00Z",
+      "homeTeam": "Fulham",
+      "awayTeam": "Spurs",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Archie Gray",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Oscar Bobb",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Issa Diop",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Micky van de Ven",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Tom Cairney",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 0.49
+        },
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "value": 0.43
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.34
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 0.29
+        },
+        {
+          "name": "João Maria Lobo Alves Palhares Costa Palhinha Gonçalves",
+          "team": "Spurs",
+          "value": 0.19
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 0.29
+        },
+        {
+          "name": "Archie Gray",
+          "team": "Spurs",
+          "value": 0.24
+        },
+        {
+          "name": "Samuel Chukwueze",
+          "team": "Fulham",
+          "value": 0.21
+        },
+        {
+          "name": "Oscar Bobb",
+          "team": "Fulham",
+          "value": 0.2
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.14
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "points": 12,
+          "bonus": 2,
+          "bps": 35,
+          "xg": 0.34,
+          "xa": 0.02,
+          "minutes": 71
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "points": 10,
+          "bonus": 3,
+          "bps": 50,
+          "xg": 0.06,
+          "xa": 0.14,
+          "minutes": 89
+        },
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "points": 5,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0.13,
+          "xa": 0.02,
+          "minutes": 32
+        },
+        {
+          "name": "Oscar Bobb",
+          "team": "Fulham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.03,
+          "xa": 0.2,
+          "minutes": 74
+        },
+        {
+          "name": "Archie Gray",
+          "team": "Spurs",
+          "points": 5,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0,
+          "xa": 0.24,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

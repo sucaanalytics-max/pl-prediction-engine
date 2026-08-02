@@ -1,0 +1,440 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-08-25|chelsea|luton": {
+      "fixtureId": 26,
+      "season": "2324",
+      "date": "2023-08-25",
+      "kickoffTime": "2023-08-25T19:00:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Luton",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Marvelous Nakamba",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Ian Maatsen",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Tom Lockyer",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Jacob Brown",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Thomas Kaminski",
+          "team": "Luton",
+          "value": 5
+        },
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "value": 0.79
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 0.71
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.26
+        },
+        {
+          "name": "Carlton Morris",
+          "team": "Luton",
+          "value": 0.16
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Conor Gallagher",
+          "team": "Chelsea",
+          "value": 0.31
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.29
+        },
+        {
+          "name": "Ben Chilwell",
+          "team": "Chelsea",
+          "value": 0.28
+        },
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "value": 0.21
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 0.18
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "points": 19,
+          "bonus": 3,
+          "bps": 52,
+          "xg": 0.79,
+          "xa": 0.21,
+          "minutes": 90
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "points": 14,
+          "bonus": 2,
+          "bps": 48,
+          "xg": 0.01,
+          "xa": 0.16,
+          "minutes": 90
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "points": 7,
+          "bonus": 1,
+          "bps": 34,
+          "xg": 0.71,
+          "xa": 0.18,
+          "minutes": 82
+        },
+        {
+          "name": "Axel Disasi",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0.05,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Thiago Emiliano da Silva",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2023-12-30|luton|chelsea": {
+      "fixtureId": 195,
+      "season": "2324",
+      "date": "2023-12-30",
+      "kickoffTime": "2023-12-30T12:30:00Z",
+      "homeTeam": "Luton",
+      "awayTeam": "Chelsea",
+      "homeGoals": 2,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "value": 2
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Teden Mengi",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Axel Disasi",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Jacob Brown",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Thomas Kaminski",
+          "team": "Luton",
+          "value": 5
+        },
+        {
+          "name": "Djordje Petrovic",
+          "team": "Chelsea",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "value": 2
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "value": 1.13
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1.06
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 0.46
+        },
+        {
+          "name": "Carlton Morris",
+          "team": "Luton",
+          "value": 0.46
+        },
+        {
+          "name": "Chiedozie Ogbene",
+          "team": "Luton",
+          "value": 0.21
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Chiedozie Ogbene",
+          "team": "Luton",
+          "value": 0.6
+        },
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "value": 0.37
+        },
+        {
+          "name": "Andros Townsend",
+          "team": "Luton",
+          "value": 0.35
+        },
+        {
+          "name": "Teden Mengi",
+          "team": "Luton",
+          "value": 0.28
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 0.26
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "points": 18,
+          "bonus": 3,
+          "bps": 57,
+          "xg": 1.06,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "points": 9,
+          "bonus": 2,
+          "bps": 44,
+          "xg": 0.13,
+          "xa": 0.37,
+          "minutes": 90
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "points": 8,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0.46,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "points": 7,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0.12,
+          "xa": 0.1,
+          "minutes": 80
+        },
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 1.13,
+          "xa": 0.08,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

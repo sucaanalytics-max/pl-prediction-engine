@@ -1,0 +1,442 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-12-22|leicester|wolves": {
+      "fixtureId": 167,
+      "season": "2425",
+      "date": "2024-12-22",
+      "kickoffTime": "2024-12-22T14:00:00Z",
+      "homeTeam": "Leicester",
+      "awayTeam": "Wolves",
+      "homeGoals": 0,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Gonçalo Manuel Ganchinho Guedes",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Martins Gomes",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Gonçalo Manuel Ganchinho Guedes",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Matt Doherty",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Boubakary Soumaré",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Jannik Vestergaard",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 4
+        },
+        {
+          "name": "Danny Ward",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 3
+        },
+        {
+          "name": "Gonçalo Manuel Ganchinho Guedes",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "Matt Doherty",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 0.68
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 0.57
+        },
+        {
+          "name": "Rodrigo Martins Gomes",
+          "team": "Wolves",
+          "value": 0.26
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.14
+        },
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "value": 0.08
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.31
+        },
+        {
+          "name": "Harry Winks",
+          "team": "Leicester",
+          "value": 0.18
+        },
+        {
+          "name": "Hamza Choudhury",
+          "team": "Leicester",
+          "value": 0.17
+        },
+        {
+          "name": "Conor Coady",
+          "team": "Leicester",
+          "value": 0.14
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "value": 0.07
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Gonçalo Manuel Ganchinho Guedes",
+          "team": "Wolves",
+          "points": 13,
+          "bonus": 2,
+          "bps": 40,
+          "xg": 0.05,
+          "xa": 0.01,
+          "minutes": 73
+        },
+        {
+          "name": "Matt Doherty",
+          "team": "Wolves",
+          "points": 10,
+          "bonus": 1,
+          "bps": 37,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "points": 9,
+          "bonus": 3,
+          "bps": 43,
+          "xg": 0.14,
+          "xa": 0.31,
+          "minutes": 90
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "points": 9,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.07,
+          "minutes": 88
+        },
+        {
+          "name": "Rodrigo Martins Gomes",
+          "team": "Wolves",
+          "points": 8,
+          "bonus": 0,
+          "bps": 34,
+          "xg": 0.26,
+          "xa": 0,
+          "minutes": 82
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-26|wolves|leicester": {
+      "fixtureId": 340,
+      "season": "2425",
+      "date": "2025-04-26",
+      "kickoffTime": "2025-04-26T14:00:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Leicester",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Rodrigo Martins Gomes",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Jørgen Strand Larsen",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Kasey McAteer",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Oliver Skipp",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Wout Faes",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Toti António Gomes",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Wilfred Ndidi",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "Mads Hermansen",
+          "team": "Leicester",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "penaltiesMissed": [
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "bonus": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 3
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 0.82
+        },
+        {
+          "name": "Jørgen Strand Larsen",
+          "team": "Wolves",
+          "value": 0.76
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.56
+        },
+        {
+          "name": "Rodrigo Martins Gomes",
+          "team": "Wolves",
+          "value": 0.21
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 0.13
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Marshall Munetsi",
+          "team": "Wolves",
+          "value": 0.86
+        },
+        {
+          "name": "Bilal El Khannouss",
+          "team": "Leicester",
+          "value": 0.41
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "value": 0.22
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.21
+        },
+        {
+          "name": "Emmanuel Agbadou",
+          "team": "Wolves",
+          "value": 0.19
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "points": 15,
+          "bonus": 3,
+          "bps": 76,
+          "xg": 0.56,
+          "xa": 0.21,
+          "minutes": 88
+        },
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "points": 12,
+          "bonus": 1,
+          "bps": 34,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "points": 11,
+          "bonus": 2,
+          "bps": 44,
+          "xg": 0.09,
+          "xa": 0.22,
+          "minutes": 76
+        },
+        {
+          "name": "Emmanuel Agbadou",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.01,
+          "xa": 0.19,
+          "minutes": 90
+        },
+        {
+          "name": "Jørgen Strand Larsen",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.76,
+          "xa": 0.02,
+          "minutes": 76
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

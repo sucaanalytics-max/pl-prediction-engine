@@ -1,0 +1,1086 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-05-19|chelsea|bournemouth": {
+      "fixtureId": 375,
+      "season": "2324",
+      "date": "2024-05-19",
+      "kickoffTime": "2024-05-19T15:00:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Bournemouth",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Benoît Badiashile",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Marcos Senesi",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Milos Kerkez",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Đorđe Petrović",
+          "team": "Chelsea",
+          "value": 5
+        },
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "value": 0.76
+        },
+        {
+          "name": "Dominic Solanke",
+          "team": "Bournemouth",
+          "value": 0.39
+        },
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 0.38
+        },
+        {
+          "name": "Conor Gallagher",
+          "team": "Chelsea",
+          "value": 0.28
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 0.27
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.32
+        },
+        {
+          "name": "Milos Kerkez",
+          "team": "Bournemouth",
+          "value": 0.26
+        },
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 0.22
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.19
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "points": 10,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0.02,
+          "xa": 0.02,
+          "minutes": 63
+        },
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "points": 9,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.1,
+          "xa": 0.03,
+          "minutes": 63
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 1,
+          "bps": 23,
+          "xg": 0.15,
+          "xa": 0.19,
+          "minutes": 88
+        },
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "points": 5,
+          "bonus": 0,
+          "bps": 8,
+          "xg": 0.76,
+          "xa": 0.05,
+          "minutes": 68
+        },
+        {
+          "name": "Đorđe Petrović",
+          "team": "Chelsea",
+          "points": 3,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-09-14|bournemouth|chelsea": {
+      "fixtureId": 32,
+      "season": "2425",
+      "date": "2024-09-14",
+      "kickoffTime": "2024-09-14T19:00:00Z",
+      "homeTeam": "Bournemouth",
+      "awayTeam": "Chelsea",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Christopher Nkunku",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jadon Sancho",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Marcos Senesi",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Adam Smith",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Jadon Sancho",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Wesley Fofana",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "João Félix Sequeira",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Renato Palma Veiga",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 7
+        },
+        {
+          "name": "Mark Travers",
+          "team": "Bournemouth",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "penaltiesMissed": [
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "bonus": [
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Wesley Fofana",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Christopher Nkunku",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "value": 0.91
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 0.31
+        },
+        {
+          "name": "Christopher Nkunku",
+          "team": "Chelsea",
+          "value": 0.3
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 0.29
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.26
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 0.15
+        },
+        {
+          "name": "Jadon Sancho",
+          "team": "Chelsea",
+          "value": 0.14
+        },
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "value": 0.1
+        },
+        {
+          "name": "Philip Billing",
+          "team": "Bournemouth",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "points": 15,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Wesley Fofana",
+          "team": "Chelsea",
+          "points": 7,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Christopher Nkunku",
+          "team": "Chelsea",
+          "points": 7,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.3,
+          "xa": 0,
+          "minutes": 11
+        },
+        {
+          "name": "Axel Disasi",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 61
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "points": 5,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0,
+          "xa": 0.15,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-01-14|chelsea|bournemouth": {
+      "fixtureId": 208,
+      "season": "2425",
+      "date": "2025-01-14",
+      "kickoffTime": "2025-01-14T19:30:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Bournemouth",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "João Félix Sequeira",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Dean Huijsen",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Roméo Lavia",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Mark Travers",
+          "team": "Bournemouth",
+          "value": 8
+        },
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1.12
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1.11
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.69
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 0.15
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.5
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 0.32
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 0.31
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.24
+        },
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "points": 12,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.03,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "points": 10,
+          "bonus": 3,
+          "bps": 43,
+          "xg": 0.69,
+          "xa": 0.5,
+          "minutes": 90
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "points": 8,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 1.12,
+          "xa": 0.06,
+          "minutes": 68
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "points": 7,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0.06,
+          "xa": 0.1,
+          "minutes": 34
+        },
+        {
+          "name": "João Félix Sequeira",
+          "team": "Chelsea",
+          "points": 4,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0.06,
+          "xa": 0,
+          "minutes": 9
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-12-06|bournemouth|chelsea": {
+      "fixtureId": 142,
+      "season": "2526",
+      "date": "2025-12-06",
+      "kickoffTime": "2025-12-06T15:00:00Z",
+      "homeTeam": "Bournemouth",
+      "awayTeam": "Chelsea",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Marc Guiu Paz",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "value": 5
+        },
+        {
+          "name": "Đorđe Petrović",
+          "team": "Bournemouth",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Wesley Fofana",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "value": 0.85
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.25
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.25
+        },
+        {
+          "name": "Marc Guiu Paz",
+          "team": "Chelsea",
+          "value": 0.21
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 0.29
+        },
+        {
+          "name": "Alejandro Garnacho Ferreyra",
+          "team": "Chelsea",
+          "value": 0.19
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.13
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.12
+        },
+        {
+          "name": "Adrien Truffert",
+          "team": "Bournemouth",
+          "value": 0.04
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Chelsea",
+          "points": 11,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "points": 10,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Wesley Fofana",
+          "team": "Chelsea",
+          "points": 9,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Marcos Senesi Barón",
+          "team": "Bournemouth",
+          "points": 8,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 61
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "points": 7,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-12-30|chelsea|bournemouth": {
+      "fixtureId": 184,
+      "season": "2526",
+      "date": "2025-12-30",
+      "kickoffTime": "2025-12-30T19:30:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Bournemouth",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Alejandro Garnacho Ferreyra",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "value": 4
+        },
+        {
+          "name": "Đorđe Petrović",
+          "team": "Bournemouth",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 3
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 1.39
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.82
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 0.82
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.46
+        },
+        {
+          "name": "Liam Delap",
+          "team": "Chelsea",
+          "value": 0.43
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 0.57
+        },
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 0.46
+        },
+        {
+          "name": "Andrey Nascimento dos Santos",
+          "team": "Chelsea",
+          "value": 0.33
+        },
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 0.24
+        },
+        {
+          "name": "Alejandro Garnacho Ferreyra",
+          "team": "Chelsea",
+          "value": 0.19
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "points": 10,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 1.39,
+          "xa": 0.46,
+          "minutes": 77
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "points": 9,
+          "bonus": 2,
+          "bps": 35,
+          "xg": 0.46,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "points": 9,
+          "bonus": 2,
+          "bps": 35,
+          "xg": 0.82,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "points": 7,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0.82,
+          "xa": 0.06,
+          "minutes": 62
+        },
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "points": 5,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.2,
+          "xa": 0.24,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

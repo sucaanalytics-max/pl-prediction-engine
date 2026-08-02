@@ -1,10 +1,25 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { Fragment, useState, useMemo } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { usePredictions } from "@/lib/PredictionsContext";
-import { loadH2H, type H2HRecord } from "@/lib/predictions";
+import {
+  findHistoricalMatchEvents,
+  loadH2H,
+  loadH2HEvents,
+  type H2HRecord,
+  type HistoricalMatchEventsFile,
+} from "@/lib/predictions";
 import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/Skeleton";
+import HistoricalMatchDetails from "@/components/HistoricalMatchDetails";
+
+const MATCH_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+});
 
 function H2HContent() {
   const { predictions: data, loading, error } = usePredictions();
@@ -14,26 +29,30 @@ function H2HContent() {
   const [record, setRecord] = useState<H2HRecord | null | "not-found">(null);
   const [loadingH2H, setLoadingH2H] = useState(false);
   const [h2hError, setH2hError] = useState<string | null>(null);
-
-  if (error) return <ErrorMessage message={error} />;
-  if (loading || !data) return <PageSkeleton rows={3} />;
+  const [eventFile, setEventFile] = useState<HistoricalMatchEventsFile | null>(null);
+  const [expandedMatch, setExpandedMatch] = useState<string | null>(null);
 
   const teams = useMemo(() => {
     const set = new Set<string>();
-    for (const pred of data.predictions) {
+    for (const pred of data?.predictions ?? []) {
       set.add(pred.fixture.home_team);
       set.add(pred.fixture.away_team);
     }
     return Array.from(set).sort();
-  }, [data.predictions]);
+  }, [data?.predictions]);
 
   async function handleSearch() {
     if (!homeTeam || !awayTeam || homeTeam === awayTeam) return;
     setLoadingH2H(true);
     setH2hError(null);
     try {
-      const result = await loadH2H(homeTeam, awayTeam);
+      const [result, events] = await Promise.all([
+        loadH2H(homeTeam, awayTeam),
+        loadH2HEvents(homeTeam, awayTeam),
+      ]);
       setRecord(result ?? "not-found");
+      setEventFile(events);
+      setExpandedMatch(null);
     } catch (e) {
       setH2hError("Head-to-head data is not available yet.");
       setRecord(null);
@@ -44,7 +63,7 @@ function H2HContent() {
 
   // Find upcoming fixture between selected teams
   const upcomingFixture = useMemo(() => {
-    if (!homeTeam || !awayTeam) return null;
+    if (!data || !homeTeam || !awayTeam) return null;
     return (
       data.predictions.find(
         (p) =>
@@ -52,7 +71,10 @@ function H2HContent() {
           (p.fixture.home_team === awayTeam && p.fixture.away_team === homeTeam)
       ) ?? null
     );
-  }, [data.predictions, homeTeam, awayTeam]);
+  }, [data, homeTeam, awayTeam]);
+
+  if (error) return <ErrorMessage message={error} />;
+  if (loading || !data) return <PageSkeleton rows={3} />;
 
   return (
     <div className="space-y-6 animate-slide-up">
@@ -75,7 +97,7 @@ function H2HContent() {
             <select
               id="home-team"
               value={homeTeam}
-              onChange={(e) => { setHomeTeam(e.target.value); setRecord(null); }}
+              onChange={(e) => { setHomeTeam(e.target.value); setRecord(null); setEventFile(null); }}
               className="form-select"
             >
               <option value="">Select team…</option>
@@ -89,7 +111,7 @@ function H2HContent() {
             <select
               id="away-team"
               value={awayTeam}
-              onChange={(e) => { setAwayTeam(e.target.value); setRecord(null); }}
+              onChange={(e) => { setAwayTeam(e.target.value); setRecord(null); setEventFile(null); }}
               className="form-select"
             >
               <option value="">Select team…</option>
@@ -212,26 +234,63 @@ function H2HContent() {
                     <th scope="col" className="text-center">Home</th>
                     <th scope="col" className="text-center font-mono">Score</th>
                     <th scope="col" className="text-center">Away</th>
+                    <th scope="col" className="text-right">Details</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {record.matches.slice(0, 10).map((m, i) => {
+                  {record.matches.slice(0, 10).map((m) => {
                     const homeWin = m.home_goals > m.away_goals;
                     const awayWin = m.away_goals > m.home_goals;
+                    const matchHome = m.home_team ?? record.home_team;
+                    const matchAway = m.away_team ?? record.away_team;
+                    const matchKey = `${m.season}-${m.date}-${matchHome}-${matchAway}`;
+                    const expanded = expandedMatch === matchKey;
+                    const events = findHistoricalMatchEvents(
+                      eventFile,
+                      m,
+                      record.home_team,
+                      record.away_team
+                    );
                     return (
-                      <tr key={i}>
-                        <td style={{ color: "var(--text-3)" }}>{m.date}</td>
-                        <td style={{ color: "var(--text-4)" }}>{m.season}</td>
-                        <td className="text-center font-medium" style={{ color: homeWin ? "var(--text-1)" : "var(--text-3)" }}>
-                          {record.home_team}
-                        </td>
-                        <td className="text-center font-mono font-bold" style={{ color: "var(--text-1)" }}>
-                          {m.home_goals} — {m.away_goals}
-                        </td>
-                        <td className="text-center font-medium" style={{ color: awayWin ? "var(--text-1)" : "var(--text-3)" }}>
-                          {record.away_team}
-                        </td>
-                      </tr>
+                      <Fragment key={matchKey}>
+                        <tr>
+                          <td style={{ color: "var(--text-3)" }}>
+                            {MATCH_DATE_FORMATTER.format(new Date(m.date))}
+                          </td>
+                          <td style={{ color: "var(--text-4)" }}>{m.season}</td>
+                          <td className="text-center font-medium" style={{ color: homeWin ? "var(--text-1)" : "var(--text-3)" }}>
+                            {matchHome}
+                          </td>
+                          <td className="text-center font-mono font-bold" style={{ color: "var(--text-1)" }}>
+                            {m.home_goals} — {m.away_goals}
+                          </td>
+                          <td className="text-center font-medium" style={{ color: awayWin ? "var(--text-1)" : "var(--text-3)" }}>
+                            {matchAway}
+                          </td>
+                          <td className="text-right">
+                            <button
+                              className={expanded ? "historical-toggle active" : "historical-toggle"}
+                              onClick={() => setExpandedMatch(expanded ? null : matchKey)}
+                              aria-expanded={expanded}
+                            >
+                              {expanded ? "Hide" : "Match stats"}
+                              {expanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+                            </button>
+                          </td>
+                        </tr>
+                        {expanded ? (
+                          <tr className="historical-detail-row">
+                            <td colSpan={6}>
+                              <HistoricalMatchDetails
+                                events={events}
+                                homeTeam={matchHome}
+                                awayTeam={matchAway}
+                                date={m.date.slice(0, 10)}
+                              />
+                            </td>
+                          </tr>
+                        ) : null}
+                      </Fragment>
                     );
                   })}
                 </tbody>

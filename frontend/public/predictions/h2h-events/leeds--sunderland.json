@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2526|2025-12-28|sunderland|leeds": {
+      "fixtureId": 179,
+      "season": "2526",
+      "date": "2025-12-28",
+      "kickoffTime": "2025-12-28T14:00:00Z",
+      "homeTeam": "Sunderland",
+      "awayTeam": "Leeds",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Granit Xhaka",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Trai Hume",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robin Roefs",
+          "team": "Sunderland",
+          "value": 4
+        },
+        {
+          "name": "Lucas Estella Perri",
+          "team": "Leeds",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Simon Adingra",
+          "team": "Sunderland",
+          "value": 3
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 2
+        },
+        {
+          "name": "Granit Xhaka",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 0.43
+        },
+        {
+          "name": "Brian Brobbey",
+          "team": "Sunderland",
+          "value": 0.41
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 0.4
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 0.34
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 0.24
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 0.79
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.52
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 0.21
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Sunderland",
+          "value": 0.2
+        },
+        {
+          "name": "Chris Rigg",
+          "team": "Sunderland",
+          "value": 0.18
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Simon Adingra",
+          "team": "Sunderland",
+          "points": 10,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0.12,
+          "xa": 0.2,
+          "minutes": 84
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "points": 8,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.4,
+          "xa": 0.1,
+          "minutes": 84
+        },
+        {
+          "name": "Granit Xhaka",
+          "team": "Sunderland",
+          "points": 6,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.18,
+          "minutes": 90
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "points": 5,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.24,
+          "xa": 0.79,
+          "minutes": 90
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "points": 4,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.14,
+          "xa": 0.52,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-03-03|leeds|sunderland": {
+      "fixtureId": 286,
+      "season": "2526",
+      "date": "2026-03-03",
+      "kickoffTime": "2026-03-03T19:30:00Z",
+      "homeTeam": "Leeds",
+      "awayTeam": "Sunderland",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Habib Diarra",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Wilson Isidor",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Habib Diarra",
+          "team": "Sunderland",
+          "value": 1
+        },
+        {
+          "name": "Luke O'Nien",
+          "team": "Sunderland",
+          "value": 1
+        },
+        {
+          "name": "Wilfried Gnonto",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Omar Alderete",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Melker Ellborg",
+          "team": "Sunderland",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Melker Ellborg",
+          "team": "Sunderland",
+          "value": 3
+        },
+        {
+          "name": "Trai Hume",
+          "team": "Sunderland",
+          "value": 2
+        },
+        {
+          "name": "Daniel Ballard",
+          "team": "Sunderland",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Habib Diarra",
+          "team": "Sunderland",
+          "value": 0.79
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 0.23
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 0.22
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.16
+        },
+        {
+          "name": "Joël Piroe",
+          "team": "Leeds",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.2
+        },
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 0.1
+        },
+        {
+          "name": "Lukas Nmecha",
+          "team": "Leeds",
+          "value": 0.09
+        },
+        {
+          "name": "Jaka Bijol",
+          "team": "Leeds",
+          "value": 0.07
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 0.06
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Melker Ellborg",
+          "team": "Sunderland",
+          "points": 10,
+          "bonus": 3,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Daniel Ballard",
+          "team": "Sunderland",
+          "points": 9,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0.01,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Trai Hume",
+          "team": "Sunderland",
+          "points": 8,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Habib Diarra",
+          "team": "Sunderland",
+          "points": 7,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.79,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Omar Alderete",
+          "team": "Sunderland",
+          "points": 7,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}
