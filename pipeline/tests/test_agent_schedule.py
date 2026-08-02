@@ -364,22 +364,52 @@ class DeliveryTests(unittest.TestCase):
         self.assertFalse(result.any_delivered)
         self.assertIn("email", result.failed)
 
+    def _published(self, directory):
+        """A real published artifact, since the site channel now verifies one."""
+        import json
+
+        path = Path(directory) / "public.json"
+        path.write_text(json.dumps({"gameweek": 5, "teams": []}))
+        return [path]
+
     def test_site_channel_counts_as_delivered(self):
+        """
+        Delivery via the site requires a readable artifact. This test used to
+        pass with none at all, which made the site channel a rubber stamp — the
+        one channel that could never fail, and so the one that proved nothing.
+        """
+        with TemporaryDirectory() as tmp:
+            result = notify(
+                {"gameweek": 5, "teams": []},
+                "https://x.test",
+                4.0,
+                channels=("site",),
+                published_paths=self._published(tmp),
+            )
+        self.assertEqual(result.delivered, ["site"])
+
+    def test_site_channel_fails_without_a_published_artifact(self):
+        """Nothing published means nothing delivered."""
         result = notify(
             {"gameweek": 5, "teams": []},
             "https://x.test",
             4.0,
             channels=("site",),
+            require_delivery=False,
+            published_paths=[],
         )
-        self.assertEqual(result.delivered, ["site"])
+        self.assertFalse(result.any_delivered)
+        self.assertIn("site", result.failed)
 
     def test_unknown_channel_is_skipped_not_silently_ignored(self):
-        result = notify(
-            {"gameweek": 5, "teams": []},
-            "https://x.test",
-            4.0,
-            channels=("site", "carrier-pigeon"),
-        )
+        with TemporaryDirectory() as tmp:
+            result = notify(
+                {"gameweek": 5, "teams": []},
+                "https://x.test",
+                4.0,
+                channels=("site", "carrier-pigeon"),
+                published_paths=self._published(tmp),
+            )
         self.assertIn("carrier-pigeon", result.skipped)
 
 

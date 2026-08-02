@@ -23,6 +23,8 @@ been removing everywhere else, and the numbers here are the point.
 """
 from __future__ import annotations
 
+import json
+from pathlib import Path
 import logging
 import os
 import smtplib
@@ -223,13 +225,43 @@ def send_email(
     return settings["recipient"]
 
 
+
+def _verify_published(paths: Optional[Sequence[Any]]) -> int:
+    """
+    Confirm the published artifacts actually exist and parse.
+
+    Existence alone is not enough: a truncated or half-written file is present
+    on disk and unreadable by the page, which is indistinguishable from a
+    missing decision to whoever is trying to act on it before a deadline.
+    """
+    if not paths:
+        raise NotificationError(
+            "no published artifact paths were supplied, so publication cannot "
+            "be confirmed"
+        )
+    confirmed = 0
+    for path in paths:
+        candidate = Path(path)
+        if not candidate.exists():
+            raise NotificationError(f"published artifact missing: {candidate}")
+        try:
+            json.loads(candidate.read_text())
+        except (json.JSONDecodeError, OSError) as exc:
+            raise NotificationError(
+                f"published artifact is unreadable: {candidate} ({exc})"
+            ) from exc
+        confirmed += 1
+    return confirmed
+
+
 def notify(
     decision: Dict[str, Any],
     site_url: str,
     hours_left: float,
-    channels: Sequence[str] = ("email",),
+    channels: Sequence[str] = ("site", "email"),
     email_config: Optional[Dict[str, str]] = None,
     require_delivery: bool = True,
+    published_paths: Optional[Sequence[Any]] = None,
 ) -> DeliveryResult:
     """
     Deliver the decision. Raises if nothing got through and delivery is required.
@@ -251,9 +283,20 @@ def notify(
                 result.failed["email"] = str(exc)
                 logger.error("email delivery failed: %s", exc)
         elif channel == "site":
-            # The site is published by the artifact writer, not here. Recorded so
-            # the delivery summary reflects every configured channel.
-            result.delivered.append("site")
+            # The artifact writer publishes the page; this VERIFIES it landed.
+            #
+            # Previously this appended "delivered" unconditionally, which made
+            # it a rubber stamp — the one channel that could never fail, and so
+            # the one that proved nothing. Since it is now the primary channel
+            # and email is optional, an unchecked pass here would mean the agent
+            # could confirm delivery of a decision it never actually published.
+            try:
+                confirmed = _verify_published(published_paths)
+                result.delivered.append("site")
+                logger.info("decision published to %d artifact(s)", confirmed)
+            except NotificationError as exc:
+                result.failed["site"] = str(exc)
+                logger.error("site publication could not be confirmed: %s", exc)
         else:
             result.skipped[channel] = "unknown channel"
 

@@ -301,3 +301,96 @@ class TestDeliveryIsWired(unittest.TestCase):
         import pipeline.learning.run_agent as agent
 
         self.assertEqual(agent._deliver(self._state(), {}, dry_run=False), 0)
+
+
+class TestSiteIsThePrimaryChannel(unittest.TestCase):
+    """
+    Email is a push convenience, not a precondition for deciding.
+
+    An unreachable mail server must not cost a gameweek — that is a far worse
+    outcome than an unsent reminder. But the site channel has to actually verify
+    something, or it is a rubber stamp that would let the agent confirm delivery
+    of a decision it never published.
+    """
+
+    def _payload(self):
+        return {"gameweek": 7, "deadline": "2026-10-01T10:00:00Z", "teams": []}
+
+    def test_publication_alone_satisfies_delivery(self):
+        from pipeline.learning.notify import notify
+
+        with TemporaryDirectory() as tmp:
+            path = Path(tmp) / "public.json"
+            path.write_text(json.dumps({"gameweek": 7, "teams": []}))
+
+            result = notify(
+                self._payload(), "https://example.invalid", 4.0,
+                channels=("site", "email"), require_delivery=True,
+                published_paths=[path],
+            )
+        self.assertIn("site", result.delivered)
+        # Email is expected to fail with no SMTP configured, and that is fine.
+        self.assertIn("email", result.failed)
+
+    def test_a_missing_artifact_is_not_delivery(self):
+        """The rubber-stamp guard: nothing published means nothing delivered."""
+        from pipeline.learning.notify import NotificationError, notify
+
+        with TemporaryDirectory() as tmp:
+            with self.assertRaises(NotificationError):
+                notify(
+                    self._payload(), "https://example.invalid", 4.0,
+                    channels=("site",), require_delivery=True,
+                    published_paths=[Path(tmp) / "never_written.json"],
+                )
+
+    def test_a_corrupt_artifact_is_not_delivery(self):
+        """
+        Existence is not enough. A truncated file is present on disk and
+        unreadable by the page, which to whoever is trying to act before a
+        deadline is the same as no decision at all.
+        """
+        from pipeline.learning.notify import NotificationError, notify
+
+        with TemporaryDirectory() as tmp:
+            path = Path(tmp) / "public.json"
+            path.write_text('{"gameweek": 7, "teams": [')  # truncated
+            with self.assertRaises(NotificationError):
+                notify(
+                    self._payload(), "https://example.invalid", 4.0,
+                    channels=("site",), require_delivery=True,
+                    published_paths=[path],
+                )
+
+    def test_no_paths_supplied_is_not_delivery(self):
+        from pipeline.learning.notify import NotificationError, notify
+
+        with self.assertRaises(NotificationError):
+            notify(
+                self._payload(), "https://example.invalid", 4.0,
+                channels=("site",), require_delivery=True, published_paths=[],
+            )
+
+    def test_deliver_succeeds_without_smtp(self):
+        """
+        The end of the blocker: a seal completes green with no mail server
+        configured at all, because the decision reached the site.
+        """
+        import pipeline.learning.run_agent as agent
+
+        with TemporaryDirectory() as tmp:
+            private = Path(tmp) / "decision.json"
+            public = Path(tmp) / "public.json"
+            for p in (private, public):
+                p.write_text(json.dumps({"gameweek": 7, "teams": []}))
+
+            code = agent._deliver(
+                ScheduleState(
+                    phase=Phase.SEAL, gameweek=7,
+                    deadline=datetime.now(timezone.utc) + timedelta(hours=4),
+                    reason="site-primary test",
+                ),
+                {"season": {"decision": private, "public": public}},
+                dry_run=False,
+            )
+        self.assertEqual(code, 0, "a published decision was reported as undelivered")

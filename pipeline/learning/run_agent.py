@@ -350,12 +350,27 @@ def _deliver(
         ],
     }
 
+    # Publication is the PRIMARY channel and email is a push convenience. The
+    # published artifact carries everything the email does — squad, transfers,
+    # captain, evidence, warnings — so a decision that reaches the site has
+    # reached the human, whether or not a mail server was reachable.
+    #
+    # Email still matters and is still attempted: a site cannot tell you the
+    # deadline is in four hours. But making SMTP a precondition for deciding at
+    # all would let an unreachable mail server cost a gameweek, which is a far
+    # worse outcome than an unsent reminder.
+    published = [
+        written["public"] for written in decisions.values() if "public" in written
+    ] or [written["decision"] for written in decisions.values()]
+
     try:
         result = notify(
             payload, site_url, hours_left,
+            channels=("site", "email"),
             # A dry run must never mail a real recipient, and must not fail the
             # run for not having done so.
             require_delivery=not dry_run,
+            published_paths=published,
         )
     except NotificationError as exc:
         logger.error(
