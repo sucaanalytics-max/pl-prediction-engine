@@ -184,7 +184,9 @@ FPL_PUBLIC_DIR = ROOT_DIR / "frontend" / "public" / "predictions" / "fpl"
 # now_cost alone.
 FPL_ENTRIES: Dict[str, Dict[str, Any]] = {
     "season": {
-        "entry_id": None,
+        # "Ronny" — https://fantasy.premierleague.com/en/entry/2561567/
+        "entry_id": int(os.environ.get("FPL_ENTRY_SEASON", "2561567")),
+        "team_name": "Ronny",
         "objective": "season",       # maximise expected points; variance is a cost
         "squad": [],
         "bank": None,
@@ -192,7 +194,9 @@ FPL_ENTRIES: Dict[str, Dict[str, Any]] = {
         "purchase_prices": None,
     },
     "weekly": {
-        "entry_id": None,
+        # "Wazza" — https://fantasy.premierleague.com/en/entry/2561099/
+        "entry_id": int(os.environ.get("FPL_ENTRY_WEEKLY", "2561099")),
+        "team_name": "Wazza",
         # Maximise P(score >= threshold). Variance is an ASSET here: a weekly
         # prize needs a right-tail outcome, and correlated players are how a
         # tail is reached.
