@@ -211,7 +211,44 @@ def publish(
     if not messages:
         raise PublicationError("refusing to publish an empty message set")
 
-    existing = {m.get("id"): m for m in load_feed(predictions_dir)}
+    # A corrupt feed must not stop the agent from speaking.
+    #
+    # load_feed raises on unreadable input, which is right for a READER — better
+    # to fail loudly than render a truncated history as though it were complete.
+    # But a WRITER that refuses to write because the previous write was bad is a
+    # deadlock, and with email gone there is no second channel to fall back on:
+    # one truncated file would silence the agent permanently. Measured — a single
+    # bad write wedged every subsequent publish until a human deleted the file.
+    #
+    # So the corrupt feed is QUARANTINED rather than deleted (it may be partly
+    # recoverable, and silently discarding history is its own failure), a fresh
+    # feed is started, and the loss is announced at critical severity so nobody
+    # mistakes a short feed for a quiet agent.
+    messages = list(messages)
+    try:
+        prior = load_feed(predictions_dir)
+    except PublicationError as exc:
+        quarantined = _quarantine(predictions_dir)
+        prior = []
+        logger.error("message feed was corrupt (%s); quarantined to %s", exc, quarantined)
+        messages.append(
+            Message(
+                id="feed-recovered",
+                gameweek=messages[0].gameweek,
+                kind="status",
+                severity="critical",
+                title="Message history was lost",
+                body=(
+                    "The message feed was unreadable and has been set aside so the "
+                    "agent could keep publishing. Messages before this point are no "
+                    "longer shown here. The damaged file was kept, not deleted: "
+                    f"{quarantined}"
+                ),
+                created_at=messages[0].created_at,
+            )
+        )
+
+    existing = {m.get("id"): m for m in prior}
     for message in messages:
         existing[message.id] = message.as_dict()
 
@@ -245,6 +282,33 @@ def publish(
         "published %d new message(s); feed now holds %d", len(messages), len(ordered)
     )
     return written
+
+
+def _quarantine(predictions_dir: Path) -> Path:
+    """
+    Move a corrupt feed aside, keeping it.
+
+    Deleting would be simpler and is wrong: the file may be partly recoverable,
+    and a system that silently discards its own history when that history
+    becomes inconvenient is not auditable. The suffix is derived from the file's
+    own mtime rather than the wall clock, so re-running the same recovery does
+    not scatter a new copy each time.
+    """
+    path = Path(predictions_dir) / "fpl" / FEED_FILENAME
+    if not path.exists():
+        return path.with_name(f"{FEED_FILENAME}.corrupt.0")
+
+    stamp = int(path.stat().st_mtime)
+    target = path.with_name(f"{FEED_FILENAME}.corrupt.{stamp}")
+    # Two corruptions inside the same second would otherwise collide, and
+    # Path.replace overwrites — so the second rescue would destroy the first.
+    # Found by testing recovery twice in a row.
+    counter = 1
+    while target.exists():
+        target = path.with_name(f"{FEED_FILENAME}.corrupt.{stamp}-{counter}")
+        counter += 1
+    path.replace(target)
+    return target
 
 
 def _verify(paths: Iterable[Path]) -> None:

@@ -308,3 +308,101 @@ class TestPublicationIsTheOnlyChannel(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestFeedRecovery(unittest.TestCase):
+    """
+    A corrupt feed must never silence the agent.
+
+    With email removed the feed is the only channel, so a writer that refuses to
+    write because the PREVIOUS write was bad is a deadlock: one truncated file
+    would mean the agent could never tell anyone anything again. Measured before
+    the fix — a single bad write wedged every subsequent publish.
+    """
+
+    def setUp(self):
+        self._tmp = TemporaryDirectory()
+        self.dir = Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+
+    def _message(self, ident, gameweek=1):
+        from pipeline.learning.messages import Message
+
+        return Message(
+            id=ident, gameweek=gameweek, kind="status", severity="info",
+            title=f"message {ident}", body="b", created_at="2026-08-01T00:00:00Z",
+        )
+
+    def _corrupt(self):
+        (self.dir / "fpl" / "messages.json").write_text('{"messages": [')
+
+    def test_publishing_recovers_from_a_corrupt_feed(self):
+        from pipeline.learning.messages import load_feed, publish
+
+        publish([self._message("m1")], self.dir)
+        self._corrupt()
+        publish([self._message("m2")], self.dir)
+
+        titles = {m["title"] for m in load_feed(self.dir)}
+        self.assertIn("message m2", titles, "the agent could not publish after corruption")
+
+    def test_the_loss_is_announced_at_critical_severity(self):
+        """
+        A silently shortened feed is indistinguishable from a quiet agent, which
+        is the opposite of what the reader should conclude.
+        """
+        from pipeline.learning.messages import load_feed, publish
+
+        publish([self._message("m1")], self.dir)
+        self._corrupt()
+        publish([self._message("m2")], self.dir)
+
+        critical = [m for m in load_feed(self.dir) if m["severity"] == "critical"]
+        self.assertEqual(len(critical), 1)
+        self.assertIn("history was lost", critical[0]["title"].lower())
+
+    def test_the_corrupt_file_is_kept_not_deleted(self):
+        """
+        It may be partly recoverable, and a system that discards its own history
+        when that history becomes inconvenient is not auditable.
+        """
+        from pipeline.learning.messages import publish
+
+        publish([self._message("m1")], self.dir)
+        self._corrupt()
+        publish([self._message("m2")], self.dir)
+
+        kept = list((self.dir / "fpl").glob("messages.json.corrupt.*"))
+        self.assertEqual(len(kept), 1)
+        self.assertIn("messages", kept[0].read_text())
+
+    def test_a_second_corruption_does_not_overwrite_the_first_rescue(self):
+        """
+        Both quarantine names derive from the file's mtime, so two corruptions
+        inside the same second collide — and Path.replace overwrites. Found by
+        running the recovery twice in a row.
+        """
+        from pipeline.learning.messages import publish
+
+        publish([self._message("m1")], self.dir)
+        self._corrupt()
+        publish([self._message("m2")], self.dir)
+        self._corrupt()
+        publish([self._message("m3")], self.dir)
+
+        kept = list((self.dir / "fpl").glob("messages.json.corrupt.*"))
+        self.assertEqual(
+            len(kept), 2, "the second rescue destroyed the first quarantine file"
+        )
+
+    def test_reading_a_corrupt_feed_still_raises(self):
+        """
+        The writer recovers; the READER must not. Rendering a truncated history
+        as though it were complete is a different and worse failure.
+        """
+        from pipeline.learning.messages import PublicationError, load_feed, publish
+
+        publish([self._message("m1")], self.dir)
+        self._corrupt()
+        with self.assertRaises(PublicationError):
+            load_feed(self.dir)
