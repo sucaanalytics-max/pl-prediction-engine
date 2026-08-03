@@ -122,12 +122,54 @@ def _gameweeks_with(directory: Path, filename: str) -> Set[int]:
     return found
 
 
+def _finally_settled(directory: Path) -> Set[int]:
+    """
+    Gameweeks whose outcome record is FINAL, not provisional.
+
+    Existence of ``outcome.jsonl`` is not enough. A Sunday-night settle runs
+    before bonus points are confirmed and writes a provisional record; treating
+    that as settled means the Tuesday final settle never fires, so bonus is
+    never captured and — because the field observation is written alongside it —
+    ``FieldObservation.usable`` stays False for every gameweek of the season and
+    the weekly team's calibration gate can never open.
+
+    ``settle_gameweek`` already records the distinction in the header and already
+    refuses to overwrite a final with a provisional. This is the reader catching
+    up with the writer.
+    """
+    found: Set[int] = set()
+    if not directory.exists():
+        return found
+    for child in directory.iterdir():
+        match = re.fullmatch(r"gw(\d{2})", child.name)
+        if not match:
+            continue
+        path = child / "outcome.jsonl"
+        if not path.exists():
+            continue
+        try:
+            with path.open(encoding="utf-8") as handle:
+                header = json.loads(handle.readline() or "{}")
+        except (json.JSONDecodeError, OSError):
+            # Unreadable header: treat as NOT finally settled, so the final
+            # settle is retried. The alternative silently abandons the gameweek.
+            continue
+        if not header.get("provisional", True):
+            found.add(int(match.group(1)))
+    return found
+
+
 def ledger_state(ledger_dir: Path) -> Dict[str, Set[int]]:
     """What the ledger already holds, by gameweek."""
     ledger_dir = Path(ledger_dir)
     return {
         "sealed": _gameweeks_with(ledger_dir, "forecast.jsonl"),
-        "settled": _gameweeks_with(ledger_dir, "outcome.jsonl"),
+        # Only FINAL settlements count. See _finally_settled: a provisional
+        # record that counted here would permanently block the final one.
+        "settled": _finally_settled(ledger_dir),
+        # Kept separate so a caller can still ask "has anything been recorded",
+        # which is what MISSED_SEAL-style reasoning wants.
+        "settled_any": _gameweeks_with(ledger_dir, "outcome.jsonl"),
         "scored": _gameweeks_with(ledger_dir, "score.json"),
     }
 

@@ -111,7 +111,19 @@ jobs:
           # POSIX ERE, not PCRE: commit_and_push.sh uses `grep -E`, which has no
           # negative lookahead. So this enumerates the daily job's territory
           # rather than expressing "anything but ours".
-          FORBID_PATHS: '^(predictions/[^/]+\.json|predictions/archive/|predictions/fpl/(xp_gw|sim_params)|frontend/)'
+          # This ENUMERATES the daily job's territory rather than trying to
+          # express "all of frontend except ours". POSIX ERE has no negative
+          # lookahead, and the attempt to fake one with character classes let
+          # frontend/package.json through — [^p] cannot exclude a directory whose
+          # name begins with p.
+          #
+          # The real control on what gets staged is the explicit path list passed
+          # to commit_and_push.sh below; this is the safety net that stops those
+          # paths ever overlapping the daily pipeline's files. The agent needs
+          # frontend/public/predictions/fpl/ because that is where its message
+          # feed is served from — without it the feed was written to the runner
+          # and discarded, leaving the agent with no channel at all in CI.
+          FORBID_PATHS: '^(predictions/[^/]+\.json|predictions/archive/|predictions/fpl/(xp_gw|sim_params)|frontend/public/predictions/[^/]+\.json|frontend/public/predictions/(archive|h2h-events)/)'
           # Interpolated into env rather than straight into the run: block.
           # These come from our own script's GITHUB_OUTPUT rather than from
           # event data, so injection is not the live risk — but a shell-quoted
@@ -124,4 +136,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           .github/scripts/commit_and_push.sh \
             "FPL agent — ${AGENT_PHASE} GW${AGENT_GAMEWEEK}" \
-            predictions/fpl/ledger predictions/fpl/decision_latest.json
+            predictions/fpl/ledger \
+            predictions/fpl/decision_latest.json \
+            predictions/fpl/messages.json \
+            predictions/fpl/field_observations.jsonl \
+            predictions/fpl/params.jsonl \
+            frontend/public/predictions/fpl

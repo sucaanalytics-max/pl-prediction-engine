@@ -403,6 +403,38 @@ def _deliver(
     return 0
 
 
+
+def _read_entry(config: Dict[str, Any], gameweek: int, bootstrap: Dict[str, Any]):
+    """
+    Read one entry's real position from FPL.
+
+    Falls back to an empty state rather than raising. A squad that cannot be read
+    is NOT the same as no squad, but the two are indistinguishable here — so the
+    caller keeps its configured values and the decision path's own price
+    guardrail flags the uncertainty. Failing the whole run instead would trade a
+    degraded proposal for no proposal, and a missed deadline costs a gameweek.
+    """
+    from pipeline.fpl.entry_api import EntryError, EntryState, read_entry_state
+
+    entry_id = config.get("entry_id")
+    if not entry_id:
+        return EntryState(entry_id=0, gameweek=int(gameweek))
+
+    now_costs = {
+        int(e["id"]): int(e.get("now_cost", 0))
+        for e in bootstrap.get("elements", [])
+    }
+    try:
+        return read_entry_state(int(entry_id), int(gameweek), now_costs)
+    except EntryError as exc:
+        logger.warning(
+            "could not read entry %s (%s); falling back to configured squad state. "
+            "If a squad IS held, selling prices will be wrong.",
+            entry_id, exc,
+        )
+        return EntryState(entry_id=int(entry_id), gameweek=int(gameweek))
+
+
 def _decide_for_entries(
     predictions_dir: Path, state: ScheduleState, outcome: Dict[str, Any], dry_run: bool
 ) -> Dict[str, Dict[str, Path]]:
@@ -425,9 +457,18 @@ def _decide_for_entries(
     # score honest rather than the maximum of a noisy sample.
     draws_report = outcome["_second_stream"]("fpl_report")
 
+    state_gameweek = state.gameweek
+    bootstrap = outcome["_bootstrap"]
+
     written: Dict[str, Dict[str, Path]] = {}
     for label, config in FPL_ENTRIES.items():
-        held = config.get("squad") or []
+        # Read the squad from FPL, not from config. The config values are a
+        # manual override and a pre-season default; leaving them authoritative
+        # meant that from GW2 onward `held` was always empty, so the agent
+        # treated every gameweek as an opening build with the full 100.0m and
+        # never once replayed a purchase price — the thing entry_api exists for.
+        state = _read_entry(config, state_gameweek, bootstrap)
+        held = state.squad or (config.get("squad") or [])
         decision = decide(
             gameweek=state.gameweek,
             draws_select=draws_select,
@@ -441,9 +482,10 @@ def _decide_for_entries(
             # No squad held means the opening build, where the whole budget is
             # cash. With a squad, the bank must be supplied — defaulting it
             # would invent 100.0m that does not exist.
-            bank=config.get("bank") if held else None,
-            free_transfers=config.get("free_transfers", 1),
-            purchase_prices=config.get("purchase_prices"),
+            bank=(state.bank if state.squad else config.get("bank")) if held else None,
+            free_transfers=state.free_transfers if state.squad
+            else config.get("free_transfers", 1),
+            purchase_prices=state.purchase_prices or config.get("purchase_prices"),
             xp_by_week=xp_by_week,
         )
         for warning in decision.warnings:

@@ -11,6 +11,7 @@ And it must stay **standard library only**, because it gates a CI job that runs
 several times a day all year. If it needed the full requirements file the gate
 would cost more than the work it guards.
 """
+import json
 import importlib.abc
 import subprocess
 import sys
@@ -184,18 +185,58 @@ class PhaseFromStateTests(unittest.TestCase):
 
 
 class LedgerStateTests(unittest.TestCase):
+    def _week(self, ledger, gameweek, outcome_header=None):
+        week = ledger / f"gw{gameweek:02d}"
+        week.mkdir()
+        (week / "forecast.jsonl").write_text("{}\n")
+        if outcome_header is not None:
+            (week / "outcome.jsonl").write_text(json.dumps(outcome_header) + "\n")
+        return week
+
     def test_reads_gameweek_numbers_from_the_ledger_layout(self):
         with TemporaryDirectory() as tmp:
             ledger = Path(tmp)
-            (ledger / "gw01").mkdir()
-            (ledger / "gw01" / "forecast.jsonl").write_text("{}\n")
-            (ledger / "gw02").mkdir()
-            (ledger / "gw02" / "forecast.jsonl").write_text("{}\n")
-            (ledger / "gw02" / "outcome.jsonl").write_text("{}\n")
+            self._week(ledger, 1)
+            self._week(ledger, 2, {"provisional": False})
             state = ledger_state(ledger)
             self.assertEqual(state["sealed"], {1, 2})
             self.assertEqual(state["settled"], {2})
             self.assertEqual(state["scored"], set())
+
+    def test_a_provisional_settlement_does_not_count_as_settled(self):
+        """
+        This is the whole reason `settled` reads the header rather than testing
+        for the file. A Sunday-night settle runs before bonus is confirmed; if it
+        counted, the Tuesday final settle would never fire, bonus would never be
+        captured, and the field observation beside it would stay unusable for
+        every gameweek of the season.
+        """
+        with TemporaryDirectory() as tmp:
+            ledger = Path(tmp)
+            self._week(ledger, 5, {"provisional": True})
+            state = ledger_state(ledger)
+            self.assertEqual(state["settled"], set())
+            # Still visible as "something was recorded", which is what
+            # missed-observation reasoning needs.
+            self.assertEqual(state["settled_any"], {5})
+
+    def test_a_header_with_no_flag_is_treated_as_provisional(self):
+        """
+        Retrying a settle is cheap and settle_gameweek refuses to overwrite a
+        final with a provisional. Abandoning one loses bonus permanently, so an
+        ambiguous header errs toward retrying.
+        """
+        with TemporaryDirectory() as tmp:
+            ledger = Path(tmp)
+            self._week(ledger, 7, {})
+            self.assertEqual(ledger_state(ledger)["settled"], set())
+
+    def test_an_unreadable_header_is_treated_as_provisional(self):
+        with TemporaryDirectory() as tmp:
+            ledger = Path(tmp)
+            week = self._week(ledger, 9)
+            (week / "outcome.jsonl").write_text("{not json\n")
+            self.assertEqual(ledger_state(ledger)["settled"], set())
 
     def test_a_dry_run_directory_is_not_mistaken_for_a_gameweek(self):
         """`dryrun/` must never be read as real ledger state."""

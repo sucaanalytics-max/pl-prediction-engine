@@ -306,8 +306,6 @@ class TestPublicationIsTheOnlyChannel(unittest.TestCase):
             )
 
 
-if __name__ == "__main__":
-    unittest.main()
 
 
 class TestFeedRecovery(unittest.TestCase):
@@ -406,3 +404,7 @@ class TestFeedRecovery(unittest.TestCase):
         self._corrupt()
         with self.assertRaises(PublicationError):
             load_feed(self.dir)
+
+
+if __name__ == "__main__":
+    unittest.main()

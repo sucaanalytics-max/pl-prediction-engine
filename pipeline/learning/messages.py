@@ -188,6 +188,14 @@ def load_feed(predictions_dir: Path) -> List[Dict[str, Any]]:
         payload = json.loads(path.read_text())
     except (json.JSONDecodeError, OSError) as exc:
         raise PublicationError(f"message feed is unreadable: {path} ({exc})") from exc
+    if not isinstance(payload, Mapping):
+        # A file containing `[]` or `null` parses fine and then fails on .get,
+        # raising AttributeError past every handler — re-wedging publish through
+        # a different door than the truncation case. Typed as PublicationError so
+        # the recovery path catches it.
+        raise PublicationError(
+            f"message feed is not an object: {path} holds {type(payload).__name__}"
+        )
     return list(payload.get("messages", []))
 
 
@@ -267,11 +275,21 @@ def publish(
         logger.info("dry run: would publish %d message(s)", len(messages))
         return {}
 
+    # The two directories follow DIFFERENT conventions, and conflating them put
+    # the public feed one level too deep — at predictions/fpl/fpl/messages.json,
+    # while the page fetches /predictions/fpl/messages.json. The inbox was dark
+    # 100% of the time and _verify could not see it, because it re-read the same
+    # wrong path publish had just written.
+    #
+    # predictions_dir is the repo's predictions/ root, so "fpl" is appended.
+    # public_dir is passed already pointing at frontend/public/predictions/fpl,
+    # which is the same asymmetry write_decision uses.
     written: Dict[str, Path] = {}
-    for key, directory in (("private", predictions_dir), ("public", public_dir)):
-        if directory is None:
-            continue
-        target = Path(directory) / "fpl"
+    targets = [("private", Path(predictions_dir) / "fpl")]
+    if public_dir is not None:
+        targets.append(("public", Path(public_dir)))
+
+    for key, target in targets:
         target.mkdir(parents=True, exist_ok=True)
         path = target / FEED_FILENAME
         path.write_text(json.dumps(payload, indent=2, allow_nan=False))
