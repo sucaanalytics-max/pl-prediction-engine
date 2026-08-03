@@ -180,6 +180,18 @@ def score_gameweek(
     errors = predicted_points - actual_points
     zeros = actual_points == 0
 
+    # Distributional calibration, measured every gameweek rather than by hand.
+    #
+    # The tail probabilities are what the weekly objective ranks on, and the
+    # module that checks them was imported by NOTHING outside tests — so the
+    # headline "every tail within 0.0024" was only ever produced by someone
+    # running a script, and nothing would have noticed the day it stopped being
+    # true. The mean-accuracy metrics below cannot substitute: a model can have
+    # a perfect MAE and a badly wrong P(>=10).
+    from pipeline.learning.calibration_check import check_calibration
+
+    calibration = check_calibration([s["forecast"] for s in scored], actual_points)
+
     metrics = {
         "schema_version": SCORE_SCHEMA_VERSION,
         "scored_at": now.isoformat(),
@@ -192,6 +204,7 @@ def score_gameweek(
         "universe_size": header.get("universe_size"),
         "n_missing_outcome": missing_outcome,
         "outcome_revision": outcomes["header"].get("revision"),
+        "distribution": calibration.as_dict(),
         "points": {
             "mae": float(np.abs(errors).mean()),
             "rmse": float(np.sqrt((errors**2).mean())),
