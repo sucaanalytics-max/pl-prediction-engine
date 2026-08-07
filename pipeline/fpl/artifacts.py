@@ -495,7 +495,9 @@ def build_xp_artifact(
             }
             for spec in (fixture_specs or [])
         ],
-        "players": draws.summary_rows(),
+        # `rules` gives every row its points decomposition; without it the
+        # clean-sheet share cannot be attributed and the field is omitted.
+        "players": draws.summary_rows(rules),
         "diagnostics": notes,
     }
     return artifact

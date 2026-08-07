@@ -76,6 +76,11 @@ class GameweekDraws:
     clean_sheets: np.ndarray = field(default_factory=lambda: np.zeros((0, 0), dtype=np.int16))
     # element_id -> the fixtures that player featured in, in kickoff order.
     fixtures_by_element: Dict[int, List[str]] = field(default_factory=dict)
+    # element_id -> "GKP"/"DEF"/"MID"/"FWD". Retained because a points
+    # decomposition is position-dependent: a clean sheet is worth 4 to a
+    # defender and 0 to a forward, so attributing one without the position
+    # would credit strikers with points they cannot score.
+    position_by_element: Dict[int, str] = field(default_factory=dict)
     notes: Dict[str, Any] = field(default_factory=dict)
 
     @property
@@ -85,13 +90,72 @@ class GameweekDraws:
     def index_of(self, element_id: int) -> int:
         return self.element_ids.index(element_id)
 
-    def summary_rows(self) -> List[Dict[str, Any]]:
+
+    def _decomposition(
+        self, index: int, element_id: int, rules: Optional[Rules],
+    ) -> Optional[Dict[str, float]]:
+        """
+        Where the expected points come from.
+
+        Nobody in the category exposes this, and it is what makes a 6.4
+        inspectable: 6.4 built from appearance points and a clean sheet is a
+        different holding from 6.4 built from a 15% chance of a hat-trick.
+
+        ``other`` is the residual — bonus, cards, saves, DefCon, own goals and
+        the goals-conceded penalty — and is computed by subtraction rather than
+        modelled, so the parts always sum to ``xp`` exactly. Reporting a
+        decomposition whose parts do not add up to the headline is worse than
+        reporting none.
+        """
+        if rules is None:
+            return None
+        position = self.position_by_element.get(element_id)
+        if position is None:
+            # No position, no clean-sheet value. Guessing one would credit a
+            # forward with four points he cannot score.
+            return None
+
+        minutes = self.minutes[:, index]
+        appearance = float(
+            np.where(
+                minutes >= rules.long_play_threshold,
+                rules.long_play,
+                np.where(minutes > 0, rules.short_play, 0),
+            ).mean()
+        )
+        goals = float(self.goals[:, index].mean()) * rules.goal_points.get(position, 0)
+        assists = float(self.assists[:, index].mean()) * rules.assist_points
+        clean_sheets = float(
+            (self.clean_sheets[:, index] > 0).mean()
+        ) * rules.clean_sheet_points.get(position, 0)
+
+        total = float(self.points[:, index].mean())
+        return {
+            "appearance": round(appearance, 4),
+            "goals": round(goals, 4),
+            "assists": round(assists, 4),
+            "clean_sheets": round(clean_sheets, 4),
+            "other": round(total - appearance - goals - assists - clean_sheets, 4),
+        }
+
+    def summary_rows(self, rules: Optional[Rules] = None) -> List[Dict[str, Any]]:
         """
         Per-player distribution summary.
 
         Both objectives read from here: the season team takes ``xp``, the weekly
         team takes the tail probabilities and quantiles. Reporting a mean alone
         would make the weekly objective unimplementable.
+
+        ``mode`` and ``decomposition`` exist because a mean is actively
+        misleading for a right-skewed distribution, and FPL points are wildly
+        right-skewed. A midfielder with ``xp 6.4`` most often returns **2** —
+        the mean is dragged by a haul that happens one week in six. Publishing
+        only the mean is what every competitor does; publishing the mode beside
+        it costs one line and changes the decision.
+
+        ``decomposition`` is supplied only when ``rules`` is passed, because the
+        value of a clean sheet depends on position and inventing one would
+        credit forwards with points they cannot score.
         """
         rows: List[Dict[str, Any]] = []
         for index, element_id in enumerate(self.element_ids):
@@ -99,6 +163,8 @@ class GameweekDraws:
             fixtures = self.fixtures_by_element.get(element_id, [])
             rows.append(
                 {
+                    "mode": _mode_of(column),
+                    "decomposition": self._decomposition(index, element_id, rules),
                     "element_id": int(element_id),
                     "fixtures": list(fixtures),
                     "n_fixtures": len(fixtures),
@@ -127,6 +193,22 @@ class GameweekDraws:
                 }
             )
         return rows
+
+
+def _mode_of(column: "np.ndarray") -> Optional[int]:
+    """
+    The most frequent point total.
+
+    Ties break to the LOWEST total. FPL point distributions are bimodal at the
+    bottom — 0 for not playing and 1 or 2 for playing without returning — and a
+    tie between them broken upward would report the optimistic half of a
+    coin flip as the typical outcome.
+    """
+    if column.size == 0:
+        return None
+    values, counts = np.unique(column, return_counts=True)
+    best = counts.max()
+    return int(values[counts == best].min())
 
 
 def simulate_gameweek(
@@ -232,6 +314,7 @@ def simulate_gameweek(
         assists=assists,
         clean_sheets=clean_sheets,
         fixtures_by_element=fixtures_by_element,
+        position_by_element=dict(position_of),
         notes={
             "n_draws": int(n_draws),
             "n_fixtures": len(fixtures),

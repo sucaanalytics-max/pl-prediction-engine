@@ -21,7 +21,7 @@ import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Mapping, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS_DIR
 from pipeline.decide.horizon import EVAL_HORIZON
@@ -72,6 +72,87 @@ def _publish_evidence_view(
         view_module.write(view, Path(FPL_PUBLIC_DIR))
     except Exception as exc:  # noqa: BLE001
         logger.warning("could not publish the evidence view: %s", exc)
+
+
+def _publish_sensitivity(gameweek: int, entry_label: str) -> None:
+    """
+    Write the robustness report the /decide screen renders.
+
+    **Today this always publishes `measurable: false`,** and that is the correct
+    output rather than a placeholder. Robustness is a statement about how wrong
+    the projections have historically been, no gameweek has ever settled, and
+    `sensitivity.measure_noise` therefore returns None. Publishing the honest
+    "not measurable, and here is why" is what stops the screen inventing a
+    survival percentage from a guessed sigma.
+
+    It is wired now rather than when the data arrives so the path is exercised,
+    the artifact exists for the frontend to render an absent state against, and
+    the reachability guard can see the module.
+
+    Non-fatal, like every other reporting step on this path: a projection that
+    has been computed must not be lost because the reporting on it failed.
+    """
+    from pipeline.fpl.artifacts import write_json_atomically
+    from pipeline.learning import sensitivity as sensitivity_module
+
+    try:
+        settled = _settled_outcomes(gameweek)
+        noise = sensitivity_module.measure_noise(settled)
+        report = sensitivity_module.assess(
+            candidates=(),
+            noise=noise,
+            # Never called while `noise` is None, which is every run today. When
+            # a sigma exists this is where the MILP re-solve is injected.
+            solve_once=lambda _candidates: None,
+        )
+        payload = report.as_dict()
+        payload["gameweek"] = int(gameweek)
+        payload["entry_label"] = entry_label
+        payload["generated_at"] = (
+            datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        )
+        payload["settled_gameweeks"] = len({r.get("gameweek") for r in settled})
+        write_json_atomically(
+            payload, Path(FPL_PUBLIC_DIR) / f"sensitivity_gw{gameweek:02d}_{entry_label}.json"
+        )
+    except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
+        logger.warning("could not publish the sensitivity report: %s", exc)
+
+
+def _settled_outcomes(gameweek: int) -> List[Dict[str, Any]]:
+    """
+    Per-player predicted-versus-actual rows from every sealed gameweek.
+
+    Empty today: `predictions/ledger/` does not exist because nothing has been
+    sealed. Returning `[]` rather than raising is what makes
+    `_publish_sensitivity` publish an honest unmeasurable report instead of
+    failing the run.
+    """
+    ledger_root = Path(PREDICTIONS_DIR) / "fpl" / "ledger"
+    if not ledger_root.is_dir():
+        return []
+
+    rows: List[Dict[str, Any]] = []
+    for outcome_path in sorted(ledger_root.glob("gw*/outcomes.json")):
+        try:
+            payload = json.loads(outcome_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            # One unreadable sealed week must not hide the others, but it must
+            # not pass silently either: a shrinking sample changes every sigma.
+            logger.warning("unreadable sealed outcomes at %s: %s", outcome_path, exc)
+            continue
+        for row in payload.get("players") or []:
+            if not isinstance(row, dict):
+                continue
+            rows.append({
+                "gameweek": payload.get("gameweek"),
+                "element_id": row.get("element_id"),
+                "position": row.get("position"),
+                "team": row.get("team"),
+                "predicted": row.get("predicted_points"),
+                "actual": row.get("actual_points"),
+            })
+    return rows
 
 
 def refresh_expected_points(
@@ -747,6 +828,7 @@ def _decide_for_entries(
             xp_rows=artifact["players"],
             rules=outcome["_rules"],
         )
+        _publish_sensitivity(int(entry.gameweek), label)
     return written
 
 
