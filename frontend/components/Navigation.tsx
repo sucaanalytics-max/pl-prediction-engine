@@ -27,8 +27,10 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { usePredictions } from "@/lib/PredictionsContext";
-import { useFplLive } from "@/lib/FplLiveContext";
+import { REGISTRY, type Latest } from "@/lib/data/narrow";
+import { useArtifact } from "@/lib/data/useArtifact";
+import { isStale as artifactIsStale, proven } from "@/lib/data/artifact";
+import { useHeuristics } from "@/lib/data/useHeuristics";
 import { compactIstDeadline } from "@/lib/formats";
 
 interface NavItem {
@@ -50,7 +52,6 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/now", label: "Now", icon: LayoutDashboard },
       { href: "/decide", label: "Decide", icon: Sparkles },
-      { href: "/", label: "Overview", icon: LayoutDashboard },
       { href: "/decisions", label: "Agent Decision", icon: Sparkles },
       { href: "/inbox", label: "Agent Inbox", icon: Inbox },
       { href: "/planner", label: "Squad Planner", icon: Route },
@@ -110,18 +111,27 @@ function ThemeToggle() {
 export default function Navigation() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { predictions, lastUpdated: predictionUpdated, isStale: predictionsStale } =
-    usePredictions();
-  const {
-    state: fplState,
-    lastUpdated: fplUpdated,
-    isStale: fplStale,
-    error: fplError,
-  } = useFplLive();
-  const lastUpdated = fplUpdated ?? predictionUpdated;
-  const isStale = fplStale || predictionsStale || Boolean(fplError);
-  const valueBetCount = predictions?.predictions?.reduce(
-    (count, prediction) => count + (prediction.value_bets?.length ?? 0),
+  // One artifact, not two contexts. The nav needs exactly two facts — how many
+  // value bets there are, and whether the data is fresh — and mounting a
+  // provider pair in the layout to answer them made every page in the tree pay
+  // for five fetches it did not use.
+  const { artifact: latest } = useArtifact<Latest>(REGISTRY.latest);
+  const { artifact: liveArtifact } = useHeuristics();
+  const predictions = proven(latest);
+  const live = proven(liveArtifact);
+  const liveFailed =
+    liveArtifact.state === "absent" || liveArtifact.state === "unreadable";
+  const lastUpdated = latest.provenance.producedAt
+    ? Date.parse(latest.provenance.producedAt)
+    : null;
+  // `unreadable` and `absent` are not stale, they are worse — so the dot goes
+  // amber for those too rather than reading as fresh because no age is known.
+  const isStale =
+    artifactIsStale(latest) ||
+    latest.state === "absent" ||
+    latest.state === "unreadable";
+  const valueBetCount = predictions?.predictions.reduce(
+    (count, prediction) => count + prediction.value_bets.length,
     0
   ) ?? 0;
 
@@ -151,13 +161,25 @@ export default function Navigation() {
 
         <div className="manager-card">
           <div className="manager-avatar">
-            {fplState?.entry.teamName?.slice(0, 1).toUpperCase() ?? "M"}
+            {live?.entry.teamName?.slice(0, 1).toUpperCase() ?? "M"}
           </div>
           <div>
-            <strong>{fplState?.entry.teamName ?? "My FPL team"}</strong>
-            <span>Manager ID {fplState?.entry.id ?? 20945}</span>
+            <strong>{live?.entry.teamName ?? "My FPL team"}</strong>
+            <span>{live?.entry.id !== null && live?.entry.id !== undefined ? `Manager ID ${live.entry.id}` : "Manager ID unavailable"}</span>
           </div>
-          <a href="https://fantasy.premierleague.com/en/entry/20945/history" target="_blank" rel="noreferrer" aria-label="Open official FPL team"><ChevronRight size={16} /></a>
+          {/* Only linkable once the real entry id is known. The hardcoded
+              20945 that used to sit here opened somebody else's team whenever
+              the live route was unavailable. */}
+          {live?.entry.id != null ? (
+            <a
+              href={`https://fantasy.premierleague.com/en/entry/${live.entry.id}/history`}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open official FPL team"
+            >
+              <ChevronRight size={16} />
+            </a>
+          ) : null}
         </div>
 
         <nav className="portal-nav" aria-label="Primary navigation">
@@ -203,16 +225,16 @@ export default function Navigation() {
             <span className="sr-only">(opens in a new tab)</span>
           </a>
           <div className="deadline-mini">
-            <span><ShieldCheck size={14} /> GW{fplState?.event.id ?? 1} planning</span>
-            <strong>{compactIstDeadline(fplState?.event.deadlineTime)}</strong>
+            <span><ShieldCheck size={14} /> {live?.event.id != null ? `GW${live.event.id} planning` : "Gameweek unknown"}</span>
+            <strong>{compactIstDeadline(live?.event.deadlineTime ?? undefined)}</strong>
           </div>
           <div className="sidebar-status">
             <span className={isStale ? "status-dot stale" : "status-dot"} />
             <div>
               <strong>
-                {fplError
+                {liveFailed
                   ? "FPL sync needs attention"
-                  : fplState?.freshness.squad === "captured"
+                  : live?.squadSource === "captured"
                     ? "Live FPL · draft captured"
                     : isStale
                       ? "Pipeline needs refresh"

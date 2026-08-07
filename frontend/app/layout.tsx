@@ -4,8 +4,6 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import PwaManager from "@/components/PwaManager";
-import { FplLiveProvider } from "@/lib/FplLiveContext";
-import { PredictionsProvider } from "@/lib/PredictionsContext";
 import { Providers } from "./providers";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -77,24 +75,26 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen">
+        {/* No data providers. Both were removed: each fetched on mount for
+            every page in the tree whether or not the page used the data, shared
+            one `loading` and one `error` across every consumer so a single
+            failure blanked unrelated sections, and cast the response with
+            `as T`. Pages now load what they need through `useArtifact`, and
+            each section owns its own state. */}
         <Providers>
-          <FplLiveProvider>
-            <PredictionsProvider>
-              <div className="flex min-h-screen">
-                <Navigation />
-                <main
-                  id="main-content"
-                  className="w-full min-w-0 flex-1 ml-0 lg:ml-[264px] transition-all duration-500"
-                >
-                  <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-9 py-7 lg:py-9">
-                    {children}
-                  </div>
-                </main>
+          <div className="flex min-h-screen">
+            <Navigation />
+            <main
+              id="main-content"
+              className="w-full min-w-0 flex-1 ml-0 lg:ml-[264px] transition-all duration-500"
+            >
+              <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-9 py-7 lg:py-9">
+                {children}
               </div>
-              <MobileBottomNav />
-              <PwaManager />
-            </PredictionsProvider>
-          </FplLiveProvider>
+            </main>
+          </div>
+          <MobileBottomNav />
+          <PwaManager />
         </Providers>
       </body>
     </html>

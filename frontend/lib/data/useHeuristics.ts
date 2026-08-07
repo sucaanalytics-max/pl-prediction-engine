@@ -55,6 +55,54 @@ function build(
   });
 }
 
+/**
+ * One in-flight request shared by every mounted consumer.
+ *
+ * The nav, `/decide` and `/players` all want this endpoint, and without this
+ * each mount would issue its own request for the same bytes — three round trips
+ * to a route that fans out to the FPL API. The provider this replaced deduped
+ * by being a singleton; that property has to be kept without reintroducing the
+ * shared `loading` and `error` that made it a problem.
+ *
+ * Deliberately not a cache: it holds only a promise that has not settled yet.
+ * A second mount a minute later re-fetches, which is what a 15-minute refresh
+ * cadence wants.
+ */
+let inflight: Promise<unknown> | null = null;
+
+function fetchState(): Promise<unknown> {
+  if (inflight) return inflight;
+  inflight = (async () => {
+    try {
+      const response = await fetch(PATH, {
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+      });
+      const payload: unknown = await response.json();
+      // Both success and failure come back as 200-shaped JSON, so `response.ok`
+      // does not separate them; the `data` key does.
+      if (typeof payload === "object" && payload !== null && "data" in payload) {
+        return (payload as { data: unknown }).data;
+      }
+      const message =
+        typeof payload === "object" && payload !== null && "error" in payload
+          ? String((payload as { error: unknown }).error)
+          : `the route returned ${response.status} with no data`;
+      throw new Error(message);
+    } finally {
+      // Cleared whether it resolved or threw, so a failure is retryable rather
+      // than pinning every future consumer to the same rejection.
+      inflight = null;
+    }
+  })();
+  return inflight;
+}
+
+/** Test seam: drop any shared request so cases do not leak into each other. */
+export function resetHeuristicsForTests(): void {
+  inflight = null;
+}
+
 export interface UseHeuristicsResult {
   readonly artifact: Artifact<HeuristicView>;
   readonly initialising: boolean;
@@ -77,31 +125,9 @@ export function useHeuristics(now?: Date): UseHeuristicsResult {
     (async () => {
       const at = () => nowRef.current ?? new Date();
       try {
-        const response = await fetch(PATH, {
-          headers: { Accept: "application/json" },
-          cache: "no-store",
-        });
-        const payload: unknown = await response.json();
-
-        // The route wraps success as `{ data }` and failure as `{ error }`.
-        // Both are 200-shaped JSON, so `response.ok` alone does not tell them
-        // apart — an unwrapped body is a contract break, not a payload.
-        const data =
-          typeof payload === "object" && payload !== null && "data" in payload
-            ? (payload as { data: unknown }).data
-            : undefined;
-
+        const data = await fetchState();
         if (cancelled) return;
-
-        if (data === undefined) {
-          const message =
-            typeof payload === "object" && payload !== null && "error" in payload
-              ? String((payload as { error: unknown }).error)
-              : `the route returned ${response.status} with no data`;
-          setArtifact(build(undefined, at(), message));
-        } else {
-          setArtifact(build(data, at(), null));
-        }
+        setArtifact(build(data, at(), null));
       } catch (caught) {
         if (cancelled) return;
         setArtifact(

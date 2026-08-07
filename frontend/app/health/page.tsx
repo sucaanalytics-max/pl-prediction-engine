@@ -4,11 +4,14 @@ import {
   XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine,
   ScatterChart, Scatter, CartesianGrid, BarChart, Bar,
 } from "recharts";
-import { usePredictions } from "@/lib/PredictionsContext";
+import { REGISTRY, type Health, type Latest } from "@/lib/data/narrow";
+import { useArtifact } from "@/lib/data/useArtifact";
+import { proven } from "@/lib/data/artifact";
+import { StateCard } from "@/components/data/Artifact";
 import { useChartTheme } from "@/lib/hooks";
 import { istDateTime, pct, timeAgo } from "@/lib/formats";
 import { CORE_METRICS, hasCoreMetrics, verdict, type Metrics } from "@/lib/health-metrics";
-import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/Skeleton";
 
 const STALE_HEALTH_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -17,27 +20,40 @@ const STALE_HEALTH_MS = 24 * 60 * 60 * 1000; // 24 hours
 // the reason `verdict` is three-valued is documented at length.
 
 function HealthContent() {
-  const { health, predictions: data, loading, error, refresh } = usePredictions();
+  // Two artifacts, two states. The context gave both one shared `loading` and
+  // one shared `error`, so a failure fetching `latest.json` blanked the health
+  // report — which is the page you look at precisely when something is wrong.
+  const { artifact: healthArtifact, initialising } =
+    useArtifact<Health>(REGISTRY.health);
+  const { artifact: latestArtifact } = useArtifact<Latest>(REGISTRY.latest);
+  const health = proven(healthArtifact);
+  const data = proven(latestArtifact);
   const chart = useChartTheme();
 
-  if (error) return <ErrorMessage message={error} onRetry={refresh} />;
-  if (loading || !health) return <PageSkeleton rows={5} />;
+  if (initialising) return <PageSkeleton rows={5} />;
+  if (!health) {
+    return <StateCard of={healthArtifact} what="the pipeline health report" />;
+  }
 
   const isHealthy = health.status === "healthy";
-  const isStaleHealth = Date.now() - new Date(health.last_updated).getTime() > STALE_HEALTH_MS;
-  const metrics: Metrics = health.model_metrics ?? {};
+  // `last_updated` is nullable. `new Date(null)` is the epoch, which would make
+  // every run with no timestamp read as decades stale rather than as unknown.
+  const updatedMs = health.last_updated ? Date.parse(health.last_updated) : NaN;
+  const isStaleHealth =
+    Number.isFinite(updatedMs) && Date.now() - updatedMs > STALE_HEALTH_MS;
+  const metrics: Metrics = health.model_metrics;
   // Distinguishes "this producer emitted no metrics" from "it emitted zeros".
   const hasMetrics = hasCoreMetrics(metrics);
 
   // Calibration chart data
-  const calData = (health.calibration?.bins ?? []).map((b) => ({
+  const calData = health.calibration_bins.map((b) => ({
     predicted: b.predicted_mean,
     actual: b.actual_mean,
     count: b.count,
   }));
 
   // Stacking weights from predictions metadata
-  const stackingWeights = data?.metadata.stacking_weights;
+  const stackingWeights = data?.stacking_weights ?? null;
   const stackingData = stackingWeights
     ? Object.entries(stackingWeights)
         .sort(([, a], [, b]) => b - a)
@@ -81,7 +97,7 @@ function HealthContent() {
             Model Health
           </h1>
           <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-            Calibration, accuracy, pipeline status · Updated {timeAgo(health.last_updated)}
+            Calibration, accuracy, pipeline status · Updated {health.last_updated ? timeAgo(health.last_updated) : "at an unrecorded time"}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -262,7 +278,7 @@ function HealthContent() {
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           <div className="glass-inset p-3">
             <div className="stat-label">Last Run</div>
-            <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{istDateTime(health.last_updated)}</div>
+            <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{health.last_updated ? istDateTime(health.last_updated) : "no timestamp published"}</div>
           </div>
           <div className="glass-inset p-3">
             <div className="stat-label">Gameweek</div>
@@ -282,7 +298,7 @@ function HealthContent() {
               </div>
               <div className="glass-inset p-3">
                 <div className="stat-label">Simulations</div>
-                <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{(data.metadata.n_simulations / 1000).toFixed(0)}K</div>
+                <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{data.metadata.n_simulations !== null ? `${(data.metadata.n_simulations / 1000).toFixed(0)}K` : "—"}</div>
               </div>
             </>
           )}

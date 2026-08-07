@@ -350,10 +350,20 @@ export interface Prediction {
   readonly match_id: string;
   readonly home_team: string;
   readonly away_team: string;
+  /** From `fixture.gameweek`. Null when the writer omits it. */
+  readonly gameweek: number | null;
   readonly kickoff: string | null;
   readonly prob_home: number;
   readonly prob_draw: number;
   readonly prob_away: number;
+  /**
+   * Expected goals per side, or null when the model published none.
+   *
+   * Null rather than `{home: 0, away: 0}`: a 0-0 expectation is a real forecast
+   * and a missing one is not, and rendering "xG 0.0 — 0.0" for the second would
+   * be the same class of lie as the all-zero league table.
+   */
+  readonly expected_goals: { readonly home: number; readonly away: number } | null;
   readonly value_bets: readonly Bet[];
   readonly shap_features: readonly { name: string; value: number }[];
   readonly has_odds_comparison: boolean;
@@ -364,6 +374,30 @@ export interface Latest {
   readonly season: string | null;
   readonly generated_at: string | null;
   readonly pipeline_version: string | null;
+  /**
+   * Ensemble weights per model, or null when stacking did not run.
+   *
+   * `null` in the committed file. An empty object would say "stacking ran and
+   * assigned nothing", which is a different claim and would chart as an axis
+   * with no bars rather than an honest "no stacking weights published".
+   */
+  readonly stacking_weights: Readonly<Record<string, number>> | null;
+  /**
+   * How the run was configured, for `/health`.
+   *
+   * `n_simulations` is worth distrusting: the committed file says 5000 in
+   * metadata while eight of ten predictions carry 2000. The narrower reports
+   * what the writer wrote; reconciling the two is a pipeline fix, not a
+   * rendering one.
+   */
+  readonly metadata: {
+    readonly calibrated: boolean | null;
+    readonly models: readonly string[];
+    readonly sub_models: readonly string[];
+    readonly n_simulations: number | null;
+    readonly odds_source: string | null;
+    readonly ensemble_method: string | null;
+  };
   readonly predictions: readonly Prediction[];
 }
 
@@ -378,7 +412,7 @@ export interface Latest {
  * `[0, 1]` — so a currency amount landing in one of these fields yields null
  * rather than a stake of 5000% of bankroll.
  */
-function halfKellyOf(bet: Record<string, unknown>): Fraction | null {
+export function halfKellyOf(bet: Record<string, unknown>): Fraction | null {
   const half = toFraction(bet.half_kelly_pct);
   if (half !== null) return half;
   const full = toFraction(bet.full_kelly_pct);
@@ -395,13 +429,58 @@ function halfKellyOf(bet: Record<string, unknown>): Fraction | null {
  * no de-vig was applied; different means it was. An absent `raw_implied_prob`
  * yields null rather than a guess.
  */
-function devigStatusOf(bet: Record<string, unknown>): boolean | null {
+export function devigStatusOf(bet: Record<string, unknown>): boolean | null {
   const implied = optNumber(bet.implied_prob);
   const raw = optNumber(bet.raw_implied_prob);
   if (implied === null || raw === null) return null;
   // Float comparison with a tolerance: these are two computed doubles, and an
   // exact `!==` would report rounding noise as a de-vig.
   return Math.abs(implied - raw) > 1e-9;
+}
+
+/**
+ * Value bets from a raw list, dropping anything without a market.
+ *
+ * Exported so `/matches/[id]` uses the same path rather than re-deriving stakes.
+ * `halfKellyOf` runs every candidate through `toFraction`, which rejects values
+ * outside [0, 1] — duplicating this logic is how a currency amount ends up
+ * rendered as a percentage of bankroll.
+ */
+export function narrowBets(raw: unknown): Bet[] {
+  return optArray(raw).flatMap((b): Bet[] => {
+    if (!b || typeof b !== "object") return [];
+    const bet = b as Record<string, unknown>;
+    const market = optString(bet.market);
+    if (market === null) return [];
+    return [{
+      market,
+      selection: optString(bet.selection),
+      edge: countOr0(bet.edge),
+      model_prob: countOr0(bet.model_prob),
+      implied_prob: countOr0(bet.implied_prob),
+      decimal_odds: optNumber(bet.decimal_odds),
+      bookmaker: optString(bet.bookmaker),
+      devigged: devigStatusOf(bet),
+      market_type: optString(bet.market_type),
+      confidence: optString(bet.confidence_tier) ?? optString(bet.confidence),
+      halfKelly: halfKellyOf(bet),
+    }];
+  });
+}
+
+function stringList(raw: unknown): string[] {
+  return optArray(raw).filter((v): v is string => typeof v === "string");
+}
+
+/** Numeric weights, or null when the block is absent or carries none. */
+function weightsOf(raw: unknown): Record<string, number> | null {
+  if (!isRecord(raw)) return null;
+  const out: Record<string, number> = {};
+  for (const [name, value] of Object.entries(raw)) {
+    const n = optNumber(value);
+    if (n !== null) out[name] = n;
+  }
+  return Object.keys(out).length > 0 ? out : null;
 }
 
 export function narrowLatest(raw: unknown): NarrowResult<Latest> {
@@ -436,32 +515,23 @@ export function narrowLatest(raw: unknown): NarrowResult<Latest> {
       ? (oneXTwo as Record<string, unknown>)
       : {};
 
+    // Both sides required: half an expected scoreline is not one, and a
+    // rendered "1.4 — 0.0" would read as a shut-out prediction.
+    const xg = isRecord(row.expected_goals) ? row.expected_goals : null;
+    const xgHome = xg ? optNumber(xg.home) : null;
+    const xgAway = xg ? optNumber(xg.away) : null;
+
     return {
       home_team, away_team,
       match_id: optString(row.match_id) ?? optString(fixture.match_id) ?? `${i}`,
+      gameweek: optNumber(fixture.gameweek),
       kickoff: optString(fixture.date) ?? optString(fixture.kickoff),
+      expected_goals:
+        xgHome !== null && xgAway !== null ? { home: xgHome, away: xgAway } : null,
       prob_home: countOr0(trio.home),
       prob_draw: countOr0(trio.draw),
       prob_away: countOr0(trio.away),
-      value_bets: optArray(row.value_bets).flatMap((b): Bet[] => {
-        if (!b || typeof b !== "object") return [];
-        const bet = b as Record<string, unknown>;
-        const market = optString(bet.market);
-        if (market === null) return [];
-        return [{
-          market,
-          selection: optString(bet.selection),
-          edge: countOr0(bet.edge),
-          model_prob: countOr0(bet.model_prob),
-          implied_prob: countOr0(bet.implied_prob),
-          decimal_odds: optNumber(bet.decimal_odds),
-          bookmaker: optString(bet.bookmaker),
-          devigged: devigStatusOf(bet),
-          market_type: optString(bet.market_type),
-          confidence: optString(bet.confidence_tier) ?? optString(bet.confidence),
-          halfKelly: halfKellyOf(bet),
-        }];
-      }),
+      value_bets: narrowBets(row.value_bets),
       // `[]` on 10/10 in the committed file, and legal: an empty array is a valid
       // ShapFeature[]. The emptiness predicate, not the narrower, is what makes
       // the page say so.
@@ -484,6 +554,15 @@ export function narrowLatest(raw: unknown): NarrowResult<Latest> {
     season: optString(metadata.season),
     generated_at: optString(metadata.generated_at),
     pipeline_version: optString(metadata.pipeline_version),
+    stacking_weights: weightsOf(metadata.stacking_weights),
+    metadata: {
+      calibrated: optBoolean(metadata.calibrated),
+      models: stringList(metadata.models),
+      sub_models: stringList(metadata.sub_models),
+      n_simulations: optNumber(metadata.n_simulations),
+      odds_source: optString(metadata.odds_source),
+      ensemble_method: optString(metadata.ensemble_method),
+    },
     predictions,
   });
 }

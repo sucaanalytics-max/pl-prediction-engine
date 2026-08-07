@@ -2,7 +2,10 @@
 
 import { Fragment, useState, useMemo } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { usePredictions } from "@/lib/PredictionsContext";
+import { REGISTRY, type Latest } from "@/lib/data/narrow";
+import { useArtifact } from "@/lib/data/useArtifact";
+import { proven } from "@/lib/data/artifact";
+import { StateCard } from "@/components/data/Artifact";
 import {
   findHistoricalMatchEvents,
   loadH2H,
@@ -10,13 +13,19 @@ import {
   type H2HRecord,
   type HistoricalMatchEventsFile,
 } from "@/lib/predictions";
-import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/Skeleton";
 import HistoricalMatchDetails from "@/components/HistoricalMatchDetails";
 import { calendarDate } from "@/lib/formats";
 
 function H2HContent() {
-  const { predictions: data, loading, error } = usePredictions();
+  // Off `PredictionsContext`, which fetched five files for every page in the
+  // tree and cast the response with `as T`. The team list genuinely needs
+  // `latest.json` — there is nowhere else to learn which clubs are playing —
+  // so this section is gated, but on a stated artifact state rather than on a
+  // shared `loading` boolean that belonged to four other pages too.
+  const { artifact, initialising } = useArtifact<Latest>(REGISTRY.latest);
+  const data = proven(artifact);
 
   const [homeTeam, setHomeTeam] = useState("");
   const [awayTeam, setAwayTeam] = useState("");
@@ -29,8 +38,8 @@ function H2HContent() {
   const teams = useMemo(() => {
     const set = new Set<string>();
     for (const pred of data?.predictions ?? []) {
-      set.add(pred.fixture.home_team);
-      set.add(pred.fixture.away_team);
+      set.add(pred.home_team);
+      set.add(pred.away_team);
     }
     return Array.from(set).sort();
   }, [data?.predictions]);
@@ -61,14 +70,13 @@ function H2HContent() {
     return (
       data.predictions.find(
         (p) =>
-          (p.fixture.home_team === homeTeam && p.fixture.away_team === awayTeam) ||
-          (p.fixture.home_team === awayTeam && p.fixture.away_team === homeTeam)
+          (p.home_team === homeTeam && p.away_team === awayTeam) ||
+          (p.home_team === awayTeam && p.away_team === homeTeam)
       ) ?? null
     );
   }, [data, homeTeam, awayTeam]);
 
-  if (error) return <ErrorMessage message={error} />;
-  if (loading || !data) return <PageSkeleton rows={3} />;
+  if (initialising) return <PageSkeleton rows={3} />;
 
   return (
     <div className="space-y-6 animate-slide-up">
@@ -82,6 +90,16 @@ function H2HContent() {
         </h1>
         <p className="text-sm font-medium tracking-wide" style={{ color: "var(--text-3)" }}>Compare two clubs across recent meetings</p>
       </div>
+
+      {/* Why the dropdowns are empty, when they are. The old page rendered a
+          skeleton forever in this case, which reads as a hung fetch rather than
+          as "no fixtures have been published". */}
+      {teams.length === 0 ? (
+        <StateCard
+          of={artifact}
+          what="the list of clubs to compare, which comes from the published fixtures"
+        />
+      ) : null}
 
       {/* Team selectors */}
       <div className="glass-panel rounded-2xl shadow-[var(--shadow-custom)] p-6 space-y-5">
@@ -131,27 +149,33 @@ function H2HContent() {
         <div className="glass-panel p-5 rounded-2xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]" />
           <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{ color: "var(--text-3)" }}>
-            Upcoming — GW{upcomingFixture.fixture.gameweek}
+            Upcoming{upcomingFixture.gameweek === null ? "" : ` — GW${upcomingFixture.gameweek}`}
           </p>
           <div className="flex items-center justify-between">
-            <span className="font-bold" style={{ color: "var(--text-1)" }}>{upcomingFixture.fixture.home_team}</span>
+            <span className="font-bold" style={{ color: "var(--text-1)" }}>{upcomingFixture.home_team}</span>
             <div className="text-center px-4">
+              {/* Null when the model published no expected scoreline. Rendering
+                  "0.0 — 0.0" would read as a predicted goalless draw. */}
               <div className="text-xs font-mono font-bold" style={{ color: "var(--home)" }}>
-                xG {upcomingFixture.expected_goals.home.toFixed(1)} — {upcomingFixture.expected_goals.away.toFixed(1)}
+                {upcomingFixture.expected_goals
+                  ? `xG ${upcomingFixture.expected_goals.home.toFixed(1)} — ${upcomingFixture.expected_goals.away.toFixed(1)}`
+                  : "no expected goals published"}
               </div>
-              <div className="text-[10px] mt-0.5" style={{ color: "var(--text-3)" }}>expected goals</div>
+              {upcomingFixture.expected_goals ? (
+                <div className="text-[10px] mt-0.5" style={{ color: "var(--text-3)" }}>expected goals</div>
+              ) : null}
             </div>
-            <span className="font-bold" style={{ color: "var(--text-1)" }}>{upcomingFixture.fixture.away_team}</span>
+            <span className="font-bold" style={{ color: "var(--text-1)" }}>{upcomingFixture.away_team}</span>
           </div>
           <div className="flex h-2 rounded-full overflow-hidden mt-3" style={{ background: "var(--surface2)" }}>
-            <div className="h-full transition-all" style={{ width: `${Math.round(upcomingFixture.probabilities["1x2"].home * 100)}%`, background: "var(--home)" }} />
-            <div className="h-full" style={{ width: `${Math.round(upcomingFixture.probabilities["1x2"].draw * 100)}%`, background: "var(--draw)" }} />
-            <div className="h-full" style={{ width: `${Math.round(upcomingFixture.probabilities["1x2"].away * 100)}%`, background: "var(--away)" }} />
+            <div className="h-full transition-all" style={{ width: `${Math.round(upcomingFixture.prob_home * 100)}%`, background: "var(--home)" }} />
+            <div className="h-full" style={{ width: `${Math.round(upcomingFixture.prob_draw * 100)}%`, background: "var(--draw)" }} />
+            <div className="h-full" style={{ width: `${Math.round(upcomingFixture.prob_away * 100)}%`, background: "var(--away)" }} />
           </div>
           <div className="flex justify-between text-[10px] font-mono mt-1" style={{ color: "var(--text-3)" }}>
-            <span style={{ color: "var(--home)" }}>{Math.round(upcomingFixture.probabilities["1x2"].home * 100)}%</span>
-            <span>{Math.round(upcomingFixture.probabilities["1x2"].draw * 100)}%</span>
-            <span style={{ color: "var(--away)" }}>{Math.round(upcomingFixture.probabilities["1x2"].away * 100)}%</span>
+            <span style={{ color: "var(--home)" }}>{Math.round(upcomingFixture.prob_home * 100)}%</span>
+            <span>{Math.round(upcomingFixture.prob_draw * 100)}%</span>
+            <span style={{ color: "var(--away)" }}>{Math.round(upcomingFixture.prob_away * 100)}%</span>
           </div>
         </div>
       )}

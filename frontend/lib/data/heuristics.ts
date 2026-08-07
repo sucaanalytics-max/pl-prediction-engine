@@ -126,6 +126,22 @@ export interface HeuristicView {
   readonly generatedAt: string;
   readonly modelVersion: string;
   /**
+   * Who the entry is, for the sidebar's manager card.
+   *
+   * `id` is nullable so the hardcoded `20945` can go: a fallback entry id in
+   * the chrome links a stranger's team when the real one cannot be read.
+   */
+  readonly entry: {
+    readonly id: number | null;
+    readonly teamName: string | null;
+  };
+  readonly event: {
+    readonly id: number | null;
+    readonly deadlineTime: string | null;
+  };
+  /** Whether the squad shown is the live one or a captured draft. */
+  readonly squadSource: string | null;
+  /**
    * `fplreview_csv_snapshot` when a paid export was on disk, `fallback` when it
    * was not. The second is now the normal case; see `lib/fplreview-projections.ts`.
    */
@@ -299,6 +315,9 @@ export function narrowHeuristics(raw: unknown): NarrowResult<HeuristicView> {
   if (root === null) return malformed(problems.all);
 
   const generatedAt = reqString(root.generatedAt, "generatedAt", problems);
+  const entry = isRecord(root.entry) ? root.entry : {};
+  const event = isRecord(root.event) ? root.event : {};
+  const freshness = isRecord(root.freshness) ? root.freshness : {};
   const recommendations = reqRecord(root.recommendations, "recommendations", problems);
   const rankings = reqRecord(root.rankings, "rankings", problems);
   const projections = reqRecord(root.projections, "projections", problems);
@@ -340,6 +359,12 @@ export function narrowHeuristics(raw: unknown): NarrowResult<HeuristicView> {
   return narrowed({
     generatedAt,
     modelVersion: optString(recommendations.modelVersion) ?? "unknown",
+    entry: { id: optNumber(entry.id), teamName: optString(entry.teamName) },
+    event: {
+      id: optNumber(event.id),
+      deadlineTime: optString(event.deadlineTime),
+    },
+    squadSource: optString(freshness.squad),
     projectionSource: optString(projections.source) ?? "unknown",
     projectionSourceLabel: optString(projections.sourceLabel) ?? "unknown source",
     transfers,
