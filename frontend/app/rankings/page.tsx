@@ -73,7 +73,7 @@ export default function RankingsPage() {
         </div>
         <div className="ranking-trust">
           <ShieldCheck size={18} />
-          <div><strong>Official inputs</strong><span>Provisional projections</span></div>
+          <div><strong>FPLReview EV</strong><span>Official live prices & flags</span></div>
         </div>
       </header>
 
@@ -174,8 +174,8 @@ export default function RankingsPage() {
       </section>
 
       <p className="data-disclaimer">
-        Rankings update with the official FPL feed. Preseason estimates will become
-        more form-led once competitive 2026/27 minutes and expected points are available.
+        Rankings use the private 4 Aug FPLReview snapshot. Official FPL prices,
+        ownership, fixtures and availability refresh independently.
       </p>
     </div>
   );

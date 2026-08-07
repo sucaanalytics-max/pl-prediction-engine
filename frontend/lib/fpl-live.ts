@@ -1,6 +1,19 @@
 import type { Position, SquadPlayer } from "./fpl-portal";
 
-export const FPL_ENTRY_ID = 20945;
+/**
+ * The FPL entry this portal describes.
+ *
+ * Defaults to the portal owner's team (20945). Keep the Python decision agent
+ * and this frontend on the same entry; otherwise the site can show one squad
+ * while recommending transfers for another manager.
+ *
+ * Env-driven so the weekly team (2561099, "Wazza") can be viewed without a code
+ * change. An entry id is a public identifier, not a secret, so NEXT_PUBLIC_ is
+ * correct here.
+ */
+export const FPL_ENTRY_ID = Number(
+  process.env.NEXT_PUBLIC_FPL_ENTRY_ID ?? 20945,
+);
 export const FPL_API_BASE = "https://fantasy.premierleague.com/api";
 
 export type FplSquadSource =
@@ -25,6 +38,7 @@ export interface FplLivePlayer extends SquadPlayer {
 }
 
 export type FplModelBasis =
+  | "fplreview_snapshot"
   | "official_form_blend"
   | "preseason_fixture_heuristic";
 
@@ -35,6 +49,7 @@ export interface FplRankedPlayer {
   position: Position;
   price: number;
   ownership: number;
+  eliteOwnership: number | null;
   status: string;
   chanceOfPlaying: number | null;
   news: string;
@@ -48,11 +63,29 @@ export interface FplRankedPlayer {
   expectedMinutes: number;
   projected4: number;
   projected6: number;
+  projected10: number;
   captainScore: number;
   valueScore: number;
   differentialScore: number;
   fixtureScore: number;
   modelBasis: FplModelBasis;
+}
+
+export interface FplProjectionPlayer {
+  elementId: number;
+  name: string;
+  team: string;
+  position: Position;
+  price: number;
+  ownership: number;
+  eliteOwnership: number | null;
+  status: string;
+  expectedMinutes: number;
+  projected4: number;
+  projected6: number;
+  projected10: number;
+  valueScore: number;
+  gameweekProjections: FplRankedPlayer["gameweekProjections"];
 }
 
 export interface FplTransferRecommendation {
@@ -125,7 +158,7 @@ export interface FplTopTenRankings {
 }
 
 export interface FplLiveState {
-  schemaVersion: 3;
+  schemaVersion: 4;
   generatedAt: string;
   season: "2026/27";
   entry: {
@@ -166,6 +199,17 @@ export interface FplLiveState {
     latestRank: number | null;
     latestSeason: string | null;
   };
+  projections: {
+    source: "fplreview_csv_snapshot" | "fallback";
+    sourceLabel: string;
+    exportedAt: string | null;
+    horizonGameweeks: number;
+    matchedPlayers: number;
+    officialPlayers: number;
+    coveragePercent: number;
+    players: FplProjectionPlayer[];
+    caveats: string[];
+  };
   rankings: FplTopTenRankings;
   recommendations: {
     transfers4: FplTransferRecommendation[];
@@ -174,7 +218,7 @@ export interface FplLiveState {
     multiTransferPlans6: FplTransferPlan[];
     captaincyPlan: FplCaptainWeek[];
     captaincyPool: FplRankedPlayer[];
-    modelVersion: "preseason-v1";
+    modelVersion: string;
     provisional: true;
     methodology: string[];
   };

@@ -224,6 +224,46 @@ class BayesianDixonColes:
             "defence_ci": [float(np.percentile(defence, 5)), float(np.percentile(defence, 95))],
         }
 
+    @staticmethod
+    def scoreline_matrix(
+        lam: float, mu: float, rho: float, max_goals: int = MAX_GOALS
+    ) -> np.ndarray:
+        """
+        Scoreline probabilities for ONE (lambda, mu, rho), with the Dixon-Coles
+        low-score correction.
+
+        Extracted so the market-implied rate inversion can run the *same* forward
+        model the simulator draws from. Inverting prices through a different
+        distribution than we later simulate would make the two disagree by
+        construction, and the disagreement would be invisible.
+
+        Deliberately NOT used by ``predict_scoreline``, whose vectorised path is
+        on the daily prediction route: refactoring it to loop over this would risk
+        moving ``latest.json``. Equivalence is pinned by a test that feeds a
+        single-sample trace instead, which buys the same guarantee at no risk.
+        """
+        from scipy.stats import poisson
+
+        goals = np.arange(max_goals + 1)
+        i_grid, j_grid = np.meshgrid(goals, goals, indexing="ij")
+
+        pmf_home = poisson.pmf(i_grid, lam)
+        pmf_away = poisson.pmf(j_grid, mu)
+
+        tau = np.ones_like(pmf_home, dtype=float)
+        tau = np.where((i_grid == 0) & (j_grid == 0), 1 - lam * mu * rho, tau)
+        tau = np.where((i_grid == 1) & (j_grid == 0), 1 + mu * rho, tau)
+        tau = np.where((i_grid == 0) & (j_grid == 1), 1 + lam * rho, tau)
+        tau = np.where((i_grid == 1) & (j_grid == 1), 1 - rho, tau)
+
+        matrix = np.maximum(pmf_home * pmf_away * tau, 0.0)
+        total = matrix.sum()
+        # The floor plus renormalisation is what keeps tau positivity from needing
+        # a hard constraint on rho: for large lambda*mu and positive rho the 0-0
+        # correction can go negative, and flooring it is what predict_scoreline
+        # already does.
+        return matrix / total if total > 0 else matrix
+
     def predict_scoreline(self, home: str, away: str, n_samples: int = 5000) -> np.ndarray:
         """
         Predict scoreline matrix from posterior predictive.

@@ -46,3 +46,11 @@ Thumbs.db
 
 # Logs
 *.log
+.vercel
+
+# FPLReview's exported projections — a paid competitor's product, read at
+# runtime by frontend/lib/fplreview-projections.ts and absent everywhere but
+# this machine. Ignored so it can never be committed: it must not be
+# redistributed, and a static import of it once made the whole site unbuildable
+# from a clean checkout. See frontend/test/no-untracked-imports.test.ts.
+frontend/data/fplreview-projections.json

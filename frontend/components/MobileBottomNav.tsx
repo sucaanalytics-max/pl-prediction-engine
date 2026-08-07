@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Crown, LayoutDashboard, Layers3, Stethoscope } from "lucide-react";
+import { BarChart3, Crown, LayoutDashboard, Layers3, Stethoscope } from "lucide-react";
 
 const ITEMS = [
   { href: "/", label: "Home", icon: LayoutDashboard },
   { href: "/optimizer", label: "Optimize", icon: Layers3 },
+  { href: "/projections", label: "Players", icon: BarChart3 },
   { href: "/captaincy", label: "Captain", icon: Crown },
   { href: "/evidence", label: "Evidence", icon: Stethoscope },
 ];

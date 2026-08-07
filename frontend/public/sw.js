@@ -1,8 +1,10 @@
-const CACHE_NAME = "suca-fpl-shell-v2";
+const CACHE_NAME = "suca-fpl-shell-v4";
 const SHELL_ROUTES = [
   "/",
+  "/now",
   "/transfers",
   "/optimizer",
+  "/projections",
   "/captaincy",
   "/evidence",
   "/rankings",

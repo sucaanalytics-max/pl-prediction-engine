@@ -27,3 +27,18 @@ penaltyblog>=1.9.0
 pyyaml>=6.0
 tqdm>=4.66
 supabase>=2.0
+
+# JSON Schema validation for the artifact contracts under pipeline/fpl/schemas/.
+# Added because it was ABSENT: both schema tests skipped on "jsonschema not
+# installed", permanently and on every runner, so every enum, const, numeric bound
+# and additionalProperties rule in xp_gw.schema.json and fixture_xg.schema.json was
+# decoration. Only the hand-rolled required-key assertions did any work. Both
+# schemas pass now that they actually run.
+jsonschema>=4.0
+
+# RSS/Atom parsing for the press-conference feed cluster (pipeline/data/news_feeds.py).
+# Hand-rolling this was considered and rejected: the six feeds span RSS 2.0 and Atom,
+# whose date formats are RFC 822 and RFC 3339 respectively, and a date parsed wrongly
+# silently misorders claims — which is the one thing the conflict rules cannot survive,
+# since R2 breaks ties on `claimed_at`. Bytes are size-capped before being handed over.
+feedparser>=6.0

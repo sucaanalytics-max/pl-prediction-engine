@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { FplPlayerChip } from "@/components/FplPlayerChip";
 import { useFplLive } from "@/lib/FplLiveContext";
-import { asSquadPlayers } from "@/lib/fpl-live";
+import { asSquadPlayers, FPL_ENTRY_ID } from "@/lib/fpl-live";
 import {
   currentSquad,
   fixtureRuns,
@@ -88,7 +88,7 @@ export default function DecisionHubPage() {
     <div className="portal-page space-y-6 animate-slide-up">
       <header className="decision-hero">
         <div className="hero-copy">
-          <div className="eyebrow"><Sparkles size={13} /> Personal decision room · Team {liveState?.entry.id ?? 20945}</div>
+          <div className="eyebrow"><Sparkles size={13} /> Personal decision room · Team {liveState?.entry.id ?? FPL_ENTRY_ID}</div>
           <h1>Build the right GW{liveState?.event.id ?? 1} team.<br /><span>Know why it is right.</span></h1>
           <p>
             Your squad, projections, fixtures, injuries and trusted weekly research—
@@ -189,7 +189,7 @@ export default function DecisionHubPage() {
               <span className="kicker">{sourceLabel}</span>
               <h2>Your GW{liveState?.event.id ?? 1} squad</h2>
             </div>
-            <a href="https://fantasy.premierleague.com/en/entry/20945/history" target="_blank" rel="noreferrer" className="icon-link" aria-label="Open official FPL team">
+            <a href={`https://fantasy.premierleague.com/en/entry/${liveState?.entry.id ?? FPL_ENTRY_ID}/history`} target="_blank" rel="noreferrer" className="icon-link" aria-label="Open official FPL team">
               <ExternalLink size={16} />
             </a>
           </div>

@@ -47,11 +47,23 @@ def devig_implied_prob(odds_dict: Dict[str, float]) -> Dict[str, float]:
     Remove bookmaker margin (overround) to get true implied probabilities.
 
     Bookmakers set odds so that the implied probabilities sum to >1.0 (the overround,
-    typically 1.03-1.06 for 1X2). This inflates every implied probability, making
-    model edges appear larger than they are.
+    typically 1.03-1.06 for 1X2). This inflates every implied probability, so an
+    edge measured as ``model_prob - 1/odds`` is measured against a number that is
+    too big and is therefore **understated**.
 
-    Method: multiplicative devig (each implied prob divided by total overround).
+    De-vigging divides each implied probability by the total, which lowers every
+    one of them — so it makes edges LARGER and stakes BIGGER. That direction is
+    worth stating plainly on a function that sizes real money, and this docstring
+    previously asserted the opposite ("making model edges appear larger than they
+    are"), which reads as a safety argument for a change that is not one.
+
+    Method: multiplicative devig (each implied prob divided by the total).
     This is the standard approach for balanced markets.
+
+    **A single outcome cannot be de-vigged.** With one entry the total IS that
+    entry, so the result is 1.0 — a certainty. Returning that would make
+    ``edge = p - 1.0`` hugely negative and silently drop the bet, so a one-sided
+    market is returned untouched instead; see the guard below.
 
     Args:
         odds_dict: {outcome: decimal_odds} e.g. {"home": 2.10, "draw": 3.40, "away": 3.80}
@@ -77,6 +89,20 @@ def devig_implied_prob(odds_dict: Dict[str, float]) -> Dict[str, float]:
     total = sum(raw_implied.values())
 
     if total <= 0:
+        return raw_implied
+
+    if len(valid) < 2:
+        # One side of the market only — the book returned no opposing price, which
+        # happens on thin totals lines. There is no overround to remove from a
+        # single number, and dividing it by itself yields 1.0: a certainty, which
+        # would make every such bet score `edge = p - 1.0` and be skipped without
+        # explanation. Returning the raw implied probability keeps the bet
+        # assessable on a conservative (understated) edge, which is the safe
+        # direction on the staking path.
+        logger.debug(
+            "one-sided market %s; no overround to remove, using raw implied",
+            sorted(valid),
+        )
         return raw_implied
 
     overround = total - 1.0

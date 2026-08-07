@@ -82,12 +82,28 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p frontend/public/predictions
-          # Explicit list, not `cp predictions/*.json`. A glob silently
+          # Explicit lists, not `cp predictions/*.json`. A glob silently
           # publishes every new artifact the pipeline learns to write —
           # including forecast_ledger.json, which grows all season and belongs
           # in predictions/ only.
+          #
+          # REQUIRED: step 10 always writes these, so an absent one is a real
+          # failure and must stop the run rather than publish a stale copy.
           for f in latest.json matches.json player_stats.json health.json table.json h2h.json; do
             cp "predictions/$f" "frontend/public/predictions/$f"
+          done
+          # OPTIONAL: written by a best-effort step, or by a harness run by hand.
+          # `cp` under `set -e` would turn a deliberately non-fatal absence into a
+          # hard pipeline failure — fixture_xg's export is wrapped in a try/except
+          # that logs "FPL agent will use fallback rates" precisely so a bad odds
+          # response cannot stop a run, and market_blend_weight is written only by
+          # fit_market_blend.py, which nothing in the pipeline may import.
+          for f in fixture_xg.json market_blend_weight.json; do
+            if [ -f "predictions/$f" ]; then
+              cp "predictions/$f" "frontend/public/predictions/$f"
+            else
+              echo "::notice::optional artifact $f is absent; not published"
+            fi
           done
 
       - name: Commit predictions
@@ -112,5 +128,5 @@ jobs:
             "Update predictions — $(date -u +%Y-%m-%d)" \
             predictions \
             ':(exclude)predictions/fpl/ledger' \
-            ':(exclude)predictions/fpl/decision_latest.json' \
+            ':(exclude)predictions/fpl/decision_gw*.json' \
             frontend/public/predictions

@@ -13,13 +13,7 @@ import {
 import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/Skeleton";
 import HistoricalMatchDetails from "@/components/HistoricalMatchDetails";
-
-const MATCH_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
-  day: "2-digit",
-  month: "short",
-  year: "numeric",
-  timeZone: "UTC",
-});
+import { calendarDate } from "@/lib/formats";
 
 function H2HContent() {
   const { predictions: data, loading, error } = usePredictions();
@@ -255,7 +249,7 @@ function H2HContent() {
                       <Fragment key={matchKey}>
                         <tr>
                           <td style={{ color: "var(--text-3)" }}>
-                            {MATCH_DATE_FORMATTER.format(new Date(m.date))}
+                            {calendarDate(m.date)}
                           </td>
                           <td style={{ color: "var(--text-4)" }}>{m.season}</td>
                           <td className="text-center font-medium" style={{ color: homeWin ? "var(--text-1)" : "var(--text-3)" }}>

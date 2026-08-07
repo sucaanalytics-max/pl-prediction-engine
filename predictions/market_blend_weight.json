@@ -1,0 +1,462 @@
+{
+  "generated_at": "2026-08-04T20:00:14+00:00",
+  "parameter": "market.blend_weight",
+  "n_matches": 903,
+  "n_rounds": 86,
+  "seasons": [
+    "2324",
+    "2425",
+    "2526"
+  ],
+  "weight_grid": [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95,
+    1.0
+  ],
+  "devig_method": "proportional",
+  "corpus": {
+    "n_rounds_total": 109,
+    "n_rounds_burn_in": 20,
+    "n_rounds_unfittable": 3,
+    "n_rounds_scored": 86,
+    "n_fixtures_seen": 906,
+    "n_dropped_no_market": 0,
+    "n_dropped_prior_only": 3,
+    "market_statuses": {
+      "converged": 2709
+    },
+    "refit_seconds_total": 0.4492
+  },
+  "primary_loss": "negative log-likelihood of the realised exact scoreline under BayesianDixonColes.scoreline_matrix(lam, mu, rho), per match",
+  "loss_curve": {
+    "proportional": [
+      2.985527629665014,
+      2.981407444992417,
+      2.9775038635143396,
+      2.973816985763692,
+      2.970346947325679,
+      2.967093919587211,
+      2.9640581104140726,
+      2.9612397647559914,
+      2.9586391651794814,
+      2.9562566323284796,
+      2.9540925253125816,
+      2.952147242022538,
+      2.9504212193724557,
+      2.9489149334680915,
+      2.9476288997002817,
+      2.946563672762397,
+      2.9457198465905368,
+      2.945098054224811,
+      2.9446989675900546,
+      2.944523297193927,
+      2.9445717917403753
+    ],
+    "power": [
+      2.985527629665014,
+      2.9814337053872038,
+      2.9775662408480557,
+      2.9739254722927164,
+      2.970511673970249,
+      2.96732515871091,
+      2.9643662784226783,
+      2.9616354245066265,
+      2.9591330281907045,
+      2.956859560781376,
+      2.954815533832521,
+      2.9530014992307083,
+      2.951418049196002,
+      2.9500658161970312,
+      2.9489454727791835,
+      2.9480577313043006,
+      2.947403343600393,
+      2.946983100519474,
+      2.94679783140164,
+      2.946848403443457,
+      2.9471357209685296
+    ],
+    "shin": [
+      2.985527629665014,
+      2.9814225705203614,
+      2.977540664469919,
+      2.9738820866571003,
+      2.9704470494384196,
+      2.967235803018675,
+      2.964248636008536,
+      2.9614858759042866,
+      2.958947889489391,
+      2.956635083157598,
+      2.9545479031569593,
+      2.9526868357540925,
+      2.9510524073178983,
+      2.9496451843216454,
+      2.94846577326216,
+      2.9475148204948534,
+      2.946793011982683,
+      2.946301072957635,
+      2.9460397674923957,
+      2.9460098979804292,
+      2.9462123045220774
+    ]
+  },
+  "argmin": {
+    "proportional": 0.95,
+    "power": 0.9,
+    "shin": 0.95
+  },
+  "headline": {
+    "devig_method": "proportional",
+    "w_hat": 0.95,
+    "loss_at_w_hat": 2.944523297193927,
+    "loss_at_0": 2.985527629665014,
+    "loss_at_1": 2.9445717917403753,
+    "indistinguishable_band": [
+      0.75,
+      1.0
+    ]
+  },
+  "intervals": {
+    "vs_w0": {
+      "n": 86,
+      "mean": 0.04821373671553808,
+      "radius": 0.0316287203021528,
+      "lower": 0.01658501641338528,
+      "upper": 0.07984245701769088,
+      "excludes_zero": true,
+      "alpha": 0.01,
+      "min_observations": 10
+    },
+    "vs_w1": {
+      "n": 86,
+      "mean": -0.0003404496549222906,
+      "radius": 0.001684606388150818,
+      "lower": -0.002025056043073109,
+      "upper": 0.0013441567332285274,
+      "excludes_zero": false,
+      "alpha": 0.01,
+      "min_observations": 10
+    }
+  },
+  "devig_comparison": {
+    "at_weight": 1.0,
+    "baseline": "proportional",
+    "baseline_mean_loss": 2.9391187054891406,
+    "pairs": [
+      {
+        "n": 86,
+        "mean": -0.0025129388017299803,
+        "radius": 0.004012704411277789,
+        "lower": -0.00652564321300777,
+        "upper": 0.001499765609547809,
+        "excludes_zero": false,
+        "alpha": 0.01,
+        "min_observations": 10,
+        "method": "power",
+        "baseline": "proportional",
+        "mean_loss": 2.9416316442908697
+      },
+      {
+        "n": 86,
+        "mean": -0.0015885221375797206,
+        "radius": 0.002858484898948346,
+        "lower": -0.004447007036528066,
+        "upper": 0.0012699627613686254,
+        "excludes_zero": false,
+        "alpha": 0.01,
+        "min_observations": 10,
+        "method": "shin",
+        "baseline": "proportional",
+        "mean_loss": 2.94070722762672
+      }
+    ],
+    "recommended_method": "proportional",
+    "finding": "No de-vig method's anytime-valid interval excludes zero against proportional at w=1. Keep proportional, the simplest. The point estimates differ (power -0.0025, shin -0.0016) but a point estimate is not evidence, and picking a winner on one would be choosing a hyperparameter on noise."
+  },
+  "secondary_metrics": {
+    "note": "Reported, never optimised. total_crps isolates the level, outcome_nll the split, *_cs_nll the clean sheets that dominate FPL defender points.",
+    "at_w_hat": {
+      "scoreline_nll": 2.944523297193927,
+      "total_crps": 0.8973431169173728,
+      "outcome_nll": 0.969551060288977,
+      "home_cs_nll": 0.5406105898408915,
+      "away_cs_nll": 0.4838142272804118
+    },
+    "at_w0": {
+      "scoreline_nll": 2.985527629665014,
+      "total_crps": 0.9157398552369856,
+      "outcome_nll": 0.9862076133176021,
+      "home_cs_nll": 0.54951671856413,
+      "away_cs_nll": 0.4930624927651555
+    },
+    "at_w1": {
+      "scoreline_nll": 2.9445717917403753,
+      "total_crps": 0.8974859185350198,
+      "outcome_nll": 0.9695692944452746,
+      "home_cs_nll": 0.5406165244212386,
+      "away_cs_nll": 0.48378384306540856
+    },
+    "curves": {
+      "scoreline_nll": [
+        2.985527629665014,
+        2.981407444992417,
+        2.9775038635143396,
+        2.973816985763692,
+        2.970346947325679,
+        2.967093919587211,
+        2.9640581104140726,
+        2.9612397647559914,
+        2.9586391651794814,
+        2.9562566323284796,
+        2.9540925253125816,
+        2.952147242022538,
+        2.9504212193724557,
+        2.9489149334680915,
+        2.9476288997002817,
+        2.946563672762397,
+        2.9457198465905368,
+        2.945098054224811,
+        2.9446989675900546,
+        2.944523297193927,
+        2.9445717917403753
+      ],
+      "total_crps": [
+        0.9157398552369856,
+        0.9137957422965068,
+        0.9119599884440714,
+        0.9102322607740084,
+        0.9086123062764063,
+        0.907099954606087,
+        0.9056951205846048,
+        0.9043978064351659,
+        0.9032081037501482,
+        0.9021261951903036,
+        0.9011523559141794,
+        0.9002869547354574,
+        0.8995304550051345,
+        0.8988834152144534,
+        0.8983464893135925,
+        0.897920426740278,
+        0.8976060721513749,
+        0.8974043648499815,
+        0.897316337899711,
+        0.8973431169173728,
+        0.8974859185350198
+      ],
+      "outcome_nll": [
+        0.9862076133176021,
+        0.9845303855066669,
+        0.9829421243735875,
+        0.9814427536705641,
+        0.9800322142374248,
+        0.9787104645649393,
+        0.9774774813045145,
+        0.9763332597249594,
+        0.9752778141169479,
+        0.9743111781458266,
+        0.9734334051532849,
+        0.9726445684083986,
+        0.9719447613083582,
+        0.9713340975290682,
+        0.9708127111256794,
+        0.9703807565828616,
+        0.9700384088144958,
+        0.9697858631122477,
+        0.9696233350422419,
+        0.969551060288977,
+        0.9695692944452746
+      ],
+      "home_cs_nll": [
+        0.54951671856413,
+        0.5486145163161437,
+        0.5477611453872647,
+        0.5469564815330469,
+        0.5462004016214728,
+        0.5454927838059781,
+        0.5448335076855102,
+        0.5442224544510362,
+        0.5436595070180973,
+        0.5431445501450382,
+        0.5426774705366841,
+        0.5422581569332984,
+        0.5418865001847262,
+        0.5415623933096945,
+        0.5412857315402622,
+        0.541056412351509,
+        0.5408743354764955,
+        0.5407394029066365,
+        0.5406515188776025,
+        0.5406105898408915,
+        0.5406165244212386
+      ],
+      "away_cs_nll": [
+        0.4930624927651555,
+        0.4921772790555842,
+        0.4913351360409972,
+        0.49053627286142226,
+        0.4897808995143333,
+        0.4890692268440432,
+        0.4884014665261596,
+        0.48777783104676214,
+        0.48719853367600924,
+        0.48666378843579716,
+        0.4861738100611614,
+        0.4857288139550813,
+        0.4853290161363411,
+        0.48497463318012507,
+        0.4846658821510022,
+        0.48440298052798003,
+        0.4841861461212968,
+        0.4840155969806484,
+        0.4838915512945336,
+        0.4838142272804118,
+        0.48378384306540856
+      ]
+    },
+    "agreement": {
+      "argmins": {
+        "scoreline_nll": 0.95,
+        "total_crps": 0.9,
+        "outcome_nll": 0.95,
+        "home_cs_nll": 0.95,
+        "away_cs_nll": 1.0
+      },
+      "level_gap": 0.04999999999999993,
+      "split_gap": 0.0,
+      "tolerance": 0.1,
+      "agrees": true,
+      "verdict": "The level (CRPS on total goals, argmin 0.90) and the split (1X2 log-loss, argmin 0.95) both agree with the primary argmin 0.95 to within 0.10. One scalar w is adequate; no evidence for splitting it into separate total and supremacy weights."
+    }
+  },
+  "per_season": [
+    {
+      "season": "2324",
+      "n_matches": 177,
+      "n_rounds": 17,
+      "argmin": 0.9,
+      "loss_at_argmin": 3.087398867653129,
+      "loss_at_0": 3.1304104733270552,
+      "loss_at_1": 3.0876881418143625,
+      "vs_w0": {
+        "n": 17,
+        "mean": 0.066572441128,
+        "radius": 0.09477738245803335,
+        "lower": -0.02820494133003336,
+        "upper": 0.16134982358603334,
+        "excludes_zero": false,
+        "alpha": 0.01,
+        "min_observations": 10
+      },
+      "vs_w1": {
+        "n": 17,
+        "mean": -0.002221894667853843,
+        "radius": 0.010181647016606786,
+        "lower": -0.012403541684460628,
+        "upper": 0.007959752348752944,
+        "excludes_zero": false,
+        "alpha": 0.01,
+        "min_observations": 10
+      }
+    },
+    {
+      "season": "2425",
+      "n_matches": 357,
+      "n_rounds": 34,
+      "argmin": 1.0,
+      "loss_at_argmin": 2.9531732765812184,
+      "loss_at_0": 2.9981722368768358,
+      "loss_at_1": 2.9531732765812184,
+      "vs_w0": {
+        "n": 34,
+        "mean": 0.0517785588268293,
+        "radius": 0.04845821639761051,
+        "lower": 0.0033203424292187894,
+        "upper": 0.10023677522443981,
+        "excludes_zero": true,
+        "alpha": 0.01,
+        "min_observations": 10
+      },
+      "vs_w1": {
+        "n": 34,
+        "mean": 0.0,
+        "radius": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "excludes_zero": false,
+        "alpha": 0.01,
+        "min_observations": 10
+      }
+    },
+    {
+      "season": "2526",
+      "n_matches": 369,
+      "n_rounds": 35,
+      "argmin": 0.95,
+      "loss_at_argmin": 2.867517331722719,
+      "loss_at_0": 2.903797580605932,
+      "loss_at_1": 2.8676007238507246,
+      "vs_w0": {
+        "n": 35,
+        "mean": 0.03565189614948885,
+        "radius": 0.03705112271127088,
+        "lower": -0.001399226561782034,
+        "upper": 0.07270301886075972,
+        "excludes_zero": false,
+        "alpha": 0.01,
+        "min_observations": 10
+      },
+      "vs_w1": {
+        "n": 35,
+        "mean": 6.0887028977977104e-05,
+        "radius": 0.0020786928808670902,
+        "lower": -0.002017805851889113,
+        "upper": 0.0021395799098450673,
+        "excludes_zero": false,
+        "alpha": 0.01,
+        "min_observations": 10
+      }
+    }
+  ],
+  "recommendation": {
+    "fitted_argmin": 0.95,
+    "indistinguishable_band": [
+      0.75,
+      1.0
+    ],
+    "closing_line_haircut": 0.15,
+    "mle_substitute_haircut": 0.05,
+    "haircut_before_snapping": 0.7671,
+    "recommended_value": 0.75,
+    "current_value": 0.55,
+    "promotable_band_one_step": [
+      0.3,
+      0.8
+    ],
+    "within_one_promotion": true,
+    "market_helps_vs_w0": true,
+    "posterior_helps_vs_w1": false,
+    "note": "Fitted argmin 0.95 on CLOSING prices, indistinguishable from anything in [0.75, 1.00]. Haircut 15% for the pre-deadline gap and 5% for the MLE standing in for the Bayesian posterior, then snapped down to the grid: 0.75. Reachable from 0.55 in one promotion."
+  },
+  "caveats": [
+    "The corpus holds CLOSING prices, which are sharper than the pre-deadline prices production consumes because they contain confirmed team news ours cannot. The fitted w is therefore an UPPER BOUND on how much to trust our live line, and must be haircut before it is shipped.",
+    "The historical corpus has only TWO books per market while production has ~10, so aggregate_books marks every historical fixture 'thin'. w is fitted against the RAW inverted market rate with the thin-ness discount neutralised (market.weight forced to 1.0), so w measures trust in the market ALONE. Production applies coverage-based shrinkage on top via effective = w * market.weight; the two are separate questions and are estimated separately.",
+    "The statistical component here is an unregularised MLE point estimate (dc_mle.MLEDixonColes), not production's hierarchical Bayesian posterior. The MLE is the weaker partner, so the residual left for the market to explain is larger than it would be against production's model, which biases w UPWARD in the same direction as the closing-line gap. Measured on the real run: of 89 fittable rounds, 3 had no finite MLE and 2 more were fitted with rates outside the plausible band."
+  ]
+}

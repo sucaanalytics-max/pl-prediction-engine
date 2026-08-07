@@ -24,6 +24,7 @@ import {
   Stethoscope,
   Sun,
   Target,
+  TrendingUp,
   Users,
   WalletCards,
   X,
@@ -31,6 +32,7 @@ import {
 } from "lucide-react";
 import { usePredictions } from "@/lib/PredictionsContext";
 import { useFplLive } from "@/lib/FplLiveContext";
+import { compactIstDeadline } from "@/lib/formats";
 
 interface NavItem {
   href: string;
@@ -49,6 +51,7 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: "Decision workspace",
     items: [
+      { href: "/now", label: "Now", icon: LayoutDashboard },
       { href: "/", label: "Overview", icon: LayoutDashboard },
       { href: "/decisions", label: "Agent Decision", icon: Sparkles },
       { href: "/inbox", label: "Agent Inbox", icon: Inbox },
@@ -59,6 +62,7 @@ const NAV_GROUPS: NavGroup[] = [
       { href: "/planner", label: "Squad Planner", icon: Route },
       { href: "/evidence", label: "Injury Evidence", icon: Stethoscope },
       { href: "/intelligence", label: "Research Feed", icon: BookOpenText, badge: "5" },
+      { href: "/projections", label: "Player Projections", icon: BarChart3 },
       { href: "/players", label: "Player Lab", icon: Users },
     ],
   },
@@ -66,13 +70,13 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Premier League",
     items: [
       { href: "/h2h", label: "Match Models", icon: GitCompareArrows },
-      { href: "/table", label: "League Context", icon: BarChart3 },
     ],
   },
   {
     label: "Markets · secondary",
     items: [
-      { href: "/value-bets", label: "Market Edges", icon: Target, valueBadge: true },
+      { href: "/decide", label: "Decide", icon: Sparkles },
+      { href: "/markets", label: "Markets", icon: TrendingUp },
       { href: "/bankroll", label: "Bankroll", icon: WalletCards },
     ],
   },
@@ -92,24 +96,6 @@ function timeAgo(timestamp: number) {
   if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
   if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
   return `${Math.floor(diff / 86400)}d ago`;
-}
-
-function compactDeadline(deadlineTime?: string) {
-  if (!deadlineTime) return "Fri 21 Aug · 23:00";
-  const date = new Date(deadlineTime);
-  const day = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kolkata",
-    weekday: "short",
-    day: "2-digit",
-    month: "short",
-  }).format(date);
-  const time = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kolkata",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).format(date);
-  return `${day} · ${time}`;
 }
 
 function ThemeToggle() {
@@ -226,7 +212,7 @@ export default function Navigation() {
           </a>
           <div className="deadline-mini">
             <span><ShieldCheck size={14} /> GW{fplState?.event.id ?? 1} planning</span>
-            <strong>{compactDeadline(fplState?.event.deadlineTime)}</strong>
+            <strong>{compactIstDeadline(fplState?.event.deadlineTime)}</strong>
           </div>
           <div className="sidebar-status">
             <span className={isStale ? "status-dot stale" : "status-dot"} />

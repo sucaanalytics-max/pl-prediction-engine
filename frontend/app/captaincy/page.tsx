@@ -142,8 +142,8 @@ export default function CaptaincyPage() {
       </section>
 
       <p className="data-disclaimer">
-        Captain projections are provisional preseason estimates. Confirm starts and team
-        news close to the deadline.
+        Captain EV uses the private FPLReview snapshot with newer official injury
+        flags overlaid. Confirm starts and team news close to the deadline.
       </p>
     </div>
   );

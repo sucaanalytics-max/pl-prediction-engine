@@ -21,7 +21,7 @@ import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Mapping, Optional, Sequence, Tuple
 
 from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS_DIR
 from pipeline.decide.horizon import EVAL_HORIZON
@@ -34,6 +34,44 @@ DEFAULT_SITE_URL = "https://example.invalid/decisions"
 # Phases whose implementation lands in a later increment. Listed explicitly so a
 # run reports "not built" instead of silently doing nothing and exiting green.
 NOT_YET_IMPLEMENTED: Dict[Phase, str] = {}
+
+
+def _publish_evidence_view(
+    claims: Sequence[Any],
+    resolutions: Mapping[Any, Any],
+    escalations: Sequence[Any],
+    gameweek: int,
+    bootstrap: Mapping[str, Any],
+) -> None:
+    """
+    Write the claim-tree artifact the /evidence screen renders.
+
+    Non-fatal by design, like everything else on this path: a projection that has
+    been computed must not be lost because the reporting on it failed. Isolated in
+    its own try so a failure here cannot also take down the resolution that the
+    model depends on — the mistake made one level up in `_record_decision_impact`,
+    where a narrow inner catch let an AttributeError abandon the whole function.
+    """
+    from pipeline.learning import evidence_view as view_module
+
+    try:
+        teams = {t["id"]: str(t.get("name") or "") for t in bootstrap.get("teams") or []}
+        names = {
+            int(e["id"]): (str(e.get("web_name") or ""), teams.get(e.get("team"), ""))
+            for e in bootstrap.get("elements") or []
+        }
+        view = view_module.build(
+            claims=claims,
+            resolutions=resolutions,
+            escalations=escalations,
+            gameweek=gameweek,
+            generated_at=datetime.now(timezone.utc)
+            .isoformat().replace("+00:00", "Z"),
+            names=names,
+        )
+        view_module.write(view, Path(FPL_PUBLIC_DIR))
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("could not publish the evidence view: %s", exc)
 
 
 def refresh_expected_points(
@@ -75,22 +113,64 @@ def refresh_expected_points(
         logger.warning("no committed prior-season snapshot; using archive only")
 
     archive = load_archive_season("2526")
-    inputs = build_fpl_inputs(bootstrap, archive, priors, rules)
+
+    # Resolved availability evidence, where any has been recorded. Read BEFORE the
+    # inputs are built so a manual press-conference claim can lower a projection.
+    # Non-fatal: without it the model falls back to FPL's own fields, which is
+    # exactly the behaviour before the evidence layer existed.
+    evidence_view: Dict[int, Any] = {}
+    evidence_summary: Dict[str, Any] = {}
+    escalations: list = []
+    try:
+        from pipeline.learning.availability_conflicts import (
+            availability_view, resolve_claims, summarise,
+        )
+        from pipeline.learning.availability_evidence import history as claim_history
+
+        recorded = [
+            claim for claim in claim_history(Path(predictions_dir))
+            if int(claim.gameweek) == int(gameweek)
+        ]
+        if recorded:
+            resolutions, escalations = resolve_claims(recorded)
+            evidence_view = availability_view(resolutions)
+            evidence_summary = summarise(resolutions, escalations)
+            logger.info("availability evidence resolved: %s", evidence_summary)
+
+            # Publish what the resolution decided AND what it beat. Written here
+            # because this is the one place the claims, the resolutions and the
+            # escalations all exist together; recomputing them for the export
+            # would risk the page showing a different adjudication from the model.
+            _publish_evidence_view(
+                recorded, resolutions, escalations, int(gameweek), bootstrap,
+            )
+    except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
+        logger.warning("could not resolve availability evidence: %s", exc)
+
+    inputs = build_fpl_inputs(
+        bootstrap, archive, priors, rules, evidence=evidence_view
+    )
 
     # Per-fixture goal rates, best source first. A flat rate for every fixture
     # gives a promoted side and the champions identical clean-sheet
     # probabilities, which measured as 0.066 predicted against 0.120 actual --
     # under-predicted by nearly half, with goals correspondingly over-predicted.
-    exported = load_exported_rates(Path(predictions_dir) / "fixture_xg.json")
+    exported = load_exported_rates(
+        Path(predictions_dir) / "fixture_xg.json", current_gameweek=gameweek
+    )
     strengths = None
-    if not exported:
-        try:
-            strengths = TeamStrengths().fit(archive)
-        except ValueError as exc:
-            # Not fatal: resolve_rates falls back to a flat default and records
-            # that provenance on every fixture, so a degraded run is visible in
-            # the artifact rather than silently indistinguishable from a good one.
-            logger.warning("could not fit team strengths (%s); rates will be flat", exc)
+    # Fitted ALWAYS, not only when the export is missing. Previously a successful
+    # export left this None, so any fixture the export happened to miss — a week
+    # beyond its horizon, a rearranged tie — fell straight past the archive tier
+    # to a flat 1.45/1.20 for both sides. One archive aggregation is cheap; a
+    # gameweek priced with no opponent information is not.
+    try:
+        strengths = TeamStrengths().fit(archive)
+    except ValueError as exc:
+        # Not fatal: resolve_rates falls back to a flat default and records
+        # that provenance on every fixture, so a degraded run is visible in
+        # the artifact rather than silently indistinguishable from a good one.
+        logger.warning("could not fit team strengths (%s); rates will be flat", exc)
 
     teams = {team["id"]: team for team in bootstrap.get("teams", [])}
     from pipeline.data.team_mapping import normalize_team_name
@@ -138,9 +218,42 @@ def refresh_expected_points(
     seed = stable_seed_entropy(CURRENT_SEASON, gameweek)
     draws = run_stream("fpl")
 
-    xp_by_week = _project_horizon(
+    horizon = _project_horizon(
         gameweek, fixtures_raw, teams, inputs, rules, exported, strengths,
     )
+    xp_by_week, horizon_diagnostics = horizon if horizon else (None, [])
+
+    # Record what was known about availability at this moment. The seal freezes
+    # the bootstrap once per gameweek; this runs every three hours, so it is what
+    # preserves the intra-week news PATH rather than only the deadline state.
+    # Non-fatal: an unrecorded claim costs one observation, while failing the run
+    # costs the forecast, which is irreplaceable.
+    evidence: Dict[str, Any] = {}
+    try:
+        from pipeline.learning.availability_evidence import (
+            claims_from_bootstrap, parse_coverage, record as record_claims,
+        )
+
+        claims = claims_from_bootstrap(
+            bootstrap,
+            int(gameweek),
+            datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        )
+        record_claims(claims, Path(predictions_dir))
+        evidence = parse_coverage(claims)
+        evidence["resolution"] = evidence_summary
+        # Every unresolved conflict, verbatim, so _deliver can surface it. The
+        # projection was still made — conservatively — and the human needs to know
+        # on what basis.
+        evidence["escalations"] = [
+            {"element_id": r.element_id, "claim_type": r.claim_type,
+             "value": r.value, "detail": r.escalation}
+            for r in escalations
+        ]
+        logger.info("availability evidence: %s", evidence)
+    except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
+        logger.warning("availability evidence not recorded: %s", exc)
+
     written = export_gameweek_xp(
         draws,
         CURRENT_SEASON,
@@ -166,6 +279,14 @@ def refresh_expected_points(
         # stream and simulating one would double the cost of the common path.
         "_second_stream": run_stream,
         "_xp_by_week": xp_by_week,
+        # Per-week availability and goal-rate provenance. Threaded out so it can
+        # ride into the sealed record: these are the only observations by which
+        # the horizon availability parameters become measurable.
+        "horizon_diagnostics": horizon_diagnostics,
+        # Parser coverage over the flagged population. Surfaced so a wording
+        # change at FPL, which otherwise degrades silently to the old behaviour,
+        # is visible in the run and in the seal.
+        "availability_evidence": evidence,
     }
 
 
@@ -177,11 +298,12 @@ def _project_horizon(
     rules: Any,
     exported: Any,
     strengths: Any,
-) -> Optional[list]:
+) -> Optional[Tuple[list, list]]:
     """
     Expected points per player for each gameweek across the horizon.
 
-    Returns a list of ``{element_id: xp}``, one per week starting at ``gameweek``.
+    Returns ``(weeks, diagnostics)`` where ``weeks`` is a list of
+    ``{element_id: xp}``, one per week starting at ``gameweek``.
     Keyed by id rather than position because the consumer aligns against a pool
     it builds itself, and a positional handoff between two modules that each
     order players independently is the R11 failure waiting to happen.
@@ -190,12 +312,20 @@ def _project_horizon(
 
     * **Fixtures differ per week**, which is the entire point. Rates come from
       the exported Dixon-Coles posterior, which now covers the horizon.
-    * **Availability decays with distance.** A player nailed today is less
-      certain to start in six weeks — injuries, rotation and transfers all
+    * **Availability changes with distance, per player.** A player nailed today
+      is less certain to start in six weeks — injuries, rotation and transfers
       accumulate. Measured in our own archive at 82.6 minutes for the current
-      week falling to 56.3 by the sixth. Without this the horizon would treat a
-      week-six projection as being as reliable as this week's and plan
-      confidently on it.
+      week falling to 56.3 by the sixth. But an *impaired* player moves the other
+      way: a suspension expires, an injury heals, and projecting him to blank for
+      eight straight weeks is simply wrong.
+
+    **This used to be one scalar applied to the finished expected points.** That
+    was wrong in a specific, measurable way: multiplying a total never crosses
+    the 60-minute clean-sheet gate or the 1-minute appearance gate inside the
+    simulator. Appearance points are sub-proportional to availability while clean
+    sheets are super-proportional, so a uniform scalar on totals systematically
+    mis-ranks defenders against forwards at long horizons. The haircut now goes
+    in as role probabilities, before simulation, where both non-linearities act.
 
     Returns ``None`` rather than raising if the horizon cannot be built: a
     myopic decision is worse than a planned one but far better than none, and
@@ -203,14 +333,21 @@ def _project_horizon(
     """
     from pipeline.data.team_mapping import normalize_team_name
     from pipeline.models.fixture_rates import resolve_rates
-    from pipeline.models.minutes import horizon_availability_factor
+    from pipeline.models.fpl_inputs import (
+        club_kickoffs_by_gameweek,
+        project_squads_at_horizon,
+    )
     from pipeline.run_pipeline import stable_seed_entropy
     from pipeline.simulation.gameweek_sim import FixtureSpec, simulate_gameweek
 
+    kickoffs_by_week = club_kickoffs_by_gameweek(fixtures_raw, teams)
+
     weeks: list = []
+    diagnostics: list = []
     for offset in range(EVAL_HORIZON):
         target = int(gameweek) + offset
         specs = []
+        week_sources: Dict[str, int] = {}
         for fixture in fixtures_raw:
             if fixture.get("event") != target or fixture.get("finished"):
                 continue
@@ -220,6 +357,7 @@ def _project_horizon(
                 continue
             match_id = str(fixture.get("id", f"{home}_{away}"))
             rates = resolve_rates(match_id, home, away, exported, strengths)
+            week_sources[rates.source] = week_sources.get(rates.source, 0) + 1
             specs.append(
                 FixtureSpec(
                     match_id=match_id, gameweek=target,
@@ -235,30 +373,59 @@ def _project_horizon(
             # every player blanks, and it would plan around a fiction.
             break
 
+        # Roles re-derived for THIS week. The availability path knows how each
+        # player's absence is expected to end, so a suspension expires and an
+        # injury heals instead of every flagged player blanking for eight weeks.
+        week_squads = project_squads_at_horizon(
+            inputs, horizon=offset, club_kickoffs=kickoffs_by_week.get(target, {})
+        )
+
         # Fewer draws than the decision week. These feed a linear surrogate that
         # only has to rank candidates into a shortlist, and the simulator
         # re-scores the winner properly on full draws.
         week_draws = simulate_gameweek(
-            specs, inputs.squads, inputs.events, rules,
+            specs, week_squads, inputs.events, rules,
             n_draws=FPL_SIM["n_draws_horizon"],
             seed_entropy=stable_seed_entropy(CURRENT_SEASON, target, "horizon"),
             all_element_ids=inputs.all_element_ids,
         )
-        decay = horizon_availability_factor(offset)
         weeks.append(
             {
-                int(row["element_id"]): float(row["xp"]) * decay
+                int(row["element_id"]): float(row["xp"])
                 for row in week_draws.summary_rows()
             }
         )
+
+        # Recorded per week and threaded into the seal, because these are the
+        # only numbers by which the horizon availability parameters can ever be
+        # measured against outcomes. A flat_default here means a week was priced
+        # with no opponent information at all, which used to be invisible.
+        players = [p for squad in week_squads.values() for p in squad]
+        diagnostics.append({
+            "gameweek": target,
+            "n_fixtures": len(specs),
+            "goal_rate_sources": week_sources,
+            "mean_expected_minutes": round(
+                sum(p.roles.expected_minutes for p in players) / max(1, len(players)), 3
+            ),
+            "n_unavailable": sum(1 for p in players if p.roles.p_unavailable > 0.5),
+        })
+        if week_sources.get("flat_default"):
+            logger.warning(
+                "GW%s: %d fixture(s) priced at the flat default rate — no opponent "
+                "information", target, week_sources["flat_default"],
+            )
 
     if len(weeks) < 2:
         logger.warning(
             "horizon covers %d gameweek(s); the decision will be myopic", len(weeks)
         )
         return None
-    logger.info("horizon projected over %d gameweeks from GW%s", len(weeks), gameweek)
-    return weeks
+    logger.info(
+        "horizon projected over %d gameweeks from GW%s; mean expected minutes %s",
+        len(weeks), gameweek, [d["mean_expected_minutes"] for d in diagnostics],
+    )
+    return weeks, diagnostics
 
 
 def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
@@ -290,6 +457,12 @@ def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
         metadata={
             "artifact_metadata": artifact.get("metadata", {}),
             "goal_rates": outcome.get("goal_rates"),
+            # Per-week availability and rate provenance ride INTO the seal. This
+            # is the only route by which the horizon availability parameters ever
+            # become measurable against outcomes: without it, the numbers that
+            # priced weeks 2-8 are gone by the time the results arrive.
+            "horizon": outcome.get("horizon_diagnostics"),
+            "availability_evidence": outcome.get("availability_evidence"),
         },
         dry_run=dry_run,
     )
@@ -312,7 +485,9 @@ def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
     for label, written in decisions.items():
         logger.info("decision (%s) -> %s", label, written["decision"])
 
-    return _deliver(state, decisions, dry_run)
+    return _deliver(
+        state, decisions, dry_run, outcome.get("availability_evidence") or {}
+    )
 
 
 
@@ -344,7 +519,10 @@ def _announce(
 
 
 def _deliver(
-    state: ScheduleState, decisions: Dict[str, Dict[str, Path]], dry_run: bool
+    state: ScheduleState,
+    decisions: Dict[str, Dict[str, Path]],
+    dry_run: bool,
+    evidence: Optional[Dict[str, Any]] = None,
 ) -> int:
     """
     Publish everything the agent has to say, to the app.
@@ -385,6 +563,58 @@ def _deliver(
                 "nothing to decide. This is normal for a blank or completed week.",
                 created_at,
                 suffix="no-decision",
+            )
+        )
+
+    # A wording change at FPL makes ban and return-date extraction stop working,
+    # and the failure mode is a silent fallback to the previous behaviour — which
+    # is exactly the kind of degradation nobody notices. Surfaced only when it is
+    # both a large share and a real count, so one oddity does not cry wolf.
+    if evidence:
+        from pipeline.learning.availability_evidence import (
+            should_escalate_parse_failures,
+        )
+
+        if should_escalate_parse_failures(evidence):
+            messages.append(
+                status_message(
+                    state.gameweek,
+                    f"GW{state.gameweek} — availability news is not being read",
+                    f"{evidence['n_unparsed']} of {evidence['n_flagged']} flagged "
+                    f"players have news the parser did not recognise "
+                    f"({evidence['unparsed_share']:.0%}). Suspension end dates and "
+                    f"expected return dates are not being extracted for them, so "
+                    f"they are projected as open-ended absences — conservative, but "
+                    f"a banned player who is back next week will look unavailable. "
+                    f"FPL has probably changed its wording.",
+                    created_at,
+                    severity="warning",
+                    kind="warning",
+                    detail=dict(evidence),
+                    suffix="news-parse",
+                )
+            )
+
+    # Unresolved availability conflicts. The projection WAS made — conservatively,
+    # using the least-available value — so this is a caveat rather than a failure.
+    #
+    # Severity is capped at `warning` deliberately. messages.py reserves `critical`
+    # for a permanently lost observation or a decision that could not be made, and
+    # a conflict on a player nobody owns is neither. Inflating it would devalue the
+    # one severity that is supposed to stop you scrolling.
+    for item in (evidence or {}).get("escalations", []) or []:
+        messages.append(
+            status_message(
+                state.gameweek,
+                f"GW{state.gameweek} — sources disagree on a player's availability",
+                f"{item.get('detail') or 'Sources disagreed.'} The projection used "
+                f"the more conservative reading, so this player may be understated "
+                f"rather than overstated.",
+                created_at,
+                severity="warning",
+                kind="warning",
+                detail=dict(item),
+                suffix=f"availability-conflict-{item.get('element_id')}",
             )
         )
 
@@ -458,6 +688,10 @@ def _decide_for_entries(
     draws_report = outcome["_second_stream"]("fpl_report")
 
     state_gameweek = state.gameweek
+    # Captured before the loop: the per-entry read below used to bind to `state`
+    # and shadow the ScheduleState, which is why `state_gameweek` exists. Reading
+    # the deadline inside the loop would have got the entry's, which has none.
+    state_deadline = state.deadline.isoformat().replace("+00:00", "Z") if state.deadline else None
     bootstrap = outcome["_bootstrap"]
 
     written: Dict[str, Dict[str, Path]] = {}
@@ -467,10 +701,11 @@ def _decide_for_entries(
         # meant that from GW2 onward `held` was always empty, so the agent
         # treated every gameweek as an opening build with the full 100.0m and
         # never once replayed a purchase price — the thing entry_api exists for.
-        state = _read_entry(config, state_gameweek, bootstrap)
-        held = state.squad or (config.get("squad") or [])
+        entry = _read_entry(config, state_gameweek, bootstrap)
+        held = entry.squad or (config.get("squad") or [])
         decision = decide(
-            gameweek=state.gameweek,
+            gameweek=entry.gameweek,
+            deadline=state_deadline,
             draws_select=draws_select,
             draws_report=draws_report,
             bootstrap=outcome["_bootstrap"],
@@ -482,10 +717,10 @@ def _decide_for_entries(
             # No squad held means the opening build, where the whole budget is
             # cash. With a squad, the bank must be supplied — defaulting it
             # would invent 100.0m that does not exist.
-            bank=(state.bank if state.squad else config.get("bank")) if held else None,
-            free_transfers=state.free_transfers if state.squad
+            bank=(entry.bank if entry.squad else config.get("bank")) if held else None,
+            free_transfers=entry.free_transfers if entry.squad
             else config.get("free_transfers", 1),
-            purchase_prices=state.purchase_prices or config.get("purchase_prices"),
+            purchase_prices=entry.purchase_prices or config.get("purchase_prices"),
             xp_by_week=xp_by_week,
         )
         for warning in decision.warnings:
@@ -494,10 +729,172 @@ def _decide_for_entries(
         if dry_run:
             logger.info("[%s] dry run: not writing the decision artifact", label)
             continue
+
+        # Read the OUTGOING decision before overwriting it: stage 2 of the delta
+        # needs the move the human was previously told to make.
+        previous = _previous_decision(predictions_dir, state_gameweek, label)
+
         written[label] = write_decision(
             decision, predictions_dir, public_dir=FPL_PUBLIC_DIR
         )
+        _record_decision_impact(
+            predictions_dir=predictions_dir,
+            gameweek=entry.gameweek,
+            entry_label=label,
+            previous=previous,
+            decision=decision,
+            draws=draws_report,
+            xp_rows=artifact["players"],
+            rules=outcome["_rules"],
+        )
     return written
+
+
+def _previous_decision(
+    predictions_dir: Path, gameweek: Optional[int], label: str
+) -> Optional[Dict[str, Any]]:
+    """
+    The decision artifact this run is about to replace, or None.
+
+    None on the first run of a gameweek, which is a real state and not an error:
+    with no previous recommendation there is no cost of inaction to compute.
+    """
+    if not gameweek:
+        return None
+    path = (
+        Path(predictions_dir) / "fpl"
+        / f"decision_gw{int(gameweek):02d}_{label}.json"
+    )
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        logger.warning("previous decision unreadable (%s); no impact computed", exc)
+        return None
+
+
+def _record_decision_impact(
+    predictions_dir: Path,
+    gameweek: Optional[int],
+    entry_label: str,
+    previous: Optional[Mapping[str, Any]],
+    decision: Any,
+    draws: Any,
+    xp_rows: Sequence[Mapping[str, Any]],
+    rules: Any,
+) -> None:
+    """
+    Stage 2 of the news delta: what the availability changes did to the plan.
+
+    Runs here rather than in the 15-minute poller because it needs the solver, and
+    `pipeline/decide/milp.py` imports numpy at module level and scipy's `milp` at
+    run time. The poller therefore emits the resolution change immediately and this
+    fills in the decision half at the agent's own cadence.
+
+    Deliberately non-fatal throughout: a decision that has been solved and written
+    must not be lost because the reporting on it failed.
+    """
+    from pipeline.decide.milp import Plan
+    from pipeline.decide.plan_eval import evaluate_plan
+    from pipeline.learning import deltas as deltas_store
+
+    try:
+        pending = deltas_store.unenriched(deltas_store.history(predictions_dir))
+        pending = [d for d in pending if int(d.get("gameweek", 0)) == int(gameweek or 0)]
+        if not pending:
+            return
+
+        new_xp = {int(r["element_id"]): float(r.get("xp", 0.0)) for r in xp_rows}
+        # The xp the PREVIOUS decision was made on, as recorded on that artifact.
+        # Absent on older producers, in which case xp_moved is reported as unknown
+        # rather than as zero movement.
+        old_xp = {
+            int(k): float(v)
+            for k, v in ((previous or {}).get("xp_snapshot") or {}).items()
+        }
+
+        new_plan = decision.reported.plan.as_dict()
+        previous_plan = ((previous or {}).get("decision") or {}).get("plan")
+
+        # Re-score the OLD recommendation on the NEW draws. This is the half of
+        # ev_cost_of_inaction that makes it a cost rather than a drift measurement.
+        rescored: Optional[float] = None
+        if previous_plan:
+            try:
+                # Built from the xp rows directly, NOT via `positions_of`: that
+                # takes `Candidate` objects and reads `.element_id`, while these are
+                # plain dicts from the artifact. Passing them raised AttributeError
+                # — which the handler below did not catch, so it escaped to the
+                # outer one and killed the entire impact assessment rather than
+                # just the cost. Stage 2 silently produced nothing from the second
+                # run of every gameweek onward, and said so only in a log line.
+                positions = {
+                    int(row["element_id"]): str(row.get("position") or "")
+                    for row in xp_rows
+                }
+                restored = Plan(
+                    squad=[int(p) for p in previous_plan["squad"]],
+                    xi=[int(p) for p in previous_plan["xi"]],
+                    captain=int(previous_plan["captain"]),
+                    vice=int(previous_plan["vice"]),
+                    transfers_in=[int(p) for p in previous_plan.get("transfers_in") or []],
+                    transfers_out=[int(p) for p in previous_plan.get("transfers_out") or []],
+                    hits=int(previous_plan.get("hits", 0)),
+                    bank_after=int(previous_plan.get("bank_after", 0)),
+                    objective=float(previous_plan.get("objective", 0.0)),
+                    free_transfers_banked=int(previous_plan.get("free_transfers_banked", 0)),
+                    free_transfers_after=int(previous_plan.get("free_transfers_after", 0)),
+                )
+                rescored = float(
+                    evaluate_plan(restored, draws, positions, rules=rules,
+                                  xp=new_xp).mean_points
+                )
+            except Exception as exc:  # noqa: BLE001
+                # `evaluate_plan` raises KeyError when the old plan names a player
+                # who has since left the draws. That is informative rather than
+                # broken: the previous recommendation is no longer scoreable, so
+                # the cost of inaction is genuinely unknown.
+                #
+                # Catching everything, deliberately. A narrower tuple let an
+                # AttributeError through to the outer handler, which abandoned the
+                # whole assessment — so a failure to compute ONE optional number
+                # cost every impact record. The scope of a rescue has to match the
+                # scope of what it is rescuing: this one owns the cost, and nothing
+                # else.
+                logger.info(
+                    "[%s] previous plan not re-scoreable (%s); "
+                    "ev_cost_of_inaction left unknown", entry_label, exc,
+                )
+
+        impacts = deltas_store.assess_impact(
+            changes=pending,
+            previous_plan=previous_plan,
+            new_plan=new_plan,
+            xp_before=old_xp,
+            xp_after=new_xp,
+            observed_at=decision.generated_at,
+            gameweek=int(gameweek or 0),
+            entry_label=entry_label,
+            new_ev=float(decision.reported.mean_points),
+            previous_plan_rescored_ev=rescored,
+        )
+
+        from pipeline.config import DELTA
+        reportable = []
+        for impact in impacts:
+            keep, why = deltas_store.impact_is_reportable(impact, DELTA)
+            if keep:
+                reportable.append(impact)
+            else:
+                logger.info("[%s] impact not reported: %s", entry_label, why)
+        if reportable:
+            deltas_store.record(reportable, predictions_dir)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning(
+            "[%s] could not assess the decision impact (%s); the decision itself "
+            "was written", entry_label, exc,
+        )
 
 
 def _settle(predictions_dir: Path, state: ScheduleState, final: bool) -> int:

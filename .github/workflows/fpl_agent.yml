@@ -137,8 +137,9 @@ jobs:
           .github/scripts/commit_and_push.sh \
             "FPL agent — ${AGENT_PHASE} GW${AGENT_GAMEWEEK}" \
             predictions/fpl/ledger \
-            predictions/fpl/decision_latest.json \
+            predictions/fpl/decision_gw*.json \
             predictions/fpl/messages.json \
             predictions/fpl/field_observations.jsonl \
             predictions/fpl/params.jsonl \
+            predictions/fpl/availability_evidence.jsonl \
             frontend/public/predictions/fpl

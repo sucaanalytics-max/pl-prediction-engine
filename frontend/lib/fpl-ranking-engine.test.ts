@@ -38,6 +38,60 @@ function player(
 }
 
 describe("FPL ranking engine", () => {
+  it("uses FPLReview weekly points and expected minutes without clamping", () => {
+    const scored = scoreFplPlayers([
+      player({
+        elementId: 99,
+        name: "Premium projection",
+        reviewProjection: {
+          exportedAt: "2026-08-04T12:04:03Z",
+          buyValue: 9,
+          sellValue: 9,
+          eliteOwnership: 17.5,
+          gameweeks: Array.from({ length: 10 }, (_, index) => ({
+            gameweek: index + 1,
+            expectedMinutes: index === 0 ? 93 : 90,
+            projectedPoints: index + 1,
+          })),
+        },
+      }),
+    ])[0];
+
+    expect(scored.modelBasis).toBe("fplreview_snapshot");
+    expect(scored.expectedMinutes).toBe(93);
+    expect(scored.projected4).toBe(10);
+    expect(scored.projected6).toBe(21);
+    expect(scored.projected10).toBe(55);
+    expect(scored.eliteOwnership).toBe(17.5);
+  });
+
+  it("overlays official injury news only when it is newer than the snapshot", () => {
+    const scored = scoreFplPlayers([
+      player({
+        elementId: 100,
+        name: "Newly flagged",
+        status: "d",
+        chanceOfPlaying: 50,
+        newsUpdatedAt: "2026-08-05T00:00:00Z",
+        reviewProjection: {
+          exportedAt: "2026-08-04T12:04:03Z",
+          buyValue: 7,
+          sellValue: 7,
+          eliteOwnership: 5,
+          gameweeks: Array.from({ length: 10 }, (_, index) => ({
+            gameweek: index + 1,
+            expectedMinutes: 90,
+            projectedPoints: 6,
+          })),
+        },
+      }),
+    ])[0];
+
+    expect(scored.expectedMinutes).toBe(45);
+    expect(scored.gameweekProjections[0].projectedPoints).toBe(3);
+    expect(scored.gameweekProjections[1].projectedPoints).toBe(6);
+  });
+
   it("creates ten-player category lists and excludes low-availability players", () => {
     const inputs = Array.from({ length: 14 }, (_, index) =>
       player({

@@ -487,6 +487,42 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     except Exception as e:
         logger.warning(f"  Odds parsing failed: {e}")
 
+    # Side resolution now uses the event's own team names rather than outcome
+    # order. Books listing the away team first previously yielded NO away leg, so
+    # their price never entered best-price selection — restoring it raises the best
+    # away price and therefore widens the Kelly stake. Bounded by
+    # RISK["max_stake_pct"], but logged every run so the change is never silent:
+    # a jump in resolved books explains a jump in stakes, and a drop is a parsing
+    # regression.
+    if parsed_main:
+        resolved = sum(m.get("n_h2h_books", 0) for m in parsed_main.values())
+        rejected = sum(m.get("n_h2h_books_rejected", 0) for m in parsed_main.values())
+        logger.info(
+            "  1X2 books resolved: %d across %d fixtures (%d rejected as "
+            "unresolvable)", resolved, len(parsed_main), rejected,
+        )
+
+    # ── Step 8b: Persist the prices before they are overwritten ──────
+    # The odds cache lives under one fixed key in gitignored data/processed/, so
+    # without this every pre-deadline price is destroyed within 24 hours. The
+    # raw per-bookmaker prices are the only method-independent record, and they
+    # are the only route to ever measuring how much a live pre-deadline line is
+    # worth relative to the sharper closing lines the historical corpus holds.
+    #
+    # Deliberately non-fatal: losing a snapshot costs one observation, whereas
+    # failing the run costs the forecast-ledger entry, which is irreplaceable.
+    if parsed_main:
+        try:
+            from pipeline.data.market_snapshots import extract as extract_snapshots
+            from pipeline.data.market_snapshots import record as record_snapshots
+
+            snapshots = extract_snapshots(
+                parsed_main, datetime.utcnow().isoformat() + "Z"
+            )
+            record_snapshots(snapshots, PREDICTIONS_DIR)
+        except Exception as e:
+            logger.warning(f"  Market snapshot not recorded: {e}")
+
     # ── Step 9: Monte Carlo Simulation ───────────────────────────────
     logger.info("\n[9/12] Running Monte Carlo simulation (correlated)...")
     from pipeline.simulation.montecarlo import MonteCarloSimulator
@@ -761,12 +797,26 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # Wrapped because the FPL layer is downstream of everything that matters
     # here. A failure to export must degrade the agent, never the daily match
     # predictions or the Kelly path.
+    # The market anchor is applied HERE and only here: these rates go to the FPL
+    # projection layer, while the value-bet path above keeps its own lambda that
+    # was NOT derived from bookmaker prices. Without that firewall a value-bet
+    # "edge" would be a readout of the price it is measured against, and Kelly
+    # would stake real money on a circularity.
+    #
+    # `parsed_main` was already fetched for the value-bet path, so this costs zero
+    # additional Odds API requests.
     try:
+        from pipeline.decide.horizon import EVAL_HORIZON
         from pipeline.models.fixture_rates import export_fixture_xg
 
         export_fixture_xg(
             dc_model, bootstrap, fixtures_raw, PREDICTIONS_DIR,
-            horizon=FPL_SIM["horizon"],
+            # The agent evaluates EVAL_HORIZON weeks but this exported only
+            # FPL_SIM["horizon"], so weeks 7-8 fell through to a flat 1.45/1.20
+            # for every fixture — leaving the two weeks that exist specifically to
+            # price the terminal squad as the least well specified of all.
+            horizon=max(EVAL_HORIZON, FPL_SIM["horizon"]),
+            parsed_odds=parsed_main or None,
         )
     except Exception as exc:
         logger.warning(f"  fixture_xg export failed ({exc}); FPL agent will use fallback rates")

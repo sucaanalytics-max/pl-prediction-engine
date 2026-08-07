@@ -218,6 +218,18 @@ export interface HealthData {
   gameweek: number;
   n_predictions: number;
   status: string;
+  /**
+   * The version of `run_pipeline.py` that produced this file.
+   *
+   * Load-bearing, not metadata. `model_metrics` and `calibration` below are
+   * emitted only from 4.1.0 onward, so a *successful* run of an older producer
+   * yields a healthy file with them absent — indistinguishable, without this
+   * field, from a current run that measured nothing. Freshness checks cannot see
+   * it because the file is not stale; it is complete for the version that wrote
+   * it. This interface previously omitted the field, which is exactly why the
+   * drift went unnoticed.
+   */
+  pipeline_version?: string;
   forecast_validation_status?: "collecting" | "evaluated";
   model_metrics?: Record<string, number>;
   calibration?: {

@@ -6,11 +6,15 @@ import {
 } from "recharts";
 import { usePredictions } from "@/lib/PredictionsContext";
 import { useChartTheme } from "@/lib/hooks";
-import { pct, timeAgo } from "@/lib/formats";
+import { istDateTime, pct, timeAgo } from "@/lib/formats";
+import { CORE_METRICS, hasCoreMetrics, verdict, type Metrics } from "@/lib/health-metrics";
 import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/Skeleton";
 
 const STALE_HEALTH_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+// CORE_METRICS / verdict / hasCoreMetrics live in lib/health-metrics.ts, where
+// the reason `verdict` is three-valued is documented at length.
 
 function HealthContent() {
   const { health, predictions: data, loading, error, refresh } = usePredictions();
@@ -21,7 +25,9 @@ function HealthContent() {
 
   const isHealthy = health.status === "healthy";
   const isStaleHealth = Date.now() - new Date(health.last_updated).getTime() > STALE_HEALTH_MS;
-  const metrics = health.model_metrics ?? {};
+  const metrics: Metrics = health.model_metrics ?? {};
+  // Distinguishes "this producer emitted no metrics" from "it emitted zeros".
+  const hasMetrics = hasCoreMetrics(metrics);
 
   // Calibration chart data
   const calData = (health.calibration?.bins ?? []).map((b) => ({
@@ -96,17 +102,40 @@ function HealthContent() {
         </div>
       </div>
 
-      {/* Core metric cards */}
+      {/* Core metric cards. `verdict` returns null when the metric is absent, so
+          an unmeasured model is never coloured as a failing one. */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <MetricCard label="Brier (H)" value={metrics.brier_1x2_home?.toFixed(3) ?? "—"} target="< 0.220" good={(metrics.brier_1x2_home ?? 1) < 0.22} />
-        <MetricCard label="Brier (D)" value={metrics.brier_1x2_draw?.toFixed(3) ?? "—"} target="< 0.230" good={(metrics.brier_1x2_draw ?? 1) < 0.23} />
-        <MetricCard label="Brier (A)" value={metrics.brier_1x2_away?.toFixed(3) ?? "—"} target="< 0.220" good={(metrics.brier_1x2_away ?? 1) < 0.22} />
-        <MetricCard label="RPS" value={metrics.rps_mean?.toFixed(3) ?? "—"} target="< 0.200" good={(metrics.rps_mean ?? 1) < 0.2} />
-        <MetricCard label="ECE" value={metrics.ece?.toFixed(3) ?? "—"} target="< 0.050" good={(metrics.ece ?? 1) < 0.05} />
-        <MetricCard label="Log Loss" value={metrics.log_loss_home?.toFixed(3) ?? "—"} target="< 0.650" good={(metrics.log_loss_home ?? 1) < 0.65} />
+        {CORE_METRICS.map((m) => (
+          <MetricCard
+            key={m.key}
+            label={m.label}
+            value={metrics[m.key]?.toFixed(3) ?? "—"}
+            target={`< ${m.target.toFixed(3)}`}
+            good={verdict(metrics[m.key], m.target)}
+          />
+        ))}
       </div>
 
       <div className="glow-line" />
+
+      {/* Why the cards are empty, when they are. Without this the page reports a
+          model with no measurements as though it had merely failed to load —
+          which is how the 4.0.0-producer drift went unnoticed. */}
+      {!hasMetrics && (
+        <div className="card p-4 text-sm space-y-1" style={{ color: "var(--text-3)" }}>
+          <p>
+            No forecast metrics in this artifact. Nothing has been scored against
+            realised results yet, so calibration and accuracy are unknown — not
+            good, and not bad.
+          </p>
+          <p className="text-xs" style={{ color: "var(--text-4)" }}>
+            Produced by pipeline{" "}
+            <span className="font-mono">{health.pipeline_version ?? "version unknown"}</span>
+            . Metrics are emitted from 4.1.0 onward, so an older producer yields a
+            healthy file with these fields absent.
+          </p>
+        </div>
+      )}
 
       {health.forecast_validation_status === "collecting" && (
         <div className="card p-4 text-sm" style={{ color: "var(--text-3)" }}>
@@ -233,7 +262,7 @@ function HealthContent() {
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           <div className="glass-inset p-3">
             <div className="stat-label">Last Run</div>
-            <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{new Date(health.last_updated).toLocaleString("en-GB")}</div>
+            <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{istDateTime(health.last_updated)}</div>
           </div>
           <div className="glass-inset p-3">
             <div className="stat-label">Gameweek</div>
@@ -293,12 +322,32 @@ function HealthContent() {
   );
 }
 
-function MetricCard({ label, value, target, good }: { label: string; value: string; target: string; good: boolean }) {
+/**
+ * One metric against its target.
+ *
+ * `good` is three-valued on purpose. It used to be a boolean computed as
+ * `(metrics.x ?? 1) < target`, which meant an ABSENT metric substituted 1.0 and
+ * rendered amber — so "we have never measured this" was displayed identically to
+ * "this model is missing its target". Null is the unmeasured state and must
+ * never borrow either verdict's colour.
+ */
+function MetricCard({
+  label, value, target, good,
+}: { label: string; value: string; target: string; good: boolean | null }) {
+  const tone =
+    good === null ? "" : good ? "text-green-400" : "text-amber-400";
   return (
     <div className="card p-4">
       <div className="stat-label">{label}</div>
-      <div className={`text-xl font-bold mt-1 ${good ? "text-green-400" : "text-amber-400"}`}>{value}</div>
-      <div className="text-[10px] mt-1" style={{ color: "var(--text-4)" }}>Target: {target}</div>
+      <div
+        className={`text-xl font-bold mt-1 ${tone}`}
+        style={good === null ? { color: "var(--text-4)" } : undefined}
+      >
+        {value}
+      </div>
+      <div className="text-[10px] mt-1" style={{ color: "var(--text-4)" }}>
+        {good === null ? "Not measured" : `Target: ${target}`}
+      </div>
     </div>
   );
 }

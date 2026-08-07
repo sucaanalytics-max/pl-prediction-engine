@@ -26,7 +26,10 @@ something up no longer looks the same as choosing not to.
 from __future__ import annotations
 
 import ast
+import os
 import pathlib
+import subprocess
+import sys
 import unittest
 from collections import defaultdict
 from typing import Dict, Set
@@ -41,12 +44,29 @@ STANDALONE: Dict[str, str] = {
     "pipeline.learning.run_agent": "entry point: .github/workflows/fpl_agent.yml",
     "pipeline.validation.run_validation": "entry point: .github/workflows/validate.yml",
     "pipeline.run_pipeline": "entry point: .github/workflows/pipeline.yml",
+    "pipeline.learning.run_news": "entry point: .github/workflows/news.yml",
+    # A CLI the human runs to file an availability claim by hand. Deliberately not
+    # imported by the pipeline: a claim is a human judgement, and code that could
+    # call this could manufacture evidence.
+    "pipeline.learning.file_claim": (
+        "availability-claim CLI, run by hand. Deliberately imported by nothing: a "
+        "claim is a human judgement, and code that could call this could "
+        "manufacture evidence about who is fit to play"
+    ),
     # Verification and research harnesses, run by hand against the archive. They
     # measure the system; nothing in the system may depend on them, or a
     # measurement would become load-bearing.
     "pipeline.fpl.replay": "scoring oracle, run by hand over the archive",
     "pipeline.learning.backtest": "walk-forward minutes backtest, run by hand",
     "pipeline.learning.backtest_decisions": "season decision backtest, run by hand",
+    "pipeline.learning.fit_market_blend": (
+        "out-of-sample market blend-weight fit, run by hand against the closing-odds "
+        "corpus. Nothing may import it: it fits market.blend_weight, and a pipeline "
+        "that called it would be refitting a shipped parameter mid-run"
+    ),
+    "pipeline.validation.fplreview_benchmark": (
+        "temporary premium parity benchmark, run by hand during the shadow period"
+    ),
     # Superseded. Kept only because removing it is a separate decision from
     # noticing it is unused.
     "pipeline.models.calibration": "UNUSED — superseded by validation.metrics",
@@ -71,6 +91,17 @@ def _import_graph() -> Dict[str, Set[str]]:
         for node in ast.walk(tree):
             if isinstance(node, ast.ImportFrom) and node.module:
                 importers[node.module].add(importer)
+                # `from pipeline.data import news_extract` imports the SUBMODULE,
+                # not just the package, so the submodule has to be credited too.
+                #
+                # Recording only `node.module` was a blind spot with teeth: any
+                # module reached exclusively through the `from package import
+                # module` form read as an orphan, which is the false positive that
+                # makes a guard get disabled rather than believed. Names that are
+                # not modules (`from pipeline.config import NEWS_FEEDS`) are
+                # harmless here — `_all_modules()` only ever asks about real ones.
+                for alias in node.names:
+                    importers[f"{node.module}.{alias.name}"].add(importer)
             elif isinstance(node, ast.Import):
                 for alias in node.names:
                     importers[alias.name].add(importer)
@@ -175,3 +206,65 @@ class TestEveryModuleIsReachable(unittest.TestCase):
                 f"{name} is a measurement harness but is imported by "
                 f"{sorted(importers.get(name, set()))}",
             )
+
+
+class TestTheAgentNeverFetchesOdds(unittest.TestCase):
+    """
+    The Odds API free tier is 500 requests a month and the daily pipeline spends
+    it. The FPL agent runs every three hours — eight times a day, ~240 requests a
+    month — so it must consume the committed export and never fetch.
+
+    Asserted structurally rather than by comment, because the comment is what a
+    future refactor deletes. The transitive import closure is the right level: an
+    indirect import through a new helper would spend the quota just as surely as a
+    direct one.
+    """
+
+    def test_importing_the_agent_does_not_load_the_odds_client(self):
+        """
+        Checked at RUNTIME, in a fresh interpreter, not as a static import closure.
+
+        A static closure test was tried first and is the wrong instrument: this
+        repo imports heavy modules lazily inside functions, so the graph shows
+        ``run_agent -> run_pipeline -> odds_api`` even though the agent never
+        executes either import. The test failed on a codebase that was correct,
+        which is worse than no test — it would have been silenced rather than
+        fixed.
+
+        What matters is whether the module is ever LOADED, so that is what this
+        asserts. A subprocess is required because the rest of the suite has
+        already imported half the package.
+        """
+        script = (
+            "import sys\n"
+            "import pipeline.learning.run_agent\n"
+            "loaded = 'pipeline.data.odds_api' in sys.modules\n"
+            "print('LOADED' if loaded else 'CLEAN')\n"
+        )
+        result = subprocess.run(
+            [sys.executable, "-c", script],
+            cwd=str(REPO), capture_output=True, text=True,
+            env={"PYTHONPATH": str(REPO), "PATH": os.environ.get("PATH", "")},
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn(
+            "CLEAN", result.stdout,
+            "importing the FPL agent now loads the Odds API client. The agent runs "
+            "8x/day, so a fetch there would spend roughly 240 of the 500 monthly "
+            "requests. The daily pipeline owns the quota; the agent reads "
+            "predictions/fixture_xg.json.",
+        )
+
+    def test_the_market_modules_never_import_the_odds_client(self):
+        """
+        Belt and braces at the module level: these consume prices handed to them.
+        """
+        for module in (
+            "pipeline.models.market_rates",
+            "pipeline.models.devig",
+            "pipeline.models.fixture_rates",
+            "pipeline.data.market_snapshots",
+        ):
+            path = REPO / (module.replace(".", "/") + ".py")
+            with self.subTest(module=module):
+                self.assertNotIn("OddsAPIClient", path.read_text(encoding="utf-8"))

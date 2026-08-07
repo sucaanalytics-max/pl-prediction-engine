@@ -136,7 +136,10 @@ class RoleProbabilityTests(unittest.TestCase):
         for player in ("nailed on", "squad filler", "rotated", "unknown player"):
             with self.subTest(player=player):
                 roles = self.model.predict("MID", player)
-                total = roles.p_start + roles.p_bench_appear + roles.p_unused
+                total = (
+                    roles.p_start + roles.p_bench_appear
+                    + roles.p_unused + roles.p_unavailable
+                )
                 self.assertAlmostEqual(total, 1.0, places=6)
 
     def test_all_probabilities_lie_in_the_unit_interval(self):
@@ -183,17 +186,31 @@ class RoleProbabilityTests(unittest.TestCase):
         self.assertIn("squad filler", self.model.by_player)
 
     def test_availability_gate_scales_the_appearing_branches(self):
+        """
+        The mass identity is now FOUR-way. ``p_unused`` used to absorb both "in
+        the squad and not picked" and "not available to be picked"; the second is
+        now ``p_unavailable``, because the simulator's substitute layer
+        renormalises over the first and was handing bench-appearance mass to
+        injured players.
+        """
         gated = self.model.predict("MID", "nailed on", status="d", chance_of_playing=50)
         ungated = self.model.predict("MID", "nailed on")
         self.assertLess(gated.p_start, ungated.p_start)
         self.assertAlmostEqual(
-            gated.p_start + gated.p_bench_appear + gated.p_unused, 1.0, places=6
+            gated.p_start + gated.p_bench_appear + gated.p_unused
+            + gated.p_unavailable,
+            1.0, places=6,
         )
+        # Half the mass is unavailability, and none of it leaks into "unused".
+        self.assertAlmostEqual(gated.p_unavailable, 0.5, places=6)
 
     def test_a_hard_gated_player_cannot_appear(self):
         roles = self.model.predict("MID", "nailed on", status="u")
         self.assertEqual(roles.p_appears, 0.0)
-        self.assertAlmostEqual(roles.p_unused, 1.0)
+        # All the mass is UNAVAILABLE, not "unused". A `u` player is not a
+        # benched player, and the substitute layer must not consider him.
+        self.assertAlmostEqual(roles.p_unavailable, 1.0)
+        self.assertAlmostEqual(roles.p_unused, 0.0)
 
     def test_preseason_fallback_start_rate_cannot_exceed_one(self):
         """
@@ -206,7 +223,9 @@ class RoleProbabilityTests(unittest.TestCase):
         )
         self.assertLessEqual(roles.p_start, 1.0)
         self.assertAlmostEqual(
-            roles.p_start + roles.p_bench_appear + roles.p_unused, 1.0, places=6
+            roles.p_start + roles.p_bench_appear + roles.p_unused
+            + roles.p_unavailable,
+            1.0, places=6,
         )
 
     def test_unknown_position_raises(self):
@@ -334,10 +353,6 @@ class BacktestAcceptanceTests(unittest.TestCase):
         )
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class HorizonAvailabilityTests(unittest.TestCase):
     """
     Availability must decay with forecast horizon.
@@ -382,14 +397,34 @@ class HorizonAvailabilityTests(unittest.TestCase):
         far = self.model.predict("MID", "nailed on", horizon=6)
         self.assertLess(far.p_appears, near.p_appears)
         self.assertAlmostEqual(
-            far.p_start + far.p_bench_appear + far.p_unused, 1.0, places=6
+            far.p_start + far.p_bench_appear + far.p_unused + far.p_unavailable,
+            1.0, places=6,
         )
 
-    def test_a_hard_gated_player_stays_gated_at_every_horizon(self):
-        """The decay scales availability; it must not resurrect an unavailable player."""
-        for horizon in (0, 3, 6):
+    def test_a_permanently_departed_player_stays_gated_at_every_horizon(self):
+        """
+        Narrowed from "hard gated" to name what the invariant is actually about.
+
+        A `u`/`n` status means FPL has removed the player from the squad, and in
+        the committed pre-season snapshot all five such players have left the club
+        (loan, permanent transfer, free agent, returned to parent club). For those
+        the projection must be zero at every horizon, and the `permanent`
+        persistence class is what preserves that.
+
+        The invariant is real and must not be widened back: without it, the
+        reversion path would resurrect a departed player at week three. But it is
+        also NOT what asserts the suspension behaviour — a suspended player
+        reaches zero through `chance_of_playing == 0`, not through this gate, and
+        he must come back. See test_minutes_horizon.DatedAbsenceTests.
+        """
+        for horizon in (0, 3, 6, 12):
             with self.subTest(horizon=horizon):
                 roles = self.model.predict(
                     "MID", "nailed on", status="u", horizon=horizon
                 )
                 self.assertEqual(roles.p_appears, 0.0)
+                self.assertAlmostEqual(roles.p_unavailable, 1.0)
+
+
+if __name__ == "__main__":
+    unittest.main()

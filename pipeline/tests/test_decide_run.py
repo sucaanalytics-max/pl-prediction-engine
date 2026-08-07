@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import unittest
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Dict, List
@@ -257,6 +258,168 @@ class TestArtifact(unittest.TestCase):
             published = json.loads(written["public"].read_text())
             self.assertIn("runners_up", private)
             self.assertNotIn("runners_up", published)
+
+
+@unittest.skipUnless(HAVE_SCIPY, "scipy/HiGHS not installed")
+class TestXpSnapshotTravelsWithTheDecision(unittest.TestCase):
+    """
+    The "before" half of the news delta.
+
+    Stage 2 reports how far a projection moved when a press conference landed, and
+    the before-value exists only inside a run that has already finished. Without a
+    snapshot on the artifact the delta can say the recommended move flipped but not
+    by how much anything changed — and a reader cannot tell a 0.1 nudge from a
+    collapse.
+    """
+
+    def setUp(self):
+        # A held squad needs a bank: `decide` refuses to default it rather than
+        # inventing 100.0m that does not exist. Build an opening squad first, then
+        # follow it, which is the real shape of a mid-season run.
+        opening = decide(
+            gameweek=7, draws_select=_draws(3), draws_report=_draws(4),
+            bootstrap=BOOTSTRAP, rules=RULES, xp_rows=XP_ROWS, shortlist_size=3,
+        )
+        self.held = list(opening.reported.plan.squad)
+        self.decision = decide(
+            gameweek=7, draws_select=_draws(3), draws_report=_draws(4),
+            bootstrap=BOOTSTRAP, rules=RULES, xp_rows=XP_ROWS, shortlist_size=3,
+            held=self.held, bank=0, free_transfers=1,
+        )
+
+    def test_the_snapshot_is_present_and_non_empty(self):
+        self.assertTrue(self.decision.xp_snapshot)
+
+    def test_it_covers_every_player_in_the_chosen_squad(self):
+        squad = set(self.decision.reported.plan.squad)
+        self.assertTrue(squad.issubset(set(self.decision.xp_snapshot)))
+
+    def test_it_covers_players_that_were_held_and_dropped(self):
+        """
+        A dropped player is precisely the one whose projection collapsed. Snapshotting
+        only the chosen squad would lose the movement that explains the move.
+        """
+        self.assertTrue(set(self.held).issubset(set(self.decision.xp_snapshot)))
+
+    def test_it_is_bounded_rather_than_the_whole_pool(self):
+        # ~30 entries, not 570. An unbounded snapshot on every decision would grow
+        # the artifact for players nobody owns or was considering.
+        self.assertLess(len(self.decision.xp_snapshot), len(XP_ROWS) + 1)
+
+    def test_the_values_match_the_xp_the_decision_was_made_on(self):
+        by_id = {int(r["element_id"]): float(r["xp"]) for r in XP_ROWS}
+        for element_id, value in self.decision.xp_snapshot.items():
+            self.assertAlmostEqual(value, by_id[element_id], places=4)
+
+    def test_it_survives_a_json_round_trip_with_string_keys(self):
+        payload = json.loads(json.dumps(self.decision.as_dict(), allow_nan=False))
+        snapshot = payload["xp_snapshot"]
+        self.assertTrue(snapshot)
+        for key in snapshot:
+            # JSON has no integer keys; the reader must parse them back.
+            self.assertIsInstance(key, str)
+            self.assertTrue(key.isdigit())
+
+    def test_it_survives_publication(self):
+        """
+        Kept on the public copy: the delta the human reads is rendered from the
+        published artifact, so stripping it would leave the app unable to say what
+        moved.
+        """
+        public = strip_for_publication(self.decision)
+        self.assertTrue(public["xp_snapshot"])
+
+    def test_a_decision_with_no_pool_overlap_yields_an_empty_snapshot(self):
+        """Empty is a legitimate answer and must not be a crash."""
+        decision = decide(
+            gameweek=7, draws_select=_draws(3), draws_report=_draws(4),
+            bootstrap=BOOTSTRAP, rules=RULES, xp_rows=XP_ROWS, shortlist_size=3,
+        )
+        self.assertIsInstance(decision.xp_snapshot, dict)
+
+
+@unittest.skipUnless(HAVE_SCIPY, "scipy/HiGHS not installed")
+class TestDeadlineTravelsWithTheDecision(unittest.TestCase):
+    """
+    The deadline is what makes "do not act on this" expressible.
+
+    A decision is advice about one specific deadline, and afterwards the advice
+    is not merely old but wrong. The consumer's freshness state machine
+    (``frontend/lib/fpl-decision.ts``) reads ``deadline``, and while the field
+    was absent every path through it collapsed:
+
+        parseDecision  -> String(source.deadline ?? "")  -> ""
+        msToDeadline   -> Date.parse("")                 -> NaN -> null
+        classifyDecision: `remaining !== null && remaining <= 0` never fires
+
+    so *every* decision classified ``ready`` and the EXPIRED branch was
+    unreachable code. That is the failure these tests pin.
+    """
+
+    DEADLINE = "2026-08-14T17:30:00Z"
+
+    def _decide(self, **kwargs):
+        params = dict(
+            gameweek=7, draws_select=_draws(3), draws_report=_draws(4),
+            bootstrap=BOOTSTRAP, rules=RULES, xp_rows=XP_ROWS, shortlist_size=3,
+        )
+        params.update(kwargs)
+        return decide(**params)
+
+    def test_the_deadline_reaches_the_artifact(self):
+        payload = self._decide(deadline=self.DEADLINE).as_dict()
+        self.assertEqual(payload["deadline"], self.DEADLINE)
+
+    def test_the_key_is_present_even_when_no_deadline_was_supplied(self):
+        """
+        Absent must be explicit. A missing KEY is indistinguishable from a
+        producer too old to emit one; an explicit null says "this run had no
+        schedule", which is a state a consumer can act on.
+        """
+        payload = self._decide().as_dict()
+        self.assertIn("deadline", payload)
+        self.assertIsNone(payload["deadline"])
+
+    def test_the_deadline_is_never_invented(self):
+        """
+        No default of "now plus a week". A fabricated deadline is worse than an
+        absent one: a consumer refuses to act on advice with no deadline, but
+        acts confidently on advice with a wrong one.
+        """
+        self.assertIsNone(self._decide().deadline)
+
+    def test_the_deadline_survives_publication(self):
+        """
+        It is not audit material to be stripped — it is the one field the public
+        page most needs, because the public page is the one a human acts on.
+        """
+        public = strip_for_publication(self._decide(deadline=self.DEADLINE))
+        self.assertEqual(public["deadline"], self.DEADLINE)
+
+    def test_the_deadline_survives_a_json_round_trip(self):
+        decision = self._decide(deadline=self.DEADLINE)
+        payload = json.loads(json.dumps(decision.as_dict(), allow_nan=False))
+        self.assertEqual(payload["deadline"], self.DEADLINE)
+
+    def test_the_deadline_is_parseable_as_an_instant(self):
+        """
+        The consumer calls Date.parse on this string. An unparseable value would
+        reproduce the original bug exactly while looking present, so the format
+        is asserted rather than assumed.
+        """
+        payload = self._decide(deadline=self.DEADLINE).as_dict()
+        parsed = datetime.fromisoformat(payload["deadline"].replace("Z", "+00:00"))
+        self.assertIsNotNone(parsed.tzinfo)
+        self.assertEqual(parsed.year, 2026)
+
+    def test_the_deadline_is_not_the_generation_time(self):
+        """
+        The two timestamps answer different questions and conflating them would
+        make a fresh decision look permanently expired. ``generated_at`` is when
+        we produced the advice; ``deadline`` is what it is advice about.
+        """
+        decision = self._decide(deadline=self.DEADLINE)
+        self.assertNotEqual(decision.as_dict()["deadline"], decision.generated_at)
 
 
 if __name__ == "__main__":

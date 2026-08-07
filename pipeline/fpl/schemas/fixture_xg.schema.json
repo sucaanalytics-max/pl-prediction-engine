@@ -1,0 +1,294 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/sucaanalytics-max/pl-prediction-engine/schemas/fixture_xg.schema.json",
+  "title": "Per-fixture goal rates across the FPL horizon",
+  "description": "Home and away goal rates for every unfinished fixture in the next `horizon` gameweeks, from the Dixon-Coles posterior and optionally blended toward a no-vig market. Written by pipeline/models/fixture_rates.py::export_fixture_xg and read by load_exported_rates in the same module. The rates set every clean-sheet and goal probability the horizon optimiser ranks on, so shape is the least of it: the invariants that matter are numeric and live in pipeline/fpl/artifacts.py::validate_fixture_xg, which runs before the file is written.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "source",
+    "statistical_component",
+    "horizon",
+    "first_gameweek",
+    "n_fixtures",
+    "market",
+    "fixtures"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "dixon_coles_posterior",
+        "dixon_coles_posterior+market_blend"
+      ],
+      "description": "Payload-level provenance. Says only that AT LEAST ONE fixture was anchored \u2014 a consumer must read each row's own `rate_source`, because reading this instead reports every fixture as market-blended the moment one is."
+    },
+    "statistical_component": {
+      "type": "string",
+      "description": "Which model was blended with the market. The betting path uses the 60/30/10 ensemble instead; naming it here makes that divergence a claim rather than an accident."
+    },
+    "horizon": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "first_gameweek": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 38,
+      "description": "The lowest UNFINISHED gameweek, taken from the event flags. Not necessarily the lowest gameweek present: rows are filtered on per-fixture `finished`, which FPL flips independently, so a week whose matches have all been played can legitimately export nothing."
+    },
+    "n_fixtures": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "prior_only_clubs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Clubs the posterior has never seen \u2014 a promoted side. Their fixtures are served from the league-average prior, and are flagged so nothing downstream mistakes them for evidence-backed."
+    },
+    "market": {
+      "type": "object",
+      "required": [
+        "blend_weight",
+        "level_correction",
+        "n_anchored"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "devig_method": {
+          "type": "string",
+          "enum": [
+            "proportional",
+            "power",
+            "shin"
+          ]
+        },
+        "blend_weight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Weight on the market in log-rate space. Zero is a true no-op, including the level correction, so the anchor's contribution can be isolated."
+        },
+        "rho": {
+          "type": "number"
+        },
+        "level_correction": {
+          "type": "object",
+          "required": [
+            "home",
+            "away"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "home": {
+              "type": "number",
+              "minimum": -0.2,
+              "maximum": 0.2
+            },
+            "away": {
+              "type": "number",
+              "minimum": -0.2,
+              "maximum": 0.2
+            }
+          },
+          "description": "RAW league-wide log correction, applied at `blend_weight` to EVERY gameweek including unpriced ones. This is what keeps week 1 and week 2 on one scale, and it is the substitute for extrapolating odds. Clamped at \u00b10.20: beyond that is a data problem, not a discovery."
+        },
+        "n_anchored": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n_priced": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Fixtures that reached the inverter, EXCLUDING those with no market for this kickoff \u2014 which is the ordinary state for a week the bookmakers have not priced, not a failure."
+        },
+        "statuses": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "median_bookmakers": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blend_weight_status": {
+          "type": "string",
+          "description": "Whether market.blend_weight is a bare prior, a prior confirmed out of sample, or a fitted value. Not a boolean: the fit confirmed the prior rather than replacing it.",
+          "enum": [
+            "prior",
+            "prior_confirmed_out_of_sample",
+            "fitted"
+          ]
+        }
+      }
+    },
+    "fixtures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "match_id",
+          "gameweek",
+          "home_team",
+          "away_team",
+          "lambda_home_dc",
+          "mu_away_dc",
+          "lambda_home_sd",
+          "mu_away_sd",
+          "lambda_home",
+          "mu_away",
+          "rate_source",
+          "supremacy",
+          "total_goals",
+          "market"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "match_id": {
+            "type": "string",
+            "description": "The FPL fixture id, as a string. Unique within the payload: the consumer keys rates by it, so a duplicate discards one fixture's rates and serves the other's for both."
+          },
+          "gameweek": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 38
+          },
+          "home_team": {
+            "type": "string"
+          },
+          "away_team": {
+            "type": "string"
+          },
+          "kickoff": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lambda_home_dc": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 5.0,
+            "description": "The posterior mean BEFORE any market anchor. Kept so the blend is auditable and reversible from the artifact alone."
+          },
+          "mu_away_dc": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 5.0
+          },
+          "lambda_home_sd": {
+            "type": "number",
+            "minimum": 0
+          },
+          "mu_away_sd": {
+            "type": "number",
+            "minimum": 0
+          },
+          "prior_only": {
+            "type": "boolean",
+            "description": "True when either club is outside the posterior's team index, so the rates come from its league-average prior. Such rows are blended at the higher market.prior_only_weight."
+          },
+          "lambda_home": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 5.0,
+            "description": "The rate the consumer uses. Where a market is present this lies between `lambda_home_dc` and `market.lambda_home`, up to the league level correction that every fixture receives regardless of its own market."
+          },
+          "mu_away": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 5.0
+          },
+          "rate_source": {
+            "type": "string",
+            "enum": [
+              "market_blend",
+              "dixon_coles_posterior+level",
+              "dixon_coles_posterior"
+            ],
+            "description": "Per-row provenance. `market_blend` requires this row's `market` to be present and converged; the converse holds wherever the blend weight is positive."
+          },
+          "supremacy": {
+            "type": "number",
+            "description": "lambda_home - mu_away, at the exported 6-decimal precision."
+          },
+          "total_goals": {
+            "type": "number"
+          },
+          "market": {
+            "description": "The no-vig market-implied rates for this fixture, or null where the bookmakers have not priced it. Present only for a converged, usable inversion.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "lambda_home",
+              "mu_away",
+              "status",
+              "weight"
+            ],
+            "additionalProperties": true,
+            "properties": {
+              "lambda_home": {
+                "type": "number",
+                "minimum": 0.1,
+                "maximum": 5.0
+              },
+              "mu_away": {
+                "type": "number",
+                "minimum": 0.1,
+                "maximum": 5.0
+              },
+              "supremacy": {
+                "type": "number"
+              },
+              "total_goals": {
+                "type": "number"
+              },
+              "status": {
+                "type": "string",
+                "const": "converged"
+              },
+              "n_bookmakers": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "dispersion": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Cross-book logit disagreement. Never 0 for a single book \u2014 an unmeasurable dispersion is reported as the 0.20 floor, because a consumer dividing by it would otherwise hand one book the maximum weight."
+              },
+              "residual": {
+                "type": "number",
+                "minimum": 0,
+                "description": "UNWEIGHTED logit RMS at the optimum, so it is comparable across fixtures with different book coverage. A large value means a Dixon-Coles bivariate Poisson cannot represent this market at all \u2014 usually a stale leg."
+              },
+              "n_constraints": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "devig_method": {
+                "type": "string"
+              },
+              "weight": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 1,
+                "description": "This market's own quality, from book coverage. It scales only the fixture-specific part of the blend; the league level keeps the full blend weight, because it was estimated from every anchored fixture rather than from this one."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

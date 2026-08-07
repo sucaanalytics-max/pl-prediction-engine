@@ -16,6 +16,10 @@ import {
   recommendTransfers,
   scoreFplPlayers,
 } from "./fpl-ranking-engine";
+import {
+  getFplReviewProjection,
+  getFplReviewSnapshot,
+} from "./fplreview-projections";
 
 interface BootstrapEvent {
   id: number;
@@ -168,7 +172,7 @@ function fixtureViews(
       (fixture) =>
         fixture.event !== null &&
         fixture.event >= eventId &&
-        fixture.event < eventId + 6 &&
+        fixture.event < eventId + 10 &&
         (fixture.team_h === teamId || fixture.team_a === teamId)
     )
     .sort((left, right) => {
@@ -277,10 +281,16 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
     };
   });
 
+  // Resolved once, above the loop. `null` whenever no FPLReview export is on
+  // disk, which is the normal case off this machine — the projection is then
+  // omitted per player rather than the request failing.
+  const projectionSnapshot = getFplReviewSnapshot();
+
   const rankedPlayers = scoreFplPlayers(
     bootstrap.elements.map((element) => {
       const team = teamById.get(element.team);
       const rawPosition = positionById.get(element.element_type) ?? "UNK";
+      const review = getFplReviewProjection(element.id);
       return {
         elementId: element.id,
         name: element.first_name === "Alisson" ? "Alisson" : element.web_name,
@@ -298,12 +308,30 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
         totalPoints: element.total_points || 0,
         minutes: element.minutes || 0,
         ictIndex: Number.parseFloat(element.ict_index) || 0,
+        newsUpdatedAt: element.news_added,
+        reviewProjection:
+          review && projectionSnapshot
+            ? {
+                exportedAt: projectionSnapshot.exportedAt,
+                eliteOwnership: review.eliteOwnership,
+                buyValue: review.buyValue,
+                sellValue: review.sellValue,
+                gameweeks: review.projectedPoints.map((projectedPoints, index) => ({
+                  gameweek: projectionSnapshot.gameweeks[index],
+                  expectedMinutes: review.expectedMinutes[index],
+                  projectedPoints,
+                })),
+              }
+            : null,
       };
     })
   );
   const rankedById = new Map(
     rankedPlayers.map((player) => [player.elementId, player])
   );
+  const matchedPlayers = bootstrap.elements.filter((element) =>
+    Boolean(getFplReviewProjection(element.id))
+  ).length;
   const rankedSquad = selected
     .map((pick) => rankedById.get(pick.elementId))
     .filter((player): player is NonNullable<typeof player> => Boolean(player));
@@ -412,11 +440,12 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
     ? ["Squad synced from the official public gameweek picks endpoint."]
     : [
         "GW1 picks remain private before the deadline; the squad is the authenticated draft captured on 28 Jul.",
-        "Official prices, clubs, availability flags and the next six fixtures are refreshed from FPL.",
+        "Official prices, clubs, availability flags and the next ten fixtures are refreshed from FPL.",
+        "Player EV and expected minutes use the private FPLReview premium snapshot exported on 4 Aug 2026.",
       ];
 
   return {
-    schemaVersion: 3,
+    schemaVersion: 4,
     generatedAt: now,
     season: "2026/27",
     entry: {
@@ -454,6 +483,44 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
       persistence: "unconfigured",
     },
     history: historySummary(history),
+    projections: {
+      // `fallback` was declared in `FplLiveState` from the start and nothing
+      // could ever produce it, because the snapshot was a static import: if the
+      // export was missing the build failed rather than the branch being taken.
+      // Reading it at runtime is what finally makes the absent case reachable.
+      source: projectionSnapshot ? "fplreview_csv_snapshot" : "fallback",
+      sourceLabel: projectionSnapshot
+        ? "FPLReview premium CSV snapshot"
+        : "No FPLReview export available — official FPL fields only",
+      exportedAt: projectionSnapshot?.exportedAt ?? null,
+      horizonGameweeks: projectionSnapshot?.gameweeks.length ?? 0,
+      matchedPlayers,
+      officialPlayers: bootstrap.elements.length,
+      coveragePercent: Math.round(
+        (matchedPlayers / Math.max(1, bootstrap.elements.length)) * 1000
+      ) / 10,
+      players: rankedPlayers.map((player) => ({
+        elementId: player.elementId,
+        name: player.name,
+        team: player.team,
+        position: player.position,
+        price: player.price,
+        ownership: player.ownership,
+        eliteOwnership: player.eliteOwnership,
+        status: player.status,
+        expectedMinutes: player.expectedMinutes,
+        projected4: player.projected4,
+        projected6: player.projected6,
+        projected10: player.projected10,
+        valueScore: player.valueScore,
+        gameweekProjections: player.gameweekProjections,
+      })),
+      caveats: [
+        "Projection values are a dated private snapshot, not a live FPLReview API connection.",
+        "Official FPL remains authoritative for current price, club, fixtures and player availability.",
+        "A newer official injury flag reduces the first-week projection until the next FPLReview import.",
+      ],
+    },
     rankings: buildTopTenRankings(rankedPlayers),
     recommendations: {
       transfers4: recommendTransfers({
@@ -484,11 +551,17 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
       captaincyPool: [...rankedSquad].sort(
         (left, right) => right.captainScore - left.captainScore
       ),
-      modelVersion: "preseason-v1",
+      // Names what actually produced these numbers. Without the export they
+      // come from the heuristic engine alone, and saying `fplreview-...`
+      // anyway would credit a source that contributed nothing.
+      modelVersion: projectionSnapshot
+        ? `fplreview-${projectionSnapshot.exportedAt.slice(0, 10)}`
+        : "heuristic-only",
       provisional: true,
       methodology: [
-        "Official FPL prices, ownership, availability and the next six fixtures.",
-        "Position and price baselines blended with official expected points when available.",
+        "FPLReview premium expected minutes and points across the next ten Gameweeks.",
+        "Official FPL prices, ownership, availability and fixtures refreshed every 15 minutes.",
+        "Official player news newer than the projection export overlays first-week availability.",
         "Legal single-player moves only: same position, affordable and no more than three per club.",
       ],
     },

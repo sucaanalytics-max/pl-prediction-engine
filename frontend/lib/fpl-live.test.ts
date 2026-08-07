@@ -1,10 +1,15 @@
 import {
+  FPL_ENTRY_ID,
   asSquadPlayers,
   positionFromFpl,
   type FplLivePlayer,
 } from "./fpl-live";
 
 describe("FPL live helpers", () => {
+  it("defaults to the portal owner's FPL entry", () => {
+    expect(FPL_ENTRY_ID).toBe(20945);
+  });
+
   it("accepts every official FPL position", () => {
     expect(["GKP", "DEF", "MID", "FWD"].map(positionFromFpl)).toEqual([
       "GKP",

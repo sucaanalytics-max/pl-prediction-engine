@@ -119,6 +119,22 @@ class Decision:
     horizon: Optional[Dict[str, Any]] = None
     field_model: str = "uncalibrated"
     generated_at: str = ""
+    # The deadline this advice is about, ISO-8601 UTC. Not decoration: a decision
+    # is advice about one specific deadline, and after it the advice is not merely
+    # old but wrong. Consumers need it to refuse to render expired advice as
+    # actionable, and they cannot derive it — comparing the artifact to itself
+    # could never detect that the deadline had passed. None only when the caller
+    # genuinely has no schedule (a backtest replaying a settled gameweek).
+    deadline: Optional[str] = None
+    # Per-player xp for the squad this decision concerns, so the NEXT run can say
+    # what moved. Bounded to the chosen squad plus whatever was held — around 30
+    # entries — rather than all 570: an unbounded snapshot on every decision would
+    # grow the artifact for the sake of players nobody owns or was considering.
+    #
+    # Without it the news delta can report that the recommended move flipped but
+    # not by how much any projection changed, because the "before" number exists
+    # only inside a run that has already finished.
+    xp_snapshot: Dict[int, float] = field(default_factory=dict)
 
     @property
     def credible(self) -> bool:
@@ -131,6 +147,11 @@ class Decision:
             "entry_label": self.entry_label,
             "objective": self.objective,
             "generated_at": self.generated_at,
+            "deadline": self.deadline,
+            # Keys stringified by json.dumps anyway; done here so the round trip is
+            # symmetric and a reader does not have to guess the key type.
+            "xp_snapshot": {str(k): round(float(v), 4)
+                            for k, v in sorted(self.xp_snapshot.items())},
             # Reported numbers come from the independent stream. The selection
             # stream's numbers are kept alongside, clearly named, so the gap is
             # auditable rather than a claim.
@@ -172,6 +193,7 @@ def decide(
     xp_by_week: Optional[Sequence[Mapping[int, float]]] = None,
     transfer_horizon: Optional[int] = None,
     field_calibrated_gameweeks: int = 0,
+    deadline: Optional[str] = None,
 ) -> Decision:
     """
     Produce one entry's proposal.
@@ -179,6 +201,11 @@ def decide(
     ``draws_select`` and ``draws_report`` must be independently seeded. Passing
     the same object twice makes ``optimism_gap`` identically zero, which would
     read as "no selection bias" when it in fact means "not measured".
+
+    ``deadline`` is the ISO-8601 UTC deadline this proposal is advice about. It
+    defaults to None rather than to "now plus something" because a fabricated
+    deadline is worse than an absent one: a consumer can refuse to act on advice
+    with no deadline, but it will act on advice with a wrong one.
     """
     warnings: List[str] = []
 
@@ -318,7 +345,24 @@ def decide(
             else "uncalibrated"
         ),
         generated_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        deadline=deadline,
+        xp_snapshot=_squad_xp(reported.plan, held, xp_of(candidates)),
     )
+
+
+def _squad_xp(
+    plan: Any, held: Sequence[int], xp: Mapping[int, float],
+) -> Dict[int, float]:
+    """
+    xp for the players this decision is about: the chosen squad plus whatever was
+    already held.
+
+    Both, not just the chosen squad: a player dropped BY this decision is exactly
+    the one whose projection collapsed, and omitting him would lose the movement
+    that explains the move.
+    """
+    relevant = set(int(p) for p in plan.squad) | {int(p) for p in held}
+    return {p: float(xp[p]) for p in sorted(relevant) if p in xp}
 
 
 def strip_for_publication(decision: Decision) -> Dict[str, Any]:

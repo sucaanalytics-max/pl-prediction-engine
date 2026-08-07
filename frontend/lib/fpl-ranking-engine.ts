@@ -24,6 +24,18 @@ export interface FplModelPlayerInput {
   totalPoints: number;
   minutes: number;
   ictIndex: number;
+  newsUpdatedAt?: string | null;
+  reviewProjection?: {
+    exportedAt: string;
+    eliteOwnership: number;
+    buyValue: number;
+    sellValue: number;
+    gameweeks: Array<{
+      gameweek: number;
+      expectedMinutes: number;
+      projectedPoints: number;
+    }>;
+  } | null;
 }
 
 const POSITION_BASELINE: Record<Position, number> = {
@@ -68,7 +80,7 @@ function expectedMinutes(player: FplModelPlayerInput) {
 function fixtureProjection(
   base: number,
   fixtures: FplFixtureView[],
-  horizon: 4 | 6
+  horizon: number
 ) {
   const selected = fixtures.slice(0, horizon);
   if (selected.length === 0) return base * horizon;
@@ -77,6 +89,42 @@ function fixtureProjection(
     0
   );
   return total + Math.max(0, horizon - selected.length) * base;
+}
+
+function fixturesForGameweek(fixtures: FplFixtureView[], gameweek: number) {
+  return fixtures.filter((fixture) => fixture.gameweek === gameweek);
+}
+
+function reviewGameweekProjections(player: FplModelPlayerInput) {
+  if (!player.reviewProjection) return null;
+  const newerOfficialFlag = Boolean(
+    player.status !== "a" &&
+      player.newsUpdatedAt &&
+      new Date(player.newsUpdatedAt).getTime() >
+        new Date(player.reviewProjection.exportedAt).getTime()
+  );
+
+  return player.reviewProjection.gameweeks.map((projection, index) => {
+    const fixtures = fixturesForGameweek(player.fixtures, projection.gameweek);
+    const firstWeekAvailability = index === 0 && newerOfficialFlag
+      ? availability(player)
+      : 1;
+    const difficulty = fixtures.length
+      ? Math.round(
+          fixtures.reduce((sum, fixture) => sum + fixture.difficulty, 0) /
+            fixtures.length
+        )
+      : 3;
+    return {
+      gameweek: projection.gameweek,
+      fixture: fixtures.length
+        ? fixtures.map((fixture) => fixture.label).join(" + ")
+        : "Blank / TBC",
+      difficulty: Math.min(5, Math.max(1, difficulty)) as 1 | 2 | 3 | 4 | 5,
+      expectedMinutes: Math.round(projection.expectedMinutes * firstWeekAvailability),
+      projectedPoints: rounded(projection.projectedPoints * firstWeekAvailability),
+    };
+  });
 }
 
 export function scoreFplPlayers(
@@ -99,9 +147,8 @@ export function scoreFplPlayers(
         ? officialSignal * 0.58 +
           (POSITION_BASELINE[player.position] + priceSignal + liveSignal) * 0.42
         : POSITION_BASELINE[player.position] + priceSignal + ownedSignal + liveSignal;
-    const projected4 = fixtureProjection(base, player.fixtures, 4) * availabilityFactor;
-    const projected6 = fixtureProjection(base, player.fixtures, 6) * availabilityFactor;
-    const gameweekProjections = player.fixtures.slice(0, 6).map((fixture) => ({
+    const reviewProjections = reviewGameweekProjections(player);
+    const fallbackProjections = player.fixtures.slice(0, 10).map((fixture) => ({
       gameweek: fixture.gameweek,
       fixture: fixture.label,
       difficulty: fixture.difficulty,
@@ -109,6 +156,24 @@ export function scoreFplPlayers(
         base * DIFFICULTY_MULTIPLIER[fixture.difficulty] * availabilityFactor
       ),
     }));
+    const gameweekProjections = (reviewProjections ?? fallbackProjections).map(
+      (projection) => ({
+        gameweek: projection.gameweek,
+        fixture: projection.fixture,
+        difficulty: projection.difficulty,
+        projectedPoints: projection.projectedPoints,
+      })
+    );
+    const reviewTotal = (horizon: number) =>
+      reviewProjections
+        ?.slice(0, horizon)
+        .reduce((sum, projection) => sum + projection.projectedPoints, 0);
+    const projected4 =
+      reviewTotal(4) ?? fixtureProjection(base, player.fixtures, 4) * availabilityFactor;
+    const projected6 =
+      reviewTotal(6) ?? fixtureProjection(base, player.fixtures, 6) * availabilityFactor;
+    const projected10 =
+      reviewTotal(10) ?? fixtureProjection(base, player.fixtures, 10) * availabilityFactor;
     const easyFixtures = player.fixtures
       .slice(0, 6)
       .filter((fixture) => fixture.difficulty <= 2).length;
@@ -116,9 +181,11 @@ export function scoreFplPlayers(
       projected4 * (1 + Math.min(0.18, priceSignal * 0.06)) +
       easyFixtures * 0.45;
     const valueScore = projected6 / Math.max(3.5, player.price);
+    const strategicOwnership =
+      player.reviewProjection?.eliteOwnership ?? player.ownership;
     const differentialScore =
       projected6 *
-      Math.max(0.12, 1 - Math.min(95, player.ownership) / 100) *
+      Math.max(0.12, 1 - Math.min(95, strategicOwnership) / 100) *
       (0.85 + easyFixtures * 0.035);
 
     return {
@@ -128,14 +195,19 @@ export function scoreFplPlayers(
       position: player.position,
       price: player.price,
       ownership: rounded(player.ownership),
+      eliteOwnership: player.reviewProjection
+        ? rounded(player.reviewProjection.eliteOwnership)
+        : null,
       status: player.status,
       chanceOfPlaying: player.chanceOfPlaying,
       news: player.news,
       fixtures: player.fixtures,
       gameweekProjections,
-      expectedMinutes: expectedMinutes(player),
+      expectedMinutes:
+        reviewProjections?.[0]?.expectedMinutes ?? expectedMinutes(player),
       projected4: rounded(projected4),
       projected6: rounded(projected6),
+      projected10: rounded(projected10),
       captainScore: rounded(captainScore, 2),
       valueScore: rounded(valueScore, 2),
       differentialScore: rounded(differentialScore, 2),
@@ -145,8 +217,9 @@ export function scoreFplPlayers(
         }, 0),
         1
       ),
-      modelBasis:
-        player.epNext > 0 || player.form > 0
+      modelBasis: player.reviewProjection
+        ? "fplreview_snapshot"
+        : player.epNext > 0 || player.form > 0
           ? "official_form_blend"
           : "preseason_fixture_heuristic",
     };
@@ -375,7 +448,7 @@ export function buildTopTenRankings(players: FplRankedPlayer[]) {
     captaincy: topTen(players, (player) => player.captainScore),
     value: topTen(players, (player) => player.valueScore),
     differentials: topTen(
-      players.filter((player) => player.ownership <= 10),
+      players.filter((player) => (player.eliteOwnership ?? player.ownership) <= 10),
       (player) => player.differentialScore
     ),
     goalkeepers: topTen(
@@ -451,8 +524,9 @@ export function recommendTransfers({
             `Projects ${selectedDelta >= 0 ? "+" : ""}${selectedDelta.toFixed(1)} points over ${horizon} gameweeks.`,
             `${easyFixtures} favourable fixture${easyFixtures === 1 ? "" : "s"} in the selected run.`,
           ];
-          if (playerIn.ownership <= 10) {
-            rationales.push(`${playerIn.ownership.toFixed(1)}% ownership adds differential upside.`);
+          const strategicOwnership = playerIn.eliteOwnership ?? playerIn.ownership;
+          if (strategicOwnership <= 10) {
+            rationales.push(`${strategicOwnership.toFixed(1)}% elite ownership adds differential upside.`);
           } else if (playerIn.expectedMinutes >= 80) {
             rationales.push(`Modelled for ${playerIn.expectedMinutes} expected minutes when available.`);
           }
@@ -471,7 +545,10 @@ export function recommendTransfers({
               ...(playerIn.modelBasis === "preseason_fixture_heuristic"
                 ? ["Preseason estimate"]
                 : []),
-              ...(playerIn.ownership <= 10 ? ["Differential"] : []),
+              ...(playerIn.modelBasis === "fplreview_snapshot"
+                ? ["FPLReview model"]
+                : []),
+              ...(strategicOwnership <= 10 ? ["Differential"] : []),
             ],
           } satisfies FplTransferRecommendation;
         })

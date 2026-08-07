@@ -176,6 +176,25 @@ class MonteCarloSimulator:
         """
         Simulate using posterior samples of lambda/mu (from PyMC).
         This properly propagates parameter uncertainty.
+
+        **KNOWN DEFECT, deliberately not fixed here: the Dixon-Coles low-score
+        correction is estimated and then never applied.**
+
+        The goals below are drawn as two INDEPENDENT Poissons. The model fits
+        ``rho`` — the whole reason to prefer Dixon-Coles over independent Poisson —
+        and ``BayesianDixonColes.scoreline_matrix`` applies the ``tau`` correction,
+        but this path does not. Measured at the historical mean ``rho`` of −0.063,
+        the corrected ``P(0-0)`` is **10.6%–11.3% higher** than what this produces,
+        with draws and low-scoring outcomes understated correspondingly.
+
+        Left alone on purpose. This function generates ``latest.json``'s
+        probabilities, which flow through ``derive_all_markets`` into
+        ``find_value_bets`` and Kelly, so correcting it moves real stake sizing —
+        and CLAUDE.md forbids changing stake sizing as a side effect of unrelated
+        work. It needs its own change, with a before/after diff of the value-bet
+        list and its own review. Recorded here rather than in a note nobody reads,
+        because the alternative is that the next person to touch this assumes the
+        correction is applied.
         """
         n = min(len(lambda_samples), self.n_sims)
         indices = np.random.choice(len(lambda_samples), size=n, replace=True)

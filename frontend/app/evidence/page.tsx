@@ -1,178 +1,239 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import {
-  AlertTriangle,
-  ArrowUpRight,
-  CircleAlert,
-  Clock3,
-  RefreshCw,
-  Search,
-  ShieldCheck,
-  Stethoscope,
-} from "lucide-react";
-import { useFplLive } from "@/lib/FplLiveContext";
-import type { FplEvidenceItem } from "@/lib/fpl-live";
+/**
+ * Evidence — why each availability number is what it is.
+ *
+ * The competitor study's single largest finding, across eight products:
+ *
+ * > *Nobody presents injury/availability evidence — only conclusions. FFS gives
+ * > you "Carvalho 25%" with no source, no quote, no timestamp on the claim. No
+ * > product shows you: here is the press-conference quote, here is who reported
+ * > it, here is when, here is why 25%. The entire category asks you to trust a
+ * > number.*
+ *
+ * So the losing claims here are **the content, not an expandable footnote**. A
+ * player whose 25% survived three conflicting reports is a different decision from
+ * one whose 25% is unopposed, and this is the only place that distinction is
+ * visible.
+ *
+ * Replaces the previous /evidence, which read live FPL flags through
+ * `FplLiveContext` and could show only the conclusion.
+ */
 
-type ScopeFilter = "squad" | "target" | "all";
+import { REGISTRY } from "@/lib/data/narrow";
+import { useArtifact } from "@/lib/data/useArtifact";
+import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import type {
+  EvidenceClaim, EvidenceEntry, EvidencePlayer, EvidenceView,
+} from "@/lib/data/narrow";
 
-function evidenceAge(value: string | null, referenceTime: string) {
-  if (!value) return "Timestamp unavailable";
-  const hours = Math.max(
-    0,
-    Math.floor(
-      (new Date(referenceTime).getTime() - new Date(value).getTime()) / 3_600_000
-    )
-  );
-  if (hours < 1) return "Updated within 1h";
-  if (hours < 48) return `Updated ${hours}h ago`;
-  return `Updated ${Math.floor(hours / 24)}d ago`;
+/** The resolver's rule names, in words a reader can act on. */
+const RULE_PROSE: Record<string, string> = {
+  asymmetric_override:
+    "R4 — a lower-tier source may push availability down, never up",
+  tier_precedence: "R3 — a more authoritative source wins",
+  recency_within_source: "R2 — the same source said something newer",
+  staleness: "R1 — the older claim passed the staleness horizon",
+  permanence_beats_gradation: "R6 — a confirmed exit outranks a percentage",
+  only_claim: "the only claim on file",
+  unresolvable: "R7 — equally authoritative and equally fresh; escalated",
+};
+
+const TIER_LABEL: Record<number, string> = {
+  1: "official",
+  2: "press conference",
+  3: "aggregator",
+};
+
+function describeValue(value: unknown): string {
+  if (value === null || value === undefined) return "—";
+  if (typeof value === "number") return `${value}%`;
+  if (typeof value === "object") {
+    const kind = (value as Record<string, unknown>).kind;
+    return typeof kind === "string" ? kind : JSON.stringify(value);
+  }
+  return String(value);
 }
 
-function EvidenceCard({
-  item,
-  referenceTime,
-}: {
-  item: FplEvidenceItem;
-  referenceTime: string;
-}) {
+const VERDICT_STYLE: Record<string, { colour: string; mark: string }> = {
+  // Colourblind-safe: the glyph carries the meaning, colour only reinforces it.
+  won: { colour: "var(--success, #22c55e)", mark: "✓" },
+  lost: { colour: "var(--text-4)", mark: "✗" },
+  dropped: { colour: "var(--warning, #f59e0b)", mark: "!" },
+};
+
+function ClaimRow({ claim }: { claim: EvidenceClaim }) {
+  const style = VERDICT_STYLE[claim.verdict] ?? VERDICT_STYLE.lost;
+  const faded = claim.verdict !== "won";
   return (
-    <article className={`evidence-card severity-${item.severity}`}>
-      <div className="evidence-severity">
-        {item.severity === "critical" ? <CircleAlert size={18} /> : <AlertTriangle size={18} />}
+    <li
+      className="flex gap-2 text-xs py-1.5"
+      style={{ opacity: faded ? 0.72 : 1 }}
+      data-verdict={claim.verdict}
+    >
+      <span
+        aria-hidden="true"
+        className="font-mono font-bold"
+        style={{ color: style.colour }}
+      >
+        {style.mark}
+      </span>
+      <span className="sr-only">{claim.verdict}</span>
+      <div className="min-w-0">
+        <p style={{ color: "var(--text-2)" }}>
+          <strong style={{ color: "var(--text-1)" }}>
+            {describeValue(claim.value)}
+          </strong>
+          {" — "}
+          {claim.source}
+          <span style={{ color: "var(--text-4)" }}>
+            {" "}(tier {claim.source_tier}
+            {TIER_LABEL[claim.source_tier] ? `, ${TIER_LABEL[claim.source_tier]}` : ""})
+          </span>
+        </p>
+        {claim.quote ? (
+          <p className="italic mt-0.5" style={{ color: "var(--text-3)" }}>
+            “{claim.quote}”
+          </p>
+        ) : null}
+        <p className="font-mono text-[10px] mt-0.5" style={{ color: "var(--text-4)" }}>
+          {/* claimed_at, not observed_at. Conflating them is what lets a stale
+              article outrank a fresh club update. */}
+          {claim.claimed_at ? `said ${claim.claimed_at}` : "no publication time"}
+          {claim.beaten_by ? ` · beaten by ${claim.beaten_by}` : ""}
+          {claim.url ? (
+            <>
+              {" · "}
+              <a
+                href={claim.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                style={{ color: "var(--accent)" }}
+              >
+                source
+              </a>
+            </>
+          ) : null}
+        </p>
       </div>
-      <div className="evidence-copy">
-        <div className="evidence-meta">
-          <span>{item.scope === "squad" ? "Your squad" : item.scope === "target" ? "Top target" : "League watch"}</span>
-          <i>·</i>
-          <span>{item.team} · {item.position} · £{item.price.toFixed(1)}m</span>
-          <i>·</i>
-          <span><Clock3 size={11} /> {evidenceAge(item.sourceUpdatedAt, referenceTime)}</span>
-        </div>
-        <h2>{item.player}</h2>
-        <p>{item.headline}</p>
-        <div className="availability-bar">
-          <i style={{ width: `${item.chanceOfPlaying ?? (item.status === "a" ? 100 : 20)}%` }} />
-        </div>
-        <small>
-          {item.chanceOfPlaying !== null
-            ? `${item.chanceOfPlaying}% FPL chance of playing`
-            : "No numerical chance supplied by FPL"}
-        </small>
+    </li>
+  );
+}
+
+function Entry({ entry }: { entry: EvidenceEntry }) {
+  return (
+    <div className="glass-inset p-3 space-y-1">
+      <div className="flex items-baseline justify-between gap-2 flex-wrap">
+        <p className="text-xs font-semibold" style={{ color: "var(--text-1)" }}>
+          {entry.claim_type.replace(/_/g, " ")}
+          {": "}
+          <span className="font-mono">{describeValue(entry.resolved_value)}</span>
+        </p>
+        <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
+          {entry.rule ? RULE_PROSE[entry.rule] ?? entry.rule : "no rule recorded"}
+        </p>
       </div>
-      <div className="evidence-sources">
-        {item.sources.map((source) => (
-          <a href={source.url} target="_blank" rel="noreferrer" key={source.label}>
-            <span>{source.role}</span>
-            {source.label}
-            <ArrowUpRight size={12} />
-          </a>
+
+      {entry.escalation ? (
+        <p
+          className="text-xs"
+          style={{ color: "var(--warning, #f59e0b)" }}
+          data-testid="escalation"
+        >
+          Needs a human: {entry.escalation}
+        </p>
+      ) : null}
+
+      {/* The losers are listed, not hidden behind a disclosure. That is the
+          feature: an unopposed number and a contested one must not look alike. */}
+      <ul className="divide-y" style={{ borderColor: "var(--border)" }}>
+        {entry.claims.map((claim) => (
+          <ClaimRow key={`${claim.claim_id}-${claim.verdict}`} claim={claim} />
         ))}
+      </ul>
+
+      <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
+        {entry.n_conflicts === 0
+          ? "Unopposed — no other source has said anything about this."
+          : `Survived ${entry.n_conflicts} conflicting claim${entry.n_conflicts === 1 ? "" : "s"}.`}
+      </p>
+    </div>
+  );
+}
+
+function PlayerCard({ player }: { player: EvidencePlayer }) {
+  return (
+    <article className="card p-4 space-y-3" data-testid="evidence-player">
+      <div className="flex items-baseline justify-between gap-2 flex-wrap">
+        <h3 className="text-sm font-semibold" style={{ color: "var(--text-1)" }}>
+          {player.player_name}
+          {player.club ? (
+            <span className="font-normal" style={{ color: "var(--text-3)" }}>
+              {" "}· {player.club}
+            </span>
+          ) : null}
+        </h3>
+        {player.needs_attention ? (
+          <span className="badge-amber text-[9px]">NEEDS A HUMAN</span>
+        ) : null}
       </div>
+      {player.entries.map((entry) => (
+        <Entry key={entry.claim_type} entry={entry} />
+      ))}
     </article>
   );
 }
 
+function EvidenceBody({ view }: { view: EvidenceView }) {
+  return (
+    <div className="space-y-4">
+      <p className="text-xs" style={{ color: "var(--text-3)" }}>
+        {/* The honest denominator. Without it a short list is ambiguous between
+            "little to report" and "the export broke". */}
+        Showing {view.shown} player{view.shown === 1 ? "" : "s"} whose availability
+        is in question, of {view.resolved} with claims on file.
+        {view.escalations > 0
+          ? ` ${view.escalations} need a human.`
+          : " Everyone else has an uncontested, fully-available reading."}
+      </p>
+      {view.players.map((player) => (
+        <PlayerCard key={player.element_id} player={player} />
+      ))}
+    </div>
+  );
+}
+
 export default function EvidencePage() {
-  const { state, loading, refresh } = useFplLive();
-  const [scope, setScope] = useState<ScopeFilter>("squad");
-  const [query, setQuery] = useState("");
-  const [criticalOnly, setCriticalOnly] = useState(false);
-  const items = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
-    return (state?.evidence?.items ?? []).filter((item) => {
-      const scopeMatches =
-        scope === "all" ||
-        item.scope === scope ||
-        (scope === "target" && item.scope === "squad");
-      const queryMatches =
-        !normalized ||
-        item.player.toLowerCase().includes(normalized) ||
-        item.team.toLowerCase().includes(normalized);
-      return scopeMatches && queryMatches && (!criticalOnly || item.severity === "critical");
-    });
-  }, [criticalOnly, query, scope, state]);
+  const { artifact } = useArtifact<EvidenceView>(REGISTRY.evidence);
 
   return (
-    <div className="portal-page space-y-6 animate-slide-up">
-      <header className="portal-header">
-        <div>
-          <div className="eyebrow"><Stethoscope size={13} /> Automated availability monitor</div>
-          <h1>Injury & news evidence</h1>
-          <p>
-            Official FPL flags update automatically; independent sources remain one
-            click away for deadline-day verification.
+    <ErrorBoundary pageName="Evidence">
+      <div className="space-y-8">
+        <header>
+          <h1
+            className="text-3xl font-extrabold tracking-tight"
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+          >
+            Evidence
+          </h1>
+          <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
+            Why each availability number is what it is — and what it beat
           </p>
-        </div>
-        <button className="primary-action" onClick={() => void refresh()} disabled={loading}>
-          <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
-          Refresh evidence
-        </button>
-      </header>
+        </header>
 
-      <section className="evidence-source-rail">
-        <div><span className="live-dot" /><strong>Official FPL</strong><small>Automated every {state?.evidence?.officialRefreshMinutes ?? 15} min</small></div>
-        <div><span className="manual-dot" /><strong>Premier Injuries</strong><small>Independent cross-check</small></div>
-        <div><span className="manual-dot" /><strong>FFScout</strong><small>Press conference context</small></div>
-        <div><span className="manual-dot" /><strong>AllAboutFPL</strong><small>FPL editorial context</small></div>
-      </section>
-
-      <section className="intelligence-toolbar">
-        <div className="filter-row">
-          {([
-            ["squad", "My squad"],
-            ["target", "Squad + targets"],
-            ["all", "All flagged"],
-          ] as const).map(([value, label]) => (
-            <button key={value} className={scope === value ? "active" : ""} onClick={() => setScope(value)}>
-              {label}
-            </button>
-          ))}
-          <button className={criticalOnly ? "active" : ""} onClick={() => setCriticalOnly((current) => !current)}>
-            Ruled out only
-          </button>
-        </div>
-        <label className="research-search">
-          <Search size={14} />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search player or club" />
-        </label>
-      </section>
-
-      <section className="evidence-list">
-        {items.map((item) => (
-          <EvidenceCard
-            item={item}
-            referenceTime={state?.evidence?.generatedAt ?? item.observedAt}
-            key={item.elementId}
+        <Section
+          title="Contested availability"
+          subtitle="Most disputed first. Every claim that lost is named, with the rule that beat it."
+          aside={<ProvenanceStrip of={artifact} />}
+        >
+          <WhenProven
+            of={artifact}
+            what="Nobody's availability is in question. Every player with claims on file reads as fully available, from an uncontested source."
+            then={(view) => <EvidenceBody view={view} />}
           />
-        ))}
-      </section>
-
-      {!items.length ? (
-        <section className="decision-card evidence-clear">
-          <ShieldCheck size={30} />
-          <strong>{loading ? "Checking official availability…" : "No active flags in this view"}</strong>
-          <p>A clear list means no current FPL flag, not guaranteed selection.</p>
-        </section>
-      ) : null}
-
-      <section className="decision-card evidence-policy">
-        <ShieldCheck size={18} />
-        <div>
-          <span className="kicker">Evidence policy</span>
-          <h2>Primary signal, independent confirmation</h2>
-          <p>
-            The portal automates official FPL status and timestamps. It does not scrape,
-            republish or silently merge third-party injury claims. Cross-check links preserve
-            provenance and prevent an old article from overriding a newer club update.
-          </p>
-        </div>
-      </section>
-
-      <p className="data-disclaimer">
-        Availability percentages and return dates are estimates. Club medical teams and
-        press conferences remain the final decision inputs.
-      </p>
-    </div>
+        </Section>
+      </div>
+    </ErrorBoundary>
   );
 }

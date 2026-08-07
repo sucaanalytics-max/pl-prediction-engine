@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "import:fplreview": "node scripts/import-fplreview-projections.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.0",

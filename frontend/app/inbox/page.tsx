@@ -10,6 +10,7 @@ import {
   type MessageFeed,
   type MessageSeverity,
 } from "@/lib/fpl-messages";
+import { istDateTime } from "@/lib/formats";
 
 /**
  * The agent's inbox — everything it has to say.
@@ -63,10 +64,7 @@ function formatWhen(iso: string): string {
   if (!iso) return "";
   const parsed = new Date(iso);
   if (Number.isNaN(parsed.getTime())) return iso;
-  return parsed.toLocaleString(undefined, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
+  return istDateTime(iso);
 }
 
 function SquadDetail({ detail }: { detail: Record<string, unknown> }) {

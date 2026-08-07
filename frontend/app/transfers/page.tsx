@@ -115,10 +115,10 @@ export default function TransfersPage() {
       <section className="model-caveat">
         <Sparkles size={16} />
         <div>
-          <strong>Preseason planning model</strong>
+          <strong>FPLReview premium projection model</strong>
           <span>
-            Official prices, ownership, availability and fixtures are live. Point
-            projections are provisional until 2026/27 minutes and form stabilise.
+            Expected points and minutes use the 4 Aug private snapshot. Official
+            prices, ownership, availability and fixtures remain live.
           </span>
         </div>
         <button onClick={() => void refresh()} disabled={loading}>
