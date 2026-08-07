@@ -29,7 +29,9 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { ALL_DESCRIPTORS } from "@/lib/data/narrow";
+import { ALL_DESCRIPTORS, decisionDescriptor } from "@/lib/data/narrow";
+import { matchDetailDescriptor } from "@/lib/data/match-detail";
+import { sensitivityDescriptor } from "@/lib/data/sensitivity";
 
 const REPO = join(__dirname, "..", "..", "..");
 const WORKFLOWS = join(REPO, ".github", "workflows");
@@ -104,16 +106,35 @@ const NEWS = newsPublishedPaths();
  */
 function hasPythonWriter(path: string): boolean {
   const filename = path.split("/").pop() ?? path;
-  // Strip a gameweek placeholder: xp_gw07.json is written as an f-string.
-  const stem = filename.replace(/\d+/g, "");
-  const candidates = [filename, stem, stem.replace(/\.json$|\.jsonl$/, "")];
+  const candidates = [
+    filename,
+    // Strip a gameweek placeholder: xp_gw07.json is written as an f-string.
+    filename.replace(/\d+/g, ""),
+    filename.replace(/\d+/g, "").replace(/\.json$|\.jsonl$/, ""),
+    // The literal prefix an f-string leaves behind. `sensitivity_gw07_weekly`
+    // appears in no source file — what the writer contains is
+    // `f"sensitivity_gw{gameweek:02d}_{label}.json"`, so the only greppable
+    // fragment is everything before the first substitution. Without this every
+    // per-gameweek, per-entry path reads as unwritten.
+    filename.replace(/\d.*$/, ""),
+  ];
   for (const candidate of candidates) {
     if (candidate.length < 4) continue;
-    const found = execFileSync(
-      "grep",
-      ["-rl", "--include=*.py", "-F", candidate, join(REPO, "pipeline")],
-      { encoding: "utf8" },
-    ).trim();
+    let found = "";
+    try {
+      found = execFileSync(
+        "grep",
+        ["-rl", "--include=*.py", "-F", candidate, join(REPO, "pipeline")],
+        { encoding: "utf8" },
+      ).trim();
+    } catch {
+      // grep exits 1 on no match, and execFileSync turns a non-zero exit into
+      // a throw. Left unhandled that aborted the whole check — so a path with
+      // no writer produced an unhandled error rather than the "nothing
+      // publishes this" failure the test exists to report, and the remaining
+      // candidates were never tried.
+      continue;
+    }
     const writers = found
       .split("\n")
       .filter((f) => f && !f.includes("/tests/"));
@@ -274,6 +295,54 @@ describe("registry hygiene", () => {
     for (const descriptor of ALL_DESCRIPTORS) {
       expect(descriptor.path.startsWith("/")).toBe(false);
       expect(descriptor.path).not.toContain("..");
+    }
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Descriptor factories
+//
+// `ALL_DESCRIPTORS` covers the static registry. It cannot cover the factories —
+// `decisionDescriptor`, `matchDetailDescriptor`, `sensitivityDescriptor` — which
+// mint a path per gameweek, per entry, or per fixture. Those are fetched paths
+// like any other, and until now nothing checked that a writer exists for them.
+//
+// That is precisely the gap `decision_latest.json` fell through: a path the
+// frontend asked for, named in two workflows, and written by nothing.
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("descriptor factories point at paths something writes", () => {
+  const factories = [
+    { name: "decision (season)", d: decisionDescriptor(7, "season") },
+    { name: "decision (weekly)", d: decisionDescriptor(12, "weekly") },
+    { name: "sensitivity (season)", d: sensitivityDescriptor(7, "season") },
+    { name: "sensitivity (weekly)", d: sensitivityDescriptor(38, "weekly") },
+    { name: "match detail", d: matchDetailDescriptor("ars-che") },
+  ];
+
+  it("finds the factories to check", () => {
+    // Guards the guard: an empty list would pass the loop below vacuously.
+    expect(factories.length).toBeGreaterThanOrEqual(5);
+  });
+
+  it.each(factories)("$name is published", ({ d }) => {
+    expect(isPublished(d.path), `${d.path} is fetched but nothing publishes it`)
+      .toBe(true);
+  });
+
+  it("pads gameweeks so the path matches the writer's f-string", () => {
+    // The agent writes `f"...gw{gameweek:02d}_{label}.json"`. An unpadded
+    // consumer asks for gw7 and 404s on a file called gw07 — a mismatch no
+    // type checks and both sides look correct in isolation.
+    expect(decisionDescriptor(7, "season").path).toContain("gw07");
+    expect(sensitivityDescriptor(7, "season").path).toContain("gw07");
+  });
+
+  it("never asks for a 'latest' alias", () => {
+    // `decision_latest.json` is the phantom this whole file exists for.
+    for (const { d } of factories) {
+      expect(d.path).not.toContain("latest.json.");
+      if (d.path.startsWith("fpl/")) expect(d.path).not.toContain("latest");
     }
   });
 });

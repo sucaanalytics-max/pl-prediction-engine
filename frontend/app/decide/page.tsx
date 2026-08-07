@@ -37,6 +37,9 @@ import { useHeuristics } from "@/lib/data/useHeuristics";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { proven } from "@/lib/data/artifact";
+import {
+  band, sensitivityDescriptor, type Sensitivity,
+} from "@/lib/data/sensitivity";
 import { formatRemaining, msToDeadline } from "@/lib/fpl-decision";
 import type { EntryLabel, MatchesFile, PublicDecision } from "@/lib/data/narrow";
 import type {
@@ -136,6 +139,105 @@ function Proposal({ decision }: { decision: PublicDecision }) {
   );
 }
 
+/**
+ * How well the move survives the projections being wrong.
+ *
+ * Ranked by robustness rather than by EV, which the competitor study called the
+ * single best pattern in the category. Today it renders the honest "not yet
+ * measurable" — no gameweek has settled, so there is no measured error
+ * distribution and a survival percentage would be invented.
+ */
+function Robustness({ label, gameweek }: { label: EntryLabel; gameweek: number }) {
+  const descriptor = useMemo(
+    () => sensitivityDescriptor(gameweek, label), [gameweek, label],
+  );
+  const { artifact } = useArtifact<Sensitivity>(descriptor);
+  const report = proven(artifact);
+
+  return (
+    <Section
+      title="Robustness"
+      subtitle="How often this move still wins when the projections are wrong"
+      aside={<ProvenanceStrip of={artifact} />}
+    >
+      {report && !report.measurable ? (
+        // Rendered rather than hidden: "we cannot measure this yet, and here is
+        // why" is a stronger statement than an empty panel, and it is the
+        // honest one until a gameweek seals.
+        <div className="card p-4 space-y-2" role="status" data-state="not-measurable">
+          <span className="badge-amber text-[9px]">NOT YET MEASURABLE</span>
+          <p className="text-sm" style={{ color: "var(--text-2)" }}>
+            {report.reason}
+          </p>
+          <p className="text-xs" style={{ color: "var(--text-4)" }}>
+            {report.settledGameweeks} gameweek
+            {report.settledGameweeks === 1 ? "" : "s"} settled. A robustness
+            score needs the model&apos;s own measured error distribution, and
+            one computed from a guessed spread would look identical to one
+            computed from evidence.
+          </p>
+        </div>
+      ) : (
+        <WhenProven
+          of={artifact}
+          what="No robustness report has been published for this entry yet."
+          then={(value) => <SurvivalPanel report={value} />}
+        />
+      )}
+    </Section>
+  );
+}
+
+function SurvivalPanel({ report }: { report: Sensitivity }) {
+  const verdict = band(report.survival);
+  const tone =
+    verdict.tone === "good" ? "var(--success, #22c55e)"
+      : verdict.tone === "bad" ? "var(--danger, #f87171)"
+        : "var(--warning, #f59e0b)";
+
+  return (
+    <div className="space-y-3">
+      <div className="glass-inset p-3 flex items-baseline justify-between gap-3 flex-wrap">
+        <div>
+          <p className="stat-label">Survives</p>
+          <p className="font-mono text-2xl" style={{ color: tone }}>
+            {/* Null even when measurable, if every draw failed to solve.
+                Coercing to 0% would report a solver timeout as fragility. */}
+            {report.survival === null
+              ? "—"
+              : `${(report.survival * 100).toFixed(0)}%`}
+          </p>
+        </div>
+        <p className="text-sm" style={{ color: tone }}>{verdict.label}</p>
+      </div>
+
+      <p className="text-xs" style={{ color: "var(--text-3)" }}>
+        {report.draws} re-solve{report.draws === 1 ? "" : "s"} under perturbed
+        projections
+        {report.failedDraws > 0
+          ? `, ${report.failedDraws} of which could not be solved and are excluded`
+          : ""}
+        {report.noise
+          ? ` · noise measured over ${report.noise.gameweeks} settled gameweeks`
+          : ""}
+      </p>
+
+      {report.alternatives.length > 1 ? (
+        <ul className="space-y-1" data-testid="alternatives">
+          {report.alternatives.map((alt) => (
+            <li key={alt.move} className="text-xs flex justify-between gap-3">
+              <span style={{ color: alt.move === report.baselineMove ? "var(--text-1)" : "var(--text-3)" }}>
+                {alt.move === "hold" ? "Hold" : alt.move}
+              </span>
+              <span className="font-mono">{(alt.frequency * 100).toFixed(0)}%</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
 function EntrySection({ label, gameweek }: { label: EntryLabel; gameweek: number }) {
   // Rebuilt only when the gameweek changes; the hook keys on descriptor.path.
   const descriptor = useMemo(
@@ -162,6 +264,15 @@ function EntrySection({ label, gameweek }: { label: EntryLabel; gameweek: number
         then={(decision) => <Proposal decision={decision} />}
       />
     </Section>
+  );
+}
+
+function EntryBlock({ label, gameweek }: { label: EntryLabel; gameweek: number }) {
+  return (
+    <>
+      <EntrySection label={label} gameweek={gameweek} />
+      <Robustness label={label} gameweek={gameweek} />
+    </>
   );
 }
 
@@ -459,7 +570,7 @@ export default function DecidePage() {
           </div>
         ) : (
           ENTRY_LABELS.map((label) => (
-            <EntrySection key={label} label={label} gameweek={gameweek} />
+            <EntryBlock key={label} label={label} gameweek={gameweek} />
           ))
         )}
 
