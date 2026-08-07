@@ -33,11 +33,15 @@
 import { useMemo } from "react";
 import { REGISTRY, decisionDescriptor, ENTRY_LABELS } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
+import { useHeuristics } from "@/lib/data/useHeuristics";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { proven } from "@/lib/data/artifact";
 import { formatRemaining, msToDeadline } from "@/lib/fpl-decision";
 import type { EntryLabel, MatchesFile, PublicDecision } from "@/lib/data/narrow";
+import type {
+  HeuristicCaptainWeek, HeuristicPlan, HeuristicTransfer, HeuristicView,
+} from "@/lib/data/heuristics";
 
 function DeadlineBadge({ deadline }: { deadline: string | null }) {
   const remaining = deadline ? msToDeadline(deadline, new Date()) : null;
@@ -176,10 +180,8 @@ function HeuristicNotice() {
     >
       <span className="badge-amber text-[9px]">HEURISTIC — NOT A MODEL</span>
       <p className="text-sm" style={{ color: "var(--text-2)" }}>
-        Until a gameweek seals, the recommendation lists on{" "}
-        <code>/transfers</code>, <code>/optimizer</code>, <code>/captaincy</code> and{" "}
-        <code>/rankings</code> come from an unvalidated heuristic, not from the
-        decision engine.
+        Until a gameweek seals, the shortlist and captaincy plan below come from
+        an unvalidated heuristic, not from the decision engine.
       </p>
       <p className="text-xs" style={{ color: "var(--text-4)" }}>
         Its tests contain no accuracy assertions, and it projects minutes as
@@ -188,6 +190,241 @@ function HeuristicNotice() {
         a number.
       </p>
     </div>
+  );
+}
+
+/** A number that is a rank rather than a measurement. */
+function Confidence({ value }: { value: number }) {
+  // Rendered as a bare fraction with no colour scale: a green bar next to an
+  // untested heuristic's self-reported confidence is two layers of false
+  // precision stacked on each other.
+  return <span className="font-mono text-xs">{value.toFixed(2)}</span>;
+}
+
+function TransferRows({ moves }: { moves: readonly HeuristicTransfer[] }) {
+  return (
+    <div className="glass-panel rounded-2xl overflow-x-auto">
+      <table className="data-table" aria-label="Heuristic transfer shortlist">
+        <thead>
+          <tr>
+            <th scope="col" className="w-8 text-center">#</th>
+            <th scope="col">Out</th>
+            <th scope="col">In</th>
+            <th scope="col" className="text-center">Δ4</th>
+            <th scope="col" className="text-center hidden sm:table-cell">Δ6</th>
+            <th scope="col" className="text-center hidden md:table-cell">Bank</th>
+            <th scope="col" className="text-center hidden md:table-cell">Conf</th>
+            <th scope="col" className="hidden lg:table-cell">Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          {moves.map((move) => (
+            <tr key={`${move.rank}-${move.playerOut.elementId}-${move.playerIn.elementId}`}
+                data-testid="transfer">
+              <td className="text-center font-mono text-xs">{move.rank}</td>
+              <td className="text-sm" style={{ color: "var(--danger, #f87171)" }}>
+                {move.playerOut.name}
+              </td>
+              <td className="text-sm" style={{ color: "var(--success, #22c55e)" }}>
+                {move.playerIn.name}
+              </td>
+              <td className="text-center font-mono text-sm">{move.delta4.toFixed(1)}</td>
+              <td className="text-center font-mono text-sm hidden sm:table-cell">
+                {move.delta6.toFixed(1)}
+              </td>
+              <td className="text-center font-mono text-sm hidden md:table-cell">
+                £{move.bankAfter.toFixed(1)}
+              </td>
+              <td className="text-center hidden md:table-cell">
+                <Confidence value={move.confidence} />
+              </td>
+              <td className="text-xs hidden lg:table-cell" style={{ color: "var(--text-3)" }}>
+                {/* The rationale is the only part of a heuristic worth reading:
+                    it is checkable, and the number is not. */}
+                {move.rationale.join(" · ") || "—"}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function CaptaincyRows({ weeks }: { weeks: readonly HeuristicCaptainWeek[] }) {
+  return (
+    <div className="glass-panel rounded-2xl overflow-x-auto">
+      <table className="data-table" aria-label="Heuristic captaincy plan">
+        <thead>
+          <tr>
+            <th scope="col" className="w-10 text-center">GW</th>
+            <th scope="col">Captain</th>
+            <th scope="col" className="hidden sm:table-cell">Fixture</th>
+            <th scope="col">Vice</th>
+            <th scope="col" className="text-center">Proj</th>
+            <th scope="col" className="text-center hidden md:table-cell">Conf</th>
+          </tr>
+        </thead>
+        <tbody>
+          {weeks.map((week) => (
+            <tr key={week.gameweek} data-testid="captain-week">
+              <td className="text-center font-mono text-xs">{week.gameweek}</td>
+              <td className="text-sm font-semibold">{week.captain.name}</td>
+              <td className="text-xs hidden sm:table-cell" style={{ color: "var(--text-3)" }}>
+                {week.captainFixture}
+              </td>
+              <td className="text-sm" style={{ color: "var(--text-3)" }}>
+                {week.viceCaptain.name}
+              </td>
+              <td className="text-center font-mono text-sm">
+                {week.projectedCaptainPoints.toFixed(1)}
+              </td>
+              <td className="text-center hidden md:table-cell">
+                <Confidence value={week.confidence} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/**
+ * The multi-transfer plans ported off `/optimizer`.
+ *
+ * Shown as *alternatives*, which is the point: the plan calls for N distinct
+ * options rather than one, because a single recommendation hides how close the
+ * runner-up was — and closeness is the honest signal about whether the choice
+ * matters at all. A 0.2-point gap between the top two plans means "either", not
+ * "this one".
+ */
+function PlanCards({ plans }: { plans: readonly HeuristicPlan[] }) {
+  const best = plans[0]?.delta4 ?? 0;
+  return (
+    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {plans.map((plan) => {
+        const behind = best - plan.delta4;
+        return (
+          <div key={`${plan.rank}-${plan.transferCount}`} className="card p-3 space-y-2"
+               data-testid="plan">
+            <div className="flex items-baseline justify-between gap-2">
+              <span className="text-xs font-semibold" style={{ color: "var(--text-2)" }}>
+                {plan.transferCount} transfers
+              </span>
+              <span className="font-mono text-sm">{plan.delta4.toFixed(1)}</span>
+            </div>
+            <ul className="space-y-1">
+              {plan.moves.map((move) => (
+                <li key={`${move.playerOut.elementId}-${move.playerIn.elementId}`}
+                    className="text-xs">
+                  <span style={{ color: "var(--danger, #f87171)" }}>
+                    {move.playerOut.name}
+                  </span>
+                  {" → "}
+                  <span style={{ color: "var(--success, #22c55e)" }}>
+                    {move.playerIn.name}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
+              {plan.rank === 1
+                ? "Best by four-gameweek delta"
+                : `${behind.toFixed(1)} behind the best`}
+              {plan.flags.length > 0 ? ` · ${plan.flags.join(", ")}` : ""}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Says out loud when rows were dropped, rather than quietly showing fewer. */
+function DroppedRows({ view }: { view: HeuristicView }) {
+  if (view.droppedRows === 0) return null;
+  return (
+    <p className="text-xs mt-2" style={{ color: "var(--warning, #f59e0b)" }} role="status">
+      {view.droppedRows} row{view.droppedRows === 1 ? "" : "s"} could not be read
+      and {view.droppedRows === 1 ? "was" : "were"} left out of these lists.
+    </p>
+  );
+}
+
+/**
+ * The two lists ported off `/transfers`, `/optimizer` and `/captaincy`.
+ *
+ * One fetch, two sections. Each owns its own state per Rule 2, so an engine that
+ * produces a captaincy plan but no shortlist renders one table and one honest
+ * card rather than blanking both.
+ */
+function HeuristicLists() {
+  const { artifact } = useHeuristics();
+
+  return (
+    <>
+      <Section
+        title="Transfer shortlist"
+        subtitle="Ranked by four-gameweek delta"
+        aside={<ProvenanceStrip of={artifact} />}
+      >
+        <WhenProven
+          of={artifact}
+          what="The engine produced no transfer shortlist. Before any fixtures are played it has no form or minutes to separate players on."
+          then={(view) =>
+            view.transfers.length === 0 ? (
+              <p className="text-sm" style={{ color: "var(--text-3)" }}>
+                No move scored better than holding.
+              </p>
+            ) : (
+              <>
+                <TransferRows moves={view.transfers} />
+                <DroppedRows view={view} />
+              </>
+            )
+          }
+        />
+      </Section>
+
+      <Section
+        title="Alternatives"
+        subtitle="Multi-transfer plans, so the runner-up is visible"
+      >
+        <WhenProven
+          of={artifact}
+          what="No multi-transfer plans were computed."
+          then={(view) =>
+            view.plans.length === 0 ? (
+              <p className="text-sm" style={{ color: "var(--text-3)" }}>
+                No multi-transfer plan beat the single-move shortlist.
+              </p>
+            ) : (
+              <PlanCards plans={view.plans} />
+            )
+          }
+        />
+      </Section>
+
+      <Section
+        title="Captaincy plan"
+        subtitle="Who to captain, and the vice behind them"
+      >
+        <WhenProven
+          of={artifact}
+          what="No captaincy plan could be built, which needs at least one upcoming fixture per player."
+          then={(view) =>
+            view.captaincy.length === 0 ? (
+              <p className="text-sm" style={{ color: "var(--text-3)" }}>
+                No captaincy plan for the current horizon.
+              </p>
+            ) : (
+              <CaptaincyRows weeks={view.captaincy} />
+            )
+          }
+        />
+      </Section>
+    </>
   );
 }
 
@@ -227,6 +464,7 @@ export default function DecidePage() {
         )}
 
         <HeuristicNotice />
+        <HeuristicLists />
       </div>
     </ErrorBoundary>
   );

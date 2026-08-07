@@ -208,3 +208,183 @@ describe("absence is stated, not blank", () => {
     expect(screen.getByText(/521 → 9/)).toBeInTheDocument();
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The lists ported off /transfers, /optimizer and /captaincy.
+//
+// Those three routes are not on `main` and return 404 in production, so nothing
+// was lost by retiring them — but the shortlist itself is the only actionable
+// content the app has until a gameweek seals, so it has to survive the move.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const LIVE_STATE = {
+  generatedAt: "2026-08-06T06:00:00Z",
+  recommendations: {
+    modelVersion: "heuristic-only",
+    transfers4: [{
+      rank: 1,
+      playerOut: { elementId: 521, name: "Raya", team: "ARS", position: "GKP" },
+      playerIn: { elementId: 9, name: "Sánchez", team: "CHE", position: "GKP" },
+      delta4: 3.2, delta6: 4.9, bankAfter: 0.4, confidence: 0.61,
+      rationale: ["Fixture swing", "Minutes secure"], flags: [],
+    }],
+    captaincyPlan: [{
+      gameweek: 7,
+      captain: { elementId: 427, name: "Salah", team: "LIV", position: "MID" },
+      viceCaptain: { elementId: 2, name: "Haaland", team: "MCI", position: "FWD" },
+      captainFixture: "LIV v BOU (H)", projectedCaptainPoints: 11.4, confidence: 0.55,
+    }],
+  },
+  rankings: {
+    overall: [], captaincy: [], value: [], differentials: [],
+    goalkeepers: [], defenders: [], midfielders: [], forwards: [],
+  },
+  projections: { source: "fallback", sourceLabel: "No FPLReview export available" },
+};
+
+/** Serves `/api/fpl/state` alongside the published artifacts. */
+async function renderWithLive(
+  bodies: Record<string, unknown>, live: unknown,
+) {
+  vi.stubGlobal("fetch", vi.fn(async (url: unknown) => {
+    const raw = String(url);
+    if (raw.includes("/api/fpl/state")) {
+      return live === undefined
+        ? new Response("", { status: 503 })
+        : new Response(JSON.stringify({ data: live }), { status: 200 });
+    }
+    const path = raw.replace(/^\/predictions\//, "");
+    if (!(path in bodies)) return new Response("", { status: 404 });
+    return new Response(JSON.stringify(bodies[path]), { status: 200 });
+  }));
+  render(<DecidePage />);
+  await screen.findByText("Decide");
+  await new Promise((r) => setTimeout(r, 30));
+}
+
+describe("the ported transfer shortlist", () => {
+  it("renders the move out and the move in", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, LIVE_STATE);
+    const rows = screen.getAllByTestId("transfer");
+    expect(rows).toHaveLength(1);
+    expect(within(rows[0]).getByText("Raya")).toBeInTheDocument();
+    expect(within(rows[0]).getByText("Sánchez")).toBeInTheDocument();
+  });
+
+  it("carries the rationale across, which is the only checkable part", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, LIVE_STATE);
+    expect(screen.getByText(/Fixture swing · Minutes secure/)).toBeInTheDocument();
+  });
+
+  it("renders the captaincy plan with its vice", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, LIVE_STATE);
+    const week = screen.getByTestId("captain-week");
+    expect(within(week).getByText("Salah")).toBeInTheDocument();
+    expect(within(week).getByText("Haaland")).toBeInTheDocument();
+  });
+});
+
+describe("the shortlist owns its own state", () => {
+  it("a dead live route does not blank the published proposal", async () => {
+    // Rule 2. The old context had one error for every consumer, so a single
+    // failing fetch emptied unrelated sections.
+    await renderWithLive(
+      { [REGISTRY.matches.path]: MATCHES, [SEASON]: decision() }, undefined,
+    );
+    expect(screen.getByText(/521 → 9/)).toBeInTheDocument();
+    expect(screen.queryAllByTestId("transfer")).toHaveLength(0);
+  });
+
+  it("an empty shortlist says so rather than showing an empty table", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, {
+      ...LIVE_STATE,
+      recommendations: { ...LIVE_STATE.recommendations, transfers4: [] },
+    });
+    expect(screen.getByText(/No move scored better than holding/)).toBeInTheDocument();
+  });
+
+  it("a malformed row is reported, not silently dropped", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, {
+      ...LIVE_STATE,
+      recommendations: {
+        ...LIVE_STATE.recommendations,
+        transfers4: [
+          ...LIVE_STATE.recommendations.transfers4,
+          { rank: 2, playerIn: { elementId: 5, name: "Half" } },
+        ],
+      },
+    });
+    // Showing 1 of 2 without saying so would overstate the shortlist's coverage.
+    expect(screen.getByText(/1 row could not be read/)).toBeInTheDocument();
+  });
+
+  it("a broken payload reads as unreadable, not as no transfers", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, { nonsense: true });
+    const cards = screen.getAllByRole("status");
+    expect(cards.some((c) => /does not match the expected shape/.test(c.textContent ?? "")))
+      .toBe(true);
+  });
+});
+
+describe("the alternatives ported off /optimizer", () => {
+  const PLANS = [
+    {
+      rank: 1, transferCount: 2, bankAfter: 0.2, delta4: 5.4, delta6: 7.1,
+      confidence: 0.5, flags: [],
+      moves: [
+        { playerOut: { elementId: 1, name: "Raya" }, playerIn: { elementId: 2, name: "Sánchez" } },
+        { playerOut: { elementId: 3, name: "Gvardiol" }, playerIn: { elementId: 4, name: "Kerkez" } },
+      ],
+    },
+    {
+      rank: 2, transferCount: 3, bankAfter: 0.0, delta4: 5.2, delta6: 7.4,
+      confidence: 0.4, flags: ["takes a hit"],
+      moves: [
+        { playerOut: { elementId: 5, name: "Watkins" }, playerIn: { elementId: 6, name: "Isak" } },
+      ],
+    },
+  ];
+
+  const withPlans = {
+    ...LIVE_STATE,
+    recommendations: { ...LIVE_STATE.recommendations, multiTransferPlans4: PLANS },
+  };
+
+  it("shows more than one plan, so the runner-up is visible", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, withPlans);
+    expect(screen.getAllByTestId("plan")).toHaveLength(2);
+  });
+
+  it("says how far behind the best each alternative is", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, withPlans);
+    // 5.4 - 5.2 = 0.2. A gap that small means "either", not "this one", and
+    // that is the whole reason for showing alternatives at all.
+    expect(screen.getByText(/0\.2 behind the best/)).toBeInTheDocument();
+    expect(screen.getByText(/Best by four-gameweek delta/)).toBeInTheDocument();
+  });
+
+  it("lists every leg of a multi-transfer plan", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, withPlans);
+    const first = screen.getAllByTestId("plan")[0];
+    expect(within(first).getByText("Gvardiol")).toBeInTheDocument();
+    expect(within(first).getByText("Kerkez")).toBeInTheDocument();
+  });
+
+  it("drops a plan whose every leg is malformed rather than showing a bare number", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, {
+      ...LIVE_STATE,
+      recommendations: {
+        ...LIVE_STATE.recommendations,
+        multiTransferPlans4: [{ rank: 1, delta4: 9.9, moves: [{ playerIn: {} }] }],
+      },
+    });
+    expect(screen.queryAllByTestId("plan")).toHaveLength(0);
+    expect(screen.getByText(/No multi-transfer plan beat/)).toBeInTheDocument();
+  });
+
+  it("absent plans do not disturb the shortlist", async () => {
+    await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, LIVE_STATE);
+    expect(screen.getAllByTestId("transfer")).toHaveLength(1);
+    expect(screen.getByText(/No multi-transfer plan beat/)).toBeInTheDocument();
+  });
+});

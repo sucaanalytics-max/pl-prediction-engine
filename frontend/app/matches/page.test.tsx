@@ -282,6 +282,12 @@ describe("Players — nulls stay null", () => {
       [REGISTRY.playerStats.path]: PLAYERS.map((p) => ({ ...p, minutes: 0 })),
     }, "Season statistics");
     expect(screen.queryAllByTestId("player")).toHaveLength(0);
-    expect(screen.getByRole("status").dataset.state).toBe("empty");
+    // `getByRole("status")` was unambiguous when Players had one section. It now
+    // carries the ported rankings too, and that section is legitimately absent
+    // here because nothing serves `/api/fpl/state` in this test — so the
+    // assertion has to name which state card it means rather than assuming
+    // there is only one.
+    const cards = screen.getAllByRole("status");
+    expect(cards.map((card) => card.dataset.state)).toContain("empty");
   });
 });
