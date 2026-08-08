@@ -47,7 +47,7 @@ import {
   applyFilters, DEFAULT_FILTERS, MARKET_GROUPS, toCsv,
   type BetFilters, type BetRow, type Confidence, type MarketGroup, type SortKey,
 } from "@/lib/data/bet-filters";
-import type { Bet, Health, Latest, Prediction } from "@/lib/data/narrow";
+import type { Health, Latest, Prediction } from "@/lib/data/narrow";
 
 /** Bankroll used only to show an illustrative cash figure beside the fraction. */
 const ILLUSTRATIVE_BANKROLL = 100;

@@ -16,7 +16,6 @@
  * which is the truth and the only part worth working on.
  */
 
-import { REGISTRY } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { proven } from "@/lib/data/artifact";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";

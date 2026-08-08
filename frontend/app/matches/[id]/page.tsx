@@ -9,7 +9,7 @@ import { proven } from "@/lib/data/artifact";
 import { StateCard } from "@/components/data/Artifact";
 import {
   correctScoreToGrid,
-  effectiveEdge, confidenceTier, marketLabel, marketIcon,
+  confidenceTier, marketLabel, marketIcon,
 } from "@/lib/predictions";
 import { pct, xg, odds, shortDate, kickoffTime, confidenceColor, edgeColor } from "@/lib/formats";
 import { ErrorBoundary } from "@/components/ErrorBoundary";

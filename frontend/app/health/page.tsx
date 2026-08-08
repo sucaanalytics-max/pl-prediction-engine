@@ -6,7 +6,7 @@ import {
 } from "recharts";
 import { REGISTRY, type Health, type Latest } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
-import { proven } from "@/lib/data/artifact";
+import { chartable, proven } from "@/lib/data/artifact";
 import { StateCard } from "@/components/data/Artifact";
 import { useChartTheme } from "@/lib/hooks";
 import { istDateTime, pct, timeAgo } from "@/lib/formats";
@@ -45,15 +45,22 @@ function HealthContent() {
   // Distinguishes "this producer emitted no metrics" from "it emitted zeros".
   const hasMetrics = hasCoreMetrics(metrics);
 
-  // Calibration chart data
-  const calData = health.calibration_bins.map((b) => ({
-    predicted: b.predicted_mean,
-    actual: b.actual_mean,
-    count: b.count,
-  }));
+  // Every Recharts mount sits behind `chartable`, which is the mechanism the
+  // plan specifies rather than a convention. A `.length > 0` check — what was
+  // here before — passes for an artifact whose state is `empty` or
+  // `unreadable` as long as the array happens to be populated, and `/health`
+  // shipped 312 lines of chart scaffolding over metrics that were never
+  // emitted. `chartable` refuses `empty` outright, so an axis with no series
+  // cannot be rendered and Recharts stays out of that path entirely.
+  const calData = (chartable(healthArtifact, (h) => h.calibration_bins) ?? []).map(
+    (b) => ({ predicted: b.predicted_mean, actual: b.actual_mean, count: b.count }),
+  );
 
   // Stacking weights from predictions metadata
-  const stackingWeights = data?.stacking_weights ?? null;
+  const stackingWeights = chartable(
+    latestArtifact,
+    (file) => (file.stacking_weights ? [file.stacking_weights] : null),
+  )?.[0] ?? null;
   const stackingData = stackingWeights
     ? Object.entries(stackingWeights)
         .sort(([, a], [, b]) => b - a)

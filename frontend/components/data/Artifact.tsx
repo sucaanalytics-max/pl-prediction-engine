@@ -22,7 +22,7 @@
 
 import type { ReactNode } from "react";
 import {
-  chartable, describeAge, describeProducer, isStale, proven,
+  describeAge, describeProducer, isStale, proven,
   type Artifact,
 } from "@/lib/data/artifact";
 

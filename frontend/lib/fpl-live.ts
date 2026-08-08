@@ -1,4 +1,23 @@
-import type { Position, SquadPlayer } from "./fpl-portal";
+/**
+ * Moved here from `lib/fpl-portal.ts`, which is gone.
+ *
+ * That file was 205 lines of hand-typed placeholder data — an invented squad,
+ * invented "intelligence" items, and a captaincy plan carrying `confidence: 91`
+ * for a pick nobody computed. These two types were the only part of it that was
+ * real, and they belong beside the live state that uses them.
+ */
+export type Position = "GKP" | "DEF" | "MID" | "FWD";
+
+export interface SquadPlayer {
+  name: string;
+  team: string;
+  position: Position;
+  price: number;
+  fixture: string;
+  difficulty: 1 | 2 | 3 | 4 | 5;
+  status?: "captain" | "vice" | "monitor";
+  bench?: boolean;
+}
 
 /**
  * The FPL entry this portal describes.

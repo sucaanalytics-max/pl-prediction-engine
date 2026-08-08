@@ -15,7 +15,7 @@
  * list. A second list would need the same maintenance as the first and would rot
  * the same way.
  */
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 

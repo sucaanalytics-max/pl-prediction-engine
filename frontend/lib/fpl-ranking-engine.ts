@@ -1,4 +1,4 @@
-import type { Position } from "./fpl-portal";
+import type { Position } from "./fpl-live";
 import type {
   FplCaptainWeek,
   FplFixtureView,

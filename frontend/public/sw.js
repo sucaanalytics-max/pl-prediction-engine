@@ -8,8 +8,6 @@ const SHELL_ROUTES = [
   "/matches",
   "/evidence",
   "/accuracy",
-  "/planner",
-  "/intelligence",
   "/offline",
   "/icon.svg",
   "/icon-maskable.svg",

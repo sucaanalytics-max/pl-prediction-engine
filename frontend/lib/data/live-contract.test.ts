@@ -30,7 +30,7 @@
  * where leaving it out of both lists fails.
  */
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { narrowHeuristics } from "@/lib/data/heuristics";
@@ -167,4 +167,56 @@ describe("the blocks removed in the narrowing stay removed", () => {
     expect(source).toContain("sourceLabel");
     expect(server).toContain('"fallback"');
   });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Charts
+//
+// The plan's mechanism is that every Recharts mount sits behind `chartable`,
+// which refuses `empty` — so "312 lines of chart scaffolding over metrics that
+// were never emitted", which `/health` actually shipped, becomes unwritable
+// rather than merely discouraged.
+//
+// It was not enforced. `chartable` was exported, unit-tested, imported by a
+// component that never called it, and used by **no page**: `/health` guarded
+// its two charts with `.length > 0`, which passes for an artifact whose state
+// is `empty` or `unreadable` whenever the array happens to be populated.
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("every charting page goes through chartable", () => {
+  const APP = join(__dirname, "..", "..", "app");
+
+  /** Files that mount Recharts, found rather than listed. */
+  function chartingPages(): string[] {
+    const found: string[] = [];
+    const walk = (dir: string) => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const abs = join(dir, entry.name);
+        if (entry.isDirectory()) walk(abs);
+        else if (/\.tsx$/.test(entry.name) && !/\.test\.tsx$/.test(entry.name)) {
+          if (readFileSync(abs, "utf8").includes("recharts")) found.push(abs);
+        }
+      }
+    };
+    walk(APP);
+    return found;
+  }
+
+  it("finds the charting pages", () => {
+    // Guards the guard: zero pages would make the check below vacuous, which is
+    // exactly how this rule went unenforced in the first place.
+    expect(chartingPages().length).toBeGreaterThan(0);
+  });
+
+  it.each(chartingPages().map((p) => [p.split("/app/")[1], p]))(
+    "%s calls chartable",
+    (_label, path) => {
+      const source = readFileSync(path, "utf8");
+      expect(
+        source.includes("chartable("),
+        "This page mounts Recharts. Series must come from `chartable`, which " +
+          "refuses an `empty` artifact — a `.length > 0` check does not.",
+      ).toBe(true);
+    },
+  );
 });
