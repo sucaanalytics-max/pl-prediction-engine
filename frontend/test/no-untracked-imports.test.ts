@@ -216,3 +216,54 @@ describe("the paid FPLReview export is not a build input", () => {
     expect(status).toBe("frontend/data/fplreview-projections.json");
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Sync-conflict duplicates
+//
+// This directory sits under ~/Documents, which macOS may sync. A sync client
+// resolves a conflict by writing "page 2.tsx" beside "page.tsx", and one such
+// file — a stale 237-line copy of a 293-line test — reached a commit through
+// `git add -A` and would have stayed there indefinitely. vitest does not
+// collect it (the name does not end in `.test.tsx`), so it was invisible to
+// every signal except `tsc`, which reported it as errors in a file nobody had
+// edited.
+//
+// A gitignore rule was the obvious fix and the wrong one: `* [0-9].*` would
+// also silently ignore a legitimately named `step 2.tsx`, which is the same
+// class of bug as the untracked import above — a real file the repository
+// cannot see. Failing loudly is the correct behaviour.
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("no sync-conflict duplicates", () => {
+  const CONFLICT = /\s\d+\.(tsx?|jsx?|json|py)$/;
+
+  it("none on disk", () => {
+    const offenders = sourcesOnDisk()
+      .concat(
+        existsSync(join(FRONTEND, "test"))
+          ? readdirSync(join(FRONTEND, "test")).map((f) => join(FRONTEND, "test", f))
+          : [],
+      )
+      .filter((file) => CONFLICT.test(file));
+    expect(
+      offenders.map((f) => relative(REPO, f)),
+      "Sync-conflict copies shadow real files and are invisible to vitest",
+    ).toEqual([]);
+  });
+
+  it.skipIf(!IN_GIT)("none tracked in git", () => {
+    const tracked = [...TRACKED]
+      .map((abs) => relative(REPO, abs))
+      .filter((rel) => CONFLICT.test(rel));
+    expect(tracked).toEqual([]);
+  });
+
+  it("the pattern matches what a sync client actually writes", () => {
+    // Guards the guard: a regex that matched nothing would pass both above.
+    expect(CONFLICT.test("app/matches/page.test 2.tsx")).toBe(true);
+    expect(CONFLICT.test("lib/data/narrow 2.ts")).toBe(true);
+    // ...and does not catch a legitimately numbered file.
+    expect(CONFLICT.test("app/gameweek2.tsx")).toBe(false);
+    expect(CONFLICT.test("lib/step-2.ts")).toBe(false);
+  });
+});

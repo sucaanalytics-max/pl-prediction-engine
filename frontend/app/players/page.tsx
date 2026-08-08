@@ -25,9 +25,14 @@ import { REGISTRY } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { usePlayerWatchlist } from "@/lib/use-player-watchlist";
+import {
+  notable, projectionsDescriptor, skew,
+  type Projection, type Projections,
+} from "@/lib/data/projections";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { MIN_MINUTES_FOR_RATES, type PlayerRow } from "@/lib/data/narrow";
+import { MIN_MINUTES_FOR_RATES, type MatchesFile, type PlayerRow } from "@/lib/data/narrow";
+import { proven } from "@/lib/data/artifact";
 import {
   RANKING_CATEGORIES, type HeuristicPlayer, type RankingCategory,
 } from "@/lib/data/heuristics";
@@ -136,6 +141,161 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
         </table>
       </div>
     </div>
+  );
+}
+
+/**
+ * The model's own projections, led by the distribution rather than the mean.
+ *
+ * This is the section that distinguishes the app: `xp 6.4` beside `most often
+ * 2` beside `P(10+) 15%` is the honest statement of a right-skewed forecast,
+ * and seven of eight competitors publish only the first of the three.
+ */
+function ModelProjections({ gameweek }: { gameweek: number }) {
+  const descriptor = useMemo(() => projectionsDescriptor(gameweek), [gameweek]);
+  const { artifact } = useArtifact<Projections>(descriptor);
+  const [expanded, setExpanded] = useState<number | null>(null);
+
+  return (
+    <Section
+      title="Projections"
+      subtitle="What the simulation expects, and how wide the spread is"
+      aside={<ProvenanceStrip of={artifact} />}
+    >
+      <WhenProven
+        of={artifact}
+        what={
+          `No projection has been published for GW${gameweek}. The agent writes ` +
+          `one per gameweek and prunes the rest, so exactly one is current.`
+        }
+        then={(file) => {
+          const rows = notable(file.players);
+          return (
+            <div className="space-y-2">
+              <div className="glass-panel rounded-2xl overflow-x-auto">
+                <table className="data-table" aria-label="Player points projections">
+                  <thead>
+                    <tr>
+                      <th scope="col">Player</th>
+                      <th scope="col" className="hidden sm:table-cell">Team</th>
+                      <th scope="col" className="text-center">Mean</th>
+                      <th scope="col" className="text-center">Most often</th>
+                      <th scope="col" className="text-center">P(10+)</th>
+                      <th scope="col" className="text-center hidden md:table-cell">
+                        10–90%
+                      </th>
+                      <th scope="col" className="w-8" aria-label="Breakdown" />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((player) => (
+                      <ProjectionRow
+                        key={player.elementId}
+                        player={player}
+                        open={expanded === player.elementId}
+                        onToggle={() =>
+                          setExpanded(
+                            expanded === player.elementId ? null : player.elementId,
+                          )
+                        }
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
+                Ranked by the chance of a hauling week, not by the mean — a
+                weekly-win entry is buying the right tail.
+                {file.nDraws !== null
+                  ? ` Tail probabilities from ${file.nDraws.toLocaleString()} simulated draws.`
+                  : ""}
+              </p>
+            </div>
+          );
+        }}
+      />
+    </Section>
+  );
+}
+
+function ProjectionRow({
+  player, open, onToggle,
+}: {
+  player: Projection;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const gap = skew(player);
+  return (
+    <>
+      <tr data-testid="projection">
+        <td className="text-sm">{player.name ?? `#${player.elementId}`}</td>
+        <td className="text-sm hidden sm:table-cell" style={{ color: "var(--text-3)" }}>
+          {player.team ?? "—"}
+        </td>
+        <td className="text-center font-mono text-sm">
+          {player.xp !== null ? player.xp.toFixed(1) : "—"}
+        </td>
+        <td className="text-center font-mono text-sm" data-testid="mode">
+          {/* The number that stops the mean being read as a forecast. */}
+          {player.mode !== null ? player.mode : "—"}
+          {gap !== null && gap >= 2 ? (
+            <span
+              className="ml-1 text-[9px]"
+              style={{ color: "var(--warning, #f59e0b)" }}
+              title={`The mean sits ${gap.toFixed(1)} points above the most likely return, so it is carried by the tail rather than by a typical week.`}
+            >
+              skew
+            </span>
+          ) : null}
+        </td>
+        <td className="text-center font-mono text-sm">
+          {player.pGe10 !== null ? `${(player.pGe10 * 100).toFixed(0)}%` : "—"}
+        </td>
+        <td className="text-center font-mono text-xs hidden md:table-cell">
+          {player.q10 !== null && player.q90 !== null
+            ? `${player.q10.toFixed(0)}–${player.q90.toFixed(0)}`
+            : "—"}
+        </td>
+        <td className="text-center">
+          {player.decomposition ? (
+            <button
+              type="button"
+              onClick={onToggle}
+              aria-expanded={open}
+              aria-label={`${open ? "Hide" : "Show"} points breakdown for ${player.name ?? player.elementId}`}
+              className="text-xs"
+              style={{ color: "var(--accent)" }}
+            >
+              {open ? "−" : "+"}
+            </button>
+          ) : null}
+        </td>
+      </tr>
+      {open && player.decomposition ? (
+        <tr data-testid="breakdown">
+          <td colSpan={7} className="text-xs" style={{ color: "var(--text-3)" }}>
+            {/* Where the mean comes from. 6.4 built from appearance points and
+                a clean sheet is a different holding from 6.4 built from a
+                one-in-six chance of a haul. */}
+            <div className="glass-inset p-3 grid grid-cols-2 sm:grid-cols-5 gap-2">
+              {([
+                ["Appearance", player.decomposition.appearance],
+                ["Goals", player.decomposition.goals],
+                ["Assists", player.decomposition.assists],
+                ["Clean sheet", player.decomposition.cleanSheets],
+                ["Other", player.decomposition.other],
+              ] as const).map(([label, value]) => (
+                <div key={label}>
+                  <p className="stat-label">{label}</p>
+                  <p className="font-mono">{value.toFixed(2)}</p>
+                </div>
+              ))}
+            </div>
+          </td>
+        </tr>
+      ) : null}
+    </>
   );
 }
 
@@ -358,6 +518,11 @@ function RankedRow({
 
 export default function PlayersPage() {
   const { artifact } = useArtifact<readonly PlayerRow[]>(REGISTRY.playerStats);
+  // The projection is filed per gameweek, so the fixtures artifact has to be
+  // readable before one can be located. Its own absence is a section-level
+  // state, not a page-level gate.
+  const { artifact: matches } = useArtifact<MatchesFile>(REGISTRY.matches);
+  const gameweek = proven(matches)?.gameweek ?? null;
 
   return (
     <ErrorBoundary pageName="Players">
@@ -381,6 +546,16 @@ export default function PlayersPage() {
             then={(rows) => <PlayersTable rows={rows} />}
           />
         </Section>
+
+        {gameweek === null ? (
+          <div className="card p-4" role="status">
+            <p className="text-sm" style={{ color: "var(--text-2)" }}>
+              The current gameweek is unknown, so no projection can be located.
+            </p>
+          </div>
+        ) : (
+          <ModelProjections gameweek={gameweek} />
+        )}
 
         <HeuristicRankings />
       </div>

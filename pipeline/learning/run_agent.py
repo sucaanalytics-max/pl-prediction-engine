@@ -119,6 +119,49 @@ def _publish_sensitivity(gameweek: int, entry_label: str) -> None:
         logger.warning("could not publish the sensitivity report: %s", exc)
 
 
+def _publish_public_xp(
+    artifact_path: Any, bootstrap: Mapping[str, Any], gameweek: int,
+) -> None:
+    """
+    Publish the per-player distributions the /players screen renders.
+
+    Reads back the artifact just written rather than taking the in-memory
+    object, so what the page shows is what actually landed on disk. A view built
+    from memory would still render if the write had silently produced something
+    different.
+
+    Non-fatal: a projection that has been computed and validated must not be
+    lost because the display copy of it failed.
+    """
+    import json as _json
+
+    from pipeline.fpl import public_xp
+
+    try:
+        artifact = _json.loads(Path(artifact_path).read_text(encoding="utf-8"))
+        teams = {t["id"]: str(t.get("name") or "") for t in bootstrap.get("teams") or []}
+        positions = {
+            1: "GKP", 2: "DEF", 3: "MID", 4: "FWD",
+        }
+        names = {
+            int(e["id"]): (
+                str(e.get("web_name") or ""),
+                teams.get(e.get("team"), ""),
+                positions.get(e.get("element_type")),
+            )
+            for e in bootstrap.get("elements") or []
+        }
+        view = public_xp.build(
+            artifact,
+            names,
+            generated_at=datetime.now(timezone.utc)
+            .isoformat().replace("+00:00", "Z"),
+        )
+        public_xp.write(view, Path(FPL_PUBLIC_DIR))
+    except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
+        logger.warning("could not publish the public xp view for GW%s: %s", gameweek, exc)
+
+
 def _settled_outcomes(gameweek: int) -> List[Dict[str, Any]]:
     """
     Per-player predicted-versus-actual rows from every sealed gameweek.
@@ -344,6 +387,12 @@ def refresh_expected_points(
         seed,
         specs,
     )
+
+    # The display projection. Separate from the artifact above because that one
+    # is optimiser input whose shape follows the model, while this is a stable
+    # contract with the page — and a quarter of the size.
+    _publish_public_xp(written["xp"], bootstrap, draws.gameweek)
+
     return {
         "status": "ok",
         "gameweek": int(draws.gameweek),

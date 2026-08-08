@@ -22,6 +22,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import PlayersPage from "@/app/players/page";
 import { REGISTRY } from "@/lib/data/narrow";
+import { projectionsDescriptor } from "@/lib/data/projections";
 
 function statRow(over: Record<string, unknown> = {}) {
   return {
@@ -297,5 +298,121 @@ describe("the pieces carried over from /transfers and /projections", () => {
     // A missing projection is not a projection of zero, and coercing would sort
     // the two identically.
     expect(short?.textContent).toContain("—");
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The model's own projections.
+//
+// The section that distinguishes this app from the category: `xp 6.4` beside
+// "most often 2" beside "P(10+) 15%". Seven of eight competitors publish only
+// the first of the three, and given the top models all sit near the theoretical
+// ceiling, the mean is the least informative of them.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const MATCHES = {
+  gameweek: 7, season: "2026-27", generated_at: "2026-08-06T06:00:00Z",
+  matches: [{
+    match_id: "m1", date: "2026-08-15", home_team: "Arsenal",
+    away_team: "Chelsea", model_prediction: "away", confidence_pct: 51,
+  }],
+};
+
+function projection(id: number, over: Record<string, unknown> = {}) {
+  return {
+    element_id: id, name: `P${id}`, team: "LIV", position: "MID",
+    xp: 6.4, xp_sd: 3.7, mode: 2, p_ge_5: 0.5, p_ge_10: 0.15,
+    q10: 1, q90: 13, n_fixtures: 1, blank: false,
+    decomposition: {
+      appearance: 1.9, goals: 2.1, assists: 0.6, clean_sheets: 0.3, other: 1.5,
+    },
+    ...over,
+  };
+}
+
+const XP_FILE = {
+  schema_version: 1, gameweek: 7, season: "2627",
+  generated_at: "2026-08-07T06:00:00Z", n_draws: 10000,
+  players: [projection(1)],
+};
+
+const XP_PATH = projectionsDescriptor(7).path;
+
+describe("the projections section", () => {
+  it("shows the mean, the mode and the tail together", async () => {
+    await renderPlayers({
+      [STATS]: [statRow()], [REGISTRY.matches.path]: MATCHES, [XP_PATH]: XP_FILE,
+    }, liveState());
+    const row = screen.getAllByTestId("projection")[0];
+    expect(within(row).getByText("6.4")).toBeInTheDocument();
+    expect(within(row).getByTestId("mode").textContent).toContain("2");
+    expect(within(row).getByText("15%")).toBeInTheDocument();
+  });
+
+  it("flags a mean carried by the tail", async () => {
+    await renderPlayers({
+      [STATS]: [statRow()], [REGISTRY.matches.path]: MATCHES, [XP_PATH]: XP_FILE,
+    }, liveState());
+    // 6.4 against a mode of 2 is a 4.4-point gap: the mean is not a forecast of
+    // a typical week, and the page has to say so.
+    expect(screen.getByText("skew")).toBeInTheDocument();
+  });
+
+  it("does not flag a symmetric projection", async () => {
+    await renderPlayers({
+      [STATS]: [statRow()], [REGISTRY.matches.path]: MATCHES,
+      [XP_PATH]: { ...XP_FILE, players: [projection(1, { xp: 2.5, mode: 2 })] },
+    }, liveState());
+    expect(screen.queryByText("skew")).not.toBeInTheDocument();
+  });
+
+  it("expands to show where the mean comes from", async () => {
+    await renderPlayers({
+      [STATS]: [statRow()], [REGISTRY.matches.path]: MATCHES, [XP_PATH]: XP_FILE,
+    }, liveState());
+    expect(screen.queryByTestId("breakdown")).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: /Show points breakdown/ }));
+    const breakdown = screen.getByTestId("breakdown");
+    expect(within(breakdown).getByText("Clean sheet")).toBeInTheDocument();
+    expect(within(breakdown).getByText("2.10")).toBeInTheDocument();
+  });
+
+  it("offers no breakdown when the producer published none", async () => {
+    const noParts = projection(1);
+    delete (noParts as Record<string, unknown>).decomposition;
+    await renderPlayers({
+      [STATS]: [statRow()], [REGISTRY.matches.path]: MATCHES,
+      [XP_PATH]: { ...XP_FILE, players: [noParts] },
+    }, liveState());
+    expect(screen.queryByRole("button", { name: /breakdown/ })).not.toBeInTheDocument();
+  });
+
+  it("says how many draws are behind the tail probabilities", async () => {
+    await renderPlayers({
+      [STATS]: [statRow()], [REGISTRY.matches.path]: MATCHES, [XP_PATH]: XP_FILE,
+    }, liveState());
+    // P(10+) = 15% from 2,000 draws and from 10,000 are different claims.
+    expect(screen.getByText(/10,000 simulated draws/)).toBeInTheDocument();
+  });
+
+  it("explains itself when no projection is published", async () => {
+    await renderPlayers({
+      [STATS]: [statRow()], [REGISTRY.matches.path]: MATCHES,
+    }, liveState());
+    const cards = screen.getAllByRole("status");
+    expect(cards.some((c) => /No projection has been published/.test(c.textContent ?? "")))
+      .toBe(true);
+  });
+
+  it("explains itself when the gameweek is unknown", async () => {
+    await renderPlayers({ [STATS]: [statRow()] }, liveState());
+    expect(screen.getByText(/current gameweek is unknown/)).toBeInTheDocument();
+  });
+
+  it("does not blank the season table when the projection is absent", async () => {
+    await renderPlayers({
+      [STATS]: [statRow()], [REGISTRY.matches.path]: MATCHES,
+    }, liveState());
+    expect(screen.getAllByTestId("player")).toHaveLength(1);
   });
 });
