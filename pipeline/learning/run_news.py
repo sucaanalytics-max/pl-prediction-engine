@@ -31,6 +31,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -43,7 +44,7 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 # reachability scanner as importing the *package*, which left news_extract.py
 # looking like a module nothing calls. That check exists because the same defect
 # occurred five times in one session, and hiding from it would be the wrong fix.
-from pipeline.data import news_extract, news_feeds
+from pipeline.data import news_extract, news_feeds, youtube
 from pipeline.learning import deltas as deltas_store
 from pipeline.learning.availability_conflicts import resolve_claims
 from pipeline.learning.availability_evidence import history, record
@@ -195,6 +196,28 @@ def _trigger_for(
     return None
 
 
+def _club_aliases(bootstrap: Mapping[str, Any]) -> Dict[str, List[str]]:
+    """
+    Club names to match in a video title, from the bootstrap FPL itself serves.
+
+    Built from live data rather than a hardcoded list so a promoted side is
+    matchable the day it appears. Both the full name and the short name are
+    offered: titles say "Spurs" and "Tottenham" about equally, and FPL supplies
+    both spellings.
+    """
+    aliases: Dict[str, List[str]] = {}
+    for team in bootstrap.get("teams") or []:
+        name = str(team.get("name") or "").strip()
+        short = str(team.get("short_name") or "").strip()
+        if not name:
+            continue
+        # Short names are three letters and would match inside unrelated words,
+        # so they are only offered when they are not a substring risk.
+        candidates = [name] + ([short] if len(short) > 3 else [])
+        aliases[name] = candidates
+    return aliases
+
+
 def poll(
     predictions_dir: Path,
     now: Optional[datetime] = None,
@@ -210,6 +233,7 @@ def poll(
     """
     from pipeline.config import (
         DELTA, FPL_BOOTSTRAP, FPL_FIXTURES, NEWS_FEEDS, NEWS_FETCH, NEWS_WINDOW,
+        YOUTUBE, YOUTUBE_CHANNELS,
     )
     moment = now or datetime.now(timezone.utc)
     observed_at = moment.isoformat().replace("+00:00", "Z")
@@ -237,7 +261,43 @@ def poll(
 
     outcomes = news_feeds.fetch_all(NEWS_FEEDS, state, NEWS_FETCH, moment)
 
-    entries = [entry for outcome in outcomes for entry in outcome.entries]
+    # Upload metadata, folded into the same entry list. It emits `FeedEntry`, so
+    # the extractor and everything downstream neither know nor care that some
+    # entries came from a video title rather than an article — one entry shape
+    # means one set of extraction rules rather than two that drift apart.
+    #
+    # Additive and never fatal: with no API key configured, which is the state
+    # today, `poll` reports why it did nothing and every other source is
+    # unaffected.
+    youtube_result = youtube.poll(
+        YOUTUBE_CHANNELS, state, YOUTUBE, moment, os.environ.get("YOUTUBE_API_KEY"),
+    )
+    if youtube_result.skipped:
+        logger.info("youtube: %s", youtube_result.skipped)
+    else:
+        logger.info(
+            "youtube: %d new upload(s), %d unit(s) spent, %d record(s) pruned",
+            len(youtube_result.entries), youtube_result.units_spent,
+            youtube_result.pruned,
+        )
+        burst = youtube.club_burst(
+            youtube_result.entries, _club_aliases(bootstrap),
+            threshold=int(YOUTUBE.get("burst_threshold", 3)),
+        )
+        for club, channels in burst.items():
+            # A window-opener, not a claim. Several channels posting about one
+            # club inside a single poll is evidence that something happened,
+            # even when no title says what.
+            logger.info(
+                "youtube burst: %d channels posted about %s in this poll",
+                channels, club,
+            )
+
+    entries = [
+        entry
+        for outcome in (*outcomes, *youtube_result.outcomes)
+        for entry in outcome.entries
+    ]
     claims, coverage = news_extract.extract_all(
         entries, bootstrap, gameweek=gameweek, observed_at=observed_at,
     )

@@ -170,6 +170,35 @@ NEWS_FETCH = {
 # Adaptive polling window, derived from the fixture list because NO published
 # press-conference schedule exists anywhere. Pressers land roughly a day or two
 # before kickoff; the deadline itself is the other hot window.
+# ── YouTube upload metadata ──────────────────────────────────────────────────
+#
+# Metadata only. Transcripts are excluded permanently — YouTube's terms bar them
+# four separate ways, and buying them from a vendor does not launder that.
+#
+# Channel ids are deliberately absent until the key exists: an id list with no
+# way to poll it is configuration pretending to be a connector. Add entries as
+# {"name": ..., "channel_id": "UC...", "tier": 3} once YOUTUBE_API_KEY is set as
+# a GitHub Actions repository secret. Tier 3 is the ceiling for this source —
+# a video title is not a press conference, and R4 lets a tier-3 claim push
+# availability down but never up.
+YOUTUBE_CHANNELS: tuple = ()
+
+YOUTUBE = {
+    # Free tier is 10,000 units/day. Half is a deliberate ceiling, not a
+    # prediction: fifteen channels at four polls an hour is ~1,440 units, and
+    # the headroom absorbs a retry storm without starving tomorrow.
+    "daily_unit_ceiling": 5_000,
+    "max_results": 10,
+    "timeout_seconds": 20,
+    # YouTube's terms, not a tuning knob: API-derived data must be deleted
+    # within 30 days.
+    "max_storage_days": 30,
+    # Distinct channels that must mention a club in one poll before it counts as
+    # a burst. One channel posting four times is a content schedule; four
+    # channels posting once each is news.
+    "burst_threshold": 3,
+}
+
 NEWS_WINDOW = {
     "hours_before_kickoff_open": 72,
     "hours_before_kickoff_close": 2,

@@ -54,6 +54,11 @@ jobs:
         env:
           PYTHONPATH: .
           FORCE: ${{ inputs.force }}
+          # Optional. Unset today, and the connector reports why it did nothing
+          # rather than failing — every other source is unaffected. Add it as a
+          # repository secret (Settings -> Secrets -> Actions) to switch upload
+          # metadata on; never paste a key into a file or a chat window.
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: |
           set -euo pipefail
           ARGS=""
