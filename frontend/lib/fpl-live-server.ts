@@ -3,7 +3,6 @@ import "server-only";
 import {
   FPL_API_BASE,
   FPL_ENTRY_ID,
-  type FplEvidenceItem,
   type FplFixtureView,
   type FplLivePlayer,
   type FplLiveState,
@@ -341,91 +340,10 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
       ? 0
       : entry.last_deadline_bank / 10;
   const now = new Date().toISOString();
-  const targetIds = new Set(
-    buildTopTenRankings(rankedPlayers).overall.map((player) => player.elementId)
-  );
-  const squadIds = new Set(selected.map((pick) => pick.elementId));
-  const evidenceItems = bootstrap.elements
-    .filter(
-      (element) =>
-        element.status !== "a" ||
-        Boolean(element.news) ||
-        element.chance_of_playing_next_round !== null
-    )
-    .map<FplEvidenceItem>((element) => {
-      const ranked = rankedById.get(element.id);
-      const team = teamById.get(element.team);
-      const rawPosition = positionById.get(element.element_type) ?? "UNK";
-      const chance = element.chance_of_playing_next_round;
-      const severity =
-        element.status === "i" ||
-        element.status === "s" ||
-        element.status === "u" ||
-        chance === 0
-          ? "critical"
-          : chance !== null && chance <= 50
-            ? "warning"
-            : "monitor";
-      const playerName =
-        element.first_name === "Alisson" ? "Alisson" : element.web_name;
-      const query = encodeURIComponent(playerName);
-      return {
-        elementId: element.id,
-        player: playerName,
-        team: team?.short_name ?? `T${element.team}`,
-        position: positionFromFpl(rawPosition),
-        price: element.now_cost / 10,
-        ownership:
-          ranked?.ownership ??
-          (Number.parseFloat(element.selected_by_percent) || 0),
-        status: element.status,
-        chanceOfPlaying: chance,
-        headline:
-          element.news ||
-          (element.status === "s"
-            ? "Suspended or otherwise unavailable."
-            : "Availability is being monitored by FPL."),
-        observedAt: now,
-        sourceUpdatedAt: element.news_added,
-        severity,
-        scope: squadIds.has(element.id)
-          ? "squad"
-          : targetIds.has(element.id)
-            ? "target"
-            : "league",
-        sources: [
-          {
-            label: "Official FPL player news",
-            url: "https://fantasy.premierleague.com/the-scout/player-news",
-            role: "primary",
-          },
-          {
-            label: "Premier Injuries",
-            url: "https://www.premierinjuries.com/injury-table.php",
-            role: "cross-check",
-          },
-          {
-            label: "Fantasy Football Scout search",
-            url: `https://www.fantasyfootballscout.co.uk/?s=${query}`,
-            role: "cross-check",
-          },
-          {
-            label: "AllAboutFPL search",
-            url: `https://allaboutfpl.com/?s=${query}`,
-            role: "cross-check",
-          },
-        ],
-      };
-    })
-    .sort((left, right) => {
-      const scopeOrder = { squad: 0, target: 1, league: 2 };
-      const severityOrder = { critical: 0, warning: 1, monitor: 2 };
-      return (
-        scopeOrder[left.scope] - scopeOrder[right.scope] ||
-        severityOrder[left.severity] - severityOrder[right.severity] ||
-        right.ownership - left.ownership
-      );
-    });
+  // The per-player availability evidence block used to be built here and is
+  // gone: `/evidence` reads `evidence_view.json`, which carries the claim
+  // tree and every losing claim, and this duplicate carried neither. It was
+  // a scan of every flagged element per request for a block no page read.
 
   const phase = bootstrap.events.every((candidate) => candidate.finished)
     ? "finished"
@@ -499,22 +417,10 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
       coveragePercent: Math.round(
         (matchedPlayers / Math.max(1, bootstrap.elements.length)) * 1000
       ) / 10,
-      players: rankedPlayers.map((player) => ({
-        elementId: player.elementId,
-        name: player.name,
-        team: player.team,
-        position: player.position,
-        price: player.price,
-        ownership: player.ownership,
-        eliteOwnership: player.eliteOwnership,
-        status: player.status,
-        expectedMinutes: player.expectedMinutes,
-        projected4: player.projected4,
-        projected6: player.projected6,
-        projected10: player.projected10,
-        valueScore: player.valueScore,
-        gameweekProjections: player.gameweekProjections,
-      })),
+      // `players` used to duplicate every ranked player here. Nothing read it:
+      // the ranked lists come from `rankings`, and the projections block is
+      // consumed only for its provenance. ~600 rows serialised per request for
+      // no consumer.
       caveats: [
         "Projection values are a dated private snapshot, not a live FPLReview API connection.",
         "Official FPL remains authoritative for current price, club, fixtures and player availability.",
@@ -529,28 +435,13 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
         bank,
         horizon: 4,
       }),
-      transfers6: recommendTransfers({
-        squad: rankedSquad,
-        allPlayers: rankedPlayers,
-        bank,
-        horizon: 6,
-      }),
       multiTransferPlans4: buildMultiTransferPlans({
         squad: rankedSquad,
         allPlayers: rankedPlayers,
         bank,
         horizon: 4,
       }),
-      multiTransferPlans6: buildMultiTransferPlans({
-        squad: rankedSquad,
-        allPlayers: rankedPlayers,
-        bank,
-        horizon: 6,
-      }),
       captaincyPlan: buildCaptaincyPlan(rankedSquad, event.id),
-      captaincyPool: [...rankedSquad].sort(
-        (left, right) => right.captainScore - left.captainScore
-      ),
       // Names what actually produced these numbers. Without the export they
       // come from the heuristic engine alone, and saying `fplreview-...`
       // anyway would credit a source that contributed nothing.
@@ -563,16 +454,6 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
         "Official FPL prices, ownership, availability and fixtures refreshed every 15 minutes.",
         "Official player news newer than the projection export overlays first-week availability.",
         "Legal single-player moves only: same position, affordable and no more than three per club.",
-      ],
-    },
-    evidence: {
-      generatedAt: now,
-      officialRefreshMinutes: 15,
-      items: evidenceItems,
-      caveats: [
-        "Official FPL availability is automated; external sources are supplied as independent verification links.",
-        "A return date or percentage is not a confirmed start. Recheck press conferences before the deadline.",
-        "Source timestamps describe when FPL updated the note; observed time describes this portal refresh.",
       ],
     },
     notices,

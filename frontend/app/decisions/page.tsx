@@ -9,6 +9,8 @@ import {
   type DecisionView,
 } from "@/lib/fpl-decision";
 import { istDateTime } from "@/lib/formats";
+import { useHeuristics } from "@/lib/data/useHeuristics";
+import { proven } from "@/lib/data/artifact";
 
 /**
  * The agent's published decision.
@@ -108,29 +110,22 @@ function TeamCard({ team, muted }: { team: DecisionTeam; muted: boolean }) {
 
 export default function DecisionsPage() {
   const [view, setView] = useState<DecisionView | null>(null);
-  const [currentGameweek, setCurrentGameweek] = useState<number | null>(null);
+  // The current gameweek comes from live state, never from the decision itself
+  // — comparing the artifact to itself could not detect that the agent failed
+  // to run. Through the shared hook rather than a raw fetch: this page used
+  // `state?.event?.id` on an unnarrowed body, which is the same unchecked read
+  // that let `HealthData` drift, and it issued a second request for a response
+  // the nav had already fetched.
+  const { artifact: live } = useHeuristics();
+  const currentGameweek = proven(live)?.event.id ?? null;
 
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
       const decision = await loadDecision();
-      // The current gameweek comes from live state, never from the decision
-      // itself — comparing the artifact to itself could not detect that the
-      // agent failed to run.
-      let gameweek: number | null = null;
-      try {
-        const response = await fetch("/api/fpl/state", { cache: "no-store" });
-        if (response.ok) {
-          const state = await response.json();
-          gameweek = state?.event?.id ?? null;
-        }
-      } catch {
-        gameweek = null;
-      }
       if (cancelled) return;
-      setCurrentGameweek(gameweek);
-      setView(classifyDecision(decision, gameweek));
+      setView(classifyDecision(decision, currentGameweek));
     }
 
     load();
@@ -139,7 +134,7 @@ export default function DecisionsPage() {
       cancelled = true;
       clearInterval(timer);
     };
-  }, []);
+  }, [currentGameweek]);
 
   if (!view) {
     return (

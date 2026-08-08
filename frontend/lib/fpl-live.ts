@@ -71,23 +71,6 @@ export interface FplRankedPlayer {
   modelBasis: FplModelBasis;
 }
 
-export interface FplProjectionPlayer {
-  elementId: number;
-  name: string;
-  team: string;
-  position: Position;
-  price: number;
-  ownership: number;
-  eliteOwnership: number | null;
-  status: string;
-  expectedMinutes: number;
-  projected4: number;
-  projected6: number;
-  projected10: number;
-  valueScore: number;
-  gameweekProjections: FplRankedPlayer["gameweekProjections"];
-}
-
 export interface FplTransferRecommendation {
   rank: number;
   playerOut: FplRankedPlayer;
@@ -123,27 +106,6 @@ export interface FplCaptainWeek {
   viceFixture: string;
   projectedCaptainPoints: number;
   confidence: number;
-}
-
-export interface FplEvidenceItem {
-  elementId: number;
-  player: string;
-  team: string;
-  position: Position;
-  price: number;
-  ownership: number;
-  status: string;
-  chanceOfPlaying: number | null;
-  headline: string;
-  observedAt: string;
-  sourceUpdatedAt: string | null;
-  severity: "critical" | "warning" | "monitor";
-  scope: "squad" | "target" | "league";
-  sources: Array<{
-    label: string;
-    url: string;
-    role: "primary" | "cross-check";
-  }>;
 }
 
 export interface FplTopTenRankings {
@@ -207,26 +169,16 @@ export interface FplLiveState {
     matchedPlayers: number;
     officialPlayers: number;
     coveragePercent: number;
-    players: FplProjectionPlayer[];
     caveats: string[];
   };
   rankings: FplTopTenRankings;
   recommendations: {
     transfers4: FplTransferRecommendation[];
-    transfers6: FplTransferRecommendation[];
     multiTransferPlans4: FplTransferPlan[];
-    multiTransferPlans6: FplTransferPlan[];
     captaincyPlan: FplCaptainWeek[];
-    captaincyPool: FplRankedPlayer[];
     modelVersion: string;
     provisional: true;
     methodology: string[];
-  };
-  evidence: {
-    generatedAt: string;
-    officialRefreshMinutes: 15;
-    items: FplEvidenceItem[];
-    caveats: string[];
   };
   notices: string[];
 }
