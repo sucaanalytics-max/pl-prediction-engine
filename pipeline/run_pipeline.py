@@ -571,9 +571,13 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         lambda_h, mu_a = 1.4, 1.1  # Default
         dc_lam_samples = None
         dc_mu_samples = None
+        dc_rho_samples = None
 
         if dc_model is not None:
             try:
+                # Fitted, and until now discarded: the whole reason to prefer
+                # Dixon-Coles over independent Poisson is this parameter.
+                dc_rho_samples = dc_model.get_rho_samples()
                 dc_lam_samples, dc_mu_samples = dc_model.get_lambda_mu_samples(
                     home, away, n_sims
                 )
@@ -631,7 +635,8 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             blended_lam_samples = dc_lam_samples * (lambda_h / lam_mean)
             blended_mu_samples = dc_mu_samples * (mu_a / mu_mean)
             sims = simulator.simulate_from_posterior(
-                blended_lam_samples, blended_mu_samples, **sim_kwargs
+                blended_lam_samples, blended_mu_samples,
+                rho_samples=dc_rho_samples, **sim_kwargs
             )
         else:
             sims = simulator.simulate_match(lambda_h, mu_a, **sim_kwargs)

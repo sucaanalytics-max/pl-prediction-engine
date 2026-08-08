@@ -358,6 +358,19 @@ class BayesianDixonColes:
         matrix = self.predict_scoreline(home, away)
         return self._derive_markets(matrix, home, away)
 
+    def get_rho_samples(self) -> np.ndarray:
+        """
+        Posterior samples of the low-score dependence parameter.
+
+        Flattened in the same order as the arrays `get_lambda_mu_samples`
+        builds, so a caller can pair them elementwise and the correction carries
+        the same parameter uncertainty as the goal rates. Returning a mean would
+        throw that away, and rho's posterior is wide enough that it matters.
+        """
+        if self.trace is None:
+            raise RuntimeError("Model not fitted")
+        return self.trace.posterior["rho"].values.flatten()
+
     def get_lambda_mu_samples(self, home: str, away: str, n_samples: int = 10000) -> Tuple[np.ndarray, np.ndarray]:
         """
         Get posterior samples of (lambda, mu) for Monte Carlo simulation.

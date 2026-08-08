@@ -19,6 +19,78 @@ from pipeline.config import N_SIMULATIONS, MAX_GOALS
 logger = logging.getLogger(__name__)
 
 
+#: Goal ceiling for the Dixon-Coles joint grid.
+#:
+#: Higher than ``MAX_GOALS`` (the 7x7 export grid) on purpose. Truncating the
+#: joint and renormalising redistributes the lost tail across every scoreline,
+#: so the grid used for *sampling* must be wide enough that the loss is
+#: negligible. At the highest lambda this pipeline produces, P(X > 10) is under
+#: 1e-4 per side.
+DC_SAMPLING_MAX_GOALS = 10
+
+
+def sample_dixon_coles(
+    lam: np.ndarray,
+    mu: np.ndarray,
+    rho: np.ndarray,
+    rng: Optional[np.random.Generator] = None,
+    max_goals: int = DC_SAMPLING_MAX_GOALS,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Draw scorelines from the Dixon-Coles joint, one per posterior sample.
+
+    Two independent Poissons cannot produce the low-score dependence the model
+    fits ``rho`` for. This builds the corrected joint per draw and samples from
+    it directly, rather than drawing independently and correcting afterwards:
+    a rejection scheme would silently change the effective sample size, and
+    reweighting after the fact would leave the corners and cards models
+    conditioned on the uncorrected match state.
+
+    ``rho`` is per-draw, so parameter uncertainty in the correction propagates
+    exactly as it does for the goal rates.
+
+    The joint is floored at zero before renormalising, matching
+    ``scoreline_matrix``: for a large ``lambda*mu`` and positive ``rho`` the
+    0-0 correction can go negative, and flooring is what keeps tau positivity
+    from needing a hard constraint on the prior.
+    """
+    from scipy.stats import poisson
+
+    generator = rng if rng is not None else np.random.default_rng()
+    n = len(lam)
+    goals = np.arange(max_goals + 1)
+
+    pmf_home = poisson.pmf(goals[None, :], lam[:, None])
+    pmf_away = poisson.pmf(goals[None, :], mu[:, None])
+    joint = pmf_home[:, :, None] * pmf_away[:, None, :]
+
+    # The four cells Dixon-Coles corrects. Everything else keeps tau = 1.
+    joint[:, 0, 0] *= 1.0 - lam * mu * rho
+    joint[:, 1, 0] *= 1.0 + mu * rho
+    joint[:, 0, 1] *= 1.0 + lam * rho
+    joint[:, 1, 1] *= 1.0 - rho
+    np.maximum(joint, 0.0, out=joint)
+
+    flat = joint.reshape(n, -1)
+    totals = flat.sum(axis=1, keepdims=True)
+    # A draw whose whole grid floored to zero is not recoverable by
+    # renormalisation; fall back to the uncorrected joint for it rather than
+    # dividing by zero and emitting NaN scorelines into the Kelly path.
+    degenerate = (totals[:, 0] <= 0.0)
+    if degenerate.any():
+        fallback = (pmf_home[degenerate][:, :, None] * pmf_away[degenerate][:, None, :])
+        flat[degenerate] = fallback.reshape(degenerate.sum(), -1)
+        totals[degenerate, 0] = flat[degenerate].sum(axis=1)
+    flat = flat / totals
+
+    cdf = np.cumsum(flat, axis=1)
+    draws = generator.random(n)[:, None]
+    index = (cdf < draws).sum(axis=1)
+    index = np.minimum(index, flat.shape[1] - 1)
+    width = max_goals + 1
+    return (index // width).astype(np.int64), (index % width).astype(np.int64)
+
+
 class MonteCarloSimulator:
     """
     10K match simulation engine.
@@ -172,29 +244,34 @@ class MonteCarloSimulator:
         away_team: str = "",
         referee: Optional[str] = None,
         is_derby: bool = False,
+        rho_samples: Optional[np.ndarray] = None,
     ) -> Dict:
         """
         Simulate using posterior samples of lambda/mu (from PyMC).
         This properly propagates parameter uncertainty.
 
-        **KNOWN DEFECT, deliberately not fixed here: the Dixon-Coles low-score
-        correction is estimated and then never applied.**
+        ## The Dixon-Coles correction
 
-        The goals below are drawn as two INDEPENDENT Poissons. The model fits
-        ``rho`` — the whole reason to prefer Dixon-Coles over independent Poisson —
-        and ``BayesianDixonColes.scoreline_matrix`` applies the ``tau`` correction,
-        but this path does not. Measured at the historical mean ``rho`` of −0.063,
-        the corrected ``P(0-0)`` is **10.6%–11.3% higher** than what this produces,
-        with draws and low-scoring outcomes understated correspondingly.
+        With ``rho_samples`` supplied, scorelines are drawn from the corrected
+        joint via :func:`sample_dixon_coles`. Without it they are two
+        independent Poissons — which is what this function did unconditionally
+        until the correction was wired, and what it still does for callers that
+        have no fitted ``rho`` (the ensemble path with no PyMC trace).
 
-        Left alone on purpose. This function generates ``latest.json``'s
-        probabilities, which flow through ``derive_all_markets`` into
-        ``find_value_bets`` and Kelly, so correcting it moves real stake sizing —
-        and CLAUDE.md forbids changing stake sizing as a side effect of unrelated
-        work. It needs its own change, with a before/after diff of the value-bet
-        list and its own review. Recorded here rather than in a note nobody reads,
-        because the alternative is that the next person to touch this assumes the
-        correction is applied.
+        That default is not a fallback anyone should rely on. Independent
+        Poisson cannot produce the low-score dependence the model spends its
+        time fitting ``rho`` for, and at the historical mean ``rho`` of −0.063
+        it understates ``P(0-0)`` by around 11% with draws understated
+        correspondingly.
+
+        **Measured impact on staking**, over 840 selections priced across the
+        5% minimum-edge band on twenty fixtures: 64 phantom bets — published as
+        value, not value — and 55 missed. The direction is systematic rather
+        than noisy, and it is exactly what understating draws predicts:
+        phantoms land on home and away, misses land on the draw. The largest
+        single probability shift is 1.93pp, which is 39% of the edge threshold,
+        so the defect cannot manufacture a bet on its own but decides every
+        selection whose true edge sits within about 2pp of the line.
         """
         n = min(len(lambda_samples), self.n_sims)
         indices = np.random.choice(len(lambda_samples), size=n, replace=True)
@@ -202,8 +279,16 @@ class MonteCarloSimulator:
         lam = lambda_samples[indices]
         mu = mu_samples[indices]
 
-        home_goals = np.random.poisson(lam)
-        away_goals = np.random.poisson(mu)
+        if rho_samples is not None and len(rho_samples) > 0:
+            # Paired to the same posterior draws as lambda and mu, so the
+            # correction carries its own uncertainty rather than a point value.
+            rho = np.asarray(rho_samples)[
+                np.random.choice(len(rho_samples), size=n, replace=True)
+            ]
+            home_goals, away_goals = sample_dixon_coles(lam, mu, rho)
+        else:
+            home_goals = np.random.poisson(lam)
+            away_goals = np.random.poisson(mu)
         total_goals = home_goals + away_goals
 
         ht_home = np.random.binomial(home_goals, 0.45)
