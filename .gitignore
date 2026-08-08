@@ -54,3 +54,15 @@ Thumbs.db
 # redistributed, and a static import of it once made the whole site unbuildable
 # from a clean checkout. See frontend/test/no-untracked-imports.test.ts.
 frontend/data/fplreview-projections.json
+# ...and any sync-conflict copy of it. The exact-filename rule above does not
+# match "fplreview-projections 2.json", and `git add -A` duly staged one — a
+# licensed competitor's export, one commit away from being redistributed.
+# `no-untracked-imports.test.ts` catches conflict copies generally; this stops
+# the one that must never be committed at the source.
+frontend/data/fplreview-projections*.json
+# Anywhere, not just in data/. `npm run build` copies the export into
+# .open-next/server-functions/, and this repo tracks .open-next — so a build
+# followed by `git add -A` stages the licensed file from a path nobody thinks
+# to look at. Caught by no-untracked-imports.test.ts only because it happened
+# to be a sync-conflict copy; this rule catches the ordinary case.
+**/fplreview-projections*.json

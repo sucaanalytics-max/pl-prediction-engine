@@ -75,7 +75,10 @@ const NAV_GROUPS: NavGroup[] = [
   },
   {
     label: "System",
-    items: [{ href: "/health", label: "Model Health", icon: Activity }],
+    items: [
+      { href: "/health", label: "Model Health", icon: Activity },
+      { href: "/accuracy", label: "Accuracy", icon: Target },
+    ],
   },
 ];
 

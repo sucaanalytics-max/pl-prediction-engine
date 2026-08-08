@@ -32,6 +32,8 @@ import { describe, expect, it } from "vitest";
 import { ALL_DESCRIPTORS, decisionDescriptor } from "@/lib/data/narrow";
 import { matchDetailDescriptor } from "@/lib/data/match-detail";
 import { sensitivityDescriptor } from "@/lib/data/sensitivity";
+import { ACCURACY } from "@/lib/data/accuracy";
+import { projectionsDescriptor } from "@/lib/data/projections";
 
 const REPO = join(__dirname, "..", "..", "..");
 const WORKFLOWS = join(REPO, ".github", "workflows");
@@ -318,11 +320,15 @@ describe("descriptor factories point at paths something writes", () => {
     { name: "sensitivity (season)", d: sensitivityDescriptor(7, "season") },
     { name: "sensitivity (weekly)", d: sensitivityDescriptor(38, "weekly") },
     { name: "match detail", d: matchDetailDescriptor("ars-che") },
+    { name: "projections", d: projectionsDescriptor(7) },
+    // Not a factory, but declared outside `narrow.ts` and therefore invisible
+    // to `ALL_DESCRIPTORS` — the same blind spot, reached a different way.
+    { name: "accuracy", d: ACCURACY },
   ];
 
   it("finds the factories to check", () => {
     // Guards the guard: an empty list would pass the loop below vacuously.
-    expect(factories.length).toBeGreaterThanOrEqual(5);
+    expect(factories.length).toBeGreaterThanOrEqual(7);
   });
 
   it.each(factories)("$name is published", ({ d }) => {

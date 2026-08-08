@@ -7,6 +7,7 @@ const SHELL_ROUTES = [
   "/markets",
   "/matches",
   "/evidence",
+  "/accuracy",
   "/planner",
   "/intelligence",
   "/offline",

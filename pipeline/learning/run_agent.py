@@ -162,6 +162,43 @@ def _publish_public_xp(
         logger.warning("could not publish the public xp view for GW%s: %s", gameweek, exc)
 
 
+def _publish_accuracy(artifact_path: Any, gameweek: int) -> None:
+    """
+    Publish the accuracy rollup.
+
+    Today this carries a real number and an honest null: the perfect-model
+    ceiling is computable from our own simulated spreads and needs no outcomes,
+    while the measured half waits for a sealed gameweek. That combination is the
+    point — "how good could anything be" is answerable now, and it is what stops
+    a future RMSE of 2.9 being read as a failure when the ceiling is 2.8.
+
+    Non-fatal, like every reporting step here.
+    """
+    import json as _json
+
+    from pipeline.learning import accuracy as accuracy_module
+
+    try:
+        artifact = _json.loads(Path(artifact_path).read_text(encoding="utf-8"))
+        spreads = [
+            row.get("xp_sd")
+            for row in artifact.get("players") or []
+            if isinstance(row, dict) and not row.get("blank")
+        ]
+        settled = _settled_outcomes(gameweek)
+        payload = accuracy_module.build(
+            settled=settled,
+            spreads=[s for s in spreads if isinstance(s, (int, float))],
+            gameweeks_sealed=len({r.get("gameweek") for r in settled}),
+            generated_at=datetime.now(timezone.utc)
+            .isoformat().replace("+00:00", "Z"),
+            season=(artifact.get("metadata") or {}).get("season"),
+        )
+        accuracy_module.write(payload, Path(FPL_PUBLIC_DIR))
+    except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
+        logger.warning("could not publish the accuracy rollup: %s", exc)
+
+
 def _settled_outcomes(gameweek: int) -> List[Dict[str, Any]]:
     """
     Per-player predicted-versus-actual rows from every sealed gameweek.
@@ -392,6 +429,7 @@ def refresh_expected_points(
     # is optimiser input whose shape follows the model, while this is a stable
     # contract with the page — and a quarter of the size.
     _publish_public_xp(written["xp"], bootstrap, draws.gameweek)
+    _publish_accuracy(written["xp"], draws.gameweek)
 
     return {
         "status": "ok",
