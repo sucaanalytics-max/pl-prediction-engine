@@ -617,6 +617,15 @@ def paired_interval(
         "radius": _finite(radius),
         "lower": _finite(lower),
         "upper": _finite(upper),
+        # `np.isfinite(radius)` is belt-and-braces and provably cannot change
+        # the answer: with an infinite radius `lower > 0` and `upper < 0` are
+        # both False, and every NaN comparison is False too. Verified by
+        # mutation — removing it survives the suite, and no test can be written
+        # that distinguishes it, because there is no input that does.
+        #
+        # Kept because it states the intent (an under-powered interval is never
+        # decisive) at the point the decision is made. What actually pins that
+        # behaviour is `UnderpoweredIntervalTests`, not this clause.
         "excludes_zero": bool(np.isfinite(radius) and (lower > 0.0 or upper < 0.0)),
         "alpha": float(alpha),
         "min_observations": MIN_OBSERVATIONS,

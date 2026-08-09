@@ -26,6 +26,10 @@ from pipeline.config import MAX_GOALS
 from pipeline.data.football_data import CLOSING_BOOKS
 from pipeline.learning.fit_market_blend import (
     CAVEAT_CLOSING_LINE,
+    LEVEL_METRIC,
+    METRIC_NAMES,
+    PRIMARY_METRIC,
+    SPLIT_METRIC,
     CAVEAT_MLE_SUBSTITUTE,
     CAVEAT_THIN_BOOKS,
     WEIGHT_GRID,
@@ -40,9 +44,12 @@ from pipeline.learning.fit_market_blend import (
     main,
     metric_table,
     outcome_log_loss,
+    paired_interval,
     round_labels,
     round_means,
+    recommendation,
     scoreline_log_loss,
+    secondary_agreement,
     total_goals_crps,
     walk_forward_cases,
 )
@@ -841,3 +848,257 @@ class TestTheEntryPointProtectsPredictions(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Mutation-driven tests.
+#
+# Every case below was written because a deliberate corruption of the source
+# survived the whole suite. Each one names the mutation it kills, because a test
+# whose purpose is not stated tends to be "simplified" back into passing.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+class DecisiveDirectionTests(unittest.TestCase):
+    """
+    Kills: dropping `and pair["mean"] > 0.0` from the `decisive` filter.
+
+    `differences = baseline_losses - candidate_losses`, so a POSITIVE mean means
+    the candidate loses less and is better. An interval that excludes zero on
+    the negative side is decisive evidence the candidate is **worse**.
+
+    Without the sign filter such a pair still lands in `decisive`, and
+    `max(decisive, key=mean)` then recommends switching to a method the same
+    interval just proved inferior. The suite passed with that in place because
+    every existing fixture has candidates that are either better or
+    indistinguishable — none that is decisively worse.
+    """
+
+    @staticmethod
+    def _pair(mean: float, excludes: bool, method: str = "power"):
+        return {
+            "method": method, "mean": mean, "excludes_zero": excludes,
+            "lower": mean - 0.01, "upper": mean + 0.01, "n": 40,
+        }
+
+    def _decisive(self, pairs):
+        # The expression under test, isolated so the assertion is about the
+        # filter rather than about assembling a whole comparison fixture.
+        return [p for p in pairs if p["excludes_zero"] and p["mean"] > 0.0]
+
+    def test_a_decisively_worse_method_is_not_decisive_evidence(self):
+        pairs = [self._pair(-0.05, True)]
+        self.assertEqual(self._decisive(pairs), [])
+
+    def test_a_decisively_better_method_is(self):
+        pairs = [self._pair(+0.05, True)]
+        self.assertEqual(len(self._decisive(pairs)), 1)
+
+    def test_the_real_comparison_keeps_the_baseline_when_candidates_lose(self):
+        """The same property end to end, not just on the expression."""
+        cases = [
+            FixtureCase(
+                match_id=f"m{i}", season="s", round_label=f"R{i // 4:02d}",
+                home_team="H", away_team="A", home_goals=i % 3, away_goals=(i + 1) % 3,
+                lambda_home_dc=1.4, mu_away_dc=1.2, rho=-0.05,
+                markets={method: _market(1.6, 1.05) for method in
+                         (PROPORTIONAL, POWER)},
+            )
+            for i in range(48)
+        ]
+        tables = {m: metric_table(cases, m, WEIGHT_GRID) for m in (PROPORTIONAL, POWER)}
+        # Make the candidate decisively worse: a large, consistent loss penalty.
+        tables[POWER][PRIMARY_METRIC] = tables[POWER][PRIMARY_METRIC] + 0.5
+
+        comparison = devig_comparison(cases, tables, WEIGHT_GRID)
+        self.assertEqual(comparison["recommended_method"], PROPORTIONAL)
+        # And it must not describe the loser as beating the baseline.
+        self.assertNotIn("Prefer power", comparison["finding"])
+
+
+class SecondaryAgreementTests(unittest.TestCase):
+    """
+    Kills three mutations of `secondary_agreement`:
+
+    * `and` -> `or`      — one metric agreeing is enough
+    * dropping the split — the split is never consulted
+    * dropping `abs()`   — a level argmin BELOW the primary reads as agreement
+
+    All three make the function report "one scalar w is adequate" when the two
+    things the market prices separately want different weights. That conclusion
+    is what decides whether the blend carries one weight or two, so a false
+    agreement is not cosmetic.
+    """
+
+    GRID = (0.0, 0.25, 0.5, 0.75, 1.0)
+
+    def _tables(self, level_argmin: float, split_argmin: float, primary_argmin: float):
+        """Curves whose minima sit exactly where each argument says."""
+        def curve(argmin: float) -> np.ndarray:
+            return np.array([[abs(w - argmin) for w in self.GRID]], dtype=float)
+
+        wanted = {
+            LEVEL_METRIC: level_argmin,
+            SPLIT_METRIC: split_argmin,
+            PRIMARY_METRIC: primary_argmin,
+        }
+        return {"m": {name: curve(wanted.get(name, primary_argmin))
+                      for name in METRIC_NAMES}}
+
+    def test_both_agreeing_is_agreement(self):
+        result = secondary_agreement(self._tables(0.5, 0.5, 0.5), "m", self.GRID, 0.5)
+        self.assertTrue(result["agrees"])
+
+    def test_the_split_disagreeing_is_a_disagreement(self):
+        # Kills `and` -> `or`, and kills dropping the split term.
+        result = secondary_agreement(self._tables(0.5, 1.0, 0.5), "m", self.GRID, 0.5)
+        self.assertFalse(result["agrees"])
+        self.assertIn("DISAGREEMENT", result["verdict"])
+
+    def test_the_level_disagreeing_is_a_disagreement(self):
+        # Kills `and` -> `or` from the other side.
+        result = secondary_agreement(self._tables(0.0, 0.5, 0.5), "m", self.GRID, 0.5)
+        self.assertFalse(result["agrees"])
+
+    def test_a_level_argmin_below_the_primary_still_disagrees(self):
+        """
+        Kills dropping `abs()`.
+
+        Without it the gap goes negative, every negative number is <= the
+        tolerance, and a level metric wanting a far LOWER weight reads as
+        perfect agreement — the direction a market-heavy blend would drift.
+        """
+        result = secondary_agreement(self._tables(0.0, 1.0, 1.0), "m", self.GRID, 1.0)
+        self.assertFalse(result["agrees"])
+
+    def test_a_split_argmin_below_the_primary_still_disagrees(self):
+        result = secondary_agreement(self._tables(1.0, 0.0, 1.0), "m", self.GRID, 1.0)
+        self.assertFalse(result["agrees"])
+
+    def test_the_verdict_names_both_argmins_either_way(self):
+        # Whoever reads this has to be able to check it without rerunning.
+        agree = secondary_agreement(self._tables(0.5, 0.5, 0.5), "m", self.GRID, 0.5)
+        differ = secondary_agreement(self._tables(0.0, 1.0, 0.5), "m", self.GRID, 0.5)
+        for verdict in (agree["verdict"], differ["verdict"]):
+            self.assertIn("CRPS", verdict)
+            self.assertIn("log-loss", verdict)
+
+
+class UnderpoweredIntervalTests(unittest.TestCase):
+    """
+    The contract behind `excludes_zero`'s finite guard.
+
+    Mutation testing showed `np.isfinite(radius)` is *provably* redundant: with
+    an infinite radius, `lower > 0` and `upper < 0` are both False anyway, and
+    every NaN comparison is False too. So no test can distinguish the guard's
+    presence — which means the guard was never the thing worth pinning. This is.
+    """
+
+    def test_an_underpowered_sample_is_never_decisive(self):
+        # Below MIN_OBSERVATIONS the bound returns an infinite radius, which is
+        # the mechanism that stops a run of lucky rounds promoting a change.
+        interval = paired_interval(np.array([0.5, 0.5, 0.5]))
+        self.assertFalse(interval["excludes_zero"])
+        self.assertIsNone(interval["radius"])
+
+    def test_a_powered_sample_with_a_clear_effect_is_decisive(self):
+        interval = paired_interval(np.full(60, 0.5))
+        self.assertTrue(interval["excludes_zero"])
+
+    def test_a_powered_sample_straddling_zero_is_not(self):
+        rng = np.random.default_rng(4)
+        interval = paired_interval(rng.normal(0.0, 1.0, 200))
+        self.assertFalse(interval["excludes_zero"])
+
+
+class RecommendationSnappingTests(unittest.TestCase):
+    """
+    Kills three mutations of `recommendation`, all of them safety properties.
+
+    This function turns a fitted weight into one a human applies, so each of
+    these decides how much the blend is allowed to lean on the market.
+    """
+
+    NEUTRAL = {"excludes_zero": False, "mean": 0.0}
+
+    def _rec(self, argmin: float, current: float = 0.30, **over):
+        kwargs = {
+            "interval_vs_w0": self.NEUTRAL, "interval_vs_w1": self.NEUTRAL,
+            "band": (0.2, 0.6),
+        }
+        kwargs.update(over)
+        return recommendation(argmin=argmin, current=current, **kwargs)
+
+    def test_the_snap_is_always_downward(self):
+        """
+        Kills floor -> round.
+
+        Both haircuts correct for biases that push the fitted weight UP, so the
+        grid's own 0.05 of resolution is spent toward the posterior. Rounding
+        would sometimes spend it toward the market — the opposite of the stated
+        property, and in the direction that is not conservative.
+        """
+        for argmin in (0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.00):
+            result = self._rec(argmin)
+            self.assertLessEqual(
+                result["recommended_value"], result["haircut_before_snapping"] + 1e-12,
+                f"argmin {argmin} snapped UP",
+            )
+
+    def test_a_value_just_above_a_grid_point_snaps_to_it(self):
+        # 0.62 * 0.85 * 0.95 = 0.50065 -> floor to 0.50, not round to 0.50 by
+        # luck. Chosen so floor and round differ from the next case.
+        self.assertEqual(self._rec(0.62)["recommended_value"], 0.50)
+
+    def test_a_value_just_below_the_next_grid_point_does_not_round_up(self):
+        # 0.68 * 0.85 * 0.95 = 0.54910. `round` gives 0.55; `floor` gives 0.50.
+        result = self._rec(0.68)
+        self.assertAlmostEqual(result["haircut_before_snapping"], 0.5491, places=4)
+        self.assertEqual(result["recommended_value"], 0.50)
+
+    def test_the_promotable_band_matches_the_gate_that_enforces_it(self):
+        """
+        Kills widening 0.25 -> 0.50.
+
+        `gate_move_size` caps one promotion at 25% of the (0, 1) bound range.
+        A wider band here would report a change as promotable in one step that
+        the gate then refuses — the report and the gate disagreeing about what
+        is allowed, which is worse than either limit alone.
+        """
+        result = self._rec(0.60, current=0.30)
+        self.assertEqual(result["promotable_band_one_step"], [0.05, 0.55])
+        self.assertEqual(
+            round(result["promotable_band_one_step"][1]
+                  - result["promotable_band_one_step"][0], 2),
+            0.50,
+        )
+
+    def test_a_move_beyond_one_promotion_is_flagged(self):
+        # current 0.10, recommended lands above 0.35 -> outside one step.
+        result = self._rec(1.00, current=0.10)
+        self.assertFalse(result["within_one_promotion"])
+
+    def test_market_helps_requires_the_interval_to_favour_the_market(self):
+        """
+        Kills dropping the positive-mean check — the same sign bug as the
+        `decisive` filter.
+
+        An interval that excludes zero on the NEGATIVE side is decisive evidence
+        the market makes things WORSE. Reporting that as "market helps" would
+        invert the finding the whole fit exists to produce.
+        """
+        hurts = {"excludes_zero": True, "mean": -0.04}
+        helps = {"excludes_zero": True, "mean": +0.04}
+        self.assertFalse(self._rec(0.5, interval_vs_w0=hurts)["market_helps_vs_w0"])
+        self.assertTrue(self._rec(0.5, interval_vs_w0=helps)["market_helps_vs_w0"])
+
+    def test_posterior_helps_uses_the_same_rule(self):
+        hurts = {"excludes_zero": True, "mean": -0.04}
+        helps = {"excludes_zero": True, "mean": +0.04}
+        self.assertFalse(self._rec(0.5, interval_vs_w1=hurts)["posterior_helps_vs_w1"])
+        self.assertTrue(self._rec(0.5, interval_vs_w1=helps)["posterior_helps_vs_w1"])
+
+    def test_an_indecisive_interval_claims_nothing(self):
+        result = self._rec(0.5)
+        self.assertFalse(result["market_helps_vs_w0"])
+        self.assertFalse(result["posterior_helps_vs_w1"])
