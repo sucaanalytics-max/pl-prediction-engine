@@ -829,6 +829,24 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # ── Step 10: Export JSON ──────────────────────────────────────────
     logger.info("\n[10/12] Exporting predictions JSON...")
 
+    # What the simulations ACTUALLY ran, not what was requested.
+    #
+    # `simulate_from_posterior` takes `min(len(lambda_samples), n_sims)`, so a
+    # posterior thinner than the request silently produces fewer draws. The
+    # committed artifact records `n_simulations: 5000` in its header while eight
+    # of its ten predictions ran 2000 — the header overstating the precision
+    # behind 80% of the file.
+    #
+    # The minimum is the honest summary: it bounds what can be said about the
+    # artifact as a whole, and every tail probability in it is only as precise
+    # as the thinnest fixture behind it. The per-prediction count stays where it
+    # was, so a consumer that cares about one fixture can still be exact.
+    _actual_sims = [
+        int(p["n_simulations"]) for p in all_predictions
+        if isinstance(p.get("n_simulations"), (int, float))
+    ]
+    simulations_run = min(_actual_sims) if _actual_sims else n_sims
+
     output = {
         "metadata": {
             "generated_at": datetime.utcnow().isoformat() + "Z",
@@ -845,7 +863,8 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 if active
             ],
             "sub_models": ["corners_negbin_adj", "cards_zip_referee", "player_cards", "goalscorer"],
-            "n_simulations": n_sims,
+            "n_simulations": simulations_run,
+            "n_simulations_requested": n_sims,
             "calibrated": False,
             "odds_source": "the_odds_api" if parsed_main else "unavailable",
             "referee_profiles_count": len(referee_profiles),
@@ -1129,7 +1148,8 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             },
             "ensemble_method": ensemble_method,
             "stacking_weights": stacking_weights,
-            "n_simulations": n_sims,
+            "n_simulations": simulations_run,
+            "n_simulations_requested": n_sims,
             "odds_source": "the_odds_api" if parsed_main else "unavailable",
             "referee_profiles_count": len(referee_profiles),
             "fpl": fpl_status,
