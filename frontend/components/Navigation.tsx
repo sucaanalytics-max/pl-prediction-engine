@@ -6,21 +6,28 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import {
   Activity,
-  ArrowUpRight,
   ChevronRight,
-  Flag,
+  ArrowLeftRight,
+  CalendarRange,
+  Crown,
   GitCompareArrows,
   Inbox,
   LayoutDashboard,
+  LineChart,
+  ListOrdered,
+  Newspaper,
   Menu,
   Moon,
   ShieldCheck,
   Sparkles,
   Stethoscope,
   Sun,
+  Swords,
+  Table2,
   Target,
   TrendingUp,
   Users,
+  Wand2,
   WalletCards,
   X,
   type LucideIcon,
@@ -44,43 +51,75 @@ interface NavGroup {
   items: NavItem[];
 }
 
+/**
+ * Every route, reachable.
+ *
+ * ## What this fixes
+ *
+ * Thirteen of the twenty-two built routes were unreachable from here. `/transfers`,
+ * `/optimizer`, `/captaincy`, `/rankings`, `/planner`, `/projections`,
+ * `/intelligence`, `/table`, `/matches`, `/value-bets` and `/h2h`'s siblings were all
+ * deployed, tested, and linked from nowhere — so the app looked far emptier than it
+ * was, and the pages carrying the most FPL value were the ones you could not get to.
+ *
+ * `frontend/test/nav-coverage.test.tsx` asserts that every route under `app/` is
+ * either in this list or named in its allow-list with a reason. A route can no longer
+ * become unreachable quietly.
+ *
+ * ## Labels
+ *
+ * Named for what a reader wants, not for the subsystem that produces it. "Player Lab"
+ * and "Match Models" described our architecture; "Players" and "Fixtures" describe
+ * the question being asked.
+ */
 const NAV_GROUPS: NavGroup[] = [
   {
-    label: "Decision workspace",
+    label: "Decide",
     items: [
       { href: "/now", label: "Now", icon: LayoutDashboard },
       { href: "/decide", label: "Decide", icon: Sparkles },
-      { href: "/decisions", label: "Agent Decision", icon: Sparkles },
-      { href: "/inbox", label: "Agent Inbox", icon: Inbox },
-      { href: "/evidence", label: "Injury Evidence", icon: Stethoscope },
-      { href: "/players", label: "Player Lab", icon: Users },
+      { href: "/transfers", label: "Transfers", icon: ArrowLeftRight },
+      { href: "/captaincy", label: "Captain", icon: Crown },
+      { href: "/optimizer", label: "Optimiser", icon: Wand2 },
+      { href: "/planner", label: "Planner", icon: CalendarRange },
     ],
   },
   {
-    label: "Premier League",
+    label: "Research",
     items: [
-      { href: "/h2h", label: "Match Models", icon: GitCompareArrows },
+      { href: "/players", label: "Players", icon: Users },
+      { href: "/projections", label: "Projections", icon: LineChart },
+      { href: "/rankings", label: "Rankings", icon: ListOrdered },
+      { href: "/evidence", label: "Injury evidence", icon: Stethoscope },
+      { href: "/intelligence", label: "Intelligence", icon: Newspaper },
     ],
   },
   {
-    label: "Markets · secondary",
+    label: "Match model",
     items: [
+      { href: "/matches", label: "Fixtures", icon: GitCompareArrows },
+      { href: "/table", label: "Table", icon: Table2 },
+      { href: "/h2h", label: "Head to head", icon: Swords },
+    ],
+  },
+  {
+    label: "Betting",
+    items: [
+      { href: "/value-bets", label: "Value bets", icon: TrendingUp },
       { href: "/markets", label: "Markets", icon: TrendingUp },
       { href: "/bankroll", label: "Bankroll", icon: WalletCards },
     ],
   },
   {
-    label: "System",
+    label: "Agent · ops",
     items: [
-      { href: "/health", label: "Model Health", icon: Activity },
+      { href: "/decisions", label: "Agent decisions", icon: Sparkles },
+      { href: "/inbox", label: "Agent inbox", icon: Inbox },
       { href: "/accuracy", label: "Accuracy", icon: Target },
+      { href: "/health", label: "Model health", icon: Activity },
     ],
   },
 ];
-
-// Paddock is a separate static dashboard for the sports outside this engine.
-// Deliberately a plain external link: it shares no data, code or deploy with us.
-const PADDOCK_URL = "https://suca-paddock.netlify.app";
 
 function timeAgo(timestamp: number) {
   const diff = Math.floor((Date.now() - timestamp) / 1000);
@@ -208,21 +247,12 @@ export default function Navigation() {
         </nav>
 
         <div className="portal-sidebar-footer">
-          <a
-            className="cross-app-link"
-            href={PADDOCK_URL}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => setMobileOpen(false)}
-          >
-            <span className="cross-app-mark"><Flag size={14} /></span>
-            <span>
-              <strong>Other sports</strong>
-              <small>F1 · Darts · Cricket</small>
-            </span>
-            <ArrowUpRight size={13} aria-hidden="true" />
-            <span className="sr-only">(opens in a new tab)</span>
-          </a>
+          {/* The other-sports link is gone.
+              CLAUDE.md rule 7 puts the F1, darts and other-sport providers out of
+              scope for this repo, and a prominent sidebar card pointing at them made
+              a single-purpose FPL tool read as a sports portal — on a page whose own
+              content was empty. The dashboard still exists at its own URL; it just
+              does not belong in this navigation. */}
           <div className="deadline-mini">
             <span><ShieldCheck size={14} /> {live?.event.id != null ? `GW${live.event.id} planning` : "Gameweek unknown"}</span>
             <strong>{compactIstDeadline(live?.event.deadlineTime ?? undefined)}</strong>

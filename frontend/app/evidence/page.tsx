@@ -22,7 +22,9 @@
 
 import { REGISTRY } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
-import { NEWS_FEED, type NewsFeed } from "@/lib/data/news-feed";
+import {
+  NEWS_FEED, type NewsFeed, type NewsItem, type NewsPlayer,
+} from "@/lib/data/news-feed";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import AgentIdleNotice from "@/components/AgentIdleNotice";
@@ -220,6 +222,21 @@ function EvidenceBody({ view }: { view: EvidenceView }) {
  * something no availability field will, and until this section existed those
  * items went into a store nothing read.
  */
+/**
+ * The players in a captured item that we can actually name.
+ *
+ * The claim store files a club-level item against element id 0 — its sentinel for
+ * "this article names no single player" — so any fallback that prints the id prints
+ * a bare `0` on screen. Filtering on the NAME rather than on the id keeps this
+ * correct if the sentinel ever changes.
+ */
+function namedPlayers(item: NewsItem): Array<NewsPlayer & { name: string }> {
+  return item.players.filter(
+    (p): p is NewsPlayer & { name: string } =>
+      typeof p.name === "string" && p.name.trim().length > 0,
+  );
+}
+
 function CapturedHeadlines() {
   const { artifact } = useArtifact<NewsFeed>(NEWS_FEED);
 
@@ -272,10 +289,17 @@ function CapturedHeadlines() {
                       </a>
                     ) : item.headline}
                   </p>
-                  {item.players.length > 0 ? (
+                  {/* Only players we can actually name.
+                      `p.name ?? p.elementId` rendered the literal `0` under any
+                      club-level headline: the claim store uses element id 0 as its
+                      sentinel for "this article names no single player", so the
+                      fallback printed the sentinel. A reader saw a bare 0 beneath
+                      "Fulham sign Charles from Southampton for £30m".
+                      An unnamed player is not a label — it is nothing to show. */}
+                  {namedPlayers(item).length > 0 ? (
                     <p className="text-xs" style={{ color: "var(--text-3)" }}>
-                      {item.players
-                        .map((p) => `${p.name ?? p.elementId}${p.club ? ` (${p.club})` : ""}`)
+                      {namedPlayers(item)
+                        .map((p) => `${p.name}${p.club ? ` (${p.club})` : ""}`)
                         .join(" · ")}
                     </p>
                   ) : null}
@@ -314,6 +338,19 @@ export default function EvidencePage() {
           </p>
         </header>
 
+        {/* The captured headlines come FIRST, and they were never rendered at all.
+            `CapturedHeadlines` was written, tested, and mounted nowhere — `git log
+            -S "<CapturedHeadlines"` returns no commit. So 70 captured articles and
+            the five scanned X posts, plus the scan trigger that lives inside this
+            section, were invisible on the page while being present in the artifact.
+
+            I verified that work by reading news_view.json rather than by opening the
+            browser, which is the same error this whole redesign exists to correct.
+
+            It leads because it is the section that actually has content: the claim
+            trees below need the agent, which is idle until a deadline nears. */}
+        <CapturedHeadlines />
+
         {/* Above the section, not inside WhenProven's fallback: the reason the
             claim trees are missing is the same whether the artifact is absent or
             empty, and repeating it in two branches would let them drift. */}
@@ -327,6 +364,9 @@ export default function EvidencePage() {
           <WhenProven
             of={artifact}
             what="Nobody's availability is in question. Every player with claims on file reads as fully available, from an uncontested source."
+            // One line: the agent writes this and is deadline-gated, so its absence
+            // is the expected state for most of a gameweek cycle.
+            weight="line"
             then={(view) => <EvidenceBody view={view} />}
           />
         </Section>
