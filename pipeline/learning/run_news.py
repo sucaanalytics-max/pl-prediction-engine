@@ -44,7 +44,7 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 # reachability scanner as importing the *package*, which left news_extract.py
 # looking like a module nothing calls. That check exists because the same defect
 # occurred five times in one session, and hiding from it would be the wrong fix.
-from pipeline.data import news_extract, news_feeds, youtube
+from pipeline.data import grok_feed, news_extract, news_feeds, youtube
 from pipeline.learning import deltas as deltas_store
 from pipeline.learning.availability_conflicts import resolve_claims
 from pipeline.learning.availability_evidence import history, record
@@ -298,8 +298,8 @@ def poll(
     like a failure in CI.
     """
     from pipeline.config import (
-        DELTA, FPL_BOOTSTRAP, FPL_FIXTURES, NEWS_FEEDS, NEWS_FETCH, NEWS_WINDOW,
-        YOUTUBE, YOUTUBE_CHANNELS,
+        DELTA, FPL_BOOTSTRAP, FPL_FIXTURES, GROK_FEED, NEWS_FEEDS, NEWS_FETCH,
+        NEWS_WINDOW, YOUTUBE, YOUTUBE_CHANNELS,
     )
     moment = now or datetime.now(timezone.utc)
     observed_at = moment.isoformat().replace("+00:00", "Z")
@@ -358,6 +358,24 @@ def poll(
                 "youtube burst: %d channels posted about %s in this poll",
                 channels, club,
             )
+
+    # X-sourced claims, from a file the user controls. Validated before anything
+    # reaches the store: every rule mirrors a gate in `file_claim`, and failing
+    # here with an item index beats filing something resolution drops silently.
+    #
+    # Dormant until GROK_FEED_URL is set, which is the state today.
+    grok_result, grok_skipped = grok_feed.poll(
+        os.environ.get("GROK_FEED_URL"), GROK_FEED, moment,
+    )
+    if grok_skipped:
+        logger.info("grok feed: %s", grok_skipped)
+    else:
+        logger.info(
+            "grok feed: %d availability + %d comparator item(s) accepted, "
+            "%d rejected",
+            len(grok_result.availability), len(grok_result.comparator),
+            len(grok_result.rejections),
+        )
 
     entries = [
         entry

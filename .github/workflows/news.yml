@@ -59,6 +59,10 @@ jobs:
           # repository secret (Settings -> Secrets -> Actions) to switch upload
           # metadata on; never paste a key into a file or a chat window.
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          # Optional. A URL to a JSON file you control, which Grok appends to.
+          # Schema and the prompt: docs/grok-x-feed-schema.md. Unset today, and
+          # the connector reports why it did nothing rather than failing.
+          GROK_FEED_URL: ${{ secrets.GROK_FEED_URL }}
         run: |
           set -euo pipefail
           ARGS=""

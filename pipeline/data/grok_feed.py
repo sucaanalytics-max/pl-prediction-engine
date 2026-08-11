@@ -1,0 +1,334 @@
+"""
+Validating the Grok/X feed before anything reaches the claim store.
+
+The schema is `pipeline/data/schemas/grok_x_feed.schema.json` and the contract is
+`docs/grok-x-feed-schema.md`. This module is the enforcement, and it exists
+because a schema nothing checks is a suggestion.
+
+## What it is defending against
+
+A language model's reading of a post, entering a store whose claims can lower a
+real player's projected minutes through R4. Every rule below mirrors a gate that
+already exists in `file_claim.py`; the point is to fail here, loudly, with an
+item index, rather than to file something that resolution will silently discard.
+
+Two failure modes are specifically anticipated because they are what a model
+does when it is unsure rather than wrong:
+
+* **Paraphrase presented as a quote.** Unfixable by validation — we cannot tell
+  a real quote from a fluent invention. What we can do is cap what an
+  unverifiable claim is allowed to affect, which is why tier 2 requires a
+  `quote` at all and why the doc tells Grok to drop to tier 3 without one.
+* **A plausible timestamp.** A `claimed_at` in the future is rejected outright,
+  because recency decides R2's tie-break and a back-dated or forward-dated claim
+  outranks an honest one.
+
+## Deliberately not imported
+
+`jsonschema` is not a dependency of the news poller, which installs `requests`
+and `feedparser` only. The checks here are hand-written for that reason — the
+same constraint that broke `news_view.write` when it reached for a helper
+needing PyYAML. The JSON Schema file is the documentation and the editor
+contract; this is the runtime.
+"""
+
+from __future__ import annotations
+
+import logging
+import re
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
+
+logger = logging.getLogger(__name__)
+
+SCHEMA_VERSION = 1
+
+#: Mirrors FILEABLE in file_claim.py. Closed on purpose.
+CLAIM_TYPES = (
+    "chance_of_playing", "expected_minutes", "return_date",
+    "unavailable_until", "permanent_exit", "severity", "unparsed_news",
+)
+
+#: Mirrors MANUAL_TIERS. Tier 1 is FPL's own fields.
+TIERS = (2, 3)
+
+COMPARATOR_METRICS = ("projected_points", "expected_minutes", "rating", "rank")
+
+EXIT_KINDS = ("transfer", "loan", "free_agent")
+
+DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+URL = re.compile(r"^https?://", re.IGNORECASE)
+
+#: A quote shorter than this is not a quote. Chosen to reject `"yes"` and
+#: `"out"` without rejecting a genuinely terse one.
+MIN_QUOTE = 8
+
+
+@dataclass
+class Rejection:
+    """One item that cannot be filed, and why."""
+
+    index: int
+    reason: str
+    lane: Optional[str] = None
+
+    def __str__(self) -> str:
+        return f"items[{self.index}]: {self.reason}"
+
+
+@dataclass
+class Validated:
+    """What survived, and what did not."""
+
+    availability: List[Dict[str, Any]] = field(default_factory=list)
+    comparator: List[Dict[str, Any]] = field(default_factory=list)
+    rejections: List[Rejection] = field(default_factory=list)
+
+    @property
+    def ok(self) -> bool:
+        return not self.rejections
+
+
+def _parse_stamp(value: Any) -> Optional[datetime]:
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        stamp = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return stamp if stamp.tzinfo else stamp.replace(tzinfo=timezone.utc)
+
+
+def check_value(claim_type: str, value: Any) -> Optional[str]:
+    """
+    Whether ``value`` has the shape ``claim_type`` requires, or why not.
+
+    Mirrors `file_claim.coerce_value`, which raises on the same conditions. The
+    duplication is deliberate: `coerce_value` parses CLI strings, and this
+    validates already-typed JSON, so a shared implementation would have to
+    accept both and would be looser than either.
+    """
+    if claim_type == "chance_of_playing":
+        # `bool` is an int in Python; True would pass an isinstance check and
+        # then compare as 1 against FPL's percentage.
+        if isinstance(value, bool) or not isinstance(value, int):
+            return f"chance_of_playing must be an integer 0-100, got {value!r} (not '25%')"
+        if not 0 <= value <= 100:
+            return f"chance_of_playing {value} is outside 0-100"
+        return None
+
+    if claim_type == "expected_minutes":
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            return f"expected_minutes must be a number 0-90, got {value!r}"
+        if not 0.0 <= float(value) <= 90.0:
+            return f"expected_minutes {value} is outside 0-90"
+        return None
+
+    if claim_type in ("return_date", "unavailable_until"):
+        if not isinstance(value, str) or not DATE.match(value):
+            return f"{claim_type} must be YYYY-MM-DD, got {value!r}"
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+        except ValueError:
+            return f"{claim_type} {value!r} is not a real date"
+        return None
+
+    if claim_type == "permanent_exit":
+        # R0 checks `isinstance(value, Mapping) and "kind" in value` and drops
+        # anything else. A bare string would be recorded and then vanish at
+        # resolution, which is worse than being rejected here.
+        if not isinstance(value, Mapping):
+            return (
+                f"permanent_exit must be an object like "
+                f'{{"kind": "transfer"}}, got {value!r}'
+            )
+        kind = value.get("kind")
+        if kind not in EXIT_KINDS:
+            return f"permanent_exit kind must be one of {EXIT_KINDS}, got {kind!r}"
+        return None
+
+    # severity and unparsed_news are free text, but not empty text.
+    if not isinstance(value, str) or not value.strip():
+        return f"{claim_type} must be non-empty text, got {value!r}"
+    return None
+
+
+def _check_availability(item: Mapping[str, Any], now: datetime) -> Optional[str]:
+    for required in ("claim_type", "value", "player_surname", "club", "tier",
+                     "source", "claimed_at"):
+        if required not in item:
+            return f"availability item is missing {required!r}"
+
+    claim_type = item["claim_type"]
+    if claim_type not in CLAIM_TYPES:
+        return (
+            f"{claim_type!r} cannot be filed; choose from {CLAIM_TYPES}. "
+            f"('status' is FPL's own field and 'predicted_start' belongs to the "
+            f"minutes model.)"
+        )
+
+    problem = check_value(claim_type, item["value"])
+    if problem:
+        return problem
+
+    if item["tier"] not in TIERS:
+        return (
+            f"tier {item['tier']!r} is not available to a filed claim; choose "
+            f"from {TIERS}. Tier 1 is reserved for FPL's own fields."
+        )
+
+    quote = item.get("quote")
+    url = item.get("url")
+    has_quote = isinstance(quote, str) and len(quote.strip()) >= MIN_QUOTE
+    has_url = isinstance(url, str) and bool(URL.match(url))
+    if not (has_quote or has_url):
+        return (
+            "a tier-2+ claim needs a verbatim quote or a url so it can be "
+            "audited; rule R0 drops claims with no provenance digest"
+        )
+    if isinstance(quote, str) and quote.strip() and not has_quote:
+        return f"quote {quote!r} is too short to be a quote"
+    if url is not None and not has_url:
+        return f"url {url!r} is not an http(s) url"
+
+    stamp = _parse_stamp(item["claimed_at"])
+    if stamp is None:
+        return f"claimed_at {item['claimed_at']!r} is not an ISO-8601 timestamp"
+    if stamp > now:
+        return (
+            f"claimed_at {item['claimed_at']} is in the future: recency decides "
+            f"R2's tie-break, so a forward-dated claim would outrank an honest one"
+        )
+
+    for field_name in ("player_surname", "club", "source"):
+        if not isinstance(item[field_name], str) or not item[field_name].strip():
+            return f"{field_name} is required and must be non-empty"
+    return None
+
+
+def _check_comparator(item: Mapping[str, Any], now: datetime) -> Optional[str]:
+    for required in ("metric", "value", "player_surname", "club", "source",
+                     "claimed_at"):
+        if required not in item:
+            return f"comparator item is missing {required!r}"
+    if item["metric"] not in COMPARATOR_METRICS:
+        return f"metric must be one of {COMPARATOR_METRICS}, got {item['metric']!r}"
+    if isinstance(item["value"], bool) or not isinstance(item["value"], (int, float)):
+        return f"comparator value must be a number, got {item['value']!r}"
+    if "tier" in item:
+        # A tier would imply it can win a resolution. It cannot.
+        return (
+            "a comparator item must not carry a tier: it never enters the "
+            "availability store and cannot beat a claim"
+        )
+    stamp = _parse_stamp(item["claimed_at"])
+    if stamp is None:
+        return f"claimed_at {item['claimed_at']!r} is not an ISO-8601 timestamp"
+    if stamp > now:
+        return f"claimed_at {item['claimed_at']} is in the future"
+    return None
+
+
+def validate(payload: Any, now: datetime) -> Validated:
+    """
+    Split a fetched feed into what can be filed and what cannot.
+
+    Never raises for bad content — a malformed feed must not stop the poll that
+    fetched it. The caller logs `rejections`, and every one carries its item
+    index so a 60-item file can be corrected without guesswork.
+    """
+    out = Validated()
+
+    if not isinstance(payload, Mapping):
+        out.rejections.append(Rejection(-1, "the feed is not a JSON object"))
+        return out
+    if payload.get("schema_version") != SCHEMA_VERSION:
+        out.rejections.append(Rejection(
+            -1,
+            f"schema_version must be {SCHEMA_VERSION}, got "
+            f"{payload.get('schema_version')!r}",
+        ))
+        return out
+
+    items = payload.get("items")
+    if not isinstance(items, list):
+        out.rejections.append(Rejection(-1, "items must be an array"))
+        return out
+
+    for index, item in enumerate(items):
+        if not isinstance(item, Mapping):
+            out.rejections.append(Rejection(index, "item is not an object"))
+            continue
+        lane = item.get("lane")
+        if lane == "availability":
+            problem = _check_availability(item, now)
+            (out.rejections.append(Rejection(index, problem, lane)) if problem
+             else out.availability.append(dict(item)))
+        elif lane == "comparator":
+            problem = _check_comparator(item, now)
+            (out.rejections.append(Rejection(index, problem, lane)) if problem
+             else out.comparator.append(dict(item)))
+        else:
+            # Not inferred. The two lanes have different consequences: one can
+            # lower a projection and the other cannot.
+            out.rejections.append(Rejection(
+                index,
+                f"lane must be 'availability' or 'comparator', got {lane!r}",
+            ))
+
+    return out
+
+
+def fetch(url: str, config: Mapping[str, Any]) -> Any:
+    """
+    GET the feed and parse it. Raises on anything that is not usable JSON.
+
+    Size-capped before parsing, like the RSS fetcher: a hostile or broken
+    response should not be parsed at all rather than parsed and then rejected.
+    """
+    import requests
+
+    response = requests.get(
+        url,
+        timeout=int(config.get("timeout_seconds", 20)),
+        headers={"Accept": "application/json"},
+    )
+    response.raise_for_status()
+    cap = int(config.get("max_bytes", 2_000_000))
+    body = response.content[: cap + 1]
+    if len(body) > cap:
+        raise ValueError(f"feed exceeds the {cap}-byte cap; refusing to parse it")
+    import json as _json
+
+    return _json.loads(body.decode("utf-8"))
+
+
+def poll(
+    url: Optional[str], config: Mapping[str, Any], now: datetime,
+) -> Tuple[Validated, Optional[str]]:
+    """
+    Fetch and validate, or explain why nothing happened.
+
+    Returns ``(validated, skipped_reason)``. A skip is not an error: with no
+    URL configured — the state today — every other news source is unaffected,
+    which is the same contract the YouTube connector has.
+    """
+    if not url:
+        return Validated(), (
+            "No GROK_FEED_URL is configured, so no X-sourced claims were read. "
+            "Every other news source is unaffected."
+        )
+    try:
+        payload = fetch(url, config)
+    except Exception as error:  # noqa: BLE001 - one feed must not sink the poll
+        logger.warning("grok feed unreadable: %s", error)
+        return Validated(), f"the feed could not be read: {error}"
+
+    result = validate(payload, now)
+    for rejection in result.rejections:
+        # Logged individually with an index, so a 60-item file can be corrected
+        # without guesswork. A silently dropped claim is indistinguishable from
+        # a poller that has stopped.
+        logger.warning("grok feed rejected %s", rejection)
+    return result, None

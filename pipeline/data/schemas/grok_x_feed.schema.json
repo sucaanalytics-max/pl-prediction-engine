@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Grok/X feed",
+  "description": "A file the user controls, which Grok appends to and the news poller reads. See docs/grok-x-feed-schema.md. Every constraint mirrors a gate that already exists in pipeline/learning/file_claim.py; none of it is new policy.",
+  "type": "object",
+  "required": ["schema_version", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": 1 },
+    "generated_at": {
+      "type": "string",
+      "description": "When the file was written. Never used for recency; claimed_at is.",
+      "format": "date-time"
+    },
+    "items": { "type": "array", "items": { "$ref": "#/$defs/item" } }
+  },
+  "$defs": {
+    "item": {
+      "oneOf": [
+        { "$ref": "#/$defs/availability" },
+        { "$ref": "#/$defs/comparator" }
+      ]
+    },
+    "availability": {
+      "type": "object",
+      "description": "Team news. Can push availability DOWN via R4, which is why every field is required.",
+      "required": ["lane", "claim_type", "value", "player_surname", "club", "tier", "source", "claimed_at"],
+      "additionalProperties": false,
+      "properties": {
+        "lane": { "const": "availability" },
+        "claim_type": {
+          "description": "FILEABLE in file_claim.py. `status` is FPL's own field and `predicted_start` belongs to the minutes model; neither is fileable.",
+          "enum": ["chance_of_playing", "expected_minutes", "return_date", "unavailable_until", "permanent_exit", "severity", "unparsed_news"]
+        },
+        "value": { "description": "Shape depends on claim_type. Enforced in pipeline/data/grok_feed.py; see valueRules." },
+        "player_surname": {
+          "type": "string", "minLength": 2,
+          "description": "As FPL spells it. Resolved our side; ambiguity within a club escalates rather than being guessed."
+        },
+        "club": { "type": "string", "minLength": 3 },
+        "tier": {
+          "enum": [2, 3],
+          "description": "Tier 1 is reserved for FPL's own fields. A paraphrase is tier 3 at best."
+        },
+        "source": { "type": "string", "minLength": 2 },
+        "quote": {
+          "type": "string", "minLength": 8,
+          "description": "VERBATIM from the source, never a summary. Omit rather than paraphrase."
+        },
+        "url": { "type": "string", "pattern": "^https?://" },
+        "claimed_at": {
+          "type": "string", "format": "date-time",
+          "description": "When the SOURCE said it. A future value is rejected."
+        }
+      },
+      "anyOf": [{ "required": ["quote"] }, { "required": ["url"] }]
+    },
+    "comparator": {
+      "type": "object",
+      "description": "Someone else's projections. Never enters the availability store, so it carries no tier and needs no quote.",
+      "required": ["lane", "metric", "value", "player_surname", "club", "source", "claimed_at"],
+      "additionalProperties": false,
+      "properties": {
+        "lane": { "const": "comparator" },
+        "metric": { "enum": ["projected_points", "expected_minutes", "rating", "rank"] },
+        "value": { "type": "number" },
+        "horizon_gameweeks": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "player_surname": { "type": "string", "minLength": 2 },
+        "club": { "type": "string", "minLength": 3 },
+        "source": { "type": "string", "minLength": 2 },
+        "url": { "type": "string", "pattern": "^https?://" },
+        "claimed_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "valueRules": {
+      "description": "JSON Schema cannot express these conditionals readably, so they are enforced in pipeline/data/grok_feed.py: chance_of_playing = integer 0-100 (not '25%'); expected_minutes = number 0-90; return_date and unavailable_until = exactly YYYY-MM-DD; permanent_exit = object with kind in transfer|loan|free_agent (a bare string is recorded and then silently dropped by R0); severity and unparsed_news = free text."
+    }
+  }
+}

@@ -170,6 +170,25 @@ NEWS_FETCH = {
 # Adaptive polling window, derived from the fixture list because NO published
 # press-conference schedule exists anywhere. Pressers land roughly a day or two
 # before kickoff; the deadline itself is the other hot window.
+# ── The Grok/X feed ──────────────────────────────────────────────────────────
+#
+# A file YOU control, which Grok appends to and the poller reads. Not X's API:
+# the free tier has no tweet-read access and pay-per-use is ~£35/mo, which the
+# £0 decision excludes. Reading your own notes is what the manual claim lane
+# was built for.
+#
+# Dormant until GROK_FEED_URL is set as a repository secret. Schema and the
+# prompt to paste to Grok: docs/grok-x-feed-schema.md.
+GROK_FEED = {
+    "timeout_seconds": 20,
+    # Same size cap as the RSS fetcher, applied before parsing.
+    "max_bytes": 2_000_000,
+    # Items older than this are ignored: a claim about last month's fitness is
+    # not team news, and the store is append-only so re-reading costs work
+    # without producing a new claim.
+    "max_age_days": 3,
+}
+
 # ── YouTube upload metadata ──────────────────────────────────────────────────
 #
 # Metadata only. Transcripts are excluded permanently — YouTube's terms bar them
