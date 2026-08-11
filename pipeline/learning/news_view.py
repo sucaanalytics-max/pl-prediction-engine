@@ -195,9 +195,26 @@ def build(
 
 
 def write(view: Mapping[str, Any], public_dir: Path) -> Path:
-    """Publish the reading list."""
-    from pipeline.fpl.artifacts import write_json_atomically
+    """
+    Publish the reading list.
 
+    Writes directly rather than through `pipeline.fpl.artifacts`. That module is
+    fine on the daily pipeline, which installs the full requirements, but the
+    news poller installs only `requests` and `feedparser` — news.yml says so and
+    explains why: it must finish in seconds, and pulling PyMC and SciPy would
+    cost minutes per 15-minute tick.
+
+    Importing the shared helper broke exactly that: the first live run failed
+    with `No module named 'yaml'` and lost the view while keeping the poll. The
+    write is three lines; the dependency was not worth it.
+
+    Atomic via a temp file and `replace`, so a poll interrupted mid-write cannot
+    leave the app fetching half a JSON document.
+    """
     directory = Path(public_dir)
     directory.mkdir(parents=True, exist_ok=True)
-    return write_json_atomically(dict(view), directory / FILENAME)
+    target = directory / FILENAME
+    scratch = target.with_suffix(".json.tmp")
+    scratch.write_text(json.dumps(dict(view), indent=2) + "\n", encoding="utf-8")
+    scratch.replace(target)
+    return target

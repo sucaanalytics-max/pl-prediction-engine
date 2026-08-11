@@ -196,3 +196,70 @@ class CommittedStoreTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PollerStaysLightweightTests(unittest.TestCase):
+    """
+    The poller may only import what news.yml installs.
+
+    news.yml installs `requests` and `feedparser` and nothing else, and says
+    why: it runs every fifteen minutes and must finish in seconds, where
+    `pipeline/requirements.txt` pulls PyMC, XGBoost and SciPy.
+
+    `news_view.write` originally called `pipeline.fpl.artifacts.
+    write_json_atomically`, which drags in a chain needing PyYAML. The first
+    live run logged `could not publish the news view: No module named 'yaml'`
+    and published nothing — non-fatally, so the poll itself survived and the
+    failure was a single warning line in a log nobody was watching.
+
+    A unit test on this machine cannot catch it: the dev venv has every
+    dependency. So the check is structural.
+    """
+
+    MODULE = Path(__file__).resolve().parents[1] / "learning" / "news_view.py"
+
+    #: Modules that reach PyMC, SciPy, PyYAML or the FPL rules loader.
+    HEAVY = ("pipeline.fpl.artifacts", "pipeline.fpl.rules", "numpy", "scipy",
+             "yaml", "pymc", "xgboost", "pipeline.simulation")
+
+    def test_it_imports_nothing_the_poller_does_not_install(self):
+        """
+        Checked by parsing the imports, not by searching the text.
+
+        A substring search over the whole file matches the docstrings above,
+        which name `pipeline.fpl.artifacts` precisely because it explains why it
+        is not imported. A test that fails on its own explanation is worse than
+        no test: it trains you to weaken the check rather than the code.
+        """
+        import ast
+
+        tree = ast.parse(self.MODULE.read_text(encoding="utf-8"))
+        imported: List[str] = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imported.extend(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                imported.append(node.module)
+
+        offenders = [
+            name for name in imported
+            if any(name == heavy or name.startswith(heavy + ".")
+                   for heavy in self.HEAVY)
+        ]
+        self.assertEqual(
+            offenders, [],
+            "news_view runs inside the 15-minute poller, which installs only "
+            "requests and feedparser:\n  " + "\n  ".join(offenders),
+        )
+
+    def test_the_module_imports_cleanly_with_only_the_stdlib_available(self):
+        # Importing it must not reach for anything the poller lacks.
+        import importlib
+        module = importlib.import_module("pipeline.learning.news_view")
+        self.assertTrue(hasattr(module, "build"))
+
+    def test_the_write_is_atomic(self):
+        # A poll interrupted mid-write must not leave the app fetching half a
+        # JSON document.
+        source = self.MODULE.read_text(encoding="utf-8")
+        self.assertIn(".replace(target)", source)
