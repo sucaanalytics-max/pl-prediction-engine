@@ -47,7 +47,21 @@ import { describe, expect, it } from "vitest";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const NARROW_SRC = join(process.cwd(), "lib", "data", "narrow.ts");
+const DATA_DIR = join(process.cwd(), "lib", "data");
+
+/**
+ * Every loader file, not just narrow.ts.
+ *
+ * The first version scanned `narrow.ts` alone and reported green — while four
+ * descriptors lived in their own files (`accuracy.ts`, `agent-status.ts`,
+ * `match-detail.ts`, `news-feed.ts`) and went unchecked. A guard that silently
+ * covers a subset is worse than none: the green tick reads as "audited".
+ */
+function loaderSources(): { file: string; text: string }[] {
+  return readdirSync(DATA_DIR)
+    .filter((name) => name.endsWith(".ts") && !name.endsWith(".test.ts"))
+    .map((name) => ({ file: name, text: readFileSync(join(DATA_DIR, name), "utf8") }));
+}
 const PREDICTIONS = join(process.cwd(), "public", "predictions");
 const PIPELINE = join(process.cwd(), "..", "pipeline");
 
@@ -70,9 +84,14 @@ function pipelineEmittedKeys(): Set<string> {
       const full = join(dir, entry.name);
       if (entry.isDirectory()) { walk(full); continue; }
       if (!entry.name.endsWith(".py")) continue;
-      for (const m of readFileSync(full, "utf8").matchAll(/"([a-z_][a-z0-9_]{2,40})":/g)) {
-        out.add(m[1]);
-      }
+      // Three forms, because Python writes dict keys all three ways and missing any
+      // of them produces a FALSE POSITIVE. The first version matched only the
+      // literal form and required three characters, so it reported `n` and
+      // `bias_radius` as unwritten when accuracy.py writes both.
+      const text = readFileSync(full, "utf8");
+      for (const m of text.matchAll(/["']([a-z_][a-z0-9_]{0,40})["']\s*:/g)) out.add(m[1]);
+      for (const m of text.matchAll(/\[["']([a-z_][a-z0-9_]{0,40})["']\]/g)) out.add(m[1]);
+      for (const m of text.matchAll(/\.get\(["']([a-z_][a-z0-9_]{0,40})["']/g)) out.add(m[1]);
     }
   };
   try { walk(PIPELINE); } catch { /* no pipeline dir in some checkouts */ }
@@ -146,11 +165,15 @@ interface Narrower {
 }
 
 function narrowers(): Narrower[] {
-  const source = readFileSync(NARROW_SRC, "utf8");
+  const sources = loaderSources();
+  const source = sources.map((entry) => entry.text).join("\n");
 
+  // Non-exported helpers included: that is where most field reads live, and a
+  // planted typo in `accuracy.ts` (whose reads are all in a helper) went undetected
+  // while the suite reported green.
   const bodies = new Map<string, string>();
   for (const match of source.matchAll(
-    /export function (narrow[A-Za-z0-9_]+)\(([\s\S]*?)\n}/g,
+    /(?:export\s+)?function (narrow[A-Za-z0-9_]+)\(([\s\S]*?)\n}/g,
   )) {
     bodies.set(match[1], match[2]);
   }
@@ -160,7 +183,21 @@ function narrowers(): Narrower[] {
     /key:\s*"([A-Za-z0-9_]+)"[\s\S]{0,400}?path:\s*"([^"]+)"[\s\S]{0,600}?narrow:\s*(narrow[A-Za-z0-9_]+)/g,
   )) {
     const [, key, path, fn] = match;
-    const body = bodies.get(fn);
+    if (out.some((n) => n.key === key)) continue;
+
+    // Follow the call graph. A narrower delegates row-level reads to helpers, so a
+    // check that stops at the entry point audits almost nothing.
+    const seen = new Set<string>();
+    const collect = (name: string, depth = 0): string => {
+      if (depth > 6 || seen.has(name)) return "";
+      seen.add(name);
+      const inner = bodies.get(name);
+      if (!inner) return "";
+      const called = [...inner.matchAll(/\b(narrow[A-Za-z0-9_]+)\s*\(/g)].map((m) => m[1]);
+      return [inner, ...called.map((c) => collect(c, depth + 1))].join("\n");
+    };
+
+    const body = collect(fn);
     if (body) out.push({ fn, body, key, path });
   }
   return out;
@@ -199,10 +236,20 @@ describe("no narrower reads a field the writer never emits", () => {
   for (const narrower of all) {
     const file = join(PREDICTIONS, narrower.path);
 
-    it.skipIf(!existsSync(file))(
-      `${narrower.key} (${narrower.path})`,
-      () => {
-        const present = keysDeep(parseArtifact(file));
+    it(`${narrower.key} (${narrower.path})`, () => {
+      /**
+       * An absent artifact is not unauditable.
+       *
+       * Skipping when the file was missing silently exempted every agent-written
+       * artifact — `accuracy.json`, `messages.json`, `evidence_view.json` are absent
+       * for the ten days before a deadline, and `evidence_view.json` has never been
+       * published at all. Those are exactly the narrowers nothing has ever checked.
+       * The Python source still says what the producer writes.
+       */
+      {
+        const present = existsSync(file)
+          ? keysDeep(parseArtifact(file))
+          : new Set<string>();
         const dead = fieldsRead(narrower.body)
           .filter((field) => !present.has(field))
           // A producer writes it, so it will be in the next artifact.
@@ -216,8 +263,8 @@ describe("no narrower reads a field the writer never emits", () => {
             `narrows to null forever. If the read is a deliberate fallback, add it ` +
             `to ALLOWED with a reason.`,
         ).toEqual([]);
-      },
-    );
+      }
+    });
   }
 });
 
@@ -234,7 +281,7 @@ describe("the exemptions stay honest", () => {
      * nothing, and it makes the list harder to trust the next time someone adds to
      * it.
      */
-    const source = readFileSync(NARROW_SRC, "utf8");
+    const source = loaderSources().map((entry) => entry.text).join("\n");
     const unused = Object.keys(ALLOWED).filter((entry) => {
       const field = entry.split(":")[1];
       return !new RegExp(`\\.${field}\\b`).test(source);
