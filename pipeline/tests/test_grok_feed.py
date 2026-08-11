@@ -301,3 +301,119 @@ class SchemaFileTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SheetTests(unittest.TestCase):
+    """
+    A published Google Sheet, which is the recommended shape.
+
+    A spreadsheet is flat and everything in it is a string, so the adapter has
+    to restore the types the validator checks. The one that matters is
+    `permanent_exit`: R0 needs a Mapping with `kind`, and asking anyone to type
+    `{"kind": "transfer"}` into a cell produces a broken JSON string far more
+    often than a correct one — so the cell holds a word and the nesting is built
+    here.
+    """
+
+    HEADER = ("lane,claim_type,value,player_surname,club,tier,source,quote,url,"
+              "claimed_at,metric,horizon_gameweeks")
+
+    def sheet(self, *rows):
+        from pipeline.data.grok_feed import parse_sheet
+        return parse_sheet("\n".join((self.HEADER, *rows)))
+
+    def test_a_doubt_row_becomes_a_claim(self):
+        payload = self.sheet(
+            f"availability,chance_of_playing,25,Rogers,Aston Villa,2,robtFPL,"
+            f"Rogers is a doubt for the weekend,https://x.com/a,{EARLIER},,"
+        )
+        result = validate(payload, NOW)
+        self.assertTrue(result.ok, [str(r) for r in result.rejections])
+        self.assertEqual(result.availability[0]["value"], 25)
+
+    def test_a_percentage_cell_is_read_as_an_integer(self):
+        # A spreadsheet will happily hold "25%"; the store must not.
+        payload = self.sheet(
+            f"availability,chance_of_playing,25%,Rogers,Aston Villa,2,robtFPL,"
+            f"a doubt for the weekend,https://x.com/a,{EARLIER},,"
+        )
+        self.assertEqual(payload["items"][0]["value"], 25)
+
+    def test_permanent_exit_is_nested_from_a_bare_word(self):
+        payload = self.sheet(
+            f"availability,permanent_exit,transfer,Solomon,Tottenham,3,BBC,,"
+            f"https://bbc.co.uk/a,{EARLIER},,"
+        )
+        self.assertEqual(payload["items"][0]["value"], {"kind": "transfer"})
+        self.assertTrue(validate(payload, NOW).ok)
+
+    def test_a_comparator_row_carries_no_tier_or_claim_type(self):
+        payload = self.sheet(
+            f"comparator,,6.4,Salah,Liverpool,,robtFPL,,https://x.com/b,"
+            f"{EARLIER},projected_points,1"
+        )
+        result = validate(payload, NOW)
+        self.assertTrue(result.ok, [str(r) for r in result.rejections])
+        self.assertEqual(result.comparator[0]["value"], 6.4)
+        self.assertEqual(result.comparator[0]["horizon_gameweeks"], 1)
+
+    def test_empty_cells_are_absent_rather_than_empty_strings(self):
+        # A missing required field must read as missing, not as "".
+        payload = self.sheet(
+            f"availability,chance_of_playing,25,Rogers,Aston Villa,2,robtFPL,,"
+            f"https://x.com/a,{EARLIER},,"
+        )
+        self.assertNotIn("quote", payload["items"][0])
+        self.assertNotIn("metric", payload["items"][0])
+
+    def test_a_quote_containing_a_comma_survives(self):
+        payload = self.sheet(
+            f'availability,severity,hamstring,Rogers,Aston Villa,2,robtFPL,'
+            f'"He is out, probably four weeks",https://x.com/a,{EARLIER},,'
+        )
+        self.assertEqual(
+            payload["items"][0]["quote"], "He is out, probably four weeks",
+        )
+
+    def test_an_unknown_column_is_ignored(self):
+        from pipeline.data.grok_feed import parse_sheet
+        payload = parse_sheet(
+            self.HEADER + ",my_notes\n"
+            f"availability,chance_of_playing,25,Rogers,Aston Villa,2,robtFPL,"
+            f"a doubt for the weekend,https://x.com/a,{EARLIER},,,check this"
+        )
+        self.assertTrue(validate(payload, NOW).ok)
+
+    def test_an_uncoercible_cell_is_left_for_the_validator_to_reject(self):
+        # Not coerced to None and not dropped: a claim that looks filed and is
+        # missing is worse than one rejected with a reason naming its row.
+        payload = self.sheet(
+            f"availability,chance_of_playing,probably,Rogers,Aston Villa,2,"
+            f"robtFPL,a doubt for the weekend,https://x.com/a,{EARLIER},,"
+        )
+        result = validate(payload, NOW)
+        self.assertFalse(result.ok)
+        self.assertIn("integer", str(result.rejections[0]))
+
+    def test_a_header_only_sheet_is_valid_and_empty(self):
+        # "I found nothing" is a correct answer.
+        result = validate(self.sheet(), NOW)
+        self.assertTrue(result.ok)
+        self.assertEqual(result.availability, [])
+
+
+class FormatSniffingTests(unittest.TestCase):
+    """
+    The format is decided by the body, not the URL.
+
+    A Google Sheets publish link carries no `.csv` extension and a gist raw URL
+    may carry one, so an extension check would be wrong for both.
+    """
+
+    def test_the_documented_columns_match_the_adapter(self):
+        from pipeline.data.grok_feed import SHEET_COLUMNS
+        doc = (Path(__file__).resolve().parents[2]
+               / "docs" / "grok-x-feed-schema.md").read_text(encoding="utf-8")
+        header = ",".join(SHEET_COLUMNS)
+        # The header the doc tells you to paste must be the one we parse.
+        self.assertIn(header, doc, f"the doc must publish this header: {header}")

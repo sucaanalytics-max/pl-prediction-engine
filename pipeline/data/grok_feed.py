@@ -280,9 +280,103 @@ def validate(payload: Any, now: datetime) -> Validated:
     return out
 
 
+#: Columns a published Google Sheet must carry, in any order.
+#:
+#: Flat because a spreadsheet is flat. `permanent_exit` needs a Mapping with a
+#: `kind` key to survive R0, and `rows_to_items` builds it — asking a human to
+#: type `{"kind": "transfer"}` into a cell would produce a broken JSON string
+#: far more often than a correct one.
+SHEET_COLUMNS = (
+    "lane", "claim_type", "value", "player_surname", "club", "tier",
+    "source", "quote", "url", "claimed_at", "metric", "horizon_gameweeks",
+)
+
+
+def rows_to_items(rows: Sequence[Mapping[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Turn spreadsheet rows into feed items.
+
+    Everything arrives as a string, so this restores the types the validator
+    checks: `tier` and `chance_of_playing` to int, `expected_minutes` and a
+    comparator `value` to float, `permanent_exit` to `{"kind": ...}`.
+
+    A cell that cannot be converted is left as the original string rather than
+    coerced or dropped. The validator then rejects it with a message naming the
+    row, which is far more useful than a silent `None` — and silently dropping
+    it is how a claim that looks filed goes missing.
+
+    Empty cells are omitted rather than sent as `""`, so a missing required
+    field reads as missing rather than as an empty value.
+    """
+    items: List[Dict[str, Any]] = []
+    for row in rows:
+        item: Dict[str, Any] = {}
+        for key, raw in row.items():
+            if key is None:
+                continue
+            name = str(key).strip().lower()
+            if name not in SHEET_COLUMNS:
+                continue
+            text = "" if raw is None else str(raw).strip()
+            if not text:
+                continue
+            item[name] = text
+
+        if "tier" in item:
+            try:
+                item["tier"] = int(item["tier"])
+            except ValueError:
+                pass
+        if "horizon_gameweeks" in item:
+            try:
+                item["horizon_gameweeks"] = int(item["horizon_gameweeks"])
+            except ValueError:
+                pass
+
+        claim_type = item.get("claim_type")
+        if "value" in item:
+            if claim_type == "chance_of_playing":
+                text = str(item["value"]).rstrip("%").strip()
+                try:
+                    item["value"] = int(text)
+                except ValueError:
+                    pass
+            elif claim_type == "expected_minutes" or item.get("lane") == "comparator":
+                try:
+                    item["value"] = float(item["value"])
+                except ValueError:
+                    pass
+            elif claim_type == "permanent_exit":
+                # The nesting R0 requires, built here so a cell stays a word.
+                item["value"] = {"kind": str(item["value"]).strip().lower()}
+        items.append(item)
+    return items
+
+
+def parse_sheet(text: str) -> Dict[str, Any]:
+    """
+    A published Google Sheet CSV, as a feed payload.
+
+    `csv` is stdlib, so this costs the poller nothing — the same constraint that
+    keeps `jsonschema` out of this module.
+    """
+    import csv
+    import io
+
+    reader = csv.DictReader(io.StringIO(text))
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "items": rows_to_items(list(reader)),
+    }
+
+
 def fetch(url: str, config: Mapping[str, Any]) -> Any:
     """
-    GET the feed and parse it. Raises on anything that is not usable JSON.
+    GET the feed and parse it, as JSON or as a published-sheet CSV.
+
+    The format is decided by what came back, not by the URL: a Google Sheets
+    publish link carries no `.csv` extension, and a gist raw URL may. Sniffing
+    the body is the only reading that holds for both.
 
     Size-capped before parsing, like the RSS fetcher: a hostile or broken
     response should not be parsed at all rather than parsed and then rejected.
@@ -299,9 +393,16 @@ def fetch(url: str, config: Mapping[str, Any]) -> Any:
     body = response.content[: cap + 1]
     if len(body) > cap:
         raise ValueError(f"feed exceeds the {cap}-byte cap; refusing to parse it")
+    text = body.decode("utf-8-sig")
+
+    content_type = str(response.headers.get("Content-Type", "")).lower()
+    stripped = text.lstrip()
+    if "csv" in content_type or not stripped.startswith(("{", "[")):
+        return parse_sheet(text)
+
     import json as _json
 
-    return _json.loads(body.decode("utf-8"))
+    return _json.loads(text)
 
 
 def poll(
