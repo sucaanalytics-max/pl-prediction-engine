@@ -61,6 +61,29 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: python -m pipeline.learning.schedule
 
+      # Committed from THIS job, which always runs, and never from the agent job,
+      # which is skipped whenever nothing is due. That is the entire point: the
+      # agent writes evidence_view.json, messages.json and xp_gw*, so all three are
+      # absent for the ~10 days before a deadline. Until this file existed the
+      # screens could not tell "the agent is idle by design" from "the agent is
+      # broken", and they render very differently.
+      - name: Publish the agent status
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Written by the resolver above; this just persists it.
+          if git diff --quiet -- frontend/public/predictions/fpl/agent_status.json; then
+            echo "status unchanged"
+            exit 0
+          fi
+          git add -- frontend/public/predictions/fpl/agent_status.json
+          git commit -q -m "Agent status — ${{ steps.phase.outputs.phase }} GW${{ steps.phase.outputs.gameweek }}"
+          git pull --rebase --autostash --quiet origin main
+          git push --quiet origin main
+
       - name: Summary
         run: |
           echo "phase=${{ steps.phase.outputs.phase }}" >> "$GITHUB_STEP_SUMMARY"

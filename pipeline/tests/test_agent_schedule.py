@@ -296,3 +296,151 @@ class StdlibOnlyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AgentStatusPublishTests(unittest.TestCase):
+    """
+    The status file that explains an absent agent artifact.
+
+    ## Why it exists
+
+    The agent self-gates: `needs_work` is false in IDLE and LOCKED, so the CI job
+    that runs it is skipped. Measured on 2026-08-11 that was every run — the GW1
+    deadline was 247 hours away and the resolver correctly said "nothing due yet".
+
+    It writes `evidence_view.json`, `messages.json` and `xp_gw*`, so those are
+    absent for roughly ten days before each deadline. `evidence_view.json` has in
+    fact never been published, and `/evidence` showed the same `absent` state
+    whether the agent was idle by design or broken.
+
+    ## The load-bearing property
+
+    **This must be written by the phase resolver, never by the agent.** The agent is
+    skipped exactly when the file is needed, so publishing it there would reproduce
+    the bug it fixes. The last test in this class is the one that matters.
+    """
+
+    def _state(self, phase, **over):
+        from pipeline.learning.schedule import Phase, ScheduleState
+
+        return ScheduleState(phase=phase, **over)
+
+    def test_it_publishes_when_the_agent_did_not_run(self):
+        import json
+        import tempfile
+        from pathlib import Path
+
+        from pipeline.learning.schedule import Phase, publish_status
+
+        with tempfile.TemporaryDirectory() as tmp:
+            state = self._state(Phase.IDLE, gameweek=1, reason="nothing due yet")
+            self.assertFalse(state.needs_work)
+            path = publish_status(state, Path(tmp))
+            payload = json.loads(path.read_text(encoding="utf-8"))
+
+        self.assertIs(payload["agent_ran"], False)
+        self.assertEqual(payload["phase"], "idle")
+        self.assertEqual(payload["gameweek"], 1)
+        self.assertIn("nothing due yet", payload["reason"])
+
+    def test_agent_ran_is_true_when_there_is_work(self):
+        import json
+        import tempfile
+        from pathlib import Path
+
+        from pipeline.learning.schedule import Phase, publish_status
+
+        working = [p for p in Phase if p not in (Phase.IDLE, Phase.LOCKED)]
+        self.assertTrue(working, "no working phases to test")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = publish_status(self._state(working[0], gameweek=2), Path(tmp))
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        self.assertIs(payload["agent_ran"], True)
+
+    def test_locked_is_also_a_non_running_phase(self):
+        # Two ways to be idle. A frontend deriving this from `phase == "idle"` would
+        # miss LOCKED, which is why `agent_ran` is published explicitly.
+        import json
+        import tempfile
+        from pathlib import Path
+
+        from pipeline.learning.schedule import Phase, publish_status
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = publish_status(self._state(Phase.LOCKED, gameweek=1), Path(tmp))
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        self.assertIs(payload["agent_ran"], False)
+
+    def test_it_carries_a_sentence_explaining_the_absence(self):
+        import json
+        import tempfile
+        from pathlib import Path
+
+        from pipeline.learning.schedule import Phase, publish_status
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = publish_status(self._state(Phase.IDLE, gameweek=1), Path(tmp))
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        # Named in the artifact so a page cannot paraphrase it into something the
+        # producer does not claim.
+        self.assertIn("absent", payload["explains_absence"])
+        self.assertIn("evidence", payload["explains_absence"].lower())
+
+    def test_the_write_is_atomic_and_leaves_no_scratch_file(self):
+        import tempfile
+        from pathlib import Path
+
+        from pipeline.learning.schedule import Phase, publish_status
+
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "nested"
+            publish_status(self._state(Phase.IDLE), target)
+            self.assertEqual(list(target.glob("*.tmp")), [])
+
+    def test_the_cli_publishes_it_unconditionally(self):
+        """
+        THE test.
+
+        The status must be written by the phase resolver, which always runs — not
+        by the agent, which is skipped whenever nothing is due. Publishing it from
+        the agent would mean the file is absent exactly when a screen needs it to
+        explain an absence.
+        """
+        from pathlib import Path
+
+        source = (Path(__file__).resolve().parents[1] / "learning" / "schedule.py").read_text(
+            encoding="utf-8",
+        )
+        self.assertIn("publish_status(resolved", source)
+        # Not behind a needs_work check.
+        cli = source[source.index('if __name__ == "__main__":'):]
+        self.assertNotIn("needs_work", cli)
+
+    def test_the_workflow_commits_it_from_the_phase_job(self):
+        from pathlib import Path
+
+        workflow = (
+            Path(__file__).resolve().parents[2]
+            / ".github" / "workflows" / "fpl_agent.yml"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("agent_status.json", workflow)
+        # The commit step must sit in the `decide` job, before the `work` job that
+        # `if: needs.decide.outputs.needs_work == 'true'` gates.
+        self.assertLess(
+            workflow.index("agent_status.json"),
+            workflow.index("needs_work == 'true'"),
+            "the status commit must be in the always-running phase job",
+        )
+
+    def test_schedule_still_imports_nothing_outside_the_standard_library(self):
+        # The constraint that lets the phase job run with no pip install. The
+        # config import for FPL_PUBLIC_DIR is inside __main__, like PREDICTIONS_DIR.
+        from pathlib import Path
+
+        source = (Path(__file__).resolve().parents[1] / "learning" / "schedule.py").read_text(
+            encoding="utf-8",
+        )
+        module_level = source[: source.index('if __name__ == "__main__":')]
+        self.assertNotIn("from pipeline.config import", module_level)

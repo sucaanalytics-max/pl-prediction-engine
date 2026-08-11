@@ -25,6 +25,7 @@ import { useArtifact } from "@/lib/data/useArtifact";
 import { NEWS_FEED, type NewsFeed } from "@/lib/data/news-feed";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import AgentIdleNotice from "@/components/AgentIdleNotice";
 import XScanButton from "@/components/XScanButton";
 import type {
   EvidenceClaim, EvidenceEntry, EvidencePlayer, EvidenceView,
@@ -312,6 +313,11 @@ export default function EvidencePage() {
             Why each availability number is what it is — and what it beat
           </p>
         </header>
+
+        {/* Above the section, not inside WhenProven's fallback: the reason the
+            claim trees are missing is the same whether the artifact is absent or
+            empty, and repeating it in two branches would let them drift. */}
+        <AgentIdleNotice />
 
         <Section
           title="Contested availability"

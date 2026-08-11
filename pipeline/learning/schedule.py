@@ -388,9 +388,72 @@ def _emit_github_output(state: ScheduleState) -> None:
         handle.write(f"gameweek={state.gameweek or ''}\n")
 
 
+#: Published so a screen can explain an ABSENT agent artifact instead of
+#: rendering a shrug.
+#:
+#: ## Why this exists
+#:
+#: The agent self-gates: `needs_work` is false in IDLE and LOCKED, and the CI job
+#: that runs it is skipped accordingly. Measured on 2026-08-11, that is every run —
+#: the GW1 deadline was 247 hours away and the phase resolver correctly said
+#: "nothing due yet". Working as designed.
+#:
+#: The cost is on the screens. `evidence_view.json`, `messages.json` and `xp_gw*`
+#: are written by the agent, so all three are absent for the ten days before a
+#: deadline, and `/evidence` renders `absent` with no way to say whether the agent
+#: is idle or broken. Those are very different facts and they looked identical.
+#:
+#: **Written by the phase-resolution job, not the agent job.** That is the whole
+#: point: the agent job is skipped exactly when this file is most needed, so
+#: publishing it there would reproduce the problem it exists to solve.
+STATUS_FILENAME = "agent_status.json"
+
+STATUS_SCHEMA_VERSION = 1
+
+
+def publish_status(state: "ScheduleState", public_dir: Path) -> Path:
+    """
+    Write the phase state where the frontend can read it.
+
+    Deliberately tiny and free of anything the agent computes: this must be
+    writable when the agent has not run, which is its only reason to exist.
+    """
+    payload = {
+        "schema_version": STATUS_SCHEMA_VERSION,
+        "generated_at": datetime.now(timezone.utc)
+        .isoformat().replace("+00:00", "Z"),
+        **state.as_dict(),
+        # Spelled out rather than left for a reader to infer from `phase`. The
+        # frontend should not have to know which phases are idle.
+        "agent_ran": state.needs_work,
+        "explains_absence": (
+            "The agent computes projections, the evidence view and the message "
+            "feed. It self-gates on phase, so those artifacts are absent — not "
+            "broken — whenever nothing is due."
+        ),
+    }
+
+    directory = Path(public_dir)
+    directory.mkdir(parents=True, exist_ok=True)
+    target = directory / STATUS_FILENAME
+    # Atomic: the frontend may fetch this at any moment, and a half-written file
+    # would narrow as unreadable rather than fail to fetch.
+    scratch = target.with_suffix(".json.tmp")
+    scratch.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    scratch.replace(target)
+    return target
+
+
 if __name__ == "__main__":
     from pipeline.config import PREDICTIONS_DIR  # noqa: E402  (CLI use only)
+
+    from pipeline.config import FPL_PUBLIC_DIR  # noqa: E402  (CLI use only)
 
     resolved = resolve(PREDICTIONS_DIR)
     print(json.dumps(resolved.as_dict(), indent=2))
     _emit_github_output(resolved)
+
+    # Publish unconditionally. A status file that only appears when the agent runs
+    # would be absent precisely when a screen needs to explain an absence.
+    published = publish_status(resolved, Path(FPL_PUBLIC_DIR))
+    print(f"published {published}")
