@@ -13,6 +13,8 @@ because GW1's deadline is further out than 30 hours and no kickoff is within 72.
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
+import tempfile
 from datetime import datetime, timedelta, timezone
 
 from pipeline.config import NEWS_WINDOW
@@ -178,3 +180,72 @@ class WindowConfigTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PublishedFeedExistsTests(unittest.TestCase):
+    """
+    The published delta feed must exist after any real poll.
+
+    ## The measured defect
+
+    `publish` writes an empty file rather than no file, and says why in its own
+    docstring: absent means "nothing has ever run", empty means "nothing recent
+    happened", and the app renders those differently.
+
+    But the call sat inside `if changes:`. With no availability change since the
+    poller first ran — the normal state, and exactly what the first live run
+    produced — nothing was ever written, and `/now` reported "Nothing has been
+    published at this path yet".
+
+    That is the `absent` card, and it understates what we know. The poller ran,
+    it read 119 entries across six feeds, and it found no change. That is a
+    result, not a silence.
+    """
+
+    def _dirs(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+        (root / "fpl").mkdir(parents=True, exist_ok=True)
+        public = root / "public" / "fpl"
+        public.mkdir(parents=True, exist_ok=True)
+        return root, public
+
+    def test_publish_writes_an_empty_file_rather_than_none(self):
+        from pipeline.learning import deltas as deltas_store
+
+        root, public = self._dirs()
+        written = deltas_store.publish(
+            root, public, current_gameweek=1, keep_gameweeks=4,
+        )
+        assert written is not None
+        self.assertTrue(written.exists())
+        # Empty, not missing. This is the whole distinction.
+        self.assertEqual(written.read_text(encoding="utf-8"), "")
+
+    def test_a_dry_run_writes_nothing(self):
+        from pipeline.learning import deltas as deltas_store
+
+        root, public = self._dirs()
+        self.assertIsNone(
+            deltas_store.publish(
+                root, public, current_gameweek=1, keep_gameweeks=4, dry_run=True,
+            )
+        )
+
+    def test_the_publish_call_is_not_guarded_on_changes(self):
+        """
+        Pins the fix at the call site.
+
+        A unit test on `publish` cannot catch this: `publish` was always correct.
+        What was wrong was that nothing called it on a quiet tick, so the guard
+        has to be asserted where it lived.
+        """
+        source = (
+            Path(__file__).resolve().parents[1]
+            / "learning" / "run_news.py"
+        ).read_text(encoding="utf-8")
+        publish_at = source.index("deltas_store.publish(")
+        # The 400 characters before the call must not reintroduce the guard.
+        preceding = source[max(0, publish_at - 400):publish_at]
+        self.assertNotIn("if changes:", preceding)

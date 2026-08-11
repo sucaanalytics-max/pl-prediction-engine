@@ -342,15 +342,24 @@ def poll(
                 for change in changes
             ]
             deltas_store.record(records, predictions_dir)
-        # Republished on every tick that changed anything, so the app's copy never
-        # lags the log by a gameweek. Cheap: the pruned view is a few KB.
-        if changes:
-            from pipeline.config import FPL_PUBLIC_DIR
-            deltas_store.publish(
-                predictions_dir, Path(FPL_PUBLIC_DIR),
-                current_gameweek=gameweek,
-                keep_gameweeks=int(DELTA.get("prune_to_gameweeks", 4)),
-            )
+        # Republished on EVERY tick, not only the ones that changed something.
+        #
+        # `publish` writes an empty file rather than no file precisely so the app
+        # can tell "nothing has ever run" from "nothing recent happened" — its
+        # docstring says so — but guarding the call on `changes` meant it never
+        # got the chance. With no availability change since the poller first ran,
+        # `/now` reported "Nothing has been published at this path yet", which is
+        # the `absent` state: it understates what we know. We know the poller ran
+        # and found nothing, and that is `empty`.
+        #
+        # Cheap enough to do unconditionally: the pruned view is a few KB, and
+        # `commit_and_push.sh` is a no-op when the bytes are unchanged.
+        from pipeline.config import FPL_PUBLIC_DIR
+        deltas_store.publish(
+            predictions_dir, Path(FPL_PUBLIC_DIR),
+            current_gameweek=gameweek,
+            keep_gameweeks=int(DELTA.get("prune_to_gameweeks", 4)),
+        )
         for key, reason in suppressed.items():
             # Logged rather than dropped silently: a threshold that swallows a real
             # change is indistinguishable from a broken poller.
