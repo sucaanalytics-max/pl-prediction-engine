@@ -417,3 +417,74 @@ class FormatSniffingTests(unittest.TestCase):
         header = ",".join(SHEET_COLUMNS)
         # The header the doc tells you to paste must be the one we parse.
         self.assertIn(header, doc, f"the doc must publish this header: {header}")
+
+
+class CadenceTests(unittest.TestCase):
+    """
+    Why the prompt asks for a 3-hour window and byte-identical carry-overs.
+
+    The Grok task runs every 3 hours and the poller reads the sheet every 15
+    minutes, so the same row is read a dozen times between Grok runs and any
+    carried-over row is written again. Both are safe only because `claim_id` is
+    a content hash that excludes `observed_at`.
+
+    These tests exist so the prompt's rules 10 and 11 stay justified: if the
+    hash ever started including `observed_at`, every re-read would become a new
+    claim and the prompt would be giving advice that no longer helps.
+    """
+
+    def _claim(self, value, observed, claimed="2026-08-11T08:42:00Z"):
+        import inspect
+
+        from pipeline.learning.availability_evidence import AvailabilityClaim
+
+        kwargs = dict(
+            source="manual:robtFPL", element_id=503, claim_type="severity",
+            value=value, claimed_at=claimed, observed_at=observed,
+        )
+        for name, param in inspect.signature(AvailabilityClaim).parameters.items():
+            if name not in kwargs and param.default is inspect.Parameter.empty:
+                kwargs[name] = 1 if name in ("gameweek", "source_tier") else None
+        return AvailabilityClaim(**kwargs)
+
+    def test_an_identical_carry_over_deduplicates(self):
+        first = self._claim("hamstring, 4-6 weeks", "2026-08-11T09:00:00Z")
+        again = self._claim("hamstring, 4-6 weeks", "2026-08-11T12:00:00Z")
+        self.assertEqual(first.claim_id, again.claim_id)
+
+    def test_a_reworded_carry_over_does_not(self):
+        # Which is why the prompt asks for the row to be reproduced exactly,
+        # and why it prefers structured claim types over free text.
+        first = self._claim("hamstring, 4-6 weeks", "2026-08-11T09:00:00Z")
+        reworded = self._claim("hamstring - four to six weeks", "2026-08-11T12:00:00Z")
+        self.assertNotEqual(first.claim_id, reworded.claim_id)
+
+    def test_a_structured_value_is_canonical_across_runs(self):
+        # `chance_of_playing=25` cannot be phrased two ways, so it survives the
+        # overlap that free text does not.
+        from pipeline.data.grok_feed import parse_sheet
+
+        header = ("lane,claim_type,value,player_surname,club,tier,source,quote,"
+                  "url,claimed_at,metric,horizon_gameweeks")
+        row = (f"availability,chance_of_playing,{{}},Rogers,Aston Villa,2,robtFPL,"
+               f"a doubt for the weekend,https://x.com/a,{EARLIER},,")
+        first = parse_sheet("\n".join((header, row.format("25"))))
+        again = parse_sheet("\n".join((header, row.format("25%"))))
+        # Written two ways in the sheet, identical once parsed.
+        self.assertEqual(first["items"][0]["value"], again["items"][0]["value"])
+
+    def test_the_doc_states_the_cadence_and_the_window(self):
+        doc = (Path(__file__).resolve().parents[2]
+               / "docs" / "grok-x-feed-schema.md").read_text(encoding="utf-8")
+        self.assertIn("every 3 hours", doc)
+        self.assertIn("last 3 hours", doc)
+        # The rule that makes the overlap safe has to be in the prompt itself,
+        # not only in the prose above it.
+        self.assertIn("exactly as you wrote it", doc)
+
+    def test_the_age_filter_outlives_the_cadence(self):
+        # A row must survive long enough to be read: a 3-day window against a
+        # 3-hour cadence leaves ample margin if a Grok run is missed.
+        from pipeline.config import GROK_FEED
+
+        self.assertGreaterEqual(GROK_FEED["max_age_days"], 1)

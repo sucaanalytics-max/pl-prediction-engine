@@ -241,13 +241,45 @@ and `claim_type` are for `availability` rows only.
 
 ---
 
+## Cadence, and the overlap problem it creates
+
+Set this up as a **Grok scheduled task running every 3 hours**, which matches the
+agent's own cadence. The poller reads the sheet every fifteen minutes, so a row
+is picked up within minutes of appearing.
+
+Three hours of overlap would be a problem if it were not handled. `claim_id` is
+a content hash of `[source, element_id, claim_type, value, claimed_at]` — it
+excludes `observed_at`, so **an identical re-report deduplicates to one claim.**
+What does *not* deduplicate is a re-worded one: "hamstring, 4-6 weeks" and
+"hamstring — four to six weeks" are two claims about one injury.
+
+So the prompt does two things about it. It asks for a **3-hour window** matching
+the cadence, so consecutive runs barely overlap; and it asks that anything
+carried over be repeated **byte-identically**, so the hash collides and the
+duplicate collapses.
+
+Structured claim types (`chance_of_playing`, `return_date`, `permanent_exit`)
+deduplicate reliably because their values are canonical. Free text (`severity`,
+`unparsed_news`) does not, which is why the prompt prefers the structured ones
+where either would do.
+
+The sheet itself grows. `GROK_FEED["max_age_days"] = 3` means anything older than
+three days is ignored regardless, so an unpruned sheet costs bytes rather than
+correctness — but clearing rows older than a week keeps it readable, which is the
+whole reason for choosing a sheet.
+
+---
+
 ## The prompt
 
-Paste this to Grok. Run it once a day, and again the evening before a deadline.
+Set this as a **recurring Grok task, every 3 hours**.
 
+> **Run this every 3 hours as a scheduled task.**
+>
 > You are collecting Fantasy Premier League team news for **Gameweek {GW}**,
 > whose deadline is **{DEADLINE}**. Search X and the open web for posts from the
-> last 24 hours.
+> **last 3 hours** — the window matches how often you run, so you neither miss
+> news nor repeat yourself.
 >
 > **Cover, in this order of priority:**
 >
@@ -292,6 +324,16 @@ Paste this to Grok. Run it once a day, and again the evening before a deadline.
 > 8. **One row per claim.** If a post says two players are doubtful, that is two
 >    rows sharing a url and a quote.
 > 9. **If a quote contains a comma, wrap the field in double quotes.**
+> 10. **If you carry an item over from your previous run** — because it is still
+>     the latest word on a player — reproduce that row **exactly as you wrote it
+>     before**: same `value` wording, same `claimed_at`, same `source`. Those
+>     four fields are hashed to deduplicate, so an identical row collapses to one
+>     claim and a re-worded one becomes two claims about one injury.
+> 11. **Prefer a structured claim type over free text** where either would fit.
+>     `chance_of_playing=25` deduplicates reliably across runs;
+>     `severity=doubtful for the weekend` does not, because you will phrase it
+>     differently next time. Use `severity` and `unparsed_news` only when nothing
+>     structured fits.
 >
 > **Do not include:** transfer rumours with no source, "X is a great captain
 > pick" opinions, or anything you inferred rather than read. An empty result is
