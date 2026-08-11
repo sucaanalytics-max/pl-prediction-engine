@@ -40,20 +40,62 @@ const TONE: Record<string, { colour: string; label: string }> = {
   unreadable: { colour: "var(--danger, #f87171)", label: "Unreadable" },
 };
 
+/**
+ * How much of the page an absent artifact is allowed to occupy.
+ *
+ * ## Why this is a control rather than a constant
+ *
+ * The rule the surface redesign turns on: **absence never occupies more space than
+ * substance.** Measured on the deployed app before this existed — `/decide` opened
+ * with four consecutive `panel`-weight state cards, about 1200px of empty bordered
+ * boxes, and the ranked transfer shortlist, the twelve alternative plans and the
+ * six-gameweek captaincy plan all sat below them, unseen.
+ *
+ * The states themselves were right. Their weight was not.
+ *
+ * * `panel` — a full card. For the one artifact a page is *about*, where absence is
+ *   the answer to the reader's question.
+ * * `inset` — a smaller block inside a section that has other content.
+ * * `line` — a single line of prose, no border. For a section whose absence is
+ *   expected and uninteresting: the agent being idle ten days out from a deadline is
+ *   not news.
+ */
+export type StateWeight = "panel" | "inset" | "line";
+
 export function StateCard<T>({
-  of, what, compact = false,
+  of, what, weight = "panel",
 }: {
   of: Artifact<T>;
   /** What the reader was expecting, in their words, e.g. "the league table". */
   what: string;
-  compact?: boolean;
+  weight?: StateWeight;
 }) {
   const tone = TONE[of.state] ?? TONE.absent;
+
+  // One line, one element. The label is inlined rather than stacked, because a
+  // three-line box is what made four of these dominate a page.
+  if (weight === "line") {
+    return (
+      <p
+        className="text-xs"
+        role="status"
+        data-state={of.state}
+        data-weight="line"
+        style={{ color: "var(--text-4)" }}
+      >
+        <span style={{ color: tone.colour }}>{tone.label}</span>
+        {" — "}
+        {what}
+      </p>
+    );
+  }
+
   return (
     <div
-      className={compact ? "glass-inset p-3" : "card p-6 text-center"}
+      className={weight === "inset" ? "glass-inset p-3" : "card p-6 text-center"}
       role="status"
       data-state={of.state}
+      data-weight={weight}
     >
       <p
         className="text-xs font-semibold uppercase tracking-wider"
@@ -81,18 +123,19 @@ export function StateCard<T>({
  * for most artifacts an empty payload is better summarised than rendered.
  */
 export function WhenProven<T>({
-  of, what, then, showEmpty = false, compact = false,
+  of, what, then, showEmpty = false, weight = "panel",
 }: {
   of: Artifact<T>;
   what: string;
   then: (value: T) => ReactNode;
   showEmpty?: boolean;
-  compact?: boolean;
+  /** See `StateWeight`. Default `panel`; use `line` where absence is expected. */
+  weight?: StateWeight;
 }) {
   const value = proven(of);
-  if (value === null) return <StateCard of={of} what={what} compact={compact} />;
+  if (value === null) return <StateCard of={of} what={what} weight={weight} />;
   if (of.state === "empty" && !showEmpty) {
-    return <StateCard of={of} what={what} compact={compact} />;
+    return <StateCard of={of} what={what} weight={weight} />;
   }
   return <>{then(value)}</>;
 }

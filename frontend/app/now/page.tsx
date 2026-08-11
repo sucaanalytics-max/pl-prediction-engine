@@ -33,6 +33,8 @@ function Deltas() {
       <WhenProven
         of={artifact}
         what="No availability has changed recently. The news poller runs every 15 minutes during a press-conference or deadline window."
+        // A quiet feed is the normal state outside a news window, not news itself.
+        weight="line"
         then={(feed) => <DeltaFeedView feed={feed} />}
       />
     </Section>
@@ -50,6 +52,9 @@ function AgentMessages() {
       <WhenProven
         of={artifact}
         what="The agent has nothing to report. It publishes only when it has something to say."
+        // Says so itself: it publishes only when it has something to say, so its
+        // silence should not be the largest element on the page.
+        weight="line"
         then={(feed) => (
           <ul className="space-y-2">
             {feed.messages.slice(0, 8).map((message) => (
@@ -123,7 +128,7 @@ function ModelStatus() {
       <WhenProven
         of={artifact}
         what="Nothing has been scored against realised results yet, so calibration is unknown — not good, and not bad."
-        compact
+        weight="inset"
         then={(health) => (
           <div className="glass-inset p-3">
             <p className="text-sm" style={{ color: "var(--text-2)" }}>
@@ -154,10 +159,17 @@ export default function NowPage() {
         </header>
 
         {/* Four independent sections. Rule 2: one absent artifact must not blank
-            the page, which is asserted in now.test.tsx rather than intended. */}
+            the page, which is asserted in now.test.tsx rather than intended.
+
+            Ordered content-first. `Deltas` and `AgentMessages` were the top two and
+            are both absent for most of a gameweek cycle — the poller files only
+            inside a news window and the agent speaks only near a deadline — so the
+            page opened with two large empty panels and put the only populated
+            section, the fixture calls, third. They are one line each now and sit
+            below the content. */}
+        <NextFixtures />
         <Deltas />
         <AgentMessages />
-        <NextFixtures />
         <ModelStatus />
       </div>
     </ErrorBoundary>

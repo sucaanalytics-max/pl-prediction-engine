@@ -156,7 +156,10 @@ function Robustness({ label, gameweek }: { label: EntryLabel; gameweek: number }
 
   return (
     <Section
-      title="Robustness"
+      // Named per entry. Two EntryBlocks each rendered a section titled plainly
+      // "Robustness", so the page showed the same heading twice with no way to tell
+      // which proposal it described.
+      title={label === "season" ? "Robustness — season team" : "Robustness — weekly team"}
       subtitle="How often this move still wins when the projections are wrong"
       aside={<ProvenanceStrip of={artifact} />}
     >
@@ -181,6 +184,9 @@ function Robustness({ label, gameweek }: { label: EntryLabel; gameweek: number }
         <WhenProven
           of={artifact}
           what="No robustness report has been published for this entry yet."
+          // One line: the agent is idle until a deadline approaches, so this is the
+          // expected state for most of a gameweek cycle and not worth a panel.
+          weight="line"
           then={(value) => <SurvivalPanel report={value} />}
         />
       )}
@@ -261,6 +267,10 @@ function EntrySection({ label, gameweek }: { label: EntryLabel; gameweek: number
           `No proposal has been published for GW${gameweek}. The agent writes one ` +
           `per entry once a gameweek is sealed, and none has sealed yet.`
         }
+        // One line. The agent is deadline-gated, so this is the expected state for
+        // most of a gameweek cycle — it was a full card, and two of these plus two
+        // robustness cards pushed the real content 1200px down the page.
+        weight="line"
         then={(decision) => <Proposal decision={decision} />}
       />
     </Section>
@@ -558,6 +568,16 @@ export default function DecidePage() {
           </p>
         </header>
 
+        {/* Content before absence.
+            Measured on the deployed page: the two EntryBlocks rendered four
+            consecutive full-card empty states, roughly 1200px, and the ranked
+            shortlist, the twelve alternative plans and the six-gameweek captaincy
+            plan all sat below them where nobody scrolled. The agent's proposals are
+            the better answer WHEN THEY EXIST; they do not exist for about ten days
+            of every gameweek cycle. */}
+        <HeuristicNotice />
+        <HeuristicLists />
+
         {gameweek === null ? (
           <div className="card p-6 text-center" role="status">
             <p className="text-sm" style={{ color: "var(--text-2)" }}>
@@ -574,8 +594,6 @@ export default function DecidePage() {
           ))
         )}
 
-        <HeuristicNotice />
-        <HeuristicLists />
       </div>
     </ErrorBoundary>
   );
