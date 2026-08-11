@@ -8,6 +8,11 @@ import {
   confidenceColor,
   edgeColor,
   predictionLabel,
+  calendarDate,
+  compactIstDeadline,
+  istDateTime,
+  kickoffTime,
+  shortDate,
 } from "./formats";
 
 describe("pct", () => {
@@ -69,6 +74,34 @@ describe("xg", () => {
 
   it("formats 2.5 as '2.50'", () => {
     expect(xg(2.5)).toBe("2.50");
+  });
+});
+
+describe("calendarDate", () => {
+  it("keeps a date-only fixture on the supplied calendar day", () => {
+    expect(calendarDate("2025-12-30T00:00:00")).toBe("30 Dec 2025");
+  });
+
+  it("returns malformed values unchanged", () => {
+    expect(calendarDate("unknown")).toBe("unknown");
+    expect(calendarDate("2025-13-01")).toBe("2025-13-01");
+  });
+});
+
+describe("Kolkata time formatting", () => {
+  it("converts UTC kickoffs to IST and labels the timezone", () => {
+    expect(kickoffTime("2026-08-21T17:30:00Z")).toBe("23:00 IST");
+    expect(compactIstDeadline("2026-08-21T17:30:00Z")).toBe(
+      "Fri 21 Aug · 23:00 IST"
+    );
+  });
+
+  it("moves post-midnight IST fixtures onto the correct Kolkata date", () => {
+    const timestamp = "2026-08-21T20:30:00Z";
+    expect(shortDate(timestamp)).toBe("Sat 22 Aug");
+    expect(kickoffTime(timestamp)).toBe("02:00 IST");
+    expect(istDateTime(timestamp)).toContain("22 Aug 2026");
+    expect(istDateTime(timestamp)).toContain("02:00 IST");
   });
 });
 

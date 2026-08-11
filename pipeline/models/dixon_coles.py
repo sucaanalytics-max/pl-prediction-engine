@@ -192,6 +192,7 @@ class BayesianDixonColes:
                 tune=DIXON_COLES["pymc_tune"],
                 chains=DIXON_COLES["pymc_chains"],
                 target_accept=DIXON_COLES["pymc_target_accept"],
+                random_seed=42,
                 return_inferencedata=True,
                 progressbar=True,
             )
@@ -222,6 +223,46 @@ class BayesianDixonColes:
             "defence_mean": float(np.mean(defence)),
             "defence_ci": [float(np.percentile(defence, 5)), float(np.percentile(defence, 95))],
         }
+
+    @staticmethod
+    def scoreline_matrix(
+        lam: float, mu: float, rho: float, max_goals: int = MAX_GOALS
+    ) -> np.ndarray:
+        """
+        Scoreline probabilities for ONE (lambda, mu, rho), with the Dixon-Coles
+        low-score correction.
+
+        Extracted so the market-implied rate inversion can run the *same* forward
+        model the simulator draws from. Inverting prices through a different
+        distribution than we later simulate would make the two disagree by
+        construction, and the disagreement would be invisible.
+
+        Deliberately NOT used by ``predict_scoreline``, whose vectorised path is
+        on the daily prediction route: refactoring it to loop over this would risk
+        moving ``latest.json``. Equivalence is pinned by a test that feeds a
+        single-sample trace instead, which buys the same guarantee at no risk.
+        """
+        from scipy.stats import poisson
+
+        goals = np.arange(max_goals + 1)
+        i_grid, j_grid = np.meshgrid(goals, goals, indexing="ij")
+
+        pmf_home = poisson.pmf(i_grid, lam)
+        pmf_away = poisson.pmf(j_grid, mu)
+
+        tau = np.ones_like(pmf_home, dtype=float)
+        tau = np.where((i_grid == 0) & (j_grid == 0), 1 - lam * mu * rho, tau)
+        tau = np.where((i_grid == 1) & (j_grid == 0), 1 + mu * rho, tau)
+        tau = np.where((i_grid == 0) & (j_grid == 1), 1 + lam * rho, tau)
+        tau = np.where((i_grid == 1) & (j_grid == 1), 1 - rho, tau)
+
+        matrix = np.maximum(pmf_home * pmf_away * tau, 0.0)
+        total = matrix.sum()
+        # The floor plus renormalisation is what keeps tau positivity from needing
+        # a hard constraint on rho: for large lambda*mu and positive rho the 0-0
+        # correction can go negative, and flooring it is what predict_scoreline
+        # already does.
+        return matrix / total if total > 0 else matrix
 
     def predict_scoreline(self, home: str, away: str, n_samples: int = 5000) -> np.ndarray:
         """
@@ -317,6 +358,19 @@ class BayesianDixonColes:
         matrix = self.predict_scoreline(home, away)
         return self._derive_markets(matrix, home, away)
 
+    def get_rho_samples(self) -> np.ndarray:
+        """
+        Posterior samples of the low-score dependence parameter.
+
+        Flattened in the same order as the arrays `get_lambda_mu_samples`
+        builds, so a caller can pair them elementwise and the correction carries
+        the same parameter uncertainty as the goal rates. Returning a mean would
+        throw that away, and rho's posterior is wide enough that it matters.
+        """
+        if self.trace is None:
+            raise RuntimeError("Model not fitted")
+        return self.trace.posterior["rho"].values.flatten()
+
     def get_lambda_mu_samples(self, home: str, away: str, n_samples: int = 10000) -> Tuple[np.ndarray, np.ndarray]:
         """
         Get posterior samples of (lambda, mu) for Monte Carlo simulation.
@@ -328,23 +382,34 @@ class BayesianDixonColes:
         if self.trace is None:
             raise RuntimeError("Model not fitted")
 
-        h_idx = self.team_index[home]
-        a_idx = self.team_index[away]
-
         attack = self.trace.posterior["attack"].values
         defence = self.trace.posterior["defence"].values
         home_adv = self.trace.posterior["home_adv"].values
         intercept = self.trace.posterior["intercept"].values
-
-        att_h = attack[:, :, h_idx].flatten()
-        att_a = attack[:, :, a_idx].flatten()
-        def_h = defence[:, :, h_idx].flatten()
-        def_a = defence[:, :, a_idx].flatten()
         ha = home_adv.flatten()
         inter = intercept.flatten()
 
-        n_total = len(att_h)
-        indices = np.random.choice(n_total, size=min(n_samples, n_total), replace=True)
+        h_idx = self.team_index.get(home)
+        a_idx = self.team_index.get(away)
+        neutral = np.zeros_like(inter)
+
+        # Promoted/unseen clubs use the hierarchical league-average prior
+        # (attack=defence=0) while known opponents retain their posterior
+        # strength. This is materially more informative than replacing the
+        # entire fixture with fixed 1.4/1.1 rates.
+        att_h = attack[:, :, h_idx].flatten() if h_idx is not None else neutral
+        att_a = attack[:, :, a_idx].flatten() if a_idx is not None else neutral
+        def_h = defence[:, :, h_idx].flatten() if h_idx is not None else neutral
+        def_a = defence[:, :, a_idx].flatten() if a_idx is not None else neutral
+
+        if h_idx is None or a_idx is None:
+            logger.info(
+                f"Using neutral promoted-team prior for {home} vs {away} "
+                f"(unknown: {[t for t, idx in ((home, h_idx), (away, a_idx)) if idx is None]})"
+            )
+
+        n_total = len(inter)
+        indices = np.random.choice(n_total, size=n_samples, replace=True)
 
         lambda_h = np.exp(inter[indices] + att_h[indices] - def_a[indices] + ha[indices])
         mu_a = np.exp(inter[indices] + att_a[indices] - def_h[indices])

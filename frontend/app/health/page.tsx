@@ -4,35 +4,63 @@ import {
   XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine,
   ScatterChart, Scatter, CartesianGrid, BarChart, Bar,
 } from "recharts";
-import { usePredictions } from "@/lib/PredictionsContext";
+import { REGISTRY, type Health, type Latest } from "@/lib/data/narrow";
+import { useArtifact } from "@/lib/data/useArtifact";
+import { chartable, proven } from "@/lib/data/artifact";
+import { StateCard } from "@/components/data/Artifact";
 import { useChartTheme } from "@/lib/hooks";
-import { pct, timeAgo } from "@/lib/formats";
-import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
+import { istDateTime, pct, timeAgo } from "@/lib/formats";
+import { CORE_METRICS, hasCoreMetrics, verdict, type Metrics } from "@/lib/health-metrics";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/Skeleton";
-import { StatCard } from "@/components/ui/StatCard";
 
 const STALE_HEALTH_MS = 24 * 60 * 60 * 1000; // 24 hours
 
+// CORE_METRICS / verdict / hasCoreMetrics live in lib/health-metrics.ts, where
+// the reason `verdict` is three-valued is documented at length.
+
 function HealthContent() {
-  const { health, predictions: data, loading, error, refresh } = usePredictions();
+  // Two artifacts, two states. The context gave both one shared `loading` and
+  // one shared `error`, so a failure fetching `latest.json` blanked the health
+  // report — which is the page you look at precisely when something is wrong.
+  const { artifact: healthArtifact, initialising } =
+    useArtifact<Health>(REGISTRY.health);
+  const { artifact: latestArtifact } = useArtifact<Latest>(REGISTRY.latest);
+  const health = proven(healthArtifact);
+  const data = proven(latestArtifact);
   const chart = useChartTheme();
 
-  if (error) return <ErrorMessage message={error} onRetry={refresh} />;
-  if (loading || !health) return <PageSkeleton rows={5} />;
+  if (initialising) return <PageSkeleton rows={5} />;
+  if (!health) {
+    return <StateCard of={healthArtifact} what="the pipeline health report" />;
+  }
 
   const isHealthy = health.status === "healthy";
-  const isStaleHealth = Date.now() - new Date(health.last_updated).getTime() > STALE_HEALTH_MS;
-  const metrics = health.model_metrics ?? {};
+  // `last_updated` is nullable. `new Date(null)` is the epoch, which would make
+  // every run with no timestamp read as decades stale rather than as unknown.
+  const updatedMs = health.last_updated ? Date.parse(health.last_updated) : NaN;
+  const isStaleHealth =
+    Number.isFinite(updatedMs) && Date.now() - updatedMs > STALE_HEALTH_MS;
+  const metrics: Metrics = health.model_metrics;
+  // Distinguishes "this producer emitted no metrics" from "it emitted zeros".
+  const hasMetrics = hasCoreMetrics(metrics);
 
-  // Calibration chart data
-  const calData = (health.calibration?.bins ?? []).map((b) => ({
-    predicted: b.predicted_mean,
-    actual: b.actual_mean,
-    count: b.count,
-  }));
+  // Every Recharts mount sits behind `chartable`, which is the mechanism the
+  // plan specifies rather than a convention. A `.length > 0` check — what was
+  // here before — passes for an artifact whose state is `empty` or
+  // `unreadable` as long as the array happens to be populated, and `/health`
+  // shipped 312 lines of chart scaffolding over metrics that were never
+  // emitted. `chartable` refuses `empty` outright, so an axis with no series
+  // cannot be rendered and Recharts stays out of that path entirely.
+  const calData = (chartable(healthArtifact, (h) => h.calibration_bins) ?? []).map(
+    (b) => ({ predicted: b.predicted_mean, actual: b.actual_mean, count: b.count }),
+  );
 
   // Stacking weights from predictions metadata
-  const stackingWeights = data?.metadata.stacking_weights;
+  const stackingWeights = chartable(
+    latestArtifact,
+    (file) => (file.stacking_weights ? [file.stacking_weights] : null),
+  )?.[0] ?? null;
   const stackingData = stackingWeights
     ? Object.entries(stackingWeights)
         .sort(([, a], [, b]) => b - a)
@@ -76,7 +104,7 @@ function HealthContent() {
             Model Health
           </h1>
           <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-            Calibration, accuracy, pipeline status · Updated {timeAgo(health.last_updated)}
+            Calibration, accuracy, pipeline status · Updated {health.last_updated ? timeAgo(health.last_updated) : "at an unrecorded time"}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -86,23 +114,58 @@ function HealthContent() {
           {isStaleHealth && (
             <span className="stale-warning">DATA &gt; 24H OLD</span>
           )}
+          {health.forecast_validation_status === "collecting" && (
+            <span className="badge-amber text-[9px]">
+              COLLECTING FORWARD RESULTS
+            </span>
+          )}
           <span className={isHealthy ? "badge-green" : "text-red-400 bg-red-500/10 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider"}>
             {health.status.toUpperCase()}
           </span>
         </div>
       </div>
 
-      {/* Core metric cards */}
+      {/* Core metric cards. `verdict` returns null when the metric is absent, so
+          an unmeasured model is never coloured as a failing one. */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <MetricCard label="Brier (H)" value={metrics.brier_1x2_home?.toFixed(3) ?? "—"} target="< 0.220" good={(metrics.brier_1x2_home ?? 1) < 0.22} />
-        <MetricCard label="Brier (D)" value={metrics.brier_1x2_draw?.toFixed(3) ?? "—"} target="< 0.230" good={(metrics.brier_1x2_draw ?? 1) < 0.23} />
-        <MetricCard label="Brier (A)" value={metrics.brier_1x2_away?.toFixed(3) ?? "—"} target="< 0.220" good={(metrics.brier_1x2_away ?? 1) < 0.22} />
-        <MetricCard label="RPS" value={metrics.rps_mean?.toFixed(3) ?? "—"} target="< 0.200" good={(metrics.rps_mean ?? 1) < 0.2} />
-        <MetricCard label="ECE" value={metrics.ece?.toFixed(3) ?? "—"} target="< 0.050" good={(metrics.ece ?? 1) < 0.05} />
-        <MetricCard label="Log Loss" value={metrics.log_loss_home?.toFixed(3) ?? "—"} target="< 0.650" good={(metrics.log_loss_home ?? 1) < 0.65} />
+        {CORE_METRICS.map((m) => (
+          <MetricCard
+            key={m.key}
+            label={m.label}
+            value={metrics[m.key]?.toFixed(3) ?? "—"}
+            target={`< ${m.target.toFixed(3)}`}
+            good={verdict(metrics[m.key], m.target)}
+          />
+        ))}
       </div>
 
       <div className="glow-line" />
+
+      {/* Why the cards are empty, when they are. Without this the page reports a
+          model with no measurements as though it had merely failed to load —
+          which is how the 4.0.0-producer drift went unnoticed. */}
+      {!hasMetrics && (
+        <div className="card p-4 text-sm space-y-1" style={{ color: "var(--text-3)" }}>
+          <p>
+            No forecast metrics in this artifact. Nothing has been scored against
+            realised results yet, so calibration and accuracy are unknown — not
+            good, and not bad.
+          </p>
+          <p className="text-xs" style={{ color: "var(--text-4)" }}>
+            Produced by pipeline{" "}
+            <span className="font-mono">{health.pipeline_version ?? "version unknown"}</span>
+            . Metrics are emitted from 4.1.0 onward, so an older producer yields a
+            healthy file with these fields absent.
+          </p>
+        </div>
+      )}
+
+      {health.forecast_validation_status === "collecting" && (
+        <div className="card p-4 text-sm" style={{ color: "var(--text-3)" }}>
+          Forecast scoring has started, but fewer than 100 completed matches are
+          available. Calibration and betting decisions should remain provisional.
+        </div>
+      )}
 
       {/* Stacking Weights + Per-Market side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -222,7 +285,7 @@ function HealthContent() {
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           <div className="glass-inset p-3">
             <div className="stat-label">Last Run</div>
-            <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{new Date(health.last_updated).toLocaleString("en-GB")}</div>
+            <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{health.last_updated ? istDateTime(health.last_updated) : "no timestamp published"}</div>
           </div>
           <div className="glass-inset p-3">
             <div className="stat-label">Gameweek</div>
@@ -242,7 +305,7 @@ function HealthContent() {
               </div>
               <div className="glass-inset p-3">
                 <div className="stat-label">Simulations</div>
-                <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{(data.metadata.n_simulations / 1000).toFixed(0)}K</div>
+                <div className="text-sm font-mono mt-1" style={{ color: "var(--text-1)" }}>{data.metadata.n_simulations !== null ? `${(data.metadata.n_simulations / 1000).toFixed(0)}K` : "—"}</div>
               </div>
             </>
           )}
@@ -282,12 +345,32 @@ function HealthContent() {
   );
 }
 
-function MetricCard({ label, value, target, good }: { label: string; value: string; target: string; good: boolean }) {
+/**
+ * One metric against its target.
+ *
+ * `good` is three-valued on purpose. It used to be a boolean computed as
+ * `(metrics.x ?? 1) < target`, which meant an ABSENT metric substituted 1.0 and
+ * rendered amber — so "we have never measured this" was displayed identically to
+ * "this model is missing its target". Null is the unmeasured state and must
+ * never borrow either verdict's colour.
+ */
+function MetricCard({
+  label, value, target, good,
+}: { label: string; value: string; target: string; good: boolean | null }) {
+  const tone =
+    good === null ? "" : good ? "text-green-400" : "text-amber-400";
   return (
     <div className="card p-4">
       <div className="stat-label">{label}</div>
-      <div className={`text-xl font-bold mt-1 ${good ? "text-green-400" : "text-amber-400"}`}>{value}</div>
-      <div className="text-[10px] mt-1" style={{ color: "var(--text-4)" }}>Target: {target}</div>
+      <div
+        className={`text-xl font-bold mt-1 ${tone}`}
+        style={good === null ? { color: "var(--text-4)" } : undefined}
+      >
+        {value}
+      </div>
+      <div className="text-[10px] mt-1" style={{ color: "var(--text-4)" }}>
+        {good === null ? "Not measured" : `Target: ${target}`}
+      </div>
     </div>
   );
 }

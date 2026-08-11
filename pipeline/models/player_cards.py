@@ -220,7 +220,7 @@ class PlayerCardsModel:
                 "yellows_per_90": player.yellows_per_90,
                 "yellow_cards": player.yellow_cards,
                 "minutes": player.minutes,
-                "is_card_magnet": player.is_card_magnet,
+                "is_card_magnet": bool(player.is_card_magnet),
             })
 
         for player in away_players:
@@ -242,7 +242,7 @@ class PlayerCardsModel:
                 "yellows_per_90": player.yellows_per_90,
                 "yellow_cards": player.yellow_cards,
                 "minutes": player.minutes,
-                "is_card_magnet": player.is_card_magnet,
+                "is_card_magnet": bool(player.is_card_magnet),
             })
 
         # Sort by adjusted probability

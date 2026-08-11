@@ -1,0 +1,1048 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-02-24|brighton|everton": {
+      "fixtureId": 254,
+      "season": "2324",
+      "date": "2024-02-24",
+      "kickoffTime": "2024-02-24T15:00:00Z",
+      "homeTeam": "Brighton",
+      "awayTeam": "Everton",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Amadou Onana",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jan Paul van Hecke",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Billy Gilmour",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 6
+        },
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 3
+        },
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "value": 2
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 0.4
+        },
+        {
+          "name": "Anssumane Fati Vieira",
+          "team": "Brighton",
+          "value": 0.2
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 0.19
+        },
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "value": 0.16
+        },
+        {
+          "name": "Julio Enciso",
+          "team": "Brighton",
+          "value": 0.1
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 0.29
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.27
+        },
+        {
+          "name": "Pervis Estupiñán",
+          "team": "Brighton",
+          "value": 0.22
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Brighton",
+          "value": 0.19
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "points": 10,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0.16,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0.08,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "points": 7,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0.05,
+          "xa": 0.29,
+          "minutes": 90
+        },
+        {
+          "name": "Tariq Lamptey",
+          "team": "Brighton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.01,
+          "xa": 0.01,
+          "minutes": 60
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "points": 4,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-08-17|everton|brighton": {
+      "fixtureId": 3,
+      "season": "2425",
+      "date": "2024-08-17",
+      "kickoffTime": "2024-08-17T14:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Brighton",
+      "homeGoals": 0,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Mats Wieffer",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "James Milner",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Ashley Young",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Jason Steele",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 3
+        },
+        {
+          "name": "Joël Veltman",
+          "team": "Brighton",
+          "value": 2
+        },
+        {
+          "name": "Jason Steele",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 0.97
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 0.2
+        },
+        {
+          "name": "Simon Adingra",
+          "team": "Brighton",
+          "value": 0.17
+        },
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 0.14
+        },
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 0.65
+        },
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 0.26
+        },
+        {
+          "name": "Ashley Young",
+          "team": "Everton",
+          "value": 0.17
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.16
+        },
+        {
+          "name": "James Milner",
+          "team": "Brighton",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "points": 12,
+          "bonus": 3,
+          "bps": 41,
+          "xg": 0.2,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Joël Veltman",
+          "team": "Brighton",
+          "points": 8,
+          "bonus": 2,
+          "bps": 34,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.97,
+          "xa": 0.04,
+          "minutes": 88
+        },
+        {
+          "name": "Jason Steele",
+          "team": "Brighton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jan Paul van Hecke",
+          "team": "Brighton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-01-25|brighton|everton": {
+      "fixtureId": 223,
+      "season": "2425",
+      "date": "2025-01-25",
+      "kickoffTime": "2025-01-25T15:00:00Z",
+      "homeTeam": "Brighton",
+      "awayTeam": "Everton",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Carlos Baleba",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jesper Lindstrøm",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.79
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Brighton",
+          "value": 0.2
+        },
+        {
+          "name": "Yasin Ayari",
+          "team": "Brighton",
+          "value": 0.13
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 0.07
+        },
+        {
+          "name": "Carlos Baleba",
+          "team": "Brighton",
+          "value": 0.07
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jan Paul van Hecke",
+          "team": "Brighton",
+          "value": 0.11
+        },
+        {
+          "name": "Joël Veltman",
+          "team": "Brighton",
+          "value": 0.1
+        },
+        {
+          "name": "Lewis Dunk",
+          "team": "Brighton",
+          "value": 0.09
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 0.07
+        },
+        {
+          "name": "Tariq Lamptey",
+          "team": "Brighton",
+          "value": 0.07
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0.79,
+          "xa": 0,
+          "minutes": 77
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "points": 5,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-08-24|everton|brighton": {
+      "fixtureId": 16,
+      "season": "2526",
+      "date": "2025-08-24",
+      "kickoffTime": "2025-08-24T13:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Brighton",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jack Grealish",
+          "team": "Everton",
+          "value": 2
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Mats Wieffer",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Tim Iroegbunam",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Ferdi Kadıoğlu",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Maxim De Cuyper",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 4
+        },
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "penaltiesMissed": [
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "bonus": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 1.56
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.73
+        },
+        {
+          "name": "Matt O'Riley",
+          "team": "Brighton",
+          "value": 0.42
+        },
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 0.35
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.24
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jack Grealish",
+          "team": "Everton",
+          "value": 0.7
+        },
+        {
+          "name": "Yankuba Minteh",
+          "team": "Brighton",
+          "value": 0.55
+        },
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 0.17
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 0.1
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "points": 15,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Everton",
+          "points": 11,
+          "bonus": 2,
+          "bps": 37,
+          "xg": 0.01,
+          "xa": 0.7,
+          "minutes": 90
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "points": 10,
+          "bonus": 1,
+          "bps": 34,
+          "xg": 0.04,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 33,
+          "xg": 0.73,
+          "xa": 0,
+          "minutes": 63
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-01-31|brighton|everton": {
+      "fixtureId": 232,
+      "season": "2526",
+      "date": "2026-01-31",
+      "kickoffTime": "2026-01-31T15:00:00Z",
+      "homeTeam": "Brighton",
+      "awayTeam": "Everton",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Yasin Ayari",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Tim Iroegbunam",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 1
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bart Verbruggen",
+          "team": "Brighton",
+          "value": 3
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 3
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Yasin Ayari",
+          "team": "Brighton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 0.59
+        },
+        {
+          "name": "Danny Welbeck",
+          "team": "Brighton",
+          "value": 0.55
+        },
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 0.49
+        },
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 0.4
+        },
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "value": 0.25
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Mitoma Kaoru",
+          "team": "Brighton",
+          "value": 0.21
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 0.21
+        },
+        {
+          "name": "Jan Paul van Hecke",
+          "team": "Brighton",
+          "value": 0.2
+        },
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 0.16
+        },
+        {
+          "name": "Maxim De Cuyper",
+          "team": "Brighton",
+          "value": 0.16
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Pascal Groß",
+          "team": "Brighton",
+          "points": 12,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0.25,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "points": 7,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0.59,
+          "xa": 0,
+          "minutes": 1
+        },
+        {
+          "name": "Yasin Ayari",
+          "team": "Brighton",
+          "points": 6,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.12,
+          "minutes": 90
+        },
+        {
+          "name": "Maxim De Cuyper",
+          "team": "Brighton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.16,
+          "minutes": 69
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "points": 5,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0.08,
+          "xa": 0.06,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

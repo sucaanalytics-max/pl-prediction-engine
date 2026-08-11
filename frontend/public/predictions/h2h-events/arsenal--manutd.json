@@ -1,0 +1,986 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-05-12|manutd|arsenal": {
+      "fixtureId": 365,
+      "season": "2324",
+      "date": "2024-05-12",
+      "kickoffTime": "2024-05-12T15:30:00Z",
+      "homeTeam": "Man Utd",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 5
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.64
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 0.39
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.34
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.22
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.19
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.62
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.5
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.27
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.1
+        },
+        {
+          "name": "Diogo Dalot Teixeira",
+          "team": "Man Utd",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "points": 11,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0.64,
+          "xa": 0.62,
+          "minutes": 65
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0.05,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.22,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.04,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Takehiro Tomiyasu",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.02,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-12-04|arsenal|manutd": {
+      "fixtureId": 131,
+      "season": "2425",
+      "date": "2024-12-04",
+      "kickoffTime": "2024-12-04T20:15:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Man Utd",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Manuel Ugarte",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Tyrell Malacia",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Oleksandr Zinchenko",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Harry Maguire",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 4
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 0.69
+        },
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 0.37
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.25
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.17
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.41
+        },
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 0.35
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.32
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.16
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.14
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 15,
+          "bonus": 3,
+          "bps": 41,
+          "xg": 0.69,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "points": 14,
+          "bonus": 2,
+          "bps": 39,
+          "xg": 0.16,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 1,
+          "bps": 33,
+          "xg": 0.08,
+          "xa": 0.41,
+          "minutes": 90
+        },
+        {
+          "name": "Jakub Kiwior",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.37,
+          "xa": 0.35,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-03-09|manutd|arsenal": {
+      "fixtureId": 276,
+      "season": "2425",
+      "date": "2025-03-09",
+      "kickoffTime": "2025-03-09T16:30:00Z",
+      "homeTeam": "Man Utd",
+      "awayTeam": "Arsenal",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "André Onana",
+          "team": "Man Utd",
+          "value": 5
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 5
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Joshua Zirkzee",
+          "team": "Man Utd",
+          "value": 0.65
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.64
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.42
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.37
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.36
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.47
+        },
+        {
+          "name": "Toby Collyer",
+          "team": "Man Utd",
+          "value": 0.35
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.3
+        },
+        {
+          "name": "Noussair Mazraoui",
+          "team": "Man Utd",
+          "value": 0.16
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "points": 10,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0.12,
+          "xa": 0.3,
+          "minutes": 90
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "points": 9,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0.36,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "team": "Man Utd",
+          "points": 5,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.07,
+          "xa": 0.09,
+          "minutes": 90
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "points": 5,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "points": 3,
+          "bonus": 1,
+          "bps": 22,
+          "xg": 0.42,
+          "xa": 0.47,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-08-17|manutd|arsenal": {
+      "fixtureId": 9,
+      "season": "2526",
+      "date": "2025-08-17",
+      "kickoffTime": "2025-08-17T15:30:00Z",
+      "homeTeam": "Man Utd",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Myles Lewis-Skelly",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "value": 7
+        },
+        {
+          "name": "Altay Bayındır",
+          "team": "Man Utd",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 0.91
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 0.42
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 0.4
+        },
+        {
+          "name": "Matthijs de Ligt",
+          "team": "Man Utd",
+          "value": 0.21
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.3
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.29
+        },
+        {
+          "name": "Mason Mount",
+          "team": "Man Utd",
+          "value": 0.15
+        },
+        {
+          "name": "Diogo Dalot Teixeira",
+          "team": "Man Utd",
+          "value": 0.15
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "points": 13,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.91,
+          "xa": 0.01,
+          "minutes": 71
+        },
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "points": 10,
+          "bonus": 3,
+          "bps": 38,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.01,
+          "xa": 0.01,
+          "minutes": 70
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-01-25|arsenal|manutd": {
+      "fixtureId": 221,
+      "season": "2526",
+      "date": "2026-01-25",
+      "kickoffTime": "2026-01-25T16:30:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Man Utd",
+      "homeGoals": 2,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Kobbie Mainoo",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Lisandro Martínez",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Senne Lammens",
+          "team": "Man Utd",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "value": 0.49
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.37
+        },
+        {
+          "name": "Martín Zubimendi Ibáñez",
+          "team": "Arsenal",
+          "value": 0.31
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 0.15
+        },
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "value": 0.12
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.47
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.43
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Arsenal",
+          "value": 0.26
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 0.25
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "points": 10,
+          "bonus": 3,
+          "bps": 27,
+          "xg": 0.15,
+          "xa": 0.01,
+          "minutes": 68
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "points": 9,
+          "bonus": 3,
+          "bps": 27,
+          "xg": 0.03,
+          "xa": 0.01,
+          "minutes": 21
+        },
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "points": 8,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0.12,
+          "xa": 0,
+          "minutes": 80
+        },
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0.49,
+          "xa": 0.02,
+          "minutes": 32
+        },
+        {
+          "name": "Kobbie Mainoo",
+          "team": "Man Utd",
+          "points": 5,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.02,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

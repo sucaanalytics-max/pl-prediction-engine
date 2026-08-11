@@ -1,0 +1,431 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-08-18|nottmforest|sheffieldutd": {
+      "fixtureId": 17,
+      "season": "2324",
+      "date": "2023-08-18",
+      "kickoffTime": "2023-08-18T18:45:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Sheffield Utd",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Serge Aurier",
+          "team": "Nott'm Forest",
+          "value": 2
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Ben Osborn",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Oliver Norwood",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Willy Boly",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Serge Aurier",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "value": 2
+        },
+        {
+          "name": "Matt Turner",
+          "team": "Nott'm Forest",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Serge Aurier",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Willy Boly",
+          "team": "Nott'm Forest",
+          "value": 0.38
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 0.31
+        },
+        {
+          "name": "Bénie Traoré",
+          "team": "Sheffield Utd",
+          "value": 0.27
+        },
+        {
+          "name": "Scott McKenna",
+          "team": "Nott'm Forest",
+          "value": 0.19
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 0.12
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.39
+        },
+        {
+          "name": "Joe Worrall",
+          "team": "Nott'm Forest",
+          "value": 0.31
+        },
+        {
+          "name": "Serge Aurier",
+          "team": "Nott'm Forest",
+          "value": 0.25
+        },
+        {
+          "name": "Oliver Norwood",
+          "team": "Sheffield Utd",
+          "value": 0.19
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Serge Aurier",
+          "team": "Nott'm Forest",
+          "points": 10,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0.01,
+          "xa": 0.25,
+          "minutes": 90
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "points": 7,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0.12,
+          "xa": 0.01,
+          "minutes": 6
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "points": 7,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.31,
+          "xa": 0.02,
+          "minutes": 83
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.02,
+          "xa": 0.12,
+          "minutes": 90
+        },
+        {
+          "name": "Joe Worrall",
+          "team": "Nott'm Forest",
+          "points": 2,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.1,
+          "xa": 0.31,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-05-04|sheffieldutd|nottmforest": {
+      "fixtureId": 360,
+      "season": "2324",
+      "date": "2024-05-04",
+      "kickoffTime": "2024-05-04T14:00:00Z",
+      "homeTeam": "Sheffield Utd",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Ben Brereton",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Danilo dos Santos de Oliveira",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Willy Boly",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Gonzalo Montiel",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Anel Ahmedhodžić",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 4
+        },
+        {
+          "name": "Wes Foderingham",
+          "team": "Sheffield Utd",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Ben Brereton",
+          "team": "Sheffield Utd",
+          "value": 1
+        },
+        {
+          "name": "Willy Boly",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Ben Brereton",
+          "team": "Sheffield Utd",
+          "value": 1.06
+        },
+        {
+          "name": "Cameron Archer",
+          "team": "Sheffield Utd",
+          "value": 0.77
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 0.61
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 0.31
+        },
+        {
+          "name": "Danilo dos Santos de Oliveira",
+          "team": "Nott'm Forest",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Oliver Arblaster",
+          "team": "Sheffield Utd",
+          "value": 0.52
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.46
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 0.32
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Sheffield Utd",
+          "value": 0.17
+        },
+        {
+          "name": "Gustavo Hamer",
+          "team": "Sheffield Utd",
+          "value": 0.16
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "points": 15,
+          "bonus": 3,
+          "bps": 46,
+          "xg": 0.31,
+          "xa": 0.09,
+          "minutes": 89
+        },
+        {
+          "name": "Ben Brereton",
+          "team": "Sheffield Utd",
+          "points": 8,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 1.06,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "points": 7,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.11,
+          "xa": 0.46,
+          "minutes": 90
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "points": 7,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.19,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Willy Boly",
+          "team": "Nott'm Forest",
+          "points": 6,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0.07,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

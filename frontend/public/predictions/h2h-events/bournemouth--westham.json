@@ -1,0 +1,998 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-02-01|westham|bournemouth": {
+      "fixtureId": 217,
+      "season": "2324",
+      "date": "2024-02-01",
+      "kickoffTime": "2024-02-01T19:30:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Bournemouth",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Dominic Solanke",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Romain Faivre",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Norberto Murara Neto",
+          "team": "Bournemouth",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Dominic Solanke",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Edson Álvarez Velázquez",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 0.79
+        },
+        {
+          "name": "Dominic Solanke",
+          "team": "Bournemouth",
+          "value": 0.52
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.4
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.27
+        },
+        {
+          "name": "Tomáš Souček",
+          "team": "West Ham",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 0.29
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 0.2
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.1
+        },
+        {
+          "name": "Dominic Solanke",
+          "team": "Bournemouth",
+          "value": 0.07
+        },
+        {
+          "name": "Justin Kluivert",
+          "team": "Bournemouth",
+          "value": 0.04
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "points": 10,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0.79,
+          "xa": 0.29,
+          "minutes": 90
+        },
+        {
+          "name": "Dominic Solanke",
+          "team": "Bournemouth",
+          "points": 8,
+          "bonus": 2,
+          "bps": 34,
+          "xg": 0.52,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0,
+          "xa": 0.2,
+          "minutes": 90
+        },
+        {
+          "name": "Edson Álvarez Velázquez",
+          "team": "West Ham",
+          "points": 3,
+          "bonus": 1,
+          "bps": 19,
+          "xg": 0.01,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "points": 3,
+          "bonus": 0,
+          "bps": 13,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-12-16|bournemouth|westham": {
+      "fixtureId": 152,
+      "season": "2425",
+      "date": "2024-12-16",
+      "kickoffTime": "2024-12-16T20:00:00Z",
+      "homeTeam": "Bournemouth",
+      "awayTeam": "West Ham",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Carlos Soler",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Edson Álvarez Velázquez",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Łukasz Fabiański",
+          "team": "West Ham",
+          "value": 8
+        },
+        {
+          "name": "Kepa Arrizabalaga",
+          "team": "Bournemouth",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "value": 3
+        },
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 0.91
+        },
+        {
+          "name": "Max Kilman",
+          "team": "West Ham",
+          "value": 0.43
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.39
+        },
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 0.38
+        },
+        {
+          "name": "Philip Billing",
+          "team": "Bournemouth",
+          "value": 0.31
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ryan Christie",
+          "team": "Bournemouth",
+          "value": 0.38
+        },
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "value": 0.31
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.25
+        },
+        {
+          "name": "Carlos Soler",
+          "team": "West Ham",
+          "value": 0.24
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 0.23
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "points": 10,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0.91,
+          "xa": 0.15,
+          "minutes": 90
+        },
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "points": 8,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0.09,
+          "xa": 0,
+          "minutes": 10
+        },
+        {
+          "name": "Adam Smith",
+          "team": "Bournemouth",
+          "points": 6,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 67
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.08,
+          "minutes": 90
+        },
+        {
+          "name": "Łukasz Fabiański",
+          "team": "West Ham",
+          "points": 4,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-05|westham|bournemouth": {
+      "fixtureId": 310,
+      "season": "2425",
+      "date": "2025-04-05",
+      "kickoffTime": "2025-04-05T14:00:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Bournemouth",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Niclas Füllkrug",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Dean Huijsen",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Adam Smith",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 4
+        },
+        {
+          "name": "Kepa Arrizabalaga",
+          "team": "Bournemouth",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "value": 3
+        },
+        {
+          "name": "Niclas Füllkrug",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "value": 1.72
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.37
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "value": 0.19
+        },
+        {
+          "name": "Illia Zabarnyi",
+          "team": "Bournemouth",
+          "value": 0.17
+        },
+        {
+          "name": "Niclas Füllkrug",
+          "team": "West Ham",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Lewis Cook",
+          "team": "Bournemouth",
+          "value": 0.27
+        },
+        {
+          "name": "Dango Ouattara",
+          "team": "Bournemouth",
+          "value": 0.21
+        },
+        {
+          "name": "Dean Huijsen",
+          "team": "Bournemouth",
+          "value": 0.19
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 0.14
+        },
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "points": 13,
+          "bonus": 3,
+          "bps": 57,
+          "xg": 1.72,
+          "xa": 0.01,
+          "minutes": 89
+        },
+        {
+          "name": "Niclas Füllkrug",
+          "team": "West Ham",
+          "points": 7,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.15,
+          "xa": 0.01,
+          "minutes": 36
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "points": 7,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.37,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Antoine Semenyo",
+          "team": "Bournemouth",
+          "points": 6,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.19,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "points": 4,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0,
+          "xa": 0.12,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-11-22|bournemouth|westham": {
+      "fixtureId": 112,
+      "season": "2526",
+      "date": "2025-11-22",
+      "kickoffTime": "2025-11-22T15:00:00Z",
+      "homeTeam": "Bournemouth",
+      "awayTeam": "West Ham",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Marcos Senesi Barón",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Jean-Clair Todibo",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Marcos Senesi Barón",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Jean-Clair Todibo",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Adrien Truffert",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 10
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 1.15
+        },
+        {
+          "name": "Junior Kroupi",
+          "team": "Bournemouth",
+          "value": 0.83
+        },
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "value": 0.49
+        },
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "value": 0.49
+        },
+        {
+          "name": "Amine Adli",
+          "team": "Bournemouth",
+          "value": 0.48
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Marcos Senesi Barón",
+          "team": "Bournemouth",
+          "value": 0.41
+        },
+        {
+          "name": "Adrien Truffert",
+          "team": "Bournemouth",
+          "value": 0.34
+        },
+        {
+          "name": "David Brooks",
+          "team": "Bournemouth",
+          "value": 0.21
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "value": 0.12
+        },
+        {
+          "name": "Jean-Clair Todibo",
+          "team": "West Ham",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "points": 12,
+          "bonus": 3,
+          "bps": 54,
+          "xg": 0.49,
+          "xa": 0,
+          "minutes": 51
+        },
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "points": 9,
+          "bonus": 2,
+          "bps": 37,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Marcus Tavernier",
+          "team": "Bournemouth",
+          "points": 7,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 1.15,
+          "xa": 0.12,
+          "minutes": 90
+        },
+        {
+          "name": "Enes Ünal",
+          "team": "Bournemouth",
+          "points": 6,
+          "bonus": 1,
+          "bps": 30,
+          "xg": 0.49,
+          "xa": 0.01,
+          "minutes": 10
+        },
+        {
+          "name": "Francisco Evanilson de Lima Barbosa",
+          "team": "Bournemouth",
+          "points": 5,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0.47,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-02-21|westham|bournemouth": {
+      "fixtureId": 270,
+      "season": "2526",
+      "date": "2026-02-21",
+      "kickoffTime": "2026-02-21T17:30:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Bournemouth",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Marcos Senesi Barón",
+          "team": "Bournemouth",
+          "value": 1
+        },
+        {
+          "name": "Tomáš Souček",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Mads Hermansen",
+          "team": "West Ham",
+          "value": 5
+        },
+        {
+          "name": "Đorđe Petrović",
+          "team": "Bournemouth",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Mads Hermansen",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Đorđe Petrović",
+          "team": "Bournemouth",
+          "value": 2
+        },
+        {
+          "name": "El Hadji Malick Diouf",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "value": 1.03
+        },
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "value": 0.72
+        },
+        {
+          "name": "Axel Disasi",
+          "team": "West Ham",
+          "value": 0.67
+        },
+        {
+          "name": "Rayan Vitor Simplício Rocha",
+          "team": "Bournemouth",
+          "value": 0.3
+        },
+        {
+          "name": "Valentín Castellanos",
+          "team": "West Ham",
+          "value": 0.29
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.85
+        },
+        {
+          "name": "El Hadji Malick Diouf",
+          "team": "West Ham",
+          "value": 0.34
+        },
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "value": 0.33
+        },
+        {
+          "name": "Valentín Castellanos",
+          "team": "West Ham",
+          "value": 0.24
+        },
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Mads Hermansen",
+          "team": "West Ham",
+          "points": 10,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Đorđe Petrović",
+          "team": "Bournemouth",
+          "points": 9,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "El Hadji Malick Diouf",
+          "team": "West Ham",
+          "points": 9,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0.34,
+          "minutes": 90
+        },
+        {
+          "name": "James Hill",
+          "team": "Bournemouth",
+          "points": 6,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

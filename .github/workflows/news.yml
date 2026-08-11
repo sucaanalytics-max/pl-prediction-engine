@@ -1,0 +1,102 @@
+name: Availability news
+
+# Team news arrives in bursts around press conferences and in the last hour before
+# a deadline. The agent runs three-hourly, and a three-hour latency on "he is out"
+# is the difference between acting and not — so this polls every fifteen minutes.
+#
+# That is only affordable because the job SELF-GATES ON STATE, not on the clock,
+# which is the pattern fpl_agent.yml already uses. Outside a news window it does
+# two cheap FPL reads and exits in seconds. The window itself is derived from the
+# fixture list because no published press-conference schedule exists anywhere.
+#
+# Politeness is not incidental here: 96 ticks a day against six small independent
+# sites would be abusive without conditional GET, and two of the six (BBC, Sky)
+# return neither ETag nor Last-Modified, so those additionally get a longer
+# per-host minimum interval. See pipeline/data/news_feeds.py.
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Poll even outside the derived news window'
+        type: boolean
+        default: false
+
+# A queued run must not race the one already going: both would fetch the same
+# feeds and append the same claims, and while the store is content-addressed and
+# would dedupe, the state file's validators would be written twice.
+concurrency:
+  group: availability-news
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install only what the poller needs
+        # Not pipeline/requirements.txt: that pulls PyMC, XGBoost and SciPy, which
+        # is minutes of install time for a job that must finish in seconds. The
+        # poller is deliberately dependency-light for exactly this reason.
+        run: python -m pip install --quiet 'requests>=2.31' 'feedparser>=6.0'
+
+      - name: Poll the feeds
+        env:
+          PYTHONPATH: .
+          FORCE: ${{ inputs.force }}
+          # Optional. Unset today, and the connector reports why it did nothing
+          # rather than failing — every other source is unaffected. Add it as a
+          # repository secret (Settings -> Secrets -> Actions) to switch upload
+          # metadata on; never paste a key into a file or a chat window.
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          set -euo pipefail
+          ARGS=""
+          if [ "${FORCE:-false}" = "true" ]; then ARGS="--force"; fi
+          python -m pipeline.learning.run_news --report /tmp/news_report.json $ARGS
+
+      - name: Commit what the feeds said
+        env:
+          # The poller owns exactly three paths: the feed state, its appends to the
+          # shared evidence store, and the published delta view. Everything else
+          # belongs to the daily pipeline or the agent, and path ownership at file
+          # granularity is what lets three writers push to main without conflicting.
+          #
+          # `commit_and_push.sh` applies this with `grep -qE`, so it is an EXTENDED
+          # regex: no negative lookahead. An earlier draft used
+          # `fpl/(?!deltas\.jsonl)` to mean "everything under fpl/ except the
+          # deltas", which grep rejects outright — the guard would have matched
+          # nothing and forbidden nothing. The other writers' artifacts are
+          # therefore listed explicitly, which is both ERE-safe and the same
+          # explicit-list discipline the publish step uses.
+          FORBID_PATHS: '^(predictions/(latest|matches|health|table|h2h|player_stats|market_blend_weight|fixture_xg)\.json|predictions/fpl/(ledger|decision|xp_gw|sim_params|messages)|predictions/archive/|frontend/public/predictions/(archive|h2h-events)/|frontend/public/predictions/[^/]+\.json|frontend/public/predictions/fpl/(messages|xp_gw|decision_public|evidence_view|accuracy|sensitivity))'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          .github/scripts/commit_and_push.sh \
+            "Availability news — $(date -u +%Y-%m-%dT%H:%MZ)" \
+            predictions/fpl/availability_evidence.jsonl \
+            predictions/fpl/deltas.jsonl \
+            predictions/news_feed_state.json \
+            frontend/public/predictions/fpl/deltas.jsonl
+
+      - name: Surface the run report
+        if: always()
+        env:
+          PYTHONPATH: .
+        # A module rather than an inline heredoc: a `<<'PY'` terminator has to sit
+        # at column zero, which cannot be indented inside a YAML block scalar
+        # without breaking the shell. Keeping it in Python also means it is
+        # covered by the test suite instead of being untested YAML.
+        run: python -m pipeline.learning.run_news --annotate /tmp/news_report.json

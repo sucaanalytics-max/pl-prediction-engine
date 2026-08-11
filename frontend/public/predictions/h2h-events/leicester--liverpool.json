@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-12-26|liverpool|leicester": {
+      "fixtureId": 175,
+      "season": "2425",
+      "date": "2024-12-26",
+      "kickoffTime": "2024-12-26T20:00:00Z",
+      "homeTeam": "Liverpool",
+      "awayTeam": "Leicester",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Stephy Mavididi",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Jannik Vestergaard",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Joe Gomez",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jakub Stolarczyk",
+          "team": "Leicester",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "value": 0.76
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.63
+        },
+        {
+          "name": "Darwin Núñez Ribeiro",
+          "team": "Liverpool",
+          "value": 0.25
+        },
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "value": 0.24
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.63
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.56
+        },
+        {
+          "name": "Trent Alexander-Arnold",
+          "team": "Liverpool",
+          "value": 0.46
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.4
+        },
+        {
+          "name": "Ryan Gravenberch",
+          "team": "Liverpool",
+          "value": 0.29
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "points": 12,
+          "bonus": 3,
+          "bps": 52,
+          "xg": 0.11,
+          "xa": 0.63,
+          "minutes": 90
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "points": 9,
+          "bonus": 2,
+          "bps": 38,
+          "xg": 0.63,
+          "xa": 0.4,
+          "minutes": 90
+        },
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 1,
+          "bps": 33,
+          "xg": 0.76,
+          "xa": 0.1,
+          "minutes": 77
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 0,
+          "bps": 31,
+          "xg": 0.02,
+          "xa": 0.56,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "points": 7,
+          "bonus": 1,
+          "bps": 33,
+          "xg": 0.24,
+          "xa": 0.04,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-20|leicester|liverpool": {
+      "fixtureId": 327,
+      "season": "2425",
+      "date": "2025-04-20",
+      "kickoffTime": "2025-04-20T15:30:00Z",
+      "homeTeam": "Leicester",
+      "awayTeam": "Liverpool",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Trent Alexander-Arnold",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Trent Alexander-Arnold",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Conor Bradley",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Wilfred Ndidi",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Mads Hermansen",
+          "team": "Leicester",
+          "value": 7
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Ibrahima Konaté",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Konstantinos Tsimikas",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 1.09
+        },
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "value": 0.46
+        },
+        {
+          "name": "Konstantinos Tsimikas",
+          "team": "Liverpool",
+          "value": 0.27
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.24
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 0.21
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Konstantinos Tsimikas",
+          "team": "Liverpool",
+          "value": 0.54
+        },
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 0.37
+        },
+        {
+          "name": "Conor Bradley",
+          "team": "Liverpool",
+          "value": 0.28
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 0.23
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.22
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Ibrahima Konaté",
+          "team": "Liverpool",
+          "points": 9,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 0.04,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Konstantinos Tsimikas",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.27,
+          "xa": 0.54,
+          "minutes": 90
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "points": 7,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0.21,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Alisson Ramses Becker",
+          "team": "Liverpool",
+          "points": 6,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Trent Alexander-Arnold",
+          "team": "Liverpool",
+          "points": 6,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0.02,
+          "xa": 0,
+          "minutes": 19
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

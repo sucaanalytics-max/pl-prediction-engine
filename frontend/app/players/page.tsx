@@ -1,425 +1,564 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
-import { loadPlayerStats, type PlayerStat } from "@/lib/predictions";
-import { useDebounce } from "@/lib/hooks";
-import { POS_COLORS, POS_BG } from "@/lib/theme";
-import { ErrorBoundary, ErrorMessage } from "@/components/ErrorBoundary";
-import { PageSkeleton } from "@/components/ui/Skeleton";
+/**
+ * Players — who, and how sure are we.
+ *
+ * ## The per-90 trap
+ *
+ * `xg_per_90` is computed upstream as `xg / max(minutes / 90, 0.1)`. That floor
+ * means a player with **zero minutes** reads as `xg * 10` — a fabricated rate,
+ * rendered in the same column and the same typeface as measured ones. The
+ * narrower therefore carries `ratesAreMeaningful` per row, and this screen
+ * suppresses the per-90 columns rather than showing a number it cannot stand
+ * behind.
+ *
+ * ## Nulls stay null
+ *
+ * `fouls_committed` and `fouls_per_90` are **null on all 564 rows** of the
+ * committed artifact while `PlayerStat` types both as `number`. Coercing them to
+ * zero would report "committed no fouls" for a stat the provider never supplied —
+ * 564 rows of confident zero being a far more convincing lie than 564 blanks.
+ */
 
-type SortKey =
-  | "goals_per_90"
-  | "xg_per_90"
-  | "assists_per_90"
-  | "yellows_per_90"
-  | "fouls_per_90"
-  | "minutes"
-  | "expected_goals"
-  | "goals_scored"
-  | "form";
-type PosFilter = "all" | "GKP" | "DEF" | "MID" | "FWD";
+import { useMemo, useState } from "react";
+import { REGISTRY } from "@/lib/data/narrow";
+import { useArtifact } from "@/lib/data/useArtifact";
+import { useHeuristics } from "@/lib/data/useHeuristics";
+import { usePlayerWatchlist } from "@/lib/use-player-watchlist";
+import {
+  notable, projectionsDescriptor, skew,
+  type Projection, type Projections,
+} from "@/lib/data/projections";
+import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { MIN_MINUTES_FOR_RATES, type MatchesFile, type PlayerRow } from "@/lib/data/narrow";
+import { proven } from "@/lib/data/artifact";
+import {
+  RANKING_CATEGORIES, type HeuristicPlayer, type RankingCategory,
+} from "@/lib/data/heuristics";
 
-const SORT_OPTIONS: Array<{ key: SortKey; label: string }> = [
-  { key: "goals_per_90", label: "Goals/90" },
-  { key: "xg_per_90", label: "xG/90" },
-  { key: "assists_per_90", label: "Assists/90" },
-  { key: "expected_goals", label: "Total xG" },
-  { key: "yellows_per_90", label: "Yellows/90" },
-  { key: "fouls_per_90", label: "Fouls/90" },
-  { key: "minutes", label: "Minutes" },
-];
+const PAGE_SIZE = 50;
 
-const PAGE_SIZE = 25;
+/** A measured value, or an honest blank. Never a coerced zero. */
+function Stat({ value, digits = 0 }: { value: number | null; digits?: number }) {
+  return value === null ? (
+    <span style={{ color: "var(--text-4)" }} title="not supplied by the provider">
+      —
+    </span>
+  ) : (
+    <>{value.toFixed(digits)}</>
+  );
+}
 
-function PlayersContent() {
-  const [players, setPlayers] = useState<PlayerStat[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [sortKey, setSortKey] = useState<SortKey>("xg_per_90");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
-  const [posFilter, setPosFilter] = useState<PosFilter>("all");
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(0);
-  const debouncedSearch = useDebounce(search, 250);
+function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
+  const [sortByRate, setSortByRate] = useState(false);
 
-  useEffect(() => {
-    loadPlayerStats()
-      .then(setPlayers)
-      .catch((e) => setError(e.message));
-  }, []);
+  const shown = useMemo(() => {
+    const sorted = [...rows].sort((a, b) =>
+      sortByRate
+        // Rows whose rates are meaningless sort last rather than topping the
+        // table on a denominator artefact.
+        ? Number(b.ratesAreMeaningful) - Number(a.ratesAreMeaningful)
+          || b.xg / Math.max(b.minutes / 90, 1) - a.xg / Math.max(a.minutes / 90, 1)
+        : b.minutes - a.minutes,
+    );
+    return sorted.slice(0, PAGE_SIZE);
+  }, [rows, sortByRate]);
 
-  // All useMemo/hooks must be before any early return (Rules of Hooks)
-  const filtered = useMemo(() => {
-    if (!players) return [];
-    let data = players;
-
-    if (posFilter !== "all") {
-      data = data.filter((p) => p.position === posFilter);
-    }
-    if (debouncedSearch) {
-      const q = debouncedSearch.toLowerCase();
-      data = data.filter(
-        (p) =>
-          p.name.toLowerCase().includes(q) ||
-          p.web_name.toLowerCase().includes(q) ||
-          p.team.toLowerCase().includes(q)
-      );
-    }
-
-    data = [...data].sort((a, b) => {
-      const av = (a[sortKey] as number) ?? 0;
-      const bv = (b[sortKey] as number) ?? 0;
-      return sortDir === "desc" ? bv - av : av - bv;
-    });
-
-    return data;
-  }, [players, posFilter, debouncedSearch, sortKey, sortDir]);
-
-  function toggleSort(key: SortKey) {
-    if (key === sortKey) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    } else {
-      setSortKey(key);
-      setSortDir("desc");
-    }
-  }
-
-  const posCounts = useMemo(() => {
-    const c: Record<string, number> = {};
-    for (const p of players ?? []) c[p.position] = (c[p.position] ?? 0) + 1;
-    return c;
-  }, [players]);
-
-  // Early returns after all hooks — show graceful "unavailable" state for 404
-  if (error) {
-    const isNotFound = error.includes("404") || error.toLowerCase().includes("failed");
-    if (isNotFound) {
-      return (
-        <div className="space-y-4">
-          <h1
-            className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
-          >
-            Player Stats
-          </h1>
-          <div className="card p-10 text-center">
-            <p className="text-sm font-medium mb-1" style={{ color: "var(--text-2)" }}>Player data not available</p>
-            <p className="text-xs" style={{ color: "var(--text-4)" }}>
-              Player stats are generated separately from match predictions. Check back after the next pipeline run.
-            </p>
-          </div>
-        </div>
-      );
-    }
-    return <ErrorMessage message={error} onRetry={() => window.location.reload()} />;
-  }
-  if (!players) return <PageSkeleton rows={6} />;
-
-  // Non-hook computations that require players to be non-null
-  const sortArrow = (key: SortKey) =>
-    sortKey === key ? (sortDir === "desc" ? " ↓" : " ↑") : "";
-
-  // Card magnet threshold: top 10% yellows_per_90
-  const yellowsSorted = [...players].sort((a, b) => (b.yellows_per_90 ?? 0) - (a.yellows_per_90 ?? 0));
-  const cardMagnetThreshold = yellowsSorted[Math.floor(yellowsSorted.length * 0.1)]?.yellows_per_90 ?? 999;
-
-  // Goal machine threshold: top 10% xG/90 (excluding GKP)
-  const xgSorted = [...players].filter(p => p.position !== "GKP").sort((a, b) => b.xg_per_90 - a.xg_per_90);
-  const goalMachineThreshold = xgSorted[Math.floor(xgSorted.length * 0.1)]?.xg_per_90 ?? 999;
+  const suppressed = rows.filter((r) => !r.ratesAreMeaningful).length;
 
   return (
-    <div className="space-y-8">
-      <div className="relative z-10 mb-6">
-        <h1
-          className="text-4xl md:text-5xl font-extrabold tracking-tighter bg-clip-text text-transparent drop-shadow-sm mb-2"
-          style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--accent) 100%)", fontFamily: "var(--font-jakarta)" }}
-        >
-          Player Stats
-        </h1>
-        <p className="text-sm font-medium tracking-wide" style={{ color: "var(--text-3)" }}>
-          {players.length} players <span className="mx-1.5 opacity-50">•</span> FPL API data <span className="mx-1.5 opacity-50">•</span> Goalscorer & booking analysis
+    <div className="space-y-2">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <p className="text-xs" style={{ color: "var(--text-3)" }}>
+          Showing {shown.length} of {rows.length}
+          {suppressed > 0
+            ? ` · per-90 rates hidden for ${suppressed} player${suppressed === 1 ? "" : "s"} under ${MIN_MINUTES_FOR_RATES} minutes`
+            : ""}
         </p>
+        <button
+          type="button"
+          className="text-xs underline"
+          style={{ color: "var(--accent)" }}
+          onClick={() => setSortByRate((v) => !v)}
+        >
+          Sort by {sortByRate ? "minutes" : "xG per 90"}
+        </button>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-wrap items-center gap-3">
-        {/* Position filter */}
-        <fieldset className="flex gap-1.5" aria-label="Filter by position">
-          {(["all", "GKP", "DEF", "MID", "FWD"] as PosFilter[]).map((pos) => (
-            <button
-              key={pos}
-              onClick={() => { setPosFilter(pos); setPage(0); }}
-              className={`px-2.5 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors border ${posFilter === pos
-                  ? pos === "all"
-                    ? "text-white border-transparent"
-                    : `${POS_BG[pos] ?? "text-white border-transparent"}`
-                  : "border-transparent"
-                }`}
-              style={
-                posFilter === pos && pos === "all"
-                  ? { background: "var(--accent)" }
-                  : posFilter !== pos
-                    ? { color: "var(--text-3)" }
-                    : undefined
-              }
-              aria-pressed={posFilter === pos}
-            >
-              {pos === "all" ? `ALL (${players.length})` : `${pos} (${posCounts[pos] ?? 0})`}
-            </button>
-          ))}
-        </fieldset>
-
-        {/* Sort pills */}
-        <div className="flex gap-1.5 flex-wrap">
-          {SORT_OPTIONS.map((opt) => (
-            <button
-              key={opt.key}
-              onClick={() => toggleSort(opt.key)}
-              className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-colors ${sortKey === opt.key
-                  ? "bg-green-500/15 text-green-400 ring-1 ring-green-500/25"
-                  : ""
-                }`}
-              style={sortKey !== opt.key ? { color: "var(--text-3)" } : undefined}
-            >
-              {opt.label}{sortArrow(opt.key)}
-            </button>
-          ))}
-        </div>
-
-        {/* Search */}
-        <div className="ml-auto relative w-full sm:w-auto mt-2 sm:mt-0">
-          <label htmlFor="player-search" className="sr-only">Search player or team</label>
-          <div className="relative">
-            <svg className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-4)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              id="player-search"
-              type="text"
-              placeholder="Search player or team…"
-              value={search}
-              onChange={(e) => { setSearch(e.target.value); setPage(0); }}
-              className="w-full sm:w-64 pl-9 pr-8 py-2 text-xs bg-[var(--surface)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)] transition-shadow text-[var(--text-1)] placeholder-[var(--text-4)] shadow-inner"
-            />
-            {search && (
-              <button
-                onClick={() => setSearch("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-4)] hover:text-[var(--text-2)] transition-colors"
-                aria-label="Clear search"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Pagination info */}
-      {(() => {
-        const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-        const paged = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
-        const start = page * PAGE_SIZE + 1;
-        const end = Math.min((page + 1) * PAGE_SIZE, filtered.length);
-
-        return (
-          <>
-            <div className="flex items-center justify-between">
-              <p className="text-xs" style={{ color: "var(--text-3)" }}>
-                {filtered.length === 0 ? "No players match" : `${start}–${end} of ${filtered.length} players`}
-              </p>
-              {totalPages > 1 && (
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => setPage(Math.max(0, page - 1))}
-                    disabled={page === 0}
-                    className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
-                    style={{ color: "var(--text-3)" }}
-                  >
-                    ← Prev
-                  </button>
-                  <span className="text-[10px] px-2" style={{ color: "var(--text-3)" }}>{page + 1}/{totalPages}</span>
-                  <button
-                    onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
-                    disabled={page >= totalPages - 1}
-                    className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
-                    style={{ color: "var(--text-3)" }}
-                  >
-                    Next →
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Mobile card layout */}
-            <div className="sm:hidden space-y-2">
-              {paged.length === 0 ? (
-                <div className="card p-6 text-center text-sm" style={{ color: "var(--text-3)" }}>No players match the current filters.</div>
-              ) : paged.map((player) => {
-                const isCardMagnet = (player.yellows_per_90 ?? 0) >= cardMagnetThreshold;
-                const isGoalMachine = player.xg_per_90 >= goalMachineThreshold && player.position !== "GKP";
-                return (
-                  <div key={player.player_id} className="card p-3 flex items-center gap-3">
-                    <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${POS_BG[player.position] ?? "text-slate-400 bg-slate-800/60 border-slate-700/50"}`}>
-                      {player.position}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium truncate" style={{ color: "var(--text-1)" }}>{player.web_name}</div>
-                      <div className="text-[10px]" style={{ color: "var(--text-3)" }}>{player.team} · {player.minutes} mins</div>
-                    </div>
-                    <div className="text-right text-xs font-mono space-y-0.5 flex-shrink-0">
-                      <div className="text-emerald-400">{player.xg_per_90.toFixed(2)} xG/90</div>
-                      <div className="text-amber-400">{(player.yellows_per_90 ?? 0).toFixed(2)} Y/90</div>
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      {isCardMagnet && <span className="badge-amber text-[7px]">□</span>}
-                      {isGoalMachine && <span className="badge-green text-[7px]">⚽</span>}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Desktop table */}
-            <div className="glass-panel overflow-x-auto hidden sm:block rounded-2xl shadow-[var(--shadow-custom)]">
-              <table className="data-table" aria-label="Player statistics">
-                <thead>
-                  <tr>
-                    <th scope="col">Player</th>
-                    <th scope="col">Team</th>
-                    <th scope="col" className="text-center">Pos</th>
-                    <th scope="col" className="text-right cursor-pointer" onClick={() => toggleSort("goals_per_90")}>
-                      G/90{sortArrow("goals_per_90")}
-                    </th>
-                    <th scope="col" className="text-right cursor-pointer" onClick={() => toggleSort("xg_per_90")}>
-                      xG/90{sortArrow("xg_per_90")}
-                    </th>
-                    <th scope="col" className="text-right cursor-pointer hidden md:table-cell" onClick={() => toggleSort("assists_per_90")}>
-                      A/90{sortArrow("assists_per_90")}
-                    </th>
-                    <th scope="col" className="text-right cursor-pointer" onClick={() => toggleSort("yellows_per_90")}>
-                      Y/90{sortArrow("yellows_per_90")}
-                    </th>
-                    <th scope="col" className="text-right cursor-pointer hidden md:table-cell" onClick={() => toggleSort("fouls_per_90")}>
-                      F/90{sortArrow("fouls_per_90")}
-                    </th>
-                    <th scope="col" className="text-right cursor-pointer hidden lg:table-cell" onClick={() => toggleSort("minutes")}>
-                      Mins{sortArrow("minutes")}
-                    </th>
-                    <th scope="col" className="text-right hidden lg:table-cell">Goals</th>
-                    <th scope="col" className="text-center">Status</th>
-                    <th scope="col" className="text-center">Tags</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paged.length === 0 ? (
-                    <tr>
-                      <td colSpan={12} className="px-4 py-8 text-center" style={{ color: "var(--text-3)" }}>
-                        No players match the current filters.
-                      </td>
-                    </tr>
+      <div className="glass-panel rounded-2xl overflow-x-auto">
+        <table className="data-table" aria-label="Player season statistics">
+          <thead>
+            <tr>
+              <th scope="col">Player</th>
+              <th scope="col">Team</th>
+              <th scope="col" className="text-center">Mins</th>
+              <th scope="col" className="text-center">G</th>
+              <th scope="col" className="text-center">A</th>
+              <th scope="col" className="text-center">xG</th>
+              <th scope="col" className="text-center hidden sm:table-cell">xA</th>
+              <th scope="col" className="text-center hidden md:table-cell">xG/90</th>
+              <th scope="col" className="text-center hidden lg:table-cell">Fouls</th>
+            </tr>
+          </thead>
+          <tbody>
+            {shown.map((row) => (
+              <tr key={`${row.name}-${row.team}`} data-testid="player">
+                <td className="text-sm">{row.name}</td>
+                <td className="text-sm" style={{ color: "var(--text-3)" }}>
+                  {row.team}
+                </td>
+                <td className="text-center font-mono text-sm">{row.minutes}</td>
+                <td className="text-center font-mono text-sm">{row.goals}</td>
+                <td className="text-center font-mono text-sm">{row.assists}</td>
+                <td className="text-center font-mono text-sm">{row.xg.toFixed(2)}</td>
+                <td className="text-center font-mono text-sm hidden sm:table-cell">
+                  {row.xa.toFixed(2)}
+                </td>
+                <td
+                  className="text-center font-mono text-sm hidden md:table-cell"
+                  data-rates={row.ratesAreMeaningful ? "shown" : "suppressed"}
+                >
+                  {/* Suppressed below the minutes floor: the denominator clamp
+                      turns a 0-minute player's xG into xG x 10. */}
+                  {row.ratesAreMeaningful ? (
+                    (row.xg / (row.minutes / 90)).toFixed(2)
                   ) : (
-                    paged.map((player) => {
-                      const isCardMagnet = (player.yellows_per_90 ?? 0) >= cardMagnetThreshold;
-                      const isGoalMachine = player.xg_per_90 >= goalMachineThreshold && player.position !== "GKP";
-                      const xgDiff = player.goals_per_90 - player.xg_per_90;
-
-                      return (
-                        <tr key={player.player_id}>
-                          <td className="px-4 py-2.5">
-                            <div className="font-medium" style={{ color: "var(--text-1)" }}>{player.web_name}</div>
-                            <div className="text-[10px] sm:hidden" style={{ color: "var(--text-4)" }}>{player.team}</div>
-                          </td>
-                          <td className="px-3 py-2.5 hidden sm:table-cell">{player.team}</td>
-                          <td className="px-3 py-2.5 text-center">
-                            <span className={`text-[10px] font-mono font-semibold ${POS_COLORS[player.position] ?? "text-slate-400"}`}>
-                              {player.position}
-                            </span>
-                          </td>
-                          <td className="px-3 py-2.5 text-right font-mono text-emerald-400">{player.goals_per_90.toFixed(2)}</td>
-                          <td className="px-3 py-2.5 text-right font-mono" style={{ color: "var(--text-2)" }}>{player.xg_per_90.toFixed(2)}</td>
-                          <td className="px-3 py-2.5 text-right font-mono hidden md:table-cell" style={{ color: "var(--info)" }}>
-                            {(player.assists_per_90 ?? 0).toFixed(2)}
-                          </td>
-                          <td className={`px-3 py-2.5 text-right font-mono ${isCardMagnet ? "text-amber-400 font-semibold" : ""}`}
-                            style={!isCardMagnet ? { color: "var(--text-3)" } : undefined}>
-                            {(player.yellows_per_90 ?? 0).toFixed(2)}
-                          </td>
-                          <td className="px-3 py-2.5 text-right font-mono hidden md:table-cell" style={{ color: "var(--text-3)" }}>
-                            {(player.fouls_per_90 ?? 0).toFixed(2)}
-                          </td>
-                          <td className="px-3 py-2.5 text-right font-mono hidden lg:table-cell" style={{ color: "var(--text-3)" }}>
-                            {player.minutes.toLocaleString()}
-                          </td>
-                          <td className="px-3 py-2.5 text-right font-mono hidden lg:table-cell" style={{ color: "var(--text-3)" }}>
-                            {player.goals_scored}
-                          </td>
-                          <td className="px-3 py-2.5 text-center hidden sm:table-cell">
-                            {player.available ? (
-                              <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" title="Available" />
-                            ) : (
-                              <span className="w-2 h-2 rounded-full bg-red-500 inline-block" title="Unavailable" />
-                            )}
-                          </td>
-                          <td className="px-3 py-2.5 text-center">
-                            <div className="flex items-center justify-center gap-1">
-                              {isCardMagnet && (
-                                <span className="badge-amber text-[8px]" title="Card magnet — top 10% yellows/90">□</span>
-                              )}
-                              {isGoalMachine && (
-                                <span className="badge-green text-[8px]" title="Goal threat — top 10% xG/90">⚽</span>
-                              )}
-                              {xgDiff > 0.15 && (
-                                <span className="text-[8px] text-emerald-500 bg-emerald-500/10 px-1 rounded" title="Overperforming xG">↑</span>
-                              )}
-                              {xgDiff < -0.15 && (
-                                <span className="text-[8px] text-red-400 bg-red-500/10 px-1 rounded" title="Underperforming xG">↓</span>
-                              )}
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })
+                    <span
+                      style={{ color: "var(--text-4)" }}
+                      title={`under ${MIN_MINUTES_FOR_RATES} minutes — a per-90 rate here is an artefact of the denominator floor`}
+                    >
+                      —
+                    </span>
                   )}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Bottom pagination */}
-            {totalPages > 1 && (
-              <div className="flex justify-center gap-1 pt-2">
-                <button
-                  onClick={() => setPage(Math.max(0, page - 1))}
-                  disabled={page === 0}
-                  className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
-                  style={{ color: "var(--text-3)" }}
-                >
-                  ← Prev
-                </button>
-                <span className="text-[10px] px-2 py-1" style={{ color: "var(--text-3)" }}>{page + 1}/{totalPages}</span>
-                <button
-                  onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
-                  disabled={page >= totalPages - 1}
-                  className="px-2 py-1 text-[10px] rounded glass-inset disabled:opacity-30 transition-colors"
-                  style={{ color: "var(--text-3)" }}
-                >
-                  Next →
-                </button>
-              </div>
-            )}
-          </>
-        );
-      })()}
-
-      <p className="text-[10px] text-center" style={{ color: "var(--text-4)" }}>
-        Stats from FPL API · □ = Card magnet (top 10% Y/90) · ⚽ = Goal threat (top 10% xG/90) · ↑↓ = xG over/underperformance
-      </p>
+                </td>
+                <td className="text-center font-mono text-sm hidden lg:table-cell">
+                  <Stat value={row.fouls_committed} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
 
+/**
+ * The model's own projections, led by the distribution rather than the mean.
+ *
+ * This is the section that distinguishes the app: `xp 6.4` beside `most often
+ * 2` beside `P(10+) 15%` is the honest statement of a right-skewed forecast,
+ * and seven of eight competitors publish only the first of the three.
+ */
+function ModelProjections({ gameweek }: { gameweek: number }) {
+  const descriptor = useMemo(() => projectionsDescriptor(gameweek), [gameweek]);
+  const { artifact } = useArtifact<Projections>(descriptor);
+  const [expanded, setExpanded] = useState<number | null>(null);
+
+  return (
+    <Section
+      title="Projections"
+      subtitle="What the simulation expects, and how wide the spread is"
+      aside={<ProvenanceStrip of={artifact} />}
+    >
+      <WhenProven
+        of={artifact}
+        what={
+          `No projection has been published for GW${gameweek}. The agent writes ` +
+          `one per gameweek and prunes the rest, so exactly one is current.`
+        }
+        then={(file) => {
+          const rows = notable(file.players);
+          return (
+            <div className="space-y-2">
+              <div className="glass-panel rounded-2xl overflow-x-auto">
+                <table className="data-table" aria-label="Player points projections">
+                  <thead>
+                    <tr>
+                      <th scope="col">Player</th>
+                      <th scope="col" className="hidden sm:table-cell">Team</th>
+                      <th scope="col" className="text-center">Mean</th>
+                      <th scope="col" className="text-center">Most often</th>
+                      <th scope="col" className="text-center">P(10+)</th>
+                      <th scope="col" className="text-center hidden md:table-cell">
+                        10–90%
+                      </th>
+                      <th scope="col" className="w-8" aria-label="Breakdown" />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((player) => (
+                      <ProjectionRow
+                        key={player.elementId}
+                        player={player}
+                        open={expanded === player.elementId}
+                        onToggle={() =>
+                          setExpanded(
+                            expanded === player.elementId ? null : player.elementId,
+                          )
+                        }
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
+                Ranked by the chance of a hauling week, not by the mean — a
+                weekly-win entry is buying the right tail.
+                {file.nDraws !== null
+                  ? ` Tail probabilities from ${file.nDraws.toLocaleString()} simulated draws.`
+                  : ""}
+              </p>
+            </div>
+          );
+        }}
+      />
+    </Section>
+  );
+}
+
+function ProjectionRow({
+  player, open, onToggle,
+}: {
+  player: Projection;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const gap = skew(player);
+  return (
+    <>
+      <tr data-testid="projection">
+        <td className="text-sm">{player.name ?? `#${player.elementId}`}</td>
+        <td className="text-sm hidden sm:table-cell" style={{ color: "var(--text-3)" }}>
+          {player.team ?? "—"}
+        </td>
+        <td className="text-center font-mono text-sm">
+          {player.xp !== null ? player.xp.toFixed(1) : "—"}
+        </td>
+        <td className="text-center font-mono text-sm" data-testid="mode">
+          {/* The number that stops the mean being read as a forecast. */}
+          {player.mode !== null ? player.mode : "—"}
+          {gap !== null && gap >= 2 ? (
+            <span
+              className="ml-1 text-[9px]"
+              style={{ color: "var(--warning, #f59e0b)" }}
+              title={`The mean sits ${gap.toFixed(1)} points above the most likely return, so it is carried by the tail rather than by a typical week.`}
+            >
+              skew
+            </span>
+          ) : null}
+        </td>
+        <td className="text-center font-mono text-sm">
+          {player.pGe10 !== null ? `${(player.pGe10 * 100).toFixed(0)}%` : "—"}
+        </td>
+        <td className="text-center font-mono text-xs hidden md:table-cell">
+          {player.q10 !== null && player.q90 !== null
+            ? `${player.q10.toFixed(0)}–${player.q90.toFixed(0)}`
+            : "—"}
+        </td>
+        <td className="text-center">
+          {player.decomposition ? (
+            <button
+              type="button"
+              onClick={onToggle}
+              aria-expanded={open}
+              aria-label={`${open ? "Hide" : "Show"} points breakdown for ${player.name ?? player.elementId}`}
+              className="text-xs"
+              style={{ color: "var(--accent)" }}
+            >
+              {open ? "−" : "+"}
+            </button>
+          ) : null}
+        </td>
+      </tr>
+      {open && player.decomposition ? (
+        <tr data-testid="breakdown">
+          <td colSpan={7} className="text-xs" style={{ color: "var(--text-3)" }}>
+            {/* Where the mean comes from. 6.4 built from appearance points and
+                a clean sheet is a different holding from 6.4 built from a
+                one-in-six chance of a haul. */}
+            <div className="glass-inset p-3 grid grid-cols-2 sm:grid-cols-5 gap-2">
+              {([
+                ["Appearance", player.decomposition.appearance],
+                ["Goals", player.decomposition.goals],
+                ["Assists", player.decomposition.assists],
+                ["Clean sheet", player.decomposition.cleanSheets],
+                ["Other", player.decomposition.other],
+              ] as const).map(([label, value]) => (
+                <div key={label}>
+                  <p className="stat-label">{label}</p>
+                  <p className="font-mono">{value.toFixed(2)}</p>
+                </div>
+              ))}
+            </div>
+          </td>
+        </tr>
+      ) : null}
+    </>
+  );
+}
+
+/**
+ * The eight ranked lists, ported off `/rankings` and `/projections`.
+ *
+ * They are the heuristic engine's output, not a projection — see
+ * `lib/data/heuristics.ts` for why that distinction is load-bearing. The badge
+ * sits on the section rather than on each number, because a per-cell caveat is
+ * one nobody reads.
+ */
+function HeuristicRankings() {
+  const { artifact } = useHeuristics();
+  const [category, setCategory] = useState<RankingCategory>("overall");
+  const [query, setQuery] = useState("");
+  // Carried over from /transfers and /rankings, which both had it. It is the
+  // user's own data in localStorage, so dropping it in the move would delete
+  // something they created rather than something we generated.
+  const { watched, toggle, persisted } = usePlayerWatchlist();
+
+  return (
+    <Section
+      title="Ranked players"
+      subtitle="From the heuristic engine, until a gameweek seals"
+      aside={<ProvenanceStrip of={artifact} />}
+    >
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="badge-amber text-[9px]">HEURISTIC — NOT A MODEL</span>
+          {persisted ? null : (
+            <span className="text-xs" role="status" style={{ color: "var(--warning, #f59e0b)" }}>
+              Starring works, but this browser is not storing it — it will be
+              gone on reload.
+            </span>
+          )}
+        </div>
+
+        <WhenProven
+          of={artifact}
+          what="The engine produced no ranked lists. It needs live FPL fields, which are unavailable before the season opens."
+          then={(view) => {
+            const all = view.rankings[category];
+            const needle = query.trim().toLowerCase();
+            const rows = needle
+              ? all.filter(
+                  (p) =>
+                    p.name.toLowerCase().includes(needle) ||
+                    p.team.toLowerCase().includes(needle),
+                )
+              : all;
+            // The widest horizon any player carries, so the per-gameweek columns
+            // match the data rather than a hardcoded ten that renders as dashes.
+            const horizon = Math.min(
+              6, rows.reduce((max, p) => Math.max(max, p.gameweeks.length), 0),
+            );
+            return (
+              <div className="space-y-2">
+                {/* Tabs are driven by the declared categories, so a list the
+                    engine stops emitting is a missing tab rather than silence. */}
+                <div className="flex gap-1 flex-wrap" role="tablist" aria-label="Ranking category">
+                  {RANKING_CATEGORIES.map(({ key, label }) => (
+                    <button
+                      key={key}
+                      type="button"
+                      role="tab"
+                      aria-selected={category === key}
+                      onClick={() => setCategory(key)}
+                      className="text-xs px-2 py-1 rounded"
+                      style={
+                        category === key
+                          ? { background: "var(--accent)", color: "#fff" }
+                          : { color: "var(--text-3)" }
+                      }
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <input
+                    type="search"
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    placeholder="Search player or team"
+                    aria-label="Search ranked players"
+                    className="text-xs px-2 py-1 rounded glass-inset"
+                    style={{ color: "var(--text-2)" }}
+                  />
+                  <span className="text-xs" style={{ color: "var(--text-3)" }}>
+                    {rows.length} of {all.length}
+                  </span>
+                </div>
+
+                {rows.length === 0 ? (
+                  <p className="text-sm" style={{ color: "var(--text-3)" }}>
+                    {all.length === 0
+                      ? "No players in this category."
+                      : "No player matches that search."}
+                  </p>
+                ) : (
+                  <div className="glass-panel rounded-2xl overflow-x-auto">
+                    <table className="data-table" aria-label={`Ranked players — ${category}`}>
+                      <thead>
+                        <tr>
+                          <th scope="col" className="w-8 text-center">#</th>
+                          <th scope="col">Player</th>
+                          <th scope="col" className="hidden sm:table-cell">Team</th>
+                          <th scope="col" className="text-center">£</th>
+                          <th scope="col" className="text-center hidden md:table-cell">Own%</th>
+                          <th scope="col" className="text-center hidden md:table-cell">xMins</th>
+                          {Array.from({ length: horizon }, (_, i) => (
+                            <th key={i} scope="col" className="text-center hidden xl:table-cell">
+                              +{i + 1}
+                            </th>
+                          ))}
+                          <th scope="col" className="text-center">4GW</th>
+                          <th scope="col" className="text-center hidden sm:table-cell">6GW</th>
+                          <th scope="col" className="w-8" aria-label="Watchlist" />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {rows.map((player, index) => (
+                          <RankedRow
+                            key={player.elementId}
+                            player={player}
+                            index={index}
+                            horizon={horizon}
+                            watched={watched.includes(player.elementId)}
+                            onToggle={() => toggle(player.elementId)}
+                          />
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
+                  Projection source: {view.projectionSourceLabel}.
+                </p>
+              </div>
+            );
+          }}
+        />
+      </div>
+    </Section>
+  );
+}
+
+function RankedRow({
+  player, index, horizon, watched, onToggle,
+}: {
+  player: HeuristicPlayer;
+  index: number;
+  horizon: number;
+  watched: boolean;
+  onToggle: () => void;
+}) {
+  // `status` is FPL's own availability letter; anything but "a" is worth seeing
+  // next to the name rather than buried in a tooltip.
+  const doubtful = player.status !== "a";
+  return (
+    <tr data-testid="ranked-player" data-watched={watched ? "yes" : "no"}>
+      <td className="text-center font-mono text-xs">{index + 1}</td>
+      <td className="text-sm">
+        {player.name}
+        {doubtful ? (
+          <span
+            className="ml-1 text-[9px] uppercase"
+            style={{ color: "var(--warning, #f59e0b)" }}
+            title={player.news || "flagged by FPL"}
+          >
+            flagged
+          </span>
+        ) : null}
+      </td>
+      <td className="text-sm hidden sm:table-cell" style={{ color: "var(--text-3)" }}>
+        {player.team}
+      </td>
+      <td className="text-center font-mono text-sm">{player.price.toFixed(1)}</td>
+      <td className="text-center font-mono text-sm hidden md:table-cell">
+        {player.ownership.toFixed(1)}
+      </td>
+      <td className="text-center font-mono text-sm hidden md:table-cell">
+        {player.expectedMinutes.toFixed(0)}
+      </td>
+      {Array.from({ length: horizon }, (_, i) => {
+        const week = player.gameweeks[i];
+        return (
+          <td
+            key={i}
+            className="text-center font-mono text-xs hidden xl:table-cell"
+            title={week?.fixture ?? "no projection for this gameweek"}
+          >
+            {/* A dash rather than 0.0: no projection is not a projection of
+                zero, and the two would sort identically if coerced. */}
+            {week ? week.projectedPoints.toFixed(1) : "—"}
+          </td>
+        );
+      })}
+      <td className="text-center font-mono text-sm">{player.projected4.toFixed(1)}</td>
+      <td className="text-center font-mono text-sm hidden sm:table-cell">
+        {player.projected6.toFixed(1)}
+      </td>
+      <td className="text-center">
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-pressed={watched}
+          aria-label={`${watched ? "Remove" : "Add"} ${player.name} ${watched ? "from" : "to"} watchlist`}
+          className="text-xs"
+          style={{ color: watched ? "var(--warning, #f59e0b)" : "var(--text-4)" }}
+        >
+          {watched ? "★" : "☆"}
+        </button>
+      </td>
+    </tr>
+  );
+}
+
 export default function PlayersPage() {
+  const { artifact } = useArtifact<readonly PlayerRow[]>(REGISTRY.playerStats);
+  // The projection is filed per gameweek, so the fixtures artifact has to be
+  // readable before one can be located. Its own absence is a section-level
+  // state, not a page-level gate.
+  const { artifact: matches } = useArtifact<MatchesFile>(REGISTRY.matches);
+  const gameweek = proven(matches)?.gameweek ?? null;
+
   return (
     <ErrorBoundary pageName="Players">
-      <PlayersContent />
+      <div className="space-y-8">
+        <header>
+          <h1
+            className="text-3xl font-extrabold tracking-tight"
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+          >
+            Players
+          </h1>
+          <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
+            Season actuals. A dash means the provider supplied nothing, not zero.
+          </p>
+        </header>
+
+        <Section title="Season statistics" aside={<ProvenanceStrip of={artifact} />}>
+          <WhenProven
+            of={artifact}
+            what="No player has played a minute yet, so there are no season statistics to show."
+            then={(rows) => <PlayersTable rows={rows} />}
+          />
+        </Section>
+
+        {gameweek === null ? (
+          <div className="card p-4" role="status">
+            <p className="text-sm" style={{ color: "var(--text-2)" }}>
+              The current gameweek is unknown, so no projection can be located.
+            </p>
+          </div>
+        ) : (
+          <ModelProjections gameweek={gameweek} />
+        )}
+
+        <HeuristicRankings />
+      </div>
     </ErrorBoundary>
   );
 }

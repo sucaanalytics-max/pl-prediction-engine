@@ -1,0 +1,866 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-12-23|fulham|burnley": {
+      "fixtureId": 173,
+      "season": "2324",
+      "date": "2023-12-23",
+      "kickoffTime": "2023-12-23T15:00:00Z",
+      "homeTeam": "Fulham",
+      "awayTeam": "Burnley",
+      "homeGoals": 0,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Wilson Odobert",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Wilson Odobert",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Jordan Beyer",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 5
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Wilson Odobert",
+          "team": "Burnley",
+          "value": 3
+        },
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 2
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.39
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "value": 0.21
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 0.19
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.18
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Burnley",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "value": 0.19
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.14
+        },
+        {
+          "name": "Tom Cairney",
+          "team": "Fulham",
+          "value": 0.14
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 0.08
+        },
+        {
+          "name": "Mike Trésor",
+          "team": "Burnley",
+          "value": 0.06
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Wilson Odobert",
+          "team": "Burnley",
+          "points": 14,
+          "bonus": 3,
+          "bps": 38,
+          "xg": 0.03,
+          "xa": 0.01,
+          "minutes": 79
+        },
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "points": 9,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Burnley",
+          "points": 9,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.16,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Victor da Silva",
+          "team": "Burnley",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Charlie Taylor",
+          "team": "Burnley",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-02-03|burnley|fulham": {
+      "fixtureId": 225,
+      "season": "2324",
+      "date": "2024-02-03",
+      "kickoffTime": "2024-02-03T15:00:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Fulham",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "David Datro Fofana",
+          "team": "Burnley",
+          "value": 2
+        },
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Wilson Odobert",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Lorenz Assignon",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Harrison Reed",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "David Datro Fofana",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 5
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "David Datro Fofana",
+          "team": "Burnley",
+          "value": 3
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "David Datro Fofana",
+          "team": "Burnley",
+          "value": 1.05
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "value": 0.43
+        },
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "value": 0.25
+        },
+        {
+          "name": "Josh Brownhill",
+          "team": "Burnley",
+          "value": 0.25
+        },
+        {
+          "name": "Tosin Adarabioyo",
+          "team": "Fulham",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 0.46
+        },
+        {
+          "name": "Lorenz Assignon",
+          "team": "Burnley",
+          "value": 0.16
+        },
+        {
+          "name": "Willian Borges da Silva",
+          "team": "Fulham",
+          "value": 0.15
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 0.13
+        },
+        {
+          "name": "Josh Brownhill",
+          "team": "Burnley",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "David Datro Fofana",
+          "team": "Burnley",
+          "points": 11,
+          "bonus": 3,
+          "bps": 48,
+          "xg": 1.05,
+          "xa": 0,
+          "minutes": 27
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "points": 8,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0.14,
+          "xa": 0.08,
+          "minutes": 73
+        },
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "points": 8,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0.25,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "points": 5,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.13,
+          "minutes": 90
+        },
+        {
+          "name": "Wilson Odobert",
+          "team": "Burnley",
+          "points": 5,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0.07,
+          "xa": 0.06,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-12-13|burnley|fulham": {
+      "fixtureId": 153,
+      "season": "2526",
+      "date": "2025-12-13",
+      "kickoffTime": "2025-12-13T17:30:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Fulham",
+      "homeGoals": 2,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Oliver Sonne",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Samuel Chukwueze",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Josh Cullen",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Quilindschy Hartman",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Josh Cullen",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Joachim Andersen",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 6
+        },
+        {
+          "name": "Martin Dúbravka",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Burnley",
+          "value": 2
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Burnley",
+          "value": 1.04
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 0.74
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 0.71
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.59
+        },
+        {
+          "name": "Armando Broja",
+          "team": "Burnley",
+          "value": 0.48
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.8
+        },
+        {
+          "name": "Samuel Chukwueze",
+          "team": "Fulham",
+          "value": 0.38
+        },
+        {
+          "name": "Jacob Bruun Larsen",
+          "team": "Burnley",
+          "value": 0.28
+        },
+        {
+          "name": "Josh Cullen",
+          "team": "Burnley",
+          "value": 0.25
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Fulham",
+          "value": 0.19
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "points": 16,
+          "bonus": 3,
+          "bps": 60,
+          "xg": 0.59,
+          "xa": 0.8,
+          "minutes": 88
+        },
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Burnley",
+          "points": 9,
+          "bonus": 2,
+          "bps": 36,
+          "xg": 1.04,
+          "xa": 0.02,
+          "minutes": 82
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "points": 9,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0.74,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "points": 8,
+          "bonus": 1,
+          "bps": 35,
+          "xg": 0.71,
+          "xa": 0.02,
+          "minutes": 88
+        },
+        {
+          "name": "Oliver Sonne",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0.39,
+          "xa": 0,
+          "minutes": 13
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-03-21|fulham|burnley": {
+      "fixtureId": 305,
+      "season": "2526",
+      "date": "2026-03-21",
+      "kickoffTime": "2026-03-21T15:00:00Z",
+      "homeTeam": "Fulham",
+      "awayTeam": "Burnley",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Josh King",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Josh King",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "James Ward-Prowse",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Josh Laurent",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 4
+        },
+        {
+          "name": "Martin Dúbravka",
+          "team": "Burnley",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Josh King",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "value": 0.87
+        },
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 0.77
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 0.59
+        },
+        {
+          "name": "Oscar Bobb",
+          "team": "Fulham",
+          "value": 0.55
+        },
+        {
+          "name": "Josh King",
+          "team": "Fulham",
+          "value": 0.4
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jaidon Anthony",
+          "team": "Burnley",
+          "value": 0.47
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.26
+        },
+        {
+          "name": "Quilindschy Hartman",
+          "team": "Burnley",
+          "value": 0.22
+        },
+        {
+          "name": "Timothy Castagne",
+          "team": "Fulham",
+          "value": 0.16
+        },
+        {
+          "name": "Samuel Chukwueze",
+          "team": "Fulham",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Josh King",
+          "team": "Fulham",
+          "points": 13,
+          "bonus": 3,
+          "bps": 39,
+          "xg": 0.4,
+          "xa": 0.09,
+          "minutes": 81
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "points": 9,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.28,
+          "xa": 0.06,
+          "minutes": 86
+        },
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0.77,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Fulham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.87,
+          "xa": 0,
+          "minutes": 8
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

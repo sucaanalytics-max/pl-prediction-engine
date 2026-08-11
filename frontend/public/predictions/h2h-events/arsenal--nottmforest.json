@@ -1,0 +1,951 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-01-30|nottmforest|arsenal": {
+      "fixtureId": 215,
+      "season": "2324",
+      "date": "2024-01-30",
+      "kickoffTime": "2024-01-30T19:30:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Arsenal",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Oleksandr Zinchenko",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Gonzalo Montiel",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Matt Turner",
+          "team": "Nott'm Forest",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Oleksandr Zinchenko",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 0.43
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.36
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.28
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 0.22
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Arsenal",
+          "value": 0.08
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.6
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Arsenal",
+          "value": 0.19
+        },
+        {
+          "name": "Oleksandr Zinchenko",
+          "team": "Arsenal",
+          "value": 0.19
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.19
+        },
+        {
+          "name": "Harry Toffolo",
+          "team": "Nott'm Forest",
+          "value": 0.18
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 10,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0.36,
+          "xa": 0.19,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "points": 10,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0.43,
+          "xa": 0.16,
+          "minutes": 77
+        },
+        {
+          "name": "Oleksandr Zinchenko",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0.19,
+          "minutes": 90
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "points": 5,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.22,
+          "xa": 0,
+          "minutes": 45
+        },
+        {
+          "name": "Gonzalo Montiel",
+          "team": "Nott'm Forest",
+          "points": 4,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.06,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-11-23|arsenal|nottmforest": {
+      "fixtureId": 111,
+      "season": "2425",
+      "date": "2024-11-23",
+      "kickoffTime": "2024-11-23T15:00:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Ethan Nwaneri",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Raheem Sterling",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Jorge Luiz Frello Filho",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.29
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.26
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.18
+        },
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 0.15
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 0.13
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.24
+        },
+        {
+          "name": "James Ward-Prowse",
+          "team": "Nott'm Forest",
+          "value": 0.18
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.15
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.11
+        },
+        {
+          "name": "Jorge Luiz Frello Filho",
+          "team": "Arsenal",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 13,
+          "bonus": 3,
+          "bps": 51,
+          "xg": 0.29,
+          "xa": 0.24,
+          "minutes": 82
+        },
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 2,
+          "bps": 36,
+          "xg": 0.06,
+          "xa": 0.01,
+          "minutes": 45
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0.26,
+          "xa": 0.15,
+          "minutes": 81
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.05,
+          "xa": 0.05,
+          "minutes": 87
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-02-26|nottmforest|arsenal": {
+      "fixtureId": 264,
+      "season": "2425",
+      "date": "2025-02-26",
+      "kickoffTime": "2025-02-26T19:30:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Nikola Milenković",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mikel Merino",
+          "team": "Arsenal",
+          "value": 0.22
+        },
+        {
+          "name": "Kieran Tierney",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 0.19
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 0.16
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 0.1
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.23
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.22
+        },
+        {
+          "name": "Mikel Merino",
+          "team": "Arsenal",
+          "value": 0.14
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.13
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.07
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "points": 9,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0.1,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.19,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 84
+        },
+        {
+          "name": "Murillo Santiago Costa dos Santos",
+          "team": "Nott'm Forest",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-09-13|arsenal|nottmforest": {
+      "fixtureId": 31,
+      "season": "2526",
+      "date": "2025-09-13",
+      "kickoffTime": "2025-09-13T11:30:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Martín Zubimendi Ibáñez",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Martín Zubimendi Ibáñez",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Cristhian Mosquera",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "value": 0.84
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 0.3
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.2
+        },
+        {
+          "name": "Martín Zubimendi Ibáñez",
+          "team": "Arsenal",
+          "value": 0.16
+        },
+        {
+          "name": "Ethan Nwaneri",
+          "team": "Arsenal",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Noni Madueke",
+          "team": "Arsenal",
+          "value": 0.71
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Arsenal",
+          "value": 0.44
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.26
+        },
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "value": 0.07
+        },
+        {
+          "name": "Cristhian Mosquera",
+          "team": "Arsenal",
+          "value": 0.04
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Martín Zubimendi Ibáñez",
+          "team": "Arsenal",
+          "points": 16,
+          "bonus": 3,
+          "bps": 52,
+          "xg": 0.16,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0.2,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 2,
+          "bps": 37,
+          "xg": 0.3,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Cristhian Mosquera",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.84,
+          "xa": 0.02,
+          "minutes": 67
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-01-17|nottmforest|arsenal": {
+      "fixtureId": 217,
+      "season": "2526",
+      "date": "2026-01-17",
+      "kickoffTime": "2026-01-17T17:30:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Arsenal",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.58
+        },
+        {
+          "name": "Gabriel Fernando de Jesus",
+          "team": "Arsenal",
+          "value": 0.51
+        },
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Nicolás Domínguez",
+          "team": "Nott'm Forest",
+          "value": 0.21
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "value": 0.5
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.46
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.44
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.38
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Arsenal",
+          "value": 0.22
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "points": 10,
+          "bonus": 3,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.14,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.09,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Murillo Costa dos Santos",
+          "team": "Nott'm Forest",
+          "points": 8,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.19,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

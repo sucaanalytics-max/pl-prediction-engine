@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-12-23|luton|newcastle": {
+      "fixtureId": 175,
+      "season": "2324",
+      "date": "2023-12-23",
+      "kickoffTime": "2023-12-23T15:00:00Z",
+      "homeTeam": "Luton",
+      "awayTeam": "Newcastle",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Andros Townsend",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Teden Mengi",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Lewis Hall",
+          "team": "Newcastle",
+          "value": 1
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Martin Dubravka",
+          "team": "Newcastle",
+          "value": 4
+        },
+        {
+          "name": "Thomas Kaminski",
+          "team": "Luton",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "value": 3
+        },
+        {
+          "name": "Andros Townsend",
+          "team": "Luton",
+          "value": 3
+        },
+        {
+          "name": "Amari'i Bell",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Andros Townsend",
+          "team": "Luton",
+          "value": 0.83
+        },
+        {
+          "name": "Callum Wilson",
+          "team": "Newcastle",
+          "value": 0.76
+        },
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "value": 0.57
+        },
+        {
+          "name": "Bruno Guimarães Rodriguez Moura",
+          "team": "Newcastle",
+          "value": 0.4
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 0.25
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Sean Longstaff",
+          "team": "Newcastle",
+          "value": 0.63
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 0.3
+        },
+        {
+          "name": "Kieran Trippier",
+          "team": "Newcastle",
+          "value": 0.26
+        },
+        {
+          "name": "Alexander Isak",
+          "team": "Newcastle",
+          "value": 0.2
+        },
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "value": 0.18
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Andros Townsend",
+          "team": "Luton",
+          "points": 11,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0.83,
+          "xa": 0.05,
+          "minutes": 80
+        },
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "points": 9,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.18,
+          "minutes": 90
+        },
+        {
+          "name": "Amari'i Bell",
+          "team": "Luton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 75
+        },
+        {
+          "name": "Thomas Kaminski",
+          "team": "Luton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel Osho",
+          "team": "Luton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-02-03|newcastle|luton": {
+      "fixtureId": 229,
+      "season": "2324",
+      "date": "2024-02-03",
+      "kickoffTime": "2024-02-03T15:00:00Z",
+      "homeTeam": "Newcastle",
+      "awayTeam": "Luton",
+      "homeGoals": 4,
+      "awayGoals": 4,
+      "scorers": [
+        {
+          "name": "Sean Longstaff",
+          "team": "Newcastle",
+          "value": 2
+        },
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Gabriel Osho",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Kieran Trippier",
+          "team": "Newcastle",
+          "value": 1
+        },
+        {
+          "name": "Harvey Barnes",
+          "team": "Newcastle",
+          "value": 1
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Carlton Morris",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Chiedozie Ogbene",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Kieran Trippier",
+          "team": "Newcastle",
+          "value": 1
+        },
+        {
+          "name": "Anthony Gordon",
+          "team": "Newcastle",
+          "value": 1
+        },
+        {
+          "name": "Lewis Miley",
+          "team": "Newcastle",
+          "value": 1
+        },
+        {
+          "name": "Bruno Guimarães Rodriguez Moura",
+          "team": "Newcastle",
+          "value": 1
+        },
+        {
+          "name": "Alfie Doughty",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Carlton Morris",
+          "team": "Luton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Albert Sambi Lokonga",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Jacob Murphy",
+          "team": "Newcastle",
+          "value": 1
+        },
+        {
+          "name": "Gabriel Osho",
+          "team": "Luton",
+          "value": 1
+        },
+        {
+          "name": "Dan Burn",
+          "team": "Newcastle",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Martin Dubravka",
+          "team": "Newcastle",
+          "value": 4
+        },
+        {
+          "name": "Thomas Kaminski",
+          "team": "Luton",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 3
+        },
+        {
+          "name": "Carlton Morris",
+          "team": "Luton",
+          "value": 2
+        },
+        {
+          "name": "Sean Longstaff",
+          "team": "Newcastle",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Sean Longstaff",
+          "team": "Newcastle",
+          "value": 0.91
+        },
+        {
+          "name": "Carlton Morris",
+          "team": "Luton",
+          "value": 0.82
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 0.61
+        },
+        {
+          "name": "Gabriel Osho",
+          "team": "Luton",
+          "value": 0.48
+        },
+        {
+          "name": "Kieran Trippier",
+          "team": "Newcastle",
+          "value": 0.33
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "value": 0.44
+        },
+        {
+          "name": "Bruno Guimarães Rodriguez Moura",
+          "team": "Newcastle",
+          "value": 0.3
+        },
+        {
+          "name": "Jacob Murphy",
+          "team": "Newcastle",
+          "value": 0.21
+        },
+        {
+          "name": "Carlton Morris",
+          "team": "Luton",
+          "value": 0.14
+        },
+        {
+          "name": "Callum Wilson",
+          "team": "Newcastle",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Ross Barkley",
+          "team": "Luton",
+          "points": 13,
+          "bonus": 3,
+          "bps": 54,
+          "xg": 0.61,
+          "xa": 0.44,
+          "minutes": 90
+        },
+        {
+          "name": "Sean Longstaff",
+          "team": "Newcastle",
+          "points": 13,
+          "bonus": 1,
+          "bps": 41,
+          "xg": 0.91,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Carlton Morris",
+          "team": "Luton",
+          "points": 11,
+          "bonus": 2,
+          "bps": 45,
+          "xg": 0.82,
+          "xa": 0.14,
+          "minutes": 78
+        },
+        {
+          "name": "Kieran Trippier",
+          "team": "Newcastle",
+          "points": 9,
+          "bonus": 0,
+          "bps": 38,
+          "xg": 0.33,
+          "xa": 0.08,
+          "minutes": 90
+        },
+        {
+          "name": "Elijah Adebayo",
+          "team": "Luton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.15,
+          "xa": 0.01,
+          "minutes": 87
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

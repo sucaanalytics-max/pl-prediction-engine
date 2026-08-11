@@ -1,0 +1,419 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-12-03|ipswich|crystalpalace": {
+      "fixtureId": 136,
+      "season": "2425",
+      "date": "2024-12-03",
+      "kickoffTime": "2024-12-03T19:30:00Z",
+      "homeTeam": "Ipswich",
+      "awayTeam": "Crystal Palace",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Jacob Greaves",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Dara O'Shea",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Cheick Doucouré",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Arijanet Muric",
+          "team": "Ipswich",
+          "value": 2
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 3
+        },
+        {
+          "name": "Maxence Lacroix",
+          "team": "Crystal Palace",
+          "value": 2
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 0.77
+        },
+        {
+          "name": "Liam Delap",
+          "team": "Ipswich",
+          "value": 0.27
+        },
+        {
+          "name": "Maxence Lacroix",
+          "team": "Crystal Palace",
+          "value": 0.19
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 0.19
+        },
+        {
+          "name": "Daniel Muñoz",
+          "team": "Crystal Palace",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "value": 0.28
+        },
+        {
+          "name": "Leif Davis",
+          "team": "Ipswich",
+          "value": 0.28
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 0.28
+        },
+        {
+          "name": "Wes Burns",
+          "team": "Ipswich",
+          "value": 0.06
+        },
+        {
+          "name": "Tyrick Mitchell",
+          "team": "Crystal Palace",
+          "value": 0.06
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "points": 8,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 0.77,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Maxence Lacroix",
+          "team": "Crystal Palace",
+          "points": 8,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0.19,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "points": 7,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Marc Guéhi",
+          "team": "Crystal Palace",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.09,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Tyrick Mitchell",
+          "team": "Crystal Palace",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0.06,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-03-08|crystalpalace|ipswich": {
+      "fixtureId": 274,
+      "season": "2425",
+      "date": "2025-03-08",
+      "kickoffTime": "2025-03-08T15:00:00Z",
+      "homeTeam": "Crystal Palace",
+      "awayTeam": "Ipswich",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jacob Greaves",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Ben Chilwell",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Chris Richards",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Adam Wharton",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Kalvin Phillips",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Julio Enciso",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Marc Guéhi",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 7
+        },
+        {
+          "name": "Alex Palmer",
+          "team": "Ipswich",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 3
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 2
+        },
+        {
+          "name": "Chris Richards",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 1.35
+        },
+        {
+          "name": "Jaden Philogene",
+          "team": "Ipswich",
+          "value": 0.65
+        },
+        {
+          "name": "Eddie Nketiah",
+          "team": "Crystal Palace",
+          "value": 0.63
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 0.58
+        },
+        {
+          "name": "Jacob Greaves",
+          "team": "Ipswich",
+          "value": 0.56
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Adam Wharton",
+          "team": "Crystal Palace",
+          "value": 0.64
+        },
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 0.46
+        },
+        {
+          "name": "Leif Davis",
+          "team": "Ipswich",
+          "value": 0.28
+        },
+        {
+          "name": "Eddie Nketiah",
+          "team": "Crystal Palace",
+          "value": 0.28
+        },
+        {
+          "name": "Marc Guéhi",
+          "team": "Crystal Palace",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "points": 11,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 1.35,
+          "xa": 0.46,
+          "minutes": 90
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "points": 10,
+          "bonus": 2,
+          "bps": 36,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Chris Richards",
+          "team": "Crystal Palace",
+          "points": 6,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0.09,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Daniel Muñoz",
+          "team": "Crystal Palace",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.44,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Maxence Lacroix",
+          "team": "Crystal Palace",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

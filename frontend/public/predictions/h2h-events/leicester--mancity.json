@@ -1,0 +1,410 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-12-29|leicester|mancity": {
+      "fixtureId": 187,
+      "season": "2425",
+      "date": "2024-12-29",
+      "kickoffTime": "2024-12-29T14:30:00Z",
+      "homeTeam": "Leicester",
+      "awayTeam": "Man City",
+      "homeGoals": 0,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Boubakary Soumaré",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Bilal El Khannouss",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Stefan Ortega Moreno",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jakub Stolarczyk",
+          "team": "Leicester",
+          "value": 3
+        },
+        {
+          "name": "Stefan Ortega Moreno",
+          "team": "Man City",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Manuel Akanji",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.87
+        },
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 0.74
+        },
+        {
+          "name": "James Justin",
+          "team": "Leicester",
+          "value": 0.42
+        },
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 0.21
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 0.08
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 0.51
+        },
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 0.45
+        },
+        {
+          "name": "Stephy Mavididi",
+          "team": "Leicester",
+          "value": 0.45
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.4
+        },
+        {
+          "name": "Conor Coady",
+          "team": "Leicester",
+          "value": 0.29
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "points": 14,
+          "bonus": 3,
+          "bps": 43,
+          "xg": 0.21,
+          "xa": 0.45,
+          "minutes": 90
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 8,
+          "bonus": 2,
+          "bps": 38,
+          "xg": 0.87,
+          "xa": 0.13,
+          "minutes": 90
+        },
+        {
+          "name": "Manuel Akanji",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Rico Lewis",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Nathan Aké",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 69
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-02|mancity|leicester": {
+      "fixtureId": 298,
+      "season": "2425",
+      "date": "2025-04-02",
+      "kickoffTime": "2025-04-02T18:45:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Leicester",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Omar Marmoush",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Luke Thomas",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Oliver Skipp",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "James Justin",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Nico González",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Mads Hermansen",
+          "team": "Leicester",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Omar Marmoush",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Omar Marmoush",
+          "team": "Man City",
+          "value": 1.45
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "value": 0.35
+        },
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 0.16
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 0.11
+        },
+        {
+          "name": "Ilkay Gündogan",
+          "team": "Man City",
+          "value": 0.1
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.59
+        },
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 0.48
+        },
+        {
+          "name": "Ilkay Gündogan",
+          "team": "Man City",
+          "value": 0.41
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 0.19
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "points": 9,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0.16,
+          "xa": 0.48,
+          "minutes": 84
+        },
+        {
+          "name": "Omar Marmoush",
+          "team": "Man City",
+          "points": 9,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 1.45,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Man City",
+          "points": 9,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0.35,
+          "xa": 0.15,
+          "minutes": 90
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.05,
+          "xa": 0.19,
+          "minutes": 90
+        },
+        {
+          "name": "Rúben Gato Alves Dias",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

@@ -35,8 +35,13 @@ Two separate data paths:
 
 ```bash
 # Pipeline tests (unittest, NOT pytest — no pytest config exists)
-# Locally the interpreter is `python3`; CI's setup-python provides `python`.
-PYTHONPATH=. python3 -m unittest discover -s pipeline/tests -v
+# Use the repo venv. Bare `python3` is a Homebrew 3.14 WITHOUT scipy, and the
+# suite degrades misleadingly under it: 56 import errors and 1187 tests instead
+# of 1309, which reads as a code regression rather than a missing interpreter.
+PYTHONPATH=. .venv/bin/python -m unittest discover -s pipeline/tests -v
+
+# Piping to `tail`/`head` masks the exit code — `cmd | tail` reports tail's
+# status, so a failing suite looks like a pass. Redirect, then check `$?`.
 
 # Frontend
 cd frontend && npm run test    # vitest run

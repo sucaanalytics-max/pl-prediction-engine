@@ -1,0 +1,421 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2526|2026-01-04|leeds|manutd": {
+      "fixtureId": 196,
+      "season": "2526",
+      "date": "2026-01-04",
+      "kickoffTime": "2026-01-04T12:30:00Z",
+      "homeTeam": "Leeds",
+      "awayTeam": "Man Utd",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Joshua Zirkzee",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Patrick Dorgu",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Senne Lammens",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Lucas Estella Perri",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 3
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "value": 0.8
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 0.32
+        },
+        {
+          "name": "Leny Yoro",
+          "team": "Man Utd",
+          "value": 0.31
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 0.28
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 0.46
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "value": 0.19
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 0.16
+        },
+        {
+          "name": "Joshua Zirkzee",
+          "team": "Man Utd",
+          "value": 0.15
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "points": 9,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0.15,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "points": 8,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "points": 7,
+          "bonus": 3,
+          "bps": 29,
+          "xg": 0.05,
+          "xa": 0.46,
+          "minutes": 90
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "points": 7,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.32,
+          "xa": 0.16,
+          "minutes": 86
+        },
+        {
+          "name": "Anton Stach",
+          "team": "Leeds",
+          "points": 4,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0.02,
+          "xa": 0.19,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-04-13|manutd|leeds": {
+      "fixtureId": 317,
+      "season": "2526",
+      "date": "2026-04-13",
+      "kickoffTime": "2026-04-13T19:00:00Z",
+      "homeTeam": "Man Utd",
+      "awayTeam": "Leeds",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 2
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Ethan Ampadu",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Matheus Santos Carneiro da Cunha",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "James Justin",
+          "team": "Leeds",
+          "value": 1
+        },
+        {
+          "name": "Luke Shaw",
+          "team": "Man Utd",
+          "value": 1
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Lisandro Martínez",
+          "team": "Man Utd",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Karl Darlow",
+          "team": "Leeds",
+          "value": 6
+        },
+        {
+          "name": "Senne Lammens",
+          "team": "Man Utd",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "value": 3
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 2
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Leeds",
+          "value": 1.31
+        },
+        {
+          "name": "Tanaka Ao",
+          "team": "Leeds",
+          "value": 0.42
+        },
+        {
+          "name": "Benjamin Sesko",
+          "team": "Man Utd",
+          "value": 0.31
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "value": 0.24
+        },
+        {
+          "name": "Pascal Struijk",
+          "team": "Leeds",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "value": 0.89
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "value": 0.49
+        },
+        {
+          "name": "Tanaka Ao",
+          "team": "Leeds",
+          "value": 0.47
+        },
+        {
+          "name": "Gabriel Gudmundsson",
+          "team": "Leeds",
+          "value": 0.29
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "team": "Man Utd",
+          "value": 0.19
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Noah Okafor",
+          "team": "Leeds",
+          "points": 15,
+          "bonus": 3,
+          "bps": 46,
+          "xg": 0.15,
+          "xa": 0.04,
+          "minutes": 73
+        },
+        {
+          "name": "Carlos Henrique Casimiro",
+          "team": "Man Utd",
+          "points": 9,
+          "bonus": 2,
+          "bps": 38,
+          "xg": 0.24,
+          "xa": 0.12,
+          "minutes": 90
+        },
+        {
+          "name": "Jayden Bogle",
+          "team": "Leeds",
+          "points": 6,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.89,
+          "minutes": 90
+        },
+        {
+          "name": "Brenden Aaronson",
+          "team": "Leeds",
+          "points": 5,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.1,
+          "xa": 0.03,
+          "minutes": 85
+        },
+        {
+          "name": "Bruno Borges Fernandes",
+          "team": "Man Utd",
+          "points": 4,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.02,
+          "xa": 0.49,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

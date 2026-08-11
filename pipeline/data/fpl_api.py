@@ -5,7 +5,7 @@ Fetches player stats, fixtures, injuries, and form data.
 import json
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Any, Dict, Optional, Tuple
 
 import pandas as pd
 
@@ -19,57 +19,128 @@ from pipeline.utils import fetch_with_retry
 logger = logging.getLogger(__name__)
 
 
-def fetch_bootstrap_static(force: bool = False) -> dict:
+SOURCE_NETWORK = "network"
+SOURCE_FRESH_CACHE = "cache"
+SOURCE_STALE_CACHE = "stale_cache"
+
+# Provenance describing where a fetched payload actually came from.
+Provenance = Dict[str, Any]
+
+
+def _cache_age_seconds(cache_path: Path) -> float:
+    """Age of a cache file in seconds, computed consistently in UTC."""
+    mtime = pd.Timestamp(cache_path.stat().st_mtime, unit="s", tz="UTC")
+    return (pd.Timestamp.now(tz="UTC") - mtime).total_seconds()
+
+
+def _fetch_cached_json(
+    url: str,
+    cache_path: Path,
+    ttl_hours: float,
+    force: bool,
+    allow_stale: bool,
+    label: str,
+) -> Tuple[Any, Provenance]:
+    """
+    Fetch JSON from `url`, caching to `cache_path` with a `ttl_hours` freshness window.
+
+    Returns ``(data, provenance)`` where ``provenance["source"]`` is one of
+    ``"network"``, ``"cache"`` (fresh, inside the TTL) or ``"stale_cache"``.
+
+    The two flags are independent and compose:
+
+    * ``force=True``      — ignore the cache entirely and require a live fetch.
+    * ``allow_stale=False`` — a network failure raises instead of silently
+      serving an arbitrarily old cache.
+
+    Any caller that timestamps a forecast MUST pass both. A stale bootstrap on
+    deadline day — exactly when the FPL API is most likely to fail — otherwise
+    produces a permanent record built on stale prices, a stale
+    ``chance_of_playing`` and a stale ``deadline_time``, with nothing in the
+    artifact revealing it. The GitHub Actions cache compounds this: its
+    ``restore-keys`` prefix has no run pin, so the restored cache can be
+    arbitrarily old.
+    """
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if cache_path.exists() and not force:
+        age = _cache_age_seconds(cache_path)
+        if age < ttl_hours * 3600:
+            logger.info("Loading cached %s (age %.0fs)", label, age)
+            return json.loads(cache_path.read_text()), {
+                "source": SOURCE_FRESH_CACHE,
+                "age_seconds": age,
+                "url": url,
+            }
+
+    logger.info("Fetching %s...", label)
+    try:
+        resp = fetch_with_retry(url, max_retries=3, timeout=30)
+        data = resp.json()
+        cache_path.write_text(json.dumps(data))
+        return data, {"source": SOURCE_NETWORK, "age_seconds": 0.0, "url": url}
+    except Exception as exc:
+        logger.error("%s fetch error: %s", label, exc)
+        if not allow_stale:
+            # Fail loudly. The caller has declared that a stale payload would
+            # be worse than no payload.
+            raise
+        if cache_path.exists():
+            age = _cache_age_seconds(cache_path)
+            logger.warning(
+                "Falling back to stale %s cache (age %.0fs)", label, age
+            )
+            return json.loads(cache_path.read_text()), {
+                "source": SOURCE_STALE_CACHE,
+                "age_seconds": age,
+                "url": url,
+            }
+        raise
+
+
+def fetch_bootstrap_static_with_provenance(
+    force: bool = False, allow_stale: bool = True
+) -> Tuple[dict, Provenance]:
+    """As :func:`fetch_bootstrap_static`, also returning fetch provenance."""
+    return _fetch_cached_json(
+        FPL_BOOTSTRAP,
+        DATA_RAW / "fpl" / "bootstrap_static.json",
+        ttl_hours=12,
+        force=force,
+        allow_stale=allow_stale,
+        label="FPL bootstrap-static",
+    )
+
+
+def fetch_bootstrap_static(force: bool = False, allow_stale: bool = True) -> dict:
     """
     Fetch FPL bootstrap-static endpoint.
     Contains all players, teams, events (gameweeks), and game settings.
     """
-    cache_dir = DATA_RAW / "fpl"
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    cache_path = cache_dir / "bootstrap_static.json"
-
-    if cache_path.exists() and not force:
-        age_hours = (pd.Timestamp.now() - pd.Timestamp(cache_path.stat().st_mtime, unit="s")).total_seconds() / 3600
-        if age_hours < 12:
-            logger.info("Loading cached FPL bootstrap-static")
-            return json.loads(cache_path.read_text())
-
-    logger.info("Fetching FPL bootstrap-static...")
-    try:
-        resp = fetch_with_retry(FPL_BOOTSTRAP, max_retries=3, timeout=30)
-        data = resp.json()
-        cache_path.write_text(json.dumps(data))
-        return data
-    except Exception as e:
-        logger.error(f"FPL API error: {e}")
-        if cache_path.exists():
-            logger.warning("Falling back to stale cache")
-            return json.loads(cache_path.read_text())
-        raise
+    data, _ = fetch_bootstrap_static_with_provenance(
+        force=force, allow_stale=allow_stale
+    )
+    return data
 
 
-def fetch_fixtures(force: bool = False) -> list:
+def fetch_fixtures_with_provenance(
+    force: bool = False, allow_stale: bool = True
+) -> Tuple[list, Provenance]:
+    """As :func:`fetch_fixtures`, also returning fetch provenance."""
+    return _fetch_cached_json(
+        FPL_FIXTURES,
+        DATA_RAW / "fpl" / "fixtures.json",
+        ttl_hours=1,
+        force=force,
+        allow_stale=allow_stale,
+        label="FPL fixtures",
+    )
+
+
+def fetch_fixtures(force: bool = False, allow_stale: bool = True) -> list:
     """Fetch all FPL fixtures for the season."""
-    cache_dir = DATA_RAW / "fpl"
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    cache_path = cache_dir / "fixtures.json"
-
-    if cache_path.exists() and not force:
-        age_hours = (pd.Timestamp.now() - pd.Timestamp(cache_path.stat().st_mtime, unit="s")).total_seconds() / 3600
-        if age_hours < 1:
-            return json.loads(cache_path.read_text())
-
-    logger.info("Fetching FPL fixtures...")
-    try:
-        resp = fetch_with_retry(FPL_FIXTURES, max_retries=3, timeout=30)
-        data = resp.json()
-        cache_path.write_text(json.dumps(data))
-        return data
-    except Exception as e:
-        logger.error(f"FPL fixtures error: {e}")
-        if cache_path.exists():
-            return json.loads(cache_path.read_text())
-        raise
+    data, _ = fetch_fixtures_with_provenance(force=force, allow_stale=allow_stale)
+    return data
 
 
 def get_current_gameweek(bootstrap: dict) -> int:
@@ -90,18 +161,16 @@ def get_upcoming_fixtures(bootstrap: dict, fixtures: list) -> pd.DataFrame:
     Get fixtures for the next gameweek.
     Returns DataFrame with home_team, away_team, kickoff, difficulty.
     """
-    import datetime
-
-    now = pd.Timestamp.utcnow().tz_localize(None)
+    now = pd.Timestamp.now(tz="UTC").tz_localize(None)
 
     def is_upcoming(fix: dict) -> bool:
-        """True if the match hasn't started yet (90-min buffer) and isn't marked finished."""
+        """True only before kickoff and while the fixture is unfinished."""
         if fix.get("finished"):
             return False
         kickoff = fix.get("kickoff_time")
         if kickoff:
             kt = pd.Timestamp(kickoff).tz_localize(None) if pd.Timestamp(kickoff).tzinfo is None else pd.Timestamp(kickoff).tz_convert(None)
-            return kt > now - pd.Timedelta(minutes=90)
+            return kt > now
         return True
 
     gw = get_current_gameweek(bootstrap)
@@ -201,6 +270,81 @@ def build_player_stats(bootstrap: dict) -> pd.DataFrame:
     df["available"] = df["status"].isin(["a", "d"])  # available or doubtful
 
     return df
+
+
+def build_league_table(bootstrap: dict, fixtures: list) -> list:
+    """Build current-season standings from completed FPL fixtures."""
+    team_map = update_fpl_team_map(bootstrap.get("teams", []))
+    standings = {
+        team_id: {
+            "team": team_name,
+            "played": 0,
+            "won": 0,
+            "drawn": 0,
+            "lost": 0,
+            "gf": 0,
+            "ga": 0,
+            "gd": 0,
+            "points": 0,
+            "form": [],
+        }
+        for team_id, team_name in team_map.items()
+    }
+
+    ordered_fixtures = sorted(
+        fixtures,
+        key=lambda f: f.get("kickoff_time") or "",
+    )
+    for fixture in ordered_fixtures:
+        home_score = fixture.get("team_h_score")
+        away_score = fixture.get("team_a_score")
+        if not fixture.get("finished") or home_score is None or away_score is None:
+            continue
+
+        home = standings.get(fixture.get("team_h"))
+        away = standings.get(fixture.get("team_a"))
+        if home is None or away is None:
+            continue
+
+        home["played"] += 1
+        away["played"] += 1
+        home["gf"] += int(home_score)
+        home["ga"] += int(away_score)
+        away["gf"] += int(away_score)
+        away["ga"] += int(home_score)
+
+        if home_score > away_score:
+            home["won"] += 1
+            away["lost"] += 1
+            home["points"] += 3
+            home["form"].append("W")
+            away["form"].append("L")
+        elif home_score < away_score:
+            away["won"] += 1
+            home["lost"] += 1
+            away["points"] += 3
+            home["form"].append("L")
+            away["form"].append("W")
+        else:
+            home["drawn"] += 1
+            away["drawn"] += 1
+            home["points"] += 1
+            away["points"] += 1
+            home["form"].append("D")
+            away["form"].append("D")
+
+    table = []
+    for row in standings.values():
+        row["gd"] = row["gf"] - row["ga"]
+        row["form"] = row["form"][-5:]
+        table.append(row)
+
+    table.sort(
+        key=lambda r: (-r["points"], -r["gd"], -r["gf"], r["team"])
+    )
+    for position, row in enumerate(table, start=1):
+        row["position"] = position
+    return table
 
 
 if __name__ == "__main__":

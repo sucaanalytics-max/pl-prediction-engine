@@ -44,6 +44,41 @@ def ranked_probability_score(pred_probs: List[float], actual_outcome: int) -> fl
     return float(rps)
 
 
+def _bin_masks(predictions: np.ndarray, n_bins: int) -> List[np.ndarray]:
+    """
+    Half-open bins ``[edge_i, edge_i+1)``, except the final bin which is closed
+    so a probability of exactly 1.0 is counted.
+
+    Left half-open everywhere else would drop ``p == 1.0`` from every bin. That
+    matters more than it sounds: the ECE numerator sums only over binned rows
+    while the denominator counts all of them, so dropped rows bias ECE
+    *downward* — and they are precisely the most confident predictions, the ones
+    whose miscalibration is most costly. The same omission silently deleted
+    those rows from the calibration curve.
+    """
+    predictions = np.asarray(predictions, dtype=float)
+    if predictions.size and (
+        predictions.min() < -1e-9 or predictions.max() > 1 + 1e-9
+    ):
+        raise ValueError(
+            "predictions must be probabilities in [0, 1]; got range "
+            f"[{predictions.min()}, {predictions.max()}]"
+        )
+    predictions = np.clip(predictions, 0.0, 1.0)
+
+    edges = np.linspace(0, 1, n_bins + 1)
+    masks = []
+    for i in range(n_bins):
+        lower = predictions >= edges[i]
+        upper = (
+            predictions <= edges[i + 1]
+            if i == n_bins - 1
+            else predictions < edges[i + 1]
+        )
+        masks.append(lower & upper)
+    return masks
+
+
 def expected_calibration_error(
     predictions: np.ndarray, actuals: np.ndarray, n_bins: int = 10
 ) -> float:
@@ -51,28 +86,43 @@ def expected_calibration_error(
     ECE: weighted average of |accuracy - confidence| per bin.
     Target: < 0.05.
     """
-    bin_edges = np.linspace(0, 1, n_bins + 1)
-    ece = 0
-    for i in range(n_bins):
-        mask = (predictions >= bin_edges[i]) & (predictions < bin_edges[i + 1])
-        if mask.sum() > 0:
-            bin_acc = actuals[mask].mean()
-            bin_conf = predictions[mask].mean()
-            ece += mask.sum() * abs(bin_acc - bin_conf)
-    return float(ece / max(len(predictions), 1))
+    predictions = np.asarray(predictions, dtype=float)
+    actuals = np.asarray(actuals, dtype=float)
+    if predictions.size == 0:
+        return 0.0
+
+    ece = 0.0
+    binned = 0
+    for mask in _bin_masks(predictions, n_bins):
+        count = int(mask.sum())
+        if count:
+            ece += count * abs(actuals[mask].mean() - predictions[mask].mean())
+            binned += count
+
+    # Every row now lands in exactly one bin, so this equals len(predictions).
+    # Asserting it keeps the numerator and denominator from silently diverging
+    # again if the binning changes.
+    if binned != len(predictions):
+        raise AssertionError(
+            f"binning dropped {len(predictions) - binned} of "
+            f"{len(predictions)} predictions"
+        )
+    return float(ece / binned)
 
 
 def calibration_curve_data(
     predictions: np.ndarray, actuals: np.ndarray, n_bins: int = 10
 ) -> Dict:
     """Generate calibration curve data for plotting."""
-    bin_edges = np.linspace(0, 1, n_bins + 1)
+    predictions = np.asarray(predictions, dtype=float)
+    actuals = np.asarray(actuals, dtype=float)
+
+    edges = np.linspace(0, 1, n_bins + 1)
     bins = []
-    for i in range(n_bins):
-        mask = (predictions >= bin_edges[i]) & (predictions < bin_edges[i + 1])
+    for i, mask in enumerate(_bin_masks(predictions, n_bins)):
         if mask.sum() > 0:
             bins.append({
-                "bin_center": float((bin_edges[i] + bin_edges[i + 1]) / 2),
+                "bin_center": float((edges[i] + edges[i + 1]) / 2),
                 "predicted_mean": float(predictions[mask].mean()),
                 "actual_mean": float(actuals[mask].mean()),
                 "count": int(mask.sum()),
@@ -128,8 +178,16 @@ def evaluate_predictions(
 
         # BTTS
         if "btts" in probs:
-            pred_btts.append(probs["btts"])
+            btts_value = probs["btts"]
+            if isinstance(btts_value, dict):
+                btts_value = btts_value.get("yes")
+            if btts_value is None:
+                continue
+            pred_btts.append(btts_value)
             act_btts.append(1 if r["FTHG"] > 0 and r["FTAG"] > 0 else 0)
+
+    if not pred_home:
+        return {"n_matches": 0}
 
     metrics = {
         "n_matches": len(pred_home),

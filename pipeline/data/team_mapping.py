@@ -4,7 +4,7 @@ Maps team names from Football-Data.co.uk, FBref, and FPL API to canonical names.
 """
 
 # Canonical name → [aliases from various sources]
-# Includes current 2025-26 PL teams plus historical teams for multi-season training data
+# Includes current 2026-27 PL teams plus historical teams for multi-season training data
 TEAM_ALIASES = {
     "Arsenal": ["Arsenal"],
     "Aston Villa": ["Aston Villa"],
@@ -13,9 +13,11 @@ TEAM_ALIASES = {
     "Brighton": ["Brighton", "Brighton and Hove Albion", "Brighton & Hove Albion"],
     "Burnley": ["Burnley"],
     "Chelsea": ["Chelsea"],
+    "Coventry City": ["Coventry City", "Coventry"],
     "Crystal Palace": ["Crystal Palace"],
     "Everton": ["Everton"],
     "Fulham": ["Fulham"],
+    "Hull City": ["Hull City", "Hull"],
     # Historical teams (relegated, kept for multi-season training data)
     "Ipswich": ["Ipswich", "Ipswich Town"],
     "Leeds": ["Leeds", "Leeds United"],
@@ -56,30 +58,29 @@ def normalize_team_name(name: str) -> str:
     return name.strip()  # Return original if no match
 
 
-# FPL API team ID → canonical name (2025-26 season)
-# Promoted: Burnley (3), Leeds (11), Sunderland (17)
-# Relegated: Ipswich, Leicester, Southampton
+# FPL API team ID → canonical name (2026-27 fallback).
+# Runtime code derives this map from bootstrap-static rather than relying on it.
 FPL_TEAM_MAP = {
     1: "Arsenal",
     2: "Aston Villa",
-    3: "Burnley",
-    4: "Bournemouth",
-    5: "Brentford",
-    6: "Brighton",
-    7: "Chelsea",
+    3: "Bournemouth",
+    4: "Brentford",
+    5: "Brighton",
+    6: "Chelsea",
+    7: "Coventry City",
     8: "Crystal Palace",
     9: "Everton",
     10: "Fulham",
-    11: "Leeds",
-    12: "Liverpool",
-    13: "Man City",
-    14: "Man United",
-    15: "Newcastle",
-    16: "Nott'm Forest",
-    17: "Sunderland",
-    18: "Tottenham",
-    19: "West Ham",
-    20: "Wolves",
+    11: "Hull City",
+    12: "Ipswich",
+    13: "Leeds",
+    14: "Liverpool",
+    15: "Man City",
+    16: "Man United",
+    17: "Newcastle",
+    18: "Nott'm Forest",
+    19: "Tottenham",
+    20: "Sunderland",
 }
 
 

@@ -1,0 +1,881 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-08-27|burnley|astonvilla": {
+      "fixtureId": 25,
+      "season": "2324",
+      "date": "2023-08-27",
+      "kickoffTime": "2023-08-27T13:00:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Aston Villa",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Matty Cash",
+          "team": "Aston Villa",
+          "value": 2
+        },
+        {
+          "name": "Moussa Diaby",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Jóhann Berg Gudmundsson",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Moussa Diaby",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Josh Cullen",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 3
+        },
+        {
+          "name": "Robin Olsen",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Matty Cash",
+          "team": "Aston Villa",
+          "value": 3
+        },
+        {
+          "name": "Moussa Diaby",
+          "team": "Aston Villa",
+          "value": 2
+        },
+        {
+          "name": "Boubacar Kamara",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Matty Cash",
+          "team": "Aston Villa",
+          "value": 1.35
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 0.78
+        },
+        {
+          "name": "Jay Rodriguez",
+          "team": "Burnley",
+          "value": 0.45
+        },
+        {
+          "name": "Nicolò Zaniolo",
+          "team": "Aston Villa",
+          "value": 0.21
+        },
+        {
+          "name": "Moussa Diaby",
+          "team": "Aston Villa",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Josh Cullen",
+          "team": "Burnley",
+          "value": 0.32
+        },
+        {
+          "name": "Ameen Al-Dakhil",
+          "team": "Burnley",
+          "value": 0.18
+        },
+        {
+          "name": "John McGinn",
+          "team": "Aston Villa",
+          "value": 0.15
+        },
+        {
+          "name": "Douglas Luiz Soares de Paulo",
+          "team": "Aston Villa",
+          "value": 0.13
+        },
+        {
+          "name": "Connor Roberts",
+          "team": "Burnley",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Matty Cash",
+          "team": "Aston Villa",
+          "points": 17,
+          "bonus": 3,
+          "bps": 45,
+          "xg": 1.35,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Moussa Diaby",
+          "team": "Aston Villa",
+          "points": 12,
+          "bonus": 2,
+          "bps": 42,
+          "xg": 0.18,
+          "xa": 0.1,
+          "minutes": 72
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 1,
+          "bps": 23,
+          "xg": 0.13,
+          "xa": 0,
+          "minutes": 80
+        },
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "points": 5,
+          "bonus": 0,
+          "bps": 17,
+          "xg": 0,
+          "xa": 0.08,
+          "minutes": 80
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "points": 5,
+          "bonus": 0,
+          "bps": 8,
+          "xg": 0.78,
+          "xa": 0.01,
+          "minutes": 85
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2023-12-30|astonvilla|burnley": {
+      "fixtureId": 191,
+      "season": "2324",
+      "date": "2023-12-30",
+      "kickoffTime": "2023-12-30T15:00:00Z",
+      "homeTeam": "Aston Villa",
+      "awayTeam": "Burnley",
+      "homeGoals": 3,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Leon Bailey",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Douglas Luiz Soares de Paulo",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Zeki Amdouni",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Moussa Diaby",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 2
+        },
+        {
+          "name": "Jhon Durán",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Jóhann Berg Gudmundsson",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Dara O'Shea",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Charlie Taylor",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Ezri Konsa Ngoyo",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "John McGinn",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Jacob Ramsey",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Sander Berge",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 4
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Douglas Luiz Soares de Paulo",
+          "team": "Aston Villa",
+          "value": 3
+        },
+        {
+          "name": "Zeki Amdouni",
+          "team": "Burnley",
+          "value": 2
+        },
+        {
+          "name": "Leon Bailey",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Moussa Diaby",
+          "team": "Aston Villa",
+          "value": 1.27
+        },
+        {
+          "name": "Douglas Luiz Soares de Paulo",
+          "team": "Aston Villa",
+          "value": 0.97
+        },
+        {
+          "name": "Zeki Amdouni",
+          "team": "Burnley",
+          "value": 0.53
+        },
+        {
+          "name": "Jacob Ramsey",
+          "team": "Aston Villa",
+          "value": 0.33
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 0.31
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 0.74
+        },
+        {
+          "name": "Ezri Konsa Ngoyo",
+          "team": "Aston Villa",
+          "value": 0.29
+        },
+        {
+          "name": "Jacob Ramsey",
+          "team": "Aston Villa",
+          "value": 0.28
+        },
+        {
+          "name": "Alexandre Moreno Lopera",
+          "team": "Aston Villa",
+          "value": 0.22
+        },
+        {
+          "name": "Victor da Silva",
+          "team": "Burnley",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Douglas Luiz Soares de Paulo",
+          "team": "Aston Villa",
+          "points": 10,
+          "bonus": 3,
+          "bps": 32,
+          "xg": 0.97,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Leon Bailey",
+          "team": "Aston Villa",
+          "points": 8,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.16,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "points": 8,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0.31,
+          "xa": 0.74,
+          "minutes": 90
+        },
+        {
+          "name": "Zeki Amdouni",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0.53,
+          "xa": 0.12,
+          "minutes": 58
+        },
+        {
+          "name": "Moussa Diaby",
+          "team": "Aston Villa",
+          "points": 7,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 1.27,
+          "xa": 0.08,
+          "minutes": 81
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-10-05|astonvilla|burnley": {
+      "fixtureId": 62,
+      "season": "2526",
+      "date": "2025-10-05",
+      "kickoffTime": "2025-10-05T13:00:00Z",
+      "homeTeam": "Aston Villa",
+      "awayTeam": "Burnley",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Donyell Malen",
+          "team": "Aston Villa",
+          "value": 2
+        },
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Morgan Rogers",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Boubacar Kamara",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Quilindschy Hartman",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Emiliano Buendía Stati",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Martin Dúbravka",
+          "team": "Burnley",
+          "value": 5
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Donyell Malen",
+          "team": "Aston Villa",
+          "value": 3
+        },
+        {
+          "name": "Josh Cullen",
+          "team": "Burnley",
+          "value": 2
+        },
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Donyell Malen",
+          "team": "Aston Villa",
+          "value": 0.49
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 0.26
+        },
+        {
+          "name": "Morgan Rogers",
+          "team": "Aston Villa",
+          "value": 0.24
+        },
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Burnley",
+          "value": 0.23
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Aston Villa",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "value": 0.58
+        },
+        {
+          "name": "Boubacar Kamara",
+          "team": "Aston Villa",
+          "value": 0.19
+        },
+        {
+          "name": "John McGinn",
+          "team": "Aston Villa",
+          "value": 0.18
+        },
+        {
+          "name": "Quilindschy Hartman",
+          "team": "Burnley",
+          "value": 0.17
+        },
+        {
+          "name": "Evann Guessand",
+          "team": "Aston Villa",
+          "value": 0.17
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Donyell Malen",
+          "team": "Aston Villa",
+          "points": 15,
+          "bonus": 3,
+          "bps": 46,
+          "xg": 0.49,
+          "xa": 0.04,
+          "minutes": 83
+        },
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0.23,
+          "xa": 0,
+          "minutes": 21
+        },
+        {
+          "name": "Josh Cullen",
+          "team": "Burnley",
+          "points": 6,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0.1,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Boubacar Kamara",
+          "team": "Aston Villa",
+          "points": 5,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.02,
+          "xa": 0.19,
+          "minutes": 90
+        },
+        {
+          "name": "Morgan Rogers",
+          "team": "Aston Villa",
+          "points": 5,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.24,
+          "xa": 0.08,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-05-10|burnley|astonvilla": {
+      "fixtureId": 352,
+      "season": "2526",
+      "date": "2026-05-10",
+      "kickoffTime": "2026-05-10T13:00:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Aston Villa",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Jaidon Anthony",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "John McGinn",
+          "team": "Aston Villa",
+          "value": 1
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Tyrone Mings",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Max Weiß",
+          "team": "Burnley",
+          "value": 5
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "value": 3
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Aston Villa",
+          "value": 2
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 0.97
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Aston Villa",
+          "value": 0.75
+        },
+        {
+          "name": "Jaidon Anthony",
+          "team": "Burnley",
+          "value": 0.57
+        },
+        {
+          "name": "John McGinn",
+          "team": "Aston Villa",
+          "value": 0.19
+        },
+        {
+          "name": "Zeki Amdouni",
+          "team": "Burnley",
+          "value": 0.17
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "John McGinn",
+          "team": "Aston Villa",
+          "value": 0.61
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "team": "Burnley",
+          "value": 0.42
+        },
+        {
+          "name": "Lucas Digne",
+          "team": "Aston Villa",
+          "value": 0.12
+        },
+        {
+          "name": "Loum Tchaouna",
+          "team": "Burnley",
+          "value": 0.1
+        },
+        {
+          "name": "Matty Cash",
+          "team": "Aston Villa",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Ollie Watkins",
+          "team": "Aston Villa",
+          "points": 9,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0.14,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Ross Barkley",
+          "team": "Aston Villa",
+          "points": 9,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.75,
+          "xa": 0.05,
+          "minutes": 79
+        },
+        {
+          "name": "Jaidon Anthony",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.57,
+          "xa": 0.01,
+          "minutes": 87
+        },
+        {
+          "name": "Emiliano Martínez Romero",
+          "team": "Aston Villa",
+          "points": 6,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "team": "Burnley",
+          "points": 5,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.02,
+          "xa": 0.42,
+          "minutes": 68
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

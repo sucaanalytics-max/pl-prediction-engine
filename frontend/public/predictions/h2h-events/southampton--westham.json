@@ -1,0 +1,405 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-12-26|southampton|westham": {
+      "fixtureId": 179,
+      "season": "2425",
+      "date": "2024-12-26",
+      "kickoffTime": "2024-12-26T15:00:00Z",
+      "homeTeam": "Southampton",
+      "awayTeam": "West Ham",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Niclas Füllkrug",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Tomáš Souček",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Guido Rodríguez",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Nathan Wood-Gordon",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Łukasz Fabiański",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Konstantinos Mavropanos",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Jean-Clair Todibo",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.88
+        },
+        {
+          "name": "Paul Onuachu",
+          "team": "Southampton",
+          "value": 0.84
+        },
+        {
+          "name": "Carlos Soler",
+          "team": "West Ham",
+          "value": 0.32
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 0.21
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 0.17
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Kyle Walker-Peters",
+          "team": "Southampton",
+          "value": 0.56
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 0.33
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 0.21
+        },
+        {
+          "name": "Tomáš Souček",
+          "team": "West Ham",
+          "value": 0.18
+        },
+        {
+          "name": "Taylor Harwood-Bellis",
+          "team": "Southampton",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "points": 9,
+          "bonus": 3,
+          "bps": 39,
+          "xg": 0.13,
+          "xa": 0.21,
+          "minutes": 90
+        },
+        {
+          "name": "Konstantinos Mavropanos",
+          "team": "West Ham",
+          "points": 8,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "points": 8,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.88,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Jean-Clair Todibo",
+          "team": "West Ham",
+          "points": 7,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 71
+        },
+        {
+          "name": "Emerson Palmieri dos Santos",
+          "team": "West Ham",
+          "points": 6,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.07,
+          "xa": 0.05,
+          "minutes": 87
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-19|westham|southampton": {
+      "fixtureId": 330,
+      "season": "2425",
+      "date": "2025-04-19",
+      "kickoffTime": "2025-04-19T14:00:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Southampton",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Kyle Walker-Peters",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Niclas Füllkrug",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Max Kilman",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Paul Onuachu",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Vladimír Coufal",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Southampton",
+          "value": 3
+        },
+        {
+          "name": "Emerson Palmieri dos Santos",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 0.17
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.16
+        },
+        {
+          "name": "Kamaldeen Sulemana",
+          "team": "Southampton",
+          "value": 0.16
+        },
+        {
+          "name": "Luis Guilherme Lira dos Santos",
+          "team": "West Ham",
+          "value": 0.15
+        },
+        {
+          "name": "Tyler Dibling",
+          "team": "Southampton",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 0.42
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 0.2
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 0.12
+        },
+        {
+          "name": "Ryan Manning",
+          "team": "Southampton",
+          "value": 0.08
+        },
+        {
+          "name": "Niclas Füllkrug",
+          "team": "West Ham",
+          "value": 0.07
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Southampton",
+          "points": 10,
+          "bonus": 3,
+          "bps": 36,
+          "xg": 0.07,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "points": 9,
+          "bonus": 1,
+          "bps": 22,
+          "xg": 0.16,
+          "xa": 0.04,
+          "minutes": 85
+        },
+        {
+          "name": "Emerson Palmieri dos Santos",
+          "team": "West Ham",
+          "points": 8,
+          "bonus": 2,
+          "bps": 24,
+          "xg": 0.11,
+          "xa": 0.03,
+          "minutes": 79
+        },
+        {
+          "name": "Niclas Füllkrug",
+          "team": "West Ham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0.11,
+          "xa": 0.07,
+          "minutes": 79
+        },
+        {
+          "name": "Kyle Walker-Peters",
+          "team": "Southampton",
+          "points": 5,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0.09,
+          "xa": 0.02,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

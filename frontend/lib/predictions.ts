@@ -23,6 +23,11 @@ export interface OverUnder {
   under: number;
 }
 
+export interface BothTeamsToScore {
+  yes: number;
+  no: number;
+}
+
 export interface ShapFeature {
   feature: string;
   value: number;
@@ -82,6 +87,21 @@ export interface GoalscorerPrediction {
 
 export interface OddsComparison {
   h2h?: Record<string, { home: number; draw: number; away: number }>;
+  totals?: Record<
+    string,
+    {
+      over?: number;
+      under?: number;
+      bookmaker_over?: string;
+      bookmaker_under?: string;
+    }
+  >;
+  btts?: {
+    yes?: number;
+    no?: number;
+    bookmaker_yes?: string;
+    bookmaker_no?: string;
+  };
   bookmaker_home?: string;
   bookmaker_draw?: string;
   bookmaker_away?: string;
@@ -117,7 +137,7 @@ export interface MatchPrediction {
   probabilities: {
     "1x2": Probabilities1X2;
     over_under: Record<string, OverUnder>;
-    btts: number;
+    btts: BothTeamsToScore;
     clean_sheet?: { home: number; away: number };
     // flat dict: {"0-0": prob, "1-0": prob, ...}
     correct_score: Record<string, number>;
@@ -198,6 +218,19 @@ export interface HealthData {
   gameweek: number;
   n_predictions: number;
   status: string;
+  /**
+   * The version of `run_pipeline.py` that produced this file.
+   *
+   * Load-bearing, not metadata. `model_metrics` and `calibration` below are
+   * emitted only from 4.1.0 onward, so a *successful* run of an older producer
+   * yields a healthy file with them absent — indistinguishable, without this
+   * field, from a current run that measured nothing. Freshness checks cannot see
+   * it because the file is not stale; it is complete for the version that wrote
+   * it. This interface previously omitted the field, which is exactly why the
+   * drift went unnoticed.
+   */
+  pipeline_version?: string;
+  forecast_validation_status?: "collecting" | "evaluated";
   model_metrics?: Record<string, number>;
   calibration?: {
     bins: Array<{
@@ -226,6 +259,8 @@ export interface TeamStanding {
 
 export interface H2HMatch {
   date: string;
+  home_team?: string;
+  away_team?: string;
   home_goals: number;
   away_goals: number;
   season: string;
@@ -238,6 +273,58 @@ export interface H2HRecord {
   draws: number;
   away_wins: number;
   matches: H2HMatch[];
+}
+
+export interface HistoricalStatPlayer {
+  name: string;
+  team: string;
+  value: number;
+}
+
+export interface HistoricalTopPerformer {
+  name: string;
+  team: string;
+  points: number;
+  bonus: number;
+  bps: number;
+  xg: number;
+  xa: number;
+  minutes: number;
+}
+
+export interface HistoricalMatchEvents {
+  fixtureId: number;
+  season: string;
+  date: string;
+  kickoffTime: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeGoals: number;
+  awayGoals: number;
+  scorers: HistoricalStatPlayer[];
+  assists: HistoricalStatPlayer[];
+  ownGoals: HistoricalStatPlayer[];
+  yellowCards: HistoricalStatPlayer[];
+  redCards: HistoricalStatPlayer[];
+  saves: HistoricalStatPlayer[];
+  penaltiesSaved: HistoricalStatPlayer[];
+  penaltiesMissed: HistoricalStatPlayer[];
+  bonus: HistoricalStatPlayer[];
+  xgLeaders: HistoricalStatPlayer[];
+  xaLeaders: HistoricalStatPlayer[];
+  topPerformers: HistoricalTopPerformer[];
+  source: {
+    label: string;
+    url: string;
+    attribution: string;
+  };
+}
+
+export interface HistoricalMatchEventsFile {
+  schemaVersion: 1;
+  generatedAt: string;
+  caveats: string[];
+  records: Record<string, HistoricalMatchEvents>;
 }
 
 const getBasePath = () =>
@@ -298,17 +385,73 @@ export async function loadTable(): Promise<TeamStanding[]> {
 export async function loadH2H(homeTeam: string, awayTeam: string): Promise<H2HRecord | null> {
   try {
     const all = await fetchWithFallback<H2HRecord[]>("h2h.json");
-    return (
+    const found =
       all.find(
-        (r) =>
-          (r.home_team === homeTeam && r.away_team === awayTeam) ||
-          (r.home_team === awayTeam && r.away_team === homeTeam)
-      ) ?? null
-    );
+        (record) =>
+          (record.home_team === homeTeam && record.away_team === awayTeam) ||
+          (record.home_team === awayTeam && record.away_team === homeTeam)
+      ) ?? null;
+    if (!found || found.home_team === homeTeam) return found;
+    return {
+      ...found,
+      home_team: homeTeam,
+      away_team: awayTeam,
+      home_wins: found.away_wins,
+      away_wins: found.home_wins,
+    };
   } catch (err) {
     console.error("Failed to load H2H:", err);
     return null;
   }
+}
+
+function canonicalTeam(value: string) {
+  const compact = value.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const aliases: Record<string, string> = {
+    manchesterunited: "manutd",
+    manunited: "manutd",
+    manchestercity: "mancity",
+    nottinghamforest: "nottmforest",
+    sheffieldunited: "sheffieldutd",
+    tottenhamhotspur: "spurs",
+    tottenham: "spurs",
+    wolverhamptonwanderers: "wolves",
+  };
+  return aliases[compact] ?? compact;
+}
+
+export async function loadH2HEvents(
+  homeTeam: string,
+  awayTeam: string
+): Promise<HistoricalMatchEventsFile | null> {
+  try {
+    const pairSlug = [canonicalTeam(homeTeam), canonicalTeam(awayTeam)]
+      .sort()
+      .join("--");
+    return await fetchWithFallback<HistoricalMatchEventsFile>(
+      `h2h-events/${pairSlug}.json`
+    );
+  } catch {
+    return null;
+  }
+}
+
+export function findHistoricalMatchEvents(
+  file: HistoricalMatchEventsFile | null,
+  match: H2HMatch,
+  fallbackHome: string,
+  fallbackAway: string
+) {
+  if (!file) return null;
+  const homeTeam = match.home_team ?? fallbackHome;
+  const awayTeam = match.away_team ?? fallbackAway;
+  const key = [
+    match.season,
+    match.date.slice(0, 10),
+    canonicalTeam(homeTeam),
+    canonicalTeam(awayTeam),
+  ].join("|");
+  return file.records[key] ?? null;
 }
 
 export function getMatchById(
@@ -355,9 +498,27 @@ export function correctScoreToGrid(
   return grid;
 }
 
-/** Get half-Kelly stake percentage (handles both pipeline v1 and v2 field names) */
+/**
+ * Half-Kelly stake percentage, handling both pipeline v1 and v2 field names.
+ *
+ * Staking is real money, so an ambiguous input must never produce a larger
+ * stake than intended. The current pipeline emits the explicit `half_kelly_pct`
+ * and `full_kelly_pct` (see `pipeline/risk/kelly.py`); the legacy `kelly_pct`
+ * does not say which fraction it holds. Because a bare "kelly" conventionally
+ * means the *full* fraction, it is halved rather than trusted as already-halved
+ * — under-staking is recoverable, over-staking is not.
+ */
 export function getHalfKellyPct(bet: ValueBet): number {
-  return bet.half_kelly_pct ?? bet.kelly_pct ?? 0;
+  if (bet.half_kelly_pct !== undefined) return bet.half_kelly_pct;
+  if (bet.full_kelly_pct !== undefined) return bet.full_kelly_pct / 2;
+  if (bet.kelly_pct !== undefined) {
+    console.warn(
+      `Ambiguous legacy kelly_pct (${bet.kelly_pct}) for "${bet.market}"; ` +
+        "halving it as full-Kelly. Re-export this data with half_kelly_pct."
+    );
+    return bet.kelly_pct / 2;
+  }
+  return 0;
 }
 
 /** Get market label for display */

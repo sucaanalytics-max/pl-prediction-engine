@@ -10,12 +10,12 @@ Transforms raw match data into model-ready features:
   - FBref passing features
 """
 import logging
-from typing import Optional
+from typing import Optional, Tuple
 
 import numpy as np
 import pandas as pd
 
-from pipeline.config import ROLLING_WINDOWS, ELO, DERBIES
+from pipeline.config import ROLLING_WINDOWS, ELO, DERBIES, CURRENT_SEASON
 
 logger = logging.getLogger(__name__)
 
@@ -279,20 +279,23 @@ def add_h2h_features(matches: pd.DataFrame) -> pd.DataFrame:
     for _, row in matches.iterrows():
         h, a = row["HomeTeam"], row["AwayTeam"]
         key = tuple(sorted([h, a]))
-        record = h2h_cache.get(key, {"hw": 0, "d": 0, "aw": 0, "n": 0})
+        record = h2h_cache.get(
+            key,
+            {"wins": {key[0]: 0, key[1]: 0}, "d": 0, "n": 0},
+        )
         total = max(record["n"], 1)
-        h2h_home_wins.append(record["hw"] / total)
+        h2h_home_wins.append(record["wins"].get(h, 0) / total)
         h2h_draws.append(record["d"] / total)
-        h2h_away_wins.append(record["aw"] / total)
+        h2h_away_wins.append(record["wins"].get(a, 0) / total)
 
         if pd.notna(row.get("FTR")):
             result = row["FTR"]
             if result == "H":
-                record["hw"] += 1
+                record["wins"][h] = record["wins"].get(h, 0) + 1
             elif result == "D":
                 record["d"] += 1
             else:
-                record["aw"] += 1
+                record["wins"][a] = record["wins"].get(a, 0) + 1
             record["n"] += 1
             h2h_cache[key] = record
 
@@ -485,6 +488,77 @@ def engineer_features(
 
     logger.info(f"Feature engineering complete: {matches.shape[1]} columns, {len(matches)} matches")
     return matches
+
+
+def engineer_training_and_upcoming_features(
+    matches: pd.DataFrame,
+    upcoming: pd.DataFrame,
+    fbref_features: Optional[dict] = None,
+    player_stats: Optional[pd.DataFrame] = None,
+    referee_profiles: Optional[dict] = None,
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Engineer one chronological frame, then split training and upcoming rows.
+
+    Upcoming fixtures must pass through the same stateful Elo, rolling-form,
+    rest, H2H, squad, and external-data transformations as historical rows.
+    Looking up a previous match with the same teams is not a valid substitute
+    for constructing the fixture's current feature vector.
+    """
+    history = matches.copy()
+    history["_is_upcoming"] = False
+
+    if upcoming is None or upcoming.empty:
+        engineered = engineer_features(
+            history,
+            fbref_features=fbref_features,
+            player_stats=player_stats,
+            referee_profiles=referee_profiles,
+        )
+        return engineered.drop(columns=["_is_upcoming"]), engineered.iloc[0:0].copy()
+
+    fixture_rows = []
+    for _, fixture in upcoming.iterrows():
+        kickoff = pd.to_datetime(fixture.get("kickoff"), utc=True, errors="coerce")
+        if pd.isna(kickoff):
+            kickoff = pd.Timestamp.now(tz="UTC")
+        kickoff_naive = kickoff.tz_convert(None)
+        home = fixture["home_team"]
+        away = fixture["away_team"]
+        stable_id = f"{kickoff_naive.strftime('%Y%m%d')}_{home}_{away}".replace(" ", "_")
+
+        fixture_rows.append({
+            "Date": kickoff_naive,
+            "HomeTeam": home,
+            "AwayTeam": away,
+            "FTHG": np.nan,
+            "FTAG": np.nan,
+            "FTR": np.nan,
+            "HTHG": np.nan,
+            "HTAG": np.nan,
+            "HTR": np.nan,
+            "Referee": fixture.get("referee"),
+            "season": CURRENT_SEASON,
+            "match_id": stable_id,
+            "_is_upcoming": True,
+        })
+
+    combined = pd.concat([history, pd.DataFrame(fixture_rows)], ignore_index=True, sort=False)
+    combined = combined.sort_values(["Date", "_is_upcoming"], kind="stable").reset_index(drop=True)
+    engineered = engineer_features(
+        combined,
+        fbref_features=fbref_features,
+        player_stats=player_stats,
+        referee_profiles=referee_profiles,
+    )
+
+    training_features = engineered[~engineered["_is_upcoming"]].drop(
+        columns=["_is_upcoming"]
+    )
+    upcoming_features = engineered[engineered["_is_upcoming"]].drop(
+        columns=["_is_upcoming"]
+    )
+    return training_features.reset_index(drop=True), upcoming_features.reset_index(drop=True)
 
 
 if __name__ == "__main__":

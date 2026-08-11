@@ -1,0 +1,1047 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-02-10|mancity|everton": {
+      "fixtureId": 236,
+      "season": "2324",
+      "date": "2024-02-10",
+      "kickoffTime": "2024-02-10T12:30:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Everton",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 2
+        }
+      ],
+      "assists": [
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Nathan Aké",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Nathan Aké",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "John Stones",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.68
+        },
+        {
+          "name": "Manuel Akanji",
+          "team": "Man City",
+          "value": 0.21
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 0.21
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.2
+        },
+        {
+          "name": "Ben Godfrey",
+          "team": "Everton",
+          "value": 0.2
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.39
+        },
+        {
+          "name": "Julián Álvarez",
+          "team": "Man City",
+          "value": 0.22
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.18
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.11
+        },
+        {
+          "name": "Rodrigo Hernandez",
+          "team": "Man City",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 13,
+          "bonus": 3,
+          "bps": 57,
+          "xg": 0.68,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Nathan Aké",
+          "team": "Man City",
+          "points": 11,
+          "bonus": 2,
+          "bps": 33,
+          "xg": 0.11,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "John Stones",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Ederson Santana de Moraes",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Rúben Gato Alves Dias",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.08,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-12-26|mancity|everton": {
+      "fixtureId": 176,
+      "season": "2425",
+      "date": "2024-12-26",
+      "kickoffTime": "2024-12-26T12:30:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Everton",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Séamus Coleman",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Orel Mangala",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 4
+        },
+        {
+          "name": "Stefan Ortega Moreno",
+          "team": "Man City",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "penaltiesMissed": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "bonus": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.82
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "value": 0.67
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "value": 0.27
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.24
+        },
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 0.22
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.71
+        },
+        {
+          "name": "Ilkay Gündogan",
+          "team": "Man City",
+          "value": 0.62
+        },
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 0.34
+        },
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 0.2
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 3,
+          "bps": 32,
+          "xg": 0.24,
+          "xa": 0.01,
+          "minutes": 80
+        },
+        {
+          "name": "Bernardo Veiga de Carvalho e Silva",
+          "team": "Man City",
+          "points": 9,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0.27,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 1,
+          "bps": 22,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "points": 5,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0,
+          "xa": 0.09,
+          "minutes": 74
+        },
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "points": 3,
+          "bonus": 1,
+          "bps": 22,
+          "xg": 0.22,
+          "xa": 0.34,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-19|everton|mancity": {
+      "fixtureId": 324,
+      "season": "2425",
+      "date": "2025-04-19",
+      "kickoffTime": "2025-04-19T14:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Man City",
+      "homeGoals": 0,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Matheus Luiz Nunes",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Ilkay Gündogan",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Michael Keane",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Tim Iroegbunam",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 4
+        },
+        {
+          "name": "Stefan Ortega Moreno",
+          "team": "Man City",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Matheus Luiz Nunes",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Rúben Gato Alves Dias",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 0.86
+        },
+        {
+          "name": "Omar Marmoush",
+          "team": "Man City",
+          "value": 0.63
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 0.33
+        },
+        {
+          "name": "Kevin De Bruyne",
+          "team": "Man City",
+          "value": 0.22
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.19
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Matheus Luiz Nunes",
+          "team": "Man City",
+          "value": 0.55
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 0.18
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 0.13
+        },
+        {
+          "name": "Ilkay Gündogan",
+          "team": "Man City",
+          "value": 0.13
+        },
+        {
+          "name": "Sávio 'Savinho' Moreira de Oliveira",
+          "team": "Man City",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "points": 11,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0.86,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Matheus Luiz Nunes",
+          "team": "Man City",
+          "points": 8,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.02,
+          "xa": 0.55,
+          "minutes": 90
+        },
+        {
+          "name": "Rúben Gato Alves Dias",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Joško Gvardiol",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.07,
+          "xa": 0.02,
+          "minutes": 12
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-10-18|mancity|everton": {
+      "fixtureId": 76,
+      "season": "2526",
+      "date": "2025-10-18",
+      "kickoffTime": "2025-10-18T14:00:00Z",
+      "homeTeam": "Man City",
+      "awayTeam": "Everton",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 2
+        }
+      ],
+      "assists": [
+        {
+          "name": "Sávio Moreira de Oliveira",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Tyler Dibling",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 5
+        },
+        {
+          "name": "Gianluigi Donnarumma",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Matheus Nunes",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.98
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 0.6
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.36
+        },
+        {
+          "name": "Tijjani Reijnders",
+          "team": "Man City",
+          "value": 0.3
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 0.27
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Phil Foden",
+          "team": "Man City",
+          "value": 0.59
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.56
+        },
+        {
+          "name": "Sávio Moreira de Oliveira",
+          "team": "Man City",
+          "value": 0.33
+        },
+        {
+          "name": "Rico Lewis",
+          "team": "Man City",
+          "value": 0.24
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.19
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 13,
+          "bonus": 3,
+          "bps": 62,
+          "xg": 0.98,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "points": 11,
+          "bonus": 2,
+          "bps": 37,
+          "xg": 0.27,
+          "xa": 0.17,
+          "minutes": 84
+        },
+        {
+          "name": "Matheus Nunes",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0.02,
+          "xa": 0.19,
+          "minutes": 90
+        },
+        {
+          "name": "Rúben dos Santos Gato Alves Dias",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Gianluigi Donnarumma",
+          "team": "Man City",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-05-04|everton|mancity": {
+      "fixtureId": 346,
+      "season": "2526",
+      "date": "2026-05-04",
+      "kickoffTime": "2026-05-04T19:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Man City",
+      "homeGoals": 3,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 2
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "Merlin Röhl",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Marc Guéhi",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Rayan Cherki",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Michael Keane",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Gianluigi Donnarumma",
+          "team": "Man City",
+          "value": 1
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Gianluigi Donnarumma",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 3
+        },
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "value": 1.33
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.89
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "value": 0.53
+        },
+        {
+          "name": "Rayan Cherki",
+          "team": "Man City",
+          "value": 0.26
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 0.24
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Mateo Kovačić",
+          "team": "Man City",
+          "value": 0.3
+        },
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "value": 0.27
+        },
+        {
+          "name": "Rayan Cherki",
+          "team": "Man City",
+          "value": 0.23
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 0.2
+        },
+        {
+          "name": "Nico O'Reilly",
+          "team": "Man City",
+          "value": 0.2
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jérémy Doku",
+          "team": "Man City",
+          "points": 15,
+          "bonus": 3,
+          "bps": 68,
+          "xg": 0.11,
+          "xa": 0.27,
+          "minutes": 90
+        },
+        {
+          "name": "Thierno Barry",
+          "team": "Everton",
+          "points": 11,
+          "bonus": 2,
+          "bps": 55,
+          "xg": 1.33,
+          "xa": 0,
+          "minutes": 26
+        },
+        {
+          "name": "Erling Haaland",
+          "team": "Man City",
+          "points": 7,
+          "bonus": 1,
+          "bps": 32,
+          "xg": 0.53,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Jake O'Brien",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 3,
+          "xg": 0.17,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "points": 5,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.2,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

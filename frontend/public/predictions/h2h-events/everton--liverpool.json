@@ -1,0 +1,1046 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-04-24|everton|liverpool": {
+      "fixtureId": 285,
+      "season": "2324",
+      "date": "2024-04-24",
+      "kickoffTime": "2024-04-24T19:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Liverpool",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Darwin Núñez Ribeiro",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 7
+        },
+        {
+          "name": "Alisson Ramses Becker",
+          "team": "Liverpool",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.67
+        },
+        {
+          "name": "Darwin Núñez Ribeiro",
+          "team": "Liverpool",
+          "value": 0.6
+        },
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 0.38
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Everton",
+          "value": 0.29
+        },
+        {
+          "name": "Ben Godfrey",
+          "team": "Everton",
+          "value": 0.23
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 0.42
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "value": 0.27
+        },
+        {
+          "name": "Trent Alexander-Arnold",
+          "team": "Liverpool",
+          "value": 0.21
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.17
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "points": 15,
+          "bonus": 3,
+          "bps": 40,
+          "xg": 0.11,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "points": 10,
+          "bonus": 2,
+          "bps": 36,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 34,
+          "xg": 0.03,
+          "xa": 0.09,
+          "minutes": 90
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0.29,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Dwight McNeil",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.11,
+          "xa": 0.27,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-02-12|everton|liverpool": {
+      "fixtureId": 144,
+      "season": "2425",
+      "date": "2025-02-12",
+      "kickoffTime": "2025-02-12T19:30:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Liverpool",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Tim Iroegbunam",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Conor Bradley",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Jesper Lindstrøm",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Abdoulaye Doucouré",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Alisson Ramses Becker",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 2
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 0.65
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.27
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.19
+        },
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 0.13
+        },
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "value": 0.11
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.13
+        },
+        {
+          "name": "Jack Harrison",
+          "team": "Everton",
+          "value": 0.09
+        },
+        {
+          "name": "Idrissa Gueye",
+          "team": "Everton",
+          "value": 0.06
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 0.05
+        },
+        {
+          "name": "Tim Iroegbunam",
+          "team": "Everton",
+          "value": 0.05
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "points": 13,
+          "bonus": 3,
+          "bps": 48,
+          "xg": 0.27,
+          "xa": 0.13,
+          "minutes": 90
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "points": 8,
+          "bonus": 2,
+          "bps": 31,
+          "xg": 0.65,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0.19,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "points": 7,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.09,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "team": "Everton",
+          "points": 4,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-02|liverpool|everton": {
+      "fixtureId": 297,
+      "season": "2425",
+      "date": "2025-04-02",
+      "kickoffTime": "2025-04-02T19:00:00Z",
+      "homeTeam": "Liverpool",
+      "awayTeam": "Everton",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Darwin Núñez Ribeiro",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Ibrahima Konaté",
+          "team": "Liverpool",
+          "value": 0.47
+        },
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "value": 0.38
+        },
+        {
+          "name": "Carlos Alcaraz Durán",
+          "team": "Everton",
+          "value": 0.32
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 0.31
+        },
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 0.27
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Alexis Mac Allister",
+          "team": "Liverpool",
+          "value": 0.27
+        },
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "value": 0.27
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "value": 0.15
+        },
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "value": 0.11
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Luis Díaz",
+          "team": "Liverpool",
+          "points": 9,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 0.27,
+          "xa": 0.27,
+          "minutes": 85
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Andrew Robertson",
+          "team": "Liverpool",
+          "points": 7,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0.07,
+          "xa": 0.15,
+          "minutes": 90
+        },
+        {
+          "name": "Diogo Teixeira da Silva",
+          "team": "Liverpool",
+          "points": 7,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.38,
+          "xa": 0.02,
+          "minutes": 74
+        },
+        {
+          "name": "Ibrahima Konaté",
+          "team": "Liverpool",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.47,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-09-20|liverpool|everton": {
+      "fixtureId": 46,
+      "season": "2526",
+      "date": "2025-09-20",
+      "kickoffTime": "2025-09-20T11:30:00Z",
+      "homeTeam": "Liverpool",
+      "awayTeam": "Everton",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Idrissa Gana Gueye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Hugo Ekitiké",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Ryan Gravenberch",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Ryan Gravenberch",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Florian Wirtz",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Alisson Becker",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Ryan Gravenberch",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Hugo Ekitiké",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Idrissa Gana Gueye",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Hugo Ekitiké",
+          "team": "Liverpool",
+          "value": 0.32
+        },
+        {
+          "name": "Idrissa Gana Gueye",
+          "team": "Everton",
+          "value": 0.26
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 0.2
+        },
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 0.19
+        },
+        {
+          "name": "Ryan Gravenberch",
+          "team": "Liverpool",
+          "value": 0.13
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ryan Gravenberch",
+          "team": "Liverpool",
+          "value": 0.19
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.19
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "team": "Everton",
+          "value": 0.17
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "value": 0.16
+        },
+        {
+          "name": "Jack Grealish",
+          "team": "Everton",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Ryan Gravenberch",
+          "team": "Liverpool",
+          "points": 15,
+          "bonus": 3,
+          "bps": 48,
+          "xg": 0.13,
+          "xa": 0.19,
+          "minutes": 90
+        },
+        {
+          "name": "Idrissa Gana Gueye",
+          "team": "Everton",
+          "points": 10,
+          "bonus": 1,
+          "bps": 35,
+          "xg": 0.26,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Hugo Ekitiké",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 2,
+          "bps": 39,
+          "xg": 0.32,
+          "xa": 0.06,
+          "minutes": 66
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.16,
+          "minutes": 85
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "points": 5,
+          "bonus": 0,
+          "bps": 14,
+          "xg": 0.12,
+          "xa": 0.19,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-04-19|everton|liverpool": {
+      "fixtureId": 325,
+      "season": "2526",
+      "date": "2026-04-19",
+      "kickoffTime": "2026-04-19T13:00:00Z",
+      "homeTeam": "Everton",
+      "awayTeam": "Liverpool",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 1
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "James Garner",
+          "team": "Everton",
+          "value": 1
+        },
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jordan Pickford",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Giorgi Mamardashvili",
+          "team": "Liverpool",
+          "value": 2
+        },
+        {
+          "name": "Freddie Woodman",
+          "team": "Liverpool",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 3
+        },
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 3
+        },
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "value": 0.52
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "value": 0.47
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.36
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "value": 0.23
+        },
+        {
+          "name": "James Tarkowski",
+          "team": "Everton",
+          "value": 0.13
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "value": 0.64
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "value": 0.27
+        },
+        {
+          "name": "Florian Wirtz",
+          "team": "Liverpool",
+          "value": 0.25
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "team": "Liverpool",
+          "value": 0.22
+        },
+        {
+          "name": "Curtis Jones",
+          "team": "Liverpool",
+          "value": 0.2
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Mohamed Salah",
+          "team": "Liverpool",
+          "points": 10,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0.52,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Norberto Bercique Gomes Betuncal",
+          "team": "Everton",
+          "points": 9,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0.47,
+          "xa": 0,
+          "minutes": 72
+        },
+        {
+          "name": "Virgil van Dijk",
+          "team": "Liverpool",
+          "points": 8,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0.23,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "team": "Everton",
+          "points": 6,
+          "bonus": 1,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.64,
+          "minutes": 90
+        },
+        {
+          "name": "Cody Gakpo",
+          "team": "Liverpool",
+          "points": 5,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.36,
+          "xa": 0.27,
+          "minutes": 83
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

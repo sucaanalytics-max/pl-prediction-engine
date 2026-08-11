@@ -1,0 +1,1007 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-04-02|nottmforest|fulham": {
+      "fixtureId": 305,
+      "season": "2324",
+      "date": "2024-04-02",
+      "kickoffTime": "2024-04-02T18:30:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Fulham",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Tosin Adarabioyo",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Murillo Santiago Costa dos Santos",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Danilo dos Santos de Oliveira",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Matt Turner",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 0.46
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.44
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 0.41
+        },
+        {
+          "name": "João Palhinha Gonçalves",
+          "team": "Fulham",
+          "value": 0.31
+        },
+        {
+          "name": "Anthony Elanga",
+          "team": "Nott'm Forest",
+          "value": 0.22
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 0.83
+        },
+        {
+          "name": "Willian Borges da Silva",
+          "team": "Fulham",
+          "value": 0.29
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.18
+        },
+        {
+          "name": "Harrison Reed",
+          "team": "Fulham",
+          "value": 0.17
+        },
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "points": 13,
+          "bonus": 3,
+          "bps": 43,
+          "xg": 0.44,
+          "xa": 0.18,
+          "minutes": 76
+        },
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "points": 8,
+          "bonus": 2,
+          "bps": 34,
+          "xg": 0.03,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Tosin Adarabioyo",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.14,
+          "xa": 0.03,
+          "minutes": 90
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "points": 7,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.46,
+          "xa": 0.03,
+          "minutes": 69
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "points": 6,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.06,
+          "xa": 0.83,
+          "minutes": 70
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-09-28|nottmforest|fulham": {
+      "fixtureId": 59,
+      "season": "2425",
+      "date": "2024-09-28",
+      "kickoffTime": "2024-09-28T14:00:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Fulham",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Harrison Reed",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Murillo Santiago Costa dos Santos",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Joachim Andersen",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 0.91
+        },
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 0.16
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 0.15
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 0.15
+        },
+        {
+          "name": "Nikola Milenković",
+          "team": "Nott'm Forest",
+          "value": 0.14
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "value": 0.31
+        },
+        {
+          "name": "Ryan Yates",
+          "team": "Nott'm Forest",
+          "value": 0.16
+        },
+        {
+          "name": "Murillo Santiago Costa dos Santos",
+          "team": "Nott'm Forest",
+          "value": 0.15
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.14
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "team": "Nott'm Forest",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "points": 9,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 0.91,
+          "xa": 0.03,
+          "minutes": 82
+        },
+        {
+          "name": "Joachim Andersen",
+          "team": "Fulham",
+          "points": 8,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.06,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.04,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.01,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "points": 6,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.05,
+          "xa": 0.06,
+          "minutes": 68
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-02-15|fulham|nottmforest": {
+      "fixtureId": 244,
+      "season": "2425",
+      "date": "2025-02-15",
+      "kickoffTime": "2025-02-15T15:00:00Z",
+      "homeTeam": "Fulham",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 8
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "value": 3
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "value": 0.56
+        },
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 0.51
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.23
+        },
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "value": 0.2
+        },
+        {
+          "name": "Rodrigo Muniz Carvalho",
+          "team": "Fulham",
+          "value": 0.17
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "value": 0.75
+        },
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "value": 0.25
+        },
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.18
+        },
+        {
+          "name": "Andreas Hoelgebaum Pereira",
+          "team": "Fulham",
+          "value": 0.1
+        },
+        {
+          "name": "Raúl Jiménez",
+          "team": "Fulham",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Chris Wood",
+          "team": "Nott'm Forest",
+          "points": 9,
+          "bonus": 3,
+          "bps": 33,
+          "xg": 0.14,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "team": "Fulham",
+          "points": 9,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0.56,
+          "xa": 0.03,
+          "minutes": 81
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "points": 8,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.16,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Adama Traoré",
+          "team": "Fulham",
+          "points": 6,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.2,
+          "xa": 0.75,
+          "minutes": 89
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "points": 5,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.05,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-12-22|fulham|nottmforest": {
+      "fixtureId": 165,
+      "season": "2526",
+      "date": "2025-12-22",
+      "kickoffTime": "2025-12-22T20:00:00Z",
+      "homeTeam": "Fulham",
+      "awayTeam": "Nott'm Forest",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Kevin Santos Lopes de Macedo",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "John Victor Maciel Furtado",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Nicolás Domínguez",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Murillo Costa dos Santos",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Joachim Andersen",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Nikola Milenković",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Jorge Cuenca Barreno",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Raúl Jiménez Rodríguez",
+          "team": "Fulham",
+          "value": 1.29
+        },
+        {
+          "name": "Igor Jesus Maciel da Cruz",
+          "team": "Nott'm Forest",
+          "value": 0.34
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.13
+        },
+        {
+          "name": "Kevin Santos Lopes de Macedo",
+          "team": "Fulham",
+          "value": 0.11
+        },
+        {
+          "name": "Saša Lukić",
+          "team": "Fulham",
+          "value": 0.06
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 0.26
+        },
+        {
+          "name": "Omari Hutchinson",
+          "team": "Nott'm Forest",
+          "value": 0.15
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 0.14
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 0.1
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "team": "Nott'm Forest",
+          "value": 0.06
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "points": 10,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.1,
+          "minutes": 90
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "points": 9,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0.26,
+          "minutes": 90
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Joachim Andersen",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Kevin Santos Lopes de Macedo",
+          "team": "Fulham",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.11,
+          "xa": 0.03,
+          "minutes": 77
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-03-15|nottmforest|fulham": {
+      "fixtureId": 298,
+      "season": "2526",
+      "date": "2026-03-15",
+      "kickoffTime": "2026-03-15T14:00:00Z",
+      "homeTeam": "Nott'm Forest",
+      "awayTeam": "Fulham",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Joachim Andersen",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Elliot Anderson",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Neco Williams",
+          "team": "Nott'm Forest",
+          "value": 1
+        },
+        {
+          "name": "Antonee Robinson",
+          "team": "Fulham",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 2
+        },
+        {
+          "name": "Matz Sels",
+          "team": "Nott'm Forest",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 3
+        },
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "value": 2
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Taiwo Awoniyi",
+          "team": "Nott'm Forest",
+          "value": 0.54
+        },
+        {
+          "name": "Josh King",
+          "team": "Fulham",
+          "value": 0.39
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "value": 0.36
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.15
+        },
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "value": 0.08
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Alex Iwobi",
+          "team": "Fulham",
+          "value": 0.23
+        },
+        {
+          "name": "Elliot Anderson",
+          "team": "Nott'm Forest",
+          "value": 0.23
+        },
+        {
+          "name": "Harry Wilson",
+          "team": "Fulham",
+          "value": 0.2
+        },
+        {
+          "name": "Ibrahim Sangaré",
+          "team": "Nott'm Forest",
+          "value": 0.19
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "value": 0.03
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Ola Aina",
+          "team": "Nott'm Forest",
+          "points": 10,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.08,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Calvin Bassey",
+          "team": "Fulham",
+          "points": 9,
+          "bonus": 3,
+          "bps": 34,
+          "xg": 0.36,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Bernd Leno",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Joachim Andersen",
+          "team": "Fulham",
+          "points": 7,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Kenny Tete",
+          "team": "Fulham",
+          "points": 6,
+          "bonus": 0,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

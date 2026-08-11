@@ -1,0 +1,1078 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-04-23|arsenal|chelsea": {
+      "fixtureId": 281,
+      "season": "2324",
+      "date": "2024-04-23",
+      "kickoffTime": "2024-04-23T19:00:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Chelsea",
+      "homeGoals": 5,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Alfie Gilchrist",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Đorđe Petrović",
+          "team": "Chelsea",
+          "value": 6
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1.03
+        },
+        {
+          "name": "Axel Disasi",
+          "team": "Chelsea",
+          "value": 0.92
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.57
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.54
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 0.41
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1.13
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Conor Gallagher",
+          "team": "Chelsea",
+          "value": 0.12
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 0.1
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "points": 20,
+          "bonus": 3,
+          "bps": 51,
+          "xg": 0.3,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "points": 14,
+          "bonus": 1,
+          "bps": 37,
+          "xg": 1.03,
+          "xa": 0.1,
+          "minutes": 71
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "points": 11,
+          "bonus": 2,
+          "bps": 44,
+          "xg": 0.08,
+          "xa": 1.13,
+          "minutes": 90
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 0,
+          "bps": 30,
+          "xg": 0.18,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 0,
+          "bps": 29,
+          "xg": 0.57,
+          "xa": 0.05,
+          "minutes": 71
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-11-10|chelsea|arsenal": {
+      "fixtureId": 103,
+      "season": "2425",
+      "date": "2024-11-10",
+      "kickoffTime": "2024-11-10T16:30:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Arsenal",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Kai Havertz",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Benjamin White",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.48
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 0.44
+        },
+        {
+          "name": "Wesley Fofana",
+          "team": "Chelsea",
+          "value": 0.36
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 0.2
+        },
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 0.19
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 0.52
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 0.31
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 0.26
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.23
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.23
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "points": 9,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0.06,
+          "xa": 0.52,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 1,
+          "bps": 25,
+          "xg": 0.48,
+          "xa": 0,
+          "minutes": 70
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "points": 7,
+          "bonus": 2,
+          "bps": 26,
+          "xg": 0.11,
+          "xa": 0.23,
+          "minutes": 90
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "points": 4,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0,
+          "xa": 0.05,
+          "minutes": 22
+        },
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "points": 2,
+          "bonus": 0,
+          "bps": 20,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-03-16|arsenal|chelsea": {
+      "fixtureId": 281,
+      "season": "2425",
+      "date": "2025-03-16",
+      "kickoffTime": "2025-03-16T13:30:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Chelsea",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Mikel Merino",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Thomas Partey",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Wesley Fofana",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 4
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "Mikel Merino",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.22
+        },
+        {
+          "name": "Mikel Merino",
+          "team": "Arsenal",
+          "value": 0.17
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.16
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 0.12
+        },
+        {
+          "name": "Christopher Nkunku",
+          "team": "Chelsea",
+          "value": 0.1
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.27
+        },
+        {
+          "name": "Martin Ødegaard",
+          "team": "Arsenal",
+          "value": 0.21
+        },
+        {
+          "name": "Tyrique George",
+          "team": "Chelsea",
+          "value": 0.11
+        },
+        {
+          "name": "Gabriel Martinelli Silva",
+          "team": "Arsenal",
+          "value": 0.09
+        },
+        {
+          "name": "Leandro Trossard",
+          "team": "Arsenal",
+          "value": 0.06
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 3,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 3,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Mikel Merino",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0.17,
+          "xa": 0.04,
+          "minutes": 90
+        },
+        {
+          "name": "David Raya Martin",
+          "team": "Arsenal",
+          "points": 6,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 5,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-11-30|chelsea|arsenal": {
+      "fixtureId": 123,
+      "season": "2526",
+      "date": "2025-11-30",
+      "kickoffTime": "2025-11-30T16:30:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Arsenal",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Myles Lewis-Skelly",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Cristhian Mosquera",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Viktor Gyökeres",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Piero Hincapié",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Martín Zubimendi Ibáñez",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "value": 0.65
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 0.3
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 0.2
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.19
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.58
+        },
+        {
+          "name": "Piero Hincapié",
+          "team": "Arsenal",
+          "value": 0.43
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 0.2
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 0.16
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.07
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Mikel Merino Zazón",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 2,
+          "bps": 28,
+          "xg": 0.65,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Chelsea",
+          "points": 9,
+          "bonus": 1,
+          "bps": 26,
+          "xg": 0.07,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "points": 8,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0.02,
+          "xa": 0.16,
+          "minutes": 90
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "points": 5,
+          "bonus": 0,
+          "bps": 21,
+          "xg": 0.19,
+          "xa": 0.58,
+          "minutes": 90
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "points": 4,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0,
+          "xa": 0.07,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-03-01|arsenal|chelsea": {
+      "fixtureId": 271,
+      "season": "2526",
+      "date": "2026-03-01",
+      "kickoffTime": "2026-03-01T16:30:00Z",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Chelsea",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Piero Hincapié",
+          "team": "Arsenal",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Jorrel Hato",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 1
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "David Raya Martín",
+          "team": "Arsenal",
+          "value": 4
+        },
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 3
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 2
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 0.57
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "value": 0.41
+        },
+        {
+          "name": "Mamadou Sarr",
+          "team": "Chelsea",
+          "value": 0.35
+        },
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "value": 0.26
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Arsenal",
+          "value": 0.25
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "value": 0.57
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 0.35
+        },
+        {
+          "name": "Bukayo Saka",
+          "team": "Arsenal",
+          "value": 0.29
+        },
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Chelsea",
+          "value": 0.24
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "value": 0.24
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "William Saliba",
+          "team": "Arsenal",
+          "points": 10,
+          "bonus": 2,
+          "bps": 26,
+          "xg": 0.26,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Gabriel dos Santos Magalhães",
+          "team": "Arsenal",
+          "points": 9,
+          "bonus": 3,
+          "bps": 27,
+          "xg": 0.03,
+          "xa": 0.57,
+          "minutes": 90
+        },
+        {
+          "name": "Jurriën Timber",
+          "team": "Arsenal",
+          "points": 8,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.41,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 2,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.35,
+          "minutes": 90
+        },
+        {
+          "name": "Declan Rice",
+          "team": "Arsenal",
+          "points": 5,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.04,
+          "xa": 0.24,
+          "minutes": 75
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

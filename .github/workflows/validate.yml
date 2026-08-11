@@ -34,65 +34,25 @@ jobs:
       - name: Run validation
         env:
           PYTHONPATH: ${{ github.workspace }}
+          # The weekly job runs the full suite, including the multi-minute
+          # walk-forward backtests. The daily job runs the fast selection only,
+          # so a slow or newly flaky FPL test can never block the prediction
+          # commit that the betting pages depend on.
+          FPL_SLOW_TESTS: "1"
         run: |
-          python -c "
-          import json, logging, sys
-          from datetime import datetime, timezone
-          from pipeline.validation.metrics import brier_score, expected_calibration_error
-          import numpy as np
-
-          logging.basicConfig(level=logging.INFO)
-
-          try:
-              with open('predictions/latest.json') as f:
-                  preds = json.load(f)
-              print(f'Loaded {len(preds.get(\"predictions\", []))} predictions')
-              print(f'Gameweek: {preds.get(\"metadata\", {}).get(\"gameweek\")}')
-
-              generated_at = preds.get('metadata', {}).get('generated_at', '')
-              stale = False
-              if generated_at:
-                  try:
-                      gen_dt = datetime.fromisoformat(generated_at.rstrip('Z')).replace(tzinfo=timezone.utc)
-                      age_hours = (datetime.now(timezone.utc) - gen_dt).total_seconds() / 3600
-                      stale = age_hours > 48
-                      print(f'Predictions age: {age_hours:.1f} hours (stale={stale})')
-                  except Exception:
-                      pass
-
-              health = {
-                  'last_updated': generated_at,
-                  'gameweek': preds.get('metadata', {}).get('gameweek'),
-                  'n_predictions': len(preds.get('predictions', [])),
-                  'status': 'stale' if stale else 'healthy',
-                  'pipeline_version': preds.get('metadata', {}).get('pipeline_version'),
-                  'validated_at': datetime.now(timezone.utc).isoformat() + 'Z',
-              }
-
-              with open('predictions/health.json', 'w') as f:
-                  json.dump(health, f, indent=2)
-
-              print('Health check passed')
-          except FileNotFoundError:
-              print('No predictions/latest.json found — pipeline may not have run yet')
-              health = {'status': 'no_predictions', 'validated_at': datetime.now(timezone.utc).isoformat() + 'Z'}
-              import os; os.makedirs('predictions', exist_ok=True)
-              with open('predictions/health.json', 'w') as f:
-                  json.dump(health, f, indent=2)
-          except Exception as e:
-              print(f'Validation error: {e}')
-              health = {'status': 'error', 'error': str(e), 'validated_at': datetime.now(timezone.utc).isoformat() + 'Z'}
-              import os; os.makedirs('predictions', exist_ok=True)
-              with open('predictions/health.json', 'w') as f:
-                  json.dump(health, f, indent=2)
-              sys.exit(1)
-          "
+          python -m unittest discover -s pipeline/tests -v
+          python -m pipeline.validation.run_validation
 
       - name: Commit health metrics
+        env:
+          FORBID_PATHS: '^(predictions|frontend/public/predictions)/fpl/'
         run: |
+          set -euo pipefail
+          cp predictions/health.json frontend/public/predictions/health.json
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add predictions/health.json
-          git diff --staged --quiet || git commit -m "Update model health — $(date -u +%Y-%m-%d)"
-          git pull --rebase origin main
-          git push
+          # Previously an unretried `git pull --rebase && git push`, which fails
+          # the whole weekly run whenever the daily job pushes concurrently.
+          .github/scripts/commit_and_push.sh \
+            "Update model health — $(date -u +%Y-%m-%d)" \
+            predictions/health.json frontend/public/predictions/health.json

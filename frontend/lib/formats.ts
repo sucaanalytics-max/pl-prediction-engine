@@ -2,6 +2,8 @@
  * Number formatting utilities for the PL Prediction Engine.
  */
 
+export const DISPLAY_TIME_ZONE = "Asia/Kolkata";
+
 /** Format a probability as a percentage string (e.g. 0.523 → "52.3%") */
 export function pct(value: number, decimals: number = 1): string {
   return `${(value * 100).toFixed(decimals)}%`;
@@ -21,20 +23,75 @@ export function xg(value: number): string {
 export function shortDate(dateStr: string): string {
   const d = new Date(dateStr);
   return d.toLocaleDateString("en-GB", {
+    timeZone: DISPLAY_TIME_ZONE,
     weekday: "short",
     day: "numeric",
     month: "short",
   });
 }
 
+/**
+ * Format a date-only API value without allowing the browser timezone to move it
+ * into the previous or next day (e.g. "2025-12-30T00:00:00" → "30 Dec 2025").
+ */
+export function calendarDate(dateStr: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateStr);
+  if (!match) return dateStr;
+
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  ];
+  const monthIndex = Number(match[2]) - 1;
+  if (monthIndex < 0 || monthIndex >= monthNames.length) return dateStr;
+
+  return `${match[3]} ${monthNames[monthIndex]} ${match[1]}`;
+}
+
 /** Format a date string to "15:00" style */
 export function kickoffTime(dateStr: string): string {
   const d = new Date(dateStr);
   return d.toLocaleTimeString("en-GB", {
+    timeZone: DISPLAY_TIME_ZONE,
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
-  });
+  }) + " IST";
+}
+
+/** Format a timestamp as a deterministic Kolkata date and time. */
+export function istDateTime(dateStr: string): string {
+  const date = new Date(dateStr);
+  if (Number.isNaN(date.getTime())) return dateStr;
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: DISPLAY_TIME_ZONE,
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(date) + " IST";
+}
+
+/** Compact deadline format used in navigation and cards. */
+export function compactIstDeadline(dateStr?: string): string {
+  if (!dateStr) return "Fri 21 Aug · 23:00 IST";
+  const date = new Date(dateStr);
+  const day = new Intl.DateTimeFormat("en-GB", {
+    timeZone: DISPLAY_TIME_ZONE,
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+  }).format(date);
+  const time = new Intl.DateTimeFormat("en-GB", {
+    timeZone: DISPLAY_TIME_ZONE,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(date);
+  return `${day} · ${time} IST`;
 }
 
 /** Format a feature name for display (snake_case → Title Case) */

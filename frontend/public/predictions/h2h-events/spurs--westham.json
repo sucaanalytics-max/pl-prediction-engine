@@ -1,0 +1,1078 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-04-02|westham|spurs": {
+      "fixtureId": 306,
+      "season": "2324",
+      "date": "2024-04-02",
+      "kickoffTime": "2024-04-02T19:15:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Spurs",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Kurt Zouma",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Michail Antonio",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Micky van de Ven",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Lukasz Fabianski",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Kurt Zouma",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.41
+        },
+        {
+          "name": "Michail Antonio",
+          "team": "West Ham",
+          "value": 0.39
+        },
+        {
+          "name": "Kurt Zouma",
+          "team": "West Ham",
+          "value": 0.27
+        },
+        {
+          "name": "Tomáš Souček",
+          "team": "West Ham",
+          "value": 0.18
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.15
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.62
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "value": 0.53
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.18
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "team": "Spurs",
+          "value": 0.17
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 0.16
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Kurt Zouma",
+          "team": "West Ham",
+          "points": 10,
+          "bonus": 2,
+          "bps": 22,
+          "xg": 0.27,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "points": 9,
+          "bonus": 3,
+          "bps": 23,
+          "xg": 0.41,
+          "xa": 0.18,
+          "minutes": 89
+        },
+        {
+          "name": "Timo Werner",
+          "team": "Spurs",
+          "points": 7,
+          "bonus": 2,
+          "bps": 22,
+          "xg": 0.04,
+          "xa": 0.53,
+          "minutes": 81
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "points": 5,
+          "bonus": 0,
+          "bps": 16,
+          "xg": 0.15,
+          "xa": 0.62,
+          "minutes": 90
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "points": 3,
+          "bonus": 0,
+          "bps": 15,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-10-19|spurs|westham": {
+      "fixtureId": 79,
+      "season": "2425",
+      "date": "2024-10-19",
+      "kickoffTime": "2024-10-19T11:30:00Z",
+      "homeTeam": "Spurs",
+      "awayTeam": "West Ham",
+      "homeGoals": 4,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Yves Bissouma",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Destiny Udogie",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "ownGoals": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "yellowCards": [
+        {
+          "name": "Tomáš Souček",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Micky van de Ven",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Carlos Soler",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 4
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Yves Bissouma",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Brennan Johnson",
+          "team": "Spurs",
+          "value": 0.89
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 0.7
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "value": 0.41
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "value": 0.17
+        },
+        {
+          "name": "Yves Bissouma",
+          "team": "Spurs",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Emerson Palmieri dos Santos",
+          "team": "West Ham",
+          "value": 0.67
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "value": 0.6
+        },
+        {
+          "name": "Destiny Udogie",
+          "team": "Spurs",
+          "value": 0.51
+        },
+        {
+          "name": "Pedro Porro",
+          "team": "Spurs",
+          "value": 0.15
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Yves Bissouma",
+          "team": "Spurs",
+          "points": 10,
+          "bonus": 3,
+          "bps": 44,
+          "xg": 0.16,
+          "xa": 0.02,
+          "minutes": 80
+        },
+        {
+          "name": "Dejan Kulusevski",
+          "team": "Spurs",
+          "points": 9,
+          "bonus": 2,
+          "bps": 35,
+          "xg": 0.17,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Son Heung-min",
+          "team": "Spurs",
+          "points": 8,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.41,
+          "xa": 0.06,
+          "minutes": 69
+        },
+        {
+          "name": "Destiny Udogie",
+          "team": "Spurs",
+          "points": 5,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0.06,
+          "xa": 0.51,
+          "minutes": 87
+        },
+        {
+          "name": "James Maddison",
+          "team": "Spurs",
+          "points": 4,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0.6,
+          "minutes": 45
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-05-04|westham|spurs": {
+      "fixtureId": 350,
+      "season": "2425",
+      "date": "2025-05-04",
+      "kickoffTime": "2025-05-04T13:00:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Spurs",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Wilson Odobert",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Ben Davies",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Wilson Odobert",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 0.53
+        },
+        {
+          "name": "Wilson Odobert",
+          "team": "Spurs",
+          "value": 0.47
+        },
+        {
+          "name": "Richarlison de Andrade",
+          "team": "Spurs",
+          "value": 0.14
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 0.1
+        },
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 0.09
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 0.38
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "value": 0.28
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "West Ham",
+          "value": 0.11
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 0.1
+        },
+        {
+          "name": "Aaron Cresswell",
+          "team": "West Ham",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Wilson Odobert",
+          "team": "Spurs",
+          "points": 10,
+          "bonus": 3,
+          "bps": 26,
+          "xg": 0.47,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "points": 9,
+          "bonus": 2,
+          "bps": 23,
+          "xg": 0.53,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Aaron Wan-Bissaka",
+          "team": "West Ham",
+          "points": 7,
+          "bonus": 2,
+          "bps": 23,
+          "xg": 0.04,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Mathys Tel",
+          "team": "Spurs",
+          "points": 4,
+          "bonus": 0,
+          "bps": 9,
+          "xg": 0.1,
+          "xa": 0.28,
+          "minutes": 90
+        },
+        {
+          "name": "Kevin Danso",
+          "team": "Spurs",
+          "points": 2,
+          "bonus": 0,
+          "bps": 13,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-09-13|westham|spurs": {
+      "fixtureId": 40,
+      "season": "2526",
+      "date": "2025-09-13",
+      "kickoffTime": "2025-09-13T16:30:00Z",
+      "homeTeam": "West Ham",
+      "awayTeam": "Spurs",
+      "homeGoals": 0,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Micky van de Ven",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Lucas Bergvall",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Lucas Bergvall",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Xavi Simons",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Djed Spence",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Tomáš Souček",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 4
+        },
+        {
+          "name": "Mads Hermansen",
+          "team": "West Ham",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 3
+        },
+        {
+          "name": "Micky van de Ven",
+          "team": "Spurs",
+          "value": 2
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 0.47
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "value": 0.28
+        },
+        {
+          "name": "Lucas Tolentino Coelho de Lima",
+          "team": "West Ham",
+          "value": 0.25
+        },
+        {
+          "name": "João Maria Lobo Alves Palhares Costa Palhinha Gonçalves",
+          "team": "Spurs",
+          "value": 0.22
+        },
+        {
+          "name": "Maximilian Kilman",
+          "team": "West Ham",
+          "value": 0.2
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 0.37
+        },
+        {
+          "name": "James Ward-Prowse",
+          "team": "West Ham",
+          "value": 0.24
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "West Ham",
+          "value": 0.15
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 0.14
+        },
+        {
+          "name": "Mohammed Kudus",
+          "team": "Spurs",
+          "value": 0.11
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Micky van de Ven",
+          "team": "Spurs",
+          "points": 14,
+          "bonus": 2,
+          "bps": 43,
+          "xg": 0.09,
+          "xa": 0,
+          "minutes": 79
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "points": 12,
+          "bonus": 3,
+          "bps": 44,
+          "xg": 0.07,
+          "xa": 0.14,
+          "minutes": 90
+        },
+        {
+          "name": "Lucas Bergvall",
+          "team": "Spurs",
+          "points": 11,
+          "bonus": 0,
+          "bps": 38,
+          "xg": 0.12,
+          "xa": 0.06,
+          "minutes": 79
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "points": 8,
+          "bonus": 1,
+          "bps": 39,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "team": "Spurs",
+          "points": 8,
+          "bonus": 0,
+          "bps": 33,
+          "xg": 0.28,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-01-17|spurs|westham": {
+      "fixtureId": 219,
+      "season": "2526",
+      "date": "2026-01-17",
+      "kickoffTime": "2026-01-17T15:00:00Z",
+      "homeTeam": "Spurs",
+      "awayTeam": "West Ham",
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "scorers": [
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Archie Gray",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Micky van de Ven",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Tomáš Souček",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Djed Spence",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Ben Davies",
+          "team": "Spurs",
+          "value": 1
+        },
+        {
+          "name": "Valentín Castellanos",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Jarrod Bowen",
+          "team": "West Ham",
+          "value": 1
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Alphonse Areola",
+          "team": "West Ham",
+          "value": 5
+        },
+        {
+          "name": "Guglielmo Vicario",
+          "team": "Spurs",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "value": 3
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "West Ham",
+          "value": 2
+        },
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "value": 0.9
+        },
+        {
+          "name": "Valentín Castellanos",
+          "team": "West Ham",
+          "value": 0.73
+        },
+        {
+          "name": "Wilson Odobert",
+          "team": "Spurs",
+          "value": 0.42
+        },
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "value": 0.35
+        },
+        {
+          "name": "Yves Bissouma",
+          "team": "Spurs",
+          "value": 0.25
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "value": 0.49
+        },
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "value": 0.26
+        },
+        {
+          "name": "Randal Kolo Muani",
+          "team": "Spurs",
+          "value": 0.23
+        },
+        {
+          "name": "Djed Spence",
+          "team": "Spurs",
+          "value": 0.15
+        },
+        {
+          "name": "Conor Gallagher",
+          "team": "Spurs",
+          "value": 0.15
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Crysencio Summerville",
+          "team": "West Ham",
+          "points": 10,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0.35,
+          "xa": 0.26,
+          "minutes": 90
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "West Ham",
+          "points": 9,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Cristian Romero",
+          "team": "Spurs",
+          "points": 8,
+          "bonus": 0,
+          "bps": 14,
+          "xg": 0.17,
+          "xa": 0.12,
+          "minutes": 90
+        },
+        {
+          "name": "Callum Wilson",
+          "team": "West Ham",
+          "points": 6,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.9,
+          "xa": 0,
+          "minutes": 1
+        },
+        {
+          "name": "Pedro Porro Sauceda",
+          "team": "Spurs",
+          "points": 4,
+          "bonus": 0,
+          "bps": 28,
+          "xg": 0.01,
+          "xa": 0.49,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

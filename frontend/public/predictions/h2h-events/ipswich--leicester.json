@@ -1,0 +1,426 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-11-02|ipswich|leicester": {
+      "fixtureId": 93,
+      "season": "2425",
+      "date": "2024-11-02",
+      "kickoffTime": "2024-11-02T15:00:00Z",
+      "homeTeam": "Ipswich",
+      "awayTeam": "Leicester",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Leif Davis",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Sam Morsy",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Arijanet Muric",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "George Hirst",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Stephy Mavididi",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Jens Cajuste",
+          "team": "Ipswich",
+          "value": 1
+        },
+        {
+          "name": "Conor Chaplin",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Kalvin Phillips",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Arijanet Muric",
+          "team": "Ipswich",
+          "value": 4
+        },
+        {
+          "name": "Mads Hermansen",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Sam Morsy",
+          "team": "Ipswich",
+          "value": 3
+        },
+        {
+          "name": "Leif Davis",
+          "team": "Ipswich",
+          "value": 2
+        },
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "value": 0.75
+        },
+        {
+          "name": "Sam Szmodics",
+          "team": "Ipswich",
+          "value": 0.3
+        },
+        {
+          "name": "Facundo Buonanotte",
+          "team": "Leicester",
+          "value": 0.23
+        },
+        {
+          "name": "Stephy Mavididi",
+          "team": "Leicester",
+          "value": 0.2
+        },
+        {
+          "name": "Dara O'Shea",
+          "team": "Ipswich",
+          "value": 0.18
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Omari Giraud-Hutchinson",
+          "team": "Ipswich",
+          "value": 0.51
+        },
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 0.45
+        },
+        {
+          "name": "Abdul Fatawu",
+          "team": "Leicester",
+          "value": 0.34
+        },
+        {
+          "name": "Boubakary Soumaré",
+          "team": "Leicester",
+          "value": 0.24
+        },
+        {
+          "name": "Leif Davis",
+          "team": "Ipswich",
+          "value": 0.22
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Leif Davis",
+          "team": "Ipswich",
+          "points": 10,
+          "bonus": 2,
+          "bps": 24,
+          "xg": 0.09,
+          "xa": 0.22,
+          "minutes": 90
+        },
+        {
+          "name": "Sam Morsy",
+          "team": "Ipswich",
+          "points": 8,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0.07,
+          "minutes": 90
+        },
+        {
+          "name": "Jordan Ayew",
+          "team": "Leicester",
+          "points": 7,
+          "bonus": 1,
+          "bps": 21,
+          "xg": 0.75,
+          "xa": 0.04,
+          "minutes": 4
+        },
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "points": 5,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.04,
+          "xa": 0.45,
+          "minutes": 90
+        },
+        {
+          "name": "Omari Giraud-Hutchinson",
+          "team": "Ipswich",
+          "points": 3,
+          "bonus": 0,
+          "bps": 2,
+          "xg": 0.12,
+          "xa": 0.51,
+          "minutes": 80
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-05-18|leicester|ipswich": {
+      "fixtureId": 368,
+      "season": "2425",
+      "date": "2025-05-18",
+      "kickoffTime": "2025-05-18T14:00:00Z",
+      "homeTeam": "Leicester",
+      "awayTeam": "Ipswich",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Kasey McAteer",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "James Justin",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Wilfred Ndidi",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Kasey McAteer",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Jakub Stolarczyk",
+          "team": "Leicester",
+          "value": 2
+        },
+        {
+          "name": "Alex Palmer",
+          "team": "Ipswich",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "James Justin",
+          "team": "Leicester",
+          "value": 3
+        },
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 2
+        },
+        {
+          "name": "Conor Coady",
+          "team": "Leicester",
+          "value": 1
+        },
+        {
+          "name": "Wout Faes",
+          "team": "Leicester",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "value": 0.45
+        },
+        {
+          "name": "Omari Giraud-Hutchinson",
+          "team": "Ipswich",
+          "value": 0.27
+        },
+        {
+          "name": "George Hirst",
+          "team": "Ipswich",
+          "value": 0.24
+        },
+        {
+          "name": "Julio Enciso",
+          "team": "Ipswich",
+          "value": 0.21
+        },
+        {
+          "name": "Kasey McAteer",
+          "team": "Leicester",
+          "value": 0.17
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Leif Davis",
+          "team": "Ipswich",
+          "value": 0.44
+        },
+        {
+          "name": "Sam Morsy",
+          "team": "Ipswich",
+          "value": 0.29
+        },
+        {
+          "name": "Omari Giraud-Hutchinson",
+          "team": "Ipswich",
+          "value": 0.22
+        },
+        {
+          "name": "Bilal El Khannouss",
+          "team": "Leicester",
+          "value": 0.09
+        },
+        {
+          "name": "James Justin",
+          "team": "Leicester",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "James Justin",
+          "team": "Leicester",
+          "points": 12,
+          "bonus": 3,
+          "bps": 37,
+          "xg": 0,
+          "xa": 0.08,
+          "minutes": 63
+        },
+        {
+          "name": "Jamie Vardy",
+          "team": "Leicester",
+          "points": 8,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.45,
+          "xa": 0,
+          "minutes": 79
+        },
+        {
+          "name": "Conor Coady",
+          "team": "Leicester",
+          "points": 7,
+          "bonus": 1,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Wout Faes",
+          "team": "Leicester",
+          "points": 7,
+          "bonus": 1,
+          "bps": 30,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Kasey McAteer",
+          "team": "Leicester",
+          "points": 7,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.17,
+          "xa": 0.01,
+          "minutes": 79
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

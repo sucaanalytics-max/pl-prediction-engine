@@ -1,0 +1,161 @@
+# FPL rules that are NOT machine-readable from the API.
+#
+# Everything the API exposes is read from `bootstrap-static` at runtime
+# (game_config.scoring, game_settings, element_types, chips) and asserted
+# against these values. This file exists only for the handful of rules FPL
+# publishes in prose but not in JSON.
+#
+# RULE: every entry carries `verified_by` (a primary-source URL) and
+# `verified_on`. `pipeline/knowledge/rules_assert.py` fails on an unsigned
+# entry. Rules are facts to be cited, never parameters to be fitted — nothing
+# in pipeline/learning/ may write to this file.
+#
+# Primary sources:
+#   [RULES] https://fantasy.premierleague.com/help/rules
+#   [FAQ]   https://www.premierleague.com/en/news/4130266   (FPL scoring FAQ)
+#   [BS]    https://fantasy.premierleague.com/api/bootstrap-static/
+
+season: "2627"
+season_label: "2026-27"
+
+# ── Divisors: the award is in the API, the "per N" is not ───────────────────
+# game_config.scoring.saves = 1 and goals_conceded = -1 are per-N rates, and N
+# appears nowhere in bootstrap-static (grepped for saves_limit, concede_limit,
+# threshold: zero hits). These two integers are the load-bearing gap.
+divisors:
+  saves_per_point:
+    value: 3
+    note: "Every 3 shot saves by a goalkeeper: +1."
+    verified_by: "https://fantasy.premierleague.com/help/rules"
+    verified_on: "2026-07-31"
+  goals_conceded_per_penalty:
+    value: 2
+    note: >-
+      Every 2 goals conceded: -1, for goalkeepers and defenders only.
+      game_config.scoring.goals_conceded.MID and .FWD are 0, so the position
+      restriction IS machine-readable; only the divisor is not.
+    verified_by: "https://fantasy.premierleague.com/help/rules"
+    verified_on: "2026-07-31"
+
+# ── Minutes ────────────────────────────────────────────────────────────────
+minutes:
+  long_play_threshold:
+    value: 60
+    note: >-
+      60 minutes or more, EXCLUDING stoppage time, earns the 2-point
+      appearance and is a precondition for clean-sheet points. The 60th minute
+      runs 59:00-59:59, so a player substituted in that window may register 59
+      minutes for FPL purposes.
+    verified_by: "https://www.premierleague.com/en/news/4130266"
+    verified_on: "2026-07-31"
+  zero_minutes_scores_only_cards:
+    value: true
+    note: >-
+      A player with 0 minutes earns no appearance point and no other component,
+      but a card still costs him. The rules define playing in a Gameweek as
+      "making an appearance on the pitch OR receiving a yellow / red card", so a
+      player can be booked without taking the field.
+
+      EMPIRICALLY CONFIRMED by the replay oracle: across 18,259 zero-minute rows
+      in the settled prior season, exactly one scored non-zero — 0 minutes, one
+      yellow card, -1 point. Maximum bonus and BPS across all zero-minute rows
+      was 0, so no other component leaks. Encoding this as "0 minutes scores 0"
+      reproduced 29,756 of 29,757 rows and failed on precisely that one.
+
+      Same definition governs the auto-substitution trigger: a carded
+      zero-minute player counts as having played and is NOT substituted.
+    verified_by: "https://fantasy.premierleague.com/help/rules"
+    verified_on: "2026-07-31"
+
+# ── Defensive Contribution ─────────────────────────────────────────────────
+# The 2-point award per position IS machine-readable
+# (game_config.scoring.defensive_contribution). The thresholds and the counted
+# action sets are not.
+defensive_contribution:
+  thresholds:
+    DEF:
+      value: 10
+      counts: [clearances_blocks_interceptions, tackles]
+      note: >-
+        "Any defender who reaches an accumulative total of 10 or more
+        clearances, blocks, interceptions (CBI) and tackles in a single match
+        will earn 2 points." Recoveries do NOT count for defenders.
+    MID:
+      value: 12
+      counts: [clearances_blocks_interceptions, tackles, recoveries]
+      note: >-
+        "Any midfielder or forward who reaches an accumulative total of 12 or
+        more clearances, blocked shots, interceptions (CBI), tackles and
+        recoveries will earn 2 points."
+    FWD:
+      value: 12
+      counts: [clearances_blocks_interceptions, tackles, recoveries]
+      note: "Same threshold and counted set as midfielders."
+    GKP:
+      value: null
+      counts: []
+      note: >-
+        Goalkeepers never earn DC. game_config.scoring
+        .defensive_contribution.GKP = 0, and elements[].defensive_contribution
+        is 0 for keepers even with high CBI and recovery counts.
+  stacks:
+    value: false
+    note: >-
+      "Defensive contribution points do not stack eg: a defender does not earn
+      4 points for the accumulation of 20 clearances, blocked shots,
+      interceptions (CBI) and tackles in a single match." Award is 2, once.
+  verified_by: "https://fantasy.premierleague.com/help/rules"
+  verified_on: "2026-07-31"
+
+# ── Cards ──────────────────────────────────────────────────────────────────
+cards:
+  red_absorbs_yellow:
+    value: true
+    note: >-
+      "Red card deductions include any points deducted for yellow cards." So a
+      second-bookable offence costs -3 in total, not -1 then -3. A player sent
+      off continues to be penalised for goals his team concedes.
+    verified_by: "https://fantasy.premierleague.com/help/rules"
+    verified_on: "2026-07-31"
+
+# ── Clean sheets ───────────────────────────────────────────────────────────
+clean_sheets:
+  definition:
+    note: >-
+      "Not conceding a goal whilst on the pitch and playing at least 60
+      minutes (excluding stoppage time)." And: "If a player has been
+      substituted when a goal is conceded this will not affect any clean sheet
+      bonus." So the test is the player's OWN goals_conceded (which FPL
+      reports per player, on-pitch only), never the opposition's final score.
+    verified_by: "https://fantasy.premierleague.com/help/rules"
+    verified_on: "2026-07-31"
+
+# ── Settlement timing ──────────────────────────────────────────────────────
+settlement:
+  points_lock:
+    value: "09:00 Europe/London on the day after the Gameweek's final match"
+    note: >-
+      NEW for 2026/27. Previously one hour after the final whistle. Opta
+      reviews each match within a six-hour window and amends its data, which
+      feeds BPS and Defensive Contribution. Later changes are possible but
+      rare. Consequence for us: a forecast may only be scored against FINAL
+      data, never provisional.
+    verified_by: "https://www.premierleague.com/en/news/4130266"
+    verified_on: "2026-07-31"
+
+# ── Confirmed unchanged for 2026/27 ────────────────────────────────────────
+unchanged_from_2526:
+  value:
+    - points_table
+    - squad_rules
+    - chip_set
+    - transfer_rules
+    - defensive_contribution
+  note: >-
+    Only the Bonus Points System was rebalanced (reducing CBI weight to cut
+    overlap with Defensive Contribution) and the points lock time moved. This
+    is what makes the settled 2025-26 season a valid replay oracle for the
+    scoring function: bonus arrives already settled, so a BPS change cannot
+    affect reproduction of total_points.
+  verified_by: "https://fantasy.premierleague.com/help/rules"
+  verified_on: "2026-07-31"

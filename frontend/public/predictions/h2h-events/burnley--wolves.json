@@ -1,0 +1,830 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2023-12-05|wolves|burnley": {
+      "fixtureId": 149,
+      "season": "2324",
+      "date": "2023-12-05",
+      "kickoffTime": "2023-12-05T19:30:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Burnley",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "scorers": [
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Charlie Taylor",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Mario Lemina",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Max Kilman",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Josh Brownhill",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Hjalmar Ekdal",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "James Trafford",
+          "team": "Burnley",
+          "value": 3
+        },
+        {
+          "name": "Daniel Bentley",
+          "team": "Wolves",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Toti António Gomes",
+          "team": "Wolves",
+          "value": 3
+        },
+        {
+          "name": "Craig Dawson",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 2
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jay Rodriguez",
+          "team": "Burnley",
+          "value": 0.43
+        },
+        {
+          "name": "Mario Lemina",
+          "team": "Wolves",
+          "value": 0.31
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 0.29
+        },
+        {
+          "name": "Pablo Sarabia",
+          "team": "Wolves",
+          "value": 0.21
+        },
+        {
+          "name": "Zeki Amdouni",
+          "team": "Burnley",
+          "value": 0.1
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Pablo Sarabia",
+          "team": "Wolves",
+          "value": 0.59
+        },
+        {
+          "name": "Jóhann Berg Gudmundsson",
+          "team": "Burnley",
+          "value": 0.14
+        },
+        {
+          "name": "Matheus Santos Carneiro Da Cunha",
+          "team": "Wolves",
+          "value": 0.09
+        },
+        {
+          "name": "Jacob Bruun Larsen",
+          "team": "Burnley",
+          "value": 0.04
+        },
+        {
+          "name": "Sander Berge",
+          "team": "Burnley",
+          "value": 0.03
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "points": 10,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0.29,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Toti António Gomes",
+          "team": "Wolves",
+          "points": 9,
+          "bonus": 3,
+          "bps": 28,
+          "xg": 0,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Craig Dawson",
+          "team": "Wolves",
+          "points": 8,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Daniel Bentley",
+          "team": "Wolves",
+          "points": 7,
+          "bonus": 0,
+          "bps": 24,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.03,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2324|2024-04-02|burnley|wolves": {
+      "fixtureId": 304,
+      "season": "2324",
+      "date": "2024-04-02",
+      "kickoffTime": "2024-04-02T18:45:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Wolves",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Jacob Bruun Larsen",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Pablo Sarabia",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Dara O'Shea",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Nélson Cabral Semedo",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 5
+        },
+        {
+          "name": "Arijanet Muric",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Jacob Bruun Larsen",
+          "team": "Burnley",
+          "value": 3
+        },
+        {
+          "name": "Victor da Silva",
+          "team": "Burnley",
+          "value": 2
+        },
+        {
+          "name": "Pablo Sarabia",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Dara O'Shea",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jacob Bruun Larsen",
+          "team": "Burnley",
+          "value": 0.49
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "value": 0.32
+        },
+        {
+          "name": "João Victor Gomes da Silva",
+          "team": "Wolves",
+          "value": 0.23
+        },
+        {
+          "name": "Wilson Odobert",
+          "team": "Burnley",
+          "value": 0.22
+        },
+        {
+          "name": "Victor da Silva",
+          "team": "Burnley",
+          "value": 0.12
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Charlie Taylor",
+          "team": "Burnley",
+          "value": 0.49
+        },
+        {
+          "name": "Victor da Silva",
+          "team": "Burnley",
+          "value": 0.2
+        },
+        {
+          "name": "Matt Doherty",
+          "team": "Wolves",
+          "value": 0.2
+        },
+        {
+          "name": "Pablo Sarabia",
+          "team": "Wolves",
+          "value": 0.19
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Jacob Bruun Larsen",
+          "team": "Burnley",
+          "points": 10,
+          "bonus": 3,
+          "bps": 23,
+          "xg": 0.49,
+          "xa": 0.06,
+          "minutes": 72
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "team": "Wolves",
+          "points": 8,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0.32,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Pablo Sarabia",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 1,
+          "bps": 20,
+          "xg": 0.05,
+          "xa": 0.19,
+          "minutes": 82
+        },
+        {
+          "name": "Dara O'Shea",
+          "team": "Burnley",
+          "points": 6,
+          "bonus": 1,
+          "bps": 20,
+          "xg": 0.03,
+          "xa": 0.1,
+          "minutes": 90
+        },
+        {
+          "name": "Victor da Silva",
+          "team": "Burnley",
+          "points": 4,
+          "bonus": 2,
+          "bps": 22,
+          "xg": 0.12,
+          "xa": 0.2,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-10-26|wolves|burnley": {
+      "fixtureId": 90,
+      "season": "2526",
+      "date": "2025-10-26",
+      "kickoffTime": "2025-10-26T14:00:00Z",
+      "homeTeam": "Wolves",
+      "awayTeam": "Burnley",
+      "homeGoals": 2,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 2
+        },
+        {
+          "name": "Marshall Munetsi",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Jørgen Strand Larsen",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Quilindschy Hartman",
+          "team": "Burnley",
+          "value": 2
+        },
+        {
+          "name": "Ladislav Krejcí",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jean-Ricner Bellegarde",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Martin Dúbravka",
+          "team": "Burnley",
+          "value": 5
+        },
+        {
+          "name": "Sam Johnstone",
+          "team": "Wolves",
+          "value": 4
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 3
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 2
+        },
+        {
+          "name": "Marshall Munetsi",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Jørgen Strand Larsen",
+          "team": "Wolves",
+          "value": 0.83
+        },
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 0.71
+        },
+        {
+          "name": "Marshall Munetsi",
+          "team": "Wolves",
+          "value": 0.63
+        },
+        {
+          "name": "Jhon Arias",
+          "team": "Wolves",
+          "value": 0.53
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "value": 0.37
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ladislav Krejcí",
+          "team": "Wolves",
+          "value": 0.69
+        },
+        {
+          "name": "Quilindschy Hartman",
+          "team": "Burnley",
+          "value": 0.58
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "team": "Burnley",
+          "value": 0.28
+        },
+        {
+          "name": "Jørgen Strand Larsen",
+          "team": "Wolves",
+          "value": 0.13
+        },
+        {
+          "name": "Jean-Ricner Bellegarde",
+          "team": "Wolves",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "points": 13,
+          "bonus": 3,
+          "bps": 68,
+          "xg": 0.71,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Marshall Munetsi",
+          "team": "Wolves",
+          "points": 8,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.63,
+          "xa": 0,
+          "minutes": 83
+        },
+        {
+          "name": "Lyle Foster",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.37,
+          "xa": 0,
+          "minutes": 13
+        },
+        {
+          "name": "Quilindschy Hartman",
+          "team": "Burnley",
+          "points": 7,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0.01,
+          "xa": 0.58,
+          "minutes": 90
+        },
+        {
+          "name": "Jørgen Strand Larsen",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.83,
+          "xa": 0.13,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-05-24|burnley|wolves": {
+      "fixtureId": 372,
+      "season": "2526",
+      "date": "2026-05-24",
+      "kickoffTime": "2026-05-24T15:00:00Z",
+      "homeTeam": "Burnley",
+      "awayTeam": "Wolves",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Adam Armstrong",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Ladislav Krejcí",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Loum Tchaouna",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Yerson Mosquera Valdelamar",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "team": "Burnley",
+          "value": 1
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Ashley Barnes",
+          "team": "Burnley",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 7
+        },
+        {
+          "name": "Max Weiß",
+          "team": "Burnley",
+          "value": 3
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "value": 3
+        },
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "value": 2
+        },
+        {
+          "name": "Adam Armstrong",
+          "team": "Wolves",
+          "value": 1
+        },
+        {
+          "name": "Ladislav Krejcí",
+          "team": "Wolves",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Adam Armstrong",
+          "team": "Wolves",
+          "value": 0.79
+        },
+        {
+          "name": "Santiago Ignacio Bueno",
+          "team": "Wolves",
+          "value": 0.31
+        },
+        {
+          "name": "Lucas Pires Silva",
+          "team": "Burnley",
+          "value": 0.27
+        },
+        {
+          "name": "Yerson Mosquera Valdelamar",
+          "team": "Wolves",
+          "value": 0.23
+        },
+        {
+          "name": "Tolu Arokodare",
+          "team": "Wolves",
+          "value": 0.19
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Mateus Mané",
+          "team": "Wolves",
+          "value": 0.7
+        },
+        {
+          "name": "Hwang Hee-chan",
+          "team": "Wolves",
+          "value": 0.34
+        },
+        {
+          "name": "Hannibal Mejbri",
+          "team": "Burnley",
+          "value": 0.3
+        },
+        {
+          "name": "James Ward-Prowse",
+          "team": "Burnley",
+          "value": 0.16
+        },
+        {
+          "name": "Marcus Edwards",
+          "team": "Burnley",
+          "value": 0.14
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Zian Flemming",
+          "team": "Burnley",
+          "points": 9,
+          "bonus": 3,
+          "bps": 32,
+          "xg": 0.12,
+          "xa": 0.02,
+          "minutes": 84
+        },
+        {
+          "name": "Adam Armstrong",
+          "team": "Wolves",
+          "points": 7,
+          "bonus": 1,
+          "bps": 19,
+          "xg": 0.79,
+          "xa": 0,
+          "minutes": 73
+        },
+        {
+          "name": "José Malheiro de Sá",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 2,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Ladislav Krejcí",
+          "team": "Wolves",
+          "points": 6,
+          "bonus": 1,
+          "bps": 19,
+          "xg": 0.06,
+          "xa": 0,
+          "minutes": 65
+        },
+        {
+          "name": "Loum Tchaouna",
+          "team": "Burnley",
+          "points": 5,
+          "bonus": 0,
+          "bps": 13,
+          "xg": 0.02,
+          "xa": 0.04,
+          "minutes": 74
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

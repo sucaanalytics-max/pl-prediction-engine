@@ -1,0 +1,1034 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2324|2024-02-12|crystalpalace|chelsea": {
+      "fixtureId": 232,
+      "season": "2324",
+      "date": "2024-02-12",
+      "kickoffTime": "2024-02-12T20:00:00Z",
+      "homeTeam": "Crystal Palace",
+      "awayTeam": "Chelsea",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Conor Gallagher",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Daniel Muñoz",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Axel Disasi",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Đorđe Petrović",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Conor Gallagher",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.38
+        },
+        {
+          "name": "Conor Gallagher",
+          "team": "Chelsea",
+          "value": 0.33
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 0.15
+        },
+        {
+          "name": "Matheus França de Oliveira",
+          "team": "Crystal Palace",
+          "value": 0.1
+        },
+        {
+          "name": "Axel Disasi",
+          "team": "Chelsea",
+          "value": 0.1
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.3
+        },
+        {
+          "name": "Raheem Sterling",
+          "team": "Chelsea",
+          "value": 0.16
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 0.15
+        },
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "value": 0.15
+        },
+        {
+          "name": "Conor Gallagher",
+          "team": "Chelsea",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Conor Gallagher",
+          "team": "Chelsea",
+          "points": 15,
+          "bonus": 3,
+          "bps": 49,
+          "xg": 0.33,
+          "xa": 0.13,
+          "minutes": 90
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "points": 10,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0.09,
+          "xa": 0.3,
+          "minutes": 90
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "points": 8,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0.38,
+          "xa": 0.05,
+          "minutes": 90
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 1,
+          "bps": 29,
+          "xg": 0,
+          "xa": 0.15,
+          "minutes": 83
+        },
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "points": 6,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0.1,
+          "xa": 0.01,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2023-24/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2024-09-01|chelsea|crystalpalace": {
+      "fixtureId": 23,
+      "season": "2425",
+      "date": "2024-09-01",
+      "kickoffTime": "2024-09-01T12:30:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Crystal Palace",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Cheick Doucouré",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Wesley Fofana",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Daniel Muñoz",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 6
+        },
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 3
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 1.34
+        },
+        {
+          "name": "Noni Madueke",
+          "team": "Chelsea",
+          "value": 0.59
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 0.19
+        },
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 0.18
+        },
+        {
+          "name": "Daichi Kamada",
+          "team": "Crystal Palace",
+          "value": 0.12
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.7
+        },
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 0.45
+        },
+        {
+          "name": "Daniel Muñoz",
+          "team": "Crystal Palace",
+          "value": 0.26
+        },
+        {
+          "name": "Mykhailo Mudryk",
+          "team": "Chelsea",
+          "value": 0.15
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.08
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "points": 10,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0.19,
+          "xa": 0.06,
+          "minutes": 90
+        },
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0.11,
+          "xa": 0.7,
+          "minutes": 90
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 1.34,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "points": 4,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Cheick Doucouré",
+          "team": "Crystal Palace",
+          "points": 4,
+          "bonus": 0,
+          "bps": 14,
+          "xg": 0.02,
+          "xa": 0,
+          "minutes": 40
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-01-04|crystalpalace|chelsea": {
+      "fixtureId": 194,
+      "season": "2425",
+      "date": "2025-01-04",
+      "kickoffTime": "2025-01-04T15:00:00Z",
+      "homeTeam": "Crystal Palace",
+      "awayTeam": "Chelsea",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jadon Sancho",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Levi Colwill",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "value": 5
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 2
+        },
+        {
+          "name": "Jadon Sancho",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 0.46
+        },
+        {
+          "name": "Nicolas Jackson",
+          "team": "Chelsea",
+          "value": 0.45
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 0.44
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 0.24
+        },
+        {
+          "name": "Josh Acheampong",
+          "team": "Chelsea",
+          "value": 0.21
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "value": 0.41
+        },
+        {
+          "name": "Daniel Muñoz",
+          "team": "Crystal Palace",
+          "value": 0.24
+        },
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 0.11
+        },
+        {
+          "name": "Jadon Sancho",
+          "team": "Chelsea",
+          "value": 0.1
+        },
+        {
+          "name": "Malo Gusto",
+          "team": "Chelsea",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Cole Palmer",
+          "team": "Chelsea",
+          "points": 10,
+          "bonus": 3,
+          "bps": 31,
+          "xg": 0.19,
+          "xa": 0.41,
+          "minutes": 90
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "points": 8,
+          "bonus": 2,
+          "bps": 30,
+          "xg": 0.44,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Jadon Sancho",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.03,
+          "xa": 0.1,
+          "minutes": 85
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "points": 5,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0.46,
+          "xa": 0.09,
+          "minutes": 86
+        },
+        {
+          "name": "Robert Sánchez",
+          "team": "Chelsea",
+          "points": 3,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2025-08-17|chelsea|crystalpalace": {
+      "fixtureId": 8,
+      "season": "2526",
+      "date": "2025-08-17",
+      "kickoffTime": "2025-08-17T13:00:00Z",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Crystal Palace",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "scorers": [],
+      "assists": [],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Daniel Muñoz Mejía",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "value": 4
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Josh Acheampong",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Tyrick Mitchell",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 0.34
+        },
+        {
+          "name": "Andrey Nascimento dos Santos",
+          "team": "Chelsea",
+          "value": 0.31
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 0.29
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 0.28
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 0.24
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 0.37
+        },
+        {
+          "name": "Pedro Lomba Neto",
+          "team": "Chelsea",
+          "value": 0.36
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 0.19
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.1
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 0.1
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Josh Acheampong",
+          "team": "Chelsea",
+          "points": 9,
+          "bonus": 3,
+          "bps": 35,
+          "xg": 0.09,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Tyrick Mitchell",
+          "team": "Crystal Palace",
+          "points": 9,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "points": 8,
+          "bonus": 2,
+          "bps": 34,
+          "xg": 0.11,
+          "xa": 0.1,
+          "minutes": 90
+        },
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "points": 8,
+          "bonus": 1,
+          "bps": 31,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        },
+        {
+          "name": "Maxence Lacroix",
+          "team": "Crystal Palace",
+          "points": 8,
+          "bonus": 0,
+          "bps": 25,
+          "xg": 0,
+          "xa": 0,
+          "minutes": 90
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2526|2026-01-25|crystalpalace|chelsea": {
+      "fixtureId": 225,
+      "season": "2526",
+      "date": "2026-01-25",
+      "kickoffTime": "2026-01-25T14:00:00Z",
+      "homeTeam": "Crystal Palace",
+      "awayTeam": "Chelsea",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "scorers": [
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Chris Richards",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Chadi Riad Dnanou",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Andrey Nascimento dos Santos",
+          "team": "Chelsea",
+          "value": 1
+        },
+        {
+          "name": "Jaydee Canvot",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Moisés Caicedo Corozo",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "redCards": [
+        {
+          "name": "Adam Wharton",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "saves": [
+        {
+          "name": "Robert Lynch Sánchez",
+          "team": "Chelsea",
+          "value": 5
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 3
+        },
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 2
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "value": 0.94
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "value": 0.65
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 0.46
+        },
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "value": 0.42
+        },
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 0.4
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Yéremy Pino Santos",
+          "team": "Crystal Palace",
+          "value": 0.41
+        },
+        {
+          "name": "Marc Cucurella Saseta",
+          "team": "Chelsea",
+          "value": 0.22
+        },
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "value": 0.14
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "value": 0.14
+        },
+        {
+          "name": "Adam Wharton",
+          "team": "Crystal Palace",
+          "value": 0.13
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Estêvão Almeida de Oliveira Gonçalves",
+          "team": "Chelsea",
+          "points": 13,
+          "bonus": 2,
+          "bps": 32,
+          "xg": 0.42,
+          "xa": 0.04,
+          "minutes": 73
+        },
+        {
+          "name": "João Pedro Junqueira de Jesus",
+          "team": "Chelsea",
+          "points": 12,
+          "bonus": 3,
+          "bps": 47,
+          "xg": 0.65,
+          "xa": 0.01,
+          "minutes": 84
+        },
+        {
+          "name": "Enzo Fernández",
+          "team": "Chelsea",
+          "points": 8,
+          "bonus": 1,
+          "bps": 27,
+          "xg": 0.94,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Chris Richards",
+          "team": "Crystal Palace",
+          "points": 7,
+          "bonus": 0,
+          "bps": 18,
+          "xg": 0.39,
+          "xa": 0.02,
+          "minutes": 90
+        },
+        {
+          "name": "Reece James",
+          "team": "Chelsea",
+          "points": 6,
+          "bonus": 0,
+          "bps": 26,
+          "xg": 0,
+          "xa": 0.14,
+          "minutes": 80
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2025-26/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

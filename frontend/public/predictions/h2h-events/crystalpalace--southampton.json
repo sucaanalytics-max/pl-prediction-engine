@@ -1,0 +1,425 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-28T12:29:20.260Z",
+  "seasons": [
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "coverage": {
+    "matchedFixtures": 1004,
+    "requestedFixtures": 1004
+  },
+  "caveats": [
+    "Assists follow FPL scoring and can differ from Premier League or Opta assists.",
+    "The archive provides player-match totals, not a goal-by-goal assist pairing or event minute.",
+    "Own goals and missed or saved penalties are shown separately to avoid misattribution."
+  ],
+  "records": {
+    "2425|2024-12-29|crystalpalace|southampton": {
+      "fixtureId": 183,
+      "season": "2425",
+      "date": "2024-12-29",
+      "kickoffTime": "2024-12-29T15:00:00Z",
+      "homeTeam": "Crystal Palace",
+      "awayTeam": "Southampton",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Tyler Dibling",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Adam Armstrong",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Taylor Harwood-Bellis",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Jan Bednarek",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Eddie Nketiah",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 8
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 2
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 3
+        },
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Crystal Palace",
+          "value": 2
+        },
+        {
+          "name": "Tyler Dibling",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Tyler Dibling",
+          "team": "Southampton",
+          "value": 0.64
+        },
+        {
+          "name": "Daniel Muñoz",
+          "team": "Crystal Palace",
+          "value": 0.51
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 0.39
+        },
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 0.35
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 0.31
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ismaïla Sarr",
+          "team": "Crystal Palace",
+          "value": 0.6
+        },
+        {
+          "name": "Tyrick Mitchell",
+          "team": "Crystal Palace",
+          "value": 0.6
+        },
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "value": 0.29
+        },
+        {
+          "name": "Kyle Walker-Peters",
+          "team": "Southampton",
+          "value": 0.14
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 0.12
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "points": 10,
+          "bonus": 3,
+          "bps": 38,
+          "xg": 0.39,
+          "xa": 0.08,
+          "minutes": 85
+        },
+        {
+          "name": "Trevoh Chalobah",
+          "team": "Crystal Palace",
+          "points": 10,
+          "bonus": 2,
+          "bps": 29,
+          "xg": 0.24,
+          "xa": 0.01,
+          "minutes": 90
+        },
+        {
+          "name": "Tyler Dibling",
+          "team": "Southampton",
+          "points": 8,
+          "bonus": 1,
+          "bps": 24,
+          "xg": 0.64,
+          "xa": 0.02,
+          "minutes": 85
+        },
+        {
+          "name": "Adam Armstrong",
+          "team": "Southampton",
+          "points": 5,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0.11,
+          "xa": 0.01,
+          "minutes": 64
+        },
+        {
+          "name": "Will Hughes",
+          "team": "Crystal Palace",
+          "points": 4,
+          "bonus": 0,
+          "bps": 19,
+          "xg": 0,
+          "xa": 0.29,
+          "minutes": 85
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    },
+    "2425|2025-04-02|southampton|crystalpalace": {
+      "fixtureId": 300,
+      "season": "2425",
+      "date": "2025-04-02",
+      "kickoffTime": "2025-04-02T18:45:00Z",
+      "homeTeam": "Southampton",
+      "awayTeam": "Crystal Palace",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "scorers": [
+        {
+          "name": "Paul Onuachu",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Matheus França de Oliveira",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "assists": [
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "ownGoals": [],
+      "yellowCards": [
+        {
+          "name": "Adam Wharton",
+          "team": "Crystal Palace",
+          "value": 1
+        },
+        {
+          "name": "Jan Bednarek",
+          "team": "Southampton",
+          "value": 1
+        },
+        {
+          "name": "Flynn Downes",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "redCards": [],
+      "saves": [
+        {
+          "name": "Aaron Ramsdale",
+          "team": "Southampton",
+          "value": 2
+        },
+        {
+          "name": "Dean Henderson",
+          "team": "Crystal Palace",
+          "value": 1
+        }
+      ],
+      "penaltiesSaved": [],
+      "penaltiesMissed": [],
+      "bonus": [
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 3
+        },
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "value": 2
+        },
+        {
+          "name": "Paul Onuachu",
+          "team": "Southampton",
+          "value": 1
+        }
+      ],
+      "xgLeaders": [
+        {
+          "name": "Paul Onuachu",
+          "team": "Southampton",
+          "value": 0.37
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "team": "Crystal Palace",
+          "value": 0.22
+        },
+        {
+          "name": "Eberechi Eze",
+          "team": "Crystal Palace",
+          "value": 0.2
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 0.18
+        },
+        {
+          "name": "Eddie Nketiah",
+          "team": "Crystal Palace",
+          "value": 0.16
+        }
+      ],
+      "xaLeaders": [
+        {
+          "name": "Ryan Manning",
+          "team": "Southampton",
+          "value": 0.31
+        },
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "value": 0.11
+        },
+        {
+          "name": "Lesley Ugochukwu",
+          "team": "Southampton",
+          "value": 0.11
+        },
+        {
+          "name": "Nathaniel Clyne",
+          "team": "Crystal Palace",
+          "value": 0.11
+        },
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "value": 0.09
+        }
+      ],
+      "topPerformers": [
+        {
+          "name": "Mateus Gonçalo Espanha Fernandes",
+          "team": "Southampton",
+          "points": 8,
+          "bonus": 3,
+          "bps": 30,
+          "xg": 0.18,
+          "xa": 0.09,
+          "minutes": 90
+        },
+        {
+          "name": "Jefferson Lerma Solís",
+          "team": "Crystal Palace",
+          "points": 7,
+          "bonus": 2,
+          "bps": 27,
+          "xg": 0,
+          "xa": 0.11,
+          "minutes": 90
+        },
+        {
+          "name": "Paul Onuachu",
+          "team": "Southampton",
+          "points": 7,
+          "bonus": 1,
+          "bps": 24,
+          "xg": 0.37,
+          "xa": 0.01,
+          "minutes": 88
+        },
+        {
+          "name": "Ryan Manning",
+          "team": "Southampton",
+          "points": 6,
+          "bonus": 0,
+          "bps": 23,
+          "xg": 0,
+          "xa": 0.31,
+          "minutes": 80
+        },
+        {
+          "name": "Matheus França de Oliveira",
+          "team": "Crystal Palace",
+          "points": 6,
+          "bonus": 0,
+          "bps": 22,
+          "xg": 0.06,
+          "xa": 0,
+          "minutes": 14
+        }
+      ],
+      "source": {
+        "label": "Historical FPL gameweek archive",
+        "url": "https://github.com/vaastav/Fantasy-Premier-League/tree/master/data/2024-25/gws",
+        "attribution": "Player-match statistics derived from the official FPL gameweek feed."
+      }
+    }
+  }
+}

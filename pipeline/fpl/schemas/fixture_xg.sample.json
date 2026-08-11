@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "source": "dixon_coles_posterior+market_blend",
+  "statistical_component": "dixon_coles_posterior",
+  "horizon": 2,
+  "first_gameweek": 1,
+  "n_fixtures": 2,
+  "prior_only_clubs": [],
+  "market": {
+    "devig_method": "proportional",
+    "blend_weight": 0.55,
+    "rho": 0.0,
+    "level_correction": {
+      "home": 0.023293657062526403,
+      "away": -0.017560085942971065
+    },
+    "n_anchored": 1,
+    "n_priced": 1,
+    "statuses": {
+      "converged": 1,
+      "rejected_kickoff_mismatch": 1
+    },
+    "median_bookmakers": 5,
+    "blend_weight_status": "prior_confirmed_out_of_sample"
+  },
+  "fixtures": [
+    {
+      "match_id": "100",
+      "gameweek": 1,
+      "home_team": "Arsenal",
+      "away_team": "Chelsea",
+      "lambda_home_dc": 1.1,
+      "mu_away_dc": 1.0,
+      "lambda_home_sd": 0.0,
+      "mu_away_sd": 0.0,
+      "kickoff": "2026-08-21T14:00:00Z",
+      "prior_only": false,
+      "lambda_home": 1.187891,
+      "mu_away": 0.943699,
+      "rate_source": "market_blend",
+      "supremacy": 0.244192,
+      "total_goals": 2.131589,
+      "market": {
+        "lambda_home": 1.2649999999999997,
+        "mu_away": 0.8999999999999999,
+        "supremacy": 0.36499999999999977,
+        "total_goals": 2.1649999999999996,
+        "status": "converged",
+        "n_bookmakers": 5,
+        "dispersion": 0.16347774899031375,
+        "residual": 4.4147945634195513e-16,
+        "n_constraints": 4,
+        "devig_method": "proportional",
+        "weight": 1.0
+      }
+    },
+    {
+      "match_id": "101",
+      "gameweek": 2,
+      "home_team": "Arsenal",
+      "away_team": "Chelsea",
+      "lambda_home_dc": 1.1,
+      "mu_away_dc": 1.0,
+      "lambda_home_sd": 0.0,
+      "mu_away_sd": 0.0,
+      "kickoff": "2026-08-28T14:00:00Z",
+      "prior_only": false,
+      "lambda_home": 1.114183,
+      "mu_away": 0.990388,
+      "rate_source": "dixon_coles_posterior+level",
+      "supremacy": 0.123795,
+      "total_goals": 2.104572,
+      "market": null
+    }
+  ],
+  "sample": true,
+  "sample_note": "A trimmed real export. Row 1 has a posted market and is blended toward it (rate_source market_blend, market object attached). Row 2 is the gameweek the bookmakers have not priced: no market of its own, but it still carries the league level correction, which is what keeps the two weeks on one scale."
+}
