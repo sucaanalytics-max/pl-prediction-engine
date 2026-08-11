@@ -107,21 +107,29 @@ MIN_BODY = 24
 #: Measured against the live logged-out page: `<time>` is absent and
 #: `data-testid` attributes are not emitted at all in that view, so neither is
 #: used. `article` and `a[href*="/status/"]` are both present.
-EXTRACT_JS = """() => {
-  const posts = [];
-  for (const article of document.querySelectorAll('article')) {
-    const link = article.querySelector('a[href*="/status/"]');
-    if (!link) continue;
-    const id = (link.href.match(/status\\/(\\d+)/) || [])[1];
-    if (!id) continue;
-    posts.push({
-      status_id: id,
-      url: 'https://x.com/' + location.pathname.split('/')[1] + '/status/' + id,
-      lines: article.innerText.split('\\n'),
-    });
-  }
-  return { handle: location.pathname.split('/')[1], posts: posts };
-}"""
+#: Path to the DOM read, which lives in its own file rather than in this string.
+#:
+#: Two callers need the identical JavaScript: this module (for a Claude Code
+#: session driving the Chrome MCP) and `scripts/x_scan.mjs` (for the headless
+#: Playwright run that `launchd` schedules). Two copies of a scraper's selectors
+#: drift, and the failure is silent — the stale copy returns zero posts and
+#: reports success.
+EXTRACT_JS_PATH = Path(__file__).resolve().parent / "x_extract.js"
+
+
+def _load_extract_js() -> str:
+    """
+    The DOM read, as text.
+
+    Strips the leading comment block so the value is a bare function expression,
+    which is what an `evaluate` call needs.
+    """
+    source = EXTRACT_JS_PATH.read_text(encoding="utf-8")
+    body = source[source.index("() =>"):] if "() =>" in source else source
+    return body.strip()
+
+
+EXTRACT_JS = _load_extract_js()
 
 
 def claimed_at(status_id: Any) -> Optional[str]:

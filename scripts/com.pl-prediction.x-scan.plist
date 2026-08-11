@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Twice-daily X scan.
+
+  Install:
+      cp scripts/com.pl-prediction.x-scan.plist ~/Library/LaunchAgents/
+      launchctl load ~/Library/LaunchAgents/com.pl-prediction.x-scan.plist
+
+  Check it is registered:
+      launchctl list | grep pl-prediction
+
+  Run it once, now, without waiting for the schedule:
+      launchctl start com.pl-prediction.x-scan
+
+  Remove:
+      launchctl unload ~/Library/LaunchAgents/com.pl-prediction.x-scan.plist
+
+  ## Why launchd rather than a Claude session
+
+  A CronCreate schedule inside Claude Code dies when the session exits and expires
+  after seven days. A LaunchAgent survives both, and reboots.
+
+  ## What it cannot do
+
+  It needs the Mac awake and the user logged in — a LaunchAgent runs in the user's
+  session, not as a system daemon. `StartCalendarInterval` fires a missed run when
+  the machine wakes, so a closed lid delays the scan rather than losing it, but a
+  machine off all day scans nothing.
+
+  That is a real limit of this route and the reason the logged-out page's five-post
+  window matters: a scan missed for two days loses the posts in between. The RSS
+  feeds in `news.yml` keep running in CI regardless.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.pl-prediction.x-scan</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/tusk-jvb/Documents/Work/PL-Prediction/pl-prediction-engine/scripts/x_scan.sh</string>
+    </array>
+
+    <!-- 07:17 and 19:17 local. Off the :00 and :30 marks deliberately: nothing
+         here needs a round number, and the odd minute keeps this off the same
+         instant as every other scheduled job on the machine. -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Hour</key><integer>7</integer>
+            <key>Minute</key><integer>17</integer>
+        </dict>
+        <dict>
+            <key>Hour</key><integer>19</integer>
+            <key>Minute</key><integer>17</integer>
+        </dict>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/tusk-jvb/Documents/Work/PL-Prediction/pl-prediction-engine</string>
+
+    <!-- Logs, so a failed scan can be read after the fact rather than guessed at.
+         The script prints a UTC timestamp per line for exactly this. -->
+    <key>StandardOutPath</key>
+    <string>/Users/tusk-jvb/Library/Logs/pl-prediction-x-scan.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/tusk-jvb/Library/Logs/pl-prediction-x-scan.log</string>
+
+    <!-- Do NOT run at load. Loading the agent should not fire a scan and a push as
+         a side effect of installing it. -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <!-- launchd starts with a minimal PATH; the script also sets its own, but this
+         covers anything invoked before that line. -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <!-- One scan at a time. Two overlapping runs would race on the inbox and on
+         the git index. -->
+    <key>AbandonProcessGroup</key>
+    <false/>
+</dict>
+</plist>

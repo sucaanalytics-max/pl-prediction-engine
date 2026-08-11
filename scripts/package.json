@@ -1,0 +1,7 @@
+{
+  "name": "pl-prediction-scripts",
+  "private": true,
+  "type": "module",
+  "description": "Local automation that needs a browser. Kept out of frontend/ so a Playwright install never reaches the Vercel build.",
+  "dependencies": { "playwright": "^1.62.0" }
+}

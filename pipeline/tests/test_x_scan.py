@@ -358,3 +358,87 @@ class ExtractorTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SharedExtractorTests(unittest.TestCase):
+    """
+    One copy of the DOM read, two callers.
+
+    `x_scan.py` uses it through the Chrome MCP in a Claude Code session;
+    `scripts/x_scan.mjs` uses it under headless Playwright on the launchd
+    schedule. If they ever hold separate copies, one goes stale and returns zero
+    posts while reporting success — the exact failure this route is built to
+    avoid, and the reason the JavaScript lives in its own file.
+    """
+
+    def _repo(self):
+        from pathlib import Path
+        return Path(__file__).resolve().parents[2]
+
+    def test_the_javascript_lives_in_its_own_file(self):
+        self.assertTrue(x_scan.EXTRACT_JS_PATH.is_file(), x_scan.EXTRACT_JS_PATH)
+
+    def test_python_loads_it_rather_than_inlining_it(self):
+        source = (self._repo() / "pipeline" / "data" / "x_scan.py").read_text(
+            encoding="utf-8",
+        )
+        # The literal would be a second copy.
+        self.assertNotIn('EXTRACT_JS = """', source)
+        self.assertIn("EXTRACT_JS_PATH", source)
+
+    def test_the_node_script_loads_the_same_file(self):
+        script = (self._repo() / "scripts" / "x_scan.mjs").read_text(encoding="utf-8")
+        self.assertIn("x_extract.js", script)
+        # Reading it, not restating it.
+        self.assertNotIn("querySelectorAll('article')", script)
+        # And it must actually READ the path, not merely name it. Mutation testing
+        # caught this: replacing the readFileSync call with an inline copy left the
+        # unused EXTRACT_PATH constant in place, so a test that only looked for the
+        # filename passed against a script that had its own second copy.
+        self.assertIn('readFileSync(EXTRACT_PATH, "utf8")', script)
+        self.assertIn("source.indexOf", script)
+
+    def test_the_loaded_value_is_a_bare_function_expression(self):
+        # `evaluate` needs an expression. A leaked comment line makes the whole
+        # thing parse as a comment and return undefined.
+        self.assertTrue(x_scan.EXTRACT_JS.startswith("() =>"), x_scan.EXTRACT_JS[:40])
+
+    def test_the_node_script_invokes_the_function(self):
+        """
+        Measured: passing the bare arrow-function source to Playwright's
+        `evaluate` returns the FUNCTION, not its result, so the run wrote
+        `undefined` and crashed. The MCP path takes a callable directly, so this
+        only bites the headless caller.
+        """
+        script = (self._repo() / "scripts" / "x_scan.mjs").read_text(encoding="utf-8")
+        # The IIFE wrapper, stated plainly. An earlier version of this assertion
+        # ran three chained `.replace` calls over the source before checking, which
+        # was hard to read and easy to make pass by accident.
+        self.assertIn("`(${extractSource})()`", script)
+        self.assertNotIn("page.evaluate(extractSource)", script)
+
+    def test_the_node_script_fails_loudly_on_zero_posts(self):
+        # A scraper that returns nothing while exiting 0 is indistinguishable from
+        # a quiet news day, and the whole route would rot unnoticed.
+        script = (self._repo() / "scripts" / "x_scan.mjs").read_text(encoding="utf-8")
+        self.assertIn("posts.length === 0", script)
+        self.assertIn("process.exit(4)", script)
+
+    def test_the_shell_wrapper_only_stages_paths_it_owns(self):
+        # Three writers push to main on disjoint paths; staging everything would
+        # turn a scan into a surprise commit of whatever else was dirty.
+        wrapper = (self._repo() / "scripts" / "x_scan.sh").read_text(encoding="utf-8")
+        self.assertIn('git add -- "${PATHS[@]}"', wrapper)
+        self.assertNotIn("git add -A", wrapper)
+        self.assertNotIn("git add .", wrapper)
+
+    def test_the_shell_wrapper_autostashes_before_rebasing(self):
+        # Measured on the first real run: the scan, merge, poll and commit all
+        # succeeded and the push failed with "cannot pull with rebase: You have
+        # unstaged changes", stranding the claims locally.
+        wrapper = (self._repo() / "scripts" / "x_scan.sh").read_text(encoding="utf-8")
+        self.assertIn("--autostash", wrapper)
+
+    def test_the_accounts_come_from_config(self):
+        wrapper = (self._repo() / "scripts" / "x_scan.sh").read_text(encoding="utf-8")
+        self.assertIn("X_SCAN_ACCOUNTS", wrapper)
