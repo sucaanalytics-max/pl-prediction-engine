@@ -31,6 +31,23 @@ function read(path: string): unknown {
   return JSON.parse(readFileSync(file, "utf8"));
 }
 
+/**
+ * The raw file, for asserting relationships rather than remembered sizes.
+ *
+ * Every count in this file used to be a literal taken from the artifact on the
+ * day it was written. `predictions/` is refreshed by the daily pipeline, so
+ * those literals rot: `player_stats.json` held 564 rows when this suite was
+ * written and 573 by the time CI first ran it, and the failure said nothing
+ * about the code. A test that breaks whenever real data arrives teaches people
+ * to ignore the suite.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function raw(path: string): any {
+  const value = read(path);
+  if (value === undefined) throw new Error(`${path} is missing`);
+  return value;
+}
+
 function load<T>(descriptor: Descriptor<T>) {
   return classify<T>({
     path: descriptor.path,
@@ -157,7 +174,7 @@ describe("matches.json — the flat-prior fingerprint", () => {
 
   it("tolerates a null referee without dropping the fixture", () => {
     const value = proven(artifact);
-    expect(value?.matches).toHaveLength(10);
+    expect(value?.matches).toHaveLength(raw("matches.json").matches.length);
     // Null on some, a string on others; both are legal.
     expect(value?.matches.some((m) => m.referee === null)).toBe(true);
   });
@@ -190,8 +207,12 @@ describe("player_stats.json — real data, so NOT empty", () => {
     expect(rows.filter((r) => r.minutes > 0).length).toBeGreaterThan(100);
   });
 
-  it("keeps all 564 rows despite nulls in number-typed fields", () => {
-    expect(proven(artifact)).toHaveLength(564);
+  it("drops no row despite nulls in number-typed fields", () => {
+    // Against the RAW count, never a hardcoded one. This file is refreshed by
+    // the daily pipeline: it held 564 rows when this test was written and 573
+    // a week later, and CI failed on the number rather than on anything real.
+    // The property that matters is that narrowing loses nothing.
+    expect(proven(artifact)).toHaveLength(raw("player_stats.json").length);
   });
 
   it("preserves fouls_committed as null rather than coercing 564 rows to zero", () => {
@@ -253,7 +274,12 @@ describe("latest.json — probabilities real, explainability absent", () => {
     const bets = (proven(artifact)?.predictions ?? []).flatMap((p) => p.value_bets);
 
     it("found the five bets in the committed file", () => {
-      expect(bets).toHaveLength(5);
+      // Count from the file, not from memory: odds move daily and so does this.
+      expect(bets).toHaveLength(
+        raw("latest.json").predictions.flatMap(
+          (p: { value_bets?: unknown[] }) => p.value_bets ?? [],
+        ).length,
+      );
     });
 
     /**
