@@ -439,6 +439,51 @@ class SharedExtractorTests(unittest.TestCase):
         wrapper = (self._repo() / "scripts" / "x_scan.sh").read_text(encoding="utf-8")
         self.assertIn("--autostash", wrapper)
 
-    def test_the_accounts_come_from_config(self):
-        wrapper = (self._repo() / "scripts" / "x_scan.sh").read_text(encoding="utf-8")
-        self.assertIn("X_SCAN_ACCOUNTS", wrapper)
+    def test_both_callers_get_their_accounts_from_config(self):
+        """
+        One source of accounts, reached the same way by both callers.
+
+        The local wrapper and the CI workflow each need the list. The wrapper used
+        to embed a heredoc and the workflow another, which is two places to add an
+        account and two places to get the quoting wrong — the workflow's version
+        silently produced nothing. Both now call `scripts/list_accounts.py`.
+        """
+        helper = self._repo() / "scripts" / "list_accounts.py"
+        self.assertTrue(helper.is_file())
+        self.assertIn("X_SCAN_ACCOUNTS", helper.read_text(encoding="utf-8"))
+
+        for caller in ("scripts/x_scan.sh", ".github/workflows/x_scan.yml"):
+            text = (self._repo() / caller).read_text(encoding="utf-8")
+            self.assertIn("list_accounts.py", text, caller)
+
+    def test_no_handle_is_hardcoded_in_either_caller(self):
+        # Adding an account must be a reviewable change to config, not an edit to a
+        # script that runs unattended or to a workflow triggered from a web page.
+        for caller in ("scripts/x_scan.sh", ".github/workflows/x_scan.yml"):
+            text = (self._repo() / caller).read_text(encoding="utf-8")
+            # The handle appears in prose/comments; what must not appear is a
+            # command invoking the scanner against a literal account.
+            self.assertNotIn("x_scan.mjs robtFPL", text, caller)
+
+    def test_the_workflow_takes_no_injectable_input(self):
+        """
+        The workflow is meant to be triggered from a web page.
+
+        Its first draft accepted a `handle` input and interpolated it into a `run:`
+        block — shell injection with the value arriving from an HTTP request, and a
+        way to point the runners at any X profile.
+        """
+        workflow = (self._repo() / ".github" / "workflows" / "x_scan.yml").read_text(
+            encoding="utf-8",
+        )
+        self.assertNotIn("inputs.handle", workflow)
+        self.assertNotIn("${{ inputs.", workflow)
+
+    def test_the_workflow_has_no_schedule(self):
+        # Deliberate: a cron would spend runner minutes re-reading the same five
+        # posts. The owner triggers it.
+        workflow = (self._repo() / ".github" / "workflows" / "x_scan.yml").read_text(
+            encoding="utf-8",
+        )
+        self.assertNotIn("schedule:", workflow)
+        self.assertIn("workflow_dispatch:", workflow)
