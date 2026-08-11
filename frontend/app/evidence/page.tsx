@@ -25,6 +25,7 @@ import { useArtifact } from "@/lib/data/useArtifact";
 import { NEWS_FEED, type NewsFeed } from "@/lib/data/news-feed";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import XScanButton from "@/components/XScanButton";
 import type {
   EvidenceClaim, EvidenceEntry, EvidencePlayer, EvidenceView,
 } from "@/lib/data/narrow";
@@ -227,6 +228,13 @@ function CapturedHeadlines() {
       subtitle="What the sources published, before any of it becomes a number"
       aside={<ProvenanceStrip of={artifact} />}
     >
+      {/* The X lane is the one source with no automatic cadence: it needs a real
+          browser, so it runs on demand rather than on the poller's fifteen
+          minutes. The control lives here because this is where its output lands. */}
+      <div className="mb-4">
+        <XScanButton />
+      </div>
+
       <WhenProven
         of={artifact}
         what="The poller has captured nothing in its window. It reads six feeds every fifteen minutes."
