@@ -222,11 +222,20 @@ describe("the pieces carried over from /transfers and /projections", () => {
   });
 
   it("keeps working, and says so, when storage is unavailable", async () => {
-    // jsdom here has no working localStorage, which is the same shape as
-    // Safari private mode and a quota overrun. The unguarded `setItem` used to
-    // throw straight out of the click handler and take the whole page down
-    // through ErrorBoundary — losing the rankings because a star could not be
-    // saved.
+    // Storage made to throw explicitly, which is what Safari private mode and a
+    // quota overrun do. An earlier version of this test relied on jsdom simply
+    // having no working localStorage — true on my machine, false in CI, where
+    // it passed locally and failed on the runner. Depending on an environment
+    // quirk is not a test of the behaviour.
+    //
+    // The behaviour: the unguarded `setItem` used to throw straight out of the
+    // click handler and take the whole page down through ErrorBoundary, losing
+    // the rankings because a star could not be saved.
+    vi.stubGlobal("localStorage", {
+      getItem: () => null,
+      setItem: () => { throw new DOMException("QuotaExceededError"); },
+      removeItem: () => {},
+    });
     await renderPlayers({ [STATS]: [statRow()] }, liveState());
     await userEvent.click(screen.getByRole("button", { name: /Add Salah/ }));
     expect(
