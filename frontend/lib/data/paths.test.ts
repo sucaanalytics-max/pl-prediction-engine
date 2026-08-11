@@ -33,6 +33,7 @@ import { ALL_DESCRIPTORS, decisionDescriptor } from "@/lib/data/narrow";
 import { matchDetailDescriptor } from "@/lib/data/match-detail";
 import { sensitivityDescriptor } from "@/lib/data/sensitivity";
 import { ACCURACY } from "@/lib/data/accuracy";
+import { NEWS_FEED } from "@/lib/data/news-feed";
 import { projectionsDescriptor } from "@/lib/data/projections";
 
 const REPO = join(__dirname, "..", "..", "..");
@@ -324,11 +325,12 @@ describe("descriptor factories point at paths something writes", () => {
     // Not a factory, but declared outside `narrow.ts` and therefore invisible
     // to `ALL_DESCRIPTORS` — the same blind spot, reached a different way.
     { name: "accuracy", d: ACCURACY },
+    { name: "news feed", d: NEWS_FEED },
   ];
 
   it("finds the factories to check", () => {
     // Guards the guard: an empty list would pass the loop below vacuously.
-    expect(factories.length).toBeGreaterThanOrEqual(7);
+    expect(factories.length).toBeGreaterThanOrEqual(8);
   });
 
   it.each(factories)("$name is published", ({ d }) => {

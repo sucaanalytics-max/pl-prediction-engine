@@ -89,7 +89,8 @@ jobs:
             predictions/fpl/availability_evidence.jsonl \
             predictions/fpl/deltas.jsonl \
             predictions/news_feed_state.json \
-            frontend/public/predictions/fpl/deltas.jsonl
+            frontend/public/predictions/fpl/deltas.jsonl \
+            frontend/public/predictions/fpl/news_view.json
 
       - name: Surface the run report
         if: always()

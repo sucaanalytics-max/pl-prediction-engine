@@ -196,6 +196,72 @@ def _trigger_for(
     return None
 
 
+def _publish_news_view(
+    predictions_dir: Path,
+    bootstrap: Mapping[str, Any],
+    gameweek: int,
+    moment: datetime,
+    observed_at: str,
+) -> None:
+    """
+    Publish the captured headlines so they reach a screen.
+
+    Every item the poller links to a player is written to the evidence store as
+    `unparsed_news`, and `evidence_view.json` carries resolved availability
+    only — so 59 captured items from BBC, Sky, FantasyFootballScout and Hayters
+    had no route to any surface at all. This is that route.
+
+    Non-fatal: the claims are already on file, and a failure to render them must
+    not cost the poll that captured them.
+    """
+    from pipeline.config import FPL_PUBLIC_DIR
+    from pipeline.learning import news_view
+
+    try:
+        teams = {t["id"]: str(t.get("short_name") or t.get("name") or "")
+                 for t in bootstrap.get("teams") or []}
+        names = {
+            int(e["id"]): (str(e.get("web_name") or ""), teams.get(e.get("team"), ""))
+            for e in bootstrap.get("elements") or []
+        }
+        view = news_view.build(
+            news_view.read_claims(predictions_dir),
+            names,
+            now=moment,
+            generated_at=observed_at,
+            held=_squad_element_ids(),
+        )
+        news_view.write(view, Path(FPL_PUBLIC_DIR))
+        logger.info(
+            "published %d captured headline(s) of %d in the window",
+            view["n_shown"], view["n_articles"],
+        )
+    except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
+        logger.warning("could not publish the news view: %s", exc)
+
+
+def _squad_element_ids() -> List[int]:
+    """
+    The entry's squad, for ranking. Empty when it cannot be read.
+
+    The poller is deliberately dependency-light and has no FPL entry client, so
+    this reads what the agent last recorded rather than making a call. An empty
+    list simply means nothing sorts to the top.
+    """
+    from pipeline.config import PREDICTIONS_DIR
+
+    for name in ("decision_gw*.json",):
+        for path in sorted(Path(PREDICTIONS_DIR).glob(f"fpl/{name}"), reverse=True):
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            squad = ((payload.get("decision") or {}).get("plan") or {}).get("squad")
+            if isinstance(squad, list):
+                return [int(e) for e in squad if isinstance(e, int)]
+    return []
+
+
 def _club_aliases(bootstrap: Mapping[str, Any]) -> Dict[str, List[str]]:
     """
     Club names to match in a video title, from the bootstrap FPL itself serves.
@@ -360,6 +426,7 @@ def poll(
             current_gameweek=gameweek,
             keep_gameweeks=int(DELTA.get("prune_to_gameweeks", 4)),
         )
+        _publish_news_view(predictions_dir, bootstrap, gameweek, moment, observed_at)
         for key, reason in suppressed.items():
             # Logged rather than dropped silently: a threshold that swallows a real
             # change is indistinguishable from a broken poller.

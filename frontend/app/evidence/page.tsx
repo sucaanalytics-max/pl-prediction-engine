@@ -22,6 +22,7 @@
 
 import { REGISTRY } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
+import { NEWS_FEED, type NewsFeed } from "@/lib/data/news-feed";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import type {
@@ -201,6 +202,88 @@ function EvidenceBody({ view }: { view: EvidenceView }) {
         <PlayerCard key={player.element_id} player={player} />
       ))}
     </div>
+  );
+}
+
+/**
+ * The captured headlines.
+ *
+ * Everything above is resolved availability: claims the parser turned into a
+ * value, with the rule that beat each loser. This is the residue — items the
+ * parser refused to convert, because RSS prose cannot meet the
+ * zero-false-positive bar R4 demands when a tier-2 claim can push availability
+ * DOWN.
+ *
+ * Worth reading anyway. "Gudmundsson + Mukiele injury latest" tells a manager
+ * something no availability field will, and until this section existed those
+ * items went into a store nothing read.
+ */
+function CapturedHeadlines() {
+  const { artifact } = useArtifact<NewsFeed>(NEWS_FEED);
+
+  return (
+    <Section
+      title="From the feeds"
+      subtitle="What the sources published, before any of it becomes a number"
+      aside={<ProvenanceStrip of={artifact} />}
+    >
+      <WhenProven
+        of={artifact}
+        what="The poller has captured nothing in its window. It reads six feeds every fifteen minutes."
+        then={(feed) => (
+          <div className="space-y-3">
+            {/* Verbatim from the artifact rather than paraphrased here: the
+                producer states its own standing, and a page that restates it
+                can drift from what the file actually claims. */}
+            {feed.basis ? (
+              <p className="text-xs" style={{ color: "var(--warning, #f59e0b)" }}>
+                {feed.basis}
+              </p>
+            ) : null}
+
+            <ul className="space-y-2" data-testid="headlines">
+              {feed.items.map((item) => (
+                <li key={item.digest} className="glass-inset p-3 space-y-1"
+                    data-squad={item.touchesSquad ? "yes" : "no"}>
+                  <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                    <span className="text-[10px] uppercase tracking-wider"
+                          style={{ color: "var(--text-4)" }}>
+                      {item.source}
+                      {item.tier !== null ? ` · tier ${item.tier}` : ""}
+                    </span>
+                    {item.touchesSquad ? (
+                      <span className="badge-amber text-[9px]">IN YOUR SQUAD</span>
+                    ) : null}
+                  </div>
+                  <p className="text-sm" style={{ color: "var(--text-1)" }}>
+                    {item.url ? (
+                      <a href={item.url} target="_blank" rel="noreferrer"
+                         style={{ color: "inherit", textDecoration: "underline" }}>
+                        {item.headline}
+                      </a>
+                    ) : item.headline}
+                  </p>
+                  {item.players.length > 0 ? (
+                    <p className="text-xs" style={{ color: "var(--text-3)" }}>
+                      {item.players
+                        .map((p) => `${p.name ?? p.elementId}${p.club ? ` (${p.club})` : ""}`)
+                        .join(" · ")}
+                    </p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+
+            {feed.nArticles > feed.nShown ? (
+              <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
+                Showing {feed.nShown} of {feed.nArticles} captured in the last{" "}
+                {feed.windowDays ?? "few"} days.
+              </p>
+            ) : null}
+          </div>
+        )}
+      />
+    </Section>
   );
 }
 
