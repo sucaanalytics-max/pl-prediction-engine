@@ -60,6 +60,41 @@ CI: `.github/workflows/pipeline.yml` (daily), `validate.yml` (Sundays, writes `h
 - **Only `predictions/forecast_ledger.json` proves a prediction predated kickoff.** Never source an accuracy claim from `latest.json`.
 - **Secrets**: `ODDS_API_KEY`, `SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `FOOTBALL_DATA_TOKEN`. Service-role keys never go behind `NEXT_PUBLIC_`.
 
+## Sync-conflict duplicates
+
+Files named `foo 2.ts` appear in this working tree periodically — **743 at once** on
+one occasion, including `pipeline/risk/kelly 2.py`, a byte-identical copy of the
+real-money staking module. Editing the wrong copy is silent, and a stale duplicate
+of a test file shadows the real one.
+
+**The cause was investigated and not found.** Ruled out by measurement, so do not
+re-check these:
+
+| Suspect | Verdict |
+|---|---|
+| iCloud Desktop & Documents | OFF — `~/Documents` is a real directory and there is no `CloudDocs/Documents` |
+| OneDrive | Running and backs up *a* Documents folder, but not this one: different inode, unrelated contents |
+| Google Drive | Running; its root has `My Drive`/`Shared drives` and no Documents mirror |
+| `npm run build` | Zero duplicates, over both a clean and an existing `.next` |
+| Shell-written files | Not duplicated (canary) |
+| Editor/tool-written files | Not duplicated (canary) |
+
+The events are **episodic** — 743, then 3, then 9 — which looks like a bulk
+reconcile rather than a per-file watcher, and it did not reproduce under two canary
+tests several minutes long.
+
+So the impact is managed rather than the cause fixed:
+
+- **Detector**: `frontend/test/no-untracked-imports.test.ts` fails on any duplicate
+  that shadows a real file, and its message names the remedy.
+- **Remedy**: `scripts/clean_sync_duplicates.sh --apply`. It removes only copies
+  that are byte-identical to their original or live in a build directory, and
+  **reports anything that differs rather than deleting it** — a differing copy may
+  hold the only version of some work.
+
+There is deliberately **no `.gitignore` rule**: `* [0-9].*` would also hide a
+legitimate `step 2.tsx`, trading a visible problem for an invisible one.
+
 ## Ignore these directories
 
 Build artifacts, present on disk but not source — exclude from searches: `frontend/.open-next/`, `frontend/.wrangler/`, `frontend/dist/`, `frontend/.sites-bundle/`, `frontend/.openai/`, `node_modules/`, and generated `frontend/public/predictions/*.json`.

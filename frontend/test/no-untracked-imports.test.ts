@@ -247,7 +247,20 @@ describe("no sync-conflict duplicates", () => {
       .filter((file) => CONFLICT.test(file));
     expect(
       offenders.map((f) => relative(REPO, f)),
-      "Sync-conflict copies shadow real files and are invisible to vitest",
+      // Names the remedy, because the cause was hunted and not found: iCloud
+      // Documents sync is off, neither OneDrive nor Google Drive covers this path,
+      // and `npm run build` produces none over a clean or an existing `.next`. The
+      // events are episodic — 743 appeared at once, then 3, then 9 — and did not
+      // reproduce under two canary tests.
+      //
+      // What they cost is real: `pipeline/risk/kelly 2.py` was a byte-identical
+      // copy of the real-money staking module, and editing the wrong one is silent.
+      //
+      // Fix with: scripts/clean_sync_duplicates.sh --apply
+      // It removes only copies that are byte-identical or inside a build directory,
+      // and reports anything that DIFFERS rather than deleting it.
+      "Sync-conflict copies shadow real files and are invisible to vitest. " +
+        "Run scripts/clean_sync_duplicates.sh --apply",
     ).toEqual([]);
   });
 
