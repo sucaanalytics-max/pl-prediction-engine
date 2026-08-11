@@ -204,7 +204,13 @@ export function narrowPlayerStats(raw: unknown): NarrowResult<readonly PlayerRow
     return {
       name, minutes,
       team: optString(row.team) ?? "",
-      goals: countOr0(row.goals),
+      // `goals_scored` is the writer's name — `build_player_stats` in
+      // pipeline/data/fpl_api.py, mirroring FPL's own field. Reading `row.goals`
+      // with no fallback made every player's goals read 0 while 226 of 577 rows in
+      // the committed artifact had scored, and `/players` rendered that zero in a
+      // table cell. `xg` and `xa` on the next lines already had the fallback; this
+      // one was missed, so nothing looked inconsistent.
+      goals: countOr0(row.goals_scored ?? row.goals),
       assists: countOr0(row.assists),
       xg: countOr0(row.xg ?? row.expected_goals),
       xa: countOr0(row.xa ?? row.expected_assists),

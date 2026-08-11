@@ -278,6 +278,20 @@ def export_fixture_xg(
 
     payload = {
         "schema_version": 1,
+        # When this was produced.
+        #
+        # Absent until now, which meant the frontend read `optString(file.generated_at)`
+        # and got null on every load — so `producedAtOf` returned nothing, freshness
+        # could not be computed, and **this artifact could never be reported as
+        # stale**. It feeds every clean-sheet and goal probability the horizon
+        # optimiser ranks on, so silently serving last week's rates is exactly the
+        # failure worth detecting.
+        #
+        # `additionalProperties` is true in the schema and this field is not in
+        # `required`, so adding it is backwards compatible with artifacts already on
+        # disk.
+        "generated_at": datetime.now(timezone.utc)
+        .isoformat().replace("+00:00", "Z"),
         "source": (
             "dixon_coles_posterior+market_blend"
             if market["n_anchored"]

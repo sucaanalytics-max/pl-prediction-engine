@@ -1,0 +1,244 @@
+/**
+ * A narrower must not read a field name no writer emits.
+ *
+ * ## The class of bug
+ *
+ * There is no runtime coupling between the Python pipeline and this app; the only
+ * contract is the shape of the JSON. `pipeline/tests/test_fixture_xg_contract.py`
+ * is 616 lines and enforces that contract thoroughly — **in one direction**. It
+ * checks that the writer emits a valid artifact. Nothing checked that the reader
+ * reads the names the writer actually wrote.
+ *
+ * Two failures live in that gap, and they differ in how loudly they fail:
+ *
+ *  * A **required** field under the wrong name makes the artifact `unreadable`, and
+ *    `real-artifacts.test.ts` catches it. That is how `narrowFixtureXg` reading
+ *    `home_rate ?? home_xg` — neither of which any producer has ever emitted — was
+ *    eventually found, after the page had been rendering nothing.
+ *  * An **optional** field under the wrong name is silent forever. It narrows to
+ *    null, the artifact stays `ok`, and a page shows a zero or a dash where a real
+ *    value belongs. Nothing anywhere notices.
+ *
+ * The second is what this test exists for. It found `goals: countOr0(row.goals)`
+ * while the writer emits `goals_scored`: 226 of 577 players had scored, and
+ * `/players` rendered 0 for every one of them in a table cell. `xg` and `xa` on the
+ * adjacent lines already had the fallback, so nothing looked inconsistent.
+ *
+ * It also found `fixture_xg.json` carrying no `generated_at`, so `producedAtOf`
+ * returned null and that artifact could never be reported as stale — on the file
+ * that feeds every clean-sheet and goal probability the optimiser ranks on.
+ *
+ * ## Why it reads the source text
+ *
+ * Because the question is about names, and names only exist in the source. Running
+ * the narrowers would answer "did it produce a value", which is precisely what an
+ * optional field hides.
+ *
+ * ## The escape hatch, and why it is narrow
+ *
+ * A read of an absent name is legitimate when it is a documented fallback for a
+ * producer that may still be emitting an older shape, or a field known to be
+ * legally absent. Those go in `ALLOWED` with a reason. Anything else fails, so
+ * adding one is a deliberate act with a note attached rather than a silent
+ * accumulation.
+ */
+
+import { describe, expect, it } from "vitest";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+
+const NARROW_SRC = join(process.cwd(), "lib", "data", "narrow.ts");
+const PREDICTIONS = join(process.cwd(), "public", "predictions");
+const PIPELINE = join(process.cwd(), "..", "pipeline");
+
+/**
+ * Every quoted string the Python side uses as a dict key, gathered once.
+ *
+ * The committed artifact is a SNAPSHOT; the writer is the contract. Checking only
+ * the snapshot made this test fail on a field that had just been added to the
+ * producer and would appear on the next pipeline run — a red test whose fix is to
+ * wait, which is the kind that gets ignored.
+ *
+ * A field is therefore legitimate if the artifact has it OR a producer writes it.
+ * Coarse on purpose: this is a spell-check against the Python source, not a schema.
+ */
+function pipelineEmittedKeys(): Set<string> {
+  const out = new Set<string>();
+  const walk = (dir: string): void => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name === "__pycache__" || entry.name === "tests") continue;
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".py")) continue;
+      for (const m of readFileSync(full, "utf8").matchAll(/"([a-z_][a-z0-9_]{2,40})":/g)) {
+        out.add(m[1]);
+      }
+    }
+  };
+  try { walk(PIPELINE); } catch { /* no pipeline dir in some checkouts */ }
+  return out;
+}
+
+/**
+ * Reads of absent names that are correct.
+ *
+ * Keyed `artifactKey:field`. Every entry needs a reason, because an unexplained
+ * exemption is how this test would rot into decoration.
+ */
+const ALLOWED: Record<string, string> = {
+  // Documented at narrow.ts:23 — absent on all 20 rows, legal by the interface, and
+  // never rendered. The optional read is the honest way to express that.
+  "table:logo_url": "legitimately absent; documented and unrendered",
+
+  // Deliberate fallbacks kept after the lambda_home/mu_away fix, so an older
+  // artifact still on disk narrows rather than going unreadable.
+  "fixtureXg:home_rate": "legacy fallback behind lambda_home",
+  "fixtureXg:home_xg": "legacy fallback behind lambda_home",
+  "fixtureXg:away_rate": "legacy fallback behind mu_away",
+  "fixtureXg:away_xg": "legacy fallback behind mu_away",
+  "fixtureXg:rows": "legacy fallback behind `fixtures`",
+  "fixtureXg:current_gameweek": "not emitted; the artifact carries first_gameweek",
+
+  // Fallback behind goals_scored, kept for the same reason.
+  "playerStats:goals": "legacy fallback behind goals_scored",
+  "playerStats:xg": "first choice, with expected_goals as the working fallback",
+  "playerStats:xa": "first choice, with expected_assists as the working fallback",
+};
+
+/**
+ * Parse an artifact, handling `.jsonl`.
+ *
+ * A `.jsonl` file is one JSON value per line and an EMPTY one is legitimate —
+ * `deltas.jsonl` is 0 bytes until a decision flips. `JSON.parse("")` throws, which
+ * made this test fail on a file that was correct.
+ */
+function parseArtifact(file: string): unknown {
+  const text = readFileSync(file, "utf8");
+  if (!file.endsWith(".jsonl")) return text.trim() ? JSON.parse(text) : null;
+  return text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => JSON.parse(line));
+}
+
+/** Every key appearing anywhere in the artifact, to a bounded depth. */
+function keysDeep(value: unknown, out = new Set<string>(), depth = 0): Set<string> {
+  if (depth > 4 || value === null || typeof value !== "object") return out;
+  if (Array.isArray(value)) {
+    // A sample is enough: rows are homogeneous, and scanning 600 players to learn
+    // the same 21 key names is wasted work.
+    for (const item of value.slice(0, 40)) keysDeep(item, out, depth + 1);
+    return out;
+  }
+  for (const [key, nested] of Object.entries(value as Record<string, unknown>)) {
+    out.add(key);
+    keysDeep(nested, out, depth + 1);
+  }
+  return out;
+}
+
+interface Narrower {
+  readonly fn: string;
+  readonly body: string;
+  readonly key: string;
+  readonly path: string;
+}
+
+function narrowers(): Narrower[] {
+  const source = readFileSync(NARROW_SRC, "utf8");
+
+  const bodies = new Map<string, string>();
+  for (const match of source.matchAll(
+    /export function (narrow[A-Za-z0-9_]+)\(([\s\S]*?)\n}/g,
+  )) {
+    bodies.set(match[1], match[2]);
+  }
+
+  const out: Narrower[] = [];
+  for (const match of source.matchAll(
+    /key:\s*"([A-Za-z0-9_]+)"[\s\S]{0,400}?path:\s*"([^"]+)"[\s\S]{0,600}?narrow:\s*(narrow[A-Za-z0-9_]+)/g,
+  )) {
+    const [, key, path, fn] = match;
+    const body = bodies.get(fn);
+    if (body) out.push({ fn, body, key, path });
+  }
+  return out;
+}
+
+/**
+ * Field names the narrower reads off a record.
+ *
+ * Method calls are excluded by the negative lookahead on `(`. `narrowDeltas` calls
+ * `raw.split("\n")` on a JSONL string, and reading that as a field name reported
+ * `split` as missing from the artifact — a false positive, and the kind that gets a
+ * useful test deleted.
+ */
+function fieldsRead(body: string): string[] {
+  return [
+    ...new Set(
+      [
+        ...body.matchAll(
+          /\b(?:file|row|raw|item|entry|obj|metadata)\.([a-z_][a-z0-9_]*)\b(?!\s*\()/g,
+        ),
+      ].map((m) => m[1]),
+    ),
+  ];
+}
+
+describe("no narrower reads a field the writer never emits", () => {
+  const all = narrowers();
+  const emitted = pipelineEmittedKeys();
+
+  it("found narrowers to check at all", () => {
+    // Without this the regex silently matching nothing would make every assertion
+    // below vacuously true — the failure mode that makes a guard worthless.
+    expect(all.length).toBeGreaterThan(5);
+  });
+
+  for (const narrower of all) {
+    const file = join(PREDICTIONS, narrower.path);
+
+    it.skipIf(!existsSync(file))(
+      `${narrower.key} (${narrower.path})`,
+      () => {
+        const present = keysDeep(parseArtifact(file));
+        const dead = fieldsRead(narrower.body)
+          .filter((field) => !present.has(field))
+          // A producer writes it, so it will be in the next artifact.
+          .filter((field) => !emitted.has(field))
+          .filter((field) => !(`${narrower.key}:${field}` in ALLOWED));
+
+        expect(
+          dead,
+          `${narrower.fn} reads ${dead.join(", ")}, which ${narrower.path} does not ` +
+            `contain. Either the writer's name changed, or the read is a typo that ` +
+            `narrows to null forever. If the read is a deliberate fallback, add it ` +
+            `to ALLOWED with a reason.`,
+        ).toEqual([]);
+      },
+    );
+  }
+});
+
+describe("the exemptions stay honest", () => {
+  it("every allowance carries a reason", () => {
+    for (const [key, reason] of Object.entries(ALLOWED)) {
+      expect(reason.length, `${key} needs a reason`).toBeGreaterThan(10);
+    }
+  });
+
+  it("no allowance is stale", () => {
+    /**
+     * An exemption for a field the narrower no longer reads is a note about
+     * nothing, and it makes the list harder to trust the next time someone adds to
+     * it.
+     */
+    const source = readFileSync(NARROW_SRC, "utf8");
+    const unused = Object.keys(ALLOWED).filter((entry) => {
+      const field = entry.split(":")[1];
+      return !new RegExp(`\\.${field}\\b`).test(source);
+    });
+    expect(unused, "these allowances name fields nothing reads").toEqual([]);
+  });
+});
