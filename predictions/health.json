@@ -1,9 +1,14 @@
 {
-  "last_updated": "2026-08-10T07:05:09.299003Z",
+  "last_updated": "2026-08-11T04:54:59.999941Z",
   "gameweek": 1,
   "n_predictions": 10,
   "status": "healthy",
-  "pipeline_version": "4.0.0",
+  "forecast_validation_status": "collecting",
+  "model_metrics": {},
+  "calibration": {
+    "bins": []
+  },
+  "pipeline_version": "4.1.0",
   "models": {
     "dixon_coles": {
       "status": "active"
@@ -16,12 +21,49 @@
     },
     "goalscorer": {
       "status": "active",
-      "n_players": 309
+      "n_players": 306
     }
   },
   "ensemble_method": "weighted_average",
   "stacking_weights": null,
   "n_simulations": 5000,
-  "odds_source": "football_data",
-  "referee_profiles_count": 28
+  "n_simulations_requested": 5000,
+  "odds_source": "the_odds_api",
+  "referee_profiles_count": 28,
+  "fpl": {
+    "status": "ok",
+    "gameweek": 1,
+    "n_players": 577,
+    "n_draws": 5000,
+    "rules_source": "bootstrap+signed_yaml",
+    "rules_degraded": false,
+    "diagnostics": {
+      "n_clubs": 20,
+      "n_players": 577,
+      "n_without_history": 122,
+      "n_availability_gated": 49,
+      "n_with_prior_start_fallback": 365,
+      "archive_rows_fitted": 29747,
+      "availability_persistence": {
+        "none": 514,
+        "open_ended": 28,
+        "permanent": 11,
+        "dated_eligibility": 3,
+        "graded": 14,
+        "dated_fitness": 7
+      },
+      "n_evidence_conflicts": 0
+    },
+    "simulation": {
+      "n_draws": 5000,
+      "n_fixtures": 10,
+      "n_fixtures_skipped": 0,
+      "skipped_fixtures": [],
+      "n_players": 577,
+      "n_double_gameweek_players": 0,
+      "n_blank_gameweek_players": 0,
+      "seed_entropy": 1681305205,
+      "dgw_rotation_correlation_modelled": false
+    }
+  }
 }

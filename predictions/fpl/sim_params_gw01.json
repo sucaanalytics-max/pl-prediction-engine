@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "season": "2627",
+  "gameweek": 1,
+  "generated_at": "2026-08-11T04:54:59.528839Z",
+  "seed_entropy": 1681305205,
+  "n_draws": 5000,
+  "parameters": {
+    "events.rate_shrinkage_per90": {
+      "value": 450.0,
+      "tier": "F"
+    },
+    "events.recency_half_life_fixtures": {
+      "value": 40.0,
+      "tier": "F"
+    },
+    "market.blend_weight": {
+      "value": 0.55,
+      "tier": "F"
+    },
+    "market.prior_only_weight": {
+      "value": 0.9,
+      "tier": "C"
+    },
+    "minutes.doubtful_default": {
+      "value": 0.75,
+      "tier": "S"
+    },
+    "minutes.horizon_availability_floor": {
+      "value": 0.8,
+      "tier": "F"
+    },
+    "minutes.horizon_availability_rho": {
+      "value": 0.73,
+      "tier": "F"
+    },
+    "minutes.horizon_start_reversion_cap": {
+      "value": 0.447,
+      "tier": "F"
+    },
+    "minutes.horizon_start_reversion_rho": {
+      "value": 0.541,
+      "tier": "F"
+    },
+    "minutes.impairment_persistence_graded": {
+      "value": 0.45,
+      "tier": "S"
+    },
+    "minutes.impairment_persistence_open": {
+      "value": 0.85,
+      "tier": "S"
+    },
+    "minutes.injured_default": {
+      "value": 0.1,
+      "tier": "S"
+    },
+    "minutes.minutes_shrinkage": {
+      "value": 2.0,
+      "tier": "F"
+    },
+    "minutes.news_staleness_days": {
+      "value": 21.0,
+      "tier": "C"
+    },
+    "minutes.p60_shrinkage": {
+      "value": 0.25,
+      "tier": "F"
+    },
+    "minutes.recency_half_life_fixtures": {
+      "value": 1.5,
+      "tier": "F"
+    },
+    "minutes.return_ramp_floor": {
+      "value": 0.6,
+      "tier": "S"
+    },
+    "minutes.return_ramp_weeks": {
+      "value": 2.0,
+      "tier": "S"
+    },
+    "minutes.start_shrinkage": {
+      "value": 0.25,
+      "tier": "F"
+    },
+    "minutes.substitutes_per_fixture": {
+      "value": 4.14,
+      "tier": "F"
+    }
+  },
+  "fixtures": [
+    {
+      "match_id": "20260821_Arsenal_Coventry_City",
+      "home_team": "Arsenal",
+      "away_team": "Coventry City",
+      "lambda_home": 1.8926,
+      "mu_away": 1.0868
+    },
+    {
+      "match_id": "20260822_Hull_City_Man_United",
+      "home_team": "Hull City",
+      "away_team": "Man United",
+      "lambda_home": 1.449,
+      "mu_away": 1.6518
+    },
+    {
+      "match_id": "20260822_Everton_Crystal_Palace",
+      "home_team": "Everton",
+      "away_team": "Crystal Palace",
+      "lambda_home": 1.4792,
+      "mu_away": 1.1196
+    },
+    {
+      "match_id": "20260822_Ipswich_Sunderland",
+      "home_team": "Ipswich",
+      "away_team": "Sunderland",
+      "lambda_home": 1.4002,
+      "mu_away": 1.4942
+    },
+    {
+      "match_id": "20260822_Nott'm_Forest_Leeds",
+      "home_team": "Nott'm Forest",
+      "away_team": "Leeds",
+      "lambda_home": 1.5878,
+      "mu_away": 1.19
+    },
+    {
+      "match_id": "20260822_Brentford_Tottenham",
+      "home_team": "Brentford",
+      "away_team": "Tottenham",
+      "lambda_home": 1.7992,
+      "mu_away": 1.4968
+    },
+    {
+      "match_id": "20260823_Brighton_Aston_Villa",
+      "home_team": "Brighton",
+      "away_team": "Aston Villa",
+      "lambda_home": 1.5554,
+      "mu_away": 1.2324
+    },
+    {
+      "match_id": "20260823_Man_City_Bournemouth",
+      "home_team": "Man City",
+      "away_team": "Bournemouth",
+      "lambda_home": 1.912,
+      "mu_away": 1.1044
+    },
+    {
+      "match_id": "20260823_Newcastle_Liverpool",
+      "home_team": "Newcastle",
+      "away_team": "Liverpool",
+      "lambda_home": 1.6284,
+      "mu_away": 1.4912
+    },
+    {
+      "match_id": "20260824_Fulham_Chelsea",
+      "home_team": "Fulham",
+      "away_team": "Chelsea",
+      "lambda_home": 1.4082,
+      "mu_away": 1.2478
+    }
+  ]
+}
