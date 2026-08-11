@@ -177,6 +177,16 @@ export interface PlayerRow {
   readonly fpl_ownership: number | null;
   readonly fpl_price: number | null;
   readonly form: number | null;
+  /** GKP | DEF | MID | FWD. Empty when the provider omitted it. */
+  readonly position: string;
+  /**
+   * Whether FPL currently lists the player as available.
+   *
+   * Narrowed as a tri-state rather than defaulted to true: "the provider did not
+   * say" and "the provider said available" are different facts, and a filter that
+   * silently treats unknown as fit would hide exactly the players worth checking.
+   */
+  readonly available: boolean | null;
   /**
    * True when per-90 columns are meaningful.
    *
@@ -198,7 +208,16 @@ export function narrowPlayerStats(raw: unknown): NarrowResult<readonly PlayerRow
   const kept = mapKept(rows, "player_stats", problems, (item, i) => {
     const row = reqRecord(item, `player_stats[${i}]`, problems);
     if (!row) return null;
-    const name = reqString(row.name, `player_stats[${i}].name`, problems);
+    // FPL's own short name, which is what every other FPL tool shows and what fits
+    // a table cell: "João Pedro" rather than "João Pedro Junqueira de Jesus",
+    // "Raya" rather than "David Raya Martín". The legal name wrapped to three lines
+    // and pushed the numbers off the visible width.
+    //
+    // Falls back to the legal name, so a row missing `web_name` still renders
+    // instead of being dropped.
+    const name =
+      optString(row.web_name)
+      ?? reqString(row.name, `player_stats[${i}].name`, problems);
     const minutes = reqNumber(row.minutes, `player_stats[${i}].minutes`, problems);
     if (name === null || minutes === null) return null;
     return {
@@ -222,6 +241,10 @@ export function narrowPlayerStats(raw: unknown): NarrowResult<readonly PlayerRow
       fpl_ownership: optNumber(row.fpl_ownership),
       fpl_price: optNumber(row.fpl_price),
       form: optNumber(row.form),
+      // Both were in the artifact all along and read by nothing, so /players could
+      // not filter by position or hide unavailable players.
+      position: optString(row.position) ?? "",
+      available: typeof row.available === "boolean" ? row.available : null,
       ratesAreMeaningful: minutes >= MIN_MINUTES_FOR_RATES,
     } satisfies PlayerRow;
   });

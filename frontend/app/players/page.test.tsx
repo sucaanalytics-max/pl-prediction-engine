@@ -425,3 +425,70 @@ describe("the projections section", () => {
     expect(screen.getAllByTestId("player")).toHaveLength(1);
   });
 });
+
+describe("the players table answers an FPL question", () => {
+  /**
+   * The old default sort was minutes descending, which put twelve goalkeepers with
+   * 0 goals and 0.00 xG at the top of the FPL players page. "Who played most last
+   * season" is not why anyone opens this page.
+   *
+   * The obvious replacement — projected points — is NOT available in production:
+   * per-player projections come from the licensed FPLReview export, absent from CI
+   * (coveragePercent 0, source fallback). Defaulting to a column that is empty on
+   * the deployed site trades one bad first screen for another, so the default is
+   * ownership: the one forward-looking number present on 498 of 577 rows.
+   */
+  it("does not default to sorting by minutes", async () => {
+    const source = readPlayersSource();
+    expect(source).toContain('useState<SortKey>("ownership")');
+    // The old default, gone.
+    expect(source).not.toContain("b.minutes - a.minutes");
+  });
+
+  it("shows price and ownership, the two numbers every transfer uses", async () => {
+    const source = readPlayersSource();
+    expect(source).toContain("row.fpl_price");
+    expect(source).toContain("row.fpl_ownership");
+  });
+
+  it("offers position, price, availability and search filters", async () => {
+    const source = readPlayersSource();
+    for (const control of ["Filter by position", "Maximum price", "Available only", "Search players"]) {
+      expect(source, `${control} filter missing`).toContain(control);
+    }
+  });
+
+  it("sorts nulls last, so a missing value never tops the table", async () => {
+    // The same defect as the goalkeeper wall, in a different column: a null that
+    // sorts high puts "we don't know" above "we do".
+    const source = readPlayersSource();
+    expect(source).toContain("if (left === null) return 1;");
+    expect(source).toContain("if (right === null) return -1;");
+  });
+
+  it("keeps the per-90 suppression it nearly lost", () => {
+    /**
+     * `xg_per_90` is `xg / max(minutes / 90, 0.1)`, so a 0-minute player reads as
+     * `xg * 10`. Rebuilding the table deleted this column and six tests failed —
+     * they encode a measured trap, not a preference. Pinned here so the next
+     * rebuild is warned rather than caught.
+     */
+    const source = readPlayersSource();
+    expect(source).toContain("ratesAreMeaningful");
+    expect(source).toContain("MIN_MINUTES_FOR_RATES");
+  });
+
+  it("says the stats are last season's, not a projection", () => {
+    // The page previously read as though these were forward-looking.
+    const source = readPlayersSource();
+    expect(source).toContain("last season's actuals, not a projection");
+  });
+});
+
+function readPlayersSource(): string {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { readFileSync } = require("node:fs") as typeof import("node:fs");
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { join } = require("node:path") as typeof import("node:path");
+  return readFileSync(join(process.cwd(), "app", "players", "page.tsx"), "utf8");
+}

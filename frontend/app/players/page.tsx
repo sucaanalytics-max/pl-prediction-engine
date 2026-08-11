@@ -50,77 +50,227 @@ function Stat({ value, digits = 0 }: { value: number | null; digits?: number }) 
   );
 }
 
+/**
+ * Sort keys, and why the default is what it is.
+ *
+ * The old default was **minutes descending**, which put twelve goalkeepers with
+ * `0` goals and `0.00` xG at the top of the FPL players page — "who played most
+ * last season" is not a question anyone opens this page to ask.
+ *
+ * The obvious replacement, projected points, is **not available in production**:
+ * per-player projections come from the FPLReview export, which is licensed and
+ * absent from CI (`coveragePercent: 0`, `source: fallback`). Defaulting to a column
+ * that is empty on the deployed site would trade one bad first screen for another.
+ *
+ * So the default is ownership — the one forward-looking number present on 498 of
+ * 577 rows, and the honest answer to "where do I start".
+ */
+const SORTS = [
+  { key: "ownership", label: "Owned by", get: (r: PlayerRow) => r.fpl_ownership },
+  { key: "price", label: "Price", get: (r: PlayerRow) => r.fpl_price },
+  { key: "form", label: "Form", get: (r: PlayerRow) => r.form },
+  { key: "goals", label: "Goals", get: (r: PlayerRow) => r.goals },
+  { key: "assists", label: "Assists", get: (r: PlayerRow) => r.assists },
+  { key: "xg", label: "xG", get: (r: PlayerRow) => r.xg },
+  { key: "minutes", label: "Minutes", get: (r: PlayerRow) => r.minutes },
+] as const;
+
+type SortKey = (typeof SORTS)[number]["key"];
+
+const POSITIONS = ["GKP", "DEF", "MID", "FWD"] as const;
+
 function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
-  const [sortByRate, setSortByRate] = useState(false);
+  const [sort, setSort] = useState<SortKey>("ownership");
+  const [position, setPosition] = useState<string>("");
+  const [query, setQuery] = useState("");
+  const [maxPrice, setMaxPrice] = useState<number | null>(null);
+  const [fitOnly, setFitOnly] = useState(false);
+
+  const filtered = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    return rows.filter((row) => {
+      if (position && row.position !== position) return false;
+      if (maxPrice !== null && (row.fpl_price ?? Infinity) > maxPrice) return false;
+      // `available === null` means the provider did not say. Excluded only when the
+      // reader explicitly asks for fit players, never silently.
+      if (fitOnly && row.available !== true) return false;
+      if (needle && !`${row.name} ${row.team}`.toLowerCase().includes(needle)) {
+        return false;
+      }
+      return true;
+    });
+  }, [rows, position, maxPrice, fitOnly, query]);
 
   const shown = useMemo(() => {
-    const sorted = [...rows].sort((a, b) =>
-      sortByRate
-        // Rows whose rates are meaningless sort last rather than topping the
-        // table on a denominator artefact.
-        ? Number(b.ratesAreMeaningful) - Number(a.ratesAreMeaningful)
-          || b.xg / Math.max(b.minutes / 90, 1) - a.xg / Math.max(a.minutes / 90, 1)
-        : b.minutes - a.minutes,
-    );
-    return sorted.slice(0, PAGE_SIZE);
-  }, [rows, sortByRate]);
+    const getter = SORTS.find((s) => s.key === sort)?.get ?? SORTS[0].get;
+    return [...filtered]
+      .sort((a, b) => {
+        const left = getter(a);
+        const right = getter(b);
+        // Nulls last, always. A missing value sorting to the top of a descending
+        // list is the same defect as the goalkeeper wall in a different column.
+        if (left === null && right === null) return 0;
+        if (left === null) return 1;
+        if (right === null) return -1;
+        return right - left;
+      })
+      .slice(0, PAGE_SIZE);
+  }, [filtered, sort]);
 
-  const suppressed = rows.filter((r) => !r.ratesAreMeaningful).length;
+  const suppressed = filtered.filter((r) => !r.ratesAreMeaningful).length;
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between gap-2 flex-wrap">
-        <p className="text-xs" style={{ color: "var(--text-3)" }}>
-          Showing {shown.length} of {rows.length}
-          {suppressed > 0
-            ? ` · per-90 rates hidden for ${suppressed} player${suppressed === 1 ? "" : "s"} under ${MIN_MINUTES_FOR_RATES} minutes`
-            : ""}
-        </p>
-        <button
-          type="button"
-          className="text-xs underline"
-          style={{ color: "var(--accent)" }}
-          onClick={() => setSortByRate((v) => !v)}
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search player or club"
+          aria-label="Search players"
+          className="rounded border px-2 py-1 text-xs"
+          style={{
+            background: "var(--surface-2, #0f172a)",
+            borderColor: "var(--border)",
+            color: "var(--text-1)",
+          }}
+        />
+
+        <div role="group" aria-label="Filter by position" className="flex gap-1">
+          {["", ...POSITIONS].map((code) => (
+            <button
+              key={code || "all"}
+              type="button"
+              onClick={() => setPosition(code)}
+              aria-pressed={position === code}
+              className="text-[11px] rounded px-2 py-1"
+              style={{
+                background: position === code ? "var(--accent)" : "transparent",
+                color: position === code ? "var(--accent-contrast, #fff)" : "var(--text-3)",
+                border: "1px solid var(--border)",
+              }}
+            >
+              {code || "All"}
+            </button>
+          ))}
+        </div>
+
+        <select
+          value={maxPrice ?? ""}
+          onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : null)}
+          aria-label="Maximum price"
+          className="rounded border px-2 py-1 text-xs"
+          style={{
+            background: "var(--surface-2, #0f172a)",
+            borderColor: "var(--border)",
+            color: "var(--text-1)",
+          }}
         >
-          Sort by {sortByRate ? "minutes" : "xG per 90"}
-        </button>
+          <option value="">Any price</option>
+          {[4.5, 5.5, 6.5, 7.5, 9, 11, 15].map((p) => (
+            <option key={p} value={p}>Up to £{p.toFixed(1)}m</option>
+          ))}
+        </select>
+
+        <label className="text-[11px] flex items-center gap-1" style={{ color: "var(--text-3)" }}>
+          <input
+            type="checkbox"
+            checked={fitOnly}
+            onChange={(event) => setFitOnly(event.target.checked)}
+          />
+          Available only
+        </label>
+
+        <select
+          value={sort}
+          onChange={(event) => setSort(event.target.value as SortKey)}
+          aria-label="Sort by"
+          className="rounded border px-2 py-1 text-xs ml-auto"
+          style={{
+            background: "var(--surface-2, #0f172a)",
+            borderColor: "var(--border)",
+            color: "var(--text-1)",
+          }}
+        >
+          {SORTS.map((option) => (
+            <option key={option.key} value={option.key}>Sort: {option.label}</option>
+          ))}
+        </select>
       </div>
 
+      <p className="text-xs" style={{ color: "var(--text-3)" }}>
+        Showing {shown.length} of {filtered.length}
+        {filtered.length !== rows.length ? ` (filtered from ${rows.length})` : ""}
+        {suppressed > 0
+          ? ` · per-90 rates hidden for ${suppressed} player${suppressed === 1 ? "" : "s"} under ${MIN_MINUTES_FOR_RATES} minutes`
+          : ""}
+        {" · goals, assists and xG are last season's actuals, not a projection"}
+      </p>
+
       <div className="glass-panel rounded-2xl overflow-x-auto">
-        <table className="data-table" aria-label="Player season statistics">
+        <table className="data-table" aria-label="Players">
           <thead>
             <tr>
               <th scope="col">Player</th>
               <th scope="col">Team</th>
-              <th scope="col" className="text-center">Mins</th>
+              <th scope="col" className="text-center">Pos</th>
+              <th scope="col" className="text-center">Price</th>
+              <th scope="col" className="text-center">Owned</th>
+              <th scope="col" className="text-center hidden sm:table-cell">Form</th>
               <th scope="col" className="text-center">G</th>
               <th scope="col" className="text-center">A</th>
-              <th scope="col" className="text-center">xG</th>
-              <th scope="col" className="text-center hidden sm:table-cell">xA</th>
+              <th scope="col" className="text-center hidden md:table-cell">xG</th>
+              <th scope="col" className="text-center hidden md:table-cell">xA</th>
               <th scope="col" className="text-center hidden md:table-cell">xG/90</th>
-              <th scope="col" className="text-center hidden lg:table-cell">Fouls</th>
+              <th scope="col" className="text-center hidden lg:table-cell">Mins</th>
             </tr>
           </thead>
           <tbody>
             {shown.map((row) => (
               <tr key={`${row.name}-${row.team}`} data-testid="player">
-                <td className="text-sm">{row.name}</td>
-                <td className="text-sm" style={{ color: "var(--text-3)" }}>
-                  {row.team}
+                <td className="text-sm">
+                  {row.name}
+                  {row.available === false ? (
+                    <span
+                      className="ml-1 text-[10px]"
+                      style={{ color: "var(--warning, #f59e0b)" }}
+                      title="FPL lists this player as unavailable"
+                    >
+                      !
+                    </span>
+                  ) : null}
                 </td>
-                <td className="text-center font-mono text-sm">{row.minutes}</td>
+                <td className="text-sm" style={{ color: "var(--text-3)" }}>{row.team}</td>
+                <td className="text-center text-xs" style={{ color: "var(--text-3)" }}>
+                  {row.position || "—"}
+                </td>
+                <td className="text-center font-mono text-sm">
+                  {row.fpl_price === null ? "—" : `£${row.fpl_price.toFixed(1)}`}
+                </td>
+                <td className="text-center font-mono text-sm">
+                  {row.fpl_ownership === null ? "—" : `${row.fpl_ownership.toFixed(1)}%`}
+                </td>
+                <td className="text-center font-mono text-sm hidden sm:table-cell">
+                  <Stat value={row.form} digits={1} />
+                </td>
                 <td className="text-center font-mono text-sm">{row.goals}</td>
                 <td className="text-center font-mono text-sm">{row.assists}</td>
-                <td className="text-center font-mono text-sm">{row.xg.toFixed(2)}</td>
-                <td className="text-center font-mono text-sm hidden sm:table-cell">
+                <td className="text-center font-mono text-sm hidden md:table-cell">
+                  {row.xg.toFixed(2)}
+                </td>
+                <td className="text-center font-mono text-sm hidden md:table-cell">
                   {row.xa.toFixed(2)}
                 </td>
                 <td
                   className="text-center font-mono text-sm hidden md:table-cell"
                   data-rates={row.ratesAreMeaningful ? "shown" : "suppressed"}
                 >
-                  {/* Suppressed below the minutes floor: the denominator clamp
-                      turns a 0-minute player's xG into xG x 10. */}
+                  {/* Suppressed below the minutes floor.
+                      `xg_per_90` is `xg / max(minutes / 90, 0.1)`, so a 0-minute
+                      player reads as `xg * 10` — a fabricated rate rendered in the
+                      same column as measured ones. I deleted this column while
+                      rebuilding the table and six tests caught it; they encode a
+                      measured trap, not a preference. */}
                   {row.ratesAreMeaningful ? (
                     (row.xg / (row.minutes / 90)).toFixed(2)
                   ) : (
@@ -133,7 +283,7 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
                   )}
                 </td>
                 <td className="text-center font-mono text-sm hidden lg:table-cell">
-                  <Stat value={row.fouls_committed} />
+                  {row.minutes}
                 </td>
               </tr>
             ))}

@@ -55,7 +55,7 @@ const PLAYERS = [
   {
     name: "New Signing", team: "Leeds", minutes: 0, goals: 0, assists: 0,
     xg: 0.8, xa: 0.3, fouls_committed: null, fouls_per_90: null,
-    fpl_ownership: null, fpl_price: 5.0, form: 0.0,
+    fpl_ownership: null, fpl_price: 5.0, form: null,
   },
 ];
 
@@ -268,12 +268,25 @@ describe("Players — nulls stay null", () => {
     await renderPage(<PlayersPage />, {
       [REGISTRY.playerStats.path]: PLAYERS,
     }, "Season statistics");
+    // The property: a stat the provider never supplied renders as a dash, never as
+    // a zero. A zero would claim the player scored none, was owned by nobody, or
+    // committed no fouls — assertions the provider did not make.
+    //
+    // Retargeted from `fouls_committed` to `form` and `fpl_ownership` when the
+    // table was rebuilt for FPL: fouls is null on 100% of real rows and never
+    // useful for a transfer decision, so the column went. The rule did not.
     const rows = screen.getAllByTestId("player");
-    // fouls_committed is null on all 564 real rows. A zero here would claim the
-    // player committed no fouls, which the provider never said.
-    for (const row of rows) {
-      const cells = within(row).getAllByTitle("not supplied by the provider");
-      expect(cells.length).toBeGreaterThan(0);
+    const withNulls = rows.filter(
+      (row) => within(row).queryAllByTitle("not supplied by the provider").length > 0,
+    );
+    expect(
+      withNulls.length,
+      "the fixture's null form and null ownership must render as dashes",
+    ).toBeGreaterThan(0);
+
+    // And no row turns a null into a zero.
+    for (const row of withNulls) {
+      expect(within(row).queryAllByText("0.0").length).toBe(0);
     }
   });
 
