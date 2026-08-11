@@ -1,0 +1,145 @@
+# Scan X for FPL team news, on demand.
+#
+# ## Why this is `workflow_dispatch` only
+#
+# No schedule. The owner triggers it — from the `/evidence` page, from the Actions
+# tab, or from `gh workflow run`. A schedule was deliberately dropped: the LaunchAgent
+# route died on macOS TCC (launchd cannot read ~/Documents), and a cron here would
+# spend runner minutes twice a day re-reading the same five posts.
+#
+# ## The open question this answers
+#
+# The scan works from the owner's Mac on a residential IP. Whether X serves the
+# logged-out profile to a GitHub runner's datacenter IP is UNKNOWN and cannot be
+# assumed — X treats those ranges differently. The job reports what it got rather
+# than pretending, and `x_scan.mjs` exits non-zero on zero posts precisely so a
+# refusal cannot look like a quiet news day.
+#
+# If this turns out to be blocked, the frontend trigger cannot work from the
+# deployed site and the honest answer is to run `scripts/x_scan.sh` locally.
+name: X scan
+
+# No inputs, deliberately.
+#
+# The first draft took a `handle` and interpolated it into a `run:` block, which is
+# a shell-injection vector — and this workflow is meant to be triggered from a web
+# page, so the value would arrive from an HTTP request rather than from a human at
+# a terminal. It would also have let a caller point our infrastructure at any X
+# profile.
+#
+# `X_SCAN_ACCOUNTS` in pipeline/config.py is the only source of accounts. Adding one
+# is a reviewable commit; it is not a request parameter.
+on:
+  workflow_dispatch:
+
+# One at a time. Two runs would race on the inbox and on the git index, and this
+# job pushes to main alongside two other writers.
+concurrency:
+  group: x-scan
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Needed to rebase onto whatever the daily pipeline pushed since.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      # Dependency-light on purpose, exactly like news.yml: the poller needs
+      # `requests` and `feedparser` and nothing else. Pulling the full
+      # requirements would add PyMC and SciPy for a job that touches neither.
+      - name: Install the poller's dependencies
+        run: python -m pip install --quiet requests feedparser
+
+      - name: Install Playwright and Chromium
+        working-directory: scripts
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Scan
+        id: scan
+        env:
+          # No system Chrome on a runner, so use Playwright's own build.
+          X_SCAN_CHANNEL: chromium
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/xscan
+          ok=0
+          fail=0
+
+          # Accounts via a helper file, not a heredoc. A heredoc here has to
+          # survive a YAML block scalar, shell quoting and Python string literals
+          # at once, and the first attempt silently produced an empty list.
+          PYTHONPATH=. python scripts/list_accounts.py > /tmp/accounts.tsv
+
+          while IFS=$'\t' read -r handle source club; do
+            [ -z "$handle" ] && continue
+            echo "::group::@$handle"
+            if node scripts/x_scan.mjs "$handle" "/tmp/xscan/$handle.json"; then
+              args=(--raw "/tmp/xscan/$handle.json" --source "$source")
+              [ -n "$club" ] && args+=(--club "$club")
+              PYTHONPATH=. python -m pipeline.data.x_scan "${args[@]}" && ok=$((ok+1)) || fail=$((fail+1))
+            else
+              # Almost certainly the datacenter IP being refused. Say which.
+              echo "::warning::@$handle returned no posts — X may be refusing this runner's IP, or the markup changed"
+              fail=$((fail+1))
+            fi
+            echo "::endgroup::"
+          done < /tmp/accounts.tsv
+
+          echo "scanned=$ok" >> "$GITHUB_OUTPUT"
+          echo "failed=$fail" >> "$GITHUB_OUTPUT"
+          [ "$ok" -gt 0 ] || { echo "::error::no account scanned successfully"; exit 1; }
+
+      - name: File the claims
+        run: PYTHONPATH=. python -m pipeline.learning.run_news --force
+
+      - name: Commit and push
+        run: |
+          # Only the paths this job owns, so a scan never becomes a surprise commit
+          # of whatever else the checkout happens to carry.
+          PATHS=(
+            predictions/fpl/x_inbox.csv
+            predictions/fpl/availability_evidence.jsonl
+            predictions/news_feed_state.json
+            frontend/public/predictions/fpl/news_view.json
+          )
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- "${PATHS[@]}"; then
+            echo "no change — the same posts are still the most recent"
+            exit 0
+          fi
+          git add -- "${PATHS[@]}"
+          git commit -q -m "X scan — $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase --autostash --quiet origin main
+          git push --quiet origin main
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### X scan"
+            echo ""
+            echo "- accounts scanned: ${{ steps.scan.outputs.scanned || 0 }}"
+            echo "- accounts failed:  ${{ steps.scan.outputs.failed || 0 }}"
+            echo ""
+            echo "A failure here is most likely X refusing the runner's datacenter IP."
+            echo "The same scan from a residential IP works: \`./scripts/x_scan.sh\`."
+          } >> "$GITHUB_STEP_SUMMARY"

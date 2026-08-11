@@ -61,8 +61,15 @@ try {
   process.exit(3);
 }
 
+// Locally: drive the installed Chrome, so nothing is downloaded and the request
+// comes from the same residential IP that was verified to work.
+//
+// In CI there is no system Chrome, so `X_SCAN_CHANNEL=chromium` selects
+// Playwright's own build. Whether X serves a GitHub runner's datacenter IP at all
+// is a separate question, and the reason that path is measured before it is used.
+const channel = process.env.X_SCAN_CHANNEL || "chrome";
 const browser = await chromium.launch({
-  channel: "chrome",           // the installed Chrome, not a downloaded Chromium
+  ...(channel === "chromium" ? {} : { channel }),
   headless: true,
 });
 

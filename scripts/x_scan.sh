@@ -37,12 +37,8 @@ command -v node >/dev/null || { log "node not on PATH; aborting"; exit 1; }
 
 # Accounts come from config, so adding one is a reviewable code change rather than
 # an edit to a script that runs unattended.
-ACCOUNTS=$("$PYTHON" - <<'PY'
-from pipeline.config import X_SCAN_ACCOUNTS
-for a in X_SCAN_ACCOUNTS:
-    print(f"{a['handle']}\t{a['source']}\t{a.get('club') or ''}")
-PY
-)
+ACCOUNTS=$(PYTHONPATH=. "$PYTHON" scripts/list_accounts.py)
+
 [ -z "$ACCOUNTS" ] && { log "no accounts configured; nothing to do"; exit 0; }
 
 scanned=0
