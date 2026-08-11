@@ -30,6 +30,7 @@ import numpy as np
 import pandas as pd
 
 from pipeline.config import (
+    RISK,
     PREDICTIONS_DIR, CURRENT_SEASON, CURRENT_SEASON_LABEL,
     N_SIMULATIONS, DERBIES, ENSEMBLE_WEIGHTS, ENABLE_STACKING, DATA_PROCESSED,
     FPL_SIM,
@@ -826,6 +827,24 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     except Exception as exc:
         logger.warning(f"  fixture_xg export failed ({exc}); FPL agent will use fallback rates")
 
+    # ── Step 9c: Bound the portfolio before publishing any stake ──────
+    #
+    # `find_value_bets` runs once per fixture, so it can only ever see one match.
+    # Every cap worth having is a cap across the card — total exposure, one
+    # direction of one market, one team in two fixtures — so this is the first
+    # point at which any of them can be applied.
+    #
+    # Until now none were. `check_portfolio_exposure` existed, complete and
+    # correct, with no callers, so the published card was bounded only by the 5%
+    # per-selection cap: measured at 35% of bankroll live across 14 selections on
+    # the 4.1.0 run, with nothing to stop 30 selections reaching 75%.
+    #
+    # This only ever reduces. That direction matters on this path and is asserted
+    # in the tests.
+    from pipeline.risk.kelly import apply_portfolio_limits
+
+    portfolio = apply_portfolio_limits(all_predictions, bankroll=RISK["bankroll"])
+
     # ── Step 10: Export JSON ──────────────────────────────────────────
     logger.info("\n[10/12] Exporting predictions JSON...")
 
@@ -865,6 +884,17 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             "sub_models": ["corners_negbin_adj", "cards_zip_referee", "player_cards", "goalscorer"],
             "n_simulations": simulations_run,
             "n_simulations_requested": n_sims,
+            # What the portfolio caps did, named in the artifact rather than only
+            # in a run log nobody reads. A card cut from 14 selections to 8 looks
+            # identical to a model that found 8, and the difference is 15% of
+            # bankroll.
+            "portfolio": {
+                "total_exposure_pct": portfolio["total_exposure_pct"],
+                "n_bets_before_limits": portfolio["n_bets_before"],
+                "n_bets_after_limits": portfolio["n_bets_after"],
+                "n_reduced_by_limits": len(portfolio["reductions"]),
+                "limits": portfolio["limits"],
+            },
             "calibrated": False,
             "odds_source": "the_odds_api" if parsed_main else "unavailable",
             "referee_profiles_count": len(referee_profiles),

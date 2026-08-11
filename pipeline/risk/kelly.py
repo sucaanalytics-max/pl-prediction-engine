@@ -13,6 +13,7 @@ Phase 3 upgrade:
 - Goalscorer market scanning
 """
 import logging
+import re
 from collections import defaultdict
 from typing import Dict, List, Optional
 
@@ -34,12 +35,101 @@ EDGE_THRESHOLDS = {
 }
 
 # Portfolio exposure limits
+#
+# ## Measured on the 4.1.0 artifact, which is why two of these are new
+#
+# The published card held 14 selections at the per-bet cap of 2.5% (half Kelly of
+# a 5% full-Kelly cap), for **35% of bankroll live at once**. Replaying it through
+# the per-match, per-team and per-market-type limits below reduced nothing: the
+# worst match held 7.5% against a 15% cap. The limits were not too loose — the
+# aggregate they were supposed to bound simply did not exist.
+#
+# Two things were missing, and both are about correlation:
+#
+# * **No total.** Nothing capped simultaneous exposure, so 14 selections gave 35%
+#   and 30 would have given 75%. Per-bet caps do not compose into a portfolio cap.
+# * **Correlated positions summed as if independent.** 12.5% of bank sat on UNDER
+#   across five matches. That is one bet on a low-scoring weekend, not five
+#   independent ones — a high-scoring Saturday loses all of it together. Summing
+#   per-bet Kelly fractions across correlated bets over-bets, and the overbet
+#   grows with the number of legs.
+#
+# Kelly's additivity holds for INDEPENDENT bets. Nothing on one weekend's card in
+# one league is independent.
 PORTFOLIO_LIMITS = {
     "max_per_match_pct": RISK.get("max_per_match_pct", 0.15),      # 15% bankroll max on any single match
     "max_per_team_pct": RISK.get("max_per_team_pct", 0.30),        # 30% on any single team (all markets)
     "max_per_market_type_pct": RISK.get("max_per_market_type_pct", 0.40),  # 40% on any market type
     "max_correlated_bets": RISK.get("max_correlated_bets", 5),     # Max home-win bets in same gameweek
+
+    # Total simultaneous exposure. THE missing cap: without it the others cannot
+    # bound the portfolio, only its slices.
+    #
+    # 20% is a judgement, not a derivation, and it is deliberately conservative
+    # because no gameweek has been sealed yet — `forecast_ledger.json` is the only
+    # thing that could show these edges are real, and it has nothing in it. Raise
+    # it in `RISK` once the ledger has a record, not before.
+    "max_total_exposure_pct": RISK.get("max_total_exposure_pct", 0.20),
+
+    # One direction of one market type, across the whole card: all the UNDERs, all
+    # the OVERs, all the home wins. These share a factor, so they are closer to
+    # one position than to N.
+    "max_per_direction_pct": RISK.get("max_per_direction_pct", 0.10),
 }
+
+#: Totals lines on the same match, in the same direction, are NESTED rather than
+#: merely correlated: `Under 2.5` winning implies `Under 3.5` winning. Betting
+#: both is one directional view at the combined stake, so they are charged
+#: against the single-bet cap together rather than each getting their own.
+#:
+#: Measured case: Man City v Bournemouth carried `Under 3.5` and `Under 2.5` at
+#: 2.5% each. Presented as two bets diversifying each other; in fact 5% on "few
+#: goals at the Etihad", which is the whole per-bet cap in one view.
+_TOTALS_DIRECTIONS = ("over", "under")
+
+
+def bet_direction(bet: Dict) -> Optional[str]:
+    """
+    The direction a selection leans, or None when it has no meaningful one.
+
+    Used to group correlated positions. Returns a string like `over_under:under`
+    or `1x2:home` — market type included, because an UNDER and a home win are not
+    the same factor even though both are "one direction".
+    """
+    market = str(bet.get("market", "")).lower()
+    market_type = str(bet.get("market_type", "") or "")
+
+    for direction in _TOTALS_DIRECTIONS:
+        if market.startswith(direction):
+            return f"{market_type}:{direction}"
+
+    if market_type == "1x2":
+        for side in ("home", "draw", "away"):
+            if market.startswith(side):
+                return f"1x2:{side}"
+    return None
+
+
+def _totals_line(bet: Dict) -> Optional[float]:
+    """The goal line of a totals selection, e.g. 2.5 — or None if not a total."""
+    match = re.search(r"(\d+(?:\.\d+)?)", str(bet.get("market", "")))
+    return float(match.group(1)) if match else None
+
+
+def nesting_key(bet: Dict) -> Optional[str]:
+    """
+    Identifies selections on one match that imply one another.
+
+    Only same-match, same-direction totals qualify today. `Under 2.5` and
+    `Under 3.5` on the same fixture are not two views; they are one view at two
+    prices, and the lower line's win implies the higher line's.
+    """
+    direction = bet_direction(bet)
+    if direction is None or not direction.startswith("over_under:"):
+        return None
+    if _totals_line(bet) is None:
+        return None
+    return f"{bet.get('match', '')}|{direction}"
 
 
 def devig_implied_prob(odds_dict: Dict[str, float]) -> Dict[str, float]:
@@ -206,6 +296,53 @@ def check_portfolio_exposure(
         allowed = max(0, max_market - current_market)
         adjusted_stake = min(adjusted_stake, allowed)
         violations.append(f"market_type_{new_market_type} ({current_market + new_stake:.0f} > {max_market:.0f})")
+
+    # 3a. Total simultaneous exposure — the cap whose absence made the rest moot.
+    max_total = PORTFOLIO_LIMITS["max_total_exposure_pct"] * bankroll
+    current_total = sum(bet.get("stake", 0) for bet in current_bets)
+    if current_total + new_stake > max_total:
+        allowed = max(0, max_total - current_total)
+        adjusted_stake = min(adjusted_stake, allowed)
+        violations.append(
+            f"total_exposure ({current_total + new_stake:.0f} > {max_total:.0f})"
+        )
+
+    # 3b. One direction of one market type across the card. All the UNDERs share a
+    # factor; a high-scoring weekend loses them together, so they are charged
+    # against one budget rather than each carrying its own.
+    new_direction = bet_direction(new_bet)
+    if new_direction is not None:
+        max_direction = PORTFOLIO_LIMITS["max_per_direction_pct"] * bankroll
+        current_direction = sum(
+            bet.get("stake", 0) for bet in current_bets
+            if bet_direction(bet) == new_direction
+        )
+        if current_direction + new_stake > max_direction:
+            allowed = max(0, max_direction - current_direction)
+            adjusted_stake = min(adjusted_stake, allowed)
+            violations.append(
+                f"direction_{new_direction} "
+                f"({current_direction + new_stake:.0f} > {max_direction:.0f})"
+            )
+
+    # 3c. Nested selections on one match are ONE position, so they share the
+    # single-bet cap instead of each getting the whole of it. `Under 2.5` winning
+    # implies `Under 3.5` winning; two of them at the cap is double the intended
+    # size on a single view.
+    new_nest = nesting_key(new_bet)
+    if new_nest is not None:
+        max_single = RISK["max_stake_pct"] * bankroll / 2  # half-Kelly basis
+        current_nest = sum(
+            bet.get("stake", 0) for bet in current_bets
+            if nesting_key(bet) == new_nest
+        )
+        if current_nest + new_stake > max_single:
+            allowed = max(0, max_single - current_nest)
+            adjusted_stake = min(adjusted_stake, allowed)
+            violations.append(
+                f"nested_{new_nest} "
+                f"({current_nest + new_stake:.0f} > {max_single:.0f})"
+            )
 
     # 4. Correlation check (home win concentration)
     if new_market_type == "1x2" and new_bet.get("market", "").lower().startswith("home"):
@@ -724,3 +861,142 @@ def check_drawdown(
             "stake_multiplier": 1.0,
             "message": "Normal operation.",
         }
+
+
+def apply_portfolio_limits(
+    all_predictions: List[Dict],
+    bankroll: float = 1000.0,
+) -> Dict:
+    """
+    Enforce the portfolio caps across every match, in place.
+
+    ## Why this function has to exist
+
+    `find_value_bets` is called once per match, so it can only ever see one
+    fixture. Every cap that matters is a cap across the card — total exposure, one
+    direction of one market, one team appearing in two fixtures — and none of them
+    is expressible from inside a single match.
+
+    `check_portfolio_exposure` was written to enforce exactly this and had **no
+    callers**. It was complete, correct, untested and unreachable, so the published
+    card was bounded only by the per-selection `max_stake_pct`: 14 selections at
+    2.5% each for 35% of bankroll live at once, with nothing to stop 30.
+
+    ## Order
+
+    Highest edge first, so when a cap binds the stake is taken from the weakest
+    selection rather than from whichever happened to be scanned last. Ties break on
+    the match and market strings, so two runs over the same card produce the same
+    portfolio — a staking recommendation that reshuffles on re-run is not one that
+    can be checked.
+
+    ## What it reports
+
+    Returns a summary, and **logs every reduction**. A cap that quietly deletes six
+    selections looks identical to a model that found eight — the reason the news
+    view now names its own truncation, and the same principle applies here with
+    money attached.
+    """
+    scored: List[Dict] = []
+    for prediction in all_predictions:
+        fixture = prediction.get("fixture") or {}
+        match = f"{fixture.get('home_team')} v {fixture.get('away_team')}"
+        for bet in prediction.get("value_bets") or []:
+            scored.append({
+                "bet": bet,
+                "prediction": prediction,
+                "context": {
+                    **bet,
+                    "match": match,
+                    "home_team": fixture.get("home_team"),
+                    "away_team": fixture.get("away_team"),
+                },
+            })
+
+    scored.sort(key=lambda row: (
+        -float(row["bet"].get("edge") or 0.0),
+        row["context"]["match"],
+        str(row["bet"].get("market") or ""),
+    ))
+
+    accepted: List[Dict] = []
+    kept_ids, reductions = set(), []
+
+    # A zero or negative bankroll approves nothing, and must not divide. Reported
+    # as a percentage of bank everywhere below, so the guard has to come before
+    # the first ratio rather than inside `check_portfolio_exposure` alone.
+    def as_pct(amount: float) -> float:
+        return amount / bankroll if bankroll > 0 else 0.0
+
+    for row in scored:
+        bet, context = row["bet"], row["context"]
+        proposed = float(bet.get("half_kelly") or 0.0)
+        verdict = check_portfolio_exposure(accepted, context, bankroll)
+        allowed = float(verdict.get("adjusted_stake") or 0.0)
+
+        if allowed <= 0:
+            reductions.append({
+                "match": context["match"], "market": bet.get("market"),
+                "was_pct": as_pct(proposed), "now_pct": 0.0,
+                "reason": (verdict.get("violations") or [verdict.get("reason")])[:1],
+            })
+            continue
+
+        if allowed < proposed - 1e-9:
+            # Scale the whole bet down together. Rewriting `half_kelly` while
+            # leaving `half_kelly_pct` alone would leave the artifact internally
+            # inconsistent, and the frontend reads the _pct fields.
+            factor = allowed / proposed if proposed > 0 else 0.0
+            reductions.append({
+                "match": context["match"], "market": bet.get("market"),
+                "was_pct": as_pct(proposed), "now_pct": as_pct(allowed),
+                "reason": (verdict.get("violations") or [verdict.get("reason")])[:1],
+            })
+            bet["half_kelly"] = allowed
+            bet["full_kelly"] = float(bet.get("full_kelly") or 0.0) * factor
+            bet["half_kelly_pct"] = as_pct(allowed)
+            bet["full_kelly_pct"] = float(bet.get("full_kelly_pct") or 0.0) * factor
+
+        accepted.append({**context, "stake": allowed})
+        kept_ids.add(id(bet))
+
+    # Drop what the caps refused, so nothing is published at a stake of zero.
+    for prediction in all_predictions:
+        existing = prediction.get("value_bets") or []
+        prediction["value_bets"] = [b for b in existing if id(b) in kept_ids]
+
+    total = sum(row["stake"] for row in accepted)
+    summary = {
+        "bankroll": float(bankroll),
+        "n_bets_before": len(scored),
+        "n_bets_after": len(accepted),
+        "total_exposure_pct": as_pct(total),
+        "limits": dict(PORTFOLIO_LIMITS),
+        "max_stake_pct": RISK["max_stake_pct"],
+        "reductions": reductions,
+    }
+
+    if reductions:
+        # What the card would have staked before any cap bound: every selection
+        # that survived, plus the full original size of everything reduced.
+        before = as_pct(total) + sum(
+            r["was_pct"] - r["now_pct"] for r in reductions
+        )
+        logger.warning(
+            "portfolio limits reduced %d of %d selections; "
+            "exposure %.1f%% -> %.1f%% of bank",
+            len(reductions), len(scored), before * 100, as_pct(total) * 100,
+        )
+        for reduction in reductions:
+            logger.info(
+                "  %s %s: %.2f%% -> %.2f%% (%s)",
+                reduction["match"], reduction["market"],
+                reduction["was_pct"] * 100, reduction["now_pct"] * 100,
+                reduction["reason"],
+            )
+    else:
+        logger.info(
+            "portfolio limits: nothing reduced; exposure %.1f%% of bank across %d selections",
+            as_pct(total) * 100, len(accepted),
+        )
+    return summary

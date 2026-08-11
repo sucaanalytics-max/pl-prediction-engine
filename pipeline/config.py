@@ -388,6 +388,25 @@ RISK = {
     "min_edge_cards": 0.08,         # 8% min edge for cards (less liquid)
     "min_edge_player_booked": 0.10, # 10% min edge for player booked (thin)
     "max_stake_pct": 0.05,          # 5% max bankroll per bet
+
+    # Notional bankroll the published stake figures are denominated in. 1000.0
+    # matches the default already hardcoded in `kelly_stake`, `find_value_bets`
+    # and `check_portfolio_exposure`, so naming it here changes no number — it
+    # gives the portfolio pass one place to read instead of a fourth literal.
+    #
+    # Every cap is a PERCENTAGE, so this only sets the units of `half_kelly` and
+    # `full_kelly`; changing it does not change how much of the bank is risked.
+    "bankroll": 1000.0,
+
+    # Portfolio caps. See PORTFOLIO_LIMITS in pipeline/risk/kelly.py for the
+    # measurement that produced the last two: the published card carried 35% of
+    # bankroll live across 14 selections because no aggregate cap existed.
+    "max_per_match_pct": 0.15,
+    "max_per_team_pct": 0.30,
+    "max_per_market_type_pct": 0.40,
+    "max_correlated_bets": 5,
+    "max_total_exposure_pct": 0.20,
+    "max_per_direction_pct": 0.10,
     "drawdown_soft_limit": 0.20,    # Reduce stakes at 20% drawdown
     "drawdown_hard_limit": 0.30,    # Pause at 30% drawdown
 }
