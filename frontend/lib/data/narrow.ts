@@ -714,8 +714,28 @@ export function narrowFixtureXg(raw: unknown): NarrowResult<FixtureXg> {
     if (!row) return null;
     const home_team = reqString(row.home_team, `fixtures[${i}].home_team`, problems);
     const away_team = reqString(row.away_team, `fixtures[${i}].away_team`, problems);
-    const home_rate = reqNumber(row.home_rate ?? row.home_xg, `fixtures[${i}].home_rate`, problems);
-    const away_rate = reqNumber(row.away_rate ?? row.away_xg, `fixtures[${i}].away_rate`, problems);
+    // `lambda_home` / `mu_away` are the writer's names — the field names of the
+    // `FixtureRates` dataclass in pipeline/models/fixture_rates.py, and what
+    // fixture_xg.schema.json marks required and documents as "the rate the
+    // consumer uses".
+    //
+    // Reading `home_rate ?? home_xg` matched NEITHER side: no producer has ever
+    // emitted either name. Every one of the 80 fixtures was dropped as malformed
+    // and the artifact narrowed to `unreadable`, so the page rendered nothing at
+    // all. Exactly the drift CLAUDE.md warns about — silent until a page is blank.
+    //
+    // NOT `lambda_home_dc`: that is the posterior mean BEFORE the market anchor,
+    // kept so the blend stays auditable. On the committed artifact the two differ
+    // by 27% (2.50 vs 1.83 for Arsenal at home), so picking the wrong one is a
+    // visibly wrong number, not a rounding difference.
+    const home_rate = reqNumber(
+      row.lambda_home ?? row.home_rate ?? row.home_xg,
+      `fixtures[${i}].lambda_home`, problems,
+    );
+    const away_rate = reqNumber(
+      row.mu_away ?? row.away_rate ?? row.away_xg,
+      `fixtures[${i}].mu_away`, problems,
+    );
     if (!home_team || !away_team || home_rate === null || away_rate === null) return null;
     return {
       home_team, away_team, home_rate, away_rate,

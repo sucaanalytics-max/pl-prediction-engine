@@ -93,34 +93,46 @@ describe("table.json — the all-Champions-League bug", () => {
   });
 
   /**
-   * The live mechanism: `position` is 0 on all 20 rows, so the old gate
-   * `if (pos <= 4) return "champions"` is true for every club in the league.
+   * The emptiness verdict comes from `played`, and from nothing else.
+   *
+   * This test used to assert `position === 0` on all 20 rows, which was true of
+   * the artifact committed at the time. The writer has since run and assigns
+   * 1..20 — so the assertion failed while the design it was defending was
+   * working perfectly. A test pinned to a snapshot of a file the pipeline
+   * rewrites daily reports a regression every time the pipeline succeeds.
+   *
+   * What is asserted now is the property that must hold in every season state.
    */
-  it("has position 0 on every row, so pos <= 4 held for all 20 clubs", () => {
+  it("is empty on the count of matches played, whatever the positions say", () => {
     const rows = proven(artifact) ?? [];
-    expect(rows.every((r) => r.position === 0)).toBe(true);
-    expect(rows.filter((r) => r.position <= 4)).toHaveLength(20);
+    expect(rows).toHaveLength(20);
+    expect(rows.every((r) => r.played === 0)).toBe(true);
+    expect(artifact.state).toBe("empty");
   });
 
   /**
-   * And the reason the tempting alternative gate is a trap rather than a fix.
+   * The trap, no longer hypothetical.
    *
-   * `position !== 0` correctly rejects TODAY's file — which is exactly what makes
-   * it dangerous: it would pass review and pass any test written against this
-   * fixture. `fpl_api.py:345` assigns 1..20, so the next real run flips it to
-   * "ranked" while every counter is still zero.
+   * When this was written, `position` was 0 everywhere and the tempting fix
+   * `position !== 0` correctly rejected the file — which was precisely what made
+   * it dangerous: it would have passed review and passed any test written
+   * against that fixture.
+   *
+   * The writer has now run. The committed file carries real positions 1..20 with
+   * every counter still zero, so the position gate would today label Arsenal,
+   * Aston Villa, Bournemouth and Brentford as Champions League places on a table
+   * where nobody has kicked a ball. The prediction came true; the played gate is
+   * unmoved.
    */
-  it("would be wrongly accepted by a position gate once the writer runs", () => {
+  it("would today be wrongly accepted by a position gate", () => {
     const rows = proven(artifact) ?? [];
-    const freshWriter = rows.map((r, i) => ({ ...r, position: i + 1 }));
 
-    // The position gate: passes on today's data, fails here.
-    expect(rows.every((r) => r.position !== 0)).toBe(false);        // rejects today
-    expect(freshWriter.every((r) => r.position !== 0)).toBe(true);  // accepts tomorrow
+    // No longer a constructed fixture — this is the live file.
+    expect(rows.every((r) => r.position !== 0)).toBe(true);   // the gate accepts
+    expect(rows.every((r) => r.played === 0)).toBe(true);     // yet nothing is played
 
-    // The played gate is unmoved by the writer change, which is the whole point.
     const relabelled = classify({
-      path: "table.json", source: "local", raw: freshWriter, now: NOW,
+      path: "table.json", source: "local", raw: rows, now: NOW,
       narrow: REGISTRY.table.narrow,
       isEmpty: REGISTRY.table.isEmpty,
       freshnessBudgetMs: null,
@@ -151,7 +163,15 @@ describe("health.json — the 4.0.0 producer", () => {
   it("names the producer that emitted no metrics", () => {
     // The whole point: the file is complete and fresh FOR ITS VERSION, so only
     // the version reveals why the metrics are missing.
-    expect(describeProducer(artifact.provenance)).toBe("4.0.0");
+    //
+    // The version itself is NOT asserted. It was pinned to "4.0.0" and the
+    // producer moved to 4.1.0, so the test failed on a successful release — the
+    // same rot as the table snapshot above. What has to hold is that the
+    // provenance names *a* producer, because an unattributed empty file is
+    // indistinguishable from a broken one.
+    const producer = describeProducer(artifact.provenance);
+    expect(producer).toBeTruthy();
+    expect(producer).toMatch(/^\d+\.\d+\.\d+$/);
   });
 
   it("has no calibration series to chart", () => {
@@ -166,10 +186,37 @@ describe("health.json — the 4.0.0 producer", () => {
 describe("matches.json — the flat-prior fingerprint", () => {
   const artifact = load(REGISTRY.matches);
 
-  it("is empty, because every fixture predicts home", () => {
-    expect(artifact.state).toBe("empty");
+  /**
+   * The flat-prior fingerprint: if every fixture calls the same way, the model
+   * has told you nothing and the file must not read as answers.
+   *
+   * The committed artifact no longer shows it — the calls now diverge, which is
+   * the model working. So the fingerprint is asserted against a constructed
+   * all-home file, and the real artifact is checked for the complementary
+   * property. Asserting the defect against live data made this fail the moment
+   * the defect was fixed.
+   */
+  it("treats an all-one-way call sheet as empty", () => {
     const value = proven(artifact);
-    expect(value?.matches.every((m) => m.model_prediction === "home")).toBe(true);
+    const flat = {
+      ...value,
+      matches: (value?.matches ?? []).map((m) => ({ ...m, model_prediction: "home" })),
+    };
+    const classified = classify({
+      path: "matches.json", source: "local", raw: flat, now: NOW,
+      narrow: REGISTRY.matches.narrow,
+      isEmpty: REGISTRY.matches.isEmpty,
+      producedAtOf: REGISTRY.matches.producedAtOf,
+      freshnessBudgetMs: null,
+    });
+    expect(classified.state).toBe("empty");
+  });
+
+  it("is ok on the committed file, because the calls diverge", () => {
+    const value = proven(artifact);
+    expect(new Set(value?.matches.map((m) => m.model_prediction)).size)
+      .toBeGreaterThan(1);
+    expect(artifact.state).toBe("ok");
   });
 
   it("tolerates a null referee without dropping the fixture", () => {
@@ -241,22 +288,57 @@ describe("player_stats.json — real data, so NOT empty", () => {
 describe("latest.json — probabilities real, explainability absent", () => {
   const artifact = load(REGISTRY.latest);
 
-  it("is empty by the explainability predicate", () => {
-    // Partial emptiness: the naive checks both pass on this data.
+  /**
+   * Partial emptiness: a file can be complete on the naive checks — rows
+   * present, gameweek non-zero — and still carry nothing to explain a decision
+   * with. That is what the explainability predicate exists to catch.
+   *
+   * These three tests asserted the absence of SHAP and odds, which was true of
+   * the artifact committed at the time and is no longer: the 4.1.0 producer
+   * emits both on all ten predictions. Testing for the absence meant the suite
+   * went red exactly when explainability started working.
+   *
+   * The predicate is now asserted in both directions instead — stripped data is
+   * empty, real data is not — so it is the rule under test rather than the day's
+   * file.
+   */
+  it("is empty when explainability is stripped, whatever else is present", () => {
     const value = proven(artifact);
     expect(value?.predictions.length).toBeGreaterThan(0);
     expect(value?.gameweek).not.toBe(0);
-    expect(artifact.state).toBe("empty");
+
+    // Stripped from the RAW file, not from `proven()`. `has_odds_comparison` is
+    // derived by the narrower and does not exist in the artifact, so feeding the
+    // narrowed shape back in produced `unreadable` rather than `empty` — a fixture
+    // that tests the narrower's tolerance for its own output, which is not the
+    // question.
+    const rawFile = raw("latest.json") as {
+      predictions: Array<Record<string, unknown>>;
+    };
+    const stripped = {
+      ...rawFile,
+      predictions: rawFile.predictions.map((p) => ({
+        ...p, shap_features: [], odds_comparison: undefined,
+      })),
+    };
+    const classified = classify({
+      path: "latest.json", source: "local", raw: stripped, now: NOW,
+      narrow: REGISTRY.latest.narrow,
+      isEmpty: REGISTRY.latest.isEmpty,
+      producedAtOf: REGISTRY.latest.producedAtOf,
+      freshnessBudgetMs: null,
+    });
+    expect(classified.state).toBe("empty");
   });
 
-  it("has no SHAP features on any prediction", () => {
+  it("agrees with the file: explainability present means not empty", () => {
     const value = proven(artifact);
-    expect(value?.predictions.every((p) => p.shap_features.length === 0)).toBe(true);
-  });
-
-  it("has no odds comparison on any prediction", () => {
-    const value = proven(artifact);
-    expect(value?.predictions.every((p) => !p.has_odds_comparison)).toBe(true);
+    const explained = (value?.predictions ?? []).filter(
+      (p) => p.shap_features.length > 0 || p.has_odds_comparison,
+    );
+    // Whichever way the current artifact falls, the verdict must follow the data
+    // rather than a remembered snapshot of it.
+    expect(artifact.state === "empty").toBe(explained.length === 0);
   });
 
   it("still carries informative probabilities that sum to one", () => {
@@ -266,8 +348,12 @@ describe("latest.json — probabilities real, explainability absent", () => {
     }
   });
 
-  it("surfaces the same 4.0.0 drift as health.json", () => {
-    expect(describeProducer(artifact.provenance)).toBe("4.0.0");
+  it("agrees with health.json about which producer wrote this run", () => {
+    // Version drift BETWEEN artifacts is the defect worth catching: it means two
+    // files a page joins were written by different code. The absolute version is
+    // not — pinning "4.0.0" made this fail on the 4.1.0 release.
+    expect(describeProducer(artifact.provenance))
+      .toBe(describeProducer(load(REGISTRY.health).provenance));
   });
 
   describe("value bets — the real-money path", () => {
@@ -401,18 +487,69 @@ describe("h2h.json — historical, and empty for this season", () => {
   });
 });
 
+/**
+ * fixture_xg.json — the artifact that was silently unreadable.
+ *
+ * It had no dedicated tests, which is how the drift survived: the narrower read
+ * `home_rate ?? home_xg` and no producer has ever emitted either name, so all 80
+ * fixtures were dropped as malformed and the page rendered nothing. The generic
+ * "no artifact is unreadable" sweep was the only thing that noticed, and it
+ * reported one line among ten other failures.
+ */
+describe("fixture_xg.json — the rates the page shows", () => {
+  const artifact = load(REGISTRY.fixtureXg);
+
+  it("narrows without dropping a single fixture", () => {
+    expect(artifact.state).not.toBe("unreadable");
+    expect(proven(artifact)?.fixtures).toHaveLength(
+      (raw("fixture_xg.json") as { fixtures: unknown[] }).fixtures.length,
+    );
+  });
+
+  it("uses lambda_home / mu_away — the rate the schema says consumers use", () => {
+    const first = (raw("fixture_xg.json") as {
+      fixtures: Array<Record<string, number>>;
+    }).fixtures[0];
+    const narrowed = proven(artifact)?.fixtures[0];
+    expect(narrowed?.home_rate).toBeCloseTo(first.lambda_home, 6);
+    expect(narrowed?.away_rate).toBeCloseTo(first.mu_away, 6);
+  });
+
+  it("does NOT show the pre-market-anchor posterior", () => {
+    // `lambda_home_dc` is kept so the blend stays auditable, and on the committed
+    // file it differs from the consumer rate by ~27%. Showing it would be a
+    // visibly wrong number rather than a rounding difference — and the two names
+    // are one underscore apart.
+    const first = (raw("fixture_xg.json") as {
+      fixtures: Array<Record<string, number>>;
+    }).fixtures[0];
+    const narrowed = proven(artifact)?.fixtures[0];
+    expect(first.lambda_home_dc).not.toBeCloseTo(first.lambda_home, 2);
+    expect(narrowed?.home_rate).not.toBeCloseTo(first.lambda_home_dc, 6);
+  });
+
+  it("carries a positive rate for both sides of every fixture", () => {
+    const fixtures = proven(artifact)?.fixtures ?? [];
+    expect(fixtures.every((f) => f.home_rate > 0 && f.away_rate > 0)).toBe(true);
+  });
+});
+
 describe("the state of the app, stated plainly", () => {
-  it("three of six artifacts currently render absence as data", () => {
+  it("still finds artifacts that would have rendered absence as data", () => {
     const empty = ALL_DESCRIPTORS
       .map((d) => ({ key: d.key, state: load(d).state }))
       .filter((r) => r.state === "empty")
       .map((r) => r.key);
-    // table, matches, health, latest and h2h are all `empty` on the committed
-    // data. Before this layer existed, every one of them rendered as though it
-    // held answers.
+
+    // Named individually before, which meant a pipeline run that legitimately
+    // filled `matches` broke the test. Which artifacts are empty is a property
+    // of today's data and will change all season; that SOME are, and that the
+    // layer notices, is the claim worth holding.
+    expect(empty.length).toBeGreaterThan(0);
+
+    // The table is the durable case: no gameweek has been played, so it must be
+    // empty regardless of what the writer put in `position`.
     expect(empty).toContain("table");
-    expect(empty).toContain("health");
-    expect(empty).toContain("matches");
   });
 
   it("no artifact is unreadable", () => {
