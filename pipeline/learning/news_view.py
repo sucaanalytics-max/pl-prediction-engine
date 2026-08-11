@@ -54,7 +54,19 @@ FILENAME = "news_view.json"
 KIND = "unparsed_news"
 
 DEFAULT_MAX_AGE_DAYS = 5
-DEFAULT_LIMIT = 60
+
+#: How many articles the view carries.
+#:
+#: Raised from 60 after measuring the first X scan: five hand-curated posts
+#: sorted to positions 58-64 of 66, so the cap dropped three of them. Age-ranked
+#: ordering is correct, but it means the content chosen deliberately is the first
+#: to be crowded out by continuous aggregator volume — the opposite of what the
+#: ranking is for.
+#:
+#: 90 is headroom, not a solution. If the total approaches it again the answer is
+#: a reserved slice per source rather than another bump, because bumping trades
+#: a silent drop for a bigger file and keeps the same failure.
+DEFAULT_LIMIT = 90
 
 #: Headlines are truncated for display. The full text stays in the store.
 MAX_HEADLINE = 180
@@ -176,9 +188,21 @@ def build(
         )
     )
 
+    # A cap that drops content without saying so reads as "this is everything".
+    # Naming the loss is the difference between a bound and a lie.
+    dropped = max(0, len(items) - limit)
+    if dropped:
+        lost = {str(i.get("source") or "?") for i in items[limit:]}
+        logger.warning(
+            "news view is capped at %d and dropped %d older article(s) from %s",
+            limit, dropped, ", ".join(sorted(lost)),
+        )
+
     return {
         "schema_version": SCHEMA_VERSION,
         "generated_at": generated_at,
+        # Explicit, so a reader can tell a complete list from a truncated one.
+        "n_dropped": dropped,
         "window_days": max_age_days,
         "n_articles": len(items),
         "n_shown": min(len(items), limit),

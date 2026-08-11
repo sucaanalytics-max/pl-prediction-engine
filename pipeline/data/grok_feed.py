@@ -155,10 +155,36 @@ def check_value(claim_type: str, value: Any) -> Optional[str]:
 
 
 def _check_availability(item: Mapping[str, Any], now: datetime) -> Optional[str]:
-    for required in ("claim_type", "value", "player_surname", "club", "tier",
-                     "source", "claimed_at"):
-        if required not in item:
-            return f"availability item is missing {required!r}"
+    # `unparsed_news` may be filed against a club with no player named. This
+    # mirrors what the RSS path already does — an entry we cannot resolve to one
+    # element becomes a club-level item rather than a guess — and it is safe for
+    # exactly one reason: `unparsed_news` carries no machine-usable availability
+    # value, so it cannot move a projection. `news_view.py` treats it as a
+    # reading list and says so in the artifact.
+    #
+    # It is needed because the highest-value posts are per-club: a pre-season
+    # minutes summary naming six players has no single surname, and requiring
+    # one would reject the content while accepting thinner single-player items.
+    # The club stays mandatory, so every row is still attributable.
+    # Neither `player_surname` nor `club` is required. A post comparing two
+    # sides names two clubs and picking either would be a guess, so `x_scan`
+    # leaves it empty — and `parse_sheet` drops empty fields, so "empty" and
+    # "absent" are the same thing by the time a row arrives here.
+    #
+    # `source`, `url` and `claimed_at` remain mandatory below, so every row is
+    # still auditable back to the post it came from. What is given up is the
+    # ability to attach the item to a squad player on screen, which is a display
+    # concern, not a correctness one.
+    required = ("claim_type", "value", "player_surname", "club", "tier",
+                "source", "claimed_at")
+    if item.get("claim_type") == "unparsed_news":
+        required = tuple(
+            f for f in required if f not in ("player_surname", "club")
+        )
+
+    for field in required:
+        if field not in item:
+            return f"availability item is missing {field!r}"
 
     claim_type = item["claim_type"]
     if claim_type not in CLAIM_TYPES:
@@ -201,8 +227,15 @@ def _check_availability(item: Mapping[str, Any], now: datetime) -> Optional[str]
             f"R2's tie-break, so a forward-dated claim would outrank an honest one"
         )
 
-    for field_name in ("player_surname", "club", "source"):
-        if not isinstance(item[field_name], str) or not item[field_name].strip():
+    # Same exemption as the presence check above, and it has to be repeated here
+    # rather than inferred: this loop indexes with `item[...]`, so relaxing only
+    # the presence check turned a rejection into a KeyError — the poller would
+    # have crashed on a club-less post instead of filing it.
+    naming = ("source",) if claim_type == "unparsed_news" else (
+        "player_surname", "club", "source",
+    )
+    for field_name in naming:
+        if not isinstance(item.get(field_name), str) or not item[field_name].strip():
             return f"{field_name} is required and must be non-empty"
     return None
 

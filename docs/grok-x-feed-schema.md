@@ -369,3 +369,96 @@ the file can be wrong and limits what a wrong entry can do.
 
 An item that turns out to be fabricated is removable by claim id, because the
 store is append-only and content-addressed.
+
+---
+
+## Route C — the browser scan (free, and the one that works today)
+
+Routes A and B both need money: xAI returns **403 `permission-denied`** until the
+team buys credits, and X discontinued its free developer tier in February 2026.
+This route needs neither.
+
+**Measured, not assumed:** the logged-out `x.com/<handle>` profile serves the
+five most recent posts to anyone, with permalinks. No account, no login, no
+auth to circumvent. It is still automated access to X, which their terms
+restrict — a private single-user tool reading public posts twice a day and
+republishing none of it is the mildest form of that, but it is not nothing, and
+this file is where that is written down rather than discovered later.
+
+### How it runs
+
+The browser only exists in a Claude Code session; GitHub Actions has neither
+Chrome nor an X login. So the two halves are decoupled through a committed file:
+
+```
+Claude session (Mac, Chrome MCP)          GitHub Actions (news.yml, 15 min)
+  navigate x.com/robtFPL                    reads predictions/fpl/x_inbox.csv
+  evaluate x_scan.EXTRACT_JS                parse_sheet -> validate
+  python -m pipeline.data.x_scan  ────────► files unparsed_news claims
+  commit x_inbox.csv                        publishes news_view.json
+```
+
+`claim_id` dedupe makes re-reading an unchanged inbox a no-op, so there is no
+consumed-row bookkeeping to get wrong. Verified: two polls of the same inbox
+produced 5 claims with 5 distinct ids, not 10.
+
+### The timestamp comes from the id, not the page
+
+The logged-out page renders `9 Aug` — no year, no time — and rule 4 forbids
+inventing a timestamp. A status id is a snowflake that encodes its own creation
+time: `ms = (id >> 22) + 1288834974657`. Exact to the second, stable across every
+markup change X has made, and it cannot drift a year in January.
+
+The obvious sanity check on that decode — *reject anything before the epoch* —
+**can never fire**, because shifting a positive integer right yields a
+non-negative offset, so id `1` decodes to the epoch itself. `SNOWFLAKE_MIN_MS`
+is a floor date instead. That bug filed a claim dated 2010-11-04 and called it
+valid.
+
+### Everything it writes is `unparsed_news`
+
+No availability value is extracted. Regex-guessing *"a knock for Shaw"* into a
+`chance_of_playing` would be a fabricated number wearing a citation, and R4 lets
+a tier-3 claim push availability **down**. The RSS path earns its parsed claims
+against a hand-labelled corpus with zero false positives; this route has no such
+corpus, so it makes no such claims. The posts land on `/evidence` as a reading
+list, which is honest and immediately useful.
+
+Tier is **always 3**. robtFPL is a well-sourced aggregator, not a press
+conference.
+
+### Club attribution is a lookup, not an inference
+
+`x_scan.club_in` matches canonical names and aliases from `team_mapping` as whole
+words, and **requires exactly one distinct match**. Measured on the first live
+scan: Arsenal, Man City, Man United (from `Man Utd`) and Brighton resolved; the
+Liverpool post did not, because its text names both Liverpool and Leeds and
+picking either would be a guess. Empty is the correct answer there — the row is
+still auditable through `source` and `url`.
+
+### The one validator change this required
+
+`_check_availability` demanded `player_surname` and `club` on every row. A
+per-club minutes summary naming six players has no single surname, so the most
+valuable posts were rejected while thinner single-player ones were accepted.
+Both fields are now optional **for `unparsed_news` only**, which is safe for
+exactly one reason: `unparsed_news` carries no machine-usable value, so it cannot
+move a projection. A `chance_of_playing` with no player named is still rejected,
+and a test asserts that the relaxation did not widen.
+
+### Running it
+
+```bash
+# In a session: navigate to the profile, evaluate x_scan.EXTRACT_JS, save the JSON.
+PYTHONPATH=. .venv/bin/python -m pipeline.data.x_scan --raw scan.json --source x:robtFPL
+PYTHONPATH=. .venv/bin/python -m pipeline.learning.run_news --force
+git add predictions/fpl/x_inbox.csv predictions/fpl/availability_evidence.jsonl && git commit
+```
+
+Accounts live in `X_SCAN_ACCOUNTS` in `pipeline/config.py`, so adding one is a
+reviewable change rather than an instruction someone typed once.
+
+**If the extractor returns zero posts, X changed its markup.** Report it and
+stop. Do not improvise selectors — the first attempt at this used `<time>` and
+`[data-testid="tweetText"]`, neither of which the logged-out view emits, and it
+returned five posts with null text while reporting success.

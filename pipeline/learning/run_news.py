@@ -44,12 +44,64 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 # reachability scanner as importing the *package*, which left news_extract.py
 # looking like a module nothing calls. That check exists because the same defect
 # occurred five times in one session, and hiding from it would be the wrong fix.
-from pipeline.data import grok_feed, news_extract, news_feeds, youtube
+from pipeline.data import grok_feed, news_extract, news_feeds, x_scan, youtube
 from pipeline.learning import deltas as deltas_store
 from pipeline.learning.availability_conflicts import resolve_claims
 from pipeline.learning.availability_evidence import history, record
 
 logger = logging.getLogger(__name__)
+
+#: Element id for a claim that names no single player.
+#:
+#: The store's existing convention, not a new one: 38 of the 59 `unparsed_news`
+#: records already on file use it, written by the RSS path when it resolves a
+#: club but not a player. Reusing it keeps `news_view` and the resolver working
+#: unchanged; inventing a second sentinel would split the same concept in two.
+CLUB_LEVEL_ELEMENT_ID = 0
+
+
+def _claims_from_feed(
+    items: Sequence[Mapping[str, Any]],
+    *,
+    gameweek: int,
+    observed_at: str,
+) -> List[Any]:
+    """
+    Turn validated feed items into claims.
+
+    Only `unparsed_news` is converted. The structured types carry a player
+    surname that still has to be resolved to an `element_id`, and resolving a
+    surname to a player is the step the RSS path refuses to guess at — two
+    `Silva`s at one club must escalate, not pick. Filing a structured claim
+    against the club-level sentinel would attach a real availability value to
+    nobody, and R4 would then let it lower a projection it does not name.
+
+    So the structured rows are validated, counted, and deliberately left
+    unfiled. That is a known gap with a name rather than a silent drop, and it
+    closes when surname resolution lands.
+    """
+    from pipeline.learning.availability_evidence import AvailabilityClaim
+
+    out: List[Any] = []
+    for item in items:
+        if item.get("claim_type") != "unparsed_news":
+            continue
+        text = str(item.get("value") or "")
+        url = item.get("url") or None
+        out.append(AvailabilityClaim(
+            element_id=CLUB_LEVEL_ELEMENT_ID,
+            source=str(item.get("source") or "feed"),
+            source_tier=int(item.get("tier") or 3),
+            claim_type="unparsed_news",
+            value=text,
+            claimed_at=item.get("claimed_at"),
+            observed_at=observed_at,
+            gameweek=gameweek,
+            provenance_url=url,
+            source_text=text,
+            notes=str(item.get("club") or ""),
+        ))
+    return out
 
 
 def _fetch_json(url: str, timeout: int = 60) -> Any:
@@ -390,6 +442,40 @@ def poll(
             len(grok_result.rejections),
         )
 
+    # ── The X inbox
+    #
+    # Third route, and the only free one. A Claude Code session reads a
+    # logged-out X profile through the Chrome MCP and appends rows here; this
+    # poller reads them in CI, where there is no browser and no login. The two
+    # halves are decoupled through a committed CSV precisely so each runs where
+    # it can — an MCP tool does not exist inside GitHub Actions.
+    #
+    # Same columns, same parser, same validator as the sheet and the API. The
+    # store's `claim_id` dedupe makes re-reading an unchanged inbox a no-op, so
+    # there is no consumed-row bookkeeping to get wrong.
+    inbox_result = None
+    # Committed file: the scan runs on a Mac with a browser, the poller runs in
+    # GitHub Actions without one, and git is the only channel both can reach.
+    inbox_path = Path("predictions") / "fpl" / x_scan.INBOX_FILENAME
+    if inbox_path.is_file():
+        try:
+            inbox_result = grok_feed.validate(
+                grok_feed.parse_sheet(inbox_path.read_text(encoding="utf-8")),
+                moment,
+            )
+        except Exception as exc:
+            # A corrupt inbox must not cost the RSS feeds their poll.
+            logger.warning("x inbox unreadable (%s); skipping it", exc)
+        else:
+            logger.info(
+                "x inbox: %d availability item(s) accepted, %d rejected",
+                len(inbox_result.availability), len(inbox_result.rejections),
+            )
+            for rejection in inbox_result.rejections[:5]:
+                logger.warning("x inbox rejected: %s", rejection)
+    else:
+        logger.info("x inbox: %s absent; nothing to read", inbox_path)
+
     entries = [
         entry
         for outcome in (*outcomes, *youtube_result.outcomes)
@@ -398,6 +484,21 @@ def poll(
     claims, coverage = news_extract.extract_all(
         entries, bootstrap, gameweek=gameweek, observed_at=observed_at,
     )
+
+    # Validated feed items become claims here, alongside the RSS ones, so they
+    # share the append, the dedupe and the resolution that follows. Until this
+    # existed both the Grok and inbox routes validated their rows, logged a
+    # count, and dropped them — a fetched path that publishes nothing, which the
+    # plan calls a failing test rather than a gap.
+    for validated, route in ((grok_result, "grok"), (inbox_result, "x-inbox")):
+        if validated is None:
+            continue
+        filed = _claims_from_feed(
+            validated.availability, gameweek=gameweek, observed_at=observed_at,
+        )
+        claims = list(claims) + filed
+        if filed:
+            logger.info("%s: %d claim(s) queued for the store", route, len(filed))
 
     suspicious = news_extract.coverage_is_suspicious(coverage)
     if suspicious:

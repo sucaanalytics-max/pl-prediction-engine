@@ -179,6 +179,33 @@ NEWS_FETCH = {
 #
 # Dormant until GROK_FEED_URL is set as a repository secret. Schema and the
 # prompt to paste to Grok: docs/grok-x-feed-schema.md.
+# ── The X browser scan
+#
+# Accounts a Claude Code session reads from the logged-out X profile page via the
+# Chrome MCP, writing rows to `predictions/fpl/x_inbox.csv` for the poller.
+#
+# Configuration lives here rather than in the scan prompt so the target list is
+# reviewable in a diff. Adding an account is a code change with an owner, not an
+# instruction someone typed once.
+#
+# `club` pins every row from a club-specific account; None means detect it per
+# post from the text, via `x_scan.club_in`.
+#
+# Kept short deliberately. The logged-out view serves ~5 recent posts per profile,
+# so value comes from picking accounts that post signal rather than from breadth,
+# and every extra account is another page load per scan.
+X_SCAN_ACCOUNTS = (
+    # Market-derived projections and pre-season minutes summaries. Named in the
+    # plan as a comparator rather than a data dependency — we invert the same
+    # no-vig prices ourselves in `models/market_rates.py`.
+    {"handle": "robtFPL", "source": "x:robtFPL", "club": None},
+)
+
+#: Twice daily. The logged-out page shows only the most recent posts, so a
+#: missed scan loses content permanently — but scanning more often costs page
+#: loads and returns the same five posts, and `merge_inbox` dedupes them anyway.
+X_SCAN_MAX_AGE_DAYS = 3
+
 GROK_FEED = {
     # xAI chat-completions endpoint. Only used when GROK_API_KEY is set; with a
     # GROK_FEED_URL instead, nothing here is read.
