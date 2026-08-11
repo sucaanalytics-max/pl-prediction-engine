@@ -66,13 +66,15 @@ Build artifacts, present on disk but not source — exclude from searches: `fron
 
 ## MCP football data servers
 
-Three servers are configured at user scope (`~/.claude.json`), all stdio via npx.
+Four servers are configured at user scope (`~/.claude.json`). Three are stdio via npx; `x-api` is
+remote HTTP.
 
 | Server | Tools | Auth | Use for |
 |---|---|---|---|
 | `matchday` | 6 (`get_standings`, `get_matches`, `get_top_scorers`, `find_team`, `get_team_matches`, `compare_teams`) | `FOOTBALL_DATA_TOKEN` | **First choice** for league tables, fixtures, results, form, scorers |
 | `sports-hub` | 57 across 6 providers — football-relevant: `espn_*` (10), `footballdata_uk_*` (2), `sportsdb_*` (13), `sportsrc_*` (7) | none | Live/in-play scores, squads, player detail, news; cross-checking the Football-Data.co.uk CSVs the pipeline ingests; **team-name aliases and cross-provider IDs** via `sportsdb_search_teams` |
 | `footballbin` | 1 (`get_match_predictions`) | none | **Benchmark only** — third-party PL/UCL predictions |
+| `x-api` | posts, full-archive search, users/timelines, trends | `X_BEARER_TOKEN` | @robtFPL and FPL team news — **dormant, see below** |
 
 Rules:
 
@@ -91,6 +93,32 @@ Rules:
 The token is exported from **`~/.zshenv`**, deliberately not `~/.zshrc`: `.zshrc` is only sourced by *interactive* shells, so a token placed there is invisible to non-interactive shells, scripts, and any tooling not launched from a terminal. `.zshenv` is sourced by every zsh invocation. Verify with `claude mcp list` — no `Missing environment variables` warning means the expansion resolved.
 
 If that warning ever reappears (for example if the editor launches Claude Code without going through zsh at all), the guaranteed fallback is to store the literal value in the server's `env` block in `~/.claude.json` instead of the `${...}` reference.
+
+### The X server (`x-api`) — what it can and cannot do
+
+X's own hosted MCP, `https://api.x.com/mcp`, live since 30 June 2026. Preferred over the community
+X servers for the same reason `matchday` beats ESPN here: maintained by the data's owner, nothing to
+deploy, and no scraper whose terms position is unresolved.
+
+**Registered dormant.** The header expands `${X_BEARER_TOKEN}`, which is not set, so `claude mcp list`
+reports `Missing environment variables` — the intended state, not a fault. Export it from `~/.zshenv`
+(same reasoning as the football-data token above) to activate.
+
+Two constraints decide what this is worth, and neither is obvious:
+
+- **It cannot feed the news poller.** Rule 3 above is not a style preference here: `news.yml` runs
+  every 15 minutes in GitHub Actions, where no MCP server exists and no MCP client is running. An MCP
+  tool is available to a Claude Code *session* and nowhere else. So `x-api` does not automate
+  anything — the 3-hourly automated lane needs an HTTP API the poller can call itself, which is what
+  `pipeline/data/grok_feed.py` is for.
+- **The MCP layer is free; the X API underneath is not.** Every call bills pay-per-use — $0.005 per
+  post read, $0.010 per user read. X discontinued its free tier for new developers in February 2026,
+  so a new account must buy credits before the first call returns anything.
+
+The route from something read here into the model is **`pipeline/learning/file_claim.py`** — the
+manual claim lane. It stamps source, tier, verbatim quote, URL and `claimed_at`, and the row then goes
+through R0–R8 exactly like an RSS claim. Never let an MCP-read post reach a projection any other way:
+that path has no provenance and no conflict adjudication.
 
 ### Quirks confirmed against the live APIs
 

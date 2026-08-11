@@ -488,3 +488,141 @@ class CadenceTests(unittest.TestCase):
         from pipeline.config import GROK_FEED
 
         self.assertGreaterEqual(GROK_FEED["max_age_days"], 1)
+
+
+class ApiRouteTests(unittest.TestCase):
+    """
+    Route A: the poller asks xAI directly, so there is no sheet to maintain.
+
+    Everything here is offline. The one live call that was made against a real
+    key returned 403 `permission-denied` — "your newly created team doesn't have
+    any credits" — which is what `test_a_403_names_billing_rather_than_the_key`
+    exists to keep legible, because the bare `403 Client Error` that surfaced
+    first reads as a code fault and sends you debugging the wrong thing.
+    """
+
+    def _config(self, **over):
+        from pipeline.config import GROK_FEED
+
+        return {**GROK_FEED, **over}
+
+    def test_the_request_carries_the_gameweek_and_the_deadline(self):
+        from pipeline.data.grok_feed import build_request
+
+        body = build_request(self._config(), 7, "2026-10-03T10:00:00Z")
+        user = body["messages"][1]["content"]
+        self.assertIn("Gameweek 7", user)
+        self.assertIn("2026-10-03T10:00:00Z", user)
+
+    def test_a_missing_deadline_is_omitted_rather_than_invented(self):
+        # An FPL event with no published deadline is normal in pre-season. A
+        # fabricated date would be reported back to us as fact by the model.
+        from pipeline.data.grok_feed import build_request
+
+        user = build_request(self._config(), 1, None)["messages"][1]["content"]
+        self.assertIn("Gameweek 1", user)
+        self.assertNotIn("whose deadline is", user)
+
+    def test_temperature_is_zero(self):
+        # Extraction, not composition. A creative sampler here invents quotes,
+        # and rule 1 of the prompt is that quotes are never reconstructed.
+        from pipeline.data.grok_feed import build_request
+
+        self.assertEqual(build_request(self._config(), 1, None)["temperature"], 0.0)
+
+    def test_the_search_window_follows_the_configured_cadence(self):
+        from pipeline.data.grok_feed import build_request
+
+        user = build_request(self._config(window_hours=6), 1, None)["messages"][1]["content"]
+        self.assertIn("last 6 hours", user)
+
+    def test_robtfpl_is_named_in_the_request(self):
+        # The account the user asked for by name. If a refactor drops it the
+        # comparator lane silently goes empty and nothing else complains.
+        from pipeline.data.grok_feed import build_request
+
+        body = build_request(self._config(), 1, None)
+        self.assertIn("robtFPL", body["messages"][1]["content"])
+
+    def test_the_system_prompt_and_the_doc_carry_the_same_load_bearing_rules(self):
+        """
+        Two prompts, one contract.
+
+        The doc's prompt is what a human pastes into Grok; SYSTEM_PROMPT is what
+        the poller sends. They must not drift, because a rule present in only
+        one means the two routes accept different data into the same store.
+        """
+        from pipeline.data.grok_feed import SYSTEM_PROMPT
+
+        doc = (Path(__file__).resolve().parents[2]
+               / "docs" / "grok-x-feed-schema.md").read_text(encoding="utf-8")
+        for rule in (
+            "word-for-word",        # never reconstruct a quote
+            "comparator",           # projections are never availability claims
+            "unparsed_news",        # the refusal path
+        ):
+            self.assertIn(rule, SYSTEM_PROMPT, f"{rule} missing from SYSTEM_PROMPT")
+            self.assertIn(rule, doc, f"{rule} missing from the doc prompt")
+
+    def test_the_header_in_the_prompt_matches_the_parser(self):
+        # The single highest-value assertion here: if the prompt asks for
+        # columns the parser does not read, every row is silently rejected.
+        from pipeline.data.grok_feed import SHEET_COLUMNS, SYSTEM_PROMPT
+
+        self.assertIn(",".join(SHEET_COLUMNS), SYSTEM_PROMPT)
+
+    # ---- error surfaces -------------------------------------------------
+
+    class _Response:
+        def __init__(self, status, body=None, text=""):
+            self.status_code, self._body, self.text = status, body, text
+
+        def json(self):
+            if self._body is None:
+                raise ValueError("not json")
+            return self._body
+
+        def raise_for_status(self):
+            raise AssertionError("raise_for_status must not be reached")
+
+    def _ask_against(self, response):
+        """Call `ask` with requests.post stubbed to return `response`."""
+        import sys, types
+        from pipeline.data import grok_feed
+
+        stub = types.ModuleType("requests")
+        stub.post = lambda *a, **k: response
+        real = sys.modules.get("requests")
+        sys.modules["requests"] = stub
+        try:
+            with self.assertRaises(ValueError) as caught:
+                grok_feed.ask("xai-test", self._config(), 1, None)
+        finally:
+            if real is not None:
+                sys.modules["requests"] = real
+            else:
+                del sys.modules["requests"]
+        return str(caught.exception)
+
+    def test_a_403_names_billing_rather_than_the_key(self):
+        message = self._ask_against(self._Response(403, {
+            "code": "permission-denied",
+            "error": "Your newly created team doesn't have any credits or "
+                     "licenses yet. You can purchase those on https://console.x.ai/",
+        }))
+        self.assertIn("billing", message)
+        # The provider's own sentence, which is the part that names the fix.
+        self.assertIn("credits", message)
+        self.assertIn("console.x.ai", message)
+
+    def test_a_403_with_an_unparseable_body_still_says_something(self):
+        message = self._ask_against(self._Response(403, None, text="<html>nope</html>"))
+        self.assertIn("403", message)
+        self.assertIn("nope", message)
+
+    def test_401_is_reported_as_a_key_problem_not_a_billing_one(self):
+        # The distinction is the whole point: 401 means change the key, 403
+        # means buy credits. Conflating them wastes the debugging session.
+        message = self._ask_against(self._Response(401, {"error": "invalid key"}))
+        self.assertIn("401", message)
+        self.assertNotIn("billing", message)

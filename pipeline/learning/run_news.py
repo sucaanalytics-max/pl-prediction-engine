@@ -311,6 +311,14 @@ def poll(
 
     open_now, why = in_news_window(fixtures, events, moment, NEWS_WINDOW)
     gameweek = current_gameweek(events, moment)
+    # Passed to the Grok prompt so it knows which deadline it is collecting for.
+    # None when FPL publishes no deadline for the gameweek, in which case the
+    # prompt simply omits it rather than inventing a date.
+    deadline = next(
+        (str(e.get("deadline_time")) for e in events
+         if e.get("id") == gameweek and e.get("deadline_time")),
+        None,
+    )
 
     if not open_now and not force:
         logger.info("outside the news window (%s); nothing to do", why)
@@ -365,7 +373,12 @@ def poll(
     #
     # Dormant until GROK_FEED_URL is set, which is the state today.
     grok_result, grok_skipped = grok_feed.poll(
-        os.environ.get("GROK_FEED_URL"), GROK_FEED, moment,
+        os.environ.get("GROK_FEED_URL"),
+        GROK_FEED,
+        moment,
+        api_key=os.environ.get("GROK_API_KEY"),
+        gameweek=gameweek,
+        deadline=deadline,
     )
     if grok_skipped:
         logger.info("grok feed: %s", grok_skipped)

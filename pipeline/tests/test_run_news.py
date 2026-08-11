@@ -249,3 +249,116 @@ class PublishedFeedExistsTests(unittest.TestCase):
         # The 400 characters before the call must not reintroduce the guard.
         preceding = source[max(0, publish_at - 400):publish_at]
         self.assertNotIn("if changes:", preceding)
+
+
+class UnboundNameTests(unittest.TestCase):
+    """
+    Every name a function reads must be bound somewhere it can reach.
+
+    ## The measured defect
+
+    `poll()` was edited to pass `deadline=deadline` to `grok_feed.poll`, but
+    `deadline` was only ever assigned inside `in_news_window` — a different
+    function. `import pipeline.learning.run_news` still succeeded, because a
+    function body is not executed at import, so every check that had ever been
+    run on this module passed. It would have raised `NameError` on the first
+    real poll inside the news window, in a workflow nobody watches, and the
+    Grok lane would simply have stayed empty.
+
+    A linter would catch this; there is no linter on the Python side. This is
+    that check, scoped to the module where it bit.
+    """
+
+    def test_no_function_reads_a_name_it_never_binds(self):
+        import ast
+        from pathlib import Path
+
+        source = (Path(__file__).resolve().parents[1]
+                  / "learning" / "run_news.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+
+        # Module scope: imports, constants, and the functions themselves.
+        module_names = {"__file__", "__name__"}
+        for node in tree.body:
+            if isinstance(node, (ast.Import, ast.ImportFrom)):
+                for alias in node.names:
+                    module_names.add((alias.asname or alias.name).split(".")[0])
+            elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                module_names.add(node.name)
+            elif isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name):
+                        module_names.add(target.id)
+            elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+                module_names.add(node.target.id)
+
+        import builtins
+
+        builtin_names = set(dir(builtins))
+        unbound = []
+
+        for fn in [n for n in ast.walk(tree)
+                   if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]:
+            bound = set(module_names)
+            args = fn.args
+            for arg in (*args.posonlyargs, *args.args, *args.kwonlyargs):
+                bound.add(arg.arg)
+            if args.vararg:
+                bound.add(args.vararg.arg)
+            if args.kwarg:
+                bound.add(args.kwarg.arg)
+            # Anything assigned anywhere in the function is in scope for the
+            # whole function, which is exactly Python's own rule.
+            for node in ast.walk(fn):
+                if isinstance(node, ast.Assign):
+                    for target in node.targets:
+                        for name in ast.walk(target):
+                            if isinstance(name, ast.Name):
+                                bound.add(name.id)
+                elif isinstance(node, (ast.AnnAssign, ast.AugAssign)):
+                    if isinstance(node.target, ast.Name):
+                        bound.add(node.target.id)
+                elif isinstance(node, (ast.For, ast.AsyncFor)):
+                    for name in ast.walk(node.target):
+                        if isinstance(name, ast.Name):
+                            bound.add(name.id)
+                elif isinstance(node, ast.comprehension):
+                    for name in ast.walk(node.target):
+                        if isinstance(name, ast.Name):
+                            bound.add(name.id)
+                elif isinstance(node, (ast.With, ast.AsyncWith)):
+                    for item in node.items:
+                        if item.optional_vars is not None:
+                            for name in ast.walk(item.optional_vars):
+                                if isinstance(name, ast.Name):
+                                    bound.add(name.id)
+                elif isinstance(node, ast.ExceptHandler) and node.name:
+                    bound.add(node.name)
+                elif isinstance(node, ast.Lambda):
+                    for arg in (*node.args.posonlyargs, *node.args.args,
+                                *node.args.kwonlyargs):
+                        bound.add(arg.arg)
+                elif isinstance(node, (ast.Import, ast.ImportFrom)):
+                    for alias in node.names:
+                        bound.add((alias.asname or alias.name).split(".")[0])
+                elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef,
+                                       ast.ClassDef)) and node is not fn:
+                    bound.add(node.name)
+                elif isinstance(node, ast.Global):
+                    bound.update(node.names)
+                elif isinstance(node, ast.NamedExpr):
+                    # A walrus binds too. Omitting it made this check report
+                    # `current_gameweek`'s `(deadline := ...)` as unbound — a
+                    # false positive on correct code, which is the failure mode
+                    # that teaches people to delete a test rather than read it.
+                    for name in ast.walk(node.target):
+                        if isinstance(name, ast.Name):
+                            bound.add(name.id)
+
+            for node in ast.walk(fn):
+                if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+                    if node.id not in bound and node.id not in builtin_names:
+                        unbound.append(f"{fn.name}() reads '{node.id}' "
+                                       f"(line {node.lineno}) but never binds it")
+
+        self.assertEqual(unbound, [], "\n".join(unbound))

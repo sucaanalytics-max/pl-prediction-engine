@@ -63,6 +63,10 @@ jobs:
           # Schema and the prompt: docs/grok-x-feed-schema.md. Unset today, and
           # the connector reports why it did nothing rather than failing.
           GROK_FEED_URL: ${{ secrets.GROK_FEED_URL }}
+          # Route A: the poller asks Grok itself, no sheet to maintain. Takes
+          # precedence over GROK_FEED_URL when both are set. Absent is normal —
+          # the poller logs one skip line and every other feed still runs.
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
         run: |
           set -euo pipefail
           ARGS=""

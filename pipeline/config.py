@@ -180,6 +180,20 @@ NEWS_FETCH = {
 # Dormant until GROK_FEED_URL is set as a repository secret. Schema and the
 # prompt to paste to Grok: docs/grok-x-feed-schema.md.
 GROK_FEED = {
+    # xAI chat-completions endpoint. Only used when GROK_API_KEY is set; with a
+    # GROK_FEED_URL instead, nothing here is read.
+    "api_url": "https://api.x.ai/v1/chat/completions",
+    "model": os.environ.get("GROK_MODEL", "grok-4-latest"),
+    # Deterministic-ish. This is an extraction task, not a writing task, and a
+    # warm model invents quotes — which is the one failure the schema cannot
+    # detect.
+    "temperature": 0.0,
+    # The API call is metered, so this is a real ceiling and not a guess: at the
+    # 3-hourly cadence it bounds the daily spend.
+    "max_tokens": 4000,
+    # Hours of X to search. Matches the agent's cadence so consecutive runs
+    # barely overlap; see the dedupe note in docs/grok-x-feed-schema.md.
+    "window_hours": 3,
     "timeout_seconds": 20,
     # Same size cap as the RSS fetcher, applied before parsing.
     "max_bytes": 2_000_000,
