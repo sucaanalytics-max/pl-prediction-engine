@@ -225,3 +225,113 @@ class NotableTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PublishedByAProcessThatActuallyRunsTests(unittest.TestCase):
+    """
+    The view must be published by something that runs.
+
+    ## The measured defect
+
+    `public_xp` was complete and tested, with exactly one caller: `run_agent.py`. The
+    agent self-gates on phase and is skipped for roughly ten days of every fourteen —
+    measured on 2026-08-12, `needs_work` was false on every run for days.
+
+    So the view was never published at all. No `xp_public_gw*.json` existed anywhere
+    on disk or in git history, while `predictions/fpl/xp_gw01.json` held 577 players
+    at 5,000 draws with quantiles, a points decomposition and Monte Carlo standard
+    errors. `/players` fell back to last season's actuals, and the richest thing this
+    repo computes reached no screen.
+
+    A tested module with an unreachable caller passes every test it has. These assert
+    reachability instead.
+    """
+
+    def _source(self, *parts):
+        from pathlib import Path
+        return (Path(__file__).resolve().parents[1].joinpath(*parts)).read_text(
+            encoding="utf-8",
+        )
+
+    def test_the_daily_pipeline_publishes_it(self):
+        """
+        THE test.
+
+        The pipeline is the process that WRITES the source artifact and runs every
+        day, so it is the one that can keep the display copy from drifting.
+        """
+        source = self._source("run_pipeline.py")
+        self.assertIn("publish_from_artifact", source)
+
+    def test_it_publishes_the_xp_path_and_not_the_result_dict(self):
+        # `export_gameweek_xp` returns {"xp": path, "sim_params": path}. Passing the
+        # dict would raise inside a broad `except` that logs a warning and continues,
+        # so the publish would have failed silently on every run.
+        source = self._source("run_pipeline.py")
+        self.assertIn('xp_written["xp"]', source)
+        self.assertNotIn("publish_from_artifact(\n                xp_written,", source)
+
+    def test_the_publish_happens_after_the_export(self):
+        source = self._source("run_pipeline.py")
+        self.assertLess(
+            source.index("export_gameweek_xp("),
+            source.index("publish_from_artifact("),
+            "the display copy cannot be built before the artifact it derives from",
+        )
+
+    def test_one_implementation_two_callers(self):
+        """
+        Both the agent and the pipeline call the SAME function.
+
+        Copying twenty lines into the pipeline would have been a second thing to keep
+        in step — and the reason the view was missing was a caller that never ran, so
+        duplicating callers without sharing the implementation would repeat the class.
+        """
+        from pipeline.fpl import public_xp
+
+        self.assertTrue(hasattr(public_xp, "publish_from_artifact"))
+        agent = self._source("learning", "run_agent.py")
+        self.assertIn("public_xp", agent)
+
+    def test_it_is_non_fatal(self):
+        # A projection that has been computed and validated must not be lost because
+        # the display copy failed. It returns None rather than raising.
+        import tempfile
+        from pathlib import Path
+
+        from pipeline.fpl.public_xp import publish_from_artifact
+
+        with tempfile.TemporaryDirectory() as tmp:
+            out = publish_from_artifact(
+                Path(tmp) / "does-not-exist.json", {}, Path(tmp),
+            )
+        self.assertIsNone(out)
+
+    def test_it_prunes_after_writing_not_before(self):
+        # A prune that ran first would delete the file it just wrote on a rerun of the
+        # current gameweek, leaving the page with nothing.
+        source = self._source("fpl", "public_xp.py")
+        publish = source[source.index("def publish_from_artifact"):]
+        self.assertLess(
+            publish.index("write(view"),
+            publish.index("prune("),
+        )
+
+    def test_the_frontend_reads_the_name_this_writes(self):
+        """
+        The filename is the contract.
+
+        The frontend descriptor asks for `fpl/xp_public_gw{NN}.json`, and the private
+        artifact is `xp_gw{NN}.json` — one underscore-separated word apart. Reading
+        the wrong one is a blank section, which is how this went unnoticed.
+        """
+        from pathlib import Path
+
+        descriptor = (
+            Path(__file__).resolve().parents[2]
+            / "frontend" / "lib" / "data" / "projections.ts"
+        ).read_text(encoding="utf-8")
+        self.assertIn("fpl/xp_public_gw", descriptor)
+
+        from pipeline.fpl import public_xp
+        self.assertTrue(public_xp.FILENAME.match("xp_public_gw01.json"))

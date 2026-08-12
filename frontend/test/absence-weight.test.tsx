@@ -57,6 +57,45 @@ describe("a line-weight state renders one line, not a panel", () => {
     expect(node?.querySelectorAll("p").length).toBe(0);
   });
 
+  it("actually says something", () => {
+    /**
+     * The assertion this file was missing.
+     *
+     * A file-corruption event replaced the whole `line` branch with a self-closing
+     * `<p />` — right tag, right attributes, no children — and all nine tests here
+     * passed against it while every "Nothing yet" and "Not published" line on
+     * /now, /decide and /evidence rendered invisible.
+     *
+     * Structure was asserted; content was not. So this asserts the two things a
+     * reader needs: the state's label, and what they were expecting.
+     */
+    const { container } = render(
+      <StateCard of={absent()} what="the agent has nothing to report" weight="line" />,
+    );
+    const node = container.querySelector('[data-weight="line"]');
+    const text = node?.textContent ?? "";
+
+    expect(text.length, "the line rendered no text at all").toBeGreaterThan(10);
+    expect(text).toContain("the agent has nothing to report");
+    // The state's own word, so a reader can tell absent from empty from unreadable.
+    expect(text.toLowerCase()).toContain("not published");
+  });
+
+  it("says something in every state, not just absent", () => {
+    // A state whose label is blank reads as a stray dash. `ok` is never carded, so
+    // the four carded states must each name themselves.
+    for (const state of ["empty", "stale", "absent", "unreadable"] as const) {
+      const artifact = { ...absent(), state } as never;
+      const { container, unmount } = render(
+        <StateCard of={artifact} what="the league table" weight="line" />,
+      );
+      const text = container.querySelector('[data-weight="line"]')?.textContent ?? "";
+      expect(text, `${state} rendered no label`).toMatch(/\S{3,}/);
+      expect(text, `${state} did not say what was expected`).toContain("the league table");
+      unmount();
+    }
+  });
+
   it("carries no card or inset styling", () => {
     const { container } = render(
       <StateCard of={absent()} what="nothing yet" weight="line" />,

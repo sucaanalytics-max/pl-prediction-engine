@@ -39,6 +39,7 @@ from __future__ import annotations
 
 import logging
 import re
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence
 
@@ -175,3 +176,69 @@ def notable(
         )
 
     return sorted(rows, key=key)[:limit]
+
+
+def publish_from_artifact(
+    artifact_path: Any,
+    bootstrap: Mapping[str, Any],
+    public_dir: Path,
+    *,
+    keep: int = 1,
+) -> Optional[Path]:
+    """
+    Build and write the display view for an xp artifact already on disk.
+
+    ## Why this exists as a shared function
+
+    It was a private helper inside `run_agent.py` with one caller, and the agent
+    self-gates on phase — skipped for roughly ten days of every fourteen-day cycle.
+    So the view was never published: measured on 2026-08-12, no `xp_public_gw*.json`
+    existed anywhere on disk or in git history, while `predictions/fpl/xp_gw01.json`
+    held 577 players at 5,000 draws with quantiles, a points decomposition and Monte
+    Carlo standard errors. The richest thing this repo computes reached no screen.
+
+    The daily pipeline now calls this too, because it is the process that WRITES the
+    source artifact — a display copy cannot drift from the file it derives from if
+    both happen in one step. Two callers, one implementation: copying the twenty
+    lines into the pipeline would have been a second thing to keep in step, and the
+    reason the view was missing in the first place was a caller that never ran.
+
+    Reads the artifact back from disk rather than taking an in-memory object, so what
+    the page shows is what actually landed.
+
+    Non-fatal by design: a projection that has been computed and validated must not
+    be lost because the display copy of it failed. Returns the path written, or None.
+    """
+    import json as _json
+
+    try:
+        artifact = _json.loads(Path(artifact_path).read_text(encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
+        logger.warning("could not read the xp artifact at %s: %s", artifact_path, exc)
+        return None
+
+    try:
+        teams = {t["id"]: str(t.get("name") or "") for t in bootstrap.get("teams") or []}
+        positions = {1: "GKP", 2: "DEF", 3: "MID", 4: "FWD"}
+        names = {
+            int(e["id"]): (
+                str(e.get("web_name") or ""),
+                teams.get(e.get("team"), ""),
+                positions.get(e.get("element_type")),
+            )
+            for e in bootstrap.get("elements") or []
+        }
+        view = build(
+            artifact,
+            names,
+            generated_at=datetime.now(timezone.utc)
+            .isoformat().replace("+00:00", "Z"),
+        )
+        written = write(view, Path(public_dir))
+        # Prune AFTER writing, and strictly-before the current gameweek. A prune that
+        # deleted its own output would leave the page with nothing.
+        prune(Path(public_dir), keep=keep)
+        return written
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("could not publish the public xp view: %s", exc)
+        return None

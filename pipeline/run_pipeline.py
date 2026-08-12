@@ -24,6 +24,7 @@ import signal
 import sys
 import time
 from datetime import datetime
+from pathlib import Path
 from typing import Dict
 
 import numpy as np
@@ -1128,7 +1129,11 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 seed_entropy=stable_seed_entropy(CURRENT_SEASON, gameweek),
                 all_element_ids=fpl_inputs.all_element_ids,
             )
-            export_gameweek_xp(
+            # Returns a dict of the paths it wrote, keyed `xp` and `sim_params` —
+            # not a single path. Passing the dict straight to the publisher would
+            # have thrown inside a `try` that logs a warning and continues, so the
+            # publish would have failed silently on every run.
+            xp_written = export_gameweek_xp(
                 fpl_draws,
                 CURRENT_SEASON,
                 datetime.utcnow().isoformat() + "Z",
@@ -1137,6 +1142,36 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 stable_seed_entropy(CURRENT_SEASON, gameweek),
                 fpl_specs,
             )
+
+            # ── Publish the display copy, from HERE rather than from the agent
+            #
+            # `pipeline/fpl/public_xp.py` is complete and tested, and had exactly one
+            # caller: `run_agent.py`. The agent self-gates on phase and is skipped for
+            # roughly ten days of every fourteen-day cycle, so the artifact it
+            # publishes was never published at all — measured on 2026-08-12, no
+            # `xp_public_gw*.json` existed anywhere on disk or in git history, while
+            # `predictions/fpl/xp_gw01.json` held 577 players at 5,000 draws with
+            # quantiles, a points decomposition and Monte Carlo standard errors.
+            #
+            # So the richest thing this repo computes reached no screen, and
+            # `/players` fell back to showing last season's actuals.
+            #
+            # The daily pipeline is the right publisher because it is the process that
+            # WRITES the source artifact: the display copy cannot drift from the file
+            # it is derived from if both happen in one step. It is also allowed to —
+            # `pipeline.yml`'s FORBID_PATHS blocks only `predictions/fpl/(ledger|
+            # decision)`, and it already stages the whole `frontend/public/predictions`
+            # tree.
+            #
+            # The agent keeps its own call. Both writing the same derived file is
+            # harmless: it is a pure function of an artifact neither of them mutates.
+            from pipeline.fpl.public_xp import publish_from_artifact
+            from pipeline.config import FPL_PUBLIC_DIR
+
+            publish_from_artifact(
+                xp_written["xp"], bootstrap, Path(FPL_PUBLIC_DIR),
+            )
+
             fpl_status = {
                 "status": "degraded" if fpl_rules.degraded else "ok",
                 "gameweek": int(fpl_draws.gameweek),
