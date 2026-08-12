@@ -41,6 +41,21 @@ function money(value: number | null): string {
   return value === null ? "—" : `£${value.toFixed(1)}m`;
 }
 
+/**
+ * How the squad was obtained, in words, keyed by the values the server emits.
+ *
+ * `fpl-live-server.ts:419` emits exactly these two. The previous code compared
+ * against `"live"` — a third value nothing produces — so its "never presented as
+ * live when it is a draft" guard was unreachable and both cases printed the raw
+ * identifier. Keying off the real values is what makes the distinction real, and
+ * the difference matters: one is the official endpoint, the other is a snapshot
+ * taken on a particular day that has been ageing ever since.
+ */
+const SOURCE_LABEL: Record<string, string> = {
+  official_public: "live from FPL",
+  captured_authenticated_draft: "captured draft, not live",
+};
+
 export default function SquadBoard() {
   const { artifact } = useHeuristics();
   const view = proven(artifact);
@@ -107,12 +122,23 @@ export default function SquadBoard() {
       <div className="flex items-baseline justify-between gap-2 flex-wrap">
         <p className="text-xs" style={{ color: "var(--text-3)" }}>
           {squad.players.length} players · {money(squad.value)} committed ·{" "}
-          {money(squad.bank)} in the bank
+          {/* Unknown bank says unknown.
+              The server used to send 0 for "no deadline has passed yet", which
+              read here as a confident "£0.0m in the bank" — the one number on
+              this line a transfer decision turns on. */}
+          {squad.bank === null || squad.bank === undefined
+            ? "bank unknown until the first deadline"
+            : `${money(squad.bank)} in the bank`}
           {squad.formation ? ` · ${squad.formation}` : ""}
         </p>
-        {/* Never presented as live when it is a draft. */}
+        {/* Never presented as live when it is a draft.
+            This compared against `"live"`, which the field cannot hold: the
+            server emits `official_public` or `captured_authenticated_draft`. So
+            the guard never fired and the raw enum was printed to the user
+            either way. Mapping the values it does hold is what makes the
+            distinction the comment claims. */}
         <p className="text-[10px] font-mono" style={{ color: "var(--text-4)" }}>
-          {squad.source === "live" ? "live from FPL" : squad.source ?? "source unknown"}
+          {SOURCE_LABEL[squad.source ?? ""] ?? squad.source ?? "source unknown"}
         </p>
       </div>
 

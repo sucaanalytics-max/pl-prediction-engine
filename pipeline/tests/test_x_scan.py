@@ -272,6 +272,78 @@ class ValidatorTests(unittest.TestCase):
         self.assertIn("player_surname", str(result.rejections[0]))
 
 
+class FeedAttributionTests(unittest.TestCase):
+    """
+    A logged-in home timeline is many authors, and who said it is the whole claim.
+
+    The profile scan needed no such thing: one page, one author, so the `source`
+    argument described every row. Reading the user's own feed breaks that
+    assumption, and breaking it quietly is the failure that matters here — the
+    rows are `unparsed_news`, so their ONLY value is provenance. A feed of forty
+    accounts all stamped `x:home-feed` is forty untraceable assertions, which is
+    exactly what the manual claim lane exists to prevent.
+    """
+
+    def test_each_post_is_attributed_to_its_own_author(self):
+        scan = {"handle": "home", "posts": [
+            {"status_id": REAL_ID, "author": "robtFPL",
+             "url": f"https://x.com/robtFPL/status/{REAL_ID}", "lines": REAL_LINES},
+            {"status_id": "2086121456807575553", "author": "FPLHarry",
+             "url": "https://x.com/FPLHarry/status/2086121456807575553",
+             "lines": ["Harry", "@FPLHarry", "8 Aug",
+                       "Arsenal have no fresh injury concerns ahead of the weekend.",
+                       "3", "9"]},
+        ]}
+        items = x_scan.to_items(scan, source="x:home-feed", now=NOW)
+        self.assertEqual([i["source"] for i in items], ["x:robtFPL", "x:FPLHarry"])
+
+    def test_a_missing_author_falls_back_and_does_not_drop_the_post(self):
+        # The extractor can only read an author from a status href. If the markup
+        # changes, the post is still worth filing under the page it came from —
+        # losing it entirely would be worse than a coarse attribution.
+        items = x_scan.to_items(real_scan(), source="x:robtFPL", now=NOW)
+        self.assertEqual(items[0]["source"], "x:robtFPL")
+
+    def test_a_junk_author_is_not_written_into_the_source(self):
+        """
+        The author is interpolated into a provenance field, so its shape is checked.
+
+        An X handle is 1-15 of `[A-Za-z0-9_]`. Anything else means the href did
+        not have the shape assumed, and writing it through would put arbitrary
+        page text into the field a human reads to decide whether to trust a row.
+        """
+        for bad in ("", "not a handle", "a/b", "x" * 16, "робт", "'; DROP"):
+            items = x_scan.to_items(
+                real_scan(author=bad), source="x:home-feed", now=NOW,
+            )
+            self.assertEqual(items[0]["source"], "x:home-feed", bad)
+
+    def test_the_extractor_never_builds_a_url_from_the_pathname(self):
+        """
+        The defect this replaced, pinned so it cannot return.
+
+        The first version built each URL as
+        `'https://x.com/' + location.pathname.split('/')[1] + '/status/' + id`.
+        On a profile that is right by coincidence. On `/home` it yields
+        `https://x.com/home/status/<id>` for every row in the feed — a URL naming
+        an author who does not exist, in the field that is supposed to be the
+        citation.
+        """
+        source = x_scan.EXTRACT_JS
+        self.assertNotIn("pathname.split('/')[1] + '/status/'", source)
+        # And the replacement must take the author from the post's own link.
+        self.assertIn("status", source)
+        self.assertIn("author", source)
+
+    def test_both_callers_still_read_the_one_extractor_file(self):
+        # The reason the JS lives in a file at all: two copies of a scraper's
+        # selectors drift, and the stale one returns zero posts and reports
+        # success.
+        from pathlib import Path
+        mjs = Path(__file__).resolve().parents[2] / "scripts" / "x_scan.mjs"
+        self.assertIn("x_extract.js", mjs.read_text(encoding="utf-8"))
+
+
 class InboxTests(unittest.TestCase):
     def _text(self, **over):
         return x_scan.to_csv(

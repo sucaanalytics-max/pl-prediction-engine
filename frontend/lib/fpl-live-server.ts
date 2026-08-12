@@ -388,11 +388,30 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
   const rankedSquad = selected
     .map((pick) => rankedById.get(pick.elementId))
     .filter((player): player is NonNullable<typeof player> => Boolean(player));
+  // Unknown is null, never 0.
+  //
+  // FPL reports `last_deadline_bank: null` before a squad's first deadline — it
+  // is the API saying "no deadline has passed", not "no money". Coercing it to 0
+  // rendered "£0.0m in the bank" on the squad board: a specific, wrong,
+  // decision-relevant number that looks like a measurement. £0.0m and "unknown"
+  // lead to opposite transfer decisions, and the consumer type
+  // (`fpl-live.ts:188`) has always been `number | null`, so the null had a place
+  // to go the whole time.
   const bank = picks
     ? picks.entry_history.bank / 10
     : entry.last_deadline_bank === null
-      ? 0
+      ? null
       : entry.last_deadline_bank / 10;
+
+  // What the transfer recommenders get, which is a different question.
+  //
+  // They do arithmetic against a budget, so they need a number. Zero is the
+  // right number for "unknown" *here* and the wrong one for the display: an
+  // under-stated budget recommends a transfer you can definitely afford, while
+  // an over-stated one recommends a move you cannot make. Same asymmetry as
+  // under- versus over-staking. The two uses are separated so neither has to
+  // compromise for the other.
+  const spendableBank = bank ?? 0;
   const now = new Date().toISOString();
   // The per-player availability evidence block used to be built here and is
   // gone: `/evidence` reads `evidence_view.json`, which carries the claim
@@ -487,13 +506,13 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
       transfers4: recommendTransfers({
         squad: rankedSquad,
         allPlayers: rankedPlayers,
-        bank,
+        bank: spendableBank,
         horizon: 4,
       }),
       multiTransferPlans4: buildMultiTransferPlans({
         squad: rankedSquad,
         allPlayers: rankedPlayers,
-        bank,
+        bank: spendableBank,
         horizon: 4,
       }),
       captaincyPlan: buildCaptaincyPlan(rankedSquad, event.id),

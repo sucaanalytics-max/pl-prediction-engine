@@ -232,6 +232,12 @@ def to_items(
     `club` pins every row to one club; leave it None to detect per post via
     `club_in`. An account covering the whole league needs the detection, and a
     club-specific account is better served by pinning it.
+
+    `source` is the fallback attribution, used only for posts whose author the
+    extractor could not read. A **profile** scan is one author, so one `source`
+    describes every row; a **logged-in home timeline** is many authors, and
+    stamping them all `x:home-feed` would destroy the only thing that makes these
+    rows admissible — who said it. So each post's own author wins when present.
     """
     moment = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
     items: List[Dict[str, Any]] = []
@@ -256,6 +262,7 @@ def to_items(
         if not url.startswith("https://"):
             continue
 
+        author = str(post.get("author") or "").strip()
         items.append({
             "lane": LANE,
             "claim_type": CLAIM_TYPE,
@@ -263,7 +270,7 @@ def to_items(
             "player_surname": "",
             "club": club if club is not None else club_in(body),
             "tier": TIER,
-            "source": source,
+            "source": f"x:{author}" if HANDLE.match(f"@{author}") else source,
             "quote": "",
             "url": url,
             "claimed_at": stamp,

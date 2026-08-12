@@ -24,12 +24,20 @@ import type { FixtureMatrixRow } from "@/lib/data/heuristics";
  * green↔red, which is the canonical colour-vision failure: roughly one man in twelve
  * cannot separate those hues, and FPL's own site uses exactly that pair.
  *
- * The ramp was validated rather than eyeballed. OKLab lightness runs
- * 0.905 → 0.812 → 0.717 → 0.622 → 0.480 — strictly monotonic, with even steps
- * (0.093, 0.095, 0.095, 0.142), so equal difficulty gaps read as equal. The darkest
- * step sits at 2.63:1 against the dark surface, below the 3:1 line, which obliges
- * visible relief — **the number is printed in every cell**, so nothing here is
- * carried by colour alone.
+ * The ramp is validated on two axes, and the first version only checked one.
+ *
+ * **Lightness monotonicity** — OKLab 0.905 → 0.812 → 0.717 → 0.527 → 0.480, strictly
+ * decreasing, so equal difficulty gaps read as ordered. That was checked.
+ *
+ * **Ink contrast on each step** — that was NOT. Step 4 shipped as `#3987e5`, on which
+ * white text computes to 3.64:1, below the 4.5:1 that AA requires for the 11px cell
+ * text. It is `#256abf` now: white at 5.39:1, and OKLab 0.527 keeps the ramp ordered.
+ * Every step now clears AA for its own ink (9.03, 6.69, 4.77, 5.39, 6.63).
+ *
+ * And **the difficulty number is in the cell**, which the first version's docstring
+ * claimed while the cell in fact rendered only the opponent-and-venue string. The FDR
+ * value was carried by colour alone. Both of those were found by an adversarial audit
+ * of this file, not by the tests in it.
  */
 
 /** Blue ramp, light = easy, dark = hard. Index by FDR 1–5. */
@@ -37,7 +45,7 @@ const FDR_FILL: Record<number, string> = {
   1: "#cde2fb",
   2: "#9ec5f4",
   3: "#6da7ec",
-  4: "#3987e5",
+  4: "#256abf",
   5: "#1c5cab",
 };
 
@@ -112,9 +120,28 @@ export default function FixtureMatrix() {
     );
   }
 
+  /**
+   * Every fixture in a gameweek, not the last one seen.
+   *
+   * This was `map.set(fixture.gameweek, fixture)`, which keeps one fixture per
+   * gameweek. A club with two — a double gameweek, created whenever a postponed
+   * match is rescheduled into an existing week — had its first one silently
+   * overwritten. That is the single most decision-relevant fixture event in FPL
+   * (it is what a Bench Boost or a Triple Captain is spent on), and the grid
+   * would have shown the club playing once.
+   *
+   * The array is the honest shape: zero entries is a blank, one is ordinary, two
+   * or more is a double, and the cell renders what it is given.
+   */
   const byGameweek = (row: FixtureMatrixRow) => {
-    const map = new Map<number, FixtureMatrixRow["fixtures"][number]>();
-    for (const fixture of row.fixtures) map.set(fixture.gameweek, fixture);
+    // A mutable element array, not `row["fixtures"]` — that type is `readonly`,
+    // which is correct for the artifact and wrong for a local accumulator.
+    const map = new Map<number, Array<FixtureMatrixRow["fixtures"][number]>>();
+    for (const fixture of row.fixtures) {
+      const existing = map.get(fixture.gameweek);
+      if (existing) existing.push(fixture);
+      else map.set(fixture.gameweek, [fixture]);
+    }
     return map;
   };
 
@@ -155,8 +182,8 @@ export default function FixtureMatrix() {
                     {row.meanDifficulty.toFixed(2)}
                   </td>
                   {gameweeks.map((gameweek) => {
-                    const fixture = map.get(gameweek);
-                    if (!fixture) {
+                    const fixtures = map.get(gameweek);
+                    if (!fixtures || fixtures.length === 0) {
                       // A blank gameweek. Left empty rather than filled with a
                       // neutral 3: a fixture that does not exist is not an
                       // average-difficulty fixture.
@@ -172,18 +199,44 @@ export default function FixtureMatrix() {
                       );
                     }
                     return (
-                      <td key={gameweek} className="text-center p-1">
-                        <span
-                          className="block rounded px-1 py-1 text-[11px] font-mono"
-                          style={{
-                            background: FDR_FILL[fixture.difficulty],
-                            color: FDR_INK[fixture.difficulty],
-                          }}
-                          title={`${row.team} — ${fixture.label} · difficulty ${fixture.difficulty} (${DIFFICULTY_WORD[fixture.difficulty]})`}
-                          data-difficulty={fixture.difficulty}
-                        >
-                          {fixture.label}
-                        </span>
+                      <td
+                        key={gameweek}
+                        className="text-center p-1 space-y-0.5"
+                        data-fixtures={fixtures.length}
+                      >
+                        {fixtures.length > 1 ? (
+                          // A double gameweek, named rather than left for the
+                          // reader to infer from two stacked cells.
+                          <span
+                            className="block text-[9px] font-semibold uppercase tracking-wide"
+                            style={{ color: "var(--text-4)" }}
+                          >
+                            Double
+                          </span>
+                        ) : null}
+                        {fixtures.map((fixture) => (
+                          <span
+                            key={`${fixture.label}-${fixture.difficulty}`}
+                            className="block rounded px-1 py-1 text-[11px] font-mono"
+                            style={{
+                              background: FDR_FILL[fixture.difficulty],
+                              color: FDR_INK[fixture.difficulty],
+                            }}
+                            title={`${row.team} — ${fixture.label} · difficulty ${fixture.difficulty} (${DIFFICULTY_WORD[fixture.difficulty]})`}
+                            data-difficulty={fixture.difficulty}
+                          >
+                            {fixture.label}
+                            {" "}
+                            {/* The difficulty itself, in the cell.
+                                This was only in `title=`, so the FDR value was
+                                carried by colour alone — the exact opposite of what
+                                this component's docstring claimed, and unreadable to
+                                anyone who cannot separate the ramp or is not hovering
+                                a mouse. An adversarial audit caught the contradiction
+                                between the claim and the code. */}
+                            <strong>{fixture.difficulty}</strong>
+                          </span>
+                        ))}
                       </td>
                     );
                   })}
