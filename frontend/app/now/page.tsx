@@ -17,6 +17,7 @@ import { useArtifact } from "@/lib/data/useArtifact";
 import {
   ProvenanceStrip, Section, WhenProven,
 } from "@/components/data/Artifact";
+import SquadBoard from "@/components/SquadBoard";
 import { DeltaFeedView } from "@/components/data/DeltaFeed";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import type { DeltaFeed, Health, MatchesFile } from "@/lib/data/narrow";
@@ -167,6 +168,17 @@ export default function NowPage() {
             page opened with two large empty panels and put the only populated
             section, the fixture calls, third. They are one line each now and sit
             below the content. */}
+        {/* The squad leads. Every product in this category opens with your fifteen
+            and an answer; this app opened with empty panels, and the squad was on
+            no screen at all — /api/fpl/state returned all fifteen the whole time
+            and the narrower dropped them. */}
+        <Section
+          title="Your squad"
+          subtitle="The fifteen, and the one move worth making"
+        >
+          <SquadBoard />
+        </Section>
+
         <NextFixtures />
         <Deltas />
         <AgentMessages />

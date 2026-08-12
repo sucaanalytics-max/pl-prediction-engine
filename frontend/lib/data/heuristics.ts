@@ -122,6 +122,23 @@ export interface HeuristicCaptainWeek {
   readonly confidence: number;
 }
 
+export interface SquadPlayer {
+  readonly name: string;
+  readonly position: string;
+  readonly team: string;
+  readonly price: number | null;
+}
+
+export interface SquadView {
+  readonly players: readonly SquadPlayer[];
+  /** Total selling value, in millions. */
+  readonly value: number | null;
+  readonly bank: number | null;
+  readonly formation: string | null;
+  /** e.g. `captured_authenticated_draft` — never presented as live when it is not. */
+  readonly source: string | null;
+}
+
 export interface HeuristicView {
   readonly generatedAt: string;
   readonly modelVersion: string;
@@ -141,6 +158,15 @@ export interface HeuristicView {
   };
   /** Whether the squad shown is the live one or a captured draft. */
   readonly squadSource: string | null;
+  /**
+   * The fifteen, with what they cost.
+   *
+   * Returned by `/api/fpl/state` all along and dropped by this narrower, so no
+   * screen could show the squad the whole app is about. £100.0m committed, £0.0m
+   * in the bank, 4-4-2 — facts a manager checks before every deadline and had to
+   * open the official site to see.
+   */
+  readonly squad: SquadView | null;
   /**
    * `fplreview_csv_snapshot` when a paid export was on disk, `fallback` when it
    * was not. The second is now the normal case; see `lib/fplreview-projections.ts`.
@@ -166,6 +192,38 @@ export interface HeuristicView {
    * it, but a page silently rendering 19 of 20 is lying about its coverage.
    */
   readonly droppedRows: number;
+}
+
+/**
+ * The fifteen, or null.
+ *
+ * Tolerant on purpose: a squad that cannot be read must not take the transfer
+ * shortlist and the captaincy plan down with it, because those are still usable
+ * without it. Null here renders as one line, not as a blank page.
+ */
+function narrowSquad(raw: unknown): SquadView | null {
+  if (!isRecord(raw)) return null;
+  const players = Array.isArray(raw.players) ? raw.players : [];
+  const kept: SquadPlayer[] = [];
+  for (const item of players) {
+    if (!isRecord(item)) continue;
+    const name = optString(item.name);
+    if (!name) continue;
+    kept.push({
+      name,
+      position: optString(item.position) ?? "",
+      team: optString(item.team) ?? "",
+      price: optNumber(item.price),
+    });
+  }
+  if (kept.length === 0) return null;
+  return {
+    players: kept,
+    value: optNumber(raw.value),
+    bank: optNumber(raw.bank),
+    formation: optString(raw.formation),
+    source: optString(raw.source),
+  };
 }
 
 /** Counts drops without failing the whole narrow. */
@@ -365,6 +423,7 @@ export function narrowHeuristics(raw: unknown): NarrowResult<HeuristicView> {
       deadlineTime: optString(event.deadlineTime),
     },
     squadSource: optString(freshness.squad),
+    squad: narrowSquad(root.squad),
     projectionSource: optString(projections.source) ?? "unknown",
     projectionSourceLabel: optString(projections.sourceLabel) ?? "unknown source",
     transfers,

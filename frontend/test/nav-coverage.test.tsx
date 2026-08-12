@@ -34,6 +34,24 @@ const NOT_IN_NAV: Record<string, string> = {
   api: "route handlers, not pages",
 };
 
+/**
+ * Whether a route is a redirect stub rather than a real destination.
+ *
+ * Eight of this app's routes exist only to keep bookmarks and the service worker
+ * working after a page was superseded: /transfers, /captaincy, /optimizer and
+ * /planner all redirect to /decide; /rankings and /projections to /players.
+ *
+ * The first version of this test only asked whether a route EXISTED, so listing all
+ * of them passed — and produced a sidebar with four "Decide" entries that landed on
+ * the same page. A nav that promises variety and delivers one screen is its own kind
+ * of empty.
+ */
+function isRedirect(route: string): boolean {
+  const file = join(APP, route, "page.tsx");
+  if (!existsSync(file)) return false;
+  return /\bredirect\(/.test(readFileSync(file, "utf8"));
+}
+
 /** Top-level route segments that have a page. */
 function builtRoutes(): string[] {
   return readdirSync(APP, { withFileTypes: true })
@@ -69,19 +87,42 @@ describe("navigation covers what is built", () => {
   });
 
   for (const route of builtRoutes()) {
-    it(`/${route} is reachable`, () => {
+    it(`/${route} is reachable or explained`, () => {
       if (route in NOT_IN_NAV) {
         expect(NOT_IN_NAV[route].length).toBeGreaterThan(10);
         return;
       }
+      if (isRedirect(route)) {
+        // A stub kept for bookmarks. It must NOT be in the nav — see below.
+        return;
+      }
       expect(
         linked.has(`/${route}`),
-        `/${route} is built but linked from nowhere. Add it to NAV_GROUPS, or to ` +
+        `/${route} is a real page linked from nowhere. Add it to NAV_GROUPS, or to ` +
           `NOT_IN_NAV with a reason. Thirteen routes were unreachable this way and ` +
           `no test could see it.`,
       ).toBe(true);
     });
   }
+
+  it("links no redirect stub", () => {
+    /**
+     * The over-correction, pinned.
+     *
+     * Restoring every built route to the sidebar put eight redirect stubs in it:
+     * four entries under "Decide" that all landed on /decide, and two under
+     * "Research" that both landed on /players. The routes still exist so bookmarks
+     * and the service worker keep working; they are not destinations.
+     */
+    const stubs = [...linked]
+      .map((href) => href.slice(1))
+      .filter((route) => route && isRedirect(route));
+    expect(
+      stubs,
+      "these nav entries redirect elsewhere, so the sidebar promises pages it does " +
+        "not have",
+    ).toEqual([]);
+  });
 
   it("links no route that does not exist", () => {
     // The other direction: a nav entry pointing at a deleted page is a 404 the

@@ -56,15 +56,18 @@ interface NavGroup {
  *
  * ## What this fixes
  *
- * Thirteen of the twenty-two built routes were unreachable from here. `/transfers`,
- * `/optimizer`, `/captaincy`, `/rankings`, `/planner`, `/projections`,
- * `/intelligence`, `/table`, `/matches`, `/value-bets` and `/h2h`'s siblings were all
- * deployed, tested, and linked from nowhere — so the app looked far emptier than it
- * was, and the pages carrying the most FPL value were the ones you could not get to.
+ * Thirteen of the twenty-two built routes were unreachable from here, so the app
+ * looked far emptier than it was.
  *
- * `frontend/test/nav-coverage.test.tsx` asserts that every route under `app/` is
- * either in this list or named in its allow-list with a reason. A route can no longer
- * become unreachable quietly.
+ * The first fix over-corrected: eight of those thirteen are REDIRECT STUBS kept for
+ * bookmarks and the service worker — `/transfers`, `/captaincy`, `/optimizer` and
+ * `/planner` all redirect to `/decide`; `/rankings` and `/projections` to
+ * `/players`. Listing them gave the sidebar four "Decide" entries that landed on the
+ * same page, which promises variety and delivers one screen.
+ *
+ * So this lists REAL destinations only. `frontend/test/nav-coverage.test.tsx` now
+ * asserts both directions: every real page is reachable, and no nav entry points at
+ * a redirect.
  *
  * ## Labels
  *
@@ -78,42 +81,28 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/now", label: "Now", icon: LayoutDashboard },
       { href: "/decide", label: "Decide", icon: Sparkles },
-      { href: "/transfers", label: "Transfers", icon: ArrowLeftRight },
-      { href: "/captaincy", label: "Captain", icon: Crown },
-      { href: "/optimizer", label: "Optimiser", icon: Wand2 },
-      { href: "/planner", label: "Planner", icon: CalendarRange },
+      { href: "/decisions", label: "Agent decisions", icon: Crown },
     ],
   },
   {
     label: "Research",
     items: [
       { href: "/players", label: "Players", icon: Users },
-      { href: "/projections", label: "Projections", icon: LineChart },
-      { href: "/rankings", label: "Rankings", icon: ListOrdered },
       { href: "/evidence", label: "Injury evidence", icon: Stethoscope },
-      { href: "/intelligence", label: "Intelligence", icon: Newspaper },
-    ],
-  },
-  {
-    label: "Match model",
-    items: [
       { href: "/matches", label: "Fixtures", icon: GitCompareArrows },
-      { href: "/table", label: "Table", icon: Table2 },
       { href: "/h2h", label: "Head to head", icon: Swords },
     ],
   },
   {
     label: "Betting",
     items: [
-      { href: "/value-bets", label: "Value bets", icon: TrendingUp },
       { href: "/markets", label: "Markets", icon: TrendingUp },
       { href: "/bankroll", label: "Bankroll", icon: WalletCards },
     ],
   },
   {
-    label: "Agent · ops",
+    label: "Ops",
     items: [
-      { href: "/decisions", label: "Agent decisions", icon: Sparkles },
       { href: "/inbox", label: "Agent inbox", icon: Inbox },
       { href: "/accuracy", label: "Accuracy", icon: Target },
       { href: "/health", label: "Model health", icon: Activity },
