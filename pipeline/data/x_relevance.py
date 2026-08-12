@@ -84,6 +84,7 @@ import re
 from dataclasses import dataclass
 from typing import Dict, Iterable, Mapping, Optional, Sequence, Tuple
 
+from pipeline.data.availability_news import _LIGAMENT, _MUSCULAR
 from pipeline.data.news_extract import fold, is_out_of_scope
 
 #: Bumped on EVERY edit to the vocabulary or the veto order, mirroring
@@ -92,7 +93,13 @@ from pipeline.data.news_extract import fold, is_out_of_scope
 #: this because someone widened the vocabulary" are different claims about the
 #: same CSV. `test_x_relevance.py` pins the pattern count against this number, so
 #: adding a term without bumping it fails the suite rather than passing quietly.
-GATE_VERSION = 1
+#: v2: the recall repair. An adversarial pass measured that v1's AVAILABILITY
+#: family saw only 4 of the 13 body parts this repo already classifies, had no term
+#: for surgery at all, and carried noun forms without their inflections — so
+#: "faces a suspension" was admitted while "is suspended for three games" was not.
+#: Rows filed under v1 were filed by a materially narrower gate, which is exactly
+#: what this number exists to record.
+GATE_VERSION = 2
 
 #: An X handle: 1-15 of `[A-Za-z0-9_]`, case-insensitive at X's end.
 #:
@@ -135,7 +142,13 @@ PROMO_PATTERNS = tuple(re.compile(p) for p in (
     r"\buse code\b",
     r"\bdeposit bonus\b",
     r"\bt&cs?\b",
-    r"\b18\+\b",
+    # `\b18\+\b` — the first version — can NEVER match a real "18+": a word
+    # boundary after "+" requires a following word character, so it fired only on
+    # "18+only". Its test passed because both fixtures also said "free bet" or
+    # "deposit bonus", so the one pattern meant to catch a bare regulatory marker
+    # was never exercised. Measured dead against "18+", "18+ only", "18+.",
+    # "(18+)" and "18+ | begambleaware".
+    r"\b18\+",
     r"\bbegambleaware\b",
     r"\bnew customers\b",
     r"\bsign[- ]?up offer\b",
@@ -188,14 +201,65 @@ PROMO_PATTERNS = tuple(re.compile(p) for p in (
 # corners" and "on target" — which is luck, not coverage. Widening this is a
 # vocabulary edit with a `GATE_VERSION` bump, not a quiet tweak.
 
+#: Body parts, taken from `availability_news.py` rather than re-listed.
+#:
+#: The first version hand-wrote seven and an adversarial check counted the cost:
+#: **9 of the 13 parts this repo already classifies were invisible**, so
+#: "Saka has a knee problem" was refused while "Saka has a hamstring problem"
+#: passed. That asymmetry has no defence — it is not a judgement about evidence,
+#: it is a gap in a list. Importing the tables that the RSS lane already uses
+#: means the two lanes cannot disagree about what counts as an injury, which is
+#: the same argument that keeps `TEAM_ALIASES` singular.
+#: `back` is deliberately NOT here even though FPL's `news` field uses it. It is
+#: ordinary English — "back in training", "back on the picket line", "back to the
+#: drawing board" — and adding it made a Sam Altman quote thread pass the content
+#: half. That is the same class of mistake the excluded-homograph list below
+#: records; it is only visible because a test asserted the corpus verdicts.
+_PARTS = tuple(sorted(_MUSCULAR | _LIGAMENT | {
+    # Present in FPL's own `news` strings and in press reporting, but not in the
+    # two coarse categories above, which exist to bucket a *return distribution*
+    # rather than to enumerate anatomy.
+    "foot", "toe", "hip", "metatarsal", "rib", "hernia", "concussion", "acl",
+}))
+
 #: Availability language specific enough to carry a post on its own.
 AVAILABILITY = (
-    r"\b(?:hamstring|groin|calf|achilles|acl|hernia|concussion)\b",
+    rf"\b(?:{'|'.join(_PARTS)})\b",
+    # Surgery had NO term at all, and "<player> has had knee surgery, out until
+    # October" is the single most common shape of real team news. Measured: six
+    # such posts were refused end-to-end with zero signals.
+    #
+    # Scoped rather than bare. "operation" and "underwent" alone are business
+    # English ("the operation of the business", "the fund underwent a review"), and
+    # a gate that admits a stranger's prose is worse than one that misses a post.
+    r"\bhad (?:successful )?surgery\b",
+    r"\bsurgery on\b",
+    r"\bunderwent (?:an? )?(?:operation|surgery|procedure)\b",
+    r"\bstress fracture\b",
     r"\bruled out\b",
     r"\bsidelined\b",
     r"\blimped off\b",
     r"\b(?:sent off|red card)\b",
     r"\bout for (?:up to |the )?(?:\w+ )?(?:weeks?|months?|games?|season)\b",
+    # Inflections, because the noun-only version produced arbitrary near-synonym
+    # splits: "faces a suspension" passed while "is suspended" was refused, and
+    # "is a doubt" passed while "is doubtful" was refused.
+    #
+    # Each is scoped to a football object. Bare `suspend(ed|s)` admitted "Everton
+    # shares suspended after the takeover filing" — a club name plus a finance verb,
+    # which is precisely the shape this module exists to refuse. A test caught it.
+    r"\bout until\b",
+    r"\bsuspended (?:for|until)\b",
+    r"\bdoubtful for\b",
+    r"\bwill miss (?:the |his |\w+ )?"
+    r"(?:game|match|fixture|weekend|season|trip|tie|leg|opener)\b",
+    r"\bmisses the (?:game|match|trip|weekend|season|opener)\b",
+    r"\bnot available for (?:selection|the)\b",
+    r"\bchance of playing\b",
+    r"\bwithdrawn from the (?:squad|camp|group)\b",
+    r"\bleft out of the (?:squad|travelling squad|matchday squad)\b",
+    r"\bwill be assessed\b",
+    r"\b(?:is|been) rested\b",
     r"\b(?:match|fully|declared) fit\b",
     r"\b(?:back|returned) (?:in|to) (?:full )?training\b",
     r"\bin full training\b",
@@ -324,6 +388,19 @@ FOLDED: Dict[str, Tuple[str, ...]] = {
 #: `AVAILABILITY_GENERIC`.
 WEAK_FAMILIES = frozenset({"availability_generic"})
 
+#: The out-of-scope reasons that no evidence can overrule.
+#:
+#: A women's or WSL story concerns a competition whose players are not in FPL, so
+#: availability language in it is still not senior team news — the players it names
+#: have no `element_id` to attach a claim to. Contrast "academy", "U21" and
+#: "legend", which describe people who routinely appear inside a senior story
+#: ("academy graduate Nwaneri starts instead"), and which therefore yield to
+#: explicit senior availability evidence. Mirrors the first two entries of
+#: `news_extract.EXCLUDE_PATTERNS`; kept as a narrow local pattern rather than by
+#: importing that tuple, because the split is a judgement THIS lane makes about
+#: post bodies, not a claim about the headline list.
+DIFFERENT_COMPETITION = re.compile(r"\bwomen'?s?\b|\bwsl\b", re.IGNORECASE)
+
 #: Refusals that hold regardless of which page the post arrived on. Reported in
 #: preference to "untrusted-surface" because they say more: "this is an ad" is a
 #: fact about the post, "we did not curate that page" is a fact about us.
@@ -427,18 +504,48 @@ def is_football_text(text: str, lines: Sequence[str] = ()) -> Relevance:
     Split out because `run_news.py` re-screens the committed inbox, where the
     surface a row came from was never recorded. Running only the content layer
     there is the honest version: it catches a row written by an older, wider scan
-    — the wedding post scores zero here, so either layer alone refuses it —
     without inventing a trust decision the CSV cannot support.
+
+    **This layer is a second line, not a football classifier.** An earlier version
+    of this docstring claimed "the wedding post scores zero here, so either layer
+    alone refuses it". That was refuted by execution: adding one clause — "Kick-off
+    for the first ceremony is in September" — makes the same post pass here with
+    `terms=('kick-off',)`. Its refusal is a property of the words that tweet
+    happened to use, not of the design. The vocabulary is also not exclusively
+    football: "The Fed has ruled out a rate cut... a serious doubt for the rest of
+    the year" passes on AVAILABILITY terms, as do NBA, cricket and picket-line
+    prose. The trust layer is what makes the gate sound; this narrows what a
+    trusted surface may say, and screens legacy rows that have no surface at all.
     """
     body = str(text)
     if is_promoted(body, lines):
         return Relevance(False, "promoted-post")
 
+    hits = football_signals(body)
     out_of_scope = is_out_of_scope(body)
-    if out_of_scope:
-        # Reused rather than reimplemented. Zero hits on this corpus, but it is
-        # the measured failure from the sibling RSS lane ("Olid named new Man Utd
-        # Women boss"), and two copies of that list would drift.
+    if out_of_scope and (
+        DIFFERENT_COMPETITION.search(body) or "availability" not in hits
+    ):
+        # Reused rather than reimplemented — two copies of that list would drift,
+        # and it encodes the sibling RSS lane's measured false positive ("Olid
+        # named new Man Utd Women boss").
+        #
+        # Scoped by evidence, because the list was written for HEADLINES and this
+        # runs on multi-topic post BODIES. As an unconditional veto it refused
+        # "Arteta confirms Saka is ruled out; academy graduate Nwaneri starts
+        # instead" for the word "academy", discarding matched senior availability
+        # evidence — and on this repo's own 102-entry RSS corpus it vetoed 5
+        # further entries that are in scope by title.
+        #
+        # But the scoping is NOT uniform, and getting that wrong is how this fix
+        # nearly shipped a regression: my first version admitted "Man Utd Women
+        # boss; she trains fully with the squad" because it carries availability
+        # language. A women's or WSL story is a DIFFERENT COMPETITION whose players
+        # are not in FPL at all, so no amount of availability language makes it
+        # senior team news — it stays a hard veto. "academy", "U21" and "legend"
+        # describe people who can appear in a senior story, so those yield to
+        # explicit senior availability evidence. The existing reuse test is what
+        # caught the difference.
         return Relevance(False, f"out-of-scope: {out_of_scope}")
 
     low = fold(body)
@@ -447,7 +554,6 @@ def is_football_text(text: str, lines: Sequence[str] = ()) -> Relevance:
         if found:
             return Relevance(False, f"gambling-promo: {found.group(0)!r}")
 
-    hits = football_signals(body)
     strong = sorted(set(hits) - WEAK_FAMILIES)
     if not strong:
         reason = (
@@ -467,14 +573,28 @@ def is_football_relevant(
     handle: str = "",
     lines: Sequence[str] = (),
     trusted: Optional[Iterable[str]] = None,
+    profile_root: bool = True,
 ) -> Relevance:
     """
     Whether a scanned post may be filed. Refuses by default.
 
-    `handle` is the page the scan read — the extractor already returns it
-    (`x_extract.js` sets it to `location.pathname.split('/')[1] || 'home'`), so
-    "home" is self-labelling and no new field is needed. `author` is the post's
-    own author, read from its status permalink.
+    `handle` is the page the scan read — the extractor returns it, so "home" is
+    self-labelling and no new field is needed. `author` is the post's own author,
+    read from its status permalink.
+
+    `profile_root` says whether that page was the handle's own timeline. It has to
+    be asked, because `handle` names the profile OWNER and not the author of what
+    the page shows: `/robtFPL`, `/robtFPL/with_replies` and `/robtFPL/status/<id>`
+    all report "robtFPL", and the last two render articles by arbitrary strangers.
+    An adversarial check filed 5 of 5 stranger replies from a `/with_replies`
+    payload as trusted — one of them "Russia has ruled out any reduction of its
+    nuclear arsenal", stamped `club=Arsenal` because "arsenal" is a club alias.
+
+    So a handle vouches for OTHER authors only on its root timeline, which shows
+    its own posts and the reposts it chose to amplify. Off the root, a post must
+    carry a curated author of its own. It defaults True so a caller that cannot
+    say gets today's behaviour for a root scan, and `to_items` passes the
+    extractor's answer.
 
     Fail-safe: a payload with neither a curated handle nor a curated author is
     refused. Quantified on the corpus rather than asserted — a legacy payload
@@ -493,8 +613,17 @@ def is_football_relevant(
         return content
 
     clean = str(author or "").strip().lstrip("@")
-    trusted_handle = bool(handle) and fold(str(handle)) in surfaces
+    on_root = bool(handle) and fold(str(handle)) in surfaces
     trusted_author = bool(clean) and fold(clean) in surfaces
+    # The page vouches for a stranger only on its own timeline. Off the root it
+    # still vouches for the owner's own posts — a `/robtFPL/status/<id>` read of
+    # robtFPL's own post is the same assertion as reading it on the timeline.
+    #
+    # A blank author is deliberately NOT covered off-root. There, "we could not
+    # read who wrote it" and "the owner wrote it" are different statements, and
+    # the `--source` fallback would turn the first into the second.
+    owns_the_post = bool(clean) and fold(clean) == fold(str(handle))
+    trusted_handle = on_root and (profile_root or owns_the_post)
 
     if not trusted_handle and not HANDLE_SHAPE.match(clean):
         # No author, no filing. `to_items` falls back to the CLI `--source` when

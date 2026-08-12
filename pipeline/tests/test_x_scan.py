@@ -373,6 +373,74 @@ class FeedAttributionTests(unittest.TestCase):
         self.assertIn("x_extract.js", mjs.read_text(encoding="utf-8"))
 
 
+class ClubPinTests(unittest.TestCase):
+    """
+    A `--club` pin describes the ACCOUNT, so it may only label that account's posts.
+
+    `X_SCAN_ACCOUNTS` invites a pin for a club-specific account and `to_items` used
+    to stamp it on every row. That was harmless while a scan was one author; once a
+    page's trust extends to the reposts it amplifies, it writes a club that appears
+    nowhere in the text. Measured: a `--club Arsenal` scan of robtFPL filed
+    @SolioAnalytics, @OptaAnalyst and @FPL_Spaceman posts as Arsenal, none of which
+    mention Arsenal.
+
+    That is not cosmetic. The string lands in `AvailabilityClaim.notes` in the
+    append-only evidence store, so it is a fabricated attribution that cannot be
+    edited out afterwards. Latent under today's config — the one configured account
+    has `club=None` — and fixed before a club-specific account makes it routine.
+    """
+
+    def _scan(self):
+        return {"handle": "robtFPL", "profileRoot": True, "posts": [
+            {"status_id": REAL_ID, "author": "robtFPL",
+             "url": f"https://x.com/robtFPL/status/{REAL_ID}",
+             "lines": ["Rob T", "@robtFPL", "9 Aug",
+                       "Liverpool summary: first pre-season starts for Van Dijk."]},
+            {"status_id": "2086471531001962819", "author": "SolioAnalytics",
+             "url": "https://x.com/SolioAnalytics/status/2086471531001962819",
+             "lines": ["Solio", "@SolioAnalytics", "9 Aug",
+                       "Shot maps and set pieces: comparing chip strategy for GW1."]},
+        ]}
+
+    def _items(self, **over):
+        return x_scan.to_items(
+            self._scan(), source="x:robtFPL", now=NOW,
+            trusted=("robtFPL", "SolioAnalytics"), **over,
+        )
+
+    def test_the_pin_labels_the_accounts_own_post(self):
+        items = self._items(club="Arsenal")
+        own = [i for i in items if i["source"] == "x:robtFPL"]
+        self.assertEqual([i["club"] for i in own], ["Arsenal"])
+
+    def test_the_pin_never_labels_another_authors_repost(self):
+        items = self._items(club="Arsenal")
+        others = [i for i in items if i["source"] != "x:robtFPL"]
+        self.assertTrue(others, "the repost was dropped; this test proves nothing")
+        for item in others:
+            self.assertNotEqual(
+                item["club"], "Arsenal",
+                f"{item['source']} was branded Arsenal; its text does not "
+                f"mention Arsenal: {item['value'][:60]!r}",
+            )
+
+    def test_a_repost_still_gets_its_own_detected_club(self):
+        # Refusing to pin must not also refuse the honest label. `club_in` reads a
+        # club only when the text literally names exactly one.
+        scan = self._scan()
+        scan["posts"][1]["lines"][3] = (
+            "Chelsea shot maps and set pieces: comparing chip strategy for GW1."
+        )
+        items = x_scan.to_items(scan, source="x:robtFPL", now=NOW, club="Arsenal",
+                                trusted=("robtFPL", "SolioAnalytics"))
+        repost = [i for i in items if i["source"] == "x:SolioAnalytics"]
+        self.assertEqual([i["club"] for i in repost], ["Chelsea"])
+
+    def test_no_pin_means_detection_for_everyone(self):
+        for item in self._items():
+            self.assertNotEqual(item["club"], "Arsenal")
+
+
 class InboxTests(unittest.TestCase):
     def _text(self, **over):
         return x_scan.to_csv(

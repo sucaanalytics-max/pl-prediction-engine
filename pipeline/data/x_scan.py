@@ -282,6 +282,10 @@ def to_items(
     moment = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
     items: List[Dict[str, Any]] = []
     handle = str(scan.get("handle") or "")
+    # Whether that page was the handle's own timeline. Absent from a legacy payload
+    # written before the extractor reported it, and defaulting True there gives the
+    # old behaviour for the only shape that ever existed — a root profile scan.
+    profile_root = bool(scan.get("profileRoot", True))
     refusals: Counter = Counter()
     considered = 0
 
@@ -315,18 +319,33 @@ def to_items(
         considered += 1
         verdict = is_football_relevant(
             body, author, handle=handle, lines=post.get("lines") or (),
-            trusted=trusted,
+            trusted=trusted, profile_root=profile_root,
         )
         if not verdict.passed:
             refusals[verdict.reason] += 1
             continue
+
+        # The `--club` pin describes the ACCOUNT, so it may only be applied to
+        # that account's own posts.
+        #
+        # `X_SCAN_ACCOUNTS` invites a club pin for a club-specific account, and
+        # `to_items` used to stamp it on every row. Once a page's trust extends to
+        # reposts, that writes a club that appears nowhere in the text: measured,
+        # a `--club Arsenal` scan of robtFPL filed @SolioAnalytics, @OptaAnalyst
+        # and @FPL_Spaceman posts as Arsenal, none of which mention Arsenal. That
+        # string lands in `AvailabilityClaim.notes` in the append-only evidence
+        # store, so it is a fabricated attribution that cannot be edited out.
+        # Latent today (the one configured account has club=None) and fixed before
+        # a club-specific account makes it routine.
+        own_post = bool(author) and author.casefold() == handle.casefold()
+        pinned = club if (club is not None and (own_post or not author)) else None
 
         items.append({
             "lane": LANE,
             "claim_type": CLAIM_TYPE,
             "value": body,
             "player_surname": "",
-            "club": club if club is not None else club_in(body),
+            "club": pinned if pinned is not None else club_in(body),
             "tier": TIER,
             "source": f"x:{author}" if HANDLE.match(f"@{author}") else source,
             "quote": "",

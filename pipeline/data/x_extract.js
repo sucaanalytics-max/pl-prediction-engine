@@ -45,8 +45,25 @@
   const signedOut = !document.cookie.includes('auth_token')
     && /Continue with|Sign in to X|Happening now/.test(document.body.innerText);
 
+  // Whether this is the profile's own timeline, and not merely some page beneath
+  // that handle.
+  //
+  // `pathname.split('/')[1]` is the profile OWNER, not the author of what the page
+  // shows, and the difference is not cosmetic: `/robtFPL`, `/robtFPL/with_replies`
+  // and `/robtFPL/status/<id>` all report "robtFPL", while the last two render
+  // articles by arbitrary strangers. An adversarial check filed five stranger
+  // replies as trusted from a `/with_replies` payload — including "Russia has
+  // ruled out any reduction of its nuclear arsenal", which was stamped
+  // `club=Arsenal` because "arsenal" is a club alias.
+  //
+  // The root timeline shows the owner's own posts and the reposts they chose to
+  // amplify, which is the thing worth inheriting trust. So the segment count is
+  // reported and Python decides; the browser stays a dumb reader.
+  const segments = location.pathname.split('/').filter(Boolean);
+
   return {
-    handle: location.pathname.split('/')[1] || 'home',
+    handle: segments[0] || 'home',
+    profileRoot: segments.length === 1,
     signedOut: signedOut,
     posts: posts,
   };

@@ -550,7 +550,9 @@ class VersionAndPurity(unittest.TestCase):
         filed this because it mentioned a hamstring" and "we filed this because
         someone widened the vocabulary" are different claims about the same CSV.
         """
-        self.assertEqual((xr.GATE_VERSION, xr.PATTERN_COUNT), (1, 79))
+        # v1 was (1, 79). v2 adds the missing body parts, surgery, and the verb
+        # inflections an adversarial pass measured as missing.
+        self.assertEqual((xr.GATE_VERSION, xr.PATTERN_COUNT), (2, 94))
 
     def test_every_pattern_compiles_and_is_anchored(self):
         # An unanchored pattern is the measured failure mode from the sibling
@@ -753,6 +755,202 @@ class IngestRescreen(unittest.TestCase):
         for item in items:
             with self.subTest(source=item["source"]):
                 self.assertTrue(xr.is_football_text(item["value"]).passed)
+
+
+class AdversarialFindings(unittest.TestCase):
+    """
+    The defects an adversarial pass found in gate v1, each pinned by the input
+    that exposed it.
+
+    Every case below is quoted from a finding that was *executed* against v1, not
+    argued. Keeping the original inputs matters more than paraphrasing them: a fix
+    verified against a reworded case is a fix I believe in, not one I know about.
+    """
+
+    def gate(self, text, author="robtFPL", handle="robtFPL", root=True):
+        return xr.is_football_relevant(
+            text, author, handle=handle, lines=text.split("\n"),
+            trusted=TRUSTED, profile_root=root,
+        )
+
+    # ── Trust was keyed to the profile OWNER, not the page's authors ──────────
+
+    def test_a_stranger_off_the_profile_root_is_refused(self):
+        """
+        The worst of the findings, and it filed 5 of 5.
+
+        `handle` comes from the URL's first path segment, so `/robtFPL`,
+        `/robtFPL/with_replies` and `/robtFPL/status/<id>` all report "robtFPL" —
+        but the last two render articles by arbitrary strangers, and the extractor
+        takes `querySelectorAll('article')` unfiltered. The geopolitics example is
+        the one to keep: it was filed with `club='Arsenal'` because "nuclear
+        arsenal" contains a club alias.
+        """
+        for text in (
+            "Congrats! Our clean sheets NFT collection mints tonight, link in bio",
+            "nothing beats a bed with clean sheets after a 14 hour flight",
+            "Great quarter. Q3 was on target and the kick-off call was Monday.",
+            "the Chiefs have ruled out their linebacker with a hamstring",
+            "Russia has ruled out any reduction of its nuclear arsenal.",
+        ):
+            verdict = self.gate(text, author="cryptobot99", root=False)
+            self.assertFalse(verdict.passed, text)
+            self.assertEqual(verdict.reason, "untrusted-surface")
+
+    def test_the_owners_own_post_is_still_trusted_off_the_root(self):
+        # Reading robtFPL's own post at `/robtFPL/status/<id>` asserts exactly what
+        # reading it on the timeline does, so the fix must not cost that.
+        self.assertTrue(self.gate(
+            "Arsenal summary: 60 mins for Gabriel, set pieces second half.",
+            author="robtFPL", root=False,
+        ).passed)
+
+    def test_a_repost_on_the_root_timeline_still_inherits_trust(self):
+        # The behaviour the fix must NOT break: @OptaAnalyst, @SolioAnalytics and
+        # @FPL_Spaceman are the highest-signal content measured, and they reach us
+        # only as reposts on a curated root timeline.
+        self.assertTrue(self.gate(
+            "Shot maps and set pieces: comparing chip strategy for GW1.",
+            author="OptaAnalyst", root=True,
+        ).passed)
+
+    # ── The vocabulary saw 4 of 13 body parts and had no word for surgery ─────
+
+    def test_surgery_and_the_missing_body_parts_are_seen(self):
+        for text in (
+            "Confirmed: Saka has had knee surgery and will be out until October.",
+            "Rodri underwent an operation on his ankle yesterday.",
+            "Wirtz has a stress fracture in his foot.",
+            "Foden has a slight thigh strain.",
+            "Gabriel suffered a shoulder injury and did not travel.",
+        ):
+            self.assertTrue(self.gate(text).passed, text)
+
+    def test_no_body_part_asymmetry_remains(self):
+        """
+        v1 saw hamstring and not knee, which is not a judgement about evidence —
+        it is a gap in a list. The parts now come from `availability_news.py`, so
+        the two lanes cannot disagree about what counts as an injury.
+        """
+        from pipeline.data.availability_news import _LIGAMENT, _MUSCULAR
+        for part in sorted(_MUSCULAR | _LIGAMENT):
+            text = f"Saka has a {part} problem and is out for three weeks."
+            self.assertIn("availability", xr.football_signals(text), part)
+
+    def test_the_inflections_real_posts_use_are_seen(self):
+        # v1 carried nouns without verbs: "faces a suspension" passed while "is
+        # suspended for three games" did not.
+        for text in (
+            "Saka is suspended for three games.",
+            "Saka is doubtful for the weekend.",
+            "Saka is out until October.",
+            "Saka has a 25% chance of playing.",
+            "Isak has been left out of the travelling squad.",
+        ):
+            self.assertTrue(self.gate(text).passed, text)
+
+    def test_fpls_own_news_strings_are_all_seen(self):
+        """
+        The sharpest version of the asymmetry: these are the literal strings
+        `availability_news.PATTERNS` parses into availability facts. v1 passed the
+        hamstring and groin ones and refused the knee, thigh and shoulder ones.
+        """
+        for text in (
+            "Hamstring injury - Unknown return date",
+            "Knee injury - Unknown return date",
+            "Thigh injury - Unknown return date",
+            "Shoulder injury - 50% chance of playing",
+            "Suspended until 29 Aug",
+        ):
+            self.assertTrue(self.gate(text).passed, text)
+
+    def test_the_new_terms_did_not_admit_business_prose(self):
+        """
+        Two of these were false positives I introduced while fixing recall, caught
+        by the pre-existing corpus and club-name tests rather than by foresight:
+        `back` as a body part (ordinary English), and bare `suspended` (which
+        admitted "Everton shares suspended after the takeover filing" — a club name
+        plus a finance verb, the exact shape this module exists to refuse).
+        """
+        for text in (
+            "Everton shares suspended after the takeover filing.",
+            "The team is back on the picket line on Monday.",
+            "The fund underwent a review and the operation of the business is fine.",
+            "It is doubtful that the merger completes this quarter.",
+        ):
+            self.assertFalse(xr.is_football_text(text).passed, text)
+
+    # ── A regulatory marker the promo check could never match ────────────────
+
+    def test_the_18_plus_marker_is_matched(self):
+        r"""
+        `\b18\+\b` can never match a real "18+": a word boundary after "+" needs a
+        following word character, so it fired only on "18+only". Its test passed
+        because both fixtures also said "free bet" or "deposit bonus", so the one
+        pattern meant to catch a bare regulatory marker was never exercised.
+        """
+        import re
+        self.assertIsNone(re.compile(r"\b18\+\b").search("18+ only"))
+        for text in (
+            "Bet on Arsenal vs Chelsea this gameweek. 18+ only.",
+            "Best odds on the Premier League starting XI markets. 18+. Bet now.",
+        ):
+            verdict = self.gate(text)
+            self.assertFalse(verdict.passed, text)
+            self.assertTrue(verdict.reason.startswith("gambling-promo"), verdict.reason)
+
+    # ── A headline exclusion list applied to multi-topic bodies ──────────────
+
+    def test_an_incidental_academy_mention_no_longer_discards_team_news(self):
+        # v1 refused these for one incidental word while its own `football_signals`
+        # had matched senior availability evidence.
+        for text in (
+            "Arteta confirms Saka is ruled out; academy graduate Nwaneri starts.",
+            "Rooney is a legend, but Mount has a hamstring tear and is ruled out.",
+            "Team news: Palmer ruled out with a groin issue, U21 keeper on the bench.",
+        ):
+            self.assertTrue(self.gate(text).passed, text)
+
+    def test_a_womens_story_is_still_refused_however_much_evidence_it_carries(self):
+        """
+        The scoping is NOT uniform, and my first version got this wrong.
+
+        A women's or WSL story concerns a competition whose players have no
+        `element_id`, so availability language in it is still not senior team news.
+        "academy"/"U21"/"legend" describe people who appear in senior stories;
+        "Women"/"WSL" describe a different competition. The pre-existing reuse test
+        is what caught the difference.
+        """
+        for text in (
+            "Olid named new Man Utd Women boss; she trains fully with the squad.",
+            "WSL: their striker is ruled out for six weeks with a hamstring.",
+        ):
+            verdict = self.gate(text)
+            self.assertFalse(verdict.passed, text)
+            self.assertTrue(verdict.reason.startswith("out-of-scope"), verdict.reason)
+
+    # ── The claim of mine that the audit refuted ─────────────────────────────
+
+    def test_the_content_half_is_not_claimed_to_be_a_football_classifier(self):
+        """
+        I reported that the wedding post was "refused by both layers
+        independently". Executed, that is false: one added clause makes it pass the
+        content half. The refusal was a property of the words that tweet used, not
+        of the design — so the docstring now says the trust layer is what makes the
+        gate sound, and this pins the honest version.
+        """
+        reworded = (
+            "FACT: Emirates Stadium offers wedding ceremonies and receptions. "
+            "Arsenal's website says 'Say I Do at Emirates Stadium.' "
+            "Kick-off for the first ceremony is in September."
+        )
+        self.assertTrue(xr.is_football_text(reworded).passed)
+        # The trust layer is what actually stops it.
+        self.assertFalse(xr.is_football_relevant(
+            reworded, "PolymarketSport", handle="home", trusted=TRUSTED,
+        ).passed)
+        source = pathlib.Path(xr.__file__).read_text(encoding="utf-8")
+        self.assertNotIn("either layer alone refuses it", source)
 
 
 if __name__ == "__main__":
