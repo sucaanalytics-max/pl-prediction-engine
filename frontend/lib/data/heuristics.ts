@@ -122,6 +122,23 @@ export interface HeuristicCaptainWeek {
   readonly confidence: number;
 }
 
+export interface FixtureMatrixEntry {
+  readonly gameweek: number;
+  /** e.g. `COV (H)` — opponent short name and venue. */
+  readonly label: string;
+  /** FPL's own 1–5 rating for THIS club in this fixture, not the opponent's. */
+  readonly difficulty: number;
+}
+
+export interface FixtureMatrixRow {
+  readonly teamId: number;
+  readonly team: string;
+  readonly shortName: string;
+  readonly fixtures: readonly FixtureMatrixEntry[];
+  readonly meanDifficulty: number;
+  readonly totalDifficulty: number;
+}
+
 export interface SquadPlayer {
   readonly name: string;
   readonly position: string;
@@ -167,6 +184,13 @@ export interface HeuristicView {
    * open the official site to see.
    */
   readonly squad: SquadView | null;
+  /**
+   * Every club's next fixtures with FPL's official difficulty, kindest run first.
+   *
+   * Empty rather than null when unreadable: the grid then renders one line saying so
+   * and the rest of the view is unaffected.
+   */
+  readonly fixtureMatrix: readonly FixtureMatrixRow[];
   /**
    * `fplreview_csv_snapshot` when a paid export was on disk, `fallback` when it
    * was not. The second is now the normal case; see `lib/fplreview-projections.ts`.
@@ -224,6 +248,46 @@ function narrowSquad(raw: unknown): SquadView | null {
     formation: optString(raw.formation),
     source: optString(raw.source),
   };
+}
+
+/**
+ * The difficulty grid, or an empty list.
+ *
+ * Every field is required per row, because a row missing its difficulty would render
+ * as an uncoloured cell indistinguishable from a blank gameweek — and a blank and an
+ * unknown are different facts.
+ */
+function narrowFixtureMatrix(raw: unknown): readonly FixtureMatrixRow[] {
+  if (!Array.isArray(raw)) return [];
+  const rows: FixtureMatrixRow[] = [];
+  for (const item of raw) {
+    if (!isRecord(item)) continue;
+    const team = optString(item.team);
+    const teamId = optNumber(item.teamId);
+    const mean = optNumber(item.meanDifficulty);
+    if (!team || teamId === null || mean === null) continue;
+
+    const fixtures: FixtureMatrixEntry[] = [];
+    for (const entry of Array.isArray(item.fixtures) ? item.fixtures : []) {
+      if (!isRecord(entry)) continue;
+      const gameweek = optNumber(entry.gameweek);
+      const difficulty = optNumber(entry.difficulty);
+      const label = optString(entry.label);
+      if (gameweek === null || difficulty === null || !label) continue;
+      fixtures.push({ gameweek, label, difficulty });
+    }
+    if (fixtures.length === 0) continue;
+
+    rows.push({
+      teamId,
+      team,
+      shortName: optString(item.shortName) ?? team,
+      fixtures,
+      meanDifficulty: mean,
+      totalDifficulty: optNumber(item.totalDifficulty) ?? 0,
+    });
+  }
+  return rows;
 }
 
 /** Counts drops without failing the whole narrow. */
@@ -424,6 +488,7 @@ export function narrowHeuristics(raw: unknown): NarrowResult<HeuristicView> {
     },
     squadSource: optString(freshness.squad),
     squad: narrowSquad(root.squad),
+    fixtureMatrix: narrowFixtureMatrix(root.fixtureMatrix),
     projectionSource: optString(projections.source) ?? "unknown",
     projectionSourceLabel: optString(projections.sourceLabel) ?? "unknown source",
     transfers,

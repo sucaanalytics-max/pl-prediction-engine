@@ -40,6 +40,25 @@ export type FplSquadSource =
   | "captured_authenticated_draft"
   | "stored_snapshot";
 
+/**
+ * One club's run of fixtures, with FPL's official difficulty.
+ *
+ * Difficulty is FPL's own 1-5 rating, not ours. That is deliberate: it is the scale
+ * every manager already reads, and a private scale in the same visual position would
+ * be read as the familiar one. Our own fitted goal rates are a separate, labelled
+ * view — a different claim deserves a different label.
+ */
+export interface FplFixtureMatrixRow {
+  readonly teamId: number;
+  readonly team: string;
+  readonly shortName: string;
+  readonly fixtures: FplFixtureView[];
+  readonly totalDifficulty: number;
+  /** Mean over fixtures that EXIST, so a club with a blank stays comparable. */
+  readonly meanDifficulty: number;
+  readonly played: number;
+}
+
 export interface FplFixtureView {
   gameweek: number;
   label: string;
@@ -157,6 +176,8 @@ export interface FplLiveState {
     deadlineTime: string;
     phase: "preseason" | "live" | "finished";
   };
+  /** Every club's next eight fixtures, easiest run first. */
+  fixtureMatrix: FplFixtureMatrixRow[];
   squad: {
     source: FplSquadSource;
     sourceLabel: string;

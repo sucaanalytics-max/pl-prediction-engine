@@ -3,6 +3,7 @@ import "server-only";
 import {
   FPL_API_BASE,
   FPL_ENTRY_ID,
+  type FplFixtureMatrixRow,
   type FplFixtureView,
   type FplLivePlayer,
   type FplLiveState,
@@ -160,6 +161,9 @@ function activeEvent(events: BootstrapEvent[]) {
   );
 }
 
+/** Gameweeks of fixtures the matrix covers. Eight is what `fixture_xg` carries. */
+const FIXTURE_HORIZON = 8;
+
 function fixtureViews(
   teamId: number,
   eventId: number,
@@ -190,6 +194,56 @@ function fixtureViews(
         kickoffTime: fixture.kickoff_time,
       };
     });
+}
+
+/**
+ * Every club's next fixtures, with FPL's official difficulty.
+ *
+ * ## Why this is a first-class part of the payload
+ *
+ * The fixture matrix is the screen Solio and FPL Review both put front and centre,
+ * and the question a manager actually asks when drafting: who has the kindest
+ * opening run. We had the data on every request — `/fixtures/` carries
+ * `team_h_difficulty` and `team_a_difficulty` — and exposed it only nested inside
+ * individual players, so no screen could show the league.
+ *
+ * `fixtureViews` already does the per-team work, including the home/away
+ * orientation that decides whether a difficulty belongs to this club or its
+ * opponent. Reused rather than reimplemented: that orientation is the single
+ * easiest thing to invert, and an inversion produces a perfectly plausible grid.
+ */
+function fixtureMatrix(
+  eventId: number,
+  fixtures: FixturePayload[],
+  teams: Map<number, BootstrapTeam>,
+  horizon: number,
+): FplFixtureMatrixRow[] {
+  const rows: FplFixtureMatrixRow[] = [];
+
+  for (const [teamId, team] of teams) {
+    const upcoming = fixtureViews(teamId, eventId, fixtures, teams)
+      .filter((view) => view.gameweek < eventId + horizon);
+    if (upcoming.length === 0) continue;
+
+    // Summed over the horizon, so the table can sort by "kindest run first".
+    // A blank gameweek contributes nothing rather than a neutral 3, because a
+    // fixture that does not exist is not an average-difficulty fixture.
+    const total = upcoming.reduce((sum, view) => sum + view.difficulty, 0);
+
+    rows.push({
+      teamId,
+      team: team.name,
+      shortName: team.short_name,
+      fixtures: upcoming,
+      totalDifficulty: total,
+      // The mean over fixtures that exist, which is what makes clubs with a blank
+      // comparable to clubs without one.
+      meanDifficulty: Math.round((total / upcoming.length) * 100) / 100,
+      played: upcoming.length,
+    });
+  }
+
+  return rows.sort((left, right) => left.meanDifficulty - right.meanDifficulty);
 }
 
 function formation(players: FplLivePlayer[]) {
@@ -383,6 +437,7 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
       deadlineTime: event.deadline_time,
       phase,
     },
+    fixtureMatrix: fixtureMatrix(event.id, fixtures, teamById, FIXTURE_HORIZON),
     squad: {
       source,
       sourceLabel: picks ? "Official public GW picks" : "Captured authenticated preseason draft",

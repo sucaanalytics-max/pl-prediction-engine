@@ -19,6 +19,7 @@
 
 import { REGISTRY } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
+import FixtureMatrix from "@/components/FixtureMatrix";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { deriveZone } from "@/lib/standings";
@@ -174,7 +175,19 @@ export default function MatchesPage() {
           </p>
         </header>
 
-        <Section title="Fixtures" aside={<ProvenanceStrip of={matches} />}>
+        
+        {/* The fixture grid leads.
+            It is the view Solio and FPL Review both put first, and the question a
+            manager asks when drafting: who has the kindest opening run. FPL's
+            difficulty was on every request already, exposed only inside individual
+            players, so the league-wide picture existed nowhere. */}
+        <Section
+          title="Fixture difficulty"
+          subtitle="Every club's next eight, kindest run first"
+        >
+          <FixtureMatrix />
+        </Section>
+<Section title="Fixtures" aside={<ProvenanceStrip of={matches} />}>
           <WhenProven
             of={matches}
             what="Every fixture is currently predicted 'home', which is what a model with no fitted team strengths produces — not a forecast that the home side wins everywhere."
