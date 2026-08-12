@@ -79,24 +79,86 @@ const SCROLL_SETTLE_MS = 900;
 const OPEN_TIMEOUT_MS = 8000;
 
 /**
- * The message for a socket that opened but never answered.
+ * Why a websocket that would not open, would not open — established by probing.
  *
- * Named as its own function because the diagnosis is the whole value: the port is
- * listening, the URL is right, the browser is fine, and the fix is to stop the
- * other client — none of which is guessable from "timed out".
+ * The first version of this asserted a single cause: "something else is holding the
+ * socket, run pkill". That was measured wrong. The far more common cause is a
+ * **stale browser GUID**, and the two need opposite fixes, so guessing sends you
+ * to the wrong one with full confidence.
+ *
+ * The distinguishing probe is a plain HTTP GET on the websocket's own path:
+ *
+ *   * **426 Upgrade Required** — the path is live and the browser is simply
+ *     refusing a second client. Chrome's browser-level endpoint takes ONE at a
+ *     time and hangs the second rather than refusing it, so this is the "busy"
+ *     case. Reproduced by holding the socket deliberately.
+ *   * **404 Not Found** — the browser does not recognise that GUID. The debugging
+ *     *session* has ended while the port carries on listening, so
+ *     `DevToolsActivePort` still names a target that no longer exists. Measured:
+ *     a session enabled at 20:42 was dead by 21:19 with the port still bound and
+ *     Chrome up 12 hours. Chrome 144+'s `chrome://inspect` toggle is
+ *     session-scoped, not persistent — which is fine for an on-demand scan and
+ *     fatal for an unattended one.
+ *
+ * Both are reported with the command that actually fixes that case.
  */
-function busyMessage(ws) {
+async function diagnose(ws) {
+  const { port, path } = splitWs(ws);
+  let status = null;
+  if (port && path) {
+    try {
+      const response = await fetch(`http://127.0.0.1:${port}${path}`, {
+        signal: AbortSignal.timeout(4000),
+      });
+      status = response.status;
+    } catch {
+      status = null;
+    }
+  }
+
+  const head = `could not talk to ${ws}` + (status ? ` (GET on that path: ${status})` : "");
+
+  if (status === 404) {
+    return [
+      head,
+      "",
+      "Chrome does not recognise that browser id, so DevToolsActivePort is STALE.",
+      "Chrome 144+'s chrome://inspect/#remote-debugging toggle is scoped to a",
+      "debugging session, and the port keeps listening after the session ends —",
+      "which is why this looks like a live endpoint that ignores you.",
+      "",
+      "  Re-enable it: open chrome://inspect/#remote-debugging and turn it on.",
+      "  That rewrites DevToolsActivePort with a fresh id.",
+    ].join("\n");
+  }
+
+  if (status === 426) {
+    return [
+      head,
+      "",
+      "The path is live (426 = upgrade required), so the browser is refusing a",
+      "SECOND client: its browser-level endpoint takes one at a time and hangs",
+      "the rest rather than refusing them. Something else is holding it — most",
+      "often a chrome-devtools-mcp daemon, started implicitly by any Chrome MCP",
+      "tool call or CLI command.",
+      "",
+      "  pgrep -fl chrome-devtools-mcp     # see what is holding it",
+      "  pkill -f chrome-devtools-mcp      # release it",
+    ].join("\n");
+  }
+
   return [
-    `connected to ${ws} but the browser never answered.`,
+    head,
     "",
-    "Chrome's browser-level debug endpoint allows ONE client at a time, and a",
-    "second one hangs rather than being refused. Something else is almost",
-    "certainly holding it — most often a chrome-devtools-mcp daemon, which is",
-    "started implicitly by any Chrome MCP tool call or CLI command.",
-    "",
-    "  pgrep -fl chrome-devtools-mcp     # see what is holding it",
-    "  pkill -f chrome-devtools-mcp      # release it",
+    "The endpoint neither upgraded nor reported a known status. Check that Chrome",
+    "is running and that chrome://inspect/#remote-debugging is enabled.",
   ].join("\n");
+}
+
+/** The port and path out of a `ws://host:port/path` URL, for the HTTP probe. */
+function splitWs(ws) {
+  const match = /^wss?:\/\/[^/:]+:(\d+)(\/.*)$/.exec(ws);
+  return match ? { port: match[1], path: match[2] } : { port: null, path: null };
 }
 
 /**
@@ -174,16 +236,14 @@ class Cdp {
   static async open(ws) {
     const socket = new WebSocket(ws);
     try {
+      // One rejection path for both failure shapes. A dead GUID produces *no*
+      // websocket event at all — no open, no close, no error — while a busy
+      // endpoint hangs identically, so neither can be told apart here. The
+      // diagnosis is probed after the fact, not inferred from which handler fired.
       await new Promise((resolve, reject) => {
-        const timer = setTimeout(
-          () => reject(new Error(busyMessage(ws))),
-          OPEN_TIMEOUT_MS,
-        );
+        const timer = setTimeout(() => reject(new Error("no-ws-event")), OPEN_TIMEOUT_MS);
         socket.onopen = () => { clearTimeout(timer); resolve(); };
-        socket.onerror = () => {
-          clearTimeout(timer);
-          reject(new Error(`could not open ${ws}`));
-        };
+        socket.onerror = () => { clearTimeout(timer); reject(new Error("ws-error")); };
       });
     } catch (error) {
       // Close the socket on the way out.
@@ -194,7 +254,9 @@ class Cdp {
       // attempts made the third fail for a different reason than the first, which
       // is how a transient problem starts looking permanent.
       try { socket.close(); } catch { /* already gone */ }
-      throw error;
+      // Probe for the actual cause now that the socket is released, so the probe
+      // cannot itself be the second client competing for a one-client endpoint.
+      throw new Error(await diagnose(ws), { cause: error });
     }
     return new Cdp(socket);
   }

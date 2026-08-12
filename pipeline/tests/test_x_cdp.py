@@ -123,12 +123,55 @@ class ConnectionTests(unittest.TestCase):
         opener = opener[:opener.index("receive(")]
         self.assertIn("socket.close()", opener)
 
-    def test_a_busy_endpoint_is_diagnosed_rather_than_timed_out(self):
-        # "timed out" sends you to check the browser; the browser is fine and the
-        # fix is to stop the other client. The message names it and gives the
-        # command. Verified live by holding the socket: fails in 9s with this text.
+    def test_the_failure_cause_is_probed_not_guessed(self):
+        """
+        Two causes, opposite fixes, indistinguishable at the socket.
+
+        The first version of this diagnosis asserted a single cause — "something
+        else is holding it, run pkill" — and that was measured wrong. The common
+        cause is a stale browser id, whose fix is to re-enable the toggle; telling
+        someone to kill a process they do not have running is a confidently wrong
+        instruction, which is worse than "timed out".
+
+        Neither cause can be told apart from the websocket: a dead id produces no
+        event at all (no open, no close, no error) and a busy endpoint hangs
+        identically. A plain GET on the websocket's own path separates them — 404
+        for an unknown id, 426 for a live path refusing a second client — so the
+        message is derived from a probe rather than an assumption.
+        """
         source = code(CDP_PATH)
-        self.assertIn("ONE client at a time", source)
+        self.assertIn("async function diagnose", source)
+        self.assertIn("=== 404", source)
+        self.assertIn("=== 426", source)
+        # And the probe must happen after the socket is released, or the probe is
+        # itself the second client on a one-client endpoint.
+        #
+        # Anchored on the method DEFINITION (`\n  receive(event) {`), not on
+        # `receive(` — the constructor's `this.receive(event)` comes first in the
+        # file, and slicing to it produced an invalid range rather than a failure
+        # that said so.
+        opener = source[source.index("static async open"):source.index("\n  receive(event) {")]
+        self.assertLess(
+            opener.index("socket.close()"), opener.index("diagnose(ws)"),
+            "the diagnosis probe runs before the socket is released",
+        )
+
+    def test_a_stale_browser_id_is_named_as_such(self):
+        """
+        Measured: a session enabled at 20:42 was dead by 21:19, with the port still
+        bound and Chrome up 12 hours. Chrome 144+'s toggle is scoped to a debugging
+        session, so `DevToolsActivePort` outlives the id it names — which presents
+        as a live endpoint that silently ignores you.
+        """
+        source = code(CDP_PATH)
+        self.assertIn("STALE", source)
+        self.assertIn("chrome://inspect", source)
+
+    def test_a_busy_endpoint_is_still_diagnosed(self):
+        # Verified live by holding the socket deliberately: fails in 9s and names
+        # chrome-devtools-mcp, which is started implicitly by any Chrome MCP call.
+        source = code(CDP_PATH)
+        self.assertIn("takes one at a time", source)
         self.assertIn("pkill -f chrome-devtools-mcp", source)
 
 
