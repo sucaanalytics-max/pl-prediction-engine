@@ -36,5 +36,18 @@
       lines: article.innerText.split('\n'),
     });
   }
-  return { handle: location.pathname.split('/')[1] || 'home', posts: posts };
+  // Whether this read happened signed out, so a caller reporting zero posts can
+  // name the real cause. Measured: signed out, `x.com/home` returns HTTP 200 with
+  // the marketing page and no `article` elements — indistinguishable from "the
+  // markup changed" unless the login wall is detected, and the two point at
+  // opposite fixes. Read here rather than in the caller because both callers need
+  // it and this is the only file that touches the DOM.
+  const signedOut = !document.cookie.includes('auth_token')
+    && /Continue with|Sign in to X|Happening now/.test(document.body.innerText);
+
+  return {
+    handle: location.pathname.split('/')[1] || 'home',
+    signedOut: signedOut,
+    posts: posts,
+  };
 }

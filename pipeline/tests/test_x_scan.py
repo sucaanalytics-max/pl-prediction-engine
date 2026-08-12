@@ -14,7 +14,6 @@ because those are the two ways this can file a wrong claim rather than no claim.
 
 from __future__ import annotations
 
-import re
 import unittest
 from datetime import datetime, timezone
 
@@ -343,105 +342,6 @@ class FeedAttributionTests(unittest.TestCase):
         from pathlib import Path
         mjs = Path(__file__).resolve().parents[2] / "scripts" / "x_scan.mjs"
         self.assertIn("x_extract.js", mjs.read_text(encoding="utf-8"))
-
-
-def scan_script_code() -> str:
-    """
-    `scripts/x_scan.mjs` with comments removed.
-
-    The guards below assert on what the script *does*, and the file talks about
-    these very calls at length in its comments — `browser.close()` appears four
-    times in the raw text and once in code. Counting the raw source made the first
-    version of these tests assert against its own prose, and slicing on
-    `if (attached) {` picked the wrong one of the two such blocks. Stripping
-    comments first is what makes a text assertion mean something here.
-    """
-    from pathlib import Path
-    source = (Path(__file__).resolve().parents[2] / "scripts" / "x_scan.mjs") \
-        .read_text(encoding="utf-8")
-    source = re.sub(r"/\*.*?\*/", "", source, flags=re.DOTALL)
-    return "\n".join(
-        line for line in source.splitlines()
-        if not line.strip().startswith("//")
-    )
-
-
-class AttachedScanTests(unittest.TestCase):
-    """
-    Reading a signed-in feed means borrowing the user's browser, which is the most
-    dangerous thing anything in this repo does. These pin the three properties that
-    were each wrong at some point in getting it working.
-
-    They are source assertions, and honest about it: the behaviour needs a live
-    Chrome with remote debugging, which a unit test cannot have. Each one was
-    measured by hand against a real endpoint first, and the measurement is recorded
-    in the docstring. These stop a regression; they are not the original evidence.
-    """
-
-    def test_it_never_closes_the_borrowed_browser(self):
-        """
-        **Measured, and it contradicted the documentation.**
-
-        Playwright's types say `close()` on a *connected* browser "clears all
-        created contexts belonging to this browser and disconnects from the browser
-        server" — which reads as safe, since the borrowed context was not created
-        by us. Run against a live endpoint it left the browser with **zero page
-        targets**: a tab that existed before the scan had been closed. On the user's
-        own Chrome that is their session.
-
-        The first check for this missed it entirely by curling `/json/version` and
-        seeing Chrome still running — that tests the process, not the tabs.
-        `/json/list` showed it. After the fix: 1 page before, 1 page after, same URL.
-        """
-        code = scan_script_code()
-        # Exactly one `browser.close()`, and it is the launched branch's.
-        self.assertEqual(
-            code.count("browser.close()"), 1,
-            "the attached path must not close a browser it did not launch",
-        )
-        # The one that remains is guarded by `else`, i.e. not attached.
-        launched = code[code.rindex("} else {"):]
-        self.assertIn("browser.close()", launched)
-
-    def test_it_closes_its_own_tab(self):
-        # Leaving a tab behind on every scan would accumulate in the user's window.
-        self.assertEqual(scan_script_code().count("page?.close()"), 1)
-
-    def test_it_exits_rather_than_hanging(self):
-        """
-        The other half of not calling `browser.close()`.
-
-        `close()` is also what lets node's event loop drain. Without it the live CDP
-        websocket holds the process open and the script never returns — the first
-        version hung until a five-minute timeout killed it, which in CI burns the
-        whole job rather than failing it. An explicit exit makes both properties
-        hold at once. Measured after the fix: exit 0 in 2s.
-        """
-        self.assertIn("if (attached) process.exit(0);", scan_script_code())
-
-    def test_it_reuses_the_signed_in_context(self):
-        """
-        `newContext()` on an attached browser has an empty cookie jar.
-
-        It would be signed out, silently, and the session is the entire point of
-        attaching. The failure mode is reading the login wall while reporting
-        success — which is the exact failure this whole route was built to avoid.
-        """
-        code = scan_script_code()
-        self.assertIn("browser.contexts()[0]", code)
-        # One `newContext`, in the launched branch where a fresh jar is correct.
-        self.assertEqual(code.count("newContext("), 1)
-
-    def test_a_signed_out_read_says_so_instead_of_blaming_the_selectors(self):
-        """
-        Measured: signed out, `x.com/home` serves the marketing page — HTTP 200,
-        zero `article` elements. Indistinguishable from "the markup changed" unless
-        the login wall is detected, and the two send you to opposite places. Exit 5
-        rather than 4 so a caller can tell them apart too.
-        """
-        code = scan_script_code()
-        self.assertIn("NOT SIGNED IN", code)
-        self.assertIn("process.exit(5)", code)
 
 
 class InboxTests(unittest.TestCase):

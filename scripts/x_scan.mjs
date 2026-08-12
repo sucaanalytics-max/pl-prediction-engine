@@ -72,120 +72,113 @@ if (!handle || !outPath) {
 const source = readFileSync(EXTRACT_PATH, "utf8");
 const extractSource = source.slice(source.indexOf("() =>")).trim();
 
-let chromium;
-try {
-  ({ chromium } = await import("playwright"));
-} catch {
-  console.error(
-    "playwright is not installed. Run: npm --prefix scripts install playwright",
-  );
-  process.exit(3);
-}
-
-// Locally: drive the installed Chrome, so nothing is downloaded and the request
-// comes from the same residential IP that was verified to work.
-//
-// In CI there is no system Chrome, so `X_SCAN_CHANNEL=chromium` selects
-// Playwright's own build. Whether X serves a GitHub runner's datacenter IP at all
-// is a separate question, and the reason that path is measured before it is used.
 const browserUrl = process.env.X_SCAN_BROWSER_URL || "";
-const attached = Boolean(browserUrl);
+const profileDir = process.env.X_SCAN_CHROME_PROFILE || null;
+const attached = Boolean(browserUrl) || Boolean(profileDir);
 
-const channel = process.env.X_SCAN_CHANNEL || "chrome";
-const browser = attached
-  ? await chromium.connectOverCDP(browserUrl)
-  : await chromium.launch({
-      ...(channel === "chromium" ? {} : { channel }),
-      headless: true,
-    });
+// `home` is the signed-in timeline; anything else is a profile. Logged out,
+// `/home` is a login wall, which is why it only makes sense when attached.
+const target = handle === "home"
+  ? "https://x.com/home"
+  : `https://x.com/${handle}`;
 
 let posts = [];
-let page;
 let signedOut = false;
-try {
-  let context;
-  if (attached) {
-    // The signed-in context, which is the entire point of attaching. `newContext`
-    // here would be a fresh, empty cookie jar — logged out, and silently so.
-    context = browser.contexts()[0];
-    if (!context) {
-      throw new Error(
-        `connected to ${browserUrl} but it exposes no browser context — ` +
-          `nothing to read`,
-      );
-    }
-  } else {
-    context = await browser.newContext({
-      // A real viewport and locale: the logged-out view is what we want, but a
-      // headless default fingerprint gets served differently often enough to matter.
-      viewport: { width: 1280, height: 1600 },
-      locale: "en-GB",
-    });
+let result = null;
+
+if (attached) {
+  // ── Attached: raw CDP against a browser the user is already signed into ──
+  //
+  // Not Playwright. Chrome 144+'s `chrome://inspect/#remote-debugging` toggle
+  // serves a narrower endpoint than the `--remote-debugging-port` flag, and
+  // `connectOverCDP` cannot use it: measured, it connects and then times out after
+  // 30s, because its handshake needs browser-context management, which that mode
+  // refuses (`Browser.setDownloadBehavior`: "Browser context management is not
+  // supported"). Raw CDP against the same socket works completely — 66 targets
+  // enumerated. See scripts/x_cdp.mjs for the full measurement.
+  const { resolveWsEndpoint, scanViaCdp } = await import("./x_cdp.mjs");
+  const { ws, via } = await resolveWsEndpoint({ url: browserUrl, profileDir });
+  if (!ws) {
+    console.error(
+      `x_scan: could not find a debuggable Chrome.\n` +
+        `  Tried: ${browserUrl || "(no URL given)"} and DevToolsActivePort in the ` +
+        `default profile.\n` +
+        `  In Chrome, open chrome://inspect/#remote-debugging and enable it. That ` +
+        `mode does NOT serve /json/version, so the port file is the only source.`,
+    );
+    process.exit(6);
   }
-  page = await context.newPage();
+  console.error(`x_scan: attached via ${via}`);
 
-  // `home` is the signed-in timeline; anything else is a profile. Logged out,
-  // `/home` is a login wall, which is why this only makes sense when attached.
-  const target = handle === "home"
-    ? "https://x.com/home"
-    : `https://x.com/${handle}`;
-  await page.goto(target, {
-    waitUntil: "domcontentloaded",
-    timeout: NAV_TIMEOUT_MS,
-  });
-
-  // Wait for at least one article rather than a fixed sleep where possible; fall
-  // back to the sleep, because a profile with no posts legitimately has none and
-  // must not fail the run.
-  await page
-    .waitForSelector("article", { timeout: RENDER_WAIT_MS })
-    .catch(() => {});
-
-  // Wrapped as an immediately-invoked expression. Passing the bare arrow-function
-  // source made `evaluate` treat it as an expression whose VALUE is the function,
-  // so it returned undefined and the write crashed on it — the function was never
-  // called. The MCP path takes a function directly, which is why this only
-  // surfaced here.
-  const result = await page.evaluate(`(${extractSource})()`);
+  result = await scanViaCdp({ ws, url: target, extractSource });
   if (!result || !Array.isArray(result.posts)) {
     throw new Error(
       `extractor returned ${JSON.stringify(result)} — expected { handle, posts }`,
     );
   }
   posts = result.posts;
-
-  // Did we actually land on a signed-in page? Recorded before teardown, so the
-  // zero-post message below can name the real cause instead of guessing.
-  //
-  // Measured: logged out, `x.com/home` does not error — it serves the marketing
-  // page, which has zero `article` elements. That is indistinguishable from "the
-  // markup changed" unless the login wall is detected explicitly, and the two
-  // send you to completely different places.
-  signedOut = await page
-    .evaluate(() => !document.cookie.includes("auth_token")
-      && /Continue with|Sign in to X|Happening now/.test(document.body.innerText))
-    .catch(() => false);
-
+  signedOut = Boolean(result.signedOut);
   writeFileSync(outPath, JSON.stringify(result, null, 2));
-} finally {
-  if (attached) {
-    // Close ONLY the tab this script opened, and never call `browser.close()`.
-    //
-    // Playwright's types say `close()` on a connected browser "clears all created
-    // contexts belonging to this browser and disconnects from the browser server",
-    // which reads as safe — the borrowed context was not created by us. MEASURED,
-    // it is not: after a run that called it, the debug endpoint reported **0
-    // targets**, meaning the tab that existed before the scan had been closed too.
-    // Against a real browser that is the user's session gone.
-    //
-    // The first check for this was too weak to catch it — it curled
-    // `/json/version` and saw Chrome still running, which tests the process and
-    // not the tabs. `/json/list` is the check that shows the damage.
-    //
-    // Dropping the websocket by letting the process exit is sufficient teardown,
-    // and it cannot touch anything the user had open.
-    await page?.close().catch(() => {});
-  } else {
+} else {
+  // ── Launched: our own headless browser, always signed out ──
+  //
+  // Locally: drive the installed Chrome, so nothing is downloaded and the request
+  // comes from the same residential IP that was verified to work.
+  //
+  // In CI there is no system Chrome, so `X_SCAN_CHANNEL=chromium` selects
+  // Playwright's own build. Whether X serves a GitHub runner's datacenter IP at all
+  // is a separate question, and the reason that path is measured before it is used.
+  let chromium;
+  try {
+    ({ chromium } = await import("playwright"));
+  } catch {
+    console.error(
+      "playwright is not installed. Run: npm --prefix scripts install playwright",
+    );
+    process.exit(3);
+  }
+
+  const channel = process.env.X_SCAN_CHANNEL || "chrome";
+  const browser = await chromium.launch({
+    ...(channel === "chromium" ? {} : { channel }),
+    headless: true,
+  });
+
+  try {
+    const context = await browser.newContext({
+      // A real viewport and locale: the logged-out view is what we want, but a
+      // headless default fingerprint gets served differently often enough to matter.
+      viewport: { width: 1280, height: 1600 },
+      locale: "en-GB",
+    });
+    const page = await context.newPage();
+    await page.goto(target, {
+      waitUntil: "domcontentloaded",
+      timeout: NAV_TIMEOUT_MS,
+    });
+
+    // Wait for at least one article rather than a fixed sleep where possible; fall
+    // back to the sleep, because a profile with no posts legitimately has none and
+    // must not fail the run.
+    await page
+      .waitForSelector("article", { timeout: RENDER_WAIT_MS })
+      .catch(() => {});
+
+    // Wrapped as an immediately-invoked expression. Passing the bare arrow-function
+    // source made `evaluate` treat it as an expression whose VALUE is the function,
+    // so it returned undefined and the write crashed on it — the function was never
+    // called. The MCP path takes a function directly, which is why this only
+    // surfaced here.
+    result = await page.evaluate(`(${extractSource})()`);
+    if (!result || !Array.isArray(result.posts)) {
+      throw new Error(
+        `extractor returned ${JSON.stringify(result)} — expected { handle, posts }`,
+      );
+    }
+    posts = result.posts;
+    signedOut = Boolean(result.signedOut);
+    writeFileSync(outPath, JSON.stringify(result, null, 2));
+  } finally {
     // A browser we launched, so this really does quit it.
     await browser.close();
   }
@@ -223,15 +216,12 @@ if (posts.length === 0) {
 
 console.log(`x_scan: read ${posts.length} post(s) from @${handle}`);
 
-// An attached run must exit explicitly.
+// An attached run exits explicitly.
 //
-// `browser.close()` is what normally lets node's event loop drain, and this path
-// deliberately does not call it (see the teardown above — measured, it closes tabs
-// the user already had open). The live CDP websocket then holds the loop open and
-// the script hangs forever instead of finishing: the first version of this did
-// exactly that, and a five-minute timeout was the only thing that surfaced it.
-//
-// Everything observable is already done — the JSON was written before teardown and
-// the count is printed above — so forcing the exit drops the socket and loses
-// nothing. The failure paths above already exit explicitly for the same reason.
+// A live websocket holds node's event loop open, so a run that merely finishes its
+// work does not terminate — an earlier version of this path hung until a
+// five-minute timeout killed it, which in CI burns the whole job rather than
+// failing it. `x_cdp.mjs` closes its socket, but belt-and-braces here costs
+// nothing: everything observable is already done, since the JSON is written and the
+// count printed above. The failure paths above exit explicitly for the same reason.
 if (attached) process.exit(0);
