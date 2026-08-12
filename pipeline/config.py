@@ -194,6 +194,15 @@ NEWS_FETCH = {
 # Kept short deliberately. The logged-out view serves ~5 recent posts per profile,
 # so value comes from picking accounts that post signal rather than from breadth,
 # and every extra account is another page load per scan.
+#
+# ADMISSION CRITERION: "files FPL-relevant team news", NOT "tweets about
+# football". This list is now also the trust boundary — `x_relevance` admits a
+# post only from a page listed here (or from its author), including reposts, so an
+# entry added in good faith widens what may be filed. @PolymarketSport is exactly
+# the trap: nominally a sports account, and its measured contribution to the
+# corpus is a post about Arsenal's wedding-package brochure. Without the criterion
+# written down, this list rots by accretion and the trust layer decays into the
+# club-name gate we deliberately refused to build.
 X_SCAN_ACCOUNTS = (
     # Market-derived projections and pre-season minutes summaries. Named in the
     # plan as a comparator rather than a data dependency — we invert the same

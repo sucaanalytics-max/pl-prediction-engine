@@ -285,6 +285,35 @@ class FeedAttributionTests(unittest.TestCase):
     """
 
     def test_each_post_is_attributed_to_its_own_author(self):
+        # `trusted` names both authors, because this test is about ATTRIBUTION and
+        # nothing else. The relevance gate refuses an uncurated author on a
+        # home-timeline surface, so without the injection this fixture would test
+        # admissibility by accident and stop testing what it is named for. The
+        # refusal itself is asserted below, and per-post in test_x_relevance.py.
+        scan = {"handle": "home", "posts": [
+            {"status_id": REAL_ID, "author": "robtFPL",
+             "url": f"https://x.com/robtFPL/status/{REAL_ID}", "lines": REAL_LINES},
+            {"status_id": "2086121456807575553", "author": "FPLHarry",
+             "url": "https://x.com/FPLHarry/status/2086121456807575553",
+             "lines": ["Harry", "@FPLHarry", "8 Aug",
+                       "Arsenal have no fresh injury concerns ahead of the weekend.",
+                       "3", "9"]},
+        ]}
+        items = x_scan.to_items(scan, source="x:home-feed", now=NOW,
+                                trusted=("robtFPL", "FPLHarry"))
+        self.assertEqual([i["source"] for i in items], ["x:robtFPL", "x:FPLHarry"])
+
+    def test_an_uncurated_author_on_the_home_feed_is_dropped_not_filed(self):
+        """
+        The same fixture without the injection, which is the shipped behaviour.
+
+        A home timeline is the whole non-football internet with two football posts
+        in it (measured: 2 of 21, zero carrying team news). Trust is a property of
+        the page we chose to open, so an author we never curated is refused even
+        when the post reads like team news — a tier-3 claim can push availability
+        DOWN under R4, and there is no cheap way to tell a real report from a
+        rumour on a surface nobody vetted.
+        """
         scan = {"handle": "home", "posts": [
             {"status_id": REAL_ID, "author": "robtFPL",
              "url": f"https://x.com/robtFPL/status/{REAL_ID}", "lines": REAL_LINES},
@@ -295,7 +324,7 @@ class FeedAttributionTests(unittest.TestCase):
                        "3", "9"]},
         ]}
         items = x_scan.to_items(scan, source="x:home-feed", now=NOW)
-        self.assertEqual([i["source"] for i in items], ["x:robtFPL", "x:FPLHarry"])
+        self.assertEqual([i["source"] for i in items], ["x:robtFPL"])
 
     def test_a_missing_author_falls_back_and_does_not_drop_the_post(self):
         # The extractor can only read an author from a status href. If the markup

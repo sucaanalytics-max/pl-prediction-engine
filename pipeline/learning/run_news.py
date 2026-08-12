@@ -44,7 +44,9 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 # reachability scanner as importing the *package*, which left news_extract.py
 # looking like a module nothing calls. That check exists because the same defect
 # occurred five times in one session, and hiding from it would be the wrong fix.
-from pipeline.data import grok_feed, news_extract, news_feeds, x_scan, youtube
+from pipeline.data import (
+    grok_feed, news_extract, news_feeds, x_relevance, x_scan, youtube,
+)
 from pipeline.learning import deltas as deltas_store
 from pipeline.learning.availability_conflicts import resolve_claims
 from pipeline.learning.availability_evidence import history, record
@@ -467,10 +469,40 @@ def poll(
             # A corrupt inbox must not cost the RSS feeds their poll.
             logger.warning("x inbox unreadable (%s); skipping it", exc)
         else:
+            # Re-screen for football relevance HERE as well as in the scan.
+            #
+            # The inbox is a committed file, so it holds rows written by whatever
+            # version of the scanner produced them — including, before the gate
+            # existed, a signed-in home-timeline scroll whose posts are 19-in-21
+            # not football. Trusting a stored row forever because an older scan
+            # accepted it is how the canonical false positive (a post about
+            # Arsenal's wedding packages) stays filed.
+            #
+            # Only the CONTENT half of the gate can run here: the CSV records
+            # `source` (`x:<author>`) and the verbatim text, never which page the
+            # post was read from. Inventing a surface decision from a row that
+            # cannot support one would be worse than screening on content alone,
+            # and content alone is enough for that post — it scores zero
+            # football terms.
+            kept, refused = [], []
+            for item in inbox_result.availability:
+                if str(item.get("source") or "").startswith("x:"):
+                    verdict = x_relevance.is_football_text(
+                        str(item.get("value") or ""),
+                    )
+                    if not verdict.passed:
+                        refused.append((item.get("source"), verdict.reason))
+                        continue
+                kept.append(item)
+            inbox_result.availability = kept
             logger.info(
-                "x inbox: %d availability item(s) accepted, %d rejected",
+                "x inbox: %d availability item(s) accepted, %d rejected, "
+                "%d refused by the relevance gate (v%s)",
                 len(inbox_result.availability), len(inbox_result.rejections),
+                len(refused), x_relevance.GATE_VERSION,
             )
+            for source, reason in refused[:5]:
+                logger.warning("x inbox refused %s: %s", source, reason)
             for rejection in inbox_result.rejections[:5]:
                 logger.warning("x inbox rejected: %s", rejection)
     else:

@@ -31,6 +31,15 @@ would be a fabricated number wearing a citation.
 The posts land on `/evidence` as a reading list, which is honest and immediately
 useful. Structured extraction is a separate change with its own corpus.
 
+## What it refuses to read
+
+Everything a logged-out curated profile served was football by construction. A
+signed-in scroll is not: it carries reposts from arbitrary accounts and, on a
+home timeline, mostly not football at all (measured 2 of 21, with zero team
+news). So `to_items` puts every post through `x_relevance.is_football_relevant`
+before building a row, unconditionally — see the note on that call for why there
+is no opt-out.
+
 ## Tier
 
 Tier 3, always. robtFPL is a well-sourced aggregator, not a press conference,
@@ -43,10 +52,19 @@ from __future__ import annotations
 
 import csv
 import io
+import logging
 import re
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence
+
+from pipeline.data.news_extract import fold
+from pipeline.data.x_relevance import (
+    GATE_VERSION, is_football_relevant, trusted_handles,
+)
+
+logger = logging.getLogger(__name__)
 
 #: Twitter's snowflake epoch in milliseconds (2010-11-04T01:42:54.657Z).
 #:
@@ -99,6 +117,17 @@ SHORT_DATE = re.compile(r"^\d{1,2}\s+\w{3}$|^\w{3}\s+\d{1,2}$|^\d+[smhd]$")
 #: A post shorter than this is a stub — a bare link or an emoji reply — and
 #: carries nothing worth filing.
 MIN_BODY = 24
+
+#: X's own truncation control, rendered as a line of its own on a long post
+#: (corpus posts #0/#9/#18/#20 of `fixtures/x_feed_corpus.json`). It is chrome,
+#: not text: leaving it in puts a UI label inside the verbatim quote a human
+#: reads on `/evidence`.
+#:
+#: Its other consequence is not fixable here and is worth stating: text past the
+#: fold was never in the DOM, so a post can be refused by the relevance gate for
+#: lacking a word it actually contains. Expanding the post is a browser-side
+#: change to `x_extract.js`, not a Python one.
+TRUNCATION_MARKERS = ("Show more", "Show less")
 
 #: Read from the DOM in the browser. Returns one record per article and nothing
 #: derived: no timestamps, no text cleaning, no tier. Everything judgemental
@@ -186,7 +215,9 @@ def body_from_lines(lines: Sequence[str]) -> str:
     while end > start and (not cleaned[end - 1] or COUNTER.match(cleaned[end - 1])):
         end -= 1
 
-    return "\n".join(cleaned[start:end]).strip()
+    body = [line for line in cleaned[start:end]
+            if line not in TRUNCATION_MARKERS]
+    return "\n".join(body).strip()
 
 
 def club_in(text: str) -> str:
@@ -225,6 +256,7 @@ def to_items(
     club: Optional[str] = None,
     now: Optional[datetime] = None,
     max_age_days: int = 3,
+    trusted: Optional[Iterable[str]] = None,
 ) -> List[Dict[str, Any]]:
     """
     Turn a browser scan into feed items, dropping what cannot be filed.
@@ -238,9 +270,20 @@ def to_items(
     describes every row; a **logged-in home timeline** is many authors, and
     stamping them all `x:home-feed` would destroy the only thing that makes these
     rows admissible — who said it. So each post's own author wins when present.
+
+    Every surviving post must also clear `x_relevance.is_football_relevant`.
+    `trusted` overrides the curated-surface set for tests; there is deliberately
+    **no way to turn the gate off**. An opt-in flag has to default somewhere, and
+    the caller most likely to forget it is a signed-in session scrolling home —
+    precisely the caller whose posts are 19-in-21 not football. A refused post is
+    dropped rather than filed with a marker: the inbox is a claim feed, not a
+    quarantine, and a row in it is an assertion that something was worth reading.
     """
     moment = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
     items: List[Dict[str, Any]] = []
+    handle = str(scan.get("handle") or "")
+    refusals: Counter = Counter()
+    considered = 0
 
     for post in scan.get("posts") or []:
         if not isinstance(post, Mapping):
@@ -263,6 +306,21 @@ def to_items(
             continue
 
         author = str(post.get("author") or "").strip()
+
+        # The relevance gate. Counted after the cheap structural drops above so
+        # the refusal tally describes posts that were otherwise filable —
+        # "refused 19 of 21 as untrusted-surface" is a statement about the feed,
+        # whereas mixing in stale and stub posts would make it a statement about
+        # nothing.
+        considered += 1
+        verdict = is_football_relevant(
+            body, author, handle=handle, lines=post.get("lines") or (),
+            trusted=trusted,
+        )
+        if not verdict.passed:
+            refusals[verdict.reason] += 1
+            continue
+
         items.append({
             "lane": LANE,
             "claim_type": CLAIM_TYPE,
@@ -277,7 +335,42 @@ def to_items(
             "metric": "",
             "horizon_gameweeks": "",
         })
+
+    _log_relevance(handle, len(items), considered, refusals, trusted)
     return items
+
+
+def _log_relevance(handle: str, filed: int, considered: int,
+                   refusals: Mapping[str, int],
+                   trusted: Optional[Iterable[str]]) -> None:
+    """
+    Say what was refused and why, and raise when a curated scan yields nothing.
+
+    An allowlist's only real failure mode is silent recall loss, and a silent
+    0-of-N is indistinguishable from a quiet day — the same failure CLAUDE.md
+    already records for the duplicated scraper, which "returns zero posts and
+    reports success". So a curated page that files none of what it read is a
+    WARNING: either the vocabulary has gone stale or the extractor has drifted,
+    and both need a human.
+    """
+    if not considered:
+        return
+    if refusals:
+        logger.info(
+            "x relevance (%s): filed %d of %d; refused %s",
+            handle or "unknown", filed, considered,
+            ", ".join(f"{reason} x{count}"
+                      for reason, count in sorted(refusals.items())),
+        )
+    surfaces = (frozenset(fold(h) for h in trusted) if trusted is not None
+                else trusted_handles())
+    if filed == 0 and fold(handle) in surfaces:
+        logger.warning(
+            "x relevance: curated scan of %s filed 0 of %d posts. Either the "
+            "extractor has drifted or the vocabulary has gone stale; check "
+            "pipeline/data/x_relevance.py (gate v%s) before assuming a quiet day",
+            handle, considered, GATE_VERSION,
+        )
 
 
 def to_csv(items: Iterable[Mapping[str, Any]], columns: Sequence[str]) -> str:
