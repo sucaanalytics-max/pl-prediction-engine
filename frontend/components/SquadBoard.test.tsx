@@ -32,7 +32,10 @@ const PLAYERS = [
   { name: "Isak", position: "FWD", team: "Liverpool", price: 10.5 },
 ];
 
-function mountWith(squad: Record<string, unknown> | null) {
+function mountWith(
+  squad: Record<string, unknown> | null,
+  projections: Array<Record<string, unknown>> | null = null,
+) {
   vi.resetModules();
   vi.doMock("@/lib/data/useHeuristics", () => ({
     useHeuristics: () => ({
@@ -42,6 +45,20 @@ function mountWith(squad: Record<string, unknown> | null) {
         reason: null,
         value: { squad },
       },
+    }),
+  }));
+  // Mocked because the component reads a second artifact. Left unmocked, the real
+  // hook issues a fetch under jsdom that no test controls, so every xP assertion
+  // below would be racing a network call — and its default `absent` result makes
+  // "the projection is missing" indistinguishable from "the match failed", which
+  // is exactly the distinction these tests exist to pin.
+  vi.doMock("@/lib/data/useArtifact", () => ({
+    useArtifact: () => ({
+      artifact: projections === null
+        ? { state: "absent", value: null }
+        : { state: "ok", value: { players: projections } },
+      initialising: false,
+      reload: () => {},
     }),
   }));
   vi.doMock("@/lib/data/artifact", async (importOriginal) => {
@@ -132,6 +149,115 @@ describe("the squad source", () => {
     const { default: SquadBoard } = await mountWith({ ...BASE, source: null });
     const { container } = render(<SquadBoard />);
     expect(container.textContent).toMatch(/source unknown/i);
+  });
+});
+
+/**
+ * The per-player model projection, which nothing tested when it was added.
+ *
+ * The feature exists because the fitted `xP` sat unread in a published artifact
+ * while the board showed heuristic numbers. What makes it worth testing is not
+ * that a number appears — it is that the *join* is right. A wrong join puts
+ * another player's points on your card, which is worse than the blank it replaced.
+ *
+ * The club is deliberately not part of the match, and that is the case most
+ * likely to regress: the squad carries FPL's short code (`ARS`) and the
+ * projection carries the full club name (`Arsenal`), so a match reaching for the
+ * club matches nothing at all. That defect shipped once already — every card read
+ * `— xP` while the artifact held a projection for all fifteen.
+ */
+describe("the model projection", () => {
+  const PROJECTIONS = [
+    { name: "Raya", team: "Arsenal", position: "GKP", xp: 3.64, eMinutes: 69.4 },
+    { name: "Gabriel", team: "Arsenal", position: "DEF", xp: 3.61, eMinutes: 66.2 },
+    { name: "Saka", team: "Arsenal", position: "MID", xp: 5.82, eMinutes: 71.0 },
+    { name: "Isak", team: "Liverpool", position: "FWD", xp: 4.10, eMinutes: 63.5 },
+  ];
+
+  function xpCells(container: HTMLElement): string[] {
+    return [...container.querySelectorAll("[data-testid='squad-xp']")]
+      .map((node) => node.textContent?.trim() ?? "");
+  }
+
+  it("shows the model's xP beside each player it has a view on", async () => {
+    const { default: SquadBoard } = await mountWith(BASE, PROJECTIONS);
+    const { container } = render(<SquadBoard />);
+    expect(xpCells(container)).toEqual(["3.6 xP", "3.6 xP", "5.8 xP", "4.1 xP"]);
+  });
+
+  it("matches on position, not on club", async () => {
+    /**
+     * The load-bearing regression test. The squad's `team` is the short code the
+     * live server emits; the projection's is the full club name. If the match
+     * ever reaches for the club again every cell returns to `— xP`, and this is
+     * what notices.
+     */
+    const shortCodes = [
+      { name: "Raya", position: "GKP", team: "ARS", price: 5.5 },
+      { name: "Gabriel", position: "DEF", team: "ARS", price: 6.0 },
+      { name: "Saka", position: "MID", team: "ARS", price: 10.0 },
+      { name: "Isak", position: "FWD", team: "LIV", price: 10.5 },
+    ];
+    const { default: SquadBoard } = await mountWith(
+      { ...BASE, players: shortCodes }, PROJECTIONS,
+    );
+    const { container } = render(<SquadBoard />);
+    expect(xpCells(container)).not.toContain("— xP");
+    expect(container.textContent).toContain("5.8 xP");
+  });
+
+  it("prints — xP, not a blank, for a player the projection does not cover", async () => {
+    // "The model has no view of this player" and "we did not look" are different
+    // facts, and only a printed dash says which one this is.
+    const { default: SquadBoard } = await mountWith(
+      BASE, PROJECTIONS.filter((p) => p.name !== "Isak"),
+    );
+    const { container } = render(<SquadBoard />);
+    expect(xpCells(container)).toContain("— xP");
+    expect(xpCells(container)).toHaveLength(4);
+  });
+
+  it("refuses an ambiguous name rather than guessing between two players", async () => {
+    /**
+     * FPL has six Wilsons. Putting one player's projection on another's card is
+     * the one outcome worse than showing nothing, so a duplicate match collapses
+     * to `— xP` rather than silently taking the first hit.
+     */
+    const ambiguous = [
+      ...PROJECTIONS,
+      { name: "Saka", team: "Chelsea", position: "MID", xp: 1.11, eMinutes: 10 },
+    ];
+    const { default: SquadBoard } = await mountWith(BASE, ambiguous);
+    const { container } = render(<SquadBoard />);
+    expect(container.textContent).not.toContain("5.8 xP");
+    expect(container.textContent).not.toContain("1.1 xP");
+    expect(xpCells(container)).toContain("— xP");
+  });
+
+  it("still matches when the two sides spell a name with different accents", async () => {
+    // Not hypothetical: F.Kadıoğlu and João Pedro are both in this league, and the
+    // Turkish dotless ı does not decompose under NFKD the way the others do.
+    const accented = [
+      { name: "F.Kadıoğlu", position: "DEF", team: "BHA", price: 4.5 },
+      { name: "João Pedro", position: "FWD", team: "CHE", price: 7.5 },
+    ];
+    const plain = [
+      { name: "F.Kadioglu", team: "Brighton", position: "DEF", xp: 3.9, eMinutes: 80 },
+      { name: "Joao Pedro", team: "Chelsea", position: "FWD", xp: 2.7, eMinutes: 61 },
+    ];
+    const { default: SquadBoard } = await mountWith(
+      { ...BASE, players: accented }, plain,
+    );
+    const { container } = render(<SquadBoard />);
+    expect(xpCells(container)).toEqual(["3.9 xP", "2.7 xP"]);
+  });
+
+  it("shows — xP for every player when no projection is published", async () => {
+    // The normal state for most of a gameweek cycle: the agent that writes the
+    // artifact is deadline-gated, so the board must work without it.
+    const { default: SquadBoard } = await mountWith(BASE, null);
+    const { container } = render(<SquadBoard />);
+    expect(xpCells(container)).toEqual(["— xP", "— xP", "— xP", "— xP"]);
   });
 });
 

@@ -28,10 +28,15 @@ import {
  *
  * **The per-player `xP` is different, and it is the real model.** This docstring
  * used to say model projections "do not exist yet", which was true when it was
- * written and false from the moment `xp_public_gw01.json` shipped with 577 players.
- * The consequence was not cosmetic: the squad rendered heuristic numbers while the
- * fitted ones sat unread in a published artifact, so the strongest thing the
- * pipeline produces was invisible on the screen that matters most.
+ * written and false from the moment `xp_public_gw01.json` began shipping a
+ * projection for every player in the game. The consequence was not cosmetic: the
+ * squad rendered heuristic numbers while the fitted ones sat unread in a published
+ * artifact, so the strongest thing the pipeline produces was invisible on the
+ * screen that matters most.
+ *
+ * The count that stood here read 577 and was 581 by the time anyone re-read it —
+ * the same failure in miniature — so coverage is now stated as a fact rather than
+ * as a number somebody has to maintain.
  *
  * A stale comment did that. The projection is now read directly and shown per
  * player, and a missing one prints `— xP` rather than a blank, because "the model
@@ -243,9 +248,9 @@ export default function SquadBoard() {
                     {/* The model's own projection, when it exists.
                         This component's docstring used to say per-player model
                         projections "do not exist yet" — true when it was written
-                        and false since `xp_public_gw01.json` shipped with 577
-                        players. So the squad showed heuristic numbers while the
-                        real ones sat unread in the artifact.
+                        and false since `xp_public_gw01.json` began shipping one
+                        for every player. So the squad showed heuristic numbers
+                        while the real ones sat unread in the artifact.
 
                         `—` rather than a blank when a player is absent from the
                         projection: the two states are "the model has no view" and
