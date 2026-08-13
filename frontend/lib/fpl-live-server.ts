@@ -466,10 +466,21 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
     ? picks.entry_history.value / 10
     : players.reduce((total, player) => total + player.price, 0);
   const source = picks ? "official_public" : "captured_authenticated_draft";
+  // `en-GB`/`UTC` explicitly: the default locale of whatever machine renders this
+  // would otherwise decide the format, and the default zone could roll the date
+  // back a day for a westward reader — a provenance line that disagrees with the
+  // `capturedAt` beside it by a day is worse than no date.
+  const capturedOn = new Date(CAPTURED_DRAFT_AT).toLocaleDateString("en-GB", {
+    day: "numeric", month: "short", timeZone: "UTC",
+  });
   const notices = picks
     ? ["Squad synced from the official public gameweek picks endpoint."]
     : [
-        "GW1 picks remain private before the deadline; the squad is the authenticated draft captured on 28 Jul.",
+        // Derived from `CAPTURED_DRAFT_AT` rather than written out again. This
+        // line said "28 Jul" across the entire life of the 13 Aug capture that
+        // replaced it — a stale provenance note on the exact panel whose job is
+        // to say how stale the squad is, which is the failure it warns about.
+        `GW1 picks remain private before the deadline; the squad is the authenticated draft captured on ${capturedOn}.`,
         "Official prices, clubs, availability flags and the next ten fixtures are refreshed from FPL.",
         "Player EV and expected minutes use the private FPLReview premium snapshot exported on 4 Aug 2026.",
       ];
