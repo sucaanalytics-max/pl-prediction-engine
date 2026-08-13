@@ -491,8 +491,14 @@ function MatchDetailContent() {
       {/* SHAP */}
       {match.shap_features.length > 0 && (
         <div className="card p-6">
+          {/* `shap_value` is the CONTRIBUTION, not the input.
+              This read `shap_value: f.value`, so the waterfall plotted each
+              feature's input value as its contribution — for `elo_diff` that is
+              133.14 in place of -0.0035, wrong by four orders of magnitude and in
+              sign. It was not a slip in this line: the narrower had collapsed both
+              numbers into one, so the real contribution was already gone. */}
           <SHAPWaterfall features={match.shap_features.map((f) => ({
-            feature: f.name, value: f.value, shap_value: f.value,
+            feature: f.name, value: f.value, shap_value: f.shapValue,
           }))} />
         </div>
       )}

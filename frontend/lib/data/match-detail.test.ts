@@ -52,7 +52,14 @@ function prediction(over: Record<string, unknown> = {}) {
     confidence: { entropy: 1.02, home_goals_ci: [0, 3], away_goals_ci: [0, 3] },
     distributions: { goals_home: [0.2, 0.3, 0.3], goals_away: [0.3, 0.4] },
     value_bets: [{ market: "Over 2.5 Goals", edge: 0.056, half_kelly_pct: 0.025 }],
-    shap_features: [{ feature: "home_form", value: 0.4 }],
+    // The real shape `pipeline/explainability/shap_explain.py:83-88` emits: an
+    // input `value`, a `shap_value` contribution and `shap_abs`. The previous
+    // fixture had only `value`, so it tested a shape the pipeline never writes —
+    // which is why it could not catch the contribution being discarded.
+    shap_features: [
+      { feature: "elo_diff", value: 133.14, shap_value: -0.0035, shap_abs: 0.0035 },
+      { feature: "away_ewm_shots_for_5", value: 0.0, shap_value: -0.077, shap_abs: 0.077 },
+    ],
     goalscorer: {
       home_scorers: [
         { web_name: "Gyökeres", position: "FWD", anytime_prob: 0.237, xg_per_90: 0.49 },

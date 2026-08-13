@@ -37,9 +37,25 @@ import {
 import { narrowBets, type Bet } from "@/lib/data/narrow";
 import { DAY, type Descriptor } from "@/lib/data/registry";
 
+/**
+ * One feature's contribution to a prediction, and the input it was computed from.
+ *
+ * The two are NOT interchangeable and the difference is not subtle. Measured on
+ * today's published `latest.json`, for `elo_diff`: input `value` 133.14, SHAP
+ * `shapValue` -0.0035. Plotting the input as the contribution is wrong by four
+ * orders of magnitude AND wrong in sign. `away_ewm_shots_for_5` is starker — its
+ * input is 0.0 while its contribution is -0.077, the second largest in the list,
+ * so an input-valued chart ranks it last when it belongs near the top.
+ *
+ * This carried only one number, so the contribution was discarded at the
+ * narrowing step and the page had nothing else to plot.
+ */
 export interface ShapFeature {
   readonly name: string;
+  /** The feature's input, e.g. an Elo difference of 133.14. */
   readonly value: number;
+  /** Its contribution to the prediction. This is what a SHAP chart plots. */
+  readonly shapValue: number;
 }
 
 export interface MatchDetail {
@@ -340,8 +356,22 @@ export function narrowMatchDetail(raw: unknown): NarrowResult<MatchDetail> {
     shap_features: optArray(row.shap_features).flatMap((f): ShapFeature[] => {
       if (!isRecord(f)) return [];
       const name = optString(f.feature) ?? optString(f.name);
-      const value = optNumber(f.value ?? f.shap_value);
-      return name !== null && value !== null ? [{ name, value }] : [];
+      // Read BOTH, from their own keys.
+      //
+      // This was `optNumber(f.value ?? f.shap_value)` into a single field. Every
+      // entry the pipeline emits has `value`, so the `??` fallback could never be
+      // reached and the contribution was always thrown away —
+      // `shap_explain.py:83-88` writes `value`, `shap_value` and `shap_abs` per
+      // feature. The page then had one number and used it for both, plotting
+      // inputs on a chart of contributions.
+      //
+      // The contribution is required; a feature without one has nothing to plot.
+      // The input is optional because it is context beside the bar, not the bar.
+      const shapValue = optNumber(f.shap_value);
+      const value = optNumber(f.value);
+      return name !== null && shapValue !== null
+        ? [{ name, value: value ?? 0, shapValue }]
+        : [];
     }),
 
     bookings: bookingsOf(row.player_bookings),
