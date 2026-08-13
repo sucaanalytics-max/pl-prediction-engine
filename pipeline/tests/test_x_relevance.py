@@ -953,5 +953,212 @@ class AdversarialFindings(unittest.TestCase):
         self.assertNotIn("either layer alone refuses it", source)
 
 
+class ObservabilityFindings(unittest.TestCase):
+    """
+    The remaining audit findings: things the gate does correctly but says badly.
+
+    Grouped because they share a failure shape — a scan that refuses everything
+    and a scan that reads nothing were indistinguishable to an operator, which is
+    the same class of defect as a scraper that "returns zero posts and reports
+    success". None of these changes a verdict; all of them change whether a human
+    finds out.
+    """
+
+    NOW = __import__("datetime").datetime(
+        2026, 8, 11, 8, 0, tzinfo=__import__("datetime").timezone.utc)
+
+    def scan(self, posts, handle="robtFPL"):
+        return {"handle": handle, "profileRoot": True, "posts": posts}
+
+    def football_post(self, **over):
+        post = {"status_id": "2086478896937963659", "author": "robtFPL",
+                "url": "https://x.com/robtFPL/status/2086478896937963659",
+                "lines": ["Rob T", "@robtFPL", "9 Aug",
+                          "Liverpool: Saka is ruled out with a hamstring injury."]}
+        post.update(over)
+        return post
+
+    def test_the_drift_alarm_fires_when_nothing_reaches_the_gate(self):
+        """
+        The alarm's own blind spot.
+
+        `_log_relevance` returned early when `considered` was 0 — but a broken
+        status permalink or body assembly drops every post BEFORE the gate, so
+        `considered` never leaves 0 and the alarm advertised as catching extractor
+        drift stayed silent. Measured on four induced failures: only the
+        vocabulary one produced any output at all.
+        """
+        for label, over in (
+            ("no url", {"url": ""}),
+            ("no status id", {"status_id": ""}),
+            ("body too short", {"lines": ["Rob T", "@robtFPL", "9 Aug", "hi"]}),
+        ):
+            with self.assertLogs("pipeline.data.x_scan", level="WARNING") as caught:
+                items = x_scan.to_items(
+                    self.scan([self.football_post(**over)]),
+                    source="x:robtFPL", now=self.NOW, trusted=TRUSTED,
+                )
+            self.assertEqual(items, [], label)
+            joined = "\n".join(caught.output)
+            self.assertIn("NONE reached the gate", joined, label)
+            self.assertIn("x_extract.js", joined, label)
+
+    def test_the_structural_reason_is_named(self):
+        # "check the selectors" is a search; "no-https-url x1" is a fix.
+        with self.assertLogs("pipeline.data.x_scan", level="WARNING") as caught:
+            x_scan.to_items(
+                self.scan([self.football_post(url="")]),
+                source="x:robtFPL", now=self.NOW, trusted=TRUSTED,
+            )
+        self.assertIn("no-https-url", "\n".join(caught.output))
+
+    def test_a_gate_wipe_still_blames_the_vocabulary_not_the_extractor(self):
+        # The two causes need different messages; conflating them is why the
+        # original single message was unhelpful.
+        with self.assertLogs("pipeline.data.x_scan", level="WARNING") as caught:
+            x_scan.to_items(
+                self.scan([self.football_post(
+                    lines=["Rob T", "@robtFPL", "9 Aug",
+                           "Quarterly revenue was up and the board met on Tuesday."])]),
+                source="x:robtFPL", now=self.NOW, trusted=TRUSTED,
+            )
+        joined = "\n".join(caught.output)
+        self.assertIn("refused by the gate", joined)
+        self.assertNotIn("NONE reached the gate", joined)
+
+    def test_the_refusal_tally_counts_what_was_read(self):
+        # Reported against `read` rather than `considered`, so the denominator is
+        # what the extractor handed over rather than what survived our own drops.
+        # The second post is non-football, so it is REFUSED. My first version of
+        # this test used a stranger's football post, which the root timeline
+        # correctly trusts — so nothing was refused, no tally was emitted, and the
+        # test failed for a reason that had nothing to do with counting.
+        with self.assertLogs("pipeline.data.x_scan", level="INFO") as caught:
+            x_scan.to_items(
+                self.scan([
+                    self.football_post(),
+                    self.football_post(
+                        status_id="2086471531001962819",
+                        url="https://x.com/robtFPL/status/2086471531001962819",
+                        lines=["Rob T", "@robtFPL", "9 Aug",
+                               "Quarterly revenue was up and the board met Tuesday."]),
+                ]),
+                source="x:robtFPL", now=self.NOW, trusted=TRUSTED,
+            )
+        self.assertIn("filed 1 of 2 read", "\n".join(caught.output))
+
+    def test_the_denominator_is_what_was_read_not_what_survived(self):
+        """
+        The distinction the previous test cannot make.
+
+        There, every post cleared the structural gates, so `read` and `considered`
+        were equal and reporting either gave the same string — a mutation swapping
+        them survived. With one post dropped structurally and one refused by the
+        gate they diverge, and only `read` describes what the extractor handed
+        over. "filed 0 of 1" would understate the scan by half while looking
+        precise.
+        """
+        with self.assertLogs("pipeline.data.x_scan", level="INFO") as caught:
+            items = x_scan.to_items(
+                self.scan([
+                    # Dropped structurally: no https url.
+                    self.football_post(url=""),
+                    # Reaches the gate and is refused: not football.
+                    self.football_post(
+                        status_id="2086471531001962819",
+                        url="https://x.com/robtFPL/status/2086471531001962819",
+                        lines=["Rob T", "@robtFPL", "9 Aug",
+                               "Quarterly revenue was up and the board met Tuesday."]),
+                ]),
+                source="x:robtFPL", now=self.NOW, trusted=TRUSTED,
+            )
+        self.assertEqual(items, [])
+        joined = "\n".join(caught.output)
+        self.assertIn("filed 0 of 2 read", joined)
+        self.assertNotIn("filed 0 of 1 read", joined)
+        # And both kinds of drop are named, not just the gate's.
+        self.assertIn("no-https-url", joined)
+        self.assertIn("no-football-signal", joined)
+
+    def test_the_cli_configures_logging(self):
+        """
+        Without this the whole tally goes to a logger with no handler.
+
+        Measured: an operator running the documented command against 21 home posts
+        saw only "x inbox now holds 6 row(s)" — identical to a scan that read
+        nothing. Only the WARNING survived, via logging's last-resort handler.
+        """
+        source = pathlib.Path(x_scan.__file__).read_text(encoding="utf-8")
+        main = source[source.index("def main("):]
+        self.assertIn("logging.basicConfig", main)
+        # To stderr, so stdout stays the machine-readable result.
+        self.assertIn("stream=sys.stderr", main)
+
+    def test_a_pattern_spanning_two_rendered_lines_is_matched(self):
+        """
+        `body_from_lines` joins on "\\n" and X breaks lines wherever it rendered
+        them, so "TEAM\\nNEWS" missed `\\bteam news\\b` while the same post on one
+        line matched. Patterns written with `\\s+` already survived the split,
+        which is what shows the inconsistency was accidental.
+        """
+        self.assertTrue(xr.is_football_text("TEAM\nNEWS: Palmer starts").passed)
+        self.assertTrue(xr.is_football_text("Saka is ruled\nout for three weeks").passed)
+        self.assertTrue(xr.is_football_text("Raya kept a clean\nsheet again").passed)
+
+    def test_an_ad_with_no_handle_line_is_still_refused(self):
+        """
+        The promoted-post veto ran over `lines[:4]`, but the chrome above the body
+        is not a fixed height: a card-style promotion with no @handle line pushed
+        "Ad" to index 4, where `body_from_lines` also missed it — its own handle
+        search gives up after 6 lines — and the ad was filed with club='Arsenal'.
+        The two windows now agree about where the post begins.
+        """
+        lines = ["Arsenal Store", "Shop now", "Official Store",
+                 "Premier League partner", "Ad",
+                 "Arsenal's new home kit is here. Pre-season deals, kick-off "
+                 "offers, free delivery on every order."]
+        self.assertTrue(xr.is_promoted("\n".join(lines), lines))
+        verdict = xr.is_football_relevant(
+            "\n".join(lines), "robtFPL", handle="robtFPL", lines=lines,
+            trusted=TRUSTED,
+        )
+        self.assertFalse(verdict.passed)
+        self.assertEqual(verdict.reason, "promoted-post")
+
+    def test_a_repost_frame_does_not_hide_the_ad_marker(self):
+        lines = ["Rob T reposted", "Brand", "@brand", "Ad",
+                 "Our boots are on sale before the Premier League kick-off."]
+        self.assertTrue(xr.is_promoted("\n".join(lines), lines))
+
+    def test_the_english_only_limit_is_written_down(self):
+        # fold() exists for Ødegaard in an English sentence, not for Spanish. A
+        # reader could reasonably assume otherwise, so the module says so.
+        source = pathlib.Path(xr.__file__).read_text(encoding="utf-8")
+        self.assertIn("English only", source)
+        self.assertFalse(xr.is_football_text(
+            "Offiziell: Wirtz fehlt wegen einer Verletzung am Oberschenkel.",
+        ).passed)
+
+    def test_the_accidental_non_english_coverage_is_named_as_accidental(self):
+        """
+        The claim I first wrote here was wrong, and the test caught it.
+
+        I asserted the Spanish example scores zero signals. It does not: it passes
+        on `muscular`, a cognate that is in the body-part table for English
+        reasons. Drop that one word and the identical claim is refused — so the
+        gate admits Spanish sentences containing an English-looking word, not
+        Spanish. Pinned because unpredictable partial coverage is worse to plan
+        around than none, and because the docstring now says exactly this.
+        """
+        self.assertTrue(xr.is_football_text(
+            'Guardiola: "Rodri estara fuera dos semanas por una lesion muscular."',
+        ).passed)
+        self.assertFalse(xr.is_football_text(
+            "Rodri estara fuera dos semanas.",
+        ).passed)
+        source = pathlib.Path(xr.__file__).read_text(encoding="utf-8")
+        self.assertIn("accidental", source)
+
+
 if __name__ == "__main__":
     unittest.main()

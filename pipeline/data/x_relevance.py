@@ -63,6 +63,30 @@ lane=availability, claim_type=unparsed_news, tier 3, so nothing it admits can
 derive an availability number. Fabricating one would need a hand-labelled corpus
 and a human, which is what `pipeline/learning/file_claim.py` is for.
 
+## English only, and that is a decision rather than an oversight
+
+The vocabulary is English. A presser quote or club statement in another language is
+refused even behind a curated handle — measured: `Offiziell: Wirtz fehlt wegen einer
+Verletzung am Oberschenkel.` scores zero signals.
+
+What coverage exists is **accidental, and worse than none for being unpredictable**.
+`Guardiola: "Rodri estará fuera dos semanas por una lesión muscular."` passes, but
+only on the cognate `muscular`, which is in the body-part table for English reasons.
+Drop that one word — `"Rodri estará fuera dos semanas."` — and the identical claim
+is refused. So the gate does not admit Spanish; it admits Spanish sentences that
+happen to contain an English-looking word, which is not a property anyone should
+plan around.
+
+Recorded here because the `fold()` machinery gives the opposite impression. Folding
+exists so that *English* posts naming Ødegaard, Šeško or Vušković still match; it
+says nothing about the language of the surrounding sentence, and a reader could
+reasonably assume otherwise.
+
+Adding a language costs a vocabulary per language and a corpus per language to
+measure it against, and the accounts in `X_SCAN_ACCOUNTS` post in English. When one
+does not, that is the moment to pay for it — not before, and not by machine
+translation, which would put a paraphrase where a verbatim quote is supposed to be.
+
 ## Deliberately not here
 
 No player-name index. A bootstrap-derived surname index would add recall, but
@@ -109,6 +133,9 @@ GATE_VERSION = 2
 #: other's parse.
 HANDLE_SHAPE = re.compile(r"^[A-Za-z0-9_]{1,15}$")
 
+#: Any run of whitespace, including the newlines `body_from_lines` joins on.
+WHITESPACE = re.compile(r"\s+")
+
 #: X renders the literal string "Ad" where the timestamp line belongs on a
 #: promoted post. Matched on the raw `lines` (and, for a row read back from the
 #: CSV, on the body's first line) rather than only on the assembled body:
@@ -122,9 +149,19 @@ HANDLE_SHAPE = re.compile(r"^[A-Za-z0-9_]{1,15}$")
 #: refused here and nowhere else.
 AD_MARKER = "ad"
 
-#: How far into the post the "Ad" marker can appear. Display name, handle,
-#: then the slot the timestamp would occupy.
-AD_WINDOW = 4
+#: How far into the post the "Ad" marker can appear.
+#:
+#: Display name, handle, then the slot the timestamp would occupy — 4 on the
+#: measured corpus shape. Widened to 6 because the chrome above the body is not a
+#: fixed height: a "Rob T reposted" frame adds a line, and a card-style promotion
+#: with no @handle line at all pushed "Ad" to index 4, outside a 4-line window,
+#: where `body_from_lines` then also missed it (its own handle search gives up
+#: after 6 lines) and the ad was filed. 6 matches that search, so the two agree
+#: about where the post begins.
+#:
+#: Widening is close to free because the check is an EXACT line equal to "Ad" — a
+#: body line that is precisely that and nothing else is not a real post.
+AD_WINDOW = 6
 
 #: Deliberately NOT an ad tell: the "From <domain>" card line. The must-pass
 #: @OptaAnalyst repost ends "From theanalyst.com", so that heuristic costs a
@@ -481,8 +518,18 @@ def football_signals(text: str) -> Dict[str, Tuple[str, ...]]:
     Returns matched substrings, never an interpretation of them. Nothing
     downstream may treat a match as an availability value.
     """
-    low = fold(str(text))
-    raw = str(text)
+    # Match against whitespace-collapsed text.
+    #
+    # `body_from_lines` joins a post with "\n", and X breaks lines wherever the
+    # rendering did — so "TEAM\nNEWS: Palmer starts" missed `\bteam news\b` while
+    # the identical post on one line matched. The inconsistency was accidental
+    # rather than chosen: patterns written with `\s+` (the qualified-XI rule)
+    # already survived the split, and the ones written with a literal space did
+    # not. Collapsing here fixes every multi-word pattern at once instead of
+    # rewriting eighty of them and missing some.
+    flat = WHITESPACE.sub(" ", str(text))
+    low = fold(flat)
+    raw = flat
     hits: Dict[str, list] = {}
     for family, patterns in _FOLDED_COMPILED.items():
         for pattern in patterns:

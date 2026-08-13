@@ -484,9 +484,22 @@ def poll(
             # cannot support one would be worse than screening on content alone,
             # and content alone is enough for that post — it scores zero
             # football terms.
+            # Scoped to `unparsed_news`, because `value` is only prose for that
+            # claim type.
+            #
+            # For a parsed claim `value` is a number, a date or a dict — a
+            # `chance_of_playing` row has value=0 and its prose lives in `quote`.
+            # Screening those as prose refuses them on evidence it never looked
+            # at: measured, 3 of 3 rows the validator accepts were dropped, and
+            # not recorded in `rejections` either. No effect today because
+            # `_claims_from_feed` already skips non-unparsed_news, but that
+            # function's docstring promises the gap closes "when surname
+            # resolution lands" — at which point this would silently eat the
+            # strongest claim class the lane has.
             kept, refused = [], []
             for item in inbox_result.availability:
-                if str(item.get("source") or "").startswith("x:"):
+                if (str(item.get("source") or "").startswith("x:")
+                        and item.get("claim_type") == "unparsed_news"):
                     verdict = x_relevance.is_football_text(
                         str(item.get("value") or ""),
                     )

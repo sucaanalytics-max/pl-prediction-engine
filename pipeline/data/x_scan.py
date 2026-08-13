@@ -54,6 +54,7 @@ import csv
 import io
 import logging
 import re
+import sys
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -288,25 +289,42 @@ def to_items(
     profile_root = bool(scan.get("profileRoot", True))
     refusals: Counter = Counter()
     considered = 0
+    #: Posts the extractor handed over, before any of our own drops.
+    #:
+    #: Separate from `considered` because the drift alarm needs it. `considered`
+    #: counts posts that survived the structural gates below, so a DOM change that
+    #: breaks the status permalink or the body assembly takes it to zero — and the
+    #: alarm, which only fired when `considered` was non-zero, then said nothing at
+    #: all. That is the exact shape it claims to catch.
+    read = 0
+    #: Why the structural gates dropped things, so a total structural wipe can name
+    #: the field that broke rather than just reporting silence.
+    structural: Counter = Counter()
 
     for post in scan.get("posts") or []:
         if not isinstance(post, Mapping):
+            structural["not-a-mapping"] += 1
             continue
+        read += 1
         stamp = claimed_at(post.get("status_id"))
         if stamp is None:
+            structural["unreadable-status-id"] += 1
             continue
         age = (moment - datetime.fromisoformat(stamp.replace("Z", "+00:00"))).days
         # A month-old post is not news. Bounded here as well as downstream so a
         # scan of a quiet account does not refile its whole visible history.
         if age > max_age_days or age < 0:
+            structural["outside-the-age-window"] += 1
             continue
 
         body = body_from_lines(post.get("lines") or [])
         if len(body) < MIN_BODY:
+            structural["body-too-short"] += 1
             continue
 
         url = str(post.get("url") or "")
         if not url.startswith("https://"):
+            structural["no-https-url"] += 1
             continue
 
         author = str(post.get("author") or "").strip()
@@ -355,15 +373,17 @@ def to_items(
             "horizon_gameweeks": "",
         })
 
-    _log_relevance(handle, len(items), considered, refusals, trusted)
+    _log_relevance(handle, len(items), considered, read, refusals, structural,
+                   trusted)
     return items
 
 
-def _log_relevance(handle: str, filed: int, considered: int,
+def _log_relevance(handle: str, filed: int, considered: int, read: int,
                    refusals: Mapping[str, int],
+                   structural: Mapping[str, int],
                    trusted: Optional[Iterable[str]]) -> None:
     """
-    Say what was refused and why, and raise when a curated scan yields nothing.
+    Say what was dropped and why, and warn when a curated scan yields nothing.
 
     An allowlist's only real failure mode is silent recall loss, and a silent
     0-of-N is indistinguishable from a quiet day — the same failure CLAUDE.md
@@ -371,24 +391,53 @@ def _log_relevance(handle: str, filed: int, considered: int,
     reports success". So a curated page that files none of what it read is a
     WARNING: either the vocabulary has gone stale or the extractor has drifted,
     and both need a human.
+
+    The first version returned early when `considered` was 0, which is precisely
+    the shape of an extractor drift — break the status permalink or the body
+    assembly and every post is dropped structurally, `considered` never leaves 0,
+    and the alarm advertised as catching drift said nothing at all. Measured on
+    four induced failures: only the vocabulary one produced any output. So the
+    trigger is now what the extractor HANDED OVER, and the structural tally is
+    reported so the message can name the field that broke.
     """
-    if not considered:
+    if not read:
         return
-    if refusals:
+
+    if refusals or structural:
         logger.info(
-            "x relevance (%s): filed %d of %d; refused %s",
-            handle or "unknown", filed, considered,
-            ", ".join(f"{reason} x{count}"
-                      for reason, count in sorted(refusals.items())),
+            "x relevance (%s): filed %d of %d read; %s",
+            handle or "unknown", filed, read,
+            "; ".join(filter(None, (
+                ", ".join(f"{reason} x{count}"
+                          for reason, count in sorted(refusals.items())),
+                ", ".join(f"{reason} x{count}"
+                          for reason, count in sorted(structural.items())),
+            ))) or "nothing dropped",
         )
+
     surfaces = (frozenset(fold(h) for h in trusted) if trusted is not None
                 else trusted_handles())
-    if filed == 0 and fold(handle) in surfaces:
+    if filed or fold(handle) not in surfaces:
+        return
+
+    if considered:
         logger.warning(
-            "x relevance: curated scan of %s filed 0 of %d posts. Either the "
-            "extractor has drifted or the vocabulary has gone stale; check "
+            "x relevance: curated scan of %s filed 0 of %d posts, all refused by "
+            "the gate. The vocabulary may have gone stale; check "
             "pipeline/data/x_relevance.py (gate v%s) before assuming a quiet day",
             handle, considered, GATE_VERSION,
+        )
+    else:
+        # Nothing even reached the gate: the extractor is the suspect, not the
+        # vocabulary. Naming which structural check ate them is the difference
+        # between a five-minute fix and a selector hunt.
+        logger.warning(
+            "x relevance: curated scan of %s read %d post(s) and NONE reached the "
+            "gate (%s). That is the shape of extractor drift — check "
+            "pipeline/data/x_extract.js against the live page",
+            handle, read,
+            ", ".join(f"{reason} x{count}"
+                      for reason, count in sorted(structural.items())) or "unknown",
         )
 
 
@@ -512,6 +561,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--predictions-dir", default="predictions")
     parser.add_argument("--max-age-days", type=int, default=3)
     args = parser.parse_args(argv)
+
+    # Turn the records on. Without this the whole refusal tally is written to a
+    # logger with no handler and discarded, so a scan that refused 21 posts prints
+    # exactly what a scan that read nothing prints: "x inbox now holds N row(s)".
+    # Measured — an operator running the documented command saw no trace of 4
+    # promoted-post and 17 untrusted-surface refusals. The alarm survived only
+    # because WARNING reaches logging's last-resort handler.
+    #
+    # To stderr, so the stdout line stays the machine-readable result and a caller
+    # piping it is unaffected.
+    logging.basicConfig(
+        level=logging.INFO, stream=sys.stderr, format="%(levelname)s %(message)s",
+    )
 
     total = ingest(
         json.loads(Path(args.raw).read_text(encoding="utf-8")),
