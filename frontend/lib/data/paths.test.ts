@@ -34,6 +34,7 @@ import { matchDetailDescriptor } from "@/lib/data/match-detail";
 import { sensitivityDescriptor } from "@/lib/data/sensitivity";
 import { ACCURACY } from "@/lib/data/accuracy";
 import { NEWS_FEED } from "@/lib/data/news-feed";
+import { MINUTES_CONFLICTS } from "@/lib/data/minutes-conflicts";
 import { projectionsDescriptor } from "@/lib/data/projections";
 
 const REPO = join(__dirname, "..", "..", "..");
@@ -326,11 +327,12 @@ describe("descriptor factories point at paths something writes", () => {
     // to `ALL_DESCRIPTORS` — the same blind spot, reached a different way.
     { name: "accuracy", d: ACCURACY },
     { name: "news feed", d: NEWS_FEED },
+    { name: "minutes conflicts", d: MINUTES_CONFLICTS },
   ];
 
   it("finds the factories to check", () => {
     // Guards the guard: an empty list would pass the loop below vacuously.
-    expect(factories.length).toBeGreaterThanOrEqual(8);
+    expect(factories.length).toBeGreaterThanOrEqual(9);
   });
 
   it.each(factories)("$name is published", ({ d }) => {

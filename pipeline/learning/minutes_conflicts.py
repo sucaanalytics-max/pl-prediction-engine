@@ -251,11 +251,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     if args.write:
         stamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
-        written = write_artifact(
-            to_artifact(conflicts, ambiguous, generated_at=stamp),
-            root / "fpl" / f"minutes_conflicts_gw{args.gameweek:02d}.json",
-        )
-        print(f"\nwrote {written}")
+        payload = to_artifact(conflicts, ambiguous, generated_at=stamp)
+        name = f"minutes_conflicts_gw{args.gameweek:02d}.json"
+        # Both copies, as the poller does. A local run that wrote only the private
+        # artifact would leave the app showing something else, which is the shape
+        # of every "the page has stale numbers" bug this repo has had.
+        for target in (root / "fpl" / name,
+                       Path("frontend/public/predictions/fpl") / name):
+            print(f"\nwrote {write_artifact(payload, target)}")
     return 0
 
 

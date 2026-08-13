@@ -29,6 +29,7 @@ import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import AgentIdleNotice from "@/components/AgentIdleNotice";
 import XScanButton from "@/components/XScanButton";
+import MinutesConflicts from "@/components/MinutesConflicts";
 import type {
   EvidenceClaim, EvidenceEntry, EvidencePlayer, EvidenceView,
 } from "@/lib/data/narrow";
@@ -350,6 +351,20 @@ export default function EvidencePage() {
             It leads because it is the section that actually has content: the claim
             trees below need the agent, which is idle until a deadline nears. */}
         <CapturedHeadlines />
+
+        {/* Where our own numbers and our own evidence disagree.
+            Second, because it is the section with the highest decision value per
+            line: our GW1 projection gave Gvardiol 14.3 expected minutes and 0.78
+            xP while a post already in x_inbox.csv said he "played full 90 -
+            started LB". Both facts were in the repository and no page put them
+            together, so a reader of the projection alone benches a nailed-on
+            starter — a ~3-point swing on the real squad, from one sentence. */}
+        <Section
+          title="Projections the evidence argues with"
+          subtitle="Reported, never applied — read the quote and decide"
+        >
+          <MinutesConflicts />
+        </Section>
 
         {/* Above the section, not inside WhenProven's fallback: the reason the
             claim trees are missing is the same whether the artifact is absent or

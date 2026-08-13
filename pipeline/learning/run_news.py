@@ -369,9 +369,18 @@ def _report_minutes_conflicts(
             conflicts, ambiguous,
             generated_at=observed_at.isoformat().replace("+00:00", "Z"),
         )
+        name = f"minutes_conflicts_gw{gameweek:02d}.json"
+        minutes_conflicts.write_artifact(payload, predictions_dir / "fpl" / name)
+        # And the copy the app reads.
+        #
+        # Written here rather than by a `cp` in the workflow so the two cannot
+        # drift: a published file that no longer matches the private one is the
+        # shape of every "the page shows stale numbers" bug in this repo. The path
+        # is deliberately outside news.yml's FORBID_PATHS, which reserves
+        # xp_gw/evidence_view/accuracy for the agent — this is the news lane's own
+        # artifact and the news lane owns it.
         minutes_conflicts.write_artifact(
-            payload,
-            predictions_dir / "fpl" / f"minutes_conflicts_gw{gameweek:02d}.json",
+            payload, Path("frontend") / "public" / "predictions" / "fpl" / name,
         )
     except Exception as exc:
         logger.warning("minutes conflicts not written (%s)", exc)

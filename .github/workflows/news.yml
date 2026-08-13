@@ -98,7 +98,9 @@ jobs:
             predictions/fpl/deltas.jsonl \
             predictions/news_feed_state.json \
             frontend/public/predictions/fpl/deltas.jsonl \
-            frontend/public/predictions/fpl/news_view.json
+            frontend/public/predictions/fpl/news_view.json \
+            predictions/fpl/minutes_conflicts_gw*.json \
+            frontend/public/predictions/fpl/minutes_conflicts_gw*.json
 
       - name: Surface the run report
         if: always()
