@@ -20,7 +20,18 @@
 
 set -o pipefail
 
-REPO="/Users/tusk-jvb/Documents/Work/PL-Prediction/pl-prediction-engine"
+# Derived from this script's own location, not hardcoded.
+#
+# It WAS an absolute path, and the repo has now moved — out of `~/Documents`,
+# because iCloud's Desktop & Documents sync was confirmed as the source of the
+# duplicated files and had begun corrupting `.git` refs (see CLAUDE.md). A
+# hardcoded path fails that move silently in the worst way: launchd fires the job,
+# `cd` fails, and "repo not found" goes to a log nobody reads while the scan
+# quietly stops running.
+#
+# `${BASH_SOURCE[0]}` rather than `$0` so it is still correct if sourced, and
+# `pwd -P` to resolve symlinks, since launchd may invoke this through one.
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 PYTHON="$REPO/.venv/bin/python"
 SCRATCH="$(mktemp -d)"
 trap 'rm -rf "$SCRATCH"' EXIT

@@ -120,10 +120,19 @@ a duplicated source file.
 1. Turn off *Desktop & Documents Folders* — System Settings → Apple ID → iCloud →
    iCloud Drive → Options. Note this moves the existing contents into iCloud, so
    read the dialog before accepting.
-2. Move this repo outside `~/Documents` (for example `~/dev/pl-prediction-engine`),
-   which is the narrower change and leaves the rest of Documents syncing.
+2. Move this repo outside `~/Documents`, which is the narrower change and leaves
+   the rest of Documents syncing.
 
-Until one of those happens, `scripts/clean_sync_duplicates.sh --apply` and the
+**Done on 2026-08-13: the repo now lives at `~/dev/pl-prediction-engine`**, which
+is not file-provider backed, so iCloud cannot reach it. Verified after the move:
+698 tracked files intact, the venv relocated cleanly (`sys.prefix` follows), and the
+full gate green — 1780 python, 877 frontend, lint, build. `scripts/x_scan.sh` now
+derives its own root from `${BASH_SOURCE[0]}` rather than an absolute path, because
+a hardcoded one fails a move silently: launchd fires, `cd` fails, and the scan stops
+while reporting to a log nobody reads.
+
+The rest of `~/Documents` still syncs, so anything else kept there has the same
+exposure. Until that changes, `scripts/clean_sync_duplicates.sh --apply` and the
 detector in `frontend/test/no-untracked-imports.test.ts` remain the mitigation, and
 `find .git -name "* 2*" -delete` is worth running whenever a git operation reports a
 bad object.
