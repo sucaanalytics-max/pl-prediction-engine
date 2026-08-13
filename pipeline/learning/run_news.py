@@ -48,6 +48,7 @@ from pipeline.data import (
     grok_feed, news_extract, news_feeds, x_relevance, x_scan, youtube,
 )
 from pipeline.learning import deltas as deltas_store
+from pipeline.learning import minutes_conflicts
 from pipeline.learning.availability_conflicts import resolve_claims
 from pipeline.learning.availability_evidence import history, record
 
@@ -338,6 +339,57 @@ def _club_aliases(bootstrap: Mapping[str, Any]) -> Dict[str, List[str]]:
     return aliases
 
 
+def _report_minutes_conflicts(
+    predictions_dir: Path,
+    bootstrap: Mapping[str, Any],
+    gameweek: int,
+    inbox_text: str,
+    observed_at: datetime,
+) -> None:
+    """
+    Publish where the minutes model and the scanned evidence disagree.
+
+    Optional by design, and therefore allowed to fail quietly — this is a reading
+    list, not a claim, so losing it costs a convenience rather than a projection.
+    CLAUDE.md's rule is that sources the models DEPEND on must fail loudly; nothing
+    depends on this, and taking the news poll down over a missing xp artifact would
+    be the wrong trade. The absence is logged either way.
+    """
+    xp_path = predictions_dir / "fpl" / f"xp_gw{gameweek:02d}.json"
+    if not xp_path.is_file():
+        # Routine: the agent writes xp and is deadline-gated, so for most of a
+        # gameweek cycle there is simply nothing to compare against.
+        logger.info("minutes conflicts: no %s yet; skipping", xp_path.name)
+        return
+    try:
+        conflicts, ambiguous = minutes_conflicts.find_conflicts(
+            json.loads(xp_path.read_text(encoding="utf-8")), inbox_text, bootstrap,
+        )
+        payload = minutes_conflicts.to_artifact(
+            conflicts, ambiguous,
+            generated_at=observed_at.isoformat().replace("+00:00", "Z"),
+        )
+        minutes_conflicts.write_artifact(
+            payload,
+            predictions_dir / "fpl" / f"minutes_conflicts_gw{gameweek:02d}.json",
+        )
+    except Exception as exc:
+        logger.warning("minutes conflicts not written (%s)", exc)
+        return
+
+    logger.info(
+        "minutes conflicts: %d disagreement(s) between the model and the scan",
+        len(conflicts),
+    )
+    for c in conflicts[:5]:
+        # The widest first, which is where a human's attention is worth most.
+        logger.warning(
+            "minutes conflict: %s (%s) model says %.0f min / %.2f xP, but %s "
+            "wrote about them — %s",
+            c.player, c.club, c.e_minutes, c.xp, c.source, c.url,
+        )
+
+
 def poll(
     predictions_dir: Path,
     now: Optional[datetime] = None,
@@ -459,11 +511,12 @@ def poll(
     # Committed file: the scan runs on a Mac with a browser, the poller runs in
     # GitHub Actions without one, and git is the only channel both can reach.
     inbox_path = Path("predictions") / "fpl" / x_scan.INBOX_FILENAME
+    inbox_text = ""
     if inbox_path.is_file():
         try:
+            inbox_text = inbox_path.read_text(encoding="utf-8")
             inbox_result = grok_feed.validate(
-                grok_feed.parse_sheet(inbox_path.read_text(encoding="utf-8")),
-                moment,
+                grok_feed.parse_sheet(inbox_text), moment,
             )
         except Exception as exc:
             # A corrupt inbox must not cost the RSS feeds their poll.
@@ -518,6 +571,20 @@ def poll(
                 logger.warning("x inbox refused %s: %s", source, reason)
             for rejection in inbox_result.rejections[:5]:
                 logger.warning("x inbox rejected: %s", rejection)
+
+            # Where the minutes model and this evidence disagree.
+            #
+            # Runs here because this is the one place that has both halves in
+            # hand, and because the disagreement is worth surfacing on the news
+            # tick rather than once a day: a pre-season minutes report lands
+            # hours before a deadline, and the projection it contradicts was
+            # written before it.
+            #
+            # Reported, never applied — see `minutes_conflicts` for why turning a
+            # quote into an `e_minutes` needs a fitted model rather than a regex.
+            _report_minutes_conflicts(
+                predictions_dir, bootstrap, gameweek, inbox_text, observed_at,
+            )
     else:
         logger.info("x inbox: %s absent; nothing to read", inbox_path)
 
