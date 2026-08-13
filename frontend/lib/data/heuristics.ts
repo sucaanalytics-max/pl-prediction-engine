@@ -144,6 +144,19 @@ export interface SquadPlayer {
   readonly position: string;
   readonly team: string;
   readonly price: number | null;
+  /**
+   * On the bench for this gameweek.
+   *
+   * The API has always carried it (`FplLivePlayer.bench`, set by the server from
+   * the pick's slot) and this narrower dropped it, so nothing downstream could
+   * tell a starter from a substitute — which makes "is your XI the best eleven
+   * available?" unanswerable, and that is the single most useful question a
+   * one-gameweek projection can answer about a squad you already own.
+   *
+   * Optional because a squad read from a source that does not distinguish them is
+   * still a squad; consumers must treat `undefined` as "unknown", not "starting".
+   */
+  readonly bench?: boolean;
 }
 
 export interface SquadView {
@@ -238,6 +251,9 @@ function narrowSquad(raw: unknown): SquadView | null {
       position: optString(item.position) ?? "",
       team: optString(item.team) ?? "",
       price: optNumber(item.price),
+      // Preserved rather than defaulted: `bench: false` on an unknown would
+      // silently promote every substitute into the XI.
+      bench: typeof item.bench === "boolean" ? item.bench : undefined,
     });
   }
   if (kept.length === 0) return null;

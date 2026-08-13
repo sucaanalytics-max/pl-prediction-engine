@@ -18,6 +18,7 @@ import {
   ProvenanceStrip, Section, WhenProven,
 } from "@/components/data/Artifact";
 import SquadBoard from "@/components/SquadBoard";
+import GameweekCall from "@/components/GameweekCall";
 import { DeltaFeedView } from "@/components/data/DeltaFeed";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import type { DeltaFeed, Health, MatchesFile } from "@/lib/data/narrow";
@@ -172,6 +173,22 @@ export default function NowPage() {
             and an answer; this app opened with empty panels, and the squad was on
             no screen at all — /api/fpl/state returned all fifteen the whole time
             and the narrower dropped them. */}
+        {/* The model's call, ABOVE the heuristic's.
+            Measured on the live app: this page opened with "Transfer F.Kadıoğlu →
+            Gabriel, +7.5 pts" and "Captain B.Fernandes · 14.2 proj", sourced from
+            `fplreview-2026-08-04` — a paid competitor's CSV, nine days stale. Every
+            part of that contradicted this repo's own projection: Kadıoğlu is 3.9
+            xP, the second-best defender in the squad, so the app's most prominent
+            advice was to sell the player the model most wants on the pitch. The
+            heuristic stays, badged, because until a gameweek seals it is the only
+            thing that ranks transfers — but it no longer speaks first. */}
+        <Section
+          title="Your GW1 call"
+          subtitle="Captain and XI, computed from the model's own projection"
+        >
+          <GameweekCall />
+        </Section>
+
         <Section
           title="Your squad"
           subtitle="The fifteen, and the one move worth making"
