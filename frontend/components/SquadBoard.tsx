@@ -3,6 +3,10 @@
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { proven } from "@/lib/data/artifact";
 import type { SquadPlayer } from "@/lib/data/heuristics";
+import { useArtifact } from "@/lib/data/useArtifact";
+import {
+  projectionsDescriptor, type Projection,
+} from "@/lib/data/projections";
 
 /**
  * Your fifteen, and the one move worth making.
@@ -18,11 +22,20 @@ import type { SquadPlayer } from "@/lib/data/heuristics";
  * ## What the numbers are, and are not
  *
  * The transfer and captaincy lines come from the heuristic engine, badged. They are
- * NOT the decision model: `xp_gw` is written by the agent, which is deadline-gated
- * and idle for roughly ten days of every gameweek cycle, so per-player model
- * projections do not exist yet. Saying so beside the number is the whole point —
- * FPL Review's own docs tell you to go read a press conference and type a number in,
+ * NOT the decision model. Saying so beside the number is the whole point — FPL
+ * Review's own docs tell you to go read a press conference and type a number in,
  * and nobody in the category tells you which of their numbers is measured.
+ *
+ * **The per-player `xP` is different, and it is the real model.** This docstring
+ * used to say model projections "do not exist yet", which was true when it was
+ * written and false from the moment `xp_public_gw01.json` shipped with 577 players.
+ * The consequence was not cosmetic: the squad rendered heuristic numbers while the
+ * fitted ones sat unread in a published artifact, so the strongest thing the
+ * pipeline produces was invisible on the screen that matters most.
+ *
+ * A stale comment did that. The projection is now read directly and shown per
+ * player, and a missing one prints `— xP` rather than a blank, because "the model
+ * has no view of this player" and "we did not look" are different facts.
  *
  * The squad source is stated for the same reason. A captured draft is not a live
  * team, and the two diverge the moment you make a transfer on the official site.
@@ -56,10 +69,71 @@ const SOURCE_LABEL: Record<string, string> = {
   captured_authenticated_draft: "captured draft, not live",
 };
 
+/**
+ * The model's projection for one squad player, or null.
+ *
+ * Matched on **name and position**, not name and club, and that is a measured
+ * choice rather than a preference. `SquadPlayer.team` is FPL's short code (`LIV`)
+ * while the projection carries the full club name (`Liverpool`), so a club
+ * comparison matches nothing at all — verified in a browser, where all fifteen
+ * cards read `— xP` while the artifact held a projection for every one of them.
+ * The squad shape carries no `element_id` to join on: `fpl-live-server` builds it
+ * from FPL's picks and drops the id on the way through.
+ *
+ * Position is the discriminator that IS shared and IS reliable — both sides emit
+ * GKP/DEF/MID/FWD — and it collapses most name collisions, since two players
+ * sharing a surname rarely share a position too.
+ *
+ * **Ambiguity is refused, never guessed.** If two projections match, this returns
+ * null and the card shows `— xP`. FPL has six Wilsons; putting another player's
+ * projection on yours is worse than showing nothing, and it is the same rule
+ * `news_extract` applies to its 441 ambiguous surname keys.
+ *
+ * Folded on both sides so `Kadıoğlu` matches `Kadioglu` and `Ødegaard` matches
+ * `Odegaard` — not hypothetical, both are in this league.
+ */
+function projectionFor(
+  projections: readonly Projection[],
+  player: SquadPlayer,
+): Projection | null {
+  const name = fold(player.name);
+  const position = fold(player.position ?? "");
+  const hits = projections.filter(
+    (p) => fold(p.name ?? "") === name
+      && (!position || fold(p.position ?? "") === position),
+  );
+  return hits.length === 1 ? hits[0] : null;
+}
+
+/** Lowercase and strip accents, so one spelling of a name matches another. */
+function fold(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    // Turkish dotless ı does not decompose, so it needs naming explicitly — the
+    // exact character that made an earlier squad match miss F.Kadıoğlu.
+    .replace(/ı/g, "i")
+    .toLowerCase()
+    .trim();
+}
+
 export default function SquadBoard() {
   const { artifact } = useHeuristics();
   const view = proven(artifact);
   const squad = view?.squad ?? null;
+
+  // The published model projection for the current gameweek. Absent for most of a
+  // cycle — the agent that writes it is deadline-gated — so every read of it is
+  // optional and the board works without it.
+  // `event.id`, which is FPL's own gameweek number. Falling back to 1 rather than
+  // skipping the read: pre-season the event is the upcoming one, and asking for
+  // gw01 is the correct guess there — a wrong gameweek 404s and renders `absent`,
+  // which is honest, whereas not asking shows nothing on the one week it matters.
+  const gameweek = view?.event?.id ?? 1;
+  const { artifact: projectionsArtifact } = useArtifact(
+    projectionsDescriptor(gameweek),
+  );
+  const projections = proven(projectionsArtifact)?.players ?? [];
 
   if (!squad) {
     // One line. A missing squad is worth saying and not worth a panel — the rest of
@@ -152,20 +226,48 @@ export default function SquadBoard() {
               {row.position}
             </span>
             <div className="flex gap-2 flex-wrap">
-              {row.players.map((player) => (
-                <div
-                  key={`${player.name}-${player.team}`}
-                  className="glass-inset px-3 py-2 text-center min-w-[92px]"
-                  data-testid="squad-player"
-                >
-                  <p className="text-sm" style={{ color: "var(--text-1)" }}>
-                    {player.name}
-                  </p>
-                  <p className="text-[10px] font-mono" style={{ color: "var(--text-4)" }}>
-                    {player.team} · {money(player.price)}
-                  </p>
-                </div>
-              ))}
+              {row.players.map((player) => {
+                const projection = projectionFor(projections, player);
+                return (
+                  <div
+                    key={`${player.name}-${player.team}`}
+                    className="glass-inset px-3 py-2 text-center min-w-[92px]"
+                    data-testid="squad-player"
+                  >
+                    <p className="text-sm" style={{ color: "var(--text-1)" }}>
+                      {player.name}
+                    </p>
+                    <p className="text-[10px] font-mono" style={{ color: "var(--text-4)" }}>
+                      {player.team} · {money(player.price)}
+                    </p>
+                    {/* The model's own projection, when it exists.
+                        This component's docstring used to say per-player model
+                        projections "do not exist yet" — true when it was written
+                        and false since `xp_public_gw01.json` shipped with 577
+                        players. So the squad showed heuristic numbers while the
+                        real ones sat unread in the artifact.
+
+                        `—` rather than a blank when a player is absent from the
+                        projection: the two states are "the model has no view" and
+                        "we did not look", and only the first is true here. */}
+                    <p
+                      className="text-[11px] font-mono mt-1"
+                      style={{ color: projection ? "var(--text-2)" : "var(--text-4)" }}
+                      data-testid="squad-xp"
+                      title={
+                        projection
+                          ? `model projection: ${projection.xp?.toFixed(2)} xP, `
+                            + `${projection.eMinutes?.toFixed(0)} expected minutes`
+                          : "not in the published projection"
+                      }
+                    >
+                      {projection?.xp !== null && projection?.xp !== undefined
+                        ? `${projection.xp.toFixed(1)} xP`
+                        : "— xP"}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}

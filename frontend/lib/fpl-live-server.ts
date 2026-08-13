@@ -108,33 +108,67 @@ interface PicksPayload {
   };
 }
 
-interface DraftPick {
+export interface DraftPick {
   elementId: number;
   position: number;
   bench: boolean;
   status?: "captain" | "vice";
 }
 
-// Captured from the authenticated FPL UI on 28 July 2026. The public picks
-// endpoint is intentionally unavailable before GW1, so this is explicitly
-// labelled as a captured draft and is enriched from live official player data.
-const CAPTURED_DRAFT_AT = "2026-07-28T00:00:00.000Z";
-const CAPTURED_DRAFT: DraftPick[] = [
-  { elementId: 350, position: 1, bench: false, status: "vice" },
-  { elementId: 387, position: 2, bench: false },
-  { elementId: 229, position: 3, bench: false },
-  { elementId: 388, position: 4, bench: false },
-  { elementId: 200, position: 5, bench: false },
-  { elementId: 13, position: 6, bench: false },
-  { elementId: 40, position: 7, bench: false },
-  { elementId: 452, position: 8, bench: false },
-  { elementId: 155, position: 9, bench: false },
-  { elementId: 379, position: 10, bench: false },
-  { elementId: 106, position: 11, bench: false, status: "captain" },
-  { elementId: 251, position: 12, bench: true },
-  { elementId: 61, position: 13, bench: true },
-  { elementId: 368, position: 14, bench: true },
-  { elementId: 25, position: 15, bench: true },
+// Captured from the authenticated FPL UI (entry 20945) on 13 August 2026. The
+// public picks endpoint is intentionally unavailable before the GW1 deadline, so
+// this is explicitly labelled as a captured draft and enriched from live official
+// player data.
+//
+// ## Why this was replaced, and why the date matters
+//
+// The previous capture was 28 July, and by 13 August the real squad had diverged
+// almost completely: of these fifteen only Szoboszlai and Thiago appeared in the
+// old list. So every number this app derived — the squad board, the transfer
+// suggestion, the captaincy line — was about a team the manager no longer had.
+// That is worse than showing nothing, because it is specific and wrong, and the
+// only tell was a `capturedAt` date in a tooltip.
+//
+// Verified rather than transcribed: each row was resolved from the bootstrap by
+// (surname, club, position) with a refusal on any ambiguous match, and the
+// resulting prices sum to **£96.5m — exactly the squad value the FPL UI reports**.
+// That total is an independent check on the whole list, since a single wrong player
+// would almost certainly break it.
+//
+// This will go stale the same way. It is only reachable while FPL keeps GW1 picks
+// private; the moment the deadline passes, `picks` is served and this is unused.
+export const CAPTURED_DRAFT_AT = "2026-08-13T00:00:00.000Z";
+
+/**
+ * The bank, from the same capture.
+ *
+ * Captured because it is unobtainable otherwise: FPL's entry endpoint reports
+ * `last_deadline_bank: null` until a deadline has passed, so before GW1 there is no
+ * API route to it at all. Without it every transfer suggestion is evaluated against
+ * a budget of zero and silently limited to like-for-like swaps.
+ *
+ * This is NOT the null-to-zero coercion fixed earlier in this file. That invented a
+ * measurement the API had not made; this records one the FPL UI displayed, next to
+ * the squad it was displayed with, dated. When the deadline passes, `picks` carries
+ * the real bank and this is unused.
+ */
+export const CAPTURED_BANK = 3.5;
+export const CAPTURED_DRAFT: DraftPick[] = [
+  { elementId: 109, position: 1, bench: false },                     // Verbruggen
+  { elementId: 391, position: 2, bench: false },                     // Gvardiol
+  { elementId: 8, position: 3, bench: false },                       // Calafiori
+  { elementId: 423, position: 4, bench: false },                     // Shaw
+  { elementId: 368, position: 5, bench: false },                     // Szoboszlai
+  { elementId: 426, position: 6, bench: false, status: "captain" },   // B.Fernandes
+  { elementId: 397, position: 7, bench: false },                     // Semenyo
+  { elementId: 427, position: 8, bench: false },                     // Mbeumo
+  { elementId: 542, position: 9, bench: false },                     // E.Le Fée
+  { elementId: 165, position: 10, bench: false, status: "vice" },     // João Pedro
+  { elementId: 106, position: 11, bench: false },                     // Thiago
+  { elementId: 496, position: 12, bench: true },                      // Kinsky
+  { elementId: 223, position: 13, bench: true },                      // Mateta
+  { elementId: 173, position: 14, bench: true },                      // Thomas
+  { elementId: 113, position: 15, bench: true },                      // F.Kadıoğlu
 ];
 
 async function getOfficialJson<T>(path: string, allowNotFound = false): Promise<T | null> {
@@ -397,11 +431,16 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
   // lead to opposite transfer decisions, and the consumer type
   // (`fpl-live.ts:188`) has always been `number | null`, so the null had a place
   // to go the whole time.
+  // Order matters: the API first, then the capture, then null. A captured value
+  // must never shadow a live one — the moment `picks` exists it is authoritative,
+  // and `CAPTURED_BANK` is only reachable on the same pre-deadline path that
+  // reaches `CAPTURED_DRAFT`, so the squad and its bank always come from the same
+  // observation rather than from two different days.
   const bank = picks
     ? picks.entry_history.bank / 10
-    : entry.last_deadline_bank === null
-      ? null
-      : entry.last_deadline_bank / 10;
+    : entry.last_deadline_bank !== null
+      ? entry.last_deadline_bank / 10
+      : CAPTURED_BANK;
 
   // What the transfer recommenders get, which is a different question.
   //
