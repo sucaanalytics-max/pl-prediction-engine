@@ -72,12 +72,61 @@ re-check these:
 
 | Suspect | Verdict |
 |---|---|
-| iCloud Desktop & Documents | OFF — `~/Documents` is a real directory and there is no `CloudDocs/Documents` |
+| **iCloud Desktop & Documents** | **CONFIRMED — this is the cause. See below.** |
 | OneDrive | Running and backs up *a* Documents folder, but not this one: different inode, unrelated contents |
 | Google Drive | Running; its root has `My Drive`/`Shared drives` and no Documents mirror |
 | `npm run build` | Zero duplicates, over both a clean and an existing `.next` |
 | Shell-written files | Not duplicated (canary) |
 | Editor/tool-written files | Not duplicated (canary) |
+
+### The cause, found 2026-08-13
+
+iCloud Drive's *Desktop & Documents Folders* sync is **ON**, and `~/Documents` is
+backed by a File Provider domain:
+
+```
+$ xattr -p com.apple.file-provider-domain-id ~/Documents
+com.apple.CloudDocs.iCloudDriveFileProvider/3B597E81-4AEE-4AF1-BB21-4319A3C865DC
+```
+
+`bird` (iCloudDriveCore) and `com.apple.CloudDocs.iCloudDriveFileProvider` are both
+running. The ` 2` suffix is Apple's own conflict-copy naming.
+
+**Why the earlier verdict said OFF, and why that test was wrong.** It looked for
+`~/Library/Mobile Documents/CloudDocs/Documents` and found none. That was the right
+check for the old implementation and is useless against the current one: under the
+File Provider API the synced folder *stays* at `~/Documents` and is materialised in
+place, so it stats as an ordinary directory on the boot volume with no symlink and
+no mirror path. Everything the original investigation measured was true and the
+conclusion drawn from it was not.
+
+The correct test is the xattr above, or `ls -la@ ~/Documents` — which prints
+`com.apple.file-provider-domain-id`.
+
+**This also explains the two properties that made it look like something else:** the
+episodic bulk reconciles (743 duplicates, then 3, then 9) are iCloud reconciling
+after a period offline, not a per-file watcher — which is why two multi-minute canary
+tests never reproduced it.
+
+**It now corrupts `.git`.** On 2026-08-13 it produced seven duplicated files inside
+`.git`, including `refs/remotes/origin/main 2` pointing at a commit from hours
+earlier, plus a stale `index` and reflogs. A push failed with
+`fatal: bad object refs/remotes/origin/main 2`. Deleting the duplicates and running
+`git fsck` cleared it, but a stale ref or index is a class of corruption worse than
+a duplicated source file.
+
+**The fix is one of these, and neither is a code change:**
+
+1. Turn off *Desktop & Documents Folders* — System Settings → Apple ID → iCloud →
+   iCloud Drive → Options. Note this moves the existing contents into iCloud, so
+   read the dialog before accepting.
+2. Move this repo outside `~/Documents` (for example `~/dev/pl-prediction-engine`),
+   which is the narrower change and leaves the rest of Documents syncing.
+
+Until one of those happens, `scripts/clean_sync_duplicates.sh --apply` and the
+detector in `frontend/test/no-untracked-imports.test.ts` remain the mitigation, and
+`find .git -name "* 2*" -delete` is worth running whenever a git operation reports a
+bad object.
 
 The events are **episodic** — 743, then 3, then 9 — which looks like a bulk
 reconcile rather than a per-file watcher, and it did not reproduce under two canary
