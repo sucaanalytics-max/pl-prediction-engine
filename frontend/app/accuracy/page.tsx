@@ -74,10 +74,10 @@ function Excess({ report }: { report: Accuracy }) {
         className="card p-4"
         role="alert"
         data-state="beats-ceiling"
-        style={{ borderColor: "var(--danger, #f87171)" }}
+        style={{ borderColor: "var(--error)" }}
       >
         <span className="text-[9px] font-semibold uppercase tracking-wider"
-              style={{ color: "var(--danger, #f87171)" }}>
+              style={{ color: "var(--error)" }}>
           Impossible result — investigate
         </span>
         <p className="text-sm mt-1" style={{ color: "var(--text-2)" }}>
@@ -133,7 +133,7 @@ function SliceRow({ label, hint, slice }: {
 
 function Breakdown({ measured }: { measured: NonNullable<Accuracy["measured"]> }) {
   return (
-    <div className="glass-panel rounded-2xl overflow-x-auto">
+    <div className="glass-panel rounded-none overflow-x-auto">
       <table className="data-table" aria-label="Accuracy by slice">
         <thead>
           <tr>
@@ -207,7 +207,7 @@ export default function AccuracyPage() {
         <header>
           <h1
             className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
             Accuracy
           </h1>

@@ -169,9 +169,9 @@ export default function SquadBoard() {
           {move ? (
             <p className="text-sm" style={{ color: "var(--text-1)" }}>
               <strong>Transfer</strong>{" "}
-              <span style={{ color: "var(--danger, #ef4444)" }}>{move.playerOut.name}</span>
+              <span style={{ color: "var(--error)" }}>{move.playerOut.name}</span>
               {" → "}
-              <span style={{ color: "var(--success, #22c55e)" }}>{move.playerIn.name}</span>
+              <span style={{ color: "var(--success)" }}>{move.playerIn.name}</span>
               <span className="font-mono" style={{ color: "var(--text-3)" }}>
                 {"  "}+{move.delta4.toFixed(1)} pts over 4 GW · confidence{" "}
                 {move.confidence.toFixed(0)}

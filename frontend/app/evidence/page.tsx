@@ -64,9 +64,9 @@ function describeValue(value: unknown): string {
 
 const VERDICT_STYLE: Record<string, { colour: string; mark: string }> = {
   // Colourblind-safe: the glyph carries the meaning, colour only reinforces it.
-  won: { colour: "var(--success, #22c55e)", mark: "✓" },
+  won: { colour: "var(--success)", mark: "✓" },
   lost: { colour: "var(--text-4)", mark: "✗" },
-  dropped: { colour: "var(--warning, #f59e0b)", mark: "!" },
+  dropped: { colour: "var(--warning)", mark: "!" },
 };
 
 function ClaimRow({ claim }: { claim: EvidenceClaim }) {
@@ -144,7 +144,7 @@ function Entry({ entry }: { entry: EvidenceEntry }) {
       {entry.escalation ? (
         <p
           className="text-xs"
-          style={{ color: "var(--warning, #f59e0b)" }}
+          style={{ color: "var(--warning)" }}
           data-testid="escalation"
         >
           Needs a human: {entry.escalation}
@@ -263,7 +263,7 @@ function CapturedHeadlines() {
                 producer states its own standing, and a page that restates it
                 can drift from what the file actually claims. */}
             {feed.basis ? (
-              <p className="text-xs" style={{ color: "var(--warning, #f59e0b)" }}>
+              <p className="text-xs" style={{ color: "var(--warning)" }}>
                 {feed.basis}
               </p>
             ) : null}
@@ -330,7 +330,7 @@ export default function EvidencePage() {
         <header>
           <h1
             className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
             Evidence
           </h1>

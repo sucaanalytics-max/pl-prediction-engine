@@ -41,10 +41,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
       return (
         <div className="card p-8 text-center space-y-4">
-          <div className="text-red-400 font-display font-bold text-lg">
+          <div className="text-[var(--error)] font-display font-bold text-lg">
             Something went wrong
           </div>
-          <p className="text-sm text-slate-400 max-w-md mx-auto">
+          <p className="text-sm text-[var(--text-3)] max-w-md mx-auto">
             {this.state.error?.message ?? "An unexpected error occurred."}
           </p>
           {this.props.pageName && (
@@ -52,7 +52,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
           )}
           <button
             onClick={this.handleRetry}
-            className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-lg text-sm font-medium transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-[var(--bg)] rounded-none text-sm font-medium transition-colors"
             style={{ background: "var(--accent)" }}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -108,13 +108,13 @@ export function ErrorMessage({
   const { type, hint } = classifyError(message);
   return (
     <div className="card p-8 text-center">
-      <p className="text-red-400 font-display font-bold text-lg">{type}</p>
-      <p className="text-sm text-slate-400 mt-1">{hint}</p>
+      <p className="text-[var(--error)] font-display font-bold text-lg">{type}</p>
+      <p className="text-sm text-[var(--text-3)] mt-1">{hint}</p>
       <p className="text-[10px] text-slate-600 mt-2 font-mono">{message}</p>
       {onRetry && (
         <button
           onClick={onRetry}
-          className="mt-4 px-4 py-2 text-white rounded-lg text-sm font-medium transition-colors"
+          className="mt-4 px-4 py-2 text-[var(--bg)] rounded-none text-sm font-medium transition-colors"
             style={{ background: "var(--accent)" }}
         >
           Retry

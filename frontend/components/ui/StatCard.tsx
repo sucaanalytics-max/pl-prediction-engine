@@ -17,7 +17,7 @@ export function StatCard({ label, value, sub, accent = false, className, ...prop
       <p className="stat-label mb-2">{label}</p>
       <p
         className="font-bold text-3xl tracking-tight leading-none"
-        style={{ fontFamily: "var(--font-jakarta)", color: accent ? "var(--accent-text)" : "var(--text-1)" }}
+        style={{ fontFamily: "var(--font-display)", color: accent ? "var(--accent-text)" : "var(--text-1)" }}
       >
         {value}
       </p>

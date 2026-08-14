@@ -190,7 +190,7 @@ export default function GameweekCall() {
             {((call.captain.xp ?? 0) * 2).toFixed(2)}
           </span>
           {suspect.has(fold(call.captain.name)) ? (
-            <span className="text-[10px]" style={{ color: "var(--warning, #f59e0b)" }}>
+            <span className="text-[10px]" style={{ color: "var(--warning)" }}>
               {"  "}— evidence disputes this projection, see Injury evidence
             </span>
           ) : null}
@@ -202,13 +202,13 @@ export default function GameweekCall() {
         <div className="space-y-1" data-testid="xi-change">
           <p className="text-sm" style={{ color: "var(--text-1)" }}>
             <strong>Start</strong>{" "}
-            <span style={{ color: "var(--success, #22c55e)" }}>
+            <span style={{ color: "var(--success)" }}>
               {call.bringIn.map((p) => p.name).join(", ")}
             </span>
             {call.sitDown.length ? (
               <>
                 {" for "}
-                <span style={{ color: "var(--danger, #ef4444)" }}>
+                <span style={{ color: "var(--error)" }}>
                   {call.sitDown.map((p) => p.name).join(", ")}
                 </span>
               </>
@@ -221,7 +221,7 @@ export default function GameweekCall() {
           {/* Naming the players whose projection is contested is the difference
               between advice and advice you can weigh. */}
           {[...call.bringIn, ...call.sitDown].some((p) => suspect.has(fold(p.name))) ? (
-            <p className="text-[10px]" style={{ color: "var(--warning, #f59e0b)" }}>
+            <p className="text-[10px]" style={{ color: "var(--warning)" }}>
               Evidence disputes the projection for{" "}
               {[...call.bringIn, ...call.sitDown]
                 .filter((p) => suspect.has(fold(p.name)))

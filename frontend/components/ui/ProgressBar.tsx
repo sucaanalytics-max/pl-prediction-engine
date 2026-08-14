@@ -18,15 +18,15 @@ export function ProgressBar({
   const pct = Math.round(Math.min(Math.max(value, 0), 1) * 100);
   return (
     <div className={clsx("flex items-center gap-2", className)}>
-      {label && <span className="text-xs text-slate-400 w-16 flex-shrink-0">{label}</span>}
-      <div className="flex-1 h-2 rounded-full overflow-hidden bg-white/[0.07]">
+      {label && <span className="text-xs text-[var(--text-3)] w-16 flex-shrink-0">{label}</span>}
+      <div className="flex-1 h-2 rounded-none overflow-hidden bg-white/[0.07]">
         <div
-          className="h-full rounded-full transition-all duration-500"
+          className="h-full rounded-none transition-all duration-500"
           style={{ width: `${pct}%`, background: color }}
         />
       </div>
       {showPct && (
-        <span className="text-xs font-mono text-slate-400 w-8 text-right flex-shrink-0">
+        <span className="text-xs font-mono text-[var(--text-3)] w-8 text-right flex-shrink-0">
           {pct}%
         </span>
       )}
@@ -47,7 +47,7 @@ export function ProbabilityBar({ home, draw, away }: ProbBarProps) {
   const ap = Math.round(away * 100);
   return (
     <div className="space-y-1">
-      <div className="flex h-2 rounded-full overflow-hidden gap-px bg-white/[0.04]">
+      <div className="flex h-2 rounded-none overflow-hidden gap-px bg-white/[0.04]">
         <div
           className="transition-all duration-500"
           style={{ width: `${hp}%`, background: "#22c55e" }}
@@ -64,7 +64,7 @@ export function ProbabilityBar({ home, draw, away }: ProbBarProps) {
           title={`Away ${ap}%`}
         />
       </div>
-      <div className="flex justify-between text-[10px] font-mono text-slate-500">
+      <div className="flex justify-between text-[10px] font-mono text-[var(--text-3)]">
         <span className="text-green-400">{hp}%</span>
         <span>{dp}%</span>
         <span className="text-sky-400">{ap}%</span>

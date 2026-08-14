@@ -38,18 +38,18 @@ const SEVERITY: Record<
 > = {
   critical: {
     label: "Critical",
-    badge: "border-red-500/50 bg-red-500/15 text-red-300",
-    card: "border-red-500/40 bg-red-500/5",
+    badge: "border-[var(--error-border)] bg-[var(--error-muted)] text-[var(--error)]",
+    card: "border-[var(--error-border)] bg-[var(--error-muted)]",
   },
   warning: {
     label: "Caveat",
-    badge: "border-amber-500/50 bg-amber-500/15 text-amber-300",
-    card: "border-amber-500/30 bg-amber-500/5",
+    badge: "border-[var(--warning-border)] bg-[var(--warning)]/15 text-[var(--warning)]",
+    card: "border-[var(--warning-border)] bg-[var(--warning)]/5",
   },
   info: {
     label: "Update",
-    badge: "border-slate-600/60 bg-slate-700/30 text-slate-300",
-    card: "border-slate-700/60 bg-slate-900/40",
+    badge: "border-[var(--border)] bg-[var(--surface)] text-[var(--text-2)]",
+    card: "border-[var(--border)] bg-[var(--surface)]",
   },
 };
 
@@ -81,26 +81,26 @@ function SquadDetail({ detail }: { detail: Record<string, unknown> }) {
   return (
     <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-4">
       <div>
-        <dt className="text-slate-500">Transfers</dt>
-        <dd className="text-slate-200">
+        <dt className="text-[var(--text-3)]">Transfers</dt>
+        <dd className="text-[var(--text-2)]">
           {transfersIn.length === 0 ? "none (roll)" : transfersIn.length}
         </dd>
       </div>
       <div>
-        <dt className="text-slate-500">Hits</dt>
-        <dd className={hits > 0 ? "text-amber-300" : "text-slate-200"}>
+        <dt className="text-[var(--text-3)]">Hits</dt>
+        <dd className={hits > 0 ? "text-[var(--warning)]" : "text-[var(--text-2)]"}>
           {hits > 0 ? `${hits} (−${hits * 4} pts)` : "none"}
         </dd>
       </div>
       {points !== null && (
         <div>
-          <dt className="text-slate-500">Projected</dt>
-          <dd className="text-slate-200">{points.toFixed(1)} pts</dd>
+          <dt className="text-[var(--text-3)]">Projected</dt>
+          <dd className="text-[var(--text-2)]">{points.toFixed(1)} pts</dd>
         </div>
       )}
       <div>
-        <dt className="text-slate-500">Out</dt>
-        <dd className="text-slate-200">{transfersOut.length || "—"}</dd>
+        <dt className="text-[var(--text-3)]">Out</dt>
+        <dd className="text-[var(--text-2)]">{transfersOut.length || "—"}</dd>
       </div>
     </dl>
   );
@@ -118,7 +118,7 @@ function EvidenceDetail({ detail }: { detail: Record<string, unknown> }) {
 
   return (
     <details className="mt-4 text-sm">
-      <summary className="cursor-pointer text-slate-400 hover:text-slate-200">
+      <summary className="cursor-pointer text-[var(--text-3)] hover:text-[var(--text-2)]">
         What this engine is measured to be worth
       </summary>
       <ul className="mt-2 space-y-2">
@@ -127,13 +127,13 @@ function EvidenceDetail({ detail }: { detail: Record<string, unknown> }) {
             <span
               className={
                 claim.verdict === "established"
-                  ? "text-emerald-400"
-                  : "text-amber-400"
+                  ? "text-[var(--success)]"
+                  : "text-[var(--warning)]"
               }
             >
               {claim.verdict === "established" ? "established" : "not established"}
             </span>
-            <span className="text-slate-400">
+            <span className="text-[var(--text-3)]">
               {name.replace(/_/g, " ")}
               {claim.note ? ` — ${claim.note}` : ""}
             </span>
@@ -147,25 +147,25 @@ function EvidenceDetail({ detail }: { detail: Record<string, unknown> }) {
 function MessageCard({ message }: { message: AgentMessage }) {
   const tone = SEVERITY[message.severity];
   return (
-    <article className={`rounded-lg border p-4 ${tone.card}`}>
+    <article className={`rounded-none border p-4 ${tone.card}`}>
       <header className="flex flex-wrap items-center gap-2">
         <span
           className={`rounded border px-2 py-0.5 text-xs font-medium ${tone.badge}`}
         >
           {tone.label}
         </span>
-        <span className="text-xs uppercase tracking-wide text-slate-500">
+        <span className="text-xs uppercase tracking-wide text-[var(--text-3)]">
           {KIND_LABEL[message.kind] ?? message.kind}
         </span>
         {message.createdAt && (
-          <span className="ml-auto text-xs text-slate-500">
+          <span className="ml-auto text-xs text-[var(--text-3)]">
             {formatWhen(message.createdAt)}
           </span>
         )}
       </header>
 
       <h3 className="mt-2 font-medium text-slate-100">{message.title}</h3>
-      <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-slate-300">
+      <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-[var(--text-2)]">
         {message.body}
       </p>
 
@@ -208,14 +208,14 @@ export default function InboxPage() {
     <main className="mx-auto max-w-3xl px-4 py-8">
       <header className="mb-6">
         <h1 className="text-2xl font-semibold text-slate-100">Agent inbox</h1>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-[var(--text-3)]">
           Everything the agent has to say. This is its only channel — there is no
           email — so nothing here is a duplicate of a message sent elsewhere.
         </p>
       </header>
 
       {error && (
-        <div className="rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-300">
+        <div className="rounded-none border border-[var(--error-border)] bg-[var(--error-muted)] p-4 text-sm text-[var(--error)]">
           <p className="font-medium">The feed could not be loaded.</p>
           <p className="mt-1 text-red-200/80">
             {error}. This does not mean the agent had nothing to say — it means
@@ -225,13 +225,13 @@ export default function InboxPage() {
       )}
 
       {!error && !feed && (
-        <p className="text-sm text-slate-500">Loading…</p>
+        <p className="text-sm text-[var(--text-3)]">Loading…</p>
       )}
 
       {feed && feed.messages.length === 0 && (
-        <div className="rounded-lg border border-slate-700/60 bg-slate-900/40 p-4">
-          <p className="text-sm text-slate-300">Nothing published yet.</p>
-          <p className="mt-1 text-sm text-slate-500">
+        <div className="rounded-none border border-[var(--border)] bg-[var(--surface)] p-4">
+          <p className="text-sm text-[var(--text-2)]">Nothing published yet.</p>
+          <p className="mt-1 text-sm text-[var(--text-3)]">
             This is different from &ldquo;no changes recommended&rdquo;. The agent
             has not published anything at all, which before the season starts is
             expected.
@@ -241,15 +241,15 @@ export default function InboxPage() {
 
       {feed && feed.messages.length > 0 && (
         <>
-          <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-slate-400">
+          <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-[var(--text-3)]">
             <span>{feed.messages.length} message(s)</span>
             {needsAttention > 0 && (
-              <span className="rounded border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-amber-300">
+              <span className="rounded border border-[var(--warning-border)] bg-[var(--warning)]/10 px-2 py-0.5 text-[var(--warning)]">
                 {needsAttention} need attention
               </span>
             )}
             {feed.malformedCount > 0 && (
-              <span className="rounded border border-red-500/40 bg-red-500/10 px-2 py-0.5 text-red-300">
+              <span className="rounded border border-[var(--error-border)] bg-[var(--error-muted)] px-2 py-0.5 text-[var(--error)]">
                 {feed.malformedCount} unreadable
               </span>
             )}
@@ -258,7 +258,7 @@ export default function InboxPage() {
           <div className="space-y-6">
             {grouped.map((group) => (
               <section key={group.gameweek}>
-                <h2 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+                <h2 className="mb-2 text-xs font-medium uppercase tracking-wide text-[var(--text-3)]">
                   {group.gameweek > 0
                     ? `Gameweek ${group.gameweek}`
                     : "General"}
@@ -274,7 +274,7 @@ export default function InboxPage() {
         </>
       )}
 
-      <footer className="mt-8 border-t border-slate-800 pt-4 text-xs text-slate-500">
+      <footer className="mt-8 border-t border-[var(--border)] pt-4 text-xs text-[var(--text-3)]">
         Nothing here has been submitted to FPL on your behalf. The agent has no
         write access by design — every recommendation needs you to act on it.
       </footer>

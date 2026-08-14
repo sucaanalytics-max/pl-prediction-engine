@@ -23,10 +23,12 @@ describe("StatCard", () => {
   });
 
   it("does not render sub element when sub is not provided", () => {
-    render(<StatCard label="Brier" value="0.197" />);
-    // Sub paragraph has text-slate-500 + text-xs + mt-1 classes
-    const sub = document.querySelector(".text-slate-500.text-xs");
-    expect(sub).toBeNull();
+    // Counted, not class-matched. The old selector named the muted grey the sub
+    // line happened to be, so it stopped meaning "the sub line" the moment that
+    // colour became a token — the assertion is that the card renders two
+    // paragraphs (label and value) rather than three.
+    const { container } = render(<StatCard label="Brier" value="0.197" />);
+    expect(container.querySelectorAll("p")).toHaveLength(2);
   });
 
   it("applies CSS var text-1 color to value by default", () => {

@@ -9,8 +9,11 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     scope: "/",
     display: "standalone",
-    background_color: "#07130f",
-    theme_color: "#07130f",
+    // The chrome colour, kept in step with `--chrome` and the `theme-color`
+    // meta tag. An installed app whose splash screen is the previous palette
+    // announces the old design before the new one has finished loading.
+    background_color: "#14140f",
+    theme_color: "#14140f",
     orientation: "portrait-primary",
     categories: ["sports", "productivity"],
     icons: [

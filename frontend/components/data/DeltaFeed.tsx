@@ -60,8 +60,8 @@ function DeltaRow({
 }) {
   const way = direction(change.before, change.after);
   const colour =
-    way === "worse" ? "var(--danger, #f87171)"
-      : way === "better" ? "var(--success, #22c55e)"
+    way === "worse" ? "var(--error)"
+      : way === "better" ? "var(--success)"
         : "var(--text-2)";
 
   return (

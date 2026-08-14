@@ -61,7 +61,6 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
               {/* Shimmer effect on hover */}
               <div
                 className="absolute inset-0 translate-x-[-100%] group-hover:animate-[pulse-shimmer_2s_infinite]"
-                style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent)' }}
                 aria-hidden="true"
               />
 
@@ -74,12 +73,12 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                     </span>
 
                     {pred.fixture.is_derby && (
-                      <span className="badge-amber shadow-[var(--glow-draw)]">DERBY</span>
+                      <span className="badge-amber">DERBY</span>
                     )}
 
                     {pred.model_disagreement !== undefined && pred.model_disagreement > 0.15 && (
-                      <span className="badge-red shadow-[var(--glow-away)] flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" /> SPLIT
+                      <span className="badge-red flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-none bg-[var(--error)] animate-pulse" /> SPLIT
                       </span>
                     )}
                   </div>
@@ -87,19 +86,18 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                   <div className="flex items-center gap-3 flex-shrink-0">
                     {valueBetCount > 0 && (
                       <span
-                        className="text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full relative overflow-hidden group/badge"
+                        className="text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-none relative overflow-hidden group/badge"
                         style={{
                           background: "var(--success-muted)",
                           color: "var(--accent)",
                           border: "1px solid var(--accent-border)",
-                          boxShadow: "var(--glow-accent)"
                         }}
                         aria-label={`${valueBetCount} value bet${valueBetCount > 1 ? "s" : ""}`}
                       >
                         <span className="mr-1 group-hover/badge:animate-pulse">⚡</span>{valueBetCount} EV+
                       </span>
                     )}
-                    <span className="text-[10px] font-mono font-bold tracking-widest uppercase px-2 py-0.5 rounded-md glass-panel" style={{ color: "var(--text-3)" }}>
+                    <span className="text-[10px] font-mono font-bold tracking-widest uppercase px-2 py-0.5 rounded-none glass-panel" style={{ color: "var(--text-3)" }}>
                       GW{pred.fixture.gameweek}
                     </span>
                   </div>
@@ -116,7 +114,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                         style={{
                           fontSize: "19px",
                           color: prediction === "home" ? "var(--text-1)" : "var(--text-3)",
-                          fontFamily: "var(--font-jakarta)",
+                          fontFamily: "var(--font-display)",
                           textShadow: prediction === "home" ? "0 0 10px rgba(255,255,255,0.1)" : "none"
                         }}
                       >
@@ -135,14 +133,14 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
 
                     {/* xG separator */}
                     <div className="flex items-center gap-2 my-2">
-                      <div className="h-[2px] rounded-full flex-1 opacity-50" style={{ background: "linear-gradient(90deg, transparent, var(--border-strong))" }} />
+                      <div className="h-[2px] rounded-none flex-1 opacity-50" style={{ background: "linear-gradient(90deg, transparent, var(--border-strong))" }} />
                       <span
-                        className="text-[9px] font-extrabold tracking-[0.2em] uppercase px-2 py-0.5 rounded-full glass-panel"
+                        className="text-[9px] font-extrabold tracking-[0.2em] uppercase px-2 py-0.5 rounded-none glass-panel"
                         style={{ fontFamily: "var(--font-mono)", color: "var(--accent)" }}
                       >
                         xG
                       </span>
-                      <div className="h-[2px] rounded-full flex-1 opacity-50" style={{ background: "linear-gradient(90deg, var(--border-strong), transparent)" }} />
+                      <div className="h-[2px] rounded-none flex-1 opacity-50" style={{ background: "linear-gradient(90deg, var(--border-strong), transparent)" }} />
                     </div>
 
                     {/* Away */}
@@ -152,7 +150,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                         style={{
                           fontSize: "19px",
                           color: prediction === "away" ? "var(--text-1)" : "var(--text-3)",
-                          fontFamily: "var(--font-jakarta)",
+                          fontFamily: "var(--font-display)",
                           textShadow: prediction === "away" ? "0 0 10px rgba(255,255,255,0.1)" : "none"
                         }}
                       >
@@ -217,7 +215,7 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                     </div>
 
                     {/* Probability bar */}
-                    <div className="flex h-2 rounded-full overflow-hidden shadow-inner glass-panel border border-[var(--border)]">
+                    <div className="flex h-2 rounded-none overflow-hidden shadow-inner glass-panel border border-[var(--border)]">
                       <div
                         style={{ width: `${hp}%`, background: "var(--home)", boxShadow: "0 0 10px var(--home)" }}
                         className="transition-all duration-1000 ease-out"

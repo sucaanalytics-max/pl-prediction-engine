@@ -190,8 +190,8 @@ function BankrollContent() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between flex-wrap gap-4 relative z-10 mb-6">
         <div>
           <h1
-            className="text-4xl md:text-5xl font-extrabold tracking-tighter bg-clip-text text-transparent drop-shadow-sm mb-2"
-            style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--accent) 100%)", fontFamily: "var(--font-jakarta)" }}
+            className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-2"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Bankroll Tracker
           </h1>
@@ -203,7 +203,7 @@ function BankrollContent() {
           {bets.length > 0 && (
             <button
               onClick={exportCSV}
-              className="px-3 py-1.5 text-xs rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs rounded-none transition-colors"
               style={{ color: "var(--text-3)", background: "var(--surface)", border: "1px solid var(--border)" }}
             >
               Export CSV
@@ -211,7 +211,7 @@ function BankrollContent() {
           )}
           <button
             onClick={() => setShowForm(!showForm)}
-            className="px-3 py-1.5 text-xs text-white rounded-lg transition-colors font-medium"
+            className="px-3 py-1.5 text-xs text-[var(--bg)] rounded-none transition-colors font-medium"
             style={{ background: "var(--accent)" }}
           >
             {showForm ? "Cancel" : "+ Add Bet"}
@@ -221,29 +221,27 @@ function BankrollContent() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)]">
+        <div className="glass-panel p-5 rounded-none flex flex-col items-center justify-center text-center">
           <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>Current Value</div>
           <div className="text-2xl sm:text-3xl font-black tabular-nums" style={{ color: "var(--text-1)" }}>£{currentValue.toFixed(0)}</div>
         </div>
-        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)] relative overflow-hidden">
+        <div className="glass-panel p-5 rounded-none flex flex-col items-center justify-center text-center relative overflow-hidden">
           <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>ROI</div>
-          <div className={`text-2xl sm:text-3xl font-black tabular-nums drop-shadow-sm ${roi >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+          <div className={`text-2xl sm:text-3xl font-black tabular-nums ${roi >= 0 ? "text-[var(--success)]" : "text-[var(--error)]"}`}>
             {roi >= 0 ? "+" : ""}{roi.toFixed(1)}%
           </div>
-          <div className={`absolute -bottom-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-20 pointer-events-none ${roi >= 0 ? "bg-emerald-500" : "bg-red-500"}`} />
         </div>
-        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)] relative overflow-hidden">
+        <div className="glass-panel p-5 rounded-none flex flex-col items-center justify-center text-center relative overflow-hidden">
           <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>Drawdown</div>
-          <div className={`text-2xl sm:text-3xl font-black tabular-nums drop-shadow-sm ${drawdown > 0.2 ? "text-red-400" : drawdown > 0.1 ? "text-amber-400" : "text-emerald-400"}`}>
+          <div className={`text-2xl sm:text-3xl font-black tabular-nums ${drawdown > 0.2 ? "text-[var(--error)]" : drawdown > 0.1 ? "text-[var(--warning)]" : "text-[var(--success)]"}`}>
             {pct(drawdown)}
           </div>
-          <div className={`absolute -bottom-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-20 pointer-events-none ${drawdown > 0.2 ? "bg-red-500" : drawdown > 0.1 ? "bg-amber-500" : "bg-emerald-500"}`} />
         </div>
-        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)]">
+        <div className="glass-panel p-5 rounded-none flex flex-col items-center justify-center text-center">
           <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>Win Rate</div>
           <div className="text-2xl sm:text-3xl font-black tabular-nums" style={{ color: "var(--info)" }}>{settledBets.length > 0 ? pct(winRate) : "—"}</div>
         </div>
-        <div className="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center text-center shadow-[var(--shadow-md)] cursor-pointer hover:bg-[var(--surface2)] transition-colors" onClick={() => { setEditingBankroll(true); setNewBankroll(initialBankroll.toString()); }}>
+        <div className="glass-panel p-5 rounded-none flex flex-col items-center justify-center text-center cursor-pointer hover:bg-[var(--surface2)] transition-colors" onClick={() => { setEditingBankroll(true); setNewBankroll(initialBankroll.toString()); }}>
           <div className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-2" style={{ color: "var(--text-3)" }}>Starting</div>
           {editingBankroll ? (
             <div className="flex justify-center w-full">
@@ -266,13 +264,13 @@ function BankrollContent() {
       </div>
 
       {/* Drawdown limits */}
-      <div className="glass-panel p-4 rounded-xl shadow-sm border border-[var(--border)]">
+      <div className="glass-panel p-4 rounded-none border border-[var(--border)]">
         <div className="flex items-center gap-4 text-xs flex-wrap">
           <span style={{ color: "var(--text-3)" }}>Risk limits:</span>
-          <span className={drawdown > 0.2 ? "text-red-400 font-semibold" : ""} style={drawdown <= 0.2 ? { color: "var(--text-2)" } : undefined}>
+          <span className={drawdown > 0.2 ? "text-[var(--error)] font-semibold" : ""} style={drawdown <= 0.2 ? { color: "var(--text-2)" } : undefined}>
             Soft stop: 20%
           </span>
-          <span className={drawdown > 0.3 ? "text-red-400 font-semibold" : ""} style={drawdown <= 0.3 ? { color: "var(--text-2)" } : undefined}>
+          <span className={drawdown > 0.3 ? "text-[var(--error)] font-semibold" : ""} style={drawdown <= 0.3 ? { color: "var(--text-2)" } : undefined}>
             Hard stop: 30%
           </span>
           <span className="ml-auto">
@@ -281,7 +279,7 @@ function BankrollContent() {
             ) : drawdown < 0.2 ? (
               <span className="badge-amber">Caution</span>
             ) : (
-              <span className="text-red-400 bg-red-500/10 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider">Alert</span>
+              <span className="text-[var(--error)] bg-[var(--error-muted)] px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider">Alert</span>
             )}
           </span>
         </div>
@@ -289,7 +287,7 @@ function BankrollContent() {
 
       {/* Add Bet Form */}
       {showForm && (
-        <div className="glass-panel p-6 space-y-5 rounded-2xl shadow-[var(--shadow-custom)] border border-[var(--border)] relative overflow-hidden">
+        <div className="glass-panel p-6 space-y-5 rounded-none border border-[var(--border)] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]" />
           <h3 className="text-lg font-bold tracking-tight" style={{ color: "var(--text-1)" }}>Add Bet</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
@@ -335,9 +333,9 @@ function BankrollContent() {
             {(["pending", "win", "loss", "void"] as const).map((r) => (
               <button key={r} onClick={() => setFormResult(r)}
                 className={`px-2.5 py-1 rounded text-[10px] font-semibold uppercase tracking-wider transition-colors ${formResult === r
-                    ? r === "win" ? "bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/30"
-                      : r === "loss" ? "bg-red-500/20 text-red-400 ring-1 ring-red-500/30"
-                        : r === "void" ? "bg-slate-700/50 text-slate-300 ring-1 ring-slate-600/30"
+                    ? r === "win" ? "bg-[var(--success)]/20 text-[var(--success)] ring-1 ring-emerald-500/30"
+                      : r === "loss" ? "bg-[var(--error-muted)] text-[var(--error)] ring-1 ring-red-500/30"
+                        : r === "void" ? "bg-[var(--surface)] text-[var(--text-2)] ring-1 ring-slate-600/30"
                           : ""
                     : ""
                   }`}
@@ -353,7 +351,7 @@ function BankrollContent() {
               </button>
             ))}
             <button onClick={addBet}
-              className="ml-auto px-4 py-1.5 text-white rounded-lg text-xs font-medium transition-colors"
+              className="ml-auto px-4 py-1.5 text-[var(--bg)] rounded-none text-xs font-medium transition-colors"
               style={{ background: "var(--accent)" }}>
               Save Bet
             </button>
@@ -363,16 +361,14 @@ function BankrollContent() {
 
       {/* PnL Chart */}
       {trajectory.length > 1 && (
-        <div className="glass-panel p-6 rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--border)] relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)] opacity-[0.03] blur-3xl rounded-full pointer-events-none" />
-          <h3 className="text-lg font-bold mb-6 tracking-tight relative z-10" style={{ color: "var(--text-1)" }}>Bankroll Trajectory</h3>
+        <div className="glass-panel p-6 rounded-none border border-[var(--border)] relative overflow-hidden">          <h3 className="text-lg font-bold mb-6 tracking-tight relative z-10" style={{ color: "var(--text-1)" }}>Bankroll Trajectory</h3>
           <div className="relative z-10"><PnLChart data={trajectory} initialBankroll={initialBankroll} /></div>
         </div>
       )}
 
       {/* Market Breakdown */}
       {Object.keys(markets).length > 0 && (
-        <div className="glass-panel p-6 rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--border)] relative overflow-hidden">
+        <div className="glass-panel p-6 rounded-none border border-[var(--border)] relative overflow-hidden">
           <h3 className="text-lg font-bold mb-6 tracking-tight" style={{ color: "var(--text-1)" }}>Performance by Market</h3>
           <div className="space-y-2">
             {Object.entries(markets)
@@ -385,7 +381,7 @@ function BankrollContent() {
                     <span style={{ color: "var(--text-3)" }}>
                       {((stats.wins / (stats.wins + stats.losses)) * 100).toFixed(0)}%
                     </span>
-                    <span className={stats.pnl >= 0 ? "text-emerald-400" : "text-red-400"}>
+                    <span className={stats.pnl >= 0 ? "text-[var(--success)]" : "text-[var(--error)]"}>
                       {stats.pnl >= 0 ? "+" : ""}£{stats.pnl.toFixed(2)}
                     </span>
                   </div>
@@ -397,7 +393,7 @@ function BankrollContent() {
 
       {/* Bet History */}
       {bets.length > 0 ? (
-        <div className="glass-panel overflow-x-auto rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--border)]">
+        <div className="glass-panel overflow-x-auto rounded-none border border-[var(--border)]">
           <table className="data-table">
             <thead>
               <tr>
@@ -427,7 +423,7 @@ function BankrollContent() {
                     <td style={{ color: "var(--text-1)" }}>{bet.selection}</td>
                     <td className="font-mono" style={{ color: "var(--text-1)" }}>{bet.decimalOdds.toFixed(2)}</td>
                     <td className="font-mono" style={{ color: "var(--text-1)" }}>£{bet.stake.toFixed(2)}</td>
-                    <td className={`font-mono ${pnl > 0 ? "text-emerald-400" : pnl < 0 ? "text-red-400" : ""}`}
+                    <td className={`font-mono ${pnl > 0 ? "text-[var(--success)]" : pnl < 0 ? "text-[var(--error)]" : ""}`}
                       style={pnl === 0 ? { color: "var(--text-3)" } : undefined}>
                       {bet.result === "pending" ? "—" : `${pnl >= 0 ? "+" : ""}£${pnl.toFixed(2)}`}
                     </td>
@@ -436,9 +432,9 @@ function BankrollContent() {
                         value={bet.result}
                         onChange={(e) => updateResult(bet.id, e.target.value as BetRecord["result"])}
                         aria-label={`Result for ${bet.match}`}
-                        className={`bg-transparent border-none text-[10px] font-semibold uppercase ${bet.result === "win" ? "text-emerald-400"
-                            : bet.result === "loss" ? "text-red-400"
-                              : bet.result === "void" ? "text-slate-400"
+                        className={`bg-transparent border-none text-[10px] font-semibold uppercase ${bet.result === "win" ? "text-[var(--success)]"
+                            : bet.result === "loss" ? "text-[var(--error)]"
+                              : bet.result === "void" ? "text-[var(--text-3)]"
                                 : "text-green-400"
                           }`}
                       >
@@ -453,7 +449,7 @@ function BankrollContent() {
                         <div className="flex items-center gap-1">
                           <button
                             onClick={() => removeBet(bet.id)}
-                            className="text-[9px] font-semibold uppercase text-red-400 hover:text-red-300 transition-colors"
+                            className="text-[9px] font-semibold uppercase text-[var(--error)] hover:text-[var(--error)] transition-colors"
                             aria-label="Confirm delete"
                           >
                             Yes
@@ -471,7 +467,7 @@ function BankrollContent() {
                       ) : (
                         <button
                           onClick={() => setConfirmDeleteId(bet.id)}
-                          className="transition-colors hover:text-red-400"
+                          className="transition-colors hover:text-[var(--error)]"
                           style={{ color: "var(--text-4)" }}
                           aria-label="Remove bet"
                         >
@@ -491,7 +487,7 @@ function BankrollContent() {
           <div className="text-xs mt-1" style={{ color: "var(--text-4)" }}>Start tracking your bets to see P&L analysis and bankroll trajectory.</div>
           <button
             onClick={() => setShowForm(true)}
-            className="mt-4 px-4 py-2 text-xs text-white rounded-lg transition-colors font-medium"
+            className="mt-4 px-4 py-2 text-xs text-[var(--bg)] rounded-none transition-colors font-medium"
             style={{ background: "var(--accent)" }}
           >
             + Add Your First Bet
@@ -502,9 +498,7 @@ function BankrollContent() {
       <div className="glow-line" />
 
       {/* Kelly Calculator */}
-      <div className="glass-panel p-6 space-y-5 rounded-2xl shadow-[var(--shadow-lg)] border border-[var(--border)] relative overflow-hidden mt-8">
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-[var(--info)] opacity-10 blur-3xl pointer-events-none" />
-        <h3 className="text-lg font-bold tracking-tight relative z-10" style={{ color: "var(--text-1)" }}>Kelly Calculator</h3>
+      <div className="glass-panel p-6 space-y-5 rounded-none border border-[var(--border)] relative overflow-hidden mt-8">        <h3 className="text-lg font-bold tracking-tight relative z-10" style={{ color: "var(--text-1)" }}>Kelly Calculator</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label htmlFor="kelly-prob" className="form-label">Model Probability</label>
@@ -525,7 +519,7 @@ function BankrollContent() {
           <div className="flex items-end">
             <button
               onClick={() => setKellyResult(kellyFraction(parseFloat(calcProb), parseFloat(calcOdds)))}
-              className="w-full text-white rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+              className="w-full text-[var(--bg)] rounded-none px-4 py-2 text-sm font-medium transition-colors"
               style={{ background: "var(--accent)" }}
             >
               Calculate
@@ -549,13 +543,13 @@ function BankrollContent() {
             </div>
             <div className="glass-inset p-3">
               <div className="stat-label">Edge</div>
-              <div className={`text-lg font-bold ${kellyResult.edge > 0 ? "text-emerald-400" : "text-red-400"}`}>
+              <div className={`text-lg font-bold ${kellyResult.edge > 0 ? "text-[var(--success)]" : "text-[var(--error)]"}`}>
                 {kellyResult.edge > 0 ? "+" : ""}{pct(kellyResult.edge)}
               </div>
             </div>
             <div className="glass-inset p-3">
               <div className="stat-label">EV</div>
-              <div className={`text-lg font-bold ${kellyResult.ev > 0 ? "text-emerald-400" : "text-red-400"}`}>
+              <div className={`text-lg font-bold ${kellyResult.ev > 0 ? "text-[var(--success)]" : "text-[var(--error)]"}`}>
                 {kellyResult.ev > 0 ? "+" : ""}{kellyResult.ev.toFixed(3)}
               </div>
             </div>

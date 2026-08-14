@@ -130,7 +130,7 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
           aria-label="Search players"
           className="rounded border px-2 py-1 text-xs"
           style={{
-            background: "var(--surface-2, #0f172a)",
+            background: "var(--surface2)",
             borderColor: "var(--border)",
             color: "var(--text-1)",
           }}
@@ -146,7 +146,7 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
               className="text-[11px] rounded px-2 py-1"
               style={{
                 background: position === code ? "var(--accent)" : "transparent",
-                color: position === code ? "var(--accent-contrast, #fff)" : "var(--text-3)",
+                color: position === code ? "var(--bg)" : "var(--text-3)",
                 border: "1px solid var(--border)",
               }}
             >
@@ -161,7 +161,7 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
           aria-label="Maximum price"
           className="rounded border px-2 py-1 text-xs"
           style={{
-            background: "var(--surface-2, #0f172a)",
+            background: "var(--surface2)",
             borderColor: "var(--border)",
             color: "var(--text-1)",
           }}
@@ -187,7 +187,7 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
           aria-label="Sort by"
           className="rounded border px-2 py-1 text-xs ml-auto"
           style={{
-            background: "var(--surface-2, #0f172a)",
+            background: "var(--surface2)",
             borderColor: "var(--border)",
             color: "var(--text-1)",
           }}
@@ -207,7 +207,7 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
         {" · goals, assists and xG are last season's actuals, not a projection"}
       </p>
 
-      <div className="glass-panel rounded-2xl overflow-x-auto">
+      <div className="glass-panel rounded-none overflow-x-auto">
         <table className="data-table" aria-label="Players">
           <thead>
             <tr>
@@ -233,7 +233,7 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
                   {row.available === false ? (
                     <span
                       className="ml-1 text-[10px]"
-                      style={{ color: "var(--warning, #f59e0b)" }}
+                      style={{ color: "var(--warning)" }}
                       title="FPL lists this player as unavailable"
                     >
                       !
@@ -322,7 +322,7 @@ function ModelProjections({ gameweek }: { gameweek: number }) {
           const rows = notable(file.players);
           return (
             <div className="space-y-2">
-              <div className="glass-panel rounded-2xl overflow-x-auto">
+              <div className="glass-panel rounded-none overflow-x-auto">
                 <table className="data-table" aria-label="Player points projections">
                   <thead>
                     <tr>
@@ -392,7 +392,7 @@ function ProjectionRow({
           {gap !== null && gap >= 2 ? (
             <span
               className="ml-1 text-[9px]"
-              style={{ color: "var(--warning, #f59e0b)" }}
+              style={{ color: "var(--warning)" }}
               title={`The mean sits ${gap.toFixed(1)} points above the most likely return, so it is carried by the tail rather than by a typical week.`}
             >
               skew
@@ -476,7 +476,7 @@ function HeuristicRankings() {
         <div className="flex items-center gap-2 flex-wrap">
           <span className="badge-amber text-[9px]">HEURISTIC — NOT A MODEL</span>
           {persisted ? null : (
-            <span className="text-xs" role="status" style={{ color: "var(--warning, #f59e0b)" }}>
+            <span className="text-xs" role="status" style={{ color: "var(--warning)" }}>
               Starring works, but this browser is not storing it — it will be
               gone on reload.
             </span>
@@ -547,7 +547,7 @@ function HeuristicRankings() {
                       : "No player matches that search."}
                   </p>
                 ) : (
-                  <div className="glass-panel rounded-2xl overflow-x-auto">
+                  <div className="glass-panel rounded-none overflow-x-auto">
                     <table className="data-table" aria-label={`Ranked players — ${category}`}>
                       <thead>
                         <tr>
@@ -615,7 +615,7 @@ function RankedRow({
         {doubtful ? (
           <span
             className="ml-1 text-[9px] uppercase"
-            style={{ color: "var(--warning, #f59e0b)" }}
+            style={{ color: "var(--warning)" }}
             title={player.news || "flagged by FPL"}
           >
             flagged
@@ -657,7 +657,7 @@ function RankedRow({
           aria-pressed={watched}
           aria-label={`${watched ? "Remove" : "Add"} ${player.name} ${watched ? "from" : "to"} watchlist`}
           className="text-xs"
-          style={{ color: watched ? "var(--warning, #f59e0b)" : "var(--text-4)" }}
+          style={{ color: watched ? "var(--warning)" : "var(--text-4)" }}
         >
           {watched ? "★" : "☆"}
         </button>
@@ -680,7 +680,7 @@ export default function PlayersPage() {
         <header>
           <h1
             className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
             Players
           </h1>

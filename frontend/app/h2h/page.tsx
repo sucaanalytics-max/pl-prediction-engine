@@ -83,8 +83,8 @@ function H2HContent() {
       {/* Header */}
       <div className="relative z-10 mb-6">
         <h1
-          className="text-4xl md:text-5xl font-extrabold tracking-tighter bg-clip-text text-transparent drop-shadow-sm mb-2"
-          style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--accent) 100%)", fontFamily: "var(--font-jakarta)" }}
+          className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-2"
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Head-to-Head
         </h1>
@@ -102,7 +102,7 @@ function H2HContent() {
       ) : null}
 
       {/* Team selectors */}
-      <div className="glass-panel rounded-2xl shadow-[var(--shadow-custom)] p-6 space-y-5">
+      <div className="glass-panel rounded-none p-6 space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label htmlFor="home-team" className="form-label">Home Team</label>
@@ -137,7 +137,7 @@ function H2HContent() {
         <button
           onClick={handleSearch}
           disabled={!homeTeam || !awayTeam || homeTeam === awayTeam || loadingH2H}
-          className="w-full py-2 text-sm font-medium text-white rounded-lg transition-colors disabled:opacity-40"
+          className="w-full py-2 text-sm font-medium text-[var(--bg)] rounded-none transition-colors disabled:opacity-40"
           style={{ background: "var(--accent)" }}
         >
           {loadingH2H ? "Loading…" : "Compare"}
@@ -146,7 +146,7 @@ function H2HContent() {
 
       {/* Upcoming fixture preview */}
       {upcomingFixture && (
-        <div className="glass-panel p-5 rounded-2xl relative overflow-hidden">
+        <div className="glass-panel p-5 rounded-none relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]" />
           <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{ color: "var(--text-3)" }}>
             Upcoming{upcomingFixture.gameweek === null ? "" : ` — GW${upcomingFixture.gameweek}`}
@@ -167,7 +167,7 @@ function H2HContent() {
             </div>
             <span className="font-bold" style={{ color: "var(--text-1)" }}>{upcomingFixture.away_team}</span>
           </div>
-          <div className="flex h-2 rounded-full overflow-hidden mt-3" style={{ background: "var(--surface2)" }}>
+          <div className="flex h-2 rounded-none overflow-hidden mt-3" style={{ background: "var(--surface2)" }}>
             <div className="h-full transition-all" style={{ width: `${Math.round(upcomingFixture.prob_home * 100)}%`, background: "var(--home)" }} />
             <div className="h-full" style={{ width: `${Math.round(upcomingFixture.prob_draw * 100)}%`, background: "var(--draw)" }} />
             <div className="h-full" style={{ width: `${Math.round(upcomingFixture.prob_away * 100)}%`, background: "var(--away)" }} />
@@ -201,8 +201,8 @@ function H2HContent() {
       {record && record !== "not-found" && (
         <div className="space-y-6">
           {/* Summary */}
-          <div className="glass-panel rounded-2xl shadow-[var(--shadow-custom)] p-6">
-            <h2 className="text-sm font-semibold mb-4" style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}>
+          <div className="glass-panel rounded-none p-6">
+            <h2 className="text-sm font-semibold mb-4" style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}>
               {record.home_team} vs {record.away_team} — All Time
             </h2>
             <div className="grid grid-cols-3 gap-4 text-center">
@@ -226,7 +226,7 @@ function H2HContent() {
                 const total = record.home_wins + record.draws + record.away_wins;
                 if (total === 0) return null;
                 return (
-                  <div className="flex h-2 rounded-full overflow-hidden">
+                  <div className="flex h-2 rounded-none overflow-hidden">
                     <div style={{ width: `${(record.home_wins / total) * 100}%`, background: "var(--home)" }} />
                     <div style={{ width: `${(record.draws / total) * 100}%`, background: "var(--draw)" }} />
                     <div style={{ width: `${(record.away_wins / total) * 100}%`, background: "var(--away)" }} />
@@ -238,7 +238,7 @@ function H2HContent() {
 
           {/* Recent meetings */}
           {record.matches.length > 0 && (
-            <div className="glass-panel rounded-2xl shadow-[var(--shadow-custom)] overflow-hidden">
+            <div className="glass-panel rounded-none overflow-hidden">
               <div className="px-5 py-4 bg-[var(--surface2)]" style={{ borderBottom: "1px solid var(--border)" }}>
                 <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-3)" }}>
                   Recent Meetings

@@ -45,7 +45,7 @@ export default function AgentIdleNotice() {
       className="glass-inset p-3 text-xs"
       role="status"
       data-testid="agent-idle-notice"
-      style={{ color: "var(--text-2)", borderLeft: "3px solid var(--warning, #f59e0b)" }}
+      style={{ color: "var(--text-2)", borderLeft: "3px solid var(--warning)" }}
     >
       <p>
         <strong style={{ color: "var(--text-1)" }}>The agent is idle.</strong>{" "}

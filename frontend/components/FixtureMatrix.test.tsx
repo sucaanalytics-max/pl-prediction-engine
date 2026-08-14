@@ -299,14 +299,28 @@ describe("the colour ramp, keyed by difficulty", () => {
     }
   });
 
-  it("is a single blue hue, not green to red", async () => {
-    // Green-to-red is FPL's own convention and the canonical colour-vision failure.
+  it("carries difficulty in lightness, not in hue", async () => {
+    /**
+     * The property, rather than one implementation of it.
+     *
+     * This asserted `blue > red` on every step, which was true of the blue ramp
+     * and is a statement about a colour rather than about the risk. The risk is
+     * green↔red — FPL's own convention, and the canonical colour-vision failure:
+     * roughly one man in twelve cannot separate those hues. A ramp is safe when
+     * difficulty rides on LIGHTNESS and the hue barely moves, which is what this
+     * checks, and which the warm neutral satisfies exactly as the blue did.
+     */
     const ramp = await renderedRamp();
     for (const { fill } of ramp.values()) {
       const hex = toHex(fill);
-      const r = parseInt(hex.slice(1, 3), 16);
-      const b = parseInt(hex.slice(5, 7), 16);
-      expect(b, `${hex} is not on a blue ramp`).toBeGreaterThan(r);
+      const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+      // Chroma as the spread between channels: a saturated green or red step
+      // spreads far, a neutral or a single desaturated hue does not.
+      const chroma = Math.max(r, g, b) - Math.min(r, g, b);
+      expect(chroma, `${hex} is too saturated to be a lightness ramp`)
+        .toBeLessThan(64);
+      // And specifically not sitting on the red–green axis.
+      expect(Math.abs(r - g), `${hex} is on the red–green axis`).toBeLessThan(48);
     }
   });
 });

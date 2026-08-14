@@ -87,10 +87,10 @@ function MatchDetailContent() {
       <div className={`card p-8 md:p-10 relative overflow-hidden ${prediction === 'home' ? 'fixture-home' : prediction === 'away' ? 'fixture-away' : 'fixture-draw'}`}>
         <div className="flex items-center justify-between mb-8 flex-wrap gap-4 relative z-10">
           <div className="flex items-center gap-3 text-xs uppercase tracking-[0.15em] font-bold flex-wrap" style={{ color: "var(--text-3)" }}>
-            <span className="glass-panel px-3 py-1 rounded-md shadow-sm">{match.kickoff ? `${shortDate(match.kickoff)} • ${kickoffTime(match.kickoff)}` : "kickoff not published"}{match.gameweek === null ? "" : ` • GW${match.gameweek}`}</span>
+            <span className="glass-panel px-3 py-1 rounded-none">{match.kickoff ? `${shortDate(match.kickoff)} • ${kickoffTime(match.kickoff)}` : "kickoff not published"}{match.gameweek === null ? "" : ` • GW${match.gameweek}`}</span>
             {is_derby && <span className="badge-amber shadow-[0_0_15px_var(--warning-muted)]">DERBY</span>}
             {referee && (
-              <span className="glass-panel px-3 py-1 rounded-md tracking-wider flex items-center gap-1.5" style={{ color: "var(--text-2)" }}>
+              <span className="glass-panel px-3 py-1 rounded-none tracking-wider flex items-center gap-1.5" style={{ color: "var(--text-2)" }}>
                 <span className="opacity-50">REF:</span> <span style={{ color: "var(--text-1)" }}>{referee}</span>
               </span>
             )}
@@ -99,7 +99,7 @@ function MatchDetailContent() {
             {match.model_disagreement !== null && match.model_disagreement > 0.15 && (
               <span className="badge-red shadow-[0_0_15px_var(--error-muted)] px-3 py-1 text-[10px] animate-pulse">MODELS DISAGREE</span>
             )}
-            <span className={`px-3 py-1 rounded-md glass-panel text-xs font-mono font-bold ${confidenceColor(maxProb * 100)}`}>
+            <span className={`px-3 py-1 rounded-none glass-panel text-xs font-mono font-bold ${confidenceColor(maxProb * 100)}`}>
               {pct(maxProb)} CONF
             </span>
           </div>
@@ -109,52 +109,52 @@ function MatchDetailContent() {
         <div className="flex items-center justify-center gap-4 md:gap-10 my-8 relative z-10">
           <div className="text-right flex-1">
             <h2
-              className="text-3xl md:text-5xl font-extrabold tracking-tighter drop-shadow-md"
+              className="text-3xl md:text-5xl font-extrabold tracking-tighter drop-"
               style={{ color: prediction === "home" ? "var(--text-1)" : "var(--text-2)", textShadow: prediction === "home" ? "0 0 20px rgba(255,255,255,0.15)" : "none" }}
             >
               {home_team}
             </h2>
             <p className="text-sm font-mono mt-3 opacity-90" style={{ color: "var(--text-3)" }}>
               <span className="uppercase tracking-[0.2em] text-[10px] font-bold mr-2">xG</span>
-              <span className="glass-panel px-2.5 py-1 rounded-md font-bold text-[15px]" style={{ color: "var(--home)", boxShadow: "var(--glow-home)" }}>{match.expected_goals ? xg(match.expected_goals.home) : "—"}</span>
+              <span className="glass-panel px-2.5 py-1 rounded-none font-bold text-[15px]" style={{ color: "var(--home)", }}>{match.expected_goals ? xg(match.expected_goals.home) : "—"}</span>
             </p>
           </div>
 
-          <div className="flex flex-col items-center px-6 md:px-10 py-4 glass-panel rounded-2xl border-t border-b border-[var(--border)] shadow-[var(--shadow-lg)] relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.05] to-transparent rounded-2xl pointer-events-none" />
+          <div className="flex flex-col items-center px-6 md:px-10 py-4 glass-panel rounded-none border-t border-b border-[var(--border)] relative">
+            <div className="absolute inset-0  rounded-none pointer-events-none" />
             <div className="text-4xl md:text-6xl font-black tracking-tighter flex items-center gap-3">
-              <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, var(--home) 0%, #10b981 100%)", filter: "drop-shadow(0 0 10px var(--home-muted))" }}>{match.expected_goals?.home.toFixed(1) ?? "—"}</span>
+              <span style={{ }}>{match.expected_goals?.home.toFixed(1) ?? "—"}</span>
               <span className="text-[var(--border-strong)] mx-1 font-light">—</span>
-              <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, var(--away) 0%, #3b82f6 100%)", filter: "drop-shadow(0 0 10px var(--away-muted))" }}>{match.expected_goals?.away.toFixed(1) ?? "—"}</span>
+              <span style={{ }}>{match.expected_goals?.away.toFixed(1) ?? "—"}</span>
             </div>
             <span className="text-[10px] uppercase tracking-[0.3em] font-bold mt-3 opacity-70" style={{ color: "var(--text-3)" }}>Expected</span>
           </div>
 
           <div className="text-left flex-1">
             <h2
-              className="text-3xl md:text-5xl font-extrabold tracking-tighter drop-shadow-md"
+              className="text-3xl md:text-5xl font-extrabold tracking-tighter drop-"
               style={{ color: prediction === "away" ? "var(--text-1)" : "var(--text-2)", textShadow: prediction === "away" ? "0 0 20px rgba(255,255,255,0.15)" : "none" }}
             >
               {away_team}
             </h2>
             <p className="text-sm font-mono mt-3 opacity-90" style={{ color: "var(--text-3)" }}>
-              <span className="glass-panel px-2.5 py-1 rounded-md font-bold text-[15px]" style={{ color: "var(--away)", boxShadow: "var(--glow-away)" }}>{match.expected_goals ? xg(match.expected_goals.away) : "—"}</span>
+              <span className="glass-panel px-2.5 py-1 rounded-none font-bold text-[15px]" style={{ color: "var(--away)", }}>{match.expected_goals ? xg(match.expected_goals.away) : "—"}</span>
               <span className="uppercase tracking-[0.2em] text-[10px] font-bold ml-2">xG</span>
             </p>
           </div>
         </div>
 
         {/* 1X2 bar */}
-        <div className="space-y-3 relative z-10 mt-10 p-5 glass-panel rounded-2xl border border-[var(--border)] bg-black/5 dark:bg-white/5 shadow-inner">
-          <div className="flex h-3.5 rounded-full overflow-hidden shadow-inner border border-[var(--border-strong)]" style={{ background: "var(--surface2)" }}>
+        <div className="space-y-3 relative z-10 mt-10 p-5 glass-panel rounded-none border border-[var(--border)] bg-black/5 dark:bg-white/5 shadow-inner">
+          <div className="flex h-3.5 rounded-none overflow-hidden shadow-inner border border-[var(--border-strong)]" style={{ background: "var(--surface2)" }}>
             <div className="prob-bar rounded-l-full shadow-[0_0_15px_var(--home)] relative" style={{ width: pct(match.prob_home), background: "var(--home)" }}>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20" />
+              <div className="absolute inset-0 " />
             </div>
             <div className="prob-bar relative shadow-[0_0_15px_var(--draw)]" style={{ width: pct(match.prob_draw), background: "var(--draw)" }}>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20" />
+              <div className="absolute inset-0 " />
             </div>
             <div className="prob-bar rounded-r-full shadow-[0_0_15px_var(--away)] relative" style={{ width: pct(match.prob_away), background: "var(--away)" }}>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20" />
+              <div className="absolute inset-0 " />
             </div>
           </div>
 
@@ -169,12 +169,12 @@ function MatchDetailContent() {
         {match.markets.clean_sheet && (
           <div className="mt-6 pt-5 flex justify-between text-xs font-semibold tracking-wide uppercase relative z-10" style={{ borderTop: "1px dashed var(--border-strong)", color: "var(--text-3)" }}>
             <span className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--home)", boxShadow: "var(--glow-home)" }} />
+              <div className="w-1.5 h-1.5 rounded-none" style={{ background: "var(--home)", }} />
               {home_team} CS: <span className="font-mono text-sm px-2 py-0.5 rounded glass-panel" style={{ color: "var(--home)" }}>{match.markets.clean_sheet.home !== null ? pct(match.markets.clean_sheet.home) : "—"}</span>
             </span>
             <span className="flex items-center gap-2">
               Away CS: <span className="font-mono text-sm px-2 py-0.5 rounded glass-panel" style={{ color: "var(--away)" }}>{match.markets.clean_sheet.away !== null ? pct(match.markets.clean_sheet.away) : "—"}</span>
-              <div className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--away)", boxShadow: "var(--glow-away)" }} />
+              <div className="w-1.5 h-1.5 rounded-none" style={{ background: "var(--away)", }} />
             </span>
           </div>
         )}
@@ -240,7 +240,7 @@ function MatchDetailContent() {
         <div className="card-hover p-5 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: "var(--text-3)" }}>Over/Under 2.5 Goals</h3>
-            <div className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-emerald-400">
+            <div className="w-8 h-8 rounded-none glass-panel flex items-center justify-center text-[var(--success)]">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
             </div>
           </div>
@@ -249,7 +249,7 @@ function MatchDetailContent() {
               <div className="flex justify-between items-end">
                 <div>
                   <div className="text-[10px] uppercase font-bold tracking-widest mb-1" style={{ color: "var(--text-4)" }}>Over</div>
-                  <span className="text-3xl font-display font-black bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--text-3) 100%)" }}>
+                  <span className="text-3xl font-display font-black " style={{ }}>
                     {pct(match.markets.over_under["2.5"].over)}
                   </span>
                 </div>
@@ -260,8 +260,8 @@ function MatchDetailContent() {
                   </span>
                 </div>
               </div>
-              <div className="flex h-2.5 rounded-full overflow-hidden shadow-inner border border-[var(--border)]" style={{ background: "var(--surface2)" }}>
-                <div className="prob-bar bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: pct(match.markets.over_under["2.5"].over) }} />
+              <div className="flex h-2.5 rounded-none overflow-hidden shadow-inner border border-[var(--border)]" style={{ background: "var(--surface2)" }}>
+                <div className="prob-bar bg-[var(--success)] shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: pct(match.markets.over_under["2.5"].over) }} />
               </div>
             </>
           ) : <span className="text-sm" style={{ color: "var(--text-4)" }}>—</span>}
@@ -271,22 +271,22 @@ function MatchDetailContent() {
         <div className="card-hover p-5 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: "var(--text-3)" }}>Both Teams to Score</h3>
-            <div className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-amber-500">
+            <div className="w-8 h-8 rounded-none glass-panel flex items-center justify-center text-[var(--warning)]">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
             </div>
           </div>
           <div className="flex justify-between items-end">
             <div>
               <div className="text-[10px] uppercase font-bold tracking-widest mb-1" style={{ color: "var(--text-4)" }}>Yes</div>
-              <span className="text-3xl font-display font-black bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, var(--text-1) 0%, var(--text-3) 100%)" }}>{match.markets.btts.yes !== null ? pct(match.markets.btts.yes) : "—"}</span>
+              <span className="text-3xl font-display font-black " style={{ }}>{match.markets.btts.yes !== null ? pct(match.markets.btts.yes) : "—"}</span>
             </div>
             <div className="text-right">
               <div className="text-[10px] uppercase font-bold tracking-widest mb-1" style={{ color: "var(--text-4)" }}>No</div>
               <span className="text-3xl font-display font-black" style={{ color: "var(--text-3)" }}>{match.markets.btts.no !== null ? pct(match.markets.btts.no) : "—"}</span>
             </div>
           </div>
-          <div className="flex h-2.5 rounded-full overflow-hidden shadow-inner border border-[var(--border)]" style={{ background: "var(--surface2)" }}>
-            <div className="prob-bar bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]" style={{ width: match.markets.btts.yes !== null ? pct(match.markets.btts.yes) : "0%" }} />
+          <div className="flex h-2.5 rounded-none overflow-hidden shadow-inner border border-[var(--border)]" style={{ background: "var(--surface2)" }}>
+            <div className="prob-bar bg-[var(--warning)] shadow-[0_0_10px_rgba(245,158,11,0.5)]" style={{ width: match.markets.btts.yes !== null ? pct(match.markets.btts.yes) : "0%" }} />
           </div>
         </div>
 
@@ -304,7 +304,7 @@ function MatchDetailContent() {
               return (
                 <div key={line} className="flex justify-between text-xs font-mono" style={{ color: "var(--text-3)" }}>
                   <span>O/U {line}</span>
-                  <span className="text-emerald-400">{pct(ou.over)}</span>
+                  <span className="text-[var(--success)]">{pct(ou.over)}</span>
                   <span>/</span>
                   <span>{pct(ou.under)}</span>
                 </div>
@@ -327,7 +327,7 @@ function MatchDetailContent() {
               return (
                 <div key={line} className="flex justify-between text-xs font-mono" style={{ color: "var(--text-3)" }}>
                   <span>O/U {line}</span>
-                  <span className="text-amber-400">{pct(ou.over)}</span>
+                  <span className="text-[var(--warning)]">{pct(ou.over)}</span>
                   <span>/</span>
                   <span>{pct(ou.under)}</span>
                 </div>
@@ -335,7 +335,7 @@ function MatchDetailContent() {
             })}
           </div>
           {is_derby && (
-            <p className="text-[10px] text-amber-500/70 pt-1">Derby boost applied</p>
+            <p className="text-[10px] text-[var(--warning)]/70 pt-1">Derby boost applied</p>
           )}
         </div>
 
@@ -384,7 +384,7 @@ function MatchDetailContent() {
                 <h4 className="text-xs uppercase tracking-wider mb-3" style={{ color: "var(--home)" }}>{home_team}</h4>
                 <div className="space-y-2">
                   {goalscorer.home.slice(0, 6).map((s, i) => (
-                    <div key={i} className="flex items-center gap-3 glass-inset rounded-lg px-3 py-2">
+                    <div key={i} className="flex items-center gap-3 glass-inset rounded-none px-3 py-2">
                       <div className="flex-1 min-w-0">
                         <span className="text-sm font-medium" style={{ color: "var(--text-1)" }}>{s.web_name}</span>
                         <span className="text-[10px] ml-1.5" style={{ color: "var(--text-3)" }}>{s.position}</span>
@@ -393,7 +393,7 @@ function MatchDetailContent() {
                         {s.xg_per_90 !== null && (
                           <span style={{ color: "var(--text-3)" }}>xG/90 {s.xg_per_90.toFixed(2)}</span>
                         )}
-                        <span className="text-emerald-400 font-semibold">{pct(s.anytime_prob)}</span>
+                        <span className="text-[var(--success)] font-semibold">{pct(s.anytime_prob)}</span>
                       </div>
                     </div>
                   ))}
@@ -406,7 +406,7 @@ function MatchDetailContent() {
                 <h4 className="text-xs uppercase tracking-wider mb-3" style={{ color: "var(--away)" }}>{away_team}</h4>
                 <div className="space-y-2">
                   {goalscorer.away.slice(0, 6).map((s, i) => (
-                    <div key={i} className="flex items-center gap-3 glass-inset rounded-lg px-3 py-2">
+                    <div key={i} className="flex items-center gap-3 glass-inset rounded-none px-3 py-2">
                       <div className="flex-1 min-w-0">
                         <span className="text-sm font-medium" style={{ color: "var(--text-1)" }}>{s.web_name}</span>
                         <span className="text-[10px] ml-1.5" style={{ color: "var(--text-3)" }}>{s.position}</span>
@@ -415,7 +415,7 @@ function MatchDetailContent() {
                         {s.xg_per_90 !== null && (
                           <span style={{ color: "var(--text-3)" }}>xG/90 {s.xg_per_90.toFixed(2)}</span>
                         )}
-                        <span className="text-emerald-400 font-semibold">{pct(s.anytime_prob)}</span>
+                        <span className="text-[var(--success)] font-semibold">{pct(s.anytime_prob)}</span>
                       </div>
                     </div>
                   ))}
@@ -465,19 +465,19 @@ function MatchDetailContent() {
           <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-1)" }}>Player Booking Probabilities</h3>
           <div className="space-y-2">
             {bookings.map((b, i) => (
-              <div key={i} className="flex items-center gap-3 glass-inset rounded-lg px-3 py-2">
+              <div key={i} className="flex items-center gap-3 glass-inset rounded-none px-3 py-2">
                 <div className="flex-1 min-w-0">
                   <span className="text-sm font-medium" style={{ color: "var(--text-1)" }}>{b.web_name}</span>
                   <span className="text-xs ml-2" style={{ color: "var(--text-3)" }}>{b.team}</span>
                 </div>
                 <div className="flex items-center gap-3 text-xs font-mono flex-shrink-0">
-                  <div className="w-20 rounded-full h-1.5 overflow-hidden" style={{ background: "var(--surface2)" }}>
+                  <div className="w-20 rounded-none h-1.5 overflow-hidden" style={{ background: "var(--surface2)" }}>
                     <div
-                      className="h-full bg-amber-500 rounded-full"
+                      className="h-full bg-[var(--warning)] rounded-none"
                       style={{ width: `${Math.min(b.adjusted_prob * 400, 100)}%` }}
                     />
                   </div>
-                  <span className="text-amber-400 w-10 text-right">{pct(b.adjusted_prob)}</span>
+                  <span className="text-[var(--warning)] w-10 text-right">{pct(b.adjusted_prob)}</span>
                 </div>
               </div>
             ))}
@@ -505,10 +505,8 @@ function MatchDetailContent() {
 
       {/* Value Bets */}
       {match.value_bets.length > 0 && (
-        <div className="card-hover p-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-          <h3 className="text-lg font-bold mb-6 flex items-center gap-3" style={{ color: "var(--text-1)" }}>
-            <span className="w-8 h-8 rounded-lg bg-[var(--accent-muted)] flex items-center justify-center border border-[var(--accent-border)] font-black text-[var(--accent)]">
+        <div className="card-hover p-8 relative overflow-hidden">          <h3 className="text-lg font-bold mb-6 flex items-center gap-3" style={{ color: "var(--text-1)" }}>
+            <span className="w-8 h-8 rounded-none bg-[var(--accent-muted)] flex items-center justify-center border border-[var(--accent-border)] font-black text-[var(--accent)]">
               {match.value_bets.length}
             </span>
             Value Bets Found
@@ -518,15 +516,15 @@ function MatchDetailContent() {
               const tier = bet.confidence ?? confidenceTier(bet.edge);
               const badge = CONF_BADGES[tier] ?? CONF_BADGES.low;
               return (
-                <div key={i} className="flex flex-col md:flex-row md:items-center justify-between glass-inset rounded-xl p-4 gap-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-[var(--accent-border)]">
+                <div key={i} className="flex flex-col md:flex-row md:items-center justify-between glass-inset rounded-none p-4 gap-4 transition-all hover:-translate-y-1 hover: hover:border-[var(--accent-border)]">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full glass-panel flex flex-shrink-0 items-center justify-center text-[var(--accent)] shadow-inner">
+                    <div className="w-10 h-10 rounded-none glass-panel flex flex-shrink-0 items-center justify-center text-[var(--accent)] shadow-inner">
                       <span className="text-lg opacity-80" role="img" aria-label={MARKET_ICON_LABELS[marketIcon(bet.market)] ?? "Market"}>{marketIcon(bet.market)}</span>
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="text-base font-bold" style={{ color: "var(--text-1)" }}>{bet.selection ?? bet.market}</span>
-                        <span className={`${badge.cls} shadow-sm px-2 text-[9px]`}>{badge.label}</span>
+                        <span className={`${badge.cls} px-2 text-[9px]`}>{badge.label}</span>
                       </div>
                       {bet.selection && (
                         <span className="text-[11px] font-semibold tracking-wider uppercase mt-1 block" style={{ color: "var(--text-4)" }}>{marketLabel(bet.market)}</span>
@@ -534,10 +532,10 @@ function MatchDetailContent() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 md:flex md:items-center gap-3 md:gap-4 text-sm font-mono p-3 md:p-0 rounded-lg bg-[var(--surface)] md:bg-transparent">
+                  <div className="grid grid-cols-2 md:flex md:items-center gap-3 md:gap-4 text-sm font-mono p-3 md:p-0 rounded-none bg-[var(--surface)] md:bg-transparent">
                     <div className="flex flex-col md:items-end">
                       <span className="text-[9px] uppercase tracking-wider text-[var(--text-4)] mb-0.5 font-bold">Model Prob</span>
-                      <span className="text-emerald-400 font-extrabold">{pct(bet.model_prob)}</span>
+                      <span className="text-[var(--success)] font-extrabold">{pct(bet.model_prob)}</span>
                     </div>
 
                     <div className="flex flex-col md:items-end">
@@ -547,7 +545,7 @@ function MatchDetailContent() {
 
                     <div className="flex flex-col md:items-end col-span-2 md:col-span-1 pl-0 md:pl-2 border-t md:border-t-0 md:border-l border-[var(--border)] pt-2 md:pt-0">
                       <span className="text-[9px] uppercase tracking-wider mb-0.5 font-bold" style={{ color: "var(--accent)" }}>Est. Edge</span>
-                      <span className={`font-black text-base drop-shadow-sm ${edgeColor(bet.edge)}`}>
+                      <span className={`font-black text-base ${edgeColor(bet.edge)}`}>
                         {edgePrefix(bet.edge)}{pct(bet.edge)}
                       </span>
                     </div>
@@ -555,7 +553,7 @@ function MatchDetailContent() {
                     {(bet.decimal_odds ?? 0) > 0 && (
                       <div className="flex flex-col md:items-end md:ml-2">
                         <span className="text-[9px] uppercase tracking-wider text-[var(--text-4)] mb-0.5 font-bold">Top Odds</span>
-                        <span className="glass-panel px-2.5 py-1 rounded-md" style={{ color: "var(--info)", background: "var(--info-muted)", border: "1px solid var(--info-border)" }}>
+                        <span className="glass-panel px-2.5 py-1 rounded-none" style={{ color: "var(--info)", background: "var(--info-muted)", border: "1px solid var(--info-border)" }}>
                           {odds(bet.decimal_odds!)}
                         </span>
                         {bet.bookmaker && (
@@ -573,7 +571,7 @@ function MatchDetailContent() {
 
       {/* Narrative */}
       <div className="card p-6">
-        <h3 className="text-sm font-semibold mb-3" style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}>
+        <h3 className="text-sm font-semibold mb-3" style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}>
           Match Preview
         </h3>
         <div

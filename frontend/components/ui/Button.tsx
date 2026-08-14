@@ -10,7 +10,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANT_STYLES: Record<ButtonVariant, string> = {
-  primary: "text-white border",
+  primary: "text-[var(--bg)] border",
   ghost: "bg-transparent border border-transparent",
   outline: "bg-transparent border",
 };
@@ -37,7 +37,7 @@ export function Button({
   return (
     <button
       className={clsx(
-        "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors duration-150",
+        "inline-flex items-center justify-center gap-2 rounded-none font-medium transition-colors duration-150",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500",
         "disabled:opacity-50 disabled:cursor-not-allowed",
         VARIANT_STYLES[variant],

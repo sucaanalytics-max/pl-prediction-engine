@@ -124,7 +124,7 @@ export default function XScanButton() {
   // explanation. It is also the normal state of a local dev server.
   if (state && !state.configured) {
     return (
-      <p className="text-xs" style={{ color: "var(--muted, #94a3b8)" }}>
+      <p className="text-xs" style={{ color: "var(--text-3)" }}>
         {state.reason}
       </p>
     );
@@ -146,7 +146,7 @@ export default function XScanButton() {
             style={{
               background: "var(--surface, #0f172a)",
               borderColor: "var(--border, #334155)",
-              color: "var(--text, #e2e8f0)",
+              color: "var(--text-1)",
             }}
           />
         ) : null}
@@ -157,12 +157,12 @@ export default function XScanButton() {
           className="rounded px-3 py-1 text-xs font-medium disabled:opacity-50"
           style={{
             background: "var(--accent, #2563eb)",
-            color: "var(--accent-contrast, #ffffff)",
+            color: "var(--bg)",
           }}
         >
           {busy ? "Queueing…" : "Scan X now"}
         </button>
-        <span className="text-xs" style={{ color: "var(--muted, #94a3b8)" }}>
+        <span className="text-xs" style={{ color: "var(--text-3)" }}>
           {describeRun(state?.lastRun ?? null)}
         </span>
       </div>
@@ -171,7 +171,7 @@ export default function XScanButton() {
         <p
           className="text-xs"
           role={failed ? "alert" : "status"}
-          style={{ color: failed ? "var(--danger, #ef4444)" : "var(--muted, #94a3b8)" }}
+          style={{ color: failed ? "var(--error)" : "var(--text-3)" }}
         >
           {message}
         </p>
@@ -183,7 +183,7 @@ export default function XScanButton() {
           href={state.lastRun.url}
           target="_blank"
           rel="noreferrer"
-          style={{ color: "var(--muted, #94a3b8)" }}
+          style={{ color: "var(--text-3)" }}
         >
           View the run log
         </a>

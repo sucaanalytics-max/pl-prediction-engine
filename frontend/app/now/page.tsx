@@ -93,7 +93,7 @@ function NextFixtures() {
         of={artifact}
         what="No fixtures are published for the current gameweek."
         then={(file) => (
-          <div className="glass-panel rounded-2xl overflow-x-auto">
+          <div className="glass-panel rounded-none overflow-x-auto">
             <table className="data-table" aria-label="This gameweek's fixtures">
               <thead>
                 <tr>
@@ -151,7 +151,7 @@ export default function NowPage() {
         <header>
           <h1
             className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
             Now
           </h1>

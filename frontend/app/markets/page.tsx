@@ -80,7 +80,7 @@ function VigFlag({ devigged }: { devigged: boolean | null }) {
     return (
       <span
         className="text-[10px] font-semibold"
-        style={{ color: "var(--warning, #f59e0b)" }}
+        style={{ color: "var(--warning)" }}
         data-vig="inflated"
         title="edge = model_prob - implied_prob, and implied_prob here still contains the bookmaker's margin"
       >
@@ -226,7 +226,7 @@ function BetsTable({ rows }: { rows: readonly BetRow[] }) {
         shown={shown.length} total={rows.length} inflated={inflated}
         onExport={exportCsv}
       />
-      <div className="glass-panel rounded-2xl overflow-x-auto">
+      <div className="glass-panel rounded-none overflow-x-auto">
         <table className="data-table" aria-label="Value bets">
           <thead>
             <tr>
@@ -314,7 +314,7 @@ export default function MarketsPage() {
         <header>
           <h1
             className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
             Markets
           </h1>

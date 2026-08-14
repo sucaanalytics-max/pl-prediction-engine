@@ -45,8 +45,13 @@ describe("ProgressBar", () => {
   });
 
   it("does not render label element when not provided", () => {
+    // Asserted on rendered text, not on the label's class name. Pinning a class
+    // is what made 53 tests in this repo break on every restyle, and this one
+    // broke again the moment the muted grey moved from a Tailwind palette class
+    // to a token — the assertion was about the label, and it was written about
+    // the colour the label happened to be.
     const { container } = render(<ProgressBar value={0.5} />);
-    expect(container.querySelector("span.text-slate-400")).toBeNull();
+    expect(container.textContent?.trim()).toBe("");
   });
 
   it("uses green as default fill color", () => {

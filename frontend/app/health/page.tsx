@@ -99,7 +99,7 @@ function HealthContent() {
         <div>
           <h1
             className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
             Model Health
           </h1>
@@ -119,7 +119,7 @@ function HealthContent() {
               COLLECTING FORWARD RESULTS
             </span>
           )}
-          <span className={isHealthy ? "badge-green" : "text-red-400 bg-red-500/10 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider"}>
+          <span className={isHealthy ? "badge-green" : "text-[var(--error)] bg-[var(--error-muted)] px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider"}>
             {health.status.toUpperCase()}
           </span>
         </div>
@@ -215,13 +215,13 @@ function HealthContent() {
                   <div key={key} className="space-y-1">
                     <div className="flex justify-between text-xs">
                       <span style={{ color: "var(--text-3)" }}>{market}</span>
-                      <span className={`font-mono ${good ? "text-emerald-400" : "text-amber-400"}`}>
+                      <span className={`font-mono ${good ? "text-[var(--success)]" : "text-[var(--warning)]"}`}>
                         {val.toFixed(3)}
                       </span>
                     </div>
-                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "var(--surface2)" }}>
+                    <div className="h-1.5 rounded-none overflow-hidden" style={{ background: "var(--surface2)" }}>
                       <div
-                        className={`h-full rounded-full ${good ? "bg-emerald-500" : "bg-amber-500"}`}
+                        className={`h-full rounded-none ${good ? "bg-[var(--success)]" : "bg-[var(--warning)]"}`}
                         style={{ width: `${pctWidth}%` }}
                       />
                     </div>
@@ -358,7 +358,7 @@ function MetricCard({
   label, value, target, good,
 }: { label: string; value: string; target: string; good: boolean | null }) {
   const tone =
-    good === null ? "" : good ? "text-green-400" : "text-amber-400";
+    good === null ? "" : good ? "text-green-400" : "text-[var(--warning)]";
   return (
     <div className="card p-4">
       <div className="stat-label">{label}</div>

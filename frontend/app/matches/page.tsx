@@ -34,7 +34,7 @@ const ZONE_COLOUR: Record<string, string> = {
 
 function Fixtures({ file }: { file: MatchesFile }) {
   return (
-    <div className="glass-panel rounded-2xl overflow-x-auto">
+    <div className="glass-panel rounded-none overflow-x-auto">
       <table className="data-table" aria-label="Fixtures and model calls">
         <thead>
           <tr>
@@ -84,7 +84,7 @@ function FormDot({ result }: { result: string }) {
   };
   return (
     <span
-      className="inline-flex w-4 h-4 rounded-full text-[8px] font-bold items-center justify-center text-white flex-shrink-0"
+      className="inline-flex w-4 h-4 rounded-none text-[8px] font-bold items-center justify-center text-[var(--bg)] flex-shrink-0"
       style={{ background: colour[result] ?? "#334155" }}
       title={label[result] ?? result}
     >
@@ -95,7 +95,7 @@ function FormDot({ result }: { result: string }) {
 
 function LeagueTable({ rows }: { rows: readonly Standing[] }) {
   return (
-    <div className="glass-panel rounded-2xl overflow-x-auto">
+    <div className="glass-panel rounded-none overflow-x-auto">
       <table className="data-table" aria-label="Premier League standings">
         <thead>
           <tr>
@@ -130,10 +130,10 @@ function LeagueTable({ rows }: { rows: readonly Standing[] }) {
                 <td className="text-sm">{club.team}</td>
                 <td className="text-center font-mono text-sm">{club.played}</td>
                 <td className="text-center font-mono text-sm hidden sm:table-cell"
-                    style={{ color: "var(--success, #22c55e)" }}>{club.won}</td>
+                    style={{ color: "var(--success)" }}>{club.won}</td>
                 <td className="text-center font-mono text-sm hidden sm:table-cell">{club.drawn}</td>
                 <td className="text-center font-mono text-sm hidden sm:table-cell"
-                    style={{ color: "var(--danger, #f87171)" }}>{club.lost}</td>
+                    style={{ color: "var(--error)" }}>{club.lost}</td>
                 <td className="text-center font-mono text-sm hidden lg:table-cell">{club.gf}</td>
                 <td className="text-center font-mono text-sm hidden lg:table-cell">{club.ga}</td>
                 <td className="text-center font-mono text-sm">{club.gd}</td>
@@ -166,7 +166,7 @@ export default function MatchesPage() {
         <header>
           <h1
             className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
             Matches
           </h1>

@@ -87,7 +87,7 @@ export default function MinutesConflicts() {
           return (
             <li
               key={`${c.elementId}-${c.url}`}
-              className="glass-panel rounded-xl p-4 space-y-2"
+              className="glass-panel rounded-none p-4 space-y-2"
               data-testid="minutes-conflict"
             >
               <div className="flex items-baseline justify-between gap-3 flex-wrap">

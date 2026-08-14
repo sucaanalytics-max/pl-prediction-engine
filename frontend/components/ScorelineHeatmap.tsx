@@ -9,12 +9,12 @@ interface ScorelineHeatmapProps {
 }
 
 function cellColor(prob: number): string {
-  if (prob >= 0.12) return "bg-pitch-500/80 text-white";
-  if (prob >= 0.08) return "bg-pitch-600/60 text-white";
-  if (prob >= 0.05) return "bg-pitch-700/40 dark:text-slate-200 text-slate-800";
-  if (prob >= 0.02) return "dark:bg-slate-800/80 bg-slate-100 dark:text-slate-300 text-slate-600";
-  if (prob > 0) return "dark:bg-slate-800/40 bg-slate-100/60 dark:text-slate-500 text-slate-400";
-  return "dark:bg-slate-900/40 bg-transparent dark:text-slate-700 text-slate-300";
+  if (prob >= 0.12) return "bg-pitch-500/80 text-[var(--bg)]";
+  if (prob >= 0.08) return "bg-pitch-600/60 text-[var(--bg)]";
+  if (prob >= 0.05) return "bg-pitch-700/40 dark:text-[var(--text-2)] text-slate-800";
+  if (prob >= 0.02) return "dark:bg-[var(--surface)] bg-[var(--surface)] dark:text-[var(--text-2)] text-slate-600";
+  if (prob > 0) return "dark:bg-[var(--surface)] bg-[var(--surface)] dark:text-[var(--text-3)] text-[var(--text-3)]";
+  return "dark:bg-[var(--surface)] bg-transparent dark:text-slate-700 text-[var(--text-2)]";
 }
 
 export default function ScorelineHeatmap({ grid, homeTeam, awayTeam }: ScorelineHeatmapProps) {
@@ -48,7 +48,7 @@ export default function ScorelineHeatmap({ grid, homeTeam, awayTeam }: Scoreline
             {row.slice(0, maxGoals).map((prob, awayGoals) => (
               <div
                 key={`${homeGoals}-${awayGoals}`}
-                className={`heatmap-cell ${cellColor(prob)} rounded-md flex items-center justify-center py-3 text-xs font-mono font-medium`}
+                className={`heatmap-cell ${cellColor(prob)} rounded-none flex items-center justify-center py-3 text-xs font-mono font-medium`}
                 title={`${homeTeam} ${homeGoals} - ${awayGoals} ${awayTeam}: ${pct(prob)}`}
               >
                 {prob >= 0.01 ? pct(prob, 0) : ""}
@@ -69,7 +69,7 @@ export default function ScorelineHeatmap({ grid, homeTeam, awayTeam }: Scoreline
           {getTopScorelines(grid, homeTeam, awayTeam, 5).map((s, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-mono"
+              className="inline-flex items-center gap-1.5 px-2 py-1 rounded-none text-xs font-mono"
               style={{ background: "var(--surface2)", border: "1px solid var(--border)" }}
             >
               <span className="font-semibold" style={{ color: "var(--text-1)" }}>{s.score}</span>

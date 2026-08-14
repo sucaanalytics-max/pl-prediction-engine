@@ -33,11 +33,11 @@ const TONE: Record<string, { colour: string; label: string }> = {
   // Published, well-formed, and carrying nothing yet. Not a fault.
   empty: { colour: "var(--text-3)", label: "Nothing yet" },
   // Real data, past its budget. Usable with a caveat.
-  stale: { colour: "var(--warning, #f59e0b)", label: "Out of date" },
+  stale: { colour: "var(--warning)", label: "Out of date" },
   // Nothing published. The normal state for most artifacts most of the time.
   absent: { colour: "var(--text-4)", label: "Not published" },
   // Published but the shape is wrong — the only state that means something broke.
-  unreadable: { colour: "var(--danger, #f87171)", label: "Unreadable" },
+  unreadable: { colour: "var(--error)", label: "Unreadable" },
 };
 
 /**
@@ -159,7 +159,7 @@ export function ProvenanceStrip<T>({
   return (
     <p
       className="text-[10px] font-mono"
-      style={{ color: stale ? "var(--warning, #f59e0b)" : "var(--text-4)" }}
+      style={{ color: stale ? "var(--warning)" : "var(--text-4)" }}
       data-testid="provenance"
     >
       {producedAt
@@ -198,7 +198,7 @@ export function Section({
         <div>
           <h2
             className="text-lg font-bold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
             {title}
           </h2>

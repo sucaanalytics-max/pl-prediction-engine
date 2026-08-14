@@ -26,27 +26,33 @@ import type { FixtureMatrixRow } from "@/lib/data/heuristics";
  *
  * The ramp is validated on two axes, and the first version only checked one.
  *
- * **Lightness monotonicity** — OKLab 0.905 → 0.812 → 0.717 → 0.527 → 0.480, strictly
- * decreasing, so equal difficulty gaps read as ordered. That was checked.
+ * **Lightness monotonicity** — strictly decreasing, so equal difficulty gaps read as
+ * ordered. That was checked.
  *
  * **Ink contrast on each step** — that was NOT. Step 4 shipped as `#3987e5`, on which
  * white text computes to 3.64:1, below the 4.5:1 that AA requires for the 11px cell
- * text. It is `#256abf` now: white at 5.39:1, and OKLab 0.527 keeps the ramp ordered.
- * Every step now clears AA for its own ink (9.03, 6.69, 4.77, 5.39, 6.63).
+ * text.
  *
- * And **the difficulty number is in the cell**, which the first version's docstring
- * claimed while the cell in fact rendered only the opponent-and-venue string. The FDR
- * value was carried by colour alone. Both of those were found by an adversarial audit
- * of this file, not by the tests in it.
+ * The ramp was blue when the app's accent was emerald, so the grid was the only blue
+ * on the surface and the largest block of colour in it — on a screen whose whole
+ * point is that colour marks agreement, disagreement and noise. It is now the app's
+ * own warm neutral, which keeps every property the blue was chosen for: a single hue
+ * light→dark rather than a diverging pair, still nothing near green↔red, and the
+ * difficulty number in the cell so the value never rests on colour alone.
+ *
+ * Re-validated when it moved, because that is exactly how step 4 slipped through the
+ * first time. Relative luminance 0.775 → 0.545 → 0.309 → 0.086 → 0.022, strictly
+ * decreasing; contrast against each step's own ink 13.68, 9.87, 5.95, 7.08, 13.37,
+ * every one clearing AA with room. `FixtureMatrix.test.tsx` pins the ordering.
  */
 
-/** Blue ramp, light = easy, dark = hard. Index by FDR 1–5. */
+/** Warm-neutral ramp, light = easy, dark = hard. Index by FDR 1–5. */
 const FDR_FILL: Record<number, string> = {
-  1: "#cde2fb",
-  2: "#9ec5f4",
-  3: "#6da7ec",
-  4: "#256abf",
-  5: "#1c5cab",
+  1: "#e6e4dc",
+  2: "#c6c3b8",
+  3: "#9a978c",
+  4: "#55534a",
+  5: "#2a2924",
 };
 
 /**
@@ -56,11 +62,11 @@ const FDR_FILL: Record<number, string> = {
  * a single text colour would be unreadable at one end of the ramp in both themes.
  */
 const FDR_INK: Record<number, string> = {
-  1: "#0d366b",
-  2: "#0d366b",
-  3: "#0d366b",
-  4: "#ffffff",
-  5: "#ffffff",
+  1: "#1b1a16",
+  2: "#1b1a16",
+  3: "#1b1a16",
+  4: "#f6f5f2",
+  5: "#f6f5f2",
 };
 
 const DIFFICULTY_WORD: Record<number, string> = {
@@ -159,7 +165,7 @@ export default function FixtureMatrix() {
         </button>
       </div>
 
-      <div className="glass-panel rounded-2xl overflow-x-auto">
+      <div className="glass-panel rounded-none overflow-x-auto">
         <table className="data-table" aria-label="Fixture difficulty by club and gameweek">
           <thead>
             <tr>

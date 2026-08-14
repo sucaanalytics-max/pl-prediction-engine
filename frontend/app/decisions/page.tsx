@@ -28,19 +28,19 @@ const BANNER: Record<
 > = {
   ready: {
     label: "Ready",
-    className: "border-emerald-500/40 bg-emerald-500/10 text-emerald-300",
+    className: "border-[var(--success-border)] bg-[var(--success)]/10 text-[var(--success)]",
   },
   expired: {
     label: "Expired — do not act on this",
-    className: "border-red-500/50 bg-red-500/10 text-red-300",
+    className: "border-[var(--error-border)] bg-[var(--error-muted)] text-[var(--error)]",
   },
   stale: {
     label: "Stale — not published for the current gameweek",
-    className: "border-amber-500/50 bg-amber-500/10 text-amber-300",
+    className: "border-[var(--warning-border)] bg-[var(--warning)]/10 text-[var(--warning)]",
   },
   absent: {
     label: "Nothing published yet",
-    className: "border-slate-500/40 bg-slate-500/10 text-slate-300",
+    className: "border-[var(--border)] bg-[var(--surface)] text-[var(--text-2)]",
   },
 };
 
@@ -48,14 +48,14 @@ function TeamCard({ team, muted }: { team: DecisionTeam; muted: boolean }) {
   const transfers = team.transfers ?? [];
   return (
     <section
-      className={`rounded-lg border border-slate-700 bg-slate-900/50 p-5 ${
+      className={`rounded-none border border-[var(--border)] bg-[var(--surface)] p-5 ${
         muted ? "opacity-50" : ""
       }`}
     >
       <header className="mb-3 flex items-baseline justify-between gap-3">
         <h2 className="text-lg font-semibold capitalize">{team.label}</h2>
         {team.projectedPoints !== undefined && (
-          <span className="text-sm text-slate-400">
+          <span className="text-sm text-[var(--text-3)]">
             {team.projectedPoints.toFixed(1)} pts
             {team.projectedInterval ? ` · 90% ${team.projectedInterval}` : ""}
           </span>
@@ -63,37 +63,37 @@ function TeamCard({ team, muted }: { team: DecisionTeam; muted: boolean }) {
       </header>
 
       {team.status && team.status !== "ok" && (
-        <p className="mb-3 rounded border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs uppercase tracking-wide text-amber-300">
+        <p className="mb-3 rounded border border-[var(--warning-border)] bg-[var(--warning)]/10 px-3 py-2 text-xs uppercase tracking-wide text-[var(--warning)]">
           {team.status.replace(/_/g, " ")}
         </p>
       )}
 
       <dl className="space-y-2 text-sm">
         <div className="flex gap-2">
-          <dt className="w-24 shrink-0 text-slate-400">Captain</dt>
+          <dt className="w-24 shrink-0 text-[var(--text-3)]">Captain</dt>
           <dd>{team.captain ?? "—"}</dd>
         </div>
         <div className="flex gap-2">
-          <dt className="w-24 shrink-0 text-slate-400">Vice</dt>
+          <dt className="w-24 shrink-0 text-[var(--text-3)]">Vice</dt>
           <dd>{team.viceCaptain ?? "—"}</dd>
         </div>
         <div className="flex gap-2">
-          <dt className="w-24 shrink-0 text-slate-400">Chip</dt>
+          <dt className="w-24 shrink-0 text-[var(--text-3)]">Chip</dt>
           <dd>{team.chip ?? "none"}</dd>
         </div>
         <div className="flex gap-2">
-          <dt className="w-24 shrink-0 text-slate-400">Transfers</dt>
+          <dt className="w-24 shrink-0 text-[var(--text-3)]">Transfers</dt>
           <dd>
             {/* "No transfers" is a decision, not an absence of one. */}
             {transfers.length === 0 ? (
-              <span className="text-slate-400">none (roll)</span>
+              <span className="text-[var(--text-3)]">none (roll)</span>
             ) : (
               <ul className="space-y-1">
                 {transfers.map((move, index) => (
                   <li key={index}>
                     {move.out} → {move.in}
                     {move.note ? (
-                      <span className="ml-2 text-xs text-slate-400">
+                      <span className="ml-2 text-xs text-[var(--text-3)]">
                         {move.note}
                       </span>
                     ) : null}
@@ -139,7 +139,7 @@ export default function DecisionsPage() {
   if (!view) {
     return (
       <main className="mx-auto max-w-4xl px-4 py-10">
-        <p className="text-slate-400">Loading decision…</p>
+        <p className="text-[var(--text-3)]">Loading decision…</p>
       </main>
     );
   }
@@ -150,12 +150,12 @@ export default function DecisionsPage() {
   return (
     <main className="mx-auto max-w-4xl px-4 py-10">
       <h1 className="mb-2 text-2xl font-semibold">Agent decision</h1>
-      <p className="mb-6 text-sm text-slate-400">
+      <p className="mb-6 text-sm text-[var(--text-3)]">
         A recommendation. Nothing is submitted on your behalf — the agent has no
         write access to FPL by design.
       </p>
 
-      <div className={`mb-6 rounded-lg border px-4 py-3 ${banner.className}`}>
+      <div className={`mb-6 rounded-none border px-4 py-3 ${banner.className}`}>
         <p className="font-medium">{banner.label}</p>
         <p className="mt-1 text-sm opacity-90">{view.reason}</p>
         {view.freshness === "ready" && view.msToDeadline !== null && (
@@ -174,9 +174,9 @@ export default function DecisionsPage() {
           </div>
 
           {view.decision.notices && view.decision.notices.length > 0 && (
-            <section className="mt-6 rounded-lg border border-slate-700 bg-slate-900/50 p-4">
-              <h2 className="mb-2 text-sm font-semibold text-slate-300">Notes</h2>
-              <ul className="list-inside list-disc space-y-1 text-sm text-slate-400">
+            <section className="mt-6 rounded-none border border-[var(--border)] bg-[var(--surface)] p-4">
+              <h2 className="mb-2 text-sm font-semibold text-[var(--text-2)]">Notes</h2>
+              <ul className="list-inside list-disc space-y-1 text-sm text-[var(--text-3)]">
                 {view.decision.notices.map((notice, index) => (
                   <li key={index}>{notice}</li>
                 ))}
@@ -184,14 +184,14 @@ export default function DecisionsPage() {
             </section>
           )}
 
-          <p className="mt-6 text-xs text-slate-500">
+          <p className="mt-6 text-xs text-[var(--text-3)]">
             Generated {istDateTime(view.decision.generatedAt)} · deadline{" "}
             {istDateTime(view.decision.deadline)}
             {currentGameweek !== null ? ` · current GW${currentGameweek}` : ""}
           </p>
         </>
       ) : (
-        <section className="rounded-lg border border-slate-700 bg-slate-900/50 p-6 text-sm text-slate-400">
+        <section className="rounded-none border border-[var(--border)] bg-[var(--surface)] p-6 text-sm text-[var(--text-3)]">
           <p>
             The agent has not published a decision. The optimiser that produces
             one is not built yet — projections are being generated and sealed

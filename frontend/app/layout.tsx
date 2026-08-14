@@ -1,21 +1,37 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import PwaManager from "@/components/PwaManager";
 import { Providers } from "./providers";
 
-const jakarta = Plus_Jakarta_Sans({
+/**
+ * IBM Plex, app-wide.
+ *
+ * Plus Jakarta and JetBrains Mono were the previous pair. The swap is not a
+ * preference: Plex Mono's figures are what let a column of projections line up
+ * under each other well enough to compare two players by eye, and the italic is
+ * what carries the typographic hedge this app puts on every heuristic number.
+ * Both faces are loaded here rather than per route, so `/margin` no longer ships
+ * its own copy.
+ *
+ * The `--font-plex-*` variable names are what `globals.css` reads. `--font-mono`
+ * is kept pointing at the same face because roughly thirty rules and several
+ * components still name it, and renaming those is a separate, noisier change.
+ */
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  variable: "--font-jakarta",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-plex-sans",
   display: "swap",
 });
 
-const mono = JetBrains_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-mono",
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -57,9 +73,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${jakarta.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${plexSans.variable} ${plexMono.variable}`}
+    >
       <head>
-        <meta name="theme-color" content="#07130f" />
+        {/* The chrome colour, which is ink on both surfaces — see `--chrome`. */}
+        <meta name="theme-color" content="#14140f" />
         {/*
           Wrangler's production bundling preserves function names inside the
           next-themes bootstrap before that function is serialized as an inline

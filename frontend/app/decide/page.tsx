@@ -61,7 +61,7 @@ function DeadlineBadge({ deadline }: { deadline: string | null }) {
     return (
       <span
         className="text-[9px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded"
-        style={{ background: "rgba(248,113,113,0.12)", color: "var(--danger, #f87171)" }}
+        style={{ background: "rgba(248,113,113,0.12)", color: "var(--error)" }}
         data-freshness="expired"
       >
         DEADLINE PASSED — DO NOT ACT
@@ -88,7 +88,7 @@ function Proposal({ decision }: { decision: PublicDecision }) {
             ? `${plan.transfers_out.join(", ")} → ${plan.transfers_in.join(", ")}`
             : "Hold — no transfer"}
           {plan.hits > 0 ? (
-            <span style={{ color: "var(--danger, #f87171)" }}>
+            <span style={{ color: "var(--error)" }}>
               {" "}(−{plan.hits * 4} for hits)
             </span>
           ) : null}
@@ -125,7 +125,7 @@ function Proposal({ decision }: { decision: PublicDecision }) {
       </div>
 
       {decision.warnings.length > 0 ? (
-        <ul className="text-xs space-y-1" style={{ color: "var(--warning, #f59e0b)" }}>
+        <ul className="text-xs space-y-1" style={{ color: "var(--warning)" }}>
           {decision.warnings.map((warning) => (
             <li key={warning}>{warning}</li>
           ))}
@@ -197,9 +197,9 @@ function Robustness({ label, gameweek }: { label: EntryLabel; gameweek: number }
 function SurvivalPanel({ report }: { report: Sensitivity }) {
   const verdict = band(report.survival);
   const tone =
-    verdict.tone === "good" ? "var(--success, #22c55e)"
-      : verdict.tone === "bad" ? "var(--danger, #f87171)"
-        : "var(--warning, #f59e0b)";
+    verdict.tone === "good" ? "var(--success)"
+      : verdict.tone === "bad" ? "var(--error)"
+        : "var(--warning)";
 
   return (
     <div className="space-y-3">
@@ -324,7 +324,7 @@ function Confidence({ value }: { value: number }) {
 
 function TransferRows({ moves }: { moves: readonly HeuristicTransfer[] }) {
   return (
-    <div className="glass-panel rounded-2xl overflow-x-auto">
+    <div className="glass-panel rounded-none overflow-x-auto">
       <table className="data-table" aria-label="Heuristic transfer shortlist">
         <thead>
           <tr>
@@ -343,10 +343,10 @@ function TransferRows({ moves }: { moves: readonly HeuristicTransfer[] }) {
             <tr key={`${move.rank}-${move.playerOut.elementId}-${move.playerIn.elementId}`}
                 data-testid="transfer">
               <td className="text-center font-mono text-xs">{move.rank}</td>
-              <td className="text-sm" style={{ color: "var(--danger, #f87171)" }}>
+              <td className="text-sm" style={{ color: "var(--error)" }}>
                 {move.playerOut.name}
               </td>
-              <td className="text-sm" style={{ color: "var(--success, #22c55e)" }}>
+              <td className="text-sm" style={{ color: "var(--success)" }}>
                 {move.playerIn.name}
               </td>
               <td className="text-center font-mono text-sm">{move.delta4.toFixed(1)}</td>
@@ -374,7 +374,7 @@ function TransferRows({ moves }: { moves: readonly HeuristicTransfer[] }) {
 
 function CaptaincyRows({ weeks }: { weeks: readonly HeuristicCaptainWeek[] }) {
   return (
-    <div className="glass-panel rounded-2xl overflow-x-auto">
+    <div className="glass-panel rounded-none overflow-x-auto">
       <table className="data-table" aria-label="Heuristic captaincy plan">
         <thead>
           <tr>
@@ -439,11 +439,11 @@ function PlanCards({ plans }: { plans: readonly HeuristicPlan[] }) {
               {plan.moves.map((move) => (
                 <li key={`${move.playerOut.elementId}-${move.playerIn.elementId}`}
                     className="text-xs">
-                  <span style={{ color: "var(--danger, #f87171)" }}>
+                  <span style={{ color: "var(--error)" }}>
                     {move.playerOut.name}
                   </span>
                   {" → "}
-                  <span style={{ color: "var(--success, #22c55e)" }}>
+                  <span style={{ color: "var(--success)" }}>
                     {move.playerIn.name}
                   </span>
                 </li>
@@ -466,7 +466,7 @@ function PlanCards({ plans }: { plans: readonly HeuristicPlan[] }) {
 function DroppedRows({ view }: { view: HeuristicView }) {
   if (view.droppedRows === 0) return null;
   return (
-    <p className="text-xs mt-2" style={{ color: "var(--warning, #f59e0b)" }} role="status">
+    <p className="text-xs mt-2" style={{ color: "var(--warning)" }} role="status">
       {view.droppedRows} row{view.droppedRows === 1 ? "" : "s"} could not be read
       and {view.droppedRows === 1 ? "was" : "were"} left out of these lists.
     </p>
@@ -559,7 +559,7 @@ export default function DecidePage() {
         <header>
           <h1
             className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
+            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
             Decide
           </h1>

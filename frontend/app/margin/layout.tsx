@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 
 /**
- * Margin's own type and its own edges.
+ * Margin's edges.
  *
- * ## Two fonts the rest of the app does not load
+ * ## The fonts moved up
  *
- * The app is set in Plus Jakarta and JetBrains Mono. Margin is set in IBM Plex,
- * and the pair is doing work rather than decorating: the research table puts
- * fourteen numeric columns on one row, and Plex Mono's figures are the reason
- * the distribution glyphs line up under each other well enough to compare two
- * players by eye. Loaded here rather than in the root layout so every other
- * route keeps paying for exactly the two faces it uses.
+ * This layout used to load IBM Plex itself, because Margin was the only screen
+ * set in it and every other route was Plus Jakarta. The app is now set in Plex
+ * throughout, so the faces come from the root layout and this route no longer
+ * ships a second copy of them.
  *
  * ## Cancelling the shell's gutters
  *
@@ -23,21 +20,6 @@ import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
  * would be a dead end.
  */
 
-const plexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-plex-sans",
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-plex-mono",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "Margin — the call, and how much of it is noise",
   description:
@@ -47,9 +29,7 @@ export const metadata: Metadata = {
 
 export default function MarginLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className={`${plexSans.variable} ${plexMono.variable} -mx-4 sm:-mx-6 lg:-mx-9 -my-7 lg:-my-9`}
-    >
+    <div className="-mx-4 sm:-mx-6 lg:-mx-9 -my-7 lg:-my-9">
       {children}
     </div>
   );

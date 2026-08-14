@@ -42,7 +42,7 @@ export default function SHAPWaterfall({ features, maxFeatures = 8 }: SHAPWaterfa
 
                   {/* Bar */}
                   <div
-                    className={`absolute h-5 rounded-sm transition-all duration-500 ${isPositive ? "shap-bar-pos" : "shap-bar-neg"}`}
+                    className={`absolute h-5 rounded-none transition-all duration-500 ${isPositive ? "shap-bar-pos" : "shap-bar-neg"}`}
                     style={{
                       width: `${barWidth * 48}%`,
                       left: isPositive ? "50%" : `${50 - barWidth * 48}%`,

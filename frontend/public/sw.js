@@ -1,4 +1,10 @@
-const CACHE_NAME = "suca-fpl-shell-v4";
+// Bumped for the ink-and-paper restyle.
+//
+// The cache key is the ONLY thing that evicts a precached shell. Every route in
+// SHELL_ROUTES below is served cache-first, so an installed PWA would keep
+// rendering the emerald design indefinitely after the new one deployed — the
+// restyle would ship and no existing user would see it.
+const CACHE_NAME = "suca-fpl-shell-v5";
 const SHELL_ROUTES = [
   "/",
   "/now",
