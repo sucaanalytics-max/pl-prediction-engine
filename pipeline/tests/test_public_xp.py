@@ -335,3 +335,83 @@ class PublishedByAProcessThatActuallyRunsTests(unittest.TestCase):
 
         from pipeline.fpl import public_xp
         self.assertTrue(public_xp.FILENAME.match("xp_public_gw01.json"))
+
+
+class HorizonBlockTests(unittest.TestCase):
+    """
+    The per-week projections, which the agent computed on every horizon run and
+    published on none of them.
+
+    The interesting cases are all about what NOT to publish: a week whose
+    numbers would be mistaken for a better estimate of the same thing, and a
+    week the projection could not fill.
+    """
+
+    def test_it_drops_week_zero(self):
+        """
+        Week 0 covers the current gameweek at the horizon draw count, while the
+        row's own ``xp`` covers it at the decision draw count. Publishing both
+        puts two different numbers for the same player in the same gameweek on
+        the same screen, and the weaker one is indistinguishable from the
+        stronger.
+        """
+        block = public_xp.build_horizon_block(
+            [{1: 5.0}, {1: 4.2}, {1: 3.9}], first_gameweek=3, n_draws=5000,
+        )
+        self.assertIsNotNone(block)
+        self.assertEqual([w["gameweek"] for w in block["weeks"]], [4, 5])
+
+    def test_it_carries_the_draw_count(self):
+        # 5,000 draws and 10,000 are different statements about precision, and a
+        # horizon number in a column beside a decision number must say which.
+        block = public_xp.build_horizon_block(
+            [{1: 5.0}, {1: 4.2}], first_gameweek=3, n_draws=5000,
+        )
+        self.assertEqual(block["n_draws"], 5000)
+
+    def test_it_keys_by_element_id_as_a_string(self):
+        # JSON object keys are strings; the consumer parses them back. Stating
+        # it here so a change to int keys fails loudly rather than at narrow time.
+        block = public_xp.build_horizon_block(
+            [{1: 5.0}, {412: 4.25}], first_gameweek=1, n_draws=5000,
+        )
+        self.assertEqual(block["weeks"][0]["xp"], {"412": 4.25})
+
+    def test_it_omits_a_week_it_could_not_fill(self):
+        # Absent reads as "no view for that week"; an empty map reads as "every
+        # player projected to zero", which is a different and much worse claim.
+        block = public_xp.build_horizon_block(
+            [{1: 5.0}, {}, {1: 3.9}], first_gameweek=3, n_draws=5000,
+        )
+        self.assertEqual([w["gameweek"] for w in block["weeks"]], [5])
+
+    def test_it_returns_none_without_a_horizon(self):
+        # `_project_horizon` returns None rather than raising when it cannot
+        # build one, and a myopic run must still publish its own gameweek.
+        self.assertIsNone(public_xp.build_horizon_block(None, 3, 5000))
+        self.assertIsNone(public_xp.build_horizon_block([], 3, 5000))
+        self.assertIsNone(public_xp.build_horizon_block([{1: 5.0}], 3, 5000))
+        self.assertIsNone(public_xp.build_horizon_block([{1: 5.0}, {1: 4.0}], None, 5000))
+
+    def test_the_view_omits_the_key_entirely_without_a_horizon(self):
+        # Not `"horizon": null`. A key whose value is null invites a consumer to
+        # read it as a published absence rather than as nothing published.
+        view = public_xp.build(
+            {"metadata": {"gameweek": 3}, "players": []},
+            {},
+            generated_at="2026-08-14T00:00:00Z",
+        )
+        self.assertNotIn("horizon", view)
+
+    def test_the_view_carries_it_when_there_is_one(self):
+        view = public_xp.build(
+            {"metadata": {"gameweek": 3, "n_draws": 10000}, "players": []},
+            {},
+            generated_at="2026-08-14T00:00:00Z",
+            horizon=[{1: 5.0}, {1: 4.2}],
+            horizon_draws=5000,
+        )
+        self.assertEqual(view["horizon"]["weeks"][0]["gameweek"], 4)
+        # The two draw counts sit side by side and are not the same number.
+        self.assertEqual(view["n_draws"], 10000)
+        self.assertEqual(view["horizon"]["n_draws"], 5000)

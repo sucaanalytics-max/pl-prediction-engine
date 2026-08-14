@@ -55,7 +55,18 @@ const MATRIX: FixtureMatrixRow[] = [{
   fixtures: [2, 3].map((gw) => ({ gameweek: gw, label: `CHE${gw}`, difficulty: 2 })),
 }];
 
-function draw(weeks = 3) {
+/** Later weeks projected, so each column can solve its own eleven. */
+const HORIZON = {
+  nDraws: 5000,
+  weeks: [2, 3].map((gameweek) => ({
+    gameweek,
+    // Reverse the ranking each later week, so the best eleven MUST differ from
+    // GW1's if it is being solved per week rather than copied.
+    xp: new Map(Array.from({ length: 15 }, (_, i) => [i + 1, i * 0.5])),
+  })),
+};
+
+function draw(weeks = 3, horizon: typeof HORIZON | null = null) {
   const fifteen = squad();
   const projections = [
     ...fifteen.map((p, i) => projection(p.elementId!, 6 - i * 0.1, { position: p.position })),
@@ -67,6 +78,8 @@ function draw(weeks = 3) {
       <Planner
         squad={fifteen}
         projections={projections}
+        horizon={horizon}
+        decisionDraws={10000}
         prices={new Map([[900, 7.5]])}
         fixtureMatrix={MATRIX}
         bank={2}
@@ -171,5 +184,36 @@ describe("a transfer is scoped to its week", () => {
       .find((r) => r.getAttribute("data-side") === "in")!;
     expect(within(arrival as HTMLElement).getAllByTitle(/not a zero/).length)
       .toBeGreaterThan(0);
+  });
+});
+
+
+describe("every week solves its own eleven", () => {
+  it("marks a different XI in a later week when the projection differs", () => {
+    /**
+     * The whole point of publishing a horizon. GW1's ranking and GW2's are
+     * deliberately opposite in the fixture, so a planner that copied week one
+     * across the row would mark the same players every week and this fails.
+     */
+    const { container } = draw(3, HORIZON);
+    const rows = [...container.querySelectorAll("[data-testid='planner-row']")];
+    const opacities = rows.map((row) => {
+      const cells = within(row as HTMLElement).queryAllByTestId("planner-cell");
+      return [cells[0], cells[1]].map((c) => (c as HTMLElement)?.style.opacity);
+    });
+    // At least one player starts in one of the two weeks and not the other.
+    expect(opacities.some(([a, b]) => a !== b)).toBe(true);
+  });
+
+  it("says which weeks are the weaker estimate", () => {
+    // 5,000 draws and 10,000 are different statements about precision, and the
+    // screen shows both in adjacent columns.
+    draw(3, HORIZON);
+    expect(screen.getByText(/10,000 draws and the rest on 5,000/)).toBeInTheDocument();
+  });
+
+  it("keeps saying no eleven is chosen when there is no horizon", () => {
+    draw(3, null);
+    expect(screen.getByText(/no eleven is chosen for them/)).toBeInTheDocument();
   });
 });

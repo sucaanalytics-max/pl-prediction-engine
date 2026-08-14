@@ -36,7 +36,9 @@
 
 import { useMemo, useState } from "react";
 import type { FixtureMatrixRow, SquadPlayer } from "@/lib/data/heuristics";
-import type { Projection } from "@/lib/data/projections";
+import type {
+  Horizon as ProjectionHorizon, Projection,
+} from "@/lib/data/projections";
 import {
   formationOf, MAX_BANKED_FREE_TRANSFERS, moveDelta, optimiseXi, ownedIn,
   pairRows, playersAcross, pointsFrom, weeklyLedger, xiProblems,
@@ -64,9 +66,16 @@ interface Picking {
 }
 
 export function Planner(
-  { squad, projections, prices, fixtureMatrix, bank, gameweek, weeks = 6 }: {
+  { squad, projections, horizon, decisionDraws, prices, fixtureMatrix, bank, gameweek, weeks = 6 }: {
     squad: readonly SquadPlayer[];
     projections: readonly Projection[];
+    /**
+     * Expected points for the weeks after this one, when the run solved a
+     * horizon. Null means later weeks show fixtures and no XI, as before.
+     */
+    horizon: ProjectionHorizon | null;
+    /** Draws behind this gameweek's numbers, for the fidelity note. */
+    decisionDraws: number | null;
     /** Every club's run, so a player you have never held still has fixtures. */
     fixtureMatrix: readonly FixtureMatrixRow[];
     /** Price by FPL element id, from `player_stats.json`. */
@@ -84,6 +93,22 @@ export function Planner(
   const [freeTransfers, setFreeTransfers] = useState<number | null>(null);
 
   const points = useMemo(() => pointsFrom(projections), [projections]);
+
+  /**
+   * The projection for each week of the plan, by gameweek.
+   *
+   * This gameweek comes from the rows themselves, which are simulated at the
+   * decision draw count; the rest come from the horizon block at the horizon
+   * draw count. Keeping them in one map lets the XI be solved per column
+   * without any caller having to know which fidelity it is looking at — the
+   * footnote says, once.
+   */
+  const pointsByWeek = useMemo(() => {
+    const out = new Map<number, ReadonlyMap<number, number>>();
+    out.set(gameweek, points);
+    for (const week of horizon?.weeks ?? []) out.set(week.gameweek, week.xp);
+    return out;
+  }, [gameweek, points, horizon]);
   const byId = useMemo(
     () => new Map(projections.map((p) => [p.elementId, p])), [projections],
   );
@@ -109,11 +134,25 @@ export function Planner(
     [squad, moves, gameweeks, bank, freeTransfers, fixturesFor],
   );
 
-  // The first week's squad is the one the XI is solved against.
   const thisWeek = ledger[0];
-  const best = useMemo(
-    () => optimiseXi(thisWeek?.squad ?? squad, points), [thisWeek, squad, points],
-  );
+
+  /**
+   * The best legal eleven for every week the projection reaches.
+   *
+   * Was the first week alone, because that was the only week with numbers. Each
+   * week is solved against *its own* squad, so a transfer in GW4 changes the
+   * eleven from GW4 and not before.
+   */
+  const bestByWeek = useMemo(() => {
+    const out = new Map<number, ReturnType<typeof optimiseXi>>();
+    for (const week of ledger) {
+      const forWeek = pointsByWeek.get(week.gameweek);
+      out.set(week.gameweek, forWeek ? optimiseXi(week.squad, forWeek) : null);
+    }
+    return out;
+  }, [ledger, pointsByWeek]);
+
+  const best = bestByWeek.get(gameweek) ?? null;
 
   /**
    * The eleven on screen: yours if you have edited it, otherwise the optimum.
@@ -142,10 +181,17 @@ export function Planner(
       if (bv === null) return -1;
       return bv - av;
     });
-    return pairRows(sorted, moves).map((row) => ({
-      ...row, starting: inXi.has(row.player),
-    }));
-  }, [ledger, squad, xi, points, moves]);
+    return pairRows(sorted, moves).map((row) => {
+      const id = row.player.elementId;
+      const startingWeeks = new Set<number>();
+      if (id !== undefined) {
+        for (const [week, solved] of bestByWeek) {
+          if (solved?.xi.some((p) => p.elementId === id)) startingWeeks.add(week);
+        }
+      }
+      return { ...row, starting: inXi.has(row.player), startingWeeks };
+    });
+  }, [ledger, squad, xi, points, moves, bestByWeek]);
 
   // No leading toggle column any more. The XI switch lives inside the GW1 cell,
   // because it only applies to GW1 — a control at row level sat across six
@@ -278,13 +324,14 @@ export function Planner(
         ))}
       </div>
 
-      {rows.map(({ player, starting, move, side }) => (
+      {rows.map(({ player, starting, move, side, startingWeeks }) => (
         <PlannerRow
           key={`${side ?? "solo"}-${player.elementId ?? player.name}`}
           player={player}
           starting={starting}
           move={move}
           side={side}
+          startingWeeks={startingWeeks}
           firstWeek={gameweeks[0]}
           projection={player.elementId === undefined ? null : byId.get(player.elementId) ?? null}
           ledger={ledger}
@@ -358,13 +405,12 @@ export function Planner(
 
       <p style={{ margin: "12px 0 0", fontSize: 11.5, lineHeight: 1.5, color: S.ink3, maxWidth: 820 }}>
         Click any week&apos;s cell to transfer that player out from that gameweek
-        on. The square in the GW{gameweek} column starts or benches a player, and
-        exists only in that column because that is the only week an eleven can be
-        solved for. The XI and its total are solved for{" "}
-        <strong style={{ color: S.ink2, fontWeight: 600 }}>GW{gameweek} only</strong>{" "}
-        &mdash; that is the horizon the published projection covers. The later
-        columns are fixtures and FPL&apos;s own difficulty, which are scheduled
-        rather than forecast; no eleven is chosen for them.
+        on. The square in the GW{gameweek} column starts or benches a player;
+        it is only in that column because only this week&apos;s eleven is yours
+        to edit.
+        {horizon
+          ? ` Every week is solved for its own best eleven — a fixture at half strength is a week that player does not make it. This gameweek is simulated on ${decisionDraws?.toLocaleString() ?? "the decision"} draws and the rest on ${horizon.nDraws?.toLocaleString() ?? "fewer"}, so a later week is a weaker estimate of the same thing, not a different kind of number.`
+          : " The later columns are fixtures and FPL's own difficulty, which are scheduled rather than forecast; no eleven is chosen for them, because the published projection covers this gameweek only."}
         {freeTransfers === null
           ? " FPL does not tell this app how many free transfers you hold, so hits are unknown until you enter the number above."
           : ` Free transfers roll over and cap at ${MAX_BANKED_FREE_TRANSFERS}; the real cap comes from FPL's own game settings, which this app does not receive.`}
@@ -448,12 +494,14 @@ function LedgerRow(
 }
 
 function PlannerRow(
-  { player, starting, projection, ledger, columns, move, side, firstWeek, onToggle, onPick }: {
+  { player, starting, projection, ledger, columns, move, side, startingWeeks, firstWeek, onToggle, onPick }: {
     player: SquadPlayer;
     starting: boolean;
     /** The transfer this row is half of, so the pair can be bracketed. */
     move: Move | null;
     side: PlannerRowModel["side"];
+    /** Gameweeks in which this player makes the best legal eleven. */
+    startingWeeks: ReadonlySet<number>;
     firstWeek: number;
     projection: Projection | null;
     ledger: readonly WeekLedger[];
@@ -533,6 +581,9 @@ function PlannerRow(
         // The XI switch belongs to the first column and only the first column,
         // because that is the only week the projection can solve an eleven for.
         const isFirst = index === 0;
+        // Each week marks its own eleven. Only the first is editable, because
+        // only the first carries a bench set the reader has touched.
+        const startsThisWeek = startingWeeks.has(week.gameweek);
 
         if (!owned) {
           return (
@@ -560,6 +611,9 @@ function PlannerRow(
               cursor: "pointer", border: 0, padding: 0, fontFamily: MONO, fontSize: 9,
               background: WEIGHT[fixture.difficulty] ?? WEIGHT[3],
               color: WEIGHT_INK[fixture.difficulty] ?? WEIGHT_INK[3],
+              // A week this player does not make the eleven reads back at half
+              // strength: the fixture is still the fact, but he is not in it.
+              opacity: startsThisWeek ? 1 : 0.45,
               boxShadow: arriving
                 ? `inset 2px 0 0 ${S.agree}`
                 : leaving ? `inset 2px 0 0 ${S.conflict}` : undefined,

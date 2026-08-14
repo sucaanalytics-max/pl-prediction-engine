@@ -58,11 +58,68 @@ CARRIED = (
 )
 
 
+def build_horizon_block(
+    weeks: Optional[Sequence[Mapping[int, float]]],
+    first_gameweek: Optional[int],
+    n_draws: Optional[int],
+) -> Optional[Dict[str, Any]]:
+    """
+    Per-player expected points for the gameweeks after this one.
+
+    ``weeks[w]`` is ``{element_id: xp}`` for gameweek ``first_gameweek + w``, as
+    ``_project_horizon`` produces it. The agent has computed this on every run
+    that solved a horizon and published none of it, so nothing downstream could
+    answer "who should start in three weeks" — the question a planning screen
+    exists for.
+
+    **Week 0 is deliberately dropped.** It covers the current gameweek and is
+    simulated at ``n_draws_horizon`` where the row's own ``xp`` is simulated at
+    ``n_draws_decision``. Publishing both would put two different numbers for
+    the same player in the same gameweek on the same screen, and the weaker one
+    would be indistinguishable from the stronger. The consumer reads the row for
+    this week and this block for the rest.
+
+    ``n_draws`` travels with it because 5,000 draws and 10,000 are different
+    statements about precision, and a horizon number sitting in a column beside
+    a decision number must say which it is.
+
+    Returns ``None`` when there is no horizon — ``_project_horizon`` returns
+    ``None`` rather than raising when it cannot build one, and a myopic run must
+    still publish its current gameweek.
+    """
+    if not weeks or first_gameweek is None:
+        return None
+
+    published: List[Dict[str, Any]] = []
+    for offset, week in enumerate(weeks):
+        if offset == 0:
+            continue
+        if not isinstance(week, Mapping):
+            continue
+        points = {
+            str(int(element_id)): round(float(value), 4)
+            for element_id, value in week.items()
+            if isinstance(element_id, int) and isinstance(value, (int, float))
+        }
+        if not points:
+            # A week the projection could not fill is omitted rather than
+            # published empty: absent reads as "no view", and {} reads as
+            # "every player projected to zero".
+            continue
+        published.append({"gameweek": first_gameweek + offset, "xp": points})
+
+    if not published:
+        return None
+    return {"n_draws": n_draws, "weeks": published}
+
+
 def build(
     artifact: Mapping[str, Any],
     names: Mapping[int, Any],
     *,
     generated_at: str,
+    horizon: Optional[Sequence[Mapping[int, float]]] = None,
+    horizon_draws: Optional[int] = None,
 ) -> Dict[str, Any]:
     """
     Reduce the private xp artifact to the display view.
@@ -106,6 +163,15 @@ def build(
         "n_draws": metadata.get("n_draws"),
         "producer_version": metadata.get("schema_version"),
         "players": rows,
+        # Absent, not empty, when the run solved no horizon — see
+        # `build_horizon_block`.
+        **(
+            {"horizon": block}
+            if (block := build_horizon_block(
+                horizon, metadata.get("gameweek"), horizon_draws,
+            )) is not None
+            else {}
+        ),
     }
 
 

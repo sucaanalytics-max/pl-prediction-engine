@@ -81,6 +81,32 @@ export interface Projection {
   readonly decomposition: Decomposition | null;
 }
 
+/**
+ * Expected points per player for one gameweek after this one.
+ *
+ * Keyed by FPL element id. Absent players simply have no view for that week —
+ * the planner leaves them out of that week's XI rather than scoring them zero.
+ */
+export interface HorizonWeekXp {
+  readonly gameweek: number;
+  readonly xp: ReadonlyMap<number, number>;
+}
+
+/**
+ * The projection beyond the current gameweek.
+ *
+ * Simulated with the same machinery as the current week and fewer draws —
+ * `n_draws_horizon` against `n_draws_decision` — so `nDraws` travels with it and
+ * every screen that shows a horizon number beside a decision number says which
+ * is which. The current gameweek is deliberately absent: its higher-fidelity
+ * number is the row's own `xp`, and two numbers for the same player in the same
+ * week would be indistinguishable on screen.
+ */
+export interface Horizon {
+  readonly nDraws: number | null;
+  readonly weeks: readonly HorizonWeekXp[];
+}
+
 export interface Projections {
   readonly gameweek: number | null;
   readonly season: string | null;
@@ -104,6 +130,8 @@ export interface Projections {
    * quantity and nothing should be tempted to compare it numerically.
    */
   readonly producerVersion: string | null;
+  /** Null when the run solved no horizon, which is a normal state. */
+  readonly horizon: Horizon | null;
   readonly players: readonly Projection[];
 }
 
@@ -157,6 +185,32 @@ function narrowPlayer(raw: unknown): Projection | null {
   };
 }
 
+/**
+ * The horizon block, or null.
+ *
+ * A week with no readable players is dropped rather than kept empty: absent
+ * reads as "no view for that week", and an empty map reads as "everyone
+ * projected to zero", which is a different and much worse claim.
+ */
+function narrowHorizon(raw: unknown): Horizon | null {
+  if (!isRecord(raw)) return null;
+  const weeks: HorizonWeekXp[] = [];
+  for (const entry of Array.isArray(raw.weeks) ? raw.weeks : []) {
+    if (!isRecord(entry)) continue;
+    const gameweek = optNumber(entry.gameweek);
+    if (gameweek === null || !isRecord(entry.xp)) continue;
+    const xp = new Map<number, number>();
+    for (const [key, value] of Object.entries(entry.xp)) {
+      const id = Number.parseInt(key, 10);
+      const points = optNumber(value);
+      if (Number.isFinite(id) && points !== null) xp.set(id, points);
+    }
+    if (xp.size > 0) weeks.push({ gameweek, xp });
+  }
+  if (weeks.length === 0) return null;
+  return { nDraws: optNumber(raw.n_draws), weeks };
+}
+
 export function narrowProjections(raw: unknown): NarrowResult<Projections> {
   const problems = new Problems();
   const file = reqRecord(raw, "projections", problems);
@@ -180,6 +234,7 @@ export function narrowProjections(raw: unknown): NarrowResult<Projections> {
     generatedAt: optString(file.generated_at),
     nDraws: optNumber(file.n_draws),
     producerVersion: version === null ? optString(file.producer_version) : String(version),
+    horizon: narrowHorizon(file.horizon),
     players: kept,
   });
 }

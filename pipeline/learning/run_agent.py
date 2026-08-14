@@ -120,7 +120,10 @@ def _publish_sensitivity(gameweek: int, entry_label: str) -> None:
 
 
 def _publish_public_xp(
-    artifact_path: Any, bootstrap: Mapping[str, Any], gameweek: int,
+    artifact_path: Any,
+    bootstrap: Mapping[str, Any],
+    gameweek: int,
+    xp_by_week: Optional[Sequence[Mapping[int, float]]] = None,
 ) -> None:
     """
     Publish the per-player distributions the /players screen renders.
@@ -156,6 +159,11 @@ def _publish_public_xp(
             names,
             generated_at=datetime.now(timezone.utc)
             .isoformat().replace("+00:00", "Z"),
+            # Computed on every run that solves a horizon and published by none
+            # of them until now, so no screen could answer "who starts in three
+            # weeks". Optional: a myopic run still publishes its own gameweek.
+            horizon=xp_by_week,
+            horizon_draws=FPL_SIM["n_draws_horizon"],
         )
         public_xp.write(view, Path(FPL_PUBLIC_DIR))
     except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
@@ -428,7 +436,7 @@ def refresh_expected_points(
     # The display projection. Separate from the artifact above because that one
     # is optimiser input whose shape follows the model, while this is a stable
     # contract with the page — and a quarter of the size.
-    _publish_public_xp(written["xp"], bootstrap, draws.gameweek)
+    _publish_public_xp(written["xp"], bootstrap, draws.gameweek, xp_by_week)
     _publish_accuracy(written["xp"], draws.gameweek)
 
     return {

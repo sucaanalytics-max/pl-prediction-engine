@@ -276,6 +276,8 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
           <Planner
             squad={squad.players}
             projections={players}
+            horizon={proven(projections)?.horizon ?? null}
+            decisionDraws={proven(projections)?.nDraws ?? null}
             prices={prices}
             fixtureMatrix={proven(heuristics)?.fixtureMatrix ?? []}
             bank={squad.bank}
