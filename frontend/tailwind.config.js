@@ -28,9 +28,12 @@ module.exports = {
           950: '#050b14', // Mapped to the new deep cyber dark
         },
       },
+      // `--font-jakarta` no longer exists — the app is set in IBM Plex — so
+      // `font-display` and `font-body` were resolving to system-ui wherever they
+      // were used. Pointed at the tokens `globals.css` actually defines.
       fontFamily: {
-        display: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
-        body: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        body: ['var(--font-body)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       animation: {

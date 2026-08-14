@@ -38,7 +38,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = process.cwd();
@@ -69,6 +69,15 @@ function sources(): string[] {
     }
   };
   for (const dir of ["app", "components", "lib"]) walk(join(ROOT, dir));
+  // The config files, which are where the first version of this test had its
+  // hole: `tailwind.config.js` mapped `font-display` and `font-body` to
+  // `var(--font-jakarta)` for a whole release after that token was deleted, so
+  // every element using those utilities silently fell back to system-ui. A guard
+  // that scans only the component tree audits the place bugs are easiest to see.
+  for (const file of ["tailwind.config.js", "postcss.config.js"]) {
+    const full = join(ROOT, file);
+    if (existsSync(full)) out.push(full);
+  }
   return out;
 }
 
