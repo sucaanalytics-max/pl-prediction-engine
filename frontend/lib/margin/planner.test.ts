@@ -18,7 +18,8 @@ import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { Projection } from "@/lib/data/projections";
 import {
   applyMoves, formationOf, MAX_BANKED_FREE_TRANSFERS, optimiseXi, ownedIn,
-  playersAcross, pointsFrom, RULES, squadAtWeek, transferCost, transferDelta,
+  moveDelta, pairRows, playersAcross, pointsFrom, RULES, squadAtWeek,
+  transferCost, transferDelta,
   weeklyLedger, xiProblems,
 } from "@/lib/margin/planner";
 
@@ -341,5 +342,99 @@ describe("a plan is a sequence of weeks", () => {
     const ledger = weeklyLedger(squad, moves, gw, 2.0, 1);
     expect(ownedIn(ledger[0], shaw)).toBe(true);
     expect(ownedIn(ledger[1], shaw)).toBe(false);
+  });
+});
+
+describe("an incoming player gets his club's fixtures", () => {
+  it("looks the run up rather than arriving with none", () => {
+    /**
+     * The defect this fixes: `applyMoves` hardcoded an empty run, so every
+     * column for a player you were evaluating hatched as "no fixture" — which
+     * reads as a blank gameweek and kills rotation planning for exactly the
+     * player being considered.
+     */
+    const squad = squadOf();
+    const run = [
+      { gameweek: 2, label: "ARS (H)", difficulty: 4 },
+      { gameweek: 3, label: "BUR (A)", difficulty: 2 },
+    ];
+    const after = applyMoves(
+      squad,
+      [{ gameweek: 2, out: squad[7], in: projection(700, 6, { team: "Chelsea" }), price: 6 }],
+      (team) => (team === "Chelsea" ? run : []),
+    );
+    expect(after.find((p) => p.elementId === 700)?.fixtures).toEqual(run);
+  });
+
+  it("leaves the run empty when the club is unknown", () => {
+    // Empty, not invented: a player whose club has no published run gets the
+    // hatch, which is the honest mark for "nothing scheduled that we can see".
+    const squad = squadOf();
+    const after = applyMoves(
+      squad,
+      [{ gameweek: 2, out: squad[7], in: projection(701, 6, { team: null }), price: 6 }],
+      () => [{ gameweek: 2, label: "X", difficulty: 3 }],
+    );
+    expect(after.find((p) => p.elementId === 701)?.fixtures).toEqual([]);
+  });
+});
+
+describe("a swap's two players sit together", () => {
+  const squad = squadOf();
+  const move = {
+    gameweek: 2, out: squad[7], in: projection(800, 6, { position: "MID" }), price: 6,
+  };
+
+  it("puts the arrival directly under the departure", () => {
+    // The one thing a transfer plan has to show is what swapped for what, and
+    // sorting by line then projection put the two anywhere relative to each
+    // other. The input is the union across the plan — the departed player is
+    // not in the post-move squad, which is why `playersAcross` exists.
+    const everyone = playersAcross(weeklyLedger(squad, [move], [1, 2, 3], 2, 1), squad);
+    const rows = pairRows(everyone, [move]);
+    const outIndex = rows.findIndex((r) => r.player.elementId === squad[7].elementId);
+    expect(outIndex).toBeGreaterThanOrEqual(0);
+    expect(rows[outIndex].side).toBe("out");
+    expect(rows[outIndex + 1].player.elementId).toBe(800);
+    expect(rows[outIndex + 1].side).toBe("in");
+  });
+
+  it("leaves every other row unpaired", () => {
+    const everyone = playersAcross(weeklyLedger(squad, [move], [1, 2, 3], 2, 1), squad);
+    const rows = pairRows(everyone, [move]);
+    // Sixteen players across the plan: the fifteen plus the arrival. Two are
+    // the pair; the rest stand alone.
+    expect(rows).toHaveLength(everyone.length);
+    expect(rows.filter((r) => r.side !== null)).toHaveLength(2);
+  });
+
+  it("keeps a departed player on the grid", () => {
+    // He is gone from the squad but still owns the weeks before the sale.
+    const after = applyMoves(squad, [move]);
+    const everyone = playersAcross(
+      weeklyLedger(squad, [move], [1, 2, 3], 2, 1), squad,
+    );
+    const rows = pairRows(everyone, [move]);
+    expect(rows.some((r) => r.player.elementId === squad[7].elementId)).toBe(true);
+  });
+});
+
+describe("the delta of a single move", () => {
+  const squad = squadOf();
+  const points = new Map<number, number>([[squad[7].elementId!, 4]]);
+
+  it("answers for a move in the projected gameweek", () => {
+    const move = { gameweek: 1, out: squad[7], in: projection(900, 7), price: 6 };
+    expect(moveDelta(move, points, 1)).toBe(3);
+  });
+
+  it("refuses for a move in any other week", () => {
+    /**
+     * `xp_public` covers one gameweek. A delta for a GW4 swap computed from this
+     * week's projections would be the most confident wrong number on the screen
+     * — it looks like an answer and is about a different week.
+     */
+    const move = { gameweek: 4, out: squad[7], in: projection(900, 7), price: 6 };
+    expect(moveDelta(move, points, 1)).toBeNull();
   });
 });

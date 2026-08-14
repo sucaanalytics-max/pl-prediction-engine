@@ -277,6 +277,7 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
             squad={squad.players}
             projections={players}
             prices={prices}
+            fixtureMatrix={proven(heuristics)?.fixtureMatrix ?? []}
             bank={squad.bank}
             gameweek={gameweek}
           />

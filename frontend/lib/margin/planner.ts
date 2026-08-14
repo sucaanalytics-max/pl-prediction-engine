@@ -28,7 +28,7 @@
  * horizon the projection covers.
  */
 
-import type { SquadPlayer } from "@/lib/data/heuristics";
+import type { SquadFixture, SquadPlayer } from "@/lib/data/heuristics";
 import type { Projection } from "@/lib/data/projections";
 
 /** FPL's squad rules, as the only place they are written down in this app. */
@@ -308,9 +308,22 @@ export function transferDelta(
   return Math.round((delta - cost.pointsCost) * 100) / 100;
 }
 
+/**
+ * A club's fixture run, for a player the squad has never held.
+ *
+ * `xp_public` carries no fixtures, so an incoming player arrived with an empty
+ * run and every one of his columns hatched as "no fixture" — which read as a
+ * blank gameweek and made the grid useless for exactly the player being
+ * evaluated. The run is a property of the club, and `fixtureMatrix` publishes it
+ * per club, so it is looked up rather than left empty.
+ */
+export type FixtureLookup = (team: string | null) => readonly SquadFixture[];
+
 /** The squad after the moves, for re-optimising the XI against it. */
 export function applyMoves(
-  squad: readonly SquadPlayer[], moves: readonly Move[],
+  squad: readonly SquadPlayer[],
+  moves: readonly Move[],
+  fixturesFor: FixtureLookup = () => [],
 ): readonly SquadPlayer[] {
   const outIds = new Set(moves.map((m) => m.out.elementId));
   const kept = squad.filter((p) => !outIds.has(p.elementId));
@@ -325,7 +338,9 @@ export function applyMoves(
     bench: undefined,
     role: undefined,
     fixture: undefined,
-    fixtures: [],
+    // Guarded here rather than in the caller's lookup: a player with no club
+    // has no run, and that must hold whatever lookup is passed.
+    fixtures: move.in.team === null ? [] : fixturesFor(move.in.team),
   }));
   return [...kept, ...added];
 }
@@ -337,12 +352,15 @@ export function applyMoves(
 
 /** The squad as it stands in a given gameweek, after every move up to it. */
 export function squadAtWeek(
-  initial: readonly SquadPlayer[], moves: readonly Move[], gameweek: number,
+  initial: readonly SquadPlayer[],
+  moves: readonly Move[],
+  gameweek: number,
+  fixturesFor: FixtureLookup = () => [],
 ): readonly SquadPlayer[] {
   const upTo = moves
     .filter((m) => m.gameweek <= gameweek)
     .sort((a, b) => a.gameweek - b.gameweek);
-  return applyMoves(initial, upTo);
+  return applyMoves(initial, upTo, fixturesFor);
 }
 
 export interface WeekLedger {
@@ -381,6 +399,7 @@ export function weeklyLedger(
   gameweeks: readonly number[],
   bank: number | null,
   startingFree: number | null,
+  fixturesFor: FixtureLookup = () => [],
 ): readonly WeekLedger[] {
   const out: WeekLedger[] = [];
   let runningBank = bank;
@@ -406,7 +425,7 @@ export function weeklyLedger(
 
     out.push({
       gameweek,
-      squad: squadAtWeek(initial, moves, gameweek),
+      squad: squadAtWeek(initial, moves, gameweek, fixturesFor),
       transfersIn: thisWeek.map((m) => m.in.elementId),
       transfersOut: thisWeek
         .map((m) => m.out.elementId)
@@ -449,4 +468,91 @@ export function ownedIn(week: WeekLedger, player: SquadPlayer): boolean {
   return id === undefined
     ? week.squad.some((p) => p.name === player.name)
     : week.squad.some((p) => p.elementId === id);
+}
+
+
+/**
+ * The change in projected points from a move, when that is knowable.
+ *
+ * Only for a move in the gameweek the projection covers. A GW4 swap has no
+ * computable delta — `xp_public` is one gameweek — and returning a number
+ * derived from this week's projections for a transfer four weeks out would be
+ * the most confident wrong number on the screen.
+ */
+export function moveDelta(
+  move: Move,
+  pointsById: ReadonlyMap<number, number>,
+  projectionGameweek: number,
+): number | null {
+  if (move.gameweek !== projectionGameweek) return null;
+  const outPoints = move.out.elementId === undefined
+    ? null
+    : pointsById.get(move.out.elementId) ?? null;
+  const inPoints = move.in.xp;
+  if (outPoints === null || inPoints === null) return null;
+  return Math.round((inPoints - outPoints) * 100) / 100;
+}
+
+/**
+ * Rows ordered so a transfer's two players sit together.
+ *
+ * The grid sorted by line and then by projection, which put the player leaving
+ * and the player replacing him anywhere relative to each other — so the one
+ * thing a transfer plan has to show, *what swapped for what*, was the one thing
+ * you could not see. The incoming player is lifted to sit directly under the
+ * outgoing one, and both carry the move so the view can bracket them.
+ */
+export interface PlannerRowModel {
+  readonly player: SquadPlayer;
+  /** The move this player is part of, if any. */
+  readonly move: Move | null;
+  /** `out` leaves, `in` arrives — which half of the pair this row is. */
+  readonly side: "out" | "in" | null;
+}
+
+export function pairRows(
+  ordered: readonly SquadPlayer[], moves: readonly Move[],
+): readonly PlannerRowModel[] {
+  const inByOut = new Map<number, Move>();
+  const incoming = new Set<number>();
+  for (const move of moves) {
+    if (move.out.elementId !== undefined) inByOut.set(move.out.elementId, move);
+    incoming.add(move.in.elementId);
+  }
+
+  const byId = new Map<number, SquadPlayer>();
+  for (const p of ordered) if (p.elementId !== undefined) byId.set(p.elementId, p);
+
+  const out: PlannerRowModel[] = [];
+  const placed = new Set<number>();
+
+  for (const player of ordered) {
+    const id = player.elementId;
+    // An incoming player is placed by its pair, never in sort order.
+    //
+    // The guard was `!placed.has(id)` — which skipped an arrival that sorted
+    // BEFORE its departure and then emitted it a second time when it sorted
+    // after, because by then it had been placed. Skipping unconditionally is
+    // the actual rule; the trailing loop picks up any the pairing missed.
+    if (id !== undefined && incoming.has(id)) continue;
+    out.push({ player, move: null, side: null });
+
+    const move = id === undefined ? undefined : inByOut.get(id);
+    if (!move) continue;
+    out[out.length - 1] = { player, move, side: "out" };
+    const arrival = byId.get(move.in.elementId);
+    if (arrival) {
+      out.push({ player: arrival, move, side: "in" });
+      placed.add(move.in.elementId);
+    }
+  }
+
+  // Anything the pairing missed still belongs on the grid.
+  for (const player of ordered) {
+    const id = player.elementId;
+    if (id !== undefined && incoming.has(id) && !placed.has(id)) {
+      out.push({ player, move: null, side: null });
+    }
+  }
+  return out;
 }

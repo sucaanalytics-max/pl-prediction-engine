@@ -35,11 +35,12 @@
  */
 
 import { useMemo, useState } from "react";
-import type { SquadPlayer } from "@/lib/data/heuristics";
+import type { FixtureMatrixRow, SquadPlayer } from "@/lib/data/heuristics";
 import type { Projection } from "@/lib/data/projections";
 import {
-  formationOf, MAX_BANKED_FREE_TRANSFERS, optimiseXi, ownedIn, playersAcross,
-  pointsFrom, weeklyLedger, xiProblems, type Move, type WeekLedger,
+  formationOf, MAX_BANKED_FREE_TRANSFERS, moveDelta, optimiseXi, ownedIn,
+  pairRows, playersAcross, pointsFrom, weeklyLedger, xiProblems,
+  type Move, type PlannerRowModel, type WeekLedger,
 } from "@/lib/margin/planner";
 import { hatch, MONO, PAPER, SANS } from "@/lib/margin/tokens";
 import { Distribution, Eyebrow, Nil } from "@/components/margin/Marks";
@@ -63,9 +64,11 @@ interface Picking {
 }
 
 export function Planner(
-  { squad, projections, prices, bank, gameweek, weeks = 6 }: {
+  { squad, projections, prices, fixtureMatrix, bank, gameweek, weeks = 6 }: {
     squad: readonly SquadPlayer[];
     projections: readonly Projection[];
+    /** Every club's run, so a player you have never held still has fixtures. */
+    fixtureMatrix: readonly FixtureMatrixRow[];
     /** Price by FPL element id, from `player_stats.json`. */
     prices: ReadonlyMap<number, number>;
     bank: number | null;
@@ -88,9 +91,22 @@ export function Planner(
     () => Array.from({ length: weeks }, (_, i) => gameweek + i), [gameweek, weeks],
   );
 
+  /**
+   * A club's fixture run by full club name.
+   *
+   * `xp_public` and `fixtureMatrix` both name clubs in full ("Arsenal"), while
+   * the squad carries FPL's short code ("ARS") — so the join for an incoming
+   * player is on the projection's team, not the squad's.
+   */
+  const fixturesFor = useMemo(() => {
+    const byTeam = new Map<string, readonly { gameweek: number; label: string; difficulty: number }[]>();
+    for (const row of fixtureMatrix) byTeam.set(row.team, row.fixtures);
+    return (team: string | null) => (team === null ? [] : byTeam.get(team) ?? []);
+  }, [fixtureMatrix]);
+
   const ledger = useMemo(
-    () => weeklyLedger(squad, moves, gameweeks, bank, freeTransfers),
-    [squad, moves, gameweeks, bank, freeTransfers],
+    () => weeklyLedger(squad, moves, gameweeks, bank, freeTransfers, fixturesFor),
+    [squad, moves, gameweeks, bank, freeTransfers, fixturesFor],
   );
 
   // The first week's squad is the one the XI is solved against.
@@ -117,7 +133,7 @@ export function Planner(
   const rows = useMemo(() => {
     const everyone = playersAcross(ledger, squad);
     const inXi = new Set(xi);
-    return [...everyone].sort((a, b) => {
+    const sorted = [...everyone].sort((a, b) => {
       const line = (LINE_ORDER[a.position] ?? 9) - (LINE_ORDER[b.position] ?? 9);
       if (line !== 0) return line;
       const av = a.elementId === undefined ? null : points.get(a.elementId) ?? null;
@@ -125,8 +141,11 @@ export function Planner(
       if (av === null) return bv === null ? 0 : 1;
       if (bv === null) return -1;
       return bv - av;
-    }).map((player) => ({ player, starting: inXi.has(player) }));
-  }, [ledger, squad, xi, points]);
+    });
+    return pairRows(sorted, moves).map((row) => ({
+      ...row, starting: inXi.has(row.player),
+    }));
+  }, [ledger, squad, xi, points, moves]);
 
   const columns = `18px 126px 42px 74px repeat(${weeks}, minmax(56px, 1fr))`;
 
@@ -250,11 +269,14 @@ export function Planner(
         ))}
       </div>
 
-      {rows.map(({ player, starting }) => (
+      {rows.map(({ player, starting, move, side }) => (
         <PlannerRow
-          key={player.elementId ?? player.name}
+          key={`${side ?? "solo"}-${player.elementId ?? player.name}`}
           player={player}
           starting={starting}
+          move={move}
+          side={side}
+          firstWeek={gameweeks[0]}
           projection={player.elementId === undefined ? null : byId.get(player.elementId) ?? null}
           ledger={ledger}
           columns={columns}
@@ -298,6 +320,17 @@ export function Planner(
               <span style={{ color: S.conflict }}>{move.out.name}</span>
               {" → "}
               <span style={{ color: S.agree }}>{move.in.name}</span>
+              {(() => {
+                const d = moveDelta(move, points, gameweek);
+                return d === null ? null : (
+                  <span
+                    style={{ color: d >= 0 ? S.agree : S.conflict, marginLeft: 6 }}
+                    title="change in this gameweek's projection, before any hit"
+                  >
+                    {d >= 0 ? "+" : ""}{d.toFixed(1)}
+                  </span>
+                );
+              })()}
               <button
                 type="button"
                 onClick={() => setMoves((was) => was.filter((m) => m !== move))}
@@ -405,9 +438,13 @@ function LedgerRow(
 }
 
 function PlannerRow(
-  { player, starting, projection, ledger, columns, onToggle, onPick }: {
+  { player, starting, projection, ledger, columns, move, side, firstWeek, onToggle, onPick }: {
     player: SquadPlayer;
     starting: boolean;
+    /** The transfer this row is half of, so the pair can be bracketed. */
+    move: Move | null;
+    side: PlannerRowModel["side"];
+    firstWeek: number;
     projection: Projection | null;
     ledger: readonly WeekLedger[];
     columns: string;
@@ -421,9 +458,18 @@ function PlannerRow(
     <div
       data-testid="planner-row"
       data-starting={starting}
+      data-side={side ?? undefined}
       style={{
         display: "grid", gridTemplateColumns: columns, gap: 4, alignItems: "center",
-        borderBottom: `1px solid rgba(27,26,22,.06)`, padding: "3px 0",
+        padding: "3px 0 3px 8px",
+        // The pair reads as one object: a rule down the left of both rows, open
+        // at neither end, so the eye takes the two together rather than as
+        // neighbours that happen to be adjacent.
+        borderLeft: side ? `2px solid ${side === "out" ? S.conflict : S.agree}` : "2px solid transparent",
+        borderBottom: side === "out"
+          ? "none"
+          : `1px solid rgba(27,26,22,.06)`,
+        background: side ? "rgba(27,26,22,.025)" : undefined,
       }}
     >
       <button
@@ -439,7 +485,7 @@ function PlannerRow(
       />
       <span style={{ display: "flex", alignItems: "baseline", gap: 6, minWidth: 0, opacity: starting ? 1 : 0.6 }}>
         <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3, width: 24 }}>
-          {player.position}
+          {side === "out" ? "OUT" : side === "in" ? "IN" : player.position}
         </span>
         <span
           style={{
@@ -467,9 +513,14 @@ function PlannerRow(
           />
         ) : null}
         <span style={{ fontFamily: MONO, fontSize: 12, color: S.ink, minWidth: 26, textAlign: "right" }}>
-          {projection?.xp === null || projection === null
+          {/* A player who arrives later cannot score this week's projection for
+              you, so the column shows nothing rather than a number his row's
+              own first cell contradicts. */}
+          {move && side === "in" && move.gameweek !== firstWeek
             ? <Nil surface={S} size={10} />
-            : projection.xp.toFixed(1)}
+            : projection?.xp === null || projection === null
+              ? <Nil surface={S} size={10} />
+              : projection.xp.toFixed(1)}
         </span>
       </span>
 
