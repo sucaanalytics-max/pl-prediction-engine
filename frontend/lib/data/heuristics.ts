@@ -157,6 +157,31 @@ export interface SquadPlayer {
    * still a squad; consumers must treat `undefined` as "unknown", not "starting".
    */
   readonly bench?: boolean;
+  /**
+   * FPL's own id for the player, when the route sent one.
+   *
+   * Emitted by `fpl-live-server.ts` on every pick and dropped here until
+   * something needed to join on it. The consequence was that `SquadBoard` had to
+   * match its fifteen against the published projection **by name and position**,
+   * fold accents on both sides to make `Kadıoğlu` meet `Kadioglu`, and refuse the
+   * match outright whenever two players collided — FPL has six Wilsons. All of
+   * that is a workaround for a key that was in the payload the whole time.
+   *
+   * Optional for the same reason as `bench`: a pick with no id is still a pick,
+   * and it renders with `— xP` rather than with a guessed neighbour's number.
+   */
+  readonly elementId?: number;
+  /**
+   * The armband, from the picks themselves.
+   *
+   * The route folds the pick role and the availability flag into one `status`
+   * field, so it can also hold `"monitor"`. Only the two roles are kept here: an
+   * injury flag rendered as a captaincy is not a near miss, it is the wrong word
+   * on the most consequential pick of the week.
+   */
+  readonly role?: "captain" | "vice";
+  /** Next opponent as FPL labels it, e.g. `BUR (H)`. */
+  readonly fixture?: string;
 }
 
 export interface SquadView {
@@ -254,6 +279,13 @@ function narrowSquad(raw: unknown): SquadView | null {
       // Preserved rather than defaulted: `bench: false` on an unknown would
       // silently promote every substitute into the XI.
       bench: typeof item.bench === "boolean" ? item.bench : undefined,
+      elementId: optNumber(item.elementId) ?? undefined,
+      // `status` carries either a pick role or an availability flag; only the
+      // two roles mean an armband. See `SquadPlayer.role`.
+      role: item.status === "captain" || item.status === "vice"
+        ? item.status
+        : undefined,
+      fixture: optString(item.fixture) ?? undefined,
     });
   }
   if (kept.length === 0) return null;

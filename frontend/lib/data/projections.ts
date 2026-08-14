@@ -57,6 +57,16 @@ export interface Projection {
   readonly pGe5: number | null;
   readonly pGe10: number | null;
   readonly q10: number | null;
+  /**
+   * The median.
+   *
+   * Published by the producer since the first `xp_public` file and narrowed by
+   * nobody until the distribution glyph needed it, so every consumer had q10 and
+   * q90 and no centre — which makes an interval you cannot tell the skew of. The
+   * gap between this and `xp` is the single most decision-relevant fact in the
+   * artifact and it was being dropped on the way in.
+   */
+  readonly q50: number | null;
   readonly q90: number | null;
   readonly nFixtures: number;
   readonly blank: boolean;
@@ -75,6 +85,17 @@ export interface Projections {
    * already been caught disagreeing with itself about its own draw count.
    */
   readonly nDraws: number | null;
+  /**
+   * The producing code's version, as the artifact carries it.
+   *
+   * Emitted as `producer_version` since the first of these files and narrowed by
+   * nobody, so every provenance strip over a projection read "version unknown" —
+   * the phrase reserved for a writer we cannot vouch for — beside numbers from a
+   * writer that names itself. The value is an integer on the wire and a string
+   * here, because {@link Provenance.producerVersion} is a label rather than a
+   * quantity and nothing should be tempted to compare it numerically.
+   */
+  readonly producerVersion: string | null;
   readonly players: readonly Projection[];
 }
 
@@ -118,6 +139,7 @@ function narrowPlayer(raw: unknown): Projection | null {
     pGe5: optNumber(raw.p_ge_5),
     pGe10: optNumber(raw.p_ge_10),
     q10: optNumber(raw.q10),
+    q50: optNumber(raw.q50),
     q90: optNumber(raw.q90),
     nFixtures: optNumber(raw.n_fixtures) ?? 0,
     blank: raw.blank === true,
@@ -139,11 +161,15 @@ export function narrowProjections(raw: unknown): NarrowResult<Projections> {
     if (player !== null) kept.push(player);
   }
 
+  // Integer on the wire, string here. `optString` alone would drop it.
+  const version = optNumber(file.producer_version);
+
   return narrowed({
     gameweek: optNumber(file.gameweek),
     season: optString(file.season),
     generatedAt: optString(file.generated_at),
     nDraws: optNumber(file.n_draws),
+    producerVersion: version === null ? optString(file.producer_version) : String(version),
     players: kept,
   });
 }
@@ -205,6 +231,7 @@ export function projectionsDescriptor(gameweek: number): Descriptor<Projections>
     freshnessBudgetMs: DAY,
     narrow: narrowProjections,
     producedAtOf: (v) => v.generatedAt,
+    producerVersionOf: (v) => v.producerVersion,
     isEmpty: projectionsAreEmpty,
   };
 }
