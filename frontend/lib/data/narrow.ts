@@ -1093,6 +1093,69 @@ export interface PublicDecision {
   readonly credible_margin: boolean;
   readonly warnings: readonly string[];
   readonly xp_snapshot: Readonly<Record<string, number>>;
+
+  // ── the squad total's distribution ─────────────────────────────────────────
+  /**
+   * The total's spread over the SAME draws that produced `mean_points`.
+   *
+   * Not derivable here and deliberately not derived: a squad total's spread is
+   * not the sum of its players' because clean sheets are drawn jointly across a
+   * defence and auto-substitution makes the XI path-dependent. Eleven standard
+   * deviations added in quadrature give a narrower interval than the measured
+   * one, which is the flattering direction to be wrong in.
+   *
+   * Null until the producer ships the block, which renders as the absence.
+   */
+  readonly points_sd: number | null;
+  readonly points_q10: number | null;
+  readonly points_q50: number | null;
+  readonly points_q90: number | null;
+  /**
+   * The modal total, over 1-point histogram bins.
+   *
+   * The mark the glyph exists for: the gap between this and the mean is what
+   * says "do not read the mean as a forecast".
+   */
+  readonly points_mode: number | null;
+  /**
+   * `P(total ≥ points)`, ascending by threshold.
+   *
+   * Sorted in the narrower so no view sorts. A value outside [0, 1] is DROPPED
+   * rather than rescaled: a writer emitting 47.9 for 47.9% would otherwise
+   * render as 4790%, and a silent absence is the safe failure.
+   */
+  readonly probAtLeast: readonly PointsThreshold[];
+  /** P(at least one auto-substitution fires), same draws. */
+  readonly autosubProb: Fraction | null;
+  /** How many draws stand behind all of the above. */
+  readonly nDraws: number | null;
+}
+
+/** One published `P(total ≥ threshold)`. */
+export interface PointsThreshold {
+  /** Points, as an integer. The object key, parsed. */
+  readonly points: number;
+  /** A fraction in [0, 1]. Never a percentage — see toFraction. */
+  readonly p: Fraction;
+}
+
+/**
+ * `{"60": 0.479}` → `[{points: 60, p: 0.479}]`, ascending.
+ *
+ * A key that is not an integer is dropped; a value `toFraction` rejects is
+ * dropped. Both are producer bugs the screen must not launder into a number.
+ */
+export function narrowThresholds(raw: unknown): PointsThreshold[] {
+  if (!isRecord(raw)) return [];
+  const out: PointsThreshold[] = [];
+  for (const [key, value] of Object.entries(raw)) {
+    const points = Number.parseInt(key, 10);
+    if (!Number.isFinite(points) || String(points) !== key.trim()) continue;
+    const p = toFraction(value);
+    if (p === null) continue;
+    out.push({ points, p });
+  }
+  return out.sort((a, b) => a.points - b.points);
 }
 
 function narrowPlan(raw: unknown): DecisionPlan | null {
@@ -1143,6 +1206,18 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
       (w): w is string => typeof w === "string",
     ),
     xp_snapshot: snapshot,
+
+    // Every one optional. The block is additive at the producer, so a file
+    // written before it shipped narrows to nulls and renders the absence rather
+    // than failing the artifact.
+    points_sd: optNumber(decision.points_sd),
+    points_q10: optNumber(decision.points_q10),
+    points_q50: optNumber(decision.points_q50),
+    points_q90: optNumber(decision.points_q90),
+    points_mode: optNumber(decision.points_mode),
+    probAtLeast: narrowThresholds(decision.prob_at_least),
+    autosubProb: toFraction(decision.autosub_prob),
+    nDraws: optNumber(decision.n_draws),
   });
 }
 

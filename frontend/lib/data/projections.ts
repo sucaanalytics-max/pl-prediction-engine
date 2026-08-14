@@ -58,6 +58,13 @@ export interface Projection {
   readonly pGe10: number | null;
   readonly q10: number | null;
   /**
+   * The interquartile ends, when the producer publishes them.
+   *
+   * Both or neither: a q25 with no q75 is a half-box, which is a narrower
+   * claim than a whole one, and the glyph drops it rather than drawing half.
+   */
+  readonly q25: number | null;
+  /**
    * The median.
    *
    * Published by the producer since the first `xp_public` file and narrowed by
@@ -67,6 +74,7 @@ export interface Projection {
    * artifact and it was being dropped on the way in.
    */
   readonly q50: number | null;
+  readonly q75: number | null;
   readonly q90: number | null;
   readonly nFixtures: number;
   readonly blank: boolean;
@@ -139,7 +147,9 @@ function narrowPlayer(raw: unknown): Projection | null {
     pGe5: optNumber(raw.p_ge_5),
     pGe10: optNumber(raw.p_ge_10),
     q10: optNumber(raw.q10),
+    q25: optNumber(raw.q25),
     q50: optNumber(raw.q50),
+    q75: optNumber(raw.q75),
     q90: optNumber(raw.q90),
     nFixtures: optNumber(raw.n_fixtures) ?? 0,
     blank: raw.blank === true,

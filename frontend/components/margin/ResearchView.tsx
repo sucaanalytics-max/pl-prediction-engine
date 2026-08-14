@@ -155,7 +155,8 @@ function Row(
       <span>
         <Distribution
           of={{
-            q10: player.q10, q50: player.q50, q90: player.q90,
+            q10: player.q10, q25: player.q25, q50: player.q50,
+            q75: player.q75, q90: player.q90,
             mean: player.xp, mode: player.mode,
           }}
           surface={S}
@@ -209,7 +210,10 @@ function Twins({ players }: { players: readonly Projection[] }) {
         {p.xp?.toFixed(1)}
       </span>
       <Distribution
-        of={{ q10: p.q10, q50: p.q50, q90: p.q90, mean: p.xp, mode: p.mode }}
+        of={{
+          q10: p.q10, q25: p.q25, q50: p.q50, q75: p.q75, q90: p.q90,
+          mean: p.xp, mode: p.mode,
+        }}
         surface={S}
         width={220}
         height={18}
@@ -278,7 +282,8 @@ function Selected({ player, file }: { player: Projection; file: Projections }) {
         <div style={{ marginTop: 10 }}>
           <Distribution
             of={{
-              q10: player.q10, q50: player.q50, q90: player.q90,
+              q10: player.q10, q25: player.q25, q50: player.q50,
+            q75: player.q75, q90: player.q90,
               mean: player.xp, mode: player.mode,
             }}
             surface={S}

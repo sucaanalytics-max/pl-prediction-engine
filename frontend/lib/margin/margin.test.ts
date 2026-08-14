@@ -28,7 +28,7 @@ function projection(over: Partial<Projection> = {}): Projection {
     elementId: 1, name: "Player", team: "Arsenal", position: "MID",
     xp: 6.4, xpSd: 2.4, mode: 2, pAppears: 0.96, p60: 0.91, eMinutes: 82,
     pGoal: 0.34, pCleanSheet: 0.28, pGe5: 0.61, pGe10: 0.07,
-    q10: 1, q50: 5, q90: 12, nFixtures: 1, blank: false, decomposition: null,
+    q10: 1, q25: 2, q50: 5, q75: 8, q90: 12, nFixtures: 1, blank: false, decomposition: null,
     ...over,
   };
 }
@@ -81,6 +81,21 @@ describe("the distribution glyph draws only what was published", () => {
   it("flags a clamped mark rather than silently pinning it", () => {
     const g = geometry({ mean: 40 });
     expect(g.mean).toEqual({ at: 100, clamped: true });
+  });
+
+  it("draws the interquartile box only when both ends resolve", () => {
+    // A half-box is a narrower claim than a whole one, and the design derives
+    // the missing end from the standard deviation — a shape invented from a
+    // spread, drawn at the weight of a measurement.
+    expect(geometry({ q25: 2, q75: 8 }).box).not.toBeNull();
+    expect(geometry({ q25: 2 }).box).toBeNull();
+    expect(geometry({ q75: 8 }).box).toBeNull();
+  });
+
+  it("orders the box inside the whisker", () => {
+    const g = geometry({ q10: 1, q25: 3, q75: 9, q90: 14 });
+    expect(g.box!.from).toBeGreaterThan(g.whisker!.from);
+    expect(g.box!.to).toBeLessThan(g.whisker!.to);
   });
 
   it("reports blank when nothing at all was published", () => {

@@ -50,6 +50,7 @@ import { INK, MONO, RAIL_BG, SANS } from "@/lib/margin/tokens";
 import {
   Age, Distribution, Eyebrow, Hatch, MarginState, Nil, WhenProvenHere,
 } from "@/components/margin/Marks";
+import { SquadInterval } from "@/components/margin/SquadInterval";
 
 const S = INK;
 
@@ -110,10 +111,10 @@ function TheCall(
           <div style={{ fontFamily: MONO, fontSize: 34, fontWeight: 500, color: S.ink, letterSpacing: "-.03em", lineHeight: 1 }}>
             {decision.mean_points === null ? <Nil surface={S} size={30} /> : decision.mean_points.toFixed(1)}
           </div>
-          <p style={{ margin: "6px 0 0", fontSize: 11.5, lineHeight: 1.45, color: S.ink3 }}>
-            A mean over the simulated draws. No interval is published for a squad
-            total, so none is drawn.
-          </p>
+          {/* Prints that same sentence itself when the producer published no
+              interval, so the honest state survives a producer that has not
+              shipped the block yet. */}
+          <SquadInterval decision={decision} />
         </div>
         <div>
           <Eyebrow surface={S} style={{ fontSize: 9, letterSpacing: ".12em", marginBottom: 5 }}>
@@ -695,7 +696,8 @@ function RailRow({ row, dim = false }: { row: SquadRow; dim?: boolean }) {
         {projection ? (
           <Distribution
             of={{
-              q10: projection.q10, q50: projection.q50, q90: projection.q90,
+              q10: projection.q10, q25: projection.q25, q50: projection.q50,
+              q75: projection.q75, q90: projection.q90,
               mean: projection.xp, mode: projection.mode,
             }}
             surface={S}

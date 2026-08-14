@@ -33,7 +33,9 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import { describeAge, isStale, proven, type Artifact } from "@/lib/data/artifact";
-import { geometry, type DistributionInput } from "@/lib/margin/distribution";
+import {
+  geometry, SCALE_HI, SCALE_LO, type DistributionInput,
+} from "@/lib/margin/distribution";
 import { hatch, MONO, type MarginSurface } from "@/lib/margin/tokens";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -167,26 +169,37 @@ export function compactAge(ms: number): string {
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * q10–q90 with the median, the mean and the mode on it.
+ * q10–q90 with the median, the mean and the mode on it, and the interquartile
+ * box when the producer publishes both of its ends.
  *
- * See `lib/margin/distribution.ts` for why there is no interquartile box: the
- * producer does not publish q25 or q75, and the design's habit of deriving them
- * from the standard deviation would draw an invented shape at the same weight as
- * the measured one.
+ * The box is drawn only from real q25/q75. The design derives them as
+ * `q25 = q50 − sd × 0.5`, which is a shape invented from a spread and drawn at
+ * the same weight as the marks that were measured — so a file carrying one end
+ * and not the other gets no box rather than half of one.
  */
 export function Distribution(
-  { of, surface, width = 88, height = 14 }: {
+  { of, surface, width = 88, height = 14, lo = SCALE_LO, hi = SCALE_HI }: {
     of: DistributionInput;
     surface: MarginSurface;
     width?: number;
     height?: number;
+    /** Scale floor. `SQUAD_SCALE_LO` for a squad total. */
+    lo?: number;
+    /** Scale ceiling. */
+    hi?: number;
   },
 ) {
-  const g = geometry(of);
+  const g = geometry(of, lo, hi);
   if (g.blank) return <Nil surface={surface} size={11} />;
 
   const mid = (height - 2) / 2;
   const pct = (v: number) => `${v}%`;
+
+  // One arrowhead per clamped edge rather than per clamped mark: two marks
+  // pinned to the same edge are one fact about the scale, not two.
+  const marks = [g.median, g.mean, g.mode];
+  const clampLow = marks.some((m) => m?.clamped && m.at === 0);
+  const clampHigh = marks.some((m) => m?.clamped && m.at === 100);
 
   return (
     <div
@@ -194,6 +207,20 @@ export function Distribution(
       role="img"
       aria-label={describeGlyph(of)}
     >
+      {/* The box first, so the whisker rule stays visible across it. */}
+      {g.box ? (
+        <div
+          title="interquartile range, q25 to q75"
+          style={{
+            position: "absolute",
+            left: pct(g.box.from),
+            width: pct(g.box.to - g.box.from),
+            top: mid - 3,
+            height: 7,
+            background: surface.block,
+          }}
+        />
+      ) : null}
       {g.whisker ? (
         <div
           style={{
@@ -237,6 +264,30 @@ export function Distribution(
           }}
         />
       ) : null}
+      {clampLow ? (
+        <div
+          title={`below the scale floor of ${lo} — pinned, not measured here`}
+          style={{
+            position: "absolute", left: 0, top: mid - 3,
+            width: 0, height: 0,
+            borderTop: "4px solid transparent",
+            borderBottom: "4px solid transparent",
+            borderRight: `4px solid ${surface.ink3}`,
+          }}
+        />
+      ) : null}
+      {clampHigh ? (
+        <div
+          title={`above the scale ceiling of ${hi} — pinned, not measured here`}
+          style={{
+            position: "absolute", right: 0, top: mid - 3,
+            width: 0, height: 0,
+            borderTop: "4px solid transparent",
+            borderBottom: "4px solid transparent",
+            borderLeft: `4px solid ${surface.ink3}`,
+          }}
+        />
+      ) : null}
     </div>
   );
 }
@@ -244,12 +295,14 @@ export function Distribution(
 /** The glyph in words, for a screen reader and for the title attribute. */
 export function describeGlyph(of: DistributionInput): string {
   const bits: string[] = [];
-  if (of.q10 !== null && of.q10 !== undefined && of.q90 !== null && of.q90 !== undefined) {
-    bits.push(`q10 ${of.q10} to q90 ${of.q90}`);
-  }
-  if (of.q50 !== null && of.q50 !== undefined) bits.push(`median ${of.q50}`);
-  if (of.mean !== null && of.mean !== undefined) bits.push(`mean ${of.mean.toFixed(1)}`);
-  if (of.mode !== null && of.mode !== undefined) bits.push(`most likely ${of.mode}`);
+  const has = (v: number | null | undefined): v is number =>
+    v !== null && v !== undefined;
+
+  if (has(of.q10) && has(of.q90)) bits.push(`q10 ${of.q10} to q90 ${of.q90}`);
+  if (has(of.q25) && has(of.q75)) bits.push(`middle half ${of.q25} to ${of.q75}`);
+  if (has(of.q50)) bits.push(`median ${of.q50}`);
+  if (has(of.mean)) bits.push(`mean ${of.mean.toFixed(1)}`);
+  if (has(of.mode)) bits.push(`most likely ${of.mode}`);
   return bits.length ? bits.join(", ") : "no distribution published";
 }
 
