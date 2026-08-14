@@ -147,7 +147,10 @@ export function Planner(
     }));
   }, [ledger, squad, xi, points, moves]);
 
-  const columns = `18px 126px 42px 74px repeat(${weeks}, minmax(56px, 1fr))`;
+  // No leading toggle column any more. The XI switch lives inside the GW1 cell,
+  // because it only applies to GW1 — a control at row level sat across six
+  // columns and read as though it governed all of them.
+  const columns = `132px 42px 74px minmax(72px, 1.2fr) repeat(${weeks - 1}, minmax(56px, 1fr))`;
 
   const toggle = (player: SquadPlayer) => {
     if (player.elementId === undefined) return;
@@ -260,12 +263,18 @@ export function Planner(
           textTransform: "uppercase", color: S.ink3, padding: "6px 0",
         }}
       >
-        <span />
         <span>Player</span>
         <span style={{ textAlign: "right" }}>&pound;</span>
         <span style={{ textAlign: "right" }}>xP GW{gameweek}</span>
-        {gameweeks.map((gw) => (
-          <span key={gw} style={{ textAlign: "center" }}>GW{gw}</span>
+        {gameweeks.map((gw, i) => (
+          <span key={gw} style={{ textAlign: "center" }}>
+            GW{gw}
+            {i === 0 ? (
+              <span style={{ display: "block", fontSize: 8, letterSpacing: ".04em", color: S.ink3 }}>
+                xi &middot; fixture
+              </span>
+            ) : null}
+          </span>
         ))}
       </div>
 
@@ -349,7 +358,9 @@ export function Planner(
 
       <p style={{ margin: "12px 0 0", fontSize: 11.5, lineHeight: 1.5, color: S.ink3, maxWidth: 820 }}>
         Click any week&apos;s cell to transfer that player out from that gameweek
-        on. The XI and its total are solved for{" "}
+        on. The square in the GW{gameweek} column starts or benches a player, and
+        exists only in that column because that is the only week an eleven can be
+        solved for. The XI and its total are solved for{" "}
         <strong style={{ color: S.ink2, fontWeight: 600 }}>GW{gameweek} only</strong>{" "}
         &mdash; that is the horizon the published projection covers. The later
         columns are fixtures and FPL&apos;s own difficulty, which are scheduled
@@ -414,7 +425,6 @@ function LedgerRow(
         borderBottom: `1px solid rgba(27,26,22,.06)`, padding: "5px 0",
       }}
     >
-      <span />
       <span
         style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}
         dangerouslySetInnerHTML={{ __html: label }}
@@ -472,17 +482,6 @@ function PlannerRow(
         background: side ? "rgba(27,26,22,.025)" : undefined,
       }}
     >
-      <button
-        type="button"
-        onClick={onToggle}
-        title={starting ? "starting GW1 — click to bench" : "benched GW1 — click to start"}
-        aria-label={`${player.name}: ${starting ? "starting" : "benched"}`}
-        style={{
-          width: 13, height: 13, padding: 0, cursor: "pointer",
-          background: starting ? S.ink : "transparent",
-          border: starting ? "none" : `1px solid rgba(27,26,22,.45)`,
-        }}
-      />
       <span style={{ display: "flex", alignItems: "baseline", gap: 6, minWidth: 0, opacity: starting ? 1 : 0.6 }}>
         <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3, width: 24 }}>
           {side === "out" ? "OUT" : side === "in" ? "IN" : player.position}
@@ -524,13 +523,16 @@ function PlannerRow(
         </span>
       </span>
 
-      {ledger.map((week) => {
+      {ledger.map((week, index) => {
         const owned = ownedIn(week, player);
         const fixture = runByWeek.get(week.gameweek);
         const leaving = player.elementId !== undefined
           && week.transfersOut.includes(player.elementId);
         const arriving = player.elementId !== undefined
           && week.transfersIn.includes(player.elementId);
+        // The XI switch belongs to the first column and only the first column,
+        // because that is the only week the projection can solve an eleven for.
+        const isFirst = index === 0;
 
         if (!owned) {
           return (
@@ -541,26 +543,21 @@ function PlannerRow(
             />
           );
         }
-        if (!fixture) {
-          return (
-            <span
-              key={week.gameweek}
-              title="no fixture scheduled — not an easy one"
-              style={{ display: "block", height: 20, background: hatch(S), opacity: 0.55 }}
-            />
-          );
-        }
-        return (
+
+        const cell = !fixture ? (
+          <span
+            title="no fixture scheduled — not an easy one"
+            style={{ display: "block", height: 20, width: "100%", background: hatch(S), opacity: 0.55 }}
+          />
+        ) : (
           <button
-            key={week.gameweek}
             type="button"
             data-testid="planner-cell"
             onClick={() => onPick(week.gameweek)}
             title={`${fixture.label} · FPL difficulty ${fixture.difficulty} — click to transfer ${player.name} out from GW${week.gameweek}`}
             style={{
-              position: "relative", display: "grid", placeItems: "center",
-              height: 20, width: "100%", cursor: "pointer", border: 0, padding: 0,
-              fontFamily: MONO, fontSize: 9,
+              display: "grid", placeItems: "center", height: 20, width: "100%",
+              cursor: "pointer", border: 0, padding: 0, fontFamily: MONO, fontSize: 9,
               background: WEIGHT[fixture.difficulty] ?? WEIGHT[3],
               color: WEIGHT_INK[fixture.difficulty] ?? WEIGHT_INK[3],
               boxShadow: arriving
@@ -570,6 +567,34 @@ function PlannerRow(
           >
             {fixture.label}
           </button>
+        );
+
+        if (!isFirst) return <span key={week.gameweek}>{cell}</span>;
+
+        return (
+          <span
+            key={week.gameweek}
+            style={{ display: "flex", alignItems: "center", gap: 4, minWidth: 0 }}
+          >
+            <button
+              type="button"
+              data-testid="planner-xi-toggle"
+              onClick={onToggle}
+              title={
+                starting
+                  ? `starting GW${week.gameweek} — click to bench`
+                  : `benched GW${week.gameweek} — click to start`
+              }
+              aria-label={`${player.name}: ${starting ? "starting" : "benched"} in GW${week.gameweek}`}
+              aria-pressed={starting}
+              style={{
+                flex: "0 0 auto", width: 13, height: 13, padding: 0, cursor: "pointer",
+                background: starting ? S.ink : "transparent",
+                border: starting ? "none" : `1px solid rgba(27,26,22,.45)`,
+              }}
+            />
+            <span style={{ flex: 1, minWidth: 0 }}>{cell}</span>
+          </span>
         );
       })}
     </div>
