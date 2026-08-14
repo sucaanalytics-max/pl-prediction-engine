@@ -30,6 +30,9 @@
 import { useMemo } from "react";
 import type { FixtureMatrixRow, HeuristicView } from "@/lib/data/heuristics";
 import { decisionDescriptor } from "@/lib/data/narrow";
+import { projectionsDescriptor } from "@/lib/data/projections";
+import { proven } from "@/lib/data/artifact";
+import { PlanGrid } from "@/components/margin/PlanGrid";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { PAPER, MONO, SANS, hatch } from "@/lib/margin/tokens";
@@ -237,6 +240,11 @@ function Captaincy({ view }: { view: HeuristicView }) {
 export function ScoreView({ gameweek }: { gameweek: number }) {
   const { artifact: heuristics } = useHeuristics();
   const { artifact: decision } = useArtifact(decisionDescriptor(gameweek, "season"));
+  const { artifact: projections } = useArtifact(projectionsDescriptor(gameweek));
+  // The solved horizon, which `decision_public` has carried all along. Null when
+  // the run solved a single gameweek — then this screen is what it was.
+  const horizon = proven(decision)?.horizon ?? null;
+  const players = proven(projections)?.players ?? [];
   const gameweeks = useMemo(
     () => Array.from({ length: HORIZON }, (_, index) => gameweek + index),
     [gameweek],
@@ -247,6 +255,26 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
       style={{ flex: 1, background: S.shell, color: S.ink, padding: "20px 22px 30px", display: "flex", flexDirection: "column", gap: 22 }}
       data-testid="margin-score"
     >
+      {horizon ? (
+        <div>
+          <Eyebrow surface={S} style={{ marginBottom: 10 }}>
+            Solved horizon &middot; GW{horizon.weeks[0]?.gameweek}&ndash;GW{horizon.weeks[horizon.weeks.length - 1]?.gameweek}
+          </Eyebrow>
+          <h1 style={{ margin: 0, fontFamily: SANS, fontSize: 28, lineHeight: 1.12, letterSpacing: "-.035em", fontWeight: 600, color: S.ink, maxWidth: 780 }}>
+            Your team over the next {horizon.transferHorizon} gameweeks, and the transfers that get you there.
+          </h1>
+          <p style={{ margin: "10px 0 0", fontSize: 13, lineHeight: 1.6, color: S.ink2, maxWidth: 780 }}>
+            One squad problem solved across {horizon.evalHorizon} weeks at once, with
+            transfers decided for the first {horizon.transferHorizon}. The tail is
+            evaluated but not planned into — it is there to price the squad you end
+            up holding, so the optimiser cannot dump a terrible run one week past
+            where it can see.
+          </p>
+          <div style={{ marginTop: 18 }}>
+            <PlanGrid horizon={horizon} projections={players} />
+          </div>
+        </div>
+      ) : (
       <div>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
           <Hatch surface={S} width={96} height={14} />
@@ -274,6 +302,7 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
           />
         </div>
       </div>
+      )}
 
       <WhenProvenHere
         of={heuristics}

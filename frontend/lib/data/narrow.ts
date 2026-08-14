@@ -1129,6 +1129,128 @@ export interface PublicDecision {
   readonly autosubProb: Fraction | null;
   /** How many draws stand behind all of the above. */
   readonly nDraws: number | null;
+  /**
+   * The solved horizon, week 0 first. Null when the run had no horizon.
+   *
+   * `run_decide.py` sets `horizon: None` explicitly when the multi-week solve
+   * did not run, so a horizon-less run is never mistaken for a planned one.
+   */
+  readonly horizon: Horizon | null;
+}
+
+/**
+ * `horizon.provisional[]` plus `decision.plan` as week 0.
+ *
+ * The producer publishes this week's plan under `decision.plan` and the rest
+ * under `horizon.provisional`, which is right for an artifact whose first week
+ * is a commitment and whose tail is not. A grid wants them in one list, so they
+ * are joined here — and `planned` records which half each came from, because
+ * that distinction is the reason the split exists.
+ */
+export function narrowHorizon(
+  raw: unknown, week0: DecisionPlan | null, gameweek: number,
+): Horizon | null {
+  if (!isRecord(raw)) return null;
+  const evalHorizon = optNumber(raw.eval_horizon) ?? 0;
+  const transferHorizon = optNumber(raw.transfer_horizon) ?? 0;
+
+  const ints = (v: unknown) =>
+    optArray(v).filter((n): n is number => typeof n === "number");
+
+  const build = (
+    plan: {
+      squad: readonly number[]; xi: readonly number[];
+      captain: number | null; vice: number | null;
+      transfers_in: readonly number[]; transfers_out: readonly number[];
+      hits: number; bank_after: number; free_transfers_after: number | null;
+    },
+    offset: number,
+  ): HorizonWeek => {
+    const xi = new Set(plan.xi);
+    return {
+      gameweek: gameweek + offset,
+      squad: plan.squad,
+      xi: plan.xi,
+      bench: plan.squad.filter((id) => !xi.has(id)),
+      captain: plan.captain,
+      vice: plan.vice,
+      transfers_in: plan.transfers_in,
+      transfers_out: plan.transfers_out,
+      hits: plan.hits,
+      bank_after: plan.bank_after,
+      free_transfers_after: plan.free_transfers_after,
+      planned: offset < transferHorizon,
+    };
+  };
+
+  const weeks: HorizonWeek[] = [];
+  if (week0) {
+    weeks.push(build({ ...week0, free_transfers_after: null }, 0));
+  }
+  optArray(raw.provisional).forEach((entry, i) => {
+    if (!isRecord(entry)) return;
+    weeks.push(build({
+      squad: ints(entry.squad),
+      xi: ints(entry.xi),
+      captain: optNumber(entry.captain),
+      vice: optNumber(entry.vice),
+      transfers_in: ints(entry.transfers_in),
+      transfers_out: ints(entry.transfers_out),
+      hits: countOr0(entry.hits),
+      bank_after: countOr0(entry.bank_after),
+      free_transfers_after: optNumber(entry.free_transfers_after),
+    }, i + 1));
+  });
+
+  // A horizon with no weeks is not a horizon. Null renders the refusal, which
+  // is the honest state for a run that solved one gameweek.
+  return weeks.length === 0
+    ? null
+    : { evalHorizon, transferHorizon, weeks };
+}
+
+/**
+ * One week of the solved horizon.
+ *
+ * `pipeline/decide/horizon.py` solves the squad over `eval_horizon` weeks and
+ * plans transfers for the first `transfer_horizon` of them, and `run_decide.py`
+ * has published the result inside `decision_public` all along — `strip_for_
+ * publication` drops the runners-up and the selection stream, and keeps this.
+ * Nothing read it, so the eight-week plan sat in the artifact the Score view was
+ * saying did not exist.
+ *
+ * `bench` is derived rather than published: the producer emits `squad` and `xi`,
+ * and the bench is exactly the difference. Deriving a set the producer already
+ * determines is not the same as inventing a number it never computed.
+ */
+export interface HorizonWeek {
+  readonly gameweek: number;
+  readonly squad: readonly number[];
+  readonly xi: readonly number[];
+  /** `squad` minus `xi`. */
+  readonly bench: readonly number[];
+  readonly captain: number | null;
+  readonly vice: number | null;
+  readonly transfers_in: readonly number[];
+  readonly transfers_out: readonly number[];
+  readonly hits: number;
+  readonly bank_after: number;
+  readonly free_transfers_after: number | null;
+  /**
+   * Whether transfers were planned into this week.
+   *
+   * The tail of the horizon feeds the objective but is never transferred into —
+   * `eval_horizon` exceeds `transfer_horizon` so the solve prices the terminal
+   * squad instead of dumping it. Those weeks must not print a transfer count the
+   * solve did not choose.
+   */
+  readonly planned: boolean;
+}
+
+export interface Horizon {
+  readonly evalHorizon: number;
+  readonly transferHorizon: number;
+  readonly weeks: readonly HorizonWeek[];
 }
 
 /** One published `P(total ≥ threshold)`. */
@@ -1184,6 +1306,7 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
   if (gameweek === null || entry_label === null) return malformed(problems.all);
 
   const decision = isRecord(file.decision) ? file.decision : {};
+  const plan = narrowPlan(decision.plan);
   const snapshot: Record<string, number> = {};
   if (isRecord(file.xp_snapshot)) {
     for (const [key, value] of Object.entries(file.xp_snapshot)) {
@@ -1198,7 +1321,7 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
     objective: optString(file.objective),
     generated_at: optString(file.generated_at),
     deadline: optString(file.deadline),
-    plan: narrowPlan(decision.plan),
+    plan,
     mean_points: optNumber(decision.mean_points),
     optimism_gap: optNumber(file.optimism_gap),
     credible_margin: optBoolean(file.credible_margin) ?? false,
@@ -1218,6 +1341,7 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
     probAtLeast: narrowThresholds(decision.prob_at_least),
     autosubProb: toFraction(decision.autosub_prob),
     nDraws: optNumber(decision.n_draws),
+    horizon: narrowHorizon(file.horizon, plan, gameweek),
   });
 }
 
