@@ -278,9 +278,6 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
             projections={players}
             prices={prices}
             bank={squad.bank}
-            // FPL does not publish free transfers to this app. `transferCost`
-            // charges nothing rather than assuming one — see its docstring.
-            freeTransfers={null}
             gameweek={gameweek}
           />
         </section>

@@ -1,41 +1,45 @@
 "use client";
 
 /**
- * The planner: your fifteen, your fixture run, and a scratchpad for moves.
+ * The planner: your squad across the horizon, and the moves that change it.
+ *
+ * ## A plan is a sequence, not a set
+ *
+ * Selling Shaw in GW2 and Gabriel in GW4 are two decisions a week apart, each
+ * with its own free transfer and its own bank. So every move carries the week it
+ * happens in, the squad is recomputed per column, and a player is drawn as owned
+ * or not in each week rather than once for the whole horizon. That is the only
+ * thing that makes a horizon worth planning: *when*.
  *
  * ## Why this is always on screen
  *
- * The Score view used to render only when the engine had published a solved
- * horizon, which is most-of-the-season never. But the two questions this screen
- * answers do not need a solve:
+ * Neither question it answers needs the engine to have solved anything:
  *
  * - **Who plays this week?** `fpl/xp_public_gw{NN}.json` publishes a projection
  *   for every player, and the best legal eleven is a small maximisation over
- *   fifteen of them. That is the model's own number.
+ *   fifteen of them.
  * - **What does the run look like?** Every squad player carries their next ten
  *   fixtures with FPL's difficulty. Fixtures are scheduled, not forecast.
  *
- * ## The one thing it will not do
+ * ## What it will not do
  *
- * Pick your eleven for gameweek six. The projection covers one gameweek, so the
- * grid shows fixtures and difficulty for the weeks beyond this one and says
- * plainly that an XI cannot be solved for them. Sorting six weeks of fixture
- * difficulty into a lineup would be a rotation plan with a model's authority and
- * a colour ramp behind it.
+ * Pick your eleven for a later week. The projection covers one gameweek, so the
+ * later columns stay fixtures. Sorting six weeks of difficulty into a lineup
+ * would be a rotation plan with a model's authority and none of its evidence.
  *
- * ## The moves belong to the reader
+ * ## Free transfers are the reader's to supply
  *
- * A transfer here is a hypothetical you are trying, not a recommendation. The
- * arithmetic is exact — prices are known, a hit is four points — and the
- * projected delta is labelled as the one gameweek it covers.
+ * FPL does not publish the count to this app. Rather than assume one and dock
+ * four points for a hit that may not be owed, the planner asks — the number is
+ * on the FPL site, and until it is given every hit reads as unknown.
  */
 
 import { useMemo, useState } from "react";
 import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { Projection } from "@/lib/data/projections";
 import {
-  applyMoves, formationOf, optimiseXi, pointsFrom, transferCost, transferDelta,
-  xiProblems, type Move,
+  formationOf, MAX_BANKED_FREE_TRANSFERS, optimiseXi, ownedIn, playersAcross,
+  pointsFrom, weeklyLedger, xiProblems, type Move, type WeekLedger,
 } from "@/lib/margin/planner";
 import { hatch, MONO, PAPER, SANS } from "@/lib/margin/tokens";
 import { Distribution, Eyebrow, Nil } from "@/components/margin/Marks";
@@ -52,62 +56,68 @@ const WEIGHT_INK: Record<number, string> = {
 
 const LINE_ORDER: Record<string, number> = { GKP: 0, DEF: 1, MID: 2, FWD: 3 };
 
+/** Which cell the replacement picker is open for. */
+interface Picking {
+  readonly player: SquadPlayer;
+  readonly gameweek: number;
+}
+
 export function Planner(
-  { squad, projections, prices, bank, freeTransfers, gameweek, weeks = 6 }: {
+  { squad, projections, prices, bank, gameweek, weeks = 6 }: {
     squad: readonly SquadPlayer[];
     projections: readonly Projection[];
     /** Price by FPL element id, from `player_stats.json`. */
     prices: ReadonlyMap<number, number>;
     bank: number | null;
-    /** Null when FPL did not tell us — see `transferCost`. */
-    freeTransfers: number | null;
     gameweek: number;
-    /** How many gameweeks of run to show. */
+    /** How many gameweeks of run to plan over. */
     weeks?: number;
   },
 ) {
   const [moves, setMoves] = useState<readonly Move[]>([]);
   const [benched, setBenched] = useState<ReadonlySet<number>>(new Set());
-  const [picking, setPicking] = useState<SquadPlayer | null>(null);
+  const [picking, setPicking] = useState<Picking | null>(null);
   const [query, setQuery] = useState("");
+  const [freeTransfers, setFreeTransfers] = useState<number | null>(null);
 
   const points = useMemo(() => pointsFrom(projections), [projections]);
   const byId = useMemo(
     () => new Map(projections.map((p) => [p.elementId, p])), [projections],
   );
-
-  const working = useMemo(() => applyMoves(squad, moves), [squad, moves]);
-  const cost = useMemo(
-    () => transferCost(moves, bank, freeTransfers), [moves, bank, freeTransfers],
-  );
-  const delta = useMemo(
-    () => transferDelta(moves, points, cost), [moves, points, cost],
-  );
-
-  const best = useMemo(() => optimiseXi(working, points), [working, points]);
-
-  /**
-   * The eleven on screen: yours if you have edited it, otherwise the optimum.
-   *
-   * Edits are recorded as a bench set rather than as a starting eleven, so a
-   * transfer that changes the squad does not silently drop a player you never
-   * benched out of the lineup.
-   */
-  const xi = useMemo(() => {
-    if (benched.size === 0) return best?.xi ?? [];
-    return working.filter((p) => p.elementId !== undefined && !benched.has(p.elementId));
-  }, [benched, best, working]);
-
-  const problems = benched.size === 0 ? [] : xiProblems(xi);
-  const formation = formationOf(xi);
-
   const gameweeks = useMemo(
     () => Array.from({ length: weeks }, (_, i) => gameweek + i), [gameweek, weeks],
   );
 
+  const ledger = useMemo(
+    () => weeklyLedger(squad, moves, gameweeks, bank, freeTransfers),
+    [squad, moves, gameweeks, bank, freeTransfers],
+  );
+
+  // The first week's squad is the one the XI is solved against.
+  const thisWeek = ledger[0];
+  const best = useMemo(
+    () => optimiseXi(thisWeek?.squad ?? squad, points), [thisWeek, squad, points],
+  );
+
+  /**
+   * The eleven on screen: yours if you have edited it, otherwise the optimum.
+   *
+   * Held as a bench set rather than a starting eleven, so a transfer that
+   * changes the squad does not silently drop a player you never benched.
+   */
+  const xi = useMemo(() => {
+    const from = thisWeek?.squad ?? squad;
+    if (benched.size === 0) return best?.xi ?? [];
+    return from.filter((p) => p.elementId !== undefined && !benched.has(p.elementId));
+  }, [benched, best, thisWeek, squad]);
+
+  const problems = benched.size === 0 ? [] : xiProblems(xi);
+  const formation = formationOf(xi);
+
   const rows = useMemo(() => {
+    const everyone = playersAcross(ledger, squad);
     const inXi = new Set(xi);
-    return [...working].sort((a, b) => {
+    return [...everyone].sort((a, b) => {
       const line = (LINE_ORDER[a.position] ?? 9) - (LINE_ORDER[b.position] ?? 9);
       if (line !== 0) return line;
       const av = a.elementId === undefined ? null : points.get(a.elementId) ?? null;
@@ -116,17 +126,20 @@ export function Planner(
       if (bv === null) return -1;
       return bv - av;
     }).map((player) => ({ player, starting: inXi.has(player) }));
-  }, [working, xi, points]);
+  }, [ledger, squad, xi, points]);
 
-  const columns = `18px 128px 44px 76px repeat(${weeks}, minmax(52px, 1fr)) 34px`;
+  const columns = `18px 126px 42px 74px repeat(${weeks}, minmax(56px, 1fr))`;
 
   const toggle = (player: SquadPlayer) => {
     if (player.elementId === undefined) return;
     const id = player.elementId;
     setBenched((was) => {
-      // First edit seeds from the optimum, so one click does not bench everyone.
+      // The first edit seeds from the optimum, so one click does not bench
+      // everyone who happened to be starting.
       const seed = was.size === 0
-        ? new Set((best?.bench ?? []).map((p) => p.elementId).filter((v): v is number => v !== undefined))
+        ? new Set((best?.bench ?? [])
+            .map((p) => p.elementId)
+            .filter((v): v is number => v !== undefined))
         : new Set(was);
       if (seed.has(id)) seed.delete(id); else seed.add(id);
       return seed;
@@ -135,14 +148,18 @@ export function Planner(
 
   const candidates = useMemo(() => {
     if (!picking) return [];
-    const owned = new Set(working.map((p) => p.elementId));
+    const week = ledger.find((w) => w.gameweek === picking.gameweek);
+    const owned = new Set((week?.squad ?? squad).map((p) => p.elementId));
     const needle = query.trim().toLowerCase();
     return projections
-      .filter((p) => p.position === picking.position && !owned.has(p.elementId) && !p.blank)
+      .filter((p) => p.position === picking.player.position)
+      .filter((p) => !owned.has(p.elementId) && !p.blank)
       .filter((p) => !needle || `${p.name ?? ""} ${p.team ?? ""}`.toLowerCase().includes(needle))
       .sort((a, b) => (b.xp ?? 0) - (a.xp ?? 0))
       .slice(0, 40);
-  }, [picking, projections, working, query]);
+  }, [picking, projections, ledger, squad, query]);
+
+  const totalHits = ledger.reduce((sum, w) => sum + w.pointsCost, 0);
 
   return (
     <section data-testid="margin-planner">
@@ -151,12 +168,27 @@ export function Planner(
           Planner &middot; GW{gameweek}&ndash;GW{gameweeks[gameweeks.length - 1]}
         </Eyebrow>
         <div style={{ display: "flex", gap: 14, alignItems: "baseline", flexWrap: "wrap", fontFamily: MONO, fontSize: 10, color: S.ink2 }}>
-          <span>bank {cost.bankAfter === null ? <Nil surface={S} size={10} /> : `£${cost.bankAfter.toFixed(1)}`}</span>
-          <span>free transfers {freeTransfers ?? <Nil surface={S} size={10} />}</span>
-          <span>
-            moves {cost.moves}
-            {cost.hits > 0 ? ` · −${cost.pointsCost}` : ""}
-          </span>
+          <label style={{ display: "inline-flex", alignItems: "baseline", gap: 5 }}>
+            free transfers now
+            <input
+              type="number"
+              min={0}
+              max={MAX_BANKED_FREE_TRANSFERS}
+              value={freeTransfers ?? ""}
+              placeholder="?"
+              aria-label="Free transfers you currently hold"
+              onChange={(event) => {
+                const raw = event.target.value;
+                setFreeTransfers(raw === "" ? null : Math.max(0, Math.min(MAX_BANKED_FREE_TRANSFERS, Number(raw))));
+              }}
+              style={{
+                width: 34, fontFamily: MONO, fontSize: 11, color: S.ink,
+                background: "transparent", border: `1px solid ${S.hair}`,
+                padding: "1px 4px", textAlign: "center",
+              }}
+            />
+          </label>
+          <span>moves {moves.length}{totalHits > 0 ? ` · −${totalHits}` : ""}</span>
           {(moves.length > 0 || benched.size > 0) ? (
             <button
               type="button"
@@ -173,17 +205,12 @@ export function Planner(
         </div>
       </div>
 
-      {/* This week's XI, which is the one the model can actually solve. */}
       <div style={{ display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap", marginBottom: 10 }}>
         <span style={{ fontFamily: MONO, fontSize: 24, fontWeight: 500, color: S.ink, letterSpacing: "-.03em" }}>
           {best === null ? <Nil surface={S} size={22} /> : projectedTotal(xi, points).toFixed(1)}
         </span>
         <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink2 }}>
-          projected GW{gameweek}
-          {formation ? ` · ${formation}` : ""}
-          {delta !== null && moves.length > 0
-            ? ` · ${delta >= 0 ? "+" : ""}${delta.toFixed(1)} after ${cost.hits > 0 ? "the hit" : "moves"}`
-            : ""}
+          projected GW{gameweek}{formation ? ` · ${formation}` : ""}
         </span>
         {benched.size > 0 ? (
           <button
@@ -206,7 +233,6 @@ export function Planner(
         </p>
       ) : null}
 
-      {/* Header */}
       <div
         style={{
           display: "grid", gridTemplateColumns: columns, gap: 4,
@@ -217,12 +243,11 @@ export function Planner(
       >
         <span />
         <span>Player</span>
-        <span style={{ textAlign: "right" }}>£</span>
+        <span style={{ textAlign: "right" }}>&pound;</span>
         <span style={{ textAlign: "right" }}>xP GW{gameweek}</span>
         {gameweeks.map((gw) => (
           <span key={gw} style={{ textAlign: "center" }}>GW{gw}</span>
         ))}
-        <span />
       </div>
 
       {rows.map(({ player, starting }) => (
@@ -231,20 +256,74 @@ export function Planner(
           player={player}
           starting={starting}
           projection={player.elementId === undefined ? null : byId.get(player.elementId) ?? null}
-          gameweeks={gameweeks}
+          ledger={ledger}
           columns={columns}
           onToggle={() => toggle(player)}
-          onReplace={() => { setPicking(player); setQuery(""); }}
+          onPick={(week) => { setPicking({ player, gameweek: week }); setQuery(""); }}
         />
       ))}
 
-      <p style={{ margin: "12px 0 0", fontSize: 11.5, lineHeight: 1.5, color: S.ink3, maxWidth: 800 }}>
-        The XI and its total are solved for <strong style={{ color: S.ink2, fontWeight: 600 }}>GW{gameweek} only</strong> —
-        that is the horizon the published projection covers. The later columns are
-        fixtures and FPL&apos;s own difficulty, which are scheduled rather than
-        forecast; no eleven is chosen for them, because sorting six weeks of
-        difficulty into a lineup would be a rotation plan with a model&apos;s
-        authority and none of its evidence.
+      {/* The plan's arithmetic, week by week. */}
+      <div style={{ marginTop: 8, borderTop: `1px solid rgba(27,26,22,.25)` }}>
+        <LedgerRow
+          label="transfers &middot; hits"
+          ledger={ledger}
+          columns={columns}
+          render={(w) => (
+            <>{w.transfersIn.length} {w.pointsCost > 0 ? `· −${w.pointsCost}` : "· 0"}</>
+          )}
+        />
+        <LedgerRow
+          label="bank &middot; FT after"
+          ledger={ledger}
+          columns={columns}
+          render={(w) => (
+            <>
+              {w.bankAfter === null ? <Nil surface={S} size={10} /> : w.bankAfter.toFixed(1)}
+              {" · "}
+              {w.freeAfter === null ? <Nil surface={S} size={10} /> : w.freeAfter}
+            </>
+          )}
+        />
+      </div>
+
+      {moves.length > 0 ? (
+        <div style={{ marginTop: 12, display: "flex", flexWrap: "wrap", gap: "6px 20px" }}>
+          {[...moves].sort((a, b) => a.gameweek - b.gameweek).map((move) => (
+            <span
+              key={`${move.gameweek}-${move.out.elementId}`}
+              style={{ fontFamily: MONO, fontSize: 11, color: S.ink2 }}
+            >
+              <span style={{ color: S.ink3 }}>GW{move.gameweek}</span>{" "}
+              <span style={{ color: S.conflict }}>{move.out.name}</span>
+              {" → "}
+              <span style={{ color: S.agree }}>{move.in.name}</span>
+              <button
+                type="button"
+                onClick={() => setMoves((was) => was.filter((m) => m !== move))}
+                aria-label={`undo ${move.out.name} to ${move.in.name} in GW${move.gameweek}`}
+                style={{
+                  marginLeft: 6, fontFamily: MONO, fontSize: 11, color: S.ink3,
+                  background: "transparent", border: 0, cursor: "pointer", padding: 0,
+                }}
+              >
+                &times;
+              </button>
+            </span>
+          ))}
+        </div>
+      ) : null}
+
+      <p style={{ margin: "12px 0 0", fontSize: 11.5, lineHeight: 1.5, color: S.ink3, maxWidth: 820 }}>
+        Click any week&apos;s cell to transfer that player out from that gameweek
+        on. The XI and its total are solved for{" "}
+        <strong style={{ color: S.ink2, fontWeight: 600 }}>GW{gameweek} only</strong>{" "}
+        &mdash; that is the horizon the published projection covers. The later
+        columns are fixtures and FPL&apos;s own difficulty, which are scheduled
+        rather than forecast; no eleven is chosen for them.
+        {freeTransfers === null
+          ? " FPL does not tell this app how many free transfers you hold, so hits are unknown until you enter the number above."
+          : ` Free transfers roll over and cap at ${MAX_BANKED_FREE_TRANSFERS}; the real cap comes from FPL's own game settings, which this app does not receive.`}
         {best && best.unprojected > 0
           ? ` ${best.unprojected} of the eleven have no published projection and are excluded from the total.`
           : ""}
@@ -253,16 +332,23 @@ export function Planner(
 
       {picking ? (
         <ReplacePanel
-          player={picking}
+          picking={picking}
           candidates={candidates}
           query={query}
+          prices={prices}
           onQuery={setQuery}
           onClose={() => setPicking(null)}
-          prices={prices}
           onPick={(candidate) => {
             setMoves((was) => [
-              ...was.filter((m) => m.out.elementId !== picking.elementId),
-              { out: picking, in: candidate, price: prices.get(candidate.elementId) ?? null },
+              // One move per player per week; picking again replaces it.
+              ...was.filter((m) => !(m.gameweek === picking.gameweek
+                && m.out.elementId === picking.player.elementId)),
+              {
+                gameweek: picking.gameweek,
+                out: picking.player,
+                in: candidate,
+                price: prices.get(candidate.elementId) ?? null,
+              },
             ]);
             setPicking(null);
           }}
@@ -272,8 +358,6 @@ export function Planner(
   );
 }
 
-
-
 function projectedTotal(
   xi: readonly SquadPlayer[], points: ReadonlyMap<number, number>,
 ): number {
@@ -282,15 +366,53 @@ function projectedTotal(
   return scored.reduce((a, b) => a + b, 0) + captain;
 }
 
+function LedgerRow(
+  { label, ledger, columns, render }: {
+    label: string;
+    ledger: readonly WeekLedger[];
+    columns: string;
+    render: (week: WeekLedger) => React.ReactNode;
+  },
+) {
+  return (
+    <div
+      style={{
+        display: "grid", gridTemplateColumns: columns, gap: 4,
+        borderBottom: `1px solid rgba(27,26,22,.06)`, padding: "5px 0",
+      }}
+    >
+      <span />
+      <span
+        style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}
+        dangerouslySetInnerHTML={{ __html: label }}
+      />
+      <span />
+      <span />
+      {ledger.map((week) => (
+        <span
+          key={week.gameweek}
+          style={{
+            textAlign: "center", fontFamily: MONO, fontSize: 10,
+            color: week.unaffordable ? S.conflict : S.ink2,
+          }}
+          title={week.unaffordable ? "this plan cannot be afforded" : undefined}
+        >
+          {render(week)}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 function PlannerRow(
-  { player, starting, projection, gameweeks, columns, onToggle, onReplace }: {
+  { player, starting, projection, ledger, columns, onToggle, onPick }: {
     player: SquadPlayer;
     starting: boolean;
     projection: Projection | null;
-    gameweeks: readonly number[];
+    ledger: readonly WeekLedger[];
     columns: string;
     onToggle: () => void;
-    onReplace: () => void;
+    onPick: (gameweek: number) => void;
   },
 ) {
   const runByWeek = new Map(player.fixtures.map((f) => [f.gameweek, f]));
@@ -302,13 +424,12 @@ function PlannerRow(
       style={{
         display: "grid", gridTemplateColumns: columns, gap: 4, alignItems: "center",
         borderBottom: `1px solid rgba(27,26,22,.06)`, padding: "3px 0",
-        opacity: starting ? 1 : 0.55,
       }}
     >
       <button
         type="button"
         onClick={onToggle}
-        title={starting ? "starting — click to bench" : "benched — click to start"}
+        title={starting ? "starting GW1 — click to bench" : "benched GW1 — click to start"}
         aria-label={`${player.name}: ${starting ? "starting" : "benched"}`}
         style={{
           width: 13, height: 13, padding: 0, cursor: "pointer",
@@ -316,7 +437,7 @@ function PlannerRow(
           border: starting ? "none" : `1px solid rgba(27,26,22,.45)`,
         }}
       />
-      <span style={{ display: "flex", alignItems: "baseline", gap: 6, minWidth: 0 }}>
+      <span style={{ display: "flex", alignItems: "baseline", gap: 6, minWidth: 0, opacity: starting ? 1 : 0.6 }}>
         <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3, width: 24 }}>
           {player.position}
         </span>
@@ -341,7 +462,7 @@ function PlannerRow(
               mean: projection.xp, mode: projection.mode,
             }}
             surface={S}
-            width={44}
+            width={40}
             height={12}
           />
         ) : null}
@@ -352,55 +473,64 @@ function PlannerRow(
         </span>
       </span>
 
-      {gameweeks.map((gw) => {
-        const fixture = runByWeek.get(gw);
-        if (!fixture) {
+      {ledger.map((week) => {
+        const owned = ownedIn(week, player);
+        const fixture = runByWeek.get(week.gameweek);
+        const leaving = player.elementId !== undefined
+          && week.transfersOut.includes(player.elementId);
+        const arriving = player.elementId !== undefined
+          && week.transfersIn.includes(player.elementId);
+
+        if (!owned) {
           return (
             <span
-              key={gw}
-              title="no fixture scheduled — not an easy one"
+              key={week.gameweek}
+              title="not in the squad this week — not a zero"
               style={{ display: "block", height: 20, background: hatch(S) }}
             />
           );
         }
+        if (!fixture) {
+          return (
+            <span
+              key={week.gameweek}
+              title="no fixture scheduled — not an easy one"
+              style={{ display: "block", height: 20, background: hatch(S), opacity: 0.55 }}
+            />
+          );
+        }
         return (
-          <span
-            key={gw}
-            title={`${fixture.label} · FPL difficulty ${fixture.difficulty}`}
+          <button
+            key={week.gameweek}
+            type="button"
+            data-testid="planner-cell"
+            onClick={() => onPick(week.gameweek)}
+            title={`${fixture.label} · FPL difficulty ${fixture.difficulty} — click to transfer ${player.name} out from GW${week.gameweek}`}
             style={{
-              display: "grid", placeItems: "center", height: 20,
+              position: "relative", display: "grid", placeItems: "center",
+              height: 20, width: "100%", cursor: "pointer", border: 0, padding: 0,
               fontFamily: MONO, fontSize: 9,
               background: WEIGHT[fixture.difficulty] ?? WEIGHT[3],
               color: WEIGHT_INK[fixture.difficulty] ?? WEIGHT_INK[3],
+              boxShadow: arriving
+                ? `inset 2px 0 0 ${S.agree}`
+                : leaving ? `inset 2px 0 0 ${S.conflict}` : undefined,
             }}
           >
             {fixture.label}
-          </span>
+          </button>
         );
       })}
-
-      <button
-        type="button"
-        onClick={onReplace}
-        title={`replace ${player.name}`}
-        aria-label={`replace ${player.name}`}
-        style={{
-          fontFamily: MONO, fontSize: 13, lineHeight: 1, color: S.ink3,
-          background: "transparent", border: 0, cursor: "pointer", padding: 0,
-        }}
-      >
-        &#8644;
-      </button>
     </div>
   );
 }
 
 function ReplacePanel(
-  { player, candidates, query, prices, onQuery, onPick, onClose }: {
-    player: SquadPlayer;
+  { picking, candidates, query, prices, onQuery, onPick, onClose }: {
+    picking: Picking;
     candidates: readonly Projection[];
-    prices: ReadonlyMap<number, number>;
     query: string;
+    prices: ReadonlyMap<number, number>;
     onQuery: (value: string) => void;
     onPick: (candidate: Projection) => void;
     onClose: () => void;
@@ -413,13 +543,13 @@ function ReplacePanel(
     >
       <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderBottom: `1px solid ${S.hair}`, flexWrap: "wrap" }}>
         <Eyebrow surface={S} style={{ fontSize: 10 }}>
-          Replace {player.name} &middot; {player.position}
+          GW{picking.gameweek} &middot; replace {picking.player.name} &middot; {picking.player.position}
         </Eyebrow>
         <input
           value={query}
           onChange={(event) => onQuery(event.target.value)}
           placeholder="search"
-          aria-label={`Search a replacement for ${player.name}`}
+          aria-label={`Search a replacement for ${picking.player.name}`}
           style={{
             fontFamily: MONO, fontSize: 11, color: S.ink, background: "transparent",
             border: `1px solid ${S.hair}`, padding: "4px 8px", minWidth: 140,
@@ -440,7 +570,8 @@ function ReplacePanel(
       <div style={{ maxHeight: 260, overflowY: "auto" }}>
         {candidates.length === 0 ? (
           <p style={{ margin: 0, padding: "12px", fontSize: 12, color: S.ink3 }}>
-            No {player.position} in the published projection matches that search.
+            No {picking.player.position} in the published projection matches that
+            search.
           </p>
         ) : candidates.map((candidate) => (
           <button
@@ -470,10 +601,10 @@ function ReplacePanel(
         ))}
       </div>
       <p style={{ margin: 0, padding: "10px 12px", borderTop: `1px solid ${S.hair}`, fontSize: 11.5, lineHeight: 1.5, color: S.ink3 }}>
-        Prices come from `player_stats.json`, joined on FPL&apos;s own element id.
-        A player it has no price for leaves the bank unknown rather than a
-        plausible wrong number — this is the figure you commit real transfers
-        against.
+        The incoming player is owned from GW{picking.gameweek} onwards. Prices come
+        from `player_stats.json`, joined on FPL&apos;s own element id; one without
+        a price leaves the bank unknown rather than a plausible wrong number,
+        because this is the figure you commit real transfers against.
       </p>
     </div>
   );

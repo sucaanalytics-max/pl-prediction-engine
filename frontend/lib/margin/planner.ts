@@ -202,11 +202,31 @@ export function pointsFrom(projections: readonly Projection[]): Map<number, numb
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface Move {
+  /**
+   * The gameweek the transfer happens in.
+   *
+   * A plan is a sequence, not a set: selling Shaw in GW2 and Gabriel in GW4 are
+   * two decisions a week apart, each with its own free transfer and its own
+   * bank. Collapsing them into one list of moves loses the only thing that makes
+   * a horizon worth planning — *when*.
+   */
+  readonly gameweek: number;
   readonly out: SquadPlayer;
   readonly in: Projection;
   /** What the incoming player costs, when a price is known. */
   readonly price: number | null;
 }
+
+/**
+ * FPL's cap on banked free transfers.
+ *
+ * The pipeline reads the real value from FPL's own `game-settings`
+ * (`max_extra_free_transfers + 1`, `pipeline/fpl/rules.py`) and does not publish
+ * it to this app. Five is the current rule; if FPL changes it, the authoritative
+ * number is on the Python side and this one is stale — which is why the planner
+ * shows the banked count rather than silently clamping to it.
+ */
+export const MAX_BANKED_FREE_TRANSFERS = 5;
 
 export interface TransferCost {
   readonly moves: number;
@@ -308,4 +328,125 @@ export function applyMoves(
     fixtures: [],
   }));
   return [...kept, ...added];
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The plan as a sequence
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** The squad as it stands in a given gameweek, after every move up to it. */
+export function squadAtWeek(
+  initial: readonly SquadPlayer[], moves: readonly Move[], gameweek: number,
+): readonly SquadPlayer[] {
+  const upTo = moves
+    .filter((m) => m.gameweek <= gameweek)
+    .sort((a, b) => a.gameweek - b.gameweek);
+  return applyMoves(initial, upTo);
+}
+
+export interface WeekLedger {
+  readonly gameweek: number;
+  readonly squad: readonly SquadPlayer[];
+  readonly transfersIn: readonly number[];
+  readonly transfersOut: readonly number[];
+  /** Transfers made beyond the free ones held that week. */
+  readonly hits: number;
+  readonly pointsCost: number;
+  /** Free transfers held going in, or null when the count is unknown. */
+  readonly freeBefore: number | null;
+  /** Held going into the next week, after use and accrual. */
+  readonly freeAfter: number | null;
+  /** Bank after the week's moves, or null when any price is unknown. */
+  readonly bankAfter: number | null;
+  readonly unaffordable: boolean;
+}
+
+/**
+ * The plan week by week: what moves, what it costs, what is left.
+ *
+ * The free-transfer chain is replayed from the transfers actually made rather
+ * than tracked incrementally, which is the same reason `horizon.py` replays it:
+ * the rule is deterministic given the moves, so deriving it cannot drift from
+ * them.
+ *
+ * `startingFree` is nullable because FPL does not publish the count to this app.
+ * Null propagates: every week's hit count is unknown rather than guessed, and
+ * the planner asks the reader for the number instead of inventing it — they can
+ * see it on the FPL site, and a wrong assumption here costs four points a time.
+ */
+export function weeklyLedger(
+  initial: readonly SquadPlayer[],
+  moves: readonly Move[],
+  gameweeks: readonly number[],
+  bank: number | null,
+  startingFree: number | null,
+): readonly WeekLedger[] {
+  const out: WeekLedger[] = [];
+  let runningBank = bank;
+  let free = startingFree;
+
+  for (const gameweek of gameweeks) {
+    const thisWeek = moves.filter((m) => m.gameweek === gameweek);
+    const count = thisWeek.length;
+    const hits = free === null ? 0 : Math.max(0, count - free);
+
+    for (const move of thisWeek) {
+      if (runningBank === null) break;
+      if (move.price === null || move.out.price === null) { runningBank = null; break; }
+      runningBank = runningBank + move.out.price - move.price;
+    }
+    if (runningBank !== null) runningBank = Math.round(runningBank * 10) / 10;
+
+    const freeBefore = free;
+    // Unused transfers roll over, plus one for the coming week, capped.
+    free = free === null
+      ? null
+      : Math.min(MAX_BANKED_FREE_TRANSFERS, Math.max(0, free - count) + 1);
+
+    out.push({
+      gameweek,
+      squad: squadAtWeek(initial, moves, gameweek),
+      transfersIn: thisWeek.map((m) => m.in.elementId),
+      transfersOut: thisWeek
+        .map((m) => m.out.elementId)
+        .filter((id): id is number => id !== undefined),
+      hits,
+      pointsCost: hits * RULES.hitCost,
+      freeBefore,
+      freeAfter: free,
+      bankAfter: runningBank,
+      unaffordable: runningBank !== null && runningBank < 0,
+    });
+  }
+
+  return out;
+}
+
+/**
+ * Every player who appears in any week of the plan, for the grid's rows.
+ *
+ * The union rather than the current fifteen: a player bought in GW4 belongs on
+ * the grid from the start as an unowned run, and one sold in GW2 belongs on it
+ * to the end. Showing only today's squad would hide exactly the moves being
+ * planned.
+ */
+export function playersAcross(
+  ledger: readonly WeekLedger[], initial: readonly SquadPlayer[],
+): readonly SquadPlayer[] {
+  const seen = new Map<number | string, SquadPlayer>();
+  const key = (p: SquadPlayer) => p.elementId ?? p.name;
+  for (const p of initial) seen.set(key(p), p);
+  for (const week of ledger) for (const p of week.squad) {
+    if (!seen.has(key(p))) seen.set(key(p), p);
+  }
+  return [...seen.values()];
+}
+
+/** Whether a player is in the squad in a given week. */
+export function ownedIn(week: WeekLedger, player: SquadPlayer): boolean {
+  const id = player.elementId;
+  return id === undefined
+    ? week.squad.some((p) => p.name === player.name)
+    : week.squad.some((p) => p.elementId === id);
 }

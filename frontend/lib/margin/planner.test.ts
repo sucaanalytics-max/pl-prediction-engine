@@ -17,8 +17,9 @@ import { describe, expect, it } from "vitest";
 import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { Projection } from "@/lib/data/projections";
 import {
-  applyMoves, formationOf, optimiseXi, pointsFrom, RULES, transferCost,
-  transferDelta, xiProblems,
+  applyMoves, formationOf, MAX_BANKED_FREE_TRANSFERS, optimiseXi, ownedIn,
+  playersAcross, pointsFrom, RULES, squadAtWeek, transferCost, transferDelta,
+  weeklyLedger, xiProblems,
 } from "@/lib/margin/planner";
 
 let nextId = 1;
@@ -155,7 +156,7 @@ describe("the optimal XI", () => {
 
 describe("what a transfer costs", () => {
   const out = player("MID", 7.5, "Out");
-  const move = { out, in: projection(99, 6), price: 8.0 };
+  const move = { gameweek: 1, out, in: projection(99, 6), price: 8.0 };
 
   it("moves the bank by the price difference", () => {
     const cost = transferCost([move], 1.0, 1);
@@ -187,14 +188,14 @@ describe("what a transfer costs", () => {
 
   it("returns a null bank rather than a partial one", () => {
     // A bank computed from three of four prices looks spendable and is not.
-    const unpriced = { out, in: projection(98, 5), price: null };
+    const unpriced = { gameweek: 1, out, in: projection(98, 5), price: null };
     expect(transferCost([move, unpriced], 5, 2).bankAfter).toBeNull();
   });
 
   it("keeps the bank in tenths", () => {
     // 0.1 + 0.2 is 0.30000000000000004, and this is money on screen.
     const cost = transferCost(
-      [{ out: player("MID", 4.1), in: projection(97, 5), price: 4.3 }], 0.3, 1,
+      [{ gameweek: 1, out: player("MID", 4.1), in: projection(97, 5), price: 4.3 }], 0.3, 1,
     );
     expect(cost.bankAfter).toBe(0.1);
   });
@@ -205,7 +206,7 @@ describe("the projected delta", () => {
 
   it("nets the hit off the gain", () => {
     const out = { ...player("MID", 5), elementId: 1 };
-    const move = { out, in: projection(50, 9), price: 5 };
+    const move = { gameweek: 1, out, in: projection(50, 9), price: 5 };
     const cost = transferCost([move], 5, 0);
     expect(cost.pointsCost).toBe(4);
     // +5 on the projection, −4 for the hit.
@@ -215,7 +216,7 @@ describe("the projected delta", () => {
   it("is null when either side has no projection", () => {
     // Scoring an unknown as zero makes every transfer out of one look like a win.
     const out = { ...player("MID", 5), elementId: 999 };
-    const move = { out, in: projection(50, 9), price: 5 };
+    const move = { gameweek: 1, out, in: projection(50, 9), price: 5 };
     expect(transferDelta([move], points, transferCost([move], 5, 1))).toBeNull();
   });
 });
@@ -224,7 +225,7 @@ describe("applying moves", () => {
   it("swaps the player and keeps the squad at fifteen", () => {
     const squad = squadOf();
     const out = squad[7];
-    const after = applyMoves(squad, [{ out, in: projection(500, 6, { position: "MID" }), price: 6 }]);
+    const after = applyMoves(squad, [{ gameweek: 1, out, in: projection(500, 6, { position: "MID" }), price: 6 }]);
     expect(after).toHaveLength(RULES.squadSize);
     expect(after.some((p) => p.elementId === out.elementId)).toBe(false);
     expect(after.some((p) => p.elementId === 500)).toBe(true);
@@ -234,9 +235,111 @@ describe("applying moves", () => {
     // A player you have not owned through a deadline has no pick, so those are
     // unknown rather than false — the planner assigns them itself.
     const squad = squadOf();
-    const after = applyMoves(squad, [{ out: squad[7], in: projection(500, 6), price: 6 }]);
+    const after = applyMoves(squad, [{ gameweek: 1, out: squad[7], in: projection(500, 6), price: 6 }]);
     const added = after.find((p) => p.elementId === 500)!;
     expect(added.bench).toBeUndefined();
     expect(added.role).toBeUndefined();
+  });
+});
+
+describe("a plan is a sequence of weeks", () => {
+  const squad = squadOf();
+  const shaw = squad[2];      // DEF
+  const gabriel = squad[3];   // DEF
+  const gw = [1, 2, 3, 4, 5, 6];
+
+  /** Shaw out in GW2, Gabriel out in GW4 — the case from the brief. */
+  const moves = [
+    { gameweek: 2, out: shaw, in: projection(101, 5, { position: "DEF" }), price: 5 },
+    { gameweek: 4, out: gabriel, in: projection(102, 6, { position: "DEF" }), price: 6 },
+  ];
+
+  it("keeps a player until the week they are sold", () => {
+    // The whole point of putting a week on a move.
+    expect(squadAtWeek(squad, moves, 1).some((p) => p.elementId === shaw.elementId)).toBe(true);
+    expect(squadAtWeek(squad, moves, 2).some((p) => p.elementId === shaw.elementId)).toBe(false);
+    expect(squadAtWeek(squad, moves, 3).some((p) => p.elementId === gabriel.elementId)).toBe(true);
+    expect(squadAtWeek(squad, moves, 4).some((p) => p.elementId === gabriel.elementId)).toBe(false);
+  });
+
+  it("brings the incoming player in from that week and no earlier", () => {
+    expect(squadAtWeek(squad, moves, 1).some((p) => p.elementId === 101)).toBe(false);
+    expect(squadAtWeek(squad, moves, 2).some((p) => p.elementId === 101)).toBe(true);
+    expect(squadAtWeek(squad, moves, 6).some((p) => p.elementId === 101)).toBe(true);
+  });
+
+  it("charges each week against the free transfers held that week", () => {
+    /**
+     * The reason a move carries a week.
+     *
+     * Starting with one free transfer and making none in GW1, you hold two by
+     * GW2 — so two moves there are still free. A third is a hit. Spreading the
+     * same three across three weeks is not.
+     */
+    const spread = weeklyLedger(squad, moves, gw, 2.0, 1);
+    expect(spread.map((w) => w.hits)).toEqual([0, 0, 0, 0, 0, 0]);
+
+    const crammed = [
+      { ...moves[0], gameweek: 2 },
+      { ...moves[1], gameweek: 2 },
+      { gameweek: 2, out: squad[4], in: projection(104, 5, { position: "DEF" }), price: 5 },
+    ];
+    const together = weeklyLedger(squad, crammed, gw, 20, 1);
+    expect(together[1].freeBefore).toBe(2);
+    expect(together[1].hits).toBe(1);
+    expect(together[1].pointsCost).toBe(4);
+  });
+
+  it("rolls unused free transfers over and caps them", () => {
+    const ledger = weeklyLedger(squad, [], gw, 2.0, 1);
+    // 1 held, none used: 2, 3, 4, 5, then capped.
+    expect(ledger.map((w) => w.freeAfter))
+      .toEqual([2, 3, 4, 5, MAX_BANKED_FREE_TRANSFERS, MAX_BANKED_FREE_TRANSFERS]);
+  });
+
+  it("spends the free transfer before banking the next one", () => {
+    const ledger = weeklyLedger(
+      squad, [{ ...moves[0], gameweek: 1 }], gw, 2.0, 1,
+    );
+    // One held, one spent, one accrued.
+    expect(ledger[0].freeBefore).toBe(1);
+    expect(ledger[0].freeAfter).toBe(1);
+  });
+
+  it("carries the bank forward week by week", () => {
+    // Shaw 5.0 out for 5.0 in leaves it; Gabriel 5.0 out for 6.0 in costs 1.0.
+    const ledger = weeklyLedger(squad, moves, gw, 2.0, 1);
+    expect(ledger[1].bankAfter).toBeCloseTo(2.0);
+    expect(ledger[3].bankAfter).toBeCloseTo(1.0);
+    expect(ledger[5].bankAfter).toBeCloseTo(1.0);
+  });
+
+  it("flags the week a plan stops being affordable", () => {
+    const dear = [{ gameweek: 3, out: shaw, in: projection(103, 9, { position: "DEF" }), price: 12 }];
+    const ledger = weeklyLedger(squad, dear, gw, 1.0, 1);
+    expect(ledger[2].unaffordable).toBe(true);
+    // And it stays flagged, because the money does not come back.
+    expect(ledger[5].unaffordable).toBe(true);
+  });
+
+  it("leaves every hit unknown when the free-transfer count is", () => {
+    const ledger = weeklyLedger(squad, moves, gw, 2.0, null);
+    expect(ledger.every((w) => w.hits === 0 && w.freeAfter === null)).toBe(true);
+  });
+
+  it("puts every player who appears in any week on the grid", () => {
+    // A player bought in GW4 belongs on the grid from the start as an unowned
+    // run, and one sold in GW2 belongs on it to the end.
+    const ledger = weeklyLedger(squad, moves, gw, 2.0, 1);
+    const everyone = playersAcross(ledger, squad);
+    expect(everyone.some((p) => p.elementId === shaw.elementId)).toBe(true);
+    expect(everyone.some((p) => p.elementId === 102)).toBe(true);
+    expect(everyone).toHaveLength(RULES.squadSize + moves.length);
+  });
+
+  it("knows who is owned in which week", () => {
+    const ledger = weeklyLedger(squad, moves, gw, 2.0, 1);
+    expect(ownedIn(ledger[0], shaw)).toBe(true);
+    expect(ownedIn(ledger[1], shaw)).toBe(false);
   });
 });
