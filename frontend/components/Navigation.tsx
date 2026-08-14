@@ -18,6 +18,7 @@ import {
   Newspaper,
   Menu,
   Moon,
+  Ruler,
   ShieldCheck,
   Sparkles,
   Stethoscope,
@@ -80,6 +81,11 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Decide",
     items: [
       { href: "/now", label: "Now", icon: LayoutDashboard },
+      // One workspace over the same artifacts these three read separately: the
+      // call, the horizon, every player as a distribution, and what has decayed.
+      // Listed rather than left to a bookmark — thirteen of this app's routes
+      // were unreachable from here once, and nothing but a test noticed.
+      { href: "/margin", label: "Margin", icon: Ruler },
       { href: "/decide", label: "Decide", icon: Sparkles },
       { href: "/decisions", label: "Agent decisions", icon: Crown },
     ],
