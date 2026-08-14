@@ -45,13 +45,14 @@ const S = PAPER;
 /** Rows shown before the reader asks for the rest. */
 const PAGE = 100;
 
-type SortKey = "xp" | "sd" | "mode" | "p10" | "pcs" | "mins" | "skew";
+type SortKey = "xp" | "sd" | "mode" | "p5" | "p10" | "pcs" | "mins" | "skew";
 
 const SORTS: ReadonlyArray<{ key: SortKey; label: string; of: (p: Projection) => number | null }> = [
   { key: "xp", label: "xP", of: (p) => p.xp },
   { key: "skew", label: "mean − mode", of: (p) => skew(p) },
   { key: "sd", label: "sd", of: (p) => p.xpSd },
   { key: "mode", label: "mode", of: (p) => p.mode },
+  { key: "p5", label: "P≥5", of: (p) => p.pGe5 },
   { key: "p10", label: "P≥10", of: (p) => p.pGe10 },
   { key: "pcs", label: "P(CS)", of: (p) => p.pCleanSheet },
   { key: "mins", label: "xMins", of: (p) => p.eMinutes },
@@ -68,7 +69,7 @@ function Num({ of, dp = 1 }: { of: number | null; dp?: number }) {
   return <>{of.toFixed(dp)}</>;
 }
 
-const COLUMNS = "26px minmax(96px,1.4fr) 46px 104px 40px 40px 46px 46px 48px 48px 46px 42px 42px 62px";
+const COLUMNS = "26px minmax(92px,1.3fr) 44px 100px 38px 38px 44px 44px 44px 46px 44px 42px 40px 40px 60px";
 
 function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => void }) {
   const cell = (key: SortKey | null, label: string, align: "left" | "right" = "right") => (
@@ -109,6 +110,7 @@ function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => voi
       {cell("mins", "xMins")}
       {cell(null, "P(goal)")}
       {cell("pcs", "P(CS)")}
+      {cell("p5", "P≥5")}
       {cell("p10", "P≥10")}
       {cell(null, "q10–q90")}
     </div>
@@ -173,6 +175,7 @@ function Row(
       <span style={{ textAlign: "right", color: S.ink2 }}><Num of={player.eMinutes} dp={0} /></span>
       <span style={{ textAlign: "right", color: S.ink2 }}><Pct of={player.pGoal} /></span>
       <span style={{ textAlign: "right", color: S.ink2 }}><Pct of={player.pCleanSheet} /></span>
+      <span style={{ textAlign: "right", color: S.ink2 }}><Pct of={player.pGe5} /></span>
       <span style={{ textAlign: "right", color: S.ink2 }}><Pct of={player.pGe10} /></span>
       <span style={{ textAlign: "right", color: S.ink3, fontSize: 10.5 }}>
         {player.q10 === null || player.q90 === null

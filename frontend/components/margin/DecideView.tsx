@@ -305,14 +305,29 @@ function ConflictCell(
   );
 }
 
-function Disagreement({ artifact }: { artifact: Artifact<MinutesConflicts> }) {
+function Disagreement(
+  { artifact, decision, squadIds }: {
+    artifact: Artifact<MinutesConflicts>;
+    decision: Artifact<PublicDecision>;
+    /** The fifteen, so the panel can say how many conflicts touch them. */
+    squadIds: readonly number[];
+  },
+) {
   const [open, setOpen] = useState(false);
   const value = proven(artifact);
+  const call = proven(decision);
   const shown = value ? (open ? value.conflicts : value.conflicts.slice(0, 3)) : [];
+
+  // How many of this run's disagreements land on a player you own. The count
+  // alone is a statistic; the intersection is the reason to read it.
+  const mine = value && squadIds.length
+    ? value.conflicts.filter((c) => squadIds.includes(c.elementId)).length
+    : null;
+  const widest = value?.conflicts[0] ?? null;
 
   return (
     <div style={{ border: `1px solid ${S.conflict}`, background: "rgba(0,0,0,.25)" }}>
-      <div style={{ padding: "14px 17px 13px" }}>
+      <div style={{ padding: "14px 17px 13px", borderBottom: `1px solid ${S.hair}` }}>
         <Eyebrow surface={S} tone={S.conflict} style={{ marginBottom: 7 }}>
           Disagreement
           {value ? ` · ${value.conflicts.length} open` : ""}
@@ -325,6 +340,83 @@ function Disagreement({ artifact }: { artifact: Artifact<MinutesConflicts> }) {
             ?? "Reported, never applied: correcting a projection from a quote needs a "
               + "fitted model of pre-season minutes, not a regex."}
         </p>
+      </div>
+
+      {/* The design's three columns: what the solve says about its own margin,
+          what the evidence disputes, and what the model flagged as
+          uncalibrated. Only the first two have a producer. */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+        <div style={{ padding: "13px 17px", borderRight: `1px solid ${S.hair}` }}>
+          <Eyebrow surface={S} style={{ fontSize: 9, letterSpacing: ".1em", marginBottom: 6 }}>
+            Margin over the runner-up
+          </Eyebrow>
+          {call ? (
+            <>
+              <div style={{ fontFamily: MONO, fontSize: 15, color: call.credible_margin ? S.agree : S.noise }}>
+                {call.credible_margin ? "credible" : "within noise"}
+              </div>
+              <div style={{ marginTop: 7, fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
+                optimism gap{" "}
+                {call.optimism_gap === null ? "∅" : call.optimism_gap.toFixed(2)}
+                {" · scored on an independent draw stream"}
+              </div>
+            </>
+          ) : (
+            <div style={{ fontSize: 11.5, lineHeight: 1.45, color: S.ink3 }}>
+              No call is published, so there is no margin to report. The
+              runners-up are stripped from the public artifact by design.
+            </div>
+          )}
+        </div>
+
+        <div style={{ padding: "13px 17px", borderRight: `1px solid ${S.hair}` }}>
+          <Eyebrow surface={S} style={{ fontSize: 9, letterSpacing: ".1em", marginBottom: 6 }}>
+            Evidence vs fitted minutes
+          </Eyebrow>
+          {widest && value ? (
+            <>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+                <span style={{ fontFamily: MONO, fontSize: 13, color: S.ink }}>{widest.player}</span>
+                <span
+                  style={{
+                    fontFamily: MONO, fontSize: 15, color: S.ink,
+                    textDecoration: "line-through",
+                    textDecorationColor: S.conflict,
+                    textDecorationThickness: "1.5px",
+                  }}
+                >
+                  {widest.eMinutes.toFixed(0)}&prime;
+                </span>
+                <span style={{ fontFamily: MONO, fontSize: 14, color: S.conflict }}>
+                  &ne;{" "}
+                  {widest.kind === "fringe-but-discussed" ? value.fringeMinutes : value.nailedMinutes}&prime;
+                </span>
+              </div>
+              <div style={{ marginTop: 7, fontSize: 11.5, lineHeight: 1.45, color: S.ink3 }}>
+                {value.conflicts.length} disagreement
+                {value.conflicts.length === 1 ? "" : "s"} this run
+                {mine === null ? "" : `; ${mine} ${mine === 1 ? "touches" : "touch"} your fifteen`}. Not
+                overridden — you decide.
+              </div>
+            </>
+          ) : (
+            <div style={{ fontSize: 11.5, lineHeight: 1.45, color: S.ink3 }}>
+              Nothing to report this run.
+            </div>
+          )}
+        </div>
+
+        <div style={{ padding: "13px 17px" }}>
+          <Eyebrow surface={S} style={{ fontSize: 9, letterSpacing: ".1em", marginBottom: 6 }}>
+            Sub-model flagged
+          </Eyebrow>
+          <div style={{ marginTop: 2 }}><Nil surface={S} size={16} /></div>
+          <div style={{ marginTop: 7, fontSize: 11.5, lineHeight: 1.45, color: S.ink3 }}>
+            No producer publishes a calibration flag per player, so nothing is
+            drawn hollow. An uncalibrated rate rendered as a solid number is the
+            one thing this panel exists to prevent.
+          </div>
+        </div>
       </div>
 
       <WhenProvenHere
@@ -620,22 +712,26 @@ function Rail(
                 {squad.bank === null ? <Nil surface={S} size={16} /> : `£${squad.bank.toFixed(1)}`}
               </div>
             </div>
+            {/* Free transfers and hits, as the design has them — not squad value
+                standing in for one of them. Both are unpublished, and `∅` in the
+                slot the reader expects is a better answer than a different
+                number in its place: a substituted metric reads as the one that
+                was asked for. */}
             <div style={{ padding: "11px 13px", borderRight: `1px solid ${S.hair}` }}>
-              <Eyebrow surface={S} style={{ fontSize: 9, letterSpacing: ".1em" }}>Squad value</Eyebrow>
-              <div style={{ fontFamily: MONO, fontSize: 18, color: S.ink, marginTop: 3 }}>
-                {squad.value === null ? <Nil surface={S} size={16} /> : `£${squad.value.toFixed(1)}`}
-              </div>
+              <Eyebrow surface={S} style={{ fontSize: 9, letterSpacing: ".1em" }}>Free transfers</Eyebrow>
+              <div style={{ marginTop: 3 }}><Nil surface={S} size={18} /></div>
             </div>
             <div style={{ padding: "11px 13px" }}>
-              <Eyebrow surface={S} style={{ fontSize: 9, letterSpacing: ".1em" }}>Free transfers</Eyebrow>
+              <Eyebrow surface={S} style={{ fontSize: 9, letterSpacing: ".1em" }}>Hits</Eyebrow>
               <div style={{ marginTop: 3 }}><Nil surface={S} size={18} /></div>
             </div>
           </div>
 
           <p style={{ margin: 0, fontFamily: MONO, fontSize: 10, lineHeight: 1.6, color: S.ink3 }}>
-            Bank and squad value are read from FPL — measured, not projected.
-            Free transfers and hits are not in the payload this app receives, so
-            they are shown as unknown rather than as a plausible number.
+            Bank is read from FPL — measured, not projected. Free transfers and
+            hits are not in the payload this app receives, so they are shown as
+            unknown rather than as a plausible number. Squad value is
+            £{squad.value === null ? "—" : squad.value.toFixed(1)}.
             {squad.bank === null
               ? " The bank is null until a deadline has passed, which is FPL saying "
                 + "“no deadline yet” rather than “no money”."
@@ -721,6 +817,11 @@ export function DecideView(
   const { artifact: conflicts } = useArtifact(MINUTES_CONFLICTS);
   const { artifact: heuristics } = useHeuristics();
   const mode = modeOf(proven(status));
+  // The fifteen, so the disagreement panel can say how many of this run's
+  // conflicts land on a player you actually own.
+  const squadIds = (proven(heuristics)?.squad?.players ?? [])
+    .map((p) => p.elementId)
+    .filter((id): id is number => typeof id === "number");
 
   return (
     <div
@@ -758,7 +859,11 @@ export function DecideView(
           />
         )}
 
-        <Disagreement artifact={conflicts} />
+        <Disagreement
+          artifact={conflicts}
+          decision={decision}
+          squadIds={squadIds}
+        />
         <Rejected artifact={sensitivity} gameweek={gameweek} />
         <Heuristic artifact={heuristics} />
       </div>

@@ -329,10 +329,12 @@ describe("Decide, with no call published", () => {
 describe("Decide, the disagreement panel", () => {
   it("shows the fitted minutes struck through against the threshold it failed", async () => {
     await renderMargin();
-    expect(screen.getByText("Vuskovic")).toBeInTheDocument();
-    expect(screen.getByText(/4′/)).toBeInTheDocument();
+    // The widest conflict appears twice by design: once in the summary column
+    // the design specifies, once in the list beneath it.
+    expect(screen.getAllByText("Vuskovic").length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/4′/).length).toBeGreaterThan(0);
     // A bare "4′" disagrees with nothing until the bar is beside it.
-    expect(screen.getByText(/≠ 45′/)).toBeInTheDocument();
+    expect(screen.getAllByText(/≠ 45′/).length).toBeGreaterThan(0);
   });
 
   it("links the claim so the reader can check it", async () => {
@@ -347,6 +349,8 @@ describe("Decide, the disagreement panel", () => {
       [PATHS.conflicts]: { ...CONFLICTS, conflicts: [] },
     });
     expect(await screen.findByText(/Checked, and nothing disagreed/)).toBeInTheDocument();
+    // The summary column says the short form, so the two do not repeat.
+    expect(screen.getByText(/Nothing to report this run/)).toBeInTheDocument();
   });
 });
 
@@ -496,7 +500,7 @@ describe("Rule 2 — one absent artifact costs one panel", () => {
     await renderMargin(ALL_PRESENT, undefined);
     // The squad goes; the conflicts and the no-call headline stay.
     expect(await screen.findByText(/There is no call for GW1 yet/)).toBeInTheDocument();
-    expect(screen.getByText("Vuskovic")).toBeInTheDocument();
+    expect(screen.getAllByText("Vuskovic").length).toBeGreaterThan(0);
   });
 
   it("keeps Watch usable when the accuracy report is absent", async () => {
