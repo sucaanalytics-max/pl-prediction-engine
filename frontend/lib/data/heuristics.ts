@@ -182,6 +182,28 @@ export interface SquadPlayer {
   readonly role?: "captain" | "vice";
   /** Next opponent as FPL labels it, e.g. `BUR (H)`. */
   readonly fixture?: string;
+  /**
+   * The player's next ten fixtures, with FPL's own difficulty for each.
+   *
+   * The route has sent these on every pick since `fixtureViews` was written and
+   * this narrower kept only the first, so nothing downstream could see past the
+   * current gameweek — which makes rotation planning, the single most common
+   * reason to look at a squad more than a week out, unanswerable from this app.
+   *
+   * Empty rather than absent when the route sent none: a player with no
+   * scheduled fixtures is a real state during a blank, and the planner hatches
+   * it rather than reading it as an easy week.
+   */
+  readonly fixtures: readonly SquadFixture[];
+}
+
+/** One upcoming fixture for one player. */
+export interface SquadFixture {
+  readonly gameweek: number;
+  /** e.g. `BUR (H)`. */
+  readonly label: string;
+  /** FPL's own 1-5 rating for THIS club in this fixture. */
+  readonly difficulty: number;
 }
 
 export interface SquadView {
@@ -263,6 +285,28 @@ export interface HeuristicView {
  * shortlist and the captaincy plan down with it, because those are still usable
  * without it. Null here renders as one line, not as a blank page.
  */
+/**
+ * A player's fixture run, dropping any row that cannot be placed on the grid.
+ *
+ * A fixture with no gameweek has no column to go in, and one with no label has
+ * nothing to render — both are dropped rather than rendered as a blank cell,
+ * which the planner would read as "no fixture" and hatch. Difficulty defaults to
+ * FPL's own midpoint only when the row is otherwise complete, because the
+ * planner colours by it and an absent rating is not an easy game.
+ */
+function narrowSquadFixtures(raw: unknown): SquadFixture[] {
+  if (!Array.isArray(raw)) return [];
+  const out: SquadFixture[] = [];
+  for (const item of raw) {
+    if (!isRecord(item)) continue;
+    const gameweek = optNumber(item.gameweek);
+    const label = optString(item.label);
+    if (gameweek === null || !label) continue;
+    out.push({ gameweek, label, difficulty: optNumber(item.difficulty) ?? 3 });
+  }
+  return out.sort((a, b) => a.gameweek - b.gameweek);
+}
+
 function narrowSquad(raw: unknown): SquadView | null {
   if (!isRecord(raw)) return null;
   const players = Array.isArray(raw.players) ? raw.players : [];
@@ -286,6 +330,7 @@ function narrowSquad(raw: unknown): SquadView | null {
         ? item.status
         : undefined,
       fixture: optString(item.fixture) ?? undefined,
+      fixtures: narrowSquadFixtures(item.fixtures),
     });
   }
   if (kept.length === 0) return null;

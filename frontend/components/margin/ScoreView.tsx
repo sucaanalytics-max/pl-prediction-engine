@@ -33,6 +33,8 @@ import { decisionDescriptor } from "@/lib/data/narrow";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { proven } from "@/lib/data/artifact";
 import { PlanGrid } from "@/components/margin/PlanGrid";
+import { Planner } from "@/components/margin/Planner";
+import { REGISTRY, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { PAPER, MONO, SANS, hatch } from "@/lib/margin/tokens";
@@ -245,6 +247,17 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
   // the run solved a single gameweek — then this screen is what it was.
   const horizon = proven(decision)?.horizon ?? null;
   const players = proven(projections)?.players ?? [];
+  // Prices, for the transfer scratchpad. `player_stats.json` carries FPL's own
+  // element id as `player_id`, so this is an exact join rather than a name match.
+  const { artifact: stats } = useArtifact(REGISTRY.playerStats);
+  const prices = useMemo(() => {
+    const out = new Map<number, number>();
+    for (const row of (proven(stats) ?? []) as readonly PlayerRow[]) {
+      if (row.elementId !== null && row.fpl_price !== null) out.set(row.elementId, row.fpl_price);
+    }
+    return out;
+  }, [stats]);
+  const squad = proven(heuristics)?.squad ?? null;
   const gameweeks = useMemo(
     () => Array.from({ length: HORIZON }, (_, index) => gameweek + index),
     [gameweek],
@@ -255,6 +268,30 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
       style={{ flex: 1, background: S.shell, color: S.ink, padding: "20px 22px 30px", display: "flex", flexDirection: "column", gap: 22 }}
       data-testid="margin-score"
     >
+      {/* The planner leads. It is what this screen is for, and it needs nothing
+          from the engine: the XI is solved from the published projection and the
+          run is scheduled rather than forecast. */}
+      {squad ? (
+        <section>
+          <Planner
+            squad={squad.players}
+            projections={players}
+            prices={prices}
+            bank={squad.bank}
+            // FPL does not publish free transfers to this app. `transferCost`
+            // charges nothing rather than assuming one — see its docstring.
+            freeTransfers={null}
+            gameweek={gameweek}
+          />
+        </section>
+      ) : (
+        <MarginState
+          of={heuristics}
+          surface={S}
+          what="No squad could be read from FPL, so there is nothing to plan with."
+        />
+      )}
+
       {horizon ? (
         <div>
           <Eyebrow surface={S} style={{ marginBottom: 10 }}>
@@ -275,25 +312,26 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
           </div>
         </div>
       ) : (
-      <div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-          <Hatch surface={S} width={96} height={14} />
-          <Eyebrow surface={S}>No horizon has been solved</Eyebrow>
+      /* The engine's own multi-week solve, a different thing from the planner
+         above: that one is yours, this one would be the optimiser's. A note
+         rather than a headline now — it was the whole screen when the screen had
+         nothing else, and opening by refusing while a working planner sits
+         underneath reads as a contradiction. */
+      <section style={{ borderTop: `1px solid ${S.hair}`, paddingTop: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+          <Hatch surface={S} width={62} height={12} />
+          <Eyebrow surface={S}>The engine has not solved a horizon</Eyebrow>
         </div>
-        <h1 style={{ margin: 0, fontFamily: SANS, fontSize: 28, lineHeight: 1.12, letterSpacing: "-.035em", fontWeight: 600, color: S.ink, maxWidth: 780 }}>
-          There is no eight-week plan, and this screen will not draw one.
-        </h1>
-        <p style={{ margin: "10px 0 0", fontSize: 13, lineHeight: 1.6, color: S.ink2, maxWidth: 760 }}>
-          The engine publishes one gameweek&apos;s proposal at a time. A grid of
-          starts, benchings and sales across eight weeks, assembled here by
-          sorting per-week projections, would carry the authority of a solver
-          without a solve behind it — which is the one failure this whole surface
-          exists to avoid. Two parts of a horizon are real and are shown below:
-          the fixture run, which is scheduled rather than forecast, and the
-          captaincy plan, which the heuristic engine does compute and which is
-          labelled as its work.
+        <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.6, color: S.ink2, maxWidth: 780 }}>
+          The planner above is a scratchpad: your moves, your eleven, priced and
+          scored against this gameweek. What is absent is the optimiser&apos;s own
+          multi-week answer — which players it would sell and when, solved rather
+          than chosen. When a run publishes one it appears here as a grid, and
+          until then this screen will not assemble one by sorting per-week
+          projections, because that would carry a solver&apos;s authority with no
+          solve behind it.
         </p>
-        <div style={{ marginTop: 14 }}>
+        <div style={{ marginTop: 12 }}>
           <MarginState
             of={decision}
             surface={S}
@@ -301,7 +339,8 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
             what={`The single-gameweek proposal for GW${gameweek} is the closest thing published to a plan.`}
           />
         </div>
-      </div>
+      </section>
+
       )}
 
       <WhenProvenHere

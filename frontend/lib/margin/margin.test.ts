@@ -36,7 +36,7 @@ function projection(over: Partial<Projection> = {}): Projection {
 function squadPlayer(over: Partial<SquadPlayer> = {}): SquadPlayer {
   return {
     name: "Player", position: "MID", team: "ARS", price: 10.6,
-    elementId: 1, bench: undefined, role: undefined, fixture: "BUR (H)",
+    elementId: 1, bench: undefined, role: undefined, fixture: "BUR (H)", fixtures: [],
     ...over,
   };
 }

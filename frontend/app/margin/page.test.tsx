@@ -428,11 +428,25 @@ describe("Research", () => {
 
 describe("Score", () => {
   it("refuses to draw a horizon nobody solved", async () => {
+    // The refusal is a note under the planner now, not the headline it was when
+    // the screen had nothing else — but it still has to be on the page, and it
+    // still has to distinguish the reader's scratchpad from the optimiser's
+    // unsolved answer.
     await renderMargin();
     go("score");
     expect(
-      await screen.findByText(/There is no eight-week plan, and this screen will not draw one/),
+      await screen.findByText(/The engine has not solved a horizon/),
     ).toBeInTheDocument();
+    expect(screen.getByText(/would carry a solver's authority with no\s+solve behind it/))
+      .toBeInTheDocument();
+  });
+
+  it("plans without waiting for the engine", async () => {
+    // The point of the change: the planner needs no solve. The XI comes from the
+    // published projection and the run from the fixture list.
+    await renderMargin();
+    go("score");
+    expect(await screen.findByTestId("margin-planner")).toBeInTheDocument();
   });
 
   it("shows the fixture run, which is scheduled rather than forecast", async () => {

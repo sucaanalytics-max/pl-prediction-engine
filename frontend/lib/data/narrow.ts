@@ -163,6 +163,16 @@ export function narrowMatches(raw: unknown): NarrowResult<MatchesFile> {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface PlayerRow {
+  /**
+   * FPL's own element id, which this file has carried as `player_id` since it
+   * was first written and no narrower read.
+   *
+   * Verified against `xp_public_gw01.json`: 200 of 200 sampled ids resolve to
+   * the same player. It is the exact join this app kept working around with
+   * accent-folded name matching, and it is what lets the planner price a
+   * transfer instead of leaving the bank unknown.
+   */
+  readonly elementId: number | null;
   readonly name: string;
   readonly team: string;
   readonly minutes: number;
@@ -239,6 +249,7 @@ export function narrowPlayerStats(raw: unknown): NarrowResult<readonly PlayerRow
       fouls_committed: optNumber(row.fouls_committed),
       fouls_per_90: optNumber(row.fouls_per_90),
       fpl_ownership: optNumber(row.fpl_ownership),
+      elementId: optNumber(row.player_id),
       fpl_price: optNumber(row.fpl_price),
       form: optNumber(row.form),
       // Both were in the artifact all along and read by nothing, so /players could
