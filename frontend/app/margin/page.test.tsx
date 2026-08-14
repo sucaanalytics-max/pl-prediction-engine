@@ -223,6 +223,10 @@ function go(view: string) {
 beforeEach(() => {
   vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
   resetHeuristicsForTests();
+  // The tabs write `?view=` so a view is linkable, and jsdom shares one window
+  // across a file — so without this the previous test's tab decides the next
+  // test's opening view. Real behaviour, leaking; reset it rather than drop it.
+  window.history.replaceState(null, "", "/margin");
 });
 afterEach(() => {
   cleanup();
@@ -263,6 +267,27 @@ describe("the shell", () => {
     expect(await screen.findByTestId("margin-research")).toBeInTheDocument();
     go("watch");
     expect(await screen.findByTestId("margin-watch")).toBeInTheDocument();
+  });
+
+  it("opens on the view named in the URL", async () => {
+    // Four views behind one path means "look at the Score tab" is not a link
+    // anyone can send.
+    window.history.replaceState(null, "", "/margin?view=watch");
+    await renderMargin();
+    expect(await screen.findByTestId("margin-watch")).toBeInTheDocument();
+  });
+
+  it("ignores a view the app does not have", async () => {
+    window.history.replaceState(null, "", "/margin?view=nonsense");
+    await renderMargin();
+    expect(screen.getByTestId("margin-decide")).toBeInTheDocument();
+  });
+
+  it("puts the current view in the URL so it can be linked", async () => {
+    await renderMargin();
+    go("research");
+    await screen.findByTestId("margin-research");
+    expect(new URL(window.location.href).searchParams.get("view")).toBe("research");
   });
 
   it("renders a placeholder clock until it has mounted", async () => {
