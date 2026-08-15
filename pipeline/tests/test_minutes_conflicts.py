@@ -15,10 +15,13 @@ derived minutes figure would be worse than no report.
 from __future__ import annotations
 
 import json
+import os
+import tempfile
 import unittest
 from pathlib import Path
 
 from pipeline.learning import minutes_conflicts as mc
+from pipeline.learning import run_news
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -256,6 +259,72 @@ class AgainstTheRealData(unittest.TestCase):
             surname = fold(c.player).split(".")[-1]
             self.assertIn(surname[:5], fold(c.quote),
                           f"{c.player} is not named in the quote cited for them")
+
+
+class TheWiringThatPublishesIt(unittest.TestCase):
+    """
+    Everything above tests `minutes_conflicts` directly, and all of it passed while
+    the artifact was never written once.
+
+    `run_news._report_minutes_conflicts` is the only caller. It took the timestamp
+    as a formatted string and called `.isoformat()` on it, so it raised on every
+    real invocation from the commit that introduced it. Annotations do not run, no
+    test went through the caller, and the caller's broad `except` logged a single
+    WARNING line — which read exactly like the quiet gameweek it was not.
+
+    These go through the wiring, with the string the poller actually passes.
+    """
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        (self.root / "fpl").mkdir(parents=True)
+        (self.root / "fpl" / "xp_gw01.json").write_text(
+            json.dumps(XP), encoding="utf-8")
+        # The app's copy is written to a RELATIVE `frontend/...`, so the caller's
+        # cwd decides where it lands. Without this the test writes into the repo.
+        cwd = os.getcwd()
+        os.chdir(self.root)
+        self.addCleanup(os.chdir, cwd)
+
+    def _run(self, observed_at="2026-08-15T10:20:21Z"):
+        run_news._report_minutes_conflicts(
+            self.root, BOOTSTRAP, 1, inbox(GVARDIOL), observed_at,
+        )
+        return self.root / "fpl" / "minutes_conflicts_gw01.json"
+
+    def test_the_artifact_is_actually_written(self):
+        self.assertTrue(self._run().is_file(),
+                        "the only caller produced no artifact")
+
+    def test_the_app_gets_the_same_payload(self):
+        # Two paths, one payload: a published file that no longer matches the
+        # private one is the shape of every stale-numbers bug in this repo.
+        private = self._run()
+        published = Path("frontend/public/predictions/fpl/minutes_conflicts_gw01.json")
+        self.assertTrue(published.is_file())
+        self.assertEqual(json.loads(published.read_text(encoding="utf-8")),
+                         json.loads(private.read_text(encoding="utf-8")))
+
+    def test_the_timestamp_survives_as_given(self):
+        # Straight through: nothing reformats it on the way.
+        payload = json.loads(self._run().read_text(encoding="utf-8"))
+        self.assertEqual(payload["generated_at"], "2026-08-15T10:20:21Z")
+
+    def test_the_disagreement_reaches_the_file(self):
+        # Not merely "a file exists" — the conflict this module exists for is in it.
+        payload = json.loads(self._run().read_text(encoding="utf-8"))
+        self.assertEqual([c["player"] for c in payload["conflicts"]], ["Gvardiol"])
+
+    def test_no_xp_yet_writes_nothing_and_stays_quiet(self):
+        # The one expected absence: the agent is deadline-gated, so for most of a
+        # cycle there is nothing to compare against. That must not become noise.
+        (self.root / "fpl" / "xp_gw01.json").unlink()
+        with self.assertLogs(run_news.logger, level="INFO") as caught:
+            self._run()
+        self.assertFalse((self.root / "fpl" / "minutes_conflicts_gw01.json").exists())
+        self.assertNotIn("ERROR", " ".join(caught.output))
 
 
 if __name__ == "__main__":  # pragma: no cover

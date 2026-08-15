@@ -344,7 +344,7 @@ def _report_minutes_conflicts(
     bootstrap: Mapping[str, Any],
     gameweek: int,
     inbox_text: str,
-    observed_at: datetime,
+    observed_at: str,
 ) -> None:
     """
     Publish where the minutes model and the scanned evidence disagree.
@@ -354,6 +354,12 @@ def _report_minutes_conflicts(
     CLAUDE.md's rule is that sources the models DEPEND on must fail loudly; nothing
     depends on this, and taking the news poll down over a missing xp artifact would
     be the wrong trade. The absence is logged either way.
+
+    `observed_at` is the already-formatted timestamp string, not a datetime. It was
+    annotated `datetime` here from the first commit while the only caller passed the
+    string every other publisher takes, so `.isoformat()` raised on every run and
+    the broad `except` below turned it into one line of log. The artifact was never
+    written once. Annotations do not run; the test that calls this does.
     """
     xp_path = predictions_dir / "fpl" / f"xp_gw{gameweek:02d}.json"
     if not xp_path.is_file():
@@ -366,8 +372,7 @@ def _report_minutes_conflicts(
             json.loads(xp_path.read_text(encoding="utf-8")), inbox_text, bootstrap,
         )
         payload = minutes_conflicts.to_artifact(
-            conflicts, ambiguous,
-            generated_at=observed_at.isoformat().replace("+00:00", "Z"),
+            conflicts, ambiguous, generated_at=observed_at,
         )
         name = f"minutes_conflicts_gw{gameweek:02d}.json"
         minutes_conflicts.write_artifact(payload, predictions_dir / "fpl" / name)
@@ -383,7 +388,15 @@ def _report_minutes_conflicts(
             payload, Path("frontend") / "public" / "predictions" / "fpl" / name,
         )
     except Exception as exc:
-        logger.warning("minutes conflicts not written (%s)", exc)
+        # Still caught: nothing depends on this artifact and the poll must not go
+        # down over it. But ERROR with the type and a traceback, because the one
+        # expected failure — no xp yet — already returned above, so everything that
+        # reaches here is a bug. As WARNING with only `str(exc)`, the mismatch that
+        # broke this from day one read like routine absence in the log.
+        logger.error(
+            "minutes conflicts not written (%s: %s)",
+            type(exc).__name__, exc, exc_info=True,
+        )
         return
 
     logger.info(
