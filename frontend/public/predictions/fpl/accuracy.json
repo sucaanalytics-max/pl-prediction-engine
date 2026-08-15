@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-13T18:53:15.554117Z",
+  "season": "2627",
+  "gameweeks_sealed": 0,
+  "observations": 0,
+  "perfect_model_rmse": 2.2449,
+  "perfect_model_basis": "Root-mean-square of the simulated per-player standard deviations. A forecaster that knew each player's true distribution would still incur this, because the outcome is random.",
+  "measured": null,
+  "excess_over_ceiling": null,
+  "predicted_xi": {
+    "ours": null,
+    "benchmark": 0.84,
+    "benchmark_source": "SportMonks published predicted-XI accuracy",
+    "reason": "No gameweek has sealed, so realised lineups cannot be compared against what was forecast."
+  },
+  "reason": "0 gameweek(s) sealed and 0 settled player-gameweeks recorded; at least 50 are needed before an error measurement describes the model rather than the sample."
+}
