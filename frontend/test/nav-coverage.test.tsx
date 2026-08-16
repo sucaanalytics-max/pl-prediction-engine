@@ -27,12 +27,29 @@ import { join } from "node:path";
 
 const APP = join(process.cwd(), "app");
 const NAV = join(process.cwd(), "components", "Navigation.tsx");
+const BET_INDEX = join(APP, "bet", "page.tsx");
 
 /** Routes that exist but are deliberately not in the sidebar. */
 const NOT_IN_NAV: Record<string, string> = {
   offline: "served by the service worker when a fetch fails; not a destination",
   api: "route handlers, not pages",
 };
+
+/**
+ * The betting screens, which are destinations but not FPL ones.
+ *
+ * These are NOT in `NOT_IN_NAV`, and the difference matters. That list means
+ * "not a destination" — a service-worker fallback, a route handler. These four
+ * are real pages a reader visits; they simply reach them through `/bet` rather
+ * than the FPL sidebar, because they answer what to stake rather than who to
+ * pick and they were crowding out the screens this app is for.
+ *
+ * Excusing them with a sentence would recreate the exact defect this file
+ * exists for — thirteen routes linked from nowhere, invisible to every test —
+ * so the excuse comes with an obligation, asserted below: the betting index
+ * must actually link every route that claims it.
+ */
+const BEHIND_BETTING_INDEX = new Set(["markets", "bankroll", "matches", "h2h"]);
 
 /**
  * Whether a route is a redirect stub rather than a real destination.
@@ -83,7 +100,17 @@ describe("navigation covers what is built", () => {
   });
 
   it("finds nav links to check at all", () => {
-    expect(linked.size).toBeGreaterThan(10);
+    /**
+     * Guards against the regex silently matching nothing, which would make every
+     * assertion below vacuous.
+     *
+     * Was `> 10`, chosen when the sidebar carried thirteen links. Splitting the
+     * betting screens behind `/bet` took it to ten and turned this sanity check
+     * into a failure about a change it was never watching for. Five keeps it
+     * catching the real fault — a broken read returning nothing — without
+     * pinning a count that moves whenever the nav is edited.
+     */
+    expect(linked.size).toBeGreaterThan(5);
   });
 
   for (const route of builtRoutes()) {
@@ -94,6 +121,15 @@ describe("navigation covers what is built", () => {
       }
       if (isRedirect(route)) {
         // A stub kept for bookmarks. It must NOT be in the nav — see below.
+        return;
+      }
+      if (BEHIND_BETTING_INDEX.has(route)) {
+        // Reachability is still required, just from the other door.
+        expect(
+          readFileSync(BET_INDEX, "utf8"),
+          `/${route} is excused from the sidebar as a betting screen but the ` +
+            `betting index does not link it, so it is reachable from nowhere.`,
+        ).toContain(`"/${route}"`);
         return;
       }
       expect(
@@ -143,6 +179,25 @@ describe("the sidebar stays in scope", () => {
     const source = readFileSync(NAV, "utf8");
     expect(source).not.toContain("Other sports");
     expect(source).not.toContain("F1 · Darts · Cricket");
+  });
+
+  it("keeps the betting screens out of the FPL sidebar", () => {
+    /**
+     * The other direction of the split. Re-adding one of these is a one-line
+     * change that would look harmless in review and would quietly undo it, so
+     * the boundary is pinned rather than left to memory.
+     */
+    const linked = new Set(navHrefs());
+    const leaked = [...BEHIND_BETTING_INDEX].filter((r) => linked.has(`/${r}`));
+    expect(
+      leaked,
+      "these answer what to stake, not who to pick, and belong behind /bet",
+    ).toEqual([]);
+  });
+
+  it("still offers a way into the betting screens", () => {
+    // Splitting them out must not strand them: one door, and it has to be here.
+    expect(navHrefs()).toContain("/bet");
   });
 
   it("labels destinations by the question, not the subsystem", () => {

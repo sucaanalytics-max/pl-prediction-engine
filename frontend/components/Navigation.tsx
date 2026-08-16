@@ -10,7 +10,6 @@ import {
   ArrowLeftRight,
   CalendarRange,
   Crown,
-  GitCompareArrows,
   Inbox,
   LayoutDashboard,
   LineChart,
@@ -23,13 +22,11 @@ import {
   Sparkles,
   Stethoscope,
   Sun,
-  Swords,
   Table2,
   Target,
   TrendingUp,
   Users,
   Wand2,
-  WalletCards,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -95,15 +92,6 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/players", label: "Players", icon: Users },
       { href: "/evidence", label: "Injury evidence", icon: Stethoscope },
-      { href: "/matches", label: "Fixtures", icon: GitCompareArrows },
-      { href: "/h2h", label: "Head to head", icon: Swords },
-    ],
-  },
-  {
-    label: "Betting",
-    items: [
-      { href: "/markets", label: "Markets", icon: TrendingUp },
-      { href: "/bankroll", label: "Bankroll", icon: WalletCards },
     ],
   },
   {
@@ -113,6 +101,22 @@ const NAV_GROUPS: NavGroup[] = [
       { href: "/accuracy", label: "Accuracy", icon: Target },
       { href: "/health", label: "Model health", icon: Activity },
     ],
+  },
+  /**
+   * One door, not a group.
+   *
+   * Markets, bankroll, matches and h2h answer "what should I stake" — 2,087
+   * lines, 40% of the app's real code, and a different question from anything
+   * else in this sidebar. Interleaved with the FPL screens they made a planner
+   * look like a sports portal, and pushed the FPL entries below the fold.
+   *
+   * They keep working and keep their URLs. They are reached from `/bet`, which
+   * `nav-coverage.test.tsx` asserts actually links every one of them, so the
+   * "linked from nowhere" defect cannot come back through this exit.
+   */
+  {
+    label: "Elsewhere",
+    items: [{ href: "/bet", label: "Betting", icon: TrendingUp }],
   },
 ];
 
