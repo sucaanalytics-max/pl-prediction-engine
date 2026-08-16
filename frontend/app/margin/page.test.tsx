@@ -19,6 +19,8 @@ import { cleanup, fireEvent, render, screen, within } from "@testing-library/rea
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import MarginPage from "@/app/margin/page";
+import { DecideView } from "@/components/margin/DecideView";
+import { useArtifact } from "@/lib/data/useArtifact";
 import { AGENT_STATUS } from "@/lib/data/agent-status";
 import { ACCURACY } from "@/lib/data/accuracy";
 import { MINUTES_CONFLICTS } from "@/lib/data/minutes-conflicts";
@@ -216,6 +218,29 @@ async function renderMargin(
   await new Promise((resolve) => setTimeout(resolve, 30));
 }
 
+/**
+ * Decide, mounted on its own.
+ *
+ * It used to be Margin's default view, so these tests reached it by rendering the
+ * page. It is a drill-down at `/decide` now — the call itself is a card on Plan —
+ * so the panels below are exercised directly rather than through a tab that no
+ * longer exists. The assertions are unchanged: this screen still has to say what
+ * is absent and why.
+ */
+function DecideHarness() {
+  const { artifact: status } = useArtifact(AGENT_STATUS);
+  return <DecideView gameweek={1} status={status} />;
+}
+
+async function renderDecide(
+  bodies: Record<string, unknown> = ALL_PRESENT, live: unknown = LIVE,
+) {
+  vi.stubGlobal("fetch", mockFetch(bodies, live));
+  render(<DecideHarness />);
+  await screen.findByTestId("margin-decide");
+  await new Promise((resolve) => setTimeout(resolve, 30));
+}
+
 function go(view: string) {
   fireEvent.click(screen.getByRole("tab", { name: view }));
 }
@@ -238,10 +263,12 @@ afterEach(() => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 describe("the shell", () => {
-  it("opens on Decide with all four views reachable", async () => {
+  it("opens on Plan with all four views reachable", async () => {
+    // Plan leads because it is the screen you return to. Decide used to hold this
+    // slot with five panels, two of them absent for most of a gameweek.
     await renderMargin();
-    expect(screen.getByTestId("margin-decide")).toBeInTheDocument();
-    for (const view of ["decide", "score", "research", "watch"]) {
+    expect(screen.getByTestId("margin-score")).toBeInTheDocument();
+    for (const view of ["plan", "players", "news", "now"]) {
       expect(screen.getByRole("tab", { name: view })).toBeInTheDocument();
     }
   });
@@ -263,16 +290,16 @@ describe("the shell", () => {
 
   it("switches views without unmounting the workspace", async () => {
     await renderMargin();
-    go("research");
+    go("players");
     expect(await screen.findByTestId("margin-research")).toBeInTheDocument();
-    go("watch");
+    go("now");
     expect(await screen.findByTestId("margin-watch")).toBeInTheDocument();
   });
 
   it("opens on the view named in the URL", async () => {
     // Four views behind one path means "look at the Score tab" is not a link
     // anyone can send.
-    window.history.replaceState(null, "", "/margin?view=watch");
+    window.history.replaceState(null, "", "/margin?view=now");
     await renderMargin();
     expect(await screen.findByTestId("margin-watch")).toBeInTheDocument();
   });
@@ -280,14 +307,29 @@ describe("the shell", () => {
   it("ignores a view the app does not have", async () => {
     window.history.replaceState(null, "", "/margin?view=nonsense");
     await renderMargin();
-    expect(screen.getByTestId("margin-decide")).toBeInTheDocument();
+    expect(screen.getByTestId("margin-score")).toBeInTheDocument();
+  });
+
+  it("still honours the tab names the views used to have", async () => {
+    // `?view=score` was the planner and is now Plan. Links were sent with the old
+    // names; falling through to the default would open a plausible wrong tab and
+    // look like it had worked.
+    window.history.replaceState(null, "", "/margin?view=score");
+    await renderMargin();
+    expect(await screen.findByTestId("margin-score")).toBeInTheDocument();
+  });
+
+  it("sends the retired Decide tab to the plan that now carries the call", async () => {
+    window.history.replaceState(null, "", "/margin?view=decide");
+    await renderMargin();
+    expect(await screen.findByTestId("margin-score")).toBeInTheDocument();
   });
 
   it("puts the current view in the URL so it can be linked", async () => {
     await renderMargin();
-    go("research");
+    go("players");
     await screen.findByTestId("margin-research");
-    expect(new URL(window.location.href).searchParams.get("view")).toBe("research");
+    expect(new URL(window.location.href).searchParams.get("view")).toBe("players");
   });
 
   it("renders a placeholder clock until it has mounted", async () => {
@@ -301,25 +343,25 @@ describe("the shell", () => {
 
 describe("Decide, with no call published", () => {
   it("says there is no call at the size the answer would have been", async () => {
-    await renderMargin();
+    await renderDecide();
     expect(
       await screen.findByText(/There is no call for GW1 yet/),
     ).toBeInTheDocument();
   });
 
   it("refuses to answer whether the call would change", async () => {
-    await renderMargin();
+    await renderDecide();
     // The whole panel. "No" would be acted on; "not knowable" is the truth.
     expect(screen.getByText(/Not knowable without a solve/)).toBeInTheDocument();
   });
 
   it("carries the resolver's own reason, not a shrug", async () => {
-    await renderMargin();
+    await renderDecide();
     expect(screen.getByText(/nothing due yet/)).toBeInTheDocument();
   });
 
   it("shows no projected total when none was published", async () => {
-    await renderMargin();
+    await renderDecide();
     // The prototype's 59.6 ±15.6 has no producer. Nothing may stand in for it.
     expect(screen.queryByText("59.6")).toBeNull();
     expect(screen.queryByText(/±15.6/)).toBeNull();
@@ -328,7 +370,7 @@ describe("Decide, with no call published", () => {
 
 describe("Decide, the disagreement panel", () => {
   it("shows the fitted minutes struck through against the threshold it failed", async () => {
-    await renderMargin();
+    await renderDecide();
     // The widest conflict appears twice by design: once in the summary column
     // the design specifies, once in the list beneath it.
     expect(screen.getAllByText("Vuskovic").length).toBeGreaterThan(0);
@@ -338,13 +380,13 @@ describe("Decide, the disagreement panel", () => {
   });
 
   it("links the claim so the reader can check it", async () => {
-    await renderMargin();
+    await renderDecide();
     const link = screen.getByRole("link", { name: /check the claim/ });
     expect(link).toHaveAttribute("href", CONFLICTS.conflicts[0].url);
   });
 
   it("says the scan found nothing rather than rendering an absence", async () => {
-    await renderMargin({
+    await renderDecide({
       ...ALL_PRESENT,
       [PATHS.conflicts]: { ...CONFLICTS, conflicts: [] },
     });
@@ -356,7 +398,7 @@ describe("Decide, the disagreement panel", () => {
 
 describe("Decide, the rail", () => {
   it("shows the model's own projection beside each of the fifteen", async () => {
-    await renderMargin();
+    await renderDecide();
     // Palmer 6.4 and Semenyo 6.42 both print "6.4", so the assertion is scoped
     // to the row rather than to the page — a bare `getByText("6.4")` would pass
     // on either player's number appearing next to the other's name.
@@ -366,13 +408,13 @@ describe("Decide, the rail", () => {
   });
 
   it("shows free transfers as unknown rather than as a plausible number", async () => {
-    await renderMargin();
+    await renderDecide();
     const rail = screen.getByText("Free transfers").parentElement;
     expect(within(rail as HTMLElement).getByTitle(/not a zero/)).toBeInTheDocument();
   });
 
   it("marks the captain from the picks themselves", async () => {
-    await renderMargin();
+    await renderDecide();
     expect(screen.getByTitle(/captain, from your own picks/)).toBeInTheDocument();
   });
 });
@@ -380,14 +422,14 @@ describe("Decide, the rail", () => {
 describe("Research", () => {
   it("renders one row per player with the mode beside the mean", async () => {
     await renderMargin();
-    go("research");
+    go("players");
     const rows = await screen.findAllByTestId("margin-player");
     expect(rows).toHaveLength(PROJECTIONS.players.length);
   });
 
   it("draws ∅ rather than 0 for a value the producer did not compute", async () => {
     await renderMargin();
-    go("research");
+    go("players");
     const rows = await screen.findAllByTestId("margin-player");
     const unmeasured = rows.find((row) => row.textContent?.includes("Unmeasured"));
     expect(unmeasured).toBeDefined();
@@ -398,7 +440,7 @@ describe("Research", () => {
 
   it("finds the same-mean pair in the file instead of naming one", async () => {
     await renderMargin();
-    go("research");
+    go("players");
     expect(await screen.findByText(/Same mean, different asset/)).toBeInTheDocument();
     // Palmer 6.4 sd 2.4 against Semenyo 6.42 sd 5.9 — the pair in this fixture,
     // not a pair written into the component.
@@ -407,19 +449,19 @@ describe("Research", () => {
 
   it("announces what it truncated rather than ending the list quietly", async () => {
     await renderMargin();
-    go("research");
+    go("players");
     expect(await screen.findByText(/showing 3 of 3/)).toBeInTheDocument();
   });
 
   it("states the draw count behind every tail probability", async () => {
     await renderMargin();
-    go("research");
+    go("players");
     expect(await screen.findByText(/5,000 draws/)).toBeInTheDocument();
   });
 
   it("says which artifact is missing when there is no projection", async () => {
     await renderMargin({ ...ALL_PRESENT, [PATHS.projections]: undefined });
-    go("research");
+    go("players");
     const state = await screen.findByText(/No per-player projection has been published/);
     expect(state).toBeInTheDocument();
     expect(screen.queryAllByTestId("margin-player")).toHaveLength(0);
@@ -433,7 +475,7 @@ describe("Score", () => {
     // still has to distinguish the reader's scratchpad from the optimiser's
     // unsolved answer.
     await renderMargin();
-    go("score");
+    go("plan");
     expect(
       await screen.findByText(/The engine has not solved a horizon/),
     ).toBeInTheDocument();
@@ -445,20 +487,20 @@ describe("Score", () => {
     // The point of the change: the planner needs no solve. The XI comes from the
     // published projection and the run from the fixture list.
     await renderMargin();
-    go("score");
+    go("plan");
     expect(await screen.findByTestId("margin-planner")).toBeInTheDocument();
   });
 
   it("shows the fixture run, which is scheduled rather than forecast", async () => {
     await renderMargin();
-    go("score");
+    go("plan");
     expect(await screen.findByText("CHE")).toBeInTheDocument();
     expect(screen.getByTitle(/FPL difficulty 2/)).toBeInTheDocument();
   });
 
   it("hatches a week with no fixture rather than leaving it blank", async () => {
     await renderMargin();
-    go("score");
+    go("plan");
     // A blank cell reads as an easy game.
     expect(
       (await screen.findAllByTitle(/no fixture scheduled — not an easy one/)).length,
@@ -467,7 +509,7 @@ describe("Score", () => {
 
   it("dots every heuristic number so it cannot be read as the model's", async () => {
     await renderMargin();
-    go("score");
+    go("plan");
     expect(
       await screen.findByTitle(/a heuristic score, not a simulated projection/),
     ).toBeInTheDocument();
@@ -477,7 +519,7 @@ describe("Score", () => {
 describe("Watch", () => {
   it("renders all three panels", async () => {
     await renderMargin();
-    go("watch");
+    go("now");
     expect(await screen.findByText(/What is ageing under the current answer/)).toBeInTheDocument();
     expect(screen.getByText(/What has changed since the last solve/)).toBeInTheDocument();
     expect(screen.getByText(/Whether the engine has been right/)).toBeInTheDocument();
@@ -485,7 +527,7 @@ describe("Watch", () => {
 
   it("reports the perfect-model ceiling even with nothing sealed", async () => {
     await renderMargin();
-    go("watch");
+    go("now");
     // The number that stops a future RMSE of 2.9 reading as a failure.
     expect(await screen.findByText("2.806")).toBeInTheDocument();
     expect(screen.getByText(/no measured error distribution/)).toBeInTheDocument();
@@ -493,13 +535,13 @@ describe("Watch", () => {
 
   it("says a quiet ledger is the poller working, not the poller stopped", async () => {
     await renderMargin();
-    go("watch");
+    go("now");
     expect(await screen.findByText(/a quiet ledger is the poller working/)).toBeInTheDocument();
   });
 
   it("marks an artifact with no timestamp rather than calling it fresh", async () => {
     await renderMargin();
-    go("watch");
+    go("now");
     // More than one input has no timestamp — an absent artifact has no age, and
     // `deltas.jsonl` carries no `generated_at` at all — so this asserts the mark
     // exists rather than that exactly one does.
@@ -511,7 +553,7 @@ describe("Watch", () => {
 
 describe("Rule 2 — one absent artifact costs one panel", () => {
   it("keeps Decide usable when the live route fails", async () => {
-    await renderMargin(ALL_PRESENT, undefined);
+    await renderDecide(ALL_PRESENT, undefined);
     // The squad goes; the conflicts and the no-call headline stay.
     expect(await screen.findByText(/There is no call for GW1 yet/)).toBeInTheDocument();
     expect(screen.getAllByText("Vuskovic").length).toBeGreaterThan(0);
@@ -519,16 +561,25 @@ describe("Rule 2 — one absent artifact costs one panel", () => {
 
   it("keeps Watch usable when the accuracy report is absent", async () => {
     await renderMargin({ ...ALL_PRESENT, [PATHS.accuracy]: undefined });
-    go("watch");
+    go("now");
     expect(await screen.findByText(/What is ageing under the current answer/)).toBeInTheDocument();
     expect(screen.getByText(/No accuracy report has been published/)).toBeInTheDocument();
   });
 
   it("renders every view with nothing published at all", async () => {
+    // The testids still carry the old view names — `margin-score` is Plan and
+    // `margin-research` is Players — because renaming them would churn every
+    // selector in this file for no gain in what is asserted.
     await renderMargin({}, undefined);
-    for (const view of ["decide", "score", "research", "watch"] as const) {
-      go(view);
-      expect(await screen.findByTestId(`margin-${view}`)).toBeInTheDocument();
+    const views = [
+      ["plan", "margin-score"],
+      ["players", "margin-research"],
+      ["news", "margin-news"],
+      ["now", "margin-watch"],
+    ] as const;
+    for (const [tab, testid] of views) {
+      go(tab);
+      expect(await screen.findByTestId(testid)).toBeInTheDocument();
       // Not one blank screen among them.
       expect(screen.getAllByRole("status").length).toBeGreaterThan(0);
     }
@@ -538,7 +589,7 @@ describe("Rule 2 — one absent artifact costs one panel", () => {
 describe("absence keeps its reason on this surface too", () => {
   it("names the state and says why, as the cards it replaces do", async () => {
     await renderMargin({}, undefined);
-    go("research");
+    go("players");
     const states = await screen.findAllByRole("status");
     const absent = states.find((node) => node.getAttribute("data-state") === "absent");
     expect(absent, "no state was marked absent").toBeDefined();

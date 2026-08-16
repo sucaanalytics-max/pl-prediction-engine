@@ -49,28 +49,38 @@ import { AGENT_STATUS } from "@/lib/data/agent-status";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { Shell, useViewKeys, VIEWS, type MarginView } from "@/components/margin/Shell";
-import { DecideView } from "@/components/margin/DecideView";
+import {
+  Shell, useViewKeys, VIEW_ALIASES, VIEWS, type MarginView,
+} from "@/components/margin/Shell";
 import { ScoreView } from "@/components/margin/ScoreView";
 import { ResearchView } from "@/components/margin/ResearchView";
 import { WatchView } from "@/components/margin/WatchView";
+import { NewsView } from "@/components/margin/NewsView";
 
 export default function MarginPage() {
-  const [view, setView] = useState<MarginView>("decide");
+  const [view, setView] = useState<MarginView>("plan");
 
   /**
-   * `?view=score` opens on that tab, and the URL follows the tabs.
+   * `?view=plan` opens on that tab, and the URL follows the tabs.
    *
-   * Four views behind one path means "look at the Score tab" is not a link
+   * Four views behind one path means "look at the Plan tab" is not a link
    * anyone can send, and a workspace you cannot point at loses arguments it
    * should win. Read in an effect rather than in the initial state so the server
    * render and the first client render agree — reading `location.search` during
    * render hydrates with a mismatch on every deep link.
+   *
+   * The alias pass keeps every link that was sent before the rename working:
+   * `?view=score` was the planner and is now Plan. Without it those URLs would
+   * fall through to the default and land somewhere plausible, which is the worst
+   * outcome — a link that opens the wrong tab and looks like it worked.
    */
   useEffect(() => {
     const wanted = new URLSearchParams(window.location.search).get("view");
-    if (wanted && (VIEWS as readonly string[]).includes(wanted)) {
+    if (!wanted) return;
+    if ((VIEWS as readonly string[]).includes(wanted)) {
       setView(wanted as MarginView);
+    } else if (wanted in VIEW_ALIASES) {
+      setView(VIEW_ALIASES[wanted]);
     }
   }, []);
 
@@ -98,10 +108,10 @@ export default function MarginPage() {
   return (
     <ErrorBoundary pageName="Margin">
       <Shell view={view} onView={select} status={status}>
-        {view === "decide" ? <DecideView gameweek={gameweek} status={status} /> : null}
-        {view === "score" ? <ScoreView gameweek={gameweek} /> : null}
-        {view === "research" ? <ResearchView gameweek={gameweek} /> : null}
-        {view === "watch" ? <WatchView gameweek={gameweek} /> : null}
+        {view === "plan" ? <ScoreView gameweek={gameweek} /> : null}
+        {view === "players" ? <ResearchView gameweek={gameweek} /> : null}
+        {view === "news" ? <NewsView /> : null}
+        {view === "now" ? <WatchView gameweek={gameweek} /> : null}
       </Shell>
     </ErrorBoundary>
   );

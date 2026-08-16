@@ -27,12 +27,37 @@ import {
 } from "@/lib/margin/mode";
 import { INK, MONO, type MarginSurface } from "@/lib/margin/tokens";
 
-export const VIEWS = ["decide", "score", "research", "watch"] as const;
+/**
+ * The four tabs, named for the job rather than the engine stage.
+ *
+ * Was `decide / score / research / watch`, which described what the pipeline
+ * does. A reader wanting their transfers had to know that the planner lived
+ * under "Score", and the heaviest screen in the app — five panels, two of them
+ * absent for most of a cycle — occupied the first tab and the default view.
+ *
+ * `decide` is not in this list any more. Its job was justifying a call, which is
+ * a drill-down and not a destination, so it collapses to a card at the top of
+ * Plan and keeps `/decide` for anyone who wants the full argument.
+ */
+export const VIEWS = ["plan", "players", "news", "now"] as const;
 export type MarginView = (typeof VIEWS)[number];
+
+/**
+ * Old `?view=` values, so links and bookmarks survive the rename.
+ *
+ * `decide` lands on Plan rather than 404-ing or falling back silently: the call
+ * it named is now the card there, which is the same answer in less space.
+ */
+export const VIEW_ALIASES: Record<string, MarginView> = {
+  score: "plan",
+  decide: "plan",
+  research: "players",
+  watch: "now",
+};
 
 /** `1`–`4`, in the order the tabs are read. */
 const KEYS: Record<string, MarginView> = {
-  "1": "decide", "2": "score", "3": "research", "4": "watch",
+  "1": "plan", "2": "players", "3": "news", "4": "now",
 };
 
 export function useViewKeys(setView: (view: MarginView) => void) {

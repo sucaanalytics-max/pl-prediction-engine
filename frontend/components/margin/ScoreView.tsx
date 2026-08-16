@@ -27,13 +27,14 @@
  * run is the one part of a horizon that is known rather than forecast.
  */
 
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import type { FixtureMatrixRow, HeuristicView } from "@/lib/data/heuristics";
 import { decisionDescriptor } from "@/lib/data/narrow";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { proven } from "@/lib/data/artifact";
 import { PlanGrid } from "@/components/margin/PlanGrid";
 import { Planner } from "@/components/margin/Planner";
+import { DecideCard } from "@/components/margin/DecideCard";
 import { REGISTRY, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
@@ -246,10 +247,28 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
   // The solved horizon, which `decision_public` has carried all along. Null when
   // the run solved a single gameweek — then this screen is what it was.
   const horizon = proven(decision)?.horizon ?? null;
-  const players = proven(projections)?.players ?? [];
+  // Memoised because the `?? []` allocates a new array on every render, and two
+  // hooks below depend on it — without this the name map is rebuilt each pass
+  // over all 587 projections for a lookup that never changed.
+  const players = useMemo(
+    () => proven(projections)?.players ?? [], [projections],
+  );
   // Prices, for the transfer scratchpad. `player_stats.json` carries FPL's own
   // element id as `player_id`, so this is an exact join rather than a name match.
   const { artifact: stats } = useArtifact(REGISTRY.playerStats);
+  // Element id → name, for the call card. The projection is already loaded for
+  // the planner, and it carries both, so the card needs no artifact of its own.
+  const names = useMemo(() => {
+    const out = new Map<number, string>();
+    // `name` is nullable on a projection, and a missing one must not become
+    // the string "null" under a captaincy.
+    for (const player of players) {
+      if (player.name !== null) out.set(player.elementId, player.name);
+    }
+    return out;
+  }, [players]);
+  const nameOf = useCallback((id: number) => names.get(id) ?? null, [names]);
+
   const prices = useMemo(() => {
     const out = new Map<number, number>();
     for (const row of (proven(stats) ?? []) as readonly PlayerRow[]) {
@@ -268,6 +287,11 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
       style={{ flex: 1, background: S.shell, color: S.ink, padding: "20px 22px 30px", display: "flex", flexDirection: "column", gap: 22 }}
       data-testid="margin-score"
     >
+      {/* The call, in one line, above the plan it changes. It used to be a tab of
+          its own — five panels, two of them absent most of the time, holding the
+          default view. The answer belongs here; the argument stays at /decide. */}
+      <DecideCard gameweek={gameweek} nameOf={nameOf} />
+
       {/* The planner leads. It is what this screen is for, and it needs nothing
           from the engine: the XI is solved from the published projection and the
           run is scheduled rather than forecast. */}
