@@ -115,5 +115,71 @@ class DecisionStagingTests(unittest.TestCase):
         self.assertIn("frontend/public/predictions/fpl", self.agent)
 
 
+class NewsLaneStagingTests(unittest.TestCase):
+    """
+    `run_news` has two callers, and they must stage the same things.
+
+    `news.yml` runs it every 15 minutes in CI; `scripts/x_scan.sh` runs it twice a
+    day on the machine that can reach X. Same writer, same artifacts — but the
+    script's commit list was written before `minutes_conflicts` existed and never
+    grew to include it. So the CI lane published the artifact while the local lane
+    produced an identical one, left it uncommitted, and handed it to the next
+    scan's `--autostash` to shuffle back and forth. The dash saw it only when a
+    human committed it by hand.
+
+    Neither side is wrong read on its own, which is why this file exists.
+    """
+
+    #: As `_report_minutes_conflicts` builds it: f"minutes_conflicts_gw{gw:02d}.json".
+    #: A literal, not an import, so renaming the Python has to break something.
+    CONFLICTS = "minutes_conflicts_gw*.json"
+
+    def setUp(self) -> None:
+        self.news = (REPO_ROOT / ".github" / "workflows" / "news.yml").read_text()
+        self.script = (REPO_ROOT / "scripts" / "x_scan.sh").read_text()
+
+    def test_both_callers_stage_the_minutes_conflicts_artifacts(self):
+        for lane, text in (("news.yml", self.news), ("x_scan.sh", self.script)):
+            for prefix in ("predictions/fpl/", "frontend/public/predictions/fpl/"):
+                with self.subTest(lane=lane, path=prefix):
+                    self.assertIn(
+                        prefix + self.CONFLICTS, text,
+                        f"{lane} runs the poller but never commits "
+                        f"{prefix}{self.CONFLICTS}, so it stays dirty forever",
+                    )
+
+    def test_the_writers_filename_matches_the_staged_glob(self):
+        # Ties the two sides together, as the decision test above does.
+        for gameweek in (1, 7, 38):
+            filename = f"minutes_conflicts_gw{gameweek:02d}.json"
+            with self.subTest(filename=filename):
+                self.assertTrue(Path(filename).match(self.CONFLICTS))
+
+    def test_the_news_lane_is_permitted_to_commit_them(self):
+        # Staging a path the job's own guard then refuses is the trap the decision
+        # ownership split fell into. `run_news` states in comments that this is the
+        # news lane's own artifact; FORBID_PATHS has to agree.
+        match = re.search(r"FORBID_PATHS:\s*'([^']+)'", self.news)
+        self.assertIsNotNone(match, "news.yml has no FORBID_PATHS")
+        pattern = re.compile(match.group(1))
+        for path in ("predictions/fpl/minutes_conflicts_gw01.json",
+                     "frontend/public/predictions/fpl/minutes_conflicts_gw01.json"):
+            with self.subTest(path=path):
+                self.assertIsNone(
+                    pattern.match(path),
+                    "news.yml forbids the artifact it is meant to commit",
+                )
+
+    def test_the_script_survives_a_glob_that_matches_nothing(self):
+        # Before the season's first artifact the glob matches no file. Without
+        # `nullglob` git is handed a literal `*`, which `git add` rejects — turning
+        # a run with nothing to do into a failing one.
+        self.assertIn("shopt -s nullglob", self.script)
+        self.assertLess(
+            self.script.index("shopt -s nullglob"), self.script.index("PATHS=("),
+            "nullglob must be set before the array expands",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

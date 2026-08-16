@@ -90,12 +90,26 @@ PYTHONPATH=. "$PYTHON" -m pipeline.learning.run_news --force || log "poller retu
 # Only the paths this job owns. The daily pipeline and the agent write elsewhere,
 # and staging everything would turn a scan into a surprise commit of whatever else
 # happened to be dirty.
+#
+# The minutes-conflicts globs were missing for as long as the artifact existed.
+# `news.yml` runs this same poller and commits them; this did not, so every local
+# scan wrote a fresh artifact, left it dirty, and handed it to the next run's
+# `--autostash` to shuffle back and forth. The dash only ever saw it when someone
+# committed it by hand. Two callers of one writer must stage the same files.
+#
+# `nullglob` because the name carries the gameweek: without it a scan before the
+# first artifact exists passes git a literal `*`, which `git add` rejects — an
+# empty-handed run would start failing instead of quietly having nothing to do.
+shopt -s nullglob
 PATHS=(
     predictions/fpl/x_inbox.csv
     predictions/fpl/availability_evidence.jsonl
     predictions/news_feed_state.json
     frontend/public/predictions/fpl/news_view.json
+    predictions/fpl/minutes_conflicts_gw*.json
+    frontend/public/predictions/fpl/minutes_conflicts_gw*.json
 )
+shopt -u nullglob
 
 if git diff --quiet -- "${PATHS[@]}" && git diff --cached --quiet -- "${PATHS[@]}"; then
     log "no change to commit — the same posts are still the most recent"
