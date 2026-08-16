@@ -27,14 +27,16 @@
  * "showing 100 of 581" rather than a list that quietly ends.
  */
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { proven, describeProducer } from "@/lib/data/artifact";
 import {
   projectionsDescriptor, skew, type Projection, type Projections,
 } from "@/lib/data/projections";
+import { REGISTRY, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { istDateTime } from "@/lib/formats";
 import { findTwins } from "@/lib/margin/twins";
+import { Compare } from "@/components/margin/Compare";
 import { PAPER, MONO, SANS } from "@/lib/margin/tokens";
 import {
   Distribution, Eyebrow, Hollow, MarginState, Nil, WhenProvenHere,
@@ -44,6 +46,9 @@ const S = PAPER;
 
 /** Rows shown before the reader asks for the rest. */
 const PAGE = 100;
+
+/** Four columns is where the labels stop fitting; beyond that it is a table. */
+const MAX_COMPARE = 4;
 
 type SortKey = "xp" | "sd" | "mode" | "p5" | "p10" | "pcs" | "mins" | "skew";
 
@@ -69,9 +74,12 @@ function Num({ of, dp = 1 }: { of: number | null; dp?: number }) {
   return <>{of.toFixed(dp)}</>;
 }
 
-const COLUMNS = "26px minmax(92px,1.3fr) 44px 100px 38px 38px 44px 44px 44px 46px 44px 42px 40px 40px 60px";
+const COLUMNS = "24px 26px minmax(92px,1.3fr) 44px 100px 38px 38px 44px 44px 44px 46px 44px 42px 40px 40px 60px";
 
 function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => void }) {
+  // A spacer for the pin column. Without it the header labels sit one column
+  // left of the numbers they name, which is the kind of bug that reads as a
+  // wrong value rather than as a broken layout.
   const cell = (key: SortKey | null, label: string, align: "left" | "right" = "right") => (
     <span
       key={label}
@@ -99,6 +107,7 @@ function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => voi
       }}
     >
       {cell(null, "", "left")}
+      {cell(null, "", "left")}
       {cell(null, "Player", "left")}
       {cell("xp", "xP")}
       {cell(null, "distribution", "left")}
@@ -118,8 +127,9 @@ function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => voi
 }
 
 function Row(
-  { player, selected, onSelect }: {
+  { player, selected, onSelect, pinned, onPin }: {
     player: Projection; selected: boolean; onSelect: () => void;
+    pinned: boolean; onPin: () => void;
   },
 ) {
   const gap = skew(player);
@@ -136,6 +146,24 @@ function Row(
         boxShadow: selected ? `inset 3px 0 0 ${S.agree}` : undefined,
       }}
     >
+      {/* `stopPropagation` because the row itself opens the detail panel: without
+          it, pinning a player also swaps the panel under the reader's cursor. */}
+      <button
+        type="button"
+        data-testid="research-pin"
+        aria-label={pinned ? `remove ${player.name} from the comparison`
+                           : `compare ${player.name}`}
+        aria-pressed={pinned}
+        onClick={(event) => { event.stopPropagation(); onPin(); }}
+        style={{
+          fontFamily: MONO, fontSize: 11, lineHeight: 1, cursor: "pointer",
+          background: "transparent", padding: "2px 4px",
+          border: `1px solid ${pinned ? S.agree : "transparent"}`,
+          color: pinned ? S.agree : S.ink3,
+        }}
+      >
+        {pinned ? "✓" : "+"}
+      </button>
       <span style={{ fontSize: 9, color: S.ink3 }}>{player.position ?? "—"}</span>
       <span
         style={{
@@ -374,6 +402,27 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
   const [sort, setSort] = useState<SortKey>("xp");
   const [showAll, setShowAll] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  /**
+   * Who is pinned for comparison, in the order they were picked.
+   *
+   * An array rather than a Set: the comparison reads left to right and the
+   * reader chose that order, so insertion order is information.
+   */
+  const [compareIds, setCompareIds] = useState<readonly number[]>([]);
+  const { artifact: statsArtifact } = useArtifact(REGISTRY.playerStats);
+  const stats = useMemo(
+    () => (proven(statsArtifact) ?? []) as readonly PlayerRow[], [statsArtifact],
+  );
+
+  const togglePin = useCallback((elementId: number) => {
+    setCompareIds((current) => {
+      if (current.includes(elementId)) return current.filter((id) => id !== elementId);
+      // Four columns is where the labels stop fitting on a laptop, and a
+      // comparison of eight is a table, which this screen already has.
+      if (current.length >= MAX_COMPARE) return current;
+      return [...current, elementId];
+    });
+  }, []);
 
   const file = proven(artifact);
   // Memoised so the `?? []` fallback is not a fresh identity on every render,
@@ -454,6 +503,20 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
           what={`No per-player projection has been published for GW${gameweek}.`}
           then={() => (
             <>
+              {/* Above the table, because it is what you assembled from it and
+                  scrolling back to a comparison you built is the whole cost of
+                  putting it below. */}
+              {compareIds.length > 0 ? (
+                <div style={{ padding: "12px 18px 0" }}>
+                  <Compare
+                    ids={compareIds}
+                    projections={players}
+                    stats={stats}
+                    onRemove={togglePin}
+                    onClear={() => setCompareIds([])}
+                  />
+                </div>
+              ) : null}
               <Header sort={sort} onSort={setSort} />
               {shown.map((player) => (
                 <Row
@@ -461,6 +524,8 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
                   player={player}
                   selected={selected?.elementId === player.elementId}
                   onSelect={() => setSelectedId(player.elementId)}
+                  pinned={compareIds.includes(player.elementId)}
+                  onPin={() => togglePin(player.elementId)}
                 />
               ))}
 
