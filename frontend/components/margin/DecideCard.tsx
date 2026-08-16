@@ -26,11 +26,8 @@
  */
 
 import Link from "next/link";
-import { proven } from "@/lib/data/artifact";
-import {
-  decisionDescriptor, type EntryLabel, type PublicDecision,
-} from "@/lib/data/narrow";
-import { useArtifact } from "@/lib/data/useArtifact";
+import { proven, type Artifact } from "@/lib/data/artifact";
+import type { PublicDecision } from "@/lib/data/narrow";
 import { INK, MONO } from "@/lib/margin/tokens";
 
 const S = INK;
@@ -44,13 +41,23 @@ function nameFor(id: number, nameOf?: NameOf): string {
 }
 
 export function DecideCard(
-  { gameweek, nameOf, label = "season" }:
-    { gameweek: number; nameOf?: NameOf; label?: EntryLabel },
+  { gameweek, nameOf, of }: {
+    gameweek: number;
+    nameOf?: NameOf;
+    /**
+     * The decision the planner below is already reading.
+     *
+     * Passed in rather than fetched again: this card mounts inside `ScoreView`,
+     * which holds the same artifact, and fetching it here put two requests for
+     * the same URL 3ms apart — measured as a pair of 404s in the console on
+     * every load. Sharing it also makes the guarantee real rather than
+     * conventional: the card and the grid cannot describe two different solves,
+     * because there is only one read.
+     */
+    of: Artifact<PublicDecision>;
+  },
 ) {
-  // Same label the planner reads, so the card and the grid below it can never
-  // describe two different solves of the same gameweek.
-  const { artifact } = useArtifact<PublicDecision>(decisionDescriptor(gameweek, label));
-  const call = proven(artifact);
+  const call = proven(of);
 
   const frame = {
     display: "flex", gap: 12, alignItems: "baseline", flexWrap: "wrap" as const,

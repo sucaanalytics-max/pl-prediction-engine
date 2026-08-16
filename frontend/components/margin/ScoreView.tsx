@@ -290,7 +290,7 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
       {/* The call, in one line, above the plan it changes. It used to be a tab of
           its own — five panels, two of them absent most of the time, holding the
           default view. The answer belongs here; the argument stays at /decide. */}
-      <DecideCard gameweek={gameweek} nameOf={nameOf} />
+      <DecideCard gameweek={gameweek} nameOf={nameOf} of={decision} />
 
       {/* The planner leads. It is what this screen is for, and it needs nothing
           from the engine: the XI is solved from the published projection and the
