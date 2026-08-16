@@ -94,6 +94,22 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
           </a>
         ) : item.headline}
       </p>
+      {/* The feed's own teaser. allaboutfpl blocks framing (`x-frame-options:
+          SAMEORIGIN`), so an embedded article pane renders nothing — but the
+          summary was in the store the whole time, which reads better anyway:
+          it is this app's type, it works offline, and it loads no third-party
+          script. */}
+      {item.summary ? (
+        <p
+          data-testid="news-summary"
+          style={{
+            margin: 0, fontFamily: SANS, fontSize: 12, lineHeight: 1.5,
+            color: S.ink, opacity: .6, maxWidth: "68ch",
+          }}
+        >
+          {item.summary}
+        </p>
+      ) : null}
     </li>
   );
 }
@@ -170,9 +186,15 @@ export function NewsView() {
         <p style={{ margin: 0, fontFamily: MONO, fontSize: 11, color: S.ink, opacity: .55 }}>
           {feed.nShown} of {feed.nArticles} captured
           {feed.windowDays !== null ? ` over ${feed.windowDays} days` : ""}
-          {squadKnown
-            ? ` · ${mine} about your fifteen`
-            : " · your squad is not loaded, so nothing is marked as yours"}
+          {" · "}
+          {/* Named in the DOM because it is a state, not a decoration: "0 about
+              your fifteen" and "we never knew your fifteen" look identical in
+              a feed and mean opposite things. */}
+          <span data-testid="news-squad-state" data-known={squadKnown ? "yes" : "no"}>
+            {squadKnown
+              ? `${mine} about your fifteen`
+              : "your squad is not loaded, so nothing is marked as yours"}
+          </span>
         </p>
       </div>
 

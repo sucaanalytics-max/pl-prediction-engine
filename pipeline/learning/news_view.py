@@ -40,9 +40,10 @@ from __future__ import annotations
 
 import json
 import logging
+from collections import OrderedDict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -70,6 +71,18 @@ DEFAULT_LIMIT = 90
 
 #: Headlines are truncated for display. The full text stays in the store.
 MAX_HEADLINE = 180
+
+#: How much of the article's own summary travels with the headline.
+#:
+#: The extractor already stores it — `source_text` is the title, a newline, and
+#: the feed's summary — and this view dropped it for its whole life by reading
+#: only the first line.
+#:
+#: 400 rather than the full body: the same allaboutfpl post carries 8.7KB of
+#: article in its feed, and ninety of those would be 780KB the browser downloads
+#: to render a reading list. 400 characters is the feed's own teaser length and
+#: costs about 36KB across a full view.
+MAX_SUMMARY = 400
 
 
 def _parse(value: Any) -> Optional[datetime]:
@@ -109,6 +122,89 @@ def _headline(record: Mapping[str, Any]) -> str:
     text = record.get("source_text") or record.get("value") or ""
     first = str(text).split("\n", 1)[0].strip()
     return first[:MAX_HEADLINE]
+
+
+def _summary(record: Mapping[str, Any]) -> Optional[str]:
+    """
+    Everything after the title, which the extractor has been storing all along.
+
+    `source_text` is the title, a newline, then the feed's own summary — 300
+    characters for a real allaboutfpl post, the body of the post for an X
+    source. `_headline` takes the first line and the remainder went on the
+    floor, so this view published a list of titles when it had what it needed
+    for a readable card.
+
+    None rather than "" when there is no second line, which is the case for some
+    feeds: an empty string renders as a card with a blank body, where None
+    renders as a headline that never had a summary.
+    """
+    text = str(record.get("source_text") or record.get("value") or "")
+    rest = text.split("\n", 1)[1] if "\n" in text else ""
+    # Feeds wrap at arbitrary widths, so the stored newlines are not the author's
+    # paragraphs and collapsing them loses nothing a reader wanted.
+    collapsed = " ".join(rest.split())
+    return collapsed[:MAX_SUMMARY] or None
+
+
+def _rank(item: Mapping[str, Any]) -> Tuple[bool, float, str]:
+    """
+    Squad-relevant first, then most recent, digest breaking ties.
+
+    Extracted so the sort before the cap and the sort after it cannot drift: the
+    balance step reorders items by source, and re-sorting with a second copy of
+    this key is how the two silently stop matching.
+    """
+    when = _parse(item.get("claimed_at")) or datetime.min.replace(tzinfo=timezone.utc)
+    return (not item.get("touches_squad"), -when.timestamp(), str(item.get("digest") or ""))
+
+
+def _balanced(
+    items: Sequence[Dict[str, Any]], limit: int,
+) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
+    """
+    Fill the cap by taking a turn from each source, rather than off the top.
+
+    ## The measured problem
+
+    Ranking is squad-first then recency, and the cap was a flat slice of it. Two
+    general football feeds publish far more than the FPL-specific ones, so a real
+    poll filled the ninety slots: bbc_football 33, sky_football 24, hayters 14,
+    fantasyfootballscout 11, x:robtFPL 5, x:OptaAnalyst 2 — and **allaboutfpl 1**.
+    The sources chosen for FPL value were being crowded out by volume, which is
+    what `DEFAULT_LIMIT` warned would happen and why it says a bigger cap is not
+    the answer: raising it only admits more BBC.
+
+    ## Why round-robin rather than a list of favoured sources
+
+    A preferred-source list would work, and would bake an editorial opinion into
+    the producer where the reader cannot see it and only a code change can move
+    it. Taking a turn from each source needs no list: a feed with one article
+    contributes it, a feed with eighty contributes whatever is left once the
+    others have had their turn, and the total is unchanged.
+
+    Order within a source is preserved, so each contributes its best first. The
+    caller re-sorts the result into the global order, so the file still reads
+    squad-first and most-recent-first.
+
+    Returns the chosen items, and how many each source lost.
+    """
+    if len(items) <= limit:
+        return list(items), {}
+
+    queues: "OrderedDict[str, List[Dict[str, Any]]]" = OrderedDict()
+    for item in items:
+        queues.setdefault(str(item.get("source") or "?"), []).append(item)
+
+    chosen: List[Dict[str, Any]] = []
+    while len(chosen) < limit and any(queues.values()):
+        for queue in queues.values():
+            if not queue:
+                continue
+            chosen.append(queue.pop(0))
+            if len(chosen) >= limit:
+                break
+
+    return chosen, {source: len(rest) for source, rest in queues.items() if rest}
 
 
 def build(
@@ -163,6 +259,7 @@ def build(
             by_article[digest] = {
                 "digest": digest,
                 "headline": _headline(record),
+                "summary": _summary(record),
                 "source": record.get("source"),
                 "tier": record.get("source_tier"),
                 "url": record.get("provenance_url"),
@@ -180,22 +277,25 @@ def build(
 
     # Squad-relevant first, then most recent. Digest breaks ties so the order is
     # total and a re-publish does not reshuffle the file for no reason.
-    items.sort(
-        key=lambda i: (
-            not i["touches_squad"],
-            -(_parse(i["claimed_at"]) or datetime.min.replace(tzinfo=timezone.utc)).timestamp(),
-            i["digest"],
-        )
-    )
+    items.sort(key=_rank)
+
+    # Every source gets a turn before any source gets a second one, so a feed
+    # that publishes all day cannot bury one that publishes once.
+    shown, lost_by_source = _balanced(items, limit)
+    # Back into the global order: the balance decides *which* items travel, not
+    # what the file reads like, and a round-robin order would interleave sources
+    # into something no reader asked for.
+    shown.sort(key=_rank)
 
     # A cap that drops content without saying so reads as "this is everything".
-    # Naming the loss is the difference between a bound and a lie.
+    # Naming the loss is the difference between a bound and a lie — and it is now
+    # named per source, because "dropped 15" hid which source was being starved.
     dropped = max(0, len(items) - limit)
     if dropped:
-        lost = {str(i.get("source") or "?") for i in items[limit:]}
         logger.warning(
-            "news view is capped at %d and dropped %d older article(s) from %s",
-            limit, dropped, ", ".join(sorted(lost)),
+            "news view is capped at %d and dropped %d article(s): %s",
+            limit, dropped,
+            ", ".join(f"{source} {n}" for source, n in sorted(lost_by_source.items())),
         )
 
     return {
@@ -203,9 +303,12 @@ def build(
         "generated_at": generated_at,
         # Explicit, so a reader can tell a complete list from a truncated one.
         "n_dropped": dropped,
+        # Which source lost what. A single total told you the list was truncated
+        # and not that one source was being starved by another's volume.
+        "dropped_by_source": dict(sorted(lost_by_source.items())),
         "window_days": max_age_days,
         "n_articles": len(items),
-        "n_shown": min(len(items), limit),
+        "n_shown": len(shown),
         # Named in the artifact so a consumer cannot mistake this for evidence
         # the model acted on. Nothing here has moved a projection.
         "basis": (
@@ -214,7 +317,7 @@ def build(
             "availability field and parsed tier-2/3 claims only. This is a "
             "reading list."
         ),
-        "items": items[:limit],
+        "items": shown,
     }
 
 

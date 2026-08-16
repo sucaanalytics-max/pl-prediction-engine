@@ -1,15 +1,128 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-16T16:29:27.606890Z",
-  "n_dropped": 3,
+  "generated_at": "2026-08-16T18:47:35.766424Z",
+  "n_dropped": 12,
+  "dropped_by_source": {
+    "bbc_football": 10,
+    "sky_football": 2
+  },
   "window_days": 5,
-  "n_articles": 93,
+  "n_articles": 102,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
     {
+      "digest": "9bf28f55008f41d0",
+      "headline": "Liverpool latest: Barcola, Mbaye not in PSG squad amid Reds transfer links",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-16T19:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f42d7913ab55a136",
+      "headline": "Shop window or new chance - what next for Grealish?",
+      "summary": "Jack Grealish made an unexpected return to the Manchester City team on Sunday - so what could his future hold?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c07rr20g732o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-16T18:30:55Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fae753da78b39383",
+      "headline": "Arsenal latest: Arteta calls for rule change on PL squads",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-16T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "56d813c04ae85598",
+      "headline": "Enzo Maresca says \u2018all teams would need Rodri\u2019",
+      "summary": "New Manchester City manager Enzo Maresca says any team in the world would need Rodri, after much speculation that the midfielder is on his way to Barcelona. City lost 3-0 to Arsenal in the Community Shield, with the Spaniard unavailable. The Manchester",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/enzo-maresca-says-all-teams-would-need-rodri/",
+      "claimed_at": "2026-08-16T17:37:59Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e88aec0ba8448e43",
+      "headline": "Arteta on Tzolis: \u2018He makes good decisions when others rush\u2019",
+      "summary": "Arsenal manager Mikel Arteta has heaped praise on new signing Christos Tzolis after the Greek international managed two assists against Manchester City in the Community Shield. The Gunners won 3-0 in Cardiff and were by far the better team",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-on-tzolis-he-makes-good-decisions-when-others-rush/",
+      "claimed_at": "2026-08-16T17:27:50Z",
+      "players": [
+        {
+          "element_id": 557,
+          "name": "Tzolis",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "99cd7fb25756b902",
+      "headline": "Tough summer on Tyneside ends with Newcastle being held by Strasbourg",
+      "summary": "Newcastle United rounded off their pre-season campaign with a 1-1 draw with French side Strasbourg at St. James' Park. Their first half lead thanks to the boot of William Osula was cancelled out by Strasbourg\u2019s Gessime Yassine. Th",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/tough-summer-on-tyneside-ends-with-newcastle-being-held-by-strasbourg/",
+      "claimed_at": "2026-08-16T17:05:58Z",
+      "players": [
+        {
+          "element_id": 465,
+          "name": "Osula",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "58c1a78068762d42",
       "headline": "Liverpool vs Como team news as Jacquet starts LIVE!",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/liverpool-vs-como/live/556108",
@@ -25,8 +138,27 @@
       "touches_squad": false
     },
     {
+      "digest": "c4332e25903a2eb9",
+      "headline": "Jacquet scores on debut to double Liverpool's lead over Como LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13573748/liverpool-vs-como-live-commentary-live-score-and-team-news-from-anfield",
+      "claimed_at": "2026-08-16T16:22:00Z",
+      "players": [
+        {
+          "element_id": 362,
+          "name": "Jacquet",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "3ee592f06b11f194",
       "headline": "Odegaard's importance, Anderson and Foden struggle - how the players rated",
+      "summary": "How Arsenal and Man City's players rated following the Premier League champions' comfortable 3-0 victory over the FA Cup winners in the Community Shield.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c8jnnknwnd1o?at_medium=RSS&at_campaign=rss",
@@ -48,8 +180,27 @@
       "touches_squad": false
     },
     {
+      "digest": "0ac0a1650d168806",
+      "headline": "Tottenham latest: Maddison returns as Spurs end pre-season unbeaten",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-16T16:00:00Z",
+      "players": [
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "ef205101e4399895",
       "headline": "Spurs latest: Maddison gives De Zerbi boost as pre-season ends without defeat",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
@@ -67,6 +218,7 @@
     {
       "digest": "7f45cb04b86c2661",
       "headline": "How Chelsea could line-up under Xabi Alonso for 2026/27 season",
+      "summary": "In this blog, we look at how Chelsea could line up under Xabi Alonso, what it means from an FPL perspective & the best chelsea FPL assets. The post How Chelsea could line-up under Xabi Alonso for 2026/27 season appeared first on ALLABOUT",
       "source": "allaboutfpl",
       "tier": 3,
       "url": "https://allaboutfpl.com/2026/08/how-chelsea-could-line-up-under-xabi-alonso-for-2026-27-season/",
@@ -84,6 +236,7 @@
     {
       "digest": "4a70243b2cffb059",
       "headline": "Arsenal latest: Lewis-Skelly stars in Community Shield but Martinelli left out",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
@@ -99,8 +252,27 @@
       "touches_squad": false
     },
     {
+      "digest": "9562b5e229f1774b",
+      "headline": "Man City latest: Maresca calls on club to move swiftly in transfer market",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-16T14:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "d8504c79db973252",
       "headline": "Man City latest: Savinho and Reijnders left out of Community Shield squad",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
@@ -118,6 +290,7 @@
     {
       "digest": "dc6b88c8fde26e9f",
       "headline": "FPL pre-season: \u00a34.0m O\u2019Nien set for GW1 start, Hume not \u2018OOP\u2019 + Muharemovic goal",
+      "summary": "Picking the FPL bones out of wins for Leeds and Sunderland The post FPL pre-season: \u00a34.0m O'Nien set for GW1 start, Hume not 'OOP' + Muharemovic goal appeared first on Best FPL Tips, Advice, Team News, Picks, and Stati",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/16/fpl-pre-season-4-0m-o-nien-set-for-gw1-start-hume-not-oop-muharemovic-goal",
@@ -141,6 +314,7 @@
     {
       "digest": "6241e1819d8cc594",
       "headline": "Villa close in on Suzuki with Martinez future in doubt",
+      "summary": "Aston Villa close in on the signing of Parma goalkeeper Zion Suzuki, with Emi Martinez's future in increasing doubt.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/ckg44n858qvo?at_medium=RSS&at_campaign=rss",
@@ -158,6 +332,7 @@
     {
       "digest": "bced670c5c329780",
       "headline": "Arsenal 3-0 Manchester City LIVE \u2013 Arsenal win the Community Shield",
+      "summary": "{rsn-live-v2} The post Arsenal 3-0 Manchester City LIVE - Arsenal win the Community Shield appeared first on Hayters.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/arsenal-v-manchester-city-live-updates-from-community-shield/",
@@ -175,6 +350,7 @@
     {
       "digest": "1c67720ed294ef5c",
       "headline": "Delap to Como and Gakpo agrees terms with Tottenham \u2013 latest transfer news",
+      "summary": "Liam Delap is being pursued by Italian side Como, according to ESPN. But he only wants to stay at Stamford Bridge. The Englishman was signed last summer for \u00a330 million and had a poor year, but reportedly wants to remain at C",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/delap-to-como-and-gakpo-agrees-terms-with-tottenham-latest-transfer-news/",
@@ -192,6 +368,7 @@
     {
       "digest": "6d2312eeb45a2308",
       "headline": "Man Utd latest: We hope Rashford stays at Old Trafford, says Maguire",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
@@ -215,6 +392,7 @@
     {
       "digest": "7ed3a84ee540d2fd",
       "headline": "Have your say after Arsenal's big Community Shield win over City LIVE!",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/arsenal-vs-manchester-city/live/556659",
@@ -232,6 +410,7 @@
     {
       "digest": "7f34eb59a3686d7a",
       "headline": "Elvedi set for Leeds move as \u00a38.5m fee agreed",
+      "summary": "Leeds agree an \u00a38.5m deal to sign defender Nico Elvedi, who is set to have a medical on Monday.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c2lqqr15p2yo?at_medium=RSS&at_campaign=rss",
@@ -249,6 +428,7 @@
     {
       "digest": "49bee9c117f9e669",
       "headline": "Aston Villa latest: How much have Juventus bid for Martinez?",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
@@ -266,6 +446,7 @@
     {
       "digest": "20cf11c0ce4e40f9",
       "headline": "Coventry agree deal for Forest striker Awoniyi",
+      "summary": "Coventry City agree a deal worth about \u00a317m for Nottingham Forest striker Taiwo Awoniyi.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cvgjjr90l0lo?at_medium=RSS&at_campaign=rss",
@@ -283,6 +464,7 @@
     {
       "digest": "cb6991fb8f45b053",
       "headline": "Villa agree deal to sign goalkeeper Suzuki as Juve make Martinez bid",
+      "summary": "Aston Villa have agreed a &#163;29.9m (&#8364;35m) deal with Parma to sign Japan goalkeeper Zion Suzuki, according to Sky in Italy.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13573666/aston-villa-transfer-news-zion-suzuki-lined-up-as-juventus-linked-emiliano-martinez-replacement-after-29-9m-deal-agreed-with-parma",
@@ -300,6 +482,7 @@
     {
       "digest": "https://x.com/robtFPL/status/2088945895559549297",
       "headline": "With two international breaks, the first half of the #FPL season is essentially three blocks: lots of uncertainty but fewer fixtures early, then games gradually piling up - first f",
+      "summary": "Lots of different chip strategy approaches that could work!",
       "source": "x:robtFPL",
       "tier": 3,
       "url": "https://x.com/robtFPL/status/2088945895559549297",
@@ -317,6 +500,7 @@
     {
       "digest": "bab82b1b189a4d48",
       "headline": "Maguire wants 'huge threat' Rashford to stay at Man Utd",
+      "summary": "Manchester United defender Harry Maguire says he hopes Marcus Rashford will stay at the club because he can improve Michael Carrick's team.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c4g442me1k8o?at_medium=RSS&at_campaign=rss",
@@ -340,6 +524,7 @@
     {
       "digest": "5007a22d7ab04240",
       "headline": "FPL pre-season: Villa injuries, another Ndiaye pen + no Norgaard",
+      "summary": "The final summer friendlies of Villa + Everton assessed The post FPL pre-season: Villa injuries, another Ndiaye pen + no Norgaard appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/16/fpl-pre-season-villa-injuries-another-ndiaye-pen-no-norgaard",
@@ -357,6 +542,7 @@
     {
       "digest": "a20d0bdc3a0fb934",
       "headline": "Newcastle agree deal to sign Dedic from Benfica",
+      "summary": "Newcastle United have reached an agreement with Benfica to sign defender Amar Dedic.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13573640/newcastle-transfer-news-club-agree-deal-to-sign-defender-amar-dedic-from-benfica",
@@ -374,6 +560,7 @@
     {
       "digest": "55a1c4c50cdb6936",
       "headline": "FPL pre-season: Pedro again, Rogers debut, Munoz returns",
+      "summary": "Chelsea and Crystal Palace provide final FPL clues ahead of Gameweek 1. The post FPL pre-season: Pedro again, Rogers debut, Munoz returns appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/16/fpl-pre-season-pedro-again-rogers-debut-munoz-returns",
@@ -391,6 +578,7 @@
     {
       "digest": "fe37d793ab53d7c8",
       "headline": "How important is Community Shield to a team's season?",
+      "summary": "Premier League champions Arsenal take on FA Cup winners Manchester City in Sunday's Community Shield - but would winning suggest a successful season ahead?",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c1e1v64q256o?at_medium=RSS&at_campaign=rss",
@@ -408,6 +596,7 @@
     {
       "digest": "8d0f9ed380e78168",
       "headline": "FPL pre-season: Another Bruno pen miss + Mbeumo a sub",
+      "summary": "Man Utd and Fulham wrapped up their pre-season campaigns on Saturday The post FPL pre-season: Another Bruno pen miss + Mbeumo a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/16/fpl-pre-season-another-bruno-pen-miss-mbeumo-a-sub",
@@ -425,6 +614,7 @@
     {
       "digest": "09d5c375c2a9084c",
       "headline": "Arteta aiming to take Arsenal to the next level after title success",
+      "summary": "Mikel Arteta says he wants to be more ambitious with Arsenal after finally achieving Premier League glory last season. The Gunners face off against Enzo Maresca's Manchester City in the Community Shield for the chance to win a first",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/arteta-aiming-to-take-arsenal-to-the-next-level-after-title-success/",
@@ -442,6 +632,7 @@
     {
       "digest": "bd012842d1d934ec",
       "headline": "Maresca reveals his Man City captains and explains how Anderson will fit in",
+      "summary": "Enzo Maresca revealed that Erling Haaland and Ruben Dias are two of his four captains for next season. Bernardo Silva was Manchester City captain last season, but has since left the club and joined Real Madrid this summer. M",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/maresca-reveals-his-man-city-captains-and-explains-how-anderson-will-fit-in/",
@@ -465,6 +656,7 @@
     {
       "digest": "423f6f6965c21bb7",
       "headline": "Villa begin Suzuki talks - Sunday's gossip",
+      "summary": "Aston Villa are in negotiations over Zion Suzuki, boosting Juventus' hope of signing Emiliano Martinez, while Arsenal are told price for Victor Osimhen, plus more.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cnvnndmz4reo?at_medium=RSS&at_campaign=rss",
@@ -482,6 +674,7 @@
     {
       "digest": "c91ad8180cdf38f3",
       "headline": "FPL pre-season: De Cuyper \u2018OOP\u2019, Minteh latest + Hinshelwood threat",
+      "summary": "Key takeaways from Brighton's win over Bologna The post FPL pre-season: De Cuyper 'OOP', Minteh latest + Hinshelwood threat appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/15/fpl-pre-season-de-cuyper-oop-minteh-latest-hinshelwood-threat",
@@ -511,6 +704,7 @@
     {
       "digest": "1c26fe83bd3c4289",
       "headline": "Jaissle hints at further changes at Newcastle after pre-season defeat",
+      "summary": "Newcastle United head coach Matthias Jaissle has made clear that the club knows what is required in terms of incomings. With the new Premier League season only a week away, Newcastle look short in several areas, in particular in t",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/jaissle-hints-at-further-changes-at-newcastle-after-pre-season-defeat/",
@@ -528,6 +722,7 @@
     {
       "digest": "7ca88ed0de6fa15c",
       "headline": "De Zerbi satisfied with Tottenham performance after Hoffenheim victory",
+      "summary": "Tottenham head coach Roberto De Zerbi says it was &#8220;a good day&#8221; after Tottenham comfortably defeated Hoffenheim 3-0. A first half opener from Richarlison was added to by a second half double from Mikey Moore as Spurs b",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/de-zerbi-satisfied-with-tottenham-performance-after-hoffenheim-victory/",
@@ -563,6 +758,7 @@
     {
       "digest": "cbeff2980717f388",
       "headline": "Rashford returns as Amorim's Milan highlight issues for Carrick",
+      "summary": "Manchester United finish their pre-season campaign with a 4-2 defeat by Ruben Amorim's AC Milan in Poland, as Marcus Rashford returns to Red Devils action.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cg5ll71pqv1o?at_medium=RSS&at_campaign=rss",
@@ -580,6 +776,7 @@
     {
       "digest": "c4263012e9a03921",
       "headline": "Sunderland agree \u00a325.6m fee for defender Methalie",
+      "summary": "Sunderland agree a \u00a325.6m fee to sign left-back Dayann Methalie from Toulouse.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c934488gjyzo?at_medium=RSS&at_campaign=rss",
@@ -597,6 +794,7 @@
     {
       "digest": "5add96abd7761634",
       "headline": "Inter sign England full-back Spence from Tottenham",
+      "summary": "England full-back Djed Spence signs a five-year deal at Inter Milan as he makes a move to Italy from Tottenham.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cz64vg6znz1o?at_medium=RSS&at_campaign=rss",
@@ -614,6 +812,7 @@
     {
       "digest": "2c08554e091a4c7b",
       "headline": "Alonso on creating \u2018good connections\u2019 with fans after final pre-season win",
+      "summary": "Chelsea head coach Xabi Alonso says he felt emotional during his first match at Stamford Bridge as his side beat Real Sociedad 3-1. Goals from Joao Pedro and a double from Morgan Rogers on his Chelsea debut saw the Blues secu",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/alonso-on-creating-good-connections-with-fans-after-final-pre-season-win/",
@@ -631,6 +830,7 @@
     {
       "digest": "8ddcab7c451c22a7",
       "headline": "Fernandez booed by Chelsea fans as Alonso offers glimpse of blueprint",
+      "summary": "Enzo Fernandez is booed by sections of the Chelsea support, Morgan Rogers scores on his first appearance and Xabi Alonso offers a glimpse of what could be his blueprint for the season.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c36dd10jj09o?at_medium=RSS&at_campaign=rss",
@@ -654,6 +854,7 @@
     {
       "digest": "1e91853bb24ba2c5",
       "headline": "Chelsea latest: Fernandez booed - and cheered - in first pre-season appearance",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
@@ -671,6 +872,7 @@
     {
       "digest": "b96e0a30e2398351",
       "headline": "Enzo Fernandez's mixed reception as clues emerge from Alonso's Chelsea",
+      "summary": "Chelsea ended pre-season with a mixed 3-1 victory over Real Sociedad as manager Xabi Alonso offered more clues about the formation his side could play ahead of their Premier League opener against Fulham.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/chelsea-vs-real-sociedad/report/575209",
@@ -688,6 +890,7 @@
     {
       "digest": "https://x.com/robtFPL/status/2088649045191385125",
       "headline": "Opta match report cards for some of today's pre-season friendlies \ud83e\uddf5",
+      "summary": "Starting with Chelsea v Real Sociedad where Lacroix, James and Rogers got an hour each ahead of #FPL GW1\ud83d\udc47",
       "source": "x:robtFPL",
       "tier": 3,
       "url": "https://x.com/robtFPL/status/2088649045191385125",
@@ -705,6 +908,7 @@
     {
       "digest": "777d2212240ba705",
       "headline": "Key moments and what we learned as Man Utd lose final pre-season friendly",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/manchester-united-vs-ac-milan/live/556661",
@@ -722,6 +926,7 @@
     {
       "digest": "26096bde00ebeffe",
       "headline": "Bournemouth to 'do better' after 'disgusting' email",
+      "summary": "Bournemouth vow to \"do better\" after changes to matchday staffing were handled in a manner which \"did not reflect the standards we expect\".",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cy8ee0gzqx2o?at_medium=RSS&at_campaign=rss",
@@ -739,6 +944,7 @@
     {
       "digest": "7ff89a8035e25628",
       "headline": "Newcastle progressing with move for Benfica defender Dedic",
+      "summary": "Newcastle United are in advanced talks as they aim to bring in defender Amar Dedic from Benfica.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c70gg3dp61lo?at_medium=RSS&at_campaign=rss",
@@ -756,6 +962,7 @@
     {
       "digest": "d588c918341d4098",
       "headline": "Palace sign Khalaili from Union Saint-Gilloise",
+      "summary": "Crystal Palace sign Israel international Ana Khalaili on a deal which runs until 2031.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/clyqrd749d5o?at_medium=RSS&at_campaign=rss",
@@ -773,6 +980,7 @@
     {
       "digest": "9b4ff1a0e30dfb94",
       "headline": "FPL 2026/27 \u2013 Bournemouth: Best players, set-piece takers, predicted XI + more",
+      "summary": "Our team previews continue with Marco Rose's Bournemouth The post FPL 2026/27 - Bournemouth: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics fr",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/15/fpl-2026-27-bournemouth-best-players-set-piece-takers-predicted-xi-more",
@@ -790,6 +998,7 @@
     {
       "digest": "a7f2e185603e40a3",
       "headline": "Romero completes \u00a334m Atletico Madrid transfer",
+      "summary": "Tottenham captain Cristian Romero has completed his &#163;34.2m move to Atletico Madrid.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13573213/cristian-romero-tottenham-captain-completes-move-to-atletico-madrid",
@@ -807,6 +1016,7 @@
     {
       "digest": "939c3a064ba0fd30",
       "headline": "Romero reflects on Spurs stay as Atletico move confirmed",
+      "summary": "Cristian Romero says he \"wasn't perfect\" during his five years with Tottenham Hotspur as his move to Atletico Madrid is confirmed.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c20dyz4vrero?at_medium=RSS&at_campaign=rss",
@@ -824,6 +1034,7 @@
     {
       "digest": "8e25459ef8a3db60",
       "headline": "Arteta says he will sign new Arsenal contract in 'organic way'",
+      "summary": "Mikel Arteta has revealed he will sign a new Arsenal contract and there is no need for fans to be worried about his future.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13572989/mikel-arteta-arsenal-manager-says-he-will-sign-new-contract-after-entering-the-last-year-of-his-current-deal",
@@ -841,6 +1052,7 @@
     {
       "digest": "eeb391484ca51233",
       "headline": "Arteta not worried about Arsenal contract talks",
+      "summary": "Mikel Arteta says supporters \"don't have to worry about\" his future at Arsenal as he wants to extend his contract and the time left on his deal is \"not an issue\".",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cp3r6qgve4no?at_medium=RSS&at_campaign=rss",
@@ -858,6 +1070,7 @@
     {
       "digest": "06d680c09125bcbe",
       "headline": "Arteta on the transfer market and his contract situation at Arsenal",
+      "summary": "Mikel Arteta insisted that he is happy with his squad, despite being active in the transfer window this summer. Arsenal have already brought in Christos Tzolis and Bruno Guimaraes this summer, but have missed out on major targets, i",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/arteta-on-the-transfer-market-and-his-contract-situation-at-arsenal/",
@@ -875,6 +1088,7 @@
     {
       "digest": "4a527a73c0472968",
       "headline": "Arsenal lead Hinshelwood race - Saturday's gossip",
+      "summary": "Arsenal lead race for Jack Hinshelwood, Barcelona set to make third Rodri bid, Manchester United and Tottenham join Arsenal in discussing Victor Osimhen, plus more.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c80n2g2x0g7o?at_medium=RSS&at_campaign=rss",
@@ -892,6 +1106,7 @@
     {
       "digest": "ba1cef6e7ab071d4",
       "headline": "Football Daily",
+      "summary": "Arsenal take on Manchester City in the Community Shield on Sunday",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sounds/play/p0p4mymx?at_medium=RSS&at_campaign=rss",
@@ -909,6 +1124,7 @@
     {
       "digest": "5e4f1a580e4fd7ce",
       "headline": "Liverpool latest: Could the Bezos-backed consortium take full control?",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
@@ -926,6 +1142,7 @@
     {
       "digest": "b604f1719feebda2",
       "headline": "Burnley sign Chelsea's Satpayev on loan",
+      "summary": "Chelsea's new teenage winger Dastan Satpayev joins Championship club Burnley on a season's loan.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c1w1y95305no?at_medium=RSS&at_campaign=rss",
@@ -943,6 +1160,7 @@
     {
       "digest": "10ad20c686cc21a4",
       "headline": "Tottenham latest: VOTE! Will Spurs miss Romero?",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
@@ -960,6 +1178,7 @@
     {
       "digest": "1cfcdff8478dc0c1",
       "headline": "Liverpool takeover Q&A: What do we know about Bezos' consortium?",
+      "summary": "Liverpool's owners Fenway Sports Group have sold a stake in Liverpool Football Club to a consortium including Amazon founder Jeff Bezos.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13566630/liverpool-key-questions-answered-as-jeff-bezos-and-amit-bhatia-close-in-on-purchasing-strategic-minority-stake",
@@ -977,6 +1196,7 @@
     {
       "digest": "889c39d3147441d8",
       "headline": "Man City miss Chelsea's deadline to bid for Fernandez",
+      "summary": "The&#160;5pm Friday deadline set by&#160;Chelsea&#160;for&#160;Man City&#160;to make their bid for&#160;Enzo Fernandez&#160;has passed with no offer made for the midfielder.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13572838/enzo-fernandez-transfer-news-man-city-miss-chelseas-deadline-to-bid-for-midfielder",
@@ -994,6 +1214,7 @@
     {
       "digest": "1fab2b77120eda9d",
       "headline": "FSG sell minority stake in Liverpool to Bezos-backed consortium",
+      "summary": "Liverpool's owners have agreed to sell around a third of the club to a consortium including Amazon founder Jeff Bezos.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13573040/liverpool-fsg-sell-minority-stake-to-amazon-founder-jeff-bezos-backed-consortium-led-by-amit-bhatia",
@@ -1011,6 +1232,7 @@
     {
       "digest": "59270654042c4140",
       "headline": "In-form forward Madjo + Joao Gomes set to miss start of season",
+      "summary": "A double injury blow for Aston Villa ahead of Gameweek 1 The post In-form forward Madjo + Joao Gomes set to miss start of season appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/in-form-forward-madjo-joao-gomes-set-to-miss-start-of-season",
@@ -1034,6 +1256,7 @@
     {
       "digest": "b955909ac08dc8f5",
       "headline": "Chelsea say no Fernandez move as deadline passes - but is it really over?",
+      "summary": "Chelsea's deadline for clubs to bid \u00a3120m for midfielder Enzo Fernandez has passed - and they now expect the Argentine to stay at the club this season.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c7vgyrl2573o?at_medium=RSS&at_campaign=rss",
@@ -1051,6 +1274,7 @@
     {
       "digest": "f4038e32433f8892",
       "headline": "Bezos-backed consortium buys a third of Liverpool",
+      "summary": "Liverpool's owners agree to sell about a third of the club to a consortium including billionaire Amazon founder Jeff Bezos - in a deal that values the Reds at more than \u00a35bn.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cx2vj4l9wxyo?at_medium=RSS&at_campaign=rss",
@@ -1068,6 +1292,7 @@
     {
       "digest": "59d675dfd42f21ac",
       "headline": "Haaland + Rodri injury latest, Maresca on returning internationals",
+      "summary": "Enzo Maresca was on press conference duties ahead of Sunday' clash with Arsenal The post Haaland + Rodri injury latest, Maresca on returning internationals appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics fro",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/haaland-rodri-injury-latest-maresca-on-returning-internationals",
@@ -1085,6 +1310,7 @@
     {
       "digest": "4f84d3379afc5f63",
       "headline": "FPL 2026/27 \u2013 Aston Villa: Best players, set-piece takers, predicted XI + more",
+      "summary": "Villa finished fourth and won the Europa League last season The post FPL 2026/27 \u2013 Aston Villa: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/fpl-2026-27-aston-villa-best-players-set-piece-takers-predicted-xi-more",
@@ -1102,6 +1328,7 @@
     {
       "digest": "fc8e0f142a13815b",
       "headline": "Is Fernandez worth two Rodris? Transfer valuations explained",
+      "summary": "Speculation is swirling around two of the Premier League's leading midfielders. As Barcelona push to sign Rodri, Manchester City are being linked with a move for Enzo Fernandez. But why does the Chelsea player have a much higher transfer v",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13572855/is-enzo-fernandez-worth-two-rodris-transfer-valuations-explained-as-chelsea-and-man-city-midfielders-linked-with-moves-between-the-lines",
@@ -1119,6 +1346,7 @@
     {
       "digest": "72d08862203a39a9",
       "headline": "Arteta gives positive injury updates on three Arsenal stars and reveals their big transfer ambition",
+      "summary": "Mikel Arteta revealed that Declan Rice, Bukayo Saka and Martin Zubimendi will be available for the Community Shield final. The trio have now arrived back in Arsenal training following an extended holi",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/arteta-gives-positive-injury-updates-on-three-arsenal-stars-and-reveals-their-big-transfer-ambition/",
@@ -1136,6 +1364,7 @@
     {
       "digest": "92942e6b3c0ce972",
       "headline": "Shakhtar want to play Champions League ties at Chelsea",
+      "summary": "Ukrainian club Shakhtar Donetsk want to play their Champions League home games at Chelsea's Stamford Bridge this season.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cpw9e1dz9kko?at_medium=RSS&at_campaign=rss",
@@ -1153,6 +1382,7 @@
     {
       "digest": "b46f57dc839da847",
       "headline": "Chelsea latest: Fernandez saga over? Rodri future key to City's Enzo chase",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
@@ -1170,6 +1400,7 @@
     {
       "digest": "80d68bc087e7f4b3",
       "headline": "Maresca on Rodri\u2019s future and rules out Enzo bid before deadline",
+      "summary": "Enzo Maresca insisted that &#8220;anything can happen&#8221; amid Rodri links to Barcelona and revealed that City are unlikely to bid for Enzo Fernandez before the deadline. Rodri has been linked with a move away from Manchester City t",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/maresca-on-rodris-future-and-rules-out-enzo-bid-before-deadline/",
@@ -1187,6 +1418,7 @@
     {
       "digest": "775f71122efb2291",
       "headline": "FPL 2026/27 \u2013 Arsenal: Best players, set-piece takers, predicted XI + more",
+      "summary": "Our team previews continue with Mikel Arteta's champions The post FPL 2026/27 - Arsenal: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fanta",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/fpl-2026-27-arsenal-best-players-set-piece-takers-predicted-xi-more",
@@ -1204,6 +1436,7 @@
     {
       "digest": "2fa0f991eb15a9ed",
       "headline": "Arsenal express interest in signing Quansah",
+      "summary": "Arsenal express an interest in signing Bayer Leverkusen and England defender Jarell Quansah.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c9q92xr0854o?at_medium=RSS&at_campaign=rss",
@@ -1221,6 +1454,7 @@
     {
       "digest": "dbce49b8726672ef",
       "headline": "Arsenal in talks with Leverkusen over Quansah",
+      "summary": "Arsenal are in talks with Bayer Leverkusen over a possible deal for England defender Jarell Quansah.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13572821/jarell-quansah-arsenal-in-talks-with-bayer-leverkusen-over-signing-england-and-former-liverpool-defender",
@@ -1238,6 +1472,7 @@
     {
       "digest": "21f1a11510136966",
       "headline": "Arsenal ranked only 66th in English football fan engagement index as clubs warned against \u2018box ticking\u2019",
+      "summary": "Arsenal have been ranked only 66th among English football clubs for fan engagement despite winning the Premier League last season, according to the latest Fan Engagement Index. The Gunners scored",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/arsenal-ranked-only-66th-in-english-football-fan-engagement-index-as-clubs-warned-against-box-ticking/",
@@ -1255,6 +1490,7 @@
     {
       "digest": "bd57c0c5ae50da93",
       "headline": "European Cup winner Rimmer dies aged 78",
+      "summary": "European Cup winner and former Aston Villa and Manchester United goalkeeper Jimmy Rimmer dies at the age of 78.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c20eyww3vyro?at_medium=RSS&at_campaign=rss",
@@ -1272,6 +1508,7 @@
     {
       "digest": "225c799e071eb22d",
       "headline": "Liverpool's Lundgaard joins Eintracht Frankfurt",
+      "summary": "Liverpool midfielder Sofie Lundgaard completes a permanent transfer to Eintracht Frankfurt for an undisclosed fee.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cqlx1023wd3o?at_medium=RSS&at_campaign=rss",
@@ -1287,25 +1524,9 @@
       "touches_squad": false
     },
     {
-      "digest": "47a2652904192739",
-      "headline": "Arsenal latest: Martinelli rejects chance to join Galatasaray",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-14T09:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "https://x.com/robtFPL/status/2088168738692419657",
       "headline": "Gonzalo Garc\u00eda (\u00a36.0m) is one of the Solio model's favourite budget forward picks for the opening 6GW, marginally ahead of more popular picks like Brobbey  \ud83d\udc47",
+      "summary": "A bit more uncertainty compared to established players like Calvert-Lewin and Brobbey, but lots of upside too! Opta Analyst @OptaAnalyst 13 Aug At \u00a36.0m, Gonzalo Garc\u00eda is emerging as one of the most popular value forwards in #FPL. He scored six goals from just nine La Liga starts last season, but how do the projections expect him to fare following his move to England? \ud83e\udd14",
       "source": "x:robtFPL",
       "tier": 3,
       "url": "https://x.com/robtFPL/status/2088168738692419657",
@@ -1323,6 +1544,7 @@
     {
       "digest": "45dbe1b8b7bc3cba",
       "headline": "Will you beat our mega football nicknames quiz?",
+      "summary": "Do you know your Red Devils from your Saints? How about your Magpies from your Robins?",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c4g4v4mm9r8o?at_medium=RSS&at_campaign=rss",
@@ -1338,42 +1560,9 @@
       "touches_squad": false
     },
     {
-      "digest": "5c9241c6f40e8b1c",
-      "headline": "The key stats as Chelsea look to go from 10th to the title again",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwyr2zez9q2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T06:34:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "311fd4c14fbd2f01",
-      "headline": "How Maresca's Man City are shaping up compared with Guardiola",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c70g7dx63geo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T05:16:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "7825449f326659b0",
       "headline": "Guimar\u00e3es, Rice, \u00d8degaard and Merino: How Arsenal\u2019s most complete midfield ever could ignite a new title era",
+      "summary": "Last season was one of the most historic in Arsenal's recent history. The Gunners held a commanding position in the Premier League title race for long stretches and secured their first title",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/guimaraes-rice-odegaard-and-merino-how-arsenals-most-complete-midfield-ever-could-ignite-a-new-title-era/",
@@ -1391,6 +1580,7 @@
     {
       "digest": "f94285553c841d25",
       "headline": "Can \u00a35.0m Silva be Bournemouth\u2019s \u2018new Senesi\u2019 for DefCon points?",
+      "summary": "The centre-back joins from Benfica in a deal worth up to \u00a325.7m The post Can \u00a35.0m Silva be Bournemouth's 'new Senesi' for DefCon points? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football S",
       "source": "fantasyfootballscout",
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/can-5-0m-silva-be-bournemouths-new-senesi-for-defcon-points",
@@ -1406,42 +1596,9 @@
       "touches_squad": false
     },
     {
-      "digest": "98036985c323557a",
-      "headline": "Man City's Reijnders set for \u00a352m Saudi move",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cp30xwkj4y3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-13T22:12:05Z",
-      "players": [
-        {
-          "element_id": 404,
-          "name": "Reijnders",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b641da8d3a6e43a8",
-      "headline": "Papers: Arsenal lead race for \u00a350m-rated Hinshelwood",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13573177/arsenal-transfer-news-gunners-lead-race-for-brighton-midfielder-jack-hinshelwood-paper-talk",
-      "claimed_at": "2026-08-13T21:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "fa655bedbefe7b0b",
       "headline": "Martin Keown: Arsenal must use Community Shield to lay down marker against Manchester City",
+      "summary": "Martin Keown insists Arsenal should treat Sunday's Community Shield clash with Manchester City as far more than a glorified friendly as Mikel Arteta's Premier League champions begin the defence of their title.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/martin-keown-arsenal/",
@@ -1459,6 +1616,7 @@
     {
       "digest": "d1fd9aef5efb67cf",
       "headline": "Carrick calls for more Man Utd signings and for club to \u2018keep pushing\u2019",
+      "summary": "Manchester United boss Michael Carrick says the club must continue pushing \u201cevery boundary\u201d in their pursuit of success as he looks to lead the Red Devils back to the top. Carrick guided his side back into the Champions League af",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/carrick-calls-for-more-man-utd-signings-and-for-club-to-keep-pushing/",
@@ -1476,6 +1634,7 @@
     {
       "digest": "https://x.com/OptaAnalyst/status/2087934197671276931",
       "headline": "At \u00a36.0m, Gonzalo Garc\u00eda is emerging as one of the most popular value forwards in #FPL.",
+      "summary": "He scored six goals from just nine La Liga starts last season, but how do the projections expect him to fare following his move to England? \ud83e\udd14",
       "source": "x:OptaAnalyst",
       "tier": 3,
       "url": "https://x.com/OptaAnalyst/status/2087934197671276931",
@@ -1491,25 +1650,9 @@
       "touches_squad": false
     },
     {
-      "digest": "e6947285c756a51c",
-      "headline": "Handling hate and seeking stability - Fofana's Chelsea journey",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c62vddx10gjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-13T16:02:57Z",
-      "players": [
-        {
-          "element_id": 145,
-          "name": "Fofana",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "https://x.com/robtFPL/status/2087879223826338291",
       "headline": "Another really cool collaboration with the @OptaAnalyst  team - looking at some of the new players to the Premier League this season (Tzolis, Sangar\u00e9 and co) and how we can think a",
+      "summary": "theanalyst.com/articles/fpl-s\u2026 Opta Analyst @OptaAnalyst 13 Aug Replying to @OptaAnalyst In the latest of our data dives in partnership with @SolioAnalytics, we assess how seven of this summer\u2019s most intriguing arrivals are expected to translate their previous performances into Fantasy Premier League points in 2026-27. theanalyst.com/articles/fpl-s\u2026",
       "source": "x:robtFPL",
       "tier": 3,
       "url": "https://x.com/robtFPL/status/2087879223826338291",
@@ -1527,6 +1670,7 @@
     {
       "digest": "https://x.com/OptaAnalyst/status/2087876871065149557",
       "headline": "Replying to @OptaAnalyst",
+      "summary": "In the latest of our data dives in partnership with @SolioAnalytics, we assess how seven of this summer\u2019s most intriguing arrivals are expected to translate their previous performances into Fantasy Premier League points in 2026-27. theanalyst.com/articles/fpl-s\u2026",
       "source": "x:OptaAnalyst",
       "tier": 3,
       "url": "https://x.com/OptaAnalyst/status/2087876871065149557",
@@ -1544,61 +1688,11 @@
     {
       "digest": "https://x.com/robtFPL/status/2087875329117274527",
       "headline": "Iliman Ndiaye (\u00a36.0m) remains the Solio model's favourite budget #FPL midfielder pick for now, but all eyes on late transfer speculation before the window closes \ud83d\udc47",
+      "summary": "Pascal Gro\u00df still showing as good value, with Buend\u00eda and Tavernier in the mix as lower-owned alternatives",
       "source": "x:robtFPL",
       "tier": 3,
       "url": "https://x.com/robtFPL/status/2087875329117274527",
       "claimed_at": "2026-08-13T12:14:03Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "73bb8fcfa8e9bedb",
-      "headline": "Can Sunderland defy the Premier League doubters again?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cn8ndw25yjeo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-13T05:52:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "445f8a2d75654466",
-      "headline": "How 'hugely impressive' Villa teen Madjo took fight to PSG",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c2k72pep488o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-12T22:35:31Z",
-      "players": [
-        {
-          "element_id": 582,
-          "name": "Madjo",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4049dc1f829d0c53",
-      "headline": "Fernandes the centre of attention - but what next for Man Utd captain?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvgwzegz9ggo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-12T21:40:45Z",
       "players": [
         {
           "element_id": 0,

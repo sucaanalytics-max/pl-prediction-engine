@@ -263,3 +263,97 @@ class PollerStaysLightweightTests(unittest.TestCase):
         # JSON document.
         source = self.MODULE.read_text(encoding="utf-8")
         self.assertIn(".replace(target)", source)
+
+
+class SourceBalanceTests(unittest.TestCase):
+    """
+    A feed that publishes all day must not bury one that publishes once.
+
+    Measured on a real poll: ninety slots went bbc_football 33, sky_football 24,
+    hayters 14, fantasyfootballscout 11, x:robtFPL 5, x:OptaAnalyst 2 and
+    allaboutfpl 1. Ranking by recency is right and is exactly what produces this
+    — the sources chosen for FPL value publish least often, so they are the first
+    to be crowded out.
+    """
+
+    def _mixed(self):
+        # One quiet source against one that never stops.
+        loud = [claim(provenance_digest=f"loud{i}", source="bbc_football",
+                      claimed_at=(NOW - timedelta(minutes=i)).isoformat().replace("+00:00", "Z"))
+                for i in range(50)]
+        quiet = [claim(provenance_digest="quiet1", source="allaboutfpl",
+                       claimed_at=(NOW - timedelta(days=2)).isoformat().replace("+00:00", "Z"))]
+        return loud + quiet
+
+    def test_the_quiet_source_survives_the_cap(self):
+        view = build(self._mixed(), limit=10)
+        sources = {i["source"] for i in view["items"]}
+        self.assertIn(
+            "allaboutfpl", sources,
+            "the one article from the quiet source was dropped for the tenth "
+            "article from the loud one, which is the defect this fixes",
+        )
+
+    def test_the_cap_is_still_the_cap(self):
+        # Balancing decides which items travel, never how many.
+        view = build(self._mixed(), limit=10)
+        self.assertEqual(len(view["items"]), 10)
+        self.assertEqual(view["n_shown"], 10)
+
+    def test_the_loud_source_still_fills_what_is_left(self):
+        # Fairness is a floor, not an equal split: nobody else wants the slots.
+        view = build(self._mixed(), limit=10)
+        loud = [i for i in view["items"] if i["source"] == "bbc_football"]
+        self.assertEqual(len(loud), 9)
+
+    def test_the_loss_is_named_per_source(self):
+        # "dropped 41" said the list was truncated. It did not say who was starved.
+        view = build(self._mixed(), limit=10)
+        self.assertEqual(view["dropped_by_source"], {"bbc_football": 41})
+
+    def test_nothing_is_dropped_when_it_all_fits(self):
+        view = build(self._mixed(), limit=200)
+        self.assertEqual(view["n_dropped"], 0)
+        self.assertEqual(view["dropped_by_source"], {})
+
+    def test_the_published_order_is_still_the_reading_order(self):
+        """
+        Round-robin decides membership, not order.
+
+        Interleaving by source would publish bbc, allaboutfpl, bbc, ... which is
+        an order no reader asked for and which breaks the squad-first promise.
+        """
+        view = build(self._mixed(), limit=10)
+        stamps = [i["claimed_at"] for i in view["items"]]
+        self.assertEqual(stamps, sorted(stamps, reverse=True))
+
+
+class SummaryTests(unittest.TestCase):
+    """
+    The article's own summary, which the store has carried all along.
+
+    `source_text` is the title, a newline, then the feed's summary. This view
+    read `split("\\n", 1)[0]` and dropped the rest for its whole life, so it
+    published a list of titles while holding what a readable card needs.
+    """
+
+    def test_the_summary_travels_with_the_headline(self):
+        view = build([claim()])
+        item = view["items"][0]
+        self.assertEqual(item["headline"], "Van de Ven signs new deal")
+        self.assertEqual(item["summary"], "Tottenham have announced...")
+
+    def test_a_headline_with_no_summary_reports_none(self):
+        # None, not "": an empty string renders a card with a blank body.
+        view = build([claim(source_text="Just a headline")])
+        self.assertIsNone(view["items"][0]["summary"])
+
+    def test_wrapped_lines_are_collapsed(self):
+        # Feed wrapping is not the author's paragraphing.
+        view = build([claim(source_text="Title\nfirst line\nsecond line")])
+        self.assertEqual(view["items"][0]["summary"], "first line second line")
+
+    def test_the_summary_is_bounded(self):
+        # The whole artifact is fetched by the browser; the full body is 8.7KB.
+        view = build([claim(source_text="Title\n" + "x" * 5000)])
+        self.assertEqual(len(view["items"][0]["summary"]), news_view.MAX_SUMMARY)

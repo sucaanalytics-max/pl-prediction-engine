@@ -39,6 +39,13 @@ export interface NewsPlayer {
 export interface NewsItem {
   readonly digest: string;
   readonly headline: string;
+  /**
+   * The feed's own teaser, when it published one.
+   *
+   * Null rather than "" for a headline with no summary, so a card can omit the
+   * body instead of rendering an empty one.
+   */
+  readonly summary: string | null;
   readonly source: string;
   readonly tier: number | null;
   readonly url: string | null;
@@ -79,6 +86,7 @@ function narrowItem(raw: unknown): NewsItem | null {
   return {
     digest: optString(raw.digest) ?? headline,
     headline,
+    summary: optString(raw.summary),
     source,
     tier: optNumber(raw.tier),
     url: optString(raw.url),
