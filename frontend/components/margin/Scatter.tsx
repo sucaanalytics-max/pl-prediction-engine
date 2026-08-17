@@ -15,23 +15,34 @@
  * manager asks before GW1: who finishes, who creates, and who costs as though
  * they do both. Haaland sits far right and low; B.Fernandes high and left.
  *
- * ## Clicking a point pins it
+ * ## Clicking pins the nearest point
  *
  * The chart is a way of finding two players worth putting side by side, so a
- * point is a control rather than a decoration. That also means it needs to be
- * reachable without a mouse, so every point is a `<button>` in the tab order
- * with its numbers in the accessible name — a scatter that only works by
- * pointing is a scatter half the readers cannot use.
+ * click is a control rather than a decoration.
  *
- * SVG rather than canvas, for 400 points: hit-testing, focus and screen-reader
- * names come free, and hand-rolling them over a bitmap to save a few
- * milliseconds would be the wrong trade on a chart this size.
+ * It was one transparent hit target per point, and that could not be made to
+ * work: targets draw in series order, so a later point's target covers an
+ * earlier point's mark. On the real artifact **278 of 367** marks sat under
+ * someone else's target — clicking the dot labelled Watkins pinned
+ * Calvert-Lewin — and 161 players could not be pinned at all. One handler
+ * asking which point is nearest has no ordering in it.
+ *
+ * ## The keyboard route is the table, not this
+ *
+ * Those targets were also 367 tab stops, sitting in front of the comparison
+ * panel and the entire table with no way past them. The table below has a pin
+ * button on every row and reaches every player including the ones excluded
+ * here, so it is the better keyboard path and this is the pointer one. The plot
+ * is a single `role="img"` with a describing label rather than 367 silent
+ * stops.
  */
 
 import { useMemo } from "react";
+import type { Artifact } from "@/lib/data/artifact";
 import type { PlayerRow } from "@/lib/data/narrow";
-import { notable, place, plot, ticks } from "@/lib/margin/scatter";
+import { nearest, notable, place, plot, ticks } from "@/lib/margin/scatter";
 import { INK, MONO, SANS } from "@/lib/margin/tokens";
+import { MarginState } from "@/components/margin/Marks";
 
 const S = INK;
 
@@ -49,8 +60,16 @@ const TONE: Record<string, string> = {
 };
 
 export function Scatter(
-  { rows, pinned, onPin }: {
+  { rows, artifact, pinned, onPin }: {
     rows: readonly PlayerRow[];
+    /**
+     * The artifact the rows came from, so its absence can be named.
+     *
+     * Without it this returned `null` for an empty cloud, and a 404 on
+     * `player_stats.json` deleted the whole panel with nothing saying a chart
+     * was ever meant to be there — the blank that house rule 1 forbids.
+     */
+    artifact?: Artifact<readonly PlayerRow[]>;
     pinned: readonly number[];
     onPin: (elementId: number) => void;
   },
@@ -58,10 +77,49 @@ export function Scatter(
   const { points, bounds } = useMemo(() => plot(rows), [rows]);
   const named = useMemo(() => notable(points), [points]);
 
-  if (points.length === 0) return null;
+  if (points.length === 0) {
+    return (
+      <section data-testid="scatter" data-state="empty"
+               style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        {artifact ? (
+          <MarginState of={artifact} what="the season's totals, for the chart"
+                       surface={S} compact />
+        ) : null}
+        <p style={{ margin: 0, fontFamily: SANS, fontSize: 11.5, lineHeight: 1.5,
+                    color: S.ink, opacity: .5, maxWidth: "62ch" }}>
+          No player has the 90 minutes this chart needs, so there is nothing to
+          plot. That is a fact about the data, not an empty panel.
+        </p>
+      </section>
+    );
+  }
 
   const innerW = W - PAD.left - PAD.right;
   const innerH = H - PAD.top - PAD.bottom;
+
+  /**
+   * One handler for the whole plot, asking which point is nearest.
+   *
+   * There used to be a transparent hit target per point. Targets draw in series
+   * order, so a later point's target covered an earlier point's mark: on the
+   * real artifact 278 of 367 marks sat under someone else's target, clicking
+   * the dot labelled Watkins pinned Calvert-Lewin, and 161 players could not be
+   * pinned at all. Nearest-point has no ordering in it.
+   */
+  function pinNearest(event: React.MouseEvent<SVGSVGElement>) {
+    const svg = event.currentTarget;
+    const box = svg.getBoundingClientRect();
+    if (box.width === 0 || box.height === 0) return;
+    // Client pixels -> viewBox units -> plot fractions.
+    const vx = ((event.clientX - box.left) / box.width) * W;
+    const vy = ((event.clientY - box.top) / box.height) * H;
+    const hit = nearest(
+      points, bounds,
+      (vx - PAD.left) / innerW,
+      1 - (vy - PAD.top) / innerH,
+    );
+    if (hit) onPin(hit.elementId);
+  }
   const at = (p: (typeof points)[number]) => {
     const { x, y } = place(p, bounds);
     return { cx: PAD.left + x * innerW, cy: PAD.top + (1 - y) * innerH };
@@ -84,7 +142,9 @@ export function Scatter(
           viewBox={`0 0 ${W} ${H}`}
           role="img"
           aria-label={`Expected goals against expected assists for ${points.length} players, last season`}
-          style={{ width: "100%", minWidth: 420, height: "auto", display: "block" }}
+          onClick={pinNearest}
+          style={{ width: "100%", minWidth: 420, height: "auto", display: "block",
+                   cursor: "pointer" }}
         >
           {/* Grid first, so every mark sits above it. */}
           {ticks(bounds.maxX).map((value) => {
@@ -130,36 +190,23 @@ export function Scatter(
                   fillOpacity={isPinned ? 1 : .55}
                   stroke={isPinned ? S.agree : "none"}
                   strokeWidth={2}
+                  data-testid="scatter-point"
+                  data-element={point.elementId}
+                  data-pinned={isPinned ? "yes" : "no"}
                 />
                 {named.has(point.elementId) || isPinned ? (
                   <text x={cx + 7} y={cy + 3} fill={S.ink} fillOpacity={.7}
                         fontFamily={SANS} fontSize={9.5}>{point.name}</text>
                 ) : null}
-                {/* The control. Transparent and on top, so the mark stays the
-                    thing you see and the target stays big enough to hit. */}
-                <circle
-                  cx={cx} cy={cy} r={9} fill="transparent"
-                  data-testid="scatter-point"
-                  data-element={point.elementId}
-                  data-pinned={isPinned ? "yes" : "no"}
-                  role="button"
-                  tabIndex={0}
-                  aria-pressed={isPinned}
-                  aria-label={`${point.name}, ${point.position}, ${point.xg.toFixed(1)} expected goals, ${point.xa.toFixed(1)} expected assists`}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => onPin(point.elementId)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      onPin(point.elementId);
-                    }
-                  }}
-                >
-                  <title>
-                    {point.name} — {point.xg.toFixed(2)} xG, {point.xa.toFixed(2)} xA,
-                    {" "}{point.minutes} minutes
-                  </title>
-                </circle>
+                {/* No per-point control. Every point used to be a tab stop —
+                    367 of them, in front of the comparison panel and the whole
+                    table, with no bypass. The table below has a pin button on
+                    every row and is the keyboard route; this is the pointer
+                    one. */}
+                <title>
+                  {point.name} — {point.xg.toFixed(2)} xG, {point.xa.toFixed(2)} xA,
+                  {" "}{point.minutes} minutes
+                </title>
               </g>
             );
           })}

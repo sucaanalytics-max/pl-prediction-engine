@@ -31,7 +31,7 @@
 import { NextResponse } from "next/server";
 
 import {
-  ARTICLE_FEEDS, findEntry, parseFeed, toParagraphs,
+  ARTICLE_FEEDS, findEntry, parseFeed, toBody,
 } from "@/lib/news/article";
 
 export const dynamic = "force-dynamic";
@@ -46,6 +46,8 @@ interface ArticleBody {
   readonly title: string;
   readonly url: string;
   readonly paragraphs: readonly string[];
+  /** True when the cap cut the article short, so the reader can be told. */
+  readonly truncated: boolean;
 }
 
 function fail(reason: string, status: number) {
@@ -99,13 +101,22 @@ export async function GET(request: Request) {
     return fail("That article has scrolled out of the feed; open it at the source.", 404);
   }
 
-  const paragraphs = toParagraphs(entry.body);
-  if (paragraphs.length === 0) {
-    return fail("The feed carried no readable body for that article.", 404);
+  const body = toBody(entry.body);
+  if (body.paragraphs.length === 0) {
+    // A feed running WordPress in Summary mode publishes an excerpt and no
+    // `content:encoded`. There is no article to give and the teaser is already
+    // on screen, so say that rather than returning it again as though it were
+    // the piece.
+    return fail("That source publishes only a summary in its feed.", 404);
   }
 
   return NextResponse.json<{ data: ArticleBody }>(
-    { data: { title: entry.title, url: entry.link, paragraphs } },
+    {
+      data: {
+        title: entry.title, url: entry.link,
+        paragraphs: body.paragraphs, truncated: body.truncated,
+      },
+    },
     {
       headers: {
         // The publisher's own feed changes on their schedule, not ours, and the

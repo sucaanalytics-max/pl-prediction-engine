@@ -8,7 +8,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  ARTICLE_FEEDS, findEntry, MAX_PARAGRAPHS, parseFeed, toParagraphs,
+  ARTICLE_FEEDS, findEntry, MAX_PARAGRAPHS, parseFeed, toBody, toParagraphs,
 } from "@/lib/news/article";
 
 /** A feed in the shape WordPress actually emits, CDATA and all. */
@@ -48,8 +48,22 @@ describe("the feed reader", () => {
     expect(parseFeed(FEED)[0].body).toContain("4-2-3-1");
   });
 
-  it("falls back to the description when there is no full body", () => {
-    expect(parseFeed(FEED)[1].body).toContain("publishes no full body");
+  it("returns no body when the feed carries only a summary", () => {
+    /**
+     * The fallback that was here made "read here" a promise the feature could
+     * not keep. fantasyfootballscout runs WordPress in Summary mode — 12 items,
+     * zero `content:encoded` — so falling back to `description` returned the
+     * same 400 characters already on screen, plus the "appeared first on"
+     * backlink, after a spinner and a round trip.
+     */
+    expect(parseFeed(FEED)[1].body).toBe("");
+  });
+
+  it("says which sources can be read in full, and which cannot", () => {
+    // Measured on the live feeds: allaboutfpl and premierfantasytools publish
+    // `content:encoded`; fantasyfootballscout publishes none.
+    expect(Object.keys(ARTICLE_FEEDS)).toContain("allaboutfpl");
+    expect(Object.keys(ARTICLE_FEEDS)).not.toContain("fantasyfootballscout");
   });
 
   it("returns nothing for a document that is not a feed", () => {
@@ -122,6 +136,21 @@ describe("markup does not survive", () => {
     const huge = Array.from({ length: 500 }, (_, i) =>
       `<p>Paragraph number ${i} padded out to clear the minimum length.</p>`).join("");
     expect(toParagraphs(huge)).toHaveLength(MAX_PARAGRAPHS);
+  });
+
+  it("reports that it cut the article rather than just stopping", () => {
+    /**
+     * Four of the ten articles in the live allaboutfpl feed exceed the cap and
+     * used to stop dead 27 paragraphs early, mid-list, with no marker. Nothing
+     * distinguished that from an article that simply ended.
+     */
+    const huge = Array.from({ length: 200 }, (_, i) =>
+      `<p>Paragraph number ${i} padded out to clear the minimum length.</p>`).join("");
+    expect(toBody(huge).truncated).toBe(true);
+  });
+
+  it("does not claim truncation on an article that fits", () => {
+    expect(toBody("<p>" + "a".repeat(60) + "</p>").truncated).toBe(false);
   });
 
   it("returns nothing rather than throwing on empty input", () => {

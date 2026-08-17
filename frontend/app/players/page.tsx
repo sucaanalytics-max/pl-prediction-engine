@@ -65,10 +65,21 @@ function Stat({ value, digits = 0 }: { value: number | null; digits?: number }) 
  * So the default is ownership — the one forward-looking number present on 498 of
  * 577 rows, and the honest answer to "where do I start".
  */
+/**
+ * Sort keys, minus form.
+ *
+ * `form` is `0.0` on all 587 rows and will be until a gameweek has been played
+ * — FPL zeroes it between seasons while keeping the totals. Offering "Sort:
+ * Form" handed the reader element-id order under a control that still said
+ * Form, with a measured-looking 0.0 in every row of a column headed Form. A
+ * control that cannot do what it says is worse than one that is missing.
+ *
+ * It comes back when the field carries values; the column below now says why it
+ * is empty rather than showing a bare zero.
+ */
 const SORTS = [
   { key: "ownership", label: "Owned by", get: (r: PlayerRow) => r.fpl_ownership },
   { key: "price", label: "Price", get: (r: PlayerRow) => r.fpl_price },
-  { key: "form", label: "Form", get: (r: PlayerRow) => r.form },
   { key: "goals", label: "Goals", get: (r: PlayerRow) => r.goals },
   { key: "assists", label: "Assists", get: (r: PlayerRow) => r.assists },
   { key: "xg", label: "xG", get: (r: PlayerRow) => r.xg },
@@ -216,7 +227,12 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
               <th scope="col" className="text-center">Pos</th>
               <th scope="col" className="text-center">Price</th>
               <th scope="col" className="text-center">Owned</th>
-              <th scope="col" className="text-center hidden sm:table-cell">Form</th>
+              {/* Titled, because the column is all zeroes until a gameweek is
+                  played and a bare 0.0 reads as a measurement. */}
+              <th scope="col" className="text-center hidden sm:table-cell"
+                  title="FPL zeroes form between seasons; it fills in once a gameweek has been played">
+                Form
+              </th>
               <th scope="col" className="text-center">G</th>
               <th scope="col" className="text-center">A</th>
               <th scope="col" className="text-center hidden md:table-cell">xG</th>
@@ -251,7 +267,10 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
                   {row.fpl_ownership === null ? "—" : `${row.fpl_ownership.toFixed(1)}%`}
                 </td>
                 <td className="text-center font-mono text-sm hidden sm:table-cell">
-                  <Stat value={row.form} digits={1} />
+                  {/* Null, not 0.0: FPL has not published a form figure for
+                      this season, and the absence mark says so where a zero
+                      would claim the player is out of form. */}
+                  <Stat value={row.form === 0 ? null : row.form} digits={1} />
                 </td>
                 <td className="text-center font-mono text-sm">{row.goals}</td>
                 <td className="text-center font-mono text-sm">{row.assists}</td>

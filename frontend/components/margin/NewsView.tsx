@@ -71,7 +71,11 @@ function ago(iso: string | null): string {
 type Body =
   | { readonly at: "idle" }
   | { readonly at: "loading" }
-  | { readonly at: "read"; readonly paragraphs: readonly string[] }
+  | {
+      readonly at: "read";
+      readonly paragraphs: readonly string[];
+      readonly truncated: boolean;
+    }
   | { readonly at: "refused"; readonly reason: string };
 
 function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
@@ -89,7 +93,7 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
     // belongs where every other narrowing in this app lives.
     const result = await readArticle(item.source, item.url ?? "");
     setBody(result.ok
-      ? { at: "read", paragraphs: result.paragraphs }
+      ? { at: "read", paragraphs: result.paragraphs, truncated: result.truncated }
       : { at: "refused", reason: result.reason });
   }
 
@@ -151,6 +155,12 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
       {body.at === "read" ? (
         <div data-testid="news-body" style={{ display: "flex", flexDirection: "column", gap: 8,
                     borderLeft: `1px solid ${S.hair}`, paddingLeft: 12, marginTop: 2 }}>
+          {body.truncated ? (
+            <p data-testid="news-truncated"
+               style={{ margin: 0, fontFamily: MONO, fontSize: 10, color: S.noise }}>
+              long article — the rest is at the source
+            </p>
+          ) : null}
           {body.paragraphs.map((paragraph, i) => (
             <p key={i} style={{ margin: 0, fontFamily: SANS, fontSize: 13,
                                 lineHeight: 1.6, color: S.ink, opacity: .85,

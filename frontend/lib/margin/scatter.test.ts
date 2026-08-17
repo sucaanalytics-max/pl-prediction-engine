@@ -8,7 +8,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { notable, place, plot, ticks } from "@/lib/margin/scatter";
+import { nearest, notable, place, plot, ticks } from "@/lib/margin/scatter";
 import { MIN_MINUTES_FOR_RATES, type PlayerRow } from "@/lib/data/narrow";
 
 function row(over: Partial<PlayerRow> = {}): PlayerRow {
@@ -89,13 +89,19 @@ describe("placing a point", () => {
 
 describe("which points get a name", () => {
   it("names the largest combined output, because 400 labels is a block of text", () => {
+    /**
+     * The fixture has to make the SUM decide. The first version ranked the same
+     * either way — sorting on xG alone or xA alone gave the same answer — so it
+     * passed with the combination removed. Here the winner leads on neither
+     * axis by itself: 14+13 beats both 20+1 and 2+18.
+     */
     const rows = [
-      row({ elementId: 1, xg: 25, xa: 2 }),
-      row({ elementId: 2, xg: 1, xa: 1 }),
-      row({ elementId: 3, xg: 10, xa: 12 }),
+      row({ elementId: 1, xg: 20, xa: 1 }),   // leads on xG alone
+      row({ elementId: 2, xg: 2, xa: 18 }),   // leads on xA alone
+      row({ elementId: 3, xg: 14, xa: 13 }),  // leads on neither, wins on both
     ];
     const { points } = plot(rows);
-    expect([...notable(points, 2)].sort()).toEqual([1, 3]);
+    expect([...notable(points, 1)]).toEqual([3]);
   });
 
   it("names nobody from an empty cloud", () => {
@@ -110,5 +116,50 @@ describe("axis ticks", () => {
 
   it("always includes the origin", () => {
     expect(ticks(3)[0]).toBe(0);
+  });
+});
+
+describe("which point a click means", () => {
+  /**
+   * The chart used to carry one transparent hit target per point, and targets
+   * are drawn in series order — so a later point's target covered an earlier
+   * point's mark. On the real artifact 278 of 367 marks sat under someone
+   * else's target. Nearest-point has no ordering in it.
+   */
+  const cloud = plot([
+    row({ elementId: 1, name: "Haaland", xg: 25, xa: 2 }),
+    row({ elementId: 2, name: "B.Fernandes", xg: 10, xa: 12 }),
+    row({ elementId: 3, name: "Watkins", xg: 15, xa: 1 }),
+  ]);
+
+  it("returns the point under the click", () => {
+    const at = place(cloud.points[0], cloud.bounds);
+    expect(nearest(cloud.points, cloud.bounds, at.x, at.y)?.name).toBe("Haaland");
+  });
+
+  it("does not depend on draw order", () => {
+    // The whole defect: the last-drawn point used to win regardless.
+    const at = place(cloud.points[2], cloud.bounds);
+    expect(nearest(cloud.points, cloud.bounds, at.x, at.y)?.name).toBe("Watkins");
+    const reversed = { ...cloud, points: [...cloud.points].reverse() };
+    expect(nearest(reversed.points, reversed.bounds, at.x, at.y)?.name).toBe("Watkins");
+  });
+
+  it("returns nothing for a click on empty space", () => {
+    // Otherwise a click anywhere pins whoever is least far away.
+    expect(nearest(cloud.points, cloud.bounds, 0.5, 0.99)).toBeNull();
+  });
+
+  it("picks the closer of two neighbours", () => {
+    const near = plot([
+      row({ elementId: 1, name: "A", xg: 10, xa: 10 }),
+      row({ elementId: 2, name: "B", xg: 10.4, xa: 10 }),
+    ]);
+    const a = place(near.points[0], near.bounds);
+    expect(nearest(near.points, near.bounds, a.x, a.y)?.name).toBe("A");
+  });
+
+  it("finds nothing in an empty cloud", () => {
+    expect(nearest([], { maxX: 1, maxY: 1 }, 0.5, 0.5)).toBeNull();
   });
 });

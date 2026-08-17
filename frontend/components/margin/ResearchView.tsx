@@ -510,7 +510,8 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
               {/* The chart is a way of finding two players worth comparing, so
                   it sits above the panel it feeds. */}
               <div style={{ padding: "12px 18px 0" }}>
-                <Scatter rows={stats} pinned={compareIds} onPin={togglePin} />
+                <Scatter rows={stats} artifact={statsArtifact as never}
+                           pinned={compareIds} onPin={togglePin} />
               </div>
 
               {compareIds.length > 0 ? (

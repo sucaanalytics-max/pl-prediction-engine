@@ -139,3 +139,28 @@ describe("the artifact envelope still classifies it", () => {
     expect(proven(artifact)?.points_sd).toBe(15.6);
   });
 });
+
+describe("the plan's free-transfer count", () => {
+  /**
+   * `narrowPlan` dropped `free_transfers_after` while `milp.py:214` published it
+   * on every plan, so week 0 of the horizon grid showed a gap where the producer
+   * had supplied a number. The fix went in untested: `PlanGrid.test.tsx` builds
+   * its weeks already-narrowed, so it never exercises the narrower at all.
+   */
+  it("reads what milp.py publishes", () => {
+    const value = decision({ plan: { squad: [1], xi: [1], free_transfers_after: 2 } });
+    expect(value?.plan?.free_transfers_after).toBe(2);
+  });
+
+  it("is null rather than zero when the producer omits it", () => {
+    // Zero free transfers and an unknown count are different facts, and the
+    // grid renders them differently.
+    const value = decision({ plan: { squad: [1], xi: [1] } });
+    expect(value?.plan?.free_transfers_after).toBeNull();
+  });
+
+  it("keeps a genuine zero", () => {
+    const value = decision({ plan: { squad: [1], xi: [1], free_transfers_after: 0 } });
+    expect(value?.plan?.free_transfers_after).toBe(0);
+  });
+});

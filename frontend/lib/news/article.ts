@@ -39,8 +39,13 @@
  */
 export const ARTICLE_FEEDS: Readonly<Record<string, string>> = {
   allaboutfpl: "https://allaboutfpl.com/feed/",
-  fantasyfootballscout: "https://www.fantasyfootballscout.co.uk/feed",
   premierfantasytools: "https://www.premierfantasytools.com/feed/",
+  // fantasyfootballscout is deliberately absent. Its feed runs in WordPress
+  // Summary mode: 12 items, zero `content:encoded`, and a `description` that is
+  // the excerpt plus the "The post … appeared first on …" backlink. Offering
+  // "read here" there returned the same 400 characters already on screen plus
+  // boilerplate, which is an affordance that lies. Measured on the live feed;
+  // `article.test.ts` pins the reason.
 };
 
 /** Paragraphs shorter than this are navigation, bylines and share prompts. */
@@ -58,7 +63,34 @@ export const MAX_PARAGRAPHS = 120;
  * blank lines) yields one wall of text, because the feed's HTML carries no
  * newlines of its own.
  */
+/** Whether an article was cut short by the cap, and by how much. */
+export interface Body {
+  readonly paragraphs: string[];
+  readonly truncated: boolean;
+}
+
+/**
+ * The article, with a flag when the cap cut it.
+ *
+ * `toParagraphs` slices at `MAX_PARAGRAPHS` and said nothing, so on 4 of the 10
+ * articles in the allaboutfpl feed the text stopped 27 paragraphs early —
+ * mid-list, with no ellipsis and no count. Nothing distinguished a truncated
+ * article from one that simply ended, which is an absence with no reason
+ * attached.
+ */
+export function toBody(html: string): Body {
+  const all = toParagraphsUncapped(html);
+  return {
+    paragraphs: all.slice(0, MAX_PARAGRAPHS),
+    truncated: all.length > MAX_PARAGRAPHS,
+  };
+}
+
 export function toParagraphs(html: string): string[] {
+  return toBody(html).paragraphs;
+}
+
+function toParagraphsUncapped(html: string): string[] {
   const withoutCode = html.replace(
     /<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, " ",
   );
@@ -69,8 +101,7 @@ export function toParagraphs(html: string): string[] {
   return text
     .split(/\n{2,}/)
     .map((piece) => piece.split(/\s+/).filter(Boolean).join(" "))
-    .filter((piece) => piece.length >= MIN_PARAGRAPH)
-    .slice(0, MAX_PARAGRAPHS);
+    .filter((piece) => piece.length >= MIN_PARAGRAPH);
 }
 
 /**
@@ -143,10 +174,13 @@ export function parseFeed(xml: string): FeedEntry[] {
     out.push({
       link,
       title: pick(item, "title") ?? "",
-      // `content:encoded` is the full article; `description` is the teaser the
-      // artifact already carries. Prefer the former and fall back, so a feed
-      // that publishes only a summary still returns something readable.
-      body: pickTag(item, "content:encoded") ?? pick(item, "description") ?? "",
+      // `content:encoded` ONLY. `description` is the teaser the artifact
+      // already carries, and falling back to it made "read here" return the
+      // sentence the reader was already looking at — on 12 of 13 items, after a
+      // spinner and a network round trip. A feed with no full body has no
+      // article to give, and the route says so rather than dressing up the
+      // summary as one.
+      body: pickTag(item, "content:encoded") ?? "",
     });
   }
   return out;
@@ -192,7 +226,12 @@ function canonical(url: string): string | null {
 
 /** What the reader asked for, or why it is not there. */
 export type ArticleResult =
-  | { readonly ok: true; readonly title: string; readonly paragraphs: readonly string[] }
+  | {
+      readonly ok: true;
+      readonly title: string;
+      readonly paragraphs: readonly string[];
+      readonly truncated: boolean;
+    }
   | { readonly ok: false; readonly reason: string };
 
 /**
@@ -240,5 +279,6 @@ export async function readArticle(source: string, url: string): Promise<ArticleR
     ok: true,
     title: typeof data.title === "string" ? data.title : "",
     paragraphs,
+    truncated: data.truncated === true,
   };
 }

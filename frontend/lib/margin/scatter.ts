@@ -116,3 +116,45 @@ export function ticks(max: number): number[] {
   for (let value = 0; value <= max; value += step) out.push(value);
   return out;
 }
+
+
+/**
+ * The point nearest a click, in fractional chart space.
+ *
+ * Replaces one transparent hit target per point, which did not work and could
+ * not be made to: targets are drawn in series order, so a later point's target
+ * covers an earlier point's mark. Measured on the real artifact, **278 of 367**
+ * marks sat under someone else's target — clicking the dot labelled Watkins
+ * pinned Calvert-Lewin, and 161 players could not be pinned at all because
+ * every pixel of their mark belonged to a point drawn after them.
+ *
+ * Enlarging the marks or shrinking the targets only moves the threshold. One
+ * handler that asks which point is nearest has no ordering in it at all, which
+ * is also what a reader means when they click into a cluster.
+ *
+ * `x` and `y` are fractions of the plot area, so this needs no pixel geometry
+ * and can be tested without rendering. Returns null beyond `within`, so a click
+ * on empty space stays a click on empty space rather than pinning whoever
+ * happens to be least far away.
+ */
+export function nearest(
+  points: readonly Point[],
+  bounds: Bounds,
+  x: number,
+  y: number,
+  within = 0.04,
+): Point | null {
+  let best: Point | null = null;
+  let bestDistance = Infinity;
+  for (const point of points) {
+    const at = place(point, bounds);
+    // Squared distance: the comparison is identical and the square root is not
+    // free across 367 points on every click.
+    const distance = (at.x - x) ** 2 + (at.y - y) ** 2;
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      best = point;
+    }
+  }
+  return bestDistance <= within ** 2 ? best : null;
+}
