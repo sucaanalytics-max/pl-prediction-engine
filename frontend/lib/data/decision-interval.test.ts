@@ -34,14 +34,27 @@ function decision(over: Record<string, unknown> = {}) {
   return result.ok ? result.value : null;
 }
 
+/**
+ * The producer's real block, generated from `PlanEvaluation.as_dict()`.
+ *
+ * This fixture used to read `points_sd`, `points_q10`, `prob_at_least` and
+ * `autosub_prob` — the same names the narrower read, and names nothing in the
+ * pipeline has ever written. Fixture and code agreed with each other, the file
+ * passed, and both were describing a producer that does not exist.
+ *
+ * `plan_eval.py:190-202` emits `sd_points`, a `quantiles` map keyed `q10…q99`,
+ * a `tails` map keyed `p_ge_40…p_ge_90`, and `autosub_rate`. Note `p_ge_60:
+ * 0.479` — the design's headline "P(≥60) 47.9%" was backed by a published
+ * number the whole time, while the screen rendered its absence.
+ */
 const FULL = {
-  points_sd: 15.6,
-  points_q10: 40.0,
-  points_q50: 59.0,
-  points_q90: 81.0,
-  points_mode: 57.0,
-  prob_at_least: { "40": 0.891, "60": 0.479, "70": 0.246, "90": 0.038 },
-  autosub_prob: 0.062,
+  sd_points: 15.6,
+  quantiles: { q10: 38.1, q25: 48.0, q50: 59.0, q75: 70.2, q90: 80.4, q99: 99.1 },
+  tails: {
+    p_ge_40: 0.91, p_ge_50: 0.78, p_ge_60: 0.479,
+    p_ge_70: 0.24, p_ge_80: 0.09, p_ge_90: 0.02,
+  },
+  autosub_rate: 0.137,
   n_draws: 10000,
 };
 
@@ -49,11 +62,13 @@ describe("the published interval", () => {
   it("reads every field when the producer ships the block", () => {
     const value = decision(FULL);
     expect(value?.points_sd).toBe(15.6);
-    expect(value?.points_q10).toBe(40);
-    expect(value?.points_q90).toBe(81);
-    expect(value?.points_mode).toBe(57);
+    expect(value?.points_q10).toBe(38.1);
+    expect(value?.points_q90).toBe(80.4);
+    // No mode. The simulation publishes quantiles for the squad total and never
+    // a mode, so this is permanently null and the screen must not draw one.
+    expect(value?.points_mode).toBeNull();
     expect(value?.nDraws).toBe(10000);
-    expect(value?.autosubProb).toBeCloseTo(0.062);
+    expect(value?.autosubProb).toBeCloseTo(0.137);
   });
 
   it("narrows to nulls when the producer has not shipped it", () => {
@@ -67,10 +82,10 @@ describe("the published interval", () => {
     expect(value?.autosubProb).toBeNull();
   });
 
-  it("keeps the mean when only half an interval is published", () => {
+  it("reads a quantile map carrying only one end", () => {
     // The glyph refuses the whisker itself; the narrower's job is only to pass
     // through what was published without inventing the other end.
-    const value = decision({ points_q10: 40 });
+    const value = decision({ quantiles: { q10: 40.0 } });
     expect(value?.points_q10).toBe(40);
     expect(value?.points_q90).toBeNull();
   });
@@ -121,6 +136,6 @@ describe("the artifact envelope still classifies it", () => {
       now: new Date("2026-08-14T00:00:00Z"),
     });
     expect(artifact.state).toBe("empty");
-    expect(proven(artifact)?.points_mode).toBe(57);
+    expect(proven(artifact)?.points_sd).toBe(15.6);
   });
 });

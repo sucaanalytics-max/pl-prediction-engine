@@ -254,3 +254,47 @@ describe("as an artifact", () => {
     expect("value" in (artifact as unknown as Record<string, unknown>)).toBe(false);
   });
 });
+
+describe("a change that moves only the armband", () => {
+  /**
+   * `deltas.py` ORs the captain into `flipped` while `describe_move` compares
+   * only transfers, so this shape is a first-class producer state — verified by
+   * running `assess_impact` on two plans differing only in `captain`:
+   *
+   *   root_move {before: "hold", after: "hold", flipped: true}
+   *   captain   {before: 100, after: 200}
+   *
+   * The narrower read `captain` into a local and dropped it with `void captain`,
+   * so both renderers printed "This changes the recommended move" above
+   * "hold → hold" and the number 200 appeared nowhere on the page.
+   */
+  // `IMPACT`'s shape, with the one difference that defines the case: the root
+  // move is identical either side and only the armband moved.
+  const CAPTAIN_ONLY = jsonl({
+    ...IMPACT,
+    delta_id: "d-captain-only",
+    root_move: { before: "hold", after: "hold", flipped: true },
+    captain: { before: 100, after: 200 },
+  });
+
+  it("keeps the armband either side of the change", () => {
+    const record = ok(CAPTAIN_ONLY).records[0];
+    expect(record?.captainBefore).toBe(100);
+    expect(record?.captainAfter).toBe(200);
+  });
+
+  it("still reports the flip, so the header is not the thing that is wrong", () => {
+    const record = ok(CAPTAIN_ONLY).records[0];
+    expect(record?.flipped).toBe(true);
+    // And the root move genuinely did not move — which is why printing it as an
+    // arrow was the defect.
+    expect(record?.root_move_before).toBe(record?.root_move_after);
+  });
+
+  it("leaves the armband null when the producer sent no captain block", () => {
+    const { captain: _dropped, ...noCaptain } = IMPACT;
+    const record = ok(jsonl({ ...noCaptain, delta_id: "d2" })).records[0];
+    expect(record?.captainBefore).toBeNull();
+    expect(record?.captainAfter).toBeNull();
+  });
+});

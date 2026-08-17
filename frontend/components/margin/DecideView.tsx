@@ -23,11 +23,22 @@
  * ## The one number this screen refuses to draw
  *
  * The design's headline carries a quantile strip — q10 through q99 with
- * `P(≥60) 47.9%` under it — for the whole XI. `PublicDecision` publishes
- * `mean_points` and no distribution, and a squad total's spread is not the sum
- * of its players' because clean sheets are drawn jointly. So the strip is not
- * drawn. Per-player glyphs are, everywhere the projection publishes quantiles,
- * because those are measured.
+ * `P(≥60) 47.9%` under it — for the whole XI, and this file used to say that
+ * strip was undrawable because `PublicDecision` published a mean and no
+ * distribution.
+ *
+ * That was wrong, and wrong in the most expensive way: the narrower was reading
+ * `points_sd`, `points_q10` and `prob_at_least`, names nothing in the pipeline
+ * has ever written, so the fields arrived null and the absence looked like a
+ * fact about the producer. `plan_eval.py:190-202` has published the squad
+ * total's whole distribution all along — `sd_points`, a `quantiles` map keyed
+ * `q10…q99`, and a `tails` map keyed `p_ge_40…p_ge_90`. The design's own
+ * headline figure is `tails.p_ge_60`, which the producer computes as 0.479.
+ *
+ * The reads now point at the real names, so the strip is backed. A squad
+ * total's spread still is not the sum of its players' — clean sheets are drawn
+ * jointly — which is exactly why it had to come from the simulation rather than
+ * from arithmetic here, and now it does.
  */
 
 import { useMemo, useState } from "react";

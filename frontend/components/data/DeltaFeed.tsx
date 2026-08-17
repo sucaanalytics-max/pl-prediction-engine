@@ -141,9 +141,20 @@ function ImpactLine({ impact }: { impact: DeltaRecord }) {
           ? "This changes the recommended move"
           : "The recommended move is unchanged"}
       </p>
-      {impact.flipped ? (
+      {/* Only when it actually moved. `flipped` is true for a captain-only
+          change too, and printing the root move then gave "hold → hold" directly
+          under "This changes the recommended move" — the header and the evidence
+          contradicting each other on the same card. */}
+      {impact.flipped && impact.root_move_before !== impact.root_move_after ? (
         <p className="text-xs font-mono" style={{ color: "var(--text-2)" }}>
           {impact.root_move_before ?? "unknown"} → {impact.root_move_after ?? "unknown"}
+        </p>
+      ) : null}
+      {impact.flipped && impact.captainBefore !== impact.captainAfter
+        && (impact.captainBefore !== null || impact.captainAfter !== null) ? (
+        <p className="text-xs font-mono" data-testid="delta-captain"
+           style={{ color: "var(--text-2)" }}>
+          captain {impact.captainBefore ?? "none"} → {impact.captainAfter ?? "none"}
         </p>
       ) : null}
       {moved.length > 0 ? (

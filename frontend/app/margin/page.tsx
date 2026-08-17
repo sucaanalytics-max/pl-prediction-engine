@@ -24,10 +24,11 @@
  * and why, in Margin's own marks rather than the app's cards. Three things the
  * design draws are therefore **not** drawn here, each for a stated reason:
  *
- * - the XI's quantile strip — `PublicDecision` publishes a mean and no interval,
- *   and a squad total's spread is not the sum of its players' because clean
- *   sheets are drawn jointly (`DecideView`, reached from the call card at
- *   `/decide` rather than from a tab here);
+ * - the XI's quantile strip — listed here for a long time as undrawable, on the
+ *   strength of a narrower reading field names no producer writes. The
+ *   simulation publishes the squad total's distribution and always did; the
+ *   reads were pointed at it, and the strip is backed (`DecideView`, reached
+ *   from the call card at `/decide` rather than from a tab here);
  * - the eight-week grid of starts, benchings and sales — nothing solves a
  *   horizon, and a grid assembled from per-week projections would carry a
  *   solver's authority without a solve (`ScoreView`);

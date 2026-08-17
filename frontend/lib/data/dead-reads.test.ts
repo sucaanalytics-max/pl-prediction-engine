@@ -118,6 +118,20 @@ const ALLOWED: Record<string, string> = {
   "fixtureXg:rows": "legacy fallback behind `fixtures`",
   "fixtureXg:current_gameweek": "not emitted; the artifact carries first_gameweek",
 
+  // The interquartile pair, wired end to end and waiting on a producer that
+  // does not compute it. `simulate_gameweek` produces q10/q50/q90/q99 per player
+  // — the private `xp_gw01.json` carries exactly those — and `public_xp.CARRIED`
+  // passes q10/q50/q90 through. Nothing anywhere computes q25 or q75.
+  //
+  // The reads stay because the path is complete on this side: four components
+  // thread them into the distribution glyph, and `lib/margin/distribution.ts`
+  // declines to draw the box rather than deriving it from the standard
+  // deviation, which is what the design did and what this repo refuses to do.
+  // Adding the two quantiles to the simulation summary and to CARRIED makes the
+  // box appear with no frontend change.
+  "projections:q25": "no producer computes it; the glyph omits the box rather than deriving it",
+  "projections:q75": "no producer computes it; the glyph omits the box rather than deriving it",
+
   // Fallback behind goals_scored, kept for the same reason.
   "playerStats:goals": "legacy fallback behind goals_scored",
   "playerStats:xg": "first choice, with expected_goals as the working fallback",
@@ -200,6 +214,43 @@ function narrowers(): Narrower[] {
     const body = collect(fn);
     if (body) out.push({ fn, body, key, path });
   }
+
+  /**
+   * The descriptors built by a function, which the regex above cannot see.
+   *
+   * Discovery requires `key: "..."` and `path: "..."` as double-quoted string
+   * literals. All four factories interpolate the gameweek, entry or fixture into
+   * a template literal, so none of them matched and this guard ran over 15 of 19
+   * narrowers — missing the two largest FPL artifacts entirely, which is where
+   * the phantom reads turned out to be.
+   *
+   * Listed explicitly and instantiated at a fixed gameweek, exactly as
+   * `paths.test.ts` handles the same blind spot for the same four descriptors.
+   * The path matters only for reading the artifact off disk; any gameweek with a
+   * committed file will do.
+   */
+  for (const { fn, key, path } of [
+    { fn: "narrowProjections", key: "projections", path: "fpl/xp_public_gw01.json" },
+    { fn: "narrowPublicDecision", key: "decisionPublic",
+      path: "fpl/decision_public_gw01_season.json" },
+    { fn: "narrowSensitivity", key: "sensitivity",
+      path: "fpl/sensitivity_gw01_season.json" },
+    { fn: "narrowMatchDetail", key: "matchDetail", path: "match_detail.json" },
+  ]) {
+    if (out.some((n) => n.key === key)) continue;
+    const seen = new Set<string>();
+    const collect = (name: string, depth = 0): string => {
+      if (depth > 6 || seen.has(name)) return "";
+      seen.add(name);
+      const inner = bodies.get(name);
+      if (!inner) return "";
+      const called = [...inner.matchAll(/\b(narrow[A-Za-z0-9_]+)\s*\(/g)].map((m) => m[1]);
+      return [inner, ...called.map((c) => collect(c, depth + 1))].join("\n");
+    };
+    const body = collect(fn);
+    if (body) out.push({ fn, body, key, path });
+  }
+
   return out;
 }
 
@@ -216,7 +267,7 @@ function fieldsRead(body: string): string[] {
     ...new Set(
       [
         ...body.matchAll(
-          /\b(?:file|row|raw|item|entry|obj|metadata)\.([a-z_][a-z0-9_]*)\b(?!\s*\()/g,
+          /\b(?:file|row|raw|item|entry|obj|metadata|decision|plan|source|payload)\.([a-z_][a-z0-9_]*)\b(?!\s*\()/g,
         ),
       ].map((m) => m[1]),
     ),

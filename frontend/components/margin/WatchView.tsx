@@ -180,7 +180,12 @@ function Change({ record }: { record: DeltaRecord }) {
         </span>
         <span style={{ fontSize: 13, color: S.ink }}>
           {impact
-            ? `${record.entry_label ?? "entry"} · ${record.root_move_before ?? "?"} → ${record.root_move_after ?? "?"}`
+            // A captain-only flip leaves the root move identical, so naming the
+            // armband is the only way this line says what changed.
+            ? record.root_move_before === record.root_move_after
+              && (record.captainBefore !== null || record.captainAfter !== null)
+              ? `${record.entry_label ?? "entry"} · captain ${record.captainBefore ?? "none"} → ${record.captainAfter ?? "none"}`
+              : `${record.entry_label ?? "entry"} · ${record.root_move_before ?? "?"} → ${record.root_move_after ?? "?"}`
             : record.player_name ?? `element ${record.element_id ?? "?"}`}
         </span>
         {impact && record.flipped ? (

@@ -814,6 +814,18 @@ export interface DeltaRecord {
   readonly player_name: string | null;
   readonly club: string | null;
   readonly claim_type: string | null;
+  /**
+   * The armband either side of the change, when it moved.
+   *
+   * `deltas.py:353-357` ORs the captain into `flipped` while `describe_move`
+   * compares only transfers, so a news item that moves the armband alone
+   * publishes `root_move {before: "hold", after: "hold", flipped: true}` with the
+   * real change in `captain`. That field was read into a local and dropped with
+   * `void captain`, so both renderers printed "This changes the recommended
+   * move" above "hold → hold" and the reader never saw what moved.
+   */
+  readonly captainBefore: number | null;
+  readonly captainAfter: number | null;
   readonly before: unknown;
   readonly after: unknown;
   readonly why_material: string | null;
@@ -893,6 +905,8 @@ export function narrowDeltas(raw: unknown): NarrowResult<DeltaFeed> {
       player_name: optString(parsed.player_name),
       club: optString(parsed.club),
       claim_type: optString(parsed.claim_type),
+      captainBefore: optNumber(captain.before),
+      captainAfter: optNumber(captain.after),
       before: parsed.before ?? null,
       after: parsed.after ?? null,
       why_material: optString(parsed.why_material),
@@ -922,7 +936,6 @@ export function narrowDeltas(raw: unknown): NarrowResult<DeltaFeed> {
         }];
       }),
     });
-    void captain;
   }
 
   if (unreadable > 0) {
@@ -1282,8 +1295,13 @@ export function narrowThresholds(raw: unknown): PointsThreshold[] {
   if (!isRecord(raw)) return [];
   const out: PointsThreshold[] = [];
   for (const [key, value] of Object.entries(raw)) {
-    const points = Number.parseInt(key, 10);
-    if (!Number.isFinite(points) || String(points) !== key.trim()) continue;
+    // `p_ge_60` is the producer's own key (`plan_eval.py:200`,
+    // `f"p_ge_{t}"`); the bare `60` form is accepted because this narrower was
+    // written against a block that was assumed to be pending and turned out to
+    // already exist under another name.
+    const label = key.trim().startsWith("p_ge_") ? key.trim().slice(5) : key.trim();
+    const points = Number.parseInt(label, 10);
+    if (!Number.isFinite(points) || String(points) !== label) continue;
     const p = toFraction(value);
     if (p === null) continue;
     out.push({ points, p });
@@ -1317,6 +1335,7 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
   if (gameweek === null || entry_label === null) return malformed(problems.all);
 
   const decision = isRecord(file.decision) ? file.decision : {};
+  const quantiles = isRecord(decision.quantiles) ? decision.quantiles : {};
   const plan = narrowPlan(decision.plan);
   const snapshot: Record<string, number> = {};
   if (isRecord(file.xp_snapshot)) {
@@ -1341,16 +1360,31 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
     ),
     xp_snapshot: snapshot,
 
-    // Every one optional. The block is additive at the producer, so a file
-    // written before it shipped narrows to nulls and renders the absence rather
-    // than failing the artifact.
-    points_sd: optNumber(decision.points_sd),
-    points_q10: optNumber(decision.points_q10),
-    points_q50: optNumber(decision.points_q50),
-    points_q90: optNumber(decision.points_q90),
-    points_mode: optNumber(decision.points_mode),
-    probAtLeast: narrowThresholds(decision.prob_at_least),
-    autosubProb: toFraction(decision.autosub_prob),
+    /**
+     * The squad total's distribution, under the names the producer uses.
+     *
+     * These were read as `points_sd`, `points_q10`, `prob_at_least` and
+     * `autosub_prob` — names nothing in the pipeline has ever written. The
+     * comment here said the block was "additive at the producer", i.e. pending;
+     * it is not. `plan_eval.py:190-202` has been computing and publishing the
+     * whole distribution all along as `sd_points`, a `quantiles` map keyed
+     * `q10…q99`, a `tails` map keyed `p_ge_40…p_ge_90`, and `autosub_rate`,
+     * and `Decision.as_dict` nests it under `decision`.
+     *
+     * So the screen rendered an absence over live data, and a docstring in
+     * `DecideView` recorded that absence as a principled refusal to draw the
+     * design's quantile strip. The strip was backed the whole time.
+     *
+     * `points_mode` has no counterpart and stays absent: the producer publishes
+     * quantiles for the squad total, not a mode.
+     */
+    points_sd: optNumber(decision.sd_points),
+    points_q10: optNumber(quantiles.q10),
+    points_q50: optNumber(quantiles.q50),
+    points_q90: optNumber(quantiles.q90),
+    points_mode: null,
+    probAtLeast: narrowThresholds(decision.tails),
+    autosubProb: toFraction(decision.autosub_rate),
     nDraws: optNumber(decision.n_draws),
     horizon: narrowHorizon(file.horizon, plan, gameweek),
   });

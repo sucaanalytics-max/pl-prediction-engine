@@ -239,7 +239,20 @@ class PollerStaysLightweightTests(unittest.TestCase):
             if isinstance(node, ast.Import):
                 imported.extend(alias.name for alias in node.names)
             elif isinstance(node, ast.ImportFrom) and node.module:
+                # Both the module and each name bound from it. Recording only
+                # `node.module` meant `from pipeline.fpl import artifacts`
+                # registered as "pipeline.fpl", which matches nothing in HEAVY —
+                # so the natural spelling of the exact import this guard exists
+                # to forbid walked straight past it. Verified by mutation: a real
+                # call to `artifacts.write_json_atomically` left all three tests
+                # green while importing the module under a yaml blocker raised
+                # ImportError.
+                #
+                # `test_module_reachability` fixed this same AST subtlety in the
+                # other direction and called recording only `node.module` "a
+                # blind spot with teeth".
                 imported.append(node.module)
+                imported.extend(f"{node.module}.{alias.name}" for alias in node.names)
 
         offenders = [
             name for name in imported
