@@ -145,3 +145,37 @@ describe("dynamic routes are not precached", () => {
     }
   });
 });
+
+describe("the shell caches the app that exists now", () => {
+  /**
+   * The precache list is served cache-first, so it decides what an installed app
+   * shows. It listed `/markets` and `/matches` — which moved behind `/bet` — and
+   * not `/margin`, which is the workspace the root now opens on. An installed
+   * PWA was therefore holding the previous shape of the app.
+   */
+  const routes = shellRoutes();
+
+  it("precaches the workspace the root opens on", () => {
+    expect(routes).toContain("/margin");
+  });
+
+  it("precaches the door the betting screens moved behind", () => {
+    expect(routes).toContain("/bet");
+  });
+
+  it("does not precache a route that is no longer in the sidebar", () => {
+    // Not wrong to reach, but wrong to spend an install budget on: these are
+    // reached from /bet now, and the budget is what keeps this installable.
+    expect(routes).not.toContain("/markets");
+    expect(routes).not.toContain("/matches");
+  });
+
+  it("bumps the cache name when the list changes", () => {
+    /**
+     * The trap this file's own header describes: a cache-first shell keeps
+     * serving the old routes forever unless the name changes. The restyle
+     * shipped once and no installed user saw it.
+     */
+    expect(swSource).toContain("suca-fpl-shell-v6");
+  });
+});

@@ -4,14 +4,18 @@
 // SHELL_ROUTES below is served cache-first, so an installed PWA would keep
 // rendering the emerald design indefinitely after the new one deployed — the
 // restyle would ship and no existing user would see it.
-const CACHE_NAME = "suca-fpl-shell-v5";
+const CACHE_NAME = "suca-fpl-shell-v6";
 const SHELL_ROUTES = [
   "/",
+  // The workspace, which the root now opens on. It was absent from this list
+  // while `/markets` and `/matches` were on it — so an installed app precached
+  // the betting screens that have since moved behind `/bet`, and not the four
+  // tabs the app is actually for.
+  "/margin",
+  "/bet",
   "/now",
   "/decide",
   "/players",
-  "/markets",
-  "/matches",
   "/evidence",
   "/accuracy",
   "/offline",
