@@ -370,3 +370,53 @@ class SummaryTests(unittest.TestCase):
         # The whole artifact is fetched by the browser; the full body is 8.7KB.
         view = build([claim(source_text="Title\n" + "x" * 5000)])
         self.assertEqual(len(view["items"][0]["summary"]), news_view.MAX_SUMMARY)
+
+
+class SquadKnownTests(unittest.TestCase):
+    """
+    "Does not touch your squad" and "your squad was never known" are different.
+
+    `_squad_element_ids` reads the squad from a decision file the agent writes
+    only when it solves, and it is deadline-gated — so for most of a cycle it
+    returns an empty list. Every item was then published `touches_squad: false`,
+    which a consumer cannot distinguish from a genuine miss. The one feature no
+    competitor has rendered as "nothing here concerns you", which is reassurance
+    the producer had no basis for.
+    """
+
+    def test_a_known_squad_still_answers_the_question(self):
+        view = build([claim(element_id=503)], held=[503])
+        self.assertTrue(view["squad_known"])
+        self.assertTrue(view["items"][0]["touches_squad"])
+        self.assertTrue(view["items"][0]["players"][0]["held"])
+
+    def test_a_known_squad_can_answer_no(self):
+        view = build([claim(element_id=503)], held=[427])
+        self.assertTrue(view["squad_known"])
+        self.assertFalse(view["items"][0]["touches_squad"])
+        self.assertFalse(view["items"][0]["players"][0]["held"])
+
+    def test_an_unknown_squad_refuses_the_question(self):
+        # None, not False. A reader is told the squad is unknown rather than
+        # shown a feed with no badges and left to infer why.
+        view = build([claim(element_id=503)])
+        self.assertFalse(view["squad_known"])
+        self.assertIsNone(view["items"][0]["touches_squad"])
+        self.assertIsNone(view["items"][0]["players"][0]["held"])
+
+    def test_the_flag_is_published_either_way(self):
+        # Absent from the artifact would be one more thing to infer.
+        self.assertIn("squad_known", build([claim()]))
+        self.assertIn("squad_known", build([claim()], held=[503]))
+
+    def test_an_unknown_squad_does_not_break_the_ranking(self):
+        # `_rank` sorts on `not touches_squad`; with None every item ties there
+        # and recency decides, which is the right order when nothing is known.
+        claims = [
+            claim(provenance_digest="old", claimed_at=(NOW - timedelta(days=2))
+                  .isoformat().replace("+00:00", "Z")),
+            claim(provenance_digest="new", claimed_at=(NOW - timedelta(hours=1))
+                  .isoformat().replace("+00:00", "Z")),
+        ]
+        view = build(claims)
+        self.assertEqual([i["digest"] for i in view["items"]], ["new", "old"])

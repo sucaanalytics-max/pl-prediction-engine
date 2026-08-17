@@ -268,10 +268,24 @@ function CapturedHeadlines() {
               </p>
             ) : null}
 
+            {/* An unmarked feed means one of two things and the reader cannot
+                see which: nothing here touches your squad, or the squad was
+                never known. The producer answers that now, so the page says it
+                rather than leaving a badgeless list to imply the first. */}
+            {!feed.squadKnown ? (
+              <p className="text-xs" data-testid="squad-unknown"
+                 style={{ color: "var(--text-3)" }}>
+                Your squad was not known when this was written, so nothing below
+                is marked as yours. The agent records it when it solves, which is
+                deadline-gated.
+              </p>
+            ) : null}
+
             <ul className="space-y-2" data-testid="headlines">
               {feed.items.map((item) => (
                 <li key={item.digest} className="glass-inset p-3 space-y-1"
-                    data-squad={item.touchesSquad ? "yes" : "no"}>
+                    data-squad={item.touchesSquad === null ? "unknown"
+                                : item.touchesSquad ? "yes" : "no"}>
                   <div className="flex items-baseline justify-between gap-2 flex-wrap">
                     <span className="text-[10px] uppercase tracking-wider"
                           style={{ color: "var(--text-4)" }}>

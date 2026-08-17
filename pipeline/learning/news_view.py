@@ -226,6 +226,20 @@ def build(
     """
     cutoff = now.astimezone(timezone.utc) - timedelta(days=max_age_days)
     squad = {int(e) for e in held}
+    # Whether the squad was known at all, which is not the same question as
+    # whether an item touches it.
+    #
+    # `_squad_element_ids` reads the squad from a decision file the agent writes
+    # only when it solves, and it is deadline-gated — so for most of a cycle this
+    # set is empty and every `held` below was published as `false`. That reads as
+    # "checked, and it does not touch your squad" when the truth is "your squad
+    # was never known here", and a reader cannot tell those apart from a feed
+    # with no badges on it.
+    #
+    # So when the squad is unknown the answer is `None`, not `False`, and the
+    # view says so at the top level. Absence is a state; this one had been
+    # rendering as a negative answer.
+    squad_known = bool(squad)
 
     # One article is one item, however many players it names.
     by_article: Dict[str, Dict[str, Any]] = {}
@@ -251,7 +265,7 @@ def build(
             "element_id": element_id,
             "name": (label or (None, None))[0],
             "club": (label or (None, None))[1],
-            "held": isinstance(element_id, int) and element_id in squad,
+            "held": (element_id in squad) if squad_known else None,
         } if isinstance(element_id, int) else None
 
         existing = by_article.get(digest)
@@ -273,7 +287,9 @@ def build(
 
     items = list(by_article.values())
     for item in items:
-        item["touches_squad"] = any(p["held"] for p in item["players"])
+        item["touches_squad"] = (
+            any(p["held"] for p in item["players"]) if squad_known else None
+        )
 
     # Squad-relevant first, then most recent. Digest breaks ties so the order is
     # total and a re-publish does not reshuffle the file for no reason.
@@ -307,6 +323,9 @@ def build(
         # and not that one source was being starved by another's volume.
         "dropped_by_source": dict(sorted(lost_by_source.items())),
         "window_days": max_age_days,
+        # Stated once, so a consumer never has to infer it from a feed that
+        # happens to carry no badges.
+        "squad_known": squad_known,
         "n_articles": len(items),
         "n_shown": len(shown),
         # Named in the artifact so a consumer cannot mistake this for evidence

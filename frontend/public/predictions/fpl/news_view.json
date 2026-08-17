@@ -1,16 +1,143 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-16T18:47:35.766424Z",
-  "n_dropped": 12,
+  "generated_at": "2026-08-17T07:10:12.075744Z",
+  "n_dropped": 26,
   "dropped_by_source": {
-    "bbc_football": 10,
-    "sky_football": 2
+    "bbc_football": 18,
+    "sky_football": 8
   },
   "window_days": 5,
-  "n_articles": 102,
+  "squad_known": false,
+  "n_articles": 116,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "1e391793c1e27d27",
+      "headline": "Juventus step up Vicario talks - Monday's gossip",
+      "summary": "Juventus increase talks for Guglielmo Vicario and pull out of move for Emiliano Martinez, Manchester City face competition for Pedro Neto and Real Madrid want Martin Zubimendi., plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c4gkk7r2r4yo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-17T05:54:05Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "0bf09e0f5debd196",
+      "headline": "Papers: Delap & Neto move closer to Chelsea exit",
+      "summary": "The top stories and transfer rumours from Monday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13573816/chelsea-transfer-news-liam-delap-and-pedro-neto-move-closer-to-exit-door-paper-talk",
+      "claimed_at": "2026-08-16T22:30:00Z",
+      "players": [
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "1cd0da8fb0b2aa36",
+      "headline": "FPL pre-season: Thiago + Schade braces, Sangare impact + Bournemouth injuries",
+      "summary": "Plus, Kluivert \u201cfeeling good\u201d ahead of the new season The post FPL pre-season: Thiago + Schade braces, Sangare impact + Bournemouth injuries appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fa",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/16/fpl-pre-season-thiago-schade-braces-sangare-impact-bournemouth-injuries",
+      "claimed_at": "2026-08-16T21:25:00Z",
+      "players": [
+        {
+          "element_id": 70,
+          "name": "Kluivert",
+          "club": "BOU",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "2ded07fee0e9ddd8",
+      "headline": "Watch the best of Rodri's Manchester City journey",
+      "summary": "BBC Sport takes a look back at the moments that defined Rodri's time at Manchester City, from important goals to injuries and a Ballon d'Or, as the great midfielder takes his next step in his career.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cly9xz3rgkeo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-16T20:51:15Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "3a2d63507fbac17d",
+      "headline": "Newcastle at best when 'us against world' - Burn",
+      "summary": "Dan Burn has his sights set on leading a new-look Newcastle back into Europe as the club's captain.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cx27798g37ko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-16T20:04:32Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "48bc4ae2249425c0",
+      "headline": "Newcastle captain Burn says Magpies have European ambitions",
+      "summary": "Newcastle United captain Dan Burn has said that he wants to see the Magpies fighting for European places again in the Premier League. Following the Magpies\u2019 pre-season draw with RC Strasbourg, Burn made clear that he wants the club to \u201cpush",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-captain-burn-says-magpies-have-european-ambitions/",
+      "claimed_at": "2026-08-16T19:55:52Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "575c9bf3a545c0a0",
+      "headline": "Liverpool latest: Iraola wants more despite Como win",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-16T19:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "9bf28f55008f41d0",
       "headline": "Liverpool latest: Barcola, Mbaye not in PSG squad amid Reds transfer links",
@@ -24,10 +151,82 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
+    },
+    {
+      "digest": "c9ba15fc3918d4f6",
+      "headline": "Nightmare Man City start for Maresca - are Arsenal really so far ahead?",
+      "summary": "Did Arsenal show just how far above Manchester City they are with their dominant Community Shield win?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c5y449kwq14o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-16T19:37:55Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "42504db37d162edb",
+      "headline": "Barcelona agree \u00a365m Rodri deal - who could replace him at Man City?",
+      "summary": "Barcelona agree a deal to sign Spain captain Rodri from Manchester City.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cy0jj65r18yo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-16T19:37:45Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "81c5c85b11ca269b",
+      "headline": "Norwich struggles to assist king - Tzolis could be Arsenal gem",
+      "summary": "Christos Tzolis has been a star performer in Arsenal's pre-season and continued that with an impressive performance against Manchester City in the Community Shield.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwyee2rl9yjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-16T18:59:27Z",
+      "players": [
+        {
+          "element_id": 557,
+          "name": "Tzolis",
+          "club": "ARS",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "c5547c2425e11987",
+      "headline": "Shop window or new chance - Grealish faces next chapter",
+      "summary": "Jack Grealish made an unexpected return to the Manchester City team on Sunday - so what could his future hold?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c07rr20g732o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-16T18:30:55Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
     },
     {
       "digest": "f42d7913ab55a136",
@@ -42,10 +241,28 @@
           "element_id": 238,
           "name": "Grealish",
           "club": "MCI",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
+    },
+    {
+      "digest": "bbd66376f10b84f6",
+      "headline": "Can anyone stop Arsenal & how do Man City improve under Maresca?",
+      "summary": "Aaron Paul is joined by Pat Nevin, Izzy Christiansen and, Chris Coles.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0p4vxzr?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-16T18:13:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
     },
     {
       "digest": "fae753da78b39383",
@@ -60,10 +277,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "56d813c04ae85598",
@@ -78,10 +295,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "e88aec0ba8448e43",
@@ -96,10 +313,10 @@
           "element_id": 557,
           "name": "Tzolis",
           "club": "ARS",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "99cd7fb25756b902",
@@ -114,10 +331,10 @@
           "element_id": 465,
           "name": "Osula",
           "club": "NEW",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "58c1a78068762d42",
@@ -132,10 +349,10 @@
           "element_id": 362,
           "name": "Jacquet",
           "club": "LIV",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "c4332e25903a2eb9",
@@ -150,10 +367,10 @@
           "element_id": 362,
           "name": "Jacquet",
           "club": "LIV",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "3ee592f06b11f194",
@@ -168,16 +385,34 @@
           "element_id": 398,
           "name": "Foden",
           "club": "MCI",
-          "held": false
+          "held": null
         },
         {
           "element_id": 481,
           "name": "Anderson",
           "club": "MCI",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
+    },
+    {
+      "digest": "10cada396d03f3b9",
+      "headline": "Jacquet scores on debut as Liverpool beat Como",
+      "summary": "Jeremy Jacquet was the star as Liverpool enjoyed a confidence-boosting 2-0 win over Como in their final pre-season friendly at Anfield.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13573738/liverpool-2-0-como-jeremy-jacquet-scores-on-debut-to-add-to-cody-gakpo-goal-as-reds-win-at-anfield",
+      "claimed_at": "2026-08-16T16:09:00Z",
+      "players": [
+        {
+          "element_id": 362,
+          "name": "Jacquet",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
     },
     {
       "digest": "0ac0a1650d168806",
@@ -192,10 +427,10 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "ef205101e4399895",
@@ -210,10 +445,10 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "7f45cb04b86c2661",
@@ -228,10 +463,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "4a70243b2cffb059",
@@ -246,10 +481,10 @@
           "element_id": 7,
           "name": "Lewis-Skelly",
           "club": "ARS",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "9562b5e229f1774b",
@@ -264,10 +499,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "d8504c79db973252",
@@ -282,10 +517,28 @@
           "element_id": 404,
           "name": "Reijnders",
           "club": "MCI",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
+    },
+    {
+      "digest": "f7815797b50f2b7d",
+      "headline": "Man City latest: VOTE! Who has got the better deal for Rodri?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-16T14:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
     },
     {
       "digest": "dc6b88c8fde26e9f",
@@ -300,16 +553,16 @@
           "element_id": 334,
           "name": "Muharemovi\u0107",
           "club": "LEE",
-          "held": false
+          "held": null
         },
         {
           "element_id": 539,
           "name": "O'Nien",
           "club": "SUN",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "6241e1819d8cc594",
@@ -324,10 +577,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "bced670c5c329780",
@@ -342,10 +595,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "1c67720ed294ef5c",
@@ -360,10 +613,10 @@
           "element_id": 167,
           "name": "Delap",
           "club": "CHE",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "6d2312eeb45a2308",
@@ -378,16 +631,16 @@
           "element_id": 418,
           "name": "Maguire",
           "club": "MUN",
-          "held": false
+          "held": null
         },
         {
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "7ed3a84ee540d2fd",
@@ -402,10 +655,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "7f34eb59a3686d7a",
@@ -420,10 +673,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "49bee9c117f9e669",
@@ -438,10 +691,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "20cf11c0ce4e40f9",
@@ -456,10 +709,10 @@
           "element_id": 492,
           "name": "Awoniyi",
           "club": "NFO",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "cb6991fb8f45b053",
@@ -474,10 +727,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "https://x.com/robtFPL/status/2088945895559549297",
@@ -492,10 +745,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "bab82b1b189a4d48",
@@ -510,16 +763,16 @@
           "element_id": 418,
           "name": "Maguire",
           "club": "MUN",
-          "held": false
+          "held": null
         },
         {
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "5007a22d7ab04240",
@@ -534,10 +787,10 @@
           "element_id": 237,
           "name": "Ndiaye",
           "club": "EVE",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "a20d0bdc3a0fb934",
@@ -552,10 +805,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "55a1c4c50cdb6936",
@@ -570,10 +823,10 @@
           "element_id": 40,
           "name": "Rogers",
           "club": "CHE",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "fe37d793ab53d7c8",
@@ -588,10 +841,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "8d0f9ed380e78168",
@@ -606,10 +859,10 @@
           "element_id": 427,
           "name": "Mbeumo",
           "club": "MUN",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "09d5c375c2a9084c",
@@ -624,10 +877,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "bd012842d1d934ec",
@@ -642,16 +895,16 @@
           "element_id": 411,
           "name": "Haaland",
           "club": "MCI",
-          "held": false
+          "held": null
         },
         {
           "element_id": 481,
           "name": "Anderson",
           "club": "MCI",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "423f6f6965c21bb7",
@@ -666,10 +919,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "c91ad8180cdf38f3",
@@ -684,22 +937,22 @@
           "element_id": 115,
           "name": "De Cuyper",
           "club": "BHA",
-          "held": false
+          "held": null
         },
         {
           "element_id": 122,
           "name": "Minteh",
           "club": "BHA",
-          "held": false
+          "held": null
         },
         {
           "element_id": 123,
           "name": "Hinshelwood",
           "club": "BHA",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "1c26fe83bd3c4289",
@@ -714,10 +967,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "7ca88ed0de6fa15c",
@@ -732,28 +985,28 @@
           "element_id": 112,
           "name": "Van Hecke",
           "club": "TOT",
-          "held": false
+          "held": null
         },
         {
           "element_id": 455,
           "name": "Tonali",
           "club": "TOT",
-          "held": false
+          "held": null
         },
         {
           "element_id": 502,
           "name": "Robertson",
           "club": "TOT",
-          "held": false
+          "held": null
         },
         {
           "element_id": 523,
           "name": "Moore",
           "club": "TOT",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "cbeff2980717f388",
@@ -768,10 +1021,10 @@
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "c4263012e9a03921",
@@ -786,10 +1039,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "5add96abd7761634",
@@ -804,10 +1057,10 @@
           "element_id": 505,
           "name": "Spence",
           "club": "TOT",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "2c08554e091a4c7b",
@@ -822,10 +1075,10 @@
           "element_id": 40,
           "name": "Rogers",
           "club": "CHE",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "8ddcab7c451c22a7",
@@ -840,16 +1093,16 @@
           "element_id": 40,
           "name": "Rogers",
           "club": "CHE",
-          "held": false
+          "held": null
         },
         {
           "element_id": 155,
           "name": "Enzo",
           "club": "CHE",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "1e91853bb24ba2c5",
@@ -864,10 +1117,10 @@
           "element_id": 155,
           "name": "Enzo",
           "club": "CHE",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "b96e0a30e2398351",
@@ -882,10 +1135,10 @@
           "element_id": 155,
           "name": "Enzo",
           "club": "CHE",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "https://x.com/robtFPL/status/2088649045191385125",
@@ -900,10 +1153,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "777d2212240ba705",
@@ -918,10 +1171,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "26096bde00ebeffe",
@@ -936,10 +1189,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "7ff89a8035e25628",
@@ -954,10 +1207,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "d588c918341d4098",
@@ -972,10 +1225,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "9b4ff1a0e30dfb94",
@@ -990,10 +1243,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "a7f2e185603e40a3",
@@ -1008,10 +1261,10 @@
           "element_id": 500,
           "name": "Romero",
           "club": "TOT",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "939c3a064ba0fd30",
@@ -1026,10 +1279,10 @@
           "element_id": 500,
           "name": "Romero",
           "club": "TOT",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "8e25459ef8a3db60",
@@ -1044,10 +1297,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "eeb391484ca51233",
@@ -1062,10 +1315,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "06d680c09125bcbe",
@@ -1080,10 +1333,10 @@
           "element_id": 557,
           "name": "Tzolis",
           "club": "ARS",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "4a527a73c0472968",
@@ -1098,28 +1351,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ba1cef6e7ab071d4",
-      "headline": "Football Daily",
-      "summary": "Arsenal take on Manchester City in the Community Shield on Sunday",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0p4mymx?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T21:09:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "5e4f1a580e4fd7ce",
@@ -1134,28 +1369,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b604f1719feebda2",
-      "headline": "Burnley sign Chelsea's Satpayev on loan",
-      "summary": "Chelsea's new teenage winger Dastan Satpayev joins Championship club Burnley on a season's loan.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c1w1y95305no?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T19:49:11Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "10ad20c686cc21a4",
@@ -1170,10 +1387,10 @@
           "element_id": 500,
           "name": "Romero",
           "club": "TOT",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "1cfcdff8478dc0c1",
@@ -1188,46 +1405,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
-    },
-    {
-      "digest": "889c39d3147441d8",
-      "headline": "Man City miss Chelsea's deadline to bid for Fernandez",
-      "summary": "The&#160;5pm Friday deadline set by&#160;Chelsea&#160;for&#160;Man City&#160;to make their bid for&#160;Enzo Fernandez&#160;has passed with no offer made for the midfielder.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13572838/enzo-fernandez-transfer-news-man-city-miss-chelseas-deadline-to-bid-for-midfielder",
-      "claimed_at": "2026-08-14T17:27:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1fab2b77120eda9d",
-      "headline": "FSG sell minority stake in Liverpool to Bezos-backed consortium",
-      "summary": "Liverpool's owners have agreed to sell around a third of the club to a consortium including Amazon founder Jeff Bezos.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13573040/liverpool-fsg-sell-minority-stake-to-amazon-founder-jeff-bezos-backed-consortium-led-by-amit-bhatia",
-      "claimed_at": "2026-08-14T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "59270654042c4140",
@@ -1242,52 +1423,16 @@
           "element_id": 54,
           "name": "Gomes",
           "club": "AVL",
-          "held": false
+          "held": null
         },
         {
           "element_id": 582,
           "name": "Madjo",
           "club": "AVL",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b955909ac08dc8f5",
-      "headline": "Chelsea say no Fernandez move as deadline passes - but is it really over?",
-      "summary": "Chelsea's deadline for clubs to bid \u00a3120m for midfielder Enzo Fernandez has passed - and they now expect the Argentine to stay at the club this season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c7vgyrl2573o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T16:04:54Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f4038e32433f8892",
-      "headline": "Bezos-backed consortium buys a third of Liverpool",
-      "summary": "Liverpool's owners agree to sell about a third of the club to a consortium including billionaire Amazon founder Jeff Bezos - in a deal that values the Reds at more than \u00a35bn.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cx2vj4l9wxyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T16:00:16Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "59d675dfd42f21ac",
@@ -1302,10 +1447,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "4f84d3379afc5f63",
@@ -1320,28 +1465,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fc8e0f142a13815b",
-      "headline": "Is Fernandez worth two Rodris? Transfer valuations explained",
-      "summary": "Speculation is swirling around two of the Premier League's leading midfielders. As Barcelona push to sign Rodri, Manchester City are being linked with a move for Enzo Fernandez. But why does the Chelsea player have a much higher transfer v",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13572855/is-enzo-fernandez-worth-two-rodris-transfer-valuations-explained-as-chelsea-and-man-city-midfielders-linked-with-moves-between-the-lines",
-      "claimed_at": "2026-08-14T13:50:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "72d08862203a39a9",
@@ -1356,46 +1483,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
-    },
-    {
-      "digest": "92942e6b3c0ce972",
-      "headline": "Shakhtar want to play Champions League ties at Chelsea",
-      "summary": "Ukrainian club Shakhtar Donetsk want to play their Champions League home games at Chelsea's Stamford Bridge this season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cpw9e1dz9kko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T13:38:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b46f57dc839da847",
-      "headline": "Chelsea latest: Fernandez saga over? Rodri future key to City's Enzo chase",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-14T13:14:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "80d68bc087e7f4b3",
@@ -1410,10 +1501,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "775f71122efb2291",
@@ -1428,46 +1519,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2fa0f991eb15a9ed",
-      "headline": "Arsenal express interest in signing Quansah",
-      "summary": "Arsenal express an interest in signing Bayer Leverkusen and England defender Jarell Quansah.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c9q92xr0854o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T10:35:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "dbce49b8726672ef",
-      "headline": "Arsenal in talks with Leverkusen over Quansah",
-      "summary": "Arsenal are in talks with Bayer Leverkusen over a possible deal for England defender Jarell Quansah.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13572821/jarell-quansah-arsenal-in-talks-with-bayer-leverkusen-over-signing-england-and-former-liverpool-defender",
-      "claimed_at": "2026-08-14T10:28:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "21f1a11510136966",
@@ -1482,46 +1537,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bd57c0c5ae50da93",
-      "headline": "European Cup winner Rimmer dies aged 78",
-      "summary": "European Cup winner and former Aston Villa and Manchester United goalkeeper Jimmy Rimmer dies at the age of 78.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c20eyww3vyro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T10:13:47Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "225c799e071eb22d",
-      "headline": "Liverpool's Lundgaard joins Eintracht Frankfurt",
-      "summary": "Liverpool midfielder Sofie Lundgaard completes a permanent transfer to Eintracht Frankfurt for an undisclosed fee.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqlx1023wd3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T10:00:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "https://x.com/robtFPL/status/2088168738692419657",
@@ -1536,28 +1555,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
-    },
-    {
-      "digest": "45dbe1b8b7bc3cba",
-      "headline": "Will you beat our mega football nicknames quiz?",
-      "summary": "Do you know your Red Devils from your Saints? How about your Magpies from your Robins?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c4g4v4mm9r8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-14T07:00:44Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "7825449f326659b0",
@@ -1572,10 +1573,10 @@
           "element_id": 15,
           "name": "\u00d8degaard",
           "club": "ARS",
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "f94285553c841d25",
@@ -1590,10 +1591,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "fa655bedbefe7b0b",
@@ -1608,10 +1609,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "d1fd9aef5efb67cf",
@@ -1626,10 +1627,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "https://x.com/OptaAnalyst/status/2087934197671276931",
@@ -1644,10 +1645,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "https://x.com/robtFPL/status/2087879223826338291",
@@ -1662,10 +1663,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "https://x.com/OptaAnalyst/status/2087876871065149557",
@@ -1680,10 +1681,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     },
     {
       "digest": "https://x.com/robtFPL/status/2087875329117274527",
@@ -1698,10 +1699,10 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
+          "held": null
         }
       ],
-      "touches_squad": false
+      "touches_squad": null
     }
   ]
 }

@@ -33,7 +33,8 @@ export interface NewsPlayer {
   readonly elementId: number;
   readonly name: string | null;
   readonly club: string | null;
-  readonly held: boolean;
+  /** Null when the squad was not known, which is not the same as "no". */
+  readonly held: boolean | null;
 }
 
 export interface NewsItem {
@@ -51,7 +52,14 @@ export interface NewsItem {
   readonly url: string | null;
   readonly claimedAt: string | null;
   readonly players: readonly NewsPlayer[];
-  readonly touchesSquad: boolean;
+  /**
+   * Null when the producer could not answer.
+   *
+   * It published `false` for both "checked, it does not" and "your squad was
+   * never known here", which a reader cannot tell apart from a feed carrying no
+   * badges. `squadKnown` on the feed says which.
+   */
+  readonly touchesSquad: boolean | null;
 }
 
 export interface NewsFeed {
@@ -61,6 +69,8 @@ export interface NewsFeed {
   readonly nShown: number;
   /** Rendered verbatim. The artifact states its own standing. */
   readonly basis: string | null;
+  /** Whether the producer knew the squad when it answered `touchesSquad`. */
+  readonly squadKnown: boolean;
   readonly items: readonly NewsItem[];
 }
 
@@ -94,7 +104,7 @@ function narrowItem(raw: unknown): NewsItem | null {
     players: (Array.isArray(raw.players) ? raw.players : [])
       .map(narrowPlayer)
       .filter((p): p is NewsPlayer => p !== null),
-    touchesSquad: raw.touches_squad === true,
+    touchesSquad: typeof raw.touches_squad === "boolean" ? raw.touches_squad : null,
   };
 }
 
@@ -112,6 +122,10 @@ export function narrowNewsFeed(raw: unknown): NarrowResult<NewsFeed> {
     nArticles: optNumber(file.n_articles) ?? 0,
     nShown: optNumber(file.n_shown) ?? 0,
     basis: optString(file.basis),
+    // Absent on files written before the producer distinguished the two cases.
+    // Those carry `touches_squad: false` throughout with no way to tell whether
+    // it was answered, so the honest reading of a missing flag is "not known".
+    squadKnown: file.squad_known === true,
     items: items.map(narrowItem).filter((i): i is NewsItem => i !== null),
   });
 }

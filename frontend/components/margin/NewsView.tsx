@@ -205,6 +205,10 @@ export function NewsView() {
       .filter((id): id is number => typeof id === "number" && id > 0);
     return new Set(ids);
   }, [squad]);
+  // The browser's own join is still the one that decides — it has the live
+  // fifteen, and the producer only has whatever the last solve wrote. The
+  // producer's flag matters for the case where neither knows, so the header can
+  // say "not loaded" rather than implying nothing concerns you.
   const squadKnown = owned.size > 0;
 
   const counts = useMemo(() => {

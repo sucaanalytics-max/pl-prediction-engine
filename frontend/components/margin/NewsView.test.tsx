@@ -113,7 +113,9 @@ const SQUAD = {
 };
 
 function mockFetch(feed: unknown, live: unknown) {
-  return vi.fn(async (input: RequestInfo | URL) => {
+  // Takes `init` as well, so a wrapper that delegates to it can pass through
+  // what it was given rather than dropping the second argument.
+  return vi.fn(async (input: RequestInfo | URL, _init?: RequestInit) => {
     const url = String(input);
     if (url.includes("news_view")) {
       if (feed === undefined) return new Response("", { status: 404 });
