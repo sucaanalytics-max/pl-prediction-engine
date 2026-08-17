@@ -292,6 +292,18 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
           default view. The answer belongs here; the argument stays at /decide. */}
       <DecideCard gameweek={gameweek} nameOf={nameOf} of={decision} />
 
+      {/* One absent artifact, named once.
+          `players` is `proven(projections) ?? []`, which erases the state — so a
+          missing xp_public rendered as twenty-two per-player nil marks, each
+          titled "no rate was fitted here", with the file itself named nowhere
+          and no reason given. House rule 2: one absent artifact costs one panel,
+          not twenty-two measurements. Rendered above the planner because the
+          planner is what it explains. */}
+      {players.length === 0 ? (
+        <MarginState of={projections}
+                     what={`the projection for GW${gameweek}`} surface={S} />
+      ) : null}
+
       {/* The planner leads. It is what this screen is for, and it needs nothing
           from the engine: the XI is solved from the published projection and the
           run is scheduled rather than forecast. */}

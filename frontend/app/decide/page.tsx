@@ -84,8 +84,17 @@ function Proposal({ decision }: { decision: PublicDecision }) {
     <div className="space-y-2">
       <div className="flex items-baseline justify-between gap-2 flex-wrap">
         <p className="text-sm font-semibold" style={{ color: "var(--text-1)" }}>
+          {/* Two lists, not an arrow. `milp.py` publishes `sorted(transfers_in)`
+              and `sorted(transfers_out)` independently, so the artifact records
+              no correspondence between them — and on an opening build, where
+              fifteen are bought and none sold, the arrow rendered with nothing
+              on its left: " → 12, 45, 88, …". The call card was fixed for this
+              and links here, so the two screens described one plan two ways. */}
           {moved
-            ? `${plan.transfers_out.join(", ")} → ${plan.transfers_in.join(", ")}`
+            ? [
+                plan.transfers_out.length ? `Out ${plan.transfers_out.join(", ")}` : null,
+                plan.transfers_in.length ? `in ${plan.transfers_in.join(", ")}` : null,
+              ].filter(Boolean).join(" · ")
             : "Hold — no transfer"}
           {plan.hits > 0 ? (
             <span style={{ color: "var(--error)" }}>

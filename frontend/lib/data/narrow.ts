@@ -1095,6 +1095,15 @@ export interface DecisionPlan {
   readonly transfers_out: readonly number[];
   readonly hits: number;
   readonly bank_after: number;
+  /**
+   * Free transfers left after this week's moves.
+   *
+   * `milp.py:214` publishes it on every plan, `strip_for_publication` keeps it,
+   * and the horizon reads it for every provisional week — but the plan narrower
+   * dropped it, so week 0 arrived without one and the grid's first column showed
+   * a gap where the producer had supplied a number.
+   */
+  readonly free_transfers_after: number | null;
 }
 
 export interface PublicDecision {
@@ -1209,7 +1218,11 @@ export function narrowHorizon(
 
   const weeks: HorizonWeek[] = [];
   if (week0) {
-    weeks.push(build({ ...week0, free_transfers_after: null }, 0));
+    // Week 0 keeps its own free-transfer count. It was blanked here with no
+    // reason given, while `milp.py:214` publishes `free_transfers_after` on
+    // every plan including this one — so the first column of the horizon grid
+    // showed a gap where the producer had supplied a number.
+    weeks.push(build(week0, 0));
   }
   optArray(raw.provisional).forEach((entry, i) => {
     if (!isRecord(entry)) return;
@@ -1322,6 +1335,7 @@ function narrowPlan(raw: unknown): DecisionPlan | null {
     transfers_out: ints(raw.transfers_out),
     hits: countOr0(raw.hits),
     bank_after: countOr0(raw.bank_after),
+    free_transfers_after: optNumber(raw.free_transfers_after),
   };
 }
 

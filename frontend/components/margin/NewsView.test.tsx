@@ -221,6 +221,36 @@ describe("sources are reachable rather than merely present", () => {
   });
 });
 
+describe("a feed that is published but not fresh", () => {
+  /**
+   * `proven()` returns the payload for `empty` and for `stale`, so `if (!feed)`
+   * fires for neither. Before this, a dead poller rendered identically to a
+   * live one — the only thing that moved was the per-item relative times, and
+   * those come from `Date.now()`, not from the artifact. A stopped poller
+   * looked like a quiet week.
+   */
+  it("names the empty state instead of printing a bare count", async () => {
+    await draw(SQUAD, { ...FEED, items: [], n_articles: 0, n_shown: 0 });
+    const view = screen.getByTestId("margin-news");
+    expect(view).toHaveAttribute("data-state", "empty");
+    expect(await screen.findByRole("status")).toBeInTheDocument();
+  });
+
+  it("says a stale feed is stale rather than showing it as current", async () => {
+    // `freshnessBudgetMs` is a DAY on this artifact; two days old is stale.
+    const old = new Date(Date.now() - 2 * 24 * 3600 * 1000).toISOString();
+    await draw(SQUAD, { ...FEED, generated_at: old });
+    expect(await screen.findByRole("status")).toBeInTheDocument();
+  });
+
+  it("still lists the items when it is merely stale", async () => {
+    // Stale is not absent: last week's news is still news, it is just labelled.
+    const old = new Date(Date.now() - 2 * 24 * 3600 * 1000).toISOString();
+    await draw(SQUAD, { ...FEED, generated_at: old });
+    expect(screen.getAllByTestId("news-item").length).toBeGreaterThan(0);
+  });
+});
+
 describe("reading the article in the app", () => {
   /**
    * `allaboutfpl.com` sends `x-frame-options: SAMEORIGIN`, so an embedded pane

@@ -67,6 +67,19 @@ async function renderDecide(bodies: Record<string, unknown>) {
 const SEASON = decisionDescriptor(7, "season").path;
 const WEEKLY = decisionDescriptor(7, "weekly").path;
 
+/** One entry's decision with the plan overridden, at the path the page fetches. */
+function withPlan(plan: Record<string, unknown>) {
+  const base = decision();
+  const inner = base.decision as Record<string, unknown>;
+  return {
+    [REGISTRY.matches.path]: MATCHES,
+    [SEASON]: {
+      ...base,
+      decision: { ...inner, plan: { ...(inner.plan as object), ...plan } },
+    },
+  };
+}
+
 beforeEach(() => vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", ""));
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
 
@@ -96,7 +109,10 @@ describe("a live proposal", () => {
     });
     expect(screen.getByText("Season team")).toBeInTheDocument();
     expect(screen.getByText("Weekly team")).toBeInTheDocument();
-    expect(screen.getAllByText(/521 → 9/).length).toBe(2);
+    // Two lists, not an arrow: the artifact records no correspondence between
+    // the two sorted arrays, and on an opening build the arrow rendered with
+    // nothing on its left.
+    expect(screen.getAllByText(/Out 521 · in 9/).length).toBe(2);
   });
 
   it("shows the optimism gap, not just the headline number", async () => {
@@ -205,7 +221,7 @@ describe("absence is stated, not blank", () => {
     await renderDecide({ [REGISTRY.matches.path]: MATCHES, [SEASON]: decision() });
     expect(screen.getByText("Season team")).toBeInTheDocument();
     expect(screen.getByText("Weekly team")).toBeInTheDocument();
-    expect(screen.getByText(/521 → 9/)).toBeInTheDocument();
+    expect(screen.getByText(/Out 521 · in 9/)).toBeInTheDocument();
   });
 });
 
@@ -291,7 +307,7 @@ describe("the shortlist owns its own state", () => {
     await renderWithLive(
       { [REGISTRY.matches.path]: MATCHES, [SEASON]: decision() }, undefined,
     );
-    expect(screen.getByText(/521 → 9/)).toBeInTheDocument();
+    expect(screen.getByText(/Out 521 · in 9/)).toBeInTheDocument();
     expect(screen.queryAllByTestId("transfer")).toHaveLength(0);
   });
 
@@ -386,5 +402,32 @@ describe("the alternatives ported off /optimizer", () => {
     await renderWithLive({ [REGISTRY.matches.path]: MATCHES }, LIVE_STATE);
     expect(screen.getAllByTestId("transfer")).toHaveLength(1);
     expect(screen.getByText(/No multi-transfer plan beat/)).toBeInTheDocument();
+  });
+});
+
+describe("the move line describes a plan the solver could have produced", () => {
+  /**
+   * `milp.py:205-206` publishes `sorted(transfers_in)` and
+   * `sorted(transfers_out)` independently, so there is no pairing in the
+   * artifact to render. The previous line was
+   * `${out.join(", ")} → ${in.join(", ")}`, which asserted one — and on the
+   * opening build the optimiser actually produces (fifteen bought, none sold)
+   * it rendered a bare arrow with nothing on its left.
+   */
+  it("names the buys on an opening build instead of an empty arrow", async () => {
+    await renderDecide(withPlan({ transfers_in: [12, 45, 88], transfers_out: [] }));
+    const line = await screen.findByText(/in 12, 45, 88/);
+    expect(line).toBeInTheDocument();
+    expect(line.textContent).not.toMatch(/^\s*→/);
+  });
+
+  it("keeps the two sides as lists when both are populated", async () => {
+    await renderDecide(withPlan({ transfers_in: [9, 21], transfers_out: [521, 400] }));
+    expect(await screen.findByText(/Out 521, 400 · in 9, 21/)).toBeInTheDocument();
+  });
+
+  it("still says hold when nothing moves", async () => {
+    await renderDecide(withPlan({ transfers_in: [], transfers_out: [] }));
+    expect(await screen.findByText(/Hold — no transfer/)).toBeInTheDocument();
   });
 });
