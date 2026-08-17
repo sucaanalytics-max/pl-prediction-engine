@@ -4,8 +4,17 @@
  * ## Why a join at all
  *
  * The Players tab reads `xp_public` only — the simulation's view of what a
- * player will do. `player_stats.json` holds what they have actually done: 587
- * rows with minutes, goals, assists, xG, xA, price, ownership and form. Both
+ * player will do. `player_stats.json` holds what they have already done: 587
+ * rows with minutes, goals, assists, xG, xA, price, ownership and form.
+ *
+ * Those totals are LAST season's, and saying otherwise was shipped here for a
+ * day. `build_player_stats` reads FPL's `bootstrap.elements` straight through,
+ * and FPL retains the previous season's totals until a gameweek has been
+ * played: the committed bootstrap reports 0 of 38 events finished, `form: 0.0`
+ * on all 400 players who have minutes, and Haaland at 2,953 minutes and 27
+ * goals. A footnote calling that "this season" is a mislabel of exactly the kind
+ * this repo keeps hunting — the number is real and the sentence around it was
+ * not. Both
  * describe the same 587 players and nothing put them on one screen, so a reader
  * comparing two forwards could see the projection or the underlying numbers but
  * never the disagreement between them, which is the interesting part.

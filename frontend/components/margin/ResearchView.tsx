@@ -37,6 +37,7 @@ import { useArtifact } from "@/lib/data/useArtifact";
 import { istDateTime } from "@/lib/formats";
 import { findTwins } from "@/lib/margin/twins";
 import { Compare } from "@/components/margin/Compare";
+import { Scatter } from "@/components/margin/Scatter";
 import { PAPER, MONO, SANS } from "@/lib/margin/tokens";
 import {
   Distribution, Eyebrow, Hollow, MarginState, Nil, WhenProvenHere,
@@ -506,6 +507,12 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
               {/* Above the table, because it is what you assembled from it and
                   scrolling back to a comparison you built is the whole cost of
                   putting it below. */}
+              {/* The chart is a way of finding two players worth comparing, so
+                  it sits above the panel it feeds. */}
+              <div style={{ padding: "12px 18px 0" }}>
+                <Scatter rows={stats} pinned={compareIds} onPin={togglePin} />
+              </div>
+
               {compareIds.length > 0 ? (
                 <div style={{ padding: "12px 18px 0" }}>
                   <Compare

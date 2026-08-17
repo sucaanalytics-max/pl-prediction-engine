@@ -211,7 +211,8 @@ export function Compare(
       <p style={{ margin: 0, fontFamily: SANS, fontSize: 11, lineHeight: 1.5,
                   color: S.ink, opacity: .45, maxWidth: "64ch" }}>
         Above the rule is what the simulation expects this gameweek; below it is
-        what the player has actually done this season. xGI and xA per 90 are the
+        what the player did across last season, which is what FPL still reports
+        until a gameweek has been played. xGI and xA per 90 are the
         only derived numbers here — everything else is published as shown. A rate
         is blank rather than estimated when the minutes cannot carry one.
       </p>
