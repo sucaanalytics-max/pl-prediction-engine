@@ -219,3 +219,58 @@ describe("it is actually mounted", () => {
     expect(page).toContain("<MinutesConflicts />");
   });
 });
+
+describe("which gameweek's conflicts it asks for", () => {
+  /**
+   * The path was frozen at `gw01` until the descriptor became a factory. This
+   * component then took `gameweek = 1` as a default, which reads as safe and is
+   * not: `/evidence` mounts it with no prop, so from GW2 it would have gone on
+   * fetching gw01 while every other caller moved on. A default wrong for most of
+   * a season is a hardcoded path with a nicer signature.
+   */
+  async function pathsRequested(statusGameweek: number | null, props: { gameweek?: number } = {}) {
+    vi.resetModules();
+    const asked: string[] = [];
+    vi.doMock("@/lib/data/useArtifact", () => ({
+      useArtifact: (descriptor: { key: string; path: string }) => {
+        asked.push(descriptor.path);
+        const isStatus = descriptor.key === "agentStatus";
+        const value = isStatus && statusGameweek !== null
+          ? { gameweek: statusGameweek } : null;
+        return {
+          artifact: {
+            state: value === null ? "absent" : "ok",
+            provenance: { source: "local", producedAt: null, ageMs: null },
+            reason: value === null ? "not published" : null,
+            value,
+          },
+        };
+      },
+    }));
+    vi.doMock("@/lib/data/artifact", async (importOriginal) => {
+      const actual = await importOriginal<Record<string, unknown>>();
+      return { ...actual, proven: (a: { value: unknown }) => a.value };
+    });
+    const { default: Component } = await import("@/components/MinutesConflicts");
+    render(<Component {...props} />);
+    return asked;
+  }
+
+  it("follows the phase resolver rather than assuming the first", async () => {
+    const asked = await pathsRequested(7);
+    expect(asked).toContain("fpl/minutes_conflicts_gw07.json");
+    expect(asked).not.toContain("fpl/minutes_conflicts_gw01.json");
+  });
+
+  it("lets a caller that already knows override it", async () => {
+    expect(await pathsRequested(7, { gameweek: 3 }))
+      .toContain("fpl/minutes_conflicts_gw03.json");
+  });
+
+  it("falls back to the first gameweek only when nothing answers", async () => {
+    // Last resort, not a default. A wrong gameweek renders a named absence,
+    // which is recoverable; a stale file rendered as current is not.
+    expect(await pathsRequested(null))
+      .toContain("fpl/minutes_conflicts_gw01.json");
+  });
+});

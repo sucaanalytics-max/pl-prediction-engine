@@ -2,6 +2,7 @@
 
 import { useArtifact } from "@/lib/data/useArtifact";
 import { proven } from "@/lib/data/artifact";
+import { AGENT_STATUS } from "@/lib/data/agent-status";
 import { minutesConflictsDescriptor } from "@/lib/data/minutes-conflicts";
 import { StateCard } from "@/components/data/Artifact";
 
@@ -46,14 +47,22 @@ const KIND_COPY: Record<string, { label: string; gist: string }> = {
 };
 
 /**
- * `gameweek` defaults to 1 because this component is mounted by a page that does
- * not know it. That is the honest default for the first gameweek and wrong from
- * the second, so the caller should pass it — but a wrong gameweek renders as a
- * named absence, which is recoverable, where a hardcoded path renders a stale
- * file as current, which is not.
+ * The gameweek is resolved here rather than defaulted.
+ *
+ * The first version took `gameweek = 1`, which read as a safe default and was
+ * not one: `/evidence` mounts this with no prop, so from GW2 it would have gone
+ * on fetching gw01 — the exact defect the descriptor factory was introduced to
+ * fix, surviving in the one caller that had no gameweek to pass.
+ *
+ * `agent_status.json` is the right source and the same one the margin page
+ * uses: it is written by the phase resolver, which always runs, so it has an
+ * answer even when the agent has not. The prop stays as an override for callers
+ * that already know, and 1 is the last resort rather than the default.
  */
-export default function MinutesConflicts({ gameweek = 1 }: { gameweek?: number }) {
-  const { artifact } = useArtifact(minutesConflictsDescriptor(gameweek));
+export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {}) {
+  const { artifact: status } = useArtifact(AGENT_STATUS);
+  const resolved = gameweek ?? proven(status)?.gameweek ?? 1;
+  const { artifact } = useArtifact(minutesConflictsDescriptor(resolved));
   const view = proven(artifact);
 
   // Absence never outweighs substance: one line, not a panel.
