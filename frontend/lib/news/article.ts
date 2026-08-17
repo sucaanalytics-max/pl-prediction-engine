@@ -163,3 +163,57 @@ function canonical(url: string): string | null {
     return null;
   }
 }
+
+
+/** What the reader asked for, or why it is not there. */
+export type ArticleResult =
+  | { readonly ok: true; readonly title: string; readonly paragraphs: readonly string[] }
+  | { readonly ok: false; readonly reason: string };
+
+/**
+ * Fetch an article body and narrow it, away from the view.
+ *
+ * `margin.test.ts` forbids a bare `fetch` inside the Margin surface, and the
+ * reason it gives is the one that matters: the two places this app cast a
+ * response to a type both turned a shape change into a blank page instead of a
+ * message. Doing the call here keeps that rule intact and puts the narrowing
+ * where every other narrowing in this app lives.
+ *
+ * Nothing is cast. A response that is not the expected shape becomes a stated
+ * reason, which is the same contract `lib/data/artifact.ts` holds for artifacts.
+ */
+export async function readArticle(source: string, url: string): Promise<ArticleResult> {
+  let payload: unknown;
+  try {
+    const response = await fetch(
+      `/api/news/article?source=${encodeURIComponent(source)}&url=${encodeURIComponent(url)}`,
+    );
+    payload = await response.json();
+  } catch {
+    return { ok: false, reason: "The request did not complete." };
+  }
+
+  if (typeof payload !== "object" || payload === null) {
+    return { ok: false, reason: "The reader answered with something unreadable." };
+  }
+  const body = payload as Record<string, unknown>;
+
+  // The route's own reason beats one invented here: it knows which of its four
+  // outcomes it hit — unknown source, missing article, empty body, dead feed.
+  if (typeof body.error === "string") return { ok: false, reason: body.error };
+
+  const data = typeof body.data === "object" && body.data !== null
+    ? (body.data as Record<string, unknown>) : null;
+  if (!data || !Array.isArray(data.paragraphs)) {
+    return { ok: false, reason: "No text came back for that article." };
+  }
+  const paragraphs = data.paragraphs.filter((p): p is string => typeof p === "string");
+  if (paragraphs.length === 0) {
+    return { ok: false, reason: "The article came back with no readable text." };
+  }
+  return {
+    ok: true,
+    title: typeof data.title === "string" ? data.title : "",
+    paragraphs,
+  };
+}

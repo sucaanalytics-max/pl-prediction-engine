@@ -221,6 +221,63 @@ describe("sources are reachable rather than merely present", () => {
   });
 });
 
+describe("reading the article in the app", () => {
+  /**
+   * `allaboutfpl.com` sends `x-frame-options: SAMEORIGIN`, so an embedded pane
+   * renders nothing. The feed carries the whole article instead, and the route
+   * turns it into paragraphs.
+   */
+  function withArticle(paragraphs: string[]) {
+    const base = mockFetch(FEED, SQUAD);
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      if (url.startsWith("/api/news/article")) {
+        return new Response(JSON.stringify({ data: { title: "t", url: "u", paragraphs } }),
+          { status: 200, headers: { "content-type": "application/json" } });
+      }
+      return base(input, init);
+    }));
+  }
+
+  it("offers to read only the sources whose feed carries a body", async () => {
+    /**
+     * The fixture holds five items across three sources, and only allaboutfpl is
+     * in ARTICLE_FEEDS. BBC and X are in the reading list and cannot be read in
+     * full, so their control is absent rather than present and failing.
+     */
+    await draw();
+    expect(screen.getAllByTestId("news-item")).toHaveLength(5);
+    const buttons = screen.getAllByTestId("news-read");
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0].closest("[data-testid='news-item']")?.textContent)
+      .toContain("allaboutfpl");
+  });
+
+  it("renders the paragraphs the route returned", async () => {
+    await draw();
+    withArticle(["Chelsea line up in a 4-2-3-1.", "Palmer starts behind the striker."]);
+    fireEvent.click(screen.getAllByTestId("news-read")[0]);
+    expect(await screen.findByText(/Palmer starts behind the striker/)).toBeInTheDocument();
+  });
+
+  it("says why when there is no body, and keeps the link", async () => {
+    // An article older than the ten-item feed is a real state within a day.
+    await draw();
+    const base = mockFetch(FEED, SQUAD);
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).startsWith("/api/news/article")) {
+        return new Response(JSON.stringify({ error: "That article has scrolled out of the feed." }),
+          { status: 404, headers: { "content-type": "application/json" } });
+      }
+      return base(input, init);
+    }));
+    fireEvent.click(screen.getAllByTestId("news-read")[0]);
+    expect(await screen.findByTestId("news-body-refused")).toHaveTextContent(/scrolled out/);
+    // The way out survives every failure.
+    expect(screen.getByText(/How Chelsea could line up/).closest("a")).not.toBeNull();
+  });
+});
+
 describe("the article's own summary", () => {
   it("renders the teaser the store has been keeping", async () => {
     await draw();

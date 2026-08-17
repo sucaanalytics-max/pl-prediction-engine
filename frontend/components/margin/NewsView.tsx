@@ -37,6 +37,7 @@ import { proven } from "@/lib/data/artifact";
 import { NEWS_FEED, type NewsFeed, type NewsItem } from "@/lib/data/news-feed";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
+import { ARTICLE_FEEDS, readArticle } from "@/lib/news/article";
 import { INK, MONO, SANS } from "@/lib/margin/tokens";
 import { Eyebrow, MarginState, Nil } from "@/components/margin/Marks";
 
@@ -59,7 +60,39 @@ function ago(iso: string | null): string {
   return `${Math.floor(h / 24)}d`;
 }
 
+/**
+ * The article's own text, fetched only when someone asks for it.
+ *
+ * Four states and each is said out loud, because "nothing appeared" is the one
+ * outcome that leaves a reader unsure whether to wait: idle, loading, the
+ * paragraphs, or the reason there are none. The link out survives all four —
+ * every failure here still leaves the reader able to go and read it.
+ */
+type Body =
+  | { readonly at: "idle" }
+  | { readonly at: "loading" }
+  | { readonly at: "read"; readonly paragraphs: readonly string[] }
+  | { readonly at: "refused"; readonly reason: string };
+
 function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
+  const [body, setBody] = useState<Body>({ at: "idle" });
+  // Only sources whose feed carries a full body can be read here. For the rest
+  // the control is absent rather than present-and-failing.
+  const readable = Object.prototype.hasOwnProperty.call(ARTICLE_FEEDS, item.source)
+    && item.url !== null;
+
+  async function read() {
+    if (body.at === "read") return setBody({ at: "idle" });
+    setBody({ at: "loading" });
+    // The call and its narrowing live in `lib/news/article`, not here: this
+    // surface is forbidden a bare fetch, and the rule is right — the narrowing
+    // belongs where every other narrowing in this app lives.
+    const result = await readArticle(item.source, item.url ?? "");
+    setBody(result.ok
+      ? { at: "read", paragraphs: result.paragraphs }
+      : { at: "refused", reason: result.reason });
+  }
+
   const hits = item.players.filter((p) => p.elementId > 0 && owned.has(p.elementId));
   return (
     <li
@@ -99,7 +132,43 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
           summary was in the store the whole time, which reads better anyway:
           it is this app's type, it works offline, and it loads no third-party
           script. */}
-      {item.summary ? (
+      {readable ? (
+        <button
+          type="button"
+          data-testid="news-read"
+          onClick={read}
+          style={{
+            alignSelf: "flex-start", fontFamily: MONO, fontSize: 10,
+            textTransform: "uppercase", letterSpacing: ".08em", cursor: "pointer",
+            background: "transparent", color: S.ink, opacity: .55,
+            border: `1px solid ${S.hair}`, padding: "2px 7px",
+          }}
+        >
+          {body.at === "loading" ? "reading…" : body.at === "read" ? "collapse" : "read here"}
+        </button>
+      ) : null}
+
+      {body.at === "read" ? (
+        <div data-testid="news-body" style={{ display: "flex", flexDirection: "column", gap: 8,
+                    borderLeft: `1px solid ${S.hair}`, paddingLeft: 12, marginTop: 2 }}>
+          {body.paragraphs.map((paragraph, i) => (
+            <p key={i} style={{ margin: 0, fontFamily: SANS, fontSize: 13,
+                                lineHeight: 1.6, color: S.ink, opacity: .85,
+                                maxWidth: "68ch" }}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      ) : null}
+
+      {body.at === "refused" ? (
+        <p data-testid="news-body-refused"
+           style={{ margin: 0, fontFamily: MONO, fontSize: 11, color: S.noise }}>
+          {body.reason}
+        </p>
+      ) : null}
+
+      {item.summary && body.at !== "read" ? (
         <p
           data-testid="news-summary"
           style={{
