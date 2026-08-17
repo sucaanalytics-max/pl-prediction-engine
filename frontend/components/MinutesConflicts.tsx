@@ -2,7 +2,7 @@
 
 import { useArtifact } from "@/lib/data/useArtifact";
 import { proven } from "@/lib/data/artifact";
-import { MINUTES_CONFLICTS } from "@/lib/data/minutes-conflicts";
+import { minutesConflictsDescriptor } from "@/lib/data/minutes-conflicts";
 import { StateCard } from "@/components/data/Artifact";
 
 /**
@@ -45,8 +45,15 @@ const KIND_COPY: Record<string, { label: string; gist: string }> = {
   },
 };
 
-export default function MinutesConflicts() {
-  const { artifact } = useArtifact(MINUTES_CONFLICTS);
+/**
+ * `gameweek` defaults to 1 because this component is mounted by a page that does
+ * not know it. That is the honest default for the first gameweek and wrong from
+ * the second, so the caller should pass it — but a wrong gameweek renders as a
+ * named absence, which is recoverable, where a hardcoded path renders a stale
+ * file as current, which is not.
+ */
+export default function MinutesConflicts({ gameweek = 1 }: { gameweek?: number }) {
+  const { artifact } = useArtifact(minutesConflictsDescriptor(gameweek));
   const view = proven(artifact);
 
   // Absence never outweighs substance: one line, not a panel.

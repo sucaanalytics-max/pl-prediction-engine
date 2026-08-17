@@ -34,7 +34,7 @@ import { proven, describeAge, isStale, type Artifact } from "@/lib/data/artifact
 import { AGENT_STATUS, type AgentStatus } from "@/lib/data/agent-status";
 import { ACCURACY, beatsTheCeiling, type Accuracy } from "@/lib/data/accuracy";
 import {
-  MINUTES_CONFLICTS, type MinutesConflicts,
+  minutesConflictsDescriptor, type MinutesConflicts,
 } from "@/lib/data/minutes-conflicts";
 import { REGISTRY, type DeltaFeed, type DeltaRecord } from "@/lib/data/narrow";
 import { projectionsDescriptor, type Projections } from "@/lib/data/projections";
@@ -340,7 +340,8 @@ function Calibration({ artifact }: { artifact: Artifact<Accuracy> }) {
 export function WatchView({ gameweek }: { gameweek: number }) {
   const { artifact: status } = useArtifact<AgentStatus>(AGENT_STATUS);
   const { artifact: projections } = useArtifact<Projections>(projectionsDescriptor(gameweek));
-  const { artifact: conflicts } = useArtifact<MinutesConflicts>(MINUTES_CONFLICTS);
+  const { artifact: conflicts } =
+    useArtifact<MinutesConflicts>(minutesConflictsDescriptor(gameweek));
   const { artifact: deltas } = useArtifact<DeltaFeed>(REGISTRY.deltas);
   const { artifact: fixtureXg } = useArtifact(REGISTRY.fixtureXg);
   const { artifact: accuracy } = useArtifact<Accuracy>(ACCURACY);

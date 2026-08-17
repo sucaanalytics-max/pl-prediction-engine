@@ -166,6 +166,32 @@ export function conflictsForSquad(
   return value.conflicts.filter((c) => wanted.has(c.elementId));
 }
 
+/**
+ * The conflicts for a gameweek.
+ *
+ * A factory, not a constant. The path was frozen at `gw01` while
+ * `run_news.py:377` writes `minutes_conflicts_gw{gameweek:02d}.json` off the
+ * live gameweek — so at the first deadline the poller would start writing gw02,
+ * stop touching gw01, and all four consumers would keep fetching a file nobody
+ * updates: current-looking conflicts for a day, then "out of date" for the rest
+ * of the season.
+ *
+ * Never reachable before, because the artifact was never written at all — the
+ * caller raised on every invocation and the broad `except` logged one line. It
+ * became reachable the moment that was fixed, which is why a path frozen since
+ * the file was created is only now a bug.
+ */
+export function minutesConflictsDescriptor(gameweek: number): Descriptor<MinutesConflicts> {
+  const padded = String(gameweek).padStart(2, "0");
+  return { ...MINUTES_CONFLICTS_SHAPE, path: `fpl/minutes_conflicts_gw${padded}.json` };
+}
+
+/**
+ * The gw01 descriptor, kept for the tests and tools that name it directly.
+ *
+ * Prefer `minutesConflictsDescriptor(gameweek)` in a component: this one is
+ * correct only during the first gameweek.
+ */
 export const MINUTES_CONFLICTS: Descriptor<MinutesConflicts> = {
   key: "minutesConflicts",
   path: "fpl/minutes_conflicts_gw01.json",
@@ -178,3 +204,6 @@ export const MINUTES_CONFLICTS: Descriptor<MinutesConflicts> = {
   producedAtOf: (v) => v.generatedAt,
   isEmpty: minutesConflictsAreEmpty,
 };
+
+/** Everything but the path, which the factory supplies per gameweek. */
+const MINUTES_CONFLICTS_SHAPE = MINUTES_CONFLICTS;

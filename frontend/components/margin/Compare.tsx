@@ -30,35 +30,49 @@
  */
 
 import { useMemo } from "react";
+import { proven, type Artifact } from "@/lib/data/artifact";
 import type { PlayerRow } from "@/lib/data/narrow";
 import type { Projection } from "@/lib/data/projections";
 import { compare, leaders, METRICS, type Metric } from "@/lib/margin/compare";
 import { INK, MONO, SANS } from "@/lib/margin/tokens";
-import { Nil } from "@/components/margin/Marks";
+import { MarginState, Nil } from "@/components/margin/Marks";
 
 const S = INK;
 
 /** Where the forecast ends and the record begins. */
 const RECORD_STARTS_AT = "minutes";
 
+/** Everything sourced from `player_stats.json`, which stands or falls together. */
+const RECORD_KEYS = new Set([
+  "minutes", "goals", "assists", "xg", "xa", "xgi", "xa90", "price", "owned", "form",
+]);
+
 function format(value: number | null, metric: Metric): string | null {
   if (value === null) return null;
-  if (metric.unit === "pct") {
-    // `p60` arrives as a probability and ownership as a percentage already. The
-    // metric knows which it is by its own scale rather than by a second flag:
-    // nothing in this set is a share above 1 that is not already a percentage.
-    const scaled = value <= 1 ? value * 100 : value;
-    return `${scaled.toFixed(metric.dp)}%`;
-  }
+  // Scale comes from the metric's declared unit, never from the value's size.
+  // Guessing by magnitude printed 0.4% ownership as "40.0%" for 312 players.
+  if (metric.unit === "prob") return `${(value * 100).toFixed(metric.dp)}%`;
+  if (metric.unit === "pct") return `${value.toFixed(metric.dp)}%`;
   if (metric.unit === "money") return `£${value.toFixed(metric.dp)}`;
   return value.toFixed(metric.dp);
 }
 
 export function Compare(
-  { ids, projections, stats, onRemove, onClear }: {
+  { ids, projections, stats, statsArtifact, onRemove, onClear }: {
     ids: readonly number[];
     projections: readonly Projection[];
     stats: readonly PlayerRow[];
+    /**
+     * The record half's artifact, so its absence can be named once.
+     *
+     * Without it this component received `proven(...) ?? []` and could not tell
+     * "the season has no numbers for these players" from "player_stats.json did
+     * not load". An absent artifact rendered as ten rows of per-player ∅, each
+     * titled "no rate was fitted here", under a footnote blaming the minutes —
+     * one missing file reported as fifteen missing measurements, with the file
+     * never named. House rule 2: one absent artifact costs one panel.
+     */
+    statsArtifact?: Artifact<readonly PlayerRow[]>;
     onRemove: (elementId: number) => void;
     onClear: () => void;
   },
@@ -66,6 +80,7 @@ export function Compare(
   const rows = useMemo(
     () => compare(ids, projections, stats), [ids, projections, stats],
   );
+  const recordIsReadable = statsArtifact === undefined || proven(statsArtifact) !== null;
 
   if (rows.length === 0) return null;
 
@@ -141,6 +156,18 @@ export function Compare(
           {METRICS.map((metric) => {
             const best = leaders(metric, rows);
             const opensRecord = metric.key === RECORD_STARTS_AT;
+            // Everything below the rule comes from one file. If that file is not
+            // readable, say so once here rather than nine times per player.
+            if (!recordIsReadable && opensRecord) {
+              return (
+                <div key="record-absent" data-testid="compare-record-absent"
+                     style={{ borderTop: `1px solid ${S.block}`, marginTop: 8, paddingTop: 8 }}>
+                  <MarginState of={statsArtifact!} what="the season's record"
+                               surface={S} compact />
+                </div>
+              );
+            }
+            if (!recordIsReadable && RECORD_KEYS.has(metric.key)) return null;
             return (
               <div
                 key={metric.key}

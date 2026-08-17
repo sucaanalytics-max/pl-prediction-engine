@@ -83,6 +83,42 @@ describe("what it marks", () => {
   });
 });
 
+describe("scale comes from the unit, not the size of the number", () => {
+  it("prints a sub-1% ownership as itself, not a hundred times itself", () => {
+    /**
+     * The defect this replaced: `value <= 1 ? value * 100 : value` inferred
+     * scale from magnitude, so Saliba's real 0.4% ownership rendered "40.0%".
+     * 312 of the 503 players carrying an ownership figure sit at or below 1%,
+     * and `/players` printed the same field correctly — two screens
+     * disagreeing about one number.
+     */
+    draw({
+      ids: [1],
+      projections: [projection()],
+      stats: [stats({ fpl_ownership: 0.4 })],
+    });
+    const row = [...screen.getAllByTestId("compare-row")]
+      .find((r) => r.textContent?.startsWith("owned by"))!;
+    expect(within(row).getByTestId("compare-cell").textContent).toBe("0.4%");
+  });
+
+  it("still scales a probability, which genuinely arrives as 0 to 1", () => {
+    // The branch the old heuristic got right, and which a blanket removal
+    // would have broken: P(60+) is a probability, not a percentage.
+    draw({ ids: [1], projections: [projection({ p60: 0.87 })], stats: [stats()] });
+    const row = [...screen.getAllByTestId("compare-row")]
+      .find((r) => r.textContent?.startsWith("P(60+)"))!;
+    expect(within(row).getByTestId("compare-cell").textContent).toBe("87%");
+  });
+
+  it("leaves a large ownership untouched", () => {
+    draw({ ids: [1], projections: [projection()], stats: [stats({ fpl_ownership: 73.3 })] });
+    const row = [...screen.getAllByTestId("compare-row")]
+      .find((r) => r.textContent?.startsWith("owned by"))!;
+    expect(within(row).getByTestId("compare-cell").textContent).toBe("73.3%");
+  });
+});
+
 describe("what it refuses to draw", () => {
   it("leaves a rate blank when the minutes cannot carry one", () => {
     // Four minutes would read as ten times the season's xA under the producer's
@@ -103,6 +139,37 @@ describe("what it refuses to draw", () => {
     const row = [...screen.getAllByTestId("compare-row")]
       .find((r) => r.textContent?.startsWith("xGI"))!;
     expect(within(row).getByTitle(/not a zero/)).toBeInTheDocument();
+  });
+
+  it("names the missing file once instead of blaming the minutes ten times", () => {
+    /**
+     * Every row below the rule comes from player_stats.json. When that file is
+     * absent this used to render ten per-player ∅, each titled "no rate was
+     * fitted here", under a footnote saying rates are blank when the minutes
+     * cannot carry one — one missing file reported as fifteen missing
+     * measurements, with the file never named.
+     */
+    const absent = {
+      state: "absent" as const,
+      reason: "Nothing has been published at this path yet.",
+      provenance: { path: "predictions/player_stats.json", source: "none" as const,
+                    fetchedAt: null, producedAt: null, ageMs: null },
+    };
+    render(
+      <Compare
+        ids={[1, 2]}
+        projections={pair().projections}
+        stats={[]}
+        statsArtifact={absent as never}
+        onRemove={vi.fn()}
+        onClear={vi.fn()}
+      />,
+    );
+    expect(screen.getByTestId("compare-record-absent")).toBeInTheDocument();
+    // And the per-player record rows are gone, not repeated as blanks.
+    const labels = screen.getAllByTestId("compare-row").map((r) => r.textContent ?? "");
+    expect(labels.some((l) => l.startsWith("xGI"))).toBe(false);
+    expect(labels.some((l) => l.startsWith("xP"))).toBe(true);
   });
 
   it("renders nothing at all when no player is pinned", () => {

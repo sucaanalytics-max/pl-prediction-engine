@@ -116,8 +116,20 @@ export interface Metric {
   readonly dp: number;
   /** True when a bigger number is better, which decides who gets marked. */
   readonly higherIsBetter: boolean;
-  /** `%` for a probability or a share, `£` for a price. */
-  readonly unit?: "pct" | "money";
+  /**
+   * How to render the number, declared rather than guessed.
+   *
+   * `prob` is a 0–1 probability and is multiplied by 100 to show; `pct` is
+   * already a percentage and is not. The first version inferred this from
+   * magnitude — `value <= 1 ? value * 100 : value` — which is right for
+   * `p60` and catastrophically wrong for ownership: 312 of the 503 players
+   * with an ownership figure sit at or below 1%, so Saliba's real 0.4% was
+   * rendered "40.0%" while `/players` printed 0.4% from the same field.
+   *
+   * Scale is a property of the source, and the source is known here. Nothing
+   * about a value's size tells you which unit it is in.
+   */
+  readonly unit?: "prob" | "pct" | "money";
 }
 
 /**
@@ -133,7 +145,7 @@ export const METRICS: readonly Metric[] = [
   { key: "q90", label: "ceiling (q90)", of: (c) => c.projection?.q90 ?? null, dp: 1, higherIsBetter: true },
   { key: "q10", label: "floor (q10)", of: (c) => c.projection?.q10 ?? null, dp: 1, higherIsBetter: true },
   { key: "mins", label: "xMins", of: (c) => c.projection?.eMinutes ?? null, dp: 0, higherIsBetter: true },
-  { key: "p60", label: "P(60+)", of: (c) => c.projection?.p60 ?? null, dp: 0, higherIsBetter: true, unit: "pct" },
+  { key: "p60", label: "P(60+)", of: (c) => c.projection?.p60 ?? null, dp: 0, higherIsBetter: true, unit: "prob" },
 
   { key: "minutes", label: "minutes played", of: (c) => c.stats?.minutes ?? null, dp: 0, higherIsBetter: true },
   { key: "goals", label: "goals", of: (c) => c.stats?.goals ?? null, dp: 0, higherIsBetter: true },

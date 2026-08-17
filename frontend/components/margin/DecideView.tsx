@@ -36,7 +36,7 @@ import type { AgentStatus } from "@/lib/data/agent-status";
 import { decisionDescriptor, type PublicDecision } from "@/lib/data/narrow";
 import { sensitivityDescriptor, type Sensitivity } from "@/lib/data/sensitivity";
 import {
-  MINUTES_CONFLICTS, type MinutesConflict, type MinutesConflicts,
+  minutesConflictsDescriptor, type MinutesConflict, type MinutesConflicts,
 } from "@/lib/data/minutes-conflicts";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { useArtifact } from "@/lib/data/useArtifact";
@@ -814,7 +814,7 @@ export function DecideView(
 ) {
   const { artifact: decision } = useArtifact(decisionDescriptor(gameweek, "season"));
   const { artifact: sensitivity } = useArtifact(sensitivityDescriptor(gameweek, "season"));
-  const { artifact: conflicts } = useArtifact(MINUTES_CONFLICTS);
+  const { artifact: conflicts } = useArtifact(minutesConflictsDescriptor(gameweek));
   const { artifact: heuristics } = useHeuristics();
   const mode = modeOf(proven(status));
   // The fifteen, so the disagreement panel can say how many of this run's

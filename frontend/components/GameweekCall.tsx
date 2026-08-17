@@ -5,7 +5,7 @@ import { useHeuristics } from "@/lib/data/useHeuristics";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { proven } from "@/lib/data/artifact";
 import { projectionsDescriptor, type Projection } from "@/lib/data/projections";
-import { MINUTES_CONFLICTS } from "@/lib/data/minutes-conflicts";
+import { minutesConflictsDescriptor } from "@/lib/data/minutes-conflicts";
 import { StateCard } from "@/components/data/Artifact";
 import type { SquadPlayer } from "@/lib/data/heuristics";
 
@@ -125,7 +125,8 @@ export default function GameweekCall() {
   const { artifact: projectionsArtifact } = useArtifact(projectionsDescriptor(gameweek));
   const projections = proven(projectionsArtifact)?.players ?? [];
 
-  const { artifact: conflictsArtifact } = useArtifact(MINUTES_CONFLICTS);
+  const { artifact: conflictsArtifact } =
+    useArtifact(minutesConflictsDescriptor(gameweek));
   const conflicts = proven(conflictsArtifact)?.conflicts ?? [];
 
   const call = useMemo(() => {

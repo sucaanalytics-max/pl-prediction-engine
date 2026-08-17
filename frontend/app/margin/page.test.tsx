@@ -319,6 +319,22 @@ describe("the shell", () => {
     expect(await screen.findByTestId("margin-score")).toBeInTheDocument();
   });
 
+  it("ignores an inherited Object key rather than blanking the workspace", async () => {
+    /**
+     * `wanted in VIEW_ALIASES` walked Object.prototype, so `?view=toString`
+     * resolved to a function. React 18 treats a function passed to a setter as
+     * a state updater, so the page rendered the bar with no panel beneath it —
+     * four tabs all aria-selected="false" and not one status line. A blank
+     * screen is the one outcome rule 1 forbids outright.
+     */
+    for (const key of ["toString", "constructor", "valueOf", "hasOwnProperty"]) {
+      cleanup();
+      window.history.replaceState(null, "", `/margin?view=${key}`);
+      await renderMargin();
+      expect(await screen.findByTestId("margin-score")).toBeInTheDocument();
+    }
+  });
+
   it("sends the retired Decide tab to the plan that now carries the call", async () => {
     window.history.replaceState(null, "", "/margin?view=decide");
     await renderMargin();

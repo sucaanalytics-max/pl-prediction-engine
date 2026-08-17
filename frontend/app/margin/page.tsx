@@ -5,10 +5,11 @@
  *
  * ## What this screen is
  *
- * The decision surface as a single workspace rather than as nine routes. Decide
- * is the answer, Score is the horizon, Research is every player as a
- * distribution, and Watch is what has decayed since the last solve. They share a
- * bar, a clock and a mode, and they switch with `1`–`4`.
+ * The decision surface as a single workspace rather than as nine routes. Plan is
+ * the grid you edit and the call above it, Players is every player as a
+ * distribution with a compare panel, News is what was written this week, and Now
+ * is what has decayed since the last solve. They share a bar, a clock and a
+ * mode, and they switch with `1`–`4` in that order.
  *
  * ## The rule this implementation is built around
  *
@@ -25,7 +26,8 @@
  *
  * - the XI's quantile strip — `PublicDecision` publishes a mean and no interval,
  *   and a squad total's spread is not the sum of its players' because clean
- *   sheets are drawn jointly (`DecideView`);
+ *   sheets are drawn jointly (`DecideView`, reached from the call card at
+ *   `/decide` rather than from a tab here);
  * - the eight-week grid of starts, benchings and sales — nothing solves a
  *   horizon, and a grid assembled from per-week projections would carry a
  *   solver's authority without a solve (`ScoreView`);
@@ -79,7 +81,13 @@ export default function MarginPage() {
     if (!wanted) return;
     if ((VIEWS as readonly string[]).includes(wanted)) {
       setView(wanted as MarginView);
-    } else if (wanted in VIEW_ALIASES) {
+    } else if (Object.hasOwn(VIEW_ALIASES, wanted)) {
+      // `hasOwn`, not `in`: `in` walks Object.prototype, so `?view=toString`
+      // resolved to a function, React 18 took it for a state updater, and the
+      // page rendered the bar with no panel under it, four tabs all
+      // aria-selected="false" and not one role="status" — the blank screen
+      // rule 1 exists to prevent. `?view=nonsense` was always fine; only the
+      // inherited keys reached setView.
       setView(VIEW_ALIASES[wanted]);
     }
   }, []);

@@ -22,8 +22,8 @@ const FEED = {
   generated_at: "2026-08-17T00:00:00Z",
   n_dropped: 0,
   window_days: 5,
-  n_articles: 3,
-  n_shown: 3,
+  n_articles: 5,
+  n_shown: 5,
   dropped_by_source: {},
   basis: "A reading list. None of this has moved a projection.",
   items: [
@@ -50,17 +50,22 @@ const FEED = {
       players: [{ element_id: 999, name: "Nobody", club: "AVL", held: false }],
       touches_squad: false,
     },
-    {
-      digest: "c3",
-      headline: "Bournemouth to do better after email",
-      summary: "Bournemouth vow to do better.",
+    // Three BBC items against one allaboutfpl, because that asymmetry IS the
+    // thing under test. With one item per source every count was 1, the
+    // count tiebreak was a no-op, and stable sort put allaboutfpl first by
+    // insertion order — so the ordering test passed with the preferred-source
+    // rule deleted entirely. Verified by mutation.
+    ...[1, 2, 3].map((n) => ({
+      digest: `c${n}`,
+      headline: `Bournemouth story ${n}`,
+      summary: `Bournemouth vow to do better, part ${n}.`,
       source: "bbc_football",
       tier: 3,
-      url: "https://bbc.co.uk/1",
+      url: `https://bbc.co.uk/${n}`,
       claimed_at: "2026-08-16T13:00:00Z",
       players: [],
       touches_squad: false,
-    },
+    })),
   ],
 };
 
@@ -167,7 +172,7 @@ describe("the squad join happens here, not in the artifact", () => {
 
   it("leaves an item about nobody you own unmarked", async () => {
     await draw();
-    expect(document.querySelectorAll("[data-owned='no']")).toHaveLength(2);
+    expect(document.querySelectorAll("[data-owned='no']")).toHaveLength(4);
   });
 
   it("says the squad is unknown rather than showing nothing is yours", async () => {
@@ -204,11 +209,15 @@ describe("sources are reachable rather than merely present", () => {
   });
 
   it("puts the FPL-specific sources ahead of the volume feeds", async () => {
-    // allaboutfpl contributes 1 item against BBC's 33 in the real feed. Sorting
-    // the filter row by count is what buries it.
+    // allaboutfpl contributes 1 item against BBC's 3 here and BBC's 33 in the
+    // real feed. Sorting the filter row by count is exactly what buries it, so
+    // the preferred source must lead DESPITE having the smaller count.
     await draw();
-    const first = screen.getAllByTestId("news-filter-source")[0];
-    expect(first.textContent).toContain("allaboutfpl");
+    const labels = [...screen.getAllByTestId("news-filter-source")]
+      .map((b) => b.textContent ?? "");
+    expect(labels[0]).toContain("allaboutfpl");
+    expect(labels.findIndex((l) => l.includes("allaboutfpl")))
+      .toBeLessThan(labels.findIndex((l) => l.includes("bbc_football")));
   });
 });
 
@@ -219,8 +228,8 @@ describe("the article's own summary", () => {
   });
 
   it("renders no body for an item that never had one", async () => {
-    // Two of the three fixtures carry a summary; the robtFPL post does not.
+    // Four of the five carry a summary; the robtFPL post does not.
     await draw();
-    expect(screen.getAllByTestId("news-summary")).toHaveLength(2);
+    expect(screen.getAllByTestId("news-summary")).toHaveLength(4);
   });
 });

@@ -165,6 +165,24 @@ export function NewsView() {
     [feed, owned],
   );
 
+  /**
+   * `empty` and `stale` are states, and `proven()` returns the payload for both.
+   *
+   * So `if (!feed)` never fired for either: a published-but-empty feed printed
+   * "0 of 0 captured" with a bare ∅ and no label, discarding the artifact's own
+   * reason; and a feed from a dead poller rendered identically to a fresh one,
+   * because nothing here read `artifact.state`. The only thing that moved was
+   * the per-item relative times, and those come from `Date.now()` rather than
+   * from the artifact — so a stopped poller looked like a quiet week.
+   */
+  if (feed && artifact.state === "empty") {
+    return (
+      <div data-testid="margin-news" data-state="empty" style={{ padding: "16px 0" }}>
+        <MarginState of={artifact} what="the week's reading" surface={S} />
+      </div>
+    );
+  }
+
   if (!feed) {
     // The testid goes on both branches: the shell's own test walks every view
     // and asserts each one renders something, and an absent feed is still this
@@ -183,8 +201,16 @@ export function NewsView() {
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         <Eyebrow surface={S}>the week&rsquo;s reading</Eyebrow>
+        {/* A stale feed is last week's news wearing this week's layout. Said
+            once, at the top, rather than left to the reader to notice. */}
+        {artifact.state === "stale" ? (
+          <MarginState of={artifact} what="this reading list" surface={S} compact />
+        ) : null}
         <p style={{ margin: 0, fontFamily: MONO, fontSize: 11, color: S.ink, opacity: .55 }}>
-          {feed.nShown} of {feed.nArticles} captured
+          {shown.length === feed.items.length
+            ? `${feed.items.length}`
+            : `${shown.length} of ${feed.items.length}`}{" "}
+          shown, {feed.nArticles} captured
           {feed.windowDays !== null ? ` over ${feed.windowDays} days` : ""}
           {" · "}
           {/* Named in the DOM because it is a state, not a decoration: "0 about

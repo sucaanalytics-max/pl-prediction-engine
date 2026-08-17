@@ -512,6 +512,7 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
                     ids={compareIds}
                     projections={players}
                     stats={stats}
+                    statsArtifact={statsArtifact as never}
                     onRemove={togglePin}
                     onClear={() => setCompareIds([])}
                   />

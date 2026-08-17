@@ -29,6 +29,7 @@ import Link from "next/link";
 import { proven, type Artifact } from "@/lib/data/artifact";
 import type { PublicDecision } from "@/lib/data/narrow";
 import { INK, MONO } from "@/lib/margin/tokens";
+import { MarginState } from "@/components/margin/Marks";
 
 const S = INK;
 
@@ -66,15 +67,37 @@ export function DecideCard(
   };
 
   if (!call || !call.plan) {
+    /**
+     * Four different no-value states, and they are not the same fact.
+     *
+     * This used to print "not solved for GW{n} yet — the engine runs on the
+     * deadline" for absent, stale, unreadable, empty AND the pre-fetch state,
+     * discarding `of.reason` entirely. A Supabase 500 was reported as a
+     * scheduling fact, and a solve that merely failed to narrow was reported as
+     * an idle engine — while ScoreView, lower on the same page, printed the
+     * true reason. A page contradicting itself is worse than a page saying
+     * nothing.
+     *
+     * `MarginState` already names each state and carries the reason, so this
+     * defers to it rather than keeping a second vocabulary. `plan === null` on
+     * an otherwise-ok artifact is its own case: the decision was published and
+     * carries no plan, which no state label covers.
+     */
     return (
-      <div data-testid="decide-card" style={{ ...frame, color: S.ink, opacity: .55 }}>
-        <span style={{ letterSpacing: ".08em", textTransform: "uppercase", fontSize: 10 }}>
+      <div data-testid="decide-card" data-state={of.state}
+           style={{ ...frame, color: S.ink }}>
+        <span style={{ letterSpacing: ".08em", textTransform: "uppercase",
+                       fontSize: 10, opacity: .55 }}>
           the call
         </span>
-        <span>
-          not solved for GW{gameweek} yet — the engine runs on the deadline
-        </span>
-        <Link href="/decide" style={{ marginLeft: "auto", color: "inherit" }}>
+        {call && !call.plan ? (
+          <span style={{ opacity: .7 }}>
+            published for GW{gameweek} with no plan in it
+          </span>
+        ) : (
+          <MarginState of={of} what={`the call for GW${gameweek} —`} surface={S} compact />
+        )}
+        <Link href="/decide" style={{ marginLeft: "auto", color: "inherit", opacity: .6 }}>
           why →
         </Link>
       </div>
@@ -82,15 +105,31 @@ export function DecideCard(
   }
 
   const { plan } = call;
-  const moves = plan.transfers_out.length;
-  const move = moves === 0
+  /**
+   * Two lists, never arrowed pairs.
+   *
+   * `milp.py` publishes `sorted(transfers_in)` and `sorted(transfers_out)`
+   * independently by element id, so the artifact records no pairing at all.
+   * Zipping them by index printed one the engine never proposed — with two
+   * transfers it read "Saka → Watkins, Haaland → Palmer" where the plan meant
+   * "Saka → Palmer, Haaland → Watkins", a MID→FWD swap that is not even a legal
+   * transfer. `DecideView.moveLine` has always rendered it as two lists; this is
+   * the same, with names.
+   *
+   * The gate is on both arrays, not just `transfers_out`. On an opening build —
+   * fifteen buys and no sells — the old test read `transfers_out.length === 0`
+   * and rendered "roll the transfer" over a plan that bought a whole squad.
+   */
+  const outs = plan.transfers_out;
+  const ins = plan.transfers_in;
+  const named = (ids: readonly number[]) =>
+    ids.map((id) => nameFor(id, nameOf)).join(", ");
+  const move = outs.length === 0 && ins.length === 0
     ? "roll the transfer"
-    : plan.transfers_out
-        .map((out, i) => {
-          const inId = plan.transfers_in[i];
-          return `${nameFor(out, nameOf)} → ${inId === undefined ? "?" : nameFor(inId, nameOf)}`;
-        })
-        .join(", ");
+    : [
+        outs.length ? `out ${named(outs)}` : null,
+        ins.length ? `in ${named(ins)}` : null,
+      ].filter(Boolean).join(" · ");
 
   return (
     <div
