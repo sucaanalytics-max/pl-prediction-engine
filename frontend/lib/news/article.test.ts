@@ -90,6 +90,34 @@ describe("markup does not survive", () => {
       .toContain("&lt;b&gt; end");
   });
 
+  it("decodes the em dash a real article shipped as a literal", () => {
+    /**
+     * Found in production, not in a fixture: the Chelsea piece rendered
+     * `&mdash; ALLABOUTFPL (@allaboutfpl) August 5, 2026` verbatim, because the
+     * first decoder carried six entities and an attribution line uses an em
+     * dash. Typographic punctuation is the common case in prose.
+     */
+    const text = toParagraphs(
+      `<p>Palestra took good positions &mdash; 2 shots, 1 big chance, and it&rsquo;s early.</p>`,
+    )[0];
+    expect(text).toContain("\u2014");
+    expect(text).toContain("it\u2019s");
+    expect(text).not.toContain("&mdash;");
+  });
+
+  it("leaves an entity it does not know rather than mangling it", () => {
+    // Visible on the page is a prompt to add it; stripped is silent data loss.
+    const text = toParagraphs(`<p>${"a".repeat(45)} &notarealentity; end</p>`)[0];
+    expect(text).toContain("&notarealentity;");
+  });
+
+  it("decodes in a single pass, so an escaped entity stays escaped", () => {
+    // Replacing `&amp;` before the rest turns `&amp;lt;` into `<`, which is how
+    // an author's literal `&lt;` becomes a tag.
+    const text = toParagraphs(`<p>${"a".repeat(45)} &amp;lt;b&amp;gt; end</p>`)[0];
+    expect(text).toContain("&lt;b&gt; end");
+  });
+
   it("bounds a runaway article", () => {
     const huge = Array.from({ length: 500 }, (_, i) =>
       `<p>Paragraph number ${i} padded out to clear the minimum length.</p>`).join("");

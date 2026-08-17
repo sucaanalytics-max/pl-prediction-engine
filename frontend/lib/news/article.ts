@@ -74,24 +74,49 @@ export function toParagraphs(html: string): string[] {
 }
 
 /**
- * The handful of entities a feed actually emits.
+ * Named entities a feed actually emits, beyond the numeric forms.
  *
- * Deliberately not a general HTML entity table: the tags are already gone by the
- * time this runs, so the only job is to stop `&amp;` and `&#038;` reaching the
- * page as literals. `&lt;` and `&gt;` are decoded last and the result is never
- * rendered as markup, so decoding them cannot reintroduce a tag.
+ * The first version carried six and shipped: a real allaboutfpl article rendered
+ * `&mdash; ALLABOUTFPL (@allaboutfpl) August 5, 2026` verbatim on the page,
+ * because an em dash is exactly what a publisher puts in an attribution line.
+ * Typographic punctuation is the common case in prose, so the list covers it
+ * rather than the six that happened to be in the first fixture.
+ */
+const NAMED: Readonly<Record<string, string>> = {
+  nbsp: " ", amp: "&", quot: '"', apos: "'", lt: "<", gt: ">",
+  mdash: "\u2014", ndash: "\u2013", hellip: "\u2026",
+  lsquo: "\u2018", rsquo: "\u2019", ldquo: "\u201c", rdquo: "\u201d",
+  bull: "\u2022", middot: "\u00b7", deg: "\u00b0",
+  eacute: "\u00e9", egrave: "\u00e8", uuml: "\u00fc", ouml: "\u00f6",
+  aacute: "\u00e1", oacute: "\u00f3", iacute: "\u00ed", ntilde: "\u00f1",
+  pound: "\u00a3", euro: "\u20ac", trade: "\u2122", copy: "\u00a9",
+};
+
+/**
+ * Entities, decoded once and in one pass.
+ *
+ * A single pass matters: replacing `&amp;` before the others turns an escaped
+ * `&amp;lt;` into `<`, which is how an author's literal `&lt;` becomes a tag.
+ * One regex over the whole string cannot do that, because each match is
+ * consumed exactly once.
+ *
+ * The result is never rendered as markup — it goes into a text node — so
+ * decoding `&lt;` cannot reintroduce an element. An entity this does not know
+ * is left alone rather than mangled: an unrecognised `&foo;` on the page is a
+ * visible prompt to add it, where a stripped one is silent data loss.
  */
 function decodeEntities(text: string): string {
-  return text
-    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
-    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)))
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&quot;/gi, '"')
-    .replace(/&apos;/gi, "'")
-    .replace(/&lt;/gi, "<")
-    .replace(/&gt;/gi, ">")
-    // Ampersand last: doing it first would turn `&amp;lt;` into `<`.
-    .replace(/&amp;/gi, "&");
+  return text.replace(
+    /&(#\d+|#x[0-9a-f]+|[a-z][a-z0-9]*);/gi,
+    (whole, body: string) => {
+      const token = body.toLowerCase();
+      if (token.startsWith("#x")) {
+        return String.fromCodePoint(parseInt(token.slice(2), 16));
+      }
+      if (token.startsWith("#")) return String.fromCodePoint(Number(token.slice(1)));
+      return Object.prototype.hasOwnProperty.call(NAMED, token) ? NAMED[token] : whole;
+    },
+  );
 }
 
 /** One item from a feed: where it points, and what it says. */
