@@ -184,7 +184,16 @@ class GameweekDraws:
                     "p_ge_10": float((column >= 10).mean()),
                     "p_ge_15": float((column >= 15).mean()),
                     "q10": float(np.quantile(column, 0.10)),
+                    # The interquartile pair. The frontend has threaded q25 and
+                    # q75 into its distribution glyph since it was written and
+                    # the glyph has been omitting the box, because nothing
+                    # computed them — the design derived them from the standard
+                    # deviation, which is a normal assumption this distribution
+                    # does not satisfy: a haul is a rare large draw, not a wide
+                    # symmetric one.
+                    "q25": float(np.quantile(column, 0.25)),
                     "q50": float(np.quantile(column, 0.50)),
+                    "q75": float(np.quantile(column, 0.75)),
                     "q90": float(np.quantile(column, 0.90)),
                     "q99": float(np.quantile(column, 0.99)),
                     # Monte Carlo standard error of xp, so a caller can tell a

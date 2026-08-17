@@ -53,7 +53,7 @@ FILENAME = re.compile(r"^xp_public_gw(\d{2})\.json$")
 CARRIED = (
     "element_id", "xp", "xp_sd", "mode", "p_appears", "p_60", "e_minutes",
     "e_goals", "e_assists", "p_goal", "p_clean_sheet",
-    "p_ge_2", "p_ge_5", "p_ge_10", "q10", "q50", "q90",
+    "p_ge_2", "p_ge_5", "p_ge_10", "q10", "q25", "q50", "q75", "q90",
     "n_fixtures", "blank", "decomposition",
 )
 

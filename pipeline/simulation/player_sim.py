@@ -103,7 +103,9 @@ class PlayerDraws:
                     "p_ge_5": float((column >= 5).mean()),
                     "p_ge_10": float((column >= 10).mean()),
                     "q10": float(np.quantile(column, 0.10)),
+                    "q25": float(np.quantile(column, 0.25)),
                     "q50": float(np.quantile(column, 0.50)),
+                    "q75": float(np.quantile(column, 0.75)),
                     "q90": float(np.quantile(column, 0.90)),
                 }
             )

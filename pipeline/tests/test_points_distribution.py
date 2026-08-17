@@ -190,3 +190,40 @@ class PositionRetentionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class InterquartileTests(unittest.TestCase):
+    """
+    q25 and q75, which the frontend has been asking for since it was written.
+
+    Four components thread them into the distribution glyph and the glyph has
+    been omitting the box, because nothing computed them. The design derived the
+    pair from the standard deviation; this distribution does not support that —
+    a haul is a rare large draw, not a wide symmetric one — so deriving them was
+    refused and the box left undrawn until the simulation supplied them.
+    """
+
+    def test_the_pair_is_computed(self):
+        # 0..99 in one column: the quartiles of a uniform run are its quarters.
+        rows = draws_with([[p] for p in range(100)]).summary_rows()
+        self.assertAlmostEqual(rows[0]["q25"], 24.75, places=1)
+        self.assertAlmostEqual(rows[0]["q75"], 74.25, places=1)
+
+    def test_the_quantiles_stay_ordered(self):
+        rows = draws_with([[p] for p in range(100)]).summary_rows()
+        keys = ("q10", "q25", "q50", "q75", "q90", "q99")
+        values = [rows[0][key] for key in keys]
+        self.assertEqual(values, sorted(values), f"{keys} came back unordered")
+
+    def test_a_flat_distribution_gives_a_zero_width_box(self):
+        # Every draw the same: the box has no width, which is a fact about the
+        # player and not a missing value.
+        rows = draws_with([[5], [5], [5]]).summary_rows()
+        self.assertEqual(rows[0]["q25"], rows[0]["q75"])
+
+    def test_the_box_sits_inside_the_whiskers(self):
+        # The property the glyph relies on to draw one inside the other.
+        rows = draws_with([[0], [1], [2], [9], [14]]).summary_rows()
+        row = rows[0]
+        self.assertLessEqual(row["q10"], row["q25"])
+        self.assertLessEqual(row["q75"], row["q90"])

@@ -36,7 +36,7 @@ SCHEMA_DIR = Path(__file__).resolve().parent / "schemas"
 
 # Tail probabilities must be non-increasing across these thresholds.
 TAIL_KEYS = ("p_ge_2", "p_ge_5", "p_ge_10", "p_ge_15")
-QUANTILE_KEYS = ("q10", "q50", "q90", "q99")
+QUANTILE_KEYS = ("q10", "q25", "q50", "q75", "q90", "q99")
 
 # ── fixture_xg.json ──────────────────────────────────────────────────────
 # The three provenance labels `blend_log` can return. An unlisted value means the

@@ -415,3 +415,49 @@ class HorizonBlockTests(unittest.TestCase):
         # The two draw counts sit side by side and are not the same number.
         self.assertEqual(view["n_draws"], 10000)
         self.assertEqual(view["horizon"]["n_draws"], 5000)
+
+
+class InterquartileCarryTests(unittest.TestCase):
+    """
+    The pair has to survive the trip to the browser, not just be computed.
+
+    `CARRIED` is an allow-list, so a field the simulation gains is dropped at the
+    public boundary until it is named here — which is how q25 and q75 came to be
+    read by four frontend components and written by nothing.
+    """
+
+    def _row(self, **over):
+        row = {
+            "element_id": 1, "xp": 4.0, "xp_sd": 2.0, "mode": 2,
+            "p_appears": 0.9, "p_60": 0.8, "e_minutes": 80.0,
+            "e_goals": 0.3, "e_assists": 0.2, "p_goal": 0.25,
+            "p_clean_sheet": 0.3, "p_ge_2": 0.6, "p_ge_5": 0.4, "p_ge_10": 0.1,
+            "q10": 0.0, "q25": 1.0, "q50": 3.0, "q75": 6.0, "q90": 9.0,
+            "n_fixtures": 1, "blank": False, "decomposition": None,
+        }
+        row.update(over)
+        return row
+
+    def test_the_pair_reaches_the_public_artifact(self):
+        built = public_xp.build(
+            {"gameweek": 1, "season": "2627", "n_draws": 10000,
+             "players": [self._row()]},
+            {1: "Raya"},
+            generated_at="2026-08-17T00:00:00Z",
+        )
+        player = built["players"][0]
+        self.assertEqual(player["q25"], 1.0)
+        self.assertEqual(player["q75"], 6.0)
+
+    def test_a_row_without_them_still_publishes(self):
+        # Every artifact written before this change lacks the pair, and a missing
+        # optional field must not cost the whole row.
+        row = self._row()
+        del row["q25"], row["q75"]
+        built = public_xp.build(
+            {"gameweek": 1, "season": "2627", "n_draws": 10000, "players": [row]},
+            {1: "Raya"},
+            generated_at="2026-08-17T00:00:00Z",
+        )
+        self.assertEqual(len(built["players"]), 1)
+        self.assertNotIn("q25", built["players"][0])

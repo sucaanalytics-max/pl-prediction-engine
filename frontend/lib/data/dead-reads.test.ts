@@ -118,19 +118,16 @@ const ALLOWED: Record<string, string> = {
   "fixtureXg:rows": "legacy fallback behind `fixtures`",
   "fixtureXg:current_gameweek": "not emitted; the artifact carries first_gameweek",
 
-  // The interquartile pair, wired end to end and waiting on a producer that
-  // does not compute it. `simulate_gameweek` produces q10/q50/q90/q99 per player
-  // — the private `xp_gw01.json` carries exactly those — and `public_xp.CARRIED`
-  // passes q10/q50/q90 through. Nothing anywhere computes q25 or q75.
+  // The interquartile pair, now computed and carried — `gameweek_sim.py` emits
+  // q25/q75 alongside q10/q50/q90/q99 and `public_xp.CARRIED` passes them
+  // through. The allowance stays only until an artifact written after that
+  // change is committed: `xp_public_gw01.json` on disk predates it, and the
+  // guard reads the committed file rather than the code.
   //
-  // The reads stay because the path is complete on this side: four components
-  // thread them into the distribution glyph, and `lib/margin/distribution.ts`
-  // declines to draw the box rather than deriving it from the standard
-  // deviation, which is what the design did and what this repo refuses to do.
-  // Adding the two quantiles to the simulation summary and to CARRIED makes the
-  // box appear with no frontend change.
-  "projections:q25": "no producer computes it; the glyph omits the box rather than deriving it",
-  "projections:q75": "no producer computes it; the glyph omits the box rather than deriving it",
+  // Delete both lines once the agent has published a gw artifact carrying them;
+  // the guard will then prove the pair arrives rather than merely being emitted.
+  "projections:q25": "computed and carried now; the committed artifact predates the change",
+  "projections:q75": "computed and carried now; the committed artifact predates the change",
 
   // Fallback behind goals_scored, kept for the same reason.
   "playerStats:goals": "legacy fallback behind goals_scored",

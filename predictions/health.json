@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-17T06:30:29.064658Z",
+  "last_updated": "2026-08-16T06:20:58.262603Z",
   "gameweek": 1,
   "n_predictions": 10,
   "status": "healthy",
@@ -21,7 +21,7 @@
     },
     "goalscorer": {
       "status": "active",
-      "n_players": 298
+      "n_players": 299
     }
   },
   "ensemble_method": "weighted_average",
@@ -41,14 +41,14 @@
       "n_clubs": 20,
       "n_players": 587,
       "n_without_history": 131,
-      "n_availability_gated": 68,
+      "n_availability_gated": 67,
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 494,
-        "open_ended": 38,
+        "none": 496,
+        "open_ended": 37,
         "permanent": 19,
-        "graded": 25,
+        "graded": 24,
         "dated_eligibility": 3,
         "dated_fitness": 8
       },
@@ -65,5 +65,8 @@
       "seed_entropy": 1681305205,
       "dgw_rotation_correlation_modelled": false
     }
-  }
+  },
+  "validated_at": "2026-08-17T06:41:07.029268+00:00",
+  "artifact_contract": "valid",
+  "prediction_age_hours": 24.335768413333334
 }
