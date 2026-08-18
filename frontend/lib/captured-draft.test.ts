@@ -440,4 +440,34 @@ describe("this file states its money once, in a constant", () => {
     expect(typed, "money typed into prose — derive it from a constant instead")
       .toEqual([]);
   });
+
+  it("lets no figure in the source file disagree with the constants", () => {
+    /**
+     * The same tripwire, aimed where the defect actually recurred.
+     *
+     * Banning the sign outright in `fpl-live-server.ts` would delete accurate prose,
+     * so the rule is agreement rather than absence: every money figure written there
+     * must be one the capture can produce — the squad value, the bank, the budget
+     * they sum to, or zero, which appears only as the wrong number a fixed bug used
+     * to display.
+     *
+     * This is what caught a fourth stale squad value surviving the first three
+     * fixes: the original tripwire read only its own source, so it could never see
+     * a figure in the file it was written to protect.
+     */
+    const legitimate = new Set(
+      [REPORTED_VALUE, CAPTURED_BANK, REPORTED_VALUE + CAPTURED_BANK, 0].map(
+        (m) => m.toFixed(1),
+      ),
+    );
+    const source = readFileSync("lib/fpl-live-server.ts", "utf8");
+    const disagreeing = [...source.matchAll(/£\s*(\d[\d.]*)m/g)]
+      .map((m) => m[1])
+      .filter((figure) => !legitimate.has(figure));
+    expect(
+      disagreeing,
+      `money in fpl-live-server.ts that the capture cannot produce — the constants `
+        + `say ${[...legitimate].join(", ")}`,
+    ).toEqual([]);
+  });
 });

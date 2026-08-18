@@ -74,6 +74,7 @@ import {
 import { read, type Read } from "@/lib/control-room/read";
 import { Matrix } from "@/components/control-room/Matrix";
 import { Ambient } from "@/components/control-room/Ambient";
+import { Squad } from "@/components/control-room/Squad";
 import { ChangeFeed, Queue, calibrationClaim, type QueueRow } from "@/components/control-room/Queue";
 import {
   Answer, Body, Figure, Label, S, Sub,
@@ -200,6 +201,19 @@ export default function ControlRoomPage() {
             }
             ronny={ronny}
             wazza={wazza}
+          />
+
+          <Squad
+            team={team}
+            squad={squad?.players ?? null}
+            projections={projections.value?.players ?? null}
+            gameweek={gameweek}
+            squadAge={live.age}
+            squadSource={squad?.source ?? null}
+            botPath={team === "ronny" ? ronny.path : team === "wazza" ? wazza.path : null}
+            initialising={team === "mine" ? live.initialising : (
+              team === "ronny" ? ronny.initialising : wazza.initialising
+            )}
           />
 
           <div

@@ -130,10 +130,11 @@ export interface DraftPick {
 // only tell was a `capturedAt` date in a tooltip.
 //
 // Verified rather than transcribed: each row was resolved from the bootstrap by
-// (surname, club, position) with a refusal on any ambiguous match, and the
-// resulting prices sum to **£96.5m — exactly the squad value the FPL UI reports**.
-// That total is an independent check on the whole list, since a single wrong player
-// would almost certainly break it.
+// (surname, club, position) with a refusal on any ambiguous match, and the resulting
+// prices sum to exactly the squad value the FPL UI reported, leaving exactly the
+// bank below. `captured-draft.test.ts` asserts that against `REPORTED_VALUE` — the
+// figure is not repeated here, because the last three times it was, the prose kept
+// the old capture's total while the constants moved on.
 //
 // This will go stale the same way. It is only reachable while FPL keeps GW1 picks
 // private; the moment the deadline passes, `picks` is served and this is unused.
