@@ -108,3 +108,47 @@ export function describeMode(mode: MarginMode, status: AgentStatus | null): stri
         + "is unknown — which is not the same as it having not run.";
   }
 }
+
+/**
+ * `3d 08h 43m` beyond a day, `01:47:12` inside it.
+ *
+ * A second format rather than a second resolver: it shares {@link remainingMs}
+ * and its null handling, so there is still exactly one place that turns a
+ * deadline string into time remaining.
+ *
+ * It exists because {@link countdown} drops to `3d 8h` beyond a day, and a
+ * display whose smallest unit is an hour has nothing for a per-minute tick to
+ * change — the masthead clock ticks per minute outside the last day, so the
+ * minutes have to be on screen or the tick is a re-render nobody can see.
+ * Inside the last day the two formats agree, because that is the only range in
+ * which seconds carry a decision.
+ */
+export function countdownLong(remaining: number | null): string {
+  if (remaining === null || !Number.isFinite(remaining)) return "—";
+  if (remaining <= 0) return "passed";
+
+  const seconds = Math.floor(remaining / 1000);
+  const days = Math.floor(seconds / 86_400);
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  if (days >= 1) {
+    const hours = Math.floor((seconds % 86_400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    return `${days}d ${pad(hours)}h ${pad(minutes)}m`;
+  }
+
+  return `${pad(Math.floor(seconds / 3600))}:${pad(Math.floor((seconds % 3600) / 60))}`
+    + `:${pad(seconds % 60)}`;
+}
+
+/**
+ * How often the clock should tick, in milliseconds.
+ *
+ * Per second inside the last day, per minute beyond it. Seconds six days out are
+ * motion dressed as urgency, and they re-render the masthead 86,400 times for a
+ * digit no reader is watching.
+ */
+export function tickPeriodMs(remaining: number | null): number {
+  if (remaining === null || !Number.isFinite(remaining)) return 60_000;
+  return remaining > 0 && remaining < 86_400_000 ? 1_000 : 60_000;
+}

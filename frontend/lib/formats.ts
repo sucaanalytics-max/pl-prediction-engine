@@ -202,3 +202,55 @@ export function ageLine(
   const get = (t: string) => parts.find((x) => x.type === t)?.value ?? "";
   return `as at ${get("weekday")} ${get("hour")}:${get("minute")}`;
 }
+
+/**
+ * A deadline written in the zone the deadline itself states.
+ *
+ * `Fri 21 Aug 2026 · 17:30 UTC` from `2026-08-21T17:30:00+00:00`.
+ *
+ * Deliberately NOT {@link DISPLAY_TIME_ZONE}. Every other timestamp in this app
+ * is a reading of something that happened, and the reader's own zone is the right
+ * frame for those. An FPL deadline is different: it is published in one zone, it
+ * is quoted in that zone everywhere FPL and its community discuss it, and a
+ * masthead that renders it as `23:00 IST` invites a reader to check it against a
+ * source that says 17:30 and conclude the clock is wrong. So the stamp follows the
+ * artifact's own offset, and it names that offset so the figure can be checked.
+ *
+ * Null when there is no timestamp, when it does not parse, or when it states no
+ * zone at all. The last case is the reason this reads the string rather than the
+ * `Date`: a naive `2026-08-21T17:30:00` has no zone to be faithful to, and
+ * labelling it `UTC` would be an invention on the one figure the whole screen
+ * counts down to.
+ */
+export function deadlineStamp(iso: string | null | undefined): string | null {
+  if (!iso) return null;
+  const at = Date.parse(iso);
+  if (Number.isNaN(at)) return null;
+
+  const zone = /(Z)$|([+-])(\d{2}):?(\d{2})$/.exec(iso.trim());
+  if (!zone) return null;
+
+  const offsetMinutes = zone[1]
+    ? 0
+    : (zone[2] === "-" ? -1 : 1) * (Number(zone[3]) * 60 + Number(zone[4]));
+
+  // Shift the instant and then format it in UTC: that reproduces the wall clock
+  // an observer at the stated offset would read, without asking Intl for a named
+  // zone the artifact never gave us.
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "UTC",
+    weekday: "short", day: "numeric", month: "short", year: "numeric",
+    hour: "2-digit", minute: "2-digit", hour12: false,
+  }).formatToParts(new Date(at + offsetMinutes * 60_000));
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+
+  const sign = offsetMinutes < 0 ? "-" : "+";
+  const abs = Math.abs(offsetMinutes);
+  const label = offsetMinutes === 0
+    ? "UTC"
+    : `UTC${sign}${String(Math.floor(abs / 60)).padStart(2, "0")}:`
+      + `${String(abs % 60).padStart(2, "0")}`;
+
+  return `${get("weekday")} ${get("day")} ${get("month")} ${get("year")} · `
+    + `${get("hour")}:${get("minute")} ${label}`;
+}

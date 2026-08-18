@@ -142,3 +142,18 @@ export function hatch(surface: MarginSurface): string {
 export const MONO = "var(--font-plex-mono), ui-monospace, monospace";
 /** IBM Plex Sans, likewise. */
 export const SANS = "var(--font-plex-sans), system-ui, sans-serif";
+
+/**
+ * Newsreader, the display face, likewise loaded by the root layout.
+ *
+ * It sets headings and the sentence that answers a screen's question, and it
+ * **never sets a figure and never sets a label** — figures are Mono so a column
+ * of them reads as a ranking, labels are Mono so they read as apparatus rather
+ * than as prose. Weight is a designed pair rather than one weight reused: 400 on
+ * paper, 500 on ink, because 400 goes spindly against black.
+ *
+ * Named here beside {@link MONO} and {@link SANS} so a view spells the face once
+ * and `var(--font-newsreader)` does not spread through the component tree as a
+ * literal — the same reason those two exist.
+ */
+export const DISPLAY = "var(--font-newsreader), Georgia, serif";

@@ -13,6 +13,7 @@ import {
   istDateTime,
   kickoffTime,
   shortDate,
+  deadlineStamp,
 } from "./formats";
 
 describe("pct", () => {
@@ -220,5 +221,47 @@ describe("predictionLabel", () => {
 
   it("handles empty string", () => {
     expect(predictionLabel("")).toBe("");
+  });
+});
+
+describe("deadlineStamp", () => {
+  /**
+   * The masthead's sub-line, and why it is not in the reader's own zone.
+   *
+   * An FPL deadline is published in one zone and quoted in that zone everywhere it
+   * is discussed. Rendering it as `23:00 IST` invites a reader to check it against
+   * a source that says 17:30 and conclude the clock is wrong.
+   */
+  it("writes the deadline in the zone the deadline states", () => {
+    expect(deadlineStamp("2026-08-21T17:30:00+00:00"))
+      .toBe("Fri 21 Aug 2026 · 17:30 UTC");
+  });
+
+  it("treats a Z suffix as the same stated zone", () => {
+    expect(deadlineStamp("2026-08-21T17:30:00Z"))
+      .toBe("Fri 21 Aug 2026 · 17:30 UTC");
+  });
+
+  it("keeps a non-zero offset's own wall clock and names it", () => {
+    expect(deadlineStamp("2026-08-21T23:00:00+05:30"))
+      .toBe("Fri 21 Aug 2026 · 23:00 UTC+05:30");
+  });
+
+  it("handles an offset without a colon", () => {
+    expect(deadlineStamp("2026-08-21T13:30:00-0400"))
+      .toBe("Fri 21 Aug 2026 · 13:30 UTC-04:00");
+  });
+
+  it("refuses a timestamp that states no zone", () => {
+    // There is nothing to be faithful to, and labelling it UTC would be an
+    // invention on the one figure the whole screen counts down to.
+    expect(deadlineStamp("2026-08-21T17:30:00")).toBeNull();
+  });
+
+  it("refuses an unparseable or absent value rather than returning NaN", () => {
+    expect(deadlineStamp("")).toBeNull();
+    expect(deadlineStamp(null)).toBeNull();
+    expect(deadlineStamp(undefined)).toBeNull();
+    expect(deadlineStamp("not a date")).toBeNull();
   });
 });

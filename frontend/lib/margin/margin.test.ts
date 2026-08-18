@@ -14,7 +14,10 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 import { geometry, meanOverMode, SCALE_HI } from "@/lib/margin/distribution";
-import { clockLabel, countdown, describeMode, modeOf, remainingMs } from "@/lib/margin/mode";
+import {
+  clockLabel, countdown, countdownLong, describeMode, modeOf, remainingMs,
+  tickPeriodMs,
+} from "@/lib/margin/mode";
 import { findTwins } from "@/lib/margin/twins";
 import { fold, hasLineup, inReadingOrder, joinProjections } from "@/lib/margin/squad";
 import type { AgentStatus } from "@/lib/data/agent-status";
@@ -162,6 +165,35 @@ describe("the countdown", () => {
 
   it("measures against the injected clock", () => {
     expect(remainingMs("2026-08-14T01:00:00Z", now)).toBe(3_600_000);
+  });
+
+  /**
+   * The long form, for a masthead whose clock ticks per minute outside the last
+   * day. `countdown` drops to `3d 8h` there, and a display whose smallest unit is
+   * an hour gives a per-minute tick nothing to change.
+   */
+  it("keeps the minutes visible beyond a day", () => {
+    expect(countdownLong(1000 * (3 * 86_400 + 8 * 3600 + 43 * 60))).toBe("3d 08h 43m");
+  });
+
+  it("agrees with the short form inside the last day", () => {
+    const inside = 1000 * (3600 + 47 * 60 + 12);
+    expect(countdownLong(inside)).toBe(countdown(inside));
+  });
+
+  it("shares the short form's answers at the edges", () => {
+    expect(countdownLong(-1)).toBe("passed");
+    expect(countdownLong(null)).toBe("—");
+    expect(countdownLong(Number.NaN)).toBe("—");
+  });
+
+  it("ticks per second only inside the last day", () => {
+    // Seconds six days out are motion dressed as urgency, and 86,400 re-renders
+    // for a digit nobody is watching.
+    expect(tickPeriodMs(1000 * 3600)).toBe(1_000);
+    expect(tickPeriodMs(1000 * 86_400 * 3)).toBe(60_000);
+    expect(tickPeriodMs(null)).toBe(60_000);
+    expect(tickPeriodMs(-1)).toBe(60_000);
   });
 });
 
