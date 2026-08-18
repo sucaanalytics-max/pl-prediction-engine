@@ -180,8 +180,13 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         fetch_bootstrap_static, fetch_fixtures,
         get_upcoming_fixtures, build_player_stats, get_current_gameweek,
     )
-    bootstrap = fetch_bootstrap_static(force=force_refresh)
-    fixtures_raw = fetch_fixtures(force=force_refresh)
+    # This run writes forecast_ledger.json, so it may not run on stale cache:
+    # a stale bootstrap means stale prices, a stale chance_of_playing and a
+    # stale deadline_time riding into a record whose entire value is that it
+    # predated kickoff. fpl_api's _fetch_cached_json states this as a contract:
+    # "Any caller that timestamps a forecast MUST pass both."
+    bootstrap = fetch_bootstrap_static(force=force_refresh, allow_stale=False)
+    fixtures_raw = fetch_fixtures(force=force_refresh, allow_stale=False)
     gameweek = get_current_gameweek(bootstrap)
     upcoming = get_upcoming_fixtures(bootstrap, fixtures_raw)
     player_stats = build_player_stats(bootstrap)
