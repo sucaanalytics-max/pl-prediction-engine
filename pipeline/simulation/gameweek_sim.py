@@ -61,6 +61,11 @@ class FixtureSpec:
     lambda_home: float
     mu_away: float
     kickoff: Optional[str] = None
+    # Where lambda_home/mu_away came from: "market_blend" when odds anchored the
+    # fixture, "dixon_coles_posterior" beyond the priced horizon, or
+    # "ensemble_unanchored" on the legacy path. Carried here so the published
+    # artifact can state it per fixture without a second lookup.
+    rate_source: Optional[str] = None
 
 
 @dataclass
