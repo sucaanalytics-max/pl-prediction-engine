@@ -399,8 +399,15 @@ class ForecastLedgerAdmissibility(unittest.TestCase):
         self.assertNotIn("m3", result["forecasts"])
         self.assertIn("no kickoff", result["rejected"][0]["reason"])
 
-    def test_never_overwrites_an_admitted_forecast_with_a_later_one(self):
-        """The first pre-match forecast is the record; later ones cannot replace it."""
+    def test_a_later_pre_kickoff_forecast_replaces_an_earlier_one(self):
+        """The ledger holds the FINAL pre-match forecast, which is what its
+        docstring promises and what every calibration number assumes.
+
+        A first-wins rule would pin the earliest run of the gameweek window —
+        stalest odds, least injury news — and silently measure a weaker
+        forecaster than the one actually shipping. Precedence is enforced by
+        the generated_at < kickoff check alone; freezing the first admission
+        adds nothing to it and costs the semantics."""
         path = Path(self.tmpdir) / "ledger.json"
         update_forecast_ledger(
             self._output("m4", "2026-08-21T19:00:00Z",
@@ -409,7 +416,24 @@ class ForecastLedgerAdmissibility(unittest.TestCase):
                               generated_at="2026-08-20T06:00:00Z")
         second["predictions"][0]["expected_goals"] = {"home": 9.9, "away": 9.9}
         result = update_forecast_ledger(second, path)
-        self.assertEqual(result["forecasts"]["m4"]["expected_goals"]["home"], 2.4)
+        self.assertEqual(result["forecasts"]["m4"]["expected_goals"]["home"], 9.9)
+        self.assertEqual(
+            result["forecasts"]["m4"]["generated_at"], "2026-08-20T06:00:00Z")
+
+    def test_a_post_kickoff_forecast_cannot_replace_an_admitted_one(self):
+        """The other half of the same rule: last-wins applies only among
+        forecasts that PROVABLY predate kickoff. A run after kickoff is
+        rejected outright and leaves the admitted forecast standing."""
+        path = Path(self.tmpdir) / "ledger.json"
+        update_forecast_ledger(
+            self._output("m6", "2026-08-21T19:00:00Z",
+                         generated_at="2026-08-19T06:00:00Z"), path)
+        late = self._output("m6", "2026-08-21T19:00:00Z",
+                            generated_at="2026-08-22T06:00:00Z")
+        late["predictions"][0]["expected_goals"] = {"home": 9.9, "away": 9.9}
+        result = update_forecast_ledger(late, path)
+        self.assertEqual(result["forecasts"]["m6"]["expected_goals"]["home"], 2.4)
+        self.assertEqual(result["rejected"][0]["match_id"], "m6")
 
     def test_rejects_a_forecast_generated_at_the_exact_instant_of_kickoff(self):
         """

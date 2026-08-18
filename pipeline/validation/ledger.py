@@ -31,7 +31,7 @@ def _parse_iso(value):
 
 def update_forecast_ledger(output: Dict, path: Path) -> Dict:
     """
-    Admit the first pre-match forecast for each stable fixture ID.
+    Admit each stable fixture ID's final pre-match forecast.
 
     A fixture disappears from the live prediction set after kickoff, leaving
     its final pre-match forecast immutable and ready to score against results.
@@ -76,11 +76,17 @@ def update_forecast_ledger(output: Dict, path: Path) -> Dict:
                              "reason": f"generated {generated_at} at or after kickoff"})
             continue
 
-        # First admissible forecast wins. A later one is not more honest for
-        # being later, and overwriting would destroy the earlier proof.
-        if match_id in forecasts:
-            continue
-
+        # The LATEST admissible forecast wins, and deliberately so. A fixture
+        # disappears from the live prediction set after kickoff, so whatever
+        # is in the ledger when that happens is this function's stated
+        # product: the FINAL pre-match forecast. A first-wins rule would
+        # freeze the earliest run of the gameweek window — the one with the
+        # stalest odds and the least injury news — and every calibration and
+        # Brier number derived from it would measure a materially weaker
+        # forecaster with nothing saying so. Precedence is already fully
+        # enforced above: generated_dt >= kickoff_dt refuses a post-hoc
+        # forecast outright, so overwriting can only ever replace one
+        # pre-kickoff forecast with a better-informed pre-kickoff forecast.
         forecasts[match_id] = {
             "match_id": match_id,
             "generated_at": generated_at,
