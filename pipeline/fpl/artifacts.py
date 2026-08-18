@@ -88,6 +88,27 @@ def validate_xp_artifact(artifact: Dict[str, Any]) -> List[str]:
         if required not in metadata:
             problems.append(f"metadata.{required} missing")
 
+    # A published fixture with a null rate_source is indistinguishable from
+    # one nobody ever wired provenance for, and an unrecognised value means
+    # the blend grew a branch this artifact's consumers were never told
+    # about. Both fail the contract here rather than reach disk unchallenged.
+    fixtures = artifact.get("fixtures")
+    if fixtures is not None and not isinstance(fixtures, list):
+        problems.append("fixtures present but not a list")
+    else:
+        accepted_rate_sources = set(RATE_SOURCES) | {"ensemble_unanchored"}
+        for fixture in fixtures or []:
+            label = f"fixture {fixture.get('home_team')} v {fixture.get('away_team')}"
+            rate_source = fixture.get("rate_source")
+            if not rate_source:
+                problems.append(f"{label}: rate_source is null or missing")
+            elif rate_source not in accepted_rate_sources:
+                problems.append(
+                    f"{label}: rate_source {rate_source!r} is not a "
+                    f"recognised value (expected one of "
+                    f"{sorted(accepted_rate_sources)})"
+                )
+
     players = artifact.get("players")
     if not isinstance(players, list):
         return problems + ["players missing or not a list"]

@@ -120,31 +120,145 @@ class RunPipelineCallSiteSwitched(unittest.TestCase):
     """AST technique mirrors pipeline/tests/test_sealing_freshness.py, since
     the FPL block in run_pipeline.py sits inside a try/except that swallows
     ImportError for pymc/xgboost/sklearn — it cannot be exercised by import or
-    execution in this environment, only inspected as source."""
+    execution in this environment, only inspected as source.
+
+    Checks STRUCTURE, not just that both names appear as calls somewhere in
+    the file. A presence-only check would still pass if a future edit
+    reordered the logic so the fallback ran unconditionally first, leaving
+    the anchored call present but unreachable. So this walks the enclosing
+    statements: the anchored call must sit inside the `try` guarded by
+    `fixture_xg_path.exists()`, and the fallback call must sit inside the
+    `if not fpl_specs:` branch that follows it.
+    """
 
     @classmethod
     def setUpClass(cls):
-        source = (REPO / "pipeline" / "run_pipeline.py").read_text(encoding="utf-8")
-        tree = ast.parse(source)
-        cls.called_names = {
-            getattr(node.func, "id", None)
-            for node in ast.walk(tree)
-            if isinstance(node, ast.Call)
-        }
+        cls.source = (REPO / "pipeline" / "run_pipeline.py").read_text(encoding="utf-8")
+        cls.tree = ast.parse(cls.source)
 
-    def test_fixture_specs_from_fixture_xg_is_called(self):
-        self.assertIn(
-            "fixture_specs_from_fixture_xg", self.called_names,
-            "run_pipeline.py no longer calls fixture_specs_from_fixture_xg — "
-            "the market-anchored rate path is not wired in",
+    @staticmethod
+    def _calls_named(container, name):
+        """Every ast.Call node calling `name`, found under `container`.
+
+        `container` may be a real AST node or a synthetic ast.Module wrapping
+        just one node's statement list — the latter is how the helpers below
+        scope a search to one branch's body only (e.g. a try's success body,
+        excluding its except handlers; or one if-branch, excluding the rest
+        of the file).
+        """
+        return [
+            node for node in ast.walk(container)
+            if isinstance(node, ast.Call) and getattr(node.func, "id", None) == name
+        ]
+
+    def _anchored_call(self):
+        """fixture_specs_from_fixture_xg, found only inside a try block's
+        success body that is itself inside an `if <x>.exists():` guard —
+        never bare, never inside the except handler."""
+        for if_node in ast.walk(self.tree):
+            if not (
+                isinstance(if_node, ast.If)
+                and isinstance(if_node.test, ast.Call)
+                and isinstance(if_node.test.func, ast.Attribute)
+                and if_node.test.func.attr == "exists"
+            ):
+                continue
+            for stmt in if_node.body:
+                if not isinstance(stmt, ast.Try):
+                    continue
+                wrapper = ast.Module(body=stmt.body, type_ignores=[])
+                calls = self._calls_named(wrapper, "fixture_specs_from_fixture_xg")
+                if calls:
+                    return calls[0]
+        return None
+
+    def _fallback_call(self):
+        """fixture_specs_from_predictions, found only inside an
+        `if not fpl_specs:` branch's body."""
+        for if_node in ast.walk(self.tree):
+            if not (
+                isinstance(if_node, ast.If)
+                and isinstance(if_node.test, ast.UnaryOp)
+                and isinstance(if_node.test.op, ast.Not)
+                and isinstance(if_node.test.operand, ast.Name)
+                and if_node.test.operand.id == "fpl_specs"
+            ):
+                continue
+            wrapper = ast.Module(body=if_node.body, type_ignores=[])
+            calls = self._calls_named(wrapper, "fixture_specs_from_predictions")
+            if calls:
+                return calls[0]
+        return None
+
+    def test_anchored_call_is_inside_the_guarded_read(self):
+        call = self._anchored_call()
+        self.assertIsNotNone(
+            call,
+            "fixture_specs_from_fixture_xg is not called inside a try "
+            "block's success body nested under `if fixture_xg_path.exists():` "
+            "— the market-anchored read must stay guarded, not bare or moved "
+            "outside the exists()/try scaffolding",
         )
 
-    def test_fixture_specs_from_predictions_is_still_called_as_fallback(self):
+    def test_anchored_call_passes_gameweeks_scoped_to_the_current_week(self):
+        """Regression guard for the ~8x inflation bug: fixture_xg.json spans
+        GW1-8 (80 rows). Without gameweeks=[gameweek], every club's fixtures
+        across the whole horizon are handed to one simulate_gameweek call,
+        which accumulates them with += (built for a genuine intra-week
+        double, not a season). A future edit dropping this keyword would
+        silently reintroduce that inflation."""
+        call = self._anchored_call()
+        self.assertIsNotNone(call, "fixture_specs_from_fixture_xg is not called")
+        keywords = {kw.arg: kw.value for kw in call.keywords}
         self.assertIn(
-            "fixture_specs_from_predictions", self.called_names,
-            "run_pipeline.py no longer calls fixture_specs_from_predictions — "
-            "a wiring change that deleted the fallback would strand every run "
-            "whose fixture_xg.json is absent or malformed",
+            "gameweeks", keywords,
+            f"fixture_specs_from_fixture_xg at line {call.lineno} does not "
+            "pass gameweeks= — without it every row across the full GW1-8 "
+            "horizon is handed to the simulation",
+        )
+        value = keywords["gameweeks"]
+        self.assertIsInstance(
+            value, ast.List,
+            f"gameweeks= at line {call.lineno} must be a literal list, got "
+            f"{ast.dump(value)}",
+        )
+        self.assertEqual(
+            len(value.elts), 1,
+            f"gameweeks= at line {call.lineno} must scope to exactly one "
+            f"gameweek, got {ast.dump(value)}",
+        )
+        element = value.elts[0]
+        self.assertIsInstance(element, ast.Name)
+        self.assertEqual(
+            element.id, "gameweek",
+            f"gameweeks= at line {call.lineno} must scope to the current "
+            f"`gameweek` variable, got {ast.dump(element)}",
+        )
+
+    def test_fallback_call_is_inside_the_if_not_fpl_specs_branch(self):
+        call = self._fallback_call()
+        self.assertIsNotNone(
+            call,
+            "fixture_specs_from_predictions is not called inside an "
+            "`if not fpl_specs:` branch — a wiring change that deleted the "
+            "fallback, or made it unconditional, would strand or silently "
+            "override every anchored run",
+        )
+
+    def test_anchored_attempt_precedes_the_fallback_guard(self):
+        """Catches a reorder that moved the `if not fpl_specs:` check ahead
+        of the anchored try — which would make the guard always true
+        (fpl_specs is still its initial []) and the fallback effectively
+        unconditional, even though it remains syntactically 'inside the
+        guard'."""
+        anchored = self._anchored_call()
+        fallback = self._fallback_call()
+        self.assertIsNotNone(anchored)
+        self.assertIsNotNone(fallback)
+        self.assertLess(
+            anchored.lineno, fallback.lineno,
+            "the anchored fixture_specs_from_fixture_xg call must appear "
+            "before the `if not fpl_specs:` fallback guard in source order",
         )
 
 

@@ -1125,13 +1125,26 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         # which raises AttributeError/TypeError the moment
         # fixture_specs_from_fixture_xg calls .get() on it — so the except
         # tuple below is wider than just (OSError, ValueError).
+        #
+        # gameweeks=[gameweek] is required, not optional: fixture_xg.json
+        # spans the full GW1-8 horizon (80 rows), and simulate_gameweek
+        # accumulates a player's fixtures across whatever spec list it is
+        # given with += — built for a genuine intra-week double gameweek, not
+        # for an entire season horizon. Passing the unfiltered payload would
+        # hand every club's 8 fixtures to one call, inflating n_fixtures and
+        # every summed stat ~8x while the artifact still claims to be a
+        # single gameweek. Phase 0 delivers the anchor only, scoped to the
+        # current gameweek; a real multi-week horizon needs one
+        # simulate_gameweek call per week (as run_agent.py already does) and
+        # is out of scope here.
         fpl_specs = []
         fixture_xg_path = PREDICTIONS_DIR / "fixture_xg.json"
         if fixture_xg_path.exists():
             try:
                 fixture_xg_payload = json.loads(
                     fixture_xg_path.read_text(encoding="utf-8"))
-                fpl_specs = fixture_specs_from_fixture_xg(fixture_xg_payload)
+                fpl_specs = fixture_specs_from_fixture_xg(
+                    fixture_xg_payload, gameweeks=[gameweek])
             except (OSError, ValueError, AttributeError, TypeError, KeyError) as exc:
                 logger.warning("  unreadable fixture_xg.json: %s", exc)
         if not fpl_specs:

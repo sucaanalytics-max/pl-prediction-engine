@@ -16,6 +16,7 @@ import numpy as np
 import pandas as pd
 
 from pipeline.fpl.artifacts import (
+    RATE_SOURCES,
     SCHEMA_DIR,
     ArtifactContractError,
     assert_valid_xp_artifact,
@@ -111,12 +112,15 @@ def _draws(fixtures, n_draws=500, all_ids=None):
 
 
 SINGLE = [
-    FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1, "2026-09-12T14:00:00Z"),
+    FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1, "2026-09-12T14:00:00Z",
+                rate_source="market_blend"),
 ]
 # Alpha plays twice: a double gameweek. Gamma does not play at all: a blank.
 DOUBLE = [
-    FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1, "2026-09-12T14:00:00Z"),
-    FixtureSpec("m2", 5, "Beta", "Alpha", 1.3, 1.4, "2026-09-15T19:00:00Z"),
+    FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1, "2026-09-12T14:00:00Z",
+                rate_source="market_blend"),
+    FixtureSpec("m2", 5, "Beta", "Alpha", 1.3, 1.4, "2026-09-15T19:00:00Z",
+                rate_source="dixon_coles_posterior+level"),
 ]
 
 
@@ -325,6 +329,65 @@ class ArtifactContractTests(unittest.TestCase):
     def test_assert_raises_on_a_broken_artifact(self):
         broken = json.loads(json.dumps(self.artifact))
         broken["players"][0]["p_appears"] = 2.0
+        with self.assertRaises(ArtifactContractError):
+            assert_valid_xp_artifact(broken)
+
+
+class FixtureRateSourceContractTests(unittest.TestCase):
+    """A published fixture with a null rate_source is indistinguishable from
+    one nobody ever wired provenance for, and an unrecognised value means the
+    blend grew a branch nothing downstream was told about. Both must fail
+    the contract, not just reach disk with the FPL layer silently reading
+    unanchored rates."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.artifact = build_xp_artifact(
+            _draws(DOUBLE), "2627", GENERATED_AT, RULES, DOUBLE
+        )
+
+    def test_a_well_formed_artifact_with_rate_sources_passes(self):
+        self.assertEqual(validate_xp_artifact(self.artifact), [])
+
+    def test_null_rate_source_is_rejected(self):
+        broken = json.loads(json.dumps(self.artifact))
+        broken["fixtures"][0]["rate_source"] = None
+        problems = validate_xp_artifact(broken)
+        self.assertTrue(
+            any("rate_source is null or missing" in p for p in problems), problems
+        )
+
+    def test_missing_rate_source_key_is_rejected(self):
+        broken = json.loads(json.dumps(self.artifact))
+        del broken["fixtures"][0]["rate_source"]
+        problems = validate_xp_artifact(broken)
+        self.assertTrue(
+            any("rate_source is null or missing" in p for p in problems), problems
+        )
+
+    def test_unrecognised_rate_source_is_rejected(self):
+        """An unexpected fourth value is exactly the case worth failing on —
+        it means the blend grew a branch nothing here was updated for."""
+        broken = json.loads(json.dumps(self.artifact))
+        broken["fixtures"][0]["rate_source"] = "vibes"
+        problems = validate_xp_artifact(broken)
+        self.assertTrue(
+            any("not a recognised value" in p for p in problems), problems
+        )
+
+    def test_each_accepted_rate_source_passes(self):
+        accepted = set(RATE_SOURCES) | {"ensemble_unanchored"}
+        for source in accepted:
+            with self.subTest(rate_source=source):
+                broken = json.loads(json.dumps(self.artifact))
+                for fixture in broken["fixtures"]:
+                    fixture["rate_source"] = source
+                problems = validate_xp_artifact(broken)
+                self.assertEqual([p for p in problems if "rate_source" in p], [])
+
+    def test_assert_raises_on_a_null_rate_source(self):
+        broken = json.loads(json.dumps(self.artifact))
+        broken["fixtures"][0]["rate_source"] = None
         with self.assertRaises(ArtifactContractError):
             assert_valid_xp_artifact(broken)
 
