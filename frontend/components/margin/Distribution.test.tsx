@@ -141,3 +141,34 @@ describe("the glyph under each emphasis", () => {
     }
   });
 });
+
+/**
+ * What the label says and what the glyph draws are the same claim.
+ *
+ * `describeGlyph` names the measured PAIRS and the point marks, so a file carrying
+ * only q75 and q90 is described as "no distribution published". While the tail
+ * alone counted as non-blank, that sentence was the `aria-label` of a `role="img"`
+ * that visibly drew a bar — the label and the mark disagreeing about whether
+ * anything was published at all.
+ */
+describe("a tail-only file draws nothing rather than a mislabelled bar", () => {
+  const TAIL_ONLY = { q75: 7, q90: 11 };
+
+  it("renders the ∅ mark, not an image", () => {
+    const { container } = render(
+      <Distribution of={TAIL_ONLY} surface={PAPER} emphasis="tail" />,
+    );
+    expect(container.querySelector('[role="img"]')).toBeNull();
+    expect(container.textContent).toContain("∅");
+  });
+
+  it("says the same thing under every emphasis", () => {
+    for (const e of ["neutral", "median", "tail"] as const) {
+      const { container } = render(
+        <Distribution of={TAIL_ONLY} surface={PAPER} emphasis={e} />,
+      );
+      expect(container.querySelector('[title="right tail, q75 to q90"]')).toBeNull();
+      cleanup();
+    }
+  });
+});

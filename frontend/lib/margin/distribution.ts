@@ -58,10 +58,13 @@ export interface DistributionGeometry {
   /**
    * q75–q90 — the right tail, and the mark the weekly objective reads.
    *
-   * Drawn as its own span rather than inferred from the box and the whisker,
-   * because under tail emphasis it thickens while the median thins: same marks,
-   * same scale, opposite conclusion. That is what lets a season-versus-weekly
-   * diff use one chart type instead of two.
+   * Computed as its own span rather than inferred from the box and the whisker,
+   * because when it is drawn it thickens while the median thins: same marks, same
+   * scale, opposite conclusion. That is what lets a season-versus-weekly diff use
+   * one chart type instead of two.
+   *
+   * Non-null here means "measured", not "drawn". `Marks.tsx` draws it only under
+   * `emphasis="tail"`, and never at all when {@link blank} — see below.
    */
   readonly tail: Span | null;
   /** The median. */
@@ -70,7 +73,25 @@ export interface DistributionGeometry {
   readonly mean: Mark | null;
   /** The most likely single return. */
   readonly mode: Mark | null;
-  /** True when nothing could be drawn, so the caller renders `∅` instead. */
+  /**
+   * True when nothing could be drawn, so the caller renders `∅` instead.
+   *
+   * ## The tail does not count, and that is the rule
+   *
+   * A file carrying q75 and q90 and nothing else has an upper tail and nothing to
+   * read it against: no median, no mean, no lower end, no interval it is the top
+   * of. Drawing that alone is the error {@link span} refuses one field up — half
+   * an interval, in the flattering direction to be wrong in — committed at the
+   * level of the whole glyph instead of one mark.
+   *
+   * It was also incoherent as rendered: the mark appeared inside a `role="img"`
+   * whose `aria-label` came from `describeGlyph`, which names only the PAIRS and
+   * the point marks and therefore said "no distribution published" over a bar that
+   * was visibly published.
+   *
+   * So: the tail is context for a distribution, never a distribution on its own.
+   * It is drawn only when some other mark already establishes one.
+   */
   readonly blank: boolean;
 }
 
@@ -173,8 +194,11 @@ export function geometry(
     median,
     mean,
     mode,
+    // `tail` is deliberately absent from this list: a lone upper tail is not a
+    // distribution, so it does not make the glyph non-blank. The rule and the
+    // reasoning are on `blank` in DistributionGeometry above.
     blank:
-      whisker === null && box === null && tail === null
+      whisker === null && box === null
       && median === null && mean === null && mode === null,
   };
 }

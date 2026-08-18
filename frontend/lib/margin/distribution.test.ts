@@ -75,6 +75,40 @@ describe("the right tail, which the weekly objective reads", () => {
   });
 });
 
+/**
+ * A lone tail is not a distribution — the second direction of rule 1.
+ *
+ * A partial file carrying q75 and q90 and nothing else has an upper tail with
+ * nothing to read it against: no median, no mean, no lower end, no interval it is
+ * the top of. That is the same "half a box, in the flattering direction" that
+ * `span` refuses one level down, committed at the level of the whole glyph — and
+ * as rendered it drew a visible bar inside a `role="img"` whose `aria-label` said
+ * "no distribution published", because `describeGlyph` names only the pairs and
+ * the point marks.
+ */
+describe("the tail alone does not make a glyph", () => {
+  const TAIL_ONLY = { q75: 7, q90: 11 };
+
+  it("reports blank when the tail is the only thing published", () => {
+    expect(geometry(TAIL_ONLY).blank).toBe(true);
+  });
+
+  it("still measures the tail — blank is about drawing, not about the numbers", () => {
+    // The span is honest geometry; what changed is that it is not sufficient.
+    expect(geometry(TAIL_ONLY).tail).not.toBeNull();
+  });
+
+  it("is not blank once any other mark anchors it", () => {
+    // The other direction: a median is enough of a distribution for the tail to
+    // be the top OF something, so the glyph draws.
+    expect(geometry({ ...TAIL_ONLY, q50: 6 }).blank).toBe(false);
+    expect(geometry({ ...TAIL_ONLY, mean: 6.66 }).blank).toBe(false);
+    expect(geometry({ ...TAIL_ONLY, mode: 5 }).blank).toBe(false);
+    // And q25 turns the lone tail into a measured middle half plus its top.
+    expect(geometry({ ...TAIL_ONLY, q25: 4 }).blank).toBe(false);
+  });
+});
+
 describe("absent input is a fact about the model, not the clock", () => {
   it("reports blank when nothing was fitted", () => {
     expect(geometry({}).blank).toBe(true);
