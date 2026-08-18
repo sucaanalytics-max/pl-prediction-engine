@@ -80,17 +80,20 @@ function mountWith(
     squad = SQUAD as Squad | null,
     projections = PROJECTIONS as Projections | null,
     conflicts = [] as Array<{ player: string }>,
+    producedAt = null as string | null,
   }: {
     squad?: Squad | null;
     projections?: Projections | null;
     conflicts?: Array<{ player: string }>;
+    /** The projection's own timestamp, which is where its age must come from. */
+    producedAt?: string | null;
   } = {},
 ) {
   vi.resetModules();
-  const ok = (value: unknown) => ({
+  const ok = (value: unknown, producedAt: string | null = null) => ({
     artifact: {
       state: value === null ? "absent" : "ok",
-      provenance: { source: "local", producedAt: null, ageMs: null },
+      provenance: { source: "local", producedAt, ageMs: null },
       reason: null, value,
     },
   });
@@ -100,7 +103,7 @@ function mountWith(
   vi.doMock("@/lib/data/useArtifact", () => ({
     useArtifact: (d: { key?: string }) =>
       String(d?.key).startsWith("projections")
-        ? ok(projections === null ? null : { players: projections })
+        ? ok(projections === null ? null : { players: projections }, producedAt)
         : ok({ conflicts, fringeMinutes: 45, nailedMinutes: 75,
                ambiguousSurnames: new Map(), generatedAt: null, note: null }),
   }));
@@ -294,5 +297,30 @@ describe("it is actually mounted", () => {
     const { readFileSync } = await import("node:fs");
     const page = readFileSync("app/now/page.tsx", "utf8");
     expect(page.indexOf("<GameweekCall />")).toBeLessThan(page.indexOf("<SquadBoard />"));
+  });
+});
+
+describe("the age of the numbers this card is made of", () => {
+  /**
+   * This card names the captain, the doubling, the XI swap, both totals and every
+   * per-player xP on the page the owner opens to decide the armband — and carried no age
+   * at all. A projection fitted before a press conference read exactly like one fitted
+   * after it, which is the difference the whole evidence surface exists to surface.
+   */
+  it("states the projection's age beside the file it names", async () => {
+    const { default: C } = await mountWith({ producedAt: "2026-08-18T06:00:00Z" });
+    const text = render(<C />).container.textContent ?? "";
+    expect(text).toContain("xp_public_gw01.json");
+    // ageLine renders "as at ..." beyond a day and "Nh old" within one; either is an age.
+    expect(text).toMatch(/as at |\dh old/);
+  });
+
+  it("says nothing rather than guessing when the artifact carries no timestamp", async () => {
+    // producedAt is null on an artifact whose writer stamped none. Inventing "0h old"
+    // there would be the same defect the squad line had.
+    const { default: C } = await mountWith({ producedAt: null });
+    const text = render(<C />).container.textContent ?? "";
+    expect(text).toContain("xp_public_gw01.json");
+    expect(text).not.toMatch(/0h old/);
   });
 });

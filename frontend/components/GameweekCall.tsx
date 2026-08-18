@@ -5,6 +5,7 @@ import { useHeuristics } from "@/lib/data/useHeuristics";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
 import { proven } from "@/lib/data/artifact";
+import { ageLine } from "@/lib/formats";
 import { projectionsDescriptor, type Projection } from "@/lib/data/projections";
 import { minutesConflictsDescriptor } from "@/lib/data/minutes-conflicts";
 import { StateCard } from "@/components/data/Artifact";
@@ -175,15 +176,35 @@ function Call({ gameweek }: { gameweek: number }) {
   }
 
   const gain = call.bestTotal - call.currentTotal;
+  // From the artifact's own producedAt, never from when this page fetched it.
+  const projectionAge = ageLine(projectionsArtifact.provenance.producedAt, new Date());
   const suspect = new Set(conflicts.map((c) => fold(c.player)));
 
   return (
     <div className="space-y-4" data-testid="gameweek-call">
       <div className="flex items-center gap-2 flex-wrap">
         <span className="badge-green text-[9px]">MODEL</span>
-        <span className="text-[10px]" style={{ color: "var(--text-4)" }}>
+        <span className="text-[11px]" style={{ color: "var(--text-3)" }}>
           computed from xp_public_gw{String(gameweek).padStart(2, "0")}.json — not the heuristic
         </span>
+        {/*
+          * The age, beside the provenance it qualifies.
+          *
+          * This card names the captain, the doubling, the XI swap, both totals and every
+          * per-player xP on the page the owner opens to decide the armband — and carried
+          * no age at all, so a projection fitted before a press conference read exactly
+          * like one fitted after it. The line already said WHERE the numbers came from;
+          * it now says WHEN, which is the half that decides whether to trust them.
+          */}
+        {projectionAge ? (
+          <span
+            className="text-[11px] font-mono"
+            style={{ color: "var(--text-3)" }}
+            title={`the projection's own timestamp, not the time this page loaded`}
+          >
+            · {projectionAge}
+          </span>
+        ) : null}
       </div>
 
       {/* The captain first: it is the single highest-leverage choice of the week. */}
