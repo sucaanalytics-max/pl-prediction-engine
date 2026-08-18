@@ -66,7 +66,7 @@ import { projectionsDescriptor } from "@/lib/data/projections";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 import { countdownLong, modeOf, remainingMs, tickPeriodMs } from "@/lib/margin/mode";
-import { deadlineStamp } from "@/lib/formats";
+import { ageLine, deadlineStamp } from "@/lib/formats";
 import { ProvenanceLegend } from "@/components/margin/Provenance";
 import {
   TEAMS, calibratedWeeks, teamFromParam, withQuartiles, xiTotal, type TeamKey,
@@ -160,6 +160,17 @@ export default function ControlRoomPage() {
     ? null
     : xiTotal(squad.players, projections.value.players);
 
+  /**
+   * The squad's age, from the squad's own stamp rather than the view's.
+   *
+   * `live.age` is derived from `HeuristicView.generatedAt`, which the route stamps at
+   * REQUEST time — so it read `0h old` beside a squad hand-captured on 18 August, on the
+   * one line whose job is to say how stale the squad is. `SquadView.capturedAt` is what
+   * the route actually sent for the squad; when FPL serves real picks it equals the fetch
+   * time, so this is the honest age on both paths.
+   */
+  const squadAge = ageLine(squad?.capturedAt ?? null, new Date()) ?? live.age;
+
   const calibrated = calibratedWeeks(accuracy.value);
   const sealed = accuracy.value?.gameweeksSealed ?? null;
 
@@ -183,7 +194,7 @@ export default function ControlRoomPage() {
 
           <Lead
             projectionsAge={projections.age}
-            squadAge={live.age}
+            squadAge={squadAge}
             squadSource={live.value?.squad?.source ?? null}
             agentRan={status.value?.agentRan ?? null}
             reason={status.value?.reason ?? null}
@@ -216,7 +227,7 @@ export default function ControlRoomPage() {
             squad={squad?.players ?? null}
             projections={projections.value?.players ?? null}
             gameweek={gameweek}
-            squadAge={live.age}
+            squadAge={squadAge}
             squadSource={squad?.source ?? null}
             botPath={team === "ronny" ? ronny.path : team === "wazza" ? wazza.path : null}
             initialising={team === "mine" ? live.initialising : (

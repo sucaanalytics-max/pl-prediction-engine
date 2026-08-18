@@ -214,6 +214,20 @@ export interface SquadView {
   readonly formation: string | null;
   /** e.g. `captured_authenticated_draft` — never presented as live when it is not. */
   readonly source: string | null;
+  /**
+   * When the squad itself was read, as opposed to when this view was built.
+   *
+   * The route has always sent it — `fpl-live-server.ts:535` emits
+   * `picks ? now : CAPTURED_DRAFT_AT` — and this narrower dropped it, so every consumer
+   * fell back to `HeuristicView.generatedAt`, which is stamped at REQUEST time. The
+   * control room therefore printed `squad: 0h old (captured draft)` beside a squad
+   * hand-captured on 18 August: a freshness claim, on the one panel whose job is to say
+   * how stale the squad is, that was wrong by days and looked like a measurement.
+   *
+   * Null only if the route sent nothing. When FPL serves real picks this equals the
+   * fetch time, which is the honest age for a squad read live.
+   */
+  readonly capturedAt: string | null;
 }
 
 export interface HeuristicView {
@@ -340,6 +354,7 @@ function narrowSquad(raw: unknown): SquadView | null {
     bank: optNumber(raw.bank),
     formation: optString(raw.formation),
     source: optString(raw.source),
+    capturedAt: optString(raw.capturedAt),
   };
 }
 

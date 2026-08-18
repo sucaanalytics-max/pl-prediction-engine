@@ -498,3 +498,63 @@ describe("the delta of a single move", () => {
     expect(moveDelta(move, points, 1)).toBeNull();
   });
 });
+
+describe("an XI is eleven, and the per-line ranges never said so", () => {
+  /**
+   * The minima sum to 7 (1+3+2+1) and the maxima to 14 (1+5+5+3), so every size in that
+   * window satisfied all four line checks while only 11 is legal. `formationOf` refused
+   * such an XI by returning null and `xiProblems` reported nothing was wrong, so the
+   * planner printed a projected total for a twelve-man team.
+   */
+  const player = (position: "GKP" | "DEF" | "MID" | "FWD", id: number) =>
+    ({ elementId: id, name: `p${id}`, position, team: "ARS", price: 5 } as never);
+
+  const shaped = (gkp: number, def: number, mid: number, fwd: number) => {
+    const out: unknown[] = [];
+    let id = 0;
+    for (let i = 0; i < gkp; i += 1) out.push(player("GKP", id += 1));
+    for (let i = 0; i < def; i += 1) out.push(player("DEF", id += 1));
+    for (let i = 0; i < mid; i += 1) out.push(player("MID", id += 1));
+    for (let i = 0; i < fwd; i += 1) out.push(player("FWD", id += 1));
+    return out as never[];
+  };
+
+  it("passes a legal eleven", () => {
+    expect(xiProblems(shaped(1, 4, 4, 2))).toEqual([]);
+    expect(formationOf(shaped(1, 4, 4, 2))).toBe("4-4-2");
+  });
+
+  it("catches a twelve whose every line is within range", () => {
+    const twelve = shaped(1, 5, 4, 2);
+    // Every line legal on its own.
+    expect(twelve).toHaveLength(12);
+    const problems = xiProblems(twelve);
+    expect(problems).toContainEqual({ line: null, have: 12, need: "exactly 11" });
+    // And the two functions now agree, where they used to contradict each other.
+    expect(formationOf(twelve)).toBeNull();
+  });
+
+  it("catches the largest all-lines-legal XI, fourteen", () => {
+    const fourteen = shaped(1, 5, 5, 3);
+    expect(fourteen).toHaveLength(14);
+    expect(xiProblems(fourteen).some((p) => p.line === null)).toBe(true);
+  });
+
+  it("catches the smallest, seven", () => {
+    const seven = shaped(1, 3, 2, 1);
+    expect(seven).toHaveLength(7);
+    expect(xiProblems(seven).some((p) => p.line === null)).toBe(true);
+  });
+
+  it("puts the size first, because it makes the line counts misleading", () => {
+    // Eleven of the wrong shape is a different edit from twelve of the right one.
+    const problems = xiProblems(shaped(1, 5, 5, 3));
+    expect(problems[0].line).toBeNull();
+  });
+
+  it("still names the line when the size is right and the shape is not", () => {
+    const problems = xiProblems(shaped(2, 4, 4, 1));
+    expect(problems.some((p) => p.line === null)).toBe(false);
+    expect(problems.some((p) => p.line === "GKP" && p.have === 2)).toBe(true);
+  });
+});

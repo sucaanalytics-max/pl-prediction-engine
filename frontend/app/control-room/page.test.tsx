@@ -31,6 +31,7 @@ import { ACCURACY } from "@/lib/data/accuracy";
 import { REGISTRY, decisionDescriptor } from "@/lib/data/narrow";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { resetHeuristicsForTests } from "@/lib/data/useHeuristics";
+import { ageLine } from "@/lib/formats";
 
 const STATE = "/api/fpl/state";
 const GW = 1;
@@ -149,6 +150,10 @@ const LIVE = {
   projections: { source: "fallback", sourceLabel: "No FPLReview export" },
   squad: {
     source: "captured_authenticated_draft",
+    // What the route sends, and what the narrower used to drop: the squad's own stamp,
+    // deliberately older than `generatedAt` above so a request-time age is visible as
+    // wrong rather than merely unproven.
+    capturedAt: "2026-08-14T09:00:00Z",
     value: 99.5,
     bank: 0.5,
     formation: "4-4-2",
@@ -761,5 +766,34 @@ describe("§4.2 · flipping idle to computed", () => {
     await renderBoard(GATE_OPEN);
     expect(screen.getAllByTestId(/^cell-/).length).toBe(idle);
     expect(idle).toBe(8 * 3);
+  });
+});
+
+describe("the squad's age is the squad's, not the request's", () => {
+  /**
+   * `HeuristicView.generatedAt` is stamped when the route runs, so it is always "now".
+   * The board printed `squad: 0h old (captured draft)` beside a squad hand-captured days
+   * earlier — a freshness claim that looked like a measurement, on the one line whose job
+   * is to say how stale the squad is.
+   */
+  it("prints exactly the age of capturedAt, not of the view", async () => {
+    /* Precise rather than "not 0h": the view's own age also happens to be non-zero in a
+       test, so a loose assertion here could not fail. This one compares against the
+       formatter's output for the squad's own stamp. */
+    await renderBoard();
+    const expected = ageLine(LIVE.squad.capturedAt, new Date());
+    expect(expected, "the fixture must be old enough to distinguish").not.toBeNull();
+    expect(screen.getByText(/squad:/).textContent).toContain(`squad: ${expected}`);
+  });
+
+  it("falls back to the view's age only when the route sent no capture stamp", async () => {
+    const noStamp = {
+      ...LIVE,
+      squad: { ...LIVE.squad, capturedAt: undefined },
+    };
+    await renderBoard(ALL_PRESENT, noStamp);
+    // Still says something rather than nothing — absence of a stamp is not absence of a
+    // squad, and Rule 1 forbids a blank.
+    expect(screen.getByText(/squad:/)).toBeTruthy();
   });
 });

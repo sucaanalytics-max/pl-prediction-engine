@@ -137,14 +137,41 @@ describe("the XI switch says what it governs by where it is", () => {
       .toBeGreaterThan(0);
   });
 
+  /** The 24px figure itself, whatever the label beside it currently claims. */
+  const headlineTotal = (container: HTMLElement): number => {
+    const figure = [...container.querySelectorAll("span")]
+      .find((n) => n.style.fontSize === "24px")!;
+    return Number(figure.textContent);
+  };
+
   it("benches a player and takes them out of the total", () => {
+    /* Reads the figure rather than the words beside it. The label used to be a constant
+       "projected GW1", so matching on it was fine; it now changes when the XI stops being
+       legal, and the property under test is the arithmetic, not the caption. */
     const { container } = draw();
-    const before = container.textContent?.match(/([\d.]+)\s*projected/)?.[1];
+    const before = headlineTotal(container);
     const starting = [...container.querySelectorAll("[data-testid='planner-row']")]
       .find((r) => r.getAttribute("data-starting") === "true")!;
     fireEvent.click(within(starting as HTMLElement).getByTestId("planner-xi-toggle"));
-    const after = container.textContent?.match(/([\d.]+)\s*projected/)?.[1];
-    expect(Number(after)).toBeLessThan(Number(before));
+    expect(headlineTotal(container)).toBeLessThan(before);
+  });
+
+  it("stops calling the figure a projection once the XI cannot be fielded", () => {
+    /* The defect: the per-line ranges do not constrain the total — their minima sum to
+       seven and their maxima to fourteen — so an XI of any size in that window carried a
+       confident number under the words "projected GW1". Ten players is not a gameweek
+       anyone can field, so the figure is a sum and says so. */
+    const { container } = draw();
+    expect(container.textContent).toContain("projected GW1");
+    const starting = [...container.querySelectorAll("[data-testid='planner-row']")]
+      .find((r) => r.getAttribute("data-starting") === "true")!;
+    fireEvent.click(within(starting as HTMLElement).getByTestId("planner-xi-toggle"));
+
+    expect(container.textContent).toContain("sum of 10 · not a legal XI");
+    expect(container.textContent).not.toContain("projected GW1");
+    // The number is still there: withholding it would remove the only feedback this
+    // tool gives, since benching is the only edit it offers.
+    expect(headlineTotal(container)).toBeGreaterThan(0);
   });
 
   it("reports the illegal shape it just made", () => {

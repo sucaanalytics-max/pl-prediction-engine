@@ -69,7 +69,16 @@ export function formationOf(xi: readonly SquadPlayer[]): string | null {
 }
 
 export interface XiProblem {
-  readonly line: Line;
+  /**
+   * The line at fault, or `null` when the whole XI is the wrong size.
+   *
+   * Nullable because the per-line ranges do not constrain the total: the minima sum to
+   * seven and the maxima to fourteen, so an XI of any size from 7 to 14 satisfied every
+   * check this function made while only 11 is legal. `formationOf` refused such an XI and
+   * returned null, and this function said nothing was wrong — so the planner printed a
+   * projected total for a twelve-man team.
+   */
+  readonly line: Line | null;
   readonly have: number;
   readonly need: string;
 }
@@ -83,6 +92,16 @@ export interface XiProblem {
  */
 export function xiProblems(xi: readonly SquadPlayer[]): readonly XiProblem[] {
   const out: XiProblem[] = [];
+  // The size first, because it is the problem that makes the others' arithmetic
+  // misleading: eleven of the wrong shape is a different edit from twelve of the right
+  // one, and the reader is mid-edit.
+  if (xi.length !== RULES.lineupSize) {
+    out.push({
+      line: null,
+      have: xi.length,
+      need: `exactly ${RULES.lineupSize}`,
+    });
+  }
   for (const line of LINES) {
     const have = xi.filter((p) => p.position === line).length;
     const { min, max } = LIMITS[line];

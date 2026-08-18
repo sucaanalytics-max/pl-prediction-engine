@@ -329,8 +329,24 @@ export function Planner(
             + "contributes nothing rather than being skipped."
           }
         >
-          {`projected GW${gameweek}`}{formation ? ` · ${formation}` : ""}
-          {` · ${COUNTING_RULE}`}
+          {/*
+            * The label states what the figure IS, rather than the figure being withheld.
+            *
+            * The per-line ranges do not constrain the total — their minima sum to seven
+            * and their maxima to fourteen — so any XI from 7 to 14 players produced a
+            * confident number under the words "projected GW1". Withholding it was the
+            * first fix and it was wrong: this planner exists to bench a player and watch
+            * the total move, and benching is the only edit it offers, so an XI is
+            * short-handed for as long as the reader is mid-thought. Removing the number
+            * removes the tool.
+            *
+            * So the number stays and stops lying: while the XI is illegal it is a sum of
+            * however many players are in it, and the label says so instead of calling it
+            * a projection of a gameweek nobody can field.
+            */}
+          {problems.length > 0
+            ? `sum of ${xi.length} · not a legal XI`
+            : `projected GW${gameweek}${formation ? ` · ${formation}` : ""} · ${COUNTING_RULE}`}
         </span>
         {benched.size > 0 ? (
           <button
@@ -349,7 +365,7 @@ export function Planner(
 
       {problems.length > 0 ? (
         <p style={{ margin: "0 0 10px", fontFamily: MONO, fontSize: 11, color: S.conflict }}>
-          {problems.map((p) => `${p.line}: ${p.have}, need ${p.need}`).join(" · ")}
+          {problems.map((p) => `${p.line ?? "XI"}: ${p.have}, need ${p.need}`).join(" · ")}
         </p>
       ) : null}
 
