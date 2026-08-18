@@ -196,8 +196,14 @@ export function Distribution(
      * The two automated teams read one identical projection and reach opposite
      * conclusions: the season objective ranks on the median and prices spread
      * as a cost, the weekly objective ranks on the right tail and prices spread
-     * as the instrument. So `median` thickens the median rule and leaves the
-     * tail a hairline; `tail` fills q75–q90 and drops the median to `ink3`.
+     * as the instrument. So `median` thickens the median rule; `tail` adds the
+     * q75–q90 span as a filled bar and drops the median to `ink3`.
+     *
+     * `neutral` is the default and is the shipped glyph, mark for mark. Every
+     * departure from it is opt-in, including the tail — an emphasis that painted
+     * itself on by default would put the weekly reading on the season surfaces,
+     * which is the one thing this prop exists to prevent.
+     *
      * Same marks, same scale — which is why a diff of the two never needs a
      * second chart type.
      */
@@ -248,18 +254,24 @@ export function Distribution(
           }}
         />
       ) : null}
-      {/* The right tail. Thin by default; filled and taller under tail
-          emphasis, where it is the number being read rather than context. */}
-      {g.tail ? (
+      {/* The right tail — drawn ONLY under tail emphasis.
+          Drawn unconditionally it was a 3px bar laid over the 1px whisker on
+          every glyph in the app, and because q10–q25 stays a hairline that made
+          every projection on every surface read right-heavy: the weekly
+          objective's conclusion imposed on the season ones. That asymmetry is
+          precisely the reading `emphasis` exists to keep opt-in, so at neutral
+          and at median emphasis this mark does not exist and the glyph is the
+          shipped set of marks, unchanged. */}
+      {emphasis === "tail" && g.tail ? (
         <div
           title="right tail, q75 to q90"
           style={{
             position: "absolute",
             left: pct(g.tail.from),
             width: pct(g.tail.to - g.tail.from),
-            top: emphasis === "tail" ? mid - 4 : mid - 1,
-            height: emphasis === "tail" ? 9 : 3,
-            background: emphasis === "tail" ? surface.ink : surface.block,
+            top: mid - 4,
+            height: 9,
+            background: surface.ink,
           }}
         />
       ) : null}
