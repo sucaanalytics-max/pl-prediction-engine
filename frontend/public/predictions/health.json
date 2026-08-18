@@ -1,8 +1,19 @@
 {
-  "last_updated": "2026-08-17T06:30:29.064658Z",
+  "last_updated": "2026-08-18T06:03:15.835309Z",
   "gameweek": 1,
   "n_predictions": 10,
   "status": "healthy",
+  "sources": {
+    "bootstrap": {
+      "source": "network",
+      "age_seconds": 0.0
+    },
+    "fixtures": {
+      "source": "network",
+      "age_seconds": 0.0
+    }
+  },
+  "degraded": [],
   "forecast_validation_status": "collecting",
   "model_metrics": {},
   "calibration": {
@@ -21,7 +32,7 @@
     },
     "goalscorer": {
       "status": "active",
-      "n_players": 298
+      "n_players": 297
     }
   },
   "ensemble_method": "weighted_average",
@@ -33,24 +44,27 @@
   "fpl": {
     "status": "ok",
     "gameweek": 1,
-    "n_players": 587,
+    "n_players": 590,
     "n_draws": 5000,
     "rules_source": "bootstrap+signed_yaml",
     "rules_degraded": false,
+    "n_fixtures_expected": 10,
+    "n_fixtures_projected": 10,
+    "fixtures_missing": [],
     "diagnostics": {
       "n_clubs": 20,
-      "n_players": 587,
-      "n_without_history": 131,
-      "n_availability_gated": 68,
+      "n_players": 590,
+      "n_without_history": 133,
+      "n_availability_gated": 76,
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 494,
+        "none": 487,
         "open_ended": 38,
-        "permanent": 19,
-        "graded": 25,
+        "permanent": 26,
+        "graded": 27,
         "dated_eligibility": 3,
-        "dated_fitness": 8
+        "dated_fitness": 9
       },
       "n_evidence_conflicts": 0
     },
@@ -59,7 +73,7 @@
       "n_fixtures": 10,
       "n_fixtures_skipped": 0,
       "skipped_fixtures": [],
-      "n_players": 587,
+      "n_players": 590,
       "n_double_gameweek_players": 0,
       "n_blank_gameweek_players": 0,
       "seed_entropy": 1681305205,
