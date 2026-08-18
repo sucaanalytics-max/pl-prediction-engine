@@ -411,6 +411,26 @@ class ForecastLedgerAdmissibility(unittest.TestCase):
         result = update_forecast_ledger(second, path)
         self.assertEqual(result["forecasts"]["m4"]["expected_goals"]["home"], 2.4)
 
+    def test_rejects_a_forecast_generated_at_the_exact_instant_of_kickoff(self):
+        """
+        generated_at == kickoff must be rejected, not admitted: only a forecast
+        that STRICTLY predates kickoff is proof of precedence. A future refactor
+        that swapped the >= comparison for > would look like a harmless
+        simplification and would silently start admitting these; this test
+        exists to catch that regression.
+        """
+        path = Path(self.tmpdir) / "ledger.json"
+        instant = "2026-08-21T19:00:00Z"
+        result = update_forecast_ledger(
+            self._output("m5", instant, generated_at=instant), path
+        )
+        self.assertNotIn("m5", result["forecasts"])
+        self.assertEqual(result["rejected"][0]["match_id"], "m5")
+        self.assertEqual(
+            result["rejected"][0]["reason"],
+            f"generated {instant} at or after kickoff",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
