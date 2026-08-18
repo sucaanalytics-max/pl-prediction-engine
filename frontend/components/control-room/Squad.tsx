@@ -16,7 +16,8 @@ import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { Projection } from "@/lib/data/projections";
 
 export function Squad({
-  team, squad, projections, gameweek, squadAge, squadSource, botPath, initialising,
+  team, squad, projections, gameweek, squadAge, squadSource, notices, botPath,
+  initialising,
 }: {
   team: TeamKey;
   squad: readonly SquadPlayer[] | null;
@@ -24,6 +25,14 @@ export function Squad({
   gameweek: number | null;
   squadAge: string | null;
   squadSource: string | null;
+  /**
+   * The route's own sentences about where this squad came from.
+   *
+   * Rendered here because this is where the squad is: when FPL answers without returning
+   * a fifteen-player squad the app falls back to the captured draft, and the sentence
+   * saying so has to sit beside the fifteen it is about.
+   */
+  notices: readonly string[];
   /** The decision artifact a bot's squad would come from, named even when absent. */
   botPath: string | null;
   initialising: boolean;
@@ -107,6 +116,13 @@ export function Squad({
           {squadSource !== null && (
             <div style={{ marginTop: 6 }}>
               <Sub>{squadSource}</Sub>
+            </div>
+          )}
+          {notices.length > 0 && (
+            <div style={{ marginTop: 4 }} data-testid="squad-notices">
+              {notices.map((notice) => (
+                <div key={notice}><Sub>{notice}</Sub></div>
+              ))}
             </div>
           )}
         </>

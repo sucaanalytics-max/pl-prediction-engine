@@ -250,6 +250,16 @@ export interface HeuristicView {
   /** Whether the squad shown is the live one or a captured draft. */
   readonly squadSource: string | null;
   /**
+   * The route's own sentences about where this squad came from.
+   *
+   * `fpl-live-server.ts:658` has emitted these since the file was written and no narrower
+   * read them, so every explanation of the captured-versus-live switch was built and
+   * thrown away. That includes the one that matters most: when FPL answers for the entry
+   * but does not return a fifteen-player squad, the app falls back to the captured draft,
+   * and without this the reader is never told it happened.
+   */
+  readonly notices: readonly string[];
+  /**
    * The fifteen, with what they cost.
    *
    * Returned by `/api/fpl/state` all along and dropped by this narrower, so no
@@ -595,6 +605,7 @@ export function narrowHeuristics(raw: unknown): NarrowResult<HeuristicView> {
       deadlineTime: optString(event.deadlineTime),
     },
     squadSource: optString(freshness.squad),
+    notices: optArray(root.notices).filter((n): n is string => typeof n === "string"),
     squad: narrowSquad(root.squad),
     fixtureMatrix: narrowFixtureMatrix(root.fixtureMatrix),
     projectionSource: optString(projections.source) ?? "unknown",

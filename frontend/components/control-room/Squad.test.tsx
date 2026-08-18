@@ -32,6 +32,7 @@ const PROJECTIONS = SQUAD.map((p, i) => ({
 const BASE = {
   squad: SQUAD, projections: PROJECTIONS, gameweek: 1,
   squadAge: "6h old", squadSource: "captured_authenticated_draft",
+  notices: [] as readonly string[],
   botPath: null as string | null, initialising: false,
 };
 
@@ -114,5 +115,30 @@ describe("my own squad", () => {
       fixtures: [] }] as unknown as SquadPlayer[];
     render(<Squad {...BASE} team="mine" squad={odd} />);
     expect(screen.getByTestId("squad-unplaced").textContent).toContain("Nobody");
+  });
+});
+
+describe("the route's own sentences about this squad", () => {
+  /**
+   * `fpl-live-server.ts` has emitted these since the file was written and no narrower read
+   * them, so every explanation of the captured-versus-live switch was built and thrown
+   * away — including the one that matters most, which says FPL answered without returning
+   * a fifteen-player squad and the captured draft is being shown instead.
+   */
+  it("renders them beside the fifteen they are about", () => {
+    render(
+      <Squad
+        {...BASE}
+        team="mine"
+        notices={["FPL answered but did not return a fifteen-player squad."]}
+      />,
+    );
+    expect(screen.getByTestId("squad-notices").textContent)
+      .toContain("did not return a fifteen-player squad");
+  });
+
+  it("renders nothing at all when the route sent none", () => {
+    render(<Squad {...BASE} team="mine" notices={[]} />);
+    expect(screen.queryByTestId("squad-notices")).toBeNull();
   });
 });

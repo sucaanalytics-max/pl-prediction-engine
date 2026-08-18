@@ -229,6 +229,7 @@ export default function ControlRoomPage() {
             gameweek={gameweek}
             squadAge={squadAge}
             squadSource={squad?.source ?? null}
+            notices={team === "mine" ? live.value?.notices ?? [] : []}
             botPath={team === "ronny" ? ronny.path : team === "wazza" ? wazza.path : null}
             initialising={team === "mine" ? live.initialising : (
               team === "ronny" ? ronny.initialising : wazza.initialising
