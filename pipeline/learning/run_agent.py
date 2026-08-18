@@ -25,6 +25,7 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS_DIR
 from pipeline.decide.horizon import EVAL_HORIZON
+from pipeline.learning.outcomes import LedgerError, read_outcomes
 from pipeline.learning.schedule import Phase, ScheduleState, resolve
 
 logger = logging.getLogger(__name__)
@@ -207,39 +208,39 @@ def _publish_accuracy(artifact_path: Any, gameweek: int) -> None:
         logger.warning("could not publish the accuracy rollup: %s", exc)
 
 
-def _settled_outcomes(gameweek: int) -> List[Dict[str, Any]]:
+def _settled_outcomes(gameweek: Optional[int] = None) -> List[Dict[str, Any]]:
     """
-    Per-player predicted-versus-actual rows from every sealed gameweek.
+    Per-player predicted-versus-actual rows from every settled gameweek.
 
-    Empty today: `predictions/ledger/` does not exist because nothing has been
-    sealed. Returning `[]` rather than raising is what makes
-    `_publish_sensitivity` publish an honest unmeasurable report instead of
-    failing the run.
+    `gameweek` is accepted only for backward compatibility with existing
+    callers; it does not filter the result — every settled week on disk
+    contributes to the sample.
+
+    Reads `gw*/outcome.jsonl`, the file `outcomes.settle_gameweek` actually
+    writes, via the same tested reader (`outcomes.read_outcomes`) that scoring
+    uses. Empty until a gameweek has actually settled: `predictions/ledger/`
+    may not exist yet, or every settlement on disk may still be provisional.
+    Returning `[]` rather than raising is what makes `_publish_sensitivity`
+    publish an honest unmeasurable report instead of failing the run.
     """
     ledger_root = Path(PREDICTIONS_DIR) / "fpl" / "ledger"
     if not ledger_root.is_dir():
         return []
 
     rows: List[Dict[str, Any]] = []
-    for outcome_path in sorted(ledger_root.glob("gw*/outcomes.json")):
+    for outcome_path in sorted(ledger_root.glob("gw*/outcome.jsonl")):
         try:
-            payload = json.loads(outcome_path.read_text(encoding="utf-8"))
-        except (OSError, ValueError) as exc:
+            parsed = read_outcomes(outcome_path)
+        except (OSError, LedgerError, ValueError) as exc:
             # One unreadable sealed week must not hide the others, but it must
             # not pass silently either: a shrinking sample changes every sigma.
             logger.warning("unreadable sealed outcomes at %s: %s", outcome_path, exc)
             continue
-        for row in payload.get("players") or []:
-            if not isinstance(row, dict):
-                continue
-            rows.append({
-                "gameweek": payload.get("gameweek"),
-                "element_id": row.get("element_id"),
-                "position": row.get("position"),
-                "team": row.get("team"),
-                "predicted": row.get("predicted_points"),
-                "actual": row.get("actual_points"),
-            })
+        # Provisional weeks are not settled: bonus and defensive contributions
+        # still move until 09:00 UK the day after the last match.
+        if parsed["header"].get("provisional", True):
+            continue
+        rows.extend(parsed["rows"].values())
     return rows
 
 
