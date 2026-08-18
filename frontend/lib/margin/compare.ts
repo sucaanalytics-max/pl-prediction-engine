@@ -169,6 +169,58 @@ export const METRICS: readonly Metric[] = [
   { key: "form", label: "form", of: (c) => c.stats?.form ?? null, dp: 1, higherIsBetter: true },
 ];
 
+
+/**
+ * Metrics the producer has not populated, judged across the whole population.
+ *
+ * FPL zeroes `form` between seasons, so `player_stats.json` carries `0.0` for all 590
+ * players — and Compare rendered it in the same format as the measured columns, with
+ * `leaders` treating it as a 590-way tie for best. Nothing on screen separated "no returns
+ * in thirty days", which is information, from "the season has not started", which is a
+ * default.
+ *
+ * The test has to be population-level, because per-row it is undecidable: a real form of
+ * zero is meaningful in October and this must not hide it. One player at zero is a fact
+ * about that player; every player at zero is a fact about the feed. So this reads the
+ * FULL player list rather than the two or three being compared — on a pair, two players
+ * who both happened to score nothing would look identical to an unpopulated column.
+ *
+ * Only the metrics that live on `PlayerRow` can be judged; the projection-derived ones
+ * (xGI, xA per 90) are computed here and cannot be a producer default.
+ */
+const POPULATION_FOR_DEFAULT_DETECTION = 20;
+
+/** Metric key to the field it reads, for the metrics a producer supplies directly. */
+const POPULATION_FIELD: Record<string, (row: PlayerRow) => number | null> = {
+  goals: (r) => r.goals,
+  assists: (r) => r.assists,
+  xg: (r) => r.xg,
+  xa: (r) => r.xa,
+  price: (r) => r.fpl_price,
+  owned: (r) => r.fpl_ownership,
+  form: (r) => r.form,
+};
+
+export function unpublishedMetrics(
+  population: readonly PlayerRow[],
+): ReadonlySet<string> {
+  const out = new Set<string>();
+  if (population.length < POPULATION_FOR_DEFAULT_DETECTION) return out;
+
+  for (const [key, read] of Object.entries(POPULATION_FIELD)) {
+    let seen = 0;
+    let allZero = true;
+    for (const row of population) {
+      const value = read(row);
+      if (value === null || value === undefined) continue;
+      seen += 1;
+      if (value !== 0) { allZero = false; break; }
+    }
+    if (allZero && seen >= POPULATION_FOR_DEFAULT_DETECTION) out.add(key);
+  }
+  return out;
+}
+
 /**
  * Which of the compared players leads on a metric.
  *

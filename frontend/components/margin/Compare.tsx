@@ -33,7 +33,9 @@ import { useMemo } from "react";
 import { proven, type Artifact } from "@/lib/data/artifact";
 import type { PlayerRow } from "@/lib/data/narrow";
 import type { Projection } from "@/lib/data/projections";
-import { compare, leaders, METRICS, type Metric } from "@/lib/margin/compare";
+import {
+  compare, leaders, METRICS, unpublishedMetrics, type Metric,
+} from "@/lib/margin/compare";
 import { INK, MONO, SANS } from "@/lib/margin/tokens";
 import { MarginState, Nil } from "@/components/margin/Marks";
 
@@ -81,6 +83,12 @@ export function Compare(
     () => compare(ids, projections, stats), [ids, projections, stats],
   );
   const recordIsReadable = statsArtifact === undefined || proven(statsArtifact) !== null;
+  /*
+   * Judged across the full player list, not the two or three on screen: on a pair, two
+   * players who both happened to score nothing would be indistinguishable from a column
+   * the producer has not populated.
+   */
+  const unpublished = useMemo(() => unpublishedMetrics(stats), [stats]);
 
   if (rows.length === 0) return null;
 
@@ -184,8 +192,12 @@ export function Compare(
                   {metric.label}
                 </div>
                 {rows.map((row) => {
-                  const shown = format(metric.of(row), metric);
-                  const leads = best.has(row.elementId);
+                  // A column of producer defaults is not a measurement, so it renders as
+                  // absent rather than as a confident zero every player ties on.
+                  const shown = unpublished.has(metric.key)
+                    ? null
+                    : format(metric.of(row), metric);
+                  const leads = !unpublished.has(metric.key) && best.has(row.elementId);
                   return (
                     <div
                       key={row.elementId}
