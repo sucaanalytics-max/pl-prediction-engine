@@ -203,8 +203,12 @@ function Cell(
             </div>
             <Body style={{ marginTop: 6 }}>
               {xi === null
-                ? "The squad read does not say which eleven starts, so no total is "
-                  + "summed — an assumed eleven would be a lineup nothing solved."
+                ? live.initialising || projections.initialising
+                  // Still reading. "Does not say" is a finding, and there is no finding
+                  // yet — this is the one cell in the thesis row carrying a live number.
+                  ? "Reading the squad and this gameweek's projection."
+                  : "The squad read does not say which eleven starts, so no total is "
+                    + "summed — an assumed eleven would be a lineup nothing solved."
                 : `Your eleven as drafted, summed from the published means. A mean is `
                   + `additive, so this total is exact rather than estimated. No `
                   + `interval is published for a squad total, so none is drawn.`}
@@ -308,15 +312,30 @@ function Cell(
             />
           </div>
           <Body style={{ marginTop: 6 }}>
+            {/*
+              * The emphasis clause is kept in every arm — it is the reason these empty
+              * cells exist at all, and delegating the whole body to `NotPublished` would
+              * delete the median-as-a-cost against right-tail-as-the-instrument contrast
+              * this row is built to carry.
+              *
+              * Only the second clause is gated. It asserted a COMPLETED absence while the
+              * fetch was still open, so the board said "no total has been published"
+              * here at the same instant the Squad section correctly said "Reading
+              * fpl/decision_public_gw01_season.json" two sections below.
+              */}
             {team === "ronny"
-              ? "Would read the median and price the spread as a cost. Nothing to "
-                + "read: no squad and no total have been published for this entry."
-              : "Would read the right tail and price the spread as the instrument. "
-                + "Nothing to read: no squad and no total have been published for "
-                + "this entry."}
+              ? "Would read the median and price the spread as a cost. "
+              : "Would read the right tail and price the spread as the instrument. "}
+            {bot?.initialising
+              ? `Reading ${bot.path}.`
+              : "Nothing to read: no squad and no total have been published for this "
+                + "entry."}
           </Body>
           <div style={{ marginTop: 4 }}>
-            <Sub>{`${bot?.path ?? "no decision path"} · never written`}</Sub>
+            <Sub>
+              {`${bot?.path ?? "no decision path"}`}
+              {bot?.initialising ? "" : " · never written"}
+            </Sub>
           </div>
         </div>
       );

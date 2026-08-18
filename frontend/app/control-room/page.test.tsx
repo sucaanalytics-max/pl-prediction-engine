@@ -909,3 +909,37 @@ describe("the 46px headline does not contradict the board beneath it", () => {
     expect(document.body.textContent).toContain("that this board can see");
   });
 });
+
+describe("a read in flight is not a finding", () => {
+  /**
+   * `read.ts` exists to separate "still loading" from "genuinely absent" — they are the
+   * same `absent` state but very different sentences. Four cells ignored it and asserted a
+   * completed absence while their fetch was open, so the board contradicted itself two
+   * sections apart: the matrix said "no total has been published for this entry" at the
+   * same instant the Squad section said "Reading fpl/decision_public_gw01_season.json".
+   *
+   * These assert the settled state, since the harness resolves every fetch. The value is
+   * the branch: it is now reachable and named, where before there was none.
+   */
+  it("still says never written once the read has settled", async () => {
+    await renderBoard();
+    expect(screen.getByTestId("cell-projection-ronny").textContent)
+      .toContain("never written");
+  });
+
+  it("keeps the emphasis clause in every arm, loading or not", async () => {
+    /* That contrast is the reason the empty cells are kept at all, so it must survive
+       whichever branch fires. */
+    await renderBoard();
+    expect(screen.getByTestId("cell-projection-ronny").textContent)
+      .toContain("median");
+    expect(screen.getByTestId("cell-projection-wazza").textContent)
+      .toContain("right tail");
+  });
+
+  it("does not claim a deadline is unpublished when one is", async () => {
+    await renderBoard();
+    const masthead = document.body.textContent ?? "";
+    expect(masthead).not.toContain("no deadline published");
+  });
+});

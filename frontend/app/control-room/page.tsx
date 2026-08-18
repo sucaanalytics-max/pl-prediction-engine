@@ -200,6 +200,7 @@ export default function ControlRoomPage() {
             mode={mode}
             reason={status.value?.reason ?? null}
             statusAge={status.age}
+            statusInitialising={status.initialising}
           />
 
           <TeamStrip focused={team} onFocus={focus} />
@@ -293,13 +294,15 @@ const MODE_LABEL: Record<string, string> = {
 };
 
 function Masthead(
-  { gameweek, season, deadline, mode, reason, statusAge }: {
+  { gameweek, season, deadline, mode, reason, statusAge, statusInitialising }: {
     gameweek: number | null;
     season: string | null;
     deadline: string | null;
     mode: string;
     reason: string | null;
     statusAge: string | null;
+    /** True only while the first read of `agent_status.json` is open. */
+    statusInitialising: boolean;
   },
 ) {
   const stamp = deadlineStamp(deadline);
@@ -361,7 +364,10 @@ function Masthead(
           <Sub>
             {stamp
               ?? (deadline === null
-                ? `no deadline published${statusAge === null ? "" : ` · ${statusAge}`}`
+                // "Not published" is a finding; a read in flight has produced none yet.
+                ? statusInitialising
+                  ? `reading ${AGENT_STATUS.path}`
+                  : `no deadline published${statusAge === null ? "" : ` · ${statusAge}`}`
                 : "the deadline states no time zone, so none is named here")}
           </Sub>
         </div>
