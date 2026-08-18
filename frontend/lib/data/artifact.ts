@@ -136,7 +136,14 @@ const WITH_VALUE: readonly ArtifactState[] = ["ok", "empty", "stale"];
  * three *identically*, which is why the state travels with the value rather than
  * being inferable from it.
  */
-export function proven<T>(artifact: Artifact<T>): T | null {
+export function proven<T>(
+  artifact: Artifact<T> | null | undefined,
+): T | null {
+  // Null and undefined are accepted so `proven(artifact) ?? proven(retained)`
+  // typechecks — the retained artifact is null until something has been proven
+  // once, and forcing every caller to guard that would put a truthiness check in
+  // front of the one expression Rule 1 asks them all to write.
+  if (!artifact) return null;
   return WITH_VALUE.includes(artifact.state) ? artifact[VALUE] : null;
 }
 

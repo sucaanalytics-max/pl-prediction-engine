@@ -15,7 +15,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { classify, type Artifact } from "@/lib/data/artifact";
+import { classify, proven, type Artifact } from "@/lib/data/artifact";
 import { load, type LoadOptions } from "@/lib/data/load";
 import type { Descriptor } from "@/lib/data/registry";
 
@@ -32,8 +32,39 @@ function pending<T>(descriptor: Descriptor<T>, now: Date): Artifact<T> {
 }
 
 export interface UseArtifactResult<T> {
+  /**
+   * This fetch's honest result. Never rewritten to look better than it was: if
+   * the reload came back `absent`, this says `absent`.
+   */
   readonly artifact: Artifact<T>;
-  /** True only during the very first fetch, for a skeleton. */
+  /**
+   * The last artifact that carried a value, kept so a later failure does not
+   * blank the screen.
+   *
+   * There are no empty states and no loading ceremony: a section renders the
+   * last known answer with its age stated, and a pending or failed refresh
+   * changes the age line and nothing else. `ok`, `empty` and `stale` all carry
+   * their own value, so this matters for exactly two states — `absent` and
+   * `unreadable` — where the payload is gone and the screen would otherwise
+   * fall back to a skeleton.
+   *
+   * Deliberately NOT folded into `artifact`. Returning a retained value under a
+   * state of `ok` would make the state lie about the fetch that just happened,
+   * and every honest-refusal mechanism in this data layer depends on that state
+   * being true. Callers render `proven(artifact) ?? proven(retained)` and take
+   * the age from whichever one they used.
+   *
+   * Null until something has been proven at least once — which is Rule 1's one
+   * genuine exception, data that has never been computed at all.
+   */
+  readonly retained: Artifact<T> | null;
+  /**
+   * True only during the very first fetch.
+   *
+   * NOT for a skeleton — Rule 1 forbids one. It exists so a caller can tell
+   * "still loading" from "genuinely absent", which are the same `absent` state
+   * but very different sentences to put on a screen.
+   */
   readonly initialising: boolean;
   readonly reload: () => void;
 }
@@ -50,6 +81,12 @@ export function useArtifact<T>(
   const [initialising, setInitialising] = useState(true);
   const [nonce, setNonce] = useState(0);
 
+  // A ref, not state: retention must never itself cause a render, and the
+  // `setArtifact` beside it already schedules one. Keyed to the descriptor path
+  // so switching gameweek does not show the previous week's numbers as this
+  // week's — a retained value is only honest for the thing it was fetched for.
+  const retainedRef = useRef<{ path: string; artifact: Artifact<T> } | null>(null);
+
   // Kept in a ref so a caller passing an inline options object does not restart
   // the fetch on every render. Only the descriptor path and the nonce should.
   const optionsRef = useRef(options);
@@ -64,6 +101,9 @@ export function useArtifact<T>(
       if (cancelled) return;
       setArtifact(result);
       setInitialising(false);
+      if (proven(result) !== null) {
+        retainedRef.current = { path: descriptor.path, artifact: result };
+      }
     });
     return () => { cancelled = true; };
     // `descriptor` is a stable module constant; `path` is the honest dependency
@@ -73,8 +113,13 @@ export function useArtifact<T>(
 
   const reload = useCallback(() => setNonce((n) => n + 1), []);
 
+  const retained =
+    retainedRef.current && retainedRef.current.path === path
+      ? retainedRef.current.artifact
+      : null;
+
   return useMemo(
-    () => ({ artifact, initialising, reload }),
-    [artifact, initialising, reload],
+    () => ({ artifact, retained, initialising, reload }),
+    [artifact, retained, initialising, reload],
   );
 }
