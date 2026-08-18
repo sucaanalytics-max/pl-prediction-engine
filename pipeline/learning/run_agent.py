@@ -231,9 +231,18 @@ def _settled_outcomes(gameweek: Optional[int] = None) -> List[Dict[str, Any]]:
     for outcome_path in sorted(ledger_root.glob("gw*/outcome.jsonl")):
         try:
             parsed = read_outcomes(outcome_path)
-        except (OSError, LedgerError, ValueError) as exc:
+        except (OSError, LedgerError, ValueError, KeyError, TypeError,
+                AttributeError) as exc:
             # One unreadable sealed week must not hide the others, but it must
             # not pass silently either: a shrinking sample changes every sigma.
+            # read_outcomes does an unchecked int(record["element_id"]) on
+            # every non-header line, so a malformed row (missing element_id,
+            # or a line that isn't even a dict) raises KeyError/TypeError/
+            # AttributeError, not just the LedgerError/ValueError/OSError this
+            # once only guarded against. Without the wider tuple, one corrupt
+            # week raises straight out of this loop and silently discards
+            # every good week already collected — exactly the failure mode
+            # this function exists to prevent.
             logger.warning("unreadable sealed outcomes at %s: %s", outcome_path, exc)
             continue
         # Provisional weeks are not settled: bonus and defensive contributions
