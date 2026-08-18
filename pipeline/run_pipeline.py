@@ -1101,6 +1101,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         from pipeline.learning.backfill import load_archive_season
         from pipeline.models.fpl_inputs import (
             build_fpl_inputs,
+            fixture_specs_from_fixture_xg,
             fixture_specs_from_predictions,
         )
         from pipeline.simulation.gameweek_sim import simulate_gameweek
@@ -1114,7 +1115,31 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             fpl_priors = None
             logger.warning("  no committed prior-season snapshot; using archive only")
 
-        fpl_specs = fixture_specs_from_predictions(all_predictions, gameweek)
+        # Rank on the market-anchored rates, not latest.json's ensemble. The
+        # ensemble is never anchored and is one gameweek wide, so reading it
+        # cost the FPL layer both its market information and its horizon.
+        # fixture_xg.json is validated by seven blocking checks before this
+        # point; if it is absent, unreadable or malformed, fall back rather
+        # than lose the gameweek. json.loads can hand back a value that
+        # parses fine but isn't a dict (None, a bare list, a string) — any of
+        # which raises AttributeError/TypeError the moment
+        # fixture_specs_from_fixture_xg calls .get() on it — so the except
+        # tuple below is wider than just (OSError, ValueError).
+        fpl_specs = []
+        fixture_xg_path = PREDICTIONS_DIR / "fixture_xg.json"
+        if fixture_xg_path.exists():
+            try:
+                fixture_xg_payload = json.loads(
+                    fixture_xg_path.read_text(encoding="utf-8"))
+                fpl_specs = fixture_specs_from_fixture_xg(fixture_xg_payload)
+            except (OSError, ValueError, AttributeError, TypeError, KeyError) as exc:
+                logger.warning("  unreadable fixture_xg.json: %s", exc)
+        if not fpl_specs:
+            logger.warning(
+                "  falling back to unanchored ensemble rates — projections will "
+                "carry rate_source 'ensemble_unanchored' and no horizon"
+            )
+            fpl_specs = fixture_specs_from_predictions(all_predictions, gameweek)
         if not fpl_specs:
             fpl_status = {"status": "skipped", "reason": "no fixtures with expected goals"}
         else:

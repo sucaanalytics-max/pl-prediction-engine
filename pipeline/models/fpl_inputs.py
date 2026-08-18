@@ -359,6 +359,7 @@ def fixture_specs_from_predictions(
                 lambda_home=float(expected.get("home", 0.0) or 0.0),
                 mu_away=float(expected.get("away", 0.0) or 0.0),
                 kickoff=fixture.get("date"),
+                rate_source="ensemble_unanchored",
             )
         )
     return specs

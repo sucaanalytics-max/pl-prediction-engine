@@ -492,6 +492,7 @@ def build_xp_artifact(
                 "kickoff": spec.kickoff,
                 "lambda_home": round(float(spec.lambda_home), 4),
                 "mu_away": round(float(spec.mu_away), 4),
+                "rate_source": spec.rate_source,
             }
             for spec in (fixture_specs or [])
         ],
@@ -536,6 +537,7 @@ def build_sim_params(
                 "away_team": spec.away_team,
                 "lambda_home": float(spec.lambda_home),
                 "mu_away": float(spec.mu_away),
+                "rate_source": spec.rate_source,
             }
             for spec in fixture_specs
         ],
