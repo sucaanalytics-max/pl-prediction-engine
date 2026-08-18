@@ -164,13 +164,26 @@ export interface XiTotal {
  * and it is the one squad-level number on the screen.
  *
  * **A quantile is not additive**, and nothing here pretends otherwise. Adding the
- * eleven q10s and eleven q90s produces an interval the producer never computed —
- * narrower than the measured one once clean sheets are drawn jointly across a
- * defence and the XI becomes path-dependent through auto-substitution, which is
- * the flattering direction to be wrong in. `PublicDecision.points_q10` is where a
- * squad total's interval legitimately comes from, it is null until a decision is
- * published, and `SquadInterval` already says the sentence for that: "No interval
- * is published for a squad total, so none is drawn."
+ * eleven q10s and q90s produces an interval the producer never computed, and it is
+ * wildly wrong in the WIDE direction, not the narrow one: measured on this squad,
+ * the summed band is 11.0 to 96.0 against a mean of 43.5, while the same marginals
+ * drawn independently put the total's own band near 27 to 51. Three and a half
+ * times too wide, because it prices the case where all eleven players
+ * simultaneously hit their ninetieth percentile.
+ *
+ * Independence is not the answer either, and that is the deeper reason no interval
+ * is drawn. The truth depends on correlation, and this squad is correlated on
+ * purpose — three Man United players share one fixture, two Brentford players share
+ * another — so a defence's clean sheets are drawn jointly and the XI is
+ * path-dependent through auto-substitution. The published artifact carries
+ * marginals only, with no covariance, so the total's interval is not derivable from
+ * it at ANY assumption. The object it would need, the draws-by-players matrix, is
+ * computed for one process's lifetime and never persisted.
+ *
+ * `PublicDecision.points_q10` is where a squad total's interval legitimately comes
+ * from, it is null until a decision is published, and `SquadInterval` already says
+ * the sentence for that: "No interval is published for a squad total, so none is
+ * drawn."
  *
  * Counting rule stated rather than chosen quietly: {@link projectedTotal} does not
  * double the armband, because two screens in this app once printed 48.20 and 54.9
