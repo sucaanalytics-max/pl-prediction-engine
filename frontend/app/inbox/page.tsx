@@ -183,11 +183,19 @@ export default function InboxPage() {
     let cancelled = false;
     fetch("/predictions/fpl/messages.json", { cache: "no-store" })
       .then((response) => {
+        // A 404 here is the NORMAL state, not a fault. The agent writes
+        // messages.json only when it has something to say, so the file is
+        // absent for about ten days of every fourteen-day cycle. Throwing on it
+        // put "feed unavailable (404)" in a red error box — telling the reader
+        // the channel is broken when it is merely quiet, which is the exact
+        // absent-versus-unreadable conflation `lib/data/load.ts` documents and
+        // this page's own empty state already words correctly.
+        if (response.status === 404) return null;
         if (!response.ok) throw new Error(`feed unavailable (${response.status})`);
         return response.json();
       })
       .then((raw) => {
-        if (!cancelled) setFeed(parseFeed(raw));
+        if (!cancelled) setFeed(raw === null ? parseFeed({ messages: [] }) : parseFeed(raw));
       })
       .catch((err: Error) => {
         if (!cancelled) setError(err.message);
