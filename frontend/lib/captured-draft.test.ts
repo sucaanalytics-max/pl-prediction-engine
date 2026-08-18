@@ -35,9 +35,40 @@ interface Element {
   now_cost: number;
 }
 
-const BOOTSTRAP = JSON.parse(
-  readFileSync("../data/raw/fpl/bootstrap_static.json", "utf8"),
-) as { elements: Element[]; teams: Array<{ id: number; short_name: string }> };
+/**
+ * The real cache when it is there, a committed minimum when it is not.
+ *
+ * `data/raw/` is gitignored, so the pipeline's bootstrap cache never reaches CI
+ * — and this file read it unconditionally, so the frontend suite failed on EVERY
+ * run for at least eight commits while passing locally. A gate that cannot pass
+ * is not a gate, and "green locally" was not evidence of anything.
+ *
+ * Preferring the real cache keeps a local or post-pipeline run checking against
+ * live prices; the fixture keeps the check alive in CI, which matters because
+ * this is the test that caught a squad value transcribed from the wrong capture.
+ */
+const BOOTSTRAP_PATHS = [
+  "../data/raw/fpl/bootstrap_static.json",
+  "test/fixtures/bootstrap-min.json",
+];
+
+function loadBootstrap() {
+  for (const path of BOOTSTRAP_PATHS) {
+    try {
+      return JSON.parse(readFileSync(path, "utf8"));
+    } catch {
+      continue;
+    }
+  }
+  throw new Error(
+    `no bootstrap available; tried ${BOOTSTRAP_PATHS.join(" then ")}`,
+  );
+}
+
+const BOOTSTRAP = loadBootstrap() as {
+  elements: Element[];
+  teams: Array<{ id: number; short_name: string }>;
+};
 
 const BY_ID = new Map(BOOTSTRAP.elements.map((e) => [e.id, e]));
 const CLUB = new Map(BOOTSTRAP.teams.map((t) => [t.id, t.short_name]));

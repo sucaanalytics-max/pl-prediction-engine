@@ -175,7 +175,18 @@ describe("the shell caches the app that exists now", () => {
      * The trap this file's own header describes: a cache-first shell keeps
      * serving the old routes forever unless the name changes. The restyle
      * shipped once and no installed user saw it.
+     *
+     * This assertion is a tripwire, not a proof. Pinning the literal means a
+     * bump cannot happen silently — you must come here and say why — but it
+     * cannot tell whether a bump was NEEDED. That judgement stays human.
+     *
+     * v6 -> v7, and it earned it: `/` stopped being a redirect to `/margin` and
+     * became the call itself. `/` is the first entry in SHELL_ROUTES and served
+     * cache-first, so every installed app went on holding the redirect and
+     * forwarding away from the new front door. The deploy was green, the commit
+     * was live, and the screen did not change — reported as "frontend not
+     * updating", which is precisely what the header warns of.
      */
-    expect(swSource).toContain("suca-fpl-shell-v6");
+    expect(swSource).toContain("suca-fpl-shell-v7");
   });
 });

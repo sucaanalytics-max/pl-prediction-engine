@@ -4,7 +4,15 @@
 // SHELL_ROUTES below is served cache-first, so an installed PWA would keep
 // rendering the emerald design indefinitely after the new one deployed — the
 // restyle would ship and no existing user would see it.
-const CACHE_NAME = "suca-fpl-shell-v6";
+// v7: `/` stopped being a redirect to `/margin` and became the call itself.
+// It is the first entry in SHELL_ROUTES and served cache-first, so every
+// installed app held the redirect and forwarded away from the new front door —
+// the deployment was fine and no existing user could see it, which is the exact
+// failure the note above describes. Bumping the name is what evicts it: the
+// activate handler below deletes every cache whose key is not CACHE_NAME.
+//
+// Bump this whenever a SHELL_ROUTES page changes what it renders.
+const CACHE_NAME = "suca-fpl-shell-v7";
 const SHELL_ROUTES = [
   "/",
   // The workspace, which the root now opens on. It was absent from this list
