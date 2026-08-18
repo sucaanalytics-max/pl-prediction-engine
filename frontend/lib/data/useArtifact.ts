@@ -69,6 +69,60 @@ export interface UseArtifactResult<T> {
   readonly reload: () => void;
 }
 
+/**
+ * Fetches that have started but not finished, keyed by path.
+ *
+ * Three components on `/` each resolve their own week and each asked for
+ * `fpl/xp_public_gw01.json` independently: measured in a production build, that
+ * artifact was requested **three times at 53.4KB each**, and `agent_status.json`
+ * three times as well — about 107KB of pure duplication per load, before the
+ * 377KB `/api/fpl/state` call. `useCurrentGameweek` is itself a `useArtifact`
+ * caller, so every surface that resolves a week adds another copy.
+ *
+ * This is coalescing, NOT a cache. The entry is deleted the moment the fetch
+ * settles, so a later mount fetches again and Rule 1's age line stays true. A
+ * cache keyed by path would quietly serve a stale payload under a fresh `ok`,
+ * which is the one thing this data layer must never do.
+ *
+ * Callers that pass `now`, `remote` or `signal` opt out and fetch alone: those
+ * three change what the result MEANS — the first two shift staleness
+ * classification, and a shared fetch that one caller can abort is a fetch the
+ * other caller cannot rely on.
+ */
+const inFlight = new Map<string, Promise<Artifact<unknown>>>();
+
+/** Visible only so a test can assert the map does not leak. */
+export function inFlightCount(): number {
+  return inFlight.size;
+}
+
+function shareable(options: LoadOptions): boolean {
+  return options.now === undefined
+    && options.remote === undefined
+    && options.signal === undefined;
+}
+
+function loadShared<T>(
+  descriptor: Descriptor<T>,
+  options: LoadOptions,
+  fresh: boolean,
+): Promise<Artifact<T>> {
+  if (!shareable(options)) return load(descriptor, options);
+
+  // A reload must not be answered by a request that was already in the air, or
+  // the button would appear to work while showing the same fetch's result.
+  if (fresh) inFlight.delete(descriptor.path);
+  else {
+    const existing = inFlight.get(descriptor.path);
+    if (existing) return existing as Promise<Artifact<T>>;
+  }
+
+  const started = load(descriptor, options)
+    .finally(() => { inFlight.delete(descriptor.path); });
+  inFlight.set(descriptor.path, started as Promise<Artifact<unknown>>);
+  return started;
+}
+
 export function useArtifact<T>(
   descriptor: Descriptor<T>,
   options: LoadOptions = {},
@@ -96,7 +150,7 @@ export function useArtifact<T>(
 
   useEffect(() => {
     let cancelled = false;
-    load(descriptor, optionsRef.current).then((result) => {
+    loadShared(descriptor, optionsRef.current, nonce > 0).then((result) => {
       // A resolved fetch for a screen the user has left must not set state.
       if (cancelled) return;
       setArtifact(result);

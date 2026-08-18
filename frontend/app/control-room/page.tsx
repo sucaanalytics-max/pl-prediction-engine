@@ -83,9 +83,17 @@ import {
 /**
  * The gameweek this board reads.
  *
- * `?? 1` is deliberately absent. The number becomes a fetch path
- * (`fpl/xp_public_gw{NN}.json`), so a wrong last resort does not mislabel a figure
- * — it reads a different gameweek's file. Sections that need a week say so instead.
+ * The `?? 1` below is not a default for the week — it is a placeholder for the
+ * PATH. A hook cannot be called conditionally, so a descriptor is always needed,
+ * and week 1's is the one that exists. Nothing downstream may treat the resulting
+ * artifact as this week's until `gameweek` is non-null, because the number becomes
+ * a fetch path (`fpl/xp_public_gw{NN}.json`) and a wrong last resort does not
+ * mislabel a figure — it reads a different gameweek's file.
+ *
+ * Every consumer therefore gates on `gameweek === null` rather than on whether the
+ * fetch succeeded. An earlier version of this docstring claimed the `?? 1` was
+ * "deliberately absent" three lines above the `?? 1`, which is how the squad board
+ * came to show week 1's projections for an unresolved week.
  */
 function useProjections(gameweek: number | null) {
   // A descriptor is required, so an unresolved week reads week 1's path and the

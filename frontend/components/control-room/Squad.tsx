@@ -29,7 +29,20 @@ export function Squad({
   initialising: boolean;
 }) {
   const focused = teamOf(team);
-  const board = squadBoardPlayers(squad, projections, gameweek);
+  /**
+   * Gated on the WEEK, not on whether the fetch succeeded.
+   *
+   * The projections descriptor falls back to week 1's path so that a hook is never
+   * called conditionally. That makes a readable artifact no evidence at all that it
+   * is THIS week's: with the week unresolved, pairing those numbers with my fifteen
+   * would put a stranger's projection beside my squad and sum it into a band total.
+   *
+   * The squad itself is week-independent, so the rows and the formation still lay
+   * out. Only the numbers refuse.
+   */
+  const board = squadBoardPlayers(
+    squad, gameweek === null ? null : projections, gameweek,
+  );
 
   return (
     <section

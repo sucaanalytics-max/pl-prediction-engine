@@ -45,6 +45,7 @@ import type { HeuristicView } from "@/lib/data/heuristics";
 import type { PublicDecision } from "@/lib/data/narrow";
 import type { Projections } from "@/lib/data/projections";
 import type { Read } from "@/lib/control-room/read";
+import { COUNTING_RULE } from "@/lib/margin/planner";
 import {
   REQUIRED_CALIBRATED_GAMEWEEKS, TEAMS, money, tenths, type TeamKey, type XiTotal,
 } from "@/lib/control-room/model";
@@ -201,7 +202,7 @@ function Cell(
                   ? "no XI identified"
                   : `${xi.matched} of ${xi.xiSize} matched on FPL's id`
                     + `${draws === null ? "" : ` · ${draws.toLocaleString()} draws`}`
-                    + " · captain not doubled"}
+                    + ` · ${COUNTING_RULE}`}
               </Sub>
             </div>
           </div>

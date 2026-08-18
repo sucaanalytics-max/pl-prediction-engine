@@ -207,6 +207,18 @@ export function optimiseXi(
  * A player with no published projection contributes nothing rather than being
  * skipped, which is why callers state that count separately.
  */
+/**
+ * The clause every surface printing a squad total must carry, written once.
+ *
+ * Three screens print this number and, before this constant, each phrased its own
+ * caveat: `/now` said "XI total, captain not doubled", the Ledger said "captain not
+ * doubled", and the planner's 24px figure said nothing at all — the one screen a
+ * reader is most likely to read a total off. The wording is shared so the three
+ * cannot drift back apart, which is the failure {@link projectedTotal} exists to
+ * have fixed.
+ */
+export const COUNTING_RULE = "captain not doubled";
+
 export function projectedTotal(
   xi: readonly SquadPlayer[],
   points: ReadonlyMap<number, number>,

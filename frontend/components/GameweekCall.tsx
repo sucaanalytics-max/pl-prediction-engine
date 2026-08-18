@@ -8,7 +8,9 @@ import { proven } from "@/lib/data/artifact";
 import { projectionsDescriptor, type Projection } from "@/lib/data/projections";
 import { minutesConflictsDescriptor } from "@/lib/data/minutes-conflicts";
 import { StateCard } from "@/components/data/Artifact";
-import { optimiseXi, pointsFrom, projectedTotal } from "@/lib/margin/planner";
+import {
+  COUNTING_RULE, optimiseXi, pointsFrom, projectedTotal,
+} from "@/lib/margin/planner";
 import { fold } from "@/lib/margin/squad";
 import type { SquadPlayer } from "@/lib/data/heuristics";
 
@@ -224,7 +226,7 @@ function Call({ gameweek }: { gameweek: number }) {
             {call.currentTotal.toFixed(2)} → {call.bestTotal.toFixed(2)} xP
             {"  (+"}{gain.toFixed(2)}{")"}
             <span style={{ color: "var(--text-4)" }}>
-              {"  "}· XI total, captain not doubled
+              {`  · XI total, ${COUNTING_RULE}`}
             </span>
           </p>
           {/* Naming the players whose projection is contested is the difference

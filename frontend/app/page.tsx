@@ -18,9 +18,11 @@
  *     `lib/margin/squad.ts` `joinProjections` (one join, on FPL's own
  *     `elementId`) and `lib/margin/planner.ts` `optimiseXi`/`projectedTotal`
  *     (one solver, exhaustive over the legal formations). One captain, one total,
- *     and the total says `XI total, captain not doubled` because two screens used
- *     to print 48.20 and 54.9 for the same eleven with neither stating its
- *     counting rule.
+ *     and the total carries `COUNTING_RULE` because two screens used to print
+ *     48.20 and 54.9 for the same eleven with neither stating its counting rule.
+ *     The clause is named rather than quoted here: a docstring holding its own
+ *     copy of the wording is how the three surfaces drifted apart in the first
+ *     place.
  *  2. {@link SquadBoard} — the fifteen, each carrying the model's own xP, and the
  *     squad line carrying `captured draft, not live`. Its heuristic "the-move"
  *     card is already gone; that cut is what leaves exactly one captain here.

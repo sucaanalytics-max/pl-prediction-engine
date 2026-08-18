@@ -41,7 +41,8 @@ import type {
 } from "@/lib/data/projections";
 import {
   formationOf, MAX_BANKED_FREE_TRANSFERS, moveDelta, optimiseXi, ownedIn,
-  pairRows, playersAcross, pointsFrom, projectedTotal, weeklyLedger, xiProblems,
+  COUNTING_RULE, pairRows, playersAcross, pointsFrom, projectedTotal, weeklyLedger,
+  xiProblems,
   type Move, type PlannerRowModel, type WeekLedger,
 } from "@/lib/margin/planner";
 import { hatch, MONO, PAPER, SANS } from "@/lib/margin/tokens";
@@ -321,8 +322,15 @@ export function Planner(
         <span style={{ fontFamily: MONO, fontSize: 24, fontWeight: 500, color: S.ink, letterSpacing: "-.03em" }}>
           {best === null ? <Nil surface={S} size={22} /> : projectedTotal(xi, points).toFixed(1)}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink2 }}>
-          projected GW{gameweek}{formation ? ` · ${formation}` : ""}
+        <span
+          style={{ fontFamily: MONO, fontSize: 11, color: S.ink2 }}
+          title={
+            "the eleven's means, added. A player with no published projection "
+            + "contributes nothing rather than being skipped."
+          }
+        >
+          {`projected GW${gameweek}`}{formation ? ` · ${formation}` : ""}
+          {` · ${COUNTING_RULE}`}
         </span>
         {benched.size > 0 ? (
           <button

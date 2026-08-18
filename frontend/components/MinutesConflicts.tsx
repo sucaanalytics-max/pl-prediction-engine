@@ -2,8 +2,8 @@
 
 import { useArtifact } from "@/lib/data/useArtifact";
 import { proven } from "@/lib/data/artifact";
-import { AGENT_STATUS } from "@/lib/data/agent-status";
 import { minutesConflictsDescriptor } from "@/lib/data/minutes-conflicts";
+import { useCurrentGameweek } from "@/lib/data/gameweek";
 import { StateCard } from "@/components/data/Artifact";
 
 /**
@@ -54,14 +54,25 @@ const KIND_COPY: Record<string, { label: string; gist: string }> = {
  * on fetching gw01 — the exact defect the descriptor factory was introduced to
  * fix, surviving in the one caller that had no gameweek to pass.
  *
- * `agent_status.json` is the right source and the same one the margin page
- * uses: it is written by the phase resolver, which always runs, so it has an
- * answer even when the agent has not. The prop stays as an override for callers
- * that already know, and 1 is the last resort rather than the default.
+ * It resolves through {@link useCurrentGameweek}, the one shared resolver, rather
+ * than re-deriving the week here. The local version read `agent_status.json` and
+ * then fell back to 1, which differed from the shared resolver twice over: it
+ * never consulted FPL's own `event.id`, and it substituted week 1 where the shared
+ * resolver returns null. Two resolvers that disagree do not mislabel a figure —
+ * the number becomes a fetch path, so they read different files.
+ *
+ * Costs nothing extra: `agent_status.json` and `/api/fpl/state` are both
+ * coalesced, so this consumer shares whatever request is already in the air.
+ *
+ * The prop stays as an override for callers that already know. The `?? 1` stays at
+ * this call site, where it is visible, because a descriptor is required and week
+ * 1's path is the one that exists — not because 1 is a sensible default for a week.
  */
 export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {}) {
-  const { artifact: status } = useArtifact(AGENT_STATUS);
-  const resolved = gameweek ?? proven(status)?.gameweek ?? 1;
+  // Called unconditionally: `gameweek ?? useCurrentGameweek()` short-circuits, which
+  // skips the hook whenever the prop is supplied and breaks hook order.
+  const shared = useCurrentGameweek();
+  const resolved = gameweek ?? shared ?? 1;
   const { artifact } = useArtifact(minutesConflictsDescriptor(resolved));
   const view = proven(artifact);
 

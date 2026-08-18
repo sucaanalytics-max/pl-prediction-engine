@@ -92,6 +92,23 @@ describe("my own squad", () => {
     expect(screen.getByText(/does not assemble a plausible fifteen/)).toBeTruthy();
   });
 
+  it("refuses the numbers when no week is resolved, but still lays out the squad", () => {
+    /* The projections descriptor falls back to week 1's path so the hook is
+       unconditional, so a readable artifact proves nothing about WHICH week it is. */
+    render(<Squad {...BASE} team="mine" gameweek={null} />);
+    expect(screen.getByTestId("band-count-midfield").textContent).toBe("2");
+    expect(screen.getByTestId("band-total-midfield").textContent).toBe("∅");
+    expect(screen.getByTestId("cluster-xp-MUN").textContent).toBe("∅");
+    expect([...new Set(
+      screen.getAllByTestId("minutes-cell").map((c) => c.textContent),
+    )]).toEqual(["∅"]);
+  });
+
+  it("shows the numbers once a week IS resolved", () => {
+    render(<Squad {...BASE} team="mine" gameweek={1} />);
+    expect(screen.getByTestId("band-total-midfield").textContent).not.toBe("∅");
+  });
+
   it("names a pick it could not band", () => {
     const odd = [...SQUAD, { name: "Nobody", position: "AM", team: "ARS", price: 4,
       fixtures: [] }] as unknown as SquadPlayer[];

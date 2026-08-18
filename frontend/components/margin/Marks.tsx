@@ -226,7 +226,7 @@ export function Distribution(
     <div
       style={{ position: "relative", width, height }}
       role="img"
-      aria-label={describeGlyph(of)}
+      aria-label={describeGlyph(of, emphasis)}
     >
       {/* The box first, so the whisker rule stays visible across it. */}
       {g.box ? (
@@ -341,8 +341,19 @@ export function Distribution(
   );
 }
 
-/** The glyph in words, for a screen reader and for the title attribute. */
-export function describeGlyph(of: DistributionInput): string {
+/**
+ * The glyph in words, for a screen reader and for the title attribute.
+ *
+ * `emphasis` is part of the description, not decoration on top of it. Under `tail`
+ * the glyph gains a filled q75–q90 bar and demotes the median; under `median` it
+ * thickens the median rule. Those are the two bots' opposite readings of one
+ * identical projection, so a label that omitted them would describe the same
+ * picture for both — the reader using the label would be told the two agree.
+ */
+export function describeGlyph(
+  of: DistributionInput,
+  emphasis: "neutral" | "median" | "tail" = "neutral",
+): string {
   const bits: string[] = [];
   const has = (v: number | null | undefined): v is number =>
     v !== null && v !== undefined;
@@ -352,7 +363,16 @@ export function describeGlyph(of: DistributionInput): string {
   if (has(of.q50)) bits.push(`median ${of.q50}`);
   if (has(of.mean)) bits.push(`mean ${of.mean.toFixed(1)}`);
   if (has(of.mode)) bits.push(`most likely ${of.mode}`);
-  return bits.length ? bits.join(", ") : "no distribution published";
+  if (bits.length === 0) return "no distribution published";
+
+  // Only claimed when the mark it describes was actually drawn: the tail span needs
+  // both q75 and q90, exactly as the glyph does.
+  if (emphasis === "tail" && has(of.q75) && has(of.q90)) {
+    bits.push(`upside q75 ${of.q75} to q90 ${of.q90} emphasised`);
+  } else if (emphasis === "median" && has(of.q50)) {
+    bits.push("median emphasised");
+  }
+  return bits.join(", ");
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

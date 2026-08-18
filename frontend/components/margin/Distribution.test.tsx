@@ -22,7 +22,7 @@
 import { cleanup, render } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { Distribution } from "@/components/margin/Marks";
+import { describeGlyph, Distribution } from "@/components/margin/Marks";
 import { SCALE_HI, SCALE_LO } from "@/lib/margin/distribution";
 import { PAPER } from "@/lib/margin/tokens";
 
@@ -170,5 +170,49 @@ describe("a tail-only file draws nothing rather than a mislabelled bar", () => {
       expect(container.querySelector('[title="right tail, q75 to q90"]')).toBeNull();
       cleanup();
     }
+  });
+});
+
+describe("the label describes the emphasis, not just the numbers", () => {
+  /* Two bots read one projection and disagree. A label that omitted which mark
+     carries the weight would read identically for both, telling the reader who
+     depends on it that the two agree. */
+  const FULL = { q10: 1, q25: 3, q50: 5, q75: 8, q90: 12, mean: 6, mode: 4 };
+
+  /** The glyph's own label, however it was rendered. */
+  const label = (ui: React.ReactElement): string => {
+    const { container } = render(ui);
+    return container.querySelector('[role="img"]')!.getAttribute("aria-label")!;
+  };
+
+  it("names the emphasised upside under tail emphasis", () => {
+    expect(label(<Distribution of={FULL} surface={PAPER} emphasis="tail" />))
+      .toContain("upside q75 8 to q90 12 emphasised");
+  });
+
+  it("says the median is emphasised under median emphasis", () => {
+    const words = label(<Distribution of={FULL} surface={PAPER} emphasis="median" />);
+    expect(words).toContain("median emphasised");
+    expect(words).not.toContain("upside");
+  });
+
+  it("claims no emphasis at neutral, so the default reads as the default", () => {
+    expect(label(<Distribution of={FULL} surface={PAPER} />))
+      .not.toContain("emphasised");
+  });
+
+  it("does not claim a tail it could not draw", () => {
+    // The glyph needs both ends; so must the sentence.
+    expect(label(
+      <Distribution of={{ ...FULL, q90: null }} surface={PAPER} emphasis="tail" />,
+    )).not.toContain("upside");
+  });
+
+  it("still refuses to describe a distribution that was never published", () => {
+    // No glyph is drawn at all, so `describeGlyph` is asserted directly.
+    expect(describeGlyph(
+      { q10: null, q25: null, q50: null, q75: null, q90: null, mean: null, mode: null },
+      "tail",
+    )).toBe("no distribution published");
   });
 });
