@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-18T20:23:25.215975Z",
-  "n_dropped": 63,
+  "generated_at": "2026-08-18T20:50:00.732562Z",
+  "n_dropped": 64,
   "dropped_by_source": {
     "bbc_football": 38,
-    "sky_football": 25
+    "sky_football": 26
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 153,
+  "n_articles": 154,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -128,6 +128,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-18T18:27:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "6f6e0c3c02a128d7",
+      "headline": "FPL winner\u2019s Gameweek 1 team reveal: Raya but no Arsenal defenders!",
+      "summary": "Simon March won FPL back in 2014/15 The post FPL winner's Gameweek 1 team reveal: Raya but no Arsenal defenders! appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/18/fpl-winners-gameweek-1-team-reveal-raya-but-no-arsenal-defenders",
+      "claimed_at": "2026-08-18T18:15:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1135,24 +1153,6 @@
           "element_id": 362,
           "name": "Jacquet",
           "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "0ac0a1650d168806",
-      "headline": "Tottenham latest: Maddison returns as Spurs end pre-season unbeaten",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-16T16:00:00Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
           "held": null
         }
       ],
