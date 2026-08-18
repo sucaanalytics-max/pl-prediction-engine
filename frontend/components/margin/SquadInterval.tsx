@@ -42,8 +42,8 @@ function pct(fraction: number): string {
 
 export function SquadInterval({ decision }: { decision: PublicDecision }) {
   const {
-    mean_points, points_sd, points_q10, points_q50, points_q90, points_mode,
-    probAtLeast, autosubProb, nDraws,
+    mean_points, points_sd, points_q10, points_q25, points_q50, points_q75,
+    points_q90, points_mode, probAtLeast, autosubProb, nDraws,
   } = decision;
 
   const hasGlyph =
@@ -87,7 +87,12 @@ export function SquadInterval({ decision }: { decision: PublicDecision }) {
           <Distribution
             of={{
               q10: points_q10,
+              // `plan_eval.py` publishes the interquartile ends for the squad total
+              // too, over the same draws. They were dropped in the narrower, so this
+              // glyph drew a whisker with a hole in it.
+              q25: points_q25,
               q50: points_q50,
+              q75: points_q75,
               q90: points_q90,
               mean: mean_points,
               mode: points_mode,

@@ -209,9 +209,78 @@ function Cell(
         );
       }
 
-      // The same primitive, the same scale, the emphasis this bot reads by — and
-      // an empty input, so it renders the primitive's own `∅`. The row still shows
-      // three glyph slots at three emphases, which is what the row is for.
+      /*
+       * The same primitive, the same scale, the emphasis this bot reads by.
+       *
+       * This branch used to ignore `bot` entirely and hardcode the absence. That was
+       * correct for every day so far — neither file has ever been written — and would
+       * have become a lie the moment one was: the screen would have said "no total
+       * has been published" while the artifact beside it carried `mean_points` and
+       * the total's quantiles. Wrong in the cautious direction is still wrong, and
+       * this is the row the product exists for.
+       *
+       * The interval here is legitimate where a squad interval usually is not: it is
+       * measured over the same draws that produced the mean, rather than summed from
+       * eleven marginals, which would be narrower and flattering. All five ends come
+       * from `plan_eval.py`'s own `quantiles` map, so the glyph draws the whole shape
+       * rather than a whisker with a hole in it.
+       */
+      const decision = bot?.value ?? null;
+      const total = decision?.mean_points ?? null;
+
+      if (total !== null) {
+        return (
+          <div data-testid="projection-glyph" data-team={team} data-emphasis={emphasis}>
+            <div className="flex items-center gap-[11px]">
+              <Distribution
+                of={{
+                  mean: total,
+                  q10: decision?.points_q10 ?? null,
+                  q25: decision?.points_q25 ?? null,
+                  q50: decision?.points_q50 ?? null,
+                  q75: decision?.points_q75 ?? null,
+                  q90: decision?.points_q90 ?? null,
+                  // No counterpart: the producer publishes quantiles for the squad
+                  // total, not a mode.
+                  mode: null,
+                }}
+                surface={S}
+                width={132}
+                height={20}
+                lo={SQUAD_SCALE_LO}
+                hi={SQUAD_SCALE_HI}
+                emphasis={emphasis}
+              />
+              <Figure size={18}>{total.toFixed(1)}</Figure>
+            </div>
+            <Body style={{ marginTop: 6 }}>
+              {team === "ronny"
+                ? "Reads the median and prices the spread as a cost. Measured over "
+                  + "the same draws as the mean, so the interval is the solver's own "
+                  + "rather than eleven marginals added up."
+                : "Reads the right tail and prices the spread as the instrument. "
+                  + "Measured over the same draws as the mean, so the interval is the "
+                  + "solver's own rather than eleven marginals added up."}
+            </Body>
+            <div style={{ marginTop: 4 }}>
+              <Sub>
+                {[
+                  decision?.points_q10 === null || decision?.points_q10 === undefined
+                    ? null : `q10 ${decision.points_q10.toFixed(0)}`,
+                  decision?.points_q90 === null || decision?.points_q90 === undefined
+                    ? null : `q90 ${decision.points_q90.toFixed(0)}`,
+                  `${emphasis} emphasis`,
+                  decision?.nDraws === null || decision?.nDraws === undefined
+                    ? null : `${decision.nDraws.toLocaleString()} draws`,
+                ].filter(Boolean).join(" · ")}
+              </Sub>
+            </div>
+          </div>
+        );
+      }
+
+      // Nothing published. An empty input, so the primitive renders its own `∅`, and
+      // the row still shows three glyph slots at three emphases.
       return (
         <div data-testid="projection-glyph" data-team={team} data-emphasis={emphasis}>
           <div className="flex items-center gap-[11px]">

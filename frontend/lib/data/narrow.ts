@@ -1141,7 +1141,21 @@ export interface PublicDecision {
    */
   readonly points_sd: number | null;
   readonly points_q10: number | null;
+  /**
+   * The interquartile ends of the SQUAD total.
+   *
+   * `plan_eval.py:195-198` has published `q25` and `q75` alongside q10/q50/q90 since
+   * the distribution block was written, and this narrower read only three of the five
+   * — so the squad glyph drew a whisker with no box while both ends sat in the file.
+   * That is the same mistake the block below records: a figure refused as absent while
+   * the producer was supplying it.
+   *
+   * Both or neither, as everywhere else: a q25 with no q75 is a half-box, which is a
+   * narrower claim than a whole one.
+   */
+  readonly points_q25: number | null;
   readonly points_q50: number | null;
+  readonly points_q75: number | null;
   readonly points_q90: number | null;
   /**
    * The modal total, over 1-point histogram bins.
@@ -1394,7 +1408,9 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
      */
     points_sd: optNumber(decision.sd_points),
     points_q10: optNumber(quantiles.q10),
+    points_q25: optNumber(quantiles.q25),
     points_q50: optNumber(quantiles.q50),
+    points_q75: optNumber(quantiles.q75),
     points_q90: optNumber(quantiles.q90),
     points_mode: null,
     probAtLeast: narrowThresholds(decision.tails),

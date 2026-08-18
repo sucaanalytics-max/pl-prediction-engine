@@ -164,3 +164,48 @@ describe("the plan's free-transfer count", () => {
     expect(value?.plan?.free_transfers_after).toBe(0);
   });
 });
+
+describe("every quantile the producer publishes, and no more", () => {
+  it("carries the interquartile ends, which were dropped for months", () => {
+    /* The `FULL` fixture above has held q25 and q75 since it was written, and the
+       narrower read only q10/q50/q90 — so the squad glyph drew a whisker with a hole
+       in it and nothing failed, because no assertion here mentioned them. */
+    const value = decision(FULL)!;
+    expect({
+      q10: value.points_q10, q25: value.points_q25, q50: value.points_q50,
+      q75: value.points_q75, q90: value.points_q90,
+    }).toEqual({ q10: 38.1, q25: 48.0, q50: 59.0, q75: 70.2, q90: 80.4 });
+  });
+
+  it("reads every quantile the glyph has a slot for", () => {
+    // The producer also publishes q99. The glyph has no q99 mark, so it is not read —
+    // this asserts the four spans the primitive draws, not the producer's whole map.
+    const value = decision(FULL)!;
+    for (const [name, got] of Object.entries({
+      points_q10: value.points_q10, points_q25: value.points_q25,
+      points_q50: value.points_q50, points_q75: value.points_q75,
+      points_q90: value.points_q90,
+    })) {
+      expect(got, `${name} was published and must not be dropped`).not.toBeNull();
+    }
+  });
+
+  it("still leaves the mode absent, because the producer publishes none", () => {
+    expect(decision(FULL)!.points_mode).toBeNull();
+  });
+
+  it("takes one interquartile end without inventing the other", () => {
+    /* Both-or-neither is the GLYPH's rule, enforced where it belongs. The narrower's
+       job is to report what was published, so a half-published pair stays half — and
+       the primitive declines to draw a box from it. */
+    const value = decision({ ...FULL, quantiles: { q10: 38.1, q25: 48.0, q90: 80.4 } })!;
+    expect(value.points_q25).toBe(48.0);
+    expect(value.points_q75).toBeNull();
+  });
+
+  it("drops a quantile that is not a number rather than repairing it", () => {
+    const value = decision({ ...FULL, quantiles: { ...FULL.quantiles, q75: "70.2" } })!;
+    expect(value.points_q75).toBeNull();
+    expect(value.points_q25).toBe(48.0);
+  });
+});

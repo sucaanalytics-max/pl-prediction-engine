@@ -590,3 +590,176 @@ describe("the phase is derived, never toggled", () => {
     expect(screen.queryByRole("switch")).toBeNull();
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The gate opens — §4.2
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * §4.2 lists nine things that move when `idle` becomes `computed`, and the note under
+ * them says what must NOT move: whether anything is on screen.
+ *
+ * These were previously untestable "when the engine runs". They are not — the fetch is
+ * stubbed here, so the gate-open state can be built and asserted before any real run,
+ * which is when a bug is cheapest. It is also when it matters most: a seal is
+ * irrecoverable, and there are thirty-eight of them in a season.
+ *
+ * Four of the nine depend on the approval flow, which is deliberately unbuilt (the
+ * hub captures and approves; it never submits). Those are named at the bottom rather
+ * than asserted, so the gap is recorded instead of implied.
+ */
+const AGENT_COMPUTED = {
+  ...AGENT_IDLE,
+  generated_at: "2026-08-21T06:14:00Z",
+  phase: "computed",
+  reason: "both objectives solved for GW1",
+  agent_ran: true,
+};
+
+/**
+ * A published decision, in the shape the producer actually writes.
+ *
+ * Nested under `decision`, with `sd_points` and a `quantiles` map keyed `q10…q99` —
+ * `plan_eval.PlanEvaluation.as_dict`. A flat fixture with `mean_points` and
+ * `points_q10` at the top level narrows to `ok` with every figure nulled, which is how
+ * this test first passed the narrower and still rendered `∅`.
+ */
+function decision(objective: "season" | "weekly", mean: number, q10: number, q90: number) {
+  return {
+    gameweek: GW,
+    entry_label: objective === "season" ? "Ronny" : "Wazza",
+    objective,
+    generated_at: "2026-08-21T06:14:00Z",
+    deadline: AGENT_IDLE.deadline,
+    optimism_gap: null,
+    credible_margin: true,
+    warnings: [],
+    xp_snapshot: {},
+    decision: {
+      plan: {
+        squad: [1, 2], xi: [1], captain: 1, vice: 2,
+        transfers_in: [], transfers_out: [], hits: 0, bank_after: 0.5,
+        free_transfers_after: 1,
+      },
+      n_draws: 5000,
+      mean_points: mean,
+      sd_points: 9.5,
+      objective: mean,
+      quantiles: {
+        q10, q25: mean - 5, q50: mean - 0.5, q75: mean + 5, q90, q99: q90 + 9,
+      },
+      tails: { p_ge_40: 0.9, p_ge_50: 0.62, p_ge_60: 0.31, p_ge_70: 0.12 },
+      autosub_rate: 0.08,
+      vice_rate: 0.03,
+    },
+  };
+}
+
+const GATE_OPEN: Record<string, unknown> = {
+  ...ALL_PRESENT,
+  [PATHS.status]: AGENT_COMPUTED,
+  // Ronny one point ahead and narrower at q90; Wazza one behind and clear — the
+  // contrast §4.2 and the capture both carry.
+  [PATHS.ronny]: decision("season", 54, 40, 70),
+  [PATHS.wazza]: decision("weekly", 53, 31, 84),
+};
+
+describe("§4.2 · flipping idle to computed", () => {
+  it("4 · moves the phase chip to say the engine has run", async () => {
+    await renderBoard(GATE_OPEN);
+    expect(screen.getByText(/engine has run/i)).toBeTruthy();
+    expect(screen.queryByText(/engine gated/i)).toBeNull();
+  });
+
+  it("1 · changes the headline, and does not keep the idle one", async () => {
+    await renderBoard(GATE_OPEN);
+    expect(screen.queryByText(/neither bot has spoken yet/i)).toBeNull();
+  });
+
+  it("5 · keeps my figure and its glyph present in BOTH states", async () => {
+    // The design is explicit: the figure and the glyph are in both states. Rule 1.
+    await renderBoard(ALL_PRESENT);
+    const idle = within(screen.getByTestId("standings-matrix"));
+    const mineIdle = idle.getAllByTestId("projection-glyph")
+      .find((n) => n.dataset.team === "mine")!;
+    const figureIdle = mineIdle.textContent;
+    cleanup();
+
+    await renderBoard(GATE_OPEN);
+    const open = within(screen.getByTestId("standings-matrix"));
+    const mineOpen = open.getAllByTestId("projection-glyph")
+      .find((n) => n.dataset.team === "mine")!;
+    expect(mineOpen.querySelector('[role="img"]')).toBeTruthy();
+    expect(mineOpen.textContent?.slice(0, 4)).toBe(figureIdle?.slice(0, 4));
+  });
+
+  it("5 · shows each bot's own total once its decision exists", async () => {
+    await renderBoard(GATE_OPEN);
+    const glyphs = screen.getAllByTestId("projection-glyph");
+    const ronny = glyphs.find((n) => n.dataset.team === "ronny")!;
+    const wazza = glyphs.find((n) => n.dataset.team === "wazza")!;
+
+    expect(ronny.textContent).toContain("54.0");
+    expect(wazza.textContent).toContain("53.0");
+    // The defect this replaced: both cells said this while the file sat there.
+    expect(ronny.textContent).not.toContain("never written");
+    expect(wazza.textContent).not.toContain("never written");
+  });
+
+  it("keeps each bot on its own emphasis, which is the row's whole argument", async () => {
+    await renderBoard(GATE_OPEN);
+    const glyphs = screen.getAllByTestId("projection-glyph");
+    expect(glyphs.map((n) => `${n.dataset.team}:${n.dataset.emphasis}`))
+      .toEqual(["mine:neutral", "ronny:median", "wazza:tail"]);
+  });
+
+  it("draws the measured interval, and says it is the solver's own", async () => {
+    await renderBoard(GATE_OPEN);
+    const ronny = screen.getAllByTestId("projection-glyph")
+      .find((n) => n.dataset.team === "ronny")!;
+    expect(ronny.textContent).toContain("q10 40");
+    expect(ronny.textContent).toContain("q90 70");
+    expect(ronny.textContent).toMatch(/same draws as the mean/);
+    // Not eleven marginals added up, which would be the flattering direction.
+    expect(ronny.textContent).not.toMatch(/summed from/);
+  });
+
+  it("draws the box, because the producer publishes q25 and q75 for the total", async () => {
+    /* The narrower read only three of the five published quantiles, so this glyph
+       used to be a whisker with a hole in it while both ends sat in the file. */
+    await renderBoard(GATE_OPEN);
+    const ronny = screen.getAllByTestId("projection-glyph")
+      .find((n) => n.dataset.team === "ronny")!;
+    expect(ronny.querySelector('[title="interquartile range, q25 to q75"]')).toBeTruthy();
+    expect(ronny.querySelector('[role="img"]')!.getAttribute("aria-label"))
+      .toContain("middle half");
+  });
+
+  it("keeps the tail emphasis honest in the label, not just in the paint", async () => {
+    await renderBoard(GATE_OPEN);
+    const wazza = screen.getAllByTestId("projection-glyph")
+      .find((n) => n.dataset.team === "wazza")!;
+    expect(wazza.querySelector('[role="img"]')!.getAttribute("aria-label"))
+      .toContain("emphasised");
+  });
+
+  it("still refuses a total no decision carries", async () => {
+    // The gate opened for one bot only: the other must not borrow its neighbour's.
+    await renderBoard({ ...GATE_OPEN, [PATHS.wazza]: undefined });
+    const wazza = screen.getAllByTestId("projection-glyph")
+      .find((n) => n.dataset.team === "wazza")!;
+    expect(wazza.textContent).toContain("never written");
+    expect(wazza.textContent).not.toContain("54");
+  });
+
+  it("keeps everything on screen that was on screen when idle — Rule 1", async () => {
+    /* The note under §4.2's nine: what must NOT change is whether anything is on
+       screen. Counted as cells, which is how the matrix addresses them. */
+    await renderBoard(ALL_PRESENT);
+    const idle = screen.getAllByTestId(/^cell-/).length;
+    cleanup();
+    await renderBoard(GATE_OPEN);
+    expect(screen.getAllByTestId(/^cell-/).length).toBe(idle);
+    expect(idle).toBe(8 * 3);
+  });
+});
