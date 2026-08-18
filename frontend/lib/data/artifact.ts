@@ -208,6 +208,8 @@ export interface ClassifyInput<T> {
   /** Runtime check. Never `raw as T`; see Rule 4 in the plan. */
   readonly narrow: (raw: unknown) => NarrowResult<T>;
   readonly producedAtOf?: (value: T) => string | null | undefined;
+  /** See `Descriptor.producedAtOfRaw`. Preferred over `producedAtOf` when set. */
+  readonly producedAtOfRaw?: (raw: unknown) => string | null | undefined;
   readonly producerVersionOf?: (value: T) => string | null | undefined;
   /** Declared per artifact. Absence of a predicate means `empty` is impossible. */
   readonly isEmpty?: (value: T) => boolean;
@@ -228,7 +230,8 @@ export interface ClassifyInput<T> {
  */
 export function classify<T>(input: ClassifyInput<T>): Artifact<T> {
   const {
-    path, source, raw, narrow, producedAtOf, producerVersionOf, isEmpty,
+    path, source, raw, narrow, producedAtOf, producedAtOfRaw, producerVersionOf,
+    isEmpty,
     freshnessBudgetMs = null, now, fetchError = null,
   } = input;
 
@@ -271,7 +274,8 @@ export function classify<T>(input: ClassifyInput<T>): Artifact<T> {
   }
 
   const value = result.value;
-  const producedAt = producedAtOf?.(value) ?? null;
+  // Raw first: an artifact that narrows to a bare array cannot carry its own envelope.
+  const producedAt = producedAtOfRaw?.(raw) ?? producedAtOf?.(value) ?? null;
   const producerVersion = producerVersionOf?.(value) ?? null;
 
   const producedMs = producedAt ? Date.parse(producedAt) : NaN;

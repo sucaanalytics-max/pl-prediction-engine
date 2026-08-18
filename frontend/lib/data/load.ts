@@ -163,6 +163,7 @@ export async function load<T>(
     raw,
     narrow: descriptor.narrow,
     producedAtOf: descriptor.producedAtOf,
+    producedAtOfRaw: descriptor.producedAtOfRaw,
     producerVersionOf: descriptor.producerVersionOf,
     isEmpty: descriptor.isEmpty,
     freshnessBudgetMs: descriptor.freshnessBudgetMs,

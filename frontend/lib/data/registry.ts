@@ -67,6 +67,22 @@ export interface Descriptor<T = unknown> {
   /** Runtime narrowing. Never `as T`. */
   readonly narrow: (raw: unknown) => NarrowResult<T>;
   readonly producedAtOf?: (value: T) => string | null | undefined;
+  /**
+   * The producer's timestamp read from the RAW payload, when the narrowed value cannot
+   * carry it.
+   *
+   * `producedAtOf` receives the narrowed value, which is right for almost every artifact
+   * because the envelope narrows into the payload. It is wrong for one shape: an artifact
+   * that narrows to a bare array. `player_stats.json` narrows to `readonly PlayerRow[]`,
+   * so its `generated_at` had nowhere to survive, and the availability figure the control
+   * room derives from it was the only artifact-derived number on the board with no way to
+   * grow old.
+   *
+   * Additive and preferred when present, so no existing descriptor changes and the
+   * alternative — widening the narrowed type and every consumer of it — is not forced on
+   * an artifact whose consumers all want the array.
+   */
+  readonly producedAtOfRaw?: (raw: unknown) => string | null | undefined;
   readonly producerVersionOf?: (value: T) => string | null | undefined;
   /** Declared per artifact. Omitted means `empty` is not a state this can reach. */
   readonly isEmpty?: (value: T) => boolean;

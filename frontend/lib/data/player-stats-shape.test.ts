@@ -17,7 +17,8 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
-import { narrowPlayerStats, playerStatsProducedAt } from "@/lib/data/narrow";
+import { narrowPlayerStats, playerStatsProducedAt, type PlayerRow } from "@/lib/data/narrow";
+import { classify, proven } from "@/lib/data/artifact";
 
 const ROW = {
   player_id: 1, name: "A Player", web_name: "Player", team: "ARS", position: "MID",
@@ -78,5 +79,57 @@ describe("a doubt is not a clean bill of health", () => {
     // The committed file predates the producer change, so it is the bare list with no
     // status. This flips when the pipeline next runs, which is the point.
     expect(result.ok && result.value.length).toBeGreaterThan(500);
+  });
+});
+
+describe("the availability figure can finally grow old", () => {
+  /**
+   * `producedAtOf` receives the NARROWED value, and this artifact narrows to a bare array
+   * — so its `generated_at` had nowhere to survive and the control room's availability
+   * split was the only artifact-derived number on the board with no way to be stale.
+   *
+   * `producedAtOfRaw` reads the envelope instead. Additive, so no other descriptor
+   * changed, and the alternative — widening the narrowed type and every consumer of it —
+   * is not forced on an artifact whose four consumers all want the array.
+   */
+  it("reports the envelope's timestamp through classify", () => {
+    const artifact = classify<readonly PlayerRow[]>({
+      path: "player_stats.json",
+      source: "local",
+      raw: { generated_at: "2026-08-19T06:00:00Z", players: [ROW] },
+      narrow: narrowPlayerStats,
+      producedAtOfRaw: playerStatsProducedAt,
+      now: new Date("2026-08-19T12:00:00Z"),
+      freshnessBudgetMs: 2 * 24 * 60 * 60 * 1000,
+    });
+    expect(artifact.provenance.producedAt).toBe("2026-08-19T06:00:00Z");
+    expect(proven(artifact)).toHaveLength(1);
+  });
+
+  it("still says nothing for the legacy bare list, rather than inventing a time", () => {
+    const artifact = classify<readonly PlayerRow[]>({
+      path: "player_stats.json",
+      source: "local",
+      raw: [ROW],
+      narrow: narrowPlayerStats,
+      producedAtOfRaw: playerStatsProducedAt,
+      now: new Date("2026-08-19T12:00:00Z"),
+    });
+    expect(artifact.provenance.producedAt).toBeNull();
+    expect(proven(artifact)).toHaveLength(1);
+  });
+
+  it("goes stale once the envelope's timestamp is old enough", () => {
+    const artifact = classify<readonly PlayerRow[]>({
+      path: "player_stats.json",
+      source: "local",
+      raw: { generated_at: "2026-08-10T06:00:00Z", players: [ROW] },
+      narrow: narrowPlayerStats,
+      producedAtOfRaw: playerStatsProducedAt,
+      now: new Date("2026-08-19T12:00:00Z"),
+      freshnessBudgetMs: 2 * 24 * 60 * 60 * 1000,
+    });
+    // Nine days against a two-day budget. Before this it could never reach `stale`.
+    expect(artifact.state).toBe("stale");
   });
 });

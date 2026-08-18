@@ -1559,6 +1559,8 @@ export const REGISTRY = {
     describes: "season player statistics",
     freshnessBudgetMs: 2 * DAY,
     narrow: narrowPlayerStats,
+    // From the raw envelope: this narrows to a bare array, which cannot hold it.
+    producedAtOfRaw: playerStatsProducedAt,
     isEmpty: playerStatsAreEmpty,
   }) satisfies Descriptor<readonly PlayerRow[]>,
 
