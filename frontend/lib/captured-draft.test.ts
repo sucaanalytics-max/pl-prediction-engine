@@ -31,7 +31,9 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import {
   CAPTURED_BANK, CAPTURED_DRAFT, CAPTURED_DRAFT_AT,
 } from "@/lib/fpl-live-server";
@@ -44,43 +46,76 @@ interface Element {
   now_cost: number;
 }
 
-/**
- * The real cache when it is there, a committed minimum when it is not.
- *
- * `data/raw/` is gitignored, so the pipeline's bootstrap cache never reaches CI
- * — and this file read it unconditionally, so the frontend suite failed on EVERY
- * run for at least eight commits while passing locally. A gate that cannot pass
- * is not a gate, and "green locally" was not evidence of anything.
- *
- * Preferring the real cache keeps a local or post-pipeline run checking against
- * live prices; the fixture keeps the check alive in CI, which matters because
- * this is the test that caught a squad value transcribed from the wrong capture.
- */
-const BOOTSTRAP_PATHS = [
-  "../data/raw/fpl/bootstrap_static.json",
-  "test/fixtures/bootstrap-min.json",
-];
-
-function loadBootstrap() {
-  for (const path of BOOTSTRAP_PATHS) {
-    try {
-      return JSON.parse(readFileSync(path, "utf8"));
-    } catch {
-      continue;
-    }
-  }
-  throw new Error(
-    `no bootstrap available; tried ${BOOTSTRAP_PATHS.join(" then ")}`,
-  );
-}
-
-const BOOTSTRAP = loadBootstrap() as {
+interface Bootstrap {
   elements: Element[];
   teams: Array<{ id: number; short_name: string }>;
-};
+  /** Written by scripts/regenerate-bootstrap-fixture.mjs. Absent on the live cache. */
+  _prices_captured_at?: string;
+}
 
-const BY_ID = new Map(BOOTSTRAP.elements.map((e) => [e.id, e]));
-const CLUB = new Map(BOOTSTRAP.teams.map((t) => [t.id, t.short_name]));
+/** The pipeline's real cache. Gitignored, so present locally and never in CI. */
+const LIVE_CACHE = "../data/raw/fpl/bootstrap_static.json";
+/** The committed projection of it. Present everywhere, by construction. */
+const COMMITTED_FIXTURE = "test/fixtures/bootstrap-min.json";
+
+/**
+ * Read a bootstrap, or fail saying which file and why.
+ *
+ * Nothing is caught here. The previous loader walked a preference list inside
+ * `try { … } catch { continue; }`, which caught a JSON parse failure exactly as it
+ * caught a missing file — so a half-written real cache degraded silently to the
+ * frozen fixture and reported green. This file's own docstring says a gate that
+ * cannot pass is not a gate; a gate that passes on a substituted input is worse,
+ * because it also claims to have checked.
+ */
+function readBootstrap(path: string): Bootstrap {
+  let text: string;
+  try {
+    text = readFileSync(path, "utf8");
+  } catch (caught) {
+    throw new Error(`${path} could not be read: ${String(caught)}`);
+  }
+  // Deliberately outside the try: a file that exists and does not parse is
+  // corrupt, and corruption must be loud rather than fall through to a fallback.
+  return JSON.parse(text) as Bootstrap;
+}
+
+/** The same, for a path whose ABSENCE — and only absence — is expected. */
+function readBootstrapIfPresent(path: string): Bootstrap | null {
+  return existsSync(path) ? readBootstrap(path) : null;
+}
+
+/**
+ * Two sources, and what each one is allowed to gate.
+ *
+ * Both used to feed the SAME assertions through a preference chain, and that was
+ * the wrong shape. FPL moves `now_cost` nightly in-season, so one price rise turned
+ * a local run red on something that is not a defect while CI stayed green on the
+ * frozen copy — two environments reaching two verdicts from one tolerance.
+ *
+ * So they are split by what cannot drift:
+ *
+ *  - Everything price-dependent — the squad value, the budget arithmetic — reads
+ *    the FIXTURE. `REPORTED_VALUE` is what the UI displayed AT capture time, so
+ *    capture-time prices are the honest thing to check it against. Checking it
+ *    against tonight's prices conflates a transcription error with a price
+ *    movement, and only the first is a defect. The gate is now identical in CI and
+ *    locally, which is the property this fixture was introduced to get.
+ *  - The live cache, when present, gates IDENTITY: every captured id must resolve
+ *    to the same player, club and position in both. No price move can fail that;
+ *    an id FPL re-pointed, or a fixture that has drifted, will.
+ *
+ * The cost, stated plainly: a divergence in `now_cost` alone between the fixture
+ * and today is tolerated and nothing here notices it. Two things bound that —
+ * `_prices_captured_at` records when the fixture's prices were taken, and the last
+ * assertion in this file refuses a fixture that has aged away from the capture it
+ * is being used to validate.
+ */
+const FIXTURE = readBootstrap(COMMITTED_FIXTURE);
+const LIVE = readBootstrapIfPresent(LIVE_CACHE);
+
+const BY_ID = new Map(FIXTURE.elements.map((e) => [e.id, e]));
+const CLUB = new Map(FIXTURE.teams.map((t) => [t.id, t.short_name]));
 const POSITION: Record<number, string> = { 1: "GKP", 2: "DEF", 3: "MID", 4: "FWD" };
 
 /** What the FPL UI displayed alongside this squad, to the penny it reports. */
@@ -89,8 +124,26 @@ const REPORTED_VALUE = 99.5;
 /** FPL's starting budget. Every squad begins with exactly this to spend. */
 const FULL_BUDGET = 100.0;
 
+/**
+ * One captured id's row, or a failure that says what to do about it.
+ *
+ * A bare `BY_ID.get(id)!` threw `undefined.element_type` from whichever assertion
+ * ran first, which says nothing. The fixture is frozen, so the reachable cause is
+ * a player FPL added after it was captured.
+ */
+function element(id: number): Element {
+  const found = BY_ID.get(id);
+  if (found) return found;
+  throw new Error(
+    `element ${id} is in CAPTURED_DRAFT but not in ${COMMITTED_FIXTURE}, whose `
+    + `prices were captured ${FIXTURE._prices_captured_at ?? "at an unknown time"}. `
+    + `If FPL added the player after that, regenerate the fixture: `
+    + `node scripts/regenerate-bootstrap-fixture.mjs`,
+  );
+}
+
 /** One player's price in millions, from the bootstrap rather than from a comment. */
-const price = (id: number) => BY_ID.get(id)!.now_cost / 10;
+const price = (id: number) => element(id).now_cost / 10;
 
 /** The squad's committed value, which is the check that covers all fifteen rows. */
 const squadValue = () =>
@@ -143,7 +196,7 @@ describe("the squad is a legal FPL squad", () => {
   it("fields a legal formation", () => {
     // Exactly one keeper, at least three defenders, at least one forward.
     const xi = CAPTURED_DRAFT.filter((p) => !p.bench)
-      .map((p) => POSITION[BY_ID.get(p.elementId)!.element_type]);
+      .map((p) => POSITION[element(p.elementId).element_type]);
     expect(xi.filter((p) => p === "GKP")).toHaveLength(1);
     expect(xi.filter((p) => p === "DEF").length).toBeGreaterThanOrEqual(3);
     expect(xi.filter((p) => p === "FWD").length).toBeGreaterThanOrEqual(1);
@@ -151,14 +204,14 @@ describe("the squad is a legal FPL squad", () => {
 
   it("carries two keepers in the fifteen", () => {
     const keepers = CAPTURED_DRAFT
-      .filter((p) => BY_ID.get(p.elementId)!.element_type === 1);
+      .filter((p) => element(p.elementId).element_type === 1);
     expect(keepers).toHaveLength(2);
   });
 
   it("respects the three-per-club limit", () => {
     const counts = new Map<string, number>();
     for (const pick of CAPTURED_DRAFT) {
-      const club = CLUB.get(BY_ID.get(pick.elementId)!.team) ?? "?";
+      const club = CLUB.get(element(pick.elementId).team) ?? "?";
       counts.set(club, (counts.get(club) ?? 0) + 1);
     }
     for (const [club, n] of counts) {
@@ -199,12 +252,12 @@ describe("every id resolves to a real player", () => {
     // Pinned by name rather than id, so the assertion still reads correctly to a
     // human checking it against the screenshot.
     const captain = CAPTURED_DRAFT.find((p) => p.status === "captain")!;
-    expect(BY_ID.get(captain.elementId)!.web_name).toBe("B.Fernandes");
+    expect(element(captain.elementId).web_name).toBe("B.Fernandes");
   });
 
   it("names the vice the UI showed", () => {
     const vice = CAPTURED_DRAFT.find((p) => p.status === "vice")!;
-    expect(BY_ID.get(vice.elementId)!.web_name).toBe("Mbeumo");
+    expect(element(vice.elementId).web_name).toBe("Mbeumo");
   });
 });
 
@@ -249,6 +302,122 @@ describe("the capture is dated and self-consistent", () => {
       `${money(total)} committed plus ${money(CAPTURED_BANK)} banked, against a `
       + `${money(FULL_BUDGET)} budget`,
     ).toBeCloseTo(FULL_BUDGET, 1);
+  });
+});
+
+/**
+ * The bootstrap this file reads, and the loader that reads it.
+ *
+ * See the block comment above `FIXTURE` for which source gates what and why. These
+ * assertions pin the two properties that decision rests on: the committed fixture
+ * is present and dated, and it has not aged away from the capture whose value it is
+ * used to check.
+ */
+describe("the bootstrap the value checks are made against", () => {
+  it("is the committed fixture, in every environment", () => {
+    // Not "whichever of two files happened to be readable". The same file, the
+    // same prices and the same verdict in CI and locally.
+    expect(FIXTURE.elements.length).toBeGreaterThan(500);
+    expect(FIXTURE.teams).toHaveLength(20);
+  });
+
+  it("says when its prices were captured", () => {
+    /**
+     * The stamp was `_generated_from: "2026-08-21T17:30:00Z"` — GW1's deadline,
+     * copied out of `events[0]`, three days after the commit that added it. A
+     * future-dated stamp is worse than none: it is the only clue to how stale the
+     * frozen prices are.
+     */
+    const stamp = FIXTURE._prices_captured_at;
+    expect(stamp, `${COMMITTED_FIXTURE} must carry _prices_captured_at`)
+      .toBeTypeOf("string");
+    expect(Number.isNaN(Date.parse(stamp!))).toBe(false);
+    expect(
+      Date.parse(stamp!),
+      "the fixture claims its prices were captured in the future",
+    ).toBeLessThan(Date.now());
+  });
+
+  it("holds prices from around the capture it validates", () => {
+    /**
+     * What bounds the tolerated price divergence.
+     *
+     * `REPORTED_VALUE` is what the UI displayed at `CAPTURED_DRAFT_AT`, and it is
+     * checked against the fixture's frozen prices — which is only meaningful while
+     * the two come from the same period. Recapture the squad without regenerating
+     * the fixture and this is the assertion that says so. Same 21-day budget the
+     * capture itself gets.
+     */
+    const gapDays = Math.abs(
+      Date.parse(CAPTURED_DRAFT_AT) - Date.parse(FIXTURE._prices_captured_at!),
+    ) / 86_400_000;
+    expect(
+      gapDays,
+      `the fixture's prices and CAPTURED_DRAFT_AT are ${gapDays.toFixed(1)} days `
+      + `apart, so the value check is comparing a reported total against another `
+      + `period's prices. Regenerate: node scripts/regenerate-bootstrap-fixture.mjs`,
+    ).toBeLessThan(21);
+  });
+
+  it("refuses a corrupt file instead of falling back to the fixture", () => {
+    /**
+     * The defect: `catch { continue; }` caught a JSON parse failure exactly as it
+     * caught ENOENT, so a half-written real cache silently became the frozen
+     * fixture and the suite reported green having checked the wrong input.
+     */
+    const corrupt = join(tmpdir(), `bootstrap-corrupt-${process.pid}.json`);
+    writeFileSync(corrupt, '{"elements": [{"id": 1,');
+    try {
+      expect(() => readBootstrap(corrupt)).toThrow();
+      // And the optional reader does not launder it either: the file EXISTS, so
+      // absence is not the explanation and it is not allowed to be treated as one.
+      expect(() => readBootstrapIfPresent(corrupt)).toThrow();
+    } finally {
+      rmSync(corrupt, { force: true });
+    }
+  });
+
+  it("treats only a genuine absence as absence", () => {
+    const missing = join(tmpdir(), `bootstrap-missing-${process.pid}.json`);
+    rmSync(missing, { force: true });
+    expect(readBootstrapIfPresent(missing)).toBeNull();
+    // A required path that is missing still fails, naming the path.
+    expect(() => readBootstrap(missing)).toThrow(missing);
+  });
+});
+
+/**
+ * The live cache, when it is there, gates what a price move cannot break.
+ *
+ * Skipped in CI rather than quietly passing: `data/raw/` is gitignored, so there is
+ * nothing to compare against and saying so is more honest than a green tick. What
+ * it checks is identity — every captured id resolving to the same player, club and
+ * position in both files. `now_cost` is deliberately NOT compared; FPL moves it
+ * nightly and comparing it is what made a local run red while CI stayed green.
+ */
+describe.skipIf(LIVE === null)("the fixture is still the same bootstrap", () => {
+  const live = LIVE!;
+
+  it("resolves every captured id to the same player in both files", () => {
+    const byId = new Map(live.elements.map((e) => [e.id, e]));
+    for (const pick of CAPTURED_DRAFT) {
+      const there = byId.get(pick.elementId);
+      const here = element(pick.elementId);
+      expect(there, `element ${pick.elementId} is absent from ${LIVE_CACHE}`)
+        .toBeDefined();
+      expect(
+        { name: there!.web_name, team: there!.team, type: there!.element_type },
+        `element ${pick.elementId} is a different player in ${LIVE_CACHE} than in `
+        + `${COMMITTED_FIXTURE} — regenerate the fixture`,
+      ).toEqual({ name: here.web_name, team: here.team, type: here.element_type });
+    }
+  });
+
+  it("carries the same clubs", () => {
+    // A renumbered team id would silently move players between clubs and break the
+    // three-per-club check in a way no price comparison would catch.
+    expect(new Map(live.teams.map((t) => [t.id, t.short_name])))
+      .toEqual(CLUB);
   });
 });
 
