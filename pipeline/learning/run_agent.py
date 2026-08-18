@@ -321,14 +321,19 @@ def _settled_outcomes(gameweek: Optional[int] = None) -> List[Dict[str, Any]]:
 
         outcome_rows = parsed["rows"]
         joined = 0
-        unforecast = 0
-        unsettled = 0
-        unusable = unusable_forecast_rows
+        unmatched = 0
+        unusable = 0
         for element_id, outcome_row in sorted(outcome_rows.items()):
             record = predicted_by_element.get(element_id)
             if record is None:
-                # Settled but never sealed: outside the forecast universe.
-                unforecast += 1
+                # Could be settled-but-never-sealed, or the settled twin of a
+                # row already counted in unusable_forecast_rows above (a
+                # malformed forecast row never makes it into
+                # predicted_by_element, so it looks identical to "never
+                # sealed" here). Resolved below rather than attributed to
+                # unforecast outright, to avoid counting the same broken row
+                # twice.
+                unmatched += 1
                 continue
             predicted = record.get("xp")
             actual = outcome_row.get("total_points")
@@ -346,6 +351,16 @@ def _settled_outcomes(gameweek: Optional[int] = None) -> List[Dict[str, Any]]:
                 }
             )
             joined += 1
+
+        # A forecast row with no usable element_id can never land in
+        # predicted_by_element, so its settled twin (if it has one) always
+        # shows up in `unmatched` too. Attribute as many of those apparent
+        # misses as possible to the parse failure that actually caused them
+        # instead of counting the same broken row once here and again as
+        # unforecast.
+        attributed_to_unusable_forecast = min(unusable_forecast_rows, unmatched)
+        unforecast = unmatched - attributed_to_unusable_forecast
+        unusable += unusable_forecast_rows
         unsettled = sum(1 for eid in predicted_by_element if eid not in outcome_rows)
 
         if unforecast or unsettled or unusable:

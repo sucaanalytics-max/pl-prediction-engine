@@ -198,9 +198,14 @@ def validate_xp_artifact(artifact: Dict[str, Any]) -> List[str]:
     # test. GameweekDraws labels itself `int(fixtures[0].gameweek)`, so a
     # mixed list silently reports the first fixture's week while carrying
     # points accumulated across all of them. This branch shipped exactly that
-    # 8x inflation once behind a green suite. It also covers the fallback
-    # path (fixture_specs_from_predictions), which has no gameweek filter at
-    # all.
+    # 8x inflation once behind a green suite. It does NOT cover the fallback
+    # path (fixture_specs_from_predictions), which has no gameweek filter of
+    # its own: that builder stamps every spec with
+    # `int(fixture.get("gameweek") or gameweek)`, the single scalar gameweek
+    # run_pipeline.py writes into every prediction's fixture dict in one run,
+    # so a fallback-built list is always uniformly labelled and this check
+    # has nothing to catch there today. It still fires on any genuine
+    # mismatch, from this path or any other, should one ever arise.
     #
     # A fixture that states NO gameweek is not a violation. _spec_gameweek
     # degrades to None rather than raise, and both callers of this check feed
