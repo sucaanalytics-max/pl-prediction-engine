@@ -61,12 +61,29 @@
   --text-3: #8d8a7f;
   --text-4: #b0ada2;
 
-  /* Accent — agreement */
+  /* Accent — agreement. SEMANTIC: this hue means "fine", and nothing else. */
   --accent:        oklch(0.45 0.13 155);
   --accent-hover:  oklch(0.38 0.13 155);
   --accent-muted:  oklch(0.45 0.13 155 / 0.08);
   --accent-border: oklch(0.45 0.13 155 / 0.32);
   --accent-text:   oklch(0.45 0.13 155);
+
+  /* Brand — identity, and kept off the semantic hues on purpose.
+   *
+   * Hue carries judgement here and nothing else: 155 says fine, 80 says inside
+   * the noise, 30 says needs attention. Identity is not a judgement, so the
+   * wordmark, the active tile and links take a fourth hue that cannot be
+   * mistaken for a verdict. Until this existed, --accent did both jobs, so a
+   * green nav tile and a green "agrees with the market" were the same colour
+   * and the palette had nothing left to say "this is ours".
+   *
+   * Not yet applied: the ~40 --accent call sites each need judging as brand or
+   * semantic, and the surfaces carrying the named brand roles are being rebuilt.
+   * Registered now so that work has somewhere to land. */
+  --brand:        oklch(0.5 0.09 250);
+  --brand-hover:  oklch(0.42 0.09 250);
+  --brand-muted:  oklch(0.5 0.09 250 / 0.08);
+  --brand-border: oklch(0.5 0.09 250 / 0.32);
 
   /* Prediction outcomes, on the semantic trio rather than a palette of their own */
   --home:       oklch(0.45 0.13 155);
@@ -150,6 +167,14 @@
   --accent-muted:  oklch(0.82 0.14 155 / 0.12);
   --accent-border: oklch(0.5 0.12 155);
   --accent-text:   oklch(0.82 0.14 155);
+
+  /* Brand on ink. A designed value, not the paper one inverted: lighter and
+   * LESS saturated, because a chroma that reads as considered on paper reads as
+   * a glow on black. */
+  --brand:        oklch(0.8 0.08 250);
+  --brand-hover:  oklch(0.86 0.08 250);
+  --brand-muted:  oklch(0.8 0.08 250 / 0.12);
+  --brand-border: oklch(0.52 0.08 250);
 
   --home:       oklch(0.82 0.14 155);
   --home-muted: oklch(0.82 0.14 155 / 0.12);

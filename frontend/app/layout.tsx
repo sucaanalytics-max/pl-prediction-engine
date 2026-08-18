@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -32,6 +32,23 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-plex-mono",
+  display: "swap",
+});
+
+/**
+ * The display face. It sets headings and screen answers, and it NEVER sets a
+ * figure or a label — figures are Mono so a column of them reads as a ranking,
+ * labels are Mono so they read as apparatus rather than as prose.
+ *
+ * Both 400 and 500 are loaded because the two surfaces need different weights
+ * for the same optical result: 400 on paper, 500 on ink, since 400 goes spindly
+ * against black. That is a designed pair, not one weight reused.
+ */
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
   display: "swap",
 });
 
@@ -76,7 +93,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${plexSans.variable} ${plexMono.variable}`}
+      className={`${plexSans.variable} ${plexMono.variable} ${newsreader.variable}`}
     >
       <head>
         {/* The chrome colour, which is ink on both surfaces — see `--chrome`. */}
