@@ -1450,6 +1450,12 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         # come up, or when odds never resolved. Derived from what health_data
         # already tracks (source_provenance, models_block, parsed_main)
         # rather than a new flag threaded through the function.
+        # Defence in depth, and currently unreachable BY DESIGN: both FPL
+        # fetches above pass allow_stale=False, so a network failure raises
+        # rather than serving a cached bootstrap. Kept rather than deleted
+        # because the day a caller re-enables staleness — for a backfill, or
+        # to survive an FPL outage on a deadline day — this is the only thing
+        # that stops that run publishing itself as "healthy".
         degraded = [
             name for name, entry in source_provenance.items()
             if entry["source"] == "stale_cache"

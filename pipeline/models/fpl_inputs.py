@@ -426,7 +426,11 @@ def fixture_specs_from_fixture_xg(fixture_xg, gameweeks=None):
 
         specs.append(
             FixtureSpec(
-                match_id=str(row.get("match_id", f"{home}_{away}")),
+                # `or`, not a dict default: a fixture_xg row whose
+                # match_id key EXISTS with a null value satisfies the
+                # default and yields the literal string "None", which
+                # then looks like a real id to every downstream join.
+                match_id=str(row.get("match_id") or f"{home}_{away}"),
                 gameweek=gameweek,
                 home_team=home,
                 away_team=away,

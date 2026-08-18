@@ -19,6 +19,11 @@ def _artifact():
              "home_team": "Arsenal", "away_team": "Coventry City",
              "kickoff": "2026-08-21T19:00:00Z",
              "lambda_home": 2.471716, "mu_away": 0.661262,
+             # The pre-anchor posterior, carried so a switch to the _dc keys
+             # fails on a value mismatch rather than on a StopIteration from
+             # the `next(...)` lookup below — which reads like a broken test
+             # rather than a regression in the code under test.
+             "lambda_home_dc": 1.819, "mu_away_dc": 0.995,
              "rate_source": "market_blend", "prior_only": True},
             {"match_id": "2", "gameweek": 1,
              "home_team": "Hull City", "away_team": "Man United",
