@@ -158,7 +158,7 @@ export default function FixtureMatrix() {
         <button
           type="button"
           className="text-xs underline"
-          style={{ color: "var(--accent)" }}
+          style={{ color: "var(--brand)" }}
           onClick={() => setHardestFirst((value) => !value)}
         >
           {hardestFirst ? "Show kindest runs first" : "Show hardest runs first"}

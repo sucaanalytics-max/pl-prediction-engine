@@ -136,7 +136,8 @@ export default function FixtureTable({ predictions }: FixtureTableProps) {
                       <div className="h-[2px] rounded-none flex-1 opacity-50" style={{ background: "linear-gradient(90deg, transparent, var(--border-strong))" }} />
                       <span
                         className="text-[9px] font-extrabold tracking-[0.2em] uppercase px-2 py-0.5 rounded-none glass-panel"
-                        style={{ fontFamily: "var(--font-mono)", color: "var(--accent)" }}
+                        // A section label, not a judgement about the fixture.
+                        style={{ fontFamily: "var(--font-mono)", color: "var(--brand)" }}
                       >
                         xG
                       </span>

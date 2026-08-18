@@ -77,9 +77,20 @@
    * green nav tile and a green "agrees with the market" were the same colour
    * and the palette had nothing left to say "this is ours".
    *
-   * Not yet applied: the ~40 --accent call sites each need judging as brand or
-   * semantic, and the surfaces carrying the named brand roles are being rebuilt.
-   * Registered now so that work has somewhere to land. */
+   * Applied to the SHARED components, where the identity roles live and where the
+   * four surviving surfaces read them: the primary button, the error boundary's
+   * retry, external links, the fixture-matrix sort toggle, the X scan button (whose
+   * hardcoded fallback was already a blue, which is what the role wanted all along)
+   * and the xG section label.
+   *
+   * Deliberately NOT applied to the verdicts. `FixtureTable`'s value-bet badge sits
+   * on --success-muted and means "there is an edge here"; that is a judgement and it
+   * keeps the semantic hue. `roles.test.ts` pins both halves of that split.
+   *
+   * Deliberately NOT applied to the page-level call sites on /h2h, /bankroll,
+   * /markets, /players, /matches/[id], /health and /evidence. Those routes are the
+   * ones the surface restructure removes -- 26 routes down to 4 -- so recolouring
+   * them is work that gets deleted. They keep the green until they go. */
   --brand:        oklch(0.5 0.09 250);
   --brand-hover:  oklch(0.42 0.09 250);
   --brand-muted:  oklch(0.5 0.09 250 / 0.08);

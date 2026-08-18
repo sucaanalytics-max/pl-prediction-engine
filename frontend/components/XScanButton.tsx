@@ -156,7 +156,9 @@ export default function XScanButton() {
           disabled={busy || (needsSecret && !secret)}
           className="rounded px-3 py-1 text-xs font-medium disabled:opacity-50"
           style={{
-            background: "var(--accent, #2563eb)",
+            // The hardcoded fallback was already a blue, which is what this role
+            // wanted all along; `--brand` is that hue as a token.
+            background: "var(--brand, #2563eb)",
             color: "var(--bg)",
           }}
         >

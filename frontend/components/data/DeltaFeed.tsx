@@ -98,7 +98,7 @@ function DeltaRow({
                   href={change.trigger.url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  style={{ color: "var(--accent)" }}
+                  style={{ color: "var(--brand)" }}
                 >
                   source
                 </a>

@@ -147,7 +147,7 @@ export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {
                 {c.claimedAt ? ` · ${c.claimedAt}` : ""}
                 {" · "}
                 <a href={c.url} target="_blank" rel="noopener noreferrer"
-                   className="underline" style={{ color: "var(--accent)" }}>
+                   className="underline" style={{ color: "var(--brand)" }}>
                   read the post
                 </a>
               </p>

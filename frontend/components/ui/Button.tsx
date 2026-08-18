@@ -16,7 +16,9 @@ const VARIANT_STYLES: Record<ButtonVariant, string> = {
 };
 
 const VARIANT_INLINE: Record<ButtonVariant, CSSProperties> = {
-  primary: { background: "var(--accent)", borderColor: "var(--accent)" },
+  // Identity, not a verdict: a primary button is "ours to press", and it must not
+  // read as the hue that means "agrees with the market".
+  primary: { background: "var(--brand)", borderColor: "var(--brand)" },
   ghost: { color: "var(--text-3)" },
   outline: { color: "var(--text-2)", borderColor: "var(--border)" },
 };
