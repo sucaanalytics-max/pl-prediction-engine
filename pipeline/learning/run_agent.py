@@ -25,6 +25,7 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS_DIR
 from pipeline.decide.horizon import EVAL_HORIZON
+from pipeline.learning.ledger import read_forecast
 from pipeline.learning.outcomes import LedgerError, read_outcomes
 from pipeline.learning.schedule import Phase, ScheduleState, resolve
 
@@ -212,37 +213,63 @@ def _settled_outcomes(gameweek: Optional[int] = None) -> List[Dict[str, Any]]:
     """
     Per-player predicted-versus-actual rows from every settled gameweek.
 
+    Each returned row is the JOIN of a sealed forecast against its settlement::
+
+        {"gameweek": int, "element_id": int, "predicted": float, "actual": float}
+
+    which is the shape both consumers actually read: `accuracy.measure`
+    (accuracy.py) and `sensitivity.measure_noise` (sensitivity.py) each key on
+    ``predicted`` and ``actual`` and skip any record lacking them. Returning the
+    raw settlement row instead would leave both measurements empty while
+    ``len(settled)`` reported hundreds of observations — an accuracy artifact
+    that says "600 recorded, at least 50 needed" is not an honest empty state,
+    it is a false one. The join itself is the one `scoring.score_gameweek`
+    performs: index the forecast by ``element_id``, take ``xp`` as predicted and
+    ``total_points`` as actual.
+
+    **``position`` and ``team`` are deliberately NOT on these rows.** Neither is
+    written to the sealed forecast row (`gameweek_sim.GameweekDraws.player_rows`
+    emits element_id/xp/e_minutes/... and no position or team), so they cannot
+    be recovered here without a bootstrap lookup that this function has no
+    access to. The consequence is explicit and intended: `accuracy.by_position`
+    stays empty and `sensitivity.measure_noise` returns None — it drops every
+    record whose position it does not recognise — until a later phase threads
+    position and team onto the sealed row. `overall`, `by_band` and the
+    published RMSE are unaffected and are measured from these rows.
+
     `gameweek` is accepted only for backward compatibility with existing
     callers; it does not filter the result — every settled week on disk
     contributes to the sample.
 
     Reads `gw*/outcome.jsonl`, the file `outcomes.settle_gameweek` actually
-    writes, via the same tested reader (`outcomes.read_outcomes`) that scoring
-    uses. Empty until a gameweek has actually settled: `predictions/ledger/`
-    may not exist yet, or every settlement on disk may still be provisional.
-    Returning `[]` rather than raising is what makes `_publish_sensitivity`
-    publish an honest unmeasurable report instead of failing the run.
+    writes, and its sibling `gw*/forecast.jsonl`, via the same tested readers
+    (`outcomes.read_outcomes`, `ledger.read_forecast`) that scoring uses. Empty
+    until a gameweek has actually settled: `predictions/ledger/` may not exist
+    yet, or every settlement on disk may still be provisional. Returning `[]`
+    rather than raising is what makes `_publish_sensitivity` publish an honest
+    unmeasurable report instead of failing the run.
     """
     ledger_root = Path(PREDICTIONS_DIR) / "fpl" / "ledger"
     if not ledger_root.is_dir():
         return []
 
+    # read_outcomes does an unchecked int(record["element_id"]) on every
+    # non-header line and read_forecast raises LedgerError on a truncated file,
+    # so a malformed row raises KeyError/TypeError/AttributeError, not just the
+    # LedgerError/ValueError/OSError this once only guarded against. Without the
+    # wider tuple, one corrupt week raises straight out of this loop and
+    # silently discards every good week already collected — exactly the failure
+    # mode this function exists to prevent.
+    READ_ERRORS = (OSError, LedgerError, ValueError, KeyError, TypeError,
+                   AttributeError)
+
     rows: List[Dict[str, Any]] = []
     for outcome_path in sorted(ledger_root.glob("gw*/outcome.jsonl")):
         try:
             parsed = read_outcomes(outcome_path)
-        except (OSError, LedgerError, ValueError, KeyError, TypeError,
-                AttributeError) as exc:
+        except READ_ERRORS as exc:
             # One unreadable sealed week must not hide the others, but it must
             # not pass silently either: a shrinking sample changes every sigma.
-            # read_outcomes does an unchecked int(record["element_id"]) on
-            # every non-header line, so a malformed row (missing element_id,
-            # or a line that isn't even a dict) raises KeyError/TypeError/
-            # AttributeError, not just the LedgerError/ValueError/OSError this
-            # once only guarded against. Without the wider tuple, one corrupt
-            # week raises straight out of this loop and silently discards
-            # every good week already collected — exactly the failure mode
-            # this function exists to prevent.
             logger.warning("unreadable sealed outcomes at %s: %s", outcome_path, exc)
             continue
         # Provisional weeks are not settled: bonus and defensive contributions
@@ -267,10 +294,69 @@ def _settled_outcomes(gameweek: Optional[int] = None) -> List[Dict[str, Any]]:
                 outcome_path,
             )
             continue
-        for row in parsed["rows"].values():
-            # Don't clobber a gameweek a row somehow already carries.
-            row.setdefault("gameweek", gameweek_no)
-            rows.append(row)
+
+        forecast_path = outcome_path.parent / "forecast.jsonl"
+        try:
+            forecast = read_forecast(forecast_path)
+        except READ_ERRORS as exc:
+            # Same resilience contract as the outcome file: a missing or
+            # unreadable forecast skips THIS week only. It never raises, and it
+            # never discards rows already collected from other weeks — an
+            # outcome file with no forecast beside it cannot be scored, but the
+            # weeks that do have one still can.
+            logger.warning(
+                "settled GW%s has no readable forecast at %s (%s); it cannot be "
+                "joined and is excluded from the accuracy sample",
+                gameweek_no, forecast_path, exc,
+            )
+            continue
+
+        predicted_by_element: Dict[int, Any] = {}
+        unusable_forecast_rows = 0
+        for record in forecast["rows"]:
+            try:
+                predicted_by_element[int(record["element_id"])] = record
+            except (KeyError, TypeError, ValueError):
+                unusable_forecast_rows += 1
+
+        outcome_rows = parsed["rows"]
+        joined = 0
+        unforecast = 0
+        unsettled = 0
+        unusable = unusable_forecast_rows
+        for element_id, outcome_row in sorted(outcome_rows.items()):
+            record = predicted_by_element.get(element_id)
+            if record is None:
+                # Settled but never sealed: outside the forecast universe.
+                unforecast += 1
+                continue
+            predicted = record.get("xp")
+            actual = outcome_row.get("total_points")
+            if not isinstance(predicted, (int, float)) or not isinstance(
+                actual, (int, float)
+            ):
+                unusable += 1
+                continue
+            rows.append(
+                {
+                    "gameweek": gameweek_no,
+                    "element_id": element_id,
+                    "predicted": float(predicted),
+                    "actual": float(actual),
+                }
+            )
+            joined += 1
+        unsettled = sum(1 for eid in predicted_by_element if eid not in outcome_rows)
+
+        if unforecast or unsettled or unusable:
+            # Never silent. Dropping rows shrinks the sample, and a shrinking
+            # sample changes every sigma and every RMSE computed from it.
+            logger.warning(
+                "GW%s join: %d rows matched, %d settled with no sealed forecast, "
+                "%d sealed with no settled outcome, %d unusable "
+                "(non-numeric xp/total_points or a row with no element_id)",
+                gameweek_no, joined, unforecast, unsettled, unusable,
+            )
     return rows
 
 
