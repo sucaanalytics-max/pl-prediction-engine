@@ -11,14 +11,23 @@
  * was a date in a tooltip.
  *
  * A typo in an id is the same failure with no tell at all: element 426 is
- * B.Fernandes and 427 is Mbeumo, so a single transposed digit silently swaps a
- * £12.0m midfielder for an £8.0m one and every downstream number shifts. These
+ * B.Fernandes and 427 is Mbeumo, so a single transposed digit silently swaps one
+ * midfielder for a much cheaper one and every downstream number shifts. These
  * assertions are what make that a test failure instead of a wrong recommendation.
  *
- * The strongest check here is the squad VALUE. The FPL UI reported £96.5m, and the
- * prices come from the bootstrap rather than from the screenshot — so if any id is
- * wrong, the total almost certainly stops matching. That single number validates
- * all fifteen rows at once, independently of how they were transcribed.
+ * The strongest check here is the squad VALUE. Prices come from the bootstrap
+ * rather than from the screenshot, so if any id is wrong the total stops matching
+ * — one number validating all fifteen rows at once, however they were transcribed.
+ *
+ * ## Every money figure below is derived, not typed
+ *
+ * `REPORTED_VALUE` is the one place the figure the FPL UI displayed is written
+ * down, and every message that has to print money builds it from that constant or
+ * from the bootstrap. Three comments in this file went on quoting an earlier
+ * capture's value after the constant was updated — the exact stale-prose defect
+ * the file exists to catch, in the file that exists to catch it. Prose cannot be
+ * trusted to be re-read, so it no longer carries the numbers, and the last test
+ * below enforces that mechanically.
  */
 
 import { describe, expect, it } from "vitest";
@@ -76,6 +85,19 @@ const POSITION: Record<number, string> = { 1: "GKP", 2: "DEF", 3: "MID", 4: "FWD
 
 /** What the FPL UI displayed alongside this squad, to the penny it reports. */
 const REPORTED_VALUE = 99.5;
+
+/** FPL's starting budget. Every squad begins with exactly this to spend. */
+const FULL_BUDGET = 100.0;
+
+/** One player's price in millions, from the bootstrap rather than from a comment. */
+const price = (id: number) => BY_ID.get(id)!.now_cost / 10;
+
+/** The squad's committed value, which is the check that covers all fifteen rows. */
+const squadValue = () =>
+  CAPTURED_DRAFT.reduce((sum, p) => sum + price(p.elementId), 0);
+
+/** Money for a failure message. The only place this file writes a £ sign. */
+const money = (millions: number) => `£${millions.toFixed(1)}m`;
 
 describe("the squad is a legal FPL squad", () => {
   it("has fifteen players", () => {
@@ -157,13 +179,20 @@ describe("every id resolves to a real player", () => {
     /**
      * The check that validates all fifteen rows at once.
      *
-     * Prices come from the bootstrap, not the screenshot, so a transposed id shifts
-     * the total: 426 (B.Fernandes, £12.0m) and 427 (Mbeumo, £8.0m) differ by £4.0m.
-     * Matching £96.5m to the penny is strong evidence the transcription is right.
+     * Prices come from the bootstrap, not the screenshot, so a transposed id
+     * shifts the total — 426 (B.Fernandes) against 427 (Mbeumo) is the worked
+     * example, and the failure message prices both from the bootstrap instead of
+     * repeating a figure here. Matching `REPORTED_VALUE` to the penny is strong
+     * evidence the transcription is right.
      */
-    const total = CAPTURED_DRAFT
-      .reduce((sum, p) => sum + BY_ID.get(p.elementId)!.now_cost / 10, 0);
-    expect(total).toBeCloseTo(REPORTED_VALUE, 1);
+    const total = squadValue();
+    expect(
+      total,
+      `${money(total)} from the bootstrap against the ${money(REPORTED_VALUE)} the `
+      + `UI reported. A transposed id is the usual cause — 426 is ${money(price(426))} `
+      + `and 427 is ${money(price(427))}, a gap of `
+      + `${money(Math.abs(price(426) - price(427)))}.`,
+    ).toBeCloseTo(REPORTED_VALUE, 1);
   });
 
   it("names the captain the UI showed", () => {
@@ -211,11 +240,35 @@ describe("the capture is dated and self-consistent", () => {
   });
 
   it("adds up to a full budget with the bank", () => {
-    // Value plus bank is the £100.0m every FPL squad starts from, and it is the
-    // arithmetic check that the two captured numbers came from one observation
-    // rather than two different days.
-    const total = CAPTURED_DRAFT
-      .reduce((sum, p) => sum + BY_ID.get(p.elementId)!.now_cost / 10, 0);
-    expect(total + CAPTURED_BANK).toBeCloseTo(100.0, 1);
+    // Value plus bank is the budget every FPL squad starts from (`FULL_BUDGET`),
+    // and it is the arithmetic check that the two captured numbers came from one
+    // observation rather than two different days.
+    const total = squadValue();
+    expect(
+      total + CAPTURED_BANK,
+      `${money(total)} committed plus ${money(CAPTURED_BANK)} banked, against a `
+      + `${money(FULL_BUDGET)} budget`,
+    ).toBeCloseTo(FULL_BUDGET, 1);
+  });
+});
+
+describe("this file states its money once, in a constant", () => {
+  it("writes no £ figure into its own prose", () => {
+    /**
+     * The tripwire for the defect this file exists to catch, aimed at itself.
+     *
+     * Three comments here quoted an earlier capture's squad value while
+     * `REPORTED_VALUE` carried the current one, and nothing failed — a comment
+     * cannot be asserted on, so it rots in a file whose whole subject is rot.
+     *
+     * The rule is therefore mechanical rather than a habit: a money figure in this
+     * file comes from a constant or from the bootstrap, never from a keystroke. The
+     * only `£` that survives is the one inside `money()`, which is followed by a
+     * template substitution rather than by a digit.
+     */
+    const source = readFileSync("lib/captured-draft.test.ts", "utf8");
+    const typed = [...source.matchAll(/£\s*\d[\d.]*m?/g)].map((m) => m[0]);
+    expect(typed, "money typed into prose — derive it from a constant instead")
+      .toEqual([]);
   });
 });
