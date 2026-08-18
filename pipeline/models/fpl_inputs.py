@@ -359,6 +359,87 @@ def fixture_specs_from_predictions(
                 lambda_home=float(expected.get("home", 0.0) or 0.0),
                 mu_away=float(expected.get("away", 0.0) or 0.0),
                 kickoff=fixture.get("date"),
+                rate_source="ensemble_unanchored",
+            )
+        )
+    return specs
+
+
+def fixture_specs_from_fixture_xg(fixture_xg, gameweeks=None):
+    """
+    Build fixture specs from the market-anchored rate artifact.
+
+    Prefer this over :func:`fixture_specs_from_predictions`. That function reads
+    ``latest.json``'s ensemble expectation, which is never anchored to the
+    market and is one gameweek wide. ``fixture_xg.json`` carries the blended
+    rate that seven blocking checks in ``pipeline/fpl/artifacts.py`` already
+    validate, spans the full horizon, and states its own ``rate_source`` per
+    fixture — so a projection built from it can say where its numbers came from.
+
+    Rows whose rate is missing are DROPPED, not defaulted. A 0.0 goal rate
+    makes every clean sheet a certainty and every goal impossible, and that
+    error propagates silently into every player projection for the fixture.
+    """
+    from pipeline.simulation.gameweek_sim import FixtureSpec
+
+    wanted = set(gameweeks) if gameweeks is not None else None
+    specs = []
+    for row in fixture_xg.get("fixtures") or []:
+        gameweek = row.get("gameweek")
+        if gameweek is None:
+            continue
+        try:
+            gameweek = int(gameweek)
+        except (TypeError, ValueError):
+            logger.warning(
+                "fixture_xg row has a non-numeric gameweek %r; dropping it",
+                row.get("gameweek"),
+            )
+            continue
+        if wanted is not None and gameweek not in wanted:
+            continue
+
+        home = normalize_team_name(row.get("home_team", ""))
+        away = normalize_team_name(row.get("away_team", ""))
+        if not home or not away:
+            continue
+
+        lambda_home = row.get("lambda_home")
+        mu_away = row.get("mu_away")
+        if lambda_home is None or mu_away is None:
+            logger.warning(
+                "fixture_xg row GW%s %s v %s has no usable rate; dropping it",
+                gameweek, home, away,
+            )
+            continue
+
+        try:
+            lambda_home = float(lambda_home)
+            mu_away = float(mu_away)
+        except (TypeError, ValueError):
+            logger.warning(
+                "fixture_xg row GW%s %s v %s has a non-numeric rate "
+                "(lambda_home=%r, mu_away=%r); dropping it",
+                gameweek, home, away, lambda_home, mu_away,
+            )
+            continue
+
+        specs.append(
+            FixtureSpec(
+                # `or`, not a dict default: a fixture_xg row whose
+                # match_id key EXISTS with a null value satisfies the
+                # default and yields the literal string "None", which
+                # then looks like a real id to every downstream join.
+                match_id=str(row.get("match_id") or f"{home}_{away}"),
+                gameweek=gameweek,
+                home_team=home,
+                away_team=away,
+                lambda_home=lambda_home,
+                mu_away=mu_away,
+                kickoff=row.get("kickoff"),
+                # Never leave this null. A null source is indistinguishable from
+                # "nobody wired provenance", which is the bug this replaces.
+                rate_source=row.get("rate_source") or "unknown",
             )
         )
     return specs

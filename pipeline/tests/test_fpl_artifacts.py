@@ -16,6 +16,8 @@ import numpy as np
 import pandas as pd
 
 from pipeline.fpl.artifacts import (
+    ACCEPTED_RATE_SOURCES,
+    RATE_SOURCES,
     SCHEMA_DIR,
     ArtifactContractError,
     assert_valid_xp_artifact,
@@ -111,12 +113,15 @@ def _draws(fixtures, n_draws=500, all_ids=None):
 
 
 SINGLE = [
-    FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1, "2026-09-12T14:00:00Z"),
+    FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1, "2026-09-12T14:00:00Z",
+                rate_source="market_blend"),
 ]
 # Alpha plays twice: a double gameweek. Gamma does not play at all: a blank.
 DOUBLE = [
-    FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1, "2026-09-12T14:00:00Z"),
-    FixtureSpec("m2", 5, "Beta", "Alpha", 1.3, 1.4, "2026-09-15T19:00:00Z"),
+    FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1, "2026-09-12T14:00:00Z",
+                rate_source="market_blend"),
+    FixtureSpec("m2", 5, "Beta", "Alpha", 1.3, 1.4, "2026-09-15T19:00:00Z",
+                rate_source="dixon_coles_posterior+level"),
 ]
 
 
@@ -327,6 +332,297 @@ class ArtifactContractTests(unittest.TestCase):
         broken["players"][0]["p_appears"] = 2.0
         with self.assertRaises(ArtifactContractError):
             assert_valid_xp_artifact(broken)
+
+
+class FixtureRateSourceContractTests(unittest.TestCase):
+    """A published fixture with a null rate_source is indistinguishable from
+    one nobody ever wired provenance for, and an unrecognised value means the
+    blend grew a branch nothing downstream was told about. Both must fail
+    the contract, not just reach disk with the FPL layer silently reading
+    unanchored rates."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.artifact = build_xp_artifact(
+            _draws(DOUBLE), "2627", GENERATED_AT, RULES, DOUBLE
+        )
+
+    def test_a_well_formed_artifact_with_rate_sources_passes(self):
+        self.assertEqual(validate_xp_artifact(self.artifact), [])
+
+    def test_null_rate_source_is_rejected(self):
+        broken = json.loads(json.dumps(self.artifact))
+        broken["fixtures"][0]["rate_source"] = None
+        problems = validate_xp_artifact(broken)
+        self.assertTrue(
+            any("rate_source is null or missing" in p for p in problems), problems
+        )
+
+    def test_missing_rate_source_key_is_rejected(self):
+        broken = json.loads(json.dumps(self.artifact))
+        del broken["fixtures"][0]["rate_source"]
+        problems = validate_xp_artifact(broken)
+        self.assertTrue(
+            any("rate_source is null or missing" in p for p in problems), problems
+        )
+
+    def test_unrecognised_rate_source_is_rejected(self):
+        """An unexpected fourth value is exactly the case worth failing on —
+        it means the blend grew a branch nothing here was updated for."""
+        broken = json.loads(json.dumps(self.artifact))
+        broken["fixtures"][0]["rate_source"] = "vibes"
+        problems = validate_xp_artifact(broken)
+        self.assertTrue(
+            any("not a recognised value" in p for p in problems), problems
+        )
+
+    def test_each_accepted_rate_source_passes(self):
+        for source in ACCEPTED_RATE_SOURCES:
+            with self.subTest(rate_source=source):
+                broken = json.loads(json.dumps(self.artifact))
+                for fixture in broken["fixtures"]:
+                    fixture["rate_source"] = source
+                problems = validate_xp_artifact(broken)
+                self.assertEqual([p for p in problems if "rate_source" in p], [])
+
+    def test_assert_raises_on_a_null_rate_source(self):
+        broken = json.loads(json.dumps(self.artifact))
+        broken["fixtures"][0]["rate_source"] = None
+        with self.assertRaises(ArtifactContractError):
+            assert_valid_xp_artifact(broken)
+
+
+class OneGameweekIsAContractNotACallSite(unittest.TestCase):
+    """The descope's exit criterion — "every fixture simulated belongs to one
+    gameweek" — was guarded by a `gameweeks=[gameweek]` keyword at one call
+    site and an AST test, and by nothing in the artifact itself.
+    `build_xp_artifact` dropped `spec.gameweek` entirely, so no consumer and
+    no contract check could see a mixed list; `GameweekDraws` labels itself
+    `int(fixtures[0].gameweek)`, so it would report the first fixture's week
+    over points accumulated across all of them. This branch shipped exactly
+    that 8x inflation once behind a green suite."""
+
+    def test_the_emitted_fixture_rows_state_their_gameweek(self):
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        self.assertEqual([f["gameweek"] for f in artifact["fixtures"]], [5, 5])
+
+    def test_sim_params_fixture_rows_state_their_gameweek(self):
+        params = build_sim_params("2627", 5, GENERATED_AT, 7, 500, DOUBLE)
+        self.assertEqual([f["gameweek"] for f in params["fixtures"]], [5, 5])
+
+    def test_a_single_gameweek_spec_list_passes_the_contract(self):
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        self.assertEqual(validate_xp_artifact(artifact), [])
+
+    def test_a_mixed_gameweek_spec_list_fails_the_contract(self):
+        """The real defect shape: fixture_specs_from_fixture_xg called with no
+        gameweeks filter, or fixture_specs_from_predictions (which has no
+        filter at all), hands several weeks to one simulate_gameweek call."""
+        mixed = [
+            FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1,
+                        "2026-09-12T14:00:00Z", rate_source="market_blend"),
+            FixtureSpec("m2", 6, "Beta", "Alpha", 1.3, 1.4,
+                        "2026-09-19T19:00:00Z", rate_source="market_blend"),
+        ]
+        artifact = build_xp_artifact(_draws(mixed), "2627", GENERATED_AT,
+                                     RULES, mixed)
+        problems = validate_xp_artifact(artifact)
+        self.assertTrue(
+            any("does not match metadata.gameweek" in p for p in problems),
+            problems,
+        )
+
+    def test_assert_raises_on_a_mixed_gameweek_artifact(self):
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        artifact["fixtures"][1]["gameweek"] = 6
+        with self.assertRaises(ArtifactContractError):
+            assert_valid_xp_artifact(artifact)
+
+    def test_a_fixture_with_no_gameweek_is_not_a_violation(self):
+        """Seal safety. _spec_gameweek degrades to None rather than raise, and
+        this check must fire on a demonstrated mismatch and nothing else — a
+        contract check must never be able to abort an irrecoverable seal."""
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        artifact["fixtures"][0]["gameweek"] = None
+        del artifact["fixtures"][1]["gameweek"]
+        self.assertEqual(
+            [p for p in validate_xp_artifact(artifact) if "gameweek" in p], []
+        )
+
+    def test_an_unparseable_gameweek_never_raises_out_of_the_validator(self):
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        artifact["fixtures"][0]["gameweek"] = "not a week"
+        validate_xp_artifact(artifact)  # must not raise
+
+
+class ContractAcceptsEveryRealProducer(unittest.TestCase):
+    """Durable guard, Fix round 2's CRITICAL finding: ACCEPTED_RATE_SOURCES
+    must stay a superset of every string a real producer can actually
+    return — not a fixed list this test maintains independently, since that
+    would only re-encode the same assumption that just broke the seal. Each
+    test here exercises the REAL producer function and asserts whatever it
+    actually returns is accepted, so a future change to any producer that
+    introduces a new source string fails here, in CI, rather than at a
+    gameweek deadline.
+    """
+
+    def test_resolve_rates_flat_default_is_accepted(self):
+        from pipeline.models.fixture_rates import resolve_rates
+        result = resolve_rates("m1", "Alpha", "Beta", exported=None, strengths=None)
+        self.assertEqual(result.source, "flat_default")
+        self.assertIn(result.source, ACCEPTED_RATE_SOURCES)
+
+    def test_resolve_rates_archive_team_strengths_is_accepted(self):
+        """TeamStrengths is a plain class (its own __init__ takes no
+        arguments; `.fit(archive)` populates it) — constructed bare and
+        populated directly here rather than guessing a keyword constructor
+        it doesn't have."""
+        from pipeline.models.fixture_rates import TeamStrengths, resolve_rates
+        strengths = TeamStrengths()
+        strengths.attack = {"Alpha": 1.1, "Beta": 0.9}
+        strengths.defence = {"Alpha": 1.0, "Beta": 1.0}
+        strengths.home_share = 0.55
+        strengths.league_mean_goals = 1.35
+        strengths.fitted = True
+        result = resolve_rates(
+            "m1", "Alpha", "Beta", exported=None, strengths=strengths
+        )
+        self.assertEqual(result.source, "archive_team_strengths")
+        self.assertIn(result.source, ACCEPTED_RATE_SOURCES)
+
+    def test_resolve_rates_prefers_and_passes_through_the_exported_posterior(self):
+        from pipeline.models.fixture_rates import FixtureRates, resolve_rates
+        exported = {
+            "m1": FixtureRates("Alpha", "Beta", 1.6, 1.1, "dixon_coles_posterior+level")
+        }
+        result = resolve_rates("m1", "Alpha", "Beta", exported=exported, strengths=None)
+        self.assertEqual(result.source, "dixon_coles_posterior+level")
+        self.assertIn(result.source, ACCEPTED_RATE_SOURCES)
+
+    def test_load_exported_rates_legacy_payload_fallback_is_accepted(self):
+        """A fixture_xg.json row missing its OWN rate_source falls back to
+        the PAYLOAD-level `source` field (fixture_rates.py's
+        load_exported_rates, the "pre-anchor file" branch in its own
+        docstring), which fixture_rates.py's export_fixture_xg can set to
+        "dixon_coles_posterior+market_blend" — a string distinct from every
+        RATE_SOURCES value. Exercised through a real temp file, not a mock,
+        so this is the actual parsing path, not an assumption about it."""
+        from pipeline.models.fixture_rates import load_exported_rates
+        with TemporaryDirectory() as tmp:
+            path = Path(tmp) / "fixture_xg.json"
+            path.write_text(json.dumps({
+                "source": "dixon_coles_posterior+market_blend",
+                "fixtures": [
+                    {
+                        "match_id": "m1", "home_team": "Alpha", "away_team": "Beta",
+                        "lambda_home": 1.5, "mu_away": 1.0, "gameweek": 1,
+                        # No "rate_source" key on this row — the legacy case.
+                    },
+                ],
+            }))
+            rates = load_exported_rates(path)
+        self.assertEqual(rates["m1"].source, "dixon_coles_posterior+market_blend")
+        self.assertIn(rates["m1"].source, ACCEPTED_RATE_SOURCES)
+
+    def test_fixture_specs_from_fixture_xg_unknown_sentinel_is_accepted(self):
+        """fixture_specs_from_fixture_xg (fpl_inputs.py) stamps "unknown" —
+        deliberately, not null — when a row has a usable rate but no
+        rate_source of its own. This is the exact daily-lane call site Task
+        5 wired in, so it must be accepted here too."""
+        from pipeline.models.fpl_inputs import fixture_specs_from_fixture_xg
+        specs = fixture_specs_from_fixture_xg({
+            "fixtures": [
+                {
+                    "match_id": "m1", "home_team": "Arsenal", "away_team": "Chelsea",
+                    "gameweek": 1, "lambda_home": 1.5, "mu_away": 1.0,
+                },
+            ]
+        })
+        self.assertEqual(specs[0].rate_source, "unknown")
+        self.assertIn(specs[0].rate_source, ACCEPTED_RATE_SOURCES)
+
+    def test_ensemble_unanchored_stays_accepted(self):
+        """Pinned directly rather than only reached via fpl_inputs, so a
+        future edit that dropped this string from ACCEPTED_RATE_SOURCES
+        fails here even before touching the daily-lane fallback."""
+        self.assertIn("ensemble_unanchored", ACCEPTED_RATE_SOURCES)
+
+    def test_every_rate_sources_value_is_still_accepted(self):
+        """RATE_SOURCES (blend_log's three values) must remain a subset —
+        ACCEPTED_RATE_SOURCES only ever widens, never narrows, what the
+        original fixture_xg.json contract already accepted."""
+        for source in RATE_SOURCES:
+            with self.subTest(rate_source=source):
+                self.assertIn(source, ACCEPTED_RATE_SOURCES)
+
+
+class SealPathNeverAbortsOnALegitimateSource(unittest.TestCase):
+    """Regression test for Fix round 2's CRITICAL finding.
+
+    run_agent.py's refresh_expected_points (:391-399) builds one FixtureSpec
+    per unplayed fixture with rate_source=resolve_rates(...).source, then
+    feeds the list straight into export_gameweek_xp — called from _seal(),
+    which has no repair path. This test builds specs the same way (calling
+    the real resolve_rates, not a stand-in) across its three branches
+    (exported posterior found, archive strengths as fallback, flat-default
+    last resort) and asserts export_gameweek_xp does NOT raise. Its absence
+    is exactly why the suite stayed green while BLOCKING 2's new contract
+    check could still have crashed the seal: no test called
+    refresh_expected_points end to end.
+
+    Proven, not assumed: constructing these same specs WITHOUT rate_source
+    (mirroring run_agent.py before Fix round 2's part 1) raises
+    ArtifactContractError with exactly two violations, one per fixture,
+    both "rate_source is null or missing" — see task-5-report.md's Fix
+    round 2 section for the verbatim reproduction.
+    """
+
+    def test_specs_built_the_way_run_agent_does_do_not_abort_export(self):
+        from pipeline.models.fixture_rates import FixtureRates, resolve_rates
+
+        # m1 resolves via the exported posterior (found in `exported`); m2
+        # has no exported or fitted-strengths rate, so it resolves via
+        # resolve_rates' flat-default last resort. Between them this covers
+        # two of resolve_rates' three branches with the real function, not a
+        # stand-in for it — the third (archive_team_strengths) is exercised
+        # directly in ContractAcceptsEveryRealProducer above.
+        exported = {
+            "m1": FixtureRates("Alpha", "Beta", 1.6, 1.1, "dixon_coles_posterior+level")
+        }
+        fixture_sides = [("m1", "Alpha", "Beta"), ("m2", "Gamma", "Alpha")]
+        specs = []
+        for match_id, home, away in fixture_sides:
+            rates = resolve_rates(match_id, home, away, exported, strengths=None)
+            specs.append(
+                FixtureSpec(
+                    match_id=match_id, gameweek=5, home_team=home, away_team=away,
+                    lambda_home=rates.lambda_home, mu_away=rates.mu_away,
+                    rate_source=rates.source,
+                )
+            )
+        self.assertEqual(
+            [s.rate_source for s in specs],
+            ["dixon_coles_posterior+level", "flat_default"],
+        )
+        draws = simulate_gameweek(
+            specs, SQUADS, EVENTS, RULES, n_draws=200, seed_entropy=7,
+            all_element_ids=None,
+        )
+        with TemporaryDirectory() as tmp:
+            try:
+                export_gameweek_xp(
+                    draws, "2627", GENERATED_AT, RULES, Path(tmp), 7, specs,
+                )
+            except ArtifactContractError as exc:
+                self.fail(
+                    "export_gameweek_xp raised on specs built the way "
+                    f"run_agent.py's seal path builds them: {exc}"
+                )
 
 
 class ExportTests(unittest.TestCase):

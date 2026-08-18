@@ -23,7 +23,7 @@ import pickle
 import signal
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict
 
@@ -142,6 +142,122 @@ def _is_derby(home: str, away: str) -> bool:
     return (home, away) in DERBIES or (away, home) in DERBIES
 
 
+def _provenance_summary(prov) -> Dict:
+    """Best-effort ``{source, age_seconds}`` view of a fetch provenance dict.
+
+    Provenance is a plain dict (``Provenance = Dict[str, Any]``, fpl_api.py),
+    not a schema-checked type. health.json is diagnostic, not load-bearing —
+    a missing key or an unexpected shape here must degrade to "unknown"
+    rather than raise and take down a run that is sealing the ledger.
+    """
+    if not isinstance(prov, dict):
+        return {"source": "unknown", "age_seconds": None}
+    return {
+        "source": prov.get("source", "unknown"),
+        "age_seconds": prov.get("age_seconds"),
+    }
+
+
+#: How old ``fixture_xg.json`` may be before the daily FPL lane stops
+#: preferring it over a fresh unanchored ensemble. Slightly over one day so a
+#: run that starts a little later than the previous one does not reject a file
+#: written by the immediately preceding run.
+FIXTURE_XG_MAX_AGE_HOURS = 26
+
+
+def _fixture_xg_staleness(payload) -> "str | None":
+    """
+    Why ``fixture_xg.json`` should not be trusted today, or None if it is fresh.
+
+    Never raises. `export_fixture_xg`'s call site only warns on failure, so a
+    failed export leaves the PREVIOUS run's file on disk — still covering the
+    current gameweek, so no coverage check can see it, and still labelled
+    ``rate_source: "market_blend"`` off odds that may be days old. An
+    unparseable or absent timestamp is treated as STALE rather than fresh: the
+    fallback costs the market anchor for a day, while trusting an undatable
+    file costs the ability to ever detect the failure.
+    """
+    if not isinstance(payload, dict):
+        return "payload is not an object"
+    raw = payload.get("generated_at")
+    if not raw:
+        return "no generated_at, so its age cannot be established"
+    try:
+        text = str(raw).strip().replace("Z", "+00:00")
+        generated = datetime.fromisoformat(text)
+    except (TypeError, ValueError):
+        return f"generated_at {raw!r} is not a parseable timestamp"
+    try:
+        if generated.tzinfo is None:
+            generated = generated.replace(tzinfo=timezone.utc)
+        age_hours = (
+            datetime.now(timezone.utc) - generated
+        ).total_seconds() / 3600.0
+    except (TypeError, ValueError, OverflowError):
+        return f"generated_at {raw!r} could not be compared with now"
+    if age_hours > FIXTURE_XG_MAX_AGE_HOURS:
+        return (
+            f"generated {age_hours:.1f}h ago, past the "
+            f"{FIXTURE_XG_MAX_AGE_HOURS}h freshness limit"
+        )
+    return None
+
+
+def _expected_gameweek_fixtures(fixtures_raw, bootstrap, gameweek) -> Dict:
+    """
+    ``{(home, away): "Home v Away"}`` for every unfinished fixture this week.
+
+    This is the denominator the FPL coverage check compares against — the real
+    fixture list, never a hardcoded count, because a genuine blank gameweek
+    legitimately has no fixtures and a double gameweek has more than usual.
+    Best-effort: this feeds a status field, so a malformed bootstrap degrades
+    to an empty expectation (no shortfall reported) rather than raising into
+    the FPL block's handler.
+    """
+    from pipeline.data.team_mapping import normalize_team_name
+
+    names = {}
+    try:
+        for team in bootstrap.get("teams") or []:
+            names[team.get("id")] = normalize_team_name(str(team.get("name") or ""))
+    except (AttributeError, TypeError):
+        return {}
+
+    expected: Dict = {}
+    try:
+        for fixture in fixtures_raw or []:
+            if fixture.get("event") != gameweek or fixture.get("finished"):
+                continue
+            home = names.get(fixture.get("team_h"), "")
+            away = names.get(fixture.get("team_a"), "")
+            if not home or not away:
+                continue
+            expected[(home, away)] = f"{home} v {away}"
+    except (AttributeError, TypeError):
+        return {}
+    return expected
+
+
+def _uncovered_fixtures(expected: Dict, specs) -> list:
+    """
+    Which expected fixtures no spec covers, named.
+
+    Keyed on the normalised club pair, not match_id: fixture_xg.json carries
+    the FPL fixture id while `fixture_specs_from_predictions` carries
+    "YYYYMMDD_Home_Away", and comparing those two id schemes would report a
+    total shortfall on the fallback path every day.
+    """
+    if not expected:
+        return []
+    covered = set()
+    for spec in specs or []:
+        try:
+            covered.add((str(spec.home_team), str(spec.away_team)))
+        except AttributeError:
+            continue
+    return [label for key, label in sorted(expected.items()) if key not in covered]
+
+
 def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     """
     Execute the full prediction pipeline.
@@ -177,11 +293,30 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     matches = load_all_seasons(force=force_refresh)
 
     from pipeline.data.fpl_api import (
-        fetch_bootstrap_static, fetch_fixtures,
+        fetch_bootstrap_static_with_provenance, fetch_fixtures_with_provenance,
         get_upcoming_fixtures, build_player_stats, get_current_gameweek,
     )
-    bootstrap = fetch_bootstrap_static(force=force_refresh)
-    fixtures_raw = fetch_fixtures(force=force_refresh)
+    # This run writes forecast_ledger.json, so it may not run on stale cache:
+    # a stale bootstrap means stale prices, a stale chance_of_playing and a
+    # stale deadline_time riding into a record whose entire value is that it
+    # predated kickoff. fpl_api's _fetch_cached_json states this as a contract:
+    # "Any caller that timestamps a forecast MUST pass both."
+    #
+    # The provenance-returning variants are used (instead of the thin
+    # fetch_bootstrap_static/fetch_fixtures wrappers that discard it) so
+    # health.json can record where this run's data actually came from —
+    # network, fresh cache, or stale cache — rather than assert "healthy"
+    # unconditionally.
+    bootstrap, bootstrap_prov = fetch_bootstrap_static_with_provenance(
+        force=force_refresh, allow_stale=False
+    )
+    fixtures_raw, fixtures_prov = fetch_fixtures_with_provenance(
+        force=force_refresh, allow_stale=False
+    )
+    source_provenance = {
+        "bootstrap": _provenance_summary(bootstrap_prov),
+        "fixtures": _provenance_summary(fixtures_prov),
+    }
     gameweek = get_current_gameweek(bootstrap)
     upcoming = get_upcoming_fixtures(bootstrap, fixtures_raw)
     player_stats = build_player_stats(bootstrap)
@@ -1096,6 +1231,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         from pipeline.learning.backfill import load_archive_season
         from pipeline.models.fpl_inputs import (
             build_fpl_inputs,
+            fixture_specs_from_fixture_xg,
             fixture_specs_from_predictions,
         )
         from pipeline.simulation.gameweek_sim import simulate_gameweek
@@ -1109,7 +1245,100 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             fpl_priors = None
             logger.warning("  no committed prior-season snapshot; using archive only")
 
-        fpl_specs = fixture_specs_from_predictions(all_predictions, gameweek)
+        # Rank on the market-anchored rates, not latest.json's ensemble. The
+        # ensemble is never anchored and is one gameweek wide, so reading it
+        # cost the FPL layer both its market information and its horizon.
+        # fixture_xg.json is validated by seven blocking checks before this
+        # point; if it is absent, unreadable or malformed, fall back rather
+        # than lose the gameweek. json.loads can hand back a value that
+        # parses fine but isn't a dict (None, a bare list, a string) — any of
+        # which raises AttributeError/TypeError the moment
+        # fixture_specs_from_fixture_xg calls .get() on it — so the except
+        # tuple below is wider than just (OSError, ValueError).
+        #
+        # gameweeks=[gameweek] is required, not optional: fixture_xg.json
+        # spans the full GW1-8 horizon (80 rows), and simulate_gameweek
+        # accumulates a player's fixtures across whatever spec list it is
+        # given with += — built for a genuine intra-week double gameweek, not
+        # for an entire season horizon. Passing the unfiltered payload would
+        # hand every club's 8 fixtures to one call, inflating n_fixtures and
+        # every summed stat ~8x while the artifact still claims to be a
+        # single gameweek. Phase 0 delivers the anchor only, scoped to the
+        # current gameweek; a real multi-week horizon needs one
+        # simulate_gameweek call per week (as run_agent.py already does) and
+        # is out of scope here.
+        #
+        # Coverage is measured against the REAL fixture list, never a
+        # hardcoded 10: a genuine blank gameweek legitimately has none, and a
+        # double gameweek has more. Keyed on the normalised club pair rather
+        # than match_id because the two spec builders use different id schemes
+        # — fixture_xg.json carries the FPL fixture id, while
+        # fixture_specs_from_predictions carries "YYYYMMDD_Home_Away" — and a
+        # coverage check that silently compared incomparable keys would report
+        # a total shortfall on the fallback path every single day.
+        expected_fixtures = _expected_gameweek_fixtures(
+            fixtures_raw, bootstrap, gameweek
+        )
+
+        fpl_specs = []
+        fixture_xg_path = PREDICTIONS_DIR / "fixture_xg.json"
+        if fixture_xg_path.exists():
+            try:
+                fixture_xg_payload = json.loads(
+                    fixture_xg_path.read_text(encoding="utf-8"))
+                # Freshness, not just coverage. export_fixture_xg's call site
+                # above only WARNS on failure, so the previous run's file
+                # survives a failed export — and it still covers `gameweek`
+                # for the rest of the week, so the coverage check below cannot
+                # tell "written this morning" from "written on Monday and
+                # broken since". It would publish rate_source "market_blend"
+                # off odds days old, indistinguishable from fresh. The SEAL
+                # path's reader (fixture_rates.load_exported_rates) has had a
+                # staleness gate all along; this lane had none.
+                stale_reason = _fixture_xg_staleness(fixture_xg_payload)
+                if stale_reason:
+                    logger.warning(
+                        "  ignoring fixture_xg.json (%s); a fresh unanchored "
+                        "ensemble is more honest than a stale market anchor",
+                        stale_reason,
+                    )
+                else:
+                    fpl_specs = fixture_specs_from_fixture_xg(
+                        fixture_xg_payload, gameweeks=[gameweek])
+            except (OSError, ValueError, AttributeError, TypeError, KeyError) as exc:
+                # Not "unreadable": this also fires for a payload that parsed
+                # fine but had the wrong shape deeper in.
+                logger.warning(
+                    "  could not build fixture specs from fixture_xg.json: %s", exc)
+
+        # Partial coverage must trip the fallback too, not only total failure.
+        # export_fixture_xg drops individual fixtures — an unmapped team id, or
+        # a posterior query that raised — so `if not fpl_specs` is False at 9 of
+        # 10 fixtures while every player in the missing one is marked blank with
+        # xp ~ 0. That is an entire club at zero for captaincy and transfers,
+        # and until now it was visible only in diagnostics.
+        missing = _uncovered_fixtures(expected_fixtures, fpl_specs)
+        if fpl_specs and missing:
+            logger.warning(
+                "  fixture_xg.json covers %d of %d unfinished GW%s fixtures; "
+                "missing %s — falling back to the ensemble rather than "
+                "projecting a whole club at zero",
+                len(fpl_specs), len(expected_fixtures), gameweek,
+                ", ".join(missing),
+            )
+            fpl_specs = []
+
+        if not fpl_specs:
+            logger.warning(
+                "  falling back to unanchored ensemble rates — projections will "
+                "carry rate_source 'ensemble_unanchored' and no horizon"
+            )
+            fpl_specs = fixture_specs_from_predictions(all_predictions, gameweek)
+
+        # The fallback can be short too. Say so in the status rather than
+        # publishing an artifact that looks complete.
+        fpl_missing = _uncovered_fixtures(expected_fixtures, fpl_specs)
+
         if not fpl_specs:
             fpl_status = {"status": "skipped", "reason": "no fixtures with expected goals"}
         else:
@@ -1173,15 +1402,33 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             )
 
             fpl_status = {
-                "status": "degraded" if fpl_rules.degraded else "ok",
+                "status": (
+                    "degraded"
+                    if (fpl_rules.degraded or fpl_missing)
+                    else "ok"
+                ),
                 "gameweek": int(fpl_draws.gameweek),
                 "n_players": len(fpl_draws.element_ids),
                 "n_draws": n_fpl_draws,
                 "rules_source": fpl_rules.source,
                 "rules_degraded": bool(fpl_rules.degraded),
+                # Named, not counted. "9 of 10" tells a reader something is
+                # wrong; naming the fixture tells them which club's players
+                # are sitting at xp 0 in today's captaincy and transfer
+                # recommendations.
+                "n_fixtures_expected": len(expected_fixtures),
+                "n_fixtures_projected": len(fpl_specs),
+                "fixtures_missing": fpl_missing,
                 "diagnostics": fpl_inputs.diagnostics,
                 "simulation": fpl_draws.notes,
             }
+            if fpl_missing:
+                logger.warning(
+                    "  GW%s projected with %d of %d fixtures; %s have no "
+                    "rates, so every player in them is blank at xp 0",
+                    gameweek, len(fpl_specs), len(expected_fixtures),
+                    ", ".join(fpl_missing),
+                )
             logger.info(f"  FPL xp exported for GW{fpl_draws.gameweek}")
     except Exception as e:
         if FPL_SIM.get("required"):
@@ -1192,11 +1439,44 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # ── Health JSON (for frontend Model Health page) ───────────────
     logger.info("  Exporting health.json...")
     try:
+        models_block = {
+            "dixon_coles": {"status": "active" if dc_model else "skipped"},
+            "xgboost": {"status": "active" if xgb_model else "failed"},
+            "penaltyblog": {"status": "active" if pb_predictions else "failed"},
+            "goalscorer": {"status": "active", "n_players": goalscorer_metrics.get("n_players", 0)},
+        }
+        # A run is "degraded" — not silently "healthy" — when a source
+        # actually used fell back to stale cache, when a goal model didn't
+        # come up, or when odds never resolved. Derived from what health_data
+        # already tracks (source_provenance, models_block, parsed_main)
+        # rather than a new flag threaded through the function.
+        # Defence in depth, and currently unreachable BY DESIGN: both FPL
+        # fetches above pass allow_stale=False, so a network failure raises
+        # rather than serving a cached bootstrap. Kept rather than deleted
+        # because the day a caller re-enables staleness — for a backfill, or
+        # to survive an FPL outage on a deadline day — this is the only thing
+        # that stops that run publishing itself as "healthy".
+        degraded = [
+            name for name, entry in source_provenance.items()
+            if entry["source"] == "stale_cache"
+        ]
+        degraded += [
+            f"model:{name}" for name, entry in models_block.items()
+            if entry["status"] != "active"
+        ]
+        if not parsed_main:
+            degraded.append("odds")
+
         health_data = {
             "last_updated": datetime.utcnow().isoformat() + "Z",
             "gameweek": gameweek,
             "n_predictions": len(all_predictions),
-            "status": "healthy",
+            # Derived, never asserted. A run that finished without its odds, or
+            # on a stale bootstrap, or with two of three goal models skipped, is
+            # not healthy — and a hardcoded literal made those look identical.
+            "status": "healthy" if not degraded else "degraded",
+            "sources": source_provenance,
+            "degraded": degraded,
             "forecast_validation_status": (
                 "evaluated"
                 if forecast_metrics.get("n_evaluated_matches", 0) >= 100
@@ -1205,12 +1485,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             "model_metrics": forecast_metrics,
             "calibration": calibration_data,
             "pipeline_version": PIPELINE_VERSION,
-            "models": {
-                "dixon_coles": {"status": "active" if dc_model else "skipped"},
-                "xgboost": {"status": "active" if xgb_model else "failed"},
-                "penaltyblog": {"status": "active" if pb_predictions else "failed"},
-                "goalscorer": {"status": "active", "n_players": goalscorer_metrics.get("n_players", 0)},
-            },
+            "models": models_block,
             "ensemble_method": ensemble_method,
             "stacking_weights": stacking_weights,
             "n_simulations": simulations_run,

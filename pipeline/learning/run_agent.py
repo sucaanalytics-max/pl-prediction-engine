@@ -25,6 +25,8 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS_DIR
 from pipeline.decide.horizon import EVAL_HORIZON
+from pipeline.learning.ledger import read_forecast
+from pipeline.learning.outcomes import LedgerError, read_outcomes
 from pipeline.learning.schedule import Phase, ScheduleState, resolve
 
 logger = logging.getLogger(__name__)
@@ -207,39 +209,169 @@ def _publish_accuracy(artifact_path: Any, gameweek: int) -> None:
         logger.warning("could not publish the accuracy rollup: %s", exc)
 
 
-def _settled_outcomes(gameweek: int) -> List[Dict[str, Any]]:
+def _settled_outcomes(gameweek: Optional[int] = None) -> List[Dict[str, Any]]:
     """
-    Per-player predicted-versus-actual rows from every sealed gameweek.
+    Per-player predicted-versus-actual rows from every settled gameweek.
 
-    Empty today: `predictions/ledger/` does not exist because nothing has been
-    sealed. Returning `[]` rather than raising is what makes
-    `_publish_sensitivity` publish an honest unmeasurable report instead of
-    failing the run.
+    Each returned row is the JOIN of a sealed forecast against its settlement::
+
+        {"gameweek": int, "element_id": int, "predicted": float, "actual": float}
+
+    which is the shape both consumers actually read: `accuracy.measure`
+    (accuracy.py) and `sensitivity.measure_noise` (sensitivity.py) each key on
+    ``predicted`` and ``actual`` and skip any record lacking them. Returning the
+    raw settlement row instead would leave both measurements empty while
+    ``len(settled)`` reported hundreds of observations — an accuracy artifact
+    that says "600 recorded, at least 50 needed" is not an honest empty state,
+    it is a false one. The join itself is the one `scoring.score_gameweek`
+    performs: index the forecast by ``element_id``, take ``xp`` as predicted and
+    ``total_points`` as actual.
+
+    **``position`` and ``team`` are deliberately NOT on these rows.** Neither is
+    written to the sealed forecast row (`gameweek_sim.GameweekDraws.player_rows`
+    emits element_id/xp/e_minutes/... and no position or team), so they cannot
+    be recovered here without a bootstrap lookup that this function has no
+    access to. The consequence is explicit and intended: `accuracy.by_position`
+    stays empty and `sensitivity.measure_noise` returns None — it drops every
+    record whose position it does not recognise — until a later phase threads
+    position and team onto the sealed row. `overall`, `by_band` and the
+    published RMSE are unaffected and are measured from these rows.
+
+    `gameweek` is accepted only for backward compatibility with existing
+    callers; it does not filter the result — every settled week on disk
+    contributes to the sample.
+
+    Reads `gw*/outcome.jsonl`, the file `outcomes.settle_gameweek` actually
+    writes, and its sibling `gw*/forecast.jsonl`, via the same tested readers
+    (`outcomes.read_outcomes`, `ledger.read_forecast`) that scoring uses. Empty
+    until a gameweek has actually settled: `predictions/ledger/` may not exist
+    yet, or every settlement on disk may still be provisional. Returning `[]`
+    rather than raising is what makes `_publish_sensitivity` publish an honest
+    unmeasurable report instead of failing the run.
     """
     ledger_root = Path(PREDICTIONS_DIR) / "fpl" / "ledger"
     if not ledger_root.is_dir():
         return []
 
+    # read_outcomes does an unchecked int(record["element_id"]) on every
+    # non-header line and read_forecast raises LedgerError on a truncated file,
+    # so a malformed row raises KeyError/TypeError/AttributeError, not just the
+    # LedgerError/ValueError/OSError this once only guarded against. Without the
+    # wider tuple, one corrupt week raises straight out of this loop and
+    # silently discards every good week already collected — exactly the failure
+    # mode this function exists to prevent.
+    READ_ERRORS = (OSError, LedgerError, ValueError, KeyError, TypeError,
+                   AttributeError)
+
     rows: List[Dict[str, Any]] = []
-    for outcome_path in sorted(ledger_root.glob("gw*/outcomes.json")):
+    for outcome_path in sorted(ledger_root.glob("gw*/outcome.jsonl")):
         try:
-            payload = json.loads(outcome_path.read_text(encoding="utf-8"))
-        except (OSError, ValueError) as exc:
+            parsed = read_outcomes(outcome_path)
+        except READ_ERRORS as exc:
             # One unreadable sealed week must not hide the others, but it must
             # not pass silently either: a shrinking sample changes every sigma.
             logger.warning("unreadable sealed outcomes at %s: %s", outcome_path, exc)
             continue
-        for row in payload.get("players") or []:
-            if not isinstance(row, dict):
+        # Provisional weeks are not settled: bonus and defensive contributions
+        # still move until 09:00 UK the day after the last match.
+        if parsed["header"].get("provisional", True):
+            continue
+        gameweek_no = parsed["header"].get("gameweek")
+        if gameweek_no is None:
+            # The header should always carry it (outcomes.py stamps
+            # "gameweek" into every header at settlement time), but fall back
+            # to the gwNN directory name rather than risk a null week: a null
+            # here would make every distinct-gameweek count collapse to one,
+            # recreating the exact bug this function exists to fix.
+            dirname = outcome_path.parent.name
+            try:
+                gameweek_no = int(dirname[2:]) if dirname.startswith("gw") else None
+            except ValueError:
+                gameweek_no = None
+        if gameweek_no is None:
+            logger.warning(
+                "sealed outcomes at %s carry no discoverable gameweek; skipping",
+                outcome_path,
+            )
+            continue
+
+        forecast_path = outcome_path.parent / "forecast.jsonl"
+        try:
+            forecast = read_forecast(forecast_path)
+        except READ_ERRORS as exc:
+            # Same resilience contract as the outcome file: a missing or
+            # unreadable forecast skips THIS week only. It never raises, and it
+            # never discards rows already collected from other weeks — an
+            # outcome file with no forecast beside it cannot be scored, but the
+            # weeks that do have one still can.
+            logger.warning(
+                "settled GW%s has no readable forecast at %s (%s); it cannot be "
+                "joined and is excluded from the accuracy sample",
+                gameweek_no, forecast_path, exc,
+            )
+            continue
+
+        predicted_by_element: Dict[int, Any] = {}
+        unusable_forecast_rows = 0
+        for record in forecast["rows"]:
+            try:
+                predicted_by_element[int(record["element_id"])] = record
+            except (KeyError, TypeError, ValueError):
+                unusable_forecast_rows += 1
+
+        outcome_rows = parsed["rows"]
+        joined = 0
+        unmatched = 0
+        unusable = 0
+        for element_id, outcome_row in sorted(outcome_rows.items()):
+            record = predicted_by_element.get(element_id)
+            if record is None:
+                # Could be settled-but-never-sealed, or the settled twin of a
+                # row already counted in unusable_forecast_rows above (a
+                # malformed forecast row never makes it into
+                # predicted_by_element, so it looks identical to "never
+                # sealed" here). Resolved below rather than attributed to
+                # unforecast outright, to avoid counting the same broken row
+                # twice.
+                unmatched += 1
                 continue
-            rows.append({
-                "gameweek": payload.get("gameweek"),
-                "element_id": row.get("element_id"),
-                "position": row.get("position"),
-                "team": row.get("team"),
-                "predicted": row.get("predicted_points"),
-                "actual": row.get("actual_points"),
-            })
+            predicted = record.get("xp")
+            actual = outcome_row.get("total_points")
+            if not isinstance(predicted, (int, float)) or not isinstance(
+                actual, (int, float)
+            ):
+                unusable += 1
+                continue
+            rows.append(
+                {
+                    "gameweek": gameweek_no,
+                    "element_id": element_id,
+                    "predicted": float(predicted),
+                    "actual": float(actual),
+                }
+            )
+            joined += 1
+
+        # A forecast row with no usable element_id can never land in
+        # predicted_by_element, so its settled twin (if it has one) always
+        # shows up in `unmatched` too. Attribute as many of those apparent
+        # misses as possible to the parse failure that actually caused them
+        # instead of counting the same broken row once here and again as
+        # unforecast.
+        attributed_to_unusable_forecast = min(unusable_forecast_rows, unmatched)
+        unforecast = unmatched - attributed_to_unusable_forecast
+        unusable += unusable_forecast_rows
+        unsettled = sum(1 for eid in predicted_by_element if eid not in outcome_rows)
+
+        if unforecast or unsettled or unusable:
+            # Never silent. Dropping rows shrinks the sample, and a shrinking
+            # sample changes every sigma and every RMSE computed from it.
+            logger.warning(
+                "GW%s join: %d rows matched, %d settled with no sealed forecast, "
+                "%d sealed with no settled outcome, %d unusable "
+                "(non-numeric xp/total_points or a row with no element_id)",
+                gameweek_no, joined, unforecast, unsettled, unusable,
+            )
     return rows
 
 
@@ -365,6 +497,14 @@ def refresh_expected_points(
                 lambda_home=rates.lambda_home,
                 mu_away=rates.mu_away,
                 kickoff=fixture.get("kickoff_time"),
+                # rates.source is already computed one line above for the log
+                # counter — thread it through rather than leave the dataclass
+                # default None. These specs feed export_gameweek_xp (below,
+                # via refresh_expected_points), whose assert_valid_xp_artifact
+                # now fails a null rate_source; a seal is irrecoverable, so
+                # this field must never be left unset on the one path that
+                # actually reaches it.
+                rate_source=rates.source,
             )
         )
 

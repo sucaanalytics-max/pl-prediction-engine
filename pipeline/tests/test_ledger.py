@@ -9,6 +9,8 @@ looks fine will be quoted.
 """
 import gzip
 import json
+import shutil
+import tempfile
 import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -33,6 +35,7 @@ from pipeline.learning.outcomes import (
     settle_gameweek,
 )
 from pipeline.learning.scoring import UnscoreableError, score_gameweek
+from pipeline.validation.ledger import update_forecast_ledger
 
 DEADLINE = "2026-09-12T10:30:00Z"
 BEFORE = datetime(2026, 9, 12, 6, 30, tzinfo=timezone.utc)
@@ -348,6 +351,109 @@ class ScoringTests(unittest.TestCase):
             settle_gameweek(5, Path(tmp), _live(), provisional=False, dry_run=True)
             with self.assertRaises(FileNotFoundError):
                 score_gameweek(5, Path(tmp))
+
+
+class ForecastLedgerAdmissibility(unittest.TestCase):
+    """The ledger's only job is proving a forecast predated kickoff."""
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+
+    def tearDown(self):
+        shutil.rmtree(self.tmpdir)
+
+    def _output(self, match_id, kickoff, generated_at="2026-08-20T06:00:00Z"):
+        return {
+            "metadata": {"generated_at": generated_at, "season": "2627"},
+            "predictions": [{
+                "match_id": match_id,
+                "fixture": {"home_team": "Arsenal", "away_team": "Coventry City",
+                            "gameweek": 1, "date": kickoff},
+                "probabilities": {"home": 0.7, "draw": 0.2, "away": 0.1},
+                "expected_goals": {"home": 2.4, "away": 0.7},
+            }],
+        }
+
+    def test_admits_a_forecast_made_before_kickoff(self):
+        path = Path(self.tmpdir) / "ledger.json"
+        result = update_forecast_ledger(
+            self._output("m1", "2026-08-21T19:00:00Z"), path
+        )
+        self.assertIn("m1", result["forecasts"])
+        self.assertEqual(result["rejected"], [])
+
+    def test_rejects_a_forecast_generated_after_kickoff(self):
+        path = Path(self.tmpdir) / "ledger.json"
+        result = update_forecast_ledger(
+            self._output("m2", "2026-08-21T19:00:00Z",
+                         generated_at="2026-08-22T06:00:00Z"),
+            path,
+        )
+        self.assertNotIn("m2", result["forecasts"])
+        self.assertEqual(result["rejected"][0]["match_id"], "m2")
+
+    def test_rejects_a_fixture_with_no_kickoff_time(self):
+        """FPL publishes null kickoff for postponed and TBC fixtures."""
+        path = Path(self.tmpdir) / "ledger.json"
+        result = update_forecast_ledger(self._output("m3", None), path)
+        self.assertNotIn("m3", result["forecasts"])
+        self.assertIn("no kickoff", result["rejected"][0]["reason"])
+
+    def test_a_later_pre_kickoff_forecast_replaces_an_earlier_one(self):
+        """The ledger holds the FINAL pre-match forecast, which is what its
+        docstring promises and what every calibration number assumes.
+
+        A first-wins rule would pin the earliest run of the gameweek window —
+        stalest odds, least injury news — and silently measure a weaker
+        forecaster than the one actually shipping. Precedence is enforced by
+        the generated_at < kickoff check alone; freezing the first admission
+        adds nothing to it and costs the semantics."""
+        path = Path(self.tmpdir) / "ledger.json"
+        update_forecast_ledger(
+            self._output("m4", "2026-08-21T19:00:00Z",
+                         generated_at="2026-08-19T06:00:00Z"), path)
+        second = self._output("m4", "2026-08-21T19:00:00Z",
+                              generated_at="2026-08-20T06:00:00Z")
+        second["predictions"][0]["expected_goals"] = {"home": 9.9, "away": 9.9}
+        result = update_forecast_ledger(second, path)
+        self.assertEqual(result["forecasts"]["m4"]["expected_goals"]["home"], 9.9)
+        self.assertEqual(
+            result["forecasts"]["m4"]["generated_at"], "2026-08-20T06:00:00Z")
+
+    def test_a_post_kickoff_forecast_cannot_replace_an_admitted_one(self):
+        """The other half of the same rule: last-wins applies only among
+        forecasts that PROVABLY predate kickoff. A run after kickoff is
+        rejected outright and leaves the admitted forecast standing."""
+        path = Path(self.tmpdir) / "ledger.json"
+        update_forecast_ledger(
+            self._output("m6", "2026-08-21T19:00:00Z",
+                         generated_at="2026-08-19T06:00:00Z"), path)
+        late = self._output("m6", "2026-08-21T19:00:00Z",
+                            generated_at="2026-08-22T06:00:00Z")
+        late["predictions"][0]["expected_goals"] = {"home": 9.9, "away": 9.9}
+        result = update_forecast_ledger(late, path)
+        self.assertEqual(result["forecasts"]["m6"]["expected_goals"]["home"], 2.4)
+        self.assertEqual(result["rejected"][0]["match_id"], "m6")
+
+    def test_rejects_a_forecast_generated_at_the_exact_instant_of_kickoff(self):
+        """
+        generated_at == kickoff must be rejected, not admitted: only a forecast
+        that STRICTLY predates kickoff is proof of precedence. A future refactor
+        that swapped the >= comparison for > would look like a harmless
+        simplification and would silently start admitting these; this test
+        exists to catch that regression.
+        """
+        path = Path(self.tmpdir) / "ledger.json"
+        instant = "2026-08-21T19:00:00Z"
+        result = update_forecast_ledger(
+            self._output("m5", instant, generated_at=instant), path
+        )
+        self.assertNotIn("m5", result["forecasts"])
+        self.assertEqual(result["rejected"][0]["match_id"], "m5")
+        self.assertEqual(
+            result["rejected"][0]["reason"],
+            f"generated {instant} at or after kickoff",
+        )
 
 
 if __name__ == "__main__":

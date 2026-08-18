@@ -44,6 +44,61 @@ QUANTILE_KEYS = ("q10", "q25", "q50", "q75", "q90", "q99")
 # decides whether a rate is market-informed at all — was not updated with it.
 RATE_SOURCES = ("market_blend", "dixon_coles_posterior+level", "dixon_coles_posterior")
 
+# Every value a FixtureSpec.rate_source can legitimately carry, across BOTH
+# real callers of build_xp_artifact/export_gameweek_xp: the daily lane
+# (pipeline/run_pipeline.py, via fixture_specs_from_fixture_xg /
+# fixture_specs_from_predictions) and the FPL agent's seal
+# (pipeline/learning/run_agent.py::refresh_expected_points, via
+# pipeline.models.fixture_rates.resolve_rates). A contract check exists to
+# catch a NULL — nobody wired provenance — not to police which legitimate
+# source was used, so THIS set must stay a superset of every real producer:
+# a legitimate value rejected here does not just fail a check, it aborts an
+# irrecoverable seal. Traced by reading every producer directly, not assumed:
+#
+#   RATE_SOURCES (above)             blend_log's per-row rate_source in
+#                                     fixture_xg.json, and what
+#                                     load_exported_rates' normal path re-reads.
+#   "dixon_coles_posterior+market_blend"
+#                                     fixture_rates.py::export_fixture_xg's
+#                                     PAYLOAD-level `source` field.
+#                                     load_exported_rates falls back to this
+#                                     when a row is missing its own
+#                                     rate_source (a pre-anchor or legacy
+#                                     file) — distinct from every RATE_SOURCES
+#                                     string, so it is not covered above.
+#   "archive_team_strengths"         TeamStrengths.rates() (fixture_rates.py);
+#                                     resolve_rates' fallback when
+#                                     fixture_xg.json has no rate for a fixture.
+#   "flat_default"                   resolve_rates' last resort
+#                                     (fixture_rates.py) when strengths are
+#                                     not fitted either.
+#   "ensemble_unanchored"            fixture_specs_from_predictions
+#                                     (fpl_inputs.py) — the daily lane's own
+#                                     fallback when fixture_xg.json is absent,
+#                                     unreadable or malformed.
+#   "unknown"                        fixture_specs_from_fixture_xg
+#                                     (fpl_inputs.py), when a fixture_xg.json
+#                                     row has a usable rate but is missing its
+#                                     own rate_source — a deliberate non-null
+#                                     sentinel, not a bug, and it flows
+#                                     through the exact daily-lane call site
+#                                     this task wired in.
+#
+# An unrecognised string is still rejected: a typo, or a genuinely new branch
+# nobody added here, must fail loudly rather than slip through as if it were
+# one of these. See test_fpl_artifacts.py's ContractAcceptsEveryRealProducer
+# for the durable guard: it exercises the real producer functions above and
+# asserts every string they can actually return is a member of this tuple, so
+# a future producer emitting a fourth value fails in CI rather than at a
+# gameweek deadline.
+ACCEPTED_RATE_SOURCES = RATE_SOURCES + (
+    "dixon_coles_posterior+market_blend",
+    "archive_team_strengths",
+    "flat_default",
+    "ensemble_unanchored",
+    "unknown",
+)
+
 # Rates outside this are not football results. Wider than market_rates' own
 # [0.15, 5.0] acceptance band on purpose: this is the last line, and it should
 # fire on a units error or a mislabelled side, not on a solver's edge case.
@@ -68,6 +123,27 @@ class ArtifactContractError(AssertionError):
     """An artifact failed a blocking check. Never swallow this."""
 
 
+def _spec_gameweek(spec: Any) -> Optional[int]:
+    """
+    The gameweek a fixture spec belongs to, or None when it cannot say.
+
+    Never raises. `FixtureSpec.gameweek` is a required field, so None here
+    means the spec came from something other than the four real producers —
+    and the two emitters below are on the irrecoverable seal path
+    (run_agent.refresh_expected_points -> export_gameweek_xp), where a
+    TypeError raised while ASSEMBLING the artifact would lose the gameweek
+    outright. Degrading to an unlabelled fixture is recoverable; raising here
+    is not.
+    """
+    value = getattr(spec, "gameweek", None)
+    if value is None:
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def validate_xp_artifact(artifact: Dict[str, Any]) -> List[str]:
     """
     Return every contract violation found. Empty means the artifact is sound.
@@ -87,6 +163,84 @@ def validate_xp_artifact(artifact: Dict[str, Any]) -> List[str]:
     ):
         if required not in metadata:
             problems.append(f"metadata.{required} missing")
+
+    # A published fixture with a null rate_source is indistinguishable from
+    # one nobody ever wired provenance for, and an unrecognised value means
+    # the blend grew a branch this artifact's consumers were never told
+    # about. Both fail the contract here rather than reach disk unchallenged.
+    # ACCEPTED_RATE_SOURCES (module level, above) is a superset of every real
+    # producer, not just RATE_SOURCES — this must never reject a legitimate
+    # value, because both real callers of this check feed an irrecoverable
+    # seal (pipeline/learning/run_agent.py) or a daily lane whose failure here
+    # silently drops that day's FPL projections (pipeline/run_pipeline.py).
+    fixtures = artifact.get("fixtures")
+    if fixtures is not None and not isinstance(fixtures, list):
+        problems.append("fixtures present but not a list")
+    else:
+        accepted_rate_sources = set(ACCEPTED_RATE_SOURCES)
+        for fixture in fixtures or []:
+            label = f"fixture {fixture.get('home_team')} v {fixture.get('away_team')}"
+            rate_source = fixture.get("rate_source")
+            if not rate_source:
+                problems.append(f"{label}: rate_source is null or missing")
+            elif rate_source not in accepted_rate_sources:
+                problems.append(
+                    f"{label}: rate_source {rate_source!r} is not a "
+                    f"recognised value (expected one of "
+                    f"{sorted(accepted_rate_sources)})"
+                )
+
+    # Every fixture belongs to the gameweek the artifact claims.
+    #
+    # The descope this phase rests on has one exit criterion — "every fixture
+    # simulated belongs to one gameweek" — and until now it was guarded only
+    # by a `gameweeks=[gameweek]` keyword at a single call site plus an AST
+    # test. GameweekDraws labels itself `int(fixtures[0].gameweek)`, so a
+    # mixed list silently reports the first fixture's week while carrying
+    # points accumulated across all of them. This branch shipped exactly that
+    # 8x inflation once behind a green suite. It does NOT cover the fallback
+    # path (fixture_specs_from_predictions), which has no gameweek filter of
+    # its own: that builder stamps every spec with
+    # `int(fixture.get("gameweek") or gameweek)`, the single scalar gameweek
+    # run_pipeline.py writes into every prediction's fixture dict in one run,
+    # so a fallback-built list is always uniformly labelled and this check
+    # has nothing to catch there today. It still fires on any genuine
+    # mismatch, from this path or any other, should one ever arise.
+    #
+    # A fixture that states NO gameweek is not a violation. _spec_gameweek
+    # degrades to None rather than raise, and both callers of this check feed
+    # an irrecoverable seal or a daily lane whose failure here drops that
+    # day's FPL projections — so this must fire on a demonstrated mismatch
+    # and on nothing else.
+    claimed_gameweek = metadata.get("gameweek")
+    if claimed_gameweek is not None:
+        try:
+            claimed_gameweek = int(claimed_gameweek)
+        except (TypeError, ValueError):
+            claimed_gameweek = None
+    if claimed_gameweek is not None:
+        for fixture in (fixtures if isinstance(fixtures, list) else []):
+            if not isinstance(fixture, dict):
+                continue
+            fixture_gameweek = fixture.get("gameweek")
+            if fixture_gameweek is None:
+                continue
+            try:
+                fixture_gameweek = int(fixture_gameweek)
+            except (TypeError, ValueError):
+                continue
+            if fixture_gameweek != claimed_gameweek:
+                label = (
+                    f"fixture {fixture.get('home_team')} v "
+                    f"{fixture.get('away_team')}"
+                )
+                problems.append(
+                    f"{label}: gameweek {fixture_gameweek} does not match "
+                    f"metadata.gameweek {claimed_gameweek}; every fixture "
+                    "simulated must belong to one gameweek, or the summed "
+                    "per-player totals describe more weeks than the artifact "
+                    "claims"
+                )
 
     players = artifact.get("players")
     if not isinstance(players, list):
@@ -487,11 +641,20 @@ def build_xp_artifact(
         "fixtures": [
             {
                 "match_id": spec.match_id,
+                # Stated per fixture so the one-gameweek guarantee is a
+                # property of the ARTIFACT rather than of a keyword argument
+                # at one call site. GameweekDraws labels itself
+                # int(fixtures[0].gameweek), so a mixed spec list silently
+                # publishes the first fixture's week over several weeks of
+                # accumulated points; without this field no consumer and no
+                # contract check could detect it.
+                "gameweek": _spec_gameweek(spec),
                 "home_team": spec.home_team,
                 "away_team": spec.away_team,
                 "kickoff": spec.kickoff,
                 "lambda_home": round(float(spec.lambda_home), 4),
                 "mu_away": round(float(spec.mu_away), 4),
+                "rate_source": spec.rate_source,
             }
             for spec in (fixture_specs or [])
         ],
@@ -532,10 +695,15 @@ def build_sim_params(
         "fixtures": [
             {
                 "match_id": spec.match_id,
+                # Same reason as build_xp_artifact: the regeneration record
+                # must show which week each fixture belonged to, or a rerun
+                # cannot tell a mixed list from a single-week one.
+                "gameweek": _spec_gameweek(spec),
                 "home_team": spec.home_team,
                 "away_team": spec.away_team,
                 "lambda_home": float(spec.lambda_home),
                 "mu_away": float(spec.mu_away),
+                "rate_source": spec.rate_source,
             }
             for spec in fixture_specs
         ],
