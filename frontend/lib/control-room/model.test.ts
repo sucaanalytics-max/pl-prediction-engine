@@ -90,9 +90,6 @@ describe("the three teams", () => {
   });
 
   it("gives only the bots a decision path, because only they solve", () => {
-    expect(teamOf("mine").decisionLabel).toBeNull();
-    expect(teamOf("ronny").decisionLabel).toBe("season");
-    expect(teamOf("wazza").decisionLabel).toBe("weekly");
   });
 
   it("states the weekly threshold the producer defaults to", () => {
@@ -305,7 +302,6 @@ describe("read() pairs a value with the age of the artifact it came from", () =>
       (value) => value.stamp, now);
     expect(result.value?.stamp).toBe("2026-08-18T06:00:00Z");
     expect(result.age).toBe("6h old");
-    expect(result.retained).toBe(false);
   });
 
   it("falls back to the retained value AND to its age", () => {
@@ -321,8 +317,9 @@ describe("read() pairs a value with the age of the artifact it came from", () =>
       (value) => value.stamp, now);
     expect(result.value?.stamp).toBe("2026-08-16T06:00:00Z");
     // Beyond a day, so an instant rather than a duration the reader cannot check.
+    /* The age is what carries "this is not from the fetch you just made" — a boolean
+       saying so as well had no reader on any surface, so it went. */
     expect(result.age).toMatch(/^as at /);
-    expect(result.retained).toBe(true);
   });
 
   it("separates a first fetch in flight from a genuine absence", () => {

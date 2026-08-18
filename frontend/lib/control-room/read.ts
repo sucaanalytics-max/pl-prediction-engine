@@ -46,12 +46,8 @@ export interface Read<T> {
   readonly age: string | null;
   /** True while the first fetch is in flight and nothing has been proven yet. */
   readonly initialising: boolean;
-  /** True when the value on screen came from the retained copy, not this fetch. */
-  readonly retained: boolean;
   /** Past its freshness budget. Age sits BESIDE the figure; it never dims it. */
   readonly stale: boolean;
-  /** The artifact's own sentence for why it is not `ok`. */
-  readonly reason: string | null;
   /** The registry path, for a sub-line that names what was not written. */
   readonly path: string;
 }
@@ -75,9 +71,7 @@ export function read<T>(
       ? null
       : ageLine(producedAtOf(value) ?? source?.provenance.producedAt, now),
     initialising: result.initialising && value === null,
-    retained: fresh === null && value !== null,
     stale: source === null ? false : isStale(source),
-    reason: result.artifact.reason,
     path: result.artifact.provenance.path,
   };
 }

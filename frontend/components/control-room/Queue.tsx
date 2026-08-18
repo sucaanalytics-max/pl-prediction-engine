@@ -40,8 +40,11 @@ import type { Read } from "@/lib/control-room/read";
 import { REQUIRED_CALIBRATED_GAMEWEEKS } from "@/lib/control-room/model";
 import { ProvenanceMarks, type Anchor } from "@/components/margin/Provenance";
 import { Answer, Body, Figure, Label, S, SectionLabel, Sub } from "@/components/control-room/parts";
+import type { AgentStatus } from "@/lib/data/agent-status";
+import { deadlineStamp } from "@/lib/formats";
 
-export interface QueueRow {
+/* Not exported: `buildQueue` is the only constructor and it now lives here. */
+interface QueueRow {
   readonly id: string;
   /** Which team the claim is about. */
   readonly team: string;
@@ -155,7 +158,7 @@ export function Queue({ rows }: { rows: readonly QueueRow[] }) {
  * It appears twice on the board — here and in the matrix's calibration cell — and
  * the number in it is read, so the two cannot drift apart.
  */
-export function calibrationClaim(weeks: number | null): string {
+function calibrationClaim(weeks: number | null): string {
   return weeks === null
     ? "The calibration counter is not published, so how many gameweeks the field "
       + "model has held its band is unknown. Until six are confirmed it runs "
@@ -225,4 +228,46 @@ export function ChangeFeed({ feed }: { feed: Read<DeltaFeed> }) {
       )}
     </div>
   );
+}
+
+export function buildQueue(
+  { status, calibrated, sealed }: {
+    status: Read<AgentStatus>;
+    calibrated: number | null;
+    sealed: number | null;
+  },
+): readonly QueueRow[] {
+  const rows: QueueRow[] = [];
+  const deadline = status.value?.deadline ?? null;
+  const stamp = deadlineStamp(deadline);
+
+  if (stamp !== null) {
+    rows.push({
+      id: "deadline",
+      team: "Mine",
+      claim: "Your team is due before the deadline, and nothing here can submit it.",
+      reason:
+        "The only thing on the clock. FPL takes the team you have set when it "
+        + "passes, so an unattended board is a submitted board.",
+      when: stamp.split(" · ")[1] ?? stamp,
+      scheduled: true,
+      anchor: "model",
+      freshness: status.age,
+      stale: status.stale,
+    });
+  }
+
+  rows.push({
+    id: "calibration",
+    team: "Wazza",
+    claim: "It cannot legitimately run its own objective yet, and says so.",
+    reason: calibrationClaim(calibrated),
+    when: "Standing",
+    scheduled: false,
+    anchor: "model",
+    freshness: sealed === null ? null : "live",
+    stale: false,
+  });
+
+  return rows;
 }

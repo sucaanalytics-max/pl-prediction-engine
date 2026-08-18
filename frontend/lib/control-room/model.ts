@@ -40,7 +40,9 @@ import { optimiseXi, pointsFrom, projectedTotal } from "@/lib/margin/planner";
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** The URL's own vocabulary for the focused team. `?team=mine`. */
-export const TEAM_KEYS = ["mine", "ronny", "wazza"] as const;
+/* Not exported: `teamFromParam` is the only reader, and a second list of the
+   three keys is how two of them drift apart. */
+const TEAM_KEYS = ["mine", "ronny", "wazza"] as const;
 export type TeamKey = (typeof TEAM_KEYS)[number];
 
 /**
@@ -85,7 +87,6 @@ export interface Team {
    * the pipeline solves for 20945. The two bots' labels are the keys
    * `pipeline/config.py` uses, which is what makes the path derivable.
    */
-  readonly decisionLabel: "season" | "weekly" | null;
 }
 
 /**
@@ -102,7 +103,6 @@ export const TEAMS: readonly Team[] = [
     kind: "human",
     objective: "Your call",
     mandate: "Human · advisory only",
-    decisionLabel: null,
   },
   {
     key: "ronny",
@@ -111,7 +111,6 @@ export const TEAMS: readonly Team[] = [
     kind: "bot",
     objective: "E[season]",
     mandate: "Bot · max E[season]",
-    decisionLabel: "season",
   },
   {
     key: "wazza",
@@ -120,7 +119,6 @@ export const TEAMS: readonly Team[] = [
     kind: "bot",
     objective: `P(GW ≥ ${TAIL_THRESHOLD})`,
     mandate: `Bot · max P(≥${TAIL_THRESHOLD})`,
-    decisionLabel: "weekly",
   },
 ];
 

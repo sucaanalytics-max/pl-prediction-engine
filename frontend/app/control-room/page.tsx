@@ -78,7 +78,7 @@ import { read, type Read } from "@/lib/control-room/read";
 import { Matrix } from "@/components/control-room/Matrix";
 import { Ambient } from "@/components/control-room/Ambient";
 import { Squad } from "@/components/control-room/Squad";
-import { ChangeFeed, Queue, calibrationClaim, type QueueRow } from "@/components/control-room/Queue";
+import { buildQueue, ChangeFeed, Queue } from "@/components/control-room/Queue";
 import {
   Answer, Body, Figure, Label, S, Sub,
 } from "@/components/control-room/parts";
@@ -562,45 +562,3 @@ function Lead(
 // ─────────────────────────────────────────────────────────────────────────────
 // 4 · The queue's rows, built from the artifacts
 // ─────────────────────────────────────────────────────────────────────────────
-
-function buildQueue(
-  { status, calibrated, sealed }: {
-    status: Read<AgentStatus>;
-    calibrated: number | null;
-    sealed: number | null;
-  },
-): readonly QueueRow[] {
-  const rows: QueueRow[] = [];
-  const deadline = status.value?.deadline ?? null;
-  const stamp = deadlineStamp(deadline);
-
-  if (stamp !== null) {
-    rows.push({
-      id: "deadline",
-      team: "Mine",
-      claim: "Your team is due before the deadline, and nothing here can submit it.",
-      reason:
-        "The only thing on the clock. FPL takes the team you have set when it "
-        + "passes, so an unattended board is a submitted board.",
-      when: stamp.split(" · ")[1] ?? stamp,
-      scheduled: true,
-      anchor: "model",
-      freshness: status.age,
-      stale: status.stale,
-    });
-  }
-
-  rows.push({
-    id: "calibration",
-    team: "Wazza",
-    claim: "It cannot legitimately run its own objective yet, and says so.",
-    reason: calibrationClaim(calibrated),
-    when: "Standing",
-    scheduled: false,
-    anchor: "model",
-    freshness: sealed === null ? null : "live",
-    stale: false,
-  });
-
-  return rows;
-}
