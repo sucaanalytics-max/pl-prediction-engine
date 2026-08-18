@@ -10,7 +10,7 @@ import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it } from "vitest";
 
 import {
-  bandTotal, clusters, SquadBoard, type SquadBoardPlayer,
+  bandTotal, clusterNote, clusters, formationOf, SquadBoard, type SquadBoardPlayer,
 } from "@/components/squad/SquadBoard";
 import type { Position } from "@/lib/fpl-live";
 import { PAPER } from "@/lib/margin/tokens";
@@ -57,13 +57,13 @@ describe("formation bands", () => {
     render(<SquadBoard players={SQUAD} surface={PAPER} />);
     const count = (band: string) =>
       Number(screen.getByTestId(`band-count-${band}`).textContent);
-    expect([count("defence"), count("midfield"), count("attack")]).toEqual([3, 4, 3]);
+    expect([count("defence"), count("midfield"), count("forward")]).toEqual([3, 4, 3]);
     expect(count("goalkeeper")).toBe(1);
   });
 
   it("bands only the XI — the bench has its own section", () => {
     render(<SquadBoard players={SQUAD} surface={PAPER} />);
-    const banded = ["goalkeeper", "defence", "midfield", "attack"]
+    const banded = ["goalkeeper", "defence", "midfield", "forward"]
       .reduce((sum, b) => sum + Number(screen.getByTestId(`band-count-${b}`).textContent), 0);
     expect(banded).toBe(11);
   });
@@ -85,7 +85,7 @@ describe("formation bands", () => {
 
   it("omits a band the squad has nobody in, rather than printing a zero", () => {
     render(<SquadBoard players={SQUAD.filter((p) => p.position !== "FWD")} surface={PAPER} />);
-    expect(screen.queryByTestId("band-attack")).toBeNull();
+    expect(screen.queryByTestId("band-forward")).toBeNull();
   });
 });
 
@@ -162,5 +162,120 @@ describe("club clusters", () => {
     const spread = SQUAD.slice(0, 4).map((p, i) => ({ ...p, club: ["ARS", "BUR", "EVE", "FUL"][i] }));
     render(<SquadBoard players={spread} surface={PAPER} />);
     expect(screen.queryByTestId("cluster-summary")).toBeNull();
+  });
+});
+
+describe("the board header", () => {
+  it("states the XI's shape and its total, as the design's caption does", () => {
+    render(<SquadBoard players={SQUAD} surface={PAPER} />);
+    const xi = SQUAD.filter((p) => !p.benched);
+    expect(screen.getByTestId("board-shape").textContent)
+      .toBe(`3-4-3 · ${bandTotal(xi)!.toFixed(1)} projected`);
+  });
+
+  it("refuses a shape for a squad that fields no eleven", () => {
+    expect(formationOf([])).toBeNull();
+    render(<SquadBoard players={SQUAD.map((p) => ({ ...p, benched: true }))} surface={PAPER} />);
+    expect(screen.getByTestId("board-shape").textContent).toContain("no legal eleven");
+  });
+
+  it("says how the run is sourced, since three of its four bars are unsolved", () => {
+    render(<SquadBoard players={SQUAD} surface={PAPER} />);
+    const note = screen.getByTestId("board-provenance").textContent!;
+    expect(note).toContain("muted 66%");
+    expect(note).toContain("next three unsolved");
+  });
+});
+
+describe("the run", () => {
+  it("draws one measured bar and three empty slots per player", () => {
+    render(<SquadBoard players={SQUAD.slice(0, 1)} surface={PAPER} />);
+    expect(screen.getAllByTestId("run-solved")).toHaveLength(1);
+    expect(screen.getAllByTestId("run-unsolved")).toHaveLength(3);
+  });
+
+  it("gives the unsolved slots no fill, so they cannot read as low scores", () => {
+    render(<SquadBoard players={SQUAD.slice(0, 1)} surface={PAPER} />);
+    for (const slot of screen.getAllByTestId("run-unsolved")) {
+      expect(slot.style.background).toBe("transparent");
+      expect(slot.style.border).toContain("1px solid");
+    }
+  });
+
+  it("solves nothing at all for a player with no projection", () => {
+    render(
+      <SquadBoard
+        players={[{ ...SQUAD[0], xp: null }]}
+        surface={PAPER}
+      />,
+    );
+    expect(screen.queryByTestId("run-solved")).toBeNull();
+    expect(screen.getAllByTestId("run-unsolved")).toHaveLength(4);
+  });
+
+  it("scales the measured bar against a fixed ceiling, not against itself", () => {
+    const low = { ...SQUAD[0], xp: 2 };
+    const high = { ...SQUAD[0], xp: 14 };
+    const { unmount } = render(<SquadBoard players={[low]} surface={PAPER} />);
+    const lowHeight = screen.getByTestId("run-solved").style.height;
+    unmount();
+    render(<SquadBoard players={[high]} surface={PAPER} />);
+    // A per-row scale would make every run the same height, which is the one thing
+    // a run must not do.
+    expect(screen.getByTestId("run-solved").style.height).not.toBe(lowHeight);
+  });
+});
+
+describe("what a cluster says about itself", () => {
+  const MUN = () => clusters(SQUAD).find((c) => c.club === "MUN")!;
+
+  it("names the shared fixture, which is what makes three holdings one bet", () => {
+    const withFixture = SQUAD.map((p) =>
+      p.club === "MUN" ? { ...p, opponent: "HUL (A)" } : p);
+    const mun = clusters(withFixture).find((c) => c.club === "MUN")!;
+    expect(mun.sharedFixture).toBe("HUL (A)");
+    expect(clusterNote(mun)).toContain("all HUL (A)");
+  });
+
+  it("claims no shared fixture when the members do not share one", () => {
+    const split = SQUAD.map((p, i) =>
+      p.club === "MUN" ? { ...p, opponent: `OPP${i} (H)` } : p);
+    expect(clusters(split).find((c) => c.club === "MUN")!.sharedFixture).toBeNull();
+  });
+
+  it("treats an unstated fixture as unknown rather than as shared", () => {
+    // Every MUN opponent is null in the base squad: a set of one null is not a
+    // shared fixture.
+    expect(MUN().sharedFixture).toBeNull();
+    expect(clusterNote(MUN())).not.toContain("all");
+  });
+
+  it("flags FPL's three-per-club cap, which MUN is at", () => {
+    expect(MUN().atLimit).toBe(true);
+    expect(clusterNote(MUN())).toContain("at the limit");
+    const liv = clusters(SQUAD).find((c) => c.club === "LIV")!;
+    expect(liv.atLimit).toBe(false);
+    expect(clusterNote(liv)).not.toContain("at the limit");
+  });
+
+  it("says when the armband is inside the correlated bet", () => {
+    const armed = SQUAD.map((p) =>
+      p.name === "B.Fernandes" ? { ...p, armband: "C" as const } : p);
+    expect(clusterNote(clusters(armed).find((c) => c.club === "MUN")!))
+      .toContain("armband inside");
+    expect(clusterNote(MUN())).not.toContain("armband");
+  });
+
+  it("counts the cluster's benched members, since a red card reaches them too", () => {
+    const liv = clusters(SQUAD).find((c) => c.club === "LIV")!;
+    expect(liv.benched).toBe(1);
+    expect(clusterNote(liv)).toContain("one benched");
+  });
+
+  it("renders the note on the row, and never pads it with negations", () => {
+    render(<SquadBoard players={SQUAD} surface={PAPER} />);
+    const note = screen.getByTestId("cluster-note-MUN").textContent!;
+    expect(note).toContain("×3");
+    expect(note).not.toMatch(/no |not |none/);
   });
 });

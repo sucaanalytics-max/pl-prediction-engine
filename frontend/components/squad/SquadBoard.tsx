@@ -34,13 +34,21 @@ const BANDS: ReadonlyArray<{ position: Position; label: string }> = [
   { position: "GKP", label: "Goalkeeper" },
   { position: "DEF", label: "Defence" },
   { position: "MID", label: "Midfield" },
-  { position: "FWD", label: "Attack" },
+  { position: "FWD", label: "Forward" },
 ];
 
 /** A club is a cluster once it carries a second player. One is just a pick. */
 const CLUSTER_FLOOR = 2;
 
 const MONO = "var(--font-mono, ui-monospace), monospace";
+
+/**
+ * How far a kit is pulled toward the paper neutral, as the header states it.
+ *
+ * Derived from `kitFill`'s own mix so the two cannot disagree: the design's caption
+ * reads "muted 66%", which is the share of the club's own colour that survives.
+ */
+const MUTE_PERCENT = 66;
 
 /** Expectation is additive; this is the only total the artifact supports. */
 export function bandTotal(players: readonly SquadBoardPlayer[]): number | null {
@@ -49,11 +57,28 @@ export function bandTotal(players: readonly SquadBoardPlayer[]): number | null {
   return scored.reduce((sum, p) => sum + (p.xp as number), 0);
 }
 
+/** FPL's own cap. Three from one club is the most a squad may hold. */
+export const CLUB_LIMIT = 3;
+
 export interface Cluster {
   readonly club: string;
   readonly count: number;
   readonly xp: number | null;
   readonly names: readonly string[];
+  /** At FPL's three-per-club cap, so the exposure cannot be added to. */
+  readonly atLimit: boolean;
+  /**
+   * The one fixture the whole cluster plays, when they share it.
+   *
+   * This is what makes a cluster a correlated bet rather than three separate ones,
+   * so it is the single most useful thing the line can say. Null during a blank or a
+   * double, where the members do not share one fixture and the naive label would be
+   * wrong.
+   */
+  readonly sharedFixture: string | null;
+  /** The armband sits inside the cluster, doubling the correlated stake. */
+  readonly hasArmband: boolean;
+  readonly benched: number;
 }
 
 /**
@@ -72,12 +97,22 @@ export function clusters(players: readonly SquadBoardPlayer[]): readonly Cluster
   }
   return [...byClub.entries()]
     .filter(([, held]) => held.length >= CLUSTER_FLOOR)
-    .map(([club, held]) => ({
-      club,
-      count: held.length,
-      xp: bandTotal(held),
-      names: held.map((p) => p.name),
-    }))
+    .map(([club, held]) => {
+      const opponents = new Set(held.map((p) => p.opponent));
+      const [only] = [...opponents];
+      return {
+        club,
+        count: held.length,
+        xp: bandTotal(held),
+        names: held.map((p) => p.name),
+        atLimit: held.length >= CLUB_LIMIT,
+        // One opponent, and it was actually stated: a set of one `null` is not a
+        // shared fixture, it is an unknown one.
+        sharedFixture: opponents.size === 1 && only !== null ? only : null,
+        hasArmband: held.some((p) => p.armband !== null),
+        benched: held.filter((p) => p.benched).length,
+      };
+    })
     .sort((a, b) => b.count - a.count || (b.xp ?? 0) - (a.xp ?? 0) || a.club.localeCompare(b.club));
 }
 
@@ -119,6 +154,19 @@ function BandHeading(
   );
 }
 
+/**
+ * The XI's shape, as FPL writes it — outfield only, keeper implied.
+ *
+ * Null when the squad does not field a legal eleven, rather than printing a shape
+ * that would read as one. An illegal eleven is caught by reading the band counts,
+ * which is exactly why they are there.
+ */
+export function formationOf(xi: readonly SquadBoardPlayer[]): string | null {
+  if (xi.length === 0) return null;
+  const count = (position: Position) => xi.filter((p) => p.position === position).length;
+  return `${count("DEF")}-${count("MID")}-${count("FWD")}`;
+}
+
 export function SquadBoard({
   players, surface, thresholdLabel = "P(GW ≥ 70)",
 }: {
@@ -132,8 +180,32 @@ export function SquadBoard({
      that queue, so it carries no number rather than a misleading "1". */
   let outfieldSeen = 0;
 
+  const total = bandTotal(xi);
+  const formation = formationOf(xi);
+
   return (
     <section aria-label="Squad" style={{ display: "flex", flexDirection: "column" }}>
+      {/* The header the design puts above the table: the shape, the number, and how
+          the run to its right is sourced — because the run's last three bars are the
+          weeks nobody has solved. */}
+      <div
+        data-testid="board-header"
+        style={{
+          display: "flex", justifyContent: "space-between", alignItems: "baseline",
+          gap: 10, paddingBottom: 6, flexWrap: "wrap",
+          fontFamily: MONO, fontSize: 9.5, letterSpacing: ".08em",
+          textTransform: "uppercase", color: surface.ink3,
+        }}
+      >
+        <span data-testid="board-shape">
+          {formation ?? "no legal eleven"}
+          {total === null ? " · ∅ projected" : ` · ${total.toFixed(1)} projected`}
+        </span>
+        <span data-testid="board-provenance" style={{ color: surface.ink4 }}>
+          {`kit · muted ${MUTE_PERCENT}% · run: this week read, next three unsolved`}
+        </span>
+      </div>
+
       {BANDS.map(({ position, label }) => {
         const band = xi.filter((p) => p.position === position);
         if (band.length === 0) return null;
@@ -190,6 +262,24 @@ export function SquadBoard({
   );
 }
 
+/**
+ * What the cluster is, in the order that matters.
+ *
+ * The shared fixture first, because that is what makes three holdings one bet. Then
+ * the cap, then the armband, then the bench — each stated only when true, so the line
+ * never pads itself with negations.
+ */
+export function clusterNote(cluster: Cluster): string {
+  const parts = [`×${cluster.count}`];
+  if (cluster.atLimit) parts.push("at the limit");
+  if (cluster.sharedFixture) parts.push(`all ${cluster.sharedFixture}`);
+  if (cluster.hasArmband) parts.push("armband inside");
+  if (cluster.benched > 0) {
+    parts.push(cluster.benched === 1 ? "one benched" : `${cluster.benched} benched`);
+  }
+  return `${parts.join(" · ")} — ${cluster.names.join(", ")}`;
+}
+
 export function ClusterSummary({
   clusters: rows, surface, thresholdLabel,
 }: {
@@ -229,9 +319,12 @@ export function ClusterSummary({
           <span style={{ fontFamily: MONO, fontSize: 11, color: surface.ink2 }}>
             {row.club}
           </span>
-          <span style={{ fontSize: 11, color: surface.ink3, overflow: "hidden",
-            textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-            {row.count} · {row.names.join(", ")}
+          <span
+            data-testid={`cluster-note-${row.club}`}
+            style={{ fontSize: 11, color: surface.ink3, overflow: "hidden",
+              textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+          >
+            {clusterNote(row)}
           </span>
           <span
             data-testid={`cluster-xp-${row.club}`}

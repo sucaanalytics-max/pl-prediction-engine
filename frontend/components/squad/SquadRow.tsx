@@ -22,6 +22,14 @@ import { MONO, type MarginSurface } from "@/lib/margin/tokens";
 /** Below this, expected minutes is the figure most likely to be wrong. */
 export const MINUTES_FLOOR = 80;
 
+/**
+ * The run's ceiling, in points, matching the per-player glyph scale.
+ *
+ * Fixed rather than per-row: a bar whose scale moved with its own value would make
+ * every player's run look the same height, which is the one thing a run must not do.
+ */
+export const RUN_SCALE_HI = 18;
+
 /** Fixture difficulty as ink weight, never as hue. */
 const DIFFICULTY_ALPHA: Readonly<Record<number, number>> = {
   1: 0.08, 2: 0.16, 3: 0.3, 4: 0.52, 5: 0.78,
@@ -169,6 +177,39 @@ export function SquadRow({
       ) : (
         <Nil surface={surface} size={11} />
       )}
+
+      {/* The four-bar run. The first bar is a measurement; the other three are slots
+          for weeks the engine has not solved, drawn as empty outlines rather than as
+          short bars — a short bar is a low projection, and there is no projection.
+          This is the "solid versus light" the design asks for, with nothing invented
+          to fill it. */}
+      <span
+        data-testid="run"
+        title={
+          "the next four gameweeks. Only this one is solved, so the first bar is the "
+          + "only measurement and the other three are empty slots, not low scores."
+        }
+        style={{ display: "inline-flex", alignItems: "flex-end", gap: 1.5, height: 12 }}
+      >
+        {[0, 1, 2, 3].map((i) => {
+          const solved = i === 0 && player.xp !== null;
+          const height = solved
+            ? Math.max(2, Math.min(12, ((player.xp as number) / RUN_SCALE_HI) * 12))
+            : 12;
+          return (
+            <span
+              key={i}
+              data-testid={solved ? "run-solved" : "run-unsolved"}
+              style={{
+                width: 3,
+                height,
+                background: solved ? (dim ? surface.ink3 : surface.ink) : "transparent",
+                border: solved ? undefined : `1px solid ${surface.hair}`,
+              }}
+            />
+          );
+        })}
+      </span>
 
       {/* Next four. Only GW1 is published, so there is nothing to put here. The
           dotted rule is kept as the mark of an unsourced figure, and `∅` says what
