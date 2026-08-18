@@ -7,9 +7,10 @@ import { useArtifact } from "@/lib/data/useArtifact";
 import {
   projectionsDescriptor, type Projection,
 } from "@/lib/data/projections";
+import { joinProjections } from "@/lib/margin/squad";
 
 /**
- * Your fifteen, and the one move worth making.
+ * Your fifteen, with the model's own projection beside each of them.
  *
  * ## Why this leads the app
  *
@@ -19,14 +20,28 @@ import {
  * fifteen players with position, team and price the whole time, and the narrower
  * dropped them.
  *
- * ## What the numbers are, and are not
+ * ## What this no longer says
  *
- * The transfer and captaincy lines come from the heuristic engine, badged. They are
- * NOT the decision model. Saying so beside the number is the whole point — FPL
- * Review's own docs tell you to go read a press conference and type a number in,
- * and nobody in the category tells you which of their numbers is measured.
+ * It used to lead with a HEURISTIC card naming a transfer and a captain. That card
+ * is gone, and its removal is the point rather than a side effect. It named a
+ * *second, different* captain from the one {@link GameweekCall} computes directly
+ * above it — Mbeumo against the model's B.Fernandes — and it printed that captain's
+ * figure already **doubled** (`fpl-ranking-engine.ts` returns
+ * `projectedPoints * 2`), so a reader compared the model's undoubled 6.66 against a
+ * doubled 8.8 and picked the weaker player. The heuristic's own ranking agreed with
+ * the model; it only lost Fernandes because `buildCaptaincyPlan` filters candidates
+ * on `expectedMinutes >= 60` and he is *estimated* at 59. It also claimed a gain
+ * "over 4 GW" while `/margin` states that no horizon has been solved, and cited
+ * elite ownership from an FPLReview export that is gitignored and therefore absent
+ * from every deployment.
  *
- * **The per-player `xP` is different, and it is the real model.** This docstring
+ * {@link GameweekCall} already states the policy this carries out: this app does
+ * not suggest transfers, because the model publishes one gameweek. One screen may
+ * not hold two answers to the same question.
+ *
+ * ## What the numbers are
+ *
+ * **The per-player `xP` is the real model.** This docstring
  * used to say model projections "do not exist yet", which was true when it was
  * written and false from the moment `xp_public_gw01.json` began shipping a
  * projection for every player in the game. The consequence was not cosmetic: the
@@ -75,51 +90,32 @@ const SOURCE_LABEL: Record<string, string> = {
 };
 
 /**
- * The model's projection for one squad player, or null.
+ * The model's projection for each of the fifteen, keyed by FPL's own id.
  *
- * Matched on **name and position**, not name and club, and that is a measured
- * choice rather than a preference. `SquadPlayer.team` is FPL's short code (`LIV`)
- * while the projection carries the full club name (`Liverpool`), so a club
- * comparison matches nothing at all — verified in a browser, where all fifteen
- * cards read `— xP` while the artifact held a projection for every one of them.
- * The squad shape carries no `element_id` to join on: `fpl-live-server` builds it
- * from FPL's picks and drops the id on the way through.
+ * This used to be a hand-rolled match on folded name **and position**, carrying a
+ * docstring that said "the squad shape carries no `element_id` to join on". That
+ * was true when it was written and false from the moment `lib/data/heuristics.ts`
+ * began narrowing `elementId` off every pick. The consequence was not academic:
+ * today's shipped `xp_public_gw01.json` holds two colliding folded pairs —
+ * `kamara/MID` (Aston Villa 47 vs Hull City 293) and `sangare/MID` (Brentford 565
+ * vs Nott'm Forest 488) — and a collision makes the player silently vanish from
+ * the card's number. None of the current fifteen collides, so this removes a
+ * landmine rather than defuses a live one.
  *
- * Position is the discriminator that IS shared and IS reliable — both sides emit
- * GKP/DEF/MID/FWD — and it collapses most name collisions, since two players
- * sharing a surname rarely share a position too.
- *
- * **Ambiguity is refused, never guessed.** If two projections match, this returns
- * null and the card shows `— xP`. FPL has six Wilsons; putting another player's
- * projection on yours is worse than showing nothing, and it is the same rule
- * `news_extract` applies to its 441 ambiguous surname keys.
- *
- * Folded on both sides so `Kadıoğlu` matches `Kadioglu` and `Ødegaard` matches
- * `Odegaard` — not hypothetical, both are in this league.
+ * {@link joinProjections} is the tested primitive for exactly this: id first,
+ * folded name and position as the fallback for a captured draft that arrives
+ * without one, ambiguity still refused rather than guessed. Keeping a second copy
+ * of the rule here is how the two drifted apart in the first place.
  */
-function projectionFor(
+function projectionByPlayer(
+  players: readonly SquadPlayer[],
   projections: readonly Projection[],
-  player: SquadPlayer,
-): Projection | null {
-  const name = fold(player.name);
-  const position = fold(player.position ?? "");
-  const hits = projections.filter(
-    (p) => fold(p.name ?? "") === name
-      && (!position || fold(p.position ?? "") === position),
-  );
-  return hits.length === 1 ? hits[0] : null;
-}
-
-/** Lowercase and strip accents, so one spelling of a name matches another. */
-function fold(value: string): string {
-  return value
-    .normalize("NFKD")
-    .replace(/[̀-ͯ]/g, "")
-    // Turkish dotless ı does not decompose, so it needs naming explicitly — the
-    // exact character that made an earlier squad match miss F.Kadıoğlu.
-    .replace(/ı/g, "i")
-    .toLowerCase()
-    .trim();
+): Map<SquadPlayer, Projection | null> {
+  const out = new Map<SquadPlayer, Projection | null>();
+  for (const row of joinProjections(players, projections).rows) {
+    out.set(row.player, row.projection);
+  }
+  return out;
 }
 
 export default function SquadBoard() {
@@ -151,51 +147,14 @@ export default function SquadBoard() {
     );
   }
 
-  const move = view?.transfers?.[0] ?? null;
-  const captain = view?.captaincy?.[0] ?? null;
+  const projectionOf = projectionByPlayer(squad.players, projections);
 
   return (
     <div className="space-y-4">
-      {/* THE MOVE, above the squad. The answer first, the evidence under it. */}
-      {move || captain ? (
-        <div className="card p-4 space-y-2" data-testid="the-move">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="badge-amber text-[9px]">HEURISTIC</span>
-            <span className="text-[10px]" style={{ color: "var(--text-4)" }}>
-              not the decision model — no gameweek has sealed yet
-            </span>
-          </div>
-
-          {move ? (
-            <p className="text-sm" style={{ color: "var(--text-1)" }}>
-              <strong>Transfer</strong>{" "}
-              <span style={{ color: "var(--error)" }}>{move.playerOut.name}</span>
-              {" → "}
-              <span style={{ color: "var(--success)" }}>{move.playerIn.name}</span>
-              <span className="font-mono" style={{ color: "var(--text-3)" }}>
-                {"  "}+{move.delta4.toFixed(1)} pts over 4 GW · confidence{" "}
-                {move.confidence.toFixed(0)}
-              </span>
-            </p>
-          ) : null}
-
-          {move?.rationale?.length ? (
-            <p className="text-xs" style={{ color: "var(--text-3)" }}>
-              {move.rationale.join(" · ")}
-            </p>
-          ) : null}
-
-          {captain ? (
-            <p className="text-sm" style={{ color: "var(--text-1)" }}>
-              <strong>Captain</strong> {captain.captain.name}
-              <span className="font-mono" style={{ color: "var(--text-3)" }}>
-                {"  "}{captain.captainFixture} · {captain.projectedCaptainPoints.toFixed(1)} proj
-                {" · vice "}{captain.viceCaptain.name}
-              </span>
-            </p>
-          ) : null}
-        </div>
-      ) : null}
+      {/* No recommendation card here, by design.
+          The model's captain is stated once, by GameweekCall, above this board.
+          See this component's docstring for what the deleted heuristic card was
+          claiming and why none of it survived checking. */}
 
       {/* The squad itself. */}
       <div className="flex items-baseline justify-between gap-2 flex-wrap">
@@ -232,7 +191,7 @@ export default function SquadBoard() {
             </span>
             <div className="flex gap-2 flex-wrap">
               {row.players.map((player) => {
-                const projection = projectionFor(projections, player);
+                const projection = projectionOf.get(player) ?? null;
                 return (
                   <div
                     key={`${player.name}-${player.team}`}

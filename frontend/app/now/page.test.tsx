@@ -184,6 +184,145 @@ describe("impact not yet assessed", () => {
   });
 });
 
+/**
+ * ONE captain on the front page.
+ *
+ * Measured on the live app: `/now` recommended two different captains at once.
+ * `GameweekCall` took the argmax of `xp` over `xp_public_gw01.json` and named
+ * B.Fernandes at 6.66; `SquadBoard`'s HEURISTIC card named Mbeumo and printed
+ * "8.8 proj" — already doubled, since `fpl-ranking-engine.ts` returns
+ * `projectedPoints * 2`. So the two numbers on screen were not comparable and the
+ * larger one belonged to the weaker player. Undoubled it reads 6.66 against 4.4.
+ *
+ * The deadline is a hard clock and this is the single highest-leverage choice of
+ * the week, so the count is asserted on the assembled page rather than on either
+ * component alone: only a page-level test can catch a second answer arriving from
+ * a different component.
+ */
+describe("one captain, not two", () => {
+  const SQUAD = {
+    players: [
+      { elementId: 1, name: "Verbruggen", position: "GKP", team: "BHA", price: 4.5, bench: false },
+      { elementId: 2, name: "Gvardiol", position: "DEF", team: "MCI", price: 5.5, bench: false },
+      { elementId: 3, name: "Calafiori", position: "DEF", team: "ARS", price: 5.5, bench: false },
+      { elementId: 4, name: "Shaw", position: "DEF", team: "MUN", price: 4.5, bench: false },
+      { elementId: 5, name: "B.Fernandes", position: "MID", team: "MUN", price: 12.0, bench: false },
+      { elementId: 6, name: "Szoboszlai", position: "MID", team: "LIV", price: 7.0, bench: false },
+      { elementId: 7, name: "Semenyo", position: "MID", team: "MCI", price: 8.5, bench: false },
+      { elementId: 8, name: "Mbeumo", position: "MID", team: "MUN", price: 8.0, bench: false },
+      { elementId: 9, name: "E.Le Fée", position: "MID", team: "SUN", price: 6.0, bench: false },
+      { elementId: 10, name: "João Pedro", position: "FWD", team: "CHE", price: 7.5, bench: false },
+      { elementId: 11, name: "Thiago", position: "FWD", team: "BRE", price: 8.0, bench: false },
+      { elementId: 12, name: "Kinsky", position: "GKP", team: "TOT", price: 4.5, bench: true },
+      { elementId: 13, name: "Mateta", position: "FWD", team: "CRY", price: 6.5, bench: true },
+      { elementId: 14, name: "Thomas", position: "DEF", team: "COV", price: 4.0, bench: true },
+      { elementId: 15, name: "F.Kadıoğlu", position: "DEF", team: "BHA", price: 4.5, bench: true },
+    ],
+    value: 96.5, bank: 3.5, formation: "3-5-2", source: "captured_authenticated_draft",
+  };
+
+  /** Real values from `xp_public_gw01.json`. */
+  const XP: Record<number, number> = {
+    1: 3.63, 2: 0.78, 3: 2.40, 4: 3.07, 5: 5.77, 6: 4.04, 7: 3.07, 8: 3.91,
+    9: 5.06, 10: 2.68, 11: 5.12, 12: 2.23, 13: 1.32, 14: 1.17, 15: 3.85,
+  };
+
+  const PROJECTIONS = SQUAD.players.map((p) => ({
+    elementId: p.elementId, name: p.name, team: null, position: p.position,
+    xp: XP[p.elementId] ?? null, xpSd: null, mode: 2, pAppears: null, p60: null,
+    eMinutes: null, pGoal: null, pCleanSheet: null, pGe5: null, pGe10: null,
+    q10: null, q90: null, decomposition: null, blank: false,
+  }));
+
+  /**
+   * The engine's captaincy and transfer output, present throughout.
+   *
+   * Passing it is the whole point: the page must hold one answer even when the
+   * heuristic has one of its own to offer. A fixture that omitted it would pass
+   * against the bug.
+   */
+  const VIEW = {
+    squad: SQUAD,
+    event: { id: 1, deadlineTime: null },
+    transfers: [{
+      playerOut: { name: "F.Kadıoğlu" }, playerIn: { name: "Gabriel" },
+      delta4: 3.8, confidence: 73, rationale: ["0.1% elite ownership adds differential upside"],
+    }],
+    captaincy: [{
+      captain: { name: "Mbeumo" }, viceCaptain: { name: "Semenyo" },
+      captainFixture: "HUL (A)", projectedCaptainPoints: 8.8,
+    }],
+  };
+
+  async function renderWithSquad() {
+    vi.resetModules();
+    const ok = (value: unknown) => ({
+      artifact: {
+        state: value === null ? "absent" : "ok",
+        provenance: { source: "local", producedAt: null, ageMs: null },
+        reason: null, value,
+      },
+      initialising: false,
+      reload: () => {},
+    });
+    vi.doMock("@/lib/data/useHeuristics", () => ({ useHeuristics: () => ok(VIEW) }));
+    vi.doMock("@/lib/data/useArtifact", () => ({
+      // Only the projection is served. Every other section renders its absent
+      // line, which is Rule 2 and is asserted elsewhere in this file.
+      useArtifact: (d: { key?: string }) =>
+        String(d?.key).startsWith("projections")
+          ? ok({ players: PROJECTIONS })
+          : ok(null),
+    }));
+    vi.doMock("@/lib/data/artifact", async (importOriginal) => {
+      const actual = await importOriginal<typeof import("@/lib/data/artifact")>();
+      return { ...actual, proven: (a: { value?: unknown }) => a?.value ?? null };
+    });
+    const { default: Page } = await import("@/app/now/page");
+    return render(<Page />);
+  }
+
+  it("recommends exactly one captain", async () => {
+    const { container } = await renderWithSquad();
+    // Both cards labelled their recommendation with a bold `Captain`, so counting
+    // that label counts recommendations — as opposed to counting the word, which
+    // also appears in the section's own subtitle.
+    const labels = [...container.querySelectorAll("strong")]
+      .filter((node) => (node.textContent ?? "").trim() === "Captain");
+    expect(labels).toHaveLength(1);
+    // The deleted card was the only thing that printed a vice-captain, and a
+    // second armband arriving under any label would bring one back.
+    expect(container.textContent).not.toMatch(/vice/i);
+  });
+
+  it("names the model's captain and not the heuristic's", async () => {
+    const { container } = await renderWithSquad();
+    const text = container.textContent ?? "";
+    expect(text).toContain("B.Fernandes");
+    // Mbeumo is still one of the fifteen, so the assertion is about the armband
+    // rather than about the name appearing at all.
+    expect(text).not.toMatch(/Captain\s*Mbeumo/);
+  });
+
+  it("shows no doubled figure standing beside an undoubled one", async () => {
+    const { container } = await renderWithSquad();
+    const text = container.textContent ?? "";
+    // "8.8 proj" was `projectedPoints * 2`. Printed next to the model's undoubled
+    // number it made the weaker player look like the stronger pick.
+    expect(text).not.toContain("8.8 proj");
+    // The model's own doubling is still shown, and still labelled as doubled.
+    expect(text).toMatch(/doubled\s*11\.54/);
+  });
+
+  it("suggests no transfer anywhere on the page", async () => {
+    const { container } = await renderWithSquad();
+    const text = container.textContent ?? "";
+    expect(text).toMatch(/No transfer is suggested/);
+    expect(text).not.toContain("over 4 GW");
+    expect(text).not.toContain("elite ownership");
+  });
+});
+
 describe("Rule 2 — one absent artifact must not blank the page", () => {
   const sections = ["What changed", "From the agent", "This gameweek", "Model status"];
 

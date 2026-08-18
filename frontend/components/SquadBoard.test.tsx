@@ -32,6 +32,15 @@ const PLAYERS = [
   { name: "Isak", position: "FWD", team: "Liverpool", price: 10.5 },
 ];
 
+/**
+ * The same fifteen with FPL's own ids on both sides.
+ *
+ * The board joins on `elementId` first now, so the id path needs its own fixture.
+ * The name-and-position fallback still has to work — a captured draft can arrive
+ * without ids — which is what every `PLAYERS`-based test above continues to cover.
+ */
+const IDS: Record<string, number> = { Raya: 1, Gabriel: 2, Saka: 3, Isak: 4 };
+
 function mountWith(
   squad: Record<string, unknown> | null,
   projections: Array<Record<string, unknown>> | null = null,
@@ -258,6 +267,160 @@ describe("the model projection", () => {
     const { default: SquadBoard } = await mountWith(BASE, null);
     const { container } = render(<SquadBoard />);
     expect(xpCells(container)).toEqual(["— xP", "— xP", "— xP", "— xP"]);
+  });
+});
+
+/**
+ * The heuristic recommendation card, deleted.
+ *
+ * `/now` used to name TWO different captains: `GameweekCall`, directly above,
+ * takes the argmax of `xp` over the published projection and named B.Fernandes,
+ * while this board's HEURISTIC card named Mbeumo — and printed his figure already
+ * DOUBLED, because `fpl-ranking-engine.ts` returns `projectedPoints * 2`. So the
+ * reader compared the model's undoubled 6.66 against a doubled 8.8 and picked the
+ * weaker player. The heuristic's own ranking agreed with the model (capScore 23.37
+ * vs 17.34); it lost Fernandes only because `buildCaptaincyPlan` filters on
+ * `expectedMinutes >= 60` and he is *estimated* at 59.
+ *
+ * These assertions exist so the card cannot come back. The board's job is the
+ * fifteen and their model projections; the answer is stated once, above it.
+ */
+describe("what this board no longer recommends", () => {
+  const WITH_ENGINE_OUTPUT = {
+    // The engine's captaincy and transfer output, present and ignored. Passing it
+    // is the point: absence of the card must not depend on absence of the data.
+    squad: BASE,
+    transfers: [{
+      playerOut: { name: "F.Kadıoğlu" }, playerIn: { name: "Gabriel" },
+      delta4: 3.8, confidence: 73, rationale: ["0.1% elite ownership adds differential upside"],
+    }],
+    captaincy: [{
+      captain: { name: "Mbeumo" }, viceCaptain: { name: "Semenyo" },
+      captainFixture: "HUL (A)", projectedCaptainPoints: 8.8,
+    }],
+  };
+
+  async function mountWithEngineOutput() {
+    vi.resetModules();
+    vi.doMock("@/lib/data/useHeuristics", () => ({
+      useHeuristics: () => ({
+        artifact: {
+          state: "ok",
+          provenance: { source: "local", producedAt: null, ageMs: null },
+          reason: null,
+          value: WITH_ENGINE_OUTPUT,
+        },
+      }),
+    }));
+    vi.doMock("@/lib/data/useArtifact", () => ({
+      useArtifact: () => ({
+        artifact: { state: "absent", value: null }, initialising: false, reload: () => {},
+      }),
+    }));
+    vi.doMock("@/lib/data/artifact", async (importOriginal) => {
+      const actual = await importOriginal<typeof import("@/lib/data/artifact")>();
+      return { ...actual, proven: (a: { value?: unknown }) => a?.value ?? null };
+    });
+    return import("@/components/SquadBoard");
+  }
+
+  it("renders no recommendation card at all", async () => {
+    const { default: SquadBoard } = await mountWithEngineOutput();
+    const { container } = render(<SquadBoard />);
+    expect(container.querySelector("[data-testid='the-move']")).toBeNull();
+  });
+
+  it("names no captain, so the page cannot hold two answers", async () => {
+    const { default: SquadBoard } = await mountWithEngineOutput();
+    const { container } = render(<SquadBoard />);
+    const text = container.textContent ?? "";
+    expect(text).not.toMatch(/captain/i);
+    expect(text).not.toContain("Mbeumo");
+  });
+
+  it("suggests no transfer, which is the app's stated policy", async () => {
+    const { default: SquadBoard } = await mountWithEngineOutput();
+    const { container } = render(<SquadBoard />);
+    const text = container.textContent ?? "";
+    expect(text).not.toMatch(/transfer/i);
+    // The two claims that could not be checked against anything published: a
+    // four-gameweek gain the engine has not solved, and an elite-ownership figure
+    // from a gitignored export that is absent from every deployment.
+    expect(text).not.toContain("over 4 GW");
+    expect(text).not.toContain("elite ownership");
+  });
+});
+
+/**
+ * Two players who fold to the same name AND position.
+ *
+ * The board used to match on a folded name plus position and refuse on collision,
+ * printing `— xP` for both. Not hypothetical: today's shipped `xp_public_gw01.json`
+ * holds `kamara/MID` (Aston Villa 47 vs Hull City 293) and `sangare/MID`
+ * (Brentford 565 vs Nott'm Forest 488). Joining on FPL's own id resolves them.
+ */
+describe("a folded name-and-position collision", () => {
+  const COLLIDING_SQUAD = {
+    ...BASE,
+    players: [
+      { elementId: 47, name: "Kamara", position: "MID", team: "AVL", price: 5.0 },
+      { elementId: 293, name: "Kamara", position: "MID", team: "HUL", price: 4.5 },
+    ],
+  };
+  const COLLIDING_PROJECTIONS = [
+    { elementId: 47, name: "Kamara", team: "Aston Villa", position: "MID", xp: 3.20, eMinutes: 74 },
+    { elementId: 293, name: "Kamara", team: "Hull City", position: "MID", xp: 1.40, eMinutes: 31 },
+  ];
+
+  it("gives each their own projection rather than refusing both", async () => {
+    const { default: SquadBoard } = await mountWith(
+      COLLIDING_SQUAD, COLLIDING_PROJECTIONS,
+    );
+    const { container } = render(<SquadBoard />);
+    const cells = [...container.querySelectorAll("[data-testid='squad-xp']")]
+      .map((n) => n.textContent?.trim() ?? "");
+    expect(cells).toEqual(["3.2 xP", "1.4 xP"]);
+  });
+
+  it("never puts one colliding player's projection on the other", async () => {
+    // The failure worth preventing is not the dash, it is the swap.
+    const { default: SquadBoard } = await mountWith(
+      COLLIDING_SQUAD, COLLIDING_PROJECTIONS,
+    );
+    const { container } = render(<SquadBoard />);
+    const cards = [...container.querySelectorAll("[data-testid='squad-player']")];
+    expect(cards[0]?.textContent).toContain("AVL");
+    expect(cards[0]?.textContent).toContain("3.2 xP");
+    expect(cards[1]?.textContent).toContain("HUL");
+    expect(cards[1]?.textContent).toContain("1.4 xP");
+  });
+
+  it("still refuses an ambiguous name when neither side carries an id", async () => {
+    // The fallback keeps the old rule: a captured draft with no ids must not be
+    // given a guessed neighbour's number.
+    const noIds = {
+      ...BASE,
+      players: COLLIDING_SQUAD.players.map(({ elementId: _id, ...rest }) => rest),
+    };
+    const { default: SquadBoard } = await mountWith(
+      noIds, COLLIDING_PROJECTIONS.map(({ elementId: _id, ...rest }) => rest),
+    );
+    const { container } = render(<SquadBoard />);
+    const cells = [...container.querySelectorAll("[data-testid='squad-xp']")]
+      .map((n) => n.textContent?.trim() ?? "");
+    expect(cells).toEqual(["— xP", "— xP"]);
+  });
+});
+
+describe("the id join", () => {
+  it("matches on FPL's id even when the two sides spell the name differently", async () => {
+    // The name fallback would miss this; the id cannot.
+    const { default: SquadBoard } = await mountWith(
+      { ...BASE, players: PLAYERS.map((p) => ({ ...p, elementId: IDS[p.name] })) },
+      [{ elementId: 3, name: "Bukayo Saka", team: "Arsenal", position: "MID", xp: 5.82, eMinutes: 71 }],
+    );
+    const { container } = render(<SquadBoard />);
+    expect(container.textContent).toContain("5.8 xP");
   });
 });
 

@@ -18,8 +18,8 @@ import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { Projection } from "@/lib/data/projections";
 import {
   applyMoves, formationOf, MAX_BANKED_FREE_TRANSFERS, optimiseXi, ownedIn,
-  moveDelta, pairRows, playersAcross, pointsFrom, RULES, squadAtWeek,
-  transferCost, transferDelta,
+  moveDelta, pairRows, playersAcross, pointsFrom, projectedTotal, RULES,
+  squadAtWeek, transferCost, transferDelta,
   weeklyLedger, xiProblems,
 } from "@/lib/margin/planner";
 
@@ -152,6 +152,66 @@ describe("the optimal XI", () => {
     const points = pointsFrom(projections);
     expect(points.has(1)).toBe(false);
     expect(points.get(2)).toBe(6);
+  });
+});
+
+/**
+ * One definition of "projected total", and the one number that is not it.
+ *
+ * `/now` printed 48.20 and `/margin` printed 54.9 for the same squad and the same
+ * artifact. The difference was 6.6562 — B.Fernandes's projection, added a second
+ * time — because `/margin` computed its headline as the XI sum PLUS the captain
+ * while `/now` summed the XI bare. Both are arithmetically defensible, which is
+ * exactly why neither could be read: nothing on either screen said which it was.
+ *
+ * So `projectedTotal` is the only definition and it does not double. The doubling
+ * survives inside `optimiseXi`, where it is a comparison key over formations and
+ * is never rendered — `OptimisedXi.total` is therefore a different quantity from
+ * this one, and these tests pin both facts so a caller cannot quietly print the
+ * wrong field again.
+ */
+describe("the projected total", () => {
+  it("is the bare sum of the eleven, with the captain counted once", () => {
+    const squad = squadOf();
+    const points = pointsFrom(squad.map((p, i) => projection(p.elementId!, i + 1)));
+    // 5-4-1: one keeper, five defenders, four midfielders, one forward.
+    const xi = [squad[0], ...squad.slice(2, 7), ...squad.slice(7, 11), squad[12]];
+    expect(xi).toHaveLength(RULES.lineupSize);
+    expect(formationOf(xi)).toBe("5-4-1");
+    // `xp` equals the element id here, so ids 1, 3–7, 8–11 and 13 sum to 77.
+    expect(projectedTotal(xi, points)).toBeCloseTo(77, 6);
+  });
+
+  it("is NOT `optimiseXi.total`, which carries the armband", () => {
+    const squad = squadOf();
+    const points = pointsFrom(squad.map((p, i) => projection(p.elementId!, i + 1)));
+    const best = optimiseXi(squad, points)!;
+    expect(best).not.toBeNull();
+    const bare = projectedTotal(best.xi, points);
+    const captain = points.get(best.captain!.elementId!)!;
+    // The relationship is exact, and it is the whole reason the two screens
+    // disagreed: one field is the other plus one player's projection.
+    expect(best.total).toBeCloseTo(bare + captain, 6);
+    expect(best.total).toBeGreaterThan(bare);
+  });
+
+  it("counts a player with no published projection as nothing, not as a gap", () => {
+    const squad = squadOf();
+    // Every id but the first keeper's is projected.
+    const points = pointsFrom(
+      squad.slice(1).map((p, i) => projection(p.elementId!, i + 1)),
+    );
+    const xi = [squad[0], ...squad.slice(2, 7), ...squad.slice(7, 11), squad[12]];
+    // Here `xp` is one less than the id, and the keeper (id 1) is unprojected and
+    // contributes nothing: 0 + 2+3+4+5+6 + 7+8+9+10 + 12 = 66.
+    expect(projectedTotal(xi, points)).toBeCloseTo(66, 6);
+  });
+
+  it("counts a player with no id as nothing rather than throwing", () => {
+    const squad = squadOf();
+    const points = pointsFrom(squad.map((p, i) => projection(p.elementId!, i + 1)));
+    const idless: SquadPlayer = { ...squad[0], elementId: undefined };
+    expect(projectedTotal([idless], points)).toBe(0);
   });
 });
 

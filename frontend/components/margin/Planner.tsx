@@ -41,7 +41,7 @@ import type {
 } from "@/lib/data/projections";
 import {
   formationOf, MAX_BANKED_FREE_TRANSFERS, moveDelta, optimiseXi, ownedIn,
-  pairRows, playersAcross, pointsFrom, weeklyLedger, xiProblems,
+  pairRows, playersAcross, pointsFrom, projectedTotal, weeklyLedger, xiProblems,
   type Move, type PlannerRowModel, type WeekLedger,
 } from "@/lib/margin/planner";
 import { hatch, MONO, PAPER, SANS } from "@/lib/margin/tokens";
@@ -446,14 +446,6 @@ export function Planner(
       ) : null}
     </section>
   );
-}
-
-function projectedTotal(
-  xi: readonly SquadPlayer[], points: ReadonlyMap<number, number>,
-): number {
-  const scored = xi.map((p) => (p.elementId === undefined ? 0 : points.get(p.elementId) ?? 0));
-  const captain = Math.max(0, ...scored);
-  return scored.reduce((a, b) => a + b, 0) + captain;
 }
 
 function LedgerRow(

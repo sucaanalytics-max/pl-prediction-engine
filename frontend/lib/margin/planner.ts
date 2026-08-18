@@ -188,6 +188,35 @@ export function optimiseXi(
   return best;
 }
 
+/**
+ * The projected total of an eleven — **the captain is not doubled here.**
+ *
+ * The single definition of the phrase, used by every surface that prints it. It
+ * exists because there were two: `/now` summed the XI bare and printed 48.20
+ * while `/margin` summed it and then added the captain's projection again and
+ * printed 54.9, for the same squad and the same artifact, with nothing on either
+ * screen saying which was which. Both were arithmetically defensible and that is
+ * precisely the problem — a reader cannot tell a projection from a
+ * projection-plus-armband by looking at it.
+ *
+ * The doubling still happens inside {@link optimiseXi}, where it belongs: there
+ * it is a comparison key that decides which formation wins, and it is never
+ * rendered. `OptimisedXi.total` is therefore *not* this number, and a caller that
+ * prints a total must call this instead of reading that field.
+ *
+ * A player with no published projection contributes nothing rather than being
+ * skipped, which is why callers state that count separately.
+ */
+export function projectedTotal(
+  xi: readonly SquadPlayer[],
+  points: ReadonlyMap<number, number>,
+): number {
+  return xi.reduce(
+    (sum, p) => sum + (p.elementId === undefined ? 0 : points.get(p.elementId) ?? 0),
+    0,
+  );
+}
+
 /** The projection map the optimiser wants, keyed by FPL's own id. */
 export function pointsFrom(projections: readonly Projection[]): Map<number, number> {
   const out = new Map<number, number>();

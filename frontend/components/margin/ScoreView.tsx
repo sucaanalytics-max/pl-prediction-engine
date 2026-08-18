@@ -7,17 +7,27 @@
  *
  * The design puts an eight-gameweek plan here: every player a row, every week a
  * column, each cell a start, a bench or a sale, with transfers and bank tracked
- * along the bottom. Nothing publishes that. `decision_public_gw{NN}` is one
- * gameweek's proposal; there is no artifact carrying a solved horizon, and no
- * writer for one.
+ * along the bottom. Nothing publishes that for this team.
  *
  * Drawing the grid anyway from per-week projections would be the most convincing
  * fabrication in this app: a schedule of starts and sales, laid out with the
  * authority of a solver, assembled by sorting some numbers. So the grid is not
- * drawn. What is drawn is the two things that genuinely exist over a horizon —
- * **the fixture run**, from FPL's own difficulty ratings, and **the captaincy
- * plan** the heuristic engine builds — with the missing solve stated at the top
- * rather than implied by a gap.
+ * drawn. What is drawn is the planner — the reader's own scratchpad, scored
+ * against the published projection — plus the two things that genuinely exist
+ * over a horizon: **the fixture run**, from FPL's own difficulty ratings, and
+ * **the captaincy plan** the heuristic engine builds, dotted throughout because
+ * it is a ranking key rather than a simulation.
+ *
+ * ## Nothing here reads another entry's decision
+ *
+ * This screen used to open with a `THE CALL · NOT PUBLISHED` banner and close with
+ * a refusal to draw a horizon, both reading `decision_public_gw{NN}_season.json`.
+ * That artifact belongs to **Ronny**, an automated entry (2561567, see
+ * `pipeline/config.py`), not to the owner's team (20945) — the only team this
+ * screen displays. So the loudest and the longest elements on a planning screen
+ * were both about a cron gate for a team that appears nowhere on it, and had the
+ * file ever published, a bot's transfers would have been drawn under the heading
+ * "Your team over the next N gameweeks". The read is gone with them.
  *
  * ## Difficulty is FPL's number, not ours
  *
@@ -27,20 +37,17 @@
  * run is the one part of a horizon that is known rather than forecast.
  */
 
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import type { FixtureMatrixRow, HeuristicView } from "@/lib/data/heuristics";
-import { decisionDescriptor } from "@/lib/data/narrow";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { proven } from "@/lib/data/artifact";
-import { PlanGrid } from "@/components/margin/PlanGrid";
 import { Planner } from "@/components/margin/Planner";
-import { DecideCard } from "@/components/margin/DecideCard";
 import { REGISTRY, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { PAPER, MONO, SANS, hatch } from "@/lib/margin/tokens";
 import {
-  Eyebrow, Hatch, MarginState, WhenProvenHere,
+  Eyebrow, MarginState, WhenProvenHere,
 } from "@/components/margin/Marks";
 
 const S = PAPER;
@@ -225,9 +232,10 @@ function Captaincy({ view }: { view: HeuristicView }) {
               fontFamily: MONO, fontSize: 12, textAlign: "right", color: S.ink2,
               borderBottom: `1.5px dotted ${S.ink3}`,
             }}
-            title="a heuristic score, not a simulated projection"
+            title="a heuristic score, not a simulated projection — already doubled for the armband"
           >
             {week.projectedCaptainPoints.toFixed(1)}
+            <span style={{ color: S.ink3 }}>{"  \u00d72"}</span>
           </span>
         </div>
       ))}
@@ -242,33 +250,16 @@ function Captaincy({ view }: { view: HeuristicView }) {
 
 export function ScoreView({ gameweek }: { gameweek: number }) {
   const { artifact: heuristics } = useHeuristics();
-  const { artifact: decision } = useArtifact(decisionDescriptor(gameweek, "season"));
   const { artifact: projections } = useArtifact(projectionsDescriptor(gameweek));
-  // The solved horizon, which `decision_public` has carried all along. Null when
-  // the run solved a single gameweek — then this screen is what it was.
-  const horizon = proven(decision)?.horizon ?? null;
-  // Memoised because the `?? []` allocates a new array on every render, and two
-  // hooks below depend on it — without this the name map is rebuilt each pass
-  // over all 587 projections for a lookup that never changed.
+  // Memoised because the `?? []` allocates a new array on every render, and the
+  // planner below takes it as a prop — a fresh array each pass would re-run its
+  // own memos over all 587 projections for a value that never changed.
   const players = useMemo(
     () => proven(projections)?.players ?? [], [projections],
   );
   // Prices, for the transfer scratchpad. `player_stats.json` carries FPL's own
   // element id as `player_id`, so this is an exact join rather than a name match.
   const { artifact: stats } = useArtifact(REGISTRY.playerStats);
-  // Element id → name, for the call card. The projection is already loaded for
-  // the planner, and it carries both, so the card needs no artifact of its own.
-  const names = useMemo(() => {
-    const out = new Map<number, string>();
-    // `name` is nullable on a projection, and a missing one must not become
-    // the string "null" under a captaincy.
-    for (const player of players) {
-      if (player.name !== null) out.set(player.elementId, player.name);
-    }
-    return out;
-  }, [players]);
-  const nameOf = useCallback((id: number) => names.get(id) ?? null, [names]);
-
   const prices = useMemo(() => {
     const out = new Map<number, number>();
     for (const row of (proven(stats) ?? []) as readonly PlayerRow[]) {
@@ -287,11 +278,6 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
       style={{ flex: 1, background: S.shell, color: S.ink, padding: "20px 22px 30px", display: "flex", flexDirection: "column", gap: 22 }}
       data-testid="margin-score"
     >
-      {/* The call, in one line, above the plan it changes. It used to be a tab of
-          its own — five panels, two of them absent most of the time, holding the
-          default view. The answer belongs here; the argument stays at /decide. */}
-      <DecideCard gameweek={gameweek} nameOf={nameOf} of={decision} />
-
       {/* One absent artifact, named once.
           `players` is `proven(projections) ?? []`, which erases the state — so a
           missing xp_public rendered as twenty-two per-player nil marks, each
@@ -328,56 +314,21 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
         />
       )}
 
-      {horizon ? (
-        <div>
-          <Eyebrow surface={S} style={{ marginBottom: 10 }}>
-            Solved horizon &middot; GW{horizon.weeks[0]?.gameweek}&ndash;GW{horizon.weeks[horizon.weeks.length - 1]?.gameweek}
-          </Eyebrow>
-          <h1 style={{ margin: 0, fontFamily: SANS, fontSize: 28, lineHeight: 1.12, letterSpacing: "-.035em", fontWeight: 600, color: S.ink, maxWidth: 780 }}>
-            Your team over the next {horizon.transferHorizon} gameweeks, and the transfers that get you there.
-          </h1>
-          <p style={{ margin: "10px 0 0", fontSize: 13, lineHeight: 1.6, color: S.ink2, maxWidth: 780 }}>
-            One squad problem solved across {horizon.evalHorizon} weeks at once, with
-            transfers decided for the first {horizon.transferHorizon}. The tail is
-            evaluated but not planned into — it is there to price the squad you end
-            up holding, so the optimiser cannot dump a terrible run one week past
-            where it can see.
-          </p>
-          <div style={{ marginTop: 18 }}>
-            <PlanGrid horizon={horizon} projections={players} />
-          </div>
-        </div>
-      ) : (
-      /* The engine's own multi-week solve, a different thing from the planner
-         above: that one is yours, this one would be the optimiser's. A note
-         rather than a headline now — it was the whole screen when the screen had
-         nothing else, and opening by refusing while a working planner sits
-         underneath reads as a contradiction. */
-      <section style={{ borderTop: `1px solid ${S.hair}`, paddingTop: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-          <Hatch surface={S} width={62} height={12} />
-          <Eyebrow surface={S}>The engine has not solved a horizon</Eyebrow>
-        </div>
-        <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.6, color: S.ink2, maxWidth: 780 }}>
-          The planner above is a scratchpad: your moves, your eleven, priced and
-          scored against this gameweek. What is absent is the optimiser&apos;s own
-          multi-week answer — which players it would sell and when, solved rather
-          than chosen. When a run publishes one it appears here as a grid, and
-          until then this screen will not assemble one by sorting per-week
-          projections, because that would carry a solver&apos;s authority with no
-          solve behind it.
-        </p>
-        <div style={{ marginTop: 12 }}>
-          <MarginState
-            of={decision}
-            surface={S}
-            compact
-            what={`The single-gameweek proposal for GW${gameweek} is the closest thing published to a plan.`}
-          />
-        </div>
-      </section>
+      {/* Neither a solved-horizon grid nor a refusal to draw one.
+          Both read `decision_public_gw{NN}_season.json`, which is **Ronny's**
+          plan — an automated entry (2561567, `pipeline/config.py`) — and not the
+          owner's team (20945), the only team this screen displays. Absent, that
+          file put a full-width near-black NOT PUBLISHED banner at the top of his
+          planning screen about a cron gate for a team the app does not display;
+          present, it would have rendered a bot's transfers under the heading
+          "Your team over the next N gameweeks". Neither state was ever about the
+          reader.
 
-      )}
+          The refusal essay went with it. It existed to answer a multi-gameweek
+          claim made elsewhere in the app — the deleted heuristic card's "+3.8 pts
+          over 4 GW" — and with that claim gone there is nothing left for it to
+          answer. The planner above already says in its own footnote that the
+          later columns are fixtures rather than a solved eleven. */}
 
       <WhenProvenHere
         of={heuristics}

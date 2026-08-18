@@ -406,8 +406,12 @@ function CaptaincyRows({ weeks }: { weeks: readonly HeuristicCaptainWeek[] }) {
               <td className="text-sm" style={{ color: "var(--text-3)" }}>
                 {week.viceCaptain.name}
               </td>
-              <td className="text-center font-mono text-sm">
+              <td
+                className="text-center font-mono text-sm"
+                title="already doubled for the armband"
+              >
                 {week.projectedCaptainPoints.toFixed(1)}
+                <span style={{ color: "var(--text-3)" }}>{"  \u00d72"}</span>
               </td>
               <td className="text-center hidden md:table-cell">
                 <Confidence value={week.confidence} />

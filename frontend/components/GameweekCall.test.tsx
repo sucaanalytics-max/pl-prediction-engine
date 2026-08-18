@@ -16,25 +16,35 @@
  */
 
 import { describe, expect, it, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 
+/**
+ * Every pick carries FPL's own `elementId`, because that is now the join key.
+ *
+ * The projection and the squad are matched on `elementId` via
+ * `pointsFrom`/`optimiseXi` rather than on a folded name and position. These ids
+ * used to be `0` on every projection and absent from every pick, which the old
+ * name-matching code did not care about — so a fixture that cannot possibly join
+ * still produced a full call. Numbering them is what makes these tests exercise
+ * the join the app actually performs.
+ */
 const SQUAD = {
   players: [
-    { name: "Verbruggen", position: "GKP", team: "BHA", price: 4.5, bench: false },
-    { name: "Gvardiol", position: "DEF", team: "MCI", price: 5.5, bench: false },
-    { name: "Calafiori", position: "DEF", team: "ARS", price: 5.5, bench: false },
-    { name: "Shaw", position: "DEF", team: "MUN", price: 4.5, bench: false },
-    { name: "B.Fernandes", position: "MID", team: "MUN", price: 12.0, bench: false },
-    { name: "Szoboszlai", position: "MID", team: "LIV", price: 7.0, bench: false },
-    { name: "Semenyo", position: "MID", team: "MCI", price: 8.5, bench: false },
-    { name: "Mbeumo", position: "MID", team: "MUN", price: 8.0, bench: false },
-    { name: "E.Le Fée", position: "MID", team: "SUN", price: 6.0, bench: false },
-    { name: "João Pedro", position: "FWD", team: "CHE", price: 7.5, bench: false },
-    { name: "Thiago", position: "FWD", team: "BRE", price: 8.0, bench: false },
-    { name: "Kinsky", position: "GKP", team: "TOT", price: 4.5, bench: true },
-    { name: "Mateta", position: "FWD", team: "CRY", price: 6.5, bench: true },
-    { name: "Thomas", position: "DEF", team: "COV", price: 4.0, bench: true },
-    { name: "F.Kadıoğlu", position: "DEF", team: "BHA", price: 4.5, bench: true },
+    { elementId: 101, name: "Verbruggen", position: "GKP", team: "BHA", price: 4.5, bench: false },
+    { elementId: 102, name: "Gvardiol", position: "DEF", team: "MCI", price: 5.5, bench: false },
+    { elementId: 103, name: "Calafiori", position: "DEF", team: "ARS", price: 5.5, bench: false },
+    { elementId: 104, name: "Shaw", position: "DEF", team: "MUN", price: 4.5, bench: false },
+    { elementId: 105, name: "B.Fernandes", position: "MID", team: "MUN", price: 12.0, bench: false },
+    { elementId: 106, name: "Szoboszlai", position: "MID", team: "LIV", price: 7.0, bench: false },
+    { elementId: 107, name: "Semenyo", position: "MID", team: "MCI", price: 8.5, bench: false },
+    { elementId: 108, name: "Mbeumo", position: "MID", team: "MUN", price: 8.0, bench: false },
+    { elementId: 109, name: "E.Le Fée", position: "MID", team: "SUN", price: 6.0, bench: false },
+    { elementId: 110, name: "João Pedro", position: "FWD", team: "CHE", price: 7.5, bench: false },
+    { elementId: 111, name: "Thiago", position: "FWD", team: "BRE", price: 8.0, bench: false },
+    { elementId: 112, name: "Kinsky", position: "GKP", team: "TOT", price: 4.5, bench: true },
+    { elementId: 113, name: "Mateta", position: "FWD", team: "CRY", price: 6.5, bench: true },
+    { elementId: 114, name: "Thomas", position: "DEF", team: "COV", price: 4.0, bench: true },
+    { elementId: 115, name: "F.Kadıoğlu", position: "DEF", team: "BHA", price: 4.5, bench: true },
   ],
   value: 96.5, bank: 3.5, formation: "3-5-2", source: "captured_authenticated_draft",
 };
@@ -48,15 +58,34 @@ const XP: Record<string, number> = {
 };
 
 const PROJECTIONS = SQUAD.players.map((p) => ({
-  elementId: 0, name: p.name, team: null, position: p.position,
+  elementId: p.elementId, name: p.name, team: null, position: p.position,
   xp: XP[p.name] ?? null, xpSd: null, mode: 2, pAppears: null, p60: null,
   eMinutes: null, pGoal: null, pCleanSheet: null, pGe5: null, pGe10: null,
-  q10: null, q90: null, decomposition: null,
+  q10: null, q90: null, decomposition: null, blank: false,
 }));
 
-function mountWith({
-  squad = SQUAD, projections = PROJECTIONS, conflicts = [] as Array<{ player: string }>,
-} = {}) {
+type Squad = typeof SQUAD;
+type Projections = typeof PROJECTIONS;
+
+/**
+ * Typed explicitly so `{ projections: null }` is a legal call.
+ *
+ * Inferring the defaults gave `projections` the type of the fixture array, and
+ * the "absent projection" test below has been a standing `tsc` error ever since
+ * it was written — passing `null` to a parameter whose type came from a non-null
+ * default. The absent case is a real state, so the signature admits it.
+ */
+function mountWith(
+  {
+    squad = SQUAD as Squad | null,
+    projections = PROJECTIONS as Projections | null,
+    conflicts = [] as Array<{ player: string }>,
+  }: {
+    squad?: Squad | null;
+    projections?: Projections | null;
+    conflicts?: Array<{ player: string }>;
+  } = {},
+) {
   vi.resetModules();
   const ok = (value: unknown) => ({
     artifact: {
@@ -173,6 +202,83 @@ describe("what it refuses to do", () => {
     const { default: C } = await mountWith({ projections: null });
     const { container } = render(<C />);
     expect(container.querySelector("[data-weight='line']")).toBeTruthy();
+  });
+});
+
+/**
+ * The join, which is where a call can silently lose a player.
+ *
+ * This component used to match the squad against the projection on a folded name
+ * plus position and refuse the match on collision. A refused match here did not
+ * print a dash — it removed the player from the pool, so the "best eleven" was
+ * chosen from fourteen, or the card collapsed entirely to "the projection does not
+ * cover enough of the squad". Today's shipped `xp_public_gw01.json` contains two
+ * such collisions (`kamara/MID`, `sangare/MID`), so this is a live shape rather
+ * than an invented one.
+ */
+describe("two players who fold to the same name and position", () => {
+  const COLLIDING = {
+    ...SQUAD,
+    players: SQUAD.players.map((p) => (
+      // Both midfielders become "Kamara/MID" — the exact collision in the live
+      // artifact — while keeping their own ids and their own projections.
+      p.name === "B.Fernandes" || p.name === "Mbeumo"
+        ? { ...p, name: "Kamara" }
+        : p
+    )),
+  };
+
+  const COLLIDING_PROJECTIONS = PROJECTIONS.map((p) => (
+    p.name === "B.Fernandes" || p.name === "Mbeumo" ? { ...p, name: "Kamara" } : p
+  ));
+
+  it("keeps both, because the join is on FPL's id and not on the name", async () => {
+    const { default: C } = await mountWith({
+      squad: COLLIDING, projections: COLLIDING_PROJECTIONS,
+    });
+    const text = render(<C />).container.textContent ?? "";
+    // Fernandes is still the captain at his own 5.77, not dropped and not given
+    // Mbeumo's 3.91.
+    expect(text).toContain("5.77 xP");
+    expect(text).not.toMatch(/does not cover enough/i);
+  });
+
+  it("still solves the same eleven as it does with distinct names", async () => {
+    const { default: Plain } = await mountWith();
+    const before = render(<Plain />).container.textContent ?? "";
+    cleanup();
+    const { default: Collided } = await mountWith({
+      squad: COLLIDING, projections: COLLIDING_PROJECTIONS,
+    });
+    const after = render(<Collided />).container.textContent ?? "";
+    // The totals are the assertion: a dropped player changes them.
+    const totals = (t: string) => t.match(/\d+\.\d\d → \d+\.\d\d/)?.[0];
+    expect(totals(after)).toBe(totals(before));
+  });
+});
+
+/**
+ * One definition of "projected total", stated on the surface that prints it.
+ *
+ * `/now` printed 48.20 and `/margin` printed 54.9 for the same squad and the same
+ * artifact — the difference was the captain's projection, added once more on
+ * `/margin`. Both were defensible and neither screen said which it was. So the
+ * number is now the bare XI sum on both, and this surface names that.
+ */
+describe("the projected total", () => {
+  it("says the captain is not doubled in it", async () => {
+    const { default: C } = await mountWith();
+    expect(render(<C />).container.textContent)
+      .toMatch(/captain not doubled/i);
+  });
+
+  it("is the bare sum of the eleven, not the sum plus the armband", async () => {
+    const { default: C } = await mountWith();
+    const text = render(<C />).container.textContent ?? "";
+    // 42.60 is the XI sum; 48.37 is that sum with B.Fernandes counted twice, and
+    // it is what `optimiseXi` compares formations on. It must not be rendered.
+    expect(text).toContain("42.60");
+    expect(text).not.toContain("48.37");
   });
 });
 

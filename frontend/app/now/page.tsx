@@ -191,7 +191,7 @@ export default function NowPage() {
 
         <Section
           title="Your squad"
-          subtitle="The fifteen, and the one move worth making"
+          subtitle="The fifteen, with the model's projection for each of them"
         >
           <SquadBoard />
         </Section>

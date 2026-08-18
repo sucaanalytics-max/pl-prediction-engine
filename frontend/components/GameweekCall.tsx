@@ -7,6 +7,8 @@ import { proven } from "@/lib/data/artifact";
 import { projectionsDescriptor, type Projection } from "@/lib/data/projections";
 import { minutesConflictsDescriptor } from "@/lib/data/minutes-conflicts";
 import { StateCard } from "@/components/data/Artifact";
+import { optimiseXi, pointsFrom, projectedTotal } from "@/lib/margin/planner";
+import { fold } from "@/lib/margin/squad";
 import type { SquadPlayer } from "@/lib/data/heuristics";
 
 /**
@@ -47,74 +49,31 @@ import type { SquadPlayer } from "@/lib/data/heuristics";
  * one anyway is how the heuristic ended up recommending the sale of a 3.9 xP
  * defender. The honest surface for a single-gameweek projection is the team you
  * already own.
- */
-
-const ORDER: Record<string, number> = { GKP: 0, DEF: 1, MID: 2, FWD: 3 };
-
-/** Lowercase, strip accents, and fold Turkish dotless ı, which does not decompose. */
-function fold(value: string): string {
-  return value.normalize("NFKD").replace(/[̀-ͯ]/g, "")
-    .replace(/ı/g, "i").toLowerCase().trim();
-}
-
-interface Rated extends SquadPlayer {
-  readonly xp: number | null;
-  readonly eMinutes: number | null;
-}
-
-/**
- * Join the squad to the projection on name and position.
  *
- * Not club: `SquadPlayer.team` is FPL's short code (`LIV`) and the projection
- * carries the full name (`Liverpool`), so a club comparison matches nothing —
- * measured. Ambiguity is refused rather than guessed, since FPL has six Wilsons.
- */
-function rate(players: readonly SquadPlayer[], projections: readonly Projection[]): Rated[] {
-  return players.map((p) => {
-    const hits = projections.filter(
-      (x) => fold(x.name ?? "") === fold(p.name)
-        && fold(x.position ?? "") === fold(p.position),
-    );
-    const hit = hits.length === 1 ? hits[0] : null;
-    return { ...p, xp: hit?.xp ?? null, eMinutes: hit?.eMinutes ?? null };
-  });
-}
-
-/**
- * The highest-scoring legal XI from the fifteen.
+ * ## Why none of the arithmetic lives here any more
  *
- * FPL requires exactly one keeper, at least three defenders, at least one forward,
- * eleven in total. Small enough to solve exhaustively: take the best keeper, the
- * minimum at each position, then fill the remaining outfield slots by xP. That is
- * optimal because the only constraints are minimums — once they are met, every
- * remaining slot is free, so the greedy fill cannot be beaten.
+ * This file used to carry its own `rate`, `bestEleven` and `total` — a name-and-
+ * position join and a greedy XI fill — beside a second, differently-behaved copy in
+ * `lib/margin/planner.ts`. Two consequences, both measured:
+ *
+ *  - **The join could drop a player.** It folded name and position and refused on
+ *    collision, and `xp_public_gw01.json` ships two colliding folded pairs
+ *    (`kamara/MID`, `sangare/MID`). A collision here did not show a dash, it
+ *    removed the player from the eleven — or, if it hit enough of them, collapsed
+ *    this whole card. {@link pointsFrom} keys on `elementId`, FPL's own id, and
+ *    additionally drops a player whose gameweek is `blank`; this surface had no
+ *    blank guard at all, so a blank gameweek could have started a player with no
+ *    fixture.
+ *  - **The totals disagreed with `/margin`.** Both numbers were defensible and
+ *    neither screen said which it was. {@link projectedTotal} is now the only
+ *    definition of the phrase, and the line below states that the captain is not
+ *    doubled in it — the captain's own doubling is printed on the captain's line,
+ *    where the reader asked for it.
+ *
+ * The greedy fill was also only *nearly* right: it was optimal given minimum-only
+ * constraints, which is not the game's rule set. {@link optimiseXi} is exhaustive
+ * over the legal formations, respects the maxima, and is already tested.
  */
-function bestEleven(rated: Rated[]): Rated[] {
-  const scored = rated.filter((p) => p.xp !== null);
-  const by = (pos: string) => scored.filter((p) => p.position === pos)
-    .sort((a, b) => (b.xp ?? 0) - (a.xp ?? 0));
-
-  const keeper = by("GKP").slice(0, 1);
-  const defs = by("DEF");
-  const mids = by("MID");
-  const fwds = by("FWD");
-  if (keeper.length < 1 || defs.length < 3 || fwds.length < 1) return [];
-
-  const required = [...defs.slice(0, 3), ...fwds.slice(0, 1)];
-  const chosen = new Set(required.map((p) => p.name));
-  const rest = [...defs.slice(3), ...mids, ...fwds.slice(1)]
-    .filter((p) => !chosen.has(p.name))
-    .sort((a, b) => (b.xp ?? 0) - (a.xp ?? 0))
-    .slice(0, 11 - 1 - required.length);
-
-  return [...keeper, ...required, ...rest]
-    .sort((a, b) => (ORDER[a.position] ?? 9) - (ORDER[b.position] ?? 9)
-      || (b.xp ?? 0) - (a.xp ?? 0));
-}
-
-function total(players: readonly Rated[]): number {
-  return players.reduce((sum, p) => sum + (p.xp ?? 0), 0);
-}
 
 export default function GameweekCall() {
   const { artifact: heuristics } = useHeuristics();
@@ -131,20 +90,25 @@ export default function GameweekCall() {
 
   const call = useMemo(() => {
     if (!squad || projections.length === 0) return null;
-    const rated = rate(squad.players, projections);
-    const current = rated.filter((p) => !p.bench);
-    const best = bestEleven(rated);
-    if (best.length !== 11) return null;
+    const points = pointsFrom(projections);
+    const best = optimiseXi(squad.players, points);
+    if (!best || best.xi.length !== 11) return null;
 
-    const inBest = new Set(best.map((p) => p.name));
-    const inCurrent = new Set(current.map((p) => p.name));
+    // Identity sets, not name sets: `optimiseXi` returns the very objects it was
+    // given, and two players can share a name.
+    const current = squad.players.filter((p) => !p.bench);
+    const inBest = new Set(best.xi);
+    const inCurrent = new Set(current);
+    const xpOf = (p: SquadPlayer) =>
+      (p.elementId === undefined ? undefined : points.get(p.elementId)) ?? null;
+
     return {
-      best,
-      captain: [...best].sort((a, b) => (b.xp ?? 0) - (a.xp ?? 0))[0] ?? null,
-      bringIn: best.filter((p) => !inCurrent.has(p.name)),
-      sitDown: current.filter((p) => !inBest.has(p.name)),
-      currentTotal: total(current),
-      bestTotal: total(best),
+      captain: best.captain,
+      captainXp: best.captain ? xpOf(best.captain) : null,
+      bringIn: best.xi.filter((p) => !inCurrent.has(p)),
+      sitDown: current.filter((p) => !inBest.has(p)),
+      currentTotal: projectedTotal(current, points),
+      bestTotal: projectedTotal(best.xi, points),
     };
   }, [squad, projections]);
 
@@ -187,8 +151,8 @@ export default function GameweekCall() {
         <p className="text-sm" style={{ color: "var(--text-1)" }}>
           <strong>Captain</strong> {call.captain.name}
           <span className="font-mono" style={{ color: "var(--text-3)" }}>
-            {"  "}{(call.captain.xp ?? 0).toFixed(2)} xP · doubled{" "}
-            {((call.captain.xp ?? 0) * 2).toFixed(2)}
+            {"  "}{(call.captainXp ?? 0).toFixed(2)} xP · doubled{" "}
+            {((call.captainXp ?? 0) * 2).toFixed(2)}
           </span>
           {suspect.has(fold(call.captain.name)) ? (
             <span className="text-[10px]" style={{ color: "var(--warning)" }}>
@@ -215,9 +179,15 @@ export default function GameweekCall() {
               </>
             ) : null}
           </p>
+          {/* Labelled, because `/margin` prints a total for the same eleven and
+              the two used to differ by the captain's projection with nothing on
+              either screen saying so. One definition now, named on both. */}
           <p className="text-xs font-mono" style={{ color: "var(--text-3)" }}>
             {call.currentTotal.toFixed(2)} → {call.bestTotal.toFixed(2)} xP
             {"  (+"}{gain.toFixed(2)}{")"}
+            <span style={{ color: "var(--text-4)" }}>
+              {"  "}· XI total, captain not doubled
+            </span>
           </p>
           {/* Naming the players whose projection is contested is the difference
               between advice and advice you can weigh. */}

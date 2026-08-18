@@ -92,6 +92,32 @@ function draw(weeks = 3, horizon: typeof HORIZON | null = null) {
 
 afterEach(cleanup);
 
+/**
+ * The headline number, which used to mean something other than its label.
+ *
+ * `projected GW1` was computed as the XI sum PLUS the captain's projection again,
+ * so this screen printed 54.9 where `/now` printed 48.20 for the same squad and
+ * the same artifact. Both were defensible; neither screen said which it was. The
+ * label says "projected", so the number is now the projection — `projectedTotal`,
+ * shared with `/now`. The doubling still decides which formation wins inside
+ * `optimiseXi` and is never rendered.
+ */
+describe("the projected total", () => {
+  it("is the sum of the eleven, not the sum plus the armband", () => {
+    const { container } = draw();
+    // Numeric, not string: the surrounding text puts a digit immediately before
+    // the total, so the capture can pick up a leading character.
+    const shown = Number(container.textContent?.match(/([\d.]+)\s*projected/)?.[1]);
+    // xp runs 6.0 down to 4.6 over ids 1–15, so the best legal shape is 5-4-1:
+    // 6.0 + (5.8+5.7+5.6+5.5+5.4) + (5.3+5.2+5.1+5.0) + 4.8 = 59.4.
+    expect(shown).toBeCloseTo(59.4, 5);
+    // 65.4 is that total with the 6.0 captain counted twice — `optimiseXi.total`,
+    // which is a comparison key and must never reach the screen.
+    expect(shown).not.toBeCloseTo(65.4, 5);
+    expect(container.textContent).toMatch(/projected GW1/);
+  });
+});
+
 describe("the XI switch says what it governs by where it is", () => {
   it("gives every row exactly one, in the first gameweek", () => {
     const { container } = draw();

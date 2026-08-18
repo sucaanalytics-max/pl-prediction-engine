@@ -45,11 +45,27 @@ function ok(plan: Record<string, unknown> = {}): Artifact<PublicDecision> {
 }
 
 /** The same envelope with nothing behind it, which is the common case. */
-function absent(state: "absent" | "unreadable", reason: string): Artifact<PublicDecision> {
+function absent(state: "absent" | "unreadable", _reason: string): Artifact<PublicDecision> {
   return classify({
     path: PATH,
     source: "none",
     raw: state === "unreadable" ? { gameweek: "not a number" } : undefined,
+    narrow: narrowPublicDecision,
+    now: new Date("2026-08-17T00:00:00Z"),
+  });
+}
+
+/** Published, and carrying no plan — which no state label covers. */
+function noPlan(): Artifact<PublicDecision> {
+  return classify({
+    path: PATH,
+    source: "local",
+    raw: {
+      gameweek: 1,
+      entry_label: "season",
+      decision: { mean_points: 59.6, plan: null },
+      credible_margin: true,
+    },
     narrow: narrowPublicDecision,
     now: new Date("2026-08-17T00:00:00Z"),
   });
@@ -96,31 +112,55 @@ describe("the move line", () => {
   });
 });
 
+/**
+ * The states that are not a call, which now render nothing.
+ *
+ * This card used to print a `THE CALL · NOT PUBLISHED` line whenever the artifact
+ * was absent, and it was mounted at the top of `/margin` — so for the ten days of
+ * every cycle that the deadline-gated writer is idle, the loudest element on the
+ * owner's planning screen was an alarm about a cron gate.
+ *
+ * And the artifact it was alarming about is `decision_public_gw01_season.json`,
+ * which is the plan for **Ronny** — an automated entry (2561567, see
+ * `pipeline/config.py`) — not the owner's team (20945), the only team this app
+ * displays. So the banner reported the absence of a file about a team that appears
+ * nowhere on the screen it was interrupting.
+ *
+ * The tests that pinned the wording of that banner are gone with it. What is
+ * pinned instead is that absence is silent: the state is still named once, lower
+ * down, by whichever view is reading the artifact.
+ */
 describe("the states that are not a call", () => {
-  it("carries the artifact's own reason rather than a scheduling sentence", () => {
-    /**
-     * This printed "not solved for GW1 yet — the engine runs on the deadline"
-     * for absent, stale, unreadable and empty alike. A 500 reported as a
-     * schedule is a claim about the world that the app cannot support, and
-     * ScoreView lower on the same page printed the true reason.
-     */
-    render(<DecideCard gameweek={1} of={absent("unreadable", "malformed")} />);
-    const card = screen.getByTestId("decide-card");
-    expect(card).toHaveAttribute("data-state", "unreadable");
-    // The state is named and the reason travels with it — whatever the
-    // classifier's wording. What must not appear is a claim about scheduling,
-    // which is a fact about the world this artifact cannot support.
-    expect(card.textContent).toContain("Unreadable");
-    expect(card.textContent).not.toContain("the engine runs on the deadline");
+  it("renders nothing at all when nothing is published", () => {
+    const { container } = render(
+      <DecideCard gameweek={1} of={absent("absent", "Nothing published yet.")} />,
+    );
+    expect(container).toBeEmptyDOMElement();
+    expect(screen.queryByTestId("decide-card")).toBeNull();
   });
 
-  it("distinguishes an absent decision from an unreadable one", () => {
-    render(<DecideCard gameweek={1} of={absent("absent", "Nothing published yet.")} />);
-    expect(screen.getByTestId("decide-card")).toHaveAttribute("data-state", "absent");
+  it("renders nothing when the artifact is unreadable, rather than an alarm", () => {
+    // An unreadable artifact is a real problem and worth reporting — but not here,
+    // and not as the largest thing on a planning screen. `MarginState` reports it.
+    const { container } = render(
+      <DecideCard gameweek={1} of={absent("unreadable", "malformed")} />,
+    );
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it("keeps the way through to the argument in every state", () => {
-    render(<DecideCard gameweek={1} of={absent("absent", "Nothing published yet.")} />);
-    expect(screen.getByText(/why/).closest("a")).toHaveAttribute("href", "/decide");
+  it("renders nothing for a decision published with no plan in it", () => {
+    const { container } = render(<DecideCard gameweek={1} of={noPlan()} />);
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it("never names another entry's artifact to the reader", () => {
+    // The specific harm: the owner reading a NOT PUBLISHED notice about a bot's
+    // file, on his own screen, hours before his deadline.
+    const { container } = render(
+      <DecideCard gameweek={1} of={absent("absent", "Nothing published yet.")} />,
+    );
+    const text = container.textContent ?? "";
+    expect(text).not.toMatch(/not published/i);
+    expect(text).not.toMatch(/the call/i);
   });
 });

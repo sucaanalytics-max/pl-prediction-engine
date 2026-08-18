@@ -485,18 +485,43 @@ describe("Research", () => {
 });
 
 describe("Score", () => {
-  it("refuses to draw a horizon nobody solved", async () => {
-    // The refusal is a note under the planner now, not the headline it was when
-    // the screen had nothing else — but it still has to be on the page, and it
-    // still has to distinguish the reader's scratchpad from the optimiser's
-    // unsolved answer.
+  it("says nothing at all about another entry's decision artifact", async () => {
+    /**
+     * What this replaces, and why the replacement is an absence.
+     *
+     * The screen used to open with a full-width near-black `THE CALL · NOT
+     * PUBLISHED` banner, and close with an eyebrow reading "The engine has not
+     * solved a horizon" over a seventy-five-word essay and a third state line.
+     * All three read `decision_public_gw{NN}_season.json`.
+     *
+     * That artifact is the plan for **Ronny**, an automated entry (2561567, see
+     * `pipeline/config.py`), not the owner's team (20945) — the only team this
+     * screen displays. So the loudest and the longest elements on his planning
+     * screen were both about a cron gate for a team the app does not show, hours
+     * before his own deadline. And had the file ever published, the same code
+     * would have drawn a bot's transfers under the heading "Your team over the
+     * next N gameweeks".
+     *
+     * The refusal essay also existed to answer a four-gameweek claim made by the
+     * heuristic card on `/now`, which is deleted; there is nothing left for it to
+     * answer.
+     */
     await renderMargin();
     go("plan");
-    expect(
-      await screen.findByText(/The engine has not solved a horizon/),
-    ).toBeInTheDocument();
-    expect(screen.getByText(/would carry a solver's authority with no\s+solve behind it/))
-      .toBeInTheDocument();
+    await screen.findByTestId("margin-planner");
+    expect(screen.queryByTestId("decide-card")).toBeNull();
+    expect(screen.queryByText(/The engine has not solved a horizon/)).toBeNull();
+    expect(screen.queryByText(/NOT PUBLISHED/i)).toBeNull();
+    expect(screen.queryByText(/Your team over the next/)).toBeNull();
+  });
+
+  it("still says which artifact is missing when the projection is absent", async () => {
+    // The deletion above must not have taken the honest states with it: the
+    // projection is the artifact this screen genuinely depends on, and it is the
+    // owner's, not a bot's.
+    await renderMargin({ ...ALL_PRESENT, [PATHS.projections]: undefined });
+    go("plan");
+    expect(await screen.findByText(/the projection for GW1/)).toBeInTheDocument();
   });
 
   it("plans without waiting for the engine", async () => {

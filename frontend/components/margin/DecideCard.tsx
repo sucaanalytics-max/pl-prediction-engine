@@ -16,20 +16,30 @@
  * written and still reachable at `/decide`; it is a drill-down now rather than
  * the thing you land on.
  *
- * ## Absence is the normal state, not an error
+ * ## Absence renders nothing at all
  *
- * The agent is deadline-gated and idle for roughly ten days of every cycle, so
- * `decision_public_gw{NN}_{label}.json` is absent far more often than not. The
- * card says which artifact is missing and why in one line, and takes one line to
- * do it — the whole point of demoting the screen was to stop absence occupying
- * the top of the page.
+ * This used to print a `THE CALL · NOT PUBLISHED` line whenever the artifact was
+ * absent — which is roughly ten days of every cycle, since the writing agent is
+ * deadline-gated. Mounted at the top of `/margin`, that made the loudest element
+ * on the owner's planning screen an alarm about a cron gate. Worse, the artifact
+ * it named, `decision_public_gw{NN}_season.json`, is the plan for **Ronny**, an
+ * automated entry (2561567, `pipeline/config.py`), not the owner's team (20945) —
+ * so the banner was reporting the absence of a file about a team the app does not
+ * display.
+ *
+ * So absence now renders nothing. A card that has no call to deliver is not a
+ * state worth a line; the artifact's real state is still named once, lower on
+ * whatever screen is reading it, by `MarginState`.
+ *
+ * Nothing currently mounts this component — `ScoreView` dropped it with the read
+ * — and it is kept only because `/decide` remains the home of the argument it
+ * summarises.
  */
 
 import Link from "next/link";
 import { proven, type Artifact } from "@/lib/data/artifact";
 import type { PublicDecision } from "@/lib/data/narrow";
 import { INK, MONO } from "@/lib/margin/tokens";
-import { MarginState } from "@/components/margin/Marks";
 
 const S = INK;
 
@@ -42,8 +52,12 @@ function nameFor(id: number, nameOf?: NameOf): string {
 }
 
 export function DecideCard(
-  { gameweek, nameOf, of }: {
-    gameweek: number;
+  { nameOf, of }: {
+    /**
+     * Which gameweek the caller is showing. Accepted, no longer read: it named
+     * the week only in the absent banner, and that banner is gone.
+     */
+    gameweek?: number;
     nameOf?: NameOf;
     /**
      * The decision the planner below is already reading.
@@ -66,43 +80,10 @@ export function DecideCard(
     fontFamily: MONO, fontSize: 11.5,
   };
 
-  if (!call || !call.plan) {
-    /**
-     * Four different no-value states, and they are not the same fact.
-     *
-     * This used to print "not solved for GW{n} yet — the engine runs on the
-     * deadline" for absent, stale, unreadable, empty AND the pre-fetch state,
-     * discarding `of.reason` entirely. A Supabase 500 was reported as a
-     * scheduling fact, and a solve that merely failed to narrow was reported as
-     * an idle engine — while ScoreView, lower on the same page, printed the
-     * true reason. A page contradicting itself is worse than a page saying
-     * nothing.
-     *
-     * `MarginState` already names each state and carries the reason, so this
-     * defers to it rather than keeping a second vocabulary. `plan === null` on
-     * an otherwise-ok artifact is its own case: the decision was published and
-     * carries no plan, which no state label covers.
-     */
-    return (
-      <div data-testid="decide-card" data-state={of.state}
-           style={{ ...frame, color: S.ink }}>
-        <span style={{ letterSpacing: ".08em", textTransform: "uppercase",
-                       fontSize: 10, opacity: .55 }}>
-          the call
-        </span>
-        {call && !call.plan ? (
-          <span style={{ opacity: .7 }}>
-            published for GW{gameweek} with no plan in it
-          </span>
-        ) : (
-          <MarginState of={of} what={`the call for GW${gameweek} —`} surface={S} compact />
-        )}
-        <Link href="/decide" style={{ marginLeft: "auto", color: "inherit", opacity: .6 }}>
-          why →
-        </Link>
-      </div>
-    );
-  }
+  // No call, or a call with no plan in it: render nothing rather than an alarm.
+  // See the docstring — this file's absent state was a NOT PUBLISHED banner about
+  // another team's artifact, mounted above the owner's own plan.
+  if (!call || !call.plan) return null;
 
   const { plan } = call;
   /**
