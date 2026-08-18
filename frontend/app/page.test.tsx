@@ -530,11 +530,20 @@ describe("the default behaviour /margin depends on is unchanged", () => {
   });
 
   it("keeps dimming every week a player does not start, solved or not", () => {
+    /**
+     * `cells.every(...)` on its own passes with ZERO cells examined, so this used
+     * to be satisfied by a `/margin` that had stopped rendering non-starting rows
+     * at all — the opposite of the behaviour it is here to pin. The sibling
+     * assertion above guards it properly; this now does the same.
+     */
     const { container } = drawDefault();
     const benched = [...container.querySelectorAll("[data-testid='planner-row']")]
       .find((row) => row.getAttribute("data-starting") === "false");
+    expect(benched, "no benched row to check").toBeDefined();
     const cells = [...(benched?.querySelectorAll("[data-testid='planner-cell']") ?? [])]
       .map((cell) => (cell as HTMLElement).style.opacity);
+    expect(cells.length, "no cells to check, so `every` would pass vacuously")
+      .toBe(6);
     expect(cells.every((o) => o === "0.45")).toBe(true);
   });
 });
