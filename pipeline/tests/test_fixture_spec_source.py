@@ -83,3 +83,26 @@ class FixtureSpecsFromFixtureXg(unittest.TestCase):
         specs = fixture_specs_from_fixture_xg(artifact, gameweeks=[1])
         arsenal = next(s for s in specs if s.home_team == "Arsenal")
         self.assertEqual(arsenal.rate_source, "unknown")
+
+    def test_returns_nothing_for_an_empty_gameweek_list(self):
+        """gameweeks=[] must mean "simulate nothing", not "no filter"."""
+        specs = fixture_specs_from_fixture_xg(_artifact(), gameweeks=[])
+        self.assertEqual(specs, [])
+
+    def test_a_malformed_row_does_not_discard_the_rest_of_the_batch(self):
+        """One bad value must drop only its own fixture, per the docstring's
+        promise, not raise and take the whole batch down with it."""
+        artifact = {
+            "fixtures": [
+                {"match_id": "1", "gameweek": "GW1",
+                 "home_team": "Arsenal", "away_team": "Coventry City",
+                 "lambda_home": 2.471716, "mu_away": 0.661262,
+                 "rate_source": "market_blend"},
+                {"match_id": "2", "gameweek": 1,
+                 "home_team": "Hull City", "away_team": "Man United",
+                 "lambda_home": 0.917505, "mu_away": 2.028719,
+                 "rate_source": "market_blend"},
+            ],
+        }
+        specs = fixture_specs_from_fixture_xg(artifact)
+        self.assertEqual([s.home_team for s in specs], ["Hull City"])

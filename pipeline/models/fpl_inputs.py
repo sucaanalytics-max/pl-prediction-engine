@@ -387,7 +387,14 @@ def fixture_specs_from_fixture_xg(fixture_xg, gameweeks=None):
         gameweek = row.get("gameweek")
         if gameweek is None:
             continue
-        gameweek = int(gameweek)
+        try:
+            gameweek = int(gameweek)
+        except (TypeError, ValueError):
+            logger.warning(
+                "fixture_xg row has a non-numeric gameweek %r; dropping it",
+                row.get("gameweek"),
+            )
+            continue
         if wanted is not None and gameweek not in wanted:
             continue
 
@@ -405,14 +412,25 @@ def fixture_specs_from_fixture_xg(fixture_xg, gameweeks=None):
             )
             continue
 
+        try:
+            lambda_home = float(lambda_home)
+            mu_away = float(mu_away)
+        except (TypeError, ValueError):
+            logger.warning(
+                "fixture_xg row GW%s %s v %s has a non-numeric rate "
+                "(lambda_home=%r, mu_away=%r); dropping it",
+                gameweek, home, away, lambda_home, mu_away,
+            )
+            continue
+
         specs.append(
             FixtureSpec(
                 match_id=str(row.get("match_id", f"{home}_{away}")),
                 gameweek=gameweek,
                 home_team=home,
                 away_team=away,
-                lambda_home=float(lambda_home),
-                mu_away=float(mu_away),
+                lambda_home=lambda_home,
+                mu_away=mu_away,
                 kickoff=row.get("kickoff"),
                 # Never leave this null. A null source is indistinguishable from
                 # "nobody wired provenance", which is the bug this replaces.
