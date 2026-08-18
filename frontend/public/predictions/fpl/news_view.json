@@ -1,17 +1,53 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-18T21:48:12.158601Z",
-  "n_dropped": 66,
+  "generated_at": "2026-08-18T22:22:49.040026Z",
+  "n_dropped": 71,
   "dropped_by_source": {
-    "bbc_football": 40,
-    "sky_football": 26
+    "bbc_football": 42,
+    "sky_football": 29
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 156,
+  "n_articles": 161,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "72fb89e1ceb41498",
+      "headline": "Chelsea latest: Napoli make enquiry for Aston Villa target Jackson",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-18T22:50:00Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ad6c309ab6ea852a",
+      "headline": "Papers: Barca midfielder rejects chance to join Man Utd",
+      "summary": "The top stories and transfer rumours from Wednesday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13574535/man-utd-transfer-news-barcelona-midfielder-gavi-rejects-chance-to-join-old-trafford-paper-talk",
+      "claimed_at": "2026-08-18T22:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "1decf780158ddcea",
       "headline": "Palace latest: Gozo joins from MLS side Real Salt Lake",
@@ -20,6 +56,60 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
       "claimed_at": "2026-08-18T22:09:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "d0471022c6be4aaa",
+      "headline": "Football Daily",
+      "summary": "Arsenal seek to defend their Premier League title, but how difficult will that be?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0p56288?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-18T21:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "3d9029542976e3bd",
+      "headline": "Football Daily",
+      "summary": "After a long couple of seasons for Spurs, can Roberto De Zerbi's turn the club around?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0p56141?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-18T21:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "0695b65761d511fb",
+      "headline": "Palace sign United States prospect Gozo",
+      "summary": "Crystal Palace sign forward Zavier Gozo from Real Salt Lake for a reported $15m (\u00a311.08m).",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cpq80q88dyqo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-18T21:26:12Z",
       "players": [
         {
           "element_id": 0,
@@ -511,6 +601,24 @@
       "touches_squad": null
     },
     {
+      "digest": "5cd79fd1462058af",
+      "headline": "Man Utd latest: Zirkzee linked with Italy move - new forward in?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-18T11:40:00Z",
+      "players": [
+        {
+          "element_id": 440,
+          "name": "Zirkzee",
+          "club": "MUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "67cd5ab7943f00f0",
       "headline": "Fernandes could significantly increase wages by leaving Man Utd \u2013 latest transfer reports",
       "summary": "Galatasaray are prepared to offer Bruno Fernandes a huge salary increase in an attempt to lure the Manchester United captain to Turkey. Manchester City, meanwhile, face a \u00a3120m-plus asking price for Chelsea mid",
@@ -907,60 +1015,6 @@
       "touches_squad": null
     },
     {
-      "digest": "03f87fa7c62ffd42",
-      "headline": "Man City move for \u00a385m Bouaddi and still want Fernandez",
-      "summary": "Manchester City are in advanced talks with Lille over a move for Morocco midfielder Ayyoub Bouaddi.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cd7l9n4qnlno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-17T13:50:22Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "6520a0da1898017d",
-      "headline": "From Chelsea bomb squad to new chapter at Como for Chalobah",
-      "summary": "After ending his near 20-year association with Chelsea by joining Como 1907 this summer, Trevoh Chalobah credits his time at Stamford Bridge with building his resilience.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c141dl0l0p6o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-17T13:30:18Z",
-      "players": [
-        {
-          "element_id": 143,
-          "name": "Chalobah",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "5cff9eb43be17875",
-      "headline": "Signings impress but squad issues remain - learnings from Man Utd's summer",
-      "summary": "Positives, negatives and areas to address urgently - how are Michael Carrick's Manchester United shaping up now pre-season is over?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c5ywwv3j1v1o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-17T08:29:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "0bf09e0f5debd196",
       "headline": "Papers: Delap & Neto move closer to Chelsea exit",
       "summary": "The top stories and transfer rumours from Monday's newspapers...",
@@ -1051,24 +1105,6 @@
       "touches_squad": null
     },
     {
-      "digest": "fae753da78b39383",
-      "headline": "Arsenal latest: Arteta calls for rule change on PL squads",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-16T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "56d813c04ae85598",
       "headline": "Enzo Maresca says \u2018all teams would need Rodri\u2019",
       "summary": "New Manchester City manager Enzo Maresca says any team in the world would need Rodri, after much speculation that the midfielder is on his way to Barcelona. City lost 3-0 to Arsenal in the Community Shield, with the Spaniard unavailable. The Manchester",
@@ -1117,42 +1153,6 @@
           "element_id": 465,
           "name": "Osula",
           "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "58c1a78068762d42",
-      "headline": "Liverpool vs Como team news as Jacquet starts LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/liverpool-vs-como/live/556108",
-      "claimed_at": "2026-08-16T16:22:00Z",
-      "players": [
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "c4332e25903a2eb9",
-      "headline": "Jacquet scores on debut to double Liverpool's lead over Como LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13573748/liverpool-vs-como-live-commentary-live-score-and-team-news-from-anfield",
-      "claimed_at": "2026-08-16T16:22:00Z",
-      "players": [
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
           "held": null
         }
       ],
