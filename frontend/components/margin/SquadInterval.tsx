@@ -17,9 +17,20 @@
  * narrow week looks narrow; a total outside it clamps and the glyph marks the
  * clamp, so a pinned mark never passes for a measured one.
  *
- * Drop in at `components/margin/SquadInterval.tsx`, then in `DecideView.tsx`
- * replace the "A mean over the simulated draws…" paragraph inside `TheCall`'s
- * Projected points tile with `<SquadInterval decision={decision} />`.
+ * ## Reachability — read this before trusting a fix made here
+ *
+ * NOT RENDERED BY ANY ROUTE TODAY. Its only importer is `DecideView.tsx:64`, and
+ * `DecideView`'s only importer in the tree is `app/margin/page.test.tsx` —
+ * `app/margin/page.tsx:122-125` mounts ScoreView, ResearchView, NewsView and
+ * WatchView, and never DecideView. So a change here is a change to code the owner
+ * cannot currently see, and the surface-restructure spec lists both files for
+ * deletion.
+ *
+ * That matters because the q25/q75 fix below reads as a live improvement and is not
+ * one. The half of that fix which IS live is in the narrower
+ * (`narrowPublicDecision`) and in `components/control-room/Matrix.tsx`, which the
+ * Ledger renders. Kept in step here so the two do not diverge if this component is
+ * ever mounted, not because mounting it is planned.
  */
 
 import type { PublicDecision } from "@/lib/data/narrow";

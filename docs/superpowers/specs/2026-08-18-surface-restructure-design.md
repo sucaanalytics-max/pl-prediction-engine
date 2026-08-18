@@ -240,3 +240,108 @@ Delete the heuristic "the-move" card from /now (components/SquadBoard.tsx:159-19
 - `components/margin/DecideView.tsx:123 — a third `decision.mean_points.toFixed(1)``
 - `components/margin/DecideView.tsx:826 — a duplicate `useArtifact(decisionDescriptor(gameweek, "season"))``
 - `components/margin/SquadInterval.tsx:20-22 — a "Drop in…" wiring instruction shipped in a dead file`
+
+---
+
+# Addendum, 2026-08-19 — reconciling the cut with the control room
+
+*This document was written on 18 August. On the 19th the control room shipped to `main`
+across six commits (`ad40484`, `392fce4`, `36b4299`, `b17daf8`, `864b183`, `a1404d4`,
+`6951c57`). Two of its decisions contradict the target structure above. This addendum
+resolves them, and it wins where it disagrees, because it is later and it describes code
+that exists.*
+
+## The timing has not changed
+
+The structural cut stays off `main` until after the GW1 deadline, **2026-08-21T17:30Z**.
+Today is the 19th. Deleting 22 routes and the whole nav two days before the season's
+first deadline would put the owner in front of a rebuilt app on the one evening they
+need the old one to work. Nothing below is executed until the deadline passes; the
+addendum exists so the execution is a single reviewed sweep rather than a set of
+decisions made under time pressure.
+
+Route count today is **27**, not 26: `/control-room` was added.
+
+## Contradiction 1 — which surface is `/`
+
+**Above:** `/` is *the call* — "what is my XI, and who is captain" — absorbing nine
+paths.
+
+**Shipped:** `/control-room` is the Ledger: masthead and countdown, the team strip, the
+lead answer, the decision queue, the eight-facet × three-team matrix, the squad board
+with formation bands and club clusters, the change feed and the ambient column. It
+answers "what needs me, across all three teams".
+
+**Survivor: the Ledger, and it moves to `/`.**
+
+*Why:* the owner's brief was one desk for a manual team and two automated ones. "What is
+my XI and who is captain" is one question about one of the three entries; the Ledger asks
+that question of all three and reads across. `BUILD-THIS.md` names it *Homepage A*, and
+the reference capture `screens/1-homepage-ledger-idle.png` is a homepage, not a
+sub-surface. A front page that answers only for the human team would leave the two bots
+reachable only by navigation, which is the shape the brief was written against.
+
+*So the call is a section, not a surface.* It is already built as one: the matrix's
+`Current call` row states the move for each entry, the squad board carries the armband on
+the player's own row, and the projection row states the counting rule via `COUNTING_RULE`.
+The nine paths above are still absorbed — into the Ledger rather than into a separate
+`/`.
+
+*Mechanically:* `app/control-room/page.tsx` becomes `app/page.tsx`, its layout merges
+into the root, and `/control-room` is one of the 410'd paths rather than a survivor.
+`app/control-room/page.test.tsx` moves with it. Target structure is therefore
+**`/`, `/players`, `/evidence`, `/offline`** — the same four names as above, with a
+different `/`.
+
+## Contradiction 2 — "delete ProvenanceStrip"
+
+The deletions list says to delete ProvenanceStrip. There are now two components a reader
+could take that to mean, and deleting the wrong one would remove the convention this
+design asks for.
+
+- **Delete** `components/data/Artifact.tsx:151-178` — the old strip. The reason given
+  above still holds: on an absent artifact it can only ever print "update time unknown ·
+  version unknown", which is a provenance claim about nothing.
+- **Keep** `components/margin/Provenance.tsx` — `ProvenanceMarks`, built for
+  `BUILD-THIS.md`'s Rule 2 ("provenance is UI, not a footnote"). Three slots: an anchor
+  (`◆ market` / `○ model` / `∅`, plus `◆ external` for a captured reading), a freshness
+  mark, and a seal mark. `anchorFromRateSource` returns `"none"` for an unrecognised
+  producer rather than guessing `model`.
+
+These are not the same convention twice. The old strip narrates provenance in words
+underneath a figure; the marks are derived from the artifact's own `rate_source` and sit
+beside it. The count in *The measure of the cut* is unaffected — 16 conventions still
+collapse to 4 — but the four are now the marks, the one-line absence, the Nil glyph and
+the Age mark.
+
+## What the control-room work has already settled
+
+Five items the cut was going to have to decide are decided, in code, with tests:
+
+- **One gameweek resolver.** `useCurrentGameweek` is the only resolver; the fourth
+  `?? 1` site (`MinutesConflicts.tsx`) now calls it. The `?? 1` that remains is at call
+  sites where a descriptor needs a path, and every consumer gates on `gameweek === null`
+  rather than on whether the fetch succeeded.
+- **One counting rule.** `COUNTING_RULE` is exported once and used by all three surfaces
+  that print a squad total, with a scan that fails if a fourth prints one without it.
+- **Identity separated from judgement.** `--brand` (hue 250) now carries the identity
+  roles in the shared components; `--accent` (155) stays semantic. The ~45 page-level
+  `--accent` sites on the routes being 410'd are deliberately left green — recolouring
+  them is work this cut deletes.
+- **The absence vocabulary.** Kept, as the spec asks, and extended: the bots' cells name
+  the artifact that would have carried each figure. The Ledger shows six `∅` cells for
+  the two bots because neither decision file has ever been written.
+- **The gate-open path.** `§4.2`'s nine changes are now asserted against a stubbed
+  `computed` phase rather than deferred to "when the engine runs". Four of the nine
+  depend on the approval flow and are named, not asserted.
+
+## What this addendum does not resolve
+
+- **`/players`' and `/evidence`' own provenance.** Both still carry per-site `what=`
+  strings the spec wants moved onto the registry descriptor. Unchanged.
+- **`SquadInterval` and `DecideView`.** Still slated for deletion, still unmounted — the
+  q25/q75 fix made on the 19th was kept in step with the narrower rather than because
+  mounting them is planned, and the component's docstring now says so at the top.
+- **Wazza's ownership term.** Blocked on data that does not exist: no artifact or capture
+  carries effective ownership, and FPL's `selected_by_percent` is not it. The ownership
+  row states its own absence.
