@@ -33,6 +33,7 @@ import MinutesConflicts from "@/components/MinutesConflicts";
 import type {
   EvidenceClaim, EvidenceEntry, EvidencePlayer, EvidenceView,
 } from "@/lib/data/narrow";
+import { proven } from "@/lib/data/artifact";
 
 /** The resolver's rule names, in words a reader can act on. */
 const RULE_PROSE: Record<string, string> = {
@@ -338,6 +339,33 @@ function CapturedHeadlines() {
 export default function EvidencePage() {
   const { artifact } = useArtifact<EvidenceView>(REGISTRY.evidence);
 
+  /**
+   * What an empty player list actually means, read from the counts beside it.
+   *
+   * This was the flat sentence "Nobody's availability is in question. Every player with
+   * claims on file reads as fully available, from an uncontested source." The shipped
+   * artifact carries 75 claims across 19 players with `n_players_resolved: 0` and one
+   * escalation — so nothing had been adjudicated, and the page printed an availability
+   * all-clear before a deadline on the strength of work that had not been done.
+   *
+   * An empty list means "nothing was contested" only once something has been resolved.
+   * Until then it means "nothing has been assessed", which is the opposite reassurance.
+   */
+  const counts = proven(artifact);
+  const allClear = counts === null || counts.withClaims === 0
+    ? "No availability claims are on file for this gameweek."
+    : counts.resolved === 0
+      ? `${counts.claims} claim${counts.claims === 1 ? "" : "s"} across `
+        + `${counts.withClaims} player${counts.withClaims === 1 ? "" : "s"} are on file `
+        + "and none has been resolved yet, so nothing here is an all-clear — it is work "
+        + "the agent has not done."
+        + (counts.escalations > 0
+          ? ` ${counts.escalations} ${counts.escalations === 1 ? "is" : "are"} escalated.`
+          : "")
+      : `Nobody's availability is in question: all ${counts.withClaims} `
+        + `player${counts.withClaims === 1 ? "" : "s"} with claims on file resolved as `
+        + "fully available, from an uncontested source.";
+
   return (
     <ErrorBoundary pageName="Evidence">
       <div className="space-y-8">
@@ -392,7 +420,7 @@ export default function EvidencePage() {
         >
           <WhenProven
             of={artifact}
-            what="Nobody's availability is in question. Every player with claims on file reads as fully available, from an uncontested source."
+            what={allClear}
             // One line: the agent writes this and is deadline-gated, so its absence
             // is the expected state for most of a gameweek cycle.
             weight="line"

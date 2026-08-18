@@ -1006,6 +1006,19 @@ export interface EvidenceView {
   readonly shown: number;
   readonly resolved: number;
   readonly escalations: number;
+  /**
+   * How many players have a claim on file at all, resolved or not.
+   *
+   * Narrowed because without it an empty `players` list is indistinguishable from "there
+   * is nothing to contest", and the page said exactly that: "Every player with claims on
+   * file reads as fully available, from an uncontested source." The shipped artifact
+   * carries 75 claims across 19 players with `n_players_resolved: 0` — so nothing had
+   * been adjudicated, and an all-clear was printed before a deadline on the strength of
+   * work that had not been done.
+   */
+  readonly withClaims: number;
+  /** Total claims across those players, for the same reason. */
+  readonly claims: number;
 }
 
 const VERDICTS = new Set(["won", "lost", "dropped"]);
@@ -1079,6 +1092,8 @@ export function narrowEvidenceView(raw: unknown): NarrowResult<EvidenceView> {
     shown: countOr0(counts.n_players_shown),
     resolved: countOr0(counts.n_players_resolved),
     escalations: countOr0(counts.n_escalations),
+    withClaims: countOr0(counts.n_players_with_claims),
+    claims: countOr0(counts.n_claims),
   });
 }
 
