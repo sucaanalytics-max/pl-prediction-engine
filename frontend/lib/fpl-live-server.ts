@@ -488,7 +488,22 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
         // to say how stale the squad is, which is the failure it warns about.
         `GW1 picks remain private before the deadline; the squad is the authenticated draft captured on ${capturedOn}.`,
         "Official prices, clubs, availability flags and the next ten fixtures are refreshed from FPL.",
-        "Player EV and expected minutes use the private FPLReview premium snapshot exported on 4 Aug 2026.",
+        // Derived from `projectionSnapshot`, never written out. The line above
+        // records why: a hardcoded provenance date went stale and misdescribed
+        // the very panel whose job is to say how stale things are. This line
+        // committed the same fault in a worse place: it named the premium
+        // snapshot, and a fixed August date, unconditionally,
+        // while the export is gitignored (`.gitignore:68`) and therefore absent
+        // from every deployment. So production asserted a premium source it did
+        // not have, for a projection that had silently fallen back to a fixture
+        // heuristic, with a date that was wrong even locally.
+        projectionSnapshot
+          ? `Player EV and expected minutes use the private FPLReview snapshot exported on ${new Date(
+              projectionSnapshot.exportedAt,
+            ).toLocaleDateString("en-GB", {
+              day: "numeric", month: "short", year: "numeric", timeZone: "UTC",
+            })}.`
+          : "No FPLReview export is available here, so player EV and expected minutes are a fixture-difficulty estimate from official FPL fields — not a premium projection.",
       ];
 
   return {
