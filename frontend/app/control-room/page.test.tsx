@@ -306,6 +306,11 @@ describe("no fabricated figure appears for Ronny or Wazza", () => {
    * number.
    */
   for (const team of ["ronny", "wazza"] as const) {
+    /* `wants` is deliberately NOT in this loop. The other three are answered only by a
+       decision file, so a figure in them is fabricated by definition. `wants` is answered
+       by `agent_status.json` too — "the agent has not run, so nothing of its is blocked
+       on you" is a sourced answer, not an invented one. Its own guard is below: the case
+       where the STATUS is unreadable, which is where it used to contradict itself. */
     for (const facet of ["projection", "value", "call"] as const) {
       it(`${team}'s ${facet} cell shows ∅ and no figure`, async () => {
         await renderBoard();
@@ -834,5 +839,73 @@ describe("the lineup change the board used to be silent about", () => {
     const mine = screen.getAllByTestId("projection-glyph")
       .find((n) => n.dataset.team === "mine")!;
     expect(mine.textContent).toContain("Your eleven as drafted");
+  });
+});
+
+describe("the wants cell answers from a source, or does not answer", () => {
+  /**
+   * It rendered "Nothing waiting" as a Figure from no branch at all, which was wrong two
+   * ways. It would still have said it the day a decision landed — the identical bug the
+   * projection branch above records having fixed. And with `agent_status.json` unreadable
+   * the `run` cell in the same column says "unknown" while this one said "Nothing
+   * waiting", from the same file, two rows apart.
+   */
+  it("says nothing is waiting when the status file says the agent has not run", async () => {
+    await renderBoard();
+    expect(screen.getByTestId("cell-wants-ronny").textContent).toContain("Nothing waiting");
+  });
+
+  it("refuses to answer when the status file cannot be read", async () => {
+    const bodies = { ...ALL_PRESENT };
+    delete bodies[PATHS.status];
+    await renderBoard(bodies);
+
+    const cell = screen.getByTestId("cell-wants-ronny");
+    // Unknown is not "nothing": whether anything is blocked cannot be read.
+    expect(cell.textContent).not.toContain("Nothing waiting");
+    expect(cell.querySelector('[data-role="figure"]')).toBeNull();
+    expect(cell.textContent).toMatch(/unknown/i);
+  });
+
+  it("stops contradicting the run cell in its own column", async () => {
+    /* The live self-contradiction: same file, same column, two rows apart, one saying
+       unknown and the other saying nothing is waiting. */
+    const bodies = { ...ALL_PRESENT };
+    delete bodies[PATHS.status];
+    await renderBoard(bodies);
+
+    const wants = screen.getByTestId("cell-wants-ronny").textContent ?? "";
+    const run = screen.getByTestId("cell-run-ronny").textContent ?? "";
+    expect(wants).not.toContain("Nothing waiting");
+    expect(run).toMatch(/unknown|could not/i);
+  });
+});
+
+describe("the 46px headline does not contradict the board beneath it", () => {
+  /**
+   * "Nothing needs you tonight" is a claim about the whole desk, printed in the largest
+   * type on the page, and it was true only of the two bots — it kept saying it while the
+   * board's own arithmetic had a better legal eleven inside the fifteen already owned.
+   * Same defect class as the two captains: two parts of one screen, each defensible
+   * alone, disagreeing with each other.
+   */
+  it("never says nothing needs you while proposing a swap", async () => {
+    await renderBoard();
+    const body = document.body.textContent ?? "";
+    const claimsNothing = body.includes("Nothing needs you tonight");
+    const proposesSwap = screen.queryByTestId("xi-swap") !== null;
+    expect(
+      claimsNothing && proposesSwap,
+      "the headline claims nothing is waiting while the call cell proposes a lineup change",
+    ).toBe(false);
+  });
+
+  it("leaves the unknown-status headline alone, which is a different claim", async () => {
+    // "This board cannot see" stays true whatever the squad says, so that arm is not
+    // touched by the swap.
+    const bodies = { ...ALL_PRESENT };
+    delete bodies[PATHS.status];
+    await renderBoard(bodies);
+    expect(document.body.textContent).toContain("that this board can see");
   });
 });

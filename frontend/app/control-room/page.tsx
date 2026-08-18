@@ -215,6 +215,7 @@ export default function ControlRoomPage() {
               projections.value === null ? null : withQuartiles(projections.value.players)
             }
             draws={projections.value?.nDraws ?? null}
+            swapWaiting={swap !== null}
           />
 
           <Queue rows={queue} />
@@ -461,6 +462,7 @@ function TeamStrip(
 function Lead(
   {
     projectionsAge, squadAge, squadSource, agentRan, reason, players, quartiled, draws,
+    swapWaiting,
   }: {
     projectionsAge: string | null;
     squadAge: string | null;
@@ -471,12 +473,34 @@ function Lead(
     /** How many of them carry all five measured quantiles. Counted, not claimed. */
     quartiled: number | null;
     draws: number | null;
+    /**
+     * Whether a better legal eleven exists inside the fifteen already owned.
+     *
+     * Passed in rather than recomputed: the same `xiSwap` the `call` cell renders, so the
+     * headline and the cell can never disagree about whether anything is waiting.
+     */
+    swapWaiting: boolean;
   },
 ) {
+  /*
+   * The largest type on the board must not contradict what is three sections below it.
+   *
+   * "Nothing needs you tonight" is a claim about the whole desk, printed at 46px, and it
+   * was true only about the two bots — it kept saying it while the board's own arithmetic
+   * had a better legal eleven inside the fifteen already owned. That is the same defect
+   * class as the two captains: two parts of one screen, both defensible alone, disagreeing
+   * with each other.
+   *
+   * Only the `agentRan === false` arm changes. The `true` arm describes a state where the
+   * bots have spoken and the queue leads instead; the `null` arm is materially different —
+   * it says the board cannot see, which stays true whatever the squad says.
+   */
   const headline = agentRan === true
     ? "Both bots have run, and what they produced is below."
     : agentRan === false
-      ? "Nothing needs you tonight, and neither bot has spoken yet."
+      ? swapWaiting
+        ? "Your eleven is not the best eleven in your fifteen."
+        : "Nothing needs you tonight, and neither bot has spoken yet."
       : "Nothing is waiting on you that this board can see.";
 
   return (

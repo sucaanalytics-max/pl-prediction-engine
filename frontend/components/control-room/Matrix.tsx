@@ -448,18 +448,61 @@ function Cell(
     // ── 5 · Wants you ───────────────────────────────────────────────────────
     case "wants": {
       const deadline = status.value?.deadline ?? null;
+      /*
+       * This cell asserted "Nothing waiting" as a Figure, from no branch at all.
+       *
+       * Two consequences, one of them live today. It would still have said it the day a
+       * decision landed — the identical bug the projection branch above records having
+       * fixed. And when `agent_status.json` fails to read, the `run` cell in this same
+       * column says "unknown" while this one said "Nothing waiting", from the same file,
+       * two rows apart: the board contradicting itself.
+       *
+       * `agentRan === false` is a real, sourced answer and keeps its sentence. Anything
+       * else is not: an unread status means whether something is blocked is UNKNOWN,
+       * which is not the same as nothing being blocked, and unknown renders as the glyph
+       * rather than as a figure. `page.test.tsx`'s no-fabricated-figure loop now covers
+       * this facet, which is why the old version could sit here.
+       */
+      const proposal = team === "mine" ? null : bot?.value ?? null;
+      const agentRan = status.value?.agentRan ?? null;
+      const answerable = team === "mine"
+        ? ronny.value !== null || wazza.value !== null || agentRan !== null
+        : proposal !== null || agentRan === false;
+
+      if (!answerable) {
+        return (
+          <NotPublished
+            initialising={status.initialising}
+            path={status.path}
+            what={"Whether anything is blocked on you is unknown: the phase file could "
+              + "not be read, which is not the same as nothing being blocked."}
+          />
+        );
+      }
+
       return (
         <>
           <Figure size={15} tone={team === "mine" ? S.ink : S.ink3}>
-            Nothing waiting
+            {team === "mine" && swap !== null
+              ? "Your lineup"
+              : proposal === null ? "Nothing waiting" : "Waiting on you"}
           </Figure>
           <Body style={{ marginTop: 6 }}>
             {team === "mine"
-              ? "No proposal is waiting on your answer: neither bot has published "
-                + "one for this gameweek. The deadline is the only thing on the clock."
-              : `${botName} has not run, so nothing of its is blocked on you. `
-                + `Approval happens on the team's own screen; this board cannot `
-                + `submit a team.`}
+              ? swap !== null
+                // The same `xiSwap` the call cell renders, so this cell cannot say
+                // nothing is waiting while the row below it proposes a change.
+                ? `No bot proposal is waiting on your answer — neither has published `
+                  + `for this gameweek. Your own eleven is: the call row has a `
+                  + `+${swap.gain.toFixed(1)} xP lineup change that costs nothing.`
+                : "No proposal is waiting on your answer: neither bot has published "
+                  + "one for this gameweek. The deadline is the only thing on the clock."
+              : proposal === null
+                ? `${botName} has not run, so nothing of its is blocked on you. `
+                  + `Approval happens on the team's own screen; this board cannot `
+                  + `submit a team.`
+                : `${botName} has published a proposal for this gameweek. Approval `
+                  + `happens on the team's own screen; this board cannot submit a team.`}
           </Body>
           {deadline === null ? null : (
             <div style={{ marginTop: 4 }}>
