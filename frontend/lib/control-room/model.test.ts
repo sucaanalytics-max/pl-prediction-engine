@@ -59,7 +59,9 @@ function playerRow(over: Partial<PlayerRow> = {}): PlayerRow {
     goals: 1, assists: 1, xg: 0.4, xa: 0.3,
     fouls_committed: null, fouls_per_90: null,
     fpl_ownership: 10, fpl_price: 6, form: 2, position: "MID",
-    available: true, ratesAreMeaningful: true,
+    available: true,
+  status: null,
+  chanceOfPlaying: null, ratesAreMeaningful: true,
     ...over,
   };
 }

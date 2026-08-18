@@ -196,7 +196,18 @@ export interface PlayerRow {
    * say" and "the provider said available" are different facts, and a filter that
    * silently treats unknown as fit would hide exactly the players worth checking.
    */
+  /**
+   * FPL's `status in {"a", "d"}` — available OR DOUBTFUL.
+   *
+   * Kept because things read it, but it is not the question most callers mean: a 75%
+   * doubt is `true` here. Use `status` / `chanceOfPlaying` to tell a doubt from a fit
+   * player.
+   */
   readonly available: boolean | null;
+  /** FPL's own status letter: `a` fit, `d` doubtful, `i` injured, `s` suspended, `u` unavailable. */
+  readonly status: string | null;
+  /** FPL's published chance of playing the next round, or null when it publishes none. */
+  readonly chanceOfPlaying: number | null;
   /**
    * True when per-90 columns are meaningful.
    *
@@ -210,9 +221,32 @@ export interface PlayerRow {
 /** Minutes below which a per-90 rate is an artefact of the denominator floor. */
 export const MIN_MINUTES_FOR_RATES = 90;
 
+/**
+ * The rows, whichever shape the producer wrote.
+ *
+ * `player_stats.json` shipped as a bare list, so it carried no `generated_at` and the one
+ * figure the control room derives from it — the availability split — could never be marked
+ * stale. The producer now wraps it, as `matches.json` already did.
+ *
+ * Both shapes are accepted, and not merely for tidiness: the deployed frontend reads a
+ * file the daily pipeline writes, so for one run the code and the artifact disagree about
+ * which shape is current. A narrower that accepted only the new one would blank the
+ * players table until the next pipeline run.
+ */
+function playerStatsRows(raw: unknown): unknown {
+  if (Array.isArray(raw)) return raw;
+  if (isRecord(raw) && Array.isArray(raw.players)) return raw.players;
+  return raw;
+}
+
+/** The producer's timestamp, or null on the legacy bare-list shape. */
+export function playerStatsProducedAt(raw: unknown): string | null {
+  return isRecord(raw) ? optString(raw.generated_at) : null;
+}
+
 export function narrowPlayerStats(raw: unknown): NarrowResult<readonly PlayerRow[]> {
   const problems = new Problems();
-  const rows = reqArray(raw, "player_stats", problems);
+  const rows = reqArray(playerStatsRows(raw), "player_stats", problems);
   if (!rows) return malformed(problems.all);
 
   const kept = mapKept(rows, "player_stats", problems, (item, i) => {
@@ -233,6 +267,17 @@ export function narrowPlayerStats(raw: unknown): NarrowResult<readonly PlayerRow
     return {
       name, minutes,
       team: optString(row.team) ?? "",
+      /*
+       * FPL's own words, kept apart from `available`.
+       *
+       * `available` is `status in {"a", "d"}` — available OR DOUBTFUL
+       * (`pipeline/data/fpl_api.py:270`, whose comment says so) — so a 75% doubt has
+       * always read as fit here and survived an "available only" filter. These two say
+       * what FPL actually published. Null on a file written before the producer exported
+       * them, which is a different claim from "fit".
+       */
+      status: optString(row.status),
+      chanceOfPlaying: optNumber(row.chance_of_playing),
       // `goals_scored` is the writer's name — `build_player_stats` in
       // pipeline/data/fpl_api.py, mirroring FPL's own field. Reading `row.goals`
       // with no fallback made every player's goals read 0 while 226 of 577 rows in

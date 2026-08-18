@@ -1134,10 +1134,39 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 "fpl_price": float(row.get("now_cost", 0)) if row.get("now_cost") else None,
                 "fpl_ownership": float(row.get("selected_by_percent", 0)) if row.get("selected_by_percent") else None,
                 "form": float(row.get("form", 0)) if pd.notna(row.get("form")) else None,
+                # `available` is `status in {"a", "d"}` — available OR DOUBTFUL
+                # (fpl_api.py:270). A 75% doubt has always read here as fit, and the
+                # frontend had nothing finer to filter on. The two fields below are what
+                # FPL actually says, exported so a consumer can tell a doubt from a fit
+                # player and from a player who is out.
                 "available": bool(row.get("available", True)),
+                # `pd.notna` first: `str(NaN)` is the string "nan", so a row without a
+                # status would have shipped `"nan"` as if FPL had said it.
+                "status": (
+                    str(row["status"]) if pd.notna(row.get("status")) else None
+                ),
+                "chance_of_playing": (
+                    int(row["chance_of_playing_next_round"])
+                    if pd.notna(row.get("chance_of_playing_next_round"))
+                    else None
+                ),
             })
+        # An envelope, so the figures derived from this file can carry an age.
+        #
+        # It was written as a bare list, so `player_stats.json` had no `generated_at` and
+        # the control room's availability figure could never be marked stale — the one
+        # artifact-derived number on the board with no way to grow old. `matches.json`
+        # already uses this shape. Readers accept both.
         with open(PREDICTIONS_DIR / "player_stats.json", "w") as f:
-            json.dump(ps_export, f, indent=2, default=str)
+            json.dump(
+                {
+                    "generated_at": datetime.now(timezone.utc).isoformat(),
+                    "players": ps_export,
+                },
+                f,
+                indent=2,
+                default=str,
+            )
         logger.info(f"  player_stats.json: {len(ps_export)} players")
     except Exception as e:
         logger.warning(f"  player_stats.json export failed: {e}")

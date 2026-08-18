@@ -17,7 +17,9 @@ function stats(over: Partial<PlayerRow> = {}): PlayerRow {
     minutes: 900, goals: 10, assists: 2, xg: 8.5, xa: 1.5,
     fouls_committed: null, fouls_per_90: null,
     fpl_ownership: 73.4, fpl_price: 15.5, form: 6.2,
-    available: true, ratesAreMeaningful: true, ...over,
+    available: true,
+  status: null,
+  chanceOfPlaying: null, ratesAreMeaningful: true, ...over,
   };
 }
 
