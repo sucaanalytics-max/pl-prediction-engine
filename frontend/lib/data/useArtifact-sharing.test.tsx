@@ -15,6 +15,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { proven } from "@/lib/data/artifact";
 import type { Descriptor } from "@/lib/data/registry";
 import { inFlightCount, useArtifact } from "@/lib/data/useArtifact";
+import { matchDetailDescriptor } from "@/lib/data/match-detail";
+import { REGISTRY } from "@/lib/data/narrow";
 
 interface Payload { readonly value: number }
 
@@ -117,5 +119,71 @@ describe("in-flight sharing", () => {
     }
     await waitFor(() => expect(inFlightCount()).toBe(0));
     expect(impl).toHaveBeenCalledTimes(3);
+  });
+});
+
+describe("two descriptors that share a path", () => {
+  /**
+   * `REGISTRY.latest` and `matchDetailDescriptor(id)` both read `latest.json` with
+   * different narrowers. Coalescing on the path handed the navigation's narrowed
+   * `Latest` to `/matches/[id]` as a `MatchDetail`, so its narrower never ran and the
+   * whole route fell to its error boundary — and the navigation fetches on every page,
+   * so the route raced itself on load.
+   */
+  it("is the real collision: same path, different keys", () => {
+    expect(matchDetailDescriptor("ars-che").path).toBe(REGISTRY.latest.path);
+    expect(matchDetailDescriptor("ars-che").key).not.toBe(REGISTRY.latest.key);
+  });
+
+  it("does not serve one descriptor's narrowed value to the other", async () => {
+    const { impl, releaseAll } = deferredFetch();
+    const nav = renderHook(() => useArtifact(REGISTRY.latest));
+    const page = renderHook(() => useArtifact(matchDetailDescriptor("ars-che")));
+
+    // Two identities, so two fetches. The duplicate byte cost is the price of a
+    // correct payload.
+    expect(impl).toHaveBeenCalledTimes(2);
+
+    await act(async () => { releaseAll(); });
+    /* The collision's actual symptom: both hooks were handed the SAME promise, so both
+       held the same Artifact object — one narrowed by `narrowLatest` and handed to the
+       consumer expecting a MatchDetail. Two distinct objects is the proof each ran its
+       own narrower. */
+    expect(nav.result.current.artifact).not.toBe(page.result.current.artifact);
+  });
+
+  it("does not serve one match's detail for another's id", async () => {
+    const { impl, releaseAll } = deferredFetch();
+    renderHook(() => useArtifact(matchDetailDescriptor("ars-che")));
+    renderHook(() => useArtifact(matchDetailDescriptor("man-liv")));
+    expect(impl).toHaveBeenCalledTimes(2);
+    await act(async () => { releaseAll(); });
+  });
+
+  it("still shares when it IS the same descriptor", async () => {
+    // The optimisation must survive the fix: two consumers of one descriptor still
+    // make one request.
+    const { impl, releaseAll } = deferredFetch();
+    renderHook(() => useArtifact(REGISTRY.latest));
+    renderHook(() => useArtifact(REGISTRY.latest));
+    expect(impl).toHaveBeenCalledTimes(1);
+    await act(async () => { releaseAll(); });
+  });
+
+  it("refetches when the id changes, because identity is the dependency", async () => {
+    /* The effect used to depend on the path, which is the constant `latest.json` for
+       every match — so navigating from one match to another never re-ran it and the
+       page kept the previous match's value under the new id. */
+    const { impl, releaseAll } = deferredFetch();
+    const hook = renderHook(
+      ({ id }: { id: string }) => useArtifact(matchDetailDescriptor(id)),
+      { initialProps: { id: "ars-che" } },
+    );
+    await act(async () => { releaseAll(); });
+    expect(impl).toHaveBeenCalledTimes(1);
+
+    await act(async () => { hook.rerender({ id: "man-liv" }); });
+    expect(impl).toHaveBeenCalledTimes(2);
+    await act(async () => { releaseAll(); });
   });
 });

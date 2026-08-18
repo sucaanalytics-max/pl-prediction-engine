@@ -91,6 +91,30 @@ export interface UseArtifactResult<T> {
  */
 const inFlight = new Map<string, Promise<Artifact<unknown>>>();
 
+/**
+ * The coalescing key: the descriptor's identity, never its path.
+ *
+ * Two descriptors can — and do — share a path with different narrowers.
+ * `REGISTRY.latest` (key `latest`, narrowed by `narrowLatest`) and
+ * `matchDetailDescriptor(id)` (key `matchDetail:<id>`) both read `latest.json`.
+ * Keying on the path handed the navigation's already-narrowed `Latest` to
+ * `/matches/[id]` as a `MatchDetail`, so its narrower never ran and every number on
+ * that route was replaced by the error boundary — and the navigation fetches on every
+ * page, so the route raced itself on load.
+ *
+ * Two ids collide the same way: `matchDetail:ars-che` and `matchDetail:man-liv` share
+ * `latest.json`, so one match's detail would be served for the other's.
+ *
+ * The cost of keying on identity is that `latest.json` can be fetched twice when two
+ * different descriptors want it. That was the behaviour before coalescing existed, and
+ * a duplicated 36KB fetch is worth incomparably less than a correct payload. Coalescing
+ * the raw bytes and narrowing per descriptor would recover it, and needs `load` split
+ * into fetch and narrow first.
+ */
+function identityOf<T>(descriptor: Descriptor<T>): string {
+  return descriptor.key;
+}
+
 /** Visible only so a test can assert the map does not leak. */
 export function inFlightCount(): number {
   return inFlight.size;
@@ -111,15 +135,17 @@ function loadShared<T>(
 
   // A reload must not be answered by a request that was already in the air, or
   // the button would appear to work while showing the same fetch's result.
-  if (fresh) inFlight.delete(descriptor.path);
+  const identity = identityOf(descriptor);
+
+  if (fresh) inFlight.delete(identity);
   else {
-    const existing = inFlight.get(descriptor.path);
+    const existing = inFlight.get(identity);
     if (existing) return existing as Promise<Artifact<T>>;
   }
 
   const started = load(descriptor, options)
-    .finally(() => { inFlight.delete(descriptor.path); });
-  inFlight.set(descriptor.path, started as Promise<Artifact<unknown>>);
+    .finally(() => { inFlight.delete(identity); });
+  inFlight.set(identity, started as Promise<Artifact<unknown>>);
   return started;
 }
 
@@ -139,7 +165,7 @@ export function useArtifact<T>(
   // `setArtifact` beside it already schedules one. Keyed to the descriptor path
   // so switching gameweek does not show the previous week's numbers as this
   // week's — a retained value is only honest for the thing it was fetched for.
-  const retainedRef = useRef<{ path: string; artifact: Artifact<T> } | null>(null);
+  const retainedRef = useRef<{ identity: string; artifact: Artifact<T> } | null>(null);
 
   // Kept in a ref so a caller passing an inline options object does not restart
   // the fetch on every render. Only the descriptor path and the nonce should.
@@ -147,6 +173,18 @@ export function useArtifact<T>(
   optionsRef.current = options;
 
   const path = descriptor.path;
+  /**
+   * The hook's own identity, for the same reason the map above uses it.
+   *
+   * The effect used to depend on `path`, with a comment reasoning that `descriptor` is
+   * a stable module constant. Factory descriptors are not: `matchDetailDescriptor(id)`
+   * is built per render and its path is the constant `latest.json`, so navigating from
+   * one match to another never re-ran the effect and the page kept the previous
+   * match's narrowed value under the new id. Depending on the key fixes that, and
+   * keying retention on it stops a value narrowed for one id being retained for
+   * another.
+   */
+  const identity = descriptor.key;
 
   useEffect(() => {
     let cancelled = false;
@@ -156,19 +194,21 @@ export function useArtifact<T>(
       setArtifact(result);
       setInitialising(false);
       if (proven(result) !== null) {
-        retainedRef.current = { path: descriptor.path, artifact: result };
+        retainedRef.current = { identity, artifact: result };
       }
     });
     return () => { cancelled = true; };
-    // `descriptor` is a stable module constant; `path` is the honest dependency
-    // and using it keeps an inline descriptor from looping.
+    // Identity AND path: the key is what makes the narrowed value what it is, and the
+    // path is included so a registry mistake that moved a file without changing its key
+    // still refetches. Neither is `descriptor` itself, which an inline factory rebuilds
+    // every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path, nonce]);
+  }, [identity, path, nonce]);
 
   const reload = useCallback(() => setNonce((n) => n + 1), []);
 
   const retained =
-    retainedRef.current && retainedRef.current.path === path
+    retainedRef.current && retainedRef.current.identity === identity
       ? retainedRef.current.artifact
       : null;
 
