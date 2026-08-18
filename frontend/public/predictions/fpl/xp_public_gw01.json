@@ -2,7 +2,7 @@
   "schema_version": 1,
   "gameweek": 1,
   "season": "2627",
-  "generated_at": "2026-08-18T06:03:15.813831Z",
+  "generated_at": "2026-08-18T06:10:03.439146Z",
   "n_draws": 5000,
   "producer_version": 1,
   "players": [
@@ -7861,9 +7861,9 @@
       }
     },
     {
-      "name": "Khalaili",
-      "team": "Crystal Palace",
-      "position": "DEF",
+      "name": null,
+      "team": null,
+      "position": null,
       "element_id": 588,
       "xp": 1.4832,
       "xp_sd": 2.661901155189651,
@@ -9346,7 +9346,7 @@
       }
     },
     {
-      "name": "Gonzalo",
+      "name": "Garc\u00eda",
       "team": "Fulham",
       "position": "FWD",
       "element_id": 569,
@@ -10337,7 +10337,7 @@
     },
     {
       "name": "Gelhardt",
-      "team": "Hull City",
+      "team": "Leeds",
       "position": "MID",
       "element_id": 340,
       "xp": 0.0,
@@ -10534,9 +10534,9 @@
       }
     },
     {
-      "name": "Herrington",
-      "team": "Hull City",
-      "position": "DEF",
+      "name": null,
+      "team": null,
+      "position": null,
       "element_id": 585,
       "xp": 1.5248,
       "xp_sd": 2.313306067082348,
@@ -10567,9 +10567,9 @@
       }
     },
     {
-      "name": "Mendy",
-      "team": "Hull City",
-      "position": "DEF",
+      "name": null,
+      "team": null,
+      "position": null,
       "element_id": 586,
       "xp": 1.5756,
       "xp_sd": 2.3703764764273205,
@@ -10600,9 +10600,9 @@
       }
     },
     {
-      "name": "Gourna-Douath",
-      "team": "Hull City",
-      "position": "MID",
+      "name": null,
+      "team": null,
+      "position": null,
       "element_id": 589,
       "xp": 1.4036,
       "xp_sd": 2.152558254728545,
@@ -14560,9 +14560,9 @@
       }
     },
     {
-      "name": "Rulli",
-      "team": "Man City",
-      "position": "GKP",
+      "name": null,
+      "team": null,
+      "position": null,
       "element_id": 587,
       "xp": 0.468,
       "xp_sd": 1.5724426857599612,
@@ -17431,9 +17431,9 @@
       }
     },
     {
-      "name": "Benda",
-      "team": "Nott'm Forest",
-      "position": "GKP",
+      "name": null,
+      "team": null,
+      "position": null,
       "element_id": 590,
       "xp": 0.021,
       "xp_sd": 0.21484645680113043,
@@ -19475,6 +19475,98 @@
         "clean_sheets": 0.0,
         "other": 0.0602
       }
+    }
+  ],
+  "fixtures": [
+    {
+      "gameweek": 1,
+      "home_team": "Arsenal",
+      "away_team": "Coventry City",
+      "kickoff": "2026-08-21T19:00:00Z",
+      "lambda_home": 2.4538,
+      "mu_away": 0.6724,
+      "rate_source": "market_blend"
+    },
+    {
+      "gameweek": 1,
+      "home_team": "Hull City",
+      "away_team": "Man United",
+      "kickoff": "2026-08-22T11:30:00Z",
+      "lambda_home": 0.9159,
+      "mu_away": 2.0453,
+      "rate_source": "market_blend"
+    },
+    {
+      "gameweek": 1,
+      "home_team": "Everton",
+      "away_team": "Crystal Palace",
+      "kickoff": "2026-08-22T14:00:00Z",
+      "lambda_home": 1.4631,
+      "mu_away": 1.1513,
+      "rate_source": "market_blend"
+    },
+    {
+      "gameweek": 1,
+      "home_team": "Ipswich",
+      "away_team": "Sunderland",
+      "kickoff": "2026-08-22T14:00:00Z",
+      "lambda_home": 1.3405,
+      "mu_away": 1.3101,
+      "rate_source": "market_blend"
+    },
+    {
+      "gameweek": 1,
+      "home_team": "Nott'm Forest",
+      "away_team": "Leeds",
+      "kickoff": "2026-08-22T14:00:00Z",
+      "lambda_home": 1.4875,
+      "mu_away": 1.2092,
+      "rate_source": "market_blend"
+    },
+    {
+      "gameweek": 1,
+      "home_team": "Brentford",
+      "away_team": "Tottenham",
+      "kickoff": "2026-08-22T16:30:00Z",
+      "lambda_home": 1.61,
+      "mu_away": 1.3391,
+      "rate_source": "market_blend"
+    },
+    {
+      "gameweek": 1,
+      "home_team": "Brighton",
+      "away_team": "Aston Villa",
+      "kickoff": "2026-08-23T13:00:00Z",
+      "lambda_home": 1.5875,
+      "mu_away": 1.3556,
+      "rate_source": "market_blend"
+    },
+    {
+      "gameweek": 1,
+      "home_team": "Man City",
+      "away_team": "Bournemouth",
+      "kickoff": "2026-08-23T13:00:00Z",
+      "lambda_home": 2.1393,
+      "mu_away": 1.1191,
+      "rate_source": "market_blend"
+    },
+    {
+      "gameweek": 1,
+      "home_team": "Newcastle",
+      "away_team": "Liverpool",
+      "kickoff": "2026-08-23T15:30:00Z",
+      "lambda_home": 1.4766,
+      "mu_away": 1.7362,
+      "rate_source": "market_blend"
+    },
+    {
+      "gameweek": 1,
+      "home_team": "Fulham",
+      "away_team": "Chelsea",
+      "kickoff": "2026-08-24T19:00:00Z",
+      "lambda_home": 1.3564,
+      "mu_away": 1.5407,
+      "rate_source": "market_blend"
     }
   ]
 }

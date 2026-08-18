@@ -57,6 +57,42 @@ CARRIED = (
     "n_fixtures", "blank", "decomposition",
 )
 
+#: Fields copied straight through from each fixture row.
+#:
+#: `rate_source` is the reason this block exists. The private artifact records
+#: it per fixture and the artifact contract fails when it is null, but none of
+#: that reached a screen while the display copy carried no fixtures at all — so
+#: a projection built on market-anchored rates and one built on the unanchored
+#: fallback rendered identically. `match_id` is deliberately not carried: it is
+#: an internal join key, and the page identifies a fixture by its two clubs.
+FIXTURE_CARRIED = (
+    "gameweek", "home_team", "away_team", "kickoff",
+    "lambda_home", "mu_away", "rate_source",
+)
+
+
+def build_fixture_block(fixtures: Any) -> Optional[List[Dict[str, Any]]]:
+    """
+    The fixtures behind this gameweek's projection, with their provenance.
+
+    Returns ``None`` — not ``[]`` — when the artifact carries no fixtures, so the
+    page can tell "this run published none" from "this run published an empty
+    set". They render differently and conflating them is how an absent input
+    starts looking like a measured zero.
+
+    A row that is not a mapping is skipped rather than raising: one malformed
+    fixture must not cost the other nine their provenance.
+    """
+    if not isinstance(fixtures, Sequence) or isinstance(fixtures, (str, bytes)):
+        return None
+    rows: List[Dict[str, Any]] = []
+    for raw in fixtures:
+        if not isinstance(raw, Mapping):
+            logger.warning("public view: skipping non-mapping fixture row %r", raw)
+            continue
+        rows.append({field: raw[field] for field in FIXTURE_CARRIED if field in raw})
+    return rows or None
+
 
 def build_horizon_block(
     weeks: Optional[Sequence[Mapping[int, float]]],
@@ -163,6 +199,13 @@ def build(
         "n_draws": metadata.get("n_draws"),
         "producer_version": metadata.get("schema_version"),
         "players": rows,
+        # Absent, not empty, when the artifact carried no fixtures.
+        **(
+            {"fixtures": fixture_block}
+            if (fixture_block := build_fixture_block(artifact.get("fixtures")))
+            is not None
+            else {}
+        ),
         # Absent, not empty, when the run solved no horizon — see
         # `build_horizon_block`.
         **(

@@ -461,3 +461,66 @@ class InterquartileCarryTests(unittest.TestCase):
         )
         self.assertEqual(len(built["players"]), 1)
         self.assertNotIn("q25", built["players"][0])
+
+
+class PublicViewCarriesFixtureProvenance(unittest.TestCase):
+    """
+    The display copy must state where each fixture's goal rates came from.
+
+    The private artifact records `rate_source` per fixture, and the artifact
+    contract fails when it is null — but the public view carried no `fixtures`
+    block at all, so none of that reached a screen. A projection built on
+    market-anchored rates and one built on the unanchored fallback rendered
+    identically, which is the exact indistinguishability this phase set out to
+    remove. A number the page cannot source is a number the page should not be
+    trusted on.
+    """
+
+    def _artifact(self):
+        return {
+            "metadata": {"gameweek": 1, "season": "2627", "n_draws": 5000,
+                         "schema_version": 1},
+            "fixtures": [
+                {"match_id": "1", "gameweek": 1, "home_team": "Arsenal",
+                 "away_team": "Coventry City", "kickoff": "2026-08-21T19:00:00Z",
+                 "lambda_home": 2.4538, "mu_away": 0.6724,
+                 "rate_source": "market_blend"},
+                {"match_id": "2", "gameweek": 1, "home_team": "Hull City",
+                 "away_team": "Man United", "kickoff": "2026-08-21T19:00:00Z",
+                 "lambda_home": 0.9159, "mu_away": 2.0453,
+                 "rate_source": "market_blend"},
+            ],
+            "players": [{"element_id": 1, "xp": 4.2}],
+        }
+
+    def test_fixtures_reach_the_public_view(self):
+        view = public_xp.build(self._artifact(), {}, generated_at="2026-08-18T06:03:15Z")
+        self.assertIn("fixtures", view)
+        self.assertEqual(len(view["fixtures"]), 2)
+
+    def test_each_published_fixture_states_its_rate_source(self):
+        view = public_xp.build(self._artifact(), {}, generated_at="2026-08-18T06:03:15Z")
+        self.assertEqual(
+            [f["rate_source"] for f in view["fixtures"]],
+            ["market_blend", "market_blend"],
+        )
+
+    def test_the_goal_rates_survive_the_copy(self):
+        """The page shows these; a rounded or dropped rate is a different claim."""
+        view = public_xp.build(self._artifact(), {}, generated_at="2026-08-18T06:03:15Z")
+        arsenal = next(f for f in view["fixtures"] if f["home_team"] == "Arsenal")
+        self.assertAlmostEqual(arsenal["lambda_home"], 2.4538, places=4)
+        self.assertAlmostEqual(arsenal["mu_away"], 0.6724, places=4)
+
+    def test_absent_fixtures_yield_no_key_rather_than_an_empty_list(self):
+        """Absence and emptiness render differently; do not conflate them."""
+        artifact = self._artifact()
+        del artifact["fixtures"]
+        view = public_xp.build(artifact, {}, generated_at="2026-08-18T06:03:15Z")
+        self.assertNotIn("fixtures", view)
+
+    def test_a_malformed_fixture_row_does_not_lose_the_others(self):
+        artifact = self._artifact()
+        artifact["fixtures"].insert(0, "not a mapping")
+        view = public_xp.build(artifact, {}, generated_at="2026-08-18T06:03:15Z")
+        self.assertEqual(len(view["fixtures"]), 2)
