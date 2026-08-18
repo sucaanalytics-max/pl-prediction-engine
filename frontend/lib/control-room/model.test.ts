@@ -20,7 +20,7 @@ import { join } from "node:path";
 import {
   REQUIRED_CALIBRATED_GAMEWEEKS, TAIL_THRESHOLD, TEAMS, availabilitySplit,
   calibratedWeeks, gatedInSimulation, money, teamFromParam, teamOf, tenths,
-  withQuartiles, xiTotal,
+  withQuartiles, xiSwap, xiTotal,
 } from "@/lib/control-room/model";
 import { read } from "@/lib/control-room/read";
 import { classify, type Artifact } from "@/lib/data/artifact";
@@ -454,6 +454,96 @@ describe("no number survived from the design", () => {
       for (const word of ["onApprove", "onReject", "onDefer", "approveDecision"]) {
         expect(source.text, `${source.file} carries ${word}`).not.toContain(word);
       }
+    }
+  });
+});
+
+describe("the lineup change the board was silent about", () => {
+  /**
+   * The `call` cell printed "No move proposed" for the owner while the model's own
+   * arithmetic had a better legal eleven inside the fifteen he already owns.
+   *
+   * Verified independently against the shipped artifact before this was written: drafted
+   * XI 43.5046, best legal XI 48.2030, in Szoboszlai and F.Kadıoğlu, out Palestra and
+   * Schade, gain 4.6984 — both bench players outscoring two starters.
+   */
+  const squad = (rows: Array<[number, string, string, boolean]>) =>
+    rows.map(([elementId, name, position, bench]) => ({
+      elementId, name, position, team: "ARS", price: 5, bench, fixtures: [],
+    })) as never[];
+
+  /** A legal 3-4-3 with two bench players worth more than two starters. */
+  const FIFTEEN = squad([
+    [1, "GK1", "GKP", false], [2, "GK2", "GKP", true],
+    [3, "D1", "DEF", false], [4, "D2", "DEF", false], [5, "D3", "DEF", false],
+    [6, "D4", "DEF", true],
+    [7, "M1", "MID", false], [8, "M2", "MID", false], [9, "M3", "MID", false],
+    [10, "M4", "MID", false], [11, "M5", "MID", true],
+    [12, "F1", "FWD", false], [13, "F2", "FWD", false], [14, "F3", "FWD", false],
+    [15, "F4", "FWD", true],
+  ]);
+
+  const projections = (byId: Record<number, number>) =>
+    Object.entries(byId).map(([id, xp]) => ({
+      elementId: Number(id), xp, blank: false,
+    })) as never[];
+
+  it("finds the swap and states both totals", () => {
+    // D4 (bench, 9) beats D1 (starting, 1); everyone else flat.
+    const proj = projections({
+      1: 4, 2: 4, 3: 1, 4: 4, 5: 4, 6: 9, 7: 4, 8: 4, 9: 4, 10: 4, 11: 4,
+      12: 4, 13: 4, 14: 4, 15: 4,
+    });
+    const swap = xiSwap(FIFTEEN, proj)!;
+    expect(swap.bringIn.map((p) => p.name)).toEqual(["D4"]);
+    expect(swap.takeOut.map((p) => p.name)).toEqual(["D1"]);
+    expect(swap.gain).toBeCloseTo(8, 5);
+    expect(swap.to - swap.from).toBeCloseTo(swap.gain, 5);
+  });
+
+  it("says nothing when the drafted eleven is already the best one", () => {
+    // Every bench player worse than every starter.
+    const proj = projections({
+      1: 5, 2: 1, 3: 5, 4: 5, 5: 5, 6: 1, 7: 5, 8: 5, 9: 5, 10: 5, 11: 1,
+      12: 5, 13: 5, 14: 5, 15: 1,
+    });
+    expect(xiSwap(FIFTEEN, proj)).toBeNull();
+  });
+
+  it("ignores a gain too small to act on, so rounding is not advice", () => {
+    const proj = projections({
+      1: 5, 2: 1, 3: 5, 4: 5, 5: 5, 6: 5.005, 7: 5, 8: 5, 9: 5, 10: 5, 11: 1,
+      12: 5, 13: 5, 14: 5, 15: 1,
+    });
+    expect(xiSwap(FIFTEEN, proj)).toBeNull();
+  });
+
+  it("refuses when the squad does not say who starts", () => {
+    // `bench: undefined` is unknown, and an assumed eleven would be a lineup nothing
+    // solved — the same rule `xiTotal` follows.
+    const unknown = FIFTEEN.map((p) => ({ ...(p as object), bench: undefined })) as never[];
+    expect(xiSwap(unknown, projections({ 1: 5 }))).toBeNull();
+  });
+
+  it("refuses when no projection exists at all", () => {
+    expect(xiSwap(FIFTEEN, [])).toBeNull();
+  });
+
+  it("keeps the eleven legal — it never proposes an illegal shape", () => {
+    // Make every keeper huge: a naive "best eleven by xP" would start two.
+    const proj = projections({
+      1: 20, 2: 20, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1,
+      12: 1, 13: 1, 14: 1, 15: 1,
+    });
+    const swap = xiSwap(FIFTEEN, proj);
+    if (swap) {
+      const started = new Set(FIFTEEN.filter((p) => (p as { bench: boolean }).bench === false)
+        .map((p) => (p as { name: string }).name));
+      for (const p of swap.takeOut) expect(started.has(p.name)).toBe(true);
+      // Exactly one keeper may start, so GK2 can only come in if GK1 goes out.
+      const inGk = swap.bringIn.filter((p) => p.position === "GKP").length;
+      const outGk = swap.takeOut.filter((p) => p.position === "GKP").length;
+      expect(inGk).toBe(outGk);
     }
   });
 });

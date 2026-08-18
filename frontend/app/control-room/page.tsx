@@ -69,7 +69,8 @@ import { countdownLong, modeOf, remainingMs, tickPeriodMs } from "@/lib/margin/m
 import { ageLine, deadlineStamp } from "@/lib/formats";
 import { ProvenanceLegend } from "@/components/margin/Provenance";
 import {
-  TEAMS, calibratedWeeks, teamFromParam, withQuartiles, xiTotal, type TeamKey,
+  TEAMS, calibratedWeeks, teamFromParam, withQuartiles, xiSwap, xiTotal,
+  type TeamKey,
 } from "@/lib/control-room/model";
 import { read, type Read } from "@/lib/control-room/read";
 import { Matrix } from "@/components/control-room/Matrix";
@@ -161,6 +162,17 @@ export default function ControlRoomPage() {
     : xiTotal(squad.players, projections.value.players);
 
   /**
+   * The better legal eleven inside the fifteen already owned.
+   *
+   * Gated on a resolved gameweek for the same reason `xi` is: with the week unknown the
+   * descriptor read week 1's file, and advising a lineup change off another week's
+   * projection is worse than advising none.
+   */
+  const swap = gameweek === null || squad === null || projections.value === null
+    ? null
+    : xiSwap(squad.players, projections.value.players);
+
+  /**
    * The squad's age, from the squad's own stamp rather than the view's.
    *
    * `live.age` is derived from `HeuristicView.generatedAt`, which the route stamps at
@@ -214,6 +226,10 @@ export default function ControlRoomPage() {
             projections={projections}
             live={live}
             xi={xi}
+            swap={swap}
+            xiSwapSource={squad?.source === "official_public"
+              ? "official picks"
+              : `captured draft${squadAge === null ? "" : ` · ${squadAge}`}`}
             calibrated={calibrated}
             calibrationSource={
               sealed === null ? null : `${accuracy.path} · ${sealed} gameweeks sealed`

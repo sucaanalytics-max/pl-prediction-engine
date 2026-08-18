@@ -47,7 +47,8 @@ import type { Projections } from "@/lib/data/projections";
 import type { Read } from "@/lib/control-room/read";
 import { COUNTING_RULE } from "@/lib/margin/planner";
 import {
-  REQUIRED_CALIBRATED_GAMEWEEKS, TEAMS, money, tenths, type TeamKey, type XiTotal,
+  REQUIRED_CALIBRATED_GAMEWEEKS, TEAMS, money, tenths, type TeamKey, type XiSwap,
+  type XiTotal,
 } from "@/lib/control-room/model";
 import { SQUAD_SCALE_HI, SQUAD_SCALE_LO } from "@/lib/margin/distribution";
 import { Distribution, Nil } from "@/components/margin/Marks";
@@ -78,6 +79,15 @@ export interface MatrixProps {
   readonly projections: Read<Projections>;
   readonly live: Read<HeuristicView>;
   readonly xi: XiTotal | null;
+  /**
+   * The better legal eleven inside the fifteen already owned, when there is one.
+   *
+   * Null when the drafted XI is already best, when the gain is too small to act on, or
+   * when nothing was published — all of which leave the cell saying what it said before.
+   */
+  readonly swap: XiSwap | null;
+  /** Where the squad this swap is computed from came from, for the provenance line. */
+  readonly xiSwapSource: string;
   readonly calibrated: number | null;
   readonly calibrationSource: string | null;
   /** The two bots' own proposals, fetched so their absence is measured. */
@@ -118,7 +128,9 @@ function NotPublished(
 function Cell(
   { facet, team, props }: { facet: FacetKey; team: TeamKey; props: MatrixProps },
 ) {
-  const { status, projections, live, xi, ronny, wazza, calibrated } = props;
+  const {
+    status, projections, live, xi, swap, xiSwapSource, ronny, wazza, calibrated,
+  } = props;
   const bot = team === "ronny" ? ronny : team === "wazza" ? wazza : null;
   const botName = team === "ronny" ? "Ronny" : "Wazza";
 
@@ -375,7 +387,9 @@ function Cell(
         const vice = xi?.vice?.name ?? null;
         return (
           <>
-            <Figure size={14}>No move proposed</Figure>
+            <Figure size={14}>
+              {swap === null ? "No move proposed" : "Start a different eleven"}
+            </Figure>
             <Body style={{ marginTop: 6 }}>
               {`Nothing solves for entry ${TEAMS[0].entryId} — the two bots are `
                 + `advisers, and neither has published. `}
@@ -384,6 +398,39 @@ function Cell(
                 : `Your standing pick keeps ${captain} on the armband`
                   + `${vice === null ? "." : `, ${vice} as vice.`}`}
             </Body>
+
+            {/*
+              * Added UNDER the sentence above, never in place of it.
+              *
+              * That sentence is the only place on the board stating that no pipeline
+              * solves for entry 20945, which stays true. What was wrong was stopping
+              * there: the board printed "No move proposed" while its own arithmetic had a
+              * better legal eleven inside the fifteen already owned — 43.50 against 48.20
+              * on the captured GW1 draft, a gain of 4.70, which is nearly eleven per cent
+              * of the headline figure three rows above.
+              *
+              * It is a lineup change, not a transfer. It costs nothing and needs no bank,
+              * which is exactly the advice this app is allowed to give while the model
+              * publishes a single gameweek.
+              */}
+            {swap !== null && (
+              <div data-testid="xi-swap" style={{ marginTop: 8 }}>
+                <Body>
+                  {"Start "}
+                  <strong>{swap.bringIn.map((p) => p.name).join(" and ")}</strong>
+                  {" for "}
+                  <strong>{swap.takeOut.map((p) => p.name).join(" and ")}</strong>
+                  {`: ${swap.from.toFixed(1)} → ${swap.to.toFixed(1)} xP `}
+                  {`(+${swap.gain.toFixed(1)}). No transfer, no bank — the same fifteen, `}
+                  {"a different eleven."}
+                </Body>
+                <div style={{ marginTop: 4 }}>
+                  <Sub>
+                    {`${xiSwapSource} · lineup only · ${COUNTING_RULE}`}
+                  </Sub>
+                </div>
+              </div>
+            )}
           </>
         );
       }

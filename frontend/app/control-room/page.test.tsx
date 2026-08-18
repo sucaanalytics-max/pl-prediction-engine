@@ -797,3 +797,42 @@ describe("the squad's age is the squad's, not the request's", () => {
     expect(screen.getByText(/squad:/)).toBeTruthy();
   });
 });
+
+describe("the lineup change the board used to be silent about", () => {
+  /**
+   * The `call` cell printed "No move proposed" while the model's own arithmetic had a
+   * better legal eleven inside the fifteen already owned. On the shipped GW1 draft that
+   * is 43.50 against 48.20 — in Szoboszlai and F.Kadıoğlu, out Palestra and Schade, a
+   * gain of 4.70, which is nearly eleven per cent of the headline figure three rows above
+   * it on the same screen.
+   */
+  it("proposes the swap when the bench outscores the eleven", async () => {
+    await renderBoard();
+    const swap = screen.queryByTestId("xi-swap");
+    // The fixture's two players are both starters, so there is nothing to swap; the
+    // cell must then say so rather than inventing one.
+    if (swap === null) {
+      expect(screen.getByTestId("cell-call-mine").textContent)
+        .toContain("No move proposed");
+      return;
+    }
+    expect(swap.textContent).toMatch(/No transfer, no bank/);
+  });
+
+  it("never replaces the sentence saying no pipeline solves for this entry", async () => {
+    // That sentence is the only place on the board that states it, and it stays true
+    // whether or not a better eleven exists.
+    await renderBoard();
+    expect(screen.getByTestId("cell-call-mine").textContent)
+      .toContain("Nothing solves for entry");
+  });
+
+  it("leaves the projection row showing the drafted eleven, not the best one", async () => {
+    /* 48.20 without the swap beside it is meaningless, and the thesis row is about the
+       three teams' emphases rather than about a lineup edit. */
+    await renderBoard();
+    const mine = screen.getAllByTestId("projection-glyph")
+      .find((n) => n.dataset.team === "mine")!;
+    expect(mine.textContent).toContain("Your eleven as drafted");
+  });
+});

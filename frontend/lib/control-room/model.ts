@@ -33,7 +33,7 @@ import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { PlayerRow } from "@/lib/data/narrow";
 import type { Projection } from "@/lib/data/projections";
 import { joinProjections } from "@/lib/margin/squad";
-import { pointsFrom, projectedTotal } from "@/lib/margin/planner";
+import { optimiseXi, pointsFrom, projectedTotal } from "@/lib/margin/planner";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Who the three teams are
@@ -211,6 +211,73 @@ export function xiTotal(
     xiSize: xi.length,
     captain: squad.find((player) => player.role === "captain") ?? null,
     vice: squad.find((player) => player.role === "vice") ?? null,
+  };
+}
+
+
+/**
+ * The lineup change the model would make, if it is worth making.
+ *
+ * The board printed "No move proposed" in the owner's `call` cell while its own
+ * arithmetic had a better legal eleven sitting inside the fifteen he already owns. On the
+ * captured GW1 draft the drafted XI is 43.5046 and the best legal XI is 48.2030 — in
+ * Szoboszlai (4.4834) and F.Kadıoğlu (3.6742), out Palestra (0.8070) and Schade (2.6522),
+ * a gain of 4.6984, which is nearly eleven per cent of the board's own headline figure.
+ * Both bench players outscore two starters.
+ *
+ * This is NOT a transfer. It costs nothing, needs no bank and breaks no rule — it is the
+ * eleven of the fifteen already owned, which is exactly the advice this app is allowed to
+ * give, because `GameweekCall.tsx` states the policy that it must not suggest transfers
+ * while the model publishes one gameweek.
+ *
+ * Separate from {@link xiTotal} rather than folded into it: `counting-rule.test.ts` scans
+ * for surfaces that print a squad total and keys on `XiTotal`, and widening that type
+ * would drag a second figure into every one of them.
+ *
+ * Null when there is nothing to say — no squad, no projection, or a gain too small to act
+ * on. The threshold matches `GameweekCall`'s, so "your XI is already the best eleven"
+ * stays a real state on both surfaces rather than becoming a rounding artefact.
+ */
+export const SWAP_WORTH_MAKING = 0.01;
+
+export interface XiSwap {
+  /** Currently benched, and worth starting. */
+  readonly bringIn: readonly SquadPlayer[];
+  /** Currently starting, and worth benching. */
+  readonly takeOut: readonly SquadPlayer[];
+  /** The drafted eleven's total, as the projection row prints it. */
+  readonly from: number;
+  /** The best legal eleven's total. */
+  readonly to: number;
+  /** `to - from`, always positive when this is non-null. */
+  readonly gain: number;
+}
+
+export function xiSwap(
+  squad: readonly SquadPlayer[],
+  projections: readonly Projection[],
+): XiSwap | null {
+  const named = squad.filter((player) => player.bench !== undefined);
+  const drafted = named.filter((player) => player.bench === false);
+  if (drafted.length === 0) return null;
+
+  const points = pointsFrom(projections);
+  const best = optimiseXi(named, points);
+  if (best === null) return null;
+
+  const from = projectedTotal(drafted, points);
+  const to = projectedTotal(best.xi, points);
+  const gain = to - from;
+  if (gain <= SWAP_WORTH_MAKING) return null;
+
+  const draftedIds = new Set(drafted.map((p) => p.elementId));
+  const bestIds = new Set(best.xi.map((p) => p.elementId));
+  return {
+    bringIn: best.xi.filter((p) => !draftedIds.has(p.elementId)),
+    takeOut: drafted.filter((p) => !bestIds.has(p.elementId)),
+    from,
+    to,
+    gain,
   };
 }
 
