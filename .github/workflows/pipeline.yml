@@ -95,7 +95,14 @@ jobs:
       # fixture. The tests would fail, the job would abort, and the artifact
       # that would have fixed them would never be regenerated: a deadlock the
       # daily job could not recover from on its own.
+      # continue-on-error: this gate must NEVER be able to withhold
+      # forecast_ledger.json. Neither "Sync predictions to frontend" nor
+      # "Commit predictions" below has an `if:`, so without this the gate
+      # aborts the job before anything commits — including the ledger, the
+      # ONLY artifact that proves a prediction predated kickoff. A seal is
+      # irrecoverable; a red run that still publishes is recoverable.
       - name: Verify Phase 0 artifacts
+        continue-on-error: true
         env:
           PYTHONPATH: ${{ github.workspace }}
           PHASE0_VERIFY_ARTIFACTS: "1"
