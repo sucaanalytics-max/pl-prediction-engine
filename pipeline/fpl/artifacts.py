@@ -123,6 +123,27 @@ class ArtifactContractError(AssertionError):
     """An artifact failed a blocking check. Never swallow this."""
 
 
+def _spec_gameweek(spec: Any) -> Optional[int]:
+    """
+    The gameweek a fixture spec belongs to, or None when it cannot say.
+
+    Never raises. `FixtureSpec.gameweek` is a required field, so None here
+    means the spec came from something other than the four real producers —
+    and the two emitters below are on the irrecoverable seal path
+    (run_agent.refresh_expected_points -> export_gameweek_xp), where a
+    TypeError raised while ASSEMBLING the artifact would lose the gameweek
+    outright. Degrading to an unlabelled fixture is recoverable; raising here
+    is not.
+    """
+    value = getattr(spec, "gameweek", None)
+    if value is None:
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def validate_xp_artifact(artifact: Dict[str, Any]) -> List[str]:
     """
     Return every contract violation found. Empty means the artifact is sound.
@@ -167,6 +188,53 @@ def validate_xp_artifact(artifact: Dict[str, Any]) -> List[str]:
                     f"{label}: rate_source {rate_source!r} is not a "
                     f"recognised value (expected one of "
                     f"{sorted(accepted_rate_sources)})"
+                )
+
+    # Every fixture belongs to the gameweek the artifact claims.
+    #
+    # The descope this phase rests on has one exit criterion — "every fixture
+    # simulated belongs to one gameweek" — and until now it was guarded only
+    # by a `gameweeks=[gameweek]` keyword at a single call site plus an AST
+    # test. GameweekDraws labels itself `int(fixtures[0].gameweek)`, so a
+    # mixed list silently reports the first fixture's week while carrying
+    # points accumulated across all of them. This branch shipped exactly that
+    # 8x inflation once behind a green suite. It also covers the fallback
+    # path (fixture_specs_from_predictions), which has no gameweek filter at
+    # all.
+    #
+    # A fixture that states NO gameweek is not a violation. _spec_gameweek
+    # degrades to None rather than raise, and both callers of this check feed
+    # an irrecoverable seal or a daily lane whose failure here drops that
+    # day's FPL projections — so this must fire on a demonstrated mismatch
+    # and on nothing else.
+    claimed_gameweek = metadata.get("gameweek")
+    if claimed_gameweek is not None:
+        try:
+            claimed_gameweek = int(claimed_gameweek)
+        except (TypeError, ValueError):
+            claimed_gameweek = None
+    if claimed_gameweek is not None:
+        for fixture in (fixtures if isinstance(fixtures, list) else []):
+            if not isinstance(fixture, dict):
+                continue
+            fixture_gameweek = fixture.get("gameweek")
+            if fixture_gameweek is None:
+                continue
+            try:
+                fixture_gameweek = int(fixture_gameweek)
+            except (TypeError, ValueError):
+                continue
+            if fixture_gameweek != claimed_gameweek:
+                label = (
+                    f"fixture {fixture.get('home_team')} v "
+                    f"{fixture.get('away_team')}"
+                )
+                problems.append(
+                    f"{label}: gameweek {fixture_gameweek} does not match "
+                    f"metadata.gameweek {claimed_gameweek}; every fixture "
+                    "simulated must belong to one gameweek, or the summed "
+                    "per-player totals describe more weeks than the artifact "
+                    "claims"
                 )
 
     players = artifact.get("players")
@@ -568,6 +636,14 @@ def build_xp_artifact(
         "fixtures": [
             {
                 "match_id": spec.match_id,
+                # Stated per fixture so the one-gameweek guarantee is a
+                # property of the ARTIFACT rather than of a keyword argument
+                # at one call site. GameweekDraws labels itself
+                # int(fixtures[0].gameweek), so a mixed spec list silently
+                # publishes the first fixture's week over several weeks of
+                # accumulated points; without this field no consumer and no
+                # contract check could detect it.
+                "gameweek": _spec_gameweek(spec),
                 "home_team": spec.home_team,
                 "away_team": spec.away_team,
                 "kickoff": spec.kickoff,
@@ -614,6 +690,10 @@ def build_sim_params(
         "fixtures": [
             {
                 "match_id": spec.match_id,
+                # Same reason as build_xp_artifact: the regeneration record
+                # must show which week each fixture belonged to, or a rerun
+                # cannot tell a mixed list from a single-week one.
+                "gameweek": _spec_gameweek(spec),
                 "home_team": spec.home_team,
                 "away_team": spec.away_team,
                 "lambda_home": float(spec.lambda_home),

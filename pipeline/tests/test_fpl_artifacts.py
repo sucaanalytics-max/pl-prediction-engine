@@ -392,6 +392,74 @@ class FixtureRateSourceContractTests(unittest.TestCase):
             assert_valid_xp_artifact(broken)
 
 
+class OneGameweekIsAContractNotACallSite(unittest.TestCase):
+    """The descope's exit criterion — "every fixture simulated belongs to one
+    gameweek" — was guarded by a `gameweeks=[gameweek]` keyword at one call
+    site and an AST test, and by nothing in the artifact itself.
+    `build_xp_artifact` dropped `spec.gameweek` entirely, so no consumer and
+    no contract check could see a mixed list; `GameweekDraws` labels itself
+    `int(fixtures[0].gameweek)`, so it would report the first fixture's week
+    over points accumulated across all of them. This branch shipped exactly
+    that 8x inflation once behind a green suite."""
+
+    def test_the_emitted_fixture_rows_state_their_gameweek(self):
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        self.assertEqual([f["gameweek"] for f in artifact["fixtures"]], [5, 5])
+
+    def test_sim_params_fixture_rows_state_their_gameweek(self):
+        params = build_sim_params("2627", 5, GENERATED_AT, 7, 500, DOUBLE)
+        self.assertEqual([f["gameweek"] for f in params["fixtures"]], [5, 5])
+
+    def test_a_single_gameweek_spec_list_passes_the_contract(self):
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        self.assertEqual(validate_xp_artifact(artifact), [])
+
+    def test_a_mixed_gameweek_spec_list_fails_the_contract(self):
+        """The real defect shape: fixture_specs_from_fixture_xg called with no
+        gameweeks filter, or fixture_specs_from_predictions (which has no
+        filter at all), hands several weeks to one simulate_gameweek call."""
+        mixed = [
+            FixtureSpec("m1", 5, "Alpha", "Beta", 1.6, 1.1,
+                        "2026-09-12T14:00:00Z", rate_source="market_blend"),
+            FixtureSpec("m2", 6, "Beta", "Alpha", 1.3, 1.4,
+                        "2026-09-19T19:00:00Z", rate_source="market_blend"),
+        ]
+        artifact = build_xp_artifact(_draws(mixed), "2627", GENERATED_AT,
+                                     RULES, mixed)
+        problems = validate_xp_artifact(artifact)
+        self.assertTrue(
+            any("does not match metadata.gameweek" in p for p in problems),
+            problems,
+        )
+
+    def test_assert_raises_on_a_mixed_gameweek_artifact(self):
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        artifact["fixtures"][1]["gameweek"] = 6
+        with self.assertRaises(ArtifactContractError):
+            assert_valid_xp_artifact(artifact)
+
+    def test_a_fixture_with_no_gameweek_is_not_a_violation(self):
+        """Seal safety. _spec_gameweek degrades to None rather than raise, and
+        this check must fire on a demonstrated mismatch and nothing else — a
+        contract check must never be able to abort an irrecoverable seal."""
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        artifact["fixtures"][0]["gameweek"] = None
+        del artifact["fixtures"][1]["gameweek"]
+        self.assertEqual(
+            [p for p in validate_xp_artifact(artifact) if "gameweek" in p], []
+        )
+
+    def test_an_unparseable_gameweek_never_raises_out_of_the_validator(self):
+        artifact = build_xp_artifact(_draws(DOUBLE), "2627", GENERATED_AT,
+                                     RULES, DOUBLE)
+        artifact["fixtures"][0]["gameweek"] = "not a week"
+        validate_xp_artifact(artifact)  # must not raise
+
+
 class ContractAcceptsEveryRealProducer(unittest.TestCase):
     """Durable guard, Fix round 2's CRITICAL finding: ACCEPTED_RATE_SOURCES
     must stay a superset of every string a real producer can actually
