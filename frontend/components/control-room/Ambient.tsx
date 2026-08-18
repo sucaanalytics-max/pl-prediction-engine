@@ -40,6 +40,7 @@ import { anchorFromRateSource, ProvenanceMarks } from "@/components/margin/Prove
 import { Nil } from "@/components/margin/Marks";
 import { predictionLabel } from "@/lib/formats";
 import { Body, Figure, S, SectionLabel, Sub } from "@/components/control-room/parts";
+import { hatch } from "@/lib/margin/tokens";
 
 /** How many fixtures the column shows. §4: four, and the rest are on /matches. */
 const SHOWN = 4;
@@ -164,8 +165,7 @@ export function Ambient(props: AmbientProps) {
                 title={`${split.unflagged} players: no flag, which is not the same as fit`}
                 style={{
                   background:
-                    "repeating-linear-gradient(45deg, rgba(27,26,22,.12) 0 3px, "
-                    + "transparent 3px 6px)",
+                    hatch(S),
                   border: `1px solid ${S.hair}`,
                 }}
               />

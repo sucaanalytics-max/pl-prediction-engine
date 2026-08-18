@@ -131,10 +131,36 @@ export const KIT_MIX_TARGET = "#f0eee8";
  * `∅` and this hatch both mean "nothing was fitted here", and an empty cell
  * would read as "fitted, and it came out low".
  */
+/**
+ * Whether a surface is light, measured rather than matched.
+ *
+ * Two places needed to know — `hatch`, so its stroke shows against the ground, and the
+ * kit mark, which mutes a club colour toward a light ground and must not on a dark one
+ * — and both asked by comparing against a literal: `surface === INK` in one,
+ * `surface.shell === "#f6f5f2"` in the other. Both answer wrongly for a surface built
+ * by spreading one of these, which is how a third surface would arrive.
+ *
+ * Relative luminance of the shell, with the sRGB transfer function, against the 0.5
+ * midpoint. Non-hex shells return `false`: every surface in this file uses a hex shell,
+ * and guessing at an `oklch()` string would be worse than the one honest default —
+ * dark, which is the surface that needs no mixing.
+ */
+export function surfaceIsLight(surface: MarginSurface): boolean {
+  const hex = /^#([0-9a-f]{6})$/i.exec(surface.shell.trim());
+  if (!hex) return false;
+  const channel = (offset: number): number => {
+    const c = parseInt(hex[1].slice(offset, offset + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  };
+  const luminance =
+    0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4);
+  return luminance > 0.5;
+}
+
 export function hatch(surface: MarginSurface): string {
-  const stroke = surface === INK
-    ? "rgba(244,243,238,.18)"
-    : "rgba(27,26,22,.12)";
+  const stroke = surfaceIsLight(surface)
+    ? "rgba(27,26,22,.12)"
+    : "rgba(244,243,238,.18)";
   return `repeating-linear-gradient(45deg, ${stroke} 0 3px, transparent 3px 6px)`;
 }
 

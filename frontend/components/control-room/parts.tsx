@@ -21,10 +21,34 @@
  */
 
 import type { CSSProperties, ReactNode } from "react";
-import { DISPLAY, MONO, PAPER, SANS } from "@/lib/margin/tokens";
+import { DISPLAY, INK, MONO, SANS } from "@/lib/margin/tokens";
 
 /** The screen's surface. Paper: this board is read at length, not under a clock. */
-export const S = PAPER;
+/**
+ * The control room's surface.
+ *
+ * INK, not PAPER, and the reason is measured rather than aesthetic.
+ *
+ * The board shipped on PAPER inside chrome that is dark — the navigation, the manager
+ * card, the deadline strip — so a light sheet sat in a dark frame, which is the first
+ * thing the eye complains about. Two of the four surfaces that survive the surface cut
+ * (`/margin` and this one) now agree instead of arguing.
+ *
+ * It is also the more legible surface at every tier that carries meaning. Against its
+ * own shell: `ink2` 6.88:1, `ink3` 3.82:1, `ink4` 2.71:1. PAPER's equivalents are
+ * 7.08:1, **3.17:1** and **2.06:1** — so the two tones this board uses for labels,
+ * counts, provenance and the absence glyph were below the 3:1 floor on paper and one of
+ * them was barely half of it.
+ *
+ * And it is the surface the kit marks were drawn for. `KitMark` mutes a club colour
+ * toward the ground only when the surface is light, so on ink the twenty kits keep full
+ * strength — which is the whole reason club is encoded as colour, because the league has
+ * six reds and muted 66% toward a paper neutral they converge into one salmon.
+ *
+ * One line to reverse, and PAPER remains fully supported: every component here reads its
+ * colours from this token and none hardcodes a light or dark literal.
+ */
+export const S = INK;
 
 /**
  * The answer, or a claim, in the display face.
@@ -96,9 +120,15 @@ export function Figure(
   );
 }
 
-/** A column header or a row name. Mono, uppercase, tracked. */
+/**
+ * A column header or a row name. Mono, uppercase, tracked.
+ *
+ * The default was 9.5px, and because it was a default rather than a prop nothing
+ * scanning for sizes could see it — so the eight facet labels, which are the names of
+ * every row on the board, were the smallest text on the page. 11 is the floor.
+ */
 export function Label(
-  { size = 9.5, tone, children, style }: {
+  { size = 11, tone, children, style }: {
     size?: number; tone?: string; children: ReactNode; style?: CSSProperties;
   },
 ) {
@@ -118,13 +148,13 @@ export function Label(
   );
 }
 
-/** The eyebrow above a section. 10px, wider tracking, tertiary ink. */
+/** The eyebrow above a section. 11px, wider tracking, tertiary ink. */
 export function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <span
       style={{
         fontFamily: MONO,
-        fontSize: 10,
+        fontSize: 11,
         letterSpacing: ".16em",
         textTransform: "uppercase",
         color: S.ink3,
@@ -188,7 +218,9 @@ export function Sub(
       className="tabular-nums"
       style={{
         fontFamily: MONO,
-        fontSize: 9.5,
+        // 11 is the floor for anything carrying meaning on this board. `Sub` states a
+        // filename, an age or a counting rule — all of them things a reader checks.
+        fontSize: 11,
         lineHeight: 1.5,
         color: S.ink3,
         ...(future

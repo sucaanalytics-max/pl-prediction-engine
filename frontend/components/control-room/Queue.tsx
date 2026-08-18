@@ -104,13 +104,15 @@ export function Queue({ rows }: { rows: readonly QueueRow[] }) {
         >
           <span className="flex items-baseline gap-[7px]">
             <TenseMark scheduled={row.scheduled} />
-            {/* ink4 at 2.06:1, and one of that token's only two sanctioned uses:
-                the index is an ordinal, not information. */}
-            <Figure size={15} tone={S.ink4} style={{ fontWeight: 400 }}>
+            {/* ink3, not ink4. The ordinal is secondary, but a reader has to be able
+                to say "the second one" — and ink4 measures 2.71:1 on this surface and
+                2.06:1 on paper, which is below the floor for any size. Being an ordinal
+                makes it quiet, not exempt. */}
+            <Figure size={15} tone={S.ink3} style={{ fontWeight: 400 }}>
               {String(i + 1).padStart(2, "0")}
             </Figure>
           </span>
-          <Label size={9.5} style={{ letterSpacing: ".12em" }}>{row.team}</Label>
+          <Label size={11} style={{ letterSpacing: ".12em" }}>{row.team}</Label>
           <div>
             <Answer size={22} style={{ lineHeight: 1.25 }}>{row.claim}</Answer>
             <Body size={12.5} style={{ marginTop: 6, maxWidth: 640 }}>

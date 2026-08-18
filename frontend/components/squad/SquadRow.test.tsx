@@ -13,7 +13,7 @@ import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { MINUTES_FLOOR, SquadRow, type SquadRowPlayer } from "@/components/squad/SquadRow";
-import { PAPER } from "@/lib/margin/tokens";
+import { INK, PAPER } from "@/lib/margin/tokens";
 
 const ARTIFACT = JSON.parse(
   readFileSync("public/predictions/fpl/xp_public_gw01.json", "utf8"),
@@ -47,6 +47,13 @@ function fromArtifact(id: number, name: string, club: string): SquadRowPlayer {
 const BASE = fromArtifact(426, "B.Fernandes", "MUN");
 
 afterEach(() => cleanup());
+
+/** jsdom normalises a hex colour to `rgb()` inside a style string. */
+function asRgb(hex: string): string {
+  const probe = document.createElement("span");
+  probe.style.color = hex;
+  return probe.style.color;
+}
 
 describe("the minutes cell, driven by the artifact", () => {
   it("flags exactly the players the simulation puts under the floor", () => {
@@ -107,12 +114,26 @@ describe("the rest of the row", () => {
     expect(band.style.border).toContain("1px solid");
   });
 
-  it("keeps difficulty monochrome, because club owns hue", () => {
+  it("keeps difficulty monochrome, and derives it from the surface", () => {
+    /* This asserted the literal `rgba(27,26,22,…)` — PAPER's ink typed into the
+       component — which passed while the tick was invisible on any dark surface. The
+       property that matters is that it is a mix of THIS surface's ink and nothing
+       else: monochrome, because club owns hue in this row. */
     render(<SquadRow player={{ ...BASE, difficulty: 5 }} surface={PAPER} />);
-    // Monochrome: an rgba of the ink, never a hue. jsdom re-spaces the channels.
-    expect(
-      screen.getByTestId("difficulty-tick").style.background.replace(/\s+/g, ""),
-    ).toContain("rgba(27,26,22");
+    const paint = screen.getByTestId("difficulty-tick").style.background;
+    expect(paint).toContain("color-mix");
+    expect(paint).toContain(asRgb(PAPER.ink));
+    for (const hue of [PAPER.agree, PAPER.conflict, PAPER.noise, PAPER.brand]) {
+      expect(paint, "difficulty must not borrow a judgement hue").not.toContain(hue);
+    }
+  });
+
+  it("draws the tick from the ink of whichever surface it is given", () => {
+    // The regression this replaces: a light-ink literal on a dark board painted
+    // nothing at all, so the entire difficulty column disappeared.
+    render(<SquadRow player={{ ...BASE, difficulty: 4 }} surface={INK} />);
+    expect(screen.getByTestId("difficulty-tick").style.background)
+      .toContain(asRgb(INK.ink));
   });
 
   it("renders next-four as ∅ under a dotted rule, since no horizon is published", () => {

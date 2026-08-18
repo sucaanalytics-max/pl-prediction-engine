@@ -56,7 +56,7 @@ export function Eyebrow(
     <div
       style={{
         fontFamily: MONO,
-        fontSize: 10,
+        fontSize: 11,
         letterSpacing: ".14em",
         textTransform: "uppercase",
         color: tone ?? surface.ink3,
@@ -143,7 +143,9 @@ export function Age<T>({ of, surface }: { of: Artifact<T>; surface: MarginSurfac
       title={`produced ${describeAge(ageMs)} ago`}
       style={{
         fontFamily: MONO,
-        fontSize: 9,
+        // 11 is the floor. This mark states how old a figure is, which is the one thing
+        // Rule 1 requires beside every number — it cannot be the smallest text present.
+        fontSize: 11,
         color: stale ? surface.noise : surface.ink3,
         border: `1px solid ${stale ? surface.noise : surface.hair}`,
         padding: "0 3px",
@@ -417,7 +419,7 @@ export function MarginState<T>(
         data-state={of.state}
         style={{ margin: 0, fontSize: 11.5, lineHeight: 1.5, color: surface.ink3 }}
       >
-        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", color: tone }}>
+        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".1em", textTransform: "uppercase", color: tone }}>
           {label}
         </span>
         {" — "}

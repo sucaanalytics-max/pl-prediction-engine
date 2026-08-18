@@ -55,6 +55,7 @@ import { ProvenanceMarks } from "@/components/margin/Provenance";
 import {
   Answer, Body, Figure, Label, S, SectionLabel, Sub,
 } from "@/components/control-room/parts";
+import { hatch } from "@/lib/margin/tokens";
 
 /** The eight rows, in the order §4 fixes them. */
 const FACETS = [
@@ -554,8 +555,7 @@ function Calibration({ weeks, source }: { weeks: number | null; source: string |
                   : {
                     border: `1px solid ${S.rule}`,
                     background:
-                      "repeating-linear-gradient(45deg, rgba(27,26,22,.10) 0 3px, "
-                      + "transparent 3px 6px)",
+                      hatch(S),
                   }),
               }}
             />
@@ -570,7 +570,7 @@ function Calibration({ weeks, source }: { weeks: number | null; source: string |
               {`${weeks} of ${REQUIRED_CALIBRATED_GAMEWEEKS}`}
             </Figure>
           )}
-        <Label size={10.5} style={{ letterSpacing: "0", textTransform: "none" }}>
+        <Label size={11} style={{ letterSpacing: "0", textTransform: "none" }}>
           calibrated gameweeks
         </Label>
       </div>
@@ -617,7 +617,7 @@ export function Matrix(props: MatrixProps) {
           className="flex flex-col justify-end px-[15px] pt-[13px] pb-[14px]"
           style={{ background: S.shell }}
         >
-          <Label size={9} tone={S.ink3}>Facet</Label>
+          <Label size={11} tone={S.ink3}>Facet</Label>
           <Body size={11} style={{ marginTop: 5 }}>
             Down for one team, across for the argument.
           </Body>
@@ -635,7 +635,7 @@ export function Matrix(props: MatrixProps) {
           >
             <div className="flex items-baseline justify-between gap-[10px]">
               <Answer size={24} as="span" style={{ lineHeight: 1 }}>{team.name}</Answer>
-              <Figure size={10} tone={S.ink3} style={{ fontWeight: 400 }}>
+              <Figure size={11} tone={S.ink3} style={{ fontWeight: 400 }}>
                 {team.entryId}
               </Figure>
             </div>
@@ -650,7 +650,7 @@ export function Matrix(props: MatrixProps) {
                     : { border: `1px solid ${S.ink}` }),
                 }}
               />
-              <Label size={9}>{team.mandate}</Label>
+              <Label size={11}>{team.mandate}</Label>
             </div>
           </div>
         ))}

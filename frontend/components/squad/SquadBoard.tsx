@@ -40,6 +40,15 @@ const BANDS: ReadonlyArray<{ position: Position; label: string }> = [
 /** A club is a cluster once it carries a second player. One is just a pick. */
 const CLUSTER_FLOOR = 2;
 
+/**
+ * The table's measure, in pixels.
+ *
+ * Not responsive, deliberately: the design is a 1600px desk screen and says responsive
+ * was never drawn. Below this the row scrolls rather than reflowing into a layout nobody
+ * designed.
+ */
+const BOARD_MEASURE = 760;
+
 const MONO = "var(--font-mono, ui-monospace), monospace";
 
 /**
@@ -131,22 +140,33 @@ function BandHeading(
     >
       <span style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
         <span style={{
-          fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase",
+          fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase",
           color: surface.ink3,
         }}>
           {label}
         </span>
-        {/* The count is the band, not decoration: 3-4-3 is a formation. */}
+        {/*
+          * The count is the band, not decoration: 3-4-3 is a formation, and an illegal
+          * eleven is meant to be caught by reading this. It was 10px on `ink4`, which
+          * measures 2.71:1 on ink and 2.06:1 on paper — below the 3:1 floor on both, for
+          * a figure the design asks the reader to check.
+          */}
         <span
           data-testid={`band-count-${label.toLowerCase()}`}
-          style={{ fontFamily: MONO, fontSize: 10, color: surface.ink4 }}
+          style={{
+            fontFamily: MONO, fontSize: 12, color: surface.ink2,
+            fontVariantNumeric: "tabular-nums",
+          }}
         >
           {count}
         </span>
       </span>
       <span
         data-testid={`band-total-${label.toLowerCase()}`}
-        style={{ fontFamily: MONO, fontSize: 11, fontVariantNumeric: "tabular-nums", color: surface.ink2 }}
+        style={{
+          fontFamily: MONO, fontSize: 13.5, fontVariantNumeric: "tabular-nums",
+          color: surface.ink,
+        }}
       >
         {xp === null ? "∅" : xp.toFixed(1)}
       </span>
@@ -184,7 +204,19 @@ export function SquadBoard({
   const formation = formationOf(xi);
 
   return (
-    <section aria-label="Squad" style={{ display: "flex", flexDirection: "column" }}>
+    <section
+      aria-label="Squad"
+      style={{
+        display: "flex", flexDirection: "column",
+        /*
+         * A stated measure. The reference capture sets this table in a ~720px panel and
+         * the rows were being stretched to the full 1240px page, which is what put a
+         * thousand pixels between a name and its number. A table is only worth more than
+         * a list because the columns line up; that needs a bound.
+         */
+        maxWidth: BOARD_MEASURE,
+      }}
+    >
       {/* The header the design puts above the table: the shape, the number, and how
           the run to its right is sourced — because the run's last three bars are the
           weeks nobody has solved. */}
@@ -193,7 +225,7 @@ export function SquadBoard({
         style={{
           display: "flex", justifyContent: "space-between", alignItems: "baseline",
           gap: 10, paddingBottom: 6, flexWrap: "wrap",
-          fontFamily: MONO, fontSize: 9.5, letterSpacing: ".08em",
+          fontFamily: MONO, fontSize: 11, letterSpacing: ".08em",
           textTransform: "uppercase", color: surface.ink3,
         }}
       >
@@ -201,7 +233,9 @@ export function SquadBoard({
           {formation ?? "no legal eleven"}
           {total === null ? " · ∅ projected" : ` · ${total.toFixed(1)} projected`}
         </span>
-        <span data-testid="board-provenance" style={{ color: surface.ink4 }}>
+        {/* ink3, not ink4: this line states how the run is sourced, which is a claim a
+            reader has to be able to read. */}
+        <span data-testid="board-provenance" style={{ color: surface.ink3 }}>
           {`kit · muted ${MUTE_PERCENT}% · run: this week read, next three unsolved`}
         </span>
       </div>
@@ -233,12 +267,15 @@ export function SquadBoard({
             }}
           >
             <span style={{
-              fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase",
+              fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase",
               color: surface.ink3,
             }}>
               Bench
             </span>
-            <span style={{ fontFamily: MONO, fontSize: 10, color: surface.ink4 }}>
+            <span style={{
+              fontFamily: MONO, fontSize: 12, color: surface.ink2,
+              fontVariantNumeric: "tabular-nums",
+            }}>
               {bench.length}
             </span>
           </div>
@@ -291,15 +328,18 @@ export function ClusterSummary({
   return (
     <div
       data-testid="cluster-summary"
-      style={{ marginTop: 18, borderTop: `1px solid ${surface.hair}`, paddingTop: 8 }}
+      style={{
+        marginTop: 18, borderTop: `1px solid ${surface.hair}`, paddingTop: 8,
+        maxWidth: BOARD_MEASURE,
+      }}
     >
       <div style={{
         display: "flex", justifyContent: "space-between", alignItems: "baseline",
-        fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase",
+        fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase",
         color: surface.ink3, paddingBottom: 4,
       }}>
         <span>Club clusters</span>
-        <span style={{ textTransform: "none", letterSpacing: 0, color: surface.ink4 }}>
+        <span style={{ textTransform: "none", letterSpacing: 0, color: surface.ink3 }}>
           Ronny pays · Wazza banks
         </span>
       </div>
@@ -310,25 +350,25 @@ export function ClusterSummary({
           data-testid={`cluster-${row.club}`}
           style={{
             display: "grid",
-            gridTemplateColumns: "15px 34px 1fr 44px 30px",
+            gridTemplateColumns: "18px 34px minmax(0, 1fr) 48px 30px",
             alignItems: "center", gap: 8, padding: "5px 0",
             borderBottom: `1px solid ${surface.hair}`,
           }}
         >
           <KitMark club={row.club} surface={surface} />
-          <span style={{ fontFamily: MONO, fontSize: 11, color: surface.ink2 }}>
+          <span style={{ fontFamily: MONO, fontSize: 12, color: surface.ink2 }}>
             {row.club}
           </span>
           <span
             data-testid={`cluster-note-${row.club}`}
-            style={{ fontSize: 11, color: surface.ink3, overflow: "hidden",
+            style={{ fontSize: 12, color: surface.ink2, overflow: "hidden",
               textOverflow: "ellipsis", whiteSpace: "nowrap" }}
           >
             {clusterNote(row)}
           </span>
           <span
             data-testid={`cluster-xp-${row.club}`}
-            style={{ fontFamily: MONO, fontSize: 11, fontVariantNumeric: "tabular-nums",
+            style={{ fontFamily: MONO, fontSize: 12.5, fontVariantNumeric: "tabular-nums",
               color: surface.ink, textAlign: "right" }}
           >
             {row.xp === null ? "∅" : row.xp.toFixed(1)}
@@ -345,7 +385,8 @@ export function ClusterSummary({
               + `covariance between these players, which xp_public does not publish.`
             }
             style={{
-              fontFamily: MONO, fontSize: 11, color: surface.ink3, textAlign: "right",
+              fontFamily: MONO, fontSize: 12.5, color: surface.ink3, textAlign: "right",
+              // ink4 stays, but only as a border — never as text.
               borderBottom: `1px dotted ${surface.ink4}`, cursor: "help",
             }}
           >

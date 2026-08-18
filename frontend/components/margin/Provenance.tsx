@@ -122,7 +122,7 @@ export function ProvenanceMarks({
       data-testid="provenance-marks"
       style={{
         fontFamily: MONO,
-        fontSize: 9.5,
+        fontSize: 11,
         letterSpacing: ".08em",
         color: surface.ink3,
         whiteSpace: "nowrap",
@@ -130,7 +130,10 @@ export function ProvenanceMarks({
     >
       {slots.map((slot, i) => (
         <span key={slot.key}>
-          {i > 0 ? <span style={{ color: surface.ink4 }}>{"  ·  "}</span> : null}
+          {/* The separator is punctuation, not content — but it is still glyphs, and a
+              rule with an exception for "things I decided are decoration" stops being
+              enforceable. ink3, like the marks it sits between. */}
+          {i > 0 ? <span style={{ color: surface.ink3 }}>{"  ·  "}</span> : null}
           <span
             data-slot={slot.key}
             title={slot.title}
@@ -164,7 +167,7 @@ export function ProvenanceLegend({ surface }: { surface: MarginSurface }) {
     <span
       data-testid="provenance-legend"
       style={{
-        fontFamily: MONO, fontSize: 9.5, letterSpacing: ".08em",
+        fontFamily: MONO, fontSize: 11, letterSpacing: ".08em",
         color: surface.ink3, whiteSpace: "nowrap",
       }}
     >

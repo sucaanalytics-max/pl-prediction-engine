@@ -11,7 +11,9 @@
  * `kits.ts` for why that is a correctness decision and not a shortcut.
  */
 import { KITS, kitBackground, type Kit } from "@/components/squad/kits";
-import { KIT_MIX_TARGET, type MarginSurface } from "@/lib/margin/tokens";
+import {
+  KIT_MIX_TARGET, surfaceIsLight, type MarginSurface,
+} from "@/lib/margin/tokens";
 
 /** The shoulder line. Cheap, and the only thing saying "shirt". */
 const SHIRT = "polygon(0 14%, 22% 0, 78% 0, 100% 14%, 100% 100%, 0 100%)";
@@ -32,7 +34,11 @@ export function KitMark({
   height?: number;
 }) {
   const kit: Kit | undefined = KITS[club];
-  const muted = mute ?? surface.shell === "#f6f5f2";
+  // Measured, not matched against PAPER's literal: a club colour is mixed toward a
+  // light ground so fifteen marks land in one lightness band, and on a dark ground it
+  // is already reading against the dark and must keep its full strength — which is what
+  // makes six league reds tell each other apart.
+  const muted = mute ?? surfaceIsLight(surface);
 
   // An unknown code gets the hatch, not a grey box and not a guess. A club we have
   // no entry for is a fact about this table, and `∅`-style honesty applies to a

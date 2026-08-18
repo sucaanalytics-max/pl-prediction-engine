@@ -286,7 +286,7 @@ function Masthead(
           Control room
         </Label>
         <div className="mt-[5px] flex flex-wrap items-center gap-x-3 gap-y-1">
-          <Label size={10} tone={S.ink3}>
+          <Label size={11} tone={S.ink3}>
             {[
               gameweek === null ? null : `Gameweek ${gameweek}`,
               season === null ? null : season.replace("-", "/"),
@@ -317,12 +317,12 @@ function Masthead(
                   : { border: `1px solid ${S.ink3}` }),
               }}
             />
-            <Label size={9} tone="inherit">{MODE_LABEL[mode] ?? MODE_LABEL.unknown}</Label>
+            <Label size={11} tone="inherit">{MODE_LABEL[mode] ?? MODE_LABEL.unknown}</Label>
           </span>
         </div>
       </div>
       <div className="text-right">
-        <Label size={9} tone={S.ink3} style={{ letterSpacing: ".12em" }}>
+        <Label size={11} tone={S.ink3} style={{ letterSpacing: ".12em" }}>
           Deadline in
         </Label>
         <Countdown deadline={deadline} />
@@ -413,10 +413,10 @@ function TeamStrip(
             <Answer size={17} as="span" style={{ color: active ? S.brand : S.ink }}>
               {team.name}
             </Answer>
-            <Figure size={10} tone={S.ink3} style={{ fontWeight: 400 }}>
+            <Figure size={11} tone={S.ink3} style={{ fontWeight: 400 }}>
               {team.entryId}
             </Figure>
-            <Label size={9}>{team.mandate}</Label>
+            <Label size={11}>{team.mandate}</Label>
           </button>
         );
       })}

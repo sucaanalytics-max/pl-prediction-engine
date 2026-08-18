@@ -72,7 +72,7 @@ export function SquadRow({
   const minutesLow = minutes !== null && minutes < MINUTES_FLOOR;
 
   const cell: React.CSSProperties = {
-    fontFamily: MONO, fontSize: 10, padding: "2px 6px",
+    fontFamily: MONO, fontSize: 12, padding: "2px 6px",
     fontVariantNumeric: "tabular-nums",
   };
 
@@ -82,23 +82,51 @@ export function SquadRow({
       data-club={player.club}
       data-benched={dim ? "true" : "false"}
       style={{
-        display: "flex", alignItems: "center", gap: 8, padding: "4px 0",
+        /*
+         * A grid with stated columns, not a stretched flex.
+         *
+         * The row was `display: flex` with the name at `flex: 1`, so on a wide screen
+         * the name sat at the far left and its numbers at the far right with a thousand
+         * pixels of nothing between them. Nobody can carry a name across that gap to a
+         * number, which is why a correct, well-contrasted row still read as unusable.
+         *
+         * Every column is now fixed except the name, and the board caps the whole
+         * measure, so the eye travels a short constant distance and the columns line up
+         * down the table — which is the only reason a table beats a list.
+         */
+        display: "grid",
+        gridTemplateColumns:
+          "14px 18px minmax(0, 1fr) 18px 30px auto 18px 100px 24px 34px",
+        alignItems: "center",
+        gap: 8,
+        padding: "5px 0",
         borderBottom: `1px solid ${surface.hair}`,
       }}
     >
-      {benchIndex ? (
-        <span
-          data-testid="bench-index"
-          title="bench order — a real FPL decision that most references bury"
-          style={{ fontFamily: MONO, fontSize: 9, color: surface.ink3, width: 10 }}
-        >
-          {benchIndex}
-        </span>
-      ) : null}
+      {/* Always rendered, so the grid's first column exists on every row and the
+          fifteen names start at one x-position. */}
+      <span
+        data-testid={benchIndex ? "bench-index" : "bench-index-empty"}
+        title={benchIndex ? "bench order — a real FPL decision that most references bury" : undefined}
+        style={{
+          fontFamily: MONO, fontSize: 11, color: surface.ink3, textAlign: "right",
+          fontVariantNumeric: "tabular-nums",
+        }}
+      >
+        {benchIndex ?? ""}
+      </span>
 
       <KitMark club={player.club} surface={surface} />
 
-      <span style={{ fontSize: 12.5, lineHeight: 1.2, flex: 1, color: dim ? surface.ink3 : surface.ink }}>
+      <span
+        style={{
+          fontSize: 13.5, lineHeight: 1.25,
+          overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+          // A benched name is quieter but still has to be readable: ink2 is 6.88:1 on
+          // this surface, where ink3 is 3.82 and would fail for 13.5px body text.
+          color: dim ? surface.ink2 : surface.ink,
+        }}
+      >
         {player.name}
       </span>
 
@@ -107,15 +135,18 @@ export function SquadRow({
         <span
           data-testid="armband"
           style={{
-            fontFamily: MONO, fontSize: 8.5, padding: "0 3px",
-            border: `1px solid ${surface.block}`, color: surface.ink,
+            fontFamily: MONO, fontSize: 11, lineHeight: 1, padding: "1px 3px",
+            textAlign: "center",
+            border: `1px solid ${surface.rule}`, color: surface.ink,
           }}
         >
           {player.armband}
         </span>
       ) : null}
 
-      <span style={{ fontFamily: MONO, fontSize: 9, color: surface.ink3, width: 26 }}>
+      {/* The disambiguator of last resort, per the design: colour narrows a club to a
+          family, pattern and code settle it. So it has to be readable — ink2, not ink3. */}
+      <span style={{ fontFamily: MONO, fontSize: 11, color: surface.ink2 }}>
         {player.club}
       </span>
 
@@ -127,16 +158,16 @@ export function SquadRow({
         <span
           data-testid="xp-cell"
           style={{
-            ...cell, fontSize: 11, fontWeight: 500, minWidth: 34, textAlign: "right",
+            ...cell, fontSize: 12.5, fontWeight: 500, minWidth: 38, textAlign: "right",
             // Inverted, so the one number the row exists for cannot be skimmed past.
             background: dim ? "transparent" : surface.ink,
             color: dim ? surface.ink3 : surface.face,
           }}
         >
-          {player.xp === null ? <Nil surface={surface} size={10} /> : player.xp.toFixed(1)}
+          {player.xp === null ? <Nil surface={surface} size={11} /> : player.xp.toFixed(1)}
         </span>
-        <span style={{ ...cell, minWidth: 52, color: surface.ink2, borderLeft: `1px solid ${surface.block}` }}>
-          {player.opponent ?? <Nil surface={surface} size={10} />}
+        <span style={{ ...cell, minWidth: 58, color: surface.ink2, borderLeft: `1px solid ${surface.block}` }}>
+          {player.opponent ?? <Nil surface={surface} size={11} />}
         </span>
         <span
           data-testid="minutes-cell"
@@ -148,14 +179,14 @@ export function SquadRow({
                 : `${minutes.toFixed(0)} expected minutes`
           }
           style={{
-            ...cell, minWidth: 34, textAlign: "right",
+            ...cell, minWidth: 38, textAlign: "right",
             borderLeft: `1px solid ${surface.block}`,
             // The ONLY cell in the row that may take a judgement hue, and only
             // under the floor. Expected minutes is the input a projection turns on.
             color: minutesLow ? surface.noise : surface.ink2,
           }}
         >
-          {minutes === null ? <Nil surface={surface} size={10} /> : minutes.toFixed(0)}
+          {minutes === null ? <Nil surface={surface} size={11} /> : minutes.toFixed(0)}
         </span>
       </span>
 
@@ -164,9 +195,17 @@ export function SquadRow({
         data-testid="difficulty-tick"
         title={player.difficulty ? `fixture difficulty ${player.difficulty} of 5` : "no difficulty published"}
         style={{
-          width: 16, height: 4, flexShrink: 0,
+          width: 18, height: 5, flexShrink: 0,
+          /*
+           * Derived from the surface, not a literal. This was
+           * `rgba(27,26,22,alpha)` — PAPER's ink — which is invisible on a dark
+           * ground, so the whole column vanished when the board changed surface.
+           * `color-mix` keeps it monochrome, because club owns hue here.
+           */
           background: player.difficulty
-            ? `rgba(27,26,22,${DIFFICULTY_ALPHA[player.difficulty] ?? 0.3})`
+            ? `color-mix(in oklab, ${surface.ink} `
+              + `${Math.round((DIFFICULTY_ALPHA[player.difficulty] ?? 0.3) * 100)}%, `
+              + `transparent)`
             : "transparent",
           border: player.difficulty ? "none" : `1px dashed ${surface.hair}`,
         }}
@@ -222,7 +261,7 @@ export function SquadRow({
           borderBottom: `1.5px dotted ${surface.ink4}`,
         }}
       >
-        <Nil surface={surface} size={10} />
+        <Nil surface={surface} size={11} />
       </span>
     </div>
   );
