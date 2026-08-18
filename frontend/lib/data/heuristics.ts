@@ -195,6 +195,20 @@ export interface SquadPlayer {
    * it rather than reading it as an easy week.
    */
   readonly fixtures: readonly SquadFixture[];
+  /**
+   * FPL's own chance of playing the next round, as a percentage.
+   *
+   * Three states, all different. A number is a published chance. `null` is FPL
+   * publishing none, which is the normal state for a fit player. `undefined` is this
+   * player not having come from the route at all — the planner synthesises an arrival
+   * from a transfer and cannot know — and a consumer must not read that as "fit".
+   *
+   * Optional for the same reason `bench` is: a value the source did not state must not
+   * arrive as a value it did.
+   */
+  readonly chanceOfPlaying?: number | null;
+  /** FPL's own news line. Empty string when there is none; absent when unknown. */
+  readonly news?: string;
 }
 
 /** One upcoming fixture for one player. */
@@ -355,6 +369,18 @@ function narrowSquad(raw: unknown): SquadView | null {
         : undefined,
       fixture: optString(item.fixture) ?? undefined,
       fixtures: narrowSquadFixtures(item.fixtures),
+      /*
+       * Availability, kept apart from the armband.
+       *
+       * The route folds a pick role and an availability flag into one `status`, and the
+       * role wins: `pick.status ?? (element.status !== "a" || element.news ? "monitor" :
+       * undefined)`. So a captain who is injured stays "captain" and the flag is lost —
+       * on precisely the pick where it matters most. These two fields are emitted
+       * independently by the route and were never read, so no squad surface could mark a
+       * flagged player at all.
+       */
+      chanceOfPlaying: optNumber(item.chanceOfPlaying),
+      news: optString(item.news) ?? "",
     });
   }
   if (kept.length === 0) return null;

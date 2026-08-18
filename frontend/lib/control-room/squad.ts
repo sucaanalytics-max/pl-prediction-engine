@@ -85,6 +85,9 @@ export function squadBoardPlayers(
       opponent: fixture?.label ?? null,
       expectedMinutes: projection?.eMinutes ?? null,
       difficulty: fixture?.difficulty ?? null,
+      // Passed through, not defaulted: an absent flag is unknown, not fit.
+      chanceOfPlaying: pick.chanceOfPlaying,
+      news: pick.news,
       distribution: projection
         ? {
           q10: projection.q10, q25: projection.q25, q50: projection.q50,

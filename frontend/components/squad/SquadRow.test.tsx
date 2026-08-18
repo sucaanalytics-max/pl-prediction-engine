@@ -155,3 +155,68 @@ describe("the rest of the row", () => {
     expect(screen.getAllByRole("img").length).toBeGreaterThan(1);
   });
 });
+
+describe("FPL's own availability flag", () => {
+  /**
+   * The route folds a pick role and an availability flag into one `status` field, and the
+   * role wins: `pick.status ?? (element.status !== "a" || element.news ? "monitor" :
+   * undefined)`. So a captain who is injured stayed "captain" and the flag was lost — on
+   * exactly the pick where it matters most — and the narrower dropped the two fields the
+   * route emits separately, so no squad surface could mark a flagged player at all.
+   */
+  it("marks a player FPL has ruled out", () => {
+    render(
+      <SquadRow
+        player={{ ...BASE, chanceOfPlaying: 0, news: "Knee injury - expected back 30 Aug" }}
+        surface={PAPER}
+      />,
+    );
+    const flag = screen.getByTestId("availability-flag");
+    expect(flag.textContent).toBe("✕");
+    expect(flag.getAttribute("title")).toContain("Knee injury");
+  });
+
+  it("marks a doubt with its published percentage", () => {
+    render(
+      <SquadRow player={{ ...BASE, chanceOfPlaying: 25, news: "Knock" }} surface={PAPER} />,
+    );
+    expect(screen.getByTestId("availability-flag").getAttribute("title"))
+      .toContain("25% chance of playing");
+  });
+
+  it("shows the flag ALONGSIDE the armband, which is the case that was lost", () => {
+    render(
+      <SquadRow
+        player={{ ...BASE, armband: "C", chanceOfPlaying: 50, news: "Doubt" }}
+        surface={PAPER}
+      />,
+    );
+    expect(screen.getByTestId("armband").textContent).toBe("C");
+    expect(screen.getByTestId("availability-flag")).toBeTruthy();
+  });
+
+  it("says nothing for a fit player, because FPL publishes nothing for one", () => {
+    render(
+      <SquadRow player={{ ...BASE, chanceOfPlaying: null, news: "" }} surface={PAPER} />,
+    );
+    expect(screen.queryByTestId("availability-flag")).toBeNull();
+  });
+
+  it("says nothing for a player the source never described, which is not the same", () => {
+    // `undefined` is "this did not come from the route" — unknown, not fit. Nothing is
+    // drawn either way; the difference is that nothing is claimed.
+    render(<SquadRow player={BASE} surface={PAPER} />);
+    expect(screen.queryByTestId("availability-flag")).toBeNull();
+  });
+
+  it("carries news even when FPL publishes no percentage", () => {
+    render(
+      <SquadRow
+        player={{ ...BASE, chanceOfPlaying: null, news: "Suspended" }}
+        surface={PAPER}
+      />,
+    );
+    expect(screen.getByTestId("availability-flag").getAttribute("title"))
+      .toContain("Suspended");
+  });
+});

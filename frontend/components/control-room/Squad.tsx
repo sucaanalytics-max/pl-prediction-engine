@@ -113,6 +113,39 @@ export function Squad({
               </Sub>
             </div>
           )}
+          {/*
+            * The count, so silence is readable.
+            *
+            * A row marks a flagged player, but no marks at all is ambiguous between
+            * "checked, none flagged" and "never checked" — the same absence-versus-zero
+            * confusion the Nil glyph exists to prevent. One line resolves it, and it
+            * costs nothing when the answer is none. Counted from the fifteen, never
+            * typed.
+            */}
+          <div style={{ marginTop: 6 }} data-testid="availability-read">
+            <Sub>
+              {(() => {
+                const stated = board.players.filter(
+                  (p) => p.chanceOfPlaying !== undefined || p.news !== undefined,
+                );
+                if (stated.length === 0) {
+                  return "availability was not stated for this squad";
+                }
+                const out = stated.filter((p) => p.chanceOfPlaying === 0).length;
+                const doubt = stated.filter(
+                  (p) => typeof p.chanceOfPlaying === "number" && p.chanceOfPlaying > 0
+                    && p.chanceOfPlaying < 100,
+                ).length;
+                const noted = stated.filter(
+                  (p) => (p.news ?? "") !== "" && p.chanceOfPlaying === null,
+                ).length;
+                const flagged = out + doubt + noted;
+                return `availability read with the squad · ${flagged} of ${stated.length} `
+                  + `flagged${doubt > 0 ? `, ${doubt} carrying a doubt` : ""}`;
+              })()}
+            </Sub>
+          </div>
+
           {squadSource !== null && (
             <div style={{ marginTop: 6 }}>
               <Sub>{squadSource}</Sub>

@@ -57,6 +57,15 @@ export interface SquadRowPlayer {
   readonly expectedMinutes: number | null;
   readonly difficulty: number | null;
   readonly distribution: DistributionInput | null;
+  /**
+   * FPL's own availability, when the source stated one.
+   *
+   * `null` chance with empty news is a fit player; a number, or any news at all, is FPL
+   * saying something. `undefined` is a player who did not come from the route, and is
+   * NOT the same as fit — it renders nothing rather than a clean bill of health.
+   */
+  readonly chanceOfPlaying?: number | null;
+  readonly news?: string;
 }
 
 export function SquadRow({
@@ -70,6 +79,26 @@ export function SquadRow({
   const dim = player.benched;
   const minutes = player.expectedMinutes;
   const minutesLow = minutes !== null && minutes < MINUTES_FLOOR;
+
+  /**
+   * What FPL says about this player, if anything.
+   *
+   * Absent chance AND empty news is a fit player — FPL sets these only when it has
+   * something to say. `undefined` on both means the source never stated one, which is
+   * unknown rather than fit, so nothing is drawn either way; the difference is that
+   * nothing is CLAIMED.
+   */
+  const flag = (() => {
+    const chance = player.chanceOfPlaying;
+    const news = player.news ?? "";
+    if (chance === undefined && !news) return null;
+    if (chance === null && !news) return null;
+    if (chance === 0) return { mark: "✕", title: `ruled out — ${news || "FPL flags 0%"}` };
+    if (typeof chance === "number" && chance < 100) {
+      return { mark: "!", title: `${chance}% chance of playing — ${news || "flagged by FPL"}` };
+    }
+    return news ? { mark: "·", title: news } : null;
+  })();
 
   const cell: React.CSSProperties = {
     fontFamily: MONO, fontSize: 12, padding: "2px 6px",
@@ -117,6 +146,27 @@ export function SquadRow({
       </span>
 
       <KitMark club={player.club} surface={surface} />
+
+      {/*
+        * FPL's own flag, beside the name it is about.
+        *
+        * The route folds a pick role and an availability flag into one `status` field and
+        * the role wins, so a captain who is injured kept "captain" and lost the flag — on
+        * exactly the pick where it matters most. This reads the two fields the route
+        * emits separately, so an armband and an injury can both be true.
+        */}
+      {flag ? (
+        <span
+          data-testid="availability-flag"
+          title={flag.title}
+          style={{
+            fontFamily: MONO, fontSize: 11, lineHeight: 1,
+            color: surface.noise, cursor: "help",
+          }}
+        >
+          {flag.mark}
+        </span>
+      ) : null}
 
       <span
         style={{
