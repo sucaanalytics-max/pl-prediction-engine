@@ -47,3 +47,33 @@ class SettledOutcomeDiscovery(unittest.TestCase):
         with mock.patch("pipeline.learning.run_agent.PREDICTIONS_DIR", self.tmpdir):
             from pipeline.learning.run_agent import _settled_outcomes
             self.assertEqual(_settled_outcomes(), [])
+
+    def test_rows_carry_the_settled_weeks_gameweek(self):
+        """A row with no gameweek would make every distinct-gameweek count
+        collapse to one — the exact bug this stamping guards against."""
+        self._write_settled_gameweek()
+        with mock.patch("pipeline.learning.run_agent.PREDICTIONS_DIR", self.tmpdir):
+            from pipeline.learning.run_agent import _settled_outcomes
+            rows = _settled_outcomes()
+        self.assertEqual(rows[0]["gameweek"], 1)
+
+    def test_two_settled_weeks_produce_rows_spanning_both(self):
+        """This is the exact computation at run_agent.py:201
+        (gameweeks_sealed=len({r.get("gameweek") for r in settled})) — it is
+        what stops the defect returning."""
+        self._write_settled_gameweek()
+        second = Path(self.tmpdir) / "fpl" / "ledger" / "gw02"
+        second.mkdir(parents=True)
+        with (second / "outcome.jsonl").open("w", encoding="utf-8") as handle:
+            handle.write(json.dumps(
+                {"record": RECORD_HEADER, "gameweek": 2, "revision": 1,
+                 "provisional": False}) + "\n")
+            handle.write(json.dumps(
+                {"element_id": 501, "total_points": 6, "minutes": 90}) + "\n")
+
+        with mock.patch("pipeline.learning.run_agent.PREDICTIONS_DIR", self.tmpdir):
+            from pipeline.learning.run_agent import _settled_outcomes
+            rows = _settled_outcomes()
+
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(len({r["gameweek"] for r in rows}), 2)

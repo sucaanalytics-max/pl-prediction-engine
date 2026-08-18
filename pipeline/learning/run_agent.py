@@ -240,7 +240,28 @@ def _settled_outcomes(gameweek: Optional[int] = None) -> List[Dict[str, Any]]:
         # still move until 09:00 UK the day after the last match.
         if parsed["header"].get("provisional", True):
             continue
-        rows.extend(parsed["rows"].values())
+        gameweek_no = parsed["header"].get("gameweek")
+        if gameweek_no is None:
+            # The header should always carry it (outcomes.py stamps
+            # "gameweek" into every header at settlement time), but fall back
+            # to the gwNN directory name rather than risk a null week: a null
+            # here would make every distinct-gameweek count collapse to one,
+            # recreating the exact bug this function exists to fix.
+            dirname = outcome_path.parent.name
+            try:
+                gameweek_no = int(dirname[2:]) if dirname.startswith("gw") else None
+            except ValueError:
+                gameweek_no = None
+        if gameweek_no is None:
+            logger.warning(
+                "sealed outcomes at %s carry no discoverable gameweek; skipping",
+                outcome_path,
+            )
+            continue
+        for row in parsed["rows"].values():
+            # Don't clobber a gameweek a row somehow already carries.
+            row.setdefault("gameweek", gameweek_no)
+            rows.append(row)
     return rows
 
 
