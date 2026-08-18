@@ -104,7 +104,15 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
       if (maxPrice !== null && (row.fpl_price ?? Infinity) > maxPrice) return false;
       // `available === null` means the provider did not say. Excluded only when the
       // reader explicitly asks for fit players, never silently.
+      /*
+       * `available` is FPL's `status in {"a", "d"}` — available OR DOUBTFUL
+       * (`pipeline/data/fpl_api.py:270`) — so this filter passed a 75% doubt as fit and
+       * the checkbox's label was wrong. When the producer states a status, a doubt is
+       * excluded here; when it states none the old behaviour stands, because "the
+       * producer did not say" is not evidence of a doubt.
+       */
       if (fitOnly && row.available !== true) return false;
+      if (fitOnly && row.status !== null && row.status !== "a") return false;
       if (needle && !`${row.name} ${row.team}`.toLowerCase().includes(needle)) {
         return false;
       }
@@ -189,7 +197,13 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
             checked={fitOnly}
             onChange={(event) => setFitOnly(event.target.checked)}
           />
-          Available only
+          <span title={
+            "FPL's own status. Where the producer states none — a file written before "
+            + "the status was exported — this falls back to its available flag, which "
+            + "counts a doubt as available."
+          }>
+            Available only
+          </span>
         </label>
 
         <select
@@ -246,13 +260,29 @@ function PlayersTable({ rows }: { rows: readonly PlayerRow[] }) {
               <tr key={`${row.name}-${row.team}`} data-testid="player">
                 <td className="text-sm">
                   {row.name}
+                  {/*
+                    * Three marks, because FPL publishes three answers. This showed one,
+                    * driven by a boolean that counts a doubt as available — so a 75%
+                    * doubt appeared here with no mark at all.
+                    */}
                   {row.available === false ? (
                     <span
                       className="ml-1 text-[10px]"
                       style={{ color: "var(--warning)" }}
-                      title="FPL lists this player as unavailable"
+                      title={row.status === "s" ? "FPL lists this player as suspended"
+                        : "FPL lists this player as unavailable"}
                     >
-                      !
+                      ✕
+                    </span>
+                  ) : row.status !== null && row.status !== "a" ? (
+                    <span
+                      className="ml-1 text-[10px]"
+                      style={{ color: "var(--warning)" }}
+                      title={row.chanceOfPlaying === null
+                        ? "FPL flags a doubt over this player"
+                        : `FPL puts this player at ${row.chanceOfPlaying}% to play`}
+                    >
+                      {row.chanceOfPlaying === null ? "!" : `${row.chanceOfPlaying}%`}
                     </span>
                   ) : null}
                 </td>
