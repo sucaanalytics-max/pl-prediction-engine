@@ -1,17 +1,35 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-18T20:50:00.732562Z",
-  "n_dropped": 64,
+  "generated_at": "2026-08-18T21:23:50.939649Z",
+  "n_dropped": 66,
   "dropped_by_source": {
-    "bbc_football": 38,
+    "bbc_football": 40,
     "sky_football": 26
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 154,
+  "n_articles": 156,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "1decf780158ddcea",
+      "headline": "Palace latest: Gozo joins from MLS side Real Salt Lake",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-18T22:09:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "5bae21eb2e88e423",
       "headline": "Brighton latest: Striker Promise David joins on loan from Union SG",
@@ -20,6 +38,42 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
       "claimed_at": "2026-08-18T21:13:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "6113b316119aeae5",
+      "headline": "Al Hilal target England's Kane - Wednesday's gossip",
+      "summary": "Al-Hilal in talks with Harry Kane and Ollie Watkins, Newcastle explore move for Manchester City's Nico Gonzalez, Sunderland move for Dayann Methalie in danger of collapsing.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c70gdd61kk4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-18T21:02:44Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "23da69723bc38341",
+      "headline": "Brighton sign Canada striker David on loan",
+      "summary": "Brighton sign Canada striker Promise David from Royale Union Saint-Gilloise on a season-long loan with an obligation to buy for a reported \u00a322m.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c30450z6pmmo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-18T20:43:01Z",
       "players": [
         {
           "element_id": 0,
@@ -907,42 +961,6 @@
       "touches_squad": null
     },
     {
-      "digest": "91aa4b7c00ce0395",
-      "headline": "Bronze explains out-of-character contract extension",
-      "summary": "England defender Lucy Bronze says she has found a \"really good role\" at a club she is \"comfortable\" with, after signing a rare contract extension with Chelsea.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cy4kge80l1eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-17T08:06:16Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1e391793c1e27d27",
-      "headline": "Juventus step up Vicario talks - Monday's gossip",
-      "summary": "Juventus increase talks for Guglielmo Vicario and pull out of move for Emiliano Martinez, Manchester City face competition for Pedro Neto and Real Madrid want Martin Zubimendi., plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c4gkk7r2r4yo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-17T05:54:05Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "0bf09e0f5debd196",
       "headline": "Papers: Delap & Neto move closer to Chelsea exit",
       "summary": "The top stories and transfer rumours from Monday's newspapers...",
@@ -1130,24 +1148,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13573748/liverpool-vs-como-live-commentary-live-score-and-team-news-from-anfield",
       "claimed_at": "2026-08-16T16:22:00Z",
-      "players": [
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "10cada396d03f3b9",
-      "headline": "Jacquet scores on debut as Liverpool beat Como",
-      "summary": "Jeremy Jacquet was the star as Liverpool enjoyed a confidence-boosting 2-0 win over Como in their final pre-season friendly at Anfield.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13573738/liverpool-2-0-como-jeremy-jacquet-scores-on-debut-to-add-to-cody-gakpo-goal-as-reds-win-at-anfield",
-      "claimed_at": "2026-08-16T16:09:00Z",
       "players": [
         {
           "element_id": 362,
