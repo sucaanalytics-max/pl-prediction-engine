@@ -145,3 +145,60 @@ export function timeAgo(dateStr: string): string {
   if (diffMins > 0) return `${diffMins}m ago`;
   return "just now";
 }
+
+/**
+ * The age line: how old the thing beside it is, in a form the reader can check.
+ *
+ * Two forms, and the switch between them is the whole point:
+ *
+ *   - inside a day  ->  `6h old`
+ *   - beyond a day  ->  `as at Tue 06:30`
+ *
+ * `describeAge` in `lib/data/artifact.ts` keeps returning "3 days" for the
+ * second case, and "3 days" is a relative claim the reader cannot verify — three
+ * days from when? A weekday and a clock time can be checked against the fixture
+ * list, the last deadline, or a memory of when the pipeline ran. Inside a day the
+ * relative form is fine, because "6h old" and "as at 06:30" carry the same
+ * information and the first is shorter.
+ *
+ * It lives here rather than beside `describeAge` because `artifact.ts` imports
+ * nothing at all — it is the pure state machine — and this needs the display
+ * zone. Age is a display concern; the state machine should not learn about time
+ * zones to serve it.
+ *
+ * Null when there is no timestamp: the caller renders nothing rather than
+ * "unknown", because the exception for absence is about data never computed, not
+ * about a value whose clock we happen not to know.
+ */
+export function ageLine(
+  producedAt: string | null | undefined,
+  now: Date = new Date(),
+): string | null {
+  if (!producedAt) return null;
+  const then = new Date(producedAt);
+  if (Number.isNaN(then.getTime())) return null;
+
+  const ms = now.getTime() - then.getTime();
+  const hours = Math.floor(Math.abs(ms) / 3_600_000);
+
+  if (ms >= 0 && hours < 24) {
+    // Under an hour still reads in hours, not minutes: these artifacts are
+    // written by a cron, so minute precision would imply a freshness the
+    // producer does not have.
+    return `${hours}h old`;
+  }
+
+  // Beyond a day — or a future stamp, from clock skew or a mis-stamped file —
+  // state the instant instead of a duration. A future age rendered as "0h old"
+  // would be a quiet lie; rendered as an instant it is visibly wrong, which is
+  // what we want.
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: DISPLAY_TIME_ZONE,
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(then);
+  const get = (t: string) => parts.find((x) => x.type === t)?.value ?? "";
+  return `as at ${get("weekday")} ${get("hour")}:${get("minute")}`;
+}
