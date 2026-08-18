@@ -78,6 +78,32 @@ jobs:
             ${{ github.event.inputs.force_refresh == 'true' && '--force-refresh' || '' }} \
             ${{ github.event.inputs.skip_pymc == 'true' && '--skip-pymc' || '' }}
 
+      # Placed HERE deliberately: after the pipeline has regenerated the
+      # artifacts and before anything publishes or commits them, so a run that
+      # produced an unanchored artifact fails instead of committing it.
+      #
+      # These two test modules are gated on PHASE0_VERIFY_ARTIFACTS because
+      # they assert against the COMMITTED predictions/fpl/xp_gw01.json and
+      # health.json, which no local checkout can regenerate (pymc, xgboost and
+      # sklearn are not installable in every dev environment). Until now the
+      # variable was set in no workflow at all, so both simply skipped
+      # everywhere and the exit criterion was never checked anywhere.
+      #
+      # It must NOT be added to "Run pipeline contract tests" above. That step
+      # runs BEFORE the pipeline, against the artifact committed by the
+      # PREVIOUS run — which today still carries rate_source: null on every
+      # fixture. The tests would fail, the job would abort, and the artifact
+      # that would have fixed them would never be regenerated: a deadlock the
+      # daily job could not recover from on its own.
+      - name: Verify Phase 0 artifacts
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          PHASE0_VERIFY_ARTIFACTS: "1"
+        run: |
+          python -m unittest \
+            pipeline.tests.test_xp_artifact_rate_source \
+            pipeline.tests.test_health_provenance
+
       - name: Sync predictions to frontend
         run: |
           set -euo pipefail

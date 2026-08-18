@@ -181,5 +181,82 @@ class NewsLaneStagingTests(unittest.TestCase):
         )
 
 
+class Phase0ArtifactGateTests(unittest.TestCase):
+    """PHASE0_VERIFY_ARTIFACTS appeared in no workflow, so both env-gated
+    artifact tests skipped everywhere — locally AND in CI — and the exit
+    criterion ("every published fixture states where its rates came from")
+    was checked by nothing.
+
+    Position is the whole fix. The obvious remedy, adding the variable to the
+    existing "Run pipeline contract tests" step, would DEADLOCK the daily job:
+    that step runs BEFORE the pipeline, against the artifact committed by the
+    previous run, whose fixtures still carry rate_source null. The tests would
+    fail, the job would abort, and the artifact that would have fixed them
+    would never be regenerated."""
+
+    ENV_VAR = "PHASE0_VERIFY_ARTIFACTS"
+    GATED_MODULES = (
+        "pipeline.tests.test_xp_artifact_rate_source",
+        "pipeline.tests.test_health_provenance",
+    )
+
+    def setUp(self) -> None:
+        self.pipeline = PIPELINE_WORKFLOW.read_text()
+
+    def _index(self, step_name):
+        marker = f"- name: {step_name}"
+        position = self.pipeline.find(marker)
+        self.assertNotEqual(
+            position, -1, f"pipeline.yml has no step named {step_name!r}")
+        return position
+
+    def test_the_gate_variable_is_set_somewhere_in_the_daily_job(self):
+        self.assertIn(self.ENV_VAR, self.pipeline)
+
+    def test_every_env_gated_module_is_named_by_the_verify_step(self):
+        """Derived from the modules that actually read the variable, so adding
+        a third gated test without wiring it here fails rather than skipping
+        forever — which is the defect this class exists for."""
+        # Matched on the skipUnless READ, not on a mention of the name —
+        # otherwise this module's own prose would count itself.
+        needle = f'os.environ.get("{self.ENV_VAR}")'
+        gated = sorted(
+            f"pipeline.tests.{path.stem}"
+            for path in (REPO_ROOT / "pipeline" / "tests").glob("test_*.py")
+            if needle in path.read_text()
+        )
+        self.assertEqual(gated, sorted(self.GATED_MODULES))
+        for module in gated:
+            with self.subTest(module=module):
+                self.assertIn(module, self.pipeline)
+
+    def test_the_gate_runs_after_the_pipeline_that_produces_the_artifact(self):
+        self.assertLess(
+            self._index("Run prediction pipeline"),
+            self._index("Verify Phase 0 artifacts"),
+            "verifying before the pipeline regenerates the artifact checks the "
+            "PREVIOUS run's output and deadlocks the job: the tests fail, the "
+            "job aborts, and the artifact is never regenerated",
+        )
+
+    def test_the_gate_runs_before_anything_publishes_or_commits(self):
+        verify = self._index("Verify Phase 0 artifacts")
+        for later in ("Sync predictions to frontend", "Commit predictions"):
+            with self.subTest(step=later):
+                self.assertLess(
+                    verify, self._index(later),
+                    "a run that produced an unanchored artifact must fail "
+                    "instead of committing it",
+                )
+
+    def test_the_pre_pipeline_contract_step_does_not_set_the_gate(self):
+        """The deadlock, pinned. "Run pipeline contract tests" runs before the
+        pipeline; setting the variable there fails the job on the previous
+        run's stale artifact and prevents the regeneration that would fix it."""
+        start = self._index("Run pipeline contract tests")
+        end = self._index("Run prediction pipeline")
+        self.assertNotIn(self.ENV_VAR, self.pipeline[start:end])
+
+
 if __name__ == "__main__":
     unittest.main()
