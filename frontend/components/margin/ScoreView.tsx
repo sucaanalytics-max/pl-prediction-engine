@@ -248,7 +248,28 @@ function Captaincy({ view }: { view: HeuristicView }) {
   );
 }
 
-export function ScoreView({ gameweek }: { gameweek: number }) {
+export function ScoreView(
+  { gameweek, captaincyPlan = true, speaksForUnsolvedWeeks = true }: {
+    gameweek: number;
+    /**
+     * Whether to draw the heuristic engine's six-week armband list.
+     *
+     * `/` passes `false`, and that is the point of the prop rather than a
+     * convenience. The front page names **one** captain — the model's argmax over
+     * `xp_public_gw{NN}.json`, stated by `GameweekCall` at the top of that page —
+     * while this panel names six more from a different engine, on a ranking key
+     * already doubled for the armband. Two answers to the single highest-leverage
+     * choice of the week is the exact defect the front page exists to remove; see
+     * `components/SquadBoard.tsx`'s docstring for the same cut made there.
+     *
+     * Defaults to `true` so `/margin` keeps rendering it while the two surfaces
+     * are compared side by side. The panel and this prop go together, later.
+     */
+    captaincyPlan?: boolean;
+    /** Forwarded to {@link Planner}; see its own docstring for what it governs. */
+    speaksForUnsolvedWeeks?: boolean;
+  },
+) {
   const { artifact: heuristics } = useHeuristics();
   const { artifact: projections } = useArtifact(projectionsDescriptor(gameweek));
   // Memoised because the `?? []` allocates a new array on every render, and the
@@ -304,6 +325,7 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
             fixtureMatrix={proven(heuristics)?.fixtureMatrix ?? []}
             bank={squad.bank}
             gameweek={gameweek}
+            speaksForUnsolvedWeeks={speaksForUnsolvedWeeks}
           />
         </section>
       ) : (
@@ -333,7 +355,9 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
       <WhenProvenHere
         of={heuristics}
         surface={S}
-        what="The live FPL state could not be read, so neither the fixture run nor the captaincy plan can be drawn."
+        what={captaincyPlan
+          ? "The live FPL state could not be read, so neither the fixture run nor the captaincy plan can be drawn."
+          : "The live FPL state could not be read, so the fixture run cannot be drawn."}
         then={(view) => (
           <>
             <section>
@@ -349,12 +373,14 @@ export function ScoreView({ gameweek }: { gameweek: number }) {
               </p>
             </section>
 
-            <section>
-              <Eyebrow surface={S} style={{ marginBottom: 9 }}>
-                Captaincy plan &middot; heuristic engine
-              </Eyebrow>
-              <Captaincy view={view} />
-            </section>
+            {captaincyPlan ? (
+              <section>
+                <Eyebrow surface={S} style={{ marginBottom: 9 }}>
+                  Captaincy plan &middot; heuristic engine
+                </Eyebrow>
+                <Captaincy view={view} />
+              </section>
+            ) : null}
           </>
         )}
       />

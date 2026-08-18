@@ -66,7 +66,10 @@ interface Picking {
 }
 
 export function Planner(
-  { squad, projections, horizon, decisionDraws, prices, fixtureMatrix, bank, gameweek, weeks = 6 }: {
+  {
+    squad, projections, horizon, decisionDraws, prices, fixtureMatrix, bank,
+    gameweek, weeks = 6, speaksForUnsolvedWeeks = true,
+  }: {
     squad: readonly SquadPlayer[];
     projections: readonly Projection[];
     /**
@@ -84,6 +87,28 @@ export function Planner(
     gameweek: number;
     /** How many gameweeks of run to plan over. */
     weeks?: number;
+    /**
+     * Whether this planner may make claims about the weeks the projection does
+     * not reach.
+     *
+     * Two marks make that claim, and both are wrong when nothing has solved a
+     * horizon. The title's `GW1–GW6` range says the planner covers six weeks; it
+     * plans over six and solves one. And a fixture cell in an unsolved week is
+     * drawn at 0.45 — the same ink that everywhere else means "does not make the
+     * eleven" — so five of six columns read as benchings that were never
+     * computed, contradicting this component's own footnote three inches below:
+     * "no eleven is chosen for them".
+     *
+     * `false` gives the title one gameweek and draws an unsolved week's fixture
+     * at full strength, because the fixture is the fact and the eleven is not. A
+     * week that *was* solved still dims, which is the mark earning its meaning
+     * back.
+     *
+     * Defaults to `true` so `/margin` renders exactly as it did while the old
+     * route and the new front page are compared side by side. The default goes
+     * when `/margin` does.
+     */
+    speaksForUnsolvedWeeks?: boolean;
   },
 ) {
   const [moves, setMoves] = useState<readonly Move[]>([]);
@@ -153,6 +178,21 @@ export function Planner(
   }, [ledger, pointsByWeek]);
 
   const best = bestByWeek.get(gameweek) ?? null;
+
+  /**
+   * The weeks whose ink is allowed to say "does not make the eleven".
+   *
+   * A week with no entry in `pointsByWeek` has no solved eleven, so half-strength
+   * ink there is a benching nobody computed. Derived from the solve rather than
+   * from the caller: the component already knows which columns it answered.
+   */
+  const dimmableWeeks = useMemo(() => {
+    const out = new Set<number>();
+    for (const [week, solved] of bestByWeek) {
+      if (speaksForUnsolvedWeeks || solved !== null) out.add(week);
+    }
+    return out;
+  }, [bestByWeek, speaksForUnsolvedWeeks]);
 
   /**
    * The eleven on screen: yours if you have edited it, otherwise the optimum.
@@ -233,7 +273,11 @@ export function Planner(
     <section data-testid="margin-planner">
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, marginBottom: 10, flexWrap: "wrap" }}>
         <Eyebrow surface={S}>
-          Planner &middot; GW{gameweek}&ndash;GW{gameweeks[gameweeks.length - 1]}
+          {/* The range is a claim about how many weeks were solved, not about how
+              many columns are drawn. See `speaksForUnsolvedWeeks`. */}
+          {speaksForUnsolvedWeeks
+            ? <>Planner &middot; GW{gameweek}&ndash;GW{gameweeks[gameweeks.length - 1]}</>
+            : <>Planner &middot; GW{gameweek}</>}
         </Eyebrow>
         <div style={{ display: "flex", gap: 14, alignItems: "baseline", flexWrap: "wrap", fontFamily: MONO, fontSize: 10, color: S.ink2 }}>
           <label style={{ display: "inline-flex", alignItems: "baseline", gap: 5 }}>
@@ -332,6 +376,7 @@ export function Planner(
           move={move}
           side={side}
           startingWeeks={startingWeeks}
+          dimmableWeeks={dimmableWeeks}
           firstWeek={gameweeks[0]}
           projection={player.elementId === undefined ? null : byId.get(player.elementId) ?? null}
           ledger={ledger}
@@ -486,7 +531,7 @@ function LedgerRow(
 }
 
 function PlannerRow(
-  { player, starting, projection, ledger, columns, move, side, startingWeeks, firstWeek, onToggle, onPick }: {
+  { player, starting, projection, ledger, columns, move, side, startingWeeks, dimmableWeeks, firstWeek, onToggle, onPick }: {
     player: SquadPlayer;
     starting: boolean;
     /** The transfer this row is half of, so the pair can be bracketed. */
@@ -494,6 +539,8 @@ function PlannerRow(
     side: PlannerRowModel["side"];
     /** Gameweeks in which this player makes the best legal eleven. */
     startingWeeks: ReadonlySet<number>;
+    /** Weeks whose fixture cell may be drawn at half strength. */
+    dimmableWeeks: ReadonlySet<number>;
     firstWeek: number;
     projection: Projection | null;
     ledger: readonly WeekLedger[];
@@ -605,7 +652,8 @@ function PlannerRow(
               color: WEIGHT_INK[fixture.difficulty] ?? WEIGHT_INK[3],
               // A week this player does not make the eleven reads back at half
               // strength: the fixture is still the fact, but he is not in it.
-              opacity: startsThisWeek ? 1 : 0.45,
+              // Only where an eleven was actually solved — see `dimmableWeeks`.
+              opacity: !startsThisWeek && dimmableWeeks.has(week.gameweek) ? 0.45 : 1,
               boxShadow: arriving
                 ? `inset 2px 0 0 ${S.agree}`
                 : leaving ? `inset 2px 0 0 ${S.conflict}` : undefined,
