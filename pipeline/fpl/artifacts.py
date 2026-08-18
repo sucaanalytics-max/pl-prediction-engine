@@ -44,6 +44,61 @@ QUANTILE_KEYS = ("q10", "q25", "q50", "q75", "q90", "q99")
 # decides whether a rate is market-informed at all — was not updated with it.
 RATE_SOURCES = ("market_blend", "dixon_coles_posterior+level", "dixon_coles_posterior")
 
+# Every value a FixtureSpec.rate_source can legitimately carry, across BOTH
+# real callers of build_xp_artifact/export_gameweek_xp: the daily lane
+# (pipeline/run_pipeline.py, via fixture_specs_from_fixture_xg /
+# fixture_specs_from_predictions) and the FPL agent's seal
+# (pipeline/learning/run_agent.py::refresh_expected_points, via
+# pipeline.models.fixture_rates.resolve_rates). A contract check exists to
+# catch a NULL — nobody wired provenance — not to police which legitimate
+# source was used, so THIS set must stay a superset of every real producer:
+# a legitimate value rejected here does not just fail a check, it aborts an
+# irrecoverable seal. Traced by reading every producer directly, not assumed:
+#
+#   RATE_SOURCES (above)             blend_log's per-row rate_source in
+#                                     fixture_xg.json, and what
+#                                     load_exported_rates' normal path re-reads.
+#   "dixon_coles_posterior+market_blend"
+#                                     fixture_rates.py::export_fixture_xg's
+#                                     PAYLOAD-level `source` field.
+#                                     load_exported_rates falls back to this
+#                                     when a row is missing its own
+#                                     rate_source (a pre-anchor or legacy
+#                                     file) — distinct from every RATE_SOURCES
+#                                     string, so it is not covered above.
+#   "archive_team_strengths"         TeamStrengths.rates() (fixture_rates.py);
+#                                     resolve_rates' fallback when
+#                                     fixture_xg.json has no rate for a fixture.
+#   "flat_default"                   resolve_rates' last resort
+#                                     (fixture_rates.py) when strengths are
+#                                     not fitted either.
+#   "ensemble_unanchored"            fixture_specs_from_predictions
+#                                     (fpl_inputs.py) — the daily lane's own
+#                                     fallback when fixture_xg.json is absent,
+#                                     unreadable or malformed.
+#   "unknown"                        fixture_specs_from_fixture_xg
+#                                     (fpl_inputs.py), when a fixture_xg.json
+#                                     row has a usable rate but is missing its
+#                                     own rate_source — a deliberate non-null
+#                                     sentinel, not a bug, and it flows
+#                                     through the exact daily-lane call site
+#                                     this task wired in.
+#
+# An unrecognised string is still rejected: a typo, or a genuinely new branch
+# nobody added here, must fail loudly rather than slip through as if it were
+# one of these. See test_fpl_artifacts.py's ContractAcceptsEveryRealProducer
+# for the durable guard: it exercises the real producer functions above and
+# asserts every string they can actually return is a member of this tuple, so
+# a future producer emitting a fourth value fails in CI rather than at a
+# gameweek deadline.
+ACCEPTED_RATE_SOURCES = RATE_SOURCES + (
+    "dixon_coles_posterior+market_blend",
+    "archive_team_strengths",
+    "flat_default",
+    "ensemble_unanchored",
+    "unknown",
+)
+
 # Rates outside this are not football results. Wider than market_rates' own
 # [0.15, 5.0] acceptance band on purpose: this is the last line, and it should
 # fire on a units error or a mislabelled side, not on a solver's edge case.
@@ -92,11 +147,16 @@ def validate_xp_artifact(artifact: Dict[str, Any]) -> List[str]:
     # one nobody ever wired provenance for, and an unrecognised value means
     # the blend grew a branch this artifact's consumers were never told
     # about. Both fail the contract here rather than reach disk unchallenged.
+    # ACCEPTED_RATE_SOURCES (module level, above) is a superset of every real
+    # producer, not just RATE_SOURCES — this must never reject a legitimate
+    # value, because both real callers of this check feed an irrecoverable
+    # seal (pipeline/learning/run_agent.py) or a daily lane whose failure here
+    # silently drops that day's FPL projections (pipeline/run_pipeline.py).
     fixtures = artifact.get("fixtures")
     if fixtures is not None and not isinstance(fixtures, list):
         problems.append("fixtures present but not a list")
     else:
-        accepted_rate_sources = set(RATE_SOURCES) | {"ensemble_unanchored"}
+        accepted_rate_sources = set(ACCEPTED_RATE_SOURCES)
         for fixture in fixtures or []:
             label = f"fixture {fixture.get('home_team')} v {fixture.get('away_team')}"
             rate_source = fixture.get("rate_source")

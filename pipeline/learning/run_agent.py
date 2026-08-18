@@ -396,6 +396,14 @@ def refresh_expected_points(
                 lambda_home=rates.lambda_home,
                 mu_away=rates.mu_away,
                 kickoff=fixture.get("kickoff_time"),
+                # rates.source is already computed one line above for the log
+                # counter — thread it through rather than leave the dataclass
+                # default None. These specs feed export_gameweek_xp (below,
+                # via refresh_expected_points), whose assert_valid_xp_artifact
+                # now fails a null rate_source; a seal is irrecoverable, so
+                # this field must never be left unset on the one path that
+                # actually reaches it.
+                rate_source=rates.source,
             )
         )
 
