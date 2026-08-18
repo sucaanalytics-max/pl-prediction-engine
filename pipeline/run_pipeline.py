@@ -142,6 +142,22 @@ def _is_derby(home: str, away: str) -> bool:
     return (home, away) in DERBIES or (away, home) in DERBIES
 
 
+def _provenance_summary(prov) -> Dict:
+    """Best-effort ``{source, age_seconds}`` view of a fetch provenance dict.
+
+    Provenance is a plain dict (``Provenance = Dict[str, Any]``, fpl_api.py),
+    not a schema-checked type. health.json is diagnostic, not load-bearing —
+    a missing key or an unexpected shape here must degrade to "unknown"
+    rather than raise and take down a run that is sealing the ledger.
+    """
+    if not isinstance(prov, dict):
+        return {"source": "unknown", "age_seconds": None}
+    return {
+        "source": prov.get("source", "unknown"),
+        "age_seconds": prov.get("age_seconds"),
+    }
+
+
 def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     """
     Execute the full prediction pipeline.
@@ -177,7 +193,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     matches = load_all_seasons(force=force_refresh)
 
     from pipeline.data.fpl_api import (
-        fetch_bootstrap_static, fetch_fixtures,
+        fetch_bootstrap_static_with_provenance, fetch_fixtures_with_provenance,
         get_upcoming_fixtures, build_player_stats, get_current_gameweek,
     )
     # This run writes forecast_ledger.json, so it may not run on stale cache:
@@ -185,8 +201,22 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # stale deadline_time riding into a record whose entire value is that it
     # predated kickoff. fpl_api's _fetch_cached_json states this as a contract:
     # "Any caller that timestamps a forecast MUST pass both."
-    bootstrap = fetch_bootstrap_static(force=force_refresh, allow_stale=False)
-    fixtures_raw = fetch_fixtures(force=force_refresh, allow_stale=False)
+    #
+    # The provenance-returning variants are used (instead of the thin
+    # fetch_bootstrap_static/fetch_fixtures wrappers that discard it) so
+    # health.json can record where this run's data actually came from —
+    # network, fresh cache, or stale cache — rather than assert "healthy"
+    # unconditionally.
+    bootstrap, bootstrap_prov = fetch_bootstrap_static_with_provenance(
+        force=force_refresh, allow_stale=False
+    )
+    fixtures_raw, fixtures_prov = fetch_fixtures_with_provenance(
+        force=force_refresh, allow_stale=False
+    )
+    source_provenance = {
+        "bootstrap": _provenance_summary(bootstrap_prov),
+        "fixtures": _provenance_summary(fixtures_prov),
+    }
     gameweek = get_current_gameweek(bootstrap)
     upcoming = get_upcoming_fixtures(bootstrap, fixtures_raw)
     player_stats = build_player_stats(bootstrap)
@@ -1235,11 +1265,38 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # ── Health JSON (for frontend Model Health page) ───────────────
     logger.info("  Exporting health.json...")
     try:
+        models_block = {
+            "dixon_coles": {"status": "active" if dc_model else "skipped"},
+            "xgboost": {"status": "active" if xgb_model else "failed"},
+            "penaltyblog": {"status": "active" if pb_predictions else "failed"},
+            "goalscorer": {"status": "active", "n_players": goalscorer_metrics.get("n_players", 0)},
+        }
+        # A run is "degraded" — not silently "healthy" — when a source
+        # actually used fell back to stale cache, when a goal model didn't
+        # come up, or when odds never resolved. Derived from what health_data
+        # already tracks (source_provenance, models_block, parsed_main)
+        # rather than a new flag threaded through the function.
+        degraded = [
+            name for name, entry in source_provenance.items()
+            if entry["source"] == "stale_cache"
+        ]
+        degraded += [
+            f"model:{name}" for name, entry in models_block.items()
+            if entry["status"] != "active"
+        ]
+        if not parsed_main:
+            degraded.append("odds")
+
         health_data = {
             "last_updated": datetime.utcnow().isoformat() + "Z",
             "gameweek": gameweek,
             "n_predictions": len(all_predictions),
-            "status": "healthy",
+            # Derived, never asserted. A run that finished without its odds, or
+            # on a stale bootstrap, or with two of three goal models skipped, is
+            # not healthy — and a hardcoded literal made those look identical.
+            "status": "healthy" if not degraded else "degraded",
+            "sources": source_provenance,
+            "degraded": degraded,
             "forecast_validation_status": (
                 "evaluated"
                 if forecast_metrics.get("n_evaluated_matches", 0) >= 100
@@ -1248,12 +1305,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             "model_metrics": forecast_metrics,
             "calibration": calibration_data,
             "pipeline_version": PIPELINE_VERSION,
-            "models": {
-                "dixon_coles": {"status": "active" if dc_model else "skipped"},
-                "xgboost": {"status": "active" if xgb_model else "failed"},
-                "penaltyblog": {"status": "active" if pb_predictions else "failed"},
-                "goalscorer": {"status": "active", "n_players": goalscorer_metrics.get("n_players", 0)},
-            },
+            "models": models_block,
             "ensemble_method": ensemble_method,
             "stacking_weights": stacking_weights,
             "n_simulations": simulations_run,
