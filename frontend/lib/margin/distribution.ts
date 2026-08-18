@@ -47,10 +47,23 @@ export interface DistributionGeometry {
   /** q10–q90. Null when either end is unpublished. */
   readonly whisker: Span | null;
   /**
-   * q25–q75. Null when either end is unpublished, which is every player until
-   * the producer ships the pair.
+   * q25–q75. Null when either end is unpublished.
+   *
+   * This read "which is every player until the producer ships the pair" until
+   * 2026-08-18. The producer ships it: `xp_public_gw01.json` carries q10, q25,
+   * q50, q75 and q90 for 590 of 590 players. The refusal below is now a real
+   * guard against a partial file rather than a description of every file.
    */
   readonly box: Span | null;
+  /**
+   * q75–q90 — the right tail, and the mark the weekly objective reads.
+   *
+   * Drawn as its own span rather than inferred from the box and the whisker,
+   * because under tail emphasis it thickens while the median thins: same marks,
+   * same scale, opposite conclusion. That is what lets a season-versus-weekly
+   * diff use one chart type instead of two.
+   */
+  readonly tail: Span | null;
   /** The median. */
   readonly median: Mark | null;
   /** The mean. */
@@ -95,6 +108,18 @@ export const SCALE_HI = 18;
 export const SQUAD_SCALE_LO = 20;
 export const SQUAD_SCALE_HI = 110;
 
+/**
+ * The scale for a doubled player.
+ *
+ * Twice the per-player ceiling, not the squad scale: the armband doubles the
+ * whole distribution, so a captained haul that would clamp at 18 has room, and
+ * the spread doubles with the mean. Reading a doubled player against the 0–18
+ * scale would clamp half the league and hide exactly the widening that makes
+ * the captaincy a variance decision rather than a ranking.
+ */
+export const DOUBLED_SCALE_LO = 0;
+export const DOUBLED_SCALE_HI = 36;
+
 function place(
   value: number | null | undefined, lo: number, hi: number,
 ): Mark | null {
@@ -124,7 +149,8 @@ export function geometry(
   // Refusing it here means no caller has to check.
   if (!(hi > lo)) {
     return {
-      whisker: null, box: null, median: null, mean: null, mode: null, blank: true,
+      whisker: null, box: null, tail: null,
+      median: null, mean: null, mode: null, blank: true,
     };
   }
 
@@ -138,15 +164,17 @@ export function geometry(
 
   const whisker = span(q10, q90);
   const box = span(q25, q75);
+  const tail = span(q75, q90);
 
   return {
     whisker,
     box,
+    tail,
     median,
     mean,
     mode,
     blank:
-      whisker === null && box === null
+      whisker === null && box === null && tail === null
       && median === null && mean === null && mode === null,
   };
 }

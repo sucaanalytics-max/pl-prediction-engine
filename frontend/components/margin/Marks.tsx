@@ -178,7 +178,10 @@ export function compactAge(ms: number): string {
  * and not the other gets no box rather than half of one.
  */
 export function Distribution(
-  { of, surface, width = 88, height = 14, lo = SCALE_LO, hi = SCALE_HI }: {
+  {
+    of, surface, width = 88, height = 14,
+    lo = SCALE_LO, hi = SCALE_HI, emphasis = "neutral",
+  }: {
     of: DistributionInput;
     surface: MarginSurface;
     width?: number;
@@ -187,6 +190,18 @@ export function Distribution(
     lo?: number;
     /** Scale ceiling. */
     hi?: number;
+    /**
+     * Which mark carries the weight.
+     *
+     * The two automated teams read one identical projection and reach opposite
+     * conclusions: the season objective ranks on the median and prices spread
+     * as a cost, the weekly objective ranks on the right tail and prices spread
+     * as the instrument. So `median` thickens the median rule and leaves the
+     * tail a hairline; `tail` fills q75–q90 and drops the median to `ink3`.
+     * Same marks, same scale — which is why a diff of the two never needs a
+     * second chart type.
+     */
+    emphasis?: "neutral" | "median" | "tail";
   },
 ) {
   const g = geometry(of, lo, hi);
@@ -233,6 +248,21 @@ export function Distribution(
           }}
         />
       ) : null}
+      {/* The right tail. Thin by default; filled and taller under tail
+          emphasis, where it is the number being read rather than context. */}
+      {g.tail ? (
+        <div
+          title="right tail, q75 to q90"
+          style={{
+            position: "absolute",
+            left: pct(g.tail.from),
+            width: pct(g.tail.to - g.tail.from),
+            top: emphasis === "tail" ? mid - 4 : mid - 1,
+            height: emphasis === "tail" ? 9 : 3,
+            background: emphasis === "tail" ? surface.ink : surface.block,
+          }}
+        />
+      ) : null}
       {/* The mode: a notch below the axis, so it never reads as the centre. */}
       {g.mode ? (
         <div
@@ -244,9 +274,16 @@ export function Distribution(
       ) : null}
       {g.median ? (
         <div
+          title="median"
           style={{
-            position: "absolute", left: pct(g.median.at), top: mid - 5,
-            width: 1.5, height: 11, background: surface.ink,
+            position: "absolute",
+            left: pct(g.median.at),
+            top: emphasis === "median" ? mid - 6 : mid - 5,
+            width: emphasis === "median" ? 2.5 : 1.5,
+            height: emphasis === "median" ? 13 : 11,
+            // Demoted, not hidden: under tail emphasis the median is still the
+            // reader's anchor for where the tail is measured from.
+            background: emphasis === "tail" ? surface.ink3 : surface.ink,
           }}
         />
       ) : null}
