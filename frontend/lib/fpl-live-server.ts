@@ -137,7 +137,7 @@ export interface DraftPick {
 //
 // This will go stale the same way. It is only reachable while FPL keeps GW1 picks
 // private; the moment the deadline passes, `picks` is served and this is unused.
-export const CAPTURED_DRAFT_AT = "2026-08-13T00:00:00.000Z";
+export const CAPTURED_DRAFT_AT = "2026-08-18T00:00:00.000Z";
 
 /**
  * The bank, from the same capture.
@@ -152,23 +152,29 @@ export const CAPTURED_DRAFT_AT = "2026-08-13T00:00:00.000Z";
  * the squad it was displayed with, dated. When the deadline passes, `picks` carries
  * the real bank and this is unused.
  */
-export const CAPTURED_BANK = 3.5;
+export const CAPTURED_BANK = 0.5;
 export const CAPTURED_DRAFT: DraftPick[] = [
+  // Recaptured 2026-08-18 from the FPL squad screen, before the GW1 deadline.
+  // Element ids were resolved against live bootstrap-static by web_name + club,
+  // not hand-typed: ten of the fifteen match the previous capture independently,
+  // and the fifteen now_cost values sum to £99.5m, which leaves exactly the
+  // £0.5m bank the UI showed. A squad that does not sum to £100.0m against its
+  // bank has been mistranscribed.
   { elementId: 109, position: 1, bench: false },                     // Verbruggen
-  { elementId: 391, position: 2, bench: false },                     // Gvardiol
-  { elementId: 8, position: 3, bench: false },                       // Calafiori
-  { elementId: 423, position: 4, bench: false },                     // Shaw
-  { elementId: 368, position: 5, bench: false },                     // Szoboszlai
-  { elementId: 426, position: 6, bench: false, status: "captain" },   // B.Fernandes
-  { elementId: 397, position: 7, bench: false },                     // Semenyo
-  { elementId: 427, position: 8, bench: false },                     // Mbeumo
-  { elementId: 542, position: 9, bench: false },                     // E.Le Fée
-  { elementId: 165, position: 10, bench: false, status: "vice" },     // João Pedro
+  { elementId: 152, position: 2, bench: false },                     // Palestra
+  { elementId: 4, position: 3, bench: false },                       // Gabriel
+  { elementId: 418, position: 4, bench: false },                     // Maguire
+  { elementId: 426, position: 5, bench: false, status: "captain" },   // B.Fernandes
+  { elementId: 94, position: 6, bench: false },                      // Schade
+  { elementId: 427, position: 7, bench: false, status: "vice" },      // Mbeumo
+  { elementId: 542, position: 8, bench: false },                     // E.Le Fée
+  { elementId: 379, position: 9, bench: false },                     // Isak
+  { elementId: 165, position: 10, bench: false },                     // João Pedro
   { elementId: 106, position: 11, bench: false },                     // Thiago
   { elementId: 496, position: 12, bench: true },                      // Kinsky
-  { elementId: 223, position: 13, bench: true },                      // Mateta
-  { elementId: 173, position: 14, bench: true },                      // Thomas
-  { elementId: 113, position: 15, bench: true },                      // F.Kadıoğlu
+  { elementId: 368, position: 13, bench: true },                      // Szoboszlai
+  { elementId: 113, position: 14, bench: true },                      // F.Kadıoğlu
+  { elementId: 173, position: 15, bench: true },                      // Thomas
 ];
 
 async function getOfficialJson<T>(path: string, allowNotFound = false): Promise<T | null> {

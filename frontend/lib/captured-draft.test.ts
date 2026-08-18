@@ -44,7 +44,7 @@ const CLUB = new Map(BOOTSTRAP.teams.map((t) => [t.id, t.short_name]));
 const POSITION: Record<number, string> = { 1: "GKP", 2: "DEF", 3: "MID", 4: "FWD" };
 
 /** What the FPL UI displayed alongside this squad, to the penny it reports. */
-const REPORTED_VALUE = 96.5;
+const REPORTED_VALUE = 99.5;
 
 describe("the squad is a legal FPL squad", () => {
   it("has fifteen players", () => {
@@ -144,7 +144,7 @@ describe("every id resolves to a real player", () => {
 
   it("names the vice the UI showed", () => {
     const vice = CAPTURED_DRAFT.find((p) => p.status === "vice")!;
-    expect(BY_ID.get(vice.elementId)!.web_name).toBe("João Pedro");
+    expect(BY_ID.get(vice.elementId)!.web_name).toBe("Mbeumo");
   });
 });
 
