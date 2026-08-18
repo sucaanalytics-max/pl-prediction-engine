@@ -1,17 +1,37 @@
-// Bumped for the ink-and-paper restyle.
+// What this worker actually does with a page request.
 //
-// The cache key is the ONLY thing that evicts a precached shell. Every route in
-// SHELL_ROUTES below is served cache-first, so an installed PWA would keep
-// rendering the emerald design indefinitely after the new one deployed — the
-// restyle would ship and no existing user would see it.
-// v7: `/` stopped being a redirect to `/margin` and became the call itself.
-// It is the first entry in SHELL_ROUTES and served cache-first, so every
-// installed app held the redirect and forwarded away from the new front door —
-// the deployment was fine and no existing user could see it, which is the exact
-// failure the note above describes. Bumping the name is what evicts it: the
-// activate handler below deletes every cache whose key is not CACHE_NAME.
+// Navigations are NETWORK-FIRST. The handler at the bottom of this file does
+// `fetch(request)`, puts a copy in the cache, and reaches for the cache only in
+// the `.catch` — so an online installed app receives the freshly deployed page
+// every time, and SHELL_ROUTES is reachable only when the network fetch rejects.
+// Two earlier versions of this comment claimed the opposite ("every route in
+// SHELL_ROUTES is served cache-first"). It was not true when it was written and
+// it is not true now; nothing in this file has ever served a navigation from the
+// cache while the network was up.
 //
-// Bump this whenever a SHELL_ROUTES page changes what it renders.
+// `/_next/static/**` IS cache-first, but every URL under it is content-hashed per
+// build, so a new deploy asks for URLs the old cache does not hold.
+//
+// So a stale precache is an OFFLINE-experience bug, and the cache key is the only
+// thing that fixes one: the activate handler below deletes every cache whose key
+// is not CACHE_NAME.
+//
+// v7 earns its bump on exactly that ground and no other. `/` stopped being a 307
+// redirect to `/margin` and became the call itself, so a v6 precache still holds
+// a redirect that the offline branch would replay — forwarding an offline visitor
+// away from the front door. Bumping evicts it.
+//
+// What v7 is NOT: an explanation of the reported stale `/`. That symptom ("the
+// frontend is not updating") was never diagnosed. It cannot have been this
+// worker's navigation handler, which is network-first and was byte-identical in
+// v6 — the reviewed commit changed the cache name and this comment, nothing else.
+// The most likely cause is HTTP-level caching of the old 307 by the browser or an
+// intermediary, from when `/` genuinely was a redirect, but that was not measured
+// and remains unknown. If it recurs, measure the response for `/` before touching
+// this file.
+//
+// Bump this whenever a SHELL_ROUTES page changes what it renders, so the offline
+// branch cannot replay a version of it that no longer exists.
 const CACHE_NAME = "suca-fpl-shell-v7";
 const SHELL_ROUTES = [
   "/",

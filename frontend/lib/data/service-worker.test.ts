@@ -148,10 +148,13 @@ describe("dynamic routes are not precached", () => {
 
 describe("the shell caches the app that exists now", () => {
   /**
-   * The precache list is served cache-first, so it decides what an installed app
-   * shows. It listed `/markets` and `/matches` — which moved behind `/bet` — and
-   * not `/margin`, which is the workspace the root now opens on. An installed
-   * PWA was therefore holding the previous shape of the app.
+   * The precache list decides what an installed app shows WHEN OFFLINE.
+   *
+   * Navigations are network-first (`sw.js` bottom: fetch, cache a copy, reach for
+   * the cache only in the `.catch`), so this list is the offline fallback rather
+   * than what an online visitor sees. It listed `/markets` and `/matches` — which
+   * moved behind `/bet` — and not `/margin`, which is the workspace the root opens
+   * on, so an offline PWA fell back to the previous shape of the app.
    */
   const routes = shellRoutes();
 
@@ -172,20 +175,25 @@ describe("the shell caches the app that exists now", () => {
 
   it("bumps the cache name when the list changes", () => {
     /**
-     * The trap this file's own header describes: a cache-first shell keeps
-     * serving the old routes forever unless the name changes. The restyle
-     * shipped once and no installed user saw it.
+     * The cache key is the only thing that evicts a stale precached copy, and the
+     * activate handler deletes every cache whose key is not `CACHE_NAME`.
      *
      * This assertion is a tripwire, not a proof. Pinning the literal means a
      * bump cannot happen silently — you must come here and say why — but it
      * cannot tell whether a bump was NEEDED. That judgement stays human.
      *
-     * v6 -> v7, and it earned it: `/` stopped being a redirect to `/margin` and
-     * became the call itself. `/` is the first entry in SHELL_ROUTES and served
-     * cache-first, so every installed app went on holding the redirect and
-     * forwarding away from the new front door. The deploy was green, the commit
-     * was live, and the screen did not change — reported as "frontend not
-     * updating", which is precisely what the header warns of.
+     * v6 -> v7, and this is the whole of what it buys: `/` stopped being a 307
+     * redirect to `/margin` and became the call itself, so a v6 precache holds a
+     * redirect that the OFFLINE branch would replay, forwarding an offline visitor
+     * away from the front door.
+     *
+     * It is not an explanation of the reported stale `/`. This test and `sw.js`
+     * both used to say `/` was "served cache-first" and that this was why the
+     * deploy went unseen. Neither was true: the navigation handler is
+     * network-first and v6's was byte-identical, so an online installed app always
+     * received the fresh `/`. The "frontend not updating" report was never
+     * diagnosed — HTTP-level caching of the old 307 is the likeliest cause and was
+     * not measured. Recorded as unknown rather than as this.
      */
     expect(swSource).toContain("suca-fpl-shell-v7");
   });
