@@ -1,0 +1,513 @@
+"use client";
+
+/**
+ * The control room — what needs me, across all three teams.
+ *
+ * ## Why this route exists beside the ones it resembles
+ *
+ * It ships alongside `/`, `/now` and `/margin`, unchanged, so the two surfaces can
+ * be compared before anything is replaced. This repository has already stranded a
+ * 612-line page by deleting the only two components that linked to it; rescue
+ * precedes deletion, and a new screen earns its predecessor's retirement by being
+ * looked at next to it.
+ *
+ * ## The design, and the one place this departs from it
+ *
+ * `handoff_suca_control_room/BUILD-THIS.md` is the specification: masthead with a
+ * live countdown, the team strip as the global switcher, the answer in Newsreader
+ * before any figure, the decision queue with its solid/dashed tense marks, the
+ * eight-row facet × team matrix, the change feed and the ambient column. All of
+ * that is built here.
+ *
+ * What is not built is its **content**. §4 shows Ronny at 54 and Wazza at 53,
+ * `Thomas → Senesi`, `Thomas → Kroupi Jr`, `£96.9m · £3.1m`, last runs at
+ * `06:14 today` — and §9 says, in its own words, that the two sample proposals and
+ * every quantile in every design file are fabricated. They are: neither bot has
+ * ever published a decision, `fpl/agent_status.json` reports `agent_ran: false`,
+ * and no `decision_public_*` file has been written. Building §4 literally would
+ * ship invented numbers as real ones, so §9's governing rule applies instead — *if
+ * you cannot source a figure, render `∅` and say what was not fitted* — and the
+ * matrix keeps all eight rows so the argument the rows make survives their empty
+ * cells. See `components/control-room/Matrix.tsx`.
+ *
+ * ## Rule 1, and where the state lives
+ *
+ * No empty state, no skeleton, no spinner, no reserved empty axis. Every section
+ * renders `proven(artifact) ?? proven(retained)` through {@link read}, which pairs
+ * the value with the age of the artifact it actually came from, and an old figure
+ * renders at full strength with its age beside it rather than dimmed. The single
+ * exception is data never computed at all, and on this board that is one sentence
+ * in the ambient column.
+ *
+ * The artifacts are loaded here rather than inside each section, which is a
+ * deliberate reading of §8's "each section owns its own state; no page-level gate".
+ * The property that matters is the *rendering*: there is no gate, no early return
+ * and no shared `loading` — each section is handed its own `Read` and states its
+ * own absence, so one absent artifact still costs exactly one section. Loading them
+ * once is what stops three sections issuing three fetches for the same 590-player
+ * projection.
+ *
+ * ## Read-only
+ *
+ * There is no approve, reject or defer control anywhere on this screen, by design.
+ * The only thing that responds to a click is the team strip, which is navigation:
+ * it writes `?team=` so a view of one team is a link somebody can send.
+ */
+
+import { useCallback, useEffect, useState } from "react";
+
+import { AGENT_STATUS, type AgentStatus } from "@/lib/data/agent-status";
+import { ACCURACY } from "@/lib/data/accuracy";
+import { useArtifact } from "@/lib/data/useArtifact";
+import { useCurrentGameweek } from "@/lib/data/gameweek";
+import { useHeuristics } from "@/lib/data/useHeuristics";
+import { REGISTRY, decisionDescriptor } from "@/lib/data/narrow";
+import { projectionsDescriptor } from "@/lib/data/projections";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+
+import { countdownLong, modeOf, remainingMs, tickPeriodMs } from "@/lib/margin/mode";
+import { deadlineStamp } from "@/lib/formats";
+import { ProvenanceLegend } from "@/components/margin/Provenance";
+import {
+  TEAMS, calibratedWeeks, teamFromParam, withQuartiles, xiTotal, type TeamKey,
+} from "@/lib/control-room/model";
+import { read, type Read } from "@/lib/control-room/read";
+import { Matrix } from "@/components/control-room/Matrix";
+import { Ambient } from "@/components/control-room/Ambient";
+import { ChangeFeed, Queue, calibrationClaim, type QueueRow } from "@/components/control-room/Queue";
+import {
+  Answer, Body, Figure, Label, S, Sub,
+} from "@/components/control-room/parts";
+
+/**
+ * The gameweek this board reads.
+ *
+ * `?? 1` is deliberately absent. The number becomes a fetch path
+ * (`fpl/xp_public_gw{NN}.json`), so a wrong last resort does not mislabel a figure
+ * — it reads a different gameweek's file. Sections that need a week say so instead.
+ */
+function useProjections(gameweek: number | null) {
+  // A descriptor is required, so an unresolved week reads week 1's path and the
+  // section below refuses to trust it. Guarded by `gameweek === null` at every
+  // consumer rather than by a silent default.
+  return useArtifact(projectionsDescriptor(gameweek ?? 1));
+}
+
+export default function ControlRoomPage() {
+  // ── cross-cutting: the phase, the gameweek, the focused team ──────────────
+  const statusResult = useArtifact(AGENT_STATUS);
+  const status = read(statusResult, (value) => value.generatedAt);
+  const gameweek = useCurrentGameweek();
+  const mode = modeOf(status.value);
+
+  const [team, setTeam] = useState<TeamKey>("mine");
+
+  // Read in an effect rather than during render: reading `location.search` while
+  // rendering hydrates with a mismatch on every deep link, which is the bug the
+  // same pattern on `/margin` was written to avoid.
+  useEffect(() => {
+    setTeam(teamFromParam(new URLSearchParams(window.location.search).get("team")));
+  }, []);
+
+  const focus = useCallback((next: TeamKey) => {
+    setTeam(next);
+    const url = new URL(window.location.href);
+    url.searchParams.set("team", next);
+    // `replaceState`, not a push: this is the same screen with a different team in
+    // focus, and a history entry per tile makes Back undo something nobody did.
+    window.history.replaceState(null, "", url);
+  }, []);
+
+  // ── per-section artifacts ────────────────────────────────────────────────
+  const projectionsResult = useProjections(gameweek);
+  const projections = read(projectionsResult, (value) => value.generatedAt);
+  const liveResult = useHeuristics();
+  const live = read(liveResult, (value) => value.generatedAt);
+  const accuracyResult = useArtifact(ACCURACY);
+  const accuracy = read(accuracyResult, (value) => value.generatedAt);
+  const matches = read(useArtifact(REGISTRY.matches), (value) => value.generated_at);
+  const fixtureXg = read(useArtifact(REGISTRY.fixtureXg), (value) => value.generated_at);
+  const playerStats = read(useArtifact(REGISTRY.playerStats), () => null);
+  const deltas = read(useArtifact(REGISTRY.deltas), () => null);
+
+  // The two bots' own proposals, fetched so that "not published" is a measured
+  // absence rather than an assumption this page makes about them.
+  const ronny = read(
+    useArtifact(decisionDescriptor(gameweek ?? 1, "season")),
+    (value) => value.generated_at,
+  );
+  const wazza = read(
+    useArtifact(decisionDescriptor(gameweek ?? 1, "weekly")),
+    (value) => value.generated_at,
+  );
+
+  // Gated on a resolved gameweek, not just on a readable file. With the week
+  // unknown the projection descriptor falls back to `gw01`'s path, and a total
+  // summed from a week the board cannot name would be a figure labelled with a
+  // gameweek nobody resolved — the exact reason `useCurrentGameweek` returns null
+  // rather than 1.
+  const squad = live.value?.squad ?? null;
+  const xi = gameweek === null || squad === null || projections.value === null
+    ? null
+    : xiTotal(squad.players, projections.value.players);
+
+  const calibrated = calibratedWeeks(accuracy.value);
+  const sealed = accuracy.value?.gameweeksSealed ?? null;
+
+  const queue = buildQueue({ status, calibrated, sealed });
+
+  return (
+    <ErrorBoundary pageName="Control room">
+      <div style={{ background: S.shell, border: `1px solid ${S.rule}` }}>
+        <div className="mx-auto max-w-[1240px] px-10 pt-[34px] pb-10">
+
+          <Masthead
+            gameweek={gameweek}
+            season={matches.value?.season ?? null}
+            deadline={status.value?.deadline ?? null}
+            mode={mode}
+            reason={status.value?.reason ?? null}
+            statusAge={status.age}
+          />
+
+          <TeamStrip focused={team} onFocus={focus} />
+
+          <Lead
+            projectionsAge={projections.age}
+            squadAge={live.age}
+            squadSource={live.value?.squad?.source ?? null}
+            agentRan={status.value?.agentRan ?? null}
+            reason={status.value?.reason ?? null}
+            players={projections.value?.players.length ?? null}
+            quartiled={
+              projections.value === null ? null : withQuartiles(projections.value.players)
+            }
+            draws={projections.value?.nDraws ?? null}
+          />
+
+          <Queue rows={queue} />
+
+          <Matrix
+            gameweek={gameweek}
+            focus={team}
+            status={status}
+            projections={projections}
+            live={live}
+            xi={xi}
+            calibrated={calibrated}
+            calibrationSource={
+              sealed === null ? null : `${accuracy.path} · ${sealed} gameweeks sealed`
+            }
+            ronny={ronny}
+            wazza={wazza}
+          />
+
+          <div
+            className="grid gap-[34px] mt-[26px] pt-[9px] grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]"
+            style={{ borderTop: `1px solid ${S.rule}` }}
+          >
+            <ChangeFeed feed={deltas} />
+            <Ambient
+              gameweek={gameweek}
+              matches={matches}
+              fixtureXg={fixtureXg}
+              playerStats={playerStats}
+              projections={projections}
+              sealed={sealed}
+            />
+          </div>
+
+          {/* The legend, once per screen. Rows carry marks only — a legend per row
+              is the badge farm Rule 2 exists to prevent. */}
+          <div className="mt-6 pt-[9px]" style={{ borderTop: `1px solid ${S.hair}` }}>
+            <ProvenanceLegend surface={S} />
+          </div>
+        </div>
+      </div>
+    </ErrorBoundary>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 1 · Masthead
+// ─────────────────────────────────────────────────────────────────────────────
+
+const MODE_LABEL: Record<string, string> = {
+  deadline: "Deadline mode · engine has run",
+  idle: "Idle · engine gated",
+  locked: "Locked · gameweek settled",
+  unknown: "Phase unknown",
+};
+
+function Masthead(
+  { gameweek, season, deadline, mode, reason, statusAge }: {
+    gameweek: number | null;
+    season: string | null;
+    deadline: string | null;
+    mode: string;
+    reason: string | null;
+    statusAge: string | null;
+  },
+) {
+  const stamp = deadlineStamp(deadline);
+  return (
+    <header
+      className="grid items-end gap-6 pb-3 grid-cols-[minmax(0,1fr)_auto]"
+      style={{ borderBottom: `2px solid ${S.ink}` }}
+    >
+      <div>
+        {/* The wordmark takes `brand`, hue 250, not `--accent`. Accent is the
+            semantic "fine" green, and spending it on identity is the defect the
+            brand token was added to fix: a green nav tile and a green "agrees
+            with the market" were one colour. */}
+        <Label size={12.5} tone={S.brand} style={{ fontWeight: 600, letterSpacing: ".2em" }}>
+          Control room
+        </Label>
+        <div className="mt-[5px] flex flex-wrap items-center gap-x-3 gap-y-1">
+          <Label size={10} tone={S.ink3}>
+            {[
+              gameweek === null ? null : `Gameweek ${gameweek}`,
+              season === null ? null : season.replace("-", "/"),
+              "three teams, one desk",
+              "read-only",
+            ].filter((part) => part !== null).join(" · ")}
+          </Label>
+          <span
+            data-testid="phase-chip"
+            data-mode={mode}
+            title={reason ?? undefined}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 7,
+              padding: "3px 8px",
+              // Never a warning hue for `idle`: idle is the engine behaving
+              // correctly, and colouring it as a fault trains a reader to ignore
+              // the one state that is one.
+              border: `1px solid ${mode === "unknown" ? S.conflict : S.hair}`,
+              color: mode === "unknown" ? S.conflict : S.ink3,
+            }}
+          >
+            <span
+              aria-hidden
+              style={{
+                width: 5, height: 5,
+                ...(mode === "deadline"
+                  ? { background: S.ink }
+                  : { border: `1px solid ${S.ink3}` }),
+              }}
+            />
+            <Label size={9} tone="inherit">{MODE_LABEL[mode] ?? MODE_LABEL.unknown}</Label>
+          </span>
+        </div>
+      </div>
+      <div className="text-right">
+        <Label size={9} tone={S.ink3} style={{ letterSpacing: ".12em" }}>
+          Deadline in
+        </Label>
+        <Countdown deadline={deadline} />
+        <div>
+          <Sub>
+            {stamp
+              ?? (deadline === null
+                ? `no deadline published${statusAge === null ? "" : ` · ${statusAge}`}`
+                : "the deadline states no time zone, so none is named here")}
+          </Sub>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+/**
+ * The one clock on this screen.
+ *
+ * It owns its own tick so a second passing does not re-render the matrix, and it
+ * initialises to `null` and sets `now` on mount — a `new Date()` initialiser makes
+ * the server render and the first client render disagree on a value that changes
+ * every second.
+ *
+ * `remainingMs` returns null rather than NaN on an unparseable deadline. That is
+ * not defensive tidiness: `Date.parse("")` is NaN, NaN arithmetic propagates
+ * silently, and it is why every expired proposal in this app once read "ready".
+ */
+function Countdown({ deadline }: { deadline: string | null }) {
+  const [now, setNow] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setNow(new Date());
+    const period = tickPeriodMs(remainingMs(deadline, new Date()));
+    const id = setInterval(() => setNow(new Date()), period);
+    return () => clearInterval(id);
+  }, [deadline]);
+
+  return (
+    <div data-testid="control-room-countdown">
+      <Figure size={25} style={{ fontWeight: 600, letterSpacing: "-.02em", lineHeight: 1.1 }}>
+        {now === null ? "—" : countdownLong(remainingMs(deadline, now))}
+      </Figure>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 2 · Team strip — the global switcher
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Always visible, always saying which team you are looking at.
+ *
+ * The rule between the cells is the separator; there is no card. The focused tile
+ * takes `brand` rather than the semantic green, for the reason given at the
+ * wordmark.
+ */
+function TeamStrip(
+  { focused, onFocus }: { focused: TeamKey; onFocus: (team: TeamKey) => void },
+) {
+  return (
+    <nav
+      data-testid="team-strip"
+      aria-label="Focused team"
+      className="grid gap-[22px] py-[11px] grid-cols-3"
+      style={{ borderBottom: `1px solid ${S.rule}` }}
+    >
+      {TEAMS.map((team, i) => {
+        const active = team.key === focused;
+        return (
+          <button
+            key={team.key}
+            type="button"
+            data-testid={`team-tile-${team.key}`}
+            aria-current={active ? "true" : undefined}
+            onClick={() => onFocus(team.key)}
+            className="flex items-baseline gap-[10px] text-left"
+            style={{
+              background: "transparent",
+              border: 0,
+              cursor: "pointer",
+              ...(i > 0
+                ? { paddingLeft: 22, borderLeft: `1px solid ${S.rule}` }
+                : null),
+            }}
+          >
+            <Answer size={17} as="span" style={{ color: active ? S.brand : S.ink }}>
+              {team.name}
+            </Answer>
+            <Figure size={10} tone={S.ink3} style={{ fontWeight: 400 }}>
+              {team.entryId}
+            </Figure>
+            <Label size={9}>{team.mandate}</Label>
+          </button>
+        );
+      })}
+    </nav>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 3 · The lead — the answer, in words, before any figure
+// ─────────────────────────────────────────────────────────────────────────────
+
+function Lead(
+  {
+    projectionsAge, squadAge, squadSource, agentRan, reason, players, quartiled, draws,
+  }: {
+    projectionsAge: string | null;
+    squadAge: string | null;
+    squadSource: string | null;
+    agentRan: boolean | null;
+    reason: string | null;
+    players: number | null;
+    /** How many of them carry all five measured quantiles. Counted, not claimed. */
+    quartiled: number | null;
+    draws: number | null;
+  },
+) {
+  const headline = agentRan === true
+    ? "Both bots have run, and what they produced is below."
+    : agentRan === false
+      ? "Nothing needs you tonight, and neither bot has spoken yet."
+      : "Nothing is waiting on you that this board can see.";
+
+  return (
+    <div>
+      <Answer as="h1" size={46} style={{ marginTop: 26, lineHeight: 1.1, letterSpacing: "-.02em", maxWidth: 900 }}>
+        {headline}
+      </Answer>
+      <Body size={15} style={{ marginTop: 14, lineHeight: 1.6, maxWidth: 820 }}>
+        {players === null
+          ? "This gameweek's projection has not been read, so the eleven below is "
+            + "priced but not scored."
+          : `This gameweek's projection is published — ${players.toLocaleString()} `
+            + `players${draws === null ? "" : `, ${draws.toLocaleString()} draws`}`
+            + `${quartiled === null
+              ? ""
+              : `, with measured quartiles on ${quartiled.toLocaleString()} of them`}. `}
+        {agentRan === false
+          ? `Neither bot has run: ${reason ?? "the agent gates on the deadline"}. `
+            + `So the two bot columns below are empty, and they say which file would `
+            + `have carried each figure rather than showing you a number nobody `
+            + `computed.`
+          : agentRan === null
+            ? "Whether the agent has run could not be read, which is not the same as "
+              + "it having not run."
+            : "Approve on each team's own screen; nothing here submits a team."}
+      </Body>
+      <div className="mt-[10px]">
+        <Sub>
+          {[
+            `projections: ${projectionsAge ?? "no timestamp"}`,
+            `squad: ${squadAge ?? "no timestamp"}${
+              squadSource === "captured_authenticated_draft" ? " (captured draft)" : ""
+            }`,
+            "calls: none published",
+          ].join("  ·  ")}
+        </Sub>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 4 · The queue's rows, built from the artifacts
+// ─────────────────────────────────────────────────────────────────────────────
+
+function buildQueue(
+  { status, calibrated, sealed }: {
+    status: Read<AgentStatus>;
+    calibrated: number | null;
+    sealed: number | null;
+  },
+): readonly QueueRow[] {
+  const rows: QueueRow[] = [];
+  const deadline = status.value?.deadline ?? null;
+  const stamp = deadlineStamp(deadline);
+
+  if (stamp !== null) {
+    rows.push({
+      id: "deadline",
+      team: "Mine",
+      claim: "Your team is due before the deadline, and nothing here can submit it.",
+      reason:
+        "The only thing on the clock. FPL takes the team you have set when it "
+        + "passes, so an unattended board is a submitted board.",
+      when: stamp.split(" · ")[1] ?? stamp,
+      scheduled: true,
+      anchor: "model",
+      freshness: status.age,
+      stale: status.stale,
+    });
+  }
+
+  rows.push({
+    id: "calibration",
+    team: "Wazza",
+    claim: "It cannot legitimately run its own objective yet, and says so.",
+    reason: calibrationClaim(calibrated),
+    when: "Standing",
+    scheduled: false,
+    anchor: "model",
+    freshness: sealed === null ? null : "live",
+    stale: false,
+  });
+
+  return rows;
+}

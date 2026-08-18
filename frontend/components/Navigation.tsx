@@ -17,6 +17,7 @@ import {
   Newspaper,
   Menu,
   Moon,
+  Radar,
   Ruler,
   ShieldCheck,
   Sparkles,
@@ -78,6 +79,12 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Decide",
     items: [
       { href: "/now", label: "Now", icon: LayoutDashboard },
+      // The cross-team board: three entries, one deadline, read-only. Listed here
+      // rather than left to a bookmark, because thirteen of this app's routes were
+      // once reachable from nowhere and only `nav-coverage.test.tsx` noticed. It
+      // ships beside `/now` rather than replacing it, so the two surfaces can be
+      // compared before anything is retired.
+      { href: "/control-room", label: "Control room", icon: Radar },
       // One workspace over the same artifacts these three read separately: the
       // call, the horizon, every player as a distribution, and what has decayed.
       // Listed rather than left to a bookmark — thirteen of this app's routes
