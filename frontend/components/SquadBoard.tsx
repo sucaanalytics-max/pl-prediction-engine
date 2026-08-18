@@ -3,6 +3,7 @@
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { proven } from "@/lib/data/artifact";
 import type { SquadPlayer } from "@/lib/data/heuristics";
+import { useCurrentGameweek } from "@/lib/data/gameweek";
 import { useArtifact } from "@/lib/data/useArtifact";
 import {
   projectionsDescriptor, type Projection,
@@ -118,23 +119,52 @@ function projectionByPlayer(
   return out;
 }
 
-export default function SquadBoard() {
-  const { artifact } = useHeuristics();
-  const view = proven(artifact);
-  const squad = view?.squad ?? null;
+/**
+ * The gameweek is resolved here, and the projection is read one component down.
+ *
+ * This read `view?.event?.id ?? 1` — FPL's own `is_current ?? is_next` — while
+ * `app/page.tsx`, which mounts it beside {@link GameweekCall}, resolved the week
+ * through {@link useCurrentGameweek} (`agent_status.gameweek` first, which is the
+ * NEXT deadline's week). During any in-progress gameweek N those differ by one, so
+ * one page held two answers and read two different `xp_public_gwNN.json` files
+ * under a single heading. The number is a fetch path, not a label.
+ *
+ * The old comment here argued that guessing gw01 is better than not reading,
+ * "because a wrong gameweek 404s and renders absent, which is honest". It is not:
+ * gw01's file EXISTS, so a wrong guess of 1 renders GW1's numbers as though they
+ * were this week's, silently. Hence the split — hooks cannot be conditional, so
+ * the only way to not read on an unknown week is for the read to live in a child.
+ */
+export default function SquadBoard({ gameweek }: { gameweek?: number } = {}) {
+  const resolved = useCurrentGameweek();
+  const week = gameweek ?? resolved;
+  return week === null
+    ? <Board projections={[]} gameweekKnown={false} />
+    : <BoardForGameweek gameweek={week} />;
+}
 
-  // The published model projection for the current gameweek. Absent for most of a
-  // cycle — the agent that writes it is deadline-gated — so every read of it is
-  // optional and the board works without it.
-  // `event.id`, which is FPL's own gameweek number. Falling back to 1 rather than
-  // skipping the read: pre-season the event is the upcoming one, and asking for
-  // gw01 is the correct guess there — a wrong gameweek 404s and renders `absent`,
-  // which is honest, whereas not asking shows nothing on the one week it matters.
-  const gameweek = view?.event?.id ?? 1;
+/**
+ * The published model projection for the week. Absent for most of a cycle — the
+ * agent that writes it is deadline-gated — so the read is optional and the board
+ * renders without it.
+ */
+function BoardForGameweek({ gameweek }: { gameweek: number }) {
   const { artifact: projectionsArtifact } = useArtifact(
     projectionsDescriptor(gameweek),
   );
-  const projections = proven(projectionsArtifact)?.players ?? [];
+  return <Board projections={proven(projectionsArtifact)?.players ?? []} />;
+}
+
+function Board(
+  { projections, gameweekKnown = true }: {
+    projections: readonly Projection[];
+    /** False when no resolver could name the week, so nothing was read. */
+    gameweekKnown?: boolean;
+  },
+) {
+  const { artifact } = useHeuristics();
+  const view = proven(artifact);
+  const squad = view?.squad ?? null;
 
   if (!squad) {
     // One line. A missing squad is worth saying and not worth a panel — the rest of
@@ -180,6 +210,15 @@ export default function SquadBoard() {
         </p>
       </div>
 
+      {/* Said once, not fifteen times in tooltips: an empty xP column has two
+          possible causes and only one of them is about the model. */}
+      {gameweekKnown ? null : (
+        <p className="text-xs" style={{ color: "var(--text-4)" }}>
+          No source could name the current gameweek, so no projection was read and
+          the xP column is empty. Guessing a week would read another one&apos;s file.
+        </p>
+      )}
+
       <div className="space-y-2">
         {byPosition(squad.players).map((row) => (
           <div key={row.position} className="flex gap-2 items-start flex-wrap">
@@ -222,7 +261,12 @@ export default function SquadBoard() {
                         projection
                           ? `model projection: ${projection.xp?.toFixed(2)} xP, `
                             + `${projection.eMinutes?.toFixed(0)} expected minutes`
-                          : "not in the published projection"
+                          // The two states the docstring above distinguishes. With
+                          // no gameweek there is no file to be absent FROM, so
+                          // "we did not look" is the true one and says so.
+                          : gameweekKnown
+                            ? "not in the published projection"
+                            : "no gameweek could be resolved, so no projection was read"
                       }
                     >
                       {projection?.xp !== null && projection?.xp !== undefined

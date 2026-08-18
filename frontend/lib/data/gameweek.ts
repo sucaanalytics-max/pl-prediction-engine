@@ -29,6 +29,13 @@
  *
  * Deliberately NOT included: `matches.gameweek`. Deriving an FPL gameweek from a
  * match-odds artifact is a coincidence, not a source.
+ *
+ * ## Who calls it
+ *
+ * Every surface that turns a gameweek into a path: `app/page.tsx`,
+ * `components/GameweekCall.tsx`, `components/SquadBoard.tsx` and
+ * `app/margin/page.tsx`. The first three take the `null` and say so; the fourth
+ * says `?? 1` at its own call site because all of its panels need a number.
  */
 
 import { proven } from "@/lib/data/artifact";
@@ -39,5 +46,9 @@ import { useHeuristics } from "@/lib/data/useHeuristics";
 export function useCurrentGameweek(): number | null {
   const { artifact: status } = useArtifact(AGENT_STATUS);
   const { artifact: heuristics } = useHeuristics();
-  return proven(status)?.gameweek ?? proven(heuristics)?.event.id ?? null;
+  // `event?.id`, optionally, even though `HeuristicView.event` is not optional.
+  // Four surfaces now resolve their week here, so a shape this function trusted
+  // and did not get would throw inside all four rather than in one — and the
+  // whole point of `proven` is that a narrowed value is the only trusted one.
+  return proven(status)?.gameweek ?? proven(heuristics)?.event?.id ?? null;
 }

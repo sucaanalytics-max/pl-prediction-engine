@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { useArtifact } from "@/lib/data/useArtifact";
+import { useCurrentGameweek } from "@/lib/data/gameweek";
 import { proven } from "@/lib/data/artifact";
 import { projectionsDescriptor, type Projection } from "@/lib/data/projections";
 import { minutesConflictsDescriptor } from "@/lib/data/minutes-conflicts";
@@ -73,13 +74,50 @@ import type { SquadPlayer } from "@/lib/data/heuristics";
  * The greedy fill was also only *nearly* right: it was optimal given minimum-only
  * constraints, which is not the game's rule set. {@link optimiseXi} is exhaustive
  * over the legal formations, respects the maxima, and is already tested.
+ *
+ * ## The gameweek comes from the shared resolver
+ *
+ * This read `view?.event?.id ?? 1` — FPL's own `is_current ?? is_next` — while
+ * `app/page.tsx`, which mounts it, resolved the week through
+ * {@link useCurrentGameweek} (`agent_status.gameweek` first, which is the NEXT
+ * deadline's week). During any in-progress gameweek N the two disagree by one, so
+ * the page printed "GW N" here and "Planner · GW N+1" three sections down while
+ * reading two different `xp_public_gwNN.json` files under one heading.
+ *
+ * The number is a fetch path, not a label, so there is no version of that which is
+ * merely cosmetic. One resolver, and no `?? 1`: an unknown week says so rather
+ * than silently reading GW1's file for 37 weeks of 38.
  */
 
-export default function GameweekCall() {
+/**
+ * The gameweek is resolved here and the work happens one component down.
+ *
+ * Hooks cannot be conditional, so a component that both resolves the week and
+ * reads the week's artifact has no way to *not* read when the week is unknown —
+ * it can only substitute a guess, which is the defect. Splitting them means the
+ * absent case issues no fetch at all.
+ */
+export default function GameweekCall({ gameweek }: { gameweek?: number } = {}) {
+  const resolved = useCurrentGameweek();
+  const week = gameweek ?? resolved;
+
+  if (week === null) {
+    // One line, not a panel: the rest of the page still works.
+    return (
+      <p className="text-xs" style={{ color: "var(--text-4)" }}>
+        Neither the agent&apos;s status nor FPL&apos;s own state could be read, so
+        the gameweek is unknown and there is no projection to compute a call from.
+        Guessing one would read a different gameweek&apos;s file.
+      </p>
+    );
+  }
+  return <Call gameweek={week} />;
+}
+
+function Call({ gameweek }: { gameweek: number }) {
   const { artifact: heuristics } = useHeuristics();
   const view = proven(heuristics);
   const squad = view?.squad ?? null;
-  const gameweek = view?.event?.id ?? 1;
 
   const { artifact: projectionsArtifact } = useArtifact(projectionsDescriptor(gameweek));
   const projections = proven(projectionsArtifact)?.players ?? [];

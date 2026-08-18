@@ -46,13 +46,17 @@ function mountWith(
   projections: Array<Record<string, unknown>> | null = null,
 ) {
   vi.resetModules();
+  // `event` is present because `narrowHeuristics` always emits it, and because the
+  // board now resolves its gameweek through `useCurrentGameweek`, which reads it.
+  // A fixture missing a field the real narrower guarantees tests a shape that
+  // cannot occur.
   vi.doMock("@/lib/data/useHeuristics", () => ({
     useHeuristics: () => ({
       artifact: {
         state: "ok",
         provenance: { source: "local", producedAt: null, ageMs: null },
         reason: null,
-        value: { squad },
+        value: { squad, event: { id: 1, deadlineTime: null } },
       },
     }),
   }));
@@ -290,6 +294,7 @@ describe("what this board no longer recommends", () => {
     // The engine's captaincy and transfer output, present and ignored. Passing it
     // is the point: absence of the card must not depend on absence of the data.
     squad: BASE,
+    event: { id: 1, deadlineTime: null },
     transfers: [{
       playerOut: { name: "F.Kadıoğlu" }, playerIn: { name: "Gabriel" },
       delta4: 3.8, confidence: 73, rationale: ["0.1% elite ownership adds differential upside"],

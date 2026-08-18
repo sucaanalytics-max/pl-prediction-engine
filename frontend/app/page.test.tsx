@@ -151,14 +151,25 @@ const PLAYER_STATS = SQUAD.players.map((p) => ({
 /**
  * Mount the page with every artifact it reads served from a fixture.
  *
- * `gameweek` is served through `agent_status`, which is the resolver this page
- * uses — so the mock exercises the real precedence rather than falling through to
- * the live route's `event.id`.
+ * `agentGameweek` and `eventId` are served SEPARATELY and default to the same
+ * number only for the cases that are not about the gameweek. They are the two
+ * sources `useCurrentGameweek` ranks, and the whole page must resolve to the
+ * first of them — see the divergence case below, which sets them apart.
+ *
+ * Every descriptor key the page asks for is recorded, because "one gameweek
+ * across the page" is a claim about which FILES were read, not about what was
+ * printed. Two of the three components render no gameweek at all.
  */
 async function mountPage(
-  { squad = SQUAD as typeof SQUAD | null, projections = PROJECTIONS as typeof PROJECTIONS | null } = {},
+  {
+    squad = SQUAD as typeof SQUAD | null,
+    projections = PROJECTIONS as typeof PROJECTIONS | null,
+    agentGameweek = 1 as number | null,
+    eventId = 1 as number | null,
+  } = {},
 ) {
   vi.resetModules();
+  const requested: string[] = [];
   const ok = (value: unknown) => ({
     artifact: {
       state: value === null ? "absent" : "ok",
@@ -170,15 +181,26 @@ async function mountPage(
     reload: () => {},
   });
   vi.doMock("@/lib/data/useHeuristics", () => ({
-    useHeuristics: () => ok(squad === null ? null : { ...VIEW, squad }),
+    useHeuristics: () => ok(
+      squad === null
+        ? null
+        : { ...VIEW, squad, event: { id: eventId, deadlineTime: null } },
+    ),
   }));
   vi.doMock("@/lib/data/useArtifact", () => ({
     useArtifact: (d: { key?: string }) => {
       const key = String(d?.key);
+      requested.push(key);
       if (key.startsWith("projections")) {
         return ok(projections === null ? null : { players: projections, horizon: null, nDraws: 10000 });
       }
-      if (key === "agentStatus") return ok({ gameweek: 1, agentRan: false, phase: "idle" });
+      if (key === "agentStatus") {
+        return ok(
+          agentGameweek === null
+            ? null
+            : { gameweek: agentGameweek, agentRan: false, phase: "idle" },
+        );
+      }
       if (key === "playerStats") return ok(PLAYER_STATS);
       // Everything else absent, which is Rule 2: it must cost one line, not the page.
       return ok(null);
@@ -189,7 +211,7 @@ async function mountPage(
     return { ...actual, proven: (a: { value?: unknown }) => a?.value ?? null };
   });
   const { default: Page } = await import("@/app/page");
-  return render(<Page />);
+  return { ...render(<Page />), requested };
 }
 
 afterEach(() => {
@@ -220,6 +242,62 @@ describe("it is a page and not a redirect", () => {
     expect(heading.parentElement?.textContent ?? "").not.toMatch(/GW\s*\d/);
     const { readFileSync } = await import("node:fs");
     expect(readFileSync("app/page.tsx", "utf8")).not.toContain('title="Your GW1 call"');
+  });
+});
+
+/**
+ * ONE gameweek, from one resolver, with the two sources deliberately disagreeing.
+ *
+ * `agent_status.gameweek` is the NEXT deadline's week (`pipeline/learning/
+ * schedule.py:274`); `/api/fpl/state` returns `is_current ?? is_next`. So during
+ * any in-progress gameweek N the two differ by exactly one, and that is the only
+ * interesting case — a fixture that sets both to 1 cannot see a page reading two
+ * of them, which is how three components shipped with two resolvers between them.
+ *
+ * The number is a fetch path (`fpl/xp_public_gwNN.json`), so disagreement is not a
+ * mislabelled figure: it is two files under one heading. Hence the assertion is on
+ * the descriptor keys as well as on the printed copy.
+ */
+describe("one gameweek across the page, even when the two sources disagree", () => {
+  const DIVERGED = { agentGameweek: 7, eventId: 6 };
+
+  it("reads exactly one gameweek's projection file", async () => {
+    const { requested } = await mountPage(DIVERGED);
+    const weeks = [...new Set(requested.filter((k) => k.startsWith("projections:")))];
+    // GameweekCall, SquadBoard and ScoreView all key a projection off the week.
+    expect(weeks).toEqual(["projections:07"]);
+  });
+
+  it("names that same gameweek everywhere it names one", async () => {
+    const { container } = await mountPage(DIVERGED);
+    const text = container.textContent ?? "";
+    // GameweekCall's provenance line, beside the call it computed.
+    expect(text).toContain("xp_public_gw07.json");
+    expect(text).not.toContain("xp_public_gw06.json");
+    // The planner, three sections down, which used to print the other one.
+    expect(text).toContain("Planner · GW7");
+  });
+
+  it("prefers agent_status over the live route, which is the documented order", async () => {
+    // With agent_status absent the live route answers, and the whole page moves
+    // together — the precedence is shared, not per-component.
+    const { container, requested } = await mountPage({ agentGameweek: null, eventId: 6 });
+    expect([...new Set(requested.filter((k) => k.startsWith("projections:")))])
+      .toEqual(["projections:06"]);
+    expect(container.textContent).toContain("xp_public_gw06.json");
+  });
+
+  it("reads no projection at all when neither source can name a week", async () => {
+    /**
+     * The reason there is no `?? 1` here. `xp_public_gw01.json` EXISTS, so a
+     * guess of 1 does not 404 into an honest `absent` — it renders GW1's numbers
+     * as though they were this week's, for 37 weeks of 38, silently.
+     */
+    const { container, requested } = await mountPage(
+      { agentGameweek: null, eventId: null },
+    );
+    expect(requested.filter((k) => k.startsWith("projections:"))).toEqual([]);
+    expect(container.textContent).toMatch(/gameweek is unknown/);
   });
 });
 

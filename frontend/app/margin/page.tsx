@@ -38,19 +38,23 @@
  *
  * ## Which gameweek
  *
- * `agent_status.json` is the primary source: it is written by the phase
- * resolver, which always runs, so it has an answer even when the agent has not.
- * The live route's `event.id` is the fallback, and 1 is the last resort — the
- * same choice `SquadBoard` makes, and for the same reason. A wrong gameweek
- * renders `absent`, which is honest; not asking renders nothing on the one week
- * it matters.
+ * {@link useCurrentGameweek}, which is the extraction of the chain this page used
+ * to inline: `agent_status.json` first, because it is written by the phase
+ * resolver, which always runs and so has an answer even when the agent has not;
+ * the live route's `event.id` second. The chain lived here in full AND in
+ * `lib/data/gameweek.ts` at the same time, byte for byte — which is the shape a
+ * fourth divergent resolver grows out of.
+ *
+ * The `?? 1` stays, and stays HERE rather than inside the resolver. All four of
+ * this page's panels take a gameweek and none can render without one, so the last
+ * resort is a decision this call site makes and can be seen making. `app/page.tsx`
+ * makes the opposite decision and prints a sentence instead.
  */
 
 import { useCallback, useEffect, useState } from "react";
-import { proven } from "@/lib/data/artifact";
 import { AGENT_STATUS } from "@/lib/data/agent-status";
 import { useArtifact } from "@/lib/data/useArtifact";
-import { useHeuristics } from "@/lib/data/useHeuristics";
+import { useCurrentGameweek } from "@/lib/data/gameweek";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import {
   Shell, useViewKeys, VIEW_ALIASES, VIEWS, type MarginView,
@@ -107,12 +111,10 @@ export default function MarginPage() {
   }, []);
   useViewKeys(select);
 
+  // Still read directly, because `Shell` renders the agent's phase from it. The
+  // gameweek is no longer derived from it here — one chain, in one file.
   const { artifact: status } = useArtifact(AGENT_STATUS);
-  const { artifact: heuristics } = useHeuristics();
-  const gameweek =
-    proven(status)?.gameweek
-    ?? proven(heuristics)?.event.id
-    ?? 1;
+  const gameweek = useCurrentGameweek() ?? 1;
 
   return (
     <ErrorBoundary pageName="Margin">
