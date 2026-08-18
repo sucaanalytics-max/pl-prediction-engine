@@ -15,7 +15,8 @@ import { join } from "node:path";
 
 import { geometry, meanOverMode, SCALE_HI } from "@/lib/margin/distribution";
 import {
-  clockLabel, countdown, countdownLong, describeMode, modeOf, remainingMs,
+  clockLabel, countdown, countdownLong, describeMode, modeOf, reasonWithoutCountdown,
+  remainingMs,
   tickPeriodMs,
 } from "@/lib/margin/mode";
 import { findTwins } from "@/lib/margin/twins";
@@ -458,5 +459,47 @@ describe("the locked phase is BEFORE the deadline, not after", () => {
     const withReason = { ...locked, reason: "within 30 minutes of the GW1 deadline" };
     expect(describeMode("locked", withReason as AgentStatus))
       .toBe("within 30 minutes of the GW1 deadline");
+  });
+});
+
+describe("one clock for one deadline", () => {
+  /**
+   * `schedule.py:362` writes `GW1 deadline in 71.0h; nothing due yet`, stamped when the
+   * agent ran. The board rendered that beside a countdown recomputed from the same
+   * deadline on every tick, so hours later the screen showed a frozen "71.0h" next to a
+   * live "2d 23h" — two clocks for one deadline, one of them wrong.
+   */
+  it("drops the frozen duration and keeps the producer's explanation", () => {
+    expect(reasonWithoutCountdown("GW1 deadline in 71.0h; nothing due yet"))
+      .toBe("Nothing due yet");
+  });
+
+  it("handles the days-away form the same way", () => {
+    expect(reasonWithoutCountdown("GW3 deadline is 9 days away")).toBeNull();
+  });
+
+  it("returns null when the duration was the whole sentence", () => {
+    // schedule.py:315 and :324 write exactly this, with no clause after it.
+    expect(reasonWithoutCountdown("GW1 deadline in 3.2h")).toBeNull();
+  });
+
+  it("leaves a reason of any other shape untouched", () => {
+    // It trims a known prefix; it does not try to parse prose.
+    for (const reason of [
+      "GW1 is already sealed",
+      "GW2 is settled but not scored",
+      "within 30 minutes of the GW1 deadline",
+    ]) {
+      expect(reasonWithoutCountdown(reason)).toBe(reason);
+    }
+  });
+
+  it("passes null through, so an absent reason stays absent", () => {
+    expect(reasonWithoutCountdown(null)).toBeNull();
+  });
+
+  it("agrees with the shipped artifact, which is what prompted this", () => {
+    expect(reasonWithoutCountdown("GW1 deadline in 71.0h; nothing due yet"))
+      .not.toMatch(/71/);
   });
 });

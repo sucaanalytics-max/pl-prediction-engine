@@ -46,6 +46,7 @@ import type { PublicDecision } from "@/lib/data/narrow";
 import type { Projections } from "@/lib/data/projections";
 import type { Read } from "@/lib/control-room/read";
 import { COUNTING_RULE } from "@/lib/margin/planner";
+import { reasonWithoutCountdown } from "@/lib/margin/mode";
 import {
   REQUIRED_CALIBRATED_GAMEWEEKS, TEAMS, money, tenths, type TeamKey, type XiSwap,
   type XiTotal,
@@ -131,6 +132,9 @@ function Cell(
   const {
     status, projections, live, xi, swap, xiSwapSource, ronny, wazza, calibrated,
   } = props;
+  /* The producer's words minus the duration the masthead counts live — otherwise the
+     board quotes a frozen "71.0h" beside a countdown that has moved on. */
+  const statusWords = reasonWithoutCountdown(status.value?.reason ?? null);
   const bot = team === "ronny" ? ronny : team === "wazza" ? wazza : null;
   const botName = team === "ronny" ? "Ronny" : "Wazza";
 
@@ -611,7 +615,7 @@ function Cell(
             {ran === false
               ? `Never. The phase resolver reports agent_ran: false, so ${botName} `
                 + `has produced nothing to date.`
-                + (status.value?.reason ? ` Its words: “${status.value.reason}”.` : "")
+                + (statusWords ? ` Its words: “${statusWords}”.` : "")
               : status.initialising
                 ? "Reading the agent's phase."
                 : "The phase resolver could not be read, so whether the agent has "

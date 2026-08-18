@@ -46,6 +46,35 @@ export function clockLabel(mode: MarginMode): string {
   }
 }
 
+
+/**
+ * The producer's reason, minus any duration the live countdown already owns.
+ *
+ * `schedule.py` writes reasons like `GW1 deadline in 71.0h; nothing due yet`, stamped when
+ * the agent ran. The board renders that string beside a countdown recomputed from the same
+ * deadline on every tick — so seven hours after the artifact was written the screen showed
+ * "71.0h" quoted next to a live "2d 23h", two clocks for one deadline, one of them frozen.
+ *
+ * The duration is the only stale part; the clause after it is the producer's actual
+ * explanation and is what a reader wants. So the leading `deadline in Xh` / `deadline is N
+ * days away` is dropped and the rest kept. A reason in any other shape is returned
+ * untouched — this trims a known prefix, it does not try to parse prose.
+ *
+ * Returns null when nothing survives, so a caller can omit the line rather than print an
+ * empty one.
+ */
+const STALE_COUNTDOWN =
+  /^GW\d+\s+deadline\s+(?:in\s+[\d.]+\s*h|is\s+\d+\s+days?\s+away)\s*[;,]?\s*/i;
+
+export function reasonWithoutCountdown(reason: string | null): string | null {
+  if (reason === null) return null;
+  const trimmed = reason.trim();
+  if (!STALE_COUNTDOWN.test(trimmed)) return trimmed || null;
+  const rest = trimmed.replace(STALE_COUNTDOWN, "").trim();
+  if (!rest) return null;
+  return rest.charAt(0).toUpperCase() + rest.slice(1);
+}
+
 /**
  * `01:47:12` inside a day, `5d 21h` beyond it, and words at the edges.
  *

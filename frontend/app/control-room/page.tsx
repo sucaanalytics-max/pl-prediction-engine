@@ -65,7 +65,9 @@ import { REGISTRY, decisionDescriptor } from "@/lib/data/narrow";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-import { countdownLong, modeOf, remainingMs, tickPeriodMs } from "@/lib/margin/mode";
+import {
+  countdownLong, modeOf, reasonWithoutCountdown, remainingMs, tickPeriodMs,
+} from "@/lib/margin/mode";
 import { ageLine, deadlineStamp } from "@/lib/formats";
 import { ProvenanceLegend } from "@/components/margin/Provenance";
 import {
@@ -183,6 +185,15 @@ export default function ControlRoomPage() {
    */
   const squadAge = ageLine(squad?.capturedAt ?? null, new Date()) ?? live.age;
 
+  /*
+   * The producer's reason, minus the duration the countdown already owns.
+   *
+   * `schedule.py` stamps "GW1 deadline in 71.0h; nothing due yet" when the agent runs, and
+   * the masthead recomputes the same deadline on every tick — so hours later the board
+   * showed a frozen 71.0h beside a live 2d 23h. One clock.
+   */
+  const trimmedReason = reasonWithoutCountdown(status.value?.reason ?? null);
+
   const calibrated = calibratedWeeks(accuracy.value);
   const sealed = accuracy.value?.gameweeksSealed ?? null;
 
@@ -198,7 +209,7 @@ export default function ControlRoomPage() {
             season={matches.value?.season ?? null}
             deadline={status.value?.deadline ?? null}
             mode={mode}
-            reason={status.value?.reason ?? null}
+            reason={trimmedReason}
             statusAge={status.age}
             statusInitialising={status.initialising}
           />
@@ -210,7 +221,7 @@ export default function ControlRoomPage() {
             squadAge={squadAge}
             squadSource={live.value?.squad?.source ?? null}
             agentRan={status.value?.agentRan ?? null}
-            reason={status.value?.reason ?? null}
+            reason={trimmedReason}
             players={projections.value?.players.length ?? null}
             quartiled={
               projections.value === null ? null : withQuartiles(projections.value.players)
