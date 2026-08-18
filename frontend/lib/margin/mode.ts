@@ -39,7 +39,9 @@ export function clockLabel(mode: MarginMode): string {
   switch (mode) {
     case "deadline": return "Deadline in";
     case "idle": return "Next gate in";
-    case "locked": return "Locked since";
+    // Still counting DOWN to the deadline — see `describeMode`. "Locked since" put the
+    // deadline in the past and the countdown beside it in the future.
+    case "locked": return "Deadline in";
     default: return "Deadline";
   }
 }
@@ -102,7 +104,26 @@ export function describeMode(mode: MarginMode, status: AgentStatus | null): stri
       return status?.reason
         ?? "The engine gates on the deadline and has not run for this gameweek.";
     case "locked":
-      return "The deadline has passed and this gameweek is settled. Nothing below is actionable.";
+      /*
+       * `locked` is the lockout BEFORE the deadline, not after it.
+       *
+       * `pipeline/learning/schedule.py:288` reads
+       * `if remaining <= LOCKOUT_BEFORE_DEADLINE` with
+       * `LOCKOUT_BEFORE_DEADLINE = timedelta(minutes=30)`, and `remaining` is time UNTIL
+       * the deadline — so this phase is the last half hour before it, and it can never be
+       * emitted after.
+       *
+       * This said "The deadline has passed and this gameweek is settled. Nothing below is
+       * actionable." It was exactly backwards, and it rendered in the only thirty minutes
+       * where being wrong about it costs a team: the reader can still change theirs, and
+       * was being told not to bother.
+       *
+       * What is actually locked is the agent, not the owner.
+       */
+      return status?.reason
+        ?? "Inside the last half hour before the deadline: the agent will not seal a new "
+          + "forecast now, so the figures below are the ones it sealed earlier. Your team "
+          + "is still yours to change until the deadline passes.";
     default:
       return "The phase resolver could not be read, so whether the engine has run "
         + "is unknown — which is not the same as it having not run.";

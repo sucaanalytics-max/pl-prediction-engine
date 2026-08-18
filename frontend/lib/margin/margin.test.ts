@@ -409,3 +409,54 @@ describe("no number survived from the prototype", () => {
     }
   });
 });
+
+describe("the locked phase is BEFORE the deadline, not after", () => {
+  /**
+   * `pipeline/learning/schedule.py:288` emits this phase when
+   * `remaining <= LOCKOUT_BEFORE_DEADLINE`, where `LOCKOUT_BEFORE_DEADLINE` is 30 minutes
+   * and `remaining` is time UNTIL the deadline. So it is the last half hour before it,
+   * and it can never be emitted after.
+   *
+   * The copy said "The deadline has passed and this gameweek is settled. Nothing below is
+   * actionable." — exactly backwards, in the only thirty minutes where being wrong about
+   * it costs a team, because the reader can still change theirs.
+   */
+  const locked = {
+    schemaVersion: 1,
+    generatedAt: "2026-08-21T17:05:00Z",
+    phase: "locked",
+    gameweek: 1,
+    deadline: "2026-08-21T17:30:00Z",
+    secondsToDeadline: 1500,
+    reason: null,
+    agentRan: true,
+  } as unknown as AgentStatus;
+
+  it("does not tell the reader the deadline has passed", () => {
+    const copy = describeMode("locked", locked);
+    expect(copy).not.toMatch(/deadline has passed/i);
+    expect(copy).not.toMatch(/settled/i);
+  });
+
+  it("does not tell the reader their team is beyond changing", () => {
+    expect(describeMode("locked", locked)).not.toMatch(/nothing below is actionable/i);
+  });
+
+  it("says what is actually locked — the agent, not the owner", () => {
+    const copy = describeMode("locked", locked);
+    expect(copy).toMatch(/agent/i);
+    expect(copy).toMatch(/still yours to change|until the deadline/i);
+  });
+
+  it("keeps the clock counting down to the deadline, not up from it", () => {
+    // "Locked since" put the deadline in the past and the countdown beside it in the
+    // future, on the same line.
+    expect(clockLabel("locked")).toBe("Deadline in");
+  });
+
+  it("still prefers the producer's own reason when it sends one", () => {
+    const withReason = { ...locked, reason: "within 30 minutes of the GW1 deadline" };
+    expect(describeMode("locked", withReason as AgentStatus))
+      .toBe("within 30 minutes of the GW1 deadline");
+  });
+});

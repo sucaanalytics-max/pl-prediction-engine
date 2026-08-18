@@ -95,7 +95,7 @@ interface HistoryPayload {
   past: Array<{ season_name: string; rank: number }>;
 }
 
-interface PicksPayload {
+export interface PicksPayload {
   picks: Array<{
     element: number;
     position: number;
@@ -306,6 +306,43 @@ function historySummary(history: HistoryPayload) {
   };
 }
 
+/** FPL's squad size. A picks payload with any other count is not a squad. */
+const SQUAD_SIZE = 15;
+
+/**
+ * FPL's picks payload, but only when it is actually a squad.
+ *
+ * The switch from the captured draft to live picks was `picks ? … : CAPTURED_DRAFT`, so
+ * the only shape that fell back safely was an exact 404. A 200 carrying `picks: []` —
+ * which is what an endpoint that is up but has not yet materialised a team returns —
+ * produced an EMPTY squad labelled `official_public`, and a payload missing the key threw
+ * inside `.map` and took the whole route down. Both land on Friday, when this path is
+ * exercised for the first time this season and the API is under its heaviest load of the
+ * week.
+ *
+ * Nine separate decisions read this value — the squad, the bank, the value, the source,
+ * the notices, the source label, `capturedAt`, `isOfficial` and `freshness.squad` — so it
+ * is validated once, here, rather than at any of them. A partial trust would label a
+ * captured squad "official", which is worse than either honest answer.
+ *
+ * An unusable payload falls back to the captured draft rather than to nothing: the draft
+ * carries its own date and says on screen that it is a capture, which is Rule 1 exactly —
+ * the last known answer with its age, never a blank.
+ */
+export function usableSquad(payload: PicksPayload | null): PicksPayload | null {
+  if (!payload || !Array.isArray(payload.picks)) return null;
+  if (payload.picks.length !== SQUAD_SIZE) return null;
+
+  const history = payload.entry_history as PicksPayload["entry_history"] | undefined;
+  if (!history || typeof history !== "object") return null;
+  if (!Number.isFinite(history.bank) || !Number.isFinite(history.value)) return null;
+
+  for (const pick of payload.picks) {
+    if (!Number.isFinite(pick.element) || !Number.isFinite(pick.position)) return null;
+  }
+  return payload;
+}
+
 export async function buildFplLiveState(): Promise<FplLiveState> {
   const [bootstrap, fixtures, entry, history] = await Promise.all([
     getOfficialJson<BootstrapPayload>("/bootstrap-static/"),
@@ -321,10 +358,19 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
   const event = activeEvent(bootstrap.events);
   if (!event) throw new Error("Official FPL API returned no gameweeks");
 
-  const picks = await getOfficialJson<PicksPayload>(
+  const picksResponse = await getOfficialJson<PicksPayload>(
     `/entry/${FPL_ENTRY_ID}/event/${event.id}/picks/`,
     true
   );
+  // Validated at the boundary, so every downstream decision reads one answer.
+  const picks = usableSquad(picksResponse);
+  /*
+   * Served, but not a squad. Distinct from "not served", because the two mean opposite
+   * things: before the deadline FPL withholds picks by design and the capture is the
+   * right answer; after it, a payload that is not a squad means something is wrong at
+   * FPL and the capture may be out of date. The reader is told which they are looking at.
+   */
+  const picksRejected = picksResponse !== null && picks === null;
   const teamById = new Map(bootstrap.teams.map((team) => [team.id, team]));
   const positionById = new Map(
     bootstrap.element_types.map((position) => [position.id, position.singular_name_short])
@@ -482,6 +528,13 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
   });
   const notices = picks
     ? ["Squad synced from the official public gameweek picks endpoint."]
+    : picksRejected
+    ? [
+        "FPL answered for this entry but did not return a fifteen-player squad, so the "
+          + `captured draft of ${capturedOn} is shown instead. If the deadline has passed, `
+          + "this squad may no longer be the one that is set.",
+        "Official prices, clubs, availability flags and the next ten fixtures are refreshed from FPL.",
+      ]
     : [
         // Derived from `CAPTURED_DRAFT_AT` rather than written out again. This
         // line said "28 Jul" across the entire life of the 13 Aug capture that

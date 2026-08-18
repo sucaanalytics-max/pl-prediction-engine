@@ -268,7 +268,9 @@ export default function ControlRoomPage() {
 const MODE_LABEL: Record<string, string> = {
   deadline: "Deadline mode · engine has run",
   idle: "Idle · engine gated",
-  locked: "Locked · gameweek settled",
+  // The agent is locked, not the gameweek: this phase is the 30 minutes BEFORE the
+  // deadline (schedule.py:288), so the team is still changeable.
+  locked: "Locked · agent will not re-seal",
   unknown: "Phase unknown",
 };
 
