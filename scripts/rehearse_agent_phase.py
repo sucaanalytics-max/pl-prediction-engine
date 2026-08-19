@@ -34,16 +34,38 @@ So this script guards instead of pretending. It refuses to start on a dirty tree
 restores the published directory with git afterwards. That is why the dirty check is not
 optional politeness: without it there is no clean state to restore to.
 
-## What it will not do
+## Sealing is rehearsable, because dry runs are quarantined
 
-It never commits, never dispatches a workflow, and cannot seal — `_seal` is deliberately
-unreachable from here, because a forecast written outside the ledger's own path is a
-forecast with no external timestamp anchor, which is worse than none. Use it to answer
-"does this code run", not "is the gameweek sealed".
+The seal is the phase worth rehearsing: it is irrecoverable (38 per season), it runs
+unattended, and until now it had never executed. It is reachable here only because
+`ledger.gameweek_dir` puts a dry run under `ledger/dryrun/gwNN/` instead of
+`ledger/gwNN/`, so a rehearsal cannot consume the real seal, and the path honours the
+directory it is given rather than resolving absolutely.
+
+`dry_run` is forced True for `seal` and there is no flag to turn it off. Under it:
+
+  * `seal_forecast` writes the quarantined ledger — the real GW is untouched
+  * `_decide_for_entries` logs and `continue`s before `write_decision`, so no decision
+    artifact is written and the returned dict is empty
+  * `_deliver` reaches `publish`, which returns `{}` without writing — nothing notified
+
+So this rehearses refresh → seal → decide-compute → deliver-compute. It does NOT
+exercise `write_decision` or a real publish, because dry run is what makes it safe to
+run at all. Read a green seal as "the seal itself works", not "the whole Friday path
+wrote what it should".
+
+Defence in depth: a dry run should never create a file in the real ledger, so the run
+compares the real ledger before and after and reports loudly if one appeared. It does
+not delete it — removing a ledger file is precisely the irreversible act that should
+need a human, and an auto-delete racing a genuine run would destroy the seal it was
+meant to protect.
+
+It never commits and never dispatches a workflow.
 
 ## Usage
 
     PYTHONPATH=. .venv/bin/python scripts/rehearse_agent_phase.py refresh --gameweek 1
+    PYTHONPATH=. .venv/bin/python scripts/rehearse_agent_phase.py seal
 
 Exit status is 0 when the phase completed, 1 when it raised — so it can gate a pre-deadline
 checklist.
@@ -85,6 +107,21 @@ def _restore(paths: str) -> None:
     subprocess.run(["git", "-C", str(REPO_ROOT), "checkout", "--", paths], check=True)
 
 
+#: The real ledger. A dry run must never add a file here; `_ledger_files` is snapshotted
+#: before and after so an escape is reported rather than discovered on seal day.
+REAL_LEDGER = REPO_ROOT / "predictions" / "fpl" / "ledger"
+
+
+def _ledger_files() -> set:
+    """Every file in the real ledger, excluding the quarantined dry-run subtree."""
+    if not REAL_LEDGER.is_dir():
+        return set()
+    return {
+        p for p in REAL_LEDGER.rglob("*")
+        if p.is_file() and "dryrun" not in p.relative_to(REAL_LEDGER).parts
+    }
+
+
 def _seed(destination: Path) -> None:
     """Copy the committed inputs a phase reads, and nothing else."""
     (destination / "fpl").mkdir(parents=True, exist_ok=True)
@@ -110,10 +147,64 @@ def _report(outcome: Dict[str, Any], scratch: Path) -> None:
     print(f"   artifacts of interest: {fresh or 'none'}")
 
 
+def _forecast_rows(path: Path) -> int:
+    """Forecast rows in a sealed ledger file, excluding its header line."""
+    if not path.exists():
+        return 0
+    import json
+    with path.open() as handle:
+        return sum(1 for line in handle if json.loads(line).get("record") == "forecast")
+
+
+def _rehearse_seal(scratch: Path, gameweek: int | None) -> Dict[str, Any]:
+    """
+    Run the seal against the scratch ledger, as a dry run.
+
+    The phase is not hand-constructed. `resolve` is asked twice: once at the real now to
+    learn the deadline from the live calendar, then again at two hours before it — inside
+    SEAL_WINDOW, outside LOCKOUT — so the phase machine itself decides this is a seal.
+    A hand-built ScheduleState would rehearse my belief about the schedule rather than
+    the code that will actually run on Friday.
+    """
+    from datetime import timedelta
+
+    from pipeline.learning.run_agent import _seal
+    from pipeline.learning.schedule import Phase, fetch_events, resolve
+
+    events = fetch_events()
+    live = resolve(scratch, events=events)
+    if live.deadline is None:
+        raise RuntimeError(f"no upcoming deadline in the calendar (phase {live.phase})")
+
+    at = live.deadline - timedelta(hours=2)
+    state = resolve(scratch, now=at, events=events)
+    print(f"   calendar deadline  {live.deadline:%a %d %b %H:%MZ}")
+    print(f"   rehearsing as at   {at:%a %d %b %H:%MZ}  -> phase {state.phase.value}")
+
+    if state.phase is not Phase.SEAL:
+        raise RuntimeError(
+            f"expected SEAL two hours before the deadline, got {state.phase.value}: "
+            f"{state.reason}"
+        )
+    if gameweek is not None and state.gameweek != gameweek:
+        raise RuntimeError(f"calendar says GW{state.gameweek}, you asked for GW{gameweek}")
+
+    code = _seal(scratch, state, dry_run=True)
+    sealed = scratch / "fpl" / "ledger" / "dryrun" / f"gw{state.gameweek:02d}" / "forecast.jsonl"
+    return {
+        "exit_code": code,
+        "gameweek": state.gameweek,
+        # Counting lines reported 496 against the header's own rows_written of 495: the
+        # first line is the header, not a forecast. Count the record type instead.
+        "sealed_rows": _forecast_rows(sealed),
+        "quarantined_to": sealed.relative_to(scratch).as_posix() if sealed.exists() else "NOTHING WRITTEN",
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[1])
-    parser.add_argument("phase", choices=["refresh"],
-                        help="only `refresh` is offered: seal is deliberately unreachable")
+    parser.add_argument("phase", choices=["refresh", "seal"],
+                        help="`seal` always runs as a dry run; there is no way to disable that")
     parser.add_argument("--gameweek", type=int, default=None)
     parser.add_argument("--keep", action="store_true",
                         help="leave the scratch directory in place for inspection")
@@ -138,8 +229,13 @@ def main() -> int:
     _seed(scratch)
     print(f"rehearsing `{args.phase}` in {scratch}")
 
+    before = _ledger_files()
+
     try:
-        outcome = refresh_expected_points(scratch, args.gameweek) or {}
+        if args.phase == "seal":
+            outcome = _rehearse_seal(scratch, args.gameweek)
+        else:
+            outcome = refresh_expected_points(scratch, args.gameweek) or {}
     except Exception:
         print("PHASE FAILED — this is what would happen on the day:")
         traceback.print_exc()
@@ -158,6 +254,17 @@ def main() -> int:
             for n in names:
                 print(f"     {n}")
             _restore(str(PUBLISHED.relative_to(REPO_ROOT)))
+        escaped = sorted(_ledger_files() - before)
+        if escaped:
+            print()
+            print("!! A DRY RUN WROTE TO THE REAL LEDGER. This can cost the seal:")
+            for path in escaped:
+                print(f"     {path.relative_to(REPO_ROOT)}")
+            print("   Not deleting it — a ledger file is not mine to remove, and an")
+            print("   auto-delete racing a genuine run would destroy the real seal.")
+            print("   Inspect it, and if it is this rehearsal's, remove it by hand")
+            print("   BEFORE the deadline or the real seal raises AlreadySealedError.")
+
         if args.keep:
             print(f"   scratch kept at {scratch}")
         else:
