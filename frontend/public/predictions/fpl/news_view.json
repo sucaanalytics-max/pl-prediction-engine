@@ -1,17 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-19T09:16:16.253005Z",
-  "n_dropped": 79,
+  "generated_at": "2026-08-19T09:58:16.872021Z",
+  "n_dropped": 87,
   "dropped_by_source": {
-    "bbc_football": 43,
-    "sky_football": 36
+    "bbc_football": 46,
+    "hayters": 2,
+    "sky_football": 39
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 169,
+  "n_articles": 177,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "512917d9ee792777",
+      "headline": "Man Utd close to full agreement with Brighton for Baleba",
+      "summary": "Manchester United are close to a full agreement with Brighton to sign Carlos Baleba.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13574619/carlos-baleba-transfer-manchester-united-close-to-full-agreement-with-brighton-for-cameroon-midfielder",
+      "claimed_at": "2026-08-19T10:02:00Z",
+      "players": [
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "3e12ac3326a0a870",
       "headline": "Why Van Hecke holds the key to unlocking De Zerbi ball at Spurs",
@@ -25,6 +44,114 @@
           "element_id": 112,
           "name": "Van Hecke",
           "club": "TOT",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "4bc49c203c812a38",
+      "headline": "West Ham complete signing of striker but look set to miss out on another",
+      "summary": "West Ham United have completed the signing of striker Jo\u00ebl Piroe from Leeds United on an initial season-long loan. The deal includes an obligation for the transfer to become permanent in the summer of 2027, subject to the agree",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/west-ham-complete-signing-of-striker-but-look-set-to-miss-out-on-another/",
+      "claimed_at": "2026-08-19T09:55:38Z",
+      "players": [
+        {
+          "element_id": 348,
+          "name": "Piroe",
+          "club": "LEE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "cfab94bcd2591bb8",
+      "headline": "Man Utd close on deal for Brighton's Baleba",
+      "summary": "Manchester United are in talks to sign Cameroon international Carlos Baleba having reignited their interest in the midfielder.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c2k7ev41nnvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-19T09:50:55Z",
+      "players": [
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "f24dc8ee937e6b86",
+      "headline": "Brighton star nears move away after Seagulls sign striker",
+      "summary": "Promise David has joined Brighton on a season-long loan from Royale Union Saint-Gilloise. The deal also includes an obligation to buy should certain criteria be met. The 25-year-old striker made 82 appearances for Union Saint-Gilloise, scorin",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brighton-star-nears-move-away-after-seagulls-sign-striker/",
+      "claimed_at": "2026-08-19T09:44:42Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "cde8d4dd3925d2de",
+      "headline": "Crystal Palace complete another summer signing as youngster joins",
+      "summary": "Crystal Palace have completed the signing of attacker Zavier Gozo from MLS side Real Salt Lake. The 19-year-old has signed a five-year contract in south London, subject to international clearance, and becomes Palace\u2019s sixth arrival of",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/crystal-palace-complete-another-summer-signing-as-youngster-joins/",
+      "claimed_at": "2026-08-19T09:37:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "fb82dd0bb3f32091",
+      "headline": "Aston Villa complete \u00a347m double deal and close in on another signing",
+      "summary": "Aston Villa have completed the signings of goalkeeper Zion Suzuki from Parma and defender Matteo Ruggeri from Atletico Madrid. Suzuki joins Unai Emery\u2019s side for a fee of around \u00a330m, while Ruggeri arrives in a deal worth approxim",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/aston-villa-complete-47m-double-deal-and-close-in-on-another-signing/",
+      "claimed_at": "2026-08-19T09:29:34Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "8751207d72b6c9ba",
+      "headline": "Nedeljkovic joins Rangers from Aston Villa",
+      "summary": "Kosta Nedeljkovic joins Rangers on a season-long loan from Aston Villa, with the Ibrox club holding a \"conditional obligation\" to buy the 20-year-old Serbia defender.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cx2mz3j402zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-19T09:25:38Z",
+      "players": [
+        {
+          "element_id": 39,
+          "name": "Nedeljkovic",
+          "club": "AVL",
           "held": null
         }
       ],
@@ -115,6 +242,24 @@
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "3f29d02f615c8d3d",
+      "headline": "Man Utd latest: Get your best questions in ahead of the new season!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-19T08:06:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": null
         }
       ],
@@ -853,24 +998,6 @@
       "touches_squad": null
     },
     {
-      "digest": "5cd79fd1462058af",
-      "headline": "Man Utd latest: Zirkzee linked with Italy move - new forward in?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-18T11:40:00Z",
-      "players": [
-        {
-          "element_id": 440,
-          "name": "Zirkzee",
-          "club": "MUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "67cd5ab7943f00f0",
       "headline": "Fernandes could significantly increase wages by leaving Man Utd \u2013 latest transfer reports",
       "summary": "Galatasaray are prepared to offer Bruno Fernandes a huge salary increase in an attempt to lure the Manchester United captain to Turkey. Manchester City, meanwhile, face a \u00a3120m-plus asking price for Chelsea mid",
@@ -961,42 +1088,6 @@
       "touches_squad": null
     },
     {
-      "digest": "69c1487c63ca18b4",
-      "headline": "Lankshear on fire for Middlesbrough: Did Spurs just sell the next Kane?",
-      "summary": "\"A lot of people questioned it,\" Scott Chickelday tells Sky Sports. \"Those same people are now looking at it and thinking, hang on, we might have got a bit of a bargain here.\" Such has been the start that Will Lankshear has made",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13570574/will-lankshear-is-middlesbroughs-new-striker-the-next-harry-kane-rise-of-ex-tottenham-forward-set-to-light-up-championship",
-      "claimed_at": "2026-08-18T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "8e3583c758df2b82",
-      "headline": "Man City have signed Anderson - why do they also want Bouaddi?",
-      "summary": "Those who followed Morocco's recent World Cup campaign will recognise the name Ayyoub Bouaddi. Perhaps those who only took a passing glance will remember him, too. He tends to stand out.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13571912/ayyoub-bouaddi-transfer-why-do-man-city-want-to-spend-big-on-another-midfielder-after-signing-elliot-anderson",
-      "claimed_at": "2026-08-18T10:00:00Z",
-      "players": [
-        {
-          "element_id": 481,
-          "name": "Anderson",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "7dea88f9a417297a",
       "headline": "Dedic delighted to reunite with Jaissle as Newcastle move is confirmed",
       "summary": "Newcastle United have completed the signing of Bosnian international full-back Amar Dedi\u0107 from Benfica for around \u00a330m. The 24-year-old has signed a five-year contract at St James\u2019 Park and becomes the sixth addition to Matthias",
@@ -1033,42 +1124,6 @@
       "touches_squad": null
     },
     {
-      "digest": "111b980fe70c54b0",
-      "headline": "Could refreshed Odegaard be like a new signing?",
-      "summary": "The Arsenal captain had a hugely frustrating 2025-26 season despite leading his team to the title - but now appears fit and refreshed.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c2lq80lwwpdo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-18T07:14:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "5b347d57227a6647",
-      "headline": "Ex-Man Utd striker Depay takes pay cut to stay at Corinthians",
-      "summary": "Memphis Depay waives a reported fee of nearly \u00a33m days after accusing Corinthians of \"unacceptable behaviour\" over a contract extension.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq56x7qvjn2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-18T07:01:31Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "fd8cccfe82888927",
       "headline": "FPL 2026/27 \u2013 Brighton: Best players, set-piece takers, predicted XI + more",
       "summary": "From a potential \u00a35.5m penalty-taking midfielder to a DefCon magnet, the Seagulls' stand-out picks The post FPL 2026/27 - Brighton: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice,",
@@ -1094,24 +1149,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/18/fpl-2026-27-brentford-best-players-set-piece-takers-predicted-xi-more",
       "claimed_at": "2026-08-18T00:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "754da3b70f7a2f76",
-      "headline": "Guardiola-Walker fallout revealed in new documentary",
-      "summary": "A new documentary series about Pep Guardiola's final two seasons at Manchester City reveals the bust-up he had with former captain Kyle Walker.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c62xj5evpjpo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-17T23:00:04Z",
       "players": [
         {
           "element_id": 0,
@@ -1639,24 +1676,6 @@
       "touches_squad": null
     },
     {
-      "digest": "80d68bc087e7f4b3",
-      "headline": "Maresca on Rodri\u2019s future and rules out Enzo bid before deadline",
-      "summary": "Enzo Maresca insisted that &#8220;anything can happen&#8221; amid Rodri links to Barcelona and revealed that City are unlikely to bid for Enzo Fernandez before the deadline. Rodri has been linked with a move away from Manchester City t",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/maresca-on-rodris-future-and-rules-out-enzo-bid-before-deadline/",
-      "claimed_at": "2026-08-14T10:46:38Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "775f71122efb2291",
       "headline": "FPL 2026/27 \u2013 Arsenal: Best players, set-piece takers, predicted XI + more",
       "summary": "Our team previews continue with Mikel Arteta's champions The post FPL 2026/27 - Arsenal: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fanta",
@@ -1664,24 +1683,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/fpl-2026-27-arsenal-best-players-set-piece-takers-predicted-xi-more",
       "claimed_at": "2026-08-14T10:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "21f1a11510136966",
-      "headline": "Arsenal ranked only 66th in English football fan engagement index as clubs warned against \u2018box ticking\u2019",
-      "summary": "Arsenal have been ranked only 66th among English football clubs for fan engagement despite winning the Premier League last season, according to the latest Fan Engagement Index. The Gunners scored",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-ranked-only-66th-in-english-football-fan-engagement-index-as-clubs-warned-against-box-ticking/",
-      "claimed_at": "2026-08-14T10:15:18Z",
       "players": [
         {
           "element_id": 0,
