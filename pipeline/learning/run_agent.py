@@ -961,15 +961,22 @@ def _entry_state_from_capture(capture, gameweek: int):
     """
     from pipeline.fpl.entry_api import EntryState
 
-    stale = capture.prices_are_stale()
+    prices: Dict[int, int] = (
+        {} if capture.prices_are_stale() else dict(capture.purchase_prices)
+    )
+    # Derived from the prices rather than from the staleness flag, so the two ways
+    # a price can be unknown land in the same place: expired by a price change, or
+    # never supplied. An earlier version keyed this on staleness alone, which meant
+    # a fresh capture that carried no prices reported them as certain.
+    untraced = [element for element in capture.squad if element not in prices]
     return EntryState(
         entry_id=capture.entry_id,
         gameweek=int(gameweek),
         squad=list(capture.squad),
         bank=capture.bank,
         free_transfers=capture.free_transfers,
-        purchase_prices={} if stale else dict(capture.purchase_prices),
-        untraced=list(capture.squad) if stale else [],
+        purchase_prices=prices,
+        untraced=untraced,
     )
 
 

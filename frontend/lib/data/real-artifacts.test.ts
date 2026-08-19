@@ -19,7 +19,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { classify, proven, chartable, describeProducer } from "@/lib/data/artifact";
-import { REGISTRY, ALL_DESCRIPTORS } from "@/lib/data/narrow";
+import { REGISTRY, ALL_DESCRIPTORS, playerStatsRows } from "@/lib/data/narrow";
 import type { Descriptor } from "@/lib/data/registry";
 
 const PREDICTIONS = join(__dirname, "..", "..", "..", "predictions");
@@ -259,7 +259,15 @@ describe("player_stats.json — real data, so NOT empty", () => {
     // the daily pipeline: it held 564 rows when this test was written and 573
     // a week later, and CI failed on the number rather than on anything real.
     // The property that matters is that narrowing loses nothing.
-    expect(proven(artifact)).toHaveLength(raw("player_stats.json").length);
+    //
+    // Through `playerStatsRows` rather than `.length` directly. Reading the raw
+    // value's own length assumed a bare array, which was true until the producer
+    // started writing a `{generated_at, players}` envelope — at which point the
+    // expected length became `undefined` and the assertion compared 592 against
+    // nothing. The narrower already knows where the rows are; ask it.
+    const rows = playerStatsRows(raw("player_stats.json")) as unknown[];
+    expect(rows.length).toBeGreaterThan(100);
+    expect(proven(artifact)).toHaveLength(rows.length);
   });
 
   it("preserves fouls_committed as null rather than coercing 564 rows to zero", () => {

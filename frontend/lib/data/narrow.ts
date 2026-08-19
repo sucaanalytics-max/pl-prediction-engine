@@ -233,7 +233,16 @@ export const MIN_MINUTES_FOR_RATES = 90;
  * which shape is current. A narrower that accepted only the new one would blank the
  * players table until the next pipeline run.
  */
-function playerStatsRows(raw: unknown): unknown {
+/**
+ * Where the player rows live, for both shapes this file has had.
+ *
+ * Exported because `real-artifacts.test.ts` needs the raw row count to assert
+ * that narrowing loses nothing, and when it re-implemented this logic it drifted:
+ * the test read `raw.length`, which was right for the bare list and silently
+ * became `undefined` the morning the pipeline first wrote the envelope. One
+ * definition, used by both.
+ */
+export function playerStatsRows(raw: unknown): unknown {
   if (Array.isArray(raw)) return raw;
   if (isRecord(raw) && Array.isArray(raw.players)) return raw.players;
   return raw;

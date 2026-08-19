@@ -236,5 +236,31 @@ class EntryStateFromCaptureTests(unittest.TestCase):
         self.assertTrue(state.price_uncertain)
 
 
+    def test_a_capture_with_no_prices_reports_them_as_uncertain(self):
+        """
+        The hole this closes: keying `untraced` on staleness alone meant a FRESH
+        capture carrying no purchase prices reported them as certain, and the
+        decision path would have priced every sale at now_cost without a flag.
+        """
+        fresh = Capture(
+            entry_id=2561567, gameweek=2, captured_at=datetime.now(timezone.utc),
+            squad=SQUAD, bank=35, free_transfers=1, purchase_prices={},
+        )
+        state = _entry_state_from_capture(fresh, 2)
+        self.assertEqual(state.squad, SQUAD)
+        self.assertEqual(state.untraced, SQUAD)
+        self.assertTrue(state.price_uncertain)
+
+    def test_a_partially_priced_capture_flags_only_the_unpriced(self):
+        partial = Capture(
+            entry_id=2561567, gameweek=2, captured_at=datetime.now(timezone.utc),
+            squad=SQUAD, bank=35, free_transfers=1,
+            purchase_prices={i: 50 for i in SQUAD[:10]},
+        )
+        state = _entry_state_from_capture(partial, 2)
+        self.assertEqual(state.untraced, SQUAD[10:])
+        self.assertTrue(state.price_uncertain)
+
+
 if __name__ == "__main__":
     unittest.main()
