@@ -1,18 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-19T09:58:16.872021Z",
-  "n_dropped": 87,
+  "generated_at": "2026-08-19T10:36:32.360383Z",
+  "n_dropped": 83,
   "dropped_by_source": {
-    "bbc_football": 46,
+    "bbc_football": 43,
     "hayters": 2,
-    "sky_football": 39
+    "sky_football": 38
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 177,
+  "n_articles": 173,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "75d28915ebfefbb1",
+      "headline": "Arsenal preference is for Nwaneri to leave on loan",
+      "summary": "Arsenal prioritise loan offers for Ethan Nwaneri with the Premier League champions keen to avoid selling their teenage attacker permanently.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c4gd1r1nel2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-19T10:24:11Z",
+      "players": [
+        {
+          "element_id": 22,
+          "name": "Nwaneri",
+          "club": "ARS",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "512917d9ee792777",
       "headline": "Man Utd close to full agreement with Brighton for Baleba",
@@ -1647,24 +1665,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/fpl-2026-27-aston-villa-best-players-set-piece-takers-predicted-xi-more",
       "claimed_at": "2026-08-14T15:55:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "72d08862203a39a9",
-      "headline": "Arteta gives positive injury updates on three Arsenal stars and reveals their big transfer ambition",
-      "summary": "Mikel Arteta revealed that Declan Rice, Bukayo Saka and Martin Zubimendi will be available for the Community Shield final. The trio have now arrived back in Arsenal training following an extended holi",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-gives-positive-injury-updates-on-three-arsenal-stars-and-reveals-their-big-transfer-ambition/",
-      "claimed_at": "2026-08-14T13:40:03Z",
       "players": [
         {
           "element_id": 0,
