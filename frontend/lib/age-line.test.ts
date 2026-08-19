@@ -80,3 +80,55 @@ describe("what it refuses", () => {
     expect(line).not.toContain("old");
   });
 });
+
+describe("a weekday only names one day inside the week", () => {
+  /**
+   * `as at Thu 18:53` identifies an instant only within the current week. Past that it
+   * names two Thursdays and the reader takes the recent one.
+   *
+   * Not hypothetical: `accuracy.json` and `evidence_view.json` were 5.3 days old and
+   * rendering "as at Thu 18:53" on a Wednesday, which reads as yesterday. At seven days
+   * the two Thursdays are indistinguishable.
+   */
+  const now = new Date("2026-08-19T12:00:00Z"); // a Wednesday
+
+  it("keeps the weekday for something earlier this week", () => {
+    // Two days back: "Mon" can only mean one Monday from here.
+    expect(ageLine("2026-08-17T06:30:00Z", now)).toMatch(/^as at Mon /);
+  });
+
+  it("dates anything a week or more old, rather than naming a weekday twice", () => {
+    const line = ageLine("2026-08-11T06:30:00Z", now)!;
+    expect(line).not.toMatch(/Mon|Tue|Wed|Thu|Fri|Sat|Sun/);
+    expect(line).toMatch(/^as at 11 Aug /);
+  });
+
+  it("dates the artifacts that prompted this, at 5.3 days", () => {
+    /* Rendered in `DISPLAY_TIME_ZONE` (Asia/Kolkata, UTC+5:30), so 13 Aug 18:53Z is
+       Friday 00:23 there — which is exactly why a weekday is a poor identifier: it is
+       not even the weekday of the timestamp as written. Six days is the boundary; this
+       sits under it and stays a weekday, and a day older does not. */
+    expect(ageLine("2026-08-13T18:53:00Z", now)).toMatch(/^as at Fri /);
+    // A day older crosses the boundary and takes a date. Asserted as a form rather than
+    // a literal, because the display zone shifts the calendar day too.
+    const older = ageLine("2026-08-12T18:53:00Z", now)!;
+    expect(older).toMatch(/^as at \d{1,2} Aug \d{2}:\d{2}$/);
+    expect(older).not.toMatch(/Mon|Tue|Wed|Thu|Fri|Sat|Sun/);
+  });
+
+  it("still reports hours inside a day", () => {
+    expect(ageLine("2026-08-19T06:00:00Z", now)).toBe("6h old");
+  });
+
+  it("still states a future stamp as an instant, and dates a far-future one", () => {
+    /* A future age rendered as "0h old" would be a quiet lie; as an instant it is
+       visibly wrong, which is the point. */
+    expect(ageLine("2026-08-20T06:00:00Z", now)).toMatch(/^as at /);
+    expect(ageLine("2027-01-01T06:00:00Z", now)).toMatch(/^as at 1 Jan /);
+  });
+
+  it("still returns null for an absent or unparseable stamp", () => {
+    expect(ageLine(null, now)).toBeNull();
+    expect(ageLine("not a date", now)).toBeNull();
+  });
+});

@@ -170,6 +170,14 @@ export function timeAgo(dateStr: string): string {
  * "unknown", because the exception for absence is about data never computed, not
  * about a value whose clock we happen not to know.
  */
+/**
+ * How long a weekday still names one day.
+ *
+ * Six, not seven: at exactly seven the weekday repeats, and a boundary that only fails
+ * at the collision is a boundary that ships the collision.
+ */
+const WEEKDAY_IS_UNAMBIGUOUS_HOURS = 6 * 24;
+
 export function ageLine(
   producedAt: string | null | undefined,
   now: Date = new Date(),
@@ -192,15 +200,29 @@ export function ageLine(
   // state the instant instead of a duration. A future age rendered as "0h old"
   // would be a quiet lie; rendered as an instant it is visibly wrong, which is
   // what we want.
+  //
+  // A weekday alone only identifies an instant inside the current week. Past that it
+  // names two days and the reader picks the recent one: `accuracy.json` and
+  // `evidence_view.json` are 5.3 days old today and render "as at Thu 18:53", which on a
+  // Wednesday reads as yesterday. At seven days it is strictly ambiguous. So beyond the
+  // week the date replaces the weekday — day and month, the same format
+  // `fpl-live-server.ts` uses for the capture date and for the same reason: a provenance
+  // line the reader can check.
+  const withinTheWeek = ms >= 0 && hours < WEEKDAY_IS_UNAMBIGUOUS_HOURS;
   const parts = new Intl.DateTimeFormat("en-GB", {
     timeZone: DISPLAY_TIME_ZONE,
-    weekday: "short",
+    ...(withinTheWeek
+      ? { weekday: "short" as const }
+      : { day: "numeric" as const, month: "short" as const }),
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
   }).formatToParts(then);
   const get = (t: string) => parts.find((x) => x.type === t)?.value ?? "";
-  return `as at ${get("weekday")} ${get("hour")}:${get("minute")}`;
+  const when = withinTheWeek
+    ? get("weekday")
+    : `${get("day")} ${get("month")}`;
+  return `as at ${when} ${get("hour")}:${get("minute")}`;
 }
 
 /**
