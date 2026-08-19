@@ -1,0 +1,76 @@
+name: Python CI
+
+# The push gate the pipeline never had.
+#
+# Until this existed, `frontend.yml` was the ONLY push-triggered workflow in the
+# repo, and it is scoped to `frontend/**`. Every other workflow is cron or
+# workflow_dispatch, so a Python change reached main untested and was first
+# executed by whichever scheduled job happened to import it. The full suite ran
+# weekly (validate.yml, Sundays 10:00Z) and the default selection daily
+# (pipeline.yml, 06:00Z) — but never before a commit landed.
+#
+# That ordering is the problem. `fpl_agent.yml` runs hourly and seals the
+# gameweek inside a 3.5-hour band, and a seal is irrecoverable. A regression
+# pushed on a Friday morning would have been discovered by the seal run itself,
+# at the one moment in the week when there is no time to fix it.
+#
+# Deliberately narrow: it runs tests and nothing else. No `contents: write`, no
+# commit, no dispatch, no runner shared with the agent. It cannot enter the
+# `fpl-agent` concurrency group, cannot queue a run, and cannot touch an
+# artifact — so the worst this job can do on its worst day is report red.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pipeline/**'
+      - 'scripts/**'
+      - '.github/workflows/python.yml'
+  pull_request:
+    paths:
+      - 'pipeline/**'
+      - 'scripts/**'
+      - '.github/workflows/python.yml'
+
+# Read-only on purpose. The three git writers (pipeline, fpl_agent, news)
+# coordinate through disjoint pathspecs in commit_and_push.sh; a fourth writer
+# would have to join that protocol, and a test job has no reason to.
+permissions:
+  contents: read
+
+# Per-ref, and cancellable — unlike `fpl-agent`, which sets
+# cancel-in-progress: false because a cancelled run can drop a seal. Superseding
+# a test run costs nothing.
+concurrency:
+  group: python-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      # v5/v6 rather than the v4/v5 used elsewhere in this repo: those majors run
+      # on the deprecated Node 20 runtime. frontend.yml already proves v5 works
+      # here, and a new workflow should not add to that debt.
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r pipeline/requirements.txt
+
+      # The default selection, matching the daily run at pipeline.yml. The
+      # multi-minute walk-forward backtests stay behind FPL_SLOW_TESTS, which
+      # validate.yml sets weekly — a push gate that took fifteen minutes would
+      # get ignored, and an ignored gate is worse than none.
+      - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m unittest discover -s pipeline/tests -v
