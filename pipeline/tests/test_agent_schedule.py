@@ -203,6 +203,32 @@ class LedgerStateTests(unittest.TestCase):
             self.assertEqual(state["settled"], {2})
             self.assertEqual(state["scored"], set())
 
+    def test_a_dry_run_ledger_never_counts_as_sealed(self):
+        """
+        A dry run writes `ledger/dryrun/gwNN/forecast.jsonl`
+        (ledger.gameweek_dir), and the agent's commit pathspec is the whole of
+        `predictions/fpl/ledger` — so a `dry_run: true` dispatch puts that
+        subtree on main. If it read as a seal, the phase machine would believe
+        the gameweek was already sealed and go IDLE instead of sealing it, and
+        the observation would be lost with nothing looking wrong.
+
+        Two things independently prevent it: `gw(\\d{2})` is a fullmatch, so
+        the name `dryrun` cannot match, and the scan is `iterdir` rather than
+        `rglob`, so `dryrun/gw01` is never visited. Both are easy to loosen by
+        accident, which is why this is pinned rather than left to inspection.
+        """
+        with TemporaryDirectory() as tmp:
+            ledger = Path(tmp)
+            quarantined = ledger / "dryrun" / "gw01"
+            quarantined.mkdir(parents=True)
+            (quarantined / "forecast.jsonl").write_text("{}\n")
+
+            self.assertEqual(ledger_state(ledger)["sealed"], set())
+
+            # Not a vacuous assertion: a real seal in the same ledger IS seen.
+            self._week(ledger, 1)
+            self.assertEqual(ledger_state(ledger)["sealed"], {1})
+
     def test_a_provisional_settlement_does_not_count_as_settled(self):
         """
         This is the whole reason `settled` reads the header rather than testing
