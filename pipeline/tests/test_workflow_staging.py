@@ -260,3 +260,98 @@ class Phase0ArtifactGateTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SharedFileMergeTests(unittest.TestCase):
+    """
+    A file two workflows both append to must have a merge driver that can merge it.
+
+    The path-ownership rule that lets three writers push to ``main`` without
+    serialising is stated at ``.github/scripts/commit_and_push.sh:63-67``: writers
+    that never touch the same file cannot conflict. ``availability_evidence.jsonl``
+    breaks it — the agent appends to it via ``record_claims`` and the 15-minute news
+    poller appends to it via the same ``record``, and both stage it.
+
+    That is not a theoretical race. ``commit_and_push.sh`` retries three times, but
+    each attempt only does ``git rebase --abort`` and tries again unchanged, so a
+    content conflict reproduces identically on all three and the push fails. For the
+    agent that window is the whole work job — a pandas/PyMC install plus the
+    simulation — and the file it fails to push contains the sealed forecast.
+
+    The fix was a union merge driver in ``.gitattributes`` rather than splitting the
+    writers, because the store is append-only and already dedupes on ``claim_id`` when
+    read. This test pins the invariant that made that safe: sharing is allowed, but a
+    shared append-only file must declare a driver that can merge two appends.
+
+    It deliberately does NOT assert the lists are disjoint. They are not, and making
+    them so would cost the agent's deadline-moment claims for no gain.
+    """
+
+    #: Workflows that push to `main`, and therefore can race each other.
+    WRITERS = ("fpl_agent.yml", "news.yml", "pipeline.yml", "validate.yml")
+
+    def setUp(self) -> None:
+        self.attributes = (REPO_ROOT / ".gitattributes").read_text()
+
+    def _staged_paths(self, workflow: str) -> set[str]:
+        """Every `predictions/...` path a workflow hands to git."""
+        text = (REPO_ROOT / ".github" / "workflows" / workflow).read_text()
+        return set(re.findall(r"predictions/[\w./*-]+", text))
+
+    def test_the_shared_evidence_file_is_still_shared(self) -> None:
+        # The premise of the test below. If a future change splits the writers this
+        # fails, and the union driver can then be reconsidered.
+        agent = self._staged_paths("fpl_agent.yml")
+        news = self._staged_paths("news.yml")
+        shared = agent & news
+        self.assertIn(
+            "predictions/fpl/availability_evidence.jsonl",
+            shared,
+            "the agent and the news poller no longer share this file; revisit "
+            "the union merge driver in .gitattributes",
+        )
+
+    def test_every_shared_append_only_file_has_a_union_driver(self) -> None:
+        seen: dict[str, set[str]] = {}
+        for workflow in self.WRITERS:
+            path = REPO_ROOT / ".github" / "workflows" / workflow
+            if not path.exists():
+                continue
+            for staged in self._staged_paths(workflow):
+                seen.setdefault(staged, set()).add(workflow)
+
+        shared_jsonl = sorted(
+            p for p, writers in seen.items()
+            if len(writers) > 1 and p.endswith(".jsonl")
+        )
+        self.assertTrue(
+            shared_jsonl,
+            "no shared .jsonl found; if the writers were split this test should go",
+        )
+        for path in shared_jsonl:
+            self.assertIn(
+                "merge=union",
+                self.attributes,
+                f"{path} is staged by more than one workflow and .gitattributes "
+                f"declares no union merge driver — three identical rebase retries "
+                f"will fail and the push carrying the seal is lost",
+            )
+
+    def test_the_seal_itself_is_never_union_merged(self) -> None:
+        """
+        The forecast must keep the default driver.
+
+        ``*`` does not cross ``/`` in gitattributes, so ``predictions/fpl/*.jsonl``
+        matches the evidence store and not ``ledger/gwNN/forecast.jsonl``. Silently
+        unioning two forecasts is precisely the corruption the ledger exists to make
+        impossible, so this asserts the pattern stayed shallow.
+        """
+        self.assertIn("predictions/fpl/*.jsonl", self.attributes)
+        self.assertNotIn("predictions/fpl/**.jsonl", self.attributes)
+        self.assertNotIn("predictions/fpl/**/*.jsonl", self.attributes)
+        for forbidden in ("ledger/**", "forecast.jsonl"):
+            self.assertNotIn(
+                f"{forbidden} -text -diff merge=union",
+                self.attributes,
+                "the seal must not be union-merged",
+            )
