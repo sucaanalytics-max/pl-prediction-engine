@@ -1,20 +1,56 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-19T07:45:52.313456Z",
-  "n_dropped": 74,
+  "generated_at": "2026-08-19T08:36:50.885727Z",
+  "n_dropped": 77,
   "dropped_by_source": {
     "bbc_football": 42,
-    "sky_football": 32
+    "sky_football": 35
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 164,
+  "n_articles": 167,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
     {
+      "digest": "38ba1a5d1ce27c78",
+      "headline": "Al Hilal in talks to sign Watkins",
+      "summary": "Al Hilal are in talks with Aston Villa over a deal to sign striker Ollie Watkins.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13574587/ollie-watkins-transfer-aston-villa-in-talks-with-saudi-club-al-hilal-over-england-striker",
+      "claimed_at": "2026-08-19T08:27:00Z",
+      "players": [
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "343bed95370655ab",
       "headline": "Man Utd latest: Rashford the one player who can beat my scoring record, says Rooney",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-19T08:06:00Z",
+      "players": [
+        {
+          "element_id": 429,
+          "name": "Rashford",
+          "club": "MUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "353c5d3f7ad5cbb5",
+      "headline": "Man Utd latest: Rashford is only one who can beat my scoring record, says Rooney",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -362,6 +398,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c5ywee6y2qlo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-18T19:09:31Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "9be2705eefe649c6",
+      "headline": "Aston Villa latest: Ruggeri and Suzuki deals completed",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-18T18:54:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1058,60 +1112,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cj6341x2g18o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-17T21:18:49Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "435ad70d4c259390",
-      "headline": "Arsenal latest: Gunners chief speaks on transfers and Arteta's future",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-17T18:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "4df72b066773f828",
-      "headline": "Do Chelsea have the best front three in the Premier League?",
-      "summary": "Morgan Rogers' &#163;117m arrival has boosted Chelsea's firepower and created a dangerous frontline that includes Joao Pedro and Cole Palmer - is their front three the best in the Premier League?",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13574084/chelsea-podcast-xabi-alonso-enzo-fernandez-future-transfers-and-a-new-era-at-stamford-bridge-analysed",
-      "claimed_at": "2026-08-17T17:11:00Z",
-      "players": [
-        {
-          "element_id": 40,
-          "name": "Rogers",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "fa15dcfdd4a20efc",
-      "headline": "How are Man Utd shaping up ahead of the new season?",
-      "summary": "Manchester United ended their pre-season with a 4-2 defeat to AC Milan and the question is: what kind of condition are they in as they go into the new season?",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13574077/manchester-uniteds-pre-season-analysed-joshua-zirkzee-resurgent-and-marcus-rashford-reunited-but-they-still-need-a-left-back",
-      "claimed_at": "2026-08-17T15:15:00Z",
       "players": [
         {
           "element_id": 0,
