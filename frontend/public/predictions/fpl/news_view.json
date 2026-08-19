@@ -1,18 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-19T19:49:46.845533Z",
-  "n_dropped": 100,
+  "generated_at": "2026-08-19T20:27:03.155622Z",
+  "n_dropped": 101,
   "dropped_by_source": {
-    "bbc_football": 48,
+    "bbc_football": 49,
     "hayters": 7,
     "sky_football": 45
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 190,
+  "n_articles": 191,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "8ca72f3733b46369",
+      "headline": "Man Utd latest: Rashford gives pointed response to Carragher...",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-19T21:10:00Z",
+      "players": [
+        {
+          "element_id": 429,
+          "name": "Rashford",
+          "club": "MUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "2c25eb4745af739e",
       "headline": "Jaissle: Club aligned on Newcastle squad needing adjustments",
@@ -188,6 +206,36 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "1e0adf27e0d0486a",
+      "headline": "Delap loses number nine shirt & trains away from first team",
+      "summary": "Chelsea have split their players into two training groups at Cobham, involving several players who could move before the transfer window closes, including Liam Delap, Nicolas Jackson and Mykhailo Mudryk.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c5y4nel5gddo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-19T15:58:44Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "CHE",
+          "held": null
+        },
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "CHE",
+          "held": null
+        },
+        {
+          "element_id": 578,
+          "name": "Mudryk",
+          "club": "CHE",
           "held": null
         }
       ],
@@ -932,24 +980,6 @@
       "touches_squad": null
     },
     {
-      "digest": "1decf780158ddcea",
-      "headline": "Palace latest: Gozo joins from MLS side Real Salt Lake",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-08-18T22:09:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "d0471022c6be4aaa",
       "headline": "Football Daily",
       "summary": "Arsenal seek to defend their Premier League title, but how difficult will that be?",
@@ -1137,24 +1167,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c2k7w3vwv5yo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-18T18:14:01Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "5cceb9665d57f0ad",
-      "headline": "Aston Villa agree deal for West Ham's Wan-Bissaka",
-      "summary": "Aston Villa agree to sign West Ham defender Aaron Wan-Bissaka on an initial loan deal with an obligation to buy at the end of the season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cgr7vvpkw0eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-18T17:56:13Z",
       "players": [
         {
           "element_id": 0,
