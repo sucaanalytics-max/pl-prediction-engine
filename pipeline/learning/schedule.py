@@ -24,6 +24,8 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
+import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
@@ -100,14 +102,73 @@ def parse_deadline(value: str) -> datetime:
     return stamp.astimezone(timezone.utc)
 
 
-def fetch_events(url: str = BOOTSTRAP_URL, timeout: int = 30) -> List[Dict[str, Any]]:
-    """Fetch the gameweek calendar using only the standard library."""
+#: Retried once per second-ish, three times total. Deliberately small: the whole
+#: fetch has to finish well inside a cron tick, and the point is to survive a blip,
+#: not to outlast an outage.
+FETCH_ATTEMPTS = 3
+FETCH_BACKOFF_SECONDS = 1.0
+
+#: Status codes worth trying again. A 4xx other than 429 is deterministic — the
+#: same request will fail the same way, so retrying only burns the tick's time.
+RETRYABLE_STATUS = frozenset({429, 500, 502, 503, 504})
+
+
+def fetch_events(
+    url: str = BOOTSTRAP_URL,
+    timeout: int = 30,
+    attempts: int = FETCH_ATTEMPTS,
+) -> List[Dict[str, Any]]:
+    """
+    Fetch the gameweek calendar using only the standard library.
+
+    Retries, and deliberately does NOT cache. This is the CI gate's only
+    dependency: `resolve` calls it unguarded, the `decide` job's exit code is the
+    step's exit code, and the `work` job is gated on outputs that a failed decide
+    never emits — so a single failure costs one seal attempt. GW1 has seven
+    (the hourly cron plus `'0,30 13-16 * * 5'`), and because the phase is derived
+    from disk state rather than the clock, a later tick re-issues SEAL from
+    identical state. But those seven were seven identical unguarded calls against
+    one host: an outage spanning the 3.5-hour band fails all of them the same way.
+    Retrying turns a blip into a few seconds' delay instead of a lost attempt.
+
+    No on-disk fallback, on purpose. The only local copy of the calendar lives
+    under `data/raw/`, which is gitignored and therefore absent on a fresh runner
+    anyway — but the deeper reason is that a stale calendar is more dangerous than
+    no calendar. Every phase decision is derived from these deadlines, so a cached
+    one that has since moved could seal the wrong gameweek or believe itself
+    locked out. A failed tick is recoverable by the next tick; a seal against the
+    wrong deadline is not.
+
+    Raises on final failure rather than returning []. An empty calendar would look
+    to `determine_phase` like a season with no gameweeks — needs_work false, exit
+    zero, a green run and a silently skipped seal. Failing loudly is the whole
+    contract of this function.
+    """
     request = urllib.request.Request(
         url, headers={"User-Agent": "pl-prediction-engine/1.0"}
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        payload = json.loads(response.read().decode("utf-8"))
-    return payload.get("events", [])
+
+    for attempt in range(1, max(1, attempts) + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+            return payload.get("events", [])
+        except urllib.error.HTTPError as exc:
+            if exc.code not in RETRYABLE_STATUS:
+                raise
+            failure: Exception = exc
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            # A truncated body raises JSONDecodeError, which is as transient as
+            # the socket error that caused it, so it retries too.
+            failure = exc
+
+        if attempt == max(1, attempts):
+            raise failure
+
+        time.sleep(FETCH_BACKOFF_SECONDS * attempt)
+
+    # Unreachable: the loop either returns or raises.
+    raise AssertionError("fetch_events exhausted its loop without returning")
 
 
 def _gameweeks_with(directory: Path, filename: str) -> Set[int]:

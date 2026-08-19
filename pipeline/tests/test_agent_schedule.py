@@ -16,13 +16,17 @@ import importlib.abc
 import subprocess
 import sys
 import unittest
+import urllib.error
+from unittest import mock
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from pipeline.learning.schedule import (
+    BOOTSTRAP_URL,
     Phase,
     determine_phase,
+    fetch_events,
     ledger_state,
     parse_deadline,
     resolve,
@@ -63,6 +67,119 @@ class DeadlineParsingTests(unittest.TestCase):
 
     def test_naive_timestamps_are_treated_as_utc(self):
         self.assertEqual(parse_deadline("2026-08-21T17:30:00"), DEADLINE)
+
+
+class CalendarFetchTests(unittest.TestCase):
+    """
+    The CI gate's only dependency, and until now the only one with no test at all.
+
+    `resolve` calls fetch_events unguarded, the decide step's exit code is the
+    job's verdict, and the work job is gated on outputs a failed decide never
+    emits. So the behaviour of this one function on a bad day decides whether a
+    gameweek gets sealed. GW1 has seven seal attempts, but they were seven
+    identical calls to one host — an outage spanning the band fails them all.
+    """
+
+    def _response(self, body):
+        handle = mock.MagicMock()
+        handle.read.return_value = body.encode("utf-8")
+        handle.__enter__ = lambda self_: self_
+        handle.__exit__ = lambda *a: False
+        return handle
+
+    def _http_error(self, code):
+        # Closed on teardown: an undisposed HTTPError with fp=None allocates a
+        # tempfile and emits a ResourceWarning when collected.
+        error = urllib.error.HTTPError(
+            BOOTSTRAP_URL, code, f"status {code}", {}, None
+        )
+        self.addCleanup(error.close)
+        return error
+
+    def test_a_transient_failure_is_retried_rather_than_losing_the_tick(self):
+        calls = []
+
+        def flaky(request, timeout=None):
+            calls.append(1)
+            if len(calls) < 3:
+                raise urllib.error.URLError("connection reset")
+            return self._response('{"events": [{"id": 1}]}')
+
+        with mock.patch("urllib.request.urlopen", flaky), \
+                mock.patch("time.sleep"):
+            events = fetch_events()
+
+        self.assertEqual(events, [{"id": 1}])
+        self.assertEqual(len(calls), 3, "should have retried twice before succeeding")
+
+    def test_a_persistent_failure_raises_rather_than_returning_no_gameweeks(self):
+        """
+        The regression this exists to prevent. An empty calendar looks to
+        determine_phase like a season with no gameweeks: needs_work false, exit
+        zero, a GREEN run — and a silently skipped seal. Returning [] on failure
+        would be the single most expensive bug available in this file.
+        """
+        with mock.patch("urllib.request.urlopen",
+                        side_effect=urllib.error.URLError("down")), \
+                mock.patch("time.sleep"):
+            with self.assertRaises(urllib.error.URLError):
+                fetch_events()
+
+    def test_a_deterministic_error_is_not_retried(self):
+        """A 404 will fail identically three times; retrying only burns the tick."""
+        calls = []
+
+        def not_found(request, timeout=None):
+            calls.append(1)
+            raise self._http_error(404)
+
+        with mock.patch("urllib.request.urlopen", not_found), \
+                mock.patch("time.sleep"):
+            with self.assertRaises(urllib.error.HTTPError):
+                fetch_events()
+
+        self.assertEqual(len(calls), 1, "a 404 must not be retried")
+
+    def test_a_server_error_is_retried(self):
+        calls = []
+
+        def unavailable(request, timeout=None):
+            calls.append(1)
+            raise self._http_error(503)
+
+        with mock.patch("urllib.request.urlopen", unavailable), \
+                mock.patch("time.sleep"):
+            with self.assertRaises(urllib.error.HTTPError):
+                fetch_events()
+
+        self.assertEqual(len(calls), 3, "503 is retryable")
+
+    def test_a_truncated_body_is_retried(self):
+        """A half-read body raises JSONDecodeError, as transient as the socket."""
+        calls = []
+
+        def truncated(request, timeout=None):
+            calls.append(1)
+            if len(calls) < 2:
+                return self._response('{"events": [{"id": 1}')
+            return self._response('{"events": [{"id": 7}]}')
+
+        with mock.patch("urllib.request.urlopen", truncated), \
+                mock.patch("time.sleep"):
+            self.assertEqual(fetch_events(), [{"id": 7}])
+
+    def test_resolve_propagates_a_fetch_failure_instead_of_swallowing_it(self):
+        """
+        Guards the gate's contract from the other side. If anyone wraps this in a
+        try/except that returns a default state, the decide job goes green, emits
+        no outputs, the work job is skipped, and nothing looks wrong.
+        """
+        with TemporaryDirectory() as tmp, \
+                mock.patch("urllib.request.urlopen",
+                           side_effect=urllib.error.URLError("down")), \
+                mock.patch("time.sleep"):
+            with self.assertRaises(urllib.error.URLError):
+                resolve(Path(tmp))
 
 
 class PhaseFromClockTests(unittest.TestCase):
