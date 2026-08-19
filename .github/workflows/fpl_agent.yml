@@ -151,7 +151,6 @@ jobs:
           FPL_AGENT_PHASE: ${{ needs.decide.outputs.phase }}
           FPL_AGENT_GAMEWEEK: ${{ needs.decide.outputs.gameweek }}
           FPL_AGENT_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
-          FPL_SITE_URL: ${{ secrets.FPL_SITE_URL }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: python -m pipeline.learning.run_agent

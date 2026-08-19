@@ -31,8 +31,6 @@ from pipeline.learning.schedule import Phase, ScheduleState, resolve
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_SITE_URL = "https://example.invalid/decisions"
-
 # Phases whose implementation lands in a later increment. Listed explicitly so a
 # run reports "not built" instead of silently doing nothing and exiting green.
 NOT_YET_IMPLEMENTED: Dict[Phase, str] = {}
