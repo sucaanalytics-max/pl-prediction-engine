@@ -17,22 +17,27 @@ name: FPL Agent
 
 on:
   schedule:
-    # Every three hours. Deadlines move, so the agent checks in regularly and
-    # the phase logic decides what is actually due.
-    - cron: '0 */3 * * *'
-    # And every 30 minutes through a Friday afternoon, because the seal is the one
-    # irrecoverable thing this repo does and the three-hourly schedule gives it exactly
-    # ONE attempt: SEAL opens at deadline-4h and LOCKED closes writing at deadline-30m,
-    # so for a 17:30Z deadline the usable band is 13:30Z-17:00Z and only 15:00Z lands in
-    # it. The next tick is 18:00Z, past the deadline. Measured over 30 real runs, this
-    # cron's delivery lag is a 32-minute median and a 62-minute maximum, so a bad day
-    # eats most of the margin — and GitHub drops scheduled runs entirely under load.
+    # Hourly. Deadlines move, so the agent checks in regularly and the phase logic
+    # decides what is actually due.
     #
-    # Additive and free: the `decide` job is stdlib-only and finishes in 12 seconds, the
-    # repo is public so Actions minutes are unmetered, and extra ticks cannot double-seal
-    # — the resolver returns IDLE once the gameweek is in `sealed` (schedule.py:300-306)
-    # and seal_forecast raises AlreadySealedError rather than overwriting
-    # (ledger.py:182-187). Eight attempts instead of one.
+    # Three-hourly left the seal — the one irrecoverable thing here — with a SINGLE
+    # attempt. SEAL opens at deadline-4h and LOCKED stops writing at deadline-30m, so
+    # the usable band is 3.5 hours, and a 3-hourly cron puts exactly one tick in it for
+    # almost every real deadline: Sat 11:00Z, Sat 11:30Z, Sat 13:30Z, Tue 17:45Z and
+    # Wed 18:00Z all get one. Measured over 30 real runs, delivery lag here has a
+    # 32-minute median and a 62-minute maximum, and GitHub drops scheduled runs outright
+    # under load — so one attempt is one bad afternoon from a permanently lost gameweek.
+    #
+    # Hourly gives at least three attempts at every one of those slots. It is free: the
+    # `decide` job is stdlib-only and finishes in 12 seconds, and this repo is public so
+    # Actions minutes are unmetered. And it cannot double-seal — the resolver returns
+    # IDLE once the gameweek is in `sealed` (schedule.py:300-306) and seal_forecast
+    # raises AlreadySealedError rather than overwriting (ledger.py:182-187).
+    - cron: '0 * * * *'
+    # And every half hour through a Friday afternoon, which is GW1's own band: it takes
+    # that deadline from three attempts to seven. Kept alongside the hourly line rather
+    # than instead of it, because a Friday-only rule protects exactly one gameweek and
+    # the other thirty-seven are the ones that move.
     - cron: '0,30 13-16 * * 5'
   workflow_dispatch:
     inputs:

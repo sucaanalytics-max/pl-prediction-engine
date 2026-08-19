@@ -355,3 +355,110 @@ class SharedFileMergeTests(unittest.TestCase):
                 self.attributes,
                 "the seal must not be union-merged",
             )
+
+
+class SealAttemptCoverageTests(unittest.TestCase):
+    """
+    The cron must actually put a tick inside the seal band.
+
+    ``test_agent_schedule.py`` has a case called
+    ``test_a_late_run_still_seals_rather_than_skipping`` that models "the next one, at
+    T-1h". It proves the resolver does the right thing GIVEN a tick. It never asserted
+    that a tick exists — and under the old three-hourly schedule, for a 17:30Z deadline,
+    T-1h was 16:30Z, a time at which no run was ever scheduled.
+
+    That is how the seal came to rest on a single attempt. The band is only 3.5 hours
+    wide — SEAL opens at deadline minus SEAL_WINDOW and LOCKED stops writing at deadline
+    minus LOCKOUT_BEFORE_DEADLINE — and a 3-hourly cron fits exactly one tick into it for
+    almost every real deadline slot.
+
+    So this reads the cron out of the workflow and sweeps it against the resolver's own
+    constants, for the deadline slots the Premier League actually uses.
+    """
+
+    #: Deadline slots that occur in a real season, in UTC. Saturday 11:00 is the
+    #: commonest; GW1 and midweek rounds are the outliers that used to be worst served.
+    REAL_SLOTS = (
+        ("Fri 17:30", 4, 17, 30),
+        ("Sat 11:00", 5, 11, 0),
+        ("Sat 11:30", 5, 11, 30),
+        ("Sat 13:30", 5, 13, 30),
+        ("Sun 13:00", 6, 13, 0),
+        ("Tue 17:45", 1, 17, 45),
+        ("Wed 18:00", 2, 18, 0),
+    )
+
+    #: Below this, one bad afternoon loses a gameweek permanently.
+    MINIMUM_ATTEMPTS = 2
+
+    def setUp(self) -> None:
+        text = AGENT_WORKFLOW.read_text()
+        self.crons = re.findall(r"- cron:\s*'([^']+)'", text)
+        self.assertTrue(self.crons, "no cron found in fpl_agent.yml")
+
+    @staticmethod
+    def _fires(cron: str, moment) -> bool:
+        """Whether a 5-field cron fires at this minute. Supports the forms in use."""
+        minute, hour, _dom, _mon, dow = cron.split()
+
+        def matches(field: str, value: int) -> bool:
+            if field == "*":
+                return True
+            for part in field.split(","):
+                if part.startswith("*/"):
+                    if value % int(part[2:]) == 0:
+                        return True
+                elif "-" in part:
+                    lo, hi = (int(x) for x in part.split("-"))
+                    if lo <= value <= hi:
+                        return True
+                elif int(part) == value:
+                    return True
+            return False
+
+        # cron's day-of-week is Sunday 0; Python's weekday() is Monday 0.
+        cron_dow = (moment.weekday() + 1) % 7
+        return (
+            matches(minute, moment.minute)
+            and matches(hour, moment.hour)
+            and matches(dow, cron_dow)
+        )
+
+    def _attempts_for(self, deadline) -> int:
+        from datetime import timedelta
+        from pipeline.learning.schedule import SEAL_WINDOW, LOCKOUT_BEFORE_DEADLINE
+
+        opens = deadline - SEAL_WINDOW
+        closes = deadline - LOCKOUT_BEFORE_DEADLINE
+        moment = opens.replace(second=0, microsecond=0)
+        seen = 0
+        while moment < closes:
+            if any(self._fires(c, moment) for c in self.crons):
+                seen += 1
+            moment += timedelta(minutes=1)
+        return seen
+
+    def test_every_real_deadline_slot_gets_more_than_one_attempt(self) -> None:
+        from datetime import datetime, timedelta, timezone
+
+        # A week containing every weekday, anchored on a Monday.
+        monday = datetime(2026, 8, 17, tzinfo=timezone.utc)
+        thin = []
+        for label, weekday, hour, minute in self.REAL_SLOTS:
+            deadline = monday + timedelta(days=weekday, hours=hour, minutes=minute)
+            attempts = self._attempts_for(deadline)
+            if attempts < self.MINIMUM_ATTEMPTS:
+                thin.append(f"{label}: {attempts}")
+        self.assertEqual(
+            thin, [],
+            "these deadline slots get fewer than "
+            f"{self.MINIMUM_ATTEMPTS} seal attempts — a single delayed or dropped run "
+            "loses the gameweek permanently, and it cannot be recovered afterwards",
+        )
+
+    def test_gw1_specifically_is_well_covered(self) -> None:
+        from datetime import datetime, timezone
+
+        # The deadline this was all written for.
+        attempts = self._attempts_for(datetime(2026, 8, 21, 17, 30, tzinfo=timezone.utc))
+        self.assertGreaterEqual(attempts, 5, "GW1's seal band lost its density")
