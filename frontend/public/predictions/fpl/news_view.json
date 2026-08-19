@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-19T16:31:08.580081Z",
+  "generated_at": "2026-08-19T17:02:51.072849Z",
   "n_dropped": 96,
   "dropped_by_source": {
     "bbc_football": 48,
-    "hayters": 5,
-    "sky_football": 43
+    "hayters": 6,
+    "sky_football": 42
   },
   "window_days": 5,
   "squad_known": false,
@@ -13,6 +13,24 @@
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "212ca9e3b723308e",
+      "headline": "Moyes calls for more Everton signings before transfer window closes",
+      "summary": "Everton boss David Moyes has admitted the club still need to add \u201cquite a few players\u201d to the squad before the transfer window closes. The Toffees have already brought in several new faces this summer, but Moyes believes there is pl",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/moyes-calls-for-more-everton-signings-before-transfer-window-closes/",
+      "claimed_at": "2026-08-19T16:38:14Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "f0045015b40c454a",
       "headline": "Chelsea confirm signing of central defender",
@@ -1562,24 +1580,6 @@
           "element_id": 427,
           "name": "Mbeumo",
           "club": "MUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "09d5c375c2a9084c",
-      "headline": "Arteta aiming to take Arsenal to the next level after title success",
-      "summary": "Mikel Arteta says he wants to be more ambitious with Arsenal after finally achieving Premier League glory last season. The Gunners face off against Enzo Maresca's Manchester City in the Community Shield for the chance to win a first",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-aiming-to-take-arsenal-to-the-next-level-after-title-success/",
-      "claimed_at": "2026-08-15T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
