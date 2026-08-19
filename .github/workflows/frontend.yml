@@ -1,17 +1,35 @@
 name: Frontend CI
 
+# The exclusion below is narrowed to `fpl/**` rather than all of
+# `frontend/public/predictions/**`, and the reason is a bug this repo actually
+# shipped. `real-artifacts.test.ts` asserts the narrowers lose no rows, reading its
+# expected count from the committed artifact. When the pipeline began writing
+# player_stats.json as a `{generated_at, players}` envelope instead of a bare list,
+# the expected length became `undefined`, the assertion compared 592 against
+# nothing, and the suite stayed green for hours — because the commit that changed
+# the shape touched only excluded paths, so this workflow never ran on it. The
+# frontend suite is the only thing that reads those shapes, and it was blind to
+# them changing.
+#
+# Narrowing is safe because the high-frequency writers are FORBIDDEN from the
+# paths this now watches, structurally rather than by convention: news.yml:90 and
+# fpl_agent.yml:198 both list `frontend/public/predictions/[^/]+\.json` in
+# FORBID_PATHS and commit_and_push.sh exits 1 on a match. So the ~96 daily news
+# commits and 24 hourly agent commits stay under `fpl/**` and still do not trigger
+# CI, while the daily pipeline and weekly validation — the two writers that can
+# change a shape the frontend narrows — now do.
 on:
   push:
     branches: [main]
     paths:
       - 'frontend/**'
       - '.github/workflows/frontend.yml'
-      - '!frontend/public/predictions/**'
+      - '!frontend/public/predictions/fpl/**'
   pull_request:
     paths:
       - 'frontend/**'
       - '.github/workflows/frontend.yml'
-      - '!frontend/public/predictions/**'
+      - '!frontend/public/predictions/fpl/**'
 
 permissions:
   contents: read
