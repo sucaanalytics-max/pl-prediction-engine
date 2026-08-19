@@ -59,6 +59,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AGENT_STATUS } from "@/lib/data/agent-status";
 import { ACCURACY } from "@/lib/data/accuracy";
 import { useArtifact } from "@/lib/data/useArtifact";
+import { useRefetchOnReturn } from "@/lib/data/useRefetchOnReturn";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { REGISTRY, decisionDescriptor } from "@/lib/data/narrow";
@@ -137,21 +138,21 @@ export default function ControlRoomPage() {
   const live = read(liveResult, (value) => value.generatedAt);
   const accuracyResult = useArtifact(ACCURACY);
   const accuracy = read(accuracyResult, (value) => value.generatedAt);
-  const matches = read(useArtifact(REGISTRY.matches), (value) => value.generated_at);
-  const fixtureXg = read(useArtifact(REGISTRY.fixtureXg), (value) => value.generated_at);
-  const playerStats = read(useArtifact(REGISTRY.playerStats), () => null);
-  const deltas = read(useArtifact(REGISTRY.deltas), () => null);
+  const matchesResult = useArtifact(REGISTRY.matches);
+  const matches = read(matchesResult, (value) => value.generated_at);
+  const fixtureXgResult = useArtifact(REGISTRY.fixtureXg);
+  const fixtureXg = read(fixtureXgResult, (value) => value.generated_at);
+  const playerStatsResult = useArtifact(REGISTRY.playerStats);
+  const playerStats = read(playerStatsResult, () => null);
+  const deltasResult = useArtifact(REGISTRY.deltas);
+  const deltas = read(deltasResult, () => null);
 
   // The two bots' own proposals, fetched so that "not published" is a measured
   // absence rather than an assumption this page makes about them.
-  const ronny = read(
-    useArtifact(decisionDescriptor(gameweek ?? 1, "season")),
-    (value) => value.generated_at,
-  );
-  const wazza = read(
-    useArtifact(decisionDescriptor(gameweek ?? 1, "weekly")),
-    (value) => value.generated_at,
-  );
+  const ronnyResult = useArtifact(decisionDescriptor(gameweek ?? 1, "season"));
+  const ronny = read(ronnyResult, (value) => value.generated_at);
+  const wazzaResult = useArtifact(decisionDescriptor(gameweek ?? 1, "weekly"));
+  const wazza = read(wazzaResult, (value) => value.generated_at);
 
   // Gated on a resolved gameweek, not just on a readable file. With the week
   // unknown the projection descriptor falls back to `gw01`'s path, and a total
@@ -184,6 +185,37 @@ export default function ControlRoomPage() {
    * time, so this is the honest age on both paths.
    */
   const squadAge = ageLine(squad?.capturedAt ?? null, new Date()) ?? live.age;
+
+  /**
+   * Re-read everything when the reader comes back to the tab.
+   *
+   * Nothing here refetches otherwise: each artifact is read once on mount and the only
+   * thing that moves afterwards is the countdown, which owns its own interval and
+   * re-renders nothing but itself. On a deadline night the board is opened early and
+   * watched, so the clock would run down to "passed" while the squad, the phase and every
+   * age beside them stayed frozen at page-load values — and FPL starts serving real picks
+   * at that exact moment.
+   *
+   * All of them together, deliberately: a board where half the figures are from now and
+   * half from an hour ago is harder to read than one that is wholly old, because the ages
+   * are the only thing that would say which is which.
+   */
+  const reloadAll = useCallback(() => {
+    statusResult.reload();
+    projectionsResult.reload();
+    liveResult.reload();
+    accuracyResult.reload();
+    matchesResult.reload();
+    fixtureXgResult.reload();
+    playerStatsResult.reload();
+    deltasResult.reload();
+    ronnyResult.reload();
+    wazzaResult.reload();
+  }, [
+    statusResult, projectionsResult, liveResult, accuracyResult, matchesResult,
+    fixtureXgResult, playerStatsResult, deltasResult, ronnyResult, wazzaResult,
+  ]);
+  useRefetchOnReturn(reloadAll);
 
   /*
    * The producer's reason, minus the duration the countdown already owns.
