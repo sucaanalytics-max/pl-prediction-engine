@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-19T15:48:04.846371Z",
+  "generated_at": "2026-08-19T16:31:08.580081Z",
   "n_dropped": 96,
   "dropped_by_source": {
-    "bbc_football": 49,
-    "hayters": 3,
-    "sky_football": 44
+    "bbc_football": 48,
+    "hayters": 5,
+    "sky_football": 43
   },
   "window_days": 5,
   "squad_known": false,
@@ -14,6 +14,24 @@
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
     {
+      "digest": "f0045015b40c454a",
+      "headline": "Chelsea confirm signing of central defender",
+      "summary": "Chelsea have completed the signing of teenage defender Alfie Osborne from Scottish side Hearts. The 18-year-old has signed a contract with the Blues until 2030 after an impressive 2025/26 campaign in Scotland. Osborne was named Hearts B's Player of the Yea",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/chelsea-confirm-signing-of-central-defender/",
+      "claimed_at": "2026-08-19T16:26:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "eae92e23721ae813",
       "headline": "Man City latest: Reijnders leaves for Al Qadsiah",
       "summary": null,
@@ -21,6 +39,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-19T16:10:00Z",
+      "players": [
+        {
+          "element_id": 404,
+          "name": "Reijnders",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ed86adef4ccbe8a7",
+      "headline": "Reijnders leaves Man City for Al-Qadsiah in \u00a352m deal",
+      "summary": "Netherlands midfielder Tijjani Reijnders completes a \u00a352m move to Saudi Arabian side Al-Qadsiah from Manchester City.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c0m7el3zr2eo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-19T16:01:32Z",
       "players": [
         {
           "element_id": 404,
@@ -44,6 +80,60 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "6e48e973be5e5a6a",
+      "headline": "Coventry suffer major injury blow ahead of opening game against Arsenal",
+      "summary": "Coventry City will be without Haji Wright for a number of weeks after the striker suffered a serious quad injury. Manager Frank Lampard confirmed the United States international is facing a lengthy spell on the sidelines, with t",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/coventry-suffer-major-injury-blow-ahead-of-opening-game-against-arsenal/",
+      "claimed_at": "2026-08-19T15:56:43Z",
+      "players": [
+        {
+          "element_id": 193,
+          "name": "Wright",
+          "club": "COV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "384296d35fedabba",
+      "headline": "Rangers eye striker after Nedeljkovic joins from Villa",
+      "summary": "Kosta Nedeljkovic joins Rangers on a season-long loan from Aston Villa, with the Ibrox club holding a \"conditional obligation\" to buy the 20-year-old Serbia defender.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cx2mz3j402zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-19T15:52:49Z",
+      "players": [
+        {
+          "element_id": 39,
+          "name": "Nedeljkovic",
+          "club": "AVL",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "dde29f38d7bfd140",
+      "headline": "Man City midfield overhaul continues with another departure confirmed",
+      "summary": "Tijjani Reijnders has left Manchester City to join Saudi Pro League side Al Qadsiah. The 28-year-old midfielder joined City from AC Milan last year and made 50 appearances across all competitions, scoring seven goals. The midfield",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-midfield-overhaul-continues-with-another-departure-confirmed/",
+      "claimed_at": "2026-08-19T15:50:40Z",
+      "players": [
+        {
+          "element_id": 404,
+          "name": "Reijnders",
+          "club": "MCI",
           "held": null
         }
       ],
@@ -968,6 +1058,24 @@
       "touches_squad": null
     },
     {
+      "digest": "75b7144dcecc325f",
+      "headline": "Newcastle latest: Exploratory talks held for Man City midfielder Gonzalez",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-18T18:27:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "6f6e0c3c02a128d7",
       "headline": "FPL winner\u2019s Gameweek 1 team reveal: Raya but no Arsenal defenders!",
       "summary": "Simon March won FPL back in 2014/15 The post FPL winner's Gameweek 1 team reveal: Raya but no Arsenal defenders! appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1083,24 +1191,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/18/fpl-2026-27-chelsea-best-players-set-piece-takers-predicted-xi-more",
       "claimed_at": "2026-08-18T16:10:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1f3c3d616f2957c1",
-      "headline": "Retaining top talent a challenge - Everton chief Kinnear",
-      "summary": "Retaining top talent is a challenge for established Premier League clubs even when they are performing well, says Everton chief executive officer Angus Kinnear.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c3d373jg15zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-18T15:29:58Z",
       "players": [
         {
           "element_id": 0,
@@ -1496,30 +1586,6 @@
       "touches_squad": null
     },
     {
-      "digest": "bd012842d1d934ec",
-      "headline": "Maresca reveals his Man City captains and explains how Anderson will fit in",
-      "summary": "Enzo Maresca revealed that Erling Haaland and Ruben Dias are two of his four captains for next season. Bernardo Silva was Manchester City captain last season, but has since left the club and joined Real Madrid this summer. M",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/maresca-reveals-his-man-city-captains-and-explains-how-anderson-will-fit-in/",
-      "claimed_at": "2026-08-15T21:30:00Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 481,
-          "name": "Anderson",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "c91ad8180cdf38f3",
       "headline": "FPL pre-season: De Cuyper \u2018OOP\u2019, Minteh latest + Hinshelwood threat",
       "summary": "Key takeaways from Brighton's win over Bologna The post FPL pre-season: De Cuyper 'OOP', Minteh latest + Hinshelwood threat appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1544,24 +1610,6 @@
           "element_id": 123,
           "name": "Hinshelwood",
           "club": "BHA",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1c26fe83bd3c4289",
-      "headline": "Jaissle hints at further changes at Newcastle after pre-season defeat",
-      "summary": "Newcastle United head coach Matthias Jaissle has made clear that the club knows what is required in terms of incomings. With the new Premier League season only a week away, Newcastle look short in several areas, in particular in t",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/jaissle-hints-at-further-changes-at-newcastle-after-pre-season-defeat/",
-      "claimed_at": "2026-08-15T19:33:32Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1593,66 +1641,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/15/fpl-2026-27-bournemouth-best-players-set-piece-takers-predicted-xi-more",
       "claimed_at": "2026-08-15T08:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "59270654042c4140",
-      "headline": "In-form forward Madjo + Joao Gomes set to miss start of season",
-      "summary": "A double injury blow for Aston Villa ahead of Gameweek 1 The post In-form forward Madjo + Joao Gomes set to miss start of season appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/in-form-forward-madjo-joao-gomes-set-to-miss-start-of-season",
-      "claimed_at": "2026-08-14T16:30:00Z",
-      "players": [
-        {
-          "element_id": 54,
-          "name": "Gomes",
-          "club": "AVL",
-          "held": null
-        },
-        {
-          "element_id": 582,
-          "name": "Madjo",
-          "club": "AVL",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "59d675dfd42f21ac",
-      "headline": "Haaland + Rodri injury latest, Maresca on returning internationals",
-      "summary": "Enzo Maresca was on press conference duties ahead of Sunday' clash with Arsenal The post Haaland + Rodri injury latest, Maresca on returning internationals appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics fro",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/haaland-rodri-injury-latest-maresca-on-returning-internationals",
-      "claimed_at": "2026-08-14T16:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "4f84d3379afc5f63",
-      "headline": "FPL 2026/27 \u2013 Aston Villa: Best players, set-piece takers, predicted XI + more",
-      "summary": "Villa finished fourth and won the Europa League last season The post FPL 2026/27 \u2013 Aston Villa: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/14/fpl-2026-27-aston-villa-best-players-set-piece-takers-predicted-xi-more",
-      "claimed_at": "2026-08-14T15:55:00Z",
       "players": [
         {
           "element_id": 0,
