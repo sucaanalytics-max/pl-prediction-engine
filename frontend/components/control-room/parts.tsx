@@ -22,6 +22,7 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import { DISPLAY, INK, MONO, SANS } from "@/lib/margin/tokens";
+import { Nil } from "@/components/margin/Marks";
 
 /** The screen's surface. Paper: this board is read at length, not under a clock. */
 /**
@@ -234,5 +235,34 @@ export function Sub(
     >
       {children}
     </span>
+  );
+}
+
+/**
+ * A cell whose artifact said nothing.
+ *
+ * `∅` and a sentence, never a blank and never a zero. An empty cell reads as
+ * "fitted, and it came out low"; a zero reads as a measurement. The path is named
+ * because "not published" without a filename is indistinguishable from a bug.
+ */
+export function NotPublished(
+  { what, path, initialising }: {
+    what: string; path: string; initialising: boolean;
+  },
+) {
+  return (
+    <>
+      <Nil surface={S} size={15} />
+      <Body style={{ marginTop: 6 }}>
+        {initialising
+          // Not a skeleton and not a spinner: one honest sentence, in place, in
+          // body type, that is replaced by the answer when the fetch lands.
+          ? `Reading ${path}.`
+          : what}
+      </Body>
+      <div style={{ marginTop: 4 }}>
+        <Sub>{`${path} · never written`}</Sub>
+      </div>
+    </>
   );
 }

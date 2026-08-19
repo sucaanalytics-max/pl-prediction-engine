@@ -7,7 +7,9 @@
  * would be the most misleading thing this page could do.
  */
 import { SquadBoard } from "@/components/squad/SquadBoard";
-import { Body, S, SectionLabel, Sub } from "@/components/control-room/parts";
+import {
+  Body, NotPublished, S, SectionLabel, Sub,
+} from "@/components/control-room/parts";
 import { Nil } from "@/components/margin/Marks";
 import { ProvenanceMarks } from "@/components/margin/Provenance";
 import { squadBoardPlayers } from "@/lib/control-room/squad";
@@ -76,18 +78,15 @@ export function Squad({
       </div>
 
       {focused.kind === "bot" ? (
+        // The same three lines the matrix draws for an unwritten file, from one place.
         <div data-testid="squad-absent">
-          <Nil surface={S} size={15} />
-          <Body style={{ marginTop: 6 }}>
-            {initialising
-              ? `Reading ${botPath ?? "the decision artifact"}.`
-              : `${focused.name} has proposed no squad, so there is nothing to lay out. `
-                + `A bot squad is whatever its decision file sealed; this one has never `
-                + `been written.`}
-          </Body>
-          <div style={{ marginTop: 4 }}>
-            <Sub>{`${botPath ?? "no decision path"} · never written`}</Sub>
-          </div>
+          <NotPublished
+            initialising={initialising}
+            path={botPath ?? "the decision artifact"}
+            what={`${focused.name} has proposed no squad, so there is nothing to lay out. `
+              + `A bot squad is whatever its decision file sealed; this one has never `
+              + `been written.`}
+          />
         </div>
       ) : board.players.length === 0 ? (
         <div data-testid="squad-absent">

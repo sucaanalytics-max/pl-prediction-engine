@@ -180,7 +180,18 @@ export function SquadRow({
         {player.name}
       </span>
 
-      {/* A bordered letter in the row, never a badge floating over a collar. */}
+      {/*
+        * A bordered letter in the row, never a badge floating over a collar.
+        *
+        * Always rendered, like the bench index above it, because the grid declares ten
+        * tracks and a conditional child leaves nine on the thirteen rows without an
+        * armband — so every column after it shifted left and the table stopped being a
+        * table. The `auto` data-strip track was collapsing onto the difficulty tick.
+        *
+        * The empty case carries NO border and NO padding. Rendering the bordered style
+        * with an empty string would draw thirteen empty boxes down the column, which is
+        * absence given more space than substance in the act of fixing an alignment bug.
+        */}
       {player.armband ? (
         <span
           data-testid="armband"
@@ -192,7 +203,9 @@ export function SquadRow({
         >
           {player.armband}
         </span>
-      ) : null}
+      ) : (
+        <span data-testid="armband-empty" style={{ fontFamily: MONO, fontSize: 11 }} />
+      )}
 
       {/* The disambiguator of last resort, per the design: colour narrows a club to a
           family, pattern and code settle it. So it has to be readable — ink2, not ink3. */}

@@ -56,7 +56,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { AGENT_STATUS, type AgentStatus } from "@/lib/data/agent-status";
+import { AGENT_STATUS } from "@/lib/data/agent-status";
 import { ACCURACY } from "@/lib/data/accuracy";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
@@ -74,7 +74,7 @@ import {
   TEAMS, calibratedWeeks, teamFromParam, withQuartiles, xiSwap, xiTotal,
   type TeamKey,
 } from "@/lib/control-room/model";
-import { read, type Read } from "@/lib/control-room/read";
+import { read } from "@/lib/control-room/read";
 import { Matrix } from "@/components/control-room/Matrix";
 import { Ambient } from "@/components/control-room/Ambient";
 import { Squad } from "@/components/control-room/Squad";

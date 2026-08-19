@@ -55,7 +55,7 @@ import { SQUAD_SCALE_HI, SQUAD_SCALE_LO } from "@/lib/margin/distribution";
 import { Distribution, Nil } from "@/components/margin/Marks";
 import { ProvenanceMarks } from "@/components/margin/Provenance";
 import {
-  Answer, Body, Figure, Label, S, SectionLabel, Sub,
+  Answer, Body, Figure, Label, NotPublished, S, SectionLabel, Sub,
 } from "@/components/control-room/parts";
 import { hatch } from "@/lib/margin/tokens";
 
@@ -96,34 +96,6 @@ export interface MatrixProps {
   readonly wazza: Read<PublicDecision>;
 }
 
-/**
- * A cell whose artifact said nothing.
- *
- * `∅` and a sentence, never a blank and never a zero. An empty cell reads as
- * "fitted, and it came out low"; a zero reads as a measurement. The path is named
- * because "not published" without a filename is indistinguishable from a bug.
- */
-function NotPublished(
-  { what, path, initialising }: {
-    what: string; path: string; initialising: boolean;
-  },
-) {
-  return (
-    <>
-      <Nil surface={S} size={15} />
-      <Body style={{ marginTop: 6 }}>
-        {initialising
-          // Not a skeleton and not a spinner: one honest sentence, in place, in
-          // body type, that is replaced by the answer when the fetch lands.
-          ? `Reading ${path}.`
-          : what}
-      </Body>
-      <div style={{ marginTop: 4 }}>
-        <Sub>{`${path} · never written`}</Sub>
-      </div>
-    </>
-  );
-}
 
 /** One cell of the eight rows, for one team. */
 function Cell(
@@ -136,6 +108,17 @@ function Cell(
      board quotes a frozen "71.0h" beside a countdown that has moved on. */
   const statusWords = reasonWithoutCountdown(status.value?.reason ?? null);
   const bot = team === "ronny" ? ronny : team === "wazza" ? wazza : null;
+  /**
+   * The same read, non-null by construction.
+   *
+   * Every branch that names a decision file is reached only after the `team === "mine"`
+   * early return, so `bot` cannot be null there — but it is typed nullable and the code
+   * papered over that with `bot?.path ?? ""`, which would have rendered
+   * " · never written" with no filename at all: the outcome `NotPublished`'s own
+   * docstring calls indistinguishable from a bug. Derived rather than asserted, so the
+   * compiler still checks it.
+   */
+  const botRead = team === "ronny" ? ronny : wazza;
   const botName = team === "ronny" ? "Ronny" : "Wazza";
 
   switch (facet) {
@@ -395,7 +378,7 @@ function Cell(
       return (
         <NotPublished
           initialising={bot?.initialising ?? false}
-          path={bot?.path ?? ""}
+          path={botRead.path}
           what={`No squad is published for ${botName}. FPL keeps a GW1 squad private `
             + `until the deadline, and no decision names one, so there is no value `
             + `and no bank to report.`}
@@ -460,7 +443,7 @@ function Cell(
       return (
         <NotPublished
           initialising={bot?.initialising ?? false}
-          path={bot?.path ?? ""}
+          path={botRead.path}
           what={`${botName} has proposed nothing for this gameweek. The agent gates `
             + `on the deadline and has not run, so there is no move to show — not a `
             + `hold, which would be a decision it did not make.`}

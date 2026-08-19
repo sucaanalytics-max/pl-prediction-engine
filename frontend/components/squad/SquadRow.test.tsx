@@ -220,3 +220,55 @@ describe("FPL's own availability flag", () => {
       .toContain("Suspended");
   });
 });
+
+describe("the row fills every track it declares", () => {
+  /**
+   * The grid declares ten columns. The armband was rendered conditionally, so the
+   * thirteen rows without one had nine children and every column after it shifted left —
+   * the `auto` data-strip track collapsing onto the 18px difficulty tick. A table whose
+   * columns do not line up is a list with extra steps.
+   *
+   * Nothing in the tree asserted this: a grep for `gridTemplateColumns`,
+   * `childElementCount` or `children.length` across the tests returned nothing. The
+   * invariant is children === tracks, and it is checkable without jsdom doing layout,
+   * which it does not.
+   */
+  const tracks = (row: HTMLElement) =>
+    row.style.gridTemplateColumns.trim().split(/\s+(?![^(]*\))/).length;
+
+  it("renders one child per declared track, with an armband", () => {
+    render(<SquadRow player={{ ...BASE, armband: "C" }} surface={PAPER} />);
+    const row = screen.getByTestId("squad-row");
+    expect(row.children.length).toBe(tracks(row));
+  });
+
+  it("renders one child per declared track WITHOUT an armband", () => {
+    render(<SquadRow player={{ ...BASE, armband: null }} surface={PAPER} />);
+    const row = screen.getByTestId("squad-row");
+    expect(row.children.length).toBe(tracks(row));
+  });
+
+  it("keeps the child count identical either way", () => {
+    const { unmount } = render(<SquadRow player={{ ...BASE, armband: "C" }} surface={PAPER} />);
+    const withBand = screen.getByTestId("squad-row").children.length;
+    unmount();
+    render(<SquadRow player={{ ...BASE, armband: null }} surface={PAPER} />);
+    expect(screen.getByTestId("squad-row").children.length).toBe(withBand);
+  });
+
+  it("draws no box where there is no armband", () => {
+    /* The fix's own trap: an empty span carrying the bordered style would put thirteen
+       empty boxes down the column. */
+    render(<SquadRow player={{ ...BASE, armband: null }} surface={PAPER} />);
+    const empty = screen.getByTestId("armband-empty");
+    expect(empty.style.border).toBe("");
+    expect(empty.style.padding).toBe("");
+    expect(empty.textContent).toBe("");
+  });
+
+  it("still finds a real armband, not the empty one", () => {
+    render(<SquadRow player={{ ...BASE, armband: "V" }} surface={PAPER} />);
+    expect(screen.getByTestId("armband").textContent).toBe("V");
+    expect(screen.queryByTestId("armband-empty")).toBeNull();
+  });
+});
