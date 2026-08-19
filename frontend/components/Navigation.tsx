@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import {
   Activity,
   ChevronRight,
+  ClipboardCheck,
   Crown,
   Inbox,
   LayoutDashboard,
@@ -84,6 +85,11 @@ const NAV_GROUPS: NavGroup[] = [
       // were unreachable from here once, and nothing but a test noticed.
       { href: "/margin", label: "Margin", icon: Ruler },
       { href: "/decide", label: "Decide", icon: Sparkles },
+      // The write path's position half. An input to a decision rather than a
+      // report on one, so it sits in Decide: the agent reads what is captured
+      // here over the network at decision time, because a squad committed to git
+      // cannot reach a run whose checkout has already happened.
+      { href: "/capture", label: "Capture position", icon: ClipboardCheck },
       { href: "/decisions", label: "Agent decisions", icon: Crown },
     ],
   },
