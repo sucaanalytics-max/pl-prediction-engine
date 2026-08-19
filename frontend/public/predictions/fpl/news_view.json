@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-19T01:13:11.204422Z",
-  "n_dropped": 72,
+  "generated_at": "2026-08-19T02:32:32.667982Z",
+  "n_dropped": 71,
   "dropped_by_source": {
     "bbc_football": 42,
-    "sky_football": 30
+    "sky_football": 29
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 162,
+  "n_articles": 161,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -1123,6 +1123,24 @@
       "touches_squad": null
     },
     {
+      "digest": "9bf28f55008f41d0",
+      "headline": "Liverpool latest: Barcola, Mbaye not in PSG squad amid Reds transfer links",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-16T19:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "56d813c04ae85598",
       "headline": "Enzo Maresca says \u2018all teams would need Rodri\u2019",
       "summary": "New Manchester City manager Enzo Maresca says any team in the world would need Rodri, after much speculation that the midfielder is on his way to Barcelona. City lost 3-0 to Arsenal in the Community Shield, with the Spaniard unavailable. The Manchester",
@@ -1669,24 +1687,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "7825449f326659b0",
-      "headline": "Guimar\u00e3es, Rice, \u00d8degaard and Merino: How Arsenal\u2019s most complete midfield ever could ignite a new title era",
-      "summary": "Last season was one of the most historic in Arsenal's recent history. The Gunners held a commanding position in the Premier League title race for long stretches and secured their first title",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/guimaraes-rice-odegaard-and-merino-how-arsenals-most-complete-midfield-ever-could-ignite-a-new-title-era/",
-      "claimed_at": "2026-08-14T01:34:00Z",
-      "players": [
-        {
-          "element_id": 15,
-          "name": "\u00d8degaard",
-          "club": "ARS",
           "held": null
         }
       ],
