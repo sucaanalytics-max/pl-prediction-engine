@@ -943,3 +943,35 @@ describe("a read in flight is not a finding", () => {
     expect(masthead).not.toContain("no deadline published");
   });
 });
+
+describe("ages sit beside the figures they age", () => {
+  /**
+   * `goal rates: …` sat at the very bottom of the ambient column — under the availability
+   * bar AND under the never-computed P(GW ≥ N) sentence — two sections away from the
+   * fixture rows it describes.
+   */
+  it("puts the fixture ages with the fixtures, not under the column", async () => {
+    await renderBoard();
+    const ages = screen.queryByTestId("fixture-ages");
+    if (ages === null) return; // both files unread in this fixture; nothing to place
+    const bar = screen.getByTestId("availability");
+    // Document order: the ages come before the availability bar, not after it.
+    expect(ages.compareDocumentPosition(bar) & Node.DOCUMENT_POSITION_FOLLOWING)
+      .toBeTruthy();
+  });
+
+  it("says nothing for a file it could not read, rather than 'no timestamp'", async () => {
+    const bodies = { ...ALL_PRESENT };
+    delete bodies[PATHS.matches];
+    delete bodies[PATHS.fixtureXg];
+    await renderBoard(bodies);
+    expect(screen.queryByTestId("fixture-ages")).toBeNull();
+  });
+
+  it("leaves the availability figure ageless while the artifact carries no stamp", async () => {
+    /* The committed player_stats.json is the legacy bare list, so there is genuinely no
+       timestamp to show. This flips when the pipeline next writes the file. */
+    await renderBoard();
+    expect(screen.queryByTestId("availability-age")).toBeNull();
+  });
+});

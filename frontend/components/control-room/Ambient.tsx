@@ -130,6 +130,29 @@ export function Ambient(props: AmbientProps) {
         })
       )}
 
+      {/*
+        * The ages, beside the rows they qualify.
+        *
+        * `goal rates: …` sat at the very bottom of the column, under the availability bar
+        * AND under the never-computed P(GW ≥ N) sentence — two sections away from the
+        * fixture rows it describes. An age belongs next to the figure it ages, which is
+        * the whole of Rule 2.
+        *
+        * Each half is guarded on its own so an unread file states nothing rather than
+        * "no timestamp". They will usually agree, because both come out of the same cron
+        * seconds apart; that is not a reason to print neither.
+        */}
+      {(matches.age !== null || fixtureXg.age !== null) && (
+        <div style={{ marginTop: 8 }} data-testid="fixture-ages">
+          <Sub>
+            {[
+              matches.age === null ? null : `fixtures: ${matches.age}`,
+              fixtureXg.age === null ? null : `goal rates: ${fixtureXg.age}`,
+            ].filter(Boolean).join("  ·  ")}
+          </Sub>
+        </div>
+      )}
+
       {/* ── The availability bar ─────────────────────────────────────────── */}
       <div className="mt-4" data-testid="availability">
         {split === null ? (
@@ -181,6 +204,22 @@ export function Ambient(props: AmbientProps) {
                 ? null
                 : ` ${gated} are gated to no appearance in the simulation.`}
             </Body>
+            {/*
+              * The age of the column's largest figure.
+              *
+              * It carried none, and could not: `player_stats.json` shipped as a bare list
+              * with no `generated_at`, so this was the one artifact-derived number on the
+              * board with no way to grow old. The producer now wraps it and
+              * `producedAtOfRaw` reads the envelope, so the age exists to print.
+              *
+              * Absent until the pipeline next writes the file, which is honest — the
+              * committed copy genuinely has no timestamp.
+              */}
+            {playerStats.age === null ? null : (
+              <div style={{ marginTop: 6 }} data-testid="availability-age">
+                <Sub>{`${playerStats.path}: ${playerStats.age}`}</Sub>
+              </div>
+            )}
           </>
         )}
       </div>
@@ -192,11 +231,6 @@ export function Ambient(props: AmbientProps) {
           + `${sealed === null ? "the sealed count is not published" : `${sealed} have sealed`}`
           + `, so Wazza runs EV-optimal and says so above.`}
       </Body>
-      {fixtureXg.age === null ? null : (
-        <div style={{ marginTop: 8 }}>
-          <Sub>{`goal rates: ${fixtureXg.age}`}</Sub>
-        </div>
-      )}
     </div>
   );
 }
