@@ -1,18 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-19T17:59:41.299246Z",
-  "n_dropped": 96,
+  "generated_at": "2026-08-19T18:47:54.823005Z",
+  "n_dropped": 99,
   "dropped_by_source": {
-    "bbc_football": 48,
-    "hayters": 6,
-    "sky_football": 42
+    "bbc_football": 49,
+    "hayters": 7,
+    "sky_football": 43
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 186,
+  "n_articles": 189,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "5776bd21e89df574",
+      "headline": "Leeds latest: Rodon signs new four-year deal",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-19T19:00:00Z",
+      "players": [
+        {
+          "element_id": 329,
+          "name": "Rodon",
+          "club": "LEE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "6526020672a74fb6",
       "headline": "Chelsea latest: Delap and Tosin lose squad numbers amid uncertain futures",
@@ -332,6 +350,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ee5e5ba25589465f",
+      "headline": "Spurs in talks over Man City pair Savinho and Marmoush",
+      "summary": "Tottenham are in talks with Manchester City over a potential double deal for Savinho and Omar Marmoush.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13574823/tottenham-transfer-news-spurs-target-man-city-duo-savinho-and-marmoush-as-search-for-three-new-forwards-gathers-pace",
+      "claimed_at": "2026-08-19T11:49:00Z",
+      "players": [
+        {
+          "element_id": 401,
+          "name": "Marmoush",
+          "club": "MCI",
           "held": null
         }
       ],
@@ -1058,42 +1094,6 @@
       "touches_squad": null
     },
     {
-      "digest": "9be2705eefe649c6",
-      "headline": "Aston Villa latest: Ruggeri and Suzuki deals completed",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-18T18:54:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "cad69fd60a00dee9",
-      "headline": "Aston Villa latest: Deal agreed to sign West Ham defender Wan-Bissaka",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-18T18:54:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "6f6e0c3c02a128d7",
       "headline": "FPL winner\u2019s Gameweek 1 team reveal: Raya but no Arsenal defenders!",
       "summary": "Simon March won FPL back in 2014/15 The post FPL winner's Gameweek 1 team reveal: Raya but no Arsenal defenders! appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1184,24 +1184,6 @@
       "touches_squad": null
     },
     {
-      "digest": "8bbf78a6efc0467a",
-      "headline": "Premier League chief on Fifa crisis, Man City charges & World Cup expansion",
-      "summary": "Richard Masters speaks to Dan Roan ahead of the new season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0p5540m?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-18T17:03:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "1eeef49970501c6a",
       "headline": "FPL 2026/27 \u2013 Chelsea: Best players, set-piece takers, predicted XI + more",
       "summary": "Can Xabi Alonso propel the Blues back to former glories? The post FPL 2026/27 \u2013 Chelsea: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fanta",
@@ -1232,6 +1214,24 @@
           "element_id": 494,
           "name": "Vicario",
           "club": "TOT",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "62a3e540b334e57d",
+      "headline": "Lack of match fitness - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-08-18T13:58:17.442072Z",
+      "players": [
+        {
+          "element_id": 100,
+          "name": "Carvalho",
+          "club": "BRE",
           "held": null
         }
       ],
@@ -1496,24 +1496,6 @@
       "touches_squad": null
     },
     {
-      "digest": "1c67720ed294ef5c",
-      "headline": "Delap to Como and Gakpo agrees terms with Tottenham \u2013 latest transfer news",
-      "summary": "Liam Delap is being pursued by Italian side Como, according to ESPN. But he only wants to stay at Stamford Bridge. The Englishman was signed last summer for \u00a330 million and had a poor year, but reportedly wants to remain at C",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/delap-to-como-and-gakpo-agrees-terms-with-tottenham-latest-transfer-news/",
-      "claimed_at": "2026-08-16T13:00:00Z",
-      "players": [
-        {
-          "element_id": 167,
-          "name": "Delap",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "https://x.com/robtFPL/status/2088945895559549297",
       "headline": "With two international breaks, the first half of the #FPL season is essentially three blocks: lots of uncertainty but fewer fixtures early, then games gradually piling up - first f",
       "summary": "Lots of different chip strategy approaches that could work!",
@@ -1610,6 +1592,42 @@
           "element_id": 123,
           "name": "Hinshelwood",
           "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "5f81c45a42624edf",
+      "headline": "Knock - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-08-15T16:00:07.558543Z",
+      "players": [
+        {
+          "element_id": 56,
+          "name": "Abraham",
+          "club": "AVL",
+          "held": null
+        },
+        {
+          "element_id": 328,
+          "name": "Struijk",
+          "club": "BHA",
+          "held": null
+        },
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": null
+        },
+        {
+          "element_id": 541,
+          "name": "Meunier",
+          "club": "SUN",
           "held": null
         }
       ],
