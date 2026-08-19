@@ -362,26 +362,6 @@ async function fetchWithFallback<T>(filename: string): Promise<T> {
   return await localRes.json();
 }
 
-export async function loadPredictions(): Promise<PredictionData> {
-  return fetchWithFallback<PredictionData>("latest.json");
-}
-
-export async function loadMatches(): Promise<{ matches: MatchSummary[]; gameweek: number }> {
-  return fetchWithFallback<{ matches: MatchSummary[]; gameweek: number }>("matches.json");
-}
-
-export async function loadHealth(): Promise<HealthData> {
-  return fetchWithFallback<HealthData>("health.json");
-}
-
-export async function loadPlayerStats(): Promise<PlayerStat[]> {
-  return fetchWithFallback<PlayerStat[]>("player_stats.json");
-}
-
-export async function loadTable(): Promise<TeamStanding[]> {
-  return fetchWithFallback<TeamStanding[]>("table.json");
-}
-
 export async function loadH2H(homeTeam: string, awayTeam: string): Promise<H2HRecord | null> {
   try {
     const all = await fetchWithFallback<H2HRecord[]>("h2h.json");
@@ -452,30 +432,6 @@ export function findHistoricalMatchEvents(
     canonicalTeam(awayTeam),
   ].join("|");
   return file.records[key] ?? null;
-}
-
-export function getMatchById(
-  predictions: PredictionData,
-  matchId: string
-): MatchPrediction | undefined {
-  return predictions.predictions.find((p) => p.match_id === matchId);
-}
-
-export function getAllValueBets(
-  predictions: PredictionData
-): Array<ValueBet & { match_id: string; home_team: string; away_team: string }> {
-  const bets: Array<ValueBet & { match_id: string; home_team: string; away_team: string }> = [];
-  for (const pred of predictions.predictions) {
-    for (const bet of pred.value_bets) {
-      bets.push({
-        ...bet,
-        match_id: pred.match_id,
-        home_team: pred.fixture.home_team,
-        away_team: pred.fixture.away_team,
-      });
-    }
-  }
-  return bets.sort((a, b) => b.edge - a.edge);
 }
 
 /** Convert flat correct_score dict {"0-0": prob, ...} to a 2D grid[home][away] */

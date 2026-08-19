@@ -157,7 +157,18 @@ export function minutesConflictsAreEmpty(value: MinutesConflicts): boolean {
   return value.conflicts.length === 0;
 }
 
-/** The conflicts touching a given set of players, widest disagreement first. */
+/**
+ * The conflicts touching a given set of players, widest disagreement first.
+ *
+ * KEPT DELIBERATELY, with no caller today. A dead-code sweep will find it again, so:
+ * this is the join the control room's planned "your fifteen carry a disputed
+ * projection" queue row is meant to call, and the surface-restructure review named it
+ * specifically — "do not write a join, call the existing `conflictsForSquad`" — because
+ * a second element-id filter would recreate the duplication that review cut. It is
+ * keyed on `elementId` rather than a folded name, which is the whole point.
+ *
+ * Delete it only together with the plan that wants it.
+ */
 export function conflictsForSquad(
   value: MinutesConflicts,
   elementIds: readonly number[],

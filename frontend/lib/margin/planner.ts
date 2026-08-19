@@ -52,10 +52,6 @@ const LIMITS: Record<Line, { min: number; max: number }> = {
 
 export const LINES: readonly Line[] = ["GKP", "DEF", "MID", "FWD"];
 
-export function isLine(value: string): value is Line {
-  return (LINES as readonly string[]).includes(value);
-}
-
 /** `4-4-2`, from an XI. Null when the XI is not eleven legal players. */
 export function formationOf(xi: readonly SquadPlayer[]): string | null {
   if (xi.length !== RULES.lineupSize) return null;

@@ -470,7 +470,6 @@ describe("a swap's two players sit together", () => {
 
   it("keeps a departed player on the grid", () => {
     // He is gone from the squad but still owns the weeks before the sale.
-    const after = applyMoves(squad, [move]);
     const everyone = playersAcross(
       weeklyLedger(squad, [move], [1, 2, 3], 2, 1), squad,
     );

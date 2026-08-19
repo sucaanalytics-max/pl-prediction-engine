@@ -1668,8 +1668,6 @@ export const REGISTRY = {
   }) satisfies Descriptor<EvidenceView>,
 } as const;
 
-export type RegistryKey = keyof typeof REGISTRY;
-
 /**
  * Metadata view over the registry, for iteration.
  *

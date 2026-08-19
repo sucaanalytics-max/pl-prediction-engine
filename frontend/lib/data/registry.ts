@@ -216,26 +216,6 @@ export function h2hIsEmpty(
   return records.every((r) => (r.matches ?? []).every((m) => m.season !== "2627"));
 }
 
-/**
- * Value bets: nothing cleared, versus nothing priced.
- *
- * Deliberately NOT a descriptor predicate, because the distinction needs a second
- * artifact. Zero bets with `health.odds_source === 'the_odds_api'` means markets
- * were priced and nothing beat the edge threshold — a real, informative answer.
- * Zero bets with `'unavailable'` means no prices were fetched at all. Those are
- * different cards, and collapsing them into one "no value bets" message would
- * report a quota failure as a market judgement.
- */
-export function valueBetsAreEmpty(
-  totalBets: number, oddsSource: string | null | undefined,
-): boolean {
-  return totalBets === 0 && oddsSource === "the_odds_api";
-}
-
-export function valueBetsUnpriced(oddsSource: string | null | undefined): boolean {
-  return oddsSource !== "the_odds_api";
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // The table
 //

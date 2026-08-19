@@ -6,7 +6,7 @@ import { useArtifact } from "@/lib/data/useArtifact";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
 import { proven } from "@/lib/data/artifact";
 import { ageLine } from "@/lib/formats";
-import { projectionsDescriptor, type Projection } from "@/lib/data/projections";
+import { projectionsDescriptor } from "@/lib/data/projections";
 import { minutesConflictsDescriptor } from "@/lib/data/minutes-conflicts";
 import { StateCard } from "@/components/data/Artifact";
 import {

@@ -10,7 +10,6 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { proven } from "@/lib/data/artifact";
 import {
   AGENT_STATUS, describeIdleAgent, narrowAgentStatus, agentStatusIsEmpty,
 } from "@/lib/data/agent-status";
