@@ -5,6 +5,31 @@
 # silently rewrites line endings would break verification on a different
 # platform. `-diff` keeps generated payloads out of diffs, where they are noise.
 predictions/fpl/**          -text -diff
+
+# Append-only stores get a union merge, because two lanes write them.
+#
+# `availability_evidence.jsonl` is appended by BOTH the agent (run_agent.py:758 ->
+# record_claims -> availability_evidence.py:401) and the 15-minute news poller
+# (run_news.py:53), and both stage it. The path-ownership rule that makes three
+# concurrent writers safe — "writers that never touch the same file cannot conflict",
+# commit_and_push.sh:63-67 — does not hold for this one file, and commit_and_push.sh's
+# three retries all reproduce the same conflict because each only does
+# `git rebase --abort` and tries again unchanged.
+#
+# That matters because the agent's exposure window is the whole work job: checkout, a
+# pandas/PyMC/xgboost install and the simulation, up to 60 minutes — while the poller
+# lands roughly hourly and peaks on deadline day, exactly when team news moves. A
+# conflict there fails the push and the sealed forecast never leaves the runner.
+#
+# Union keeps both sides' appended lines, which is correct for a content-addressed
+# append-only store that already dedupes on `claim_id` when read
+# (availability_evidence.py:381-389).
+#
+# `*` does not cross `/` in gitattributes, so this deliberately does NOT match
+# predictions/fpl/ledger/gwNN/forecast.jsonl — the seal itself keeps the default merge
+# driver, because silently unioning two forecasts is exactly the corruption this whole
+# ledger exists to make impossible.
+predictions/fpl/*.jsonl     -text -diff merge=union
 pipeline/data/priors/*.gz   -text -diff binary
 pipeline/data/priors/*.json -text
 

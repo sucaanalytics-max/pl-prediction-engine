@@ -20,6 +20,20 @@ on:
     # Every three hours. Deadlines move, so the agent checks in regularly and
     # the phase logic decides what is actually due.
     - cron: '0 */3 * * *'
+    # And every 30 minutes through a Friday afternoon, because the seal is the one
+    # irrecoverable thing this repo does and the three-hourly schedule gives it exactly
+    # ONE attempt: SEAL opens at deadline-4h and LOCKED closes writing at deadline-30m,
+    # so for a 17:30Z deadline the usable band is 13:30Z-17:00Z and only 15:00Z lands in
+    # it. The next tick is 18:00Z, past the deadline. Measured over 30 real runs, this
+    # cron's delivery lag is a 32-minute median and a 62-minute maximum, so a bad day
+    # eats most of the margin — and GitHub drops scheduled runs entirely under load.
+    #
+    # Additive and free: the `decide` job is stdlib-only and finishes in 12 seconds, the
+    # repo is public so Actions minutes are unmetered, and extra ticks cannot double-seal
+    # — the resolver returns IDLE once the gameweek is in `sealed` (schedule.py:300-306)
+    # and seal_forecast raises AlreadySealedError rather than overwriting
+    # (ledger.py:182-187). Eight attempts instead of one.
+    - cron: '0,30 13-16 * * 5'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -68,6 +82,20 @@ jobs:
       # screens could not tell "the agent is idle by design" from "the agent is
       # broken", and they render very differently.
       - name: Publish the agent status
+        # A status badge must never be able to skip a seal.
+        #
+        # This step commits on every tick — `publish_status` stamps `generated_at` with
+        # now (schedule.py:423-424), so the `git diff --quiet` short-circuit below is
+        # never taken — and it does a single unretried pull/rebase/push under
+        # `set -euo pipefail`. news.yml runs every 15 minutes in a SEPARATE concurrency
+        # group and also pushes to main, so a non-fast-forward rejection here fails this
+        # step, fails the `decide` job, and the `work` job's implicit success()
+        # requirement then SKIPS the seal.
+        #
+        # The outputs `work` gates on are written by the PREVIOUS step (schedule.py:454
+        # runs before publish_status at :456-458), so a skipped status commit costs a
+        # stale badge for three hours and nothing else.
+        continue-on-error: true
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
@@ -124,6 +152,23 @@ jobs:
         run: python -m pipeline.learning.run_agent
 
       - name: Commit agent artifacts
+        # ALWAYS, because the forecast is already on disk by the time anything
+        # downstream can fail. `run_agent` deliberately returns 1 in two states where
+        # the seal has succeeded — a decision that raises (run_agent.py:791-799) and a
+        # PublicationError in _deliver (run_agent.py:937-946) — and both comments say
+        # "the forecast is sealed so the gameweek remains measurable". That was true of
+        # the process and false in CI: the default `success()` skipped this step and the
+        # runner was destroyed with the only copy of the seal on it.
+        #
+        # pipeline.yml:98-105 already argues this exact case for forecast_ledger.json:
+        # "this gate must NEVER be able to withhold ... the ONLY artifact that proves a
+        # prediction predated kickoff. A seal is irrecoverable; a red run that still
+        # publishes is recoverable." The agent workflow never got the equivalent.
+        #
+        # Safe when the agent fails BEFORE sealing: commit_and_push.sh exits 0 on an
+        # empty staged diff, and read_forecast rejects a truncated file rather than
+        # trusting it (ledger.py:265-269).
+        if: always()
         env:
           # Path ownership is what lets this job and the daily pipeline both
           # write to main without serialising a deadline-sensitive seal behind a
