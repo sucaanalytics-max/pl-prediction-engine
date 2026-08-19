@@ -948,9 +948,43 @@ def _deliver(
 
 
 
+def _entry_state_from_capture(capture, gameweek: int):
+    """
+    Turn an owner capture into an EntryState.
+
+    When an FPL price change has landed since the capture, the squad is still
+    right — it changes only when the owner transfers — but the bank and purchase
+    prices are claims about yesterday's prices. Rather than invent a second kind
+    of uncertainty, every player goes into `untraced`, which is the field
+    EntryState already uses for "selling price could not be established" and which
+    already drives `price_uncertain` and the decision path's price guardrail.
+    """
+    from pipeline.fpl.entry_api import EntryState
+
+    stale = capture.prices_are_stale()
+    return EntryState(
+        entry_id=capture.entry_id,
+        gameweek=int(gameweek),
+        squad=list(capture.squad),
+        bank=capture.bank,
+        free_transfers=capture.free_transfers,
+        purchase_prices={} if stale else dict(capture.purchase_prices),
+        untraced=list(capture.squad) if stale else [],
+    )
+
+
 def _read_entry(config: Dict[str, Any], gameweek: int, bootstrap: Dict[str, Any]):
     """
-    Read one entry's real position from FPL.
+    Read one entry's real position, preferring what the owner captured.
+
+    Three rungs, in descending order of how strong the claim is:
+
+    1. An owner capture from the hub, when FPL_HUB_CAPTURE is set. "The owner
+       entered this" beats "the API has not published it yet", which is the whole
+       reason the hub exists — a squad committed to git cannot reach a run whose
+       checkout already happened, so this rung reads over the network.
+    2. FPL's own entry endpoint.
+    3. An empty state.
 
     Falls back to an empty state rather than raising. A squad that cannot be read
     is NOT the same as no squad, but the two are indistinguishable here — so the
@@ -959,10 +993,23 @@ def _read_entry(config: Dict[str, Any], gameweek: int, bootstrap: Dict[str, Any]
     degraded proposal for no proposal, and a missed deadline costs a gameweek.
     """
     from pipeline.fpl.entry_api import EntryError, EntryState, read_entry_state
+    from pipeline.fpl.hub_state import read_capture
 
     entry_id = config.get("entry_id")
     if not entry_id:
         return EntryState(entry_id=0, gameweek=int(gameweek))
+
+    # Returns None for every reason there is nothing to use, including the gate
+    # being off, so this is a no-op until FPL_HUB_CAPTURE is set.
+    captured = read_capture(int(entry_id), int(gameweek))
+    if captured is not None:
+        logger.info(
+            "using the owner's captured position for entry %s GW%s (captured %s%s)",
+            entry_id, gameweek, captured.captured_at.isoformat(),
+            "; prices superseded by a price change since, so selling prices are "
+            "uncertain" if captured.prices_are_stale() else "",
+        )
+        return _entry_state_from_capture(captured, gameweek)
 
     now_costs = {
         int(e["id"]): int(e.get("now_cost", 0))
