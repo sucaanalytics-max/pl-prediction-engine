@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T09:18:04.097335Z",
-  "n_dropped": 116,
+  "generated_at": "2026-08-20T10:00:10.425380Z",
+  "n_dropped": 119,
   "dropped_by_source": {
     "bbc_football": 53,
     "hayters": 7,
-    "sky_football": 56
+    "sky_football": 59
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 206,
+  "n_articles": 209,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -381,6 +381,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13574826/matthias-jaissle-newcastle-head-coach-says-squad-needs-adjustments-in-transfer-window-and-previews-liverpool-game",
       "claimed_at": "2026-08-19T19:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "2c06719194f75f29",
+      "headline": "Man City latest: Roma's Kone on midfielder shortlist",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-19T19:44:00Z",
       "players": [
         {
           "element_id": 0,
@@ -986,24 +1004,6 @@
           "element_id": 22,
           "name": "Nwaneri",
           "club": "ARS",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "512917d9ee792777",
-      "headline": "Man Utd close to full agreement with Brighton for Baleba",
-      "summary": "Manchester United are close to a full agreement with Brighton to sign Carlos Baleba.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13574619/carlos-baleba-transfer-manchester-united-close-to-full-agreement-with-brighton-for-cameroon-midfielder",
-      "claimed_at": "2026-08-19T10:02:00Z",
-      "players": [
-        {
-          "element_id": 131,
-          "name": "Baleba",
-          "club": "BHA",
           "held": null
         }
       ],
