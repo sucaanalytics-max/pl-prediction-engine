@@ -1,18 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T14:00:15.567522Z",
-  "n_dropped": 141,
+  "generated_at": "2026-08-20T14:54:50.080859Z",
+  "n_dropped": 140,
   "dropped_by_source": {
-    "bbc_football": 56,
-    "hayters": 18,
-    "sky_football": 67
+    "bbc_football": 55,
+    "hayters": 19,
+    "sky_football": 66
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 231,
+  "n_articles": 230,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "e54976e368f73ac8",
+      "headline": "Chelsea happy with Fernandez, says Alonso",
+      "summary": "Enzo Fernandez has shown a \"really good attitude\" since his return to Chelsea, says head coach Xabi Alonso, as speculation over the midfielder's future continues.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cpq8gq5llp9o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-20T14:39:54Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "e722a480875bad24",
       "headline": "'100 per cent' - Arteta confident Lewis-Skelly stays at Arsenal",
@@ -1365,24 +1383,6 @@
       "tier": 2,
       "url": "https://hayters.com/brighton-star-nears-move-away-after-seagulls-sign-striker/",
       "claimed_at": "2026-08-19T09:44:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "cde8d4dd3925d2de",
-      "headline": "Crystal Palace complete another summer signing as youngster joins",
-      "summary": "Crystal Palace have completed the signing of attacker Zavier Gozo from MLS side Real Salt Lake. The 19-year-old has signed a five-year contract in south London, subject to international clearance, and becomes Palace\u2019s sixth arrival of",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/crystal-palace-complete-another-summer-signing-as-youngster-joins/",
-      "claimed_at": "2026-08-19T09:37:56Z",
       "players": [
         {
           "element_id": 0,
