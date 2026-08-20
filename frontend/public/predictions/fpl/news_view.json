@@ -1,18 +1,54 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T16:50:34.787092Z",
-  "n_dropped": 150,
+  "generated_at": "2026-08-20T17:28:37.557860Z",
+  "n_dropped": 153,
   "dropped_by_source": {
-    "bbc_football": 58,
-    "hayters": 23,
-    "sky_football": 69
+    "bbc_football": 57,
+    "hayters": 24,
+    "sky_football": 72
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 240,
+  "n_articles": 243,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "5c0b16dd899ecadb",
+      "headline": "Glasner's plan for 'stability with success' at Nottingham Forest",
+      "summary": "Oliver Glasner is not necessarily known for being a disciplinarian. Meticulous, yes. A self-proclaimed workaholic. But not a coach who rains down rules. At Nottingham Forest that might have to change.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13574953/oliver-glasner-has-a-plan-for-premier-league-stability-and-success-at-nottingham-forest-but-it-comes-with-a-warning",
+      "claimed_at": "2026-08-20T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "87ca0a68eb222270",
+      "headline": "Liverpool latest: Reds approach for Brighton's Minteh rejected",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-20T18:00:00Z",
+      "players": [
+        {
+          "element_id": 122,
+          "name": "Minteh",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "26c6ff92b0dd6f55",
       "headline": "Man Utd latest: Carrick 'delighted' with Rashford as work continues on signings",
@@ -26,6 +62,60 @@
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "293f0bc414bf6d90",
+      "headline": "Carrick updates on Man Utd\u2019s transfer plans and \u2018delighted\u2019 with Rashford return",
+      "summary": "Manchester United boss Michael Carrick admitted he has been \u2018delighted\u2019 with Marcus Rashford\u2019s return, and updates on the club\u2019s transfer plans. After being exiled by former manager Ruben Amorim, the England internation",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/carrick-updates-on-man-utds-transfer-plans-and-delighted-with-rashford-return/",
+      "claimed_at": "2026-08-20T17:10:46Z",
+      "players": [
+        {
+          "element_id": 429,
+          "name": "Rashford",
+          "club": "MUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "3949efc3ad85bc45",
+      "headline": "Liverpool have \u00a350m bid rejected for Brighton's Minteh",
+      "summary": "Liverpool have a \u00a350m bid rejected by Brighton for their winger Yankuba Minteh.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c4gknq7d8d5o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-20T17:06:34Z",
+      "players": [
+        {
+          "element_id": 122,
+          "name": "Minteh",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "c708990a5a58e1eb",
+      "headline": "Unknown - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-08-20T17:00:08.846118Z",
+      "players": [
+        {
+          "element_id": 452,
+          "name": "Bruno G.",
+          "club": "ARS",
           "held": null
         }
       ],
@@ -224,6 +314,24 @@
           "element_id": 155,
           "name": "Enzo",
           "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "3f1e8e7a9d9cbb10",
+      "headline": "Tromso vs Brighton in play-off for Conference League LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/tromso-vs-brighton-and-hove-albion/live/577284",
+      "claimed_at": "2026-08-20T14:18:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": null
         }
       ],
@@ -1118,60 +1226,6 @@
       "touches_squad": null
     },
     {
-      "digest": "5776bd21e89df574",
-      "headline": "Leeds latest: Rodon signs new four-year deal",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-19T19:00:00Z",
-      "players": [
-        {
-          "element_id": 329,
-          "name": "Rodon",
-          "club": "LEE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "6526020672a74fb6",
-      "headline": "Chelsea latest: Delap and Tosin lose squad numbers amid uncertain futures",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-19T17:50:00Z",
-      "players": [
-        {
-          "element_id": 167,
-          "name": "Delap",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "b729632c3f822bd4",
-      "headline": "Chelsea latest: Joao Pedro set to sign new long-term contract",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-19T17:50:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "212ca9e3b723308e",
       "headline": "Moyes calls for more Everton signings before transfer window closes",
       "summary": "Everton boss David Moyes has admitted the club still need to add \u201cquite a few players\u201d to the squad before the transfer window closes. The Toffees have already brought in several new faces this summer, but Moyes believes there is pl",
@@ -1365,60 +1419,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c98vz9jvg0vo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-19T13:55:18Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "71be59ed6d3d7622",
-      "headline": "Man Utd's decision to make Baleba their 'third midfielder'",
-      "summary": "Manchester United are in talks to make Carlos Baleba their 'third midfielder' as the club revamp Michael Carrick's squad.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/clylk1wexgno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-19T13:54:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "79da672273224fdd",
-      "headline": "Rangers complete loan deal with obligation to buy for promising defender",
-      "summary": "Rangers have completed the signing of right-back Kosta Nedeljkovi\u0107 from Aston Villa. The Serbian international joins the Ibrox side on loan with a \u00a34m conditional obligation to buy. At just 20 years old, Nedeljkovi\u0107 already has",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/rangers-complete-loan-deal-with-obligation-to-buy-for-promising-defender/",
-      "claimed_at": "2026-08-19T13:47:25Z",
-      "players": [
-        {
-          "element_id": 39,
-          "name": "Nedeljkovic",
-          "club": "AVL",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "2bf138f1c05cbc18",
-      "headline": "Leeds keen on attacking signing after completing deal for defender as another departs",
-      "summary": "Leeds United have completed the signing of Swiss international defender Nico Elvedi from Borussia M\u00f6nchengladbach on a permanent deal. The 29-year-old becomes Leeds' fourth new addition of the summer transfer windo",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/leeds-keen-on-attacking-signing-after-completing-deal-for-defender-as-another-departs/",
-      "claimed_at": "2026-08-19T12:44:29Z",
       "players": [
         {
           "element_id": 0,
