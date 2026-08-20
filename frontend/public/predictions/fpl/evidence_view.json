@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T18:22:05.244952Z",
+  "generated_at": "2026-08-20T19:23:37.175188Z",
   "gameweek": 1,
   "players": [
     {
@@ -1987,6 +1987,76 @@
               "value": "d",
               "claimed_at": "2026-08-15T16:00:07.879135Z",
               "observed_at": "2026-08-19T18:18:47.096189Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 452,
+      "player_name": "Bruno G.",
+      "club": "Arsenal",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f5e8f1cd366eb4ad",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-08-20T17:00:08.846118Z",
+              "observed_at": "2026-08-20T18:22:33.958888Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "bcc730a382051b49",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-08-20T17:00:08.846118Z",
+              "observed_at": "2026-08-20T17:20:20.505870Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "d1388d8208b8de3a",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-08-20T17:00:08.846118Z",
+              "observed_at": "2026-08-20T17:20:20.505870Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -7766,63 +7836,6 @@
       "needs_attention": false
     },
     {
-      "element_id": 452,
-      "player_name": "Bruno G.",
-      "club": "Arsenal",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 75,
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "bcc730a382051b49",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-08-20T17:00:08.846118Z",
-              "observed_at": "2026-08-20T17:20:20.505870Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "d1388d8208b8de3a",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-08-20T17:00:08.846118Z",
-              "observed_at": "2026-08-20T17:20:20.505870Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 0,
-      "needs_attention": false
-    },
-    {
       "element_id": 458,
       "player_name": "Joelinton",
       "club": "Newcastle",
@@ -8832,7 +8845,7 @@
     }
   ],
   "counts": {
-    "n_claims": 867,
+    "n_claims": 870,
     "n_players_with_claims": 181,
     "n_players_shown": 117,
     "n_escalations": 11,
