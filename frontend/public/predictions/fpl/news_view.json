@@ -1,18 +1,54 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T10:39:44.984294Z",
-  "n_dropped": 122,
+  "generated_at": "2026-08-20T11:03:56.531287Z",
+  "n_dropped": 123,
   "dropped_by_source": {
     "bbc_football": 54,
-    "hayters": 8,
+    "hayters": 9,
     "sky_football": 60
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 212,
+  "n_articles": 213,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "891063278bd715f0",
+      "headline": "\u201cWe need a squad able to compete on four fronts\u201d \u2013 Van Dijk\u2019s Liverpool message ahead of the new season",
+      "summary": "Liverpool captain Virgil Van Dijk has suggested that the club\u2019s work in the transfer window is not yet finished ahead of the new season. So far the Reds have brought in centre-backs Jeremy Jacquet",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/we-need-a-squad-able-to-compete-on-four-fronts-van-dijks-liverpool-message/",
+      "claimed_at": "2026-08-20T11:00:00Z",
+      "players": [
+        {
+          "element_id": 356,
+          "name": "Virgil",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 362,
+          "name": "Jacquet",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 377,
+          "name": "Munoz",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 579,
+          "name": "Araujo",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "4a4de11daaf4d2ba",
       "headline": "Konsa set for Arsenal medical before \u00a350m-plus move",
@@ -1478,24 +1514,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e88aec0ba8448e43",
-      "headline": "Arteta on Tzolis: \u2018He makes good decisions when others rush\u2019",
-      "summary": "Arsenal manager Mikel Arteta has heaped praise on new signing Christos Tzolis after the Greek international managed two assists against Manchester City in the Community Shield. The Gunners won 3-0 in Cardiff and were by far the better team",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-on-tzolis-he-makes-good-decisions-when-others-rush/",
-      "claimed_at": "2026-08-16T17:27:50Z",
-      "players": [
-        {
-          "element_id": 557,
-          "name": "Tzolis",
-          "club": "ARS",
           "held": null
         }
       ],
