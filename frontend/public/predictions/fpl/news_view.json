@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T21:27:44.001086Z",
-  "n_dropped": 161,
+  "generated_at": "2026-08-20T21:55:07.736412Z",
+  "n_dropped": 160,
   "dropped_by_source": {
     "bbc_football": 61,
     "fantasyfootballscout": 1,
-    "hayters": 22,
+    "hayters": 21,
     "sky_football": 77
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 251,
+  "n_articles": 250,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -27,6 +27,30 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "57e15cae128742e8",
+      "headline": "Arteta explains Arsenal\u2019s aims in the final weeks of the transfer window and doesn\u2019t rule out more signings",
+      "summary": "Arsenal boss Mikel Arteta has explained the club\u2019s goals in the transfer market and has not ruled out the possibility of more signings arriving. The Gunners have already brought in Bruno Guima",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-explains-arsenals-aims-in-the-final-weeks-of-the-transfer-window/",
+      "claimed_at": "2026-08-20T21:38:42Z",
+      "players": [
+        {
+          "element_id": 3,
+          "name": "Meslier",
+          "club": "ARS",
+          "held": null
+        },
+        {
+          "element_id": 557,
+          "name": "Tzolis",
+          "club": "ARS",
           "held": null
         }
       ],
@@ -1419,24 +1443,6 @@
           "element_id": 193,
           "name": "Wright",
           "club": "COV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "dde29f38d7bfd140",
-      "headline": "Man City midfield overhaul continues with another departure confirmed",
-      "summary": "Tijjani Reijnders has left Manchester City to join Saudi Pro League side Al Qadsiah. The 28-year-old midfielder joined City from AC Milan last year and made 50 appearances across all competitions, scoring seven goals. The midfield",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-midfield-overhaul-continues-with-another-departure-confirmed/",
-      "claimed_at": "2026-08-19T15:50:40Z",
-      "players": [
-        {
-          "element_id": 404,
-          "name": "Reijnders",
-          "club": "MCI",
           "held": null
         }
       ],
