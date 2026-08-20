@@ -1,18 +1,60 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T10:00:10.425380Z",
-  "n_dropped": 119,
+  "generated_at": "2026-08-20T10:39:44.984294Z",
+  "n_dropped": 122,
   "dropped_by_source": {
-    "bbc_football": 53,
-    "hayters": 7,
-    "sky_football": 59
+    "bbc_football": 54,
+    "hayters": 8,
+    "sky_football": 60
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 209,
+  "n_articles": 212,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "4a4de11daaf4d2ba",
+      "headline": "Konsa set for Arsenal medical before \u00a350m-plus move",
+      "summary": "Arsenal agree a deal worth more than \u00a350m to sign Aston Villa and England defender Ezri Konsa.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c98vz9jvg0vo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-20T10:25:40Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "2ff00e46d1203b19",
+      "headline": "Man City rival Man Utd for midfield target, whilst Arsenal star set to stay \u2013 latest transfer reports",
+      "summary": "Manchester City are set to compete with rivals Manchester United for midfielder Manu Kone, whilst continuing to eye other targets. Arsenal striker Gabriel Jesus is set to stay at the Emirates, despi",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-rival-man-utd-for-target-whilst-arsenal-star-to-stay/",
+      "claimed_at": "2026-08-20T10:00:40Z",
+      "players": [
+        {
+          "element_id": 373,
+          "name": "C.Jones",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 401,
+          "name": "Marmoush",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "f0e7d733e782e564",
       "headline": "Liverpool latest: How will Jones exit affect Iraola's midfield options?",
@@ -464,6 +506,24 @@
       "touches_squad": null
     },
     {
+      "digest": "b729632c3f822bd4",
+      "headline": "Chelsea latest: Joao Pedro set to sign new long-term contract",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-19T17:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "d7619d893d0517f3",
       "headline": "Chelsea latest: Four players training away from first team as squad numbers revealed",
       "summary": null,
@@ -902,24 +962,6 @@
       "touches_squad": null
     },
     {
-      "digest": "c8885f03ace91db8",
-      "headline": "Arsenal in advanced talks to sign Villa's Konsa",
-      "summary": "Arsenal are in advanced talks with Aston Villa to sign Ezri Konsa.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13574665/ezri-konsa-transfer-news-arsenal-in-advanced-talks-to-sign-aston-villa-and-england-defender",
-      "claimed_at": "2026-08-19T11:36:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "a984bf3b8b1a20b8",
       "headline": "Is Haaland worth the \u00a315.5m price tag on FPL?",
       "summary": "FPL expert Gianni Buttice weighs up whether Manchester City striker Erling Haaland is worth his \u00a315.5m price tag on the game.",
@@ -1112,24 +1154,6 @@
           "element_id": 39,
           "name": "Nedeljkovic",
           "club": "AVL",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "85529f8602b442b4",
-      "headline": "Villa sign goalkeeper Suzuki and left-back Ruggeri",
-      "summary": "Aston Villa confirm the signings of goalkeeper Zion Suzuki and left-back Matteo Ruggeri in deals worth a combined \u00a347m.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c7vg4962yp9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-19T08:41:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1472,24 +1496,6 @@
           "element_id": 557,
           "name": "Tzolis",
           "club": "ARS",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "99cd7fb25756b902",
-      "headline": "Tough summer on Tyneside ends with Newcastle being held by Strasbourg",
-      "summary": "Newcastle United rounded off their pre-season campaign with a 1-1 draw with French side Strasbourg at St. James' Park. Their first half lead thanks to the boot of William Osula was cancelled out by Strasbourg\u2019s Gessime Yassine. Th",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/tough-summer-on-tyneside-ends-with-newcastle-being-held-by-strasbourg/",
-      "claimed_at": "2026-08-16T17:05:58Z",
-      "players": [
-        {
-          "element_id": 465,
-          "name": "Osula",
-          "club": "NEW",
           "held": null
         }
       ],
