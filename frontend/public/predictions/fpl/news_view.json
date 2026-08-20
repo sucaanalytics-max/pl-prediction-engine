@@ -1,18 +1,54 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T08:41:53.460498Z",
-  "n_dropped": 111,
+  "generated_at": "2026-08-20T09:18:04.097335Z",
+  "n_dropped": 116,
   "dropped_by_source": {
-    "bbc_football": 52,
+    "bbc_football": 53,
     "hayters": 7,
-    "sky_football": 52
+    "sky_football": 56
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 201,
+  "n_articles": 206,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "f0e7d733e782e564",
+      "headline": "Liverpool latest: How will Jones exit affect Iraola's midfield options?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-20T10:00:00Z",
+      "players": [
+        {
+          "element_id": 373,
+          "name": "C.Jones",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "0d72561dc176d5f4",
+      "headline": "Spurs in talks to sign Man City's Savinho and Marmoush",
+      "summary": "Spurs open talks with Manchester City to sign attacking duo Omar Marmoush and Savinho.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cz645z0w3ypo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-20T09:01:26Z",
+      "players": [
+        {
+          "element_id": 401,
+          "name": "Marmoush",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "4e04d8792c5a31d6",
       "headline": "Inter Milan agree \u00a330m deal for Liverpool's Jones",
@@ -500,6 +536,24 @@
       "touches_squad": null
     },
     {
+      "digest": "e2b0faceb53d1a4f",
+      "headline": "Aston Villa latest: More players sold?! Transfer plans analysed...",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-19T16:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "ed15cdbd820b9635",
       "headline": "Aston Villa latest: Tosin eyed as potential Konsa replacement",
       "summary": null,
@@ -520,6 +574,36 @@
     {
       "digest": "1e0adf27e0d0486a",
       "headline": "Delap loses number nine shirt & trains away from first team",
+      "summary": "Chelsea have split their players into two training groups at Cobham, involving several players who could move before the transfer window closes, including Liam Delap, Nicolas Jackson and Mykhailo Mudryk.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c5y4nel5gddo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-19T15:58:44Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "CHE",
+          "held": null
+        },
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "CHE",
+          "held": null
+        },
+        {
+          "element_id": 578,
+          "name": "Mudryk",
+          "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "36965c8927449544",
+      "headline": "Delap loses No 9 shirt & trains away from Chelsea first team",
       "summary": "Chelsea have split their players into two training groups at Cobham, involving several players who could move before the transfer window closes, including Liam Delap, Nicolas Jackson and Mykhailo Mudryk.",
       "source": "bbc_football",
       "tier": 3,
@@ -926,24 +1010,6 @@
       "touches_squad": null
     },
     {
-      "digest": "3e12ac3326a0a870",
-      "headline": "Why Van Hecke holds the key to unlocking De Zerbi ball at Spurs",
-      "summary": "Tottenham Hotspur supporters have already seen Roberto De Zerbi keep their team in the Premier League. They have noted his passion, warmed to his enthusiasm. But De Zerbi ball had to wait. Now, Spurs must be ready to embrace the real th",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13561628/jan-paul-van-hecke-to-tottenham-hotspur-why-defender-holds-the-key-to-roberto-de-zerbis-style-of-play-at-spurs",
-      "claimed_at": "2026-08-19T10:00:00Z",
-      "players": [
-        {
-          "element_id": 112,
-          "name": "Van Hecke",
-          "club": "TOT",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "4bc49c203c812a38",
       "headline": "West Ham complete signing of striker but look set to miss out on another",
       "summary": "West Ham United have completed the signing of striker Jo\u00ebl Piroe from Leeds United on an initial season-long loan. The deal includes an obligation for the transfer to become permanent in the summer of 2027, subject to the agree",
@@ -1070,42 +1136,6 @@
       "touches_squad": null
     },
     {
-      "digest": "38ba1a5d1ce27c78",
-      "headline": "Al Hilal in talks to sign Watkins",
-      "summary": "Al Hilal are in talks with Aston Villa over a deal to sign striker Ollie Watkins.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13574587/ollie-watkins-transfer-aston-villa-in-talks-with-saudi-club-al-hilal-over-england-striker",
-      "claimed_at": "2026-08-19T08:27:00Z",
-      "players": [
-        {
-          "element_id": 55,
-          "name": "Watkins",
-          "club": "AVL",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "5c2d9f2d1cd111e7",
-      "headline": "How Carrick's Man Utd are shaping up for Premier League season",
-      "summary": "As Manchester United prepare to start the new Premier League season at Hull on Saturday, BBC Sport examines how Michael Carrick's team will set up tactically.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cg5l9p58dv6o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-19T06:29:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "743484f9eb7cdf0c",
       "headline": "FPL 2026/27 \u2013 Everton: Best players, set-piece takers, predicted XI + more",
       "summary": "David Moyes' side boast several appealing FPL midfielders The post FPL 2026/27 \u2013 Everton: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fant",
@@ -1131,24 +1161,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/18/fpl-2026-27-crystal-palace-best-players-set-piece-takers-predicted-xi-more",
       "claimed_at": "2026-08-18T22:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "d0471022c6be4aaa",
-      "headline": "Football Daily",
-      "summary": "Arsenal seek to defend their Premier League title, but how difficult will that be?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0p56288?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-18T21:55:00Z",
       "players": [
         {
           "element_id": 0,
