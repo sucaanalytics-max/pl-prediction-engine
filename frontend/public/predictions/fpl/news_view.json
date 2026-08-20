@@ -1,19 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T20:02:44.897230Z",
-  "n_dropped": 159,
+  "generated_at": "2026-08-20T20:46:26.296892Z",
+  "n_dropped": 158,
   "dropped_by_source": {
-    "bbc_football": 60,
-    "fantasyfootballscout": 1,
+    "bbc_football": 59,
     "hayters": 22,
-    "sky_football": 76
+    "sky_football": 77
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 249,
+  "n_articles": 248,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "ee18a19f683d9a6b",
+      "headline": "KDH or Ndiaye, Bench Boost picks, Spurs defence: FPL Q&A",
+      "summary": "Five-time top 1k finisher Tom Freeman answers your questions The post KDH or Ndiaye, Bench Boost picks, Spurs defence: FPL Q&A appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/20/kdh-or-ndiaye-bench-boost-picks-spurs-defence-fpl-qa",
+      "claimed_at": "2026-08-20T20:35:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "4188d7d0ff1b9b13",
       "headline": "Brighton frustrated by Tromso in first leg of Conference League tie",
@@ -1299,24 +1316,6 @@
       "touches_squad": null
     },
     {
-      "digest": "2c06719194f75f29",
-      "headline": "Man City latest: Roma's Kone on midfielder shortlist",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-19T19:44:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "212ca9e3b723308e",
       "headline": "Moyes calls for more Everton signings before transfer window closes",
       "summary": "Everton boss David Moyes has admitted the club still need to add \u201cquite a few players\u201d to the squad before the transfer window closes. The Toffees have already brought in several new faces this summer, but Moyes believes there is pl",
@@ -1617,6 +1616,30 @@
       "touches_squad": null
     },
     {
+      "digest": "5f81c45a42624edf",
+      "headline": "Knock - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-08-16T18:30:07.457097Z",
+      "players": [
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": null
+        },
+        {
+          "element_id": 541,
+          "name": "Meunier",
+          "club": "SUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "7f45cb04b86c2661",
       "headline": "How Chelsea could line-up under Xabi Alonso for 2026/27 season",
       "summary": "In this blog, we look at how Chelsea could line up under Xabi Alonso, what it means from an FPL perspective & the best chelsea FPL assets. The post How Chelsea could line-up under Xabi Alonso for 2026/27 season appeared first on ALLABOUT",
@@ -1725,36 +1748,6 @@
           "element_id": 427,
           "name": "Mbeumo",
           "club": "MUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "5f81c45a42624edf",
-      "headline": "Knock - 75% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-08-15T20:30:07.523574Z",
-      "players": [
-        {
-          "element_id": 328,
-          "name": "Struijk",
-          "club": "BHA",
-          "held": null
-        },
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 541,
-          "name": "Meunier",
-          "club": "SUN",
           "held": null
         }
       ],
