@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T19:57:47.038780Z",
-  "n_dropped": 222,
+  "generated_at": "2026-08-21T20:32:37.138575Z",
+  "n_dropped": 224,
   "dropped_by_source": {
     "bbc_football": 70,
     "fantasyfootballscout": 21,
-    "hayters": 34,
-    "sky_football": 97
+    "hayters": 35,
+    "sky_football": 98
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 312,
+  "n_articles": 314,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -225,6 +225,24 @@
       "touches_squad": false
     },
     {
+      "digest": "8cae17077ab5b810",
+      "headline": "Man Utd agree \u00a370m fee for Brighton's Baleba",
+      "summary": "Manchester United agree a fee of up to \u00a370m for Brighton midfielder Carlos Baleba.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwy452d662ko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T19:58:11Z",
+      "players": [
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "5d6b3b9a0d9951b6",
       "headline": "Saturday's gossip: Liverpool enquire about Real Madrid's Endrick",
       "summary": "Liverpool make Endrick enquiry, Chelsea brace for a Nicolas Jackson offer and Arsenal make request to Victor Osimhen, plus more.",
@@ -304,6 +322,24 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/arsenal-v-coventry-team-news-no-bruno-g-rice-saka-start",
       "claimed_at": "2026-08-21T18:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6f77e04b04e713cd",
+      "headline": "Odegaard adds another with Arsenal thrashing Coventry LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/live/559444",
+      "claimed_at": "2026-08-21T18:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -462,6 +498,24 @@
       "digest": "472c14d8a158e870",
       "headline": "Arsenal v Coventry City LIVE \u2013 team news, updates and reaction",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal v Coventry City LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-v-coventry-city-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-21T17:02:40Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5dfd26747d915f2d",
+      "headline": "Arsenal 3-0 Coventry City LIVE \u2013 Odegaard puts hosts three in front",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 3-0 Coventry City LIVE - Odegaard puts hosts three in front appeared first on Hayters.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/arsenal-v-coventry-city-live-team-news-updates-and-reaction/",
@@ -1035,24 +1089,6 @@
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-21T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2baa5edc0ebaac1e",
-      "headline": "Liverpool latest: Iraola frustrated by a lack of wing options",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-21T14:00:00Z",
       "players": [
         {
@@ -1683,42 +1719,6 @@
           "element_id": 557,
           "name": "Tzolis",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "99ed43e107eb1f93",
-      "headline": "Hull owner hits out at pundits over 'laughable' criticism",
-      "summary": "Hull City owner Acun Ilicali criticises pundits Joe Cole and Carlton Cole after they mock his side's chances of Premier League survival on a podcast.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c39eg04p08eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T21:22:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "293f0bc414bf6d90",
-      "headline": "Carrick updates on Man Utd\u2019s transfer plans and \u2018delighted\u2019 with Rashford return",
-      "summary": "Manchester United boss Michael Carrick admitted he has been \u2018delighted\u2019 with Marcus Rashford\u2019s return, and updates on the club\u2019s transfer plans. After being exiled by former manager Ruben Amorim, the England internation",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/carrick-updates-on-man-utds-transfer-plans-and-delighted-with-rashford-return/",
-      "claimed_at": "2026-08-20T17:10:46Z",
-      "players": [
-        {
-          "element_id": 429,
-          "name": "Rashford",
-          "club": "MUN",
           "held": false
         }
       ],
