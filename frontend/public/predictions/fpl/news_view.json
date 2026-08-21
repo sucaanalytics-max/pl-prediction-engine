@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T19:14:09.352385Z",
-  "n_dropped": 221,
+  "generated_at": "2026-08-21T19:40:48.039612Z",
+  "n_dropped": 218,
   "dropped_by_source": {
-    "bbc_football": 71,
+    "bbc_football": 69,
     "fantasyfootballscout": 21,
-    "hayters": 33,
-    "sky_football": 96
+    "hayters": 34,
+    "sky_football": 94
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 311,
+  "n_articles": 308,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -363,6 +363,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "118bce294e24e7ca",
+      "headline": "Arsenal 2-0 Coventry City LIVE \u2013 Havertz and Saka put Champions in control",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 2-0 Coventry City LIVE - Havertz and Saka put Champions in control appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-v-coventry-city-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-21T17:02:40Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
           "held": false
         }
       ],
@@ -1719,36 +1737,6 @@
           "element_id": 452,
           "name": "Bruno G.",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ac3220dce17fa701",
-      "headline": "Carrick reveals multiple Man Utd stars close to returning",
-      "summary": "Manchester United boss Michael Carrick has updated on the fitness of Matthijs de Ligt, Benjamin Sesko, Mason Mount and others. The Reds will kick off the new season with a trip to face newly-promoted side Hull City this Saturday lunchtime. Ah",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/carrick-reveals-multiple-man-utd-stars-close-to-returning/",
-      "claimed_at": "2026-08-20T16:48:59Z",
-      "players": [
-        {
-          "element_id": 416,
-          "name": "De Ligt",
-          "club": "MUN",
-          "held": false
-        },
-        {
-          "element_id": 430,
-          "name": "Mount",
-          "club": "MUN",
-          "held": false
-        },
-        {
-          "element_id": 439,
-          "name": "\u0160e\u0161ko",
-          "club": "MUN",
           "held": false
         }
       ],
