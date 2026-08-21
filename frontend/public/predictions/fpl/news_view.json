@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T05:48:00.143282Z",
-  "n_dropped": 164,
+  "generated_at": "2026-08-21T06:45:34.208052Z",
+  "n_dropped": 166,
   "dropped_by_source": {
-    "bbc_football": 61,
+    "bbc_football": 62,
     "fantasyfootballscout": 2,
     "hayters": 21,
-    "sky_football": 80
+    "sky_football": 81
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 254,
+  "n_articles": 256,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "fcc47b0e89f371fc",
+      "headline": "Spurs agree \u00a375m deal to sign Man City's Savinho",
+      "summary": "Tottenham agree a deal to sign Manchester City winger Savinho for \u00a375m, with a further \u00a310m in potential add-ons.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwyl0r8g4lwo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T06:30:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "3bed37aef5eff4f7",
       "headline": "Break-up of Villa's Europa heroes leaves cracks for Emery to fill",
@@ -311,6 +329,24 @@
     {
       "digest": "87ca0a68eb222270",
       "headline": "Liverpool latest: Reds approach for Brighton's Minteh rejected",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-20T18:00:00Z",
+      "players": [
+        {
+          "element_id": 122,
+          "name": "Minteh",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "bd35927a101ff7ad",
+      "headline": "Liverpool latest: Approach for Brighton's Minteh rejected",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -1377,24 +1413,6 @@
       "touches_squad": null
     },
     {
-      "digest": "093ece3c092480df",
-      "headline": "Man City join Man Utd in Kone race - Thursday's gossip",
-      "summary": "Manchester City look set to rival neighbours Manchester United for Manu Kone, Aston Villa interested in Tosin Adarabioyo and Tottenham in talks over Man City duo.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cn0n4qlxyq7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-19T21:30:46Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "39c8f43a29495afe",
       "headline": "Man Utd latest: Rashford gives pointed response to Carragher clip...",
       "summary": null,
@@ -1407,24 +1425,6 @@
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "6a189748046204f6",
-      "headline": "Man Utd latest: Brighton CEO discusses Baleba move",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-19T21:10:00Z",
-      "players": [
-        {
-          "element_id": 131,
-          "name": "Baleba",
-          "club": "BHA",
           "held": null
         }
       ],
