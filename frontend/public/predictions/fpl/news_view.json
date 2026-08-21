@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T19:40:48.039612Z",
-  "n_dropped": 218,
+  "generated_at": "2026-08-21T19:57:47.038780Z",
+  "n_dropped": 222,
   "dropped_by_source": {
-    "bbc_football": 69,
+    "bbc_football": 70,
     "fantasyfootballscout": 21,
     "hayters": 34,
-    "sky_football": 94
+    "sky_football": 97
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 308,
+  "n_articles": 312,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,6 +189,60 @@
       "touches_squad": true
     },
     {
+      "digest": "03153bab9d7d92fc",
+      "headline": "Man Utd agree \u00a370m deal for Baleba",
+      "summary": "Manchester United have agreed a &#163;70m deal for Brighton midfielder Carlos Baleba.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13575603/carlos-baleba-transfer-news-manchester-united-and-brighton-agree-70m-deal-for-midfielder",
+      "claimed_at": "2026-08-21T20:38:00Z",
+      "players": [
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f8755fffc1b19deb",
+      "headline": "Clinical! Havertz fires Arsenal in front against Coventry",
+      "summary": "Kai Havertz fires Arsenal in front against Coventry as the Gunners begin their title defence.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13575602/kai-havertz-fires-arsenal-in-front-against-coventry",
+      "claimed_at": "2026-08-21T20:21:00Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5d6b3b9a0d9951b6",
+      "headline": "Saturday's gossip: Liverpool enquire about Real Madrid's Endrick",
+      "summary": "Liverpool make Endrick enquiry, Chelsea brace for a Nicolas Jackson offer and Arsenal make request to Victor Osimhen, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cy4kjg3j4d3o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T19:48:23Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "ca8c82c0ae9c6c80",
       "headline": "Inter Milan sign Jones from Liverpool",
       "summary": "Inter Milan have confirmed the signing of Curtis Jones in a &#163;30m (&#8364;35m) deal from Liverpool.",
@@ -255,6 +309,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "72da702273dda521",
+      "headline": "Saka and Havertz give Arsenal flying start in Premier League opener LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/live/559444",
+      "claimed_at": "2026-08-21T18:00:00Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
           "held": false
         }
       ],
@@ -993,24 +1065,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d10b3b7c01def00a",
-      "headline": "Man City latest: Savinho wanted to leave from day one, says Maresca",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-21T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "39623cec648ab9ab",
       "headline": "Where next for Chelsea's Delap and can he bounce back?",
       "summary": "Chelsea striker Liam Delap has been made available for sale just a year into his Stamford Bridge career. Where will he go and can he bounce back?",
@@ -1186,42 +1240,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/fpl-2026-27-man-city-best-players-set-piece-takers-predicted-xi-more",
       "claimed_at": "2026-08-21T12:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8a3b3e9c4fdab91c",
-      "headline": "\u00a3237m spent already.... so how can Spurs afford Savinho and Marmoush?",
-      "summary": "Sky Sports' Michael Bridge re-visits the question that was asked at the start of the transfer window - how can Spurs afford all these players?",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13575359/explained-how-can-spurs-afford-all-these-players",
-      "claimed_at": "2026-08-21T12:08:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "285b8e54cebea15d",
-      "headline": "Man City latest: Talks opened with Palmeiras over deal for Allan",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-21T11:59:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1678,24 +1696,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c39eg04p08eo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-20T21:22:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cd8a766971eee12f",
-      "headline": "Arsenal exploring Yildiz move - Friday's gossip",
-      "summary": "Arsenal explore move for Kenan Yildiz, Atletico Madrid trying to finalise Nicolas Jackson signing and Manchester City in talks over Allan Elias, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/czxqvllyg72o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T20:47:42Z",
       "players": [
         {
           "element_id": 0,
