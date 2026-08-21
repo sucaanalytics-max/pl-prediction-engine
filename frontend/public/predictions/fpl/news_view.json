@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T18:36:00.344237Z",
-  "n_dropped": 219,
+  "generated_at": "2026-08-21T19:14:09.352385Z",
+  "n_dropped": 221,
   "dropped_by_source": {
     "bbc_football": 71,
     "fantasyfootballscout": 21,
-    "hayters": 32,
-    "sky_football": 95
+    "hayters": 33,
+    "sky_football": 96
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 309,
+  "n_articles": 311,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -207,6 +207,24 @@
       "touches_squad": false
     },
     {
+      "digest": "e764af5aa2575f88",
+      "headline": "Inter complete \u00a330m deal for Liverpool's Jones",
+      "summary": "Inter Milan sign midfielder Curtis Jones from Liverpool in a deal worth \u00a330m.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/czdm9pjd0ero?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T18:48:15Z",
+      "players": [
+        {
+          "element_id": 373,
+          "name": "C.Jones",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "a0a843993bbd8931",
       "headline": "Brighton reject \u00a360m Liverpool bid for Minteh",
       "summary": "Brighton have rejected a &#163;60m bid from Liverpool for winger Yankuba Minteh.",
@@ -245,6 +263,24 @@
     {
       "digest": "8645693d9d1d5473",
       "headline": "Bruno absent for Arsenal vs Coventry on Sky!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/live/559444",
+      "claimed_at": "2026-08-21T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a13078407ebf0317",
+      "headline": "Arsenal vs Coventry LIVE on Sky!",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -345,6 +381,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cb4f4d7d0dd1031a",
+      "headline": "Arsenal 0-0 Coventry City LIVE \u2013 no Guimaraes or Martinelli in Gunners squad but Lewis-Skelly starts",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 0-0 Coventry City LIVE - no Guimaraes or Martinelli in Gunners squad but Lewis-Skelly starts appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-v-coventry-city-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-21T17:02:40Z",
+      "players": [
+        {
+          "element_id": 7,
+          "name": "Lewis-Skelly",
+          "club": "ARS",
           "held": false
         }
       ],
@@ -1161,24 +1215,6 @@
       "touches_squad": false
     },
     {
-      "digest": "09d378c3c5a4c6b1",
-      "headline": "Arsenal latest: Owners release statement ahead of season opener",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-21T11:49:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "92ade558572c0f8a",
       "headline": "Coventry continue busy summer with another signing",
       "summary": "Coventry City have signed goalkeeper Dan Bentley from Wolverhampton Wanderers on a two-year contract. The 33-year-old brings extensive experience to Frank Lampard\u2019s side after spells with Southend United, Brentford, Bristol City and Wolves. \u201cCoventr",
@@ -1653,24 +1689,6 @@
       "touches_squad": false
     },
     {
-      "digest": "2e95807350605255",
-      "headline": "Villa \u00a318m bid for Harwood-Bellis rejected by Southampton",
-      "summary": "Aston Villa have bid worth around \u00a318m plus add-ons rejected by Southampton for defender Taylor Harwood-Bellis.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cx27w8kv9lvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T19:14:08Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "293f0bc414bf6d90",
       "headline": "Carrick updates on Man Utd\u2019s transfer plans and \u2018delighted\u2019 with Rashford return",
       "summary": "Manchester United boss Michael Carrick admitted he has been \u2018delighted\u2019 with Marcus Rashford\u2019s return, and updates on the club\u2019s transfer plans. After being exiled by former manager Ruben Amorim, the England internation",
@@ -1731,24 +1749,6 @@
           "element_id": 439,
           "name": "\u0160e\u0161ko",
           "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9ed8e84492257023",
-      "headline": "Newcastle boss Jaissle confirms key man will miss Liverpool clash",
-      "summary": "Newcastle United head coach Matthias Jaissle has confirmed that Tino Livramento will not be ready to play against Liverpool on Sunday. Jaissle confirmed that \u201cit\u2019s for sure too early\u201d on Livramento, as he works his way back to fitness",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/newcastle-boss-jaissle-confirms-key-man-will-miss-liverpool-clash/",
-      "claimed_at": "2026-08-20T16:32:02Z",
-      "players": [
-        {
-          "element_id": 450,
-          "name": "Livramento",
-          "club": "NEW",
           "held": false
         }
       ],
