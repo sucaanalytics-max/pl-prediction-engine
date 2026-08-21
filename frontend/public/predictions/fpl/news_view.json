@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T17:13:38.291054Z",
-  "n_dropped": 216,
+  "generated_at": "2026-08-21T17:48:22.765141Z",
+  "n_dropped": 217,
   "dropped_by_source": {
-    "bbc_football": 72,
+    "bbc_football": 73,
     "fantasyfootballscout": 20,
-    "hayters": 34,
-    "sky_football": 90
+    "hayters": 32,
+    "sky_football": 92
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 306,
+  "n_articles": 307,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -187,6 +187,60 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "a0a843993bbd8931",
+      "headline": "Brighton reject \u00a360m Liverpool bid for Minteh",
+      "summary": "Brighton have rejected a &#163;60m bid from Liverpool for winger Yankuba Minteh.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13575558/yankuba-minteh-transfer-news-brighton-reject-liverpool-bid-of-60m-for-winger",
+      "claimed_at": "2026-08-21T18:24:00Z",
+      "players": [
+        {
+          "element_id": 122,
+          "name": "Minteh",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c43f6c28a8ea12eb",
+      "headline": "The Premier League is back! Arsenal vs Coventry LIVE on Sky!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/live/559444",
+      "claimed_at": "2026-08-21T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a34b9766e0bb4eb4",
+      "headline": "Brighton reject Liverpool's new \u00a360m Minteh bid",
+      "summary": "Liverpool have an improved bid of \u00a360m for winger Yankuba Minteh rejected by Brighton but talks between the clubs continue.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ce97ky3vkx4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T17:26:49Z",
+      "players": [
+        {
+          "element_id": 122,
+          "name": "Minteh",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "438569f0d2237625",
@@ -1125,24 +1179,6 @@
       "touches_squad": false
     },
     {
-      "digest": "cafecab3dcfc3f77",
-      "headline": "Carra meets Iraola! Liverpool boss on playing style, transfers & Newcastle",
-      "summary": "Andoni Iraola sits down for a revealing and wide-ranging chat with Jamie Carragher in which the Liverpool head coach discusses his playing, the club's summer transfer business and his side's tricky season opener at Newcastle",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575327/andoni-iraola-new-liverpool-boss-explains-his-coaching-philosophy-ahead-of-premier-league-opener-at-newcastle",
-      "claimed_at": "2026-08-21T11:12:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f469def5d5dcd766",
       "headline": "West Ham's Wan\u2011Bissaka joins Aston Villa on loan",
       "summary": "DR Congo right-back Aaron Wan\u2011Bissaka arrives at Villa Park on an initial loan deal with a \"conditional obligation to buy\".",
@@ -1245,24 +1281,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3938a08e1156e6bb",
-      "headline": "Palace latest: Deal for Chelsea defender Disasi close",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-08-21T09:55:00Z",
-      "players": [
-        {
-          "element_id": 153,
-          "name": "Disasi",
-          "club": "CHE",
           "held": false
         }
       ],
@@ -1620,24 +1638,6 @@
       "digest": "8774fe66860c1cce",
       "headline": "Joao Pedro set to sign new Chelsea deal until 2032",
       "summary": "Chelsea are set to renew striker Joao Pedro's contract until 2032 before the start of the Premier League season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c79g2z11r81o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T19:06:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9d06aec1cea60e4c",
-      "headline": "Joao Pedro set to extend Chelsea deal to 2034",
-      "summary": "Chelsea are set to renew striker Joao Pedro's contract until 2034 before the start of the Premier League season.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c79g2z11r81o?at_medium=RSS&at_campaign=rss",
