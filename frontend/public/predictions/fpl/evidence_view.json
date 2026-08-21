@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T10:19:24.084253Z",
+  "generated_at": "2026-08-21T11:16:45.372208Z",
   "gameweek": 1,
   "players": [
     {
@@ -666,6 +666,126 @@
               "claim_type": "status",
               "value": "d",
               "claimed_at": "2026-08-19T18:00:08.310507Z",
+              "observed_at": "2026-08-19T18:18:47.096189Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": true
+    },
+    {
+      "element_id": 283,
+      "player_name": "Jacob",
+      "club": "Hull City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "unresolved_conservative",
+          "n_conflicts": 2,
+          "n_dropped": 0,
+          "unresolved": true,
+          "escalation": "chance_of_playing: fpl_bootstrap says 0 (2026-08-02T09:00:11.038361Z) while fpl_news_parse says 75 (2026-08-02T09:00:11.038361Z). Used the more conservative 0.",
+          "claims": [
+            {
+              "claim_id": "691ae157ae1d44bc",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-08-02T09:00:11.038361Z",
+              "observed_at": "2026-08-21T10:19:57.069478Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "1a97d6c76fb702d3",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-08-02T09:00:11.038361Z",
+              "observed_at": "2026-08-19T18:18:47.096189Z",
+              "quote": "Hip injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "9911b35e1ad46d5e",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-08-02T09:00:11.038361Z",
+              "observed_at": "2026-08-19T18:18:47.096189Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            }
+          ]
+        },
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-08-29",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "9e65de212fcc6f38",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-08-29",
+              "claimed_at": "2026-08-02T09:00:11.038361Z",
+              "observed_at": "2026-08-21T10:19:57.069478Z",
+              "quote": "Hip injury - Expected back 29 Aug",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "4d4d9d347148ce92",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-08-02T09:00:11.038361Z",
+              "observed_at": "2026-08-21T10:19:57.069478Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "570dc05c3654bbe0",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-08-02T09:00:11.038361Z",
               "observed_at": "2026-08-19T18:18:47.096189Z",
               "quote": null,
               "url": null,
@@ -1707,76 +1827,6 @@
               "value": "d",
               "claimed_at": "2026-08-20T14:00:08.018379Z",
               "observed_at": "2026-08-20T14:25:55.234899Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 1,
-      "needs_attention": false
-    },
-    {
-      "element_id": 283,
-      "player_name": "Jacob",
-      "club": "Hull City",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 75,
-          "rule": "tier_precedence",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "9911b35e1ad46d5e",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-08-02T09:00:11.038361Z",
-              "observed_at": "2026-08-19T18:18:47.096189Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            },
-            {
-              "claim_id": "1a97d6c76fb702d3",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-08-02T09:00:11.038361Z",
-              "observed_at": "2026-08-19T18:18:47.096189Z",
-              "quote": "Hip injury - 75% chance of playing",
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "570dc05c3654bbe0",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-08-02T09:00:11.038361Z",
-              "observed_at": "2026-08-19T18:18:47.096189Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -8788,10 +8838,10 @@
     }
   ],
   "counts": {
-    "n_claims": 906,
+    "n_claims": 915,
     "n_players_with_claims": 182,
     "n_players_shown": 116,
-    "n_escalations": 11,
+    "n_escalations": 12,
     "n_players_resolved": 133
   }
 }
