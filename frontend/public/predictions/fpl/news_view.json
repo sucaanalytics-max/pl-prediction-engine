@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T21:00:25.282329Z",
-  "n_dropped": 223,
+  "generated_at": "2026-08-21T21:38:26.690524Z",
+  "n_dropped": 228,
   "dropped_by_source": {
-    "bbc_football": 68,
-    "fantasyfootballscout": 21,
-    "hayters": 36,
-    "sky_football": 98
+    "bbc_football": 70,
+    "fantasyfootballscout": 20,
+    "hayters": 37,
+    "sky_football": 101
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 313,
+  "n_articles": 318,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -187,6 +187,96 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "26f87bb60e24475a",
+      "headline": "Arsenal cruise to victory over Coventry on Premier League return",
+      "summary": "Highlights from the Premier League match between Arsenal and Coventry.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13575642/arsenal-3-0-coventry-premier-league-highlights",
+      "claimed_at": "2026-08-21T21:58:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c3bbe0fbec4f3323",
+      "headline": "Arsenal kick off title defence with thumping win over Coventry",
+      "summary": "Arsenal made a flying start to their Premier League title defence with a 3-0 thumping of newly-promoted Coventry City in the season opener at the Emirates Stadium.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/report/559444",
+      "claimed_at": "2026-08-21T21:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3e2031c99e031733",
+      "headline": "Arsenal start title defence with comfortable win over Coventry",
+      "summary": "Goals from Kai Havertz, Bukayo Saka and Martin Odegaard give champions Arsenal a comfortable 3-0 win over newcomers Coventry City, in the opening game of the Premier League campaign at the Emirates Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cgr7e17010go?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T21:35:28Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "df4e0d68100ef314",
+      "headline": "\u2018I think now he wants to stay\u2019 \u2013 Spurs boss De Zerbi on the futures of midfield duo",
+      "summary": "Tottenham boss Roberto De Zerbi has revealed that he wants Lucas Bergvall to remain at the club amid uncertainty over the midfielder's future. Bergvall has impressed De Zerbi during pre-season, with the new Spurs hea",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/i-think-now-he-wants-to-stay-spurs-boss-de-zerbi-on-the-futures-of-midfield-duo/",
+      "claimed_at": "2026-08-21T21:30:00Z",
+      "players": [
+        {
+          "element_id": 520,
+          "name": "Bergvall",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "452c0e1f4e2dc037",
+      "headline": "Tzolis shines on Premier League debut - Arsenal v Coventry player ratings",
+      "summary": "How Arsenal and Coventry's players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/crl7g4e4pdno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T20:52:32Z",
+      "players": [
+        {
+          "element_id": 557,
+          "name": "Tzolis",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "03153bab9d7d92fc",
@@ -407,6 +497,24 @@
     {
       "digest": "c43f6c28a8ea12eb",
       "headline": "The Premier League is back! Arsenal vs Coventry LIVE on Sky!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/live/559444",
+      "claimed_at": "2026-08-21T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "dda9d515d60d2e79",
+      "headline": "Have your say after Arsenal beat Coventry in PL opener LIVE!",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -795,42 +903,6 @@
       "touches_squad": false
     },
     {
-      "digest": "dcaf5e11a5e37d45",
-      "headline": "Spurs agree \u00a385m Savinho deal and close in on Marmoush",
-      "summary": "Tottenham are closing in on signing Manchester City pair Savinho and Omar Marmoush.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575264/savinho-transfer-tottenham-agree-85m-deal-to-sign-man-city-winger-as-spurs-close-in-on-omar-marmoush",
-      "claimed_at": "2026-08-21T15:51:00Z",
-      "players": [
-        {
-          "element_id": 401,
-          "name": "Marmoush",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "db4e253bcab42151",
-      "headline": "Leeds latest: Mudryk eyed as potential target",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-21T15:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "df7b7d535e89bd8f",
       "headline": "Shakhtar agree to play Champions League ties at Chelsea",
       "summary": "Ukrainian club Shakhtar Donetsk agree to play Champions League home games at Chelsea's Stamford Bridge this season.",
@@ -1090,24 +1162,6 @@
       "tier": 2,
       "url": "https://hayters.com/emery-on-konsa-departure-and-new-defensive-signings-at-aston-villa/",
       "claimed_at": "2026-08-21T14:25:02Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1c69682d1734fbef",
-      "headline": "Tottenham latest: De Zerbi reveals new captain...",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-21T14:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1449,24 +1503,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f7f32ec0d24b89c3",
-      "headline": "Spurs agree huge Savinho deal, Arsenal exploring possibility of move for young forward \u2013 latest transfer reports",
-      "summary": "Tottenham have agreed a deal worth \u00a375m plus \u00a310m in add-ons with Manchester City for winger Savinho, according to The Athletic. City are already looking at a replacement, with talks unde",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-exploring-possibility-of-move-for-young-forward-latest-transfer-reports/",
-      "claimed_at": "2026-08-21T10:00:20Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "3f686f30e4af3373",
       "headline": "The inside story of how Trabzonspor pulled off Salah deal",
       "summary": "Mohamed Salah was expected to move to Saudi Arabia or the United States after leaving Liverpool, but Turkish side Trabzonspor pulled off one of the coups of the transfer window.",
@@ -1672,42 +1708,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cwyl0r8g4lwo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-21T06:30:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fcc47b0e89f371fc",
-      "headline": "Spurs agree \u00a375m deal to sign Man City's Savinho",
-      "summary": "Tottenham agree a deal to sign Manchester City winger Savinho for \u00a375m, with a further \u00a310m in potential add-ons.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwyl0r8g4lwo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T06:30:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3bed37aef5eff4f7",
-      "headline": "Break-up of Villa's Europa heroes leaves cracks for Emery to fill",
-      "summary": "Aston Villa have already sold three key players this summer, a figure that could potentially double by the end of the transfer window.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c20j3vjvy48o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T05:28:59Z",
       "players": [
         {
           "element_id": 0,
