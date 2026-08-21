@@ -1,19 +1,133 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T12:02:38.897540Z",
-  "n_dropped": 189,
+  "generated_at": "2026-08-21T13:11:07.509035Z",
+  "n_dropped": 192,
   "dropped_by_source": {
     "bbc_football": 69,
     "fantasyfootballscout": 11,
-    "hayters": 24,
-    "sky_football": 85
+    "hayters": 26,
+    "sky_football": 86
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 279,
+  "n_articles": 282,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "1c69682d1734fbef",
+      "headline": "Tottenham latest: De Zerbi reveals new captain...",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-21T14:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "d10b3b7c01def00a",
+      "headline": "Man City latest: Savinho wanted to leave from day one, says Maresca",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-21T14:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "36a6d56d906b4de8",
+      "headline": "Man City star to miss \u2018two to three weeks\u2019",
+      "summary": "Manchester City boss Enzo Maresca has confirmed Jeremy Doku is the club\u2019s only injury concern ahead of Sunday\u2019s Premier League clash with Bournemouth. Maresca revealed Matheus Nunes has returned to being in contention, with the rest of his squad also availa",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-star-to-miss-two-to-three-weeks/",
+      "claimed_at": "2026-08-21T13:08:19Z",
+      "players": [
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "d833e65c6dbb50b2",
+      "headline": "\u2018Since day one\u2019 \u2013 Maresca on the futures of Spurs targets Savinho and Marmoush",
+      "summary": "Manchester City boss Enzo Maresca says Savinho has wanted to leave the club \u201csince day one\u201d of his tenure amid interest from Tottenham. Spurs have agreed an \u00a385m deal for the Brazilian winger and Maresca admitted it is di",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/since-day-one-maresca-on-the-futures-of-spurs-targets-savinho-and-marmoush/",
+      "claimed_at": "2026-08-21T12:59:30Z",
+      "players": [
+        {
+          "element_id": 401,
+          "name": "Marmoush",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "5086f1ed2586ad20",
+      "headline": "Gyokeres proud of impact at Arsenal last season",
+      "summary": "Striker Viktor Gyokeres says he is proud of his contribution to Arsenal last season as they begin the defence of their Premier League title at home to his former side Coventry City on Friday.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cy5dxg3kv6eo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T12:46:52Z",
+      "players": [
+        {
+          "element_id": 25,
+          "name": "Gy\u00f6keres",
+          "club": "ARS",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "590c408f75d53500",
+      "headline": "Brighton boss Hurzeler on futures of Man Utd target Baleba and Liverpool target Minteh",
+      "summary": "Brighton boss Fabian Hurzeler insists Carlos Baleba's absence is down to fitness and not speculation over his future. Man Utd are closing in on a deal for Baleba, who is currently nursing an ankle issue. Hurzeler",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brighton-boss-hurzeler-on-futures-of-man-utd-target-baleba-and-liverpool-target-minteh/",
+      "claimed_at": "2026-08-21T12:38:11Z",
+      "players": [
+        {
+          "element_id": 122,
+          "name": "Minteh",
+          "club": "BHA",
+          "held": null
+        },
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "285b8e54cebea15d",
       "headline": "Man City latest: Talks opened with Palmeiras over deal for Allan",
@@ -117,6 +231,24 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "cafecab3dcfc3f77",
+      "headline": "Carra meets Iraola! Liverpool boss on playing style, transfers & Newcastle",
+      "summary": "Andoni Iraola sits down for a revealing and wide-ranging chat with Jamie Carragher in which the Liverpool head coach discusses his playing, the club's summer transfer business and his side's tricky season opener at Newcastle",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13575327/andoni-iraola-new-liverpool-boss-explains-his-coaching-philosophy-ahead-of-premier-league-opener-at-newcastle",
+      "claimed_at": "2026-08-21T11:12:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": null
         }
       ],
@@ -483,6 +615,24 @@
       "touches_squad": null
     },
     {
+      "digest": "e725f977bd5d0dc4",
+      "headline": "Spurs agree \u00a375m deal for Savinho who 'wanted to leave' Man City",
+      "summary": "Tottenham have agreed a deal to sign Savinho for an initial \u00a375m after the winger asked to leave Manchester City, according to boss Enzo Maresca.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwyl0r8g4lwo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T06:30:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "fcc47b0e89f371fc",
       "headline": "Spurs agree \u00a375m deal to sign Man City's Savinho",
       "summary": "Tottenham agree a deal to sign Manchester City winger Savinho for \u00a375m, with a further \u00a310m in potential add-ons.",
@@ -585,6 +735,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "27147435dfae1f4a",
+      "headline": "Brighton latest: Hurzeler confirms Man Utd target Baleba will miss Villa game",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-20T22:55:00Z",
+      "players": [
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "BHA",
           "held": null
         }
       ],
@@ -1137,42 +1305,6 @@
       "touches_squad": null
     },
     {
-      "digest": "d9da1c14c5e262f9",
-      "headline": "Why are Brighton and Hearts both allowed in the Conference League?",
-      "summary": "Brighton and Hearts, who share an owner in Tony Bloom, could both end up in the Conference League this season",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c78g2ll2l7vo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T15:24:51Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e54976e368f73ac8",
-      "headline": "Chelsea happy with Fernandez, says Alonso",
-      "summary": "Enzo Fernandez has shown a \"really good attitude\" since his return to Chelsea, says head coach Xabi Alonso, as speculation over the midfielder's future continues.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cpq8gq5llp9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T14:39:54Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "3f1e8e7a9d9cbb10",
       "headline": "Tromso vs Brighton in play-off for Conference League LIVE!",
       "summary": null,
@@ -1234,42 +1366,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/tromso-vs-brighton-and-hove-albion/live/577284",
       "claimed_at": "2026-08-20T14:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e722a480875bad24",
-      "headline": "'100 per cent' - Arteta confident Lewis-Skelly stays at Arsenal",
-      "summary": "Mikel Arteta says he is \"100 per cent\" confident Myles Lewis-Skelly will be an Arsenal player at the end of the transfer window.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575044/myles-lewis-skelly-transfer-news-mikel-arteta-100-per-cent-confident-arsenal-will-keep-teenage-midfielder-this-summer",
-      "claimed_at": "2026-08-20T14:04:00Z",
-      "players": [
-        {
-          "element_id": 7,
-          "name": "Lewis-Skelly",
-          "club": "ARS",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "009717ac5af9377d",
-      "headline": "Once homeless and in liquidation, Coventry seek 'fearless' PL return",
-      "summary": "The groundswell of excitement in the city of Coventry is palpable. Frank Lampard's side play their first Premier League game in over 25 years at the home of champions Arsenal on Friday night, live on Sky Sports. Only four months ag",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575020/arsenal-vs-coventry-premier-league-new-boys-approaching-season-with-no-fear-under-frank-lampard",
-      "claimed_at": "2026-08-20T14:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1461,102 +1557,6 @@
       "touches_squad": null
     },
     {
-      "digest": "38b0d561a2e81a07",
-      "headline": "\u2018We need a squad able to compete on four fronts\u2019 \u2013 Van Dijk\u2019s Liverpool message ahead of the new season",
-      "summary": "Liverpool captain Virgil Van Dijk has suggested that the club\u2019s work in the transfer window is not yet finished ahead of the new season. So far the Reds have brought in centre-backs Jeremy Jacquet",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/we-need-a-squad-able-to-compete-on-four-fronts-van-dijks-liverpool-message/",
-      "claimed_at": "2026-08-20T11:00:00Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 579,
-          "name": "Araujo",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "891063278bd715f0",
-      "headline": "\u201cWe need a squad able to compete on four fronts\u201d \u2013 Van Dijk\u2019s Liverpool message ahead of the new season",
-      "summary": "Liverpool captain Virgil Van Dijk has suggested that the club\u2019s work in the transfer window is not yet finished ahead of the new season. So far the Reds have brought in centre-backs Jeremy Jacquet",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/we-need-a-squad-able-to-compete-on-four-fronts-van-dijks-liverpool-message/",
-      "claimed_at": "2026-08-20T11:00:00Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 579,
-          "name": "Araujo",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "2ff00e46d1203b19",
-      "headline": "Man City rival Man Utd for midfield target, whilst Arsenal star set to stay \u2013 latest transfer reports",
-      "summary": "Manchester City are set to compete with rivals Manchester United for midfielder Manu Kone, whilst continuing to eye other targets. Arsenal striker Gabriel Jesus is set to stay at the Emirates, despi",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-rival-man-utd-for-target-whilst-arsenal-star-to-stay/",
-      "claimed_at": "2026-08-20T10:00:40Z",
-      "players": [
-        {
-          "element_id": 373,
-          "name": "C.Jones",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 401,
-          "name": "Marmoush",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "14507965dc3f926a",
       "headline": "How you can own FOUR Arsenal players in FPL Gameweek 1",
       "summary": "Fantasy managers will have to move quickly to get the 'quadruple-up' The post How you can own FOUR Arsenal players in FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1569,42 +1569,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "f0e7d733e782e564",
-      "headline": "Liverpool latest: How will Jones exit affect Iraola's midfield options?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-20T10:00:00Z",
-      "players": [
-        {
-          "element_id": 373,
-          "name": "C.Jones",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "c95d49c2cdedea61",
-      "headline": "Why Liverpool are ready to put their faith in the 'real deal' Jacquet",
-      "summary": "Liverpool have big hopes for Jeremy Jacquet having invested &#163;60m to bring the highly regarded young central defender to Anfield this summer. An injury disrupted his pre-season, but the Frenchman looks worth the wait.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13570137/jeremy-jacquet-why-liverpool-are-ready-to-put-their-faith-in-60m-france-centre-back",
-      "claimed_at": "2026-08-20T08:08:00Z",
-      "players": [
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
           "held": null
         }
       ],
