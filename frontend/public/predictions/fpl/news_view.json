@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T21:38:26.690524Z",
-  "n_dropped": 228,
+  "generated_at": "2026-08-21T21:59:45.980524Z",
+  "n_dropped": 229,
   "dropped_by_source": {
     "bbc_football": 70,
     "fantasyfootballscout": 20,
-    "hayters": 37,
+    "hayters": 38,
     "sky_football": 101
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 318,
+  "n_articles": 319,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -201,6 +201,30 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ea2854de9225659d",
+      "headline": "Arteta hails Tzolis\u2019 impact and provides update on Guimaraes injury after beating Coventry",
+      "summary": "Mikel Arteta hailed Christos Tzolis\u2019 impact after Arsenal began their Premier League title defence with a comfortable 3-0 victory over Coventry City at the Emirates. Kai Havertz, Bukayo Saka and Martin Odegaar",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-hails-tzolis-impact-and-provides-update-on-guimaraes-injury-after-beating-coventry/",
+      "claimed_at": "2026-08-21T21:51:36Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 557,
+          "name": "Tzolis",
+          "club": "ARS",
           "held": false
         }
       ],
@@ -1474,24 +1498,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c79g2z11r81o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-21T10:03:59Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "05597e0519884083",
-      "headline": "Arsenal exploring possibility of move for young forward \u2013 latest transfer reports",
-      "summary": "Tottenham have agreed a deal worth \u00a375m plus \u00a310m in add-ons with Manchester City for winger Savinho, according to The Athletic. City are already looking at a replacement, with talks underway over a deal for Palmeiras",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-exploring-possibility-of-move-for-young-forward-latest-transfer-reports/",
-      "claimed_at": "2026-08-21T10:00:20Z",
       "players": [
         {
           "element_id": 0,
