@@ -1,19 +1,49 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T15:16:57.818258Z",
-  "n_dropped": 208,
+  "generated_at": "2026-08-21T15:58:44.657363Z",
+  "n_dropped": 216,
   "dropped_by_source": {
-    "bbc_football": 69,
+    "bbc_football": 72,
     "fantasyfootballscout": 17,
-    "hayters": 31,
-    "sky_football": 91
+    "hayters": 33,
+    "sky_football": 94
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 298,
+  "n_articles": 306,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "8cbf52782d66fdcb",
+      "headline": "Manzambi, Madjo + Watkins: Aston Villa injury latest for FPL Gameweek 1",
+      "summary": "Unai Emery spoke to the press on Thursday The post Manzambi, Madjo + Watkins: Aston Villa injury latest for FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/manzambi-madjo-watkins-aston-villa-injury-latest-for-fpl-gameweek-1",
+      "claimed_at": "2026-08-21T15:54:42Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": true
+        },
+        {
+          "element_id": 582,
+          "name": "Madjo",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "f147f84ecdafcdfd",
       "headline": "Villa expected to make Jackson move if Watkins sold to Al Hilal",
@@ -159,6 +189,60 @@
       "touches_squad": true
     },
     {
+      "digest": "2ecc73060dde15a5",
+      "headline": "Leeds latest: Chelsea reject opening offer for Mudryk",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-21T16:30:00Z",
+      "players": [
+        {
+          "element_id": 578,
+          "name": "Mudryk",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b1f2941e9272ea26",
+      "headline": "Chelsea to host Shakhtar's Champions League home games amid ongoing exile",
+      "summary": "Shakhtar&#160;Donetsk will play their Champions League home games at&#160;Stamford Bridge&#160;this season after coming to an agreement with&#160;Chelsea&#160;to host their European matches while they remain in exile from thei",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13575487/why-are-shakhtar-playing-at-chelsea-stamford-bridge-to-host-exiled-ukrainian-sides-champions-league-home-games",
+      "claimed_at": "2026-08-21T16:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e3f1743a824197db",
+      "headline": "Palace latest: Disasi undergoing medical ahead of loan move",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-21T16:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "cbe5bce55b309d12",
       "headline": "Sunderland latest: Defender Methalie joins with deal agreed for midfielder",
       "summary": null,
@@ -220,6 +304,78 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-21T15:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "df7b7d535e89bd8f",
+      "headline": "Shakhtar agree to play Champions League ties at Chelsea",
+      "summary": "Ukrainian club Shakhtar Donetsk agree to play Champions League home games at Chelsea's Stamford Bridge this season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cpw9e1dz9kko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T15:40:04Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "57c45b369db3ac1c",
+      "headline": "Chelsea reject initial Leeds loan bid for Mudryk",
+      "summary": "Chelsea reject an initial season-long loan offer from Leeds United for winger Mykhailo Mudryk.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c4gjv4xq2l8o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T15:22:37Z",
+      "players": [
+        {
+          "element_id": 578,
+          "name": "Mudryk",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9fa90f8ff4e68426",
+      "headline": "'Hungry to win' - Villa's Konsa joins Arsenal in \u00a355m deal",
+      "summary": "Arsenal complete the \u00a355m signing of England defender Ezri Konsa from Aston Villa.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckg97jpkkego?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T15:20:45Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "134ff718e2fa633e",
+      "headline": "Southampton boss Eckert responds to Aston Villa interest in star man Harwood-Bellis",
+      "summary": "Southampton boss Tonda Eckert says it is \u201ccompletely normal\u201d for Taylor Harwood-Bellis to attract interest after establishing himself as one of the Championship\u2019s best centre-backs. Harwood-Bellis is a target for Ast",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/southampton-boss-eckert-responds-to-aston-villa-interest-in-star-man-harwood-bellis/",
+      "claimed_at": "2026-08-21T15:19:43Z",
       "players": [
         {
           "element_id": 0,
@@ -1155,24 +1311,6 @@
       "touches_squad": false
     },
     {
-      "digest": "24bc040fb75d233a",
-      "headline": "Spurs agree \u00a385m deal to sign Savinho from Man City",
-      "summary": "Tottenham Hotspur have agreed an &#163;85m deal with Manchester City to sign Savinho.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575264/savinho-transfer-spurs-agree-85m-deal-to-sign-brazi-forward-from-manchester-city",
-      "claimed_at": "2026-08-21T07:56:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a353c31c454e9657",
       "headline": "Would Marmoush joining Tottenham be a masterstroke or risk?",
       "summary": "Tottenham are working on a deal for Omar Marmoush, but what could the Man City forward bring to the north London team?",
@@ -1270,42 +1408,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/fpl-2026-27-spurs-best-players-set-piece-takers-predicted-xi-more",
       "claimed_at": "2026-08-21T01:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5bf2d43b8d9c10be",
-      "headline": "PL Predictions: Champions again, ole, ole? Arsenal to make fast start on FNF",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575143/premier-league-predictions-jones-knows-best-bets-champions-again-ole-ole-arsenal-to-make-fast-start-on-fnf",
-      "claimed_at": "2026-08-20T23:25:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e8ca9efeb37dbdca",
-      "headline": "PL predictions: Champions again, ole, ole? Arsenal to make fast start on FNF",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575143/premier-league-predictions-jones-knows-best-bets-champions-again-ole-ole-arsenal-to-make-fast-start-on-fnf",
-      "claimed_at": "2026-08-20T23:25:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1485,42 +1587,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5a396625d8221f7a",
-      "headline": "Why first 10 days of new season could tell us a lot about Man Utd",
-      "summary": "The first 10 days of the new Premier League season could tell us a lot about what lies ahead for Manchester United.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cy5dx427yw7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T17:54:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "35324fc13fa8f337",
-      "headline": "Seven defenders on the books - why Arsenal still want Konsa",
-      "summary": "Arsenal have already spent more than \u00a3100m this summer as they look to defend their Premier League title - so why do they want Ezri Konsa as well?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c62ey2y9n79o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T17:48:12Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "293f0bc414bf6d90",
       "headline": "Carrick updates on Man Utd\u2019s transfer plans and \u2018delighted\u2019 with Rashford return",
       "summary": "Manchester United boss Michael Carrick admitted he has been \u2018delighted\u2019 with Marcus Rashford\u2019s return, and updates on the club\u2019s transfer plans. After being exiled by former manager Ruben Amorim, the England internation",
@@ -1533,24 +1599,6 @@
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3949efc3ad85bc45",
-      "headline": "Liverpool have \u00a350m bid rejected for Brighton's Minteh",
-      "summary": "Liverpool have a \u00a350m bid rejected by Brighton for their winger Yankuba Minteh.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c4gknq7d8d5o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T17:06:34Z",
-      "players": [
-        {
-          "element_id": 122,
-          "name": "Minteh",
-          "club": "BHA",
           "held": false
         }
       ],
@@ -1659,42 +1707,6 @@
           "element_id": 223,
           "name": "Mateta",
           "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "290cb7e5b3bc497b",
-      "headline": "Hull City boss Jakirovic still expects \u2018three or four\u2019 more signings",
-      "summary": "Hull City manager Sergej Jakirovic has insisted that he is still expecting multiple more signings before the end of the transfer window. The Tigers have already made 11 new signings this summer after winning the Championship play-o",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/hull-city-boss-jakirovic-still-expects-three-or-four-more-signings/",
-      "claimed_at": "2026-08-20T15:26:14Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5591713614416d7d",
-      "headline": "Arsenal midfielder a doubt for Coventry clash",
-      "summary": "Arsenal boss Mikel Arteta says Bruno Guimaraes is making good progress in his recovery from a minor injury but remains cautious over the midfielder\u2019s return. Guimaraes picked up a knock during the Community Shield win over Manchester City. On whether Gui",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-midfielder-a-doubt-for-coventry-clash/",
-      "claimed_at": "2026-08-20T13:42:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
