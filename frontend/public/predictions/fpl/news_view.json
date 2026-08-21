@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T20:32:37.138575Z",
-  "n_dropped": 224,
+  "generated_at": "2026-08-21T21:00:25.282329Z",
+  "n_dropped": 223,
   "dropped_by_source": {
-    "bbc_football": 70,
+    "bbc_football": 68,
     "fantasyfootballscout": 21,
-    "hayters": 35,
+    "hayters": 36,
     "sky_football": 98
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 314,
+  "n_articles": 313,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -466,6 +466,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
       "claimed_at": "2026-08-21T17:22:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "00b6de7a449dca7e",
+      "headline": "Arsenal 3-0 Coventry City LIVE \u2013 Champions start title defence with comfortable win",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 3-0 Coventry City LIVE - Champions start title defence with comfortable win appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-v-coventry-city-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-21T17:02:40Z",
       "players": [
         {
           "element_id": 0,
@@ -1695,30 +1713,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "57e15cae128742e8",
-      "headline": "Arteta explains Arsenal\u2019s aims in the final weeks of the transfer window and doesn\u2019t rule out more signings",
-      "summary": "Arsenal boss Mikel Arteta has explained the club\u2019s goals in the transfer market and has not ruled out the possibility of more signings arriving. The Gunners have already brought in Bruno Guima",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-explains-arsenals-aims-in-the-final-weeks-of-the-transfer-window/",
-      "claimed_at": "2026-08-20T21:38:42Z",
-      "players": [
-        {
-          "element_id": 3,
-          "name": "Meslier",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 557,
-          "name": "Tzolis",
-          "club": "ARS",
           "held": false
         }
       ],
