@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T11:16:45.372208Z",
+  "generated_at": "2026-08-21T12:23:26.824069Z",
   "gameweek": 1,
   "players": [
     {
@@ -1276,6 +1276,113 @@
         }
       ],
       "total_conflicts": 3,
+      "needs_attention": false
+    },
+    {
+      "element_id": 281,
+      "player_name": "Drameh",
+      "club": "Hull City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 100,
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "9d253e5b96255074",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-08-08T19:00:05.613036Z",
+              "observed_at": "2026-08-21T11:17:18.697013Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "d06187ed1ea0118d",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-08-08T19:00:05.613036Z",
+              "observed_at": "2026-08-19T18:18:47.096189Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        },
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-08-29",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "2e74db5a44c41a23",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-08-29",
+              "claimed_at": "2026-08-08T19:00:05.613036Z",
+              "observed_at": "2026-08-19T18:18:47.096189Z",
+              "quote": "Hamstring injury - Expected back 29 Aug",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "a",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "c90dcebe318a8097",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-08-08T19:00:05.613036Z",
+              "observed_at": "2026-08-21T11:17:18.697013Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "bc7a86a6bc696eec",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-08-08T19:00:05.613036Z",
+              "observed_at": "2026-08-19T18:18:47.096189Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 2,
       "needs_attention": false
     },
     {
@@ -5144,87 +5251,6 @@
       "needs_attention": false
     },
     {
-      "element_id": 281,
-      "player_name": "Drameh",
-      "club": "Hull City",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 0,
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "d06187ed1ea0118d",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 0,
-              "claimed_at": "2026-08-08T19:00:05.613036Z",
-              "observed_at": "2026-08-19T18:18:47.096189Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        },
-        {
-          "claim_type": "return_date",
-          "resolved_value": "2026-08-29",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "2e74db5a44c41a23",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "return_date",
-              "value": "2026-08-29",
-              "claimed_at": "2026-08-08T19:00:05.613036Z",
-              "observed_at": "2026-08-19T18:18:47.096189Z",
-              "quote": "Hamstring injury - Expected back 29 Aug",
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "i",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "bc7a86a6bc696eec",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "i",
-              "claimed_at": "2026-08-08T19:00:05.613036Z",
-              "observed_at": "2026-08-19T18:18:47.096189Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 0,
-      "needs_attention": false
-    },
-    {
       "element_id": 291,
       "player_name": "Matazo",
       "club": "Hull City",
@@ -8838,10 +8864,10 @@
     }
   ],
   "counts": {
-    "n_claims": 915,
-    "n_players_with_claims": 182,
+    "n_claims": 926,
+    "n_players_with_claims": 183,
     "n_players_shown": 116,
-    "n_escalations": 12,
+    "n_escalations": 13,
     "n_players_resolved": 133
   }
 }
