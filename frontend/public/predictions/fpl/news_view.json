@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T13:59:09.265503Z",
-  "n_dropped": 194,
+  "generated_at": "2026-08-21T14:44:40.699968Z",
+  "n_dropped": 200,
   "dropped_by_source": {
-    "bbc_football": 68,
-    "fantasyfootballscout": 10,
-    "hayters": 29,
+    "bbc_football": 69,
+    "fantasyfootballscout": 13,
+    "hayters": 31,
     "sky_football": 87
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 284,
+  "n_articles": 290,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "f147f84ecdafcdfd",
+      "headline": "Villa expected to make Jackson move if Watkins sold to Al Hilal",
+      "summary": "Aston Villa are expected to make a move for Nicolas Jackson if they sell Ollie Watkins to Al Hilal.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13575424/aston-villa-transfer-news-unai-emerys-side-expected-to-make-nicolas-jackson-approach-if-ollie-watkins-sold-to-al-hilal",
+      "claimed_at": "2026-08-21T14:21:00Z",
+      "players": [
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "976286793788c293",
       "headline": "Aston Villa latest: 'We have an issue,' says Emery on Watkins' future",
@@ -141,12 +159,114 @@
       "touches_squad": true
     },
     {
+      "digest": "e73f43b2d393a89f",
+      "headline": "Porro, Solanke, van de Ven: Tottenham injury latest for FPL Gameweek 1",
+      "summary": "The recent World Cup winner is in 22.2% of FPL squads The post Porro, Solanke, van de Ven: Tottenham injury latest for FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/porro-solanke-van-de-ven-tottenham-injury-latest-for-fpl-gameweek-1",
+      "claimed_at": "2026-08-21T14:40:28Z",
+      "players": [
+        {
+          "element_id": 503,
+          "name": "Van de Ven",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "dbfdb8f20edacc40",
+      "headline": "Doku + Nunes: Man City injury latest for FPL Gameweek 1",
+      "summary": "Enzo Maresca gave updates ahead of his first league match in charge The post Doku + Nunes: Man City injury latest for FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/doku-nunes-man-city-injury-latest-for-fpl-gameweek-1",
+      "claimed_at": "2026-08-21T14:33:40Z",
+      "players": [
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2fb51fc8affa65b7",
+      "headline": "Moyes confirms Everton midfield injury blows ahead of Crystal Palace clash",
+      "summary": "Everton will be without Christian Norgaard and Tim Iroegbunam for Saturday\u2019s Premier League opener against Crystal Palace. N\u00f8rgaard, who joined Everton this summer from Premier League champions Arsenal, is not yet fit, while",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/moyes-confirms-everton-midfield-injury-blows-ahead-of-crystal-palace-clash/",
+      "claimed_at": "2026-08-21T14:31:56Z",
+      "players": [
+        {
+          "element_id": 21,
+          "name": "N\u00f8rgaard",
+          "club": "EVE",
+          "held": false
+        },
+        {
+          "element_id": 239,
+          "name": "Garner",
+          "club": "EVE",
+          "held": false
+        },
+        {
+          "element_id": 240,
+          "name": "Iroegbunam",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "afdaae277830e41a",
+      "headline": "Emery on Konsa departure and new defensive signings at Aston Villa",
+      "summary": "Aston Villa boss Unai Emery has confirmed the club are looking to sign another centre-back to replace Ezri Konsa, who has left to join Arsenal. Emery revealed Villa are targeting defensive reinforcements but also believes young defen",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/emery-on-konsa-departure-and-new-defensive-signings-at-aston-villa/",
+      "claimed_at": "2026-08-21T14:25:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "1c69682d1734fbef",
       "headline": "Tottenham latest: De Zerbi reveals new captain...",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-21T14:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2baa5edc0ebaac1e",
+      "headline": "Liverpool latest: Iraola frustrated by a lack of wing options",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-21T14:00:00Z",
       "players": [
         {
@@ -171,6 +291,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "39623cec648ab9ab",
+      "headline": "Where next for Chelsea's Delap and can he bounce back?",
+      "summary": "Chelsea striker Liam Delap has been made available for sale just a year into his Stamford Bridge career. Where will he go and can he bounce back?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c4g3n9zryx8o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-21T13:58:22Z",
+      "players": [
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "CHE",
           "held": false
         }
       ],
@@ -327,6 +465,24 @@
       "touches_squad": false
     },
     {
+      "digest": "10501cee038bf30b",
+      "headline": "FPL 2026/27 \u2013 Man City: Best players, set-piece takers, predicted XI + more",
+      "summary": "Our team previews continue with Enzo Maresca's Manchester City The post FPL 2026/27 \u2013 Man City: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics fr",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/fpl-2026-27-man-city-best-players-set-piece-takers-predicted-xi-more",
+      "claimed_at": "2026-08-21T12:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "285b8e54cebea15d",
       "headline": "Man City latest: Talks opened with Palmeiras over deal for Allan",
       "summary": null,
@@ -347,6 +503,24 @@
     {
       "digest": "09d378c3c5a4c6b1",
       "headline": "Arsenal latest: Owners release statement ahead of season opener",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-21T11:49:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "be308ed9e7273136",
+      "headline": "Arsenal latest: Young Blackburn forward set to join Gunners",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -429,6 +603,24 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c5e15d726f1de03c",
+      "headline": "Alonso: My plan for Rogers and working with 'top talent' Palmer",
+      "summary": "Xabi Alonso said he will be flexible in his approach with club-record summer signing Morgan Rogers ahead of a potential Chelsea debut in their Premier League opener at Fulham, live on Monday Night Football.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13575335/xabi-alonso-new-chelsea-manager-on-morgan-rogers-cole-palmer-and-working-on-soul-of-the-blues",
+      "claimed_at": "2026-08-21T11:21:00Z",
+      "players": [
+        {
+          "element_id": 40,
+          "name": "Rogers",
+          "club": "CHE",
           "held": false
         }
       ],
@@ -1197,42 +1389,6 @@
       "touches_squad": false
     },
     {
-      "digest": "87ca0a68eb222270",
-      "headline": "Liverpool latest: Reds approach for Brighton's Minteh rejected",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-20T18:00:00Z",
-      "players": [
-        {
-          "element_id": 122,
-          "name": "Minteh",
-          "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bd35927a101ff7ad",
-      "headline": "Liverpool latest: Approach for Brighton's Minteh rejected",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-20T18:00:00Z",
-      "players": [
-        {
-          "element_id": 122,
-          "name": "Minteh",
-          "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5a396625d8221f7a",
       "headline": "Why first 10 days of new season could tell us a lot about Man Utd",
       "summary": "The first 10 days of the new Premier League season could tell us a lot about what lies ahead for Manchester United.",
@@ -1263,24 +1419,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "26c6ff92b0dd6f55",
-      "headline": "Man Utd latest: Carrick 'delighted' with Rashford as work continues on signings",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-20T17:30:00Z",
-      "players": [
-        {
-          "element_id": 429,
-          "name": "Rashford",
-          "club": "MUN",
           "held": false
         }
       ],
@@ -1389,24 +1527,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d3d943589efa5408",
-      "headline": "Carrick dismisses 'ridiculous' Man Utd easy start talk",
-      "summary": "Manchester United head coach Michael Carrick says it is \"ridiculous\" to say his side has an easy start to the Premier League season because they play two promoted teams.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cy5dx427yw7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-20T16:30:29Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "afa59b17a76a657b",
       "headline": "Glasner confirms double Forest injury blow ahead of season opener",
       "summary": "Nottingham Forest boss Oliver Glasner has confirmed that both Ryan Yates and Nicolo Savona will miss their first match of the season. The Reds will welcome Leeds United to the City Ground on Sunday. However, captain Yates will not be",
@@ -1485,24 +1605,6 @@
       "touches_squad": false
     },
     {
-      "digest": "3f1e8e7a9d9cbb10",
-      "headline": "Tromso vs Brighton in play-off for Conference League LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/tromso-vs-brighton-and-hove-albion/live/577284",
-      "claimed_at": "2026-08-20T14:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5591713614416d7d",
       "headline": "Arsenal midfielder a doubt for Coventry clash",
       "summary": "Arsenal boss Mikel Arteta says Bruno Guimaraes is making good progress in his recovery from a minor injury but remains cautious over the midfielder\u2019s return. Guimaraes picked up a knock during the Community Shield win over Manchester City. On whether Gui",
@@ -1515,54 +1617,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2ec69d588642cc73",
-      "headline": "Arteta \u2018100%\u2019 confident of Arsenal star staying at the club this summer",
-      "summary": "Mikel Arteta says he is \u201c100%\u201d confident Myles Lewis-Skelly will remain an Arsenal player this summer. Lewis-Skelly has attracted interest from the likes of Chelsea and Manchester United but Arteta is adamant the 18-year-old wil",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-100-confident-of-arsenal-star-staying-at-the-club-this-summer/",
-      "claimed_at": "2026-08-20T13:34:27Z",
-      "players": [
-        {
-          "element_id": 7,
-          "name": "Lewis-Skelly",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "72d8b9a4415edcf0",
-      "headline": "Chelsea boss Alonso explains decision behind separate training groups \u2013 and discusses Enzo Fernandez\u2019s future",
-      "summary": "Chelsea boss Xabi Alonso says the club are managing different groups of players effectively in training as they prepare for the start of the Premier League season. Liam Delap, Tosin and Nico",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/chelsea-boss-alonso-explains-decision-behind-separate-training-groups-and-discusses-enzo-fernandezs-future/",
-      "claimed_at": "2026-08-20T13:26:09Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "CHE",
-          "held": false
-        },
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "CHE",
-          "held": false
-        },
-        {
-          "element_id": 167,
-          "name": "Delap",
-          "club": "CHE",
           "held": false
         }
       ],
@@ -1599,60 +1653,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bd0916cdac0bdabd",
-      "headline": "FPL 2026/27 \u2013 Liverpool: Best players, set-piece takers, predicted XI + more",
-      "summary": "A favourable opening run of fixtures means the Reds are on FPL radars The post FPL 2026/27 \u2013 Liverpool: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Stat",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/20/fpl-2026-27-liverpool-best-players-set-piece-takers-predicted-xi-more",
-      "claimed_at": "2026-08-20T02:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "88776f0ba35cdd6b",
-      "headline": "FPL 2026/27 \u2013 Leeds: Best players, set-piece takers, predicted XI + more",
-      "summary": "A decent opening run of five fixtures puts Leeds players on the FPL radar The post FPL 2026/27 - Leeds: Best players, set-piece takers, predicted XI + more appeared first on Best FPL Tips, Advice, Team News, Picks, and Statisti",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/20/fpl-2026-27-leeds-best-players-set-piece-takers-predicted-xi-more",
-      "claimed_at": "2026-08-20T00:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f7b9ae462bcdb47c",
-      "headline": "Will Anderson be a better or worse FPL pick at Man City?",
-      "summary": "We assess the Fantasy prospects of Elliot Anderson at Man City The post Will Anderson be a better or worse FPL pick at Man City? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/20/will-anderson-be-a-better-or-worse-fpl-pick-at-man-city",
-      "claimed_at": "2026-08-19T23:30:00Z",
-      "players": [
-        {
-          "element_id": 481,
-          "name": "Anderson",
-          "club": "MCI",
           "held": false
         }
       ],
