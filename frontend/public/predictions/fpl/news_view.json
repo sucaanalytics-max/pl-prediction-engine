@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T13:19:14.804359Z",
-  "n_dropped": 270,
+  "generated_at": "2026-08-22T13:51:59.643999Z",
+  "n_dropped": 272,
   "dropped_by_source": {
-    "bbc_football": 80,
+    "bbc_football": 79,
     "fantasyfootballscout": 22,
-    "hayters": 45,
-    "sky_football": 123
+    "hayters": 46,
+    "sky_football": 125
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 360,
+  "n_articles": 362,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -187,6 +187,42 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "0935a7e8650c50f2",
+      "headline": "Humbled on Humberside! Lacklustre Man Utd stunned by brilliant Hull",
+      "summary": "A lacklustre Man Utd were left stunned as they slipped to a 2-0 defeat to newly-promoted Hull City in their Premier League season opener at the MKM Stadium.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/hull-city-vs-manchester-united/report/559447",
+      "claimed_at": "2026-08-22T14:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "01bc3c9b16151396",
+      "headline": "Ajayi is rock at the back as Hull stun Man Utd - player ratings",
+      "summary": "How Hull City and Manchester United's players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cpw94jp02xxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T13:24:59Z",
+      "players": [
+        {
+          "element_id": 279,
+          "name": "Ajayi",
+          "club": "HUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "131639a5d0e01698",
@@ -399,6 +435,24 @@
           "element_id": 43,
           "name": "Tielemans",
           "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9ded570903b81bfa",
+      "headline": "Hull City 2-0 Man Utd LIVE \u2013 United beaten by newly promoted side in opening game",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City 2-0 Man Utd LIVE - United beaten by newly promoted side in opening game appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T10:35:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -783,24 +837,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a5d821e5908befac",
-      "headline": "'Alvarez pushes Arsenal over CL line' - Nev insists Gunners need world-class attacker",
-      "summary": "The Friday Night Football panel discuss whether Arsenal are still shy of a world-class attacker that would see them get over the line to win their first UEFA Champions League title.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13575653/arsenal-vs-coventry-gary-neville-believes-arsenal-still-lack-a-world-class-attacker",
-      "claimed_at": "2026-08-21T22:38:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a8d870c66abfc001",
       "headline": "Lampard hails Arsenal as \u2018different level\u2019 but backs Coventry to bounce back",
       "summary": "Frank Lampard admitted Arsenal were simply \u201ca different level\u201d as Coventry City were beaten 3-0 by the Premier League champions on their return to the top flight. The Sky Blues were given a daunting opening fixture against",
@@ -1071,24 +1107,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a34b9766e0bb4eb4",
-      "headline": "Brighton reject Liverpool's new \u00a360m Minteh bid",
-      "summary": "Liverpool have an improved bid of \u00a360m for winger Yankuba Minteh rejected by Brighton but talks between the clubs continue.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ce97ky3vkx4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T17:26:49Z",
-      "players": [
-        {
-          "element_id": 122,
-          "name": "Minteh",
-          "club": "BHA",
           "held": false
         }
       ],
@@ -1515,30 +1533,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "abf80f7093e0010b",
-      "headline": "De Zerbi names his five-man captain group for this season",
-      "summary": "Tottenham boss Roberto De Zerbi has named Micky van de Ven as the club\u2019s new captain, with Pedro Porro, Ben Davies, James Maddison and Archie Gray completing his leadership group. Van de Ven will take over the captaincy ahead of the new seaso",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-names-his-five-man-captain-group-for-this-season/",
-      "claimed_at": "2026-08-21T13:39:16Z",
-      "players": [
-        {
-          "element_id": 503,
-          "name": "Van de Ven",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
           "held": false
         }
       ],
