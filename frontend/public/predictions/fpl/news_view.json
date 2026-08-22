@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T16:23:09.684523Z",
-  "n_dropped": 294,
+  "generated_at": "2026-08-22T16:50:30.856887Z",
+  "n_dropped": 295,
   "dropped_by_source": {
     "bbc_football": 83,
     "fantasyfootballscout": 23,
-    "hayters": 49,
+    "hayters": 50,
     "sky_football": 139
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 384,
+  "n_articles": 385,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -297,6 +297,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "adc2e5838ccfd33a",
+      "headline": "Brentford 1-0 Spurs LIVE \u2013 Lewis-Potter fires Brentford ahea",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 1-0 Spurs LIVE - Lewis-Potter fires Brentford ahea appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-spurs-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T16:30:00Z",
+      "players": [
+        {
+          "element_id": 86,
+          "name": "Lewis-Potter",
+          "club": "BRE",
           "held": false
         }
       ],
@@ -1311,24 +1329,6 @@
           "element_id": 7,
           "name": "Lewis-Skelly",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7e6ab07434eaf411",
-      "headline": "Hayters season predictions: Who we think will win the league, get relegated, be the Footballer of the Year and MORE",
-      "summary": "The new Premier League season is here, and the Hayters team have cast their predictions on the title race, relegation battle, Golden Boot, Player of the Season, as well as the domestic",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/hayters-season-predictions-who-we-think-will-win-the-league-get-relegated-be-the-footballer-of-the-year-and-more/",
-      "claimed_at": "2026-08-21T16:13:08Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
