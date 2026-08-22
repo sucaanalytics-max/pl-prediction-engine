@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T21:21:16.243940Z",
-  "n_dropped": 328,
+  "generated_at": "2026-08-22T21:46:26.226523Z",
+  "n_dropped": 329,
   "dropped_by_source": {
     "bbc_football": 98,
     "fantasyfootballscout": 23,
-    "hayters": 59,
+    "hayters": 60,
     "sky_football": 148
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 418,
+  "n_articles": 419,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -196,6 +196,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13576128/arsenal-transfer-news-mikel-arteta-and-andrea-berta-in-frequent-contact-with-julian-alvarez-amid-hope-of-luring-atletico-madrid-star-paper-talk",
       "claimed_at": "2026-08-22T22:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0223c44952c4459b",
+      "headline": "\u2018Try to find a new Rodri\u2019 \u2013 Maresca explains Man City plan to replace star",
+      "summary": "Manchester City manager Enzo Maresca has insisted that the club will &#8220;try to find a new Rodri&#8221; after the midfielder\u2019s departure. The Spaniard has been instrumental to the club\u2019s success of recent years, however th",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/try-to-find-a-new-rodri-maresca-explains-man-city-plan-to-replace-star/",
+      "claimed_at": "2026-08-22T21:30:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1299,24 +1317,6 @@
           "element_id": 557,
           "name": "Tzolis",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a8d870c66abfc001",
-      "headline": "Lampard hails Arsenal as \u2018different level\u2019 but backs Coventry to bounce back",
-      "summary": "Frank Lampard admitted Arsenal were simply \u201ca different level\u201d as Coventry City were beaten 3-0 by the Premier League champions on their return to the top flight. The Sky Blues were given a daunting opening fixture against",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/frank-lampard-coventry-arsenal/",
-      "claimed_at": "2026-08-21T22:27:47Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
