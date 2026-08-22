@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T07:19:02.560264Z",
-  "n_dropped": 248,
+  "generated_at": "2026-08-22T07:54:59.613193Z",
+  "n_dropped": 249,
   "dropped_by_source": {
     "bbc_football": 77,
     "fantasyfootballscout": 21,
     "hayters": 39,
-    "sky_football": 111
+    "sky_football": 112
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 338,
+  "n_articles": 339,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -187,6 +187,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "1a197456fbfd0f0a",
+      "headline": "VOTE: Who has the better 'best XI' - Man Utd or Liverpool?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13574293/premier-league-2026-27-preview-team-news-analysis-injury-latest-suspensions-and-fantasy-football",
+      "claimed_at": "2026-08-22T08:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "b076f9ad0ee6084e",
@@ -809,24 +827,6 @@
     {
       "digest": "8645693d9d1d5473",
       "headline": "Bruno absent for Arsenal vs Coventry on Sky!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/live/559444",
-      "claimed_at": "2026-08-21T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a13078407ebf0317",
-      "headline": "Arsenal vs Coventry LIVE on Sky!",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
