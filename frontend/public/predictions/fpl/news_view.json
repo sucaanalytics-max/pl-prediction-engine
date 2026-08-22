@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T17:19:59.167489Z",
-  "n_dropped": 302,
+  "generated_at": "2026-08-22T17:46:08.789074Z",
+  "n_dropped": 303,
   "dropped_by_source": {
     "bbc_football": 84,
     "fantasyfootballscout": 23,
-    "hayters": 51,
+    "hayters": 52,
     "sky_football": 144
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 392,
+  "n_articles": 393,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -375,6 +375,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0d29809910afc07c",
+      "headline": "Brentford 3-0 Spurs LIVE \u2013 Kayode makes it three and Thiago misses penalty",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 3-0 Spurs LIVE - Kayode makes it three and Thiago misses penalty appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-spurs-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T16:30:00Z",
+      "players": [
+        {
+          "element_id": 88,
+          "name": "Kayode",
+          "club": "BRE",
           "held": false
         }
       ],
@@ -1317,24 +1335,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cb4f4d7d0dd1031a",
-      "headline": "Arsenal 0-0 Coventry City LIVE \u2013 no Guimaraes or Martinelli in Gunners squad but Lewis-Skelly starts",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 0-0 Coventry City LIVE - no Guimaraes or Martinelli in Gunners squad but Lewis-Skelly starts appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-v-coventry-city-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-21T17:02:40Z",
-      "players": [
-        {
-          "element_id": 7,
-          "name": "Lewis-Skelly",
-          "club": "ARS",
           "held": false
         }
       ],
