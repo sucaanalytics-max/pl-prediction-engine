@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T14:47:55.066288Z",
-  "n_dropped": 280,
+  "generated_at": "2026-08-22T15:20:30.139256Z",
+  "n_dropped": 284,
   "dropped_by_source": {
-    "bbc_football": 81,
+    "bbc_football": 82,
     "fantasyfootballscout": 22,
-    "hayters": 47,
-    "sky_football": 130
+    "hayters": 48,
+    "sky_football": 132
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 370,
+  "n_articles": 374,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,9 +189,45 @@
       "touches_squad": true
     },
     {
+      "digest": "cf84bd290d1db73e",
+      "headline": "\u2018Not everything is wrong\u2019 \u2013 Carrick defiant after disappointing Man Utd loss",
+      "summary": "Manchester United boss Michael Carrick has insisted that not everything is wrong with his team after losing 2-0 to Hull City. The Reds were unable to respond after two first half goals from the newly promoted side, and kick",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/not-everything-is-wrong-carrick-defiant-after-disappointing-man-utd-loss/",
+      "claimed_at": "2026-08-22T15:06:09Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "dbfae4777bed0792",
       "headline": "'We didn't click' - Carrick reflects on Man Utd's loss to Hull City",
       "summary": "Manchester United head coach Michael Carrick reacts to his sides 2-0 defeat to newly promoted Hull City in their first game of the 2026-27 Premier League season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cr5956led9lo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T14:40:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e4fac0fc817af883",
+      "headline": "'We didn't click' - Carrick on Man Utd's loss",
+      "summary": "Manchester United head coach Michael Carrick says his side 'didn't click' as they suffered a 2-0 defeat at newly promoted Hull City in their first game of the 2026-27 Premier League season.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/cr5956led9lo?at_medium=RSS&at_campaign=rss",
@@ -279,6 +315,24 @@
       "touches_squad": false
     },
     {
+      "digest": "ab4848d44b0d035f",
+      "headline": "'We showed we can compete' - Jakirovic",
+      "summary": "Hull City head coach Sergej Jakirovic praises his side for their approach and sticking to the tactical plan to gain a 2-0 win against Manchester United on the opening weekend of the Premier League season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cgmkm9xgv1zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T14:17:59Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "01bc3c9b16151396",
       "headline": "Ajayi is rock at the back as Hull stun Man Utd - player ratings",
       "summary": "How Hull City and Manchester United's players rated following their Premier League match.",
@@ -351,6 +405,24 @@
       "touches_squad": false
     },
     {
+      "digest": "32e4b19e159a0969",
+      "headline": "Leeds and Forest pushing for opener LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/nottingham-forest-vs-leeds-united/live/559449",
+      "claimed_at": "2026-08-22T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "3abe3e9f54521c7c",
       "headline": "McNeil starts for Palace at Everton as Johnson on bench LIVE!",
       "summary": null,
@@ -399,6 +471,42 @@
           "element_id": 226,
           "name": "Pickford",
           "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e27446efc34dca9c",
+      "headline": "Barry heads in to double Everton lead vs Palace LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/live/559446",
+      "claimed_at": "2026-08-22T13:00:00Z",
+      "players": [
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5105947619463dd2",
+      "headline": "Stunning Angulo free-kick brings Sunderland level at Ipswich LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/ipswich-town-vs-sunderland/live/559448",
+      "claimed_at": "2026-08-22T12:00:00Z",
+      "players": [
+        {
+          "element_id": 551,
+          "name": "Angulo",
+          "club": "SUN",
           "held": false
         }
       ],
@@ -657,24 +765,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d029f390d78c5a3a",
-      "headline": "Chelsea latest: Joao Pedro signs new eight-year deal at Stamford Bridge",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-22T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "bd69371307ec921f",
       "headline": "Hull City v Man Utd LIVE \u2013 team news, updates and reaction",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City v Man Utd LIVE - team news, updates and reaction appeared first on Hayters.",
@@ -729,24 +819,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e07038f994e65b11",
-      "headline": "Aston Villa latest: Talks begin to sign free agent Goretzka",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-22T08:59:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5e7a3705ea55a968",
       "headline": "How new-look Spurs are shaping up under De Zerbi",
       "summary": "Roberto de Zerbi has had time and money over the summer to start creating a new-look Tottenham. So how are they shaping up?",
@@ -754,24 +826,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cx25xy7p9zpo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-22T08:41:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1a197456fbfd0f0a",
-      "headline": "VOTE: Who has the better 'best XI' - Man Utd or Liverpool?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13574293/premier-league-2026-27-preview-team-news-analysis-injury-latest-suspensions-and-fantasy-football",
-      "claimed_at": "2026-08-22T08:30:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1071,42 +1125,6 @@
           "element_id": 131,
           "name": "Baleba",
           "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1dad4637bbcb222e",
-      "headline": "Liverpool make Endrick enquiry - Saturday's gossip",
-      "summary": "Liverpool make Endrick enquiry, Chelsea brace for a Nicolas Jackson offer and Arsenal make request to Victor Osimhen, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cy4kjg3j4d3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T19:48:23Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5d6b3b9a0d9951b6",
-      "headline": "Saturday's gossip: Liverpool enquire about Real Madrid's Endrick",
-      "summary": "Liverpool make Endrick enquiry, Chelsea brace for a Nicolas Jackson offer and Arsenal make request to Victor Osimhen, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cy4kjg3j4d3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T19:48:23Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "CHE",
           "held": false
         }
       ],
@@ -1503,36 +1521,6 @@
           "element_id": 389,
           "name": "Matheus N.",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2fb51fc8affa65b7",
-      "headline": "Moyes confirms Everton midfield injury blows ahead of Crystal Palace clash",
-      "summary": "Everton will be without Christian Norgaard and Tim Iroegbunam for Saturday\u2019s Premier League opener against Crystal Palace. N\u00f8rgaard, who joined Everton this summer from Premier League champions Arsenal, is not yet fit, while",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/moyes-confirms-everton-midfield-injury-blows-ahead-of-crystal-palace-clash/",
-      "claimed_at": "2026-08-21T14:31:56Z",
-      "players": [
-        {
-          "element_id": 21,
-          "name": "N\u00f8rgaard",
-          "club": "EVE",
-          "held": false
-        },
-        {
-          "element_id": 239,
-          "name": "Garner",
-          "club": "EVE",
-          "held": false
-        },
-        {
-          "element_id": 240,
-          "name": "Iroegbunam",
-          "club": "EVE",
           "held": false
         }
       ],
