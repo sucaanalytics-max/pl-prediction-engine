@@ -228,7 +228,7 @@ Notes on current state:
 
 ## Subagent delegation
 
-Seven agents in `.claude/agents/`, tiered by model. Route work to the cheapest agent that can do it properly.
+Ten agents in `.claude/agents/`, tiered by model. Route work to the cheapest agent that can do it properly.
 
 | Task | Agent | Model |
 |---|---|---|
@@ -239,9 +239,31 @@ Seven agents in `.claude/agents/`, tiered by model. Route work to the cheapest a
 | Comparing our predictions vs market/competitor/results | `benchmark-analyst` | sonnet |
 | Fetching real football facts via MCP | `football-data-scout` | haiku |
 | Running test suites, checking the JSON contract | `contract-guardian` | haiku |
+| Phase machine, ledger, seal, settlement, `fpl_agent.yml` | `seal-warden` | opus |
+| Effective ownership, rank tiers, sampling error, `field_calibrated_gameweeks` | `field-analyst` | opus |
+| Live routes, cache policy, in-gameweek freshness | `live-surface` | sonnet |
 
 Guidance:
 - Send **anything that changes a predicted probability or a stake size** to `quant-modeller`. That work justifies the strongest model.
 - Send **raw data lookups** to `football-data-scout` rather than making MCP calls in a reasoning-heavy context — it is far cheaper and returns structured data without analysis. `benchmark-analyst` should delegate its fetching this way.
 - Send **verification** to `contract-guardian` before committing. It runs commands and reports; it does not fix, so route its findings to the owning agent.
+- Send **anything under `pipeline/learning/{schedule,ledger,outcomes}.py` or the `_seal`/`_settle` paths** to `seal-warden`, whatever the task was called. A seal is irrecoverable and there are 38 a season, so this is the one area where the routing is by path rather than by how the request was phrased.
+- Send **any number whose meaning depends on what other managers did** to `field-analyst`. Ownership, EO, rank and template share a failure mode: a cheaper model will emit a confident figure without stating which population it describes.
 - Launch independent agents in parallel in a single message. `data-integrator` and `frontend-dev` rarely conflict; `quant-modeller` and `contract-guardian` should run sequentially since the latter verifies the former.
+
+**Paths own agents, not topics.** Where a path appears above, it wins over the description of the task. "Make the deadline countdown clearer" sounds like frontend work, but if it touches `schedule.py` it is `seal-warden`'s. Deterministic routing beats a judgement call about which specialist feels right.
+
+## Skills
+
+Procedures in `.claude/skills/`, for the things worth doing the same way every time:
+
+- **`rehearse-phase`** — execute the real REFRESH or SEAL against a scratch directory before shipping a change to it. The seal path runs unattended and rarely, so "it works" should be an observation.
+- **`verify-seal`** — check a sealed forecast is real (`dry_run: false`), complete (`rows_written` equals `universe_size`) and carries all four provenance fields, which are flattened into the header rather than nested.
+- **`push-and-watch`** — land a commit where three bots also push: rebase, confirm the active `gh` account, then watch whichever of the two CI gates the changed paths actually trigger.
+
+## Saved workflows
+
+Fan-outs in `.claude/workflows/`, invoked by name via the Workflow tool:
+
+- **`seal-audit`** — find ways a seal could be lost, then have three skeptics try to refute each finding before it is reported. Takes an optional scope argument, e.g. a commit range.
+- **`field-feasibility`** — re-measure what FPL's API makes affordable: sampling frame, per-manager picks cost, live payload, and the sample size a stated error requires. Carries a hard request budget, because the same host serves the `bootstrap-static` call the seal depends on.
