@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T15:20:30.139256Z",
-  "n_dropped": 284,
+  "generated_at": "2026-08-22T15:46:26.402870Z",
+  "n_dropped": 285,
   "dropped_by_source": {
     "bbc_football": 82,
     "fantasyfootballscout": 22,
-    "hayters": 48,
+    "hayters": 49,
     "sky_football": 132
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 374,
+  "n_articles": 375,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -250,6 +250,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cnvnvjer47mo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-22T14:39:46Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "927e5dcbe9463dfc",
+      "headline": "Brentford v Spurs LIVE \u2013 Archie Gray becomes Spurs\u2019 youngest ever captain",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford v Spurs LIVE - Archie Gray becomes Spurs' youngest ever captain appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-spurs-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T14:30:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1366,24 +1384,6 @@
       "tier": 2,
       "url": "https://hayters.com/southampton-boss-eckert-responds-to-aston-villa-interest-in-star-man-harwood-bellis/",
       "claimed_at": "2026-08-21T15:19:43Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "be7ff0f65149b343",
-      "headline": "Konsa \u2018hungry for more\u2019 after completing move to Arsenal from Aston Villa",
-      "summary": "Arsenal have confirmed the signing of Ezri Konsa from Aston Villa in a \u00a355m deal. Konsa has signed a four-year contract with the Gunners, with the option of a further year, and described joining the club as a \u201cprivilege\u201d as he",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/konsa-hungry-for-more-after-completing-move-to-arsenal-from-aston-villa/",
-      "claimed_at": "2026-08-21T15:13:53Z",
       "players": [
         {
           "element_id": 0,
