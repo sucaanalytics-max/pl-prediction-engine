@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T04:49:30.351366Z",
-  "n_dropped": 244,
+  "generated_at": "2026-08-22T05:26:19.149304Z",
+  "n_dropped": 245,
   "dropped_by_source": {
-    "bbc_football": 76,
+    "bbc_football": 77,
     "fantasyfootballscout": 21,
     "hayters": 39,
     "sky_football": 108
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 334,
+  "n_articles": 335,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -187,6 +187,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "9edd0f4a0400e864",
+      "headline": "My family got me through injury - Maddison",
+      "summary": "Tottenham midfielder James Maddison discusses life under boss Roberto de Zerbi and how the distraction of having five children under five at home kept him busy while he was out with a long-term injury.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c4g30ewkx75o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T05:20:29Z",
+      "players": [
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "fcd28c0bc34a6ab3",
@@ -1539,24 +1557,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4dec89a916fa9929",
-      "headline": "De Zerbi let us bond over a few beers - Maddison",
-      "summary": "Midfielder James Maddison says Tottenham boss Roberto de Zerbi let the team bond over some beers before the new season, where they hope to improve on finishing 17th last term.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c0km6pzplrzo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T11:22:59Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
           "held": false
         }
       ],
