@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T05:54:28.578227Z",
-  "n_dropped": 244,
+  "generated_at": "2026-08-22T06:38:58.135217Z",
+  "n_dropped": 246,
   "dropped_by_source": {
-    "bbc_football": 76,
+    "bbc_football": 77,
     "fantasyfootballscout": 21,
     "hayters": 39,
-    "sky_football": 108
+    "sky_football": 109
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 334,
+  "n_articles": 336,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -187,6 +187,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "b076f9ad0ee6084e",
+      "headline": "Second set of twins a good distraction from injury - Maddison",
+      "summary": "Tottenham midfielder James Maddison says having five children aged four and under - including a second set of twins - helpfully distracted him from his ACL injury last season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c20j3vx6ne4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T05:28:50Z",
+      "players": [
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "9edd0f4a0400e864",
@@ -459,6 +477,24 @@
           "element_id": 557,
           "name": "Tzolis",
           "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3f088760ffef93fa",
+      "headline": "'Dominant' - Arsenal kick off title defence with thumping Coventry win",
+      "summary": "Arsenal made a flying start to their Premier League title defence with a 3-0 thumping of newly-promoted Coventry City in the season opener at the Emirates Stadium.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/report/559444",
+      "claimed_at": "2026-08-21T21:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -791,24 +827,6 @@
     {
       "digest": "a13078407ebf0317",
       "headline": "Arsenal vs Coventry LIVE on Sky!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/live/559444",
-      "claimed_at": "2026-08-21T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c43f6c28a8ea12eb",
-      "headline": "The Premier League is back! Arsenal vs Coventry LIVE on Sky!",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -1479,24 +1497,6 @@
           "element_id": 401,
           "name": "Marmoush",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5086f1ed2586ad20",
-      "headline": "Gyokeres proud of impact at Arsenal last season",
-      "summary": "Striker Viktor Gyokeres says he is proud of his contribution to Arsenal last season as they begin the defence of their Premier League title at home to his former side Coventry City on Friday.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cy5dxg3kv6eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T12:46:52Z",
-      "players": [
-        {
-          "element_id": 25,
-          "name": "Gy\u00f6keres",
-          "club": "ARS",
           "held": false
         }
       ],
