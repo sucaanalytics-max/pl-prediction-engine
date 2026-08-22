@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T14:20:59.198836Z",
-  "n_dropped": 272,
+  "generated_at": "2026-08-22T14:47:55.066288Z",
+  "n_dropped": 280,
   "dropped_by_source": {
-    "bbc_football": 79,
+    "bbc_football": 81,
     "fantasyfootballscout": 22,
-    "hayters": 46,
-    "sky_football": 125
+    "hayters": 47,
+    "sky_football": 130
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 362,
+  "n_articles": 370,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,8 +189,80 @@
       "touches_squad": true
     },
     {
+      "digest": "dbfae4777bed0792",
+      "headline": "'We didn't click' - Carrick reflects on Man Utd's loss to Hull City",
+      "summary": "Manchester United head coach Michael Carrick reacts to his sides 2-0 defeat to newly promoted Hull City in their first game of the 2026-27 Premier League season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cr5956led9lo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T14:40:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2124c75c6b2d6ef4",
+      "headline": "Villa close to signing Germany midfielder Goretzka",
+      "summary": "Aston Villa are close to signing free agent Leon Goretzka, who left Bayern Munich in the summer after eight years.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cnvnvjer47mo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T14:39:46Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "de9faaed19d8f335",
+      "headline": "Brentford v Spurs LIVE \u2013 team news, updates and reaction",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford v Spurs LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-spurs-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T14:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "0935a7e8650c50f2",
       "headline": "Humbled on Humberside! Lacklustre Man Utd stunned by brilliant Hull",
+      "summary": "A lacklustre Man Utd were left stunned as they slipped to a 2-0 defeat to newly-promoted Hull City in their Premier League season opener at the MKM Stadium.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/hull-city-vs-manchester-united/report/559447",
+      "claimed_at": "2026-08-22T14:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d92cd0c615cdca9e",
+      "headline": "Mauled by the Tigers! Lacklustre Man Utd stunned by brilliant Hull",
       "summary": "A lacklustre Man Utd were left stunned as they slipped to a 2-0 defeat to newly-promoted Hull City in their Premier League season opener at the MKM Stadium.",
       "source": "sky_football",
       "tier": 3,
@@ -219,6 +291,24 @@
           "element_id": 279,
           "name": "Ajayi",
           "club": "HUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0908f426a0d6558f",
+      "headline": "Calvert-Lewin denied tap-in by TEAM-MATE in Forest vs Leeds LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/nottingham-forest-vs-leeds-united/live/559449",
+      "claimed_at": "2026-08-22T13:00:00Z",
+      "players": [
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
           "held": false
         }
       ],
@@ -297,6 +387,24 @@
       "touches_squad": false
     },
     {
+      "digest": "56d16fddb39484fc",
+      "headline": "Pickford and poor Palace finishing keeping Everton level LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/live/559446",
+      "claimed_at": "2026-08-22T13:00:00Z",
+      "players": [
+        {
+          "element_id": 226,
+          "name": "Pickford",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "63cb19cae8af6893",
       "headline": "Ipswich vs Sunderland team news LIVE!",
       "summary": null,
@@ -309,6 +417,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "651350a16b0756d1",
+      "headline": "Stunning Angulo free kick brings Sunderland level at Ipswich LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/ipswich-town-vs-sunderland/live/559448",
+      "claimed_at": "2026-08-22T12:00:00Z",
+      "players": [
+        {
+          "element_id": 551,
+          "name": "Angulo",
+          "club": "SUN",
           "held": false
         }
       ],
@@ -399,6 +525,24 @@
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a7149255ecc8bc8e",
+      "headline": "Man Utd latest: Is Carrick under pressure after Hull defeat?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-22T10:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -711,24 +855,6 @@
       "touches_squad": false
     },
     {
-      "digest": "335953d119be3fbe",
-      "headline": "Papers: Atletico Madrid ready to sell Alvarez to Arsenal",
-      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575656/arsenal-transfer-news-atletico-madrid-finally-shift-julian-alvarez-position-and-now-willing-to-sell-striker-to-the-gunners-paper-talk",
-      "claimed_at": "2026-08-21T23:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f3312222d354def5",
       "headline": "Lessons learned, but Coventry's top-flight return about more than result",
       "summary": "Twenty-five years, 94 days and countless twists later, Coventry City have started life back in the Premier League, but it was a tough baptism of fire with a 3-0 loss at defending champions Arsenal.",
@@ -747,60 +873,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a3252b59e9bde0e2",
-      "headline": "'A massive 10 days' - Neville tells Arsenal to get Alvarez before deadline",
-      "summary": "Defending Premier League champions Arsenal would become Champions League winners if they land Julian Alvarez in the final days of the transfer window, says Gary Neville.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575645/arsenal-transfer-news-julian-alvarez-would-add-magic-to-gunners-frontline-says-gary-neville-as-he-urges-them-to-sign-atletico-madrid-striker",
-      "claimed_at": "2026-08-21T23:06:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ed28c3fcd33d59c5",
-      "headline": "'Liverpool's best XI is still better than Man Utd's' | Carra and Nev clash on who is looking better!",
-      "summary": "Jamie Carragher believes Liverpool boast a stronger starting eleven than Manchester United heading into the 2026/27 Premier League season, but says the Reds still need to add depth and quality before",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13575664/jamie-carragher-believes-liverpools-starting-eleven-is-better-than-man-utds-going-into-the-2026-27-pl-season",
-      "claimed_at": "2026-08-21T23:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "32b01affe5f95244",
-      "headline": "PL predictions: Brentford to give Spurs a reality check",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575143/premier-league-predictions-jones-knows-best-bets-champions-again-ole-ole-arsenal-to-make-fast-start-on-fnf",
-      "claimed_at": "2026-08-21T23:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "274d8cba9be172f6",
       "headline": "Swaggering Arsenal want title attack, not defence",
       "summary": "Arsenal started last season as nearly men but their title win has given them a swagger - as Coventry discovered on the Premier League's opening night.",
@@ -808,24 +880,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cpw94evj1q7o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-21T22:55:40Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5896012e4eafcc82",
-      "headline": "Man Utd latest: Carrick on protecting Bruno and CL hopes",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-21T22:48:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1059,24 +1113,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e764af5aa2575f88",
-      "headline": "Inter complete \u00a330m deal for Liverpool's Jones",
-      "summary": "Inter Milan sign midfielder Curtis Jones from Liverpool in a deal worth \u00a330m.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/czdm9pjd0ero?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T18:48:15Z",
-      "players": [
-        {
-          "element_id": 373,
-          "name": "C.Jones",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "718fc891e09b3482",
       "headline": "Arsenal v Coventry team news: No Bruno G, Rice + Saka start",
       "summary": "\u00a35.0m forward Ellis Simms spearheads the Coventry attack The post Arsenal v Coventry team news: No Bruno G, Rice + Saka start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1084,24 +1120,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/arsenal-v-coventry-team-news-no-bruno-g-rice-saka-start",
       "claimed_at": "2026-08-21T18:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "47ec050dca035a05",
-      "headline": "Mohamed Salah: Inside his move to Trabzonspor",
-      "summary": "Mohamed Salah was expected to move to Saudi Arabia or the United States after leaving Liverpool, but Turkish side Trabzonspor pulled off one of the coups of the transfer window.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cx2reg4knn5o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T17:44:55Z",
       "players": [
         {
           "element_id": 0,
@@ -1515,24 +1533,6 @@
           "element_id": 240,
           "name": "Iroegbunam",
           "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "afdaae277830e41a",
-      "headline": "Emery on Konsa departure and new defensive signings at Aston Villa",
-      "summary": "Aston Villa boss Unai Emery has confirmed the club are looking to sign another centre-back to replace Ezri Konsa, who has left to join Arsenal. Emery revealed Villa are targeting defensive reinforcements but also believes young defen",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/emery-on-konsa-departure-and-new-defensive-signings-at-aston-villa/",
-      "claimed_at": "2026-08-21T14:25:02Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
