@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T12:38:05.776919Z",
-  "n_dropped": 267,
+  "generated_at": "2026-08-22T13:19:14.804359Z",
+  "n_dropped": 270,
   "dropped_by_source": {
     "bbc_football": 80,
     "fantasyfootballscout": 22,
     "hayters": 45,
-    "sky_football": 120
+    "sky_football": 123
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 357,
+  "n_articles": 360,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -207,6 +207,42 @@
       "touches_squad": false
     },
     {
+      "digest": "2e7853ba3b82a48f",
+      "headline": "Three new Leeds signings start at Forest LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/nottingham-forest-vs-leeds-united/live/559449",
+      "claimed_at": "2026-08-22T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3abe3e9f54521c7c",
+      "headline": "McNeil starts for Palace at Everton as Johnson on bench LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/live/559446",
+      "claimed_at": "2026-08-22T13:00:00Z",
+      "players": [
+        {
+          "element_id": 241,
+          "name": "McNeil",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "44cc7098a5e1cc34",
       "headline": "Nottingham Forest vs Leeds team news LIVE!",
       "summary": null,
@@ -227,6 +263,24 @@
     {
       "digest": "63cb19cae8af6893",
       "headline": "Ipswich vs Sunderland team news LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/ipswich-town-vs-sunderland/live/559448",
+      "claimed_at": "2026-08-22T12:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f609b254def2d889",
+      "headline": "Ipswich hand debuts to SEVEN new signings vs Sunderland LIVE!",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -801,24 +855,6 @@
       "touches_squad": false
     },
     {
-      "digest": "26f87bb60e24475a",
-      "headline": "Arsenal cruise to victory over Coventry on Premier League return",
-      "summary": "Highlights from the Premier League match between Arsenal and Coventry.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13575642/arsenal-3-0-coventry-premier-league-highlights",
-      "claimed_at": "2026-08-21T21:58:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "638b9026eeb37a88",
       "headline": "'A lot to like!' Arteta delighted with opening win for Arsenal",
       "summary": "Arsenal manager Mikel Arteta gives his thoughts on his side's 3-0 win over Coventry City in the opening game of the Premier League season.",
@@ -855,42 +891,6 @@
           "element_id": 557,
           "name": "Tzolis",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3f088760ffef93fa",
-      "headline": "'Dominant' - Arsenal kick off title defence with thumping Coventry win",
-      "summary": "Arsenal made a flying start to their Premier League title defence with a 3-0 thumping of newly-promoted Coventry City in the season opener at the Emirates Stadium.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/report/559444",
-      "claimed_at": "2026-08-21T21:50:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c3bbe0fbec4f3323",
-      "headline": "Arsenal kick off title defence with thumping win over Coventry",
-      "summary": "Arsenal made a flying start to their Premier League title defence with a 3-0 thumping of newly-promoted Coventry City in the season opener at the Emirates Stadium.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/report/559444",
-      "claimed_at": "2026-08-21T21:50:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
