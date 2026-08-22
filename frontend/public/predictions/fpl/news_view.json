@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T19:00:23.063874Z",
-  "n_dropped": 311,
+  "generated_at": "2026-08-22T19:35:01.159580Z",
+  "n_dropped": 319,
   "dropped_by_source": {
-    "bbc_football": 89,
+    "bbc_football": 96,
     "fantasyfootballscout": 23,
     "hayters": 57,
-    "sky_football": 142
+    "sky_football": 143
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 401,
+  "n_articles": 409,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,6 +189,24 @@
       "touches_squad": true
     },
     {
+      "digest": "e6e001e9056d5d96",
+      "headline": "Spurs latest: 'We weren't right to fight' - De Zerbi apologises for loss",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-22T20:10:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "4e121e32c03c59a5",
       "headline": "Spurs crumble as Brentford show brilliance in convincing win",
       "summary": "Highlights from the Premier League match between Brentford and Tottenham Hotspur.",
@@ -207,6 +225,24 @@
       "touches_squad": false
     },
     {
+      "digest": "31571788502c4e76",
+      "headline": "Spurs 'didn't fight in the right way' - Di Zerbi",
+      "summary": "Tottenham Hotspur head coach Roberto Di Zerbi believes his side \"didn't fight in the right way\" in their 3-0 loss to Brentford in the opening match of the 2026-27 Premier League season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cp8x8jl4yj2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T19:23:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "8befda7e64952b40",
       "headline": "Woeful Spurs easily beaten at Brentford despite big-spending summer",
       "summary": "A woeful Tottenham started their new Premier League season dismally with a 3-0 loss at Brentford despite a big summer of spending.",
@@ -214,6 +250,96 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/brentford-vs-tottenham-hotspur/report/559445",
       "claimed_at": "2026-08-22T19:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2f963076e44892ab",
+      "headline": "Brentford beat lacklustre Spurs in comfortable opening day win",
+      "summary": "Tottenham Hotspur's Premier League season under Roberto De Zerbi gets off to a dismal start as they lose 3-0 to a dominant Brentford side at the Gtech Community Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqx75yq28rwo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T19:02:31Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f2e74eb5e006a7c3",
+      "headline": "Late drama as Ipswich stun Sunderland",
+      "summary": "Ipswich Town beat Sunderland as Jack Clarke scores a 90th minute winner to open their account on their return to the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cvg0214evlmo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T19:01:50Z",
+      "players": [
+        {
+          "element_id": 313,
+          "name": "Clarke",
+          "club": "IPS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4218c974d08c86c3",
+      "headline": "Leeds score late winner to silence Forest fans",
+      "summary": "Anton Stach scores in the 88th minute to give Leeds United a win in Oliver Glasner's first game in charge of Nottingham Forest in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cwyr0n7vyrgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T19:01:04Z",
+      "players": [
+        {
+          "element_id": 335,
+          "name": "Stach",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ccf044a333481752",
+      "headline": "Wasteful Palace punished by Everton in Sage's first game",
+      "summary": "Everton beat Crystal Palace 2\u20130 to win their opening game of the Premier League season for the first time in five years, with goals from Kiernan Dewsbury\u2011Hall and Thierno.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c0m7dk4z82ro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T19:00:58Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "228e1e22f4716122",
+      "headline": "Hull shock Man Utd with dream Premier League return",
+      "summary": "Watch highlights as Hull City make a dream start to their return to the Premier League, beating Manchester United 2-0 on the opening weekend at the MKM Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/clyl5ejxj2wo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T19:00:18Z",
       "players": [
         {
           "element_id": 0,
@@ -533,6 +659,24 @@
     {
       "digest": "1d939fe156da9c04",
       "headline": "'I'm very happy and have many compliments for my players' - Farke",
+      "summary": "Leeds United manager Daniel Farke reacts to his side's 1\u20130 win against Nottingham Forest, sealed by Anton Stach's free\u2011kick in the opening game of their 2026-27 Premier League season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cn5n57dwewko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T16:55:35Z",
+      "players": [
+        {
+          "element_id": 335,
+          "name": "Stach",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ad11a6b9776c5544",
+      "headline": "I'm very happy and have many compliments for my players - Farke",
       "summary": "Leeds United manager Daniel Farke reacts to his side's 1\u20130 win against Nottingham Forest, sealed by Anton Stach's free\u2011kick in the opening game of their 2026-27 Premier League season.",
       "source": "bbc_football",
       "tier": 3,
@@ -981,42 +1125,6 @@
       "touches_squad": false
     },
     {
-      "digest": "131639a5d0e01698",
-      "headline": "Everton vs Crystal Palace LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/live/559446",
-      "claimed_at": "2026-08-22T13:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7db1cc3c5c66f7cc",
-      "headline": "Martinelli deserves better from Arsenal - Wright",
-      "summary": "Ian Wright says Gabriel Martinelli deserves \"more respect\" from Arsenal and questions the way the club have handled the winger's potential exit.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cj636ewwz46o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T11:49:08Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "944c30984c63890b",
       "headline": "Hull v Man Utd team news: Amad out, Mbeumo + Cunha start",
       "summary": "Both sides make one change from their final pre-season matches The post Hull v Man Utd team news: Amad out, Mbeumo + Cunha start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1107,24 +1215,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b03bc26654041f3c",
-      "headline": "Joao Pedro extends Chelsea stay until 2034",
-      "summary": "Chelsea striker Joao Pedro signs a new contract with the club until 2032, with the option of two further years.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c79g2z11r81o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T10:07:37Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "bd69371307ec921f",
       "headline": "Hull City v Man Utd LIVE \u2013 team news, updates and reaction",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City v Man Utd LIVE - team news, updates and reaction appeared first on Hayters.",
@@ -1161,78 +1251,6 @@
       "touches_squad": false
     },
     {
-      "digest": "c015275aaa952517",
-      "headline": "How Liverpool are preparing to face six new managers in first six games",
-      "summary": "For Liverpool and Andoni Iraola, the Premier League schedule means they will face six teams with new managers in their first six matches.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cg5l9qz1dvno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T09:36:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5e7a3705ea55a968",
-      "headline": "How new-look Spurs are shaping up under De Zerbi",
-      "summary": "Roberto de Zerbi has had time and money over the summer to start creating a new-look Tottenham. So how are they shaping up?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cx25xy7p9zpo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T08:41:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b076f9ad0ee6084e",
-      "headline": "Second set of twins a good distraction from injury - Maddison",
-      "summary": "Tottenham midfielder James Maddison says having five children aged four and under - including a second set of twins - helpfully distracted him from his ACL injury last season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c20j3vx6ne4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T05:28:50Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9edd0f4a0400e864",
-      "headline": "My family got me through injury - Maddison",
-      "summary": "Tottenham midfielder James Maddison discusses life under boss Roberto de Zerbi and how the distraction of having five children under five at home kept him busy while he was out with a long-term injury.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c4g30ewkx75o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T05:20:29Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "fcd28c0bc34a6ab3",
       "headline": "FPL notes: Bruno G injury latest, Tzolis sharp + Odegaard \u201crhythm\u201d",
       "summary": "What we learned from Arsenal 3-0 Coventry The post FPL notes: Bruno G injury latest, Tzolis sharp + Odegaard \u201crhythm\u201d appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1245,24 +1263,6 @@
           "element_id": 557,
           "name": "Tzolis",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "99928494ac8268a7",
-      "headline": "Football Daily",
-      "summary": "Kelly Somers speaks to Tottenham midfielder James Maddison.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0p5nnky?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T00:00:00Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
           "held": false
         }
       ],
