@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T11:29:15.968527Z",
-  "n_dropped": 261,
+  "generated_at": "2026-08-22T11:49:54.674286Z",
+  "n_dropped": 262,
   "dropped_by_source": {
     "bbc_football": 79,
     "fantasyfootballscout": 22,
-    "hayters": 43,
+    "hayters": 44,
     "sky_football": 117
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 351,
+  "n_articles": 352,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -236,6 +236,24 @@
         {
           "element_id": 429,
           "name": "Rashford",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9aa9bedb2e66beae",
+      "headline": "Hull City 0-0 Man Utd LIVE \u2013 Santos and Tielemans start in midfield but no Amad in squad",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City 0-0 Man Utd LIVE - Santos and Tielemans start in midfield but no Amad in squad appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T10:35:00Z",
+      "players": [
+        {
+          "element_id": 43,
+          "name": "Tielemans",
           "club": "MUN",
           "held": false
         }
@@ -1521,36 +1539,6 @@
           "element_id": 373,
           "name": "C.Jones",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3c3f14407db89cd2",
-      "headline": "Spurs trio out for opening game against Brentford",
-      "summary": "Tottenham boss Roberto De Zerbi has confirmed Micky van de Ven and Pedro Porro will miss their opening Premier League fixture against Brentford. James Maddison, Dominic Solanke, Destiny Udogie and Archie Gray are all available, however. But Pape Mata",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/spurs-trio-out-for-opening-game-against-brentford/",
-      "claimed_at": "2026-08-21T13:18:53Z",
-      "players": [
-        {
-          "element_id": 503,
-          "name": "Van de Ven",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 506,
-          "name": "Udogie",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
           "held": false
         }
       ],
