@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T09:35:07.123921Z",
-  "n_dropped": 252,
+  "generated_at": "2026-08-22T09:59:56.768195Z",
+  "n_dropped": 253,
   "dropped_by_source": {
     "bbc_football": 77,
     "fantasyfootballscout": 21,
-    "hayters": 40,
+    "hayters": 41,
     "sky_football": 114
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 342,
+  "n_articles": 343,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -196,6 +196,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-22T10:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bd69371307ec921f",
+      "headline": "Hull City v Man Utd LIVE \u2013 team news, updates and reaction",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City v Man Utd LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T09:45:40Z",
       "players": [
         {
           "element_id": 0,
@@ -1515,30 +1533,6 @@
           "element_id": 401,
           "name": "Marmoush",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "590c408f75d53500",
-      "headline": "Brighton boss Hurzeler on futures of Man Utd target Baleba and Liverpool target Minteh",
-      "summary": "Brighton boss Fabian Hurzeler insists Carlos Baleba's absence is down to fitness and not speculation over his future. Man Utd are closing in on a deal for Baleba, who is currently nursing an ankle issue. Hurzeler",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/brighton-boss-hurzeler-on-futures-of-man-utd-target-baleba-and-liverpool-target-minteh/",
-      "claimed_at": "2026-08-21T12:38:11Z",
-      "players": [
-        {
-          "element_id": 122,
-          "name": "Minteh",
-          "club": "BHA",
-          "held": false
-        },
-        {
-          "element_id": 131,
-          "name": "Baleba",
-          "club": "BHA",
           "held": false
         }
       ],
