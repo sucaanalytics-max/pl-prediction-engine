@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T18:29:39.846891Z",
-  "n_dropped": 304,
+  "generated_at": "2026-08-22T19:00:23.063874Z",
+  "n_dropped": 311,
   "dropped_by_source": {
-    "bbc_football": 86,
+    "bbc_football": 89,
     "fantasyfootballscout": 23,
-    "hayters": 55,
-    "sky_football": 140
+    "hayters": 57,
+    "sky_football": 142
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 394,
+  "n_articles": 401,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,6 +189,42 @@
       "touches_squad": true
     },
     {
+      "digest": "4e121e32c03c59a5",
+      "headline": "Spurs crumble as Brentford show brilliance in convincing win",
+      "summary": "Highlights from the Premier League match between Brentford and Tottenham Hotspur.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13576076/brentford-3-0-tottenham-hotspur-premier-league-highlights",
+      "claimed_at": "2026-08-22T19:28:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8befda7e64952b40",
+      "headline": "Woeful Spurs easily beaten at Brentford despite big-spending summer",
+      "summary": "A woeful Tottenham started their new Premier League season dismally with a 3-0 loss at Brentford despite a big summer of spending.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brentford-vs-tottenham-hotspur/report/559445",
+      "claimed_at": "2026-08-22T19:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "baa15fb3f74e6810",
       "headline": "'Reality check' for Spurs as Kayode makes it three for The Bees",
       "summary": "Michael Kayode makes it three for Brentford three minutes into the second half against Spurs.",
@@ -201,6 +237,96 @@
           "element_id": 88,
           "name": "Kayode",
           "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4eed03dccbde6150",
+      "headline": "Brentford 3-0 Spurs LIVE \u2013 Spurs kick off new season with defeat",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 3-0 Spurs LIVE - Spurs kick off new season with defeat appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-spurs-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T18:36:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9ee284324524c566",
+      "headline": "Moyes on Everton star\u2019s fitness and ongoing right-back search despite Rohl impressing in win over Crystal Palace",
+      "summary": "Everton boss David Moyes admits James Garner would not have been involved in their 2-0 victory over Crystal Palace had he had more midfield options available. Garner missed most of Everto",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/moyes-on-everton-stars-fitness-and-ongoing-right-back-search-despite-rohl-impressing-in-win-over-crystal-palace/",
+      "claimed_at": "2026-08-22T18:35:55Z",
+      "players": [
+        {
+          "element_id": 239,
+          "name": "Garner",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3539a3052d66b59d",
+      "headline": "Where does Man Utd defeat rank among shock opening-game losses?",
+      "summary": "BBC Sport looks at some of the most shocking Premier League opening-game defeats.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvgvg1l138zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T18:35:33Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b03726bc0dc1e294",
+      "headline": "Farke turnaround has Leeds aiming to thrive not just survive",
+      "summary": "With exciting new signings and growing belief, Leeds United will hope a winning start to the Premier League means they can aim to thrive rather than just survive this time around.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cjwxw2365wpo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T18:31:17Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "46d6dd7d66d8a84a",
+      "headline": "Tonali nightmare as Sangare stars - Brentford v Spurs player ratings",
+      "summary": "How Brentford and Tottenham's players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cp878q13v72o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T18:29:05Z",
+      "players": [
+        {
+          "element_id": 455,
+          "name": "Tonali",
+          "club": "TOT",
           "held": false
         }
       ],
@@ -873,42 +999,6 @@
       "touches_squad": false
     },
     {
-      "digest": "2e7853ba3b82a48f",
-      "headline": "Three new Leeds signings start at Forest LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/nottingham-forest-vs-leeds-united/live/559449",
-      "claimed_at": "2026-08-22T13:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "32e4b19e159a0969",
-      "headline": "Leeds and Forest pushing for opener LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/nottingham-forest-vs-leeds-united/live/559449",
-      "claimed_at": "2026-08-22T13:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "7db1cc3c5c66f7cc",
       "headline": "Martinelli deserves better from Arsenal - Wright",
       "summary": "Ian Wright says Gabriel Martinelli deserves \"more respect\" from Arsenal and questions the way the club have handled the winger's potential exit.",
@@ -1179,42 +1269,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f3312222d354def5",
-      "headline": "Lessons learned, but Coventry's top-flight return about more than result",
-      "summary": "Twenty-five years, 94 days and countless twists later, Coventry City have started life back in the Premier League, but it was a tough baptism of fire with a 3-0 loss at defending champions Arsenal.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cp8e37mpp0eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T23:13:13Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "274d8cba9be172f6",
-      "headline": "Swaggering Arsenal want title attack, not defence",
-      "summary": "Arsenal started last season as nearly men but their title win has given them a swagger - as Coventry discovered on the Premier League's opening night.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cpw94evj1q7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T22:55:40Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a8d870c66abfc001",
       "headline": "Lampard hails Arsenal as \u2018different level\u2019 but backs Coventry to bounce back",
       "summary": "Frank Lampard admitted Arsenal were simply \u201ca different level\u201d as Coventry City were beaten 3-0 by the Premier League champions on their return to the top flight. The Sky Blues were given a daunting opening fixture against",
@@ -1251,24 +1305,6 @@
       "touches_squad": false
     },
     {
-      "digest": "94a23ee0ddfe4190",
-      "headline": "Lampard praises Coventry's courage in 3-0 defeat by Arsenal",
-      "summary": "Coventry City manager Frank Lampard shares his thoughts on his side's 3-0 defeat by Arsenal in their first game back in the Premier League since 2001.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/ckg97d082wyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T22:00:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ea2854de9225659d",
       "headline": "Arteta hails Tzolis\u2019 impact and provides update on Guimaraes injury after beating Coventry",
       "summary": "Mikel Arteta hailed Christos Tzolis\u2019 impact after Arsenal began their Premier League title defence with a comfortable 3-0 victory over Coventry City at the Emirates. Kai Havertz, Bukayo Saka and Martin Odegaar",
@@ -1293,24 +1329,6 @@
       "touches_squad": false
     },
     {
-      "digest": "df4e0d68100ef314",
-      "headline": "\u2018I think now he wants to stay\u2019 \u2013 Spurs boss De Zerbi on the futures of midfield duo",
-      "summary": "Tottenham boss Roberto De Zerbi has revealed that he wants Lucas Bergvall to remain at the club amid uncertainty over the midfielder's future. Bergvall has impressed De Zerbi during pre-season, with the new Spurs hea",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/i-think-now-he-wants-to-stay-spurs-boss-de-zerbi-on-the-futures-of-midfield-duo/",
-      "claimed_at": "2026-08-21T21:30:00Z",
-      "players": [
-        {
-          "element_id": 520,
-          "name": "Bergvall",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "718fc891e09b3482",
       "headline": "Arsenal v Coventry team news: No Bruno G, Rice + Saka start",
       "summary": "\u00a35.0m forward Ellis Simms spearheads the Coventry attack The post Arsenal v Coventry team news: No Bruno G, Rice + Saka start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1318,24 +1336,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/arsenal-v-coventry-team-news-no-bruno-g-rice-saka-start",
       "claimed_at": "2026-08-21T18:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "00b6de7a449dca7e",
-      "headline": "Arsenal 3-0 Coventry City LIVE \u2013 Champions start title defence with comfortable win",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 3-0 Coventry City LIVE - Champions start title defence with comfortable win appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-v-coventry-city-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-21T17:02:40Z",
       "players": [
         {
           "element_id": 0,
