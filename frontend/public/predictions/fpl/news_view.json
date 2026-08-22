@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T09:59:56.768195Z",
-  "n_dropped": 253,
+  "generated_at": "2026-08-22T10:33:22.541856Z",
+  "n_dropped": 259,
   "dropped_by_source": {
-    "bbc_football": 77,
+    "bbc_football": 79,
     "fantasyfootballscout": 21,
-    "hayters": 41,
-    "sky_football": 114
+    "hayters": 43,
+    "sky_football": 116
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 343,
+  "n_articles": 349,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,6 +189,78 @@
       "touches_squad": true
     },
     {
+      "digest": "212c89c25e936ddb",
+      "headline": "Man Utd latest: Rashford's squad number confirmed",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-22T10:40:00Z",
+      "players": [
+        {
+          "element_id": 429,
+          "name": "Rashford",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "df97508ae29b5f11",
+      "headline": "Everton latest: Fiorentina interested in Beto",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-22T10:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "64ff91ffdf5d547e",
+      "headline": "Joao Pedro signs new long-term deal with Chelsea",
+      "summary": "Joao Pedro has signed a new long-term contract with Chelsea that will keep him at Stamford Bridge until 2034. The Brazil international joined the Blues in July 2025 and made an immediate impact, scoring in both the Club World Cup semi-final and final",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/joao-pedro-signs-new-long-term-deal-with-chelsea/",
+      "claimed_at": "2026-08-22T10:26:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b03bc26654041f3c",
+      "headline": "Joao Pedro extends Chelsea stay until 2034",
+      "summary": "Chelsea striker Joao Pedro signs a new contract with the club until 2032, with the option of two further years.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c79g2z11r81o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T10:07:37Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "d029f390d78c5a3a",
       "headline": "Chelsea latest: Joao Pedro signs new eight-year deal at Stamford Bridge",
       "summary": null,
@@ -214,6 +286,42 @@
       "tier": 2,
       "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
       "claimed_at": "2026-08-22T09:45:40Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f8e5f7cb7acee647",
+      "headline": "Hull City v Man Utd LIVE \u2013 Santos and Tielemans start in midfield but no Amad in squad",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City v Man Utd LIVE - Santos and Tielemans start in midfield but no Amad in squad appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T09:45:40Z",
+      "players": [
+        {
+          "element_id": 43,
+          "name": "Tielemans",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c015275aaa952517",
+      "headline": "How Liverpool are preparing to face six new managers in first six games",
+      "summary": "For Liverpool and Andoni Iraola, the Premier League schedule means they will face six teams with new managers in their first six matches.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cg5l9qz1dvno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T09:36:48Z",
       "players": [
         {
           "element_id": 0,
@@ -879,42 +987,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5a43957dc7f2f13a",
-      "headline": "Key moments and your views as Arsenal thrash Coventry!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/live/559444",
-      "claimed_at": "2026-08-21T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6f77e04b04e713cd",
-      "headline": "Odegaard adds another with Arsenal thrashing Coventry LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-coventry-city/live/559444",
-      "claimed_at": "2026-08-21T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "47ec050dca035a05",
       "headline": "Mohamed Salah: Inside his move to Trabzonspor",
       "summary": "Mohamed Salah was expected to move to Saudi Arabia or the United States after leaving Liverpool, but Turkish side Trabzonspor pulled off one of the coups of the transfer window.",
@@ -1173,42 +1245,6 @@
           "element_id": 593,
           "name": "Dedi\u0107",
           "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "df7b7d535e89bd8f",
-      "headline": "Shakhtar agree to play Champions League ties at Chelsea",
-      "summary": "Ukrainian club Shakhtar Donetsk agree to play Champions League home games at Chelsea's Stamford Bridge this season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cpw9e1dz9kko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T15:40:04Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "57c45b369db3ac1c",
-      "headline": "Chelsea reject initial Leeds loan bid for Mudryk",
-      "summary": "Chelsea reject an initial season-long loan offer from Leeds United for winger Mykhailo Mudryk.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c4gjv4xq2l8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T15:22:37Z",
-      "players": [
-        {
-          "element_id": 578,
-          "name": "Mudryk",
-          "club": "CHE",
           "held": false
         }
       ],
@@ -1497,42 +1533,6 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "36a6d56d906b4de8",
-      "headline": "Man City star to miss \u2018two to three weeks\u2019",
-      "summary": "Manchester City boss Enzo Maresca has confirmed Jeremy Doku is the club\u2019s only injury concern ahead of Sunday\u2019s Premier League clash with Bournemouth. Maresca revealed Matheus Nunes has returned to being in contention, with the rest of his squad also availa",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-star-to-miss-two-to-three-weeks/",
-      "claimed_at": "2026-08-21T13:08:19Z",
-      "players": [
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d833e65c6dbb50b2",
-      "headline": "\u2018Since day one\u2019 \u2013 Maresca on the futures of Spurs targets Savinho and Marmoush",
-      "summary": "Manchester City boss Enzo Maresca says Savinho has wanted to leave the club \u201csince day one\u201d of his tenure amid interest from Tottenham. Spurs have agreed an \u00a385m deal for the Brazilian winger and Maresca admitted it is di",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/since-day-one-maresca-on-the-futures-of-spurs-targets-savinho-and-marmoush/",
-      "claimed_at": "2026-08-21T12:59:30Z",
-      "players": [
-        {
-          "element_id": 401,
-          "name": "Marmoush",
-          "club": "MCI",
           "held": false
         }
       ],
