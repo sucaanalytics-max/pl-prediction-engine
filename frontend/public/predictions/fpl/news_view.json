@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T19:35:01.159580Z",
-  "n_dropped": 319,
+  "generated_at": "2026-08-22T19:56:43.814458Z",
+  "n_dropped": 320,
   "dropped_by_source": {
     "bbc_football": 96,
     "fantasyfootballscout": 23,
-    "hayters": 57,
+    "hayters": 58,
     "sky_football": 143
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 409,
+  "n_articles": 410,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -196,6 +196,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-22T20:10:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c3a5094d0deb9dce",
+      "headline": "Eckert explains decision to leave Aston Villa target Harwood-Bellis out of his Southampton squad",
+      "summary": "Southampton boss Tonda Eckert has defended Taylor Harwood-Bellis after he was left out of the squad for their 3-1 Championship victory over Stoke City amid interest from Aston Villa. Harwood-Bellis is a",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/eckert-explains-decision-to-leave-aston-villa-target-harwood-bellis-out-of-his-southampton-squad/",
+      "claimed_at": "2026-08-22T19:48:44Z",
       "players": [
         {
           "element_id": 0,
@@ -1299,30 +1317,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ea2854de9225659d",
-      "headline": "Arteta hails Tzolis\u2019 impact and provides update on Guimaraes injury after beating Coventry",
-      "summary": "Mikel Arteta hailed Christos Tzolis\u2019 impact after Arsenal began their Premier League title defence with a comfortable 3-0 victory over Coventry City at the Emirates. Kai Havertz, Bukayo Saka and Martin Odegaar",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-hails-tzolis-impact-and-provides-update-on-guimaraes-injury-after-beating-coventry/",
-      "claimed_at": "2026-08-21T21:51:36Z",
-      "players": [
-        {
-          "element_id": 26,
-          "name": "Havertz",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 557,
-          "name": "Tzolis",
-          "club": "ARS",
           "held": false
         }
       ],
