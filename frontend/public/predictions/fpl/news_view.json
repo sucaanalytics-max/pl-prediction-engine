@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T16:50:30.856887Z",
-  "n_dropped": 295,
+  "generated_at": "2026-08-22T17:19:59.167489Z",
+  "n_dropped": 302,
   "dropped_by_source": {
-    "bbc_football": 83,
+    "bbc_football": 84,
     "fantasyfootballscout": 23,
-    "hayters": 50,
-    "sky_football": 139
+    "hayters": 51,
+    "sky_football": 144
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 385,
+  "n_articles": 392,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,6 +189,42 @@
       "touches_squad": true
     },
     {
+      "digest": "2d0ae4787318bb0a",
+      "headline": "Janelt doubles Brentford's lead as Spurs struggle",
+      "summary": "Vitaly Janelt makes it two for the home side as Brentford lead Spurs 2-0 in the first half.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13576037/goal-v-janelt-33-brentford-2-0-tottenham-hotspur",
+      "claimed_at": "2026-08-22T18:08:00Z",
+      "players": [
+        {
+          "element_id": 98,
+          "name": "Janelt",
+          "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0217bf24a13198a4",
+      "headline": "'This is brilliant!' | Lewis-Potter puts Brentford ahead vs Spurs",
+      "summary": "A perfect pass from Mamadou Sangare sees Keane Lewis-Potter's strike put Brentford 1-0 up against Spurs.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13576021/goal-k-lewis-potter-12-brentford-1-0-tottenham-hotspur",
+      "claimed_at": "2026-08-22T17:48:00Z",
+      "players": [
+        {
+          "element_id": 86,
+          "name": "Lewis-Potter",
+          "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "5f7d764bb7c0b9f3",
       "headline": "Hull stun Man Utd in perfect Premier League return",
       "summary": "Highlights from the Premier League match between Hull and Manchester United.",
@@ -201,6 +237,30 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "226591812a3a51a8",
+      "headline": "Everton outclass wasteful Palace in Premier League opener",
+      "summary": "Everton made a winning start to the new Premier League campaign by beating Crystal Palace 2-0 thanks to classy goals from Kiernan Dewsbury-Hall and Thierno Barry.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/report/559446",
+      "claimed_at": "2026-08-22T17:05:00Z",
+      "players": [
+        {
+          "element_id": 236,
+          "name": "Dewsbury-Hall",
+          "club": "EVE",
+          "held": false
+        },
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
           "held": false
         }
       ],
@@ -243,6 +303,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1d939fe156da9c04",
+      "headline": "'I'm very happy and have many compliments for my players' - Farke",
+      "summary": "Leeds United manager Daniel Farke reacts to his side's 1\u20130 win against Nottingham Forest, sealed by Anton Stach's free\u2011kick in the opening game of their 2026-27 Premier League season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cn5n57dwewko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T16:55:35Z",
+      "players": [
+        {
+          "element_id": 335,
+          "name": "Stach",
+          "club": "LEE",
           "held": false
         }
       ],
@@ -297,6 +375,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "41fe8f6dd028f7ea",
+      "headline": "Brentford 2-0 Spurs LIVE \u2013 Janelt doubles Brentford\u2019s lead",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 2-0 Spurs LIVE - Janelt doubles Brentford's lead appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-spurs-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T16:30:00Z",
+      "players": [
+        {
+          "element_id": 98,
+          "name": "Janelt",
+          "club": "BRE",
           "held": false
         }
       ],
@@ -382,6 +478,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c87n78p070do?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-22T15:44:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "802ee781100a0f1a",
+      "headline": "Carrick defends dismal Man Utd loss: 'It was never going to be perfect'",
+      "summary": "Man Utd boss Michael Carrick focused on the \"good things\" his side had done despite a dismal 2-0 defeat at newly-promoted Hull City on the opening day of the new season.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13575881/michael-carrick-insists-man-utd-did-some-good-things-despite-dismal-hull-defeat-on-opening-premier-league-weekend",
+      "claimed_at": "2026-08-22T15:36:00Z",
       "players": [
         {
           "element_id": 0,
@@ -675,78 +789,6 @@
           "element_id": 241,
           "name": "McNeil",
           "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "44cc7098a5e1cc34",
-      "headline": "Nottingham Forest vs Leeds team news LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/nottingham-forest-vs-leeds-united/live/559449",
-      "claimed_at": "2026-08-22T13:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "56d16fddb39484fc",
-      "headline": "Pickford and poor Palace finishing keeping Everton level LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/live/559446",
-      "claimed_at": "2026-08-22T13:00:00Z",
-      "players": [
-        {
-          "element_id": 226,
-          "name": "Pickford",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e27446efc34dca9c",
-      "headline": "Barry heads in to double Everton lead vs Palace LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/live/559446",
-      "claimed_at": "2026-08-22T13:00:00Z",
-      "players": [
-        {
-          "element_id": 249,
-          "name": "Barry",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5105947619463dd2",
-      "headline": "Stunning Angulo free-kick brings Sunderland level at Ipswich LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/ipswich-town-vs-sunderland/live/559448",
-      "claimed_at": "2026-08-22T12:00:00Z",
-      "players": [
-        {
-          "element_id": 551,
-          "name": "Angulo",
-          "club": "SUN",
           "held": false
         }
       ],
@@ -1191,24 +1233,6 @@
       "touches_squad": false
     },
     {
-      "digest": "452c0e1f4e2dc037",
-      "headline": "Tzolis shines on Premier League debut - Arsenal v Coventry player ratings",
-      "summary": "How Arsenal and Coventry's players rated following their Premier League match.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/crl7g4e4pdno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T20:52:32Z",
-      "players": [
-        {
-          "element_id": 557,
-          "name": "Tzolis",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "718fc891e09b3482",
       "headline": "Arsenal v Coventry team news: No Bruno G, Rice + Saka start",
       "summary": "\u00a35.0m forward Ellis Simms spearheads the Coventry attack The post Arsenal v Coventry team news: No Bruno G, Rice + Saka start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1302,24 +1326,6 @@
       "digest": "cb4f4d7d0dd1031a",
       "headline": "Arsenal 0-0 Coventry City LIVE \u2013 no Guimaraes or Martinelli in Gunners squad but Lewis-Skelly starts",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 0-0 Coventry City LIVE - no Guimaraes or Martinelli in Gunners squad but Lewis-Skelly starts appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-v-coventry-city-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-21T17:02:40Z",
-      "players": [
-        {
-          "element_id": 7,
-          "name": "Lewis-Skelly",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cbb1ed9cd83880b1",
-      "headline": "Arsenal v Coventry City LIVE \u2013 no Guimaraes or Martinelli in Gunners squad but Lewis-Skelly starts",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal v Coventry City LIVE - no Guimaraes or Martinelli in Gunners squad but Lewis-Skelly starts appeared first on Hayters.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/arsenal-v-coventry-city-live-team-news-updates-and-reaction/",
