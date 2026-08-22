@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T11:49:54.674286Z",
-  "n_dropped": 262,
+  "generated_at": "2026-08-22T12:38:05.776919Z",
+  "n_dropped": 267,
   "dropped_by_source": {
-    "bbc_football": 79,
+    "bbc_football": 80,
     "fantasyfootballscout": 22,
-    "hayters": 44,
-    "sky_football": 117
+    "hayters": 45,
+    "sky_football": 120
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 352,
+  "n_articles": 357,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,6 +189,78 @@
       "touches_squad": true
     },
     {
+      "digest": "131639a5d0e01698",
+      "headline": "Everton vs Crystal Palace LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/live/559446",
+      "claimed_at": "2026-08-22T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "44cc7098a5e1cc34",
+      "headline": "Nottingham Forest vs Leeds team news LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/nottingham-forest-vs-leeds-united/live/559449",
+      "claimed_at": "2026-08-22T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "63cb19cae8af6893",
+      "headline": "Ipswich vs Sunderland team news LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/ipswich-town-vs-sunderland/live/559448",
+      "claimed_at": "2026-08-22T12:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7db1cc3c5c66f7cc",
+      "headline": "Martinelli deserves better from Arsenal - Wright",
+      "summary": "Ian Wright says Gabriel Martinelli deserves \"more respect\" from Arsenal and questions the way the club have handled the winger's potential exit.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cj636ewwz46o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T11:49:08Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "944c30984c63890b",
       "headline": "Hull v Man Utd team news: Amad out, Mbeumo + Cunha start",
       "summary": "Both sides make one change from their final pre-season matches The post Hull v Man Utd team news: Amad out, Mbeumo + Cunha start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -237,6 +309,24 @@
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "19dbc969c50d563f",
+      "headline": "Hull City 2-0 Man Utd LIVE \u2013 Mendy doubles lead for hosts",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City 2-0 Man Utd LIVE - Mendy doubles lead for hosts appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-22T10:35:00Z",
+      "players": [
+        {
+          "element_id": 586,
+          "name": "Mendy",
+          "club": "HUL",
           "held": false
         }
       ],
@@ -879,42 +969,6 @@
       "touches_squad": false
     },
     {
-      "digest": "03153bab9d7d92fc",
-      "headline": "Man Utd agree \u00a370m deal for Baleba",
-      "summary": "Manchester United have agreed a &#163;70m deal for Brighton midfielder Carlos Baleba.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575603/carlos-baleba-transfer-news-manchester-united-and-brighton-agree-70m-deal-for-midfielder",
-      "claimed_at": "2026-08-21T20:38:00Z",
-      "players": [
-        {
-          "element_id": 131,
-          "name": "Baleba",
-          "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f8755fffc1b19deb",
-      "headline": "Clinical! Havertz fires Arsenal in front against Coventry",
-      "summary": "Kai Havertz fires Arsenal in front against Coventry as the Gunners begin their title defence.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13575602/kai-havertz-fires-arsenal-in-front-against-coventry",
-      "claimed_at": "2026-08-21T20:21:00Z",
-      "players": [
-        {
-          "element_id": 26,
-          "name": "Havertz",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "8cae17077ab5b810",
       "headline": "Man Utd agree \u00a370m fee for Brighton's Baleba",
       "summary": "Manchester United agree a fee of up to \u00a370m for Brighton midfielder Carlos Baleba.",
@@ -963,24 +1017,6 @@
           "element_id": 166,
           "name": "N.Jackson",
           "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ca8c82c0ae9c6c80",
-      "headline": "Inter Milan sign Jones from Liverpool",
-      "summary": "Inter Milan have confirmed the signing of Curtis Jones in a &#163;30m (&#8364;35m) deal from Liverpool.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575215/curtis-jones-transfer-news-inter-milan-sign-midfielder-from-liverpool-in-30m-deal-with-sell-on-clause-included",
-      "claimed_at": "2026-08-21T19:30:00Z",
-      "players": [
-        {
-          "element_id": 373,
-          "name": "C.Jones",
-          "club": "LIV",
           "held": false
         }
       ],
@@ -1245,24 +1281,6 @@
       "touches_squad": false
     },
     {
-      "digest": "c1a047e9f4aedce5",
-      "headline": "We don't have enough wingers for start of season - Iraola",
-      "summary": "Liverpool boss Andoni Iraola believes his side don't have enough wide players for the start of the season - but is confident he will find a solution.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ce97ky3vkx4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-21T16:01:55Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "89e1c1928972dc90",
       "headline": "Dedic + Livramento: Newcastle injury latest for FPL Gameweek 1",
       "summary": "Matthias Jaissle hinted at a debut for his new full-back signing The post Dedic + Livramento: Newcastle injury latest for FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scou",
@@ -1521,24 +1539,6 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4fd4f98d9fd213a7",
-      "headline": "Liverpool boss Iraola on Jones\u2019 exit and the area where his squad is lacking",
-      "summary": "Liverpool boss Andoni Iraola says Curtis Jones\u2019 departure is an \u201congoing situation\u201d as the midfielder closes in on a move away from the club. The midfielder is in Milan to complete his move to Serie A side Inter. \u201cWith Curt",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-boss-iraola-on-jones-exit-and-the-area-where-his-squad-is-lacking/",
-      "claimed_at": "2026-08-21T13:31:30Z",
-      "players": [
-        {
-          "element_id": 373,
-          "name": "C.Jones",
-          "club": "LIV",
           "held": false
         }
       ],
