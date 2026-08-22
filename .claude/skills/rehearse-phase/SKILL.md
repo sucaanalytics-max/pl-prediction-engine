@@ -23,6 +23,10 @@ Exit 0 means the phase completed; 1 means it raised, and the traceback is what w
 
 It **does** write the published tree. `FPL_PUBLIC_DIR` is built from `ROOT_DIR` in `pipeline/config.py` and is therefore absolute — a phase writes there regardless of the directory it is handed. The script refuses to start on a dirty `frontend/public/predictions` (its restore is a `git checkout`, which would destroy uncommitted work there) and restores what it overwrote afterwards.
 
+It seeds the scratch ledger from the real one, so the rehearsal targets the **next** deadline. Without that, an empty scratch ledger claims GW1 still needs sealing, while `seal_forecast` checks the real wall clock — which turned every rehearsal into a `TooLateToSealError` about a gameweek sealed days earlier, the moment the first deadline passed.
+
+It restores artifacts the phase overwrote and **removes ones it created**. A `git checkout` cannot remove an untracked file, so a phase that produced a new projection left it sitting in the live published tree. Deleting it is safe only because the run refuses to start on a dirty tree, which means anything untracked afterwards came from this run.
+
 It also snapshots the **real** ledger and reports loudly if a dry run wrote there, without deleting it. A ledger file is not a script's to remove, and an auto-delete racing a genuine run would destroy the seal it was meant to protect. If that warning fires, inspect by hand before the next deadline or the real seal raises `AlreadySealedError`.
 
 ## Then confirm the tree is clean

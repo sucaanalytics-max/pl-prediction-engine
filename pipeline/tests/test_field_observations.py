@@ -161,3 +161,61 @@ class TestConsecutiveRun(unittest.TestCase):
     def test_no_observations_is_a_run_of_zero(self):
         with TemporaryDirectory() as empty:
             self.assertEqual(consecutive_calibrated(Path(empty), {}), 0)
+
+
+class WeeklyGateWiringTests(unittest.TestCase):
+    """
+    The gate that decides whether Wazza is Wazza or a second Ronny.
+
+    `run_decide.decide` takes `field_calibrated_gameweeks=0`, so for a long time
+    the agent simply omitted the argument and got the number a closed gate wants
+    by accident. That is indistinguishable from correct today and wrong at GW7,
+    when six settled observations exist and the gate would still read zero.
+    """
+
+    def test_the_agent_passes_the_gate_count_explicitly(self):
+        import inspect
+
+        from pipeline.learning.run_agent import _decide_for_entries
+
+        source = inspect.getsource(_decide_for_entries)
+        self.assertIn(
+            "field_calibrated_gameweeks=", source,
+            "the agent must pass the calibration count into decide() rather than "
+            "inheriting its default — the default is the same 0, so its absence "
+            "cannot be spotted by reading the output",
+        )
+
+    def test_no_observations_means_a_closed_gate(self):
+        from pipeline.learning.run_agent import _field_calibrated_gameweeks
+
+        with TemporaryDirectory() as tmp:
+            self.assertEqual(_field_calibrated_gameweeks(Path(tmp)), 0)
+
+    def test_settled_observations_alone_do_not_open_the_gate(self):
+        """
+        Observations are not verdicts. Six settled gameweeks on disk say what the
+        field scored, not whether our model predicted it — `check_calibration`
+        needs the model's own scores beside each observation, and nothing persists
+        those yet. Returning a count here from observations alone would open the
+        gate on evidence that does not exist.
+        """
+        from pipeline.learning.field_observations import FieldObservation, record
+        from pipeline.learning.run_agent import _field_calibrated_gameweeks
+
+        with TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            for gameweek in range(1, 8):
+                record(
+                    FieldObservation(
+                        gameweek=gameweek,
+                        average_entry_score=50.0,
+                        highest_score=110.0,
+                        most_captained=1,
+                        most_vice_captained=2,
+                        provisional=False,
+                        captured_at="2026-08-22T00:00:00Z",
+                    ),
+                    directory,
+                )
+            self.assertEqual(_field_calibrated_gameweeks(directory), 0)

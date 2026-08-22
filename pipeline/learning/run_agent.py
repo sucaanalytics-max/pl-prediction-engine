@@ -1033,6 +1033,44 @@ def _read_entry(config: Dict[str, Any], gameweek: int, bootstrap: Dict[str, Any]
         return EntryState(entry_id=int(entry_id), gameweek=int(gameweek))
 
 
+def _field_calibrated_gameweeks(predictions_dir: Path) -> int:
+    """
+    Length of the current run of gameweeks whose field model landed in its band.
+
+    **This is deliberately 0 today, and says so rather than defaulting.** The
+    gate it feeds is real: `run_decide.py` refuses the weekly objective while
+    `field_is_usable` is False, so Wazza falls back to Ronny's EV-optimal plan.
+    That fallback is the pre-registered honest outcome, not a bug — presenting a
+    modelled tail as a measured one would be worse than having no weekly team.
+
+    What is missing is the verdict store, not the counter.
+    `field_observations.consecutive_calibrated` already exists and is tested, but
+    it needs a per-gameweek pass/fail map, and `check_calibration` produces that
+    only with the field model's own scores for that gameweek beside the
+    observation. Nothing persists those verdicts yet, so there is no honest way
+    to populate the map from disk. The place for it is scoring, where the model
+    output and the settled observation are both already in hand.
+
+    The reason this function exists at all, rather than letting the parameter
+    default: `decide()` takes `field_calibrated_gameweeks=0`, so omitting the
+    argument silently produced exactly the number a closed gate wants. That is
+    fine now and wrong at GW7, when six settled observations exist and the gate
+    would still read zero with nobody looking. An explicit call that logs its own
+    emptiness turns that into a visible state.
+    """
+    from pipeline.learning.field_observations import latest_per_gameweek
+
+    usable = [o for o in latest_per_gameweek(predictions_dir).values() if o.usable]
+    if usable:
+        logger.info(
+            "field: %d settled observation(s) on disk but no calibration verdicts "
+            "are persisted, so the weekly gate stays closed. Persist per-gameweek "
+            "check_calibration results at scoring time and read them here.",
+            len(usable),
+        )
+    return 0
+
+
 def _decide_for_entries(
     predictions_dir: Path, state: ScheduleState, outcome: Dict[str, Any], dry_run: bool
 ) -> Dict[str, Dict[str, Path]]:
@@ -1090,6 +1128,11 @@ def _decide_for_entries(
             else config.get("free_transfers", 1),
             purchase_prices=entry.purchase_prices or config.get("purchase_prices"),
             xp_by_week=xp_by_week,
+            # Passed explicitly, never left to the default. See
+            # _field_calibrated_gameweeks: the default is the same 0, so omitting
+            # this looked correct and would still look correct at GW7 when it no
+            # longer was.
+            field_calibrated_gameweeks=_field_calibrated_gameweeks(predictions_dir),
         )
         for warning in decision.warnings:
             logger.warning("[%s] %s", label, warning)

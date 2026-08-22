@@ -123,13 +123,33 @@ def _ledger_files() -> set:
 
 
 def _seed(destination: Path) -> None:
-    """Copy the committed inputs a phase reads, and nothing else."""
+    """
+    Copy the committed inputs a phase reads, and nothing else.
+
+    The ledger's sealed gameweeks are copied too, and that is not tidiness. The
+    phase machine picks the first UNSEALED gameweek, so a scratch directory with
+    no ledger claims GW1 still needs sealing — and `seal_forecast` checks the real
+    wall clock, not the simulated one this script hands to `resolve`. Once GW1's
+    deadline passed, that mismatch turned every rehearsal into a
+    `TooLateToSealError` about a gameweek that was in fact sealed days ago.
+    Seeding the seals makes the rehearsal target the NEXT deadline, which is the
+    only one it was ever useful for.
+    """
     (destination / "fpl").mkdir(parents=True, exist_ok=True)
     for source in PREDICTIONS.glob("*.json"):
         shutil.copy2(source, destination / source.name)
     for source in (PREDICTIONS / "fpl").glob("*"):
         if source.is_file():
             shutil.copy2(source, destination / "fpl" / source.name)
+
+    real_ledger = PREDICTIONS / "fpl" / "ledger"
+    if real_ledger.is_dir():
+        for week in sorted(real_ledger.iterdir()):
+            # Skip the quarantined dry-run subtree: copying it in would teach the
+            # scratch machine that a rehearsal counts as a seal.
+            if not week.is_dir() or week.name == "dryrun":
+                continue
+            shutil.copytree(week, destination / "fpl" / "ledger" / week.name)
 
 
 def _report(outcome: Dict[str, Any], scratch: Path) -> None:
@@ -249,11 +269,26 @@ def main() -> int:
         if touched:
             # `XY path`, and the status field is not always the same width — slicing a
             # fixed 3 chars ate the first letter of the filename.
-            names = [line.split(maxsplit=1)[-1] for line in touched.split("\n")]
-            print(f"   restoring {len(names)} published artifact(s) the phase overwrote:")
-            for n in names:
-                print(f"     {n}")
-            _restore(str(PUBLISHED.relative_to(REPO_ROOT)))
+            rows = [(line[:2].strip(), line.split(maxsplit=1)[-1])
+                    for line in touched.split("\n")]
+            # `git checkout` restores a tracked file but will not remove an untracked
+            # one, so a phase that CREATED an artifact left it behind in the live tree
+            # — a projection this machine generated, sitting where the published ones
+            # go. Safe to delete precisely because the run refuses to start on a dirty
+            # tree: anything untracked here now was created by this run.
+            created = [name for status, name in rows if status == "??"]
+            modified = [name for status, name in rows if status != "??"]
+
+            if modified:
+                print(f"   restoring {len(modified)} published artifact(s) overwritten:")
+                for name in modified:
+                    print(f"     {name}")
+                _restore(str(PUBLISHED.relative_to(REPO_ROOT)))
+            if created:
+                print(f"   removing {len(created)} published artifact(s) created:")
+                for name in created:
+                    print(f"     {name}")
+                    (REPO_ROOT / name).unlink(missing_ok=True)
         escaped = sorted(_ledger_files() - before)
         if escaped:
             print()
