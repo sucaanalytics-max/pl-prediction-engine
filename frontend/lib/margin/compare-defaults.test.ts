@@ -52,7 +52,7 @@ describe("a metric the producer has not populated", () => {
     expect([...flagged]).toEqual(["form"]);
   });
 
-  it("agrees with the shipped artifact, which is what prompted this", () => {
+  it("agrees with the shipped artifact, which has since become a measurement", () => {
     const raw = JSON.parse(
       readFileSync("public/predictions/player_stats.json", "utf8"),
     ) as unknown;
@@ -63,10 +63,14 @@ describe("a metric the producer has not populated", () => {
     const forms = players
       .map((p) => (p as { form?: number }).form)
       .filter((f): f is number => typeof f === "number");
-    // Every form in the shipped file is zero. If this ever fails the season has started
-    // and the column has become a measurement.
     expect(forms.length).toBeGreaterThan(100);
-    expect(forms.every((f) => f === 0)).toBe(true);
+    // This assertion used to be `every(f => f === 0)`, with a comment saying "if this
+    // ever fails the season has started and the column has become a measurement".
+    // The season started. So the assertion is inverted rather than deleted: `form` is
+    // now real, which is precisely why `unpublishedMetrics` must not flag it, and the
+    // synthetic cases above still guard the all-zero handling for the next pre-season.
+    expect(forms.some((f) => f !== 0)).toBe(true);
+    expect(unpublishedMetrics(players as never).has("form")).toBe(false);
   });
 
   it("keeps form in METRICS, because it becomes real once the season starts", () => {

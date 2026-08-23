@@ -11,7 +11,14 @@ name: Frontend CI
 # frontend suite is the only thing that reads those shapes, and it was blind to
 # them changing.
 #
-# Narrowing is safe because the high-frequency writers are FORBIDDEN from the
+# IMPORTANT, and I had this wrong when I made the change: narrowing does NOT make
+# the daily pipeline's artifact commits run this workflow. GitHub does not trigger
+# workflows for pushes made with the default GITHUB_TOKEN, so a bot commit fires
+# nothing whatever the path filter says. The artifact-shape check lives in
+# pipeline.yml instead, as a step the producer runs on itself. What narrowing DOES
+# buy is coverage when a human pushes a top-level artifact by hand.
+#
+# Narrowing is still safe because the high-frequency writers are FORBIDDEN from the
 # paths this now watches, structurally rather than by convention: news.yml:90 and
 # fpl_agent.yml:198 both list `frontend/public/predictions/[^/]+\.json` in
 # FORBID_PATHS and commit_and_push.sh exits 1 on a match. So the ~96 daily news

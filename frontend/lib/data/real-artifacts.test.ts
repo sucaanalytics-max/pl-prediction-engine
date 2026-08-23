@@ -212,11 +212,20 @@ describe("matches.json — the flat-prior fingerprint", () => {
     expect(classified.state).toBe("empty");
   });
 
-  it("is ok on the committed file, because the calls diverge", () => {
+  it("classifies the committed file by the rule, whichever way it currently falls", () => {
+    /**
+     * This asserted the live file had diverse calls and was therefore `ok`. The
+     * committed artifact is now four fixtures all called `home`, so the fingerprint
+     * fires — CORRECTLY, which is the whole point of it. Asserting the live file's
+     * diversity pinned today's fixture list, the same trap as asserting the defect
+     * against live data, just from the other side.
+     *
+     * The rule itself is covered by the constructed cases either side of this one.
+     * What is worth checking against real data is only that the two agree.
+     */
     const value = proven(artifact);
-    expect(new Set(value?.matches.map((m) => m.model_prediction)).size)
-      .toBeGreaterThan(1);
-    expect(artifact.state).toBe("ok");
+    const distinct = new Set(value?.matches.map((m) => m.model_prediction)).size;
+    expect(artifact.state).toBe(distinct > 1 ? "ok" : "empty");
   });
 
   it("tolerates a null referee without dropping the fixture", () => {

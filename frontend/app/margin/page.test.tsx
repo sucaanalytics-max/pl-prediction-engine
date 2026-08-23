@@ -353,7 +353,11 @@ describe("the shell", () => {
     // first client render, hydrating with a mismatch on a value that changes
     // every second.
     await renderMargin();
-    expect(screen.getByTestId("margin-clock").textContent).toMatch(/\d|—/);
+    // Accepts the settled wording too. The point of this test is that the clock
+    // renders SOMETHING stable rather than a `new Date()` that differs between the
+    // server and first client render; once a deadline passes the clock legitimately
+    // reads "passed", which carries no digit and used to fail here.
+    expect(screen.getByTestId("margin-clock").textContent).toMatch(/\d|—|passed|settled/i);
   });
 });
 

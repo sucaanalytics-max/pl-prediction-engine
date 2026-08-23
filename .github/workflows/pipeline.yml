@@ -164,3 +164,40 @@ jobs:
             ':(exclude)predictions/fpl/decision_gw*.json' \
             ':(exclude)predictions/fpl/hub' \
             frontend/public/predictions
+
+      # The frontend suite reads the artifacts this job just published, and it is the
+      # ONLY thing that checks their shape. It cannot be triggered by the commit
+      # above: GitHub does not run workflows for pushes made with the default
+      # GITHUB_TOKEN, so a bot artifact commit fires nothing regardless of any path
+      # filter. Narrowing frontend.yml's excluded paths did not fix that, because
+      # there was never a trigger to reach.
+      #
+      # So the producer verifies its own consumer. Three real breakages went
+      # unnoticed for days this way — hardcoded counts in evidence-allclear, a form
+      # column that became a measurement when the season started, and a clock that
+      # began reading "passed" — each of which this step would have caught the
+      # morning it happened.
+      #
+      # Deliberately AFTER the push, and continue-on-error. A frontend failure must
+      # report red without withholding the prediction commit the pages depend on:
+      # this repo's own rule is that a red run which still publishes is recoverable,
+      # and a green run that publishes nothing is not.
+      # Set up here rather than at the top of the job: the pipeline itself is pure
+      # Python and a PyMC run takes a long time, so there is no reason to hold a
+      # Node toolchain for it. Same version and cache key as frontend.yml, so the
+      # two agree about what "the frontend suite passes" means.
+      - name: Set up Node for the frontend check
+        if: always()
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Verify the frontend still reads what we published
+        if: always()
+        continue-on-error: true
+        working-directory: frontend
+        run: |
+          npm ci --prefer-offline --no-audit
+          npm test
