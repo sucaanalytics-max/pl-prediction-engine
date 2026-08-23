@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T13:54:05.721782Z",
-  "n_dropped": 348,
+  "generated_at": "2026-08-23T14:22:58.518466Z",
+  "n_dropped": 347,
   "dropped_by_source": {
-    "bbc_football": 104,
+    "bbc_football": 103,
     "fantasyfootballscout": 22,
     "hayters": 62,
     "sky_football": 160
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 438,
+  "n_articles": 437,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -1053,6 +1053,24 @@
       "touches_squad": false
     },
     {
+      "digest": "4218c974d08c86c3",
+      "headline": "Leeds score late winner to silence Forest fans",
+      "summary": "Anton Stach scores in the 88th minute to give Leeds United a win in Oliver Glasner's first game in charge of Nottingham Forest in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cwyr0n7vyrgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-22T19:01:04Z",
+      "players": [
+        {
+          "element_id": 335,
+          "name": "Stach",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "4eed03dccbde6150",
       "headline": "Brentford 3-0 Spurs LIVE \u2013 Spurs kick off new season with defeat",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 3-0 Spurs LIVE - Spurs kick off new season with defeat appeared first on Hayters.",
@@ -1701,24 +1719,6 @@
           "element_id": 452,
           "name": "Bruno G.",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "62a3e540b334e57d",
-      "headline": "Lack of match fitness - 75% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-08-18T13:58:17.442072Z",
-      "players": [
-        {
-          "element_id": 100,
-          "name": "Carvalho",
-          "club": "BRE",
           "held": false
         }
       ],
