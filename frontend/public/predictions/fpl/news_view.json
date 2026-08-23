@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T10:00:10.407153Z",
-  "n_dropped": 330,
+  "generated_at": "2026-08-23T10:40:47.278183Z",
+  "n_dropped": 331,
   "dropped_by_source": {
     "bbc_football": 102,
     "fantasyfootballscout": 22,
-    "hayters": 60,
-    "sky_football": 146
+    "hayters": 58,
+    "sky_football": 149
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 420,
+  "n_articles": 421,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "178efd20199831be",
+      "headline": "Man City latest: Where's it all gone?! Haaland reveals new shaven haircut",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T10:20:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "8cbf52782d66fdcb",
       "headline": "Manzambi, Madjo + Watkins: Aston Villa injury latest for FPL Gameweek 1",
@@ -187,6 +205,42 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "0089a3a88488b082",
+      "headline": "Chelsea latest: Essugo available for loan with PL clubs interested",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T11:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cec8475b2d6c1924",
+      "headline": "'It hurts' - Alexander-Arnold reveals he still receives abuse after Liverpool exit",
+      "summary": "Trent Alexander-Arnold says he still receives abuse from Liverpool fans online after leaving Anfield for Real Madrid 14 months ago.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqjxj2zz77ro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T10:05:27Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "a77680cf9570ba27",
@@ -843,24 +897,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b03726bc0dc1e294",
-      "headline": "Farke turnaround has Leeds aiming to thrive not just survive",
-      "summary": "With exciting new signings and growing belief, Leeds United will hope a winning start to the Premier League means they can aim to thrive rather than just survive this time around.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cjwxw2365wpo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T18:31:17Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b9f655e25ef30f24",
       "headline": "Glasner stresses the need for time after Nottingham Forest are beaten by Leeds",
       "summary": "Nottingham Forest boss Oliver Glasner urged the need for patience after his side began their Premier League campaign with a 1-0 defeat to Leeds. Anton Stach\u2019s late winner condemned Forest to defeat at Elland Road, but Gla",
@@ -1017,42 +1053,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "697ebb73b58bff82",
-      "headline": "Clarke haunts Sunderland as Ipswich get off to winning start",
-      "summary": "Former Sunderland player Jack Clarke struck a 90th-minute winner for Ipswich Town on their return to the Premier League in a 2-1 win over the Black Cats.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/ipswich-town-vs-sunderland/report/559448",
-      "claimed_at": "2026-08-22T16:46:00Z",
-      "players": [
-        {
-          "element_id": 313,
-          "name": "Clarke",
-          "club": "IPS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1a7d5f72baab6a04",
-      "headline": "Stach snatches win for Leeds at Forest",
-      "summary": "Anton Stach's stunning late free-kick snatched the points for Leeds as Oliver Glasner lost his first Premier League game in charge of Nottingham Forest 1-0 at the City Ground.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/nottingham-forest-vs-leeds-united/report/559449",
-      "claimed_at": "2026-08-22T16:45:00Z",
-      "players": [
-        {
-          "element_id": 335,
-          "name": "Stach",
-          "club": "LEE",
           "held": false
         }
       ],
