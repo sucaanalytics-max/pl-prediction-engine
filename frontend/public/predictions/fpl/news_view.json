@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T14:50:17.615666Z",
-  "n_dropped": 352,
+  "generated_at": "2026-08-23T15:21:59.398362Z",
+  "n_dropped": 357,
   "dropped_by_source": {
-    "bbc_football": 102,
+    "bbc_football": 104,
     "fantasyfootballscout": 22,
     "hayters": 64,
-    "sky_football": 164
+    "sky_football": 167
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 442,
+  "n_articles": 447,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -279,6 +279,24 @@
       "touches_squad": true
     },
     {
+      "digest": "c8ebdd891b6d9033",
+      "headline": "Nightmare start! Aston Villa concede four first-half goals in thumping by Brighton",
+      "summary": "Aston Villa produced one of the worst opening 45 minutes in Premier League history on their way to a heavy 4-0 defeat at Brighton.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-aston-villa/report/559450",
+      "claimed_at": "2026-08-23T15:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "95be15b388f1c42d",
       "headline": "Arsenal target Alvarez starts on bench for Atletico against Villarreal",
       "summary": null,
@@ -291,6 +309,78 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9ee3f1e840e349e9",
+      "headline": "Sub Cherki rescues result for Maresca - player ratings for Man City v Bournemouth",
+      "summary": "How Man City and Bournemouth players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cy0j01pr0p0o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T15:05:14Z",
+      "players": [
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0df630615e5b7746",
+      "headline": "Manchester Utd midfielder Devaney joins Hibs on loan",
+      "summary": "Manchester United teenager Jacob Devaney is joining Hibernian on a season-long loan, with the Edinburgh club holding an option to make the move permanent.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ce343p742v9o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T15:01:52Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bba743a17f721e46",
+      "headline": "Man City strike twice late on to beat Bournemouth",
+      "summary": "Manchester City score two late goals to earn Enzo Maresca a win in his first Premier League game in charge and deny Marco Rose the perfect start as Bournemouth boss.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.ukundefined/?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T15:00:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "37a3116588710111",
+      "headline": "Man City 2-1 Bournemouth LIVE \u2013 Gvardiol completes late comeback for Maresca\u2019s side",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 2-1 Bournemouth LIVE - Gvardiol completes late comeback for Maresca\u2019s side appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-v-bournemouth-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-23T15:00:00Z",
+      "players": [
+        {
+          "element_id": 391,
+          "name": "Gvardiol",
+          "club": "MCI",
           "held": false
         }
       ],
@@ -501,6 +591,24 @@
       "touches_squad": false
     },
     {
+      "digest": "940b3a2d9e3d1232",
+      "headline": "'Brighton run riot!' Seagulls hammer 10-man Aston Villa LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-aston-villa/live/559450",
+      "claimed_at": "2026-08-23T12:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "9d976f6b66f9737a",
       "headline": "Brighton vs Aston Villa team news LIVE!",
       "summary": null,
@@ -567,42 +675,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4da5d860fb34bdec",
-      "headline": "Man City vs Bournemouth team news LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-bournemouth/live/559451",
-      "claimed_at": "2026-08-23T11:56:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ae23d5791dd3eb44",
-      "headline": "Lewis starts for Man City as Silva makes Bournemouth debut LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-bournemouth/live/559451",
-      "claimed_at": "2026-08-23T11:56:00Z",
-      "players": [
-        {
-          "element_id": 395,
-          "name": "Lewis",
-          "club": "MCI",
           "held": false
         }
       ],
@@ -1059,60 +1131,6 @@
       "touches_squad": false
     },
     {
-      "digest": "2f963076e44892ab",
-      "headline": "Brentford beat lacklustre Spurs in comfortable opening day win",
-      "summary": "Tottenham Hotspur's Premier League season under Roberto De Zerbi gets off to a dismal start as they lose 3-0 to a dominant Brentford side at the Gtech Community Stadium.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cqx75yq28rwo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T19:02:31Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f2e74eb5e006a7c3",
-      "headline": "Late drama as Ipswich stun Sunderland",
-      "summary": "Ipswich Town beat Sunderland as Jack Clarke scores a 90th minute winner to open their account on their return to the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cvg0214evlmo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T19:01:50Z",
-      "players": [
-        {
-          "element_id": 313,
-          "name": "Clarke",
-          "club": "IPS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4218c974d08c86c3",
-      "headline": "Leeds score late winner to silence Forest fans",
-      "summary": "Anton Stach scores in the 88th minute to give Leeds United a win in Oliver Glasner's first game in charge of Nottingham Forest in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cwyr0n7vyrgo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T19:01:04Z",
-      "players": [
-        {
-          "element_id": 335,
-          "name": "Stach",
-          "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "4eed03dccbde6150",
       "headline": "Brentford 3-0 Spurs LIVE \u2013 Spurs kick off new season with defeat",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 3-0 Spurs LIVE - Spurs kick off new season with defeat appeared first on Hayters.",
@@ -1288,24 +1306,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/22/brentford-v-spurs-team-news-five-competitive-debuts",
       "claimed_at": "2026-08-22T16:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cf84bd290d1db73e",
-      "headline": "\u2018Not everything is wrong\u2019 \u2013 Carrick defiant after disappointing Man Utd loss",
-      "summary": "Manchester United boss Michael Carrick has insisted that not everything is wrong with his team after losing 2-0 to Hull City. The Reds were unable to respond after two first half goals from the newly promoted side, and kick",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/not-everything-is-wrong-carrick-defiant-after-disappointing-man-utd-loss/",
-      "claimed_at": "2026-08-22T15:06:09Z",
       "players": [
         {
           "element_id": 0,
