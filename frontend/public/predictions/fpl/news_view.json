@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T13:20:19.543819Z",
-  "n_dropped": 343,
+  "generated_at": "2026-08-23T13:54:05.721782Z",
+  "n_dropped": 348,
   "dropped_by_source": {
     "bbc_football": 104,
     "fantasyfootballscout": 22,
-    "hayters": 60,
-    "sky_football": 157
+    "hayters": 62,
+    "sky_football": 160
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 433,
+  "n_articles": 438,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -27,6 +27,24 @@
           "element_id": 411,
           "name": "Haaland",
           "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "8ce8b7607c828d59",
+      "headline": "Bournemouth LEAD Man City after Tavernier opener LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-bournemouth/live/559451",
+      "claimed_at": "2026-08-23T11:56:00Z",
+      "players": [
+        {
+          "element_id": 68,
+          "name": "Tavernier",
+          "club": "BOU",
           "held": true
         }
       ],
@@ -261,6 +279,42 @@
       "touches_squad": true
     },
     {
+      "digest": "3e8c74e3bc728ecd",
+      "headline": "Newcastle vs Liverpool team news LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/newcastle-united-vs-liverpool/live/559452",
+      "claimed_at": "2026-08-23T14:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "856fa7ad9e0417d6",
+      "headline": "Newcastle v Liverpool LIVE \u2013 team news, updates and reaction",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v Liverpool LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-v-liverpool-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-08-23T13:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "30294a38a44d6f2c",
       "headline": "Newcastle latest: Burn and Joelinton to miss Liverpool curtain-raiser",
       "summary": null,
@@ -340,6 +394,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/clyjy0e0pkzo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-23T12:19:43Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "00675c3a998859f1",
+      "headline": "'Brighton running riot!' Seagulls FOUR up after half an hour vs 10-man Villa LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-aston-villa/live/559450",
+      "claimed_at": "2026-08-23T12:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -549,6 +621,24 @@
       "touches_squad": false
     },
     {
+      "digest": "a7f2fbaa73bbcfe6",
+      "headline": "Man City 0-1 Bournemouth LIVE \u2013 Maresca\u2019s side trail in his first league game",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 0-1 Bournemouth LIVE - Maresca\u2019s side trail in his first league game appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-v-bournemouth-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-23T11:20:33Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "0089a3a88488b082",
       "headline": "Chelsea latest: Essugo available for loan with PL clubs interested",
       "summary": null,
@@ -675,30 +765,6 @@
       "touches_squad": false
     },
     {
-      "digest": "648fd72785679da5",
-      "headline": "Maguire-Mazraoui grappling mix-up - what happened in build-up to Hull opener?",
-      "summary": "Manchester United defenders Harry Maguire and Noussair Mazraoui seemed to get mixed-up in the build up to Hull's opening goal on Saturday.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13576065/man-utd-harry-maguire-and-noussair-mazraoui-in-mix-up-for-hull-opening-goal",
-      "claimed_at": "2026-08-22T23:59:00Z",
-      "players": [
-        {
-          "element_id": 418,
-          "name": "Maguire",
-          "club": "MUN",
-          "held": false
-        },
-        {
-          "element_id": 422,
-          "name": "Mazraoui",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "13be364d6e0245f6",
       "headline": "How Arsenal 'punished' newly promoted Coventry",
       "summary": "Match of the Day's Mark Chapman, Alan Shearer and Wayne Rooney discuss Arsenal's quality against Coventry City, praising the hosts but stressing that Frank Lampard's side shouldn't be judged.",
@@ -760,42 +826,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/clyqylwkl2no?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-22T23:01:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4e393c3e09c60fd2",
-      "headline": "Man City latest: Maresca: Man City need to find a new Rodri",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-22T22:44:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2d8f4ceb406bdd2e",
-      "headline": "De Zerbi admits 'we're not a team yet' as Redknapp labels Spurs 'strangers'",
-      "summary": "Tottenham boss Roberto De Zerbi believes their dismal 3-0 opening-season defeat at Brentford shows his new-look side are \"not a team yet\" after a big summer of spending.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13575888/roberto-de-zerbi-tottenham-boss-admits-were-not-a-team-yet-after-new-look-side-suffer-dismal-brentford-loss",
-      "claimed_at": "2026-08-22T22:20:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1274,42 +1304,6 @@
         {
           "element_id": 427,
           "name": "Mbeumo",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "19dbc969c50d563f",
-      "headline": "Hull City 2-0 Man Utd LIVE \u2013 Mendy doubles lead for hosts",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City 2-0 Man Utd LIVE - Mendy doubles lead for hosts appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-22T10:35:00Z",
-      "players": [
-        {
-          "element_id": 586,
-          "name": "Mendy",
-          "club": "HUL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9aa9bedb2e66beae",
-      "headline": "Hull City 0-0 Man Utd LIVE \u2013 Santos and Tielemans start in midfield but no Amad in squad",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City 0-0 Man Utd LIVE - Santos and Tielemans start in midfield but no Amad in squad appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-22T10:35:00Z",
-      "players": [
-        {
-          "element_id": 43,
-          "name": "Tielemans",
           "club": "MUN",
           "held": false
         }
