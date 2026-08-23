@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T05:45:07.505810Z",
-  "n_dropped": 335,
+  "generated_at": "2026-08-23T06:15:46.210360Z",
+  "n_dropped": 336,
   "dropped_by_source": {
     "bbc_football": 103,
     "fantasyfootballscout": 21,
     "hayters": 61,
-    "sky_football": 150
+    "sky_football": 151
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 425,
+  "n_articles": 426,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -201,6 +201,30 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "648fd72785679da5",
+      "headline": "Maguire-Mazraoui grappling mix-up - what happened in build-up to Hull opener?",
+      "summary": "Manchester United defenders Harry Maguire and Noussair Mazraoui seemed to get mixed-up in the build up to Hull's opening goal on Saturday.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13576065/man-utd-harry-maguire-and-noussair-mazraoui-in-mix-up-for-hull-opening-goal",
+      "claimed_at": "2026-08-22T23:59:00Z",
+      "players": [
+        {
+          "element_id": 418,
+          "name": "Maguire",
+          "club": "MUN",
+          "held": false
+        },
+        {
+          "element_id": 422,
+          "name": "Mazraoui",
+          "club": "MUN",
           "held": false
         }
       ],
@@ -1011,24 +1035,6 @@
           "element_id": 335,
           "name": "Stach",
           "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6990c97972530388",
-      "headline": "Tottenham latest: Gray becomes club's youngest-ever PL captain",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-22T16:39:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
