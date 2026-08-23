@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T11:50:11.296703Z",
-  "n_dropped": 332,
+  "generated_at": "2026-08-23T12:39:16.013573Z",
+  "n_dropped": 339,
   "dropped_by_source": {
-    "bbc_football": 101,
+    "bbc_football": 103,
     "fantasyfootballscout": 22,
-    "hayters": 58,
-    "sky_football": 151
+    "hayters": 59,
+    "sky_football": 155
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 422,
+  "n_articles": 429,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "ab386daf26bfab54",
+      "headline": "'New season, new trim' - Haaland reveals buzzcut",
+      "summary": "Manchester City striker Erling Haaland reveals his new buzz cut on social media.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cr4941zkgevo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T12:36:54Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "ef6d823142a43bce",
       "headline": "Where's it all gone? Haaland reveals new shaven haircut",
@@ -45,6 +63,24 @@
           "element_id": 411,
           "name": "Haaland",
           "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "a17704a67ed4ae92",
+      "headline": "Aston Villa latest: Watkins not in squad amid Saudi transfer interest",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-22T15:20:00Z",
+      "players": [
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
           "held": true
         }
       ],
@@ -225,6 +261,60 @@
       "touches_squad": true
     },
     {
+      "digest": "1f807cfa03e906e3",
+      "headline": "Man City agree record-breaking deal with Lille to sign Bouaddi",
+      "summary": "Manchester City have agreed a deal with Lille for Morocco international midfielder Ayyoub Bouaddi worth up to &#163;86m (&#8364;100m).",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13576242/ayyoub-bouaddi-transfer-manchester-city-reach-agreement-with-lille-to-sign-18-year-old-morocco-midfielder",
+      "claimed_at": "2026-08-23T13:02:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c05a9fcf0ee5d24a",
+      "headline": "Spurs latest: Savinho absent from City squad but Marmoush on bench",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "64103cdaede4919b",
+      "headline": "Man City agree \u00a386m deal for teen midfielder Bouaddi",
+      "summary": "Manchester City agree a deal in principle for 18-year-old Lille midfielder Ayyoub Bouaddi worth 100m euros (\u00a386m).",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/clyjy0e0pkzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T12:19:43Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "9d976f6b66f9737a",
       "headline": "Brighton vs Aston Villa team news LIVE!",
       "summary": null,
@@ -243,6 +333,24 @@
       "touches_squad": false
     },
     {
+      "digest": "cd605942419be14d",
+      "headline": "Vuskovic makes PL debut for Brighton as Villa leave out star names LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-aston-villa/live/559450",
+      "claimed_at": "2026-08-23T12:00:00Z",
+      "players": [
+        {
+          "element_id": 504,
+          "name": "Vuskovic",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "4da5d860fb34bdec",
       "headline": "Man City vs Bournemouth team news LIVE!",
       "summary": null,
@@ -250,6 +358,60 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/manchester-city-vs-bournemouth/live/559451",
       "claimed_at": "2026-08-23T11:56:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ae23d5791dd3eb44",
+      "headline": "Lewis starts for Man City as Silva makes Bournemouth debut LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-bournemouth/live/559451",
+      "claimed_at": "2026-08-23T11:56:00Z",
+      "players": [
+        {
+          "element_id": 395,
+          "name": "Lewis",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "24849f7bde6fb663",
+      "headline": "Rooney says Man Utd must become feared - but what went wrong at Hull?",
+      "summary": "Manchester United made an awful start to their Premier League campaign at newly-promoted Hull. What went wrong?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvgxg1g8nkro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T11:43:19Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2c1418d12a71df2f",
+      "headline": "Man City v Bournemouth LIVE \u2013 Maresca names surprising lineup",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City v Bournemouth LIVE - Maresca names surprising lineup appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-v-bournemouth-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-23T11:20:33Z",
       "players": [
         {
           "element_id": 0,
@@ -753,24 +915,6 @@
       "touches_squad": false
     },
     {
-      "digest": "4e121e32c03c59a5",
-      "headline": "Spurs crumble as Brentford show brilliance in convincing win",
-      "summary": "Highlights from the Premier League match between Brentford and Tottenham Hotspur.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13576076/brentford-3-0-tottenham-hotspur-premier-league-highlights",
-      "claimed_at": "2026-08-22T19:28:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "31571788502c4e76",
       "headline": "Spurs 'didn't fight in the right way' - Di Zerbi",
       "summary": "Tottenham Hotspur head coach Roberto Di Zerbi believes his side \"didn't fight in the right way\" in their 3-0 loss to Brentford in the opening match of the 2026-27 Premier League season.",
@@ -796,24 +940,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/cp8x8jl4yj2o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-22T19:23:56Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8befda7e64952b40",
-      "headline": "Woeful Spurs easily beaten at Brentford despite big-spending summer",
-      "summary": "A woeful Tottenham started their new Premier League season dismally with a 3-0 loss at Brentford despite a big summer of spending.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/brentford-vs-tottenham-hotspur/report/559445",
-      "claimed_at": "2026-08-22T19:20:00Z",
       "players": [
         {
           "element_id": 0,
@@ -879,60 +1005,6 @@
       "touches_squad": false
     },
     {
-      "digest": "ccf044a333481752",
-      "headline": "Wasteful Palace punished by Everton in Sage's first game",
-      "summary": "Everton beat Crystal Palace 2\u20130 to win their opening game of the Premier League season for the first time in five years, with goals from Kiernan Dewsbury\u2011Hall and Thierno.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c0m7dk4z82ro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T19:00:58Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "228e1e22f4716122",
-      "headline": "Hull shock Man Utd with dream Premier League return",
-      "summary": "Watch highlights as Hull City make a dream start to their return to the Premier League, beating Manchester United 2-0 on the opening weekend at the MKM Stadium.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/clyl5ejxj2wo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T19:00:18Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "baa15fb3f74e6810",
-      "headline": "'Reality check' for Spurs as Kayode makes it three for The Bees",
-      "summary": "Michael Kayode makes it three for Brentford three minutes into the second half against Spurs.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13576053/goal-m-kayode-49-brentford-3-0-tottenham-hotspur",
-      "claimed_at": "2026-08-22T18:43:00Z",
-      "players": [
-        {
-          "element_id": 88,
-          "name": "Kayode",
-          "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "4eed03dccbde6150",
       "headline": "Brentford 3-0 Spurs LIVE \u2013 Spurs kick off new season with defeat",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 3-0 Spurs LIVE - Spurs kick off new season with defeat appeared first on Hayters.",
@@ -969,24 +1041,6 @@
       "touches_squad": false
     },
     {
-      "digest": "3539a3052d66b59d",
-      "headline": "Where does Man Utd defeat rank among shock opening-game losses?",
-      "summary": "BBC Sport looks at some of the most shocking Premier League opening-game defeats.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvgvg1l138zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T18:35:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b9f655e25ef30f24",
       "headline": "Glasner stresses the need for time after Nottingham Forest are beaten by Leeds",
       "summary": "Nottingham Forest boss Oliver Glasner urged the need for patience after his side began their Premier League campaign with a 1-0 defeat to Leeds. Anton Stach\u2019s late winner condemned Forest to defeat at Elland Road, but Gla",
@@ -999,24 +1053,6 @@
           "element_id": 335,
           "name": "Stach",
           "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2d0ae4787318bb0a",
-      "headline": "Janelt doubles Brentford's lead as Spurs struggle",
-      "summary": "Vitaly Janelt makes it two for the home side as Brentford lead Spurs 2-0 in the first half.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13576037/goal-v-janelt-33-brentford-2-0-tottenham-hotspur",
-      "claimed_at": "2026-08-22T18:08:00Z",
-      "players": [
-        {
-          "element_id": 98,
-          "name": "Janelt",
-          "club": "BRE",
           "held": false
         }
       ],
@@ -1041,24 +1077,6 @@
           "element_id": 385,
           "name": "Trafford",
           "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0217bf24a13198a4",
-      "headline": "'This is brilliant!' | Lewis-Potter puts Brentford ahead vs Spurs",
-      "summary": "A perfect pass from Mamadou Sangare sees Keane Lewis-Potter's strike put Brentford 1-0 up against Spurs.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13576021/goal-k-lewis-potter-12-brentford-1-0-tottenham-hotspur",
-      "claimed_at": "2026-08-22T17:48:00Z",
-      "players": [
-        {
-          "element_id": 86,
-          "name": "Lewis-Potter",
-          "club": "BRE",
           "held": false
         }
       ],
@@ -1288,24 +1306,6 @@
       "tier": 2,
       "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
       "claimed_at": "2026-08-22T10:35:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "64ff91ffdf5d547e",
-      "headline": "Joao Pedro signs new long-term deal with Chelsea",
-      "summary": "Joao Pedro has signed a new long-term contract with Chelsea that will keep him at Stamford Bridge until 2034. The Brazil international joined the Blues in July 2025 and made an immediate impact, scoring in both the Club World Cup semi-final and final",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/joao-pedro-signs-new-long-term-deal-with-chelsea/",
-      "claimed_at": "2026-08-22T10:26:02Z",
       "players": [
         {
           "element_id": 0,
