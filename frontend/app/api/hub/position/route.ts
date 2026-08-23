@@ -8,10 +8,11 @@ import { saveOwnerCapture, type OwnerCapture } from "@/lib/hub-position-store";
  *
  * ## Why this exists at all
  *
- * The agent's `work` job checks out the repo, installs dependencies, and only
- * then runs — so a position committed to git cannot reach the run already in
- * flight. This route writes to Supabase instead, and `pipeline/fpl/hub_state.py`
- * reads it over the network at decision time.
+ * This project has no database, so a capture goes where every other fact goes: a
+ * committed file, written through GitHub's Contents API and read by the agent out
+ * of its own checkout. The cost is that a capture reaches the NEXT agent tick
+ * rather than one already in flight — every thirty minutes inside a Friday seal
+ * window — which did not justify a second store and a second secret.
  *
  * ## Two entries, not three
  *
@@ -161,21 +162,32 @@ export async function POST(request: Request) {
   // staleness check compares against FPL's price-change boundary, so a clock the
   // caller controls could make an expired capture look fresh.
   const capturedAt = new Date().toISOString();
-  const status = await saveOwnerCapture(parsed.capture, capturedAt);
+  const { status, commit } = await saveOwnerCapture(parsed.capture, capturedAt);
 
   if (status === "unconfigured") {
     return NextResponse.json(
       {
         error:
-          "Supabase is not configured for this deployment, so the capture was " +
-          "not stored. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.",
+          "GITHUB_DISPATCH_TOKEN is not set for this deployment, so the capture " +
+          "could not be committed. Nothing was saved.",
       },
       { status: 503, headers: { "Cache-Control": "no-store" } }
     );
   }
+  if (status === "conflict") {
+    return NextResponse.json(
+      {
+        error:
+          "Another capture for this entry landed first, so this one was refused " +
+          "rather than overwriting it. Reload to see the stored position, then " +
+          "capture again if it is still wrong.",
+      },
+      { status: 409, headers: { "Cache-Control": "no-store" } }
+    );
+  }
   if (status === "unavailable") {
     return NextResponse.json(
-      { error: "The capture could not be stored. Nothing was saved; try again." },
+      { error: "The capture could not be committed. Nothing was saved; try again." },
       { status: 502, headers: { "Cache-Control": "no-store" } }
     );
   }
@@ -184,6 +196,9 @@ export async function POST(request: Request) {
     {
       status,
       capturedAt,
+      // The commit is the receipt. A capture is only real once it is in the
+      // record, so the screen quotes the sha rather than saying "saved".
+      commit,
       // Echoed so the screen can say what was recorded rather than implying it.
       recorded: {
         entryId: parsed.capture.entryId,

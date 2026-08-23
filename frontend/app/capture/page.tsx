@@ -4,10 +4,11 @@
  * Record the position actually submitted to FPL, for the entries the agent
  * decides for.
  *
- * A committed file cannot reach a run already in flight — the agent's job checks
- * out, installs dependencies, and only then runs — so this posts to
- * `/api/hub/position`, which writes to Supabase, and `pipeline/fpl/hub_state.py`
- * reads it over the network at decision time.
+ * This posts to `/api/hub/position`, which commits the position to
+ * `predictions/fpl/hub/capture/{entryId}.json` through GitHub's Contents API.
+ * `pipeline/fpl/hub_state.py` reads it out of the agent's own checkout, so a
+ * capture reaches the NEXT run rather than one already in flight — every half hour
+ * inside a deadline window. There is no database here, and nothing to provision.
  *
  * Only the bot entries appear. The owner's own team is advisory: it never reaches
  * `_decide_for_entries`, so a capture for it would imply a proposal that never

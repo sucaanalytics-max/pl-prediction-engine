@@ -1,90 +1,91 @@
 """
 Read a position the owner captured in the hub.
 
-## Why this reads over the network instead of from a file
+## A committed file, not a database
 
-The agent's `work` job runs `actions/checkout`, then `setup-python`, then a full
-`pip install -r pipeline/requirements.txt`, and only then the agent
-(`.github/workflows/fpl_agent.yml`). A commit landing in that gap is invisible to
-the run already in flight — git does not retroactively alter a checkout. So a
-capture the owner makes while a run is underway can only reach that run over the
-wire. That is the entire reason this module exists.
+The hub writes a capture to `predictions/fpl/hub/capture/{entry_id}.json` through
+GitHub's Contents API, and the agent reads it out of its own checkout like every
+other artifact. There is no database in this project: truth is committed JSON
+served from the CDN, and the five-state artifact model does the work a query layer
+would.
 
-## What it is for, and what it is not
+The earlier version of this module read PostgREST over the network, to close a real
+gap — the agent's `work` job checks out, installs dependencies, and only then runs,
+so a commit landing in that gap is invisible to the run already in flight. That gap
+is real but small: inside a Friday seal window `fpl_agent.yml` ticks every thirty
+minutes (`'0,30 13-16 * * 5'` beside the hourly cron), so a capture waits for the
+next tick rather than the next hour. Thirty minutes, hours before a deadline, did
+not justify a second store, a second secret, and a second place for provenance to
+diverge.
 
-It serves the entries the agent actually decides for — `FPL_ENTRIES` in
-`pipeline/config.py`, currently the two bot teams. It has nothing to say about the
-owner's own team, which is a display entity in the frontend and never reaches
-`_decide_for_entries`.
+What that buys, beyond one fewer dependency: the capture inherits git's own
+history. A database row overwritten in place leaves no trace of what it replaced,
+while `git log` on this path shows every position the owner has ever claimed,
+timestamped by something outside our control.
 
-It is also inert for GW1. `config.py:448` says an empty squad "means the opening
-build, where the whole budget is cash", and FPL does not publish any entry's picks
-before the first deadline — so an empty squad is the CORRECT input for GW1 and a
-capture cannot improve it. This starts earning its keep at GW2, when a squad is
-held and the API may lag behind what the owner has actually done.
+## Latest wins, and absence is the gate
 
-## It never raises, and it is off by default
+One file per entry, overwritten by each capture. The newest claim is the truth and
+git keeps the rest, so nothing here needs to reason about ordering.
+
+There is no feature flag. An absent file means no capture, which is exactly what
+`_read_entry` should do with it — fall through to FPL's own endpoint. The previous
+version carried an `FPL_HUB_CAPTURE` gate because a NETWORK dependency in the
+pre-deadline decision path needed an off switch; reading a file that may not exist
+is what every other artifact in this repo already does.
+
+## It still never raises
 
 `_read_entry` is reached from `_decide_for_entries`, which the seal path calls
-AFTER `seal_forecast` inside a `try/except Exception`. So an exception here costs a
-proposal, not a seal. That is not licence to be careless: this returns None on
-every failure, so a hub that is down, misconfigured, or slow degrades to the FPL
-API read that already works, rather than turning a recoverable proposal into a red
-run.
+AFTER `seal_forecast` inside a `try/except Exception`. So a failure here costs a
+proposal, not a seal. This returns None on every unusable input regardless, because
+the fallback below it is a working read and a degraded proposal beats none.
 
-The gate is `FPL_HUB_CAPTURE`, and it must be set explicitly. Shipping this with
-the gate off means the agent's behaviour is unchanged byte for byte until someone
-decides otherwise — which is the only responsible way to add a network dependency
-to a decision path in the days before an irrecoverable seal.
-
-Standard library only, matching `pipeline/learning/schedule.py`'s discipline, so
-this cannot drag a new dependency into the deadline path.
+Standard library only, matching `pipeline/learning/schedule.py`, so nothing here can
+drag a dependency into the deadline path.
 """
 from __future__ import annotations
 
 import json
 import logging
-import os
-import urllib.error
-import urllib.parse
-import urllib.request
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
-#: The provenance value written by the hub's capture route. Distinct from
-#: `captured_authenticated_draft`, which means "official picks were unavailable".
+#: Provenance, written by the capture route and carried in the file. Distinct from
+#: `captured_authenticated_draft`, which the frontend sets when FPL's official picks
+#: were unavailable — "the owner typed this in" is a stronger claim than "the API
+#: would not tell us", and the UI renders them differently.
 OWNER_CAPTURED = "owner_captured"
 
+#: Where the hub writes. A path no other writer owns, declared in the other
+#: workflows' FORBID_PATHS rather than left incidentally disjoint — `pipeline.yml`
+#: stages `predictions` wholesale, so "nothing else happens to touch it" is not a
+#: guarantee, it is a coincidence waiting to end.
+CAPTURE_DIR = ("fpl", "hub", "capture")
+
 #: FPL applies price changes at roughly 01:30 UTC. A captured bank and set of
-#: purchase prices are claims about the prices of one particular day, so they stop
-#: being trustworthy once that boundary passes — not after some round number of
-#: hours. The squad list itself does not age this way: it changes only when the
-#: owner transfers, which is an act the owner would capture again.
+#: purchase prices are claims about one particular day's prices, so they stop being
+#: trustworthy once that boundary passes — not after some round number of hours. The
+#: squad list does not age this way: it changes only when the owner transfers, which
+#: is an act the owner would capture again.
 PRICE_CHANGE_HOUR = 1
 PRICE_CHANGE_MINUTE = 30
 
-#: Short on purpose. This runs inside the pre-deadline decision path, where a slow
-#: dependency is a worse failure than an absent one: the FPL API read below it
-#: already works, so waiting is pure downside.
-DEFAULT_TIMEOUT_SECONDS = 3.0
-
-#: The table already exists, RLS enabled and forced, service-role only
-#: (supabase/migrations/202607280001_create_private_fpl_snapshots.sql).
-TABLE = "fpl_manager_snapshots"
+SQUAD_SIZE = 15
 
 
 @dataclass
 class Capture:
     """
-    One position the owner entered by hand, as stored.
+    One position the owner entered by hand.
 
     Units are integer tenths of a million throughout, matching
-    `pipeline.fpl.entry_api.EntryState` so that nothing has to convert on the way
-    into a decision. The table's `bank` and `squad_value` columns are millions,
-    for reading in SQL; the `payload` this is built from is tenths.
+    `pipeline.fpl.entry_api.EntryState`, so nothing converts on the way into a
+    decision.
     """
 
     entry_id: int
@@ -100,27 +101,9 @@ class Capture:
         return _price_change_has_passed(self.captured_at, now)
 
 
-def capture_enabled() -> bool:
-    """
-    Whether the agent should consult the hub at all.
-
-    Defaults to FALSE, and only an explicit affirmative turns it on. A gate that
-    could be switched on by an empty string or an unset variable would not be a
-    gate.
-    """
-    return os.environ.get("FPL_HUB_CAPTURE", "").strip().lower() in {"1", "true", "yes"}
-
-
-def _credentials() -> Optional[Dict[str, str]]:
-    """Matches the frontend's fallback order in frontend/lib/fpl-snapshot-store.ts."""
-    url = os.environ.get("SUPABASE_URL")
-    secret = (
-        os.environ.get("SUPABASE_SECRET_KEY")
-        or os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-    )
-    if not url or not secret:
-        return None
-    return {"url": url.rstrip("/"), "secret": secret}
+def capture_path(predictions_dir: Path, entry_id: int) -> Path:
+    """Where one entry's capture lives, under the predictions root it is given."""
+    return Path(predictions_dir).joinpath(*CAPTURE_DIR) / f"{int(entry_id)}.json"
 
 
 def _price_change_has_passed(
@@ -129,10 +112,11 @@ def _price_change_has_passed(
     now = now or datetime.now(timezone.utc)
     if captured_at.tzinfo is None:
         captured_at = captured_at.replace(tzinfo=timezone.utc)
-    boundary = captured_at.astimezone(timezone.utc).replace(
+    captured_at = captured_at.astimezone(timezone.utc)
+    boundary = captured_at.replace(
         hour=PRICE_CHANGE_HOUR, minute=PRICE_CHANGE_MINUTE, second=0, microsecond=0
     )
-    if boundary <= captured_at.astimezone(timezone.utc):
+    if boundary <= captured_at:
         boundary += timedelta(days=1)
     return boundary <= now.astimezone(timezone.utc)
 
@@ -145,22 +129,52 @@ def _parse_stamp(value: Any) -> Optional[datetime]:
     return stamp if stamp.tzinfo else stamp.replace(tzinfo=timezone.utc)
 
 
-def _build(row: Dict[str, Any], entry_id: int, gameweek: int) -> Optional[Capture]:
+def read_capture(
+    predictions_dir: Path, entry_id: int, gameweek: int
+) -> Optional[Capture]:
     """
-    Turn one row into a Capture, or None if it does not describe a usable position.
+    The owner's capture for this entry and gameweek, or None.
 
-    Validated rather than trusted. This crosses a process boundary from a browser
-    form, and a squad of the wrong size or an unparseable stamp would otherwise
-    reach the optimiser as though the owner had asserted it.
+    None covers every reason there is nothing to use — no file, unreadable JSON,
+    wrong gameweek, malformed squad — deliberately, because the caller's action is
+    identical in all of them: fall through to the FPL read that already works. The
+    reasons are distinguished in the log, not in the return type.
+
+    The gameweek is checked rather than trusted. A capture is a claim about one
+    gameweek's position, and serving GW3's squad into a GW4 decision would be a
+    wrong answer delivered confidently.
     """
-    captured_at = _parse_stamp(row.get("captured_at"))
-    if captured_at is None:
-        logger.warning("hub capture for entry %s has no readable captured_at", entry_id)
+    path = capture_path(predictions_dir, entry_id)
+    if not path.exists():
         return None
 
-    payload = row.get("payload")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        logger.warning("hub capture at %s is unreadable (%s)", path, exc)
+        return None
+
     if not isinstance(payload, dict):
-        logger.warning("hub capture for entry %s has no payload object", entry_id)
+        logger.warning("hub capture at %s is not an object", path)
+        return None
+
+    if payload.get("source") != OWNER_CAPTURED:
+        logger.warning(
+            "hub capture at %s claims source %r, not %r; ignoring",
+            path, payload.get("source"), OWNER_CAPTURED,
+        )
+        return None
+
+    if int(payload.get("gameweek", -1)) != int(gameweek):
+        logger.info(
+            "hub capture for entry %s is for GW%s, not GW%s; ignoring",
+            entry_id, payload.get("gameweek"), gameweek,
+        )
+        return None
+
+    captured_at = _parse_stamp(payload.get("captured_at"))
+    if captured_at is None:
+        logger.warning("hub capture for entry %s has no readable captured_at", entry_id)
         return None
 
     try:
@@ -175,86 +189,22 @@ def _build(row: Dict[str, Any], entry_id: int, gameweek: int) -> Optional[Captur
         logger.warning("hub capture for entry %s is not numeric (%s)", entry_id, exc)
         return None
 
-    # A capture is a claim about a full squad. Fifteen is not a style preference:
-    # the optimiser's transfer accounting starts from the squad it is handed, and a
-    # short squad would silently read as free slots to fill.
-    if len(squad) != 15 or len(set(squad)) != 15:
+    # A capture is a claim about a full squad. Fifteen is not a style preference: the
+    # optimiser's transfer accounting starts from the squad it is handed, and a short
+    # squad reads as free slots to fill, which it would then spend the bank on.
+    if len(squad) != SQUAD_SIZE or len(set(squad)) != SQUAD_SIZE:
         logger.warning(
-            "hub capture for entry %s holds %d distinct players, not 15; ignoring",
-            entry_id, len(set(squad)),
+            "hub capture for entry %s holds %d distinct players, not %d; ignoring",
+            entry_id, len(set(squad)), SQUAD_SIZE,
         )
         return None
 
     return Capture(
-        entry_id=entry_id,
-        gameweek=gameweek,
+        entry_id=int(entry_id),
+        gameweek=int(gameweek),
         captured_at=captured_at,
         squad=squad,
         bank=bank,
         free_transfers=free_transfers,
         purchase_prices=purchase_prices,
     )
-
-
-def read_capture(
-    entry_id: int,
-    gameweek: int,
-    timeout: float = DEFAULT_TIMEOUT_SECONDS,
-) -> Optional[Capture]:
-    """
-    The newest owner capture for this entry and gameweek, or None.
-
-    None covers every reason there is nothing to use — gate off, no credentials,
-    hub unreachable, no capture yet, malformed row — deliberately, because the
-    caller's action is identical in all of them: fall through to the FPL API read
-    that already works. The reasons are distinguished in the log, not in the
-    return type.
-
-    Scoped to `gameweek` in the query rather than filtered afterwards. A capture
-    is a claim about one gameweek's position; serving GW3's squad into a GW4
-    decision would be a wrong answer delivered confidently.
-    """
-    if not capture_enabled():
-        return None
-
-    credentials = _credentials()
-    if credentials is None:
-        logger.info(
-            "FPL_HUB_CAPTURE is set but SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY are "
-            "not; no capture can be read"
-        )
-        return None
-
-    query = urllib.parse.urlencode(
-        {
-            "entry_id": f"eq.{int(entry_id)}",
-            "event_id": f"eq.{int(gameweek)}",
-            "source": f"eq.{OWNER_CAPTURED}",
-            "select": "captured_at,payload",
-            "order": "captured_at.desc",
-            "limit": "1",
-        }
-    )
-    request = urllib.request.Request(
-        f"{credentials['url']}/rest/v1/{TABLE}?{query}",
-        headers={
-            "apikey": credentials["secret"],
-            "Authorization": f"Bearer {credentials['secret']}",
-            "Accept": "application/json",
-        },
-    )
-
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            rows = json.loads(response.read().decode("utf-8"))
-    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, OSError) as exc:
-        # Not re-raised. See the module docstring: the fallback below this is a
-        # working read, so a hub outage must cost nothing.
-        logger.warning("could not read hub capture for entry %s (%s)", entry_id, exc)
-        return None
-
-    if not isinstance(rows, list) or not rows:
-        logger.info("no hub capture for entry %s GW%s", entry_id, gameweek)
-        return None
-
-    return _build(rows[0], int(entry_id), int(gameweek))

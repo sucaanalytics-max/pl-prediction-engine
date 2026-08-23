@@ -56,6 +56,7 @@ beforeEach(() => {
       JSON.stringify({
         status: "saved",
         capturedAt: "2026-08-25T09:00:00.000Z",
+        commit: "abc1234def5678",
         recorded: { entryId: 2561567, gameweek: 2, players: 15, pricesSupplied: 0 },
       }),
       { status: 201 }
@@ -193,11 +194,13 @@ describe("submitting", () => {
     expect(body.gameweek).toBe(2);
   });
 
-  it("reports what was recorded, not that it succeeded", async () => {
+  it("quotes the commit rather than claiming success", async () => {
     await fill();
     await userEvent.click(screen.getByRole("button", { name: /Record this position/ }));
     const status = await screen.findByRole("status");
-    expect(status.textContent).toMatch(/Recorded 15 players for GW2/);
+    expect(status.textContent).toMatch(/15 players recorded for GW2/);
+    // The sha is the checkable part; "saved" would be a reassurance.
+    expect(status.textContent).toMatch(/commit abc1234/);
     expect(status.textContent).toMatch(/uncertain/);
   });
 

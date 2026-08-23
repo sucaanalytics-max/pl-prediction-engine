@@ -980,16 +980,22 @@ def _entry_state_from_capture(capture, gameweek: int):
     )
 
 
-def _read_entry(config: Dict[str, Any], gameweek: int, bootstrap: Dict[str, Any]):
+def _read_entry(
+    predictions_dir: Path,
+    config: Dict[str, Any],
+    gameweek: int,
+    bootstrap: Dict[str, Any],
+):
     """
     Read one entry's real position, preferring what the owner captured.
 
     Three rungs, in descending order of how strong the claim is:
 
-    1. An owner capture from the hub, when FPL_HUB_CAPTURE is set. "The owner
+    1. An owner capture committed under `predictions/fpl/hub/capture/`. "The owner
        entered this" beats "the API has not published it yet", which is the whole
-       reason the hub exists — a squad committed to git cannot reach a run whose
-       checkout already happened, so this rung reads over the network.
+       reason the hub exists. It is read from this checkout like any other
+       artifact, so a capture reaches the NEXT run rather than one already in
+       flight — inside a Friday seal window that is the next half-hourly tick.
     2. FPL's own entry endpoint.
     3. An empty state.
 
@@ -1006,9 +1012,10 @@ def _read_entry(config: Dict[str, Any], gameweek: int, bootstrap: Dict[str, Any]
     if not entry_id:
         return EntryState(entry_id=0, gameweek=int(gameweek))
 
-    # Returns None for every reason there is nothing to use, including the gate
-    # being off, so this is a no-op until FPL_HUB_CAPTURE is set.
-    captured = read_capture(int(entry_id), int(gameweek))
+    # None for every reason there is nothing to use, including no file at all, so
+    # this is inert until a capture is actually committed. Absence is the gate; it
+    # needs no flag, because that is how every artifact in this repo behaves.
+    captured = read_capture(predictions_dir, int(entry_id), int(gameweek))
     if captured is not None:
         logger.info(
             "using the owner's captured position for entry %s GW%s (captured %s%s)",
@@ -1107,7 +1114,7 @@ def _decide_for_entries(
         # meant that from GW2 onward `held` was always empty, so the agent
         # treated every gameweek as an opening build with the full 100.0m and
         # never once replayed a purchase price — the thing entry_api exists for.
-        entry = _read_entry(config, state_gameweek, bootstrap)
+        entry = _read_entry(predictions_dir, config, state_gameweek, bootstrap)
         held = entry.squad or (config.get("squad") or [])
         decision = decide(
             gameweek=entry.gameweek,

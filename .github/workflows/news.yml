@@ -87,7 +87,7 @@ jobs:
           # nothing and forbidden nothing. The other writers' artifacts are
           # therefore listed explicitly, which is both ERE-safe and the same
           # explicit-list discipline the publish step uses.
-          FORBID_PATHS: '^(predictions/(latest|matches|health|table|h2h|player_stats|market_blend_weight|fixture_xg)\.json|predictions/fpl/(ledger|decision|xp_gw|sim_params|messages)|predictions/archive/|frontend/public/predictions/(archive|h2h-events)/|frontend/public/predictions/[^/]+\.json|frontend/public/predictions/fpl/(messages|xp_gw|decision_public|evidence_view|accuracy|sensitivity))'
+          FORBID_PATHS: '^(predictions/(latest|matches|health|table|h2h|player_stats|market_blend_weight|fixture_xg)\.json|predictions/fpl/(ledger|decision|xp_gw|sim_params|messages|hub)|predictions/archive/|frontend/public/predictions/(archive|h2h-events)/|frontend/public/predictions/[^/]+\.json|frontend/public/predictions/fpl/(messages|xp_gw|decision_public|evidence_view|accuracy|sensitivity))'
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"

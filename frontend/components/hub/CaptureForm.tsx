@@ -196,13 +196,18 @@ export default function CaptureForm({
       if (!response.ok) {
         setOutcome({ ok: false, message: payload.error ?? `Refused (${response.status}).` });
       } else {
+        const sha = typeof payload.commit === "string" ? payload.commit.slice(0, 7) : null;
         setOutcome({
           ok: true,
-          // Says what was recorded rather than "Saved!", so the screen carries the
-          // fact rather than a reassurance.
-          message: `Recorded ${payload.recorded?.players ?? SQUAD_SIZE} players for GW${
-            payload.recorded?.gameweek ?? week
-          } at ${payload.capturedAt}. Prices were not supplied, so selling prices stay flagged as uncertain.`,
+          // Quotes the commit rather than saying "Saved!". A capture is only real
+          // once it is in the record, and the sha is the part that can be checked;
+          // "saved" is a reassurance the screen has no way to back up.
+          message:
+            `${payload.recorded?.players ?? SQUAD_SIZE} players recorded for GW${
+              payload.recorded?.gameweek ?? week
+            }${sha ? ` in commit ${sha}` : ""}. The next agent run reads it — ` +
+            `every half hour inside a deadline window. Prices were not supplied, so ` +
+            `selling prices stay flagged as uncertain.`,
         });
       }
     } catch {
