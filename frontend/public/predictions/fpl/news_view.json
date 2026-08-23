@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T21:46:28.792450Z",
-  "n_dropped": 388,
+  "generated_at": "2026-08-23T22:20:45.359780Z",
+  "n_dropped": 386,
   "dropped_by_source": {
-    "bbc_football": 112,
+    "bbc_football": 110,
     "fantasyfootballscout": 20,
     "hayters": 73,
     "sky_football": 183
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 478,
+  "n_articles": 476,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -367,6 +367,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "34c25e64f50e6d46",
+      "headline": "Papers: Palace prepare audacious \u00a350m bid for West Ham captain Bowen",
+      "summary": "The top stories and transfer rumours from Monday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13576453/crystal-palace-transfer-news-eagles-prepare-audacious-50m-bid-to-lure-jarrod-bowen-back-to-premier-league-paper-talk",
+      "claimed_at": "2026-08-23T22:25:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "54fe79a3780e0b92",
@@ -855,24 +873,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "582c6f145abba39b",
-      "headline": "Aston Villa latest: McGinn apologises to Villa fans - but proud of second-half reaction",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-23T17:00:00Z",
-      "players": [
-        {
-          "element_id": 45,
-          "name": "McGinn",
-          "club": "AVL",
           "held": false
         }
       ],
