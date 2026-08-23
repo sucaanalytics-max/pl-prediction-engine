@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T19:28:33.656634Z",
-  "n_dropped": 382,
+  "generated_at": "2026-08-23T19:48:16.810915Z",
+  "n_dropped": 389,
   "dropped_by_source": {
-    "bbc_football": 109,
+    "bbc_football": 113,
     "fantasyfootballscout": 20,
     "hayters": 73,
-    "sky_football": 180
+    "sky_football": 183
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 472,
+  "n_articles": 479,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -369,6 +369,78 @@
       "touches_squad": true
     },
     {
+      "digest": "f4b7252ed1302e8f",
+      "headline": "Man Utd latest: Baleba passes medical",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T20:19:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e11059497dc7f3a5",
+      "headline": "Liverpool latest: Iraola says Isak expected hostile return at Newcastle",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T20:12:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3d3524bd9b2b464d",
+      "headline": "Newcastle latest: Jaissle offers cryptic clue over Magpies signings",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T20:07:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "008c6b02ff5b9692",
+      "headline": "Relief for Iraola but Liverpool have work to do",
+      "summary": "Dominik Szoboszlai's injury-time penalty rescues a point at the start of the Andoni Iraola era - but Liverpool need to improv after below-par performance.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cdrvr73egnlo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T19:27:12Z",
+      "players": [
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "4d693b55552ac6aa",
       "headline": "Jaissle slams \u2018really soft\u2019 penalty call in Newcastle\u2019s draw with Liverpool",
       "summary": "Newcastle boss Matthias Jaissle labelled the late penalty awarded to Liverpool as \u201creally soft\u201d after his side's 2-2 draw at St James\u2019 Park. Liverpool were awarded a spot-kick late on after Victor Munoz went down in the box",
@@ -398,6 +470,60 @@
         {
           "element_id": 377,
           "name": "Munoz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a07325d16e80ab59",
+      "headline": "Maresca's Manchester City reign begins with dramatic comeback against Bournemouth",
+      "summary": "Two managers in charge of new clubs face off with Manchester City under Enzo Maresca and Bournemouth under Marco Rose, as the hosts stage a late comeback to kick the new Premier League season off in dramatic fashion.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cpd7dp7zeqzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T19:03:31Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "493041bebda601f9",
+      "headline": "Brighton dominate 10-man Villa",
+      "summary": "Brighton start their season with an emphatic win at home against Europa League winners Aston Villa, with four first-half goals.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c78g8gdkgnzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T19:02:54Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "db98b328758a9f92",
+      "headline": "Late penalty for Liverpool denies Newcastle win",
+      "summary": "Szoboszlai rescues a point for Liverpool, scoring a stoppage-time penalty to deny Newcastle an opening game victory at St James' Park in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c36d6lxx36eo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T19:01:23Z",
+      "players": [
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
           "club": "LIV",
           "held": false
         }
@@ -735,24 +861,6 @@
       "touches_squad": false
     },
     {
-      "digest": "2a319a86c98b8cdd",
-      "headline": "Brighton blow Villa away in first-half masterclass at The Amex",
-      "summary": "Highlights from the Premier League match between Brighton and Aston Villa.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13576325/brighton-4-0-aston-villa-premier-league-highlights",
-      "claimed_at": "2026-08-23T16:13:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "7f767cbb912f1e5a",
       "headline": "\u2018A work in progress\u2019 \u2013 Man City boss Maresca reflects on comeback win over Bournemouth",
       "summary": "Manchester City boss Enzo Maresca insists his side remain a \u201cwork in progress\u201d after Josko Gvardiol\u2019s late goal secured a 2-1 win over Bournemouth. Gvardiol struck late to give City all three points as they came f",
@@ -765,42 +873,6 @@
           "element_id": 391,
           "name": "Gvardiol",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "31d4e10ac6db7974",
-      "headline": "Man City survive huge Bournemouth scare in Maresca's first game",
-      "summary": "Manchester City survived a serious scare in Enzo Maresca's first Premier League game in charge, forced to come from behind to earn a dramatic, late 2-1 victory over Bournemouth.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-bournemouth/report/559451",
-      "claimed_at": "2026-08-23T16:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "35422f5c0fd7d74c",
-      "headline": "Man City latest: We're a work in progress, says Maresca after late Cherries win",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-23T16:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1198,78 +1270,6 @@
       "tier": 2,
       "url": "https://hayters.com/man-city-v-bournemouth-live-team-news-updates-and-reaction/",
       "claimed_at": "2026-08-23T11:20:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cec8475b2d6c1924",
-      "headline": "'It hurts' - Alexander-Arnold reveals he still receives abuse after Liverpool exit",
-      "summary": "Trent Alexander-Arnold says he still receives abuse from Liverpool fans online after leaving Anfield for Real Madrid 14 months ago.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqjxj2zz77ro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T10:05:27Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a77680cf9570ba27",
-      "headline": "What does Savinho's \u00a375m move reveal about Man City's multi-club model?",
-      "summary": "Does Savinho's \u00a375m move from Manchester City to Tottenham represent a sporting success for the Abu Dhabi-owned club?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c3w0wpy86z7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T07:43:38Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "059708d71f6f9e3f",
-      "headline": "Life after Salah - why Isak and Wirtz must step up for Liverpool",
-      "summary": "Liverpool are preparing to begin a season without Mohamed Salah for the first time in a decade - but they haven't replaced him yet. This is why.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cd69dd1q4qlo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T06:31:21Z",
-      "players": [
-        {
-          "element_id": 366,
-          "name": "Wirtz",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bf837f582e524bd7",
-      "headline": "Relive: Keegan's Newcastle lose thriller to Liverpool",
-      "summary": "BBC Sport looks back at one of the Premier League's best ever games as Newcastle, then managed by Kevin Keegan, lost a thriller to Liverpool. Both clubs will pay tribute to Keegan before their Premier League opener at St James' Park.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c4gvjep9wr2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T05:17:21Z",
       "players": [
         {
           "element_id": 0,
