@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T10:59:53.018639Z",
-  "n_dropped": 330,
+  "generated_at": "2026-08-23T11:29:03.322331Z",
+  "n_dropped": 334,
   "dropped_by_source": {
     "bbc_football": 101,
     "fantasyfootballscout": 22,
     "hayters": 58,
-    "sky_football": 149
+    "sky_football": 153
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 420,
+  "n_articles": 424,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "ef6d823142a43bce",
+      "headline": "Where's it all gone? Haaland reveals new shaven haircut",
+      "summary": "Erling Haaland revealed a fresh haircut before Manchester City's Premier League curtain raiser against Bournemouth on Sunday afternoon, live on Sky Sports.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13576220/erling-haaland-haircut-manchester-city-forward-reveals-fresh-shaven-style-ahead-of-new-premier-league-season",
+      "claimed_at": "2026-08-23T11:19:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "178efd20199831be",
       "headline": "Man City latest: Where's it all gone?! Haaland reveals new shaven haircut",
@@ -207,6 +225,60 @@
       "touches_squad": true
     },
     {
+      "digest": "9d976f6b66f9737a",
+      "headline": "Brighton vs Aston Villa team news LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-aston-villa/live/559450",
+      "claimed_at": "2026-08-23T12:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4da5d860fb34bdec",
+      "headline": "Man City vs Bournemouth team news LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-bournemouth/live/559451",
+      "claimed_at": "2026-08-23T11:56:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "93214a82904c18e6",
+      "headline": "Man City v Bournemouth LIVE \u2013 team news, updates and reaction",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City v Bournemouth LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-v-bournemouth-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-23T11:20:33Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "0089a3a88488b082",
       "headline": "Chelsea latest: Essugo available for loan with PL clubs interested",
       "summary": null,
@@ -214,6 +286,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-23T11:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "22667634871225cf",
+      "headline": "Man City latest: Man City need to find a new Rodri, says Maresca",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T10:20:00Z",
       "players": [
         {
           "element_id": 0,
@@ -975,90 +1065,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5f7d764bb7c0b9f3",
-      "headline": "Hull stun Man Utd in perfect Premier League return",
-      "summary": "Highlights from the Premier League match between Hull and Manchester United.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13575830/hull-2-0-manchester-united-premier-league-highlights",
-      "claimed_at": "2026-08-22T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "226591812a3a51a8",
-      "headline": "Everton outclass wasteful Palace in Premier League opener",
-      "summary": "Everton made a winning start to the new Premier League campaign by beating Crystal Palace 2-0 thanks to classy goals from Kiernan Dewsbury-Hall and Thierno Barry.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/report/559446",
-      "claimed_at": "2026-08-22T17:05:00Z",
-      "players": [
-        {
-          "element_id": 236,
-          "name": "Dewsbury-Hall",
-          "club": "EVE",
-          "held": false
-        },
-        {
-          "element_id": 249,
-          "name": "Barry",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "233491b8e1ebb984",
-      "headline": "Everton outclass Palace in Premier League opener",
-      "summary": "Everton made a winning start to the new Premier League campaign by beating Crystal Palace 2-0 thanks to classy goals from Kiernan Dewsbury-Hall and Thierno Barry.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/everton-vs-crystal-palace/report/559446",
-      "claimed_at": "2026-08-22T17:05:00Z",
-      "players": [
-        {
-          "element_id": 236,
-          "name": "Dewsbury-Hall",
-          "club": "EVE",
-          "held": false
-        },
-        {
-          "element_id": 249,
-          "name": "Barry",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c66b5d75c7394400",
-      "headline": "Three things we've learned from Man Utd's loss at Hull",
-      "summary": "Danyal Khan gives us his three things to take away from Manchester United's loss to Hull City on the opening day of the season.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13575951/hull-city-vs-manchester-united-three-things-weve-learned-from-man-utd-vs-hull",
-      "claimed_at": "2026-08-22T17:03:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0d29809910afc07c",
       "headline": "Brentford 3-0 Spurs LIVE \u2013 Kayode makes it three and Thiago misses penalty",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 3-0 Spurs LIVE - Kayode makes it three and Thiago misses penalty appeared first on Hayters.",
@@ -1300,24 +1306,6 @@
       "tier": 2,
       "url": "https://hayters.com/joao-pedro-signs-new-long-term-deal-with-chelsea/",
       "claimed_at": "2026-08-22T10:26:02Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bd69371307ec921f",
-      "headline": "Hull City v Man Utd LIVE \u2013 team news, updates and reaction",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Hull City v Man Utd LIVE - team news, updates and reaction appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/hull-city-v-man-utd-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-22T09:45:40Z",
       "players": [
         {
           "element_id": 0,
