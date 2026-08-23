@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T14:22:58.518466Z",
-  "n_dropped": 347,
+  "generated_at": "2026-08-23T14:50:17.615666Z",
+  "n_dropped": 352,
   "dropped_by_source": {
-    "bbc_football": 103,
+    "bbc_football": 102,
     "fantasyfootballscout": 22,
-    "hayters": 62,
-    "sky_football": 160
+    "hayters": 64,
+    "sky_football": 164
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 437,
+  "n_articles": 442,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -279,6 +279,42 @@
       "touches_squad": true
     },
     {
+      "digest": "95be15b388f1c42d",
+      "headline": "Arsenal target Alvarez starts on bench for Atletico against Villarreal",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13575723/european-football-news-and-transfers-barcelona-real-madrid-psg-bayern-munich-latest-and-more",
+      "claimed_at": "2026-08-23T15:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "59733e4199714be7",
+      "headline": "Man Utd latest: Neville reflects on Carrick's 'disappointing' start to season",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T14:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "3e8c74e3bc728ecd",
       "headline": "Newcastle vs Liverpool team news LIVE!",
       "summary": null,
@@ -291,6 +327,48 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fb97b28d4837b6d4",
+      "headline": "Newcastle vs Liverpool: Isak starts, three Magpies debutants LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/newcastle-united-vs-liverpool/live/559452",
+      "claimed_at": "2026-08-23T14:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1f2e72d2b85e45cf",
+      "headline": "Newcastle v Liverpool LIVE \u2013 Thiaw captains hosts, Jacquet starts for visitors",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v Liverpool LIVE - Thiaw captains hosts, Jacquet starts for visitors appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-v-liverpool-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-08-23T13:45:00Z",
+      "players": [
+        {
+          "element_id": 362,
+          "name": "Jacquet",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 445,
+          "name": "Thiaw",
+          "club": "NEW",
           "held": false
         }
       ],
@@ -531,24 +609,6 @@
       "touches_squad": false
     },
     {
-      "digest": "bcc133258836f0df",
-      "headline": "Man City vs Bournemouth LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-bournemouth/live/559451",
-      "claimed_at": "2026-08-23T11:56:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "24849f7bde6fb663",
       "headline": "Rooney says Man Utd must become feared - but what went wrong at Hull?",
       "summary": "Manchester United made an awful start to their Premier League campaign at newly-promoted Hull. What went wrong?",
@@ -570,6 +630,24 @@
       "digest": "2c1418d12a71df2f",
       "headline": "Man City v Bournemouth LIVE \u2013 Maresca names surprising lineup",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City v Bournemouth LIVE - Maresca names surprising lineup appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-v-bournemouth-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-23T11:20:33Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "414b25f06b739fa9",
+      "headline": "Man City 1-1 Bournemouth LIVE \u2013 Maresca\u2019s side level in his first league game",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 1-1 Bournemouth LIVE - Maresca\u2019s side level in his first league game appeared first on Hayters.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/man-city-v-bournemouth-live-team-news-updates-and-reaction/",
@@ -628,42 +706,6 @@
       "tier": 2,
       "url": "https://hayters.com/man-city-v-bournemouth-live-team-news-updates-and-reaction/",
       "claimed_at": "2026-08-23T11:20:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0089a3a88488b082",
-      "headline": "Chelsea latest: Essugo available for loan with PL clubs interested",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-23T11:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "22667634871225cf",
-      "headline": "Man City latest: Man City need to find a new Rodri, says Maresca",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-23T10:20:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1264,42 +1306,6 @@
       "tier": 2,
       "url": "https://hayters.com/not-everything-is-wrong-carrick-defiant-after-disappointing-man-utd-loss/",
       "claimed_at": "2026-08-22T15:06:09Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "927e5dcbe9463dfc",
-      "headline": "Brentford v Spurs LIVE \u2013 Archie Gray becomes Spurs\u2019 youngest ever captain",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford v Spurs LIVE - Archie Gray becomes Spurs' youngest ever captain appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/brentford-v-spurs-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-22T14:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "de9faaed19d8f335",
-      "headline": "Brentford v Spurs LIVE \u2013 team news, updates and reaction",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford v Spurs LIVE - team news, updates and reaction appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/brentford-v-spurs-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-22T14:30:00Z",
       "players": [
         {
           "element_id": 0,
