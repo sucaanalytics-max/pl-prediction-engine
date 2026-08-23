@@ -1,19 +1,55 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T17:19:47.842266Z",
-  "n_dropped": 377,
+  "generated_at": "2026-08-23T17:46:15.302505Z",
+  "n_dropped": 378,
   "dropped_by_source": {
-    "bbc_football": 107,
+    "bbc_football": 108,
     "fantasyfootballscout": 22,
     "hayters": 69,
     "sky_football": 179
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 467,
+  "n_articles": 468,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "692a3de3362b72e0",
+      "headline": "Emery hopeful Aston Villa stars will return soon following dreadful defeat to Brighton",
+      "summary": "Unai Emery is hopeful Aston Villa can welcome back several key players soon, following their heavy 4-0 defeat to Brighton. Villa were comfortably beaten by Brighton, with Johan Manzambi, Brian Madjo and Tammy Abra",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/emery-hopeful-aston-villa-stars-will-return-soon-following-dreadful-defeat-to-brighton/",
+      "claimed_at": "2026-08-23T17:38:31Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": true
+        },
+        {
+          "element_id": 56,
+          "name": "Abraham",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 582,
+          "name": "Madjo",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "c4cfd3c28c295dbc",
       "headline": "Watkins' absence at Brighton a question for him - Emery",
@@ -801,6 +837,24 @@
       "touches_squad": false
     },
     {
+      "digest": "3f78093463da099c",
+      "headline": "Newcastle 2-2 Liverpool LIVE \u2013 Szoboszlai\u2019s 99th minute penalty secures point for visitors",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle 2-2 Liverpool LIVE - Szoboszlai's 99th minute penalty secures point for visitors appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-v-liverpool-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-08-23T13:45:00Z",
+      "players": [
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "856fa7ad9e0417d6",
       "headline": "Newcastle v Liverpool LIVE \u2013 team news, updates and reaction",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v Liverpool LIVE - team news, updates and reaction appeared first on Hayters.",
@@ -1185,24 +1239,6 @@
       "touches_squad": false
     },
     {
-      "digest": "67a462c1b3f06dff",
-      "headline": "Man City will 'try to find the new Rodri' - Maresca",
-      "summary": "Manchester City will \"try to find the new Rodri\" after the Spain captain left the club earlier this week to join La Liga champions Barcelona, says manager Enzo Maresca.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cd9w1zkw7x8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T21:30:32Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0223c44952c4459b",
       "headline": "\u2018Try to find a new Rodri\u2019 \u2013 Maresca explains Man City plan to replace star",
       "summary": "Manchester City manager Enzo Maresca has insisted that the club will &#8220;try to find a new Rodri&#8221; after the midfielder\u2019s departure. The Spaniard has been instrumental to the club\u2019s success of recent years, however th",
@@ -1304,30 +1340,6 @@
         {
           "element_id": 335,
           "name": "Stach",
-          "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d71f836fbbc60644",
-      "headline": "Farke hails Leeds summer signing after opening day win over Nottingham Forest",
-      "summary": "Leeds boss Daniel Farke praised James Trafford\u2019s \u201cnatural aura of confidence and calmness\u201d after the goalkeeper helped his side secure a 1-0 Premier League win over Nottingham Forest. Anton Stach struck a late winner to se",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/farke-hails-leeds-summer-signing-after-opening-day-win-over-nottingham-forest/",
-      "claimed_at": "2026-08-22T18:07:19Z",
-      "players": [
-        {
-          "element_id": 335,
-          "name": "Stach",
-          "club": "LEE",
-          "held": false
-        },
-        {
-          "element_id": 385,
-          "name": "Trafford",
           "club": "LEE",
           "held": false
         }
