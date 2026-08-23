@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T16:53:08.077283Z",
-  "n_dropped": 371,
+  "generated_at": "2026-08-23T17:19:47.842266Z",
+  "n_dropped": 377,
   "dropped_by_source": {
     "bbc_football": 107,
     "fantasyfootballscout": 22,
     "hayters": 69,
-    "sky_football": 173
+    "sky_football": 179
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 461,
+  "n_articles": 467,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "c4cfd3c28c295dbc",
+      "headline": "Watkins' absence at Brighton a question for him - Emery",
+      "summary": "Ollie Watkins' absence in Aston Villa's thrashing at Brighton is a question for the striker, says boss Unai Emery.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c20j3vjvy48o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T16:57:02Z",
+      "players": [
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "e8f92a08ed7c154a",
       "headline": "'Ask him' - Emery cryptic on Watkins amid transfer interest",
@@ -315,6 +333,24 @@
       "touches_squad": true
     },
     {
+      "digest": "a2c9f980de550790",
+      "headline": "McGinn apologises to Villa fans but provides hope despite Brighton horror show",
+      "summary": "John McGinn apologised to the Aston Villa fans after the 4-0 thumping at Brighton, but the team's captain is refusing to hit the panic button just yet.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13576370/aston-villa-captain-john-mcginn-apologises-to-fans-but-provides-hope-despite-brighton-horror-show",
+      "claimed_at": "2026-08-23T17:11:00Z",
+      "players": [
+        {
+          "element_id": 45,
+          "name": "McGinn",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "4cda9b498b7002f8",
       "headline": "Spurs latest: 'Marmoush loan deal with buy clause verbally agreed'",
       "summary": null,
@@ -351,6 +387,24 @@
       "touches_squad": false
     },
     {
+      "digest": "cc9be9582ebb4164",
+      "headline": "Bournemouth latest: Rose laments 'unlucky' late loss at City",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-23T16:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "614b4eeefd5bec9f",
       "headline": "'Brilliant finish!' Elanga puts Newcastle ahead inside FIVE minutes",
       "summary": "Matthias Jaissle's new Newcastle United side go ahead against Liverpool thanks to Anthony Elanga's early goal.",
@@ -363,6 +417,24 @@
           "element_id": 454,
           "name": "Elanga",
           "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "086adebc69f8942c",
+      "headline": "'Up front next week?' Guehi proves Maresca's midfield masterstroke",
+      "summary": "Rather than playing safe in selecting his Manchester City side for the first time in the Premier League, Enzo Maresca made a bold choice in midfield. Ultimately, it paid off.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqx7x1wpz20o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T16:26:44Z",
+      "players": [
+        {
+          "element_id": 388,
+          "name": "Gu\u00e9hi",
+          "club": "MCI",
           "held": false
         }
       ],
@@ -443,6 +515,42 @@
     {
       "digest": "31d4e10ac6db7974",
       "headline": "Man City survive huge Bournemouth scare in Maresca's first game",
+      "summary": "Manchester City survived a serious scare in Enzo Maresca's first Premier League game in charge, forced to come from behind to earn a dramatic, late 2-1 victory over Bournemouth.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-bournemouth/report/559451",
+      "claimed_at": "2026-08-23T16:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "35422f5c0fd7d74c",
+      "headline": "Man City latest: We're a work in progress, says Maresca after late Cherries win",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T16:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "44ec76962a5968c0",
+      "headline": "Experimental Man City survive Bournemouth scare to win Maresca's first game",
       "summary": "Manchester City survived a serious scare in Enzo Maresca's first Premier League game in charge, forced to come from behind to earn a dramatic, late 2-1 victory over Bournemouth.",
       "source": "sky_football",
       "tier": 3,
@@ -669,60 +777,6 @@
       "touches_squad": false
     },
     {
-      "digest": "3e8c74e3bc728ecd",
-      "headline": "Newcastle vs Liverpool team news LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/newcastle-united-vs-liverpool/live/559452",
-      "claimed_at": "2026-08-23T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "adf26c9a2c4758bb",
-      "headline": "Liverpool pushing to cancel out Elanga's Newcastle opener LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/newcastle-united-vs-liverpool/live/559452",
-      "claimed_at": "2026-08-23T14:00:00Z",
-      "players": [
-        {
-          "element_id": 454,
-          "name": "Elanga",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fb97b28d4837b6d4",
-      "headline": "Newcastle vs Liverpool: Isak starts, three Magpies debutants LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/newcastle-united-vs-liverpool/live/559452",
-      "claimed_at": "2026-08-23T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "1f2e72d2b85e45cf",
       "headline": "Newcastle v Liverpool LIVE \u2013 Thiaw captains hosts, Jacquet starts for visitors",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v Liverpool LIVE - Thiaw captains hosts, Jacquet starts for visitors appeared first on Hayters.",
@@ -801,42 +855,6 @@
           "element_id": 460,
           "name": "Willock",
           "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "30294a38a44d6f2c",
-      "headline": "Newcastle latest: Burn and Joelinton to miss Liverpool curtain-raiser",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-23T13:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e1517a6885fcb2fa",
-      "headline": "Newcastle latest: Jaissle hopeful of more incomings amid 'huge challenge'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-23T13:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1192,24 +1210,6 @@
       "tier": 2,
       "url": "https://hayters.com/try-to-find-a-new-rodri-maresca-explains-man-city-plan-to-replace-star/",
       "claimed_at": "2026-08-22T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "59d557f72282bb79",
-      "headline": "Alvarez open to Arsenal transfer - Sunday's gossip",
-      "summary": "Atletico Madrid forward Julian Alvarez open to Arsenal transfer, Spurs confident on completing Omar Marmoush deal, Ollie Watkins wants Al-Hilal move, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvg0gxxkp1vo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T20:39:00Z",
       "players": [
         {
           "element_id": 0,
