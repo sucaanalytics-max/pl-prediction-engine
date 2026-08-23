@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T05:01:40.284550Z",
-  "n_dropped": 334,
+  "generated_at": "2026-08-23T05:45:07.505810Z",
+  "n_dropped": 335,
   "dropped_by_source": {
-    "bbc_football": 102,
+    "bbc_football": 103,
     "fantasyfootballscout": 21,
     "hayters": 61,
     "sky_football": 150
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 424,
+  "n_articles": 425,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -187,6 +187,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "bf837f582e524bd7",
+      "headline": "Relive: Keegan's Newcastle lose thriller to Liverpool",
+      "summary": "BBC Sport looks back at one of the Premier League's best ever games as Newcastle, then managed by Kevin Keegan, lost a thriller to Liverpool. Both clubs will pay tribute to Keegan before their Premier League opener at St James' Park.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c4gvjep9wr2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T05:17:21Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "13be364d6e0245f6",
@@ -873,24 +891,6 @@
           "element_id": 86,
           "name": "Lewis-Potter",
           "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e9af4f8cb8f64f50",
-      "headline": "'No button to press' - Glasner and Forest must find stability",
-      "summary": "Anton Stach's late goal for Leeds hands Oliver Glasner a defeat in his first game at Nottingham Forest.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c3v0vlngz2do?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-22T17:43:18Z",
-      "players": [
-        {
-          "element_id": 335,
-          "name": "Stach",
-          "club": "LEE",
           "held": false
         }
       ],
