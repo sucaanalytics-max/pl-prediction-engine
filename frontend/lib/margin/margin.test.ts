@@ -19,6 +19,8 @@
  */
 
 import { describe, expect, it } from "vitest";
+
+import { withoutComments } from "@/test/support/comments";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
@@ -260,12 +262,6 @@ describe("no number survived from the prototype", () => {
    * `//` is only treated as a line comment when it is not preceded by a colon,
    * so a `https://` inside a string survives.
    */
-  function withoutComments(text: string): string {
-    return text
-      .replace(/\/\*[\s\S]*?\*\//g, " ")
-      .replace(/(^|[^:])\/\/[^\n]*/g, "$1");
-  }
-
   function marginSources(): { file: string; text: string }[] {
     const out: { file: string; text: string }[] = [];
     // `app/margin` is deleted with the route cut; the views it composed live on

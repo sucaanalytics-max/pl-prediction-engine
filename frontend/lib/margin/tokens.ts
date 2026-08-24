@@ -75,6 +75,17 @@ export interface MarginSurface {
   readonly block: string;
   /** Ground a glyph sits on, for the mean diamond's centre. */
   readonly face: string;
+  /**
+   * The ground the eleven stand on, on the call screen.
+   *
+   * A shade off `shell` and pulled slightly green, which is the only place in
+   * this palette where a colour is representational rather than semantic — a
+   * pitch is green, and eleven tiles floating on the page ground read as a list
+   * rather than as a team. It is deliberately barely green: enough to say
+   * "pitch", not enough to compete with `agree`, which on this screen has to keep
+   * meaning "kind fixture".
+   */
+  readonly pitch: string;
 }
 
 /**
@@ -107,7 +118,39 @@ export const FLOODLIT: MarginSurface = {
   noise: "oklch(0.80 0.14 85)",
   block: "rgba(233,238,245,.22)",
   face: "#14181d",
+  pitch: "#0f1714",
 };
+
+/**
+ * The tint for a fixture-difficulty chip: `[background, foreground]`.
+ *
+ * FPL rates each fixture 1–5 for the club playing it, 1 kindest. The chip is the
+ * one place on the call screen where a fixture's difficulty is stated as a
+ * colour, and it reuses the SEMANTIC three rather than inventing a fourth scale:
+ * kind is `agree`, mid is plain ink, hard is `noise`, hardest is `conflict`.
+ *
+ * Note what this deliberately does NOT do: it does not tint by expected points.
+ * A chip says who the opponent is and how FPL rated them; the number beside it
+ * says what the model expects. Colouring both by the same quantity would make
+ * the fixture look like evidence for the projection, when the projection already
+ * priced the fixture.
+ *
+ * A difficulty outside 1–5 gets the mid tint rather than being clamped to an
+ * end: a rating we do not recognise is not a kind fixture and it is not a brutal
+ * one, and guessing either way would be a claim.
+ */
+export function difficultyTint(
+  difficulty: number | null,
+  surface: MarginSurface = FLOODLIT,
+): readonly [string, string] {
+  const mid: readonly [string, string] = ["rgba(233,238,245,.07)", surface.ink2];
+  if (difficulty === null || !Number.isFinite(difficulty)) return mid;
+  if (difficulty < 1 || difficulty > 5) return mid;
+  if (difficulty <= 2) return ["rgba(120,220,140,.16)", surface.agree];
+  if (difficulty === 3) return mid;
+  if (difficulty === 4) return ["rgba(255,140,90,.15)", surface.noise];
+  return ["rgba(255,90,70,.22)", surface.conflict];
+}
 
 /** The heat ramp for a projected-points cell. Five steps, teal toward lime. */
 export const HEAT: readonly (readonly [string, string])[] = [

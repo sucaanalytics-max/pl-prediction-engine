@@ -1,55 +1,45 @@
 "use client";
 
 /**
- * The call — what your XI is, and who is captain, before the deadline.
+ * The call — what your XI is, who is captain, and what happens if you change it.
  *
- * ## What this replaces
+ * ## What this replaces, and why the page got shorter
  *
- * A `redirect("/margin")`. Before that, a `redirect("/now")`. The front door has
- * only ever pointed somewhere else, and the somewhere else kept moving: at the
- * time of writing the same question — *who do I captain* — had four doors
- * (`/now`, `/margin?view=plan`, `/decide`, `/decisions`) and they disagreed with
- * each other. Two of them read decision files this repo says nothing writes.
+ * Four stacked sections: `GameweekCall` (the captain and a total), `SquadBoard`
+ * (the fifteen as cards), `ScoreView` (a planner table plus a fixture run) and
+ * `PlanGridSection` (the solved plan). The first three each answered a piece of
+ * one question — *is this the right eleven* — and answered it three times in
+ * three shapes, so a reader had to hold a card grid, a table and a headline total
+ * in their head and check the three agreed. They did agree; the arithmetic was
+ * shared. What none of them could do was let you disagree with it.
  *
- * So this page is one composition of three things that already existed, in the
- * order a manager needs them, and it authors no new number:
+ * {@link CallBoard} is those three folded into one surface where the eleven is
+ * editable and every figure recomputes off the eleven on screen. That is the
+ * whole redesign: a manager's question before a deadline is not "what does the
+ * optimiser think", it is "what happens if I do it my way", and no arrangement of
+ * static panels answers the second one.
  *
- *  1. {@link GameweekCall} — the captain and the eleven, from
- *     `lib/margin/squad.ts` `joinProjections` (one join, on FPL's own
- *     `elementId`) and `lib/margin/planner.ts` `optimiseXi`/`projectedTotal`
- *     (one solver, exhaustive over the legal formations). One captain, one total,
- *     and the total carries `COUNTING_RULE` because two screens used to print
- *     48.20 and 54.9 for the same eleven with neither stating its counting rule.
- *     The clause is named rather than quoted here: a docstring holding its own
- *     copy of the wording is how the three surfaces drifted apart in the first
- *     place.
- *  2. {@link SquadBoard} — the fifteen, each carrying the model's own xP, and the
- *     squad line carrying `captured draft, not live`. Its heuristic "the-move"
- *     card is already gone; that cut is what leaves exactly one captain here.
- *  3. {@link ScoreView} — the planner grid with the distribution glyphs in the xP
- *     column, and the fixture run. Passed `captaincyPlan={false}`, because the
- *     heuristic's six-week armband list would put a second, a third and a sixth
- *     captain under the one this page opens with.
+ * `PlanGridSection` stays, below, because it is the only surface here that reads
+ * the DECISION artifact — the weeks the agent actually solved, with its own
+ * starts and sales. The board above reads projections and solves one week. Those
+ * are different warranties, so they keep their own sections.
  *
- * ## The nine paths this absorbs are gone
+ * ## The three components this page stopped mounting
  *
- * `/now`, `/margin`, `/decide` and the six others were deleted and are served a
- * 410 by `middleware.ts`; `test/nav-coverage.test.tsx` is an allow-list over
- * `app/`, so a tenth door onto this question is a red build. The rescue half of
- * the rule still held — this repo has already stranded a 612-line page by
- * deleting the only components that linked to it — so the four components only a
- * doomed route imported were re-mounted first, one commit earlier, and
- * `test/rescued-mounts.test.tsx` pins where.
+ * `GameweekCall`, `SquadBoard` and `ScoreView` are no longer rendered anywhere.
+ * They are deliberately NOT deleted in the same change: `/` was their only mount,
+ * and this repo has already stranded a 612-line page by deleting the components
+ * that linked to it, so the rule here is that rescue precedes deletion. Removing
+ * them is its own change with its own review, because `ScoreView` carries
+ * `Planner`, and `Planner` carries the distribution glyphs `margin.test.ts`
+ * guards.
  *
  * ## Absence
  *
- * Answers first, caveats adjacent and quiet. The two sections that answer the
- * reader's question lead, and each states its own absence in one line rather than
- * in a bordered panel — the rule from
+ * Answers first, caveats adjacent and quiet. Each section states its own absence
+ * in one line rather than in a bordered panel — the rule from
  * `docs/superpowers/specs/2026-08-11-usable-surface-design.md`: absence never
- * occupies more space than substance. That is not tidiness. Every improvement to
- * how articulately this app explained absence used to push the content that
- * answers the question further down the page.
+ * occupies more space than substance.
  *
  * ## The gameweek
  *
@@ -62,11 +52,9 @@ import Link from "next/link";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Section } from "@/components/data/Artifact";
+import { CallBoard } from "@/components/call/CallBoard";
 import { DeadlineClock } from "@/components/DeadlineClock";
-import GameweekCall from "@/components/GameweekCall";
-import SquadBoard from "@/components/SquadBoard";
 import { PlanGridSection } from "@/components/PlanGridSection";
-import { ScoreView } from "@/components/margin/ScoreView";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
 
 export default function CallPage() {
@@ -83,73 +71,50 @@ export default function CallPage() {
             >
               Your call
             </h1>
-            {/* No gameweek literal in the chrome. `GameweekCall` names the week
-                once, beside the artifact it read it from, and a hardcoded "GW1"
-                here would be wrong for 37 weeks of 38. */}
+            {/* No gameweek literal in the chrome. The board names the week once,
+                beside the artifact it read it from, and a hardcoded "GW1" here
+                would be wrong for 37 weeks of 38. */}
             <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-              What your XI is, and who is captain, before the deadline
+              Your eleven, your captain, and what changes if you disagree
             </p>
           </div>
           {/* The deadline the sentence above refers to, and the app's ONLY clock.
-              It sits here rather than in the sidebar because it constrains this
+              It sits here rather than in the masthead because it constrains this
               page's decision, and it is mounted once because two clocks over one
               deadline is a defect this repo has already shipped — see
               `components/DeadlineClock.tsx`. */}
           <DeadlineClock />
         </header>
 
-        {/* The model's call leads, and it is the only captain on this page. */}
-        <Section
-          title="Captain and XI"
-          subtitle="Computed from the model's own projection for this gameweek"
-        >
-          <GameweekCall />
-        </Section>
-
-        <Section
-          title="Your squad"
-          subtitle="The fifteen, with the model's projection for each of them"
-          aside={
-            /* The app's only route to `/capture`, and deliberately not a nav
-               entry — it belongs beside the squad because capturing the position
-               is what makes the fifteen below true. `_read_entry`
-               (`run_agent.py:1023`) reads a committed capture for this entry
-               BEFORE asking FPL live, so this link is the head of the write path;
-               for a while nothing in the tree pointed at it and the page was
-               unreachable except by typing the URL. */
-            <Link
-              href="/capture"
-              className="text-xs underline"
-              style={{ color: "var(--brand)" }}
-            >
-              Capture what you actually submitted
-            </Link>
-          }
-        >
-          <SquadBoard />
-        </Section>
-
-        {/* The plan and the run, below the answer they support. */}
-        <Section
-          title="The plan"
-          subtitle="Your eleven scored against the projection, and the fixture run behind it"
-        >
+        <div data-testid="call-board">
           {gameweek === null ? (
-            // One line, not a panel: the two sections above still answer the
-            // question this page exists for.
-            <p className="text-xs" style={{ color: "var(--text-4)" }}>
+            // One line, not a panel: a guessed gameweek would read another week's
+            // file rather than mislabel this one.
+            <p
+              data-weight="line"
+              className="text-xs"
+              style={{ color: "var(--text-4)" }}
+            >
               Neither the agent&apos;s status nor FPL&apos;s own state could be
-              read, so the gameweek is unknown and the plan cannot be pointed at a
+              read, so the gameweek is unknown and the call cannot be pointed at a
               projection. Guessing one would read a different gameweek&apos;s file.
             </p>
           ) : (
-            <ScoreView
-              gameweek={gameweek}
-              captaincyPlan={false}
-              speaksForUnsolvedWeeks={false}
-            />
+            <CallBoard gameweek={gameweek} />
           )}
-        </Section>
+        </div>
+
+        {/* The app's only route to `/capture`, and deliberately not a nav entry —
+            it belongs beside the squad because capturing the position is what
+            makes the eleven above true. `_read_entry` in `run_agent.py` reads a
+            committed capture for this entry BEFORE asking FPL live, so this link
+            is the head of the write path; for a while nothing in the tree pointed
+            at it and the page was unreachable except by typing the URL. */}
+        <p className="text-xs">
+          <Link href="/capture" className="underline" style={{ color: "var(--brand)" }}>
+            Capture what you actually submitted
+          </Link>
+        </p>
 
         <Section
           title="Week by week"

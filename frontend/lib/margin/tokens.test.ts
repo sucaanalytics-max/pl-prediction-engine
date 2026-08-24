@@ -16,7 +16,9 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
-import { FLOODLIT, HEAT, KIT_MIX_TARGET, hatch, heatStep } from "@/lib/margin/tokens";
+import {
+  FLOODLIT, HEAT, KIT_MIX_TARGET, difficultyTint, hatch, heatStep,
+} from "@/lib/margin/tokens";
 
 /** Pull the hue angle out of an oklch() triple. */
 function hue(value: string): number {
@@ -145,5 +147,64 @@ describe("the display face is loaded, not merely configured", () => {
     // naming the face directly would drift from this.
     const css = readFileSync("app/globals.css", "utf8");
     expect(css).toMatch(/--font-display:\s*var\(--font-display-anton\)/);
+  });
+});
+
+describe("the fixture-difficulty chip", () => {
+  it("reuses the semantic three rather than inventing a fourth scale", () => {
+    // Kind is agree, hard is noise, hardest is conflict. A separate palette for
+    // fixtures would mean two colour languages on one screen.
+    expect(difficultyTint(1)[1]).toBe(FLOODLIT.agree);
+    expect(difficultyTint(2)[1]).toBe(FLOODLIT.agree);
+    expect(difficultyTint(4)[1]).toBe(FLOODLIT.noise);
+    expect(difficultyTint(5)[1]).toBe(FLOODLIT.conflict);
+  });
+
+  it("gives a mid fixture plain ink, not a weak green", () => {
+    // FDR 3 is the median rating and the most common one. Tinting it green would
+    // make most of the league look kind.
+    expect(difficultyTint(3)[1]).toBe(FLOODLIT.ink2);
+  });
+
+  it("treats an unknown rating as mid rather than guessing an end", () => {
+    // A rating we do not recognise is neither kind nor brutal, and clamping to
+    // either end would state something FPL did not.
+    const mid = difficultyTint(3);
+    expect(difficultyTint(null)).toEqual(mid);
+    expect(difficultyTint(0)).toEqual(mid);
+    expect(difficultyTint(9)).toEqual(mid);
+    expect(difficultyTint(Number.NaN)).toEqual(mid);
+  });
+
+  it("returns a background as well as a foreground, so the chip is legible", () => {
+    for (const difficulty of [1, 2, 3, 4, 5]) {
+      const [background, foreground] = difficultyTint(difficulty);
+      expect(background, `fdr ${difficulty}`).toBeTruthy();
+      expect(foreground, `fdr ${difficulty}`).toBeTruthy();
+      expect(background).not.toBe(foreground);
+    }
+  });
+});
+
+describe("the pitch", () => {
+  it("is a distinct ground from the page and the bars on it", () => {
+    // Eleven tiles on the page ground read as a list rather than as a team, so
+    // the pitch has to be visibly its own surface — but only just.
+    expect(FLOODLIT.pitch).not.toBe(FLOODLIT.shell);
+    expect(FLOODLIT.pitch).not.toBe(FLOODLIT.bar);
+  });
+
+  it("is dark enough that the ink measured against the shell still reads on it", () => {
+    // The contrast figures in `legibility.test.ts` are measured against `shell`.
+    // A pitch materially lighter than the shell would invalidate them for every
+    // tile drawn on it, so this pins the pitch as the darker of the two grounds.
+    const luminance = (hex: string) => {
+      const channel = (offset: number) => {
+        const c = parseInt(hex.slice(1 + offset, 3 + offset), 16) / 255;
+        return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+      };
+      return 0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4);
+    };
+    expect(luminance(FLOODLIT.pitch)).toBeLessThan(luminance(FLOODLIT.bar));
   });
 });

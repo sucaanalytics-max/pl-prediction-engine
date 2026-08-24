@@ -16,6 +16,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { COUNTING_RULE } from "@/lib/margin/planner";
+import { withoutComments } from "@/test/support/comments";
 
 function sources(dir: string, out: string[] = []): string[] {
   for (const entry of readdirSync(dir)) {
@@ -61,12 +62,19 @@ describe("the counting rule travels with the number", () => {
       .toEqual([]);
   });
 
-  it("has none of them retype the phrase, so the three cannot drift apart", () => {
+  it("has none of them retype the phrase, so they cannot drift apart", () => {
     /* The original defect was three screens each wording their own caveat. A typed
-       copy would let one of them be edited alone. */
+       copy would let one of them be edited alone.
+
+       Comments are stripped before the scan, for the reason
+       `test/support/comments.ts` records: a docstring quoting the historical
+       wording — which is how a reader learns why this constant exists at all — is
+       documentation, while the same words in an expression are the defect. A raw
+       scan cannot tell them apart, and would push an author to delete the
+       explanation to get to green. */
     const retyped = FILES.filter((path) => {
       if (path.endsWith("lib/margin/planner.ts")) return false;
-      return readFileSync(path, "utf8").includes(COUNTING_RULE);
+      return withoutComments(readFileSync(path, "utf8")).includes(COUNTING_RULE);
     });
     expect(retyped, `retypes "${COUNTING_RULE}" instead of importing it`).toEqual([]);
   });

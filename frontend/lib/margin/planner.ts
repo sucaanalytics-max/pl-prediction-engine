@@ -245,6 +245,30 @@ export function projectedTotal(
 }
 
 /** The projection map the optimiser wants, keyed by FPL's own id. */
+/**
+ * The total of the eleven FPL currently has starting — the "as picked" figure.
+ *
+ * Named and exported because it was computed inline inside `GameweekCall` and
+ * nowhere else, and it is one half of the comparison a manager actually makes:
+ * the optimiser's total means nothing without the total it improves on. A second
+ * surface re-deriving `filter(!bench)` and summing it is precisely the
+ * duplication {@link projectedTotal} exists to prevent — three screens once
+ * printed three different totals for one eleven.
+ *
+ * Returns null when nobody has said who starts. `SquadPlayer.bench` is
+ * `undefined` before a lineup is known, and treating undefined as "starting"
+ * would sum all fifteen and present it as an eleven — a number 40% too high,
+ * carrying the same units as the real one. {@link hasLineup} is the same guard
+ * one level up.
+ */
+export function asPickedTotal(
+  squad: readonly SquadPlayer[],
+  points: ReadonlyMap<number, number>,
+): number | null {
+  if (!squad.some((player) => player.bench !== undefined)) return null;
+  return projectedTotal(squad.filter((player) => !player.bench), points);
+}
+
 export function pointsFrom(projections: readonly Projection[]): Map<number, number> {
   const out = new Map<number, number>();
   for (const p of projections) {

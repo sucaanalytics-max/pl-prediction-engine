@@ -21,7 +21,7 @@
  * that renders them. They are supplied, and the page must still hold one answer.
  */
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Planner } from "@/components/margin/Planner";
@@ -235,7 +235,8 @@ afterEach(() => {
 describe("it is a page and not a redirect", () => {
   it("renders the call rather than sending the reader somewhere else", async () => {
     const { container } = await mountPage();
-    expect(container.querySelector("[data-testid='gameweek-call']")).not.toBeNull();
+    expect(container.querySelector("[data-testid='call-board']")).not.toBeNull();
+    expect(container.querySelectorAll("[data-testid='pitch-tile']").length).toBe(11);
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Your call");
   });
 
@@ -291,18 +292,20 @@ describe("one gameweek across the page, even when the two sources disagree", () 
   it("reads exactly one gameweek's projection file", async () => {
     const { requested } = await mountPage(DIVERGED);
     const weeks = [...new Set(requested.filter((k) => k.startsWith("projections:")))];
-    // GameweekCall, SquadBoard and ScoreView all key a projection off the week.
+    // The board and the solved-plan section both key a projection off the week,
+    // and they must key it off the SAME week.
     expect(weeks).toEqual(["projections:07"]);
   });
 
   it("names that same gameweek everywhere it names one", async () => {
     const { container } = await mountPage(DIVERGED);
     const text = container.textContent ?? "";
-    // GameweekCall's provenance line, beside the call it computed.
+    // The board's provenance line, beside the call it computed. This is the only
+    // place the page names a gameweek, which is why the chrome carries none.
     expect(text).toContain("xp_public_gw07.json");
     expect(text).not.toContain("xp_public_gw06.json");
-    // The planner, three sections down, which used to print the other one.
-    expect(text).toContain("Planner · GW7");
+    expect(container.querySelector("[data-testid='call-provenance']")?.textContent)
+      .toContain("GW7");
   });
 
   it("prefers agent_status over the live route, which is the documented order", async () => {
@@ -340,11 +343,14 @@ describe("one gameweek across the page, even when the two sources disagree", () 
 describe("one captain, not two and not seven", () => {
   it("recommends exactly one captain", async () => {
     const { container } = await mountPage();
-    // Counting the bold `Captain` label counts recommendations; counting the word
-    // would also catch the section heading, which recommends nothing.
-    const labels = [...container.querySelectorAll("strong")]
-      .filter((node) => (node.textContent ?? "").trim() === "Captain");
-    expect(labels).toHaveLength(1);
+    /* Asserted on the armband marker rather than on however many bold "Captain"
+       labels a layout happens to have. One armband on the pitch, and the tile that
+       names him is the same player — two elements, one recommendation. Counting
+       bold text was a proxy for this and broke the moment the layout changed. */
+    const markers = container.querySelectorAll("[data-testid='captain-marker']");
+    expect(markers).toHaveLength(1);
+    const armband = container.querySelector("[data-testid='tile-armband']");
+    expect(armband?.textContent).toContain("B.Fernandes");
   });
 
   it("names the model's captain, not the heuristic's", async () => {
@@ -374,6 +380,8 @@ describe("one captain, not two and not seven", () => {
     const { container } = await mountPage();
     const text = container.textContent ?? "";
     expect(text).toMatch(/No transfer is suggested/);
+    expect(container.querySelector("[data-testid='tile-transfer']")?.textContent)
+      .toContain("one published week cannot price a sale");
     expect(text).not.toContain("over 4 GW");
     expect(text).not.toContain("elite ownership");
     expect(text).not.toContain("Gabriel");
@@ -403,9 +411,15 @@ describe("the projected total says how it was counted", () => {
     expect(text).not.toContain("48.37");
   });
 
-  it("shows the captain's doubling on the captain's own line, where it was asked for", async () => {
+  it("shows the captain's doubling on the armband tile, where it was asked for", async () => {
     const { container } = await mountPage();
-    expect(container.textContent).toMatch(/doubled\s*11\.54/);
+    /* Both halves, in that order: the bare projection, an arrow, the doubled
+       figure, then the word. The doubling is the one place a captain's points are
+       counted twice on this page, and showing only the product would leave a
+       reader unable to tell which counting rule produced it. */
+    const armband = container.querySelector("[data-testid='tile-armband']")?.textContent ?? "";
+    expect(armband).toMatch(/5\.77/);
+    expect(armband).toMatch(/11\.54\s*doubled/);
   });
 });
 
@@ -445,44 +459,62 @@ describe("the distribution glyphs render", () => {
 });
 
 /**
- * The planner, and the two marks that used to speak for weeks nobody solved.
+ * The horizon rail, and the claim it must not make.
+ *
+ * This block replaces four assertions about `Planner`, the multi-week table this
+ * page used to carry. The defect they guarded is unchanged and is the reason they
+ * are still here in a new shape: a grid of eight weeks beside an eleven invites
+ * the reader to read a rotation plan off it, and only ONE week has been solved.
+ *
+ * `Planner` handled that by drawing later weeks as fixtures and dimming nothing
+ * it had not solved. The rail handles it differently — it shows per-player
+ * PROJECTIONS rather than any lineup at all, so there is no start/bench mark
+ * across the horizon to be wrong about. What must survive is the sentence saying
+ * so, because without it a heat grid of eight columns looks exactly like a plan.
  */
-describe("the planner does not claim a horizon it has not got", () => {
-  it("is titled with the one gameweek it solves", async () => {
+describe("the horizon rail does not claim an eleven it has not solved", () => {
+  it("says in words that these are projections and not a lineup", async () => {
+    const { container } = await mountPage();
+    expect(container.textContent).toMatch(/per-player projections, not a lineup/);
+  });
+
+  it("names the one week that was solved, and points elsewhere for the rest", async () => {
     const { container } = await mountPage();
     const text = container.textContent ?? "";
-    expect(text).toContain("Planner · GW1");
-    expect(text).not.toContain("Planner · GW1–GW6");
+    expect(text).toMatch(/Only this gameweek has a\s+solved eleven/);
+    // The weeks that WERE solved are the decision artifact's, drawn by
+    // `PlanGridSection` under its own heading further down.
+    expect(text).toContain("Week by week");
   });
 
-  it("still draws six columns, because a fixture list is scheduled rather than forecast", async () => {
-    const { container } = await mountPage();
-    const text = container.textContent ?? "";
-    for (const week of [1, 2, 3, 4, 5, 6]) expect(text).toContain(`GW${week}`);
-  });
-
-  it("says in words that no eleven is chosen for the later weeks", async () => {
-    const { container } = await mountPage();
-    expect(container.textContent).toMatch(/no eleven is chosen for them/);
-  });
-
-  it("dims this week's non-starters and no week that was never solved", async () => {
+  it("draws no horizon columns at all when the projection carries no horizon", async () => {
     /**
-     * The ink at 0.45 means "does not make the eleven" everywhere in this app. On
-     * five of six columns it was a benching nobody computed, sitting three inches
-     * above a footnote saying no eleven is chosen for those weeks.
+     * The fixture in this suite publishes `horizon: null`, which is the normal
+     * state for a run that solved one week. Eight columns of dots would imply
+     * seven weeks were considered and came back empty; one line saying there is
+     * no horizon is the honest rendering of a horizon that does not exist.
      */
     const { container } = await mountPage();
-    const benched = [...container.querySelectorAll("[data-testid='planner-row']")]
-      .find((row) => row.getAttribute("data-starting") === "false");
-    expect(benched, "no benched row to check").toBeDefined();
-    const cells = [...(benched?.querySelectorAll("[data-testid='planner-cell']") ?? [])]
-      .map((cell) => (cell as HTMLElement).style.opacity);
-    // GW1 is solved, so a non-starter there is genuinely out of the eleven.
-    expect(cells[0]).toBe("0.45");
-    // GW2 onward are not solved, so nothing there is out of anything.
-    expect(cells.slice(1).every((o) => o === "1")).toBe(true);
-    expect(cells.length).toBe(6);
+    expect(container.querySelectorAll("[data-testid='horizon-row']")).toHaveLength(0);
+    expect(container.textContent).toMatch(/solved no horizon/);
+  });
+
+  it("still recomputes the total off the eleven on screen, not off a stored one", async () => {
+    /**
+     * The interaction the redesign exists for, and the invariant that makes it
+     * safe: there is nowhere for a stale total to live, because the total is
+     * derived from the eleven every render. Benching a player must move the
+     * headline figure — a screen that kept them in step by hand is the class of
+     * bug that had two surfaces printing different sums for one squad.
+     */
+    const { container } = await mountPage();
+    const before = container.querySelector("[data-testid='tile-xi']")?.textContent ?? "";
+    const tile = container.querySelector("[data-testid='pitch-tile']") as HTMLElement;
+    fireEvent.click(tile);
+    const after = container.querySelector("[data-testid='tile-xi']")?.textContent ?? "";
+    expect(after).not.toBe(before);
+    // Ten on the pitch, and the benched one is now a bench tile.
+    expect(container.querySelectorAll("[data-testid='pitch-tile']")).toHaveLength(10);
   });
 });
 
@@ -500,20 +532,35 @@ describe("absence sits below the answers, and quietly", () => {
     const line = container.querySelector("[data-weight='line']");
     expect(line).not.toBeNull();
     expect(line?.tagName).toBe("P");
-    // And the squad still renders, so one absent artifact has not blanked the page.
-    expect(container.querySelectorAll("[data-testid='squad-player']").length)
-      .toBe(SQUAD.players.length);
+    /* And nothing above it is a panel. The board cannot draw an eleven without a
+       projection — there is nothing to score — so this absence legitimately costs
+       the whole board, and the check that matters is that it costs ONE LINE rather
+       than a bordered card. The deadline, the capture link and the solved-plan
+       section all still render, so one absent artifact has not blanked the page. */
+    expect(container.querySelectorAll("[data-testid='pitch-tile']")).toHaveLength(0);
+    expect(screen.getByRole("link", { name: /Capture what you actually submitted/ }))
+      .toBeInTheDocument();
+    expect(container.querySelector("[data-testid='deadline-clock']")).not.toBeNull();
   });
 
-  it("puts the answers above every absence statement in the source", async () => {
-    // Source-level: the ordering is a property of the composition, and rendering
-    // it under every combination of five artifacts would assert the mocks.
+  it("puts the answer above the plan that supports it, in the source", async () => {
+    /* Source-level: the ordering is a property of the composition, and rendering
+       it under every combination of artifacts would assert the mocks.
+
+       Three components used to be ordered here — GameweekCall, then SquadBoard,
+       then ScoreView — on the principle that the model speaks first. There is now
+       one board, so what is left to order is the board against the solved plan
+       below it: the board answers this week, and "Week by week" is context for a
+       decision the board has already stated. */
     const { readFileSync } = await import("node:fs");
     const source = readFileSync("app/page.tsx", "utf8");
-    expect(source.indexOf("<GameweekCall />")).toBeGreaterThan(-1);
-    expect(source.indexOf("<GameweekCall />"))
-      .toBeLessThan(source.indexOf("<SquadBoard />"));
-    expect(source.indexOf("<SquadBoard />")).toBeLessThan(source.indexOf("<ScoreView"));
+    const board = source.indexOf("<CallBoard gameweek={gameweek} />");
+    expect(board).toBeGreaterThan(-1);
+    expect(board).toBeLessThan(source.indexOf("<PlanGridSection"));
+    // And the three it replaced are mounted nowhere.
+    for (const gone of ["<GameweekCall />", "<SquadBoard />", "<ScoreView"]) {
+      expect(source, `${gone} is still mounted`).not.toContain(gone);
+    }
   });
 
   it("says so in one line when no resolver can name the gameweek", async () => {

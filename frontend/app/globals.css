@@ -177,6 +177,12 @@
   --chrome-ink-3:  rgba(233, 238, 245, 0.38);
   --chrome-hair:   rgba(233, 238, 245, 0.13);
   --chrome-accent: oklch(0.84 0.19 128);
+
+  /* The ground the eleven stand on, on the call screen. Barely green — enough to
+     say "pitch", not enough to compete with --accent, which on that screen has
+     to keep meaning "kind fixture". Kept in step with FLOODLIT.pitch in
+     lib/margin/tokens.ts. */
+  --pitch: #0f1714;
 }
 
 /* ── Ink (dark) ─────────────────────────────────────────────────────────────── */
@@ -227,6 +233,9 @@
   --chart-tick:           rgba(244, 243, 238, 0.42);
 
   --ambient-bg: #0d1013;
+  /* See :root — kept in both blocks because it is a surface colour, and
+     `test/design-tokens.test.ts` requires every surface token in both. */
+  --pitch: #0f1714;
 }
 
 /* ── Base ────────────────────────────────────────────────────────────────────── */
@@ -928,4 +937,14 @@ input[type="range"]::-moz-range-thumb {
   .historical-source { align-items: flex-start; flex-direction: column; }
   .historical-missing { grid-template-columns: 20px 1fr; }
   .historical-missing a { grid-column: 2; }
+}
+
+/* The call board: pitch beside rail, stacking under it when the rail can no
+   longer hold its eight-column horizon table. The breakpoint is the rail's own
+   minimum plus the pitch's — a 150px tile does not shrink, so squeezing the
+   pitch to keep the rail alongside would break the tiles rather than the
+   layout. */
+@media (max-width: 1100px) {
+  .call-board { grid-template-columns: minmax(0, 1fr) !important; }
+  .call-board > div:first-child { border-right: 0 !important; }
 }

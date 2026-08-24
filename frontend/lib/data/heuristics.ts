@@ -207,6 +207,26 @@ export interface SquadPlayer {
    * arrive as a value it did.
    */
   readonly chanceOfPlaying?: number | null;
+  /**
+   * Percent of FPL managers who own this player, or null.
+   *
+   * On the wire since the route was written and dropped here until the call
+   * screen needed it. Null rather than 0 when unreadable: FPL sends
+   * `selected_by_percent` as a string and the route parses it with `|| 0`, so a
+   * genuine 0% and a failed parse already look alike upstream. Adding a second
+   * zero here would make "nobody owns him" indistinguishable from "we could not
+   * read it" at exactly the point where a screen decides to call him a
+   * differential.
+   */
+  readonly ownership?: number | null;
+  /**
+   * FPL's 1–5 rating for THIS player's club in THIS gameweek's fixture.
+   *
+   * The same number `fixtures[0].difficulty` carries. Kept as its own field
+   * because the route emits it that way, and because a tile showing one fixture
+   * should not have to reach into a list to find its rating.
+   */
+  readonly difficulty?: number | null;
   /** FPL's own news line. Empty string when there is none; absent when unknown. */
   readonly news?: string;
 }
@@ -381,6 +401,18 @@ function narrowSquad(raw: unknown): SquadView | null {
        */
       chanceOfPlaying: optNumber(item.chanceOfPlaying),
       news: optString(item.news) ?? "",
+      /*
+       * Ownership and this week's fixture difficulty.
+       *
+       * Both have been on the wire since the route was written —
+       * `fpl-live-server.ts` sets `ownership` from `selected_by_percent` and
+       * `difficulty` from the pick's next fixture, on every one of the fifteen —
+       * and this narrower read neither, so no squad surface could show either.
+       * The call screen needs both: ownership to say whether keeping a player is
+       * a bet on him or on the field, and difficulty to tint his fixture chip.
+       */
+      ownership: optNumber(item.ownership),
+      difficulty: optNumber(item.difficulty),
     });
   }
   if (kept.length === 0) return null;

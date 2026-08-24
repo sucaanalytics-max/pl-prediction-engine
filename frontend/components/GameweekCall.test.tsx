@@ -285,21 +285,54 @@ describe("the projected total", () => {
   });
 });
 
-describe("it is actually mounted", () => {
-  // Read from `app/page.tsx`, not `app/now/page.tsx`: `/now` was one of five routes
-  // answering "who do I captain this week" and is deleted. This card is the answer,
-  // so it is on the front door.
-  it("appears on /", async () => {
+describe("it is no longer mounted, and that is deliberate", () => {
+  /**
+   * This block used to assert the opposite: that `<GameweekCall />` appeared on `/`
+   * and sat above `<SquadBoard />`, because "order is the message: the model speaks
+   * first".
+   *
+   * Both are now false. The call screen redesign folded this card, `SquadBoard` and
+   * `ScoreView` into `components/call/CallBoard.tsx`, which answers the same
+   * question — captain, eleven, total — on one surface where the eleven is
+   * editable. Three panels each answering a piece of one question is what the
+   * redesign removed.
+   *
+   * The component is kept, unmounted, on purpose. `/` was its only mount, and this
+   * repo has already stranded a 612-line page by deleting the components that
+   * linked to it, so the rule is that rescue precedes deletion — and the deletion
+   * is its own change, with its own consent. This block is the marker that the
+   * file is dead code awaiting that step, so it cannot be mistaken for a surface
+   * still in use. The tests above it still pass and still describe the component
+   * accurately; what changed is where it appears, which is nowhere.
+   */
+  it("is not on / any more, because CallBoard answers this", async () => {
     const { readFileSync } = await import("node:fs");
     const page = readFileSync("app/page.tsx", "utf8");
-    expect(page).toContain("<GameweekCall />");
+    expect(page).not.toContain("<GameweekCall />");
+    expect(page).toContain("<CallBoard gameweek={gameweek} />");
   });
 
-  it("sits above the heuristic squad board", async () => {
-    // Order is the message: the model speaks first.
-    const { readFileSync } = await import("node:fs");
-    const page = readFileSync("app/page.tsx", "utf8");
-    expect(page.indexOf("<GameweekCall />")).toBeLessThan(page.indexOf("<SquadBoard />"));
+  it("is imported by nothing, so deleting it strands nothing", async () => {
+    // The check that makes the deletion safe when it is approved. If this fails,
+    // something started importing this file again and the deletion is no longer
+    // free.
+    const { readdirSync, readFileSync, statSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    const walk = (dir: string, out: string[] = []): string[] => {
+      for (const entry of readdirSync(dir)) {
+        if (entry === "node_modules" || entry === ".next") continue;
+        const path = join(dir, entry);
+        if (statSync(path).isDirectory()) walk(path, out);
+        else if (/\.tsx?$/.test(entry) && !/\.test\.tsx?$/.test(entry)) out.push(path);
+      }
+      return out;
+    };
+    const importers = ["app", "components", "lib"]
+      .flatMap((dir) => walk(dir))
+      .filter((path) => !path.endsWith("components/GameweekCall.tsx"))
+      .filter((path) => /from "@\/components\/GameweekCall"|from "\.\/GameweekCall"/
+        .test(readFileSync(path, "utf8")));
+    expect(importers, "GameweekCall is unmounted but still imported").toEqual([]);
   });
 });
 
