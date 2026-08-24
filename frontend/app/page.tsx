@@ -55,6 +55,8 @@
  * mislabel a figure — it reads a different file.
  */
 
+import Link from "next/link";
+
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Section } from "@/components/data/Artifact";
 import { DeadlineClock } from "@/components/DeadlineClock";
@@ -104,6 +106,22 @@ export default function CallPage() {
         <Section
           title="Your squad"
           subtitle="The fifteen, with the model's projection for each of them"
+          aside={
+            /* The app's only route to `/capture`, and deliberately not a nav
+               entry — it belongs beside the squad because capturing the position
+               is what makes the fifteen below true. `_read_entry`
+               (`run_agent.py:1023`) reads a committed capture for this entry
+               BEFORE asking FPL live, so this link is the head of the write path;
+               for a while nothing in the tree pointed at it and the page was
+               unreachable except by typing the URL. */
+            <Link
+              href="/capture"
+              className="text-xs underline"
+              style={{ color: "var(--brand)" }}
+            >
+              Capture what you actually submitted
+            </Link>
+          }
         >
           <SquadBoard />
         </Section>

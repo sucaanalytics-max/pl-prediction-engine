@@ -31,11 +31,6 @@ export interface PickablePlayer {
   readonly team: string;
 }
 
-export interface CaptureTarget {
-  readonly entryId: number;
-  readonly name: string;
-}
-
 const SQUAD_SIZE = 15;
 const S = INK;
 
@@ -134,14 +129,18 @@ const label: React.CSSProperties = {
 
 export default function CaptureForm({
   players,
-  targets,
+  entryId,
   gameweek,
 }: {
   players: readonly PickablePlayer[];
-  targets: readonly CaptureTarget[];
+  /**
+   * The entry this capture is for. One number, not a chooser: this form used to
+   * render a button per target from a three-team list, and the two it offered
+   * were the entries nothing here decides for any more.
+   */
+  entryId: number;
   gameweek: number;
 }) {
-  const [entryId, setEntryId] = useState(targets[0]?.entryId ?? 0);
   const [week, setWeek] = useState(String(gameweek));
   const [text, setText] = useState("");
   const [bank, setBank] = useState("0.0");
@@ -219,25 +218,12 @@ export default function CaptureForm({
 
   return (
     <div style={{ display: "grid", gap: 18, maxWidth: 760 }}>
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-        {targets.map((target) => (
-          <button
-            key={target.entryId}
-            type="button"
-            onClick={() => setEntryId(target.entryId)}
-            aria-pressed={entryId === target.entryId}
-            style={{
-              ...field,
-              width: "auto",
-              cursor: "pointer",
-              color: entryId === target.entryId ? S.shell : S.ink,
-              background: entryId === target.entryId ? S.ink : S.inset,
-            }}
-          >
-            {target.name} · {target.entryId}
-          </button>
-        ))}
-      </div>
+      {/* Stated, not chosen. There is one entry, so a selector would offer a
+          decision that does not exist — and the id is worth printing because it
+          is what the committed filename is keyed on. */}
+      <p style={{ font: `12px ${MONO}`, color: S.ink2, margin: 0 }}>
+        Capturing for entry {entryId} — the one team this repo decides for.
+      </p>
 
       <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(4, 1fr)" }}>
         <div>

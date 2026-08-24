@@ -6,6 +6,8 @@
  * for a pick nobody computed. These two types were the only part of it that was
  * real, and they belong beside the live state that uses them.
  */
+import { OWNER_ENTRY } from "@/lib/entry";
+
 export type Position = "GKP" | "DEF" | "MID" | "FWD";
 
 export interface SquadPlayer {
@@ -20,18 +22,22 @@ export interface SquadPlayer {
 }
 
 /**
- * The FPL entry this portal describes.
+ * The FPL entry this portal DISPLAYS.
  *
- * Defaults to the portal owner's team (20945). Keep the Python decision agent
- * and this frontend on the same entry; otherwise the site can show one squad
- * while recommending transfers for another manager.
+ * Defaults to {@link OWNER_ENTRY}, the one entry the agent decides for, so the
+ * squad on screen and the squad being planned for are the same team unless
+ * somebody deliberately says otherwise. The literal lives there rather than here:
+ * two copies of an entry id is how the site came to show one squad while
+ * recommending transfers for another manager.
  *
- * Env-driven so the weekly team (2561099, "Wazza") can be viewed without a code
+ * Env-driven so another manager's public team can be looked at without a code
  * change. An entry id is a public identifier, not a secret, so NEXT_PUBLIC_ is
- * correct here.
+ * correct here. It moves what is DISPLAYED and nothing else — the capture route's
+ * allowlist is {@link OWNER_ENTRY} itself, because a capture for an entry the
+ * agent does not read is a file nothing opens.
  */
 export const FPL_ENTRY_ID = Number(
-  process.env.NEXT_PUBLIC_FPL_ENTRY_ID ?? 20945,
+  process.env.NEXT_PUBLIC_FPL_ENTRY_ID ?? OWNER_ENTRY,
 );
 export const FPL_API_BASE = "https://fantasy.premierleague.com/api";
 

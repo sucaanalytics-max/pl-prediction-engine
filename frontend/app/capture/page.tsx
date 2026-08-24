@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * Record the position actually submitted to FPL, for the entries the agent
- * decides for.
+ * Record the position actually submitted to FPL, for the entry the agent decides
+ * for.
  *
  * This posts to `/api/hub/position`, which commits the position to
  * `predictions/fpl/hub/capture/{entryId}.json` through GitHub's Contents API.
@@ -10,25 +10,23 @@
  * capture reaches the NEXT run rather than one already in flight — every half hour
  * inside a deadline window. There is no database here, and nothing to provision.
  *
- * Only the bot entries appear. The owner's own team is advisory: it never reaches
- * `_decide_for_entries`, so a capture for it would imply a proposal that never
- * arrives, and the route refuses one.
+ * One entry, and it is the owner's own team ({@link OWNER_ENTRY}). That is the
+ * whole point of this screen: `_read_entry` reads a committed capture for it
+ * BEFORE asking FPL live (`run_agent.py:1023`), so what is typed here is what the
+ * agent plans from. This form used to offer the two bot entries instead — a list
+ * left over from the deleted control room — which made the one surface that feeds
+ * the agent unable to name the team the agent decides for.
  */
 
 import { proven } from "@/lib/data/artifact";
 import { REGISTRY, type MatchesFile, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
-import { TEAMS } from "@/lib/control-room/model";
+import { OWNER_ENTRY } from "@/lib/entry";
 import { INK, SANS } from "@/lib/margin/tokens";
 import CaptureForm, { type PickablePlayer } from "@/components/hub/CaptureForm";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const S = INK;
-
-const TARGETS = TEAMS.filter((team) => team.kind === "bot").map((team) => ({
-  entryId: team.entryId,
-  name: team.name,
-}));
 
 export default function CapturePage() {
   const { artifact } = useArtifact<readonly PlayerRow[]>(REGISTRY.playerStats);
@@ -67,7 +65,7 @@ export default function CapturePage() {
             so the form is withheld until it loads.
           </p>
         ) : (
-          <CaptureForm players={players} targets={TARGETS} gameweek={gameweek} />
+          <CaptureForm players={players} entryId={OWNER_ENTRY} gameweek={gameweek} />
         )}
 
         <p style={{ font: `11px ${SANS}`, color: S.ink3, maxWidth: 620 }}>

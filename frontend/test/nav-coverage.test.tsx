@@ -55,6 +55,22 @@ function destinations(file: string): string[] {
   return [...new Set(linked)].sort();
 }
 
+/**
+ * Pages whose source links a given href.
+ *
+ * Matches the JSX attribute — `href="/capture"` — rather than the `href: "/x"`
+ * object form the navs use, because a page links directly.
+ */
+function pagesLinking(href: string): string[] {
+  return Object.keys(ALLOWED)
+    .map((route) => ({
+      route,
+      path: route === "." ? join(APP, "page.tsx") : join(APP, route, "page.tsx"),
+    }))
+    .filter(({ path }) => readFileSync(path, "utf8").includes(`href="${href}"`))
+    .map(({ route }) => route);
+}
+
 function routeDirs(): string[] {
   return readdirSync(APP, { withFileTypes: true })
     .filter((e) => e.isDirectory() && e.name !== "api")
@@ -111,6 +127,24 @@ describe("route allow-list", () => {
           .toHaveProperty(name);
       }
     }
+  });
+
+  it("has a surviving page linking /capture, since the navs deliberately do not", () => {
+    /**
+     * The half of the rule that was missing, and the gap it left.
+     *
+     * Every assertion here was about what the navs must NOT link, and `/capture`
+     * is excluded from them by design — so when its nav entry was removed, the
+     * suite stayed green with the route reachable only by typing the URL. Both
+     * `ALLOWED` above and `components/Navigation.tsx` claimed it was "reached
+     * from /" while nothing in the tree linked it at all.
+     *
+     * "At least one page" rather than a named one: the spec puts the link on `/`,
+     * beside the squad, and that is where it is — but a route that is reachable
+     * from somewhere is the property worth enforcing, and pinning the page would
+     * make moving the link a test edit rather than a design decision.
+     */
+    expect(pagesLinking("/capture")).not.toEqual([]);
   });
 
   it("mounts both navs, so neither guard above can pass vacuously", () => {
