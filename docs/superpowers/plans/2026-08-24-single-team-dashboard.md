@@ -384,17 +384,31 @@ deadline 126h out, `phase: idle`, and no `xp_public_gw02.json` anywhere in the t
 
 ```bash
 cd ~/dev/pl-prediction-engine
-/usr/bin/time -p .venv/bin/python -c "
+PYTHONPATH=. .venv/bin/python -c "
 import logging, time
 logging.basicConfig(level=logging.INFO)
 from pathlib import Path
+from pipeline.learning.schedule import resolve
 from pipeline.learning.run_agent import refresh_expected_points
+
+# resolve() first: refresh_expected_points does int(gameweek) internally and
+# raises TypeError on None despite its Optional[int] annotation, so the gameweek
+# must be a real number. This also tells you the phase before you touch anything.
+state = resolve(Path('predictions'))
+print('PHASE', state.phase.value, 'GW', state.gameweek)
+assert state.phase.value != 'seal', 'SEAL phase — stop, do not run this by hand'
+
 t = time.time()
-out = refresh_expected_points(Path('predictions'), None)
+out = refresh_expected_points(Path('predictions'), state.gameweek)
 print('STATUS', out.get('status'), 'ELAPSED', round(time.time() - t, 1), 's')
 print('HORIZON WEEKS', len(out.get('_xp_by_week') or []))
-" 2>&1 | tail -20
+" 2>&1 | tail -25
 ```
+
+This performs a real projection run and writes artifacts. That is intended — it is
+the same work Step 10 verifies — but read the `PHASE` line before trusting the
+timing: a `skipped` status means the gameweek had no unplayed fixtures and no
+simulation was timed.
 
 Record the elapsed seconds and the week count in the commit message. This is 8 × `simulate_gameweek` at `n_draws_horizon = 5_000` plus one decision-stream simulation.
 
@@ -629,7 +643,14 @@ Expected: `OK` for both.
 - [ ] **Step 10: Prove the real thing — a projection for the next gameweek**
 
 ```bash
-.venv/bin/python -m pipeline.learning.run_agent --once 2>&1 | tail -20
+# Confirm the phase BEFORE running. A SEAL is irrecoverable and there are 38 a
+# season; if this prints `seal`, stop and escalate rather than running the agent.
+PYTHONPATH=. .venv/bin/python -c "
+from pathlib import Path
+from pipeline.learning.schedule import resolve
+s = resolve(Path('predictions')); print(s.phase.value, s.gameweek, s.reason)"
+
+PYTHONPATH=. .venv/bin/python -m pipeline.learning.run_agent 2>&1 | tail -20
 ls -la predictions/fpl/xp_public_gw*.json
 .venv/bin/python -c "
 import json, glob
@@ -645,7 +666,16 @@ Expected: a file for the **next** gameweek carrying a `horizon` block with at le
 
 If `horizon` is `None`, do **not** reach for the reverted Task 2 change. `_project_horizon` returns `None` when it covered fewer than 2 weeks; check the run's log for the "horizon covers N gameweek(s)" warning and for `flat_default` goal-rate warnings, which say the Dixon-Coles export does not reach the horizon. That is a data-coverage problem, not the week-selection logic.
 
-Confirm the exact CLI entrypoint first with `grep -n "argparse\|__main__" pipeline/learning/run_agent.py`; use whatever flag that reveals rather than assuming `--once`.
+`run_agent.py` has a bare `main()` at `:1498` with no argparse and no CLI flags —
+it reads the phase and acts. There is no `--once`, which is why the phase must be
+checked separately, first.
+
+There IS one safety valve: `main()` reads `FPL_AGENT_DRY_RUN` from the environment
+and threads it into `seal_forecast(dry_run=...)`. It guards **the seal only** — a
+REFRESH run writes its projections either way — but set it anyway on any
+hand-run of the agent (`FPL_AGENT_DRY_RUN=true PYTHONPATH=. .venv/bin/python -m
+pipeline.learning.run_agent`), so a phase that turns out to be SEAL cannot burn one
+of the season's 38 irrecoverable seals from a developer's terminal.
 
 - [ ] **Step 11: Verify the ledger is untouched, then commit**
 
