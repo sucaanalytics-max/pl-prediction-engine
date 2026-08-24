@@ -12,10 +12,24 @@
  * `ResearchView` is the only surface in the app that reads `xp_public` end to end
  * with its quantiles, which is the reason this route survives the cut at all. It
  * was reachable only from `/margin`, a route now deleted.
+ *
+ * ## Why the nav says Projections and the URL says /players
+ *
+ * The grid is now the page: players across the next eight gameweeks, which is the
+ * screen the redesign was benchmarked against, and "Projections" is what it is.
+ * The URL is not the label, and renaming a route means a redirect or a 410 plus
+ * the allow-list churn that goes with it — a cost with no reader on the other end.
+ * If this page is ever split, the grid takes the new URL and this one 410s.
+ *
+ * `ResearchView` stays below the grid rather than being replaced by it: the grid
+ * answers "who scores most over N weeks" and the quantiles answer "how wide is
+ * the spread on him", and the second question is the one that decides whether a
+ * one-point difference in the first is worth a transfer.
  */
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ResearchView } from "@/components/margin/ResearchView";
+import { ProjectionGridSection } from "@/components/projections/ProjectionGridSection";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
 
 export default function PlayersPage() {
@@ -29,10 +43,10 @@ export default function PlayersPage() {
             className="text-3xl font-extrabold tracking-tight"
             style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
           >
-            Players
+            Projections
           </h1>
           <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-            Who could I bring in, and how wide is the spread on him
+            Who scores most over the next few gameweeks, and how wide the spread is
           </p>
         </header>
 
@@ -45,7 +59,10 @@ export default function PlayersPage() {
             gameweek&apos;s projection.
           </p>
         ) : (
-          <ResearchView gameweek={gameweek} />
+          <>
+            <ProjectionGridSection gameweek={gameweek} />
+            <ResearchView gameweek={gameweek} />
+          </>
         )}
       </div>
     </ErrorBoundary>

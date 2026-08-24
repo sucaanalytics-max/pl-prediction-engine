@@ -35,7 +35,7 @@ interface NavItem {
  */
 const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "The call", icon: LayoutDashboard },
-  { href: "/players", label: "Players", icon: Users },
+  { href: "/players", label: "Projections", icon: Users },
   { href: "/evidence", label: "Evidence", icon: Stethoscope },
 ];
 

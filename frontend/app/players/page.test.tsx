@@ -1,5 +1,5 @@
 /**
- * Players — who could I bring in, and how wide is the spread on him.
+ * Projections — who scores most over the next few gameweeks.
  *
  * ## What used to be here
  *
@@ -7,13 +7,14 @@
  * list that duplicated the transfer shortlist, and a "Season statistics" table
  * built on `player_stats.json`'s per-90 trap (`xg_per_90 = xg / max(minutes / 90,
  * 0.1)`, which reads a 0-minute player as `xg * 10`). All three are gone: this
- * page now mounts `ResearchView`, which already carries its own coverage from
- * where it lived until now — `app/margin/page.test.tsx`. What is left to check
- * here is page-level: that `/players` actually renders `ResearchView` once the
- * gameweek resolves, and that it states its own absence in one line, not a
- * panel, when the gameweek cannot be resolved — the same rule every surface
- * built on `useCurrentGameweek` has to follow, since a guessed gameweek here
- * would silently point `ResearchView` at the wrong `xp_public` file.
+ * page now mounts the projection grid over `ResearchView`, which carries its own
+ * coverage from where it lived until now — `app/margin/page.test.tsx`, and the
+ * grid's arithmetic is covered in `lib/projections/grid.test.ts`. What is left to
+ * check here is page-level: that both consumers actually mount once the gameweek
+ * resolves, and that the page states its own absence in one line, not a panel,
+ * when the gameweek cannot be resolved — the same rule every surface built on
+ * `useCurrentGameweek` has to follow, since a guessed gameweek here would
+ * silently point both of them at the wrong `xp_public` file.
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -80,10 +81,10 @@ afterEach(() => {
   vi.doUnmock("@/lib/data/artifact");
 });
 
-describe("the page mounts ResearchView", () => {
+describe("the page mounts the grid and ResearchView", () => {
   it("renders the heading and the researched player once the gameweek resolves", async () => {
     await mountPlayers();
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Players");
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Projections");
     // ResearchView shows the selected player a second time in its detail panel,
     // so the row and the panel both say "P1" — asserting there is at least one
     // is the page-mount claim; ResearchView's own suite covers the rest.
@@ -92,8 +93,30 @@ describe("the page mounts ResearchView", () => {
 
   it("passes the resolved gameweek through, not a guessed one", async () => {
     await mountPlayers({ agentGameweek: 7 });
-    // ResearchView labels its own artifact chip with the gameweek it was given.
-    expect(screen.getByText("GW7")).toBeInTheDocument();
+    // Both consumers label with the gameweek they were given — ResearchView its
+    // artifact chip, the grid its single column — so more than one match here is
+    // the propagation itself rather than a loose assertion.
+    expect((await screen.findAllByText("GW7")).length).toBeGreaterThan(0);
+  });
+
+  it("draws the grid, with the span control and its provenance line", async () => {
+    await mountPlayers();
+    expect(screen.getByTestId("grid-summary").textContent)
+      .toContain("GW7 on 10,000 draws");
+    expect(screen.getByLabelText("Total the next 4 gameweeks")).toBeInTheDocument();
+    expect(screen.getAllByTestId("grid-row")).toHaveLength(1);
+  });
+
+  it("offers no span the published horizon cannot cover", async () => {
+    // This fixture solved no horizon, so only the current week exists. A span of
+    // four would total three weeks that were never published.
+    await mountPlayers();
+    expect(screen.getByLabelText("Total the next 4 gameweeks")).toBeDisabled();
+  });
+
+  it("says the horizon is absent rather than drawing eight empty columns", async () => {
+    await mountPlayers();
+    expect(screen.getByText(/solved no horizon/i)).toBeInTheDocument();
   });
 });
 
