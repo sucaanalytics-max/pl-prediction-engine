@@ -41,7 +41,20 @@ LOCKOUT_BEFORE_DEADLINE = timedelta(minutes=30)
 # Produce and publish the decision here, leaving the human time to act.
 SEAL_WINDOW = timedelta(hours=4)
 # Refresh projections from this far out.
-REFRESH_WINDOW = timedelta(hours=48)
+#
+# Was 48 hours, which left the dashboard with nothing for roughly 4.5 days of
+# every 7: the phase resolver reports the NEXT deadline's gameweek, the frontend
+# turns that number into `fpl/xp_public_gw{NN}.json`, and outside the window that
+# file had never been written. Eight days covers a normal inter-deadline gap so a
+# projection for the next gameweek always exists.
+#
+# Widening the WINDOW is not widening the CADENCE. Every run inside 48 hours
+# still refreshes, because late team news dominates projection error there; a run
+# further out refreshes only if the published projection has aged past
+# PROJECTION_MAX_AGE. The gate lives in run_agent, not here, so this module stays
+# a pure function of the schedule. IDLE_HORIZON is 45 days and does not shadow
+# this.
+REFRESH_WINDOW = timedelta(days=8)
 # Beyond this the season is not close enough to be worth waking for.
 IDLE_HORIZON = timedelta(days=45)
 # FPL locks points at 09:00 UK the day after a gameweek's final match. Before

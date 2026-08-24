@@ -587,3 +587,15 @@ class AgentStatusPublishTests(unittest.TestCase):
         )
         module_level = source[: source.index('if __name__ == "__main__":')]
         self.assertNotIn("from pipeline.config import", module_level)
+
+    def test_refresh_reaches_a_deadline_a_week_out(self):
+        """
+        The window was 48h, so for ~4.5 days of every 7 the phase was IDLE, no
+        projection was written, and the front page fetched a file that had never
+        existed. The frontend resolves the gameweek from agent_status.gameweek —
+        the NEXT deadline — so it asks for a week the producer had not reached.
+        """
+        from datetime import timedelta
+        from pipeline.learning.schedule import REFRESH_WINDOW
+
+        self.assertGreaterEqual(REFRESH_WINDOW, timedelta(days=7))

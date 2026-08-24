@@ -19,7 +19,7 @@ import json
 import logging
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
@@ -27,7 +27,7 @@ from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS
 from pipeline.decide.horizon import EVAL_HORIZON
 from pipeline.learning.ledger import read_forecast
 from pipeline.learning.outcomes import LedgerError, read_outcomes
-from pipeline.learning.schedule import Phase, ScheduleState, resolve
+from pipeline.learning.schedule import Phase, ScheduleState, SEAL_WINDOW, resolve
 
 logger = logging.getLogger(__name__)
 
@@ -1431,6 +1431,44 @@ def _score(predictions_dir: Path, state: ScheduleState) -> int:
     return 0
 
 
+#: How stale a published projection may be before a run outside the seal window
+#: rebuilds it. Set from a measured `_project_horizon` runtime — see
+#: docs/superpowers/plans/2026-08-24-single-team-dashboard.md Task 3 Step 1.
+PROJECTION_MAX_AGE = timedelta(hours=6)
+
+
+def projection_is_current(
+    predictions_dir: Path,
+    gameweek: int,
+    now: datetime,
+    max_age: timedelta = PROJECTION_MAX_AGE,
+) -> bool:
+    """
+    Whether a published projection for THIS gameweek is young enough to keep.
+
+    Keyed on the gameweek, not on "the newest file present". That distinction is
+    the whole defect: `xp_public_gw01.json` sat on disk looking fresh while the
+    frontend asked for `gw02`, which had never been written.
+
+    Anything unreadable counts as not current. A projection is cheap to rebuild
+    and wrong to guess at.
+    """
+    path = Path(predictions_dir) / "fpl" / f"xp_public_gw{int(gameweek):02d}.json"
+    try:
+        stamp = json.loads(path.read_text(encoding="utf-8")).get("generated_at")
+    except (OSError, ValueError):
+        return False
+    if not isinstance(stamp, str):
+        return False
+    try:
+        generated = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    if generated.tzinfo is None:
+        generated = generated.replace(tzinfo=timezone.utc)
+    return (now - generated) < max_age
+
+
 def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
     """Execute the resolved phase. Returns a process exit code."""
     predictions_dir = Path(PREDICTIONS_DIR)
@@ -1464,6 +1502,21 @@ def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
         return 1
 
     if state.phase is Phase.REFRESH:
+        # Inside the seal window every run refreshes: late team news dominates
+        # projection error there. Further out, refresh only when the published
+        # projection for THIS gameweek has aged out, so an eight-day window costs
+        # about one full simulation a day rather than one every three hours.
+        remaining = timedelta(seconds=state.seconds_to_deadline or 0)
+        now = datetime.now(timezone.utc)
+        if remaining > SEAL_WINDOW and projection_is_current(
+            predictions_dir, state.gameweek, now
+        ):
+            logger.info(
+                "refresh skipped: GW%s projection is younger than %s and the "
+                "deadline is %.1fh away",
+                state.gameweek, PROJECTION_MAX_AGE, remaining.total_seconds() / 3600,
+            )
+            return 0
         outcome = refresh_expected_points(predictions_dir, state.gameweek)
         logger.info("refresh: %s", outcome)
         return 0
