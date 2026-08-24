@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-24T10:53:30.686695Z",
-  "n_dropped": 393,
+  "generated_at": "2026-08-24T11:27:57.758592Z",
+  "n_dropped": 390,
   "dropped_by_source": {
-    "bbc_football": 119,
+    "bbc_football": 117,
     "fantasyfootballscout": 20,
-    "hayters": 70,
+    "hayters": 69,
     "sky_football": 184
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 483,
+  "n_articles": 480,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -373,6 +373,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "5a12e548e332578f",
+      "headline": "Ref Watch: Were Liverpool right to be awarded penalty at Newcastle?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13576553/ref-watch-premier-league-weekend-reaction-live-dermot-gallagher-assesses-the-big-refereeing-decisions",
+      "claimed_at": "2026-08-24T09:47:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "7dfd496bbd684856",
@@ -1005,24 +1023,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e84f59812745458e",
-      "headline": "Late Liverpool pen sees Szoboszlai silence Newcastle in draw",
-      "summary": "FREE TO WATCH: Highlights from the Premier League match between Newcastle and Liverpool.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13576408/newcastle-2-2-liverpool-premier-league-highlights",
-      "claimed_at": "2026-08-23T18:47:00Z",
-      "players": [
-        {
-          "element_id": 368,
-          "name": "Szoboszlai",
-          "club": "LIV",
           "held": false
         }
       ],
