@@ -239,6 +239,22 @@ describe("it is a page and not a redirect", () => {
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Your call");
   });
 
+  it("renders the link to /capture, which is the write path's only door", async () => {
+    /**
+     * Asserted on the DOM, not on the source. `test/nav-coverage.test.tsx` reads
+     * the file text — enough to stop the link disappearing again, not enough to
+     * know it renders — and this route was reachable only by typing the URL for
+     * the whole of the route cut while two files claimed it was "reached from /".
+     *
+     * It sits beside the squad because capturing the position is what makes the
+     * squad above it true: `_read_entry` reads a committed capture BEFORE asking
+     * FPL live, so this anchor is the head of the only write path the app has.
+     */
+    await mountPage();
+    const link = screen.getByRole("link", { name: /Capture what you actually submitted/ });
+    expect(link.getAttribute("href")).toBe("/capture");
+  });
+
   it("names no gameweek in its own chrome", async () => {
     /**
      * The gameweek is named once, by `GameweekCall`, beside the artifact it was
