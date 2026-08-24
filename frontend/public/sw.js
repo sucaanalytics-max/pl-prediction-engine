@@ -46,19 +46,21 @@
 // of the front door with no route to the write path at all), and `/capture` now
 // captures for entry 20945 rather than offering the two entries that detached —
 // a v8 copy would go on posting captures the agent never reads.
-// v10 adds a route. `/phases` is new, and the list is what the offline branch
-// serves, so a v9 cache holds an app whose nav links a page it cannot open —
-// which offline reads as the app being broken rather than as one page missing.
-// Bumping evicts it. Same reason this is one commit with the route: `cache.addAll`
-// rejects atomically, so a list naming a route that 404s precaches NOTHING.
+// v10 adds two routes. `/phases` and `/stats` are new, and the list is what the
+// offline branch serves, so a v9 cache holds an app whose nav links two pages it
+// cannot open — which offline reads as the app being broken rather than as pages
+// missing. Bumping evicts it. Same reason this is one commit with the routes:
+// `cache.addAll` rejects atomically, so a list naming a route that 404s
+// precaches NOTHING.
 const CACHE_NAME = "suca-fpl-shell-v10";
 const SHELL_ROUTES = [
   // Every route the app has, which is still a short enough list to precache
-  // whole: the call, the projections, the fixture phases, the evidence, the
-  // position, and the page shown when a fetch fails.
+  // whole: the call, the projections, the fixture phases, the player stats, the
+  // evidence, the position, and the page shown when a fetch fails.
   "/",
   "/players",
   "/phases",
+  "/stats",
   "/evidence",
   "/capture",
   "/offline",

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, CalendarRange, Stethoscope, Users } from "lucide-react";
+import { LayoutDashboard, BarChart3, CalendarRange, Stethoscope, Users } from "lucide-react";
 
 /**
  * The same three destinations the sidebar has, because there are only three.
@@ -16,6 +16,7 @@ const ITEMS = [
   { href: "/", label: "The call", icon: LayoutDashboard },
   { href: "/players", label: "Players", icon: Users },
   { href: "/phases", label: "Phases", icon: CalendarRange },
+  { href: "/stats", label: "Stats", icon: BarChart3 },
   { href: "/evidence", label: "Evidence", icon: Stethoscope },
 ];
 

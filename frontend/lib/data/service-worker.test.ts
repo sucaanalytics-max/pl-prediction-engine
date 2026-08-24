@@ -193,9 +193,9 @@ describe("the shell caches the app that exists now", () => {
      * bump cannot happen silently — you must come here and say why — but it
      * cannot tell whether a bump was NEEDED. That judgement stays human.
      *
-     * v9 -> v10 is for the list: `/phases` is new. A v9 cache holds an app whose
-     * nav links a page it cannot open, which offline reads as the app being broken
-     * rather than as one page missing.
+     * v9 -> v10 is for the list: `/phases` and `/stats` are new. A v9 cache holds
+     * an app whose nav links two pages it cannot open, which offline reads as the
+     * app being broken rather than as pages missing.
      *
      * The earlier v8 -> v9 bump was for two pages ON the list changing in ways a
      * stale offline copy misleads with: `/` gained the app's only link to

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
+  BarChart3,
   CalendarRange,
   Stethoscope,
   Users,
@@ -38,6 +39,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "The call", icon: LayoutDashboard },
   { href: "/players", label: "Projections", icon: Users },
   { href: "/phases", label: "Phases", icon: CalendarRange },
+  { href: "/stats", label: "Stats", icon: BarChart3 },
   { href: "/evidence", label: "Evidence", icon: Stethoscope },
 ];
 

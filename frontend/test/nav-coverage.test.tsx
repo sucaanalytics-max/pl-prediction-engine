@@ -36,13 +36,14 @@ const ALLOWED: Record<string, string> = {
   ".": "the call: XI, captain, and the horizon",
   players: "the projection grid over eight gameweeks, and the spread on each candidate",
   phases: "the league's fixture runs: twenty clubs, where to hop on and off",
+  stats: "the detail behind a transfer, on players owned and not owned",
   evidence: "what moved, and whether to believe it",
   capture: "the position: squad, bank, purchase prices — reached from /, not the nav",
   offline: "served by the service worker when a fetch fails; not a destination",
 };
 
 /** Routes reached from the nav. `capture` and `offline` deliberately are not. */
-const IN_NAV = ["/", "/players", "/phases", "/evidence"];
+const IN_NAV = ["/", "/players", "/phases", "/stats", "/evidence"];
 
 /**
  * Destinations a nav component lists, read from its item array.
