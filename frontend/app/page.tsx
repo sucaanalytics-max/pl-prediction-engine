@@ -59,6 +59,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Section } from "@/components/data/Artifact";
 import GameweekCall from "@/components/GameweekCall";
 import SquadBoard from "@/components/SquadBoard";
+import { PlanGridSection } from "@/components/PlanGridSection";
 import { ScoreView } from "@/components/margin/ScoreView";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
 
@@ -117,6 +118,20 @@ export default function CallPage() {
               captaincyPlan={false}
               speaksForUnsolvedWeeks={false}
             />
+          )}
+        </Section>
+
+        <Section
+          title="Week by week"
+          subtitle="The solved plan across the horizon — who starts, who benches, who wears the armband"
+        >
+          {gameweek === null ? (
+            <p className="text-xs" style={{ color: "var(--text-4)" }}>
+              The gameweek could not be resolved, so the plan cannot be pointed at
+              a decision.
+            </p>
+          ) : (
+            <PlanGridSection gameweek={gameweek} />
           )}
         </Section>
       </div>

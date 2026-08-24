@@ -1,19 +1,23 @@
 /**
- * Matches and Players — the two screens whose committed data is degenerate.
+ * Matches — the screen whose committed data is degenerate.
  *
- * Both currently sit in a state that renders as a confident answer under the old
+ * It currently sits in a state that renders as a confident answer under the old
  * code, so the tests are written against the real artifact shapes:
  *
  * * every fixture predicts `home` (the flat-prior fingerprint);
  * * every table row has `played: 0` AND `position: 0`, which made
- *   `if (pos <= 4)` true for all twenty clubs;
- * * `fouls_committed` is null on all 564 player rows while typed `number`.
+ *   `if (pos <= 4)` true for all twenty clubs.
+ *
+ * The Players suites this file used to carry alongside it — the per-90 trap and
+ * the nulls-stay-null rule — rendered `/players`' old `PlayersTable`, which is
+ * gone: `/players` now mounts `ResearchView` and carries no season-statistics
+ * table at all. `app/players/page.test.tsx` covers the page as it is now; there
+ * is nothing left here for those two describe blocks to assert against.
  */
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import MatchesPage from "@/app/matches/page";
-import PlayersPage from "@/app/players/page";
 import { REGISTRY } from "@/lib/data/narrow";
 
 function fixture(id: string, home: string, away: string, call = "home", referee: string | null = null) {
@@ -45,19 +49,6 @@ const PRE_SEASON_TABLE = [
 const RANKED_TABLE = PRE_SEASON_TABLE.map((r, i) => ({
   ...r, position: i + 1, played: 10, points: 30 - i, gd: 20 - i,
 }));
-
-const PLAYERS = [
-  {
-    name: "Saka", team: "Arsenal", minutes: 2400, goals: 12, assists: 9,
-    xg: 10.4, xa: 7.2, fouls_committed: null, fouls_per_90: null,
-    fpl_ownership: 41.2, fpl_price: 10.1, form: 6.2,
-  },
-  {
-    name: "New Signing", team: "Leeds", minutes: 0, goals: 0, assists: 0,
-    xg: 0.8, xa: 0.3, fouls_committed: null, fouls_per_90: null,
-    fpl_ownership: null, fpl_price: 5.0, form: null,
-  },
-];
 
 function mockFetch(bodies: Record<string, unknown>) {
   return vi.fn(async (url: unknown) => {
@@ -220,87 +211,5 @@ describe("Matches — Rule 2", () => {
   it("an absent fixtures file does not blank the table", async () => {
     await renderPage(<MatchesPage />, { [REGISTRY.table.path]: RANKED_TABLE }, "Fixtures");
     expect(document.querySelectorAll("tr[data-zone]")).toHaveLength(20);
-  });
-});
-
-describe("Players — the per-90 trap", () => {
-  it("suppresses the rate for a player under the minutes floor", async () => {
-    await renderPage(<PlayersPage />, {
-      [REGISTRY.playerStats.path]: PLAYERS,
-    }, "Season statistics");
-    const suppressed = document.querySelectorAll('td[data-rates="suppressed"]');
-    expect(suppressed).toHaveLength(1);
-    // Assert the RENDERED CELL, not just the marker attribute. Removing the guard
-    // leaves `data-rates="suppressed"` in place while the number appears anyway,
-    // so an attribute-only assertion passes on a broken page — which a mutation
-    // run duly demonstrated.
-    expect(suppressed[0].textContent?.trim()).toBe("—");
-  });
-
-  it("never renders a rate computed by dividing by zero minutes", async () => {
-    await renderPage(<PlayersPage />, {
-      [REGISTRY.playerStats.path]: PLAYERS,
-    }, "Season statistics");
-    // The real failure mode. `xg / (0 / 90)` is Infinity, not the `xg * 10` the
-    // pipeline's floored version would give — so a test looking for "8.00" misses
-    // it entirely.
-    expect(document.body.textContent).not.toContain("Infinity");
-    expect(document.body.textContent).not.toContain("NaN");
-  });
-
-  it("shows the rate for a player with real minutes", async () => {
-    await renderPage(<PlayersPage />, {
-      [REGISTRY.playerStats.path]: PLAYERS,
-    }, "Season statistics");
-    expect(document.querySelectorAll('td[data-rates="shown"]')).toHaveLength(1);
-  });
-
-  it("says how many rates were hidden", async () => {
-    await renderPage(<PlayersPage />, {
-      [REGISTRY.playerStats.path]: PLAYERS,
-    }, "Season statistics");
-    expect(screen.getByText(/per-90 rates hidden for 1 player/)).toBeInTheDocument();
-  });
-});
-
-describe("Players — nulls stay null", () => {
-  it("renders a dash for an unsupplied stat, never a zero", async () => {
-    await renderPage(<PlayersPage />, {
-      [REGISTRY.playerStats.path]: PLAYERS,
-    }, "Season statistics");
-    // The property: a stat the provider never supplied renders as a dash, never as
-    // a zero. A zero would claim the player scored none, was owned by nobody, or
-    // committed no fouls — assertions the provider did not make.
-    //
-    // Retargeted from `fouls_committed` to `form` and `fpl_ownership` when the
-    // table was rebuilt for FPL: fouls is null on 100% of real rows and never
-    // useful for a transfer decision, so the column went. The rule did not.
-    const rows = screen.getAllByTestId("player");
-    const withNulls = rows.filter(
-      (row) => within(row).queryAllByTitle("not supplied by the provider").length > 0,
-    );
-    expect(
-      withNulls.length,
-      "the fixture's null form and null ownership must render as dashes",
-    ).toBeGreaterThan(0);
-
-    // And no row turns a null into a zero.
-    for (const row of withNulls) {
-      expect(within(row).queryAllByText("0.0").length).toBe(0);
-    }
-  });
-
-  it("an all-zero-minutes squad is empty, not a table of zeros", async () => {
-    await renderPage(<PlayersPage />, {
-      [REGISTRY.playerStats.path]: PLAYERS.map((p) => ({ ...p, minutes: 0 })),
-    }, "Season statistics");
-    expect(screen.queryAllByTestId("player")).toHaveLength(0);
-    // `getByRole("status")` was unambiguous when Players had one section. It now
-    // carries the ported rankings too, and that section is legitimately absent
-    // here because nothing serves `/api/fpl/state` in this test — so the
-    // assertion has to name which state card it means rather than assuming
-    // there is only one.
-    const cards = screen.getAllByRole("status");
-    expect(cards.map((card) => card.dataset.state)).toContain("empty");
   });
 });

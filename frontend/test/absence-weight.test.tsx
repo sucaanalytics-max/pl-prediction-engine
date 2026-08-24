@@ -154,7 +154,11 @@ describe("/decide puts content before absence", () => {
 
   it("renders the heuristic lists before the agent proposals", () => {
     const lists = source.indexOf("<HeuristicLists />");
-    const proposals = source.indexOf("ENTRY_LABELS.map");
+    // Was `"ENTRY_LABELS.map"` — Task 4 widened that shared list to admit "owner"
+    // for `decisionDescriptor`'s type, which left this page (titling only "season"
+    // and "weekly") mapping over its own two-label tuple instead. `<EntryBlock`
+    // still marks the same spot: the loop that renders the agent's proposals.
+    const proposals = source.indexOf("<EntryBlock");
     expect(lists).toBeGreaterThan(-1);
     expect(proposals).toBeGreaterThan(-1);
     expect(

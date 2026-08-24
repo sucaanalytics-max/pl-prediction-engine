@@ -1489,8 +1489,15 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
   });
 }
 
-/** The two mandates, as `pipeline/config.py::FPL_ENTRIES` names them. */
-export const ENTRY_LABELS = ["season", "weekly"] as const;
+/**
+ * The entry labels, as `pipeline/config.py::FPL_ENTRIES` names them.
+ *
+ * `owner` is the only one the pipeline still writes: the two bot entries were
+ * detached to their own project. `season` and `weekly` remain legal here purely so
+ * `/decide`, `/control-room` and `DecideView` keep compiling until they are deleted,
+ * and Task 7 removes all three when the last of those callers is gone.
+ */
+export const ENTRY_LABELS = ["season", "weekly", "owner"] as const;
 export type EntryLabel = (typeof ENTRY_LABELS)[number];
 
 /**

@@ -31,7 +31,7 @@
  */
 
 import { useMemo } from "react";
-import { REGISTRY, decisionDescriptor, ENTRY_LABELS } from "@/lib/data/narrow";
+import { REGISTRY, decisionDescriptor } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
@@ -602,7 +602,15 @@ export default function DecidePage() {
             </p>
           </div>
         ) : (
-          ENTRY_LABELS.map((label) => (
+          // The two mandates this page has always titled — "Season team" and
+          // "Weekly team" — not the full, shared `ENTRY_LABELS`. That list widened
+          // to admit "owner" for `decisionDescriptor`'s type, and this page's own
+          // title ternary (`label === "season" ? ... : "Weekly team"`) has no third
+          // case: mapping the wider list would have printed two "Weekly team"
+          // sections for a mandate this page was never built to show. `/decide` is
+          // deleted in Task 5; until then it keeps rendering exactly what it always
+          // rendered.
+          (["season", "weekly"] as const).map((label) => (
             <EntryBlock key={label} label={label} gameweek={gameweek} />
           ))
         )}

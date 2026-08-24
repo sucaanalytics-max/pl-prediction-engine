@@ -1,370 +1,29 @@
 "use client";
 
 /**
- * Evidence — why each availability number is what it is.
+ * Evidence — what moved since I last looked, and how much of this is guessed.
  *
- * The competitor study's single largest finding, across eight products:
+ * ## What this absorbs
  *
- * > *Nobody presents injury/availability evidence — only conclusions. FFS gives
- * > you "Carvalho 25%" with no source, no quote, no timestamp on the claim. No
- * > product shows you: here is the press-conference quote, here is who reported
- * > it, here is when, here is why 25%. The entire category asks you to trust a
- * > number.*
+ * `/inbox`, `/accuracy` and `/health`, plus `/margin?view=news`. `WatchView`
+ * already carries the decay ledger and the perfect-model calibration ceiling from
+ * accuracy.json, which is what makes `/accuracy` and `/health` redundant rather
+ * than the reverse. `NewsView` performs the squad join the pipeline could not, and
+ * its copy is the model for how a claim should carry its source.
  *
- * So the losing claims here are **the content, not an expandable footnote**. A
- * player whose 25% survived three conflicting reports is a different decision from
- * one whose 25% is unopposed, and this is the only place that distinction is
- * visible.
- *
- * Replaces the previous /evidence, which read live FPL flags through
- * `FplLiveContext` and could show only the conclusion.
+ * The page's own `CapturedHeadlines` is gone: it read the identical NEWS_FEED
+ * artifact that NewsView reads better.
  */
 
-import { REGISTRY } from "@/lib/data/narrow";
-import { useArtifact } from "@/lib/data/useArtifact";
-import {
-  NEWS_FEED, type NewsFeed, type NewsItem, type NewsPlayer,
-} from "@/lib/data/news-feed";
-import { ProvenanceStrip, Section, WhenProven } from "@/components/data/Artifact";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import AgentIdleNotice from "@/components/AgentIdleNotice";
-import XScanButton from "@/components/XScanButton";
+import { NewsView } from "@/components/margin/NewsView";
+import { WatchView } from "@/components/margin/WatchView";
+import { Section } from "@/components/data/Artifact";
 import MinutesConflicts from "@/components/MinutesConflicts";
-import type {
-  EvidenceClaim, EvidenceEntry, EvidencePlayer, EvidenceView,
-} from "@/lib/data/narrow";
-import { proven } from "@/lib/data/artifact";
-
-/** The resolver's rule names, in words a reader can act on. */
-const RULE_PROSE: Record<string, string> = {
-  asymmetric_override:
-    "R4 — a lower-tier source may push availability down, never up",
-  tier_precedence: "R3 — a more authoritative source wins",
-  recency_within_source: "R2 — the same source said something newer",
-  staleness: "R1 — the older claim passed the staleness horizon",
-  permanence_beats_gradation: "R6 — a confirmed exit outranks a percentage",
-  only_claim: "the only claim on file",
-  unresolvable: "R7 — equally authoritative and equally fresh; escalated",
-};
-
-const TIER_LABEL: Record<number, string> = {
-  1: "official",
-  2: "press conference",
-  3: "aggregator",
-};
-
-function describeValue(value: unknown): string {
-  if (value === null || value === undefined) return "—";
-  if (typeof value === "number") return `${value}%`;
-  if (typeof value === "object") {
-    const kind = (value as Record<string, unknown>).kind;
-    return typeof kind === "string" ? kind : JSON.stringify(value);
-  }
-  return String(value);
-}
-
-const VERDICT_STYLE: Record<string, { colour: string; mark: string }> = {
-  // Colourblind-safe: the glyph carries the meaning, colour only reinforces it.
-  won: { colour: "var(--success)", mark: "✓" },
-  lost: { colour: "var(--text-4)", mark: "✗" },
-  dropped: { colour: "var(--warning)", mark: "!" },
-};
-
-function ClaimRow({ claim }: { claim: EvidenceClaim }) {
-  const style = VERDICT_STYLE[claim.verdict] ?? VERDICT_STYLE.lost;
-  const faded = claim.verdict !== "won";
-  return (
-    <li
-      className="flex gap-2 text-xs py-1.5"
-      style={{ opacity: faded ? 0.72 : 1 }}
-      data-verdict={claim.verdict}
-    >
-      <span
-        aria-hidden="true"
-        className="font-mono font-bold"
-        style={{ color: style.colour }}
-      >
-        {style.mark}
-      </span>
-      <span className="sr-only">{claim.verdict}</span>
-      <div className="min-w-0">
-        <p style={{ color: "var(--text-2)" }}>
-          <strong style={{ color: "var(--text-1)" }}>
-            {describeValue(claim.value)}
-          </strong>
-          {" — "}
-          {claim.source}
-          <span style={{ color: "var(--text-4)" }}>
-            {" "}(tier {claim.source_tier}
-            {TIER_LABEL[claim.source_tier] ? `, ${TIER_LABEL[claim.source_tier]}` : ""})
-          </span>
-        </p>
-        {claim.quote ? (
-          <p className="italic mt-0.5" style={{ color: "var(--text-3)" }}>
-            “{claim.quote}”
-          </p>
-        ) : null}
-        <p className="font-mono text-[10px] mt-0.5" style={{ color: "var(--text-4)" }}>
-          {/* claimed_at, not observed_at. Conflating them is what lets a stale
-              article outrank a fresh club update. */}
-          {claim.claimed_at ? `said ${claim.claimed_at}` : "no publication time"}
-          {claim.beaten_by ? ` · beaten by ${claim.beaten_by}` : ""}
-          {claim.url ? (
-            <>
-              {" · "}
-              <a
-                href={claim.url}
-                target="_blank"
-                rel="noreferrer noopener"
-                style={{ color: "var(--accent)" }}
-              >
-                source
-              </a>
-            </>
-          ) : null}
-        </p>
-      </div>
-    </li>
-  );
-}
-
-function Entry({ entry }: { entry: EvidenceEntry }) {
-  return (
-    <div className="glass-inset p-3 space-y-1">
-      <div className="flex items-baseline justify-between gap-2 flex-wrap">
-        <p className="text-xs font-semibold" style={{ color: "var(--text-1)" }}>
-          {entry.claim_type.replace(/_/g, " ")}
-          {": "}
-          <span className="font-mono">{describeValue(entry.resolved_value)}</span>
-        </p>
-        <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
-          {entry.rule ? RULE_PROSE[entry.rule] ?? entry.rule : "no rule recorded"}
-        </p>
-      </div>
-
-      {entry.escalation ? (
-        <p
-          className="text-xs"
-          style={{ color: "var(--warning)" }}
-          data-testid="escalation"
-        >
-          Needs a human: {entry.escalation}
-        </p>
-      ) : null}
-
-      {/* The losers are listed, not hidden behind a disclosure. That is the
-          feature: an unopposed number and a contested one must not look alike. */}
-      <ul className="divide-y" style={{ borderColor: "var(--border)" }}>
-        {entry.claims.map((claim) => (
-          <ClaimRow key={`${claim.claim_id}-${claim.verdict}`} claim={claim} />
-        ))}
-      </ul>
-
-      <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
-        {entry.n_conflicts === 0
-          ? "Unopposed — no other source has said anything about this."
-          : `Survived ${entry.n_conflicts} conflicting claim${entry.n_conflicts === 1 ? "" : "s"}.`}
-      </p>
-    </div>
-  );
-}
-
-function PlayerCard({ player }: { player: EvidencePlayer }) {
-  return (
-    <article className="card p-4 space-y-3" data-testid="evidence-player">
-      <div className="flex items-baseline justify-between gap-2 flex-wrap">
-        <h3 className="text-sm font-semibold" style={{ color: "var(--text-1)" }}>
-          {player.player_name}
-          {player.club ? (
-            <span className="font-normal" style={{ color: "var(--text-3)" }}>
-              {" "}· {player.club}
-            </span>
-          ) : null}
-        </h3>
-        {player.needs_attention ? (
-          <span className="badge-amber text-[9px]">NEEDS A HUMAN</span>
-        ) : null}
-      </div>
-      {player.entries.map((entry) => (
-        <Entry key={entry.claim_type} entry={entry} />
-      ))}
-    </article>
-  );
-}
-
-function EvidenceBody({ view }: { view: EvidenceView }) {
-  return (
-    <div className="space-y-4">
-      <p className="text-xs" style={{ color: "var(--text-3)" }}>
-        {/* The honest denominator. Without it a short list is ambiguous between
-            "little to report" and "the export broke". */}
-        Showing {view.shown} player{view.shown === 1 ? "" : "s"} whose availability
-        is in question, of {view.resolved} with claims on file.
-        {view.escalations > 0
-          ? ` ${view.escalations} need a human.`
-          : " Everyone else has an uncontested, fully-available reading."}
-      </p>
-      {view.players.map((player) => (
-        <PlayerCard key={player.element_id} player={player} />
-      ))}
-    </div>
-  );
-}
-
-/**
- * The captured headlines.
- *
- * Everything above is resolved availability: claims the parser turned into a
- * value, with the rule that beat each loser. This is the residue — items the
- * parser refused to convert, because RSS prose cannot meet the
- * zero-false-positive bar R4 demands when a tier-2 claim can push availability
- * DOWN.
- *
- * Worth reading anyway. "Gudmundsson + Mukiele injury latest" tells a manager
- * something no availability field will, and until this section existed those
- * items went into a store nothing read.
- */
-/**
- * The players in a captured item that we can actually name.
- *
- * The claim store files a club-level item against element id 0 — its sentinel for
- * "this article names no single player" — so any fallback that prints the id prints
- * a bare `0` on screen. Filtering on the NAME rather than on the id keeps this
- * correct if the sentinel ever changes.
- */
-function namedPlayers(item: NewsItem): Array<NewsPlayer & { name: string }> {
-  return item.players.filter(
-    (p): p is NewsPlayer & { name: string } =>
-      typeof p.name === "string" && p.name.trim().length > 0,
-  );
-}
-
-function CapturedHeadlines() {
-  const { artifact } = useArtifact<NewsFeed>(NEWS_FEED);
-
-  return (
-    <Section
-      title="From the feeds"
-      subtitle="What the sources published, before any of it becomes a number"
-      aside={<ProvenanceStrip of={artifact} />}
-    >
-      {/* The X lane is the one source with no automatic cadence: it needs a real
-          browser, so it runs on demand rather than on the poller's fifteen
-          minutes. The control lives here because this is where its output lands. */}
-      <div className="mb-4">
-        <XScanButton />
-      </div>
-
-      <WhenProven
-        of={artifact}
-        what="The poller has captured nothing in its window. It reads six feeds every fifteen minutes."
-        then={(feed) => (
-          <div className="space-y-3">
-            {/* Verbatim from the artifact rather than paraphrased here: the
-                producer states its own standing, and a page that restates it
-                can drift from what the file actually claims. */}
-            {feed.basis ? (
-              <p className="text-xs" style={{ color: "var(--warning)" }}>
-                {feed.basis}
-              </p>
-            ) : null}
-
-            {/* An unmarked feed means one of two things and the reader cannot
-                see which: nothing here touches your squad, or the squad was
-                never known. The producer answers that now, so the page says it
-                rather than leaving a badgeless list to imply the first. */}
-            {!feed.squadKnown ? (
-              <p className="text-xs" data-testid="squad-unknown"
-                 style={{ color: "var(--text-3)" }}>
-                Your squad was not known when this was written, so nothing below
-                is marked as yours. The agent records it when it solves, which is
-                deadline-gated.
-              </p>
-            ) : null}
-
-            <ul className="space-y-2" data-testid="headlines">
-              {feed.items.map((item) => (
-                <li key={item.digest} className="glass-inset p-3 space-y-1"
-                    data-squad={item.touchesSquad === null ? "unknown"
-                                : item.touchesSquad ? "yes" : "no"}>
-                  <div className="flex items-baseline justify-between gap-2 flex-wrap">
-                    <span className="text-[10px] uppercase tracking-wider"
-                          style={{ color: "var(--text-4)" }}>
-                      {item.source}
-                      {item.tier !== null ? ` · tier ${item.tier}` : ""}
-                    </span>
-                    {item.touchesSquad ? (
-                      <span className="badge-amber text-[9px]">IN YOUR SQUAD</span>
-                    ) : null}
-                  </div>
-                  <p className="text-sm" style={{ color: "var(--text-1)" }}>
-                    {item.url ? (
-                      <a href={item.url} target="_blank" rel="noreferrer"
-                         style={{ color: "inherit", textDecoration: "underline" }}>
-                        {item.headline}
-                      </a>
-                    ) : item.headline}
-                  </p>
-                  {/* Only players we can actually name.
-                      `p.name ?? p.elementId` rendered the literal `0` under any
-                      club-level headline: the claim store uses element id 0 as its
-                      sentinel for "this article names no single player", so the
-                      fallback printed the sentinel. A reader saw a bare 0 beneath
-                      "Fulham sign Charles from Southampton for £30m".
-                      An unnamed player is not a label — it is nothing to show. */}
-                  {namedPlayers(item).length > 0 ? (
-                    <p className="text-xs" style={{ color: "var(--text-3)" }}>
-                      {namedPlayers(item)
-                        .map((p) => `${p.name}${p.club ? ` (${p.club})` : ""}`)
-                        .join(" · ")}
-                    </p>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-
-            {feed.nArticles > feed.nShown ? (
-              <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
-                Showing {feed.nShown} of {feed.nArticles} captured in the last{" "}
-                {feed.windowDays ?? "few"} days.
-              </p>
-            ) : null}
-          </div>
-        )}
-      />
-    </Section>
-  );
-}
+import { useCurrentGameweek } from "@/lib/data/gameweek";
 
 export default function EvidencePage() {
-  const { artifact } = useArtifact<EvidenceView>(REGISTRY.evidence);
-
-  /**
-   * What an empty player list actually means, read from the counts beside it.
-   *
-   * This was the flat sentence "Nobody's availability is in question. Every player with
-   * claims on file reads as fully available, from an uncontested source." The shipped
-   * artifact carries 75 claims across 19 players with `n_players_resolved: 0` and one
-   * escalation — so nothing had been adjudicated, and the page printed an availability
-   * all-clear before a deadline on the strength of work that had not been done.
-   *
-   * An empty list means "nothing was contested" only once something has been resolved.
-   * Until then it means "nothing has been assessed", which is the opposite reassurance.
-   */
-  const counts = proven(artifact);
-  const allClear = counts === null || counts.withClaims === 0
-    ? "No availability claims are on file for this gameweek."
-    : counts.resolved === 0
-      ? `${counts.claims} claim${counts.claims === 1 ? "" : "s"} across `
-        + `${counts.withClaims} player${counts.withClaims === 1 ? "" : "s"} are on file `
-        + "and none has been resolved yet, so nothing here is an all-clear — it is work "
-        + "the agent has not done."
-        + (counts.escalations > 0
-          ? ` ${counts.escalations} ${counts.escalations === 1 ? "is" : "are"} escalated.`
-          : "")
-      : `Nobody's availability is in question: all ${counts.withClaims} `
-        + `player${counts.withClaims === 1 ? "" : "s"} with claims on file resolved as `
-        + "fully available, from an uncontested source.";
+  const gameweek = useCurrentGameweek();
 
   return (
     <ErrorBoundary pageName="Evidence">
@@ -377,30 +36,19 @@ export default function EvidencePage() {
             Evidence
           </h1>
           <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-            Why each availability number is what it is — and what it beat
+            What moved since you last looked, and how much of this is guessed
           </p>
         </header>
 
-        {/* The captured headlines come FIRST, and they were never rendered at all.
-            `CapturedHeadlines` was written, tested, and mounted nowhere — `git log
-            -S "<CapturedHeadlines"` returns no commit. So 70 captured articles and
-            the five scanned X posts, plus the scan trigger that lives inside this
-            section, were invisible on the page while being present in the artifact.
+        {/* The claims lead: they are what changed. */}
+        <Section
+          title="Availability"
+          subtitle="What the model believes about who plays, and who said so"
+        >
+          <NewsView />
+        </Section>
 
-            I verified that work by reading news_view.json rather than by opening the
-            browser, which is the same error this whole redesign exists to correct.
-
-            It leads because it is the section that actually has content: the claim
-            trees below need the agent, which is idle until a deadline nears. */}
-        <CapturedHeadlines />
-
-        {/* Where our own numbers and our own evidence disagree.
-            Second, because it is the section with the highest decision value per
-            line: our GW1 projection gave Gvardiol 14.3 expected minutes and 0.78
-            xP while a post already in x_inbox.csv said he "played full 90 -
-            started LB". Both facts were in the repository and no page put them
-            together, so a reader of the projection alone benches a nailed-on
-            starter — a ~3-point swing on the real squad, from one sentence. */}
+        {/* Where our own numbers and our own evidence disagree. */}
         <Section
           title="Projections the evidence argues with"
           subtitle="Reported, never applied — read the quote and decide"
@@ -408,24 +56,19 @@ export default function EvidencePage() {
           <MinutesConflicts />
         </Section>
 
-        {/* Above the section, not inside WhenProven's fallback: the reason the
-            claim trees are missing is the same whether the artifact is absent or
-            empty, and repeating it in two branches would let them drift. */}
-        <AgentIdleNotice />
-
+        {/* Then whether to trust any of it. */}
         <Section
-          title="Contested availability"
-          subtitle="Most disputed first. Every claim that lost is named, with the rule that beat it."
-          aside={<ProvenanceStrip of={artifact} />}
+          title="Do I believe it"
+          subtitle="What has decayed, and how close the model is to the best any forecaster could do"
         >
-          <WhenProven
-            of={artifact}
-            what={allClear}
-            // One line: the agent writes this and is deadline-gated, so its absence
-            // is the expected state for most of a gameweek cycle.
-            weight="line"
-            then={(view) => <EvidenceBody view={view} />}
-          />
+          {gameweek === null ? (
+            <p className="text-xs" style={{ color: "var(--text-4)" }}>
+              The gameweek could not be resolved, so the decay ledger cannot be
+              pointed at a projection.
+            </p>
+          ) : (
+            <WatchView gameweek={gameweek} />
+          )}
         </Section>
       </div>
     </ErrorBoundary>
