@@ -703,7 +703,8 @@ runtime: <FILL IN FROM STEP 1>s over <N> weeks."
 - Test: `frontend/test/rescued-mounts.test.tsx` (create)
 
 **Interfaces:**
-- Consumes: `decisionDescriptor(gameweek, label)` from `@/lib/data/narrow` — still two-argument at this point; Task 7 collapses it. Pass `"owner"`.
+- Consumes: `decisionDescriptor(gameweek, label)` from `@/lib/data/narrow` — still two-argument at this point; Task 7 collapses it. Pass `"owner"`, which **Step 0 below must make a legal `EntryLabel` first**.
+- Produces: `PlanGridSection` in `frontend/components/PlanGridSection.tsx`, taking `{ gameweek: number }`. Task 7 edits its one `decisionDescriptor` call.
 - Produces: `/players`, `/evidence` and `/` each importing their rescued component, which Task 5's deletion depends on.
 
 **Why this task is first among the frontend work:** `ResearchView`, `NewsView` and `WatchView` are imported **only** by `app/margin/page.tsx`. `PlanGrid` has no importer at all. Deleting `/margin` before this lands strands three tested components, which is precisely how this repo once stranded a 612-line page.
@@ -711,6 +712,36 @@ runtime: <FILL IN FROM STEP 1>s over <N> weeks."
 The two `Horizon` types are different and must not be crossed:
 - `Planner` (already mounted via `ScoreView` on `/`) takes `lib/data/projections.ts`'s `Horizon` — per-player xP per week, from `xp_public`'s `horizon` block.
 - `PlanGrid` takes `lib/data/narrow.ts`'s `Horizon` — `{evalHorizon, transferHorizon, weeks: HorizonWeek[]}` where each week carries `squad`/`xi`/`captain`/`vice`, from the **decision** artifact.
+
+- [ ] **Step 0: Make `"owner"` a legal entry label**
+
+Task 1 renamed the pipeline's only entry to `owner`, so the artifact on disk is now
+`decision_public_gw{NN}_owner.json`. But `frontend/lib/data/narrow.ts:1493` still reads:
+
+```tsx
+/** The two mandates, as `pipeline/config.py::FPL_ENTRIES` names them. */
+export const ENTRY_LABELS = ["season", "weekly"] as const;
+```
+
+`EntryLabel` is derived from that tuple, so passing `"owner"` to `decisionDescriptor`
+is a **type error** and `npm run build` fails. Widening it is the whole fix — one line
+plus its comment:
+
+```tsx
+/**
+ * The entry labels, as `pipeline/config.py::FPL_ENTRIES` names them.
+ *
+ * `owner` is the only one the pipeline still writes: the two bot entries were
+ * detached to their own project. `season` and `weekly` remain legal here purely so
+ * `/decide`, `/control-room` and `DecideView` keep compiling until they are deleted,
+ * and Task 7 removes all three when the last of those callers is gone.
+ */
+export const ENTRY_LABELS = ["season", "weekly", "owner"] as const;
+```
+
+Do **not** remove `season` or `weekly` here. Three files still pass them —
+`app/decide/page.tsx:259,605`, `app/control-room/page.tsx:152,154` and
+`components/margin/DecideView.tsx:826` — and they are deleted in Task 5, not this one.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -1417,7 +1448,7 @@ middleware.ts, not proxy.ts: this frontend is Next.js 14.2."
 - Test: `frontend/test/single-entry.test.ts` (create)
 
 **Interfaces:**
-- Consumes: `"owner"` as the only entry label, from Task 1.
+- Consumes: `"owner"` as the only entry label, from Task 1. Note `ENTRY_LABELS` has **three** members at this point — `season` and `weekly` were kept in Task 4 Step 0 so the doomed routes compiled, and Task 5 deleted their last callers. All three go now.
 - Produces: `decisionDescriptor(gameweek: number)` — one argument. `sensitivityDescriptor(gameweek: number)` likewise.
 
 - [ ] **Step 1: Write the failing test**
