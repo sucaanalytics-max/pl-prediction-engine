@@ -169,7 +169,16 @@ describe("the workflow declarations parse", () => {
     // Two loops. Reading only the first is a silent blind spot.
     expect(DAILY).toContain("latest.json");
     expect(DAILY).toContain("fixture_xg.json");
-    expect(OPTIONAL).toEqual(["fixture_xg.json", "market_blend_weight.json"]);
+    // Pinned as a set, so adding an artifact to the workflow has to be a
+    // deliberate act here too. `player_events.json` joined on 2026-08-24: the
+    // Understat player-events feed, OPTIONAL because it is a scraped source
+    // that may be absent on any given day, and a `cp` under `set -e` would
+    // turn that into a hard pipeline failure.
+    expect(OPTIONAL).toEqual([
+      "fixture_xg.json",
+      "market_blend_weight.json",
+      "player_events.json",
+    ]);
   });
 
   it("finds what the news workflow publishes", () => {
