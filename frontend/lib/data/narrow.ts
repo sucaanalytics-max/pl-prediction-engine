@@ -34,8 +34,7 @@ import {
 } from "@/lib/data/check";
 import { parseFeed, type MessageFeed } from "@/lib/fpl-messages";
 import {
-  DAY, explainabilityIsEmpty, h2hIsEmpty, healthIsEmpty, matchesAreEmpty,
-  playerStatsAreEmpty, tableIsEmpty,
+  DAY, healthIsEmpty, matchesAreEmpty, playerStatsAreEmpty,
   type Descriptor, type OpaqueDescriptor,
 } from "@/lib/data/registry";
 import { toFraction, type Fraction } from "@/lib/data/units";
@@ -108,7 +107,6 @@ export interface MatchRow {
   readonly confidence_pct: number;
   readonly referee: string | null;
   readonly is_derby: boolean | null;
-  readonly n_value_bets: number | null;
 }
 
 export interface MatchesFile {
@@ -145,7 +143,6 @@ export function narrowMatches(raw: unknown): NarrowResult<MatchesFile> {
       // models degrade gracefully by design, so absence is expected.
       referee: optString(row.referee),
       is_derby: optBoolean(row.is_derby),
-      n_value_bets: optNumber(row.n_value_bets),
     } satisfies MatchRow;
   });
 
@@ -1534,11 +1531,11 @@ export function decisionDescriptor(
 /**
  * Every artifact the app may fetch.
  *
- * Each entry keeps its own payload type — `REGISTRY.table` is a
- * `Descriptor<readonly Standing[]>`, not a `Descriptor<any>`. An earlier draft
+ * Each entry keeps its own payload type — `REGISTRY.matches` is a
+ * `Descriptor<MatchesFile>`, not a `Descriptor<any>`. An earlier draft
  * funnelled them through a `Descriptor<any>` helper to make the record
  * homogeneous, which typechecked and quietly erased every payload type in the
- * app: `proven(load(REGISTRY.table))` came back `any`, so the layer built to
+ * app: `proven(load(REGISTRY.matches))` came back `any`, so the layer built to
  * replace `res.json() as T` reintroduced exactly the same hole one level up.
  *
  * `unpublished: true` marks a path no workflow writes yet. The paths test fails
@@ -1547,16 +1544,6 @@ export function decisionDescriptor(
  * added silently again.
  */
 export const REGISTRY = {
-  table: ({
-    key: "table",
-    path: "table.json",
-    owner: "daily",
-    describes: "the Premier League table",
-    freshnessBudgetMs: 2 * DAY,
-    narrow: narrowTable,
-    isEmpty: tableIsEmpty,
-  }) satisfies Descriptor<readonly Standing[]>,
-
   matches: ({
     key: "matches",
     path: "matches.json",
@@ -1592,31 +1579,6 @@ export const REGISTRY = {
     isEmpty: healthIsEmpty,
   }) satisfies Descriptor<Health>,
 
-  latest: ({
-    key: "latest",
-    path: "latest.json",
-    owner: "daily",
-    describes: "match probabilities, value bets and explanations",
-    freshnessBudgetMs: DAY,
-    narrow: narrowLatest,
-    producedAtOf: (v) => v.generated_at,
-    producerVersionOf: (v) => v.pipeline_version,
-    // Partial emptiness: the probability payload is real, the SHAP and
-    // odds-comparison panels are not. See explainabilityIsEmpty.
-    isEmpty: explainabilityIsEmpty,
-  }) satisfies Descriptor<Latest>,
-
-  h2h: ({
-    key: "h2h",
-    path: "h2h.json",
-    owner: "daily",
-    describes: "head-to-head history",
-    // A historical record does not go off.
-    freshnessBudgetMs: null,
-    narrow: narrowH2H,
-    isEmpty: h2hIsEmpty,
-  }) satisfies Descriptor<readonly H2HEntry[]>,
-
   messages: ({
     key: "messages",
     path: "fpl/messages.json",
@@ -1630,18 +1592,6 @@ export const REGISTRY = {
     // publishes nothing when it has nothing to say.
     isEmpty: (v) => v.messages.length === 0,
   }) satisfies Descriptor<MessageFeed>,
-
-  blendWeight: ({
-    key: "blendWeight",
-    path: "market_blend_weight.json",
-    owner: "daily",
-    describes: "the fitted market blend weight and its caveats",
-    // A fit does not go off; it is superseded.
-    freshnessBudgetMs: null,
-    narrow: narrowBlendWeight,
-    producedAtOf: (v) => v.generated_at,
-    isEmpty: (v) => v.n_matches === 0,
-  }) satisfies Descriptor<BlendWeight>,
 
   fixtureXg: ({
     key: "fixtureXg",

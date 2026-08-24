@@ -16,7 +16,6 @@ import { proven } from "@/lib/data/artifact";
 import type { Descriptor } from "@/lib/data/registry";
 import { inFlightCount, useArtifact } from "@/lib/data/useArtifact";
 import { matchDetailDescriptor } from "@/lib/data/match-detail";
-import { REGISTRY } from "@/lib/data/narrow";
 
 interface Payload { readonly value: number }
 
@@ -130,14 +129,22 @@ describe("two descriptors that share a path", () => {
    * whole route fell to its error boundary — and the navigation fetches on every page,
    * so the route raced itself on load.
    */
+  /*
+   * `REGISTRY.latest` is gone — the nav no longer fetches it, and the entry went
+   * with the betting and match screens — so the second half of that pair is now a
+   * local descriptor over the same path. The mechanism under test is
+   * `useArtifact`'s keying, not either registry entry.
+   */
+  const otherOverLatest = descriptor("latest.json");
+
   it("is the real collision: same path, different keys", () => {
-    expect(matchDetailDescriptor("ars-che").path).toBe(REGISTRY.latest.path);
-    expect(matchDetailDescriptor("ars-che").key).not.toBe(REGISTRY.latest.key);
+    expect(matchDetailDescriptor("ars-che").path).toBe(otherOverLatest.path);
+    expect(matchDetailDescriptor("ars-che").key).not.toBe(otherOverLatest.key);
   });
 
   it("does not serve one descriptor's narrowed value to the other", async () => {
     const { impl, releaseAll } = deferredFetch();
-    const nav = renderHook(() => useArtifact(REGISTRY.latest));
+    const nav = renderHook(() => useArtifact(otherOverLatest));
     const page = renderHook(() => useArtifact(matchDetailDescriptor("ars-che")));
 
     // Two identities, so two fetches. The duplicate byte cost is the price of a
@@ -164,8 +171,8 @@ describe("two descriptors that share a path", () => {
     // The optimisation must survive the fix: two consumers of one descriptor still
     // make one request.
     const { impl, releaseAll } = deferredFetch();
-    renderHook(() => useArtifact(REGISTRY.latest));
-    renderHook(() => useArtifact(REGISTRY.latest));
+    renderHook(() => useArtifact(otherOverLatest));
+    renderHook(() => useArtifact(otherOverLatest));
     expect(impl).toHaveBeenCalledTimes(1);
     await act(async () => { releaseAll(); });
   });

@@ -142,49 +142,19 @@ describe("a line-weight state renders one line, not a panel", () => {
   });
 });
 
-describe("/decide puts content before absence", () => {
-  /**
-   * Source-level, not render-level.
-   *
-   * Rendering the page needs the live FPL fetch and the heuristic engine, and a test
-   * that mocks both would be asserting the mocks. The ordering is a property of the
-   * composition, and the composition is readable.
-   */
-  const source = readDecideSource();
-
-  it("renders the heuristic lists before the agent proposals", () => {
-    const lists = source.indexOf("<HeuristicLists />");
-    // Was `"ENTRY_LABELS.map"` — Task 4 widened that shared list to admit "owner"
-    // for `decisionDescriptor`'s type, which left this page (titling only "season"
-    // and "weekly") mapping over its own two-label tuple instead. `<EntryBlock`
-    // still marks the same spot: the loop that renders the agent's proposals.
-    const proposals = source.indexOf("<EntryBlock");
-    expect(lists).toBeGreaterThan(-1);
-    expect(proposals).toBeGreaterThan(-1);
-    expect(
-      lists,
-      "the transfer shortlist and captaincy plan must render above the agent " +
-        "proposals, which are absent for ~10 days of every gameweek cycle",
-    ).toBeLessThan(proposals);
-  });
-
-  it("gives the absent proposals and robustness reports line weight", () => {
-    // Two of them, one per entry label.
-    expect(source.match(/weight="line"/g)?.length ?? 0).toBeGreaterThanOrEqual(2);
-  });
-
-  it("does not render two sections with the same bare title", () => {
-    // `title="Robustness"` twice is what produced the duplicate heading.
-    expect(source).not.toContain('title="Robustness"');
-    expect(source).toContain("Robustness — season team");
-    expect(source).toContain("Robustness — weekly team");
-  });
-});
-
-function readDecideSource(): string {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { readFileSync } = require("node:fs") as typeof import("node:fs");
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { join } = require("node:path") as typeof import("node:path");
-  return readFileSync(join(process.cwd(), "app", "decide", "page.tsx"), "utf8");
-}
+/**
+ * The `/decide` ordering assertions are gone with the page.
+ *
+ * They pinned that `<HeuristicLists />` rendered above the `<EntryBlock` loop on
+ * `app/decide/page.tsx`, because the agent's proposals are absent for ~10 days of
+ * every gameweek cycle and four full-card empty states pushed the useful content
+ * roughly 1200px down. That page was one of five answering "who do I captain this
+ * week" and is deleted; `HeuristicLists` and `EntryBlock` were local to it and have
+ * no other mount, so there is no composition left to assert an order over.
+ *
+ * The rule the page was made to obey outlives it and is what the assertions above
+ * enforce: a `line`-weight state renders one line and not a panel. The surfaces that
+ * currently spend it — `components/GameweekCall.tsx` and
+ * `components/MinutesConflicts.tsx` — are ordinary components, and a source-order
+ * assertion over a component is not the same claim as one over a page.
+ */

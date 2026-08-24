@@ -1,210 +1,88 @@
 /**
- * Every built route is reachable, or explicitly not.
+ * The route surface is an allow-list, and the nav reaches all of it.
  *
- * ## The measured defect
+ * ## Why this is a test and not a convention
  *
- * **Thirteen of twenty-two routes were unreachable from the sidebar.**
- * `/transfers`, `/optimizer`, `/captaincy`, `/rankings`, `/planner`, `/projections`,
- * `/intelligence`, `/table`, `/matches`, `/value-bets`, `/decisions`, `/accuracy`
- * and `/h2h` were all built, tested, deployed — and linked from nowhere.
+ * Three specs — 2026-08-11, 08-17, 08-18 — each prescribed deleting superseded
+ * surfaces. None was executed; the 08-18 one specified the cut line by line and
+ * two MORE routes were added after it was written. The tree's own docstrings named
+ * the reason: "rescue precedes deletion… so the two surfaces can be compared
+ * before anything is destroyed." The comparison never concluded.
  *
- * The consequence was not a broken link, which someone would have reported. It was
- * that the app looked far emptier than it was, and the pages carrying the most FPL
- * value were the ones you could not get to. That is invisible to every kind of test
- * this repo had: each page passed its own suite while being unreachable.
- *
- * ## Why an allow-list rather than "every route must be linked"
- *
- * Some routes legitimately are not nav destinations — `/offline` is served by the
- * service worker, and a dynamic segment is reached from its index. Those are named
- * with a reason, so the list of exceptions is short, visible, and has to be argued
- * for rather than accumulated.
+ * Intent has now lost three times, so this is the enforcer. A 24th route is a red
+ * build, and the rescue half of that principle is preserved in
+ * `test/rescued-mounts.test.tsx`, which runs before any deletion.
  */
-
 import { describe, expect, it } from "vitest";
-import { readdirSync, readFileSync, existsSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const APP = join(process.cwd(), "app");
 const NAV = join(process.cwd(), "components", "Navigation.tsx");
-const BET_INDEX = join(APP, "bet", "page.tsx");
 
-/** Routes that exist but are deliberately not in the sidebar. */
-const NOT_IN_NAV: Record<string, string> = {
+/** Every page route this app is allowed to have, and why it exists. */
+const ALLOWED: Record<string, string> = {
+  ".": "the call: XI, captain, and the horizon",
+  players: "the shortlist, with the spread on each candidate",
+  evidence: "what moved, and whether to believe it",
+  capture: "the position: squad, bank, purchase prices — reached from /, not the nav",
   offline: "served by the service worker when a fetch fails; not a destination",
-  api: "route handlers, not pages",
 };
 
-/**
- * The betting screens, which are destinations but not FPL ones.
- *
- * These are NOT in `NOT_IN_NAV`, and the difference matters. That list means
- * "not a destination" — a service-worker fallback, a route handler. These four
- * are real pages a reader visits; they simply reach them through `/bet` rather
- * than the FPL sidebar, because they answer what to stake rather than who to
- * pick and they were crowding out the screens this app is for.
- *
- * Excusing them with a sentence would recreate the exact defect this file
- * exists for — thirteen routes linked from nowhere, invisible to every test —
- * so the excuse comes with an obligation, asserted below: the betting index
- * must actually link every route that claims it.
- */
-const BEHIND_BETTING_INDEX = new Set(["markets", "bankroll", "matches", "h2h"]);
+/** Routes reached from the nav. `capture` and `offline` deliberately are not. */
+const IN_NAV = ["/", "/players", "/evidence"];
 
-/**
- * Whether a route is a redirect stub rather than a real destination.
- *
- * Eight of this app's routes exist only to keep bookmarks and the service worker
- * working after a page was superseded: /transfers, /captaincy, /optimizer and
- * /planner all redirect to /decide; /rankings and /projections to /players.
- *
- * The first version of this test only asked whether a route EXISTED, so listing all
- * of them passed — and produced a sidebar with four "Decide" entries that landed on
- * the same page. A nav that promises variety and delivers one screen is its own kind
- * of empty.
- */
-function isRedirect(route: string): boolean {
-  const file = join(APP, route, "page.tsx");
-  if (!existsSync(file)) return false;
-  return /\bredirect\(/.test(readFileSync(file, "utf8"));
-}
-
-/** Top-level route segments that have a page. */
-function builtRoutes(): string[] {
+function routeDirs(): string[] {
   return readdirSync(APP, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => !entry.name.startsWith("_") && !entry.name.startsWith("("))
-    .filter((entry) => {
-      // A directory is a route only if it renders something. A folder holding a
-      // dynamic child (`matches/[id]`) still counts via its own page when present.
-      const dir = join(APP, entry.name);
-      return ["page.tsx", "page.ts", "route.ts"].some((f) => existsSync(join(dir, f)))
-        || entry.name === "api";
-    })
-    .map((entry) => entry.name);
+    .filter((e) => e.isDirectory() && e.name !== "api")
+    .map((e) => e.name);
 }
 
-function navHrefs(): string[] {
-  const source = readFileSync(NAV, "utf8");
-  return [...source.matchAll(/href:\s*"(\/[a-z0-9-]*)"/g)].map((m) => m[1]);
-}
-
-describe("navigation covers what is built", () => {
-  const routes = builtRoutes();
-  const linked = new Set(navHrefs());
-
-  it("finds routes to check at all", () => {
-    // Guards against the directory read silently returning nothing, which would
-    // make every assertion below vacuous.
-    expect(routes.length).toBeGreaterThan(10);
+describe("route allow-list", () => {
+  it("has exactly the allowed routes and no others", () => {
+    const found = routeDirs().sort();
+    const allowed = Object.keys(ALLOWED).filter((r) => r !== ".").sort();
+    expect(found).toEqual(allowed);
   });
 
-  it("finds nav links to check at all", () => {
-    /**
-     * Guards against the regex silently matching nothing, which would make every
-     * assertion below vacuous.
-     *
-     * Was `> 10`, chosen when the sidebar carried thirteen links. Splitting the
-     * betting screens behind `/bet` took it to ten and turned this sanity check
-     * into a failure about a change it was never watching for. Five keeps it
-     * catching the real fault — a broken read returning nothing — without
-     * pinning a count that moves whenever the nav is edited.
-     */
-    expect(linked.size).toBeGreaterThan(5);
+  it("every allowed route is actually built", () => {
+    for (const route of Object.keys(ALLOWED)) {
+      const path = route === "."
+        ? join(APP, "page.tsx")
+        : join(APP, route, "page.tsx");
+      expect(() => readFileSync(path, "utf8"), `${route} must exist`).not.toThrow();
+    }
   });
 
-  for (const route of builtRoutes()) {
-    it(`/${route} is reachable or explained`, () => {
-      if (route in NOT_IN_NAV) {
-        expect(NOT_IN_NAV[route].length).toBeGreaterThan(10);
-        return;
-      }
-      if (isRedirect(route)) {
-        // A stub kept for bookmarks. It must NOT be in the nav — see below.
-        return;
-      }
-      if (BEHIND_BETTING_INDEX.has(route)) {
-        // Reachability is still required, just from the other door.
-        expect(
-          readFileSync(BET_INDEX, "utf8"),
-          `/${route} is excused from the sidebar as a betting screen but the ` +
-            `betting index does not link it, so it is reachable from nowhere.`,
-        ).toContain(`"/${route}"`);
-        return;
-      }
-      expect(
-        linked.has(`/${route}`),
-        `/${route} is a real page linked from nowhere. Add it to NAV_GROUPS, or to ` +
-          `NOT_IN_NAV with a reason. Thirteen routes were unreachable this way and ` +
-          `no test could see it.`,
-      ).toBe(true);
-    });
-  }
-
-  it("links no redirect stub", () => {
-    /**
-     * The over-correction, pinned.
-     *
-     * Restoring every built route to the sidebar put eight redirect stubs in it:
-     * four entries under "Decide" that all landed on /decide, and two under
-     * "Research" that both landed on /players. The routes still exist so bookmarks
-     * and the service worker keep working; they are not destinations.
-     */
-    const stubs = [...linked]
-      .map((href) => href.slice(1))
-      .filter((route) => route && isRedirect(route));
-    expect(
-      stubs,
-      "these nav entries redirect elsewhere, so the sidebar promises pages it does " +
-        "not have",
-    ).toEqual([]);
+  it("contains no redirect stubs", () => {
+    // Nine of these existed, four pointing at the same page. A stub is how a
+    // deleted surface comes back as a nav entry that promises variety.
+    for (const route of routeDirs()) {
+      const source = readFileSync(join(APP, route, "page.tsx"), "utf8");
+      expect(source, `${route} must not be a redirect`).not.toContain(
+        'from "next/navigation"',
+      );
+    }
   });
 
-  it("links no route that does not exist", () => {
-    // The other direction: a nav entry pointing at a deleted page is a 404 the
-    // reader finds before we do.
-    const built = new Set(routes.map((r) => `/${r}`));
-    const dangling = [...linked].filter((href) => href !== "/" && !built.has(href));
-    expect(dangling, "nav links with no page behind them").toEqual([]);
-  });
-});
-
-describe("the sidebar stays in scope", () => {
-  it("does not link the other-sports dashboard", () => {
-    /**
-     * CLAUDE.md rule 7: the F1, darts and other-sport providers are out of scope for
-     * this repo. A prominent sidebar card pointing at them made a single-purpose FPL
-     * tool look like a sports portal, on a page whose own content was empty.
-     */
-    const source = readFileSync(NAV, "utf8");
-    expect(source).not.toContain("Other sports");
-    expect(source).not.toContain("F1 · Darts · Cricket");
+  it("the nav links exactly the three destinations", () => {
+    const nav = readFileSync(NAV, "utf8");
+    const linked = [...nav.matchAll(/href:\s*"(\/[^"]*)"/g)].map((m) => m[1]);
+    expect([...new Set(linked)].sort()).toEqual([...IN_NAV].sort());
   });
 
-  it("keeps the betting screens out of the FPL sidebar", () => {
-    /**
-     * The other direction of the split. Re-adding one of these is a one-line
-     * change that would look harmless in review and would quietly undo it, so
-     * the boundary is pinned rather than left to memory.
-     */
-    const linked = new Set(navHrefs());
-    const leaked = [...BEHIND_BETTING_INDEX].filter((r) => linked.has(`/${r}`));
-    expect(
-      leaked,
-      "these answer what to stake, not who to pick, and belong behind /bet",
-    ).toEqual([]);
+  it("the nav has no groups", () => {
+    // Four groups over twelve destinations is what pushed the FPL screens below
+    // the fold. Three flat items need no grouping.
+    expect(readFileSync(NAV, "utf8")).not.toContain("NAV_GROUPS");
   });
 
-  it("still offers a way into the betting screens", () => {
-    // Splitting them out must not strand them: one door, and it has to be here.
-    expect(navHrefs()).toContain("/bet");
-  });
-
-  it("labels destinations by the question, not the subsystem", () => {
-    // "Player Lab" and "Match Models" named our architecture. A reader looking for
-    // players does not know they want a lab.
-    const source = readFileSync(NAV, "utf8");
-    expect(source).not.toContain('label: "Player Lab"');
-    expect(source).not.toContain('label: "Match Models"');
+  it("the service worker precaches only routes that exist", () => {
+    const sw = readFileSync(join(process.cwd(), "public", "sw.js"), "utf8");
+    const routes = [...sw.matchAll(/^\s*"(\/[a-z-]*)",/gm)].map((m) => m[1]);
+    for (const route of routes) {
+      const name = route === "/" ? "." : route.slice(1);
+      expect(ALLOWED, `sw.js precaches ${route}`).toHaveProperty(name);
+    }
   });
 });

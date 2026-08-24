@@ -390,10 +390,12 @@ describe("no number survived from the design", () => {
 
   function sources(): { file: string; text: string }[] {
     const out: { file: string; text: string }[] = [];
+    // `components/control-room` and `app/control-room` were the board and are
+    // deleted with the route cut. What is left is the arithmetic they read, which
+    // is where a fabricated literal would do the same damage: a number invented
+    // here reaches whatever renders it next.
     const dirs = [
       join(process.cwd(), "lib", "control-room"),
-      join(process.cwd(), "components", "control-room"),
-      join(process.cwd(), "app", "control-room"),
     ];
     for (const dir of dirs) {
       for (const name of readdirSync(dir)) {
@@ -409,8 +411,9 @@ describe("no number survived from the design", () => {
   }
 
   it("finds the control room's sources at all", () => {
-    // Guards the guard: an empty list makes every assertion below vacuous.
-    expect(sources().length).toBeGreaterThan(4);
+    // Guards the guard: an empty list makes every assertion below vacuous. Two
+    // files now — `model.ts` and `read.ts` — where it used to be the whole board.
+    expect(sources().length).toBeGreaterThan(1);
   });
 
   it("strips comments without stripping code", () => {

@@ -1,7 +1,9 @@
 /**
  * The four pure decisions behind Margin, and one guard over the whole surface.
  *
- * The rendering is asserted in `app/margin/page.test.tsx`. Everything here is a
+ * The rendering was asserted in `app/margin/page.test.tsx`, which went with the
+ * route; the views themselves are now mounted on `/`, `/players` and `/evidence`
+ * and tested per component. Everything here is a
  * function with an input and an output, and each case below is a claim the
  * screen makes that would be invisible if it were wrong: a mark drawn at the
  * wrong end of a scale still looks like a mark, a countdown that says "passed"
@@ -352,10 +354,12 @@ describe("no number survived from the prototype", () => {
 
   function marginSources(): { file: string; text: string }[] {
     const out: { file: string; text: string }[] = [];
+    // `app/margin` is deleted with the route cut; the views it composed live on
+    // under `components/margin` and are mounted on `/`, `/players` and `/evidence`,
+    // so the surface this guard protects moved rather than went away.
     const dirs = [
       join(process.cwd(), "lib", "margin"),
       join(process.cwd(), "components", "margin"),
-      join(process.cwd(), "app", "margin"),
     ];
     for (const dir of dirs) {
       for (const name of readdirSync(dir)) {

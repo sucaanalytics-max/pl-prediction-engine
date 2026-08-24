@@ -2,13 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, Crown, LayoutDashboard, Layers3, Stethoscope } from "lucide-react";
+import { LayoutDashboard, Stethoscope, Users } from "lucide-react";
 
+/**
+ * The same three destinations the sidebar has, because there are only three.
+ *
+ * Two of the five entries here — `/optimizer` and `/captaincy` — were redirect
+ * stubs onto `/decide`, and `/projections` was a stub onto `/players`. On a phone
+ * that made five tabs out of three screens. Those routes are gone, so this lists
+ * the destinations that exist; `test/nav-coverage.test.tsx` holds the allow-list.
+ */
 const ITEMS = [
-  { href: "/", label: "Home", icon: LayoutDashboard },
-  { href: "/optimizer", label: "Optimize", icon: Layers3 },
-  { href: "/projections", label: "Players", icon: BarChart3 },
-  { href: "/captaincy", label: "Captain", icon: Crown },
+  { href: "/", label: "The call", icon: LayoutDashboard },
+  { href: "/players", label: "Players", icon: Users },
   { href: "/evidence", label: "Evidence", icon: Stethoscope },
 ];
 

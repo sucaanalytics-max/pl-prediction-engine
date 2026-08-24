@@ -5,134 +5,47 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import {
-  Activity,
   ChevronRight,
-  ClipboardCheck,
-  Crown,
-  Inbox,
   LayoutDashboard,
   Menu,
   Moon,
-  Radar,
-  Ruler,
-  ShieldCheck,
   Sparkles,
   Stethoscope,
   Sun,
-  Target,
-  TrendingUp,
   Users,
   X,
   type LucideIcon,
 } from "lucide-react";
-import { REGISTRY, type Latest } from "@/lib/data/narrow";
-import { useArtifact } from "@/lib/data/useArtifact";
-import { isStale as artifactIsStale, proven } from "@/lib/data/artifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
-import { compactIstDeadline } from "@/lib/formats";
+import { proven } from "@/lib/data/artifact";
 
 interface NavItem {
   href: string;
   label: string;
   icon: LucideIcon;
-  badge?: string;
-  valueBadge?: boolean;
-}
-
-interface NavGroup {
-  label: string;
-  items: NavItem[];
 }
 
 /**
- * Every route, reachable.
+ * Three destinations, flat.
  *
- * ## What this fixes
+ * ## What this replaced
  *
- * Thirteen of the twenty-two built routes were unreachable from here, so the app
- * looked far emptier than it was.
+ * Four groups over twelve entries, of which five answered the same question —
+ * who do I captain this week — and four landed on the same page through redirect
+ * stubs. Grouping twelve entries pushed the FPL screens below the fold and the
+ * variety it promised did not exist. The routes those entries pointed at are gone;
+ * `test/nav-coverage.test.tsx` is now an allow-list over `app/`, so a fourteenth
+ * entry cannot come back without a red build.
  *
- * The first fix over-corrected: eight of those thirteen are REDIRECT STUBS kept for
- * bookmarks and the service worker — `/transfers`, `/captaincy`, `/optimizer` and
- * `/planner` all redirect to `/decide`; `/rankings` and `/projections` to
- * `/players`. Listing them gave the sidebar four "Decide" entries that landed on the
- * same page, which promises variety and delivers one screen.
- *
- * So this lists REAL destinations only. `frontend/test/nav-coverage.test.tsx` now
- * asserts both directions: every real page is reachable, and no nav entry points at
- * a redirect.
- *
- * ## Labels
- *
- * Named for what a reader wants, not for the subsystem that produces it. "Player Lab"
- * and "Match Models" described our architecture; "Players" and "Fixtures" describe
- * the question being asked.
+ * `/capture` is deliberately absent: it is reached from `/`, where the position it
+ * captures is read. `/offline` is not a destination — the service worker serves it
+ * when a fetch fails.
  */
-const NAV_GROUPS: NavGroup[] = [
-  {
-    label: "Decide",
-    items: [
-      { href: "/now", label: "Now", icon: LayoutDashboard },
-      // The cross-team board: three entries, one deadline, read-only. Listed here
-      // rather than left to a bookmark, because thirteen of this app's routes were
-      // once reachable from nowhere and only `nav-coverage.test.tsx` noticed. It
-      // ships beside `/now` rather than replacing it, so the two surfaces can be
-      // compared before anything is retired.
-      { href: "/control-room", label: "Control room", icon: Radar },
-      // One workspace over the same artifacts these three read separately: the
-      // call, the horizon, every player as a distribution, and what has decayed.
-      // Listed rather than left to a bookmark — thirteen of this app's routes
-      // were unreachable from here once, and nothing but a test noticed.
-      { href: "/margin", label: "Margin", icon: Ruler },
-      { href: "/decide", label: "Decide", icon: Sparkles },
-      // The write path's position half. An input to a decision rather than a
-      // report on one, so it sits in Decide: the agent reads what is captured
-      // here over the network at decision time, because a squad committed to git
-      // cannot reach a run whose checkout has already happened.
-      { href: "/capture", label: "Capture position", icon: ClipboardCheck },
-      { href: "/decisions", label: "Agent decisions", icon: Crown },
-    ],
-  },
-  {
-    label: "Research",
-    items: [
-      { href: "/players", label: "Players", icon: Users },
-      { href: "/evidence", label: "Injury evidence", icon: Stethoscope },
-    ],
-  },
-  {
-    label: "Ops",
-    items: [
-      { href: "/inbox", label: "Agent inbox", icon: Inbox },
-      { href: "/accuracy", label: "Accuracy", icon: Target },
-      { href: "/health", label: "Model health", icon: Activity },
-    ],
-  },
-  /**
-   * One door, not a group.
-   *
-   * Markets, bankroll, matches and h2h answer "what should I stake" — 2,087
-   * lines, 40% of the app's real code, and a different question from anything
-   * else in this sidebar. Interleaved with the FPL screens they made a planner
-   * look like a sports portal, and pushed the FPL entries below the fold.
-   *
-   * They keep working and keep their URLs. They are reached from `/bet`, which
-   * `nav-coverage.test.tsx` asserts actually links every one of them, so the
-   * "linked from nowhere" defect cannot come back through this exit.
-   */
-  {
-    label: "Elsewhere",
-    items: [{ href: "/bet", label: "Betting", icon: TrendingUp }],
-  },
+const NAV_ITEMS: NavItem[] = [
+  { href: "/", label: "The call", icon: LayoutDashboard },
+  { href: "/players", label: "Players", icon: Users },
+  { href: "/evidence", label: "Evidence", icon: Stethoscope },
 ];
-
-function timeAgo(timestamp: number) {
-  const diff = Math.floor((Date.now() - timestamp) / 1000);
-  if (diff < 60) return "just now";
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-  return `${Math.floor(diff / 86400)}d ago`;
-}
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -154,29 +67,11 @@ function ThemeToggle() {
 export default function Navigation() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  // One artifact, not two contexts. The nav needs exactly two facts — how many
-  // value bets there are, and whether the data is fresh — and mounting a
-  // provider pair in the layout to answer them made every page in the tree pay
-  // for five fetches it did not use.
-  const { artifact: latest } = useArtifact<Latest>(REGISTRY.latest);
+  // One artifact, and only for the manager card. The `latest.json` fetch that used
+  // to sit beside this one counted value bets for a badge that was rendered
+  // nowhere, on every page load of every route.
   const { artifact: liveArtifact } = useHeuristics();
-  const predictions = proven(latest);
   const live = proven(liveArtifact);
-  const liveFailed =
-    liveArtifact.state === "absent" || liveArtifact.state === "unreadable";
-  const lastUpdated = latest.provenance.producedAt
-    ? Date.parse(latest.provenance.producedAt)
-    : null;
-  // `unreadable` and `absent` are not stale, they are worse — so the dot goes
-  // amber for those too rather than reading as fresh because no age is known.
-  const isStale =
-    artifactIsStale(latest) ||
-    latest.state === "absent" ||
-    latest.state === "unreadable";
-  const valueBetCount = predictions?.predictions.reduce(
-    (count, prediction) => count + prediction.value_bets.length,
-    0
-  ) ?? 0;
 
   return (
     <>
@@ -226,62 +121,31 @@ export default function Navigation() {
         </div>
 
         <nav className="portal-nav" aria-label="Primary navigation">
-          {NAV_GROUPS.map((group) => (
-            <div className="portal-nav-group" key={group.label}>
-              <span className="portal-nav-label">{group.label}</span>
-              {group.items.map((item) => {
-                const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-                const Icon = item.icon;
-                const badge = item.valueBadge ? valueBetCount : item.badge;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={active ? "active" : ""}
-                    onClick={() => setMobileOpen(false)}
-                    aria-current={active ? "page" : undefined}
-                  >
-                    <Icon size={17} />
-                    <span>{item.label}</span>
-                    {badge ? <small>{badge}</small> : null}
-                  </Link>
-                );
-              })}
-            </div>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={active ? "active" : ""}
+                onClick={() => setMobileOpen(false)}
+                aria-current={active ? "page" : undefined}
+              >
+                <Icon size={17} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="portal-sidebar-footer">
-          {/* The other-sports link is gone.
-              CLAUDE.md rule 7 puts the F1, darts and other-sport providers out of
-              scope for this repo, and a prominent sidebar card pointing at them made
-              a single-purpose FPL tool read as a sports portal — on a page whose own
-              content was empty. The dashboard still exists at its own URL; it just
-              does not belong in this navigation. */}
-          <div className="deadline-mini">
-            <span><ShieldCheck size={14} /> {live?.event.id != null ? `GW${live.event.id} planning` : "Gameweek unknown"}</span>
-            <strong>{compactIstDeadline(live?.event.deadlineTime ?? undefined)}</strong>
-          </div>
-          <div className="sidebar-status">
-            <span className={isStale ? "status-dot stale" : "status-dot"} />
-            <div>
-              <strong>
-                {liveFailed
-                  ? "FPL sync needs attention"
-                  : live?.squadSource === "captured"
-                    ? "Live FPL · draft captured"
-                    : isStale
-                      ? "Pipeline needs refresh"
-                      : "Live workspace ready"}
-              </strong>
-              <small>
-                {lastUpdated
-                  ? `Updated ${timeAgo(lastUpdated)}`
-                  : "Connecting official FPL data"}
-              </small>
-            </div>
-            <ThemeToggle />
-          </div>
+          {/* No second deadline clock and no artifact-age readout. The deadline is
+              on `/`, beside the decision it constrains, and the age of
+              `latest.json` said nothing about whether the captured position or the
+              live FPL sync was current — which is what the words next to it
+              claimed. What is left here is the one control that belongs in chrome. */}
+          <ThemeToggle />
         </div>
       </aside>
     </>

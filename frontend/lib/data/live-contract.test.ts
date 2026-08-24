@@ -183,11 +183,12 @@ describe("the blocks removed in the narrowing stay removed", () => {
 // is `empty` or `unreadable` whenever the array happens to be populated.
 // ─────────────────────────────────────────────────────────────────────────────
 
-describe("every charting page goes through chartable", () => {
+describe("every charting mount goes through chartable", () => {
   const APP = join(__dirname, "..", "..", "app");
+  const COMPONENTS = join(__dirname, "..", "..", "components");
 
   /** Files that mount Recharts, found rather than listed. */
-  function chartingPages(): string[] {
+  function chartingSources(): string[] {
     const found: string[] = [];
     const walk = (dir: string) => {
       for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -199,24 +200,34 @@ describe("every charting page goes through chartable", () => {
       }
     };
     walk(APP);
+    walk(COMPONENTS);
     return found;
   }
 
-  it("finds the charting pages", () => {
-    // Guards the guard: zero pages would make the check below vacuous, which is
-    // exactly how this rule went unenforced in the first place.
-    expect(chartingPages().length).toBeGreaterThan(0);
+  const mounts = chartingSources();
+
+  it("has no Recharts mount left anywhere in the tree", () => {
+    /**
+     * Every screen that mounted Recharts — `/health`, `/accuracy`, `/markets`,
+     * `/bankroll`, `/h2h` — and the chart components only they reached went with
+     * the route cut, so the count is zero. `chartable` itself is untouched.
+     *
+     * Asserted rather than deleted, because the per-file rule below now has nothing
+     * to iterate and a rule that iterates nothing is exactly how this went
+     * unenforced the first time. When a chart returns this fails, and whoever adds
+     * it has to come here and see the rule it must obey.
+     */
+    expect(mounts.map((m) => m.split("/frontend/")[1] ?? m)).toEqual([]);
   });
 
-  it.each(chartingPages().map((p) => [p.split("/app/")[1], p]))(
-    "%s calls chartable",
-    (_label, path) => {
+  for (const path of mounts) {
+    it(`${path.split("/frontend/")[1] ?? path} calls chartable`, () => {
       const source = readFileSync(path, "utf8");
       expect(
         source.includes("chartable("),
-        "This page mounts Recharts. Series must come from `chartable`, which " +
+        "This file mounts Recharts. Series must come from `chartable`, which " +
           "refuses an `empty` artifact — a `.length > 0` check does not.",
       ).toBe(true);
-    },
-  );
+    });
+  }
 });

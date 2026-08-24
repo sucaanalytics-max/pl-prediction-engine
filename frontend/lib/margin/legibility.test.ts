@@ -34,21 +34,26 @@ const SURFACES: ReadonlyArray<readonly [string, MarginSurface]> = [
   ["PAPER", PAPER], ["INK", INK],
 ];
 
-/** The board and everything it renders. */
+/**
+ * What is left of the board.
+ *
+ * `components/control-room` and `app/control-room` were the board itself and are
+ * gone with the route cut; the kit primitives under `components/squad` are what
+ * survived it, and they are still held to the rule that the board's labels broke.
+ */
 const ROOTS = [
-  "components/control-room",
   "components/squad",
-  "app/control-room",
 ];
 
 /**
- * Margin components the BOARD renders, so its primitives are held to the board's rule.
+ * Margin components held to the same rule, so the primitives cannot drift.
  *
- * The rest of `components/margin` — ScoreView, Planner, DecideView, ResearchView,
- * WatchView, NewsView — carries 91 sizes below this floor. That is a real backlog and it
- * is deliberately not in scope here: those are the `/margin` surface, several are slated
- * for deletion by the surface cut, and a test that fails on 91 pre-existing violations
- * gets skipped rather than fixed. Add them when that surface is next opened.
+ * The rest of `components/margin` — ScoreView, Planner, ResearchView, WatchView,
+ * NewsView — carries sizes below this floor. That is a real backlog and it is
+ * deliberately not in scope here: a test that fails on dozens of pre-existing
+ * violations gets skipped rather than fixed. Those views are now mounted on `/`,
+ * `/players` and `/evidence`, so the backlog is no longer behind a surface slated
+ * for deletion — add them when one of those pages is next opened.
  */
 const BOARD_PRIMITIVES = [
   "components/margin/Marks.tsx",

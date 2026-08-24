@@ -286,16 +286,19 @@ describe("the projected total", () => {
 });
 
 describe("it is actually mounted", () => {
-  it("appears on /now", async () => {
+  // Read from `app/page.tsx`, not `app/now/page.tsx`: `/now` was one of five routes
+  // answering "who do I captain this week" and is deleted. This card is the answer,
+  // so it is on the front door.
+  it("appears on /", async () => {
     const { readFileSync } = await import("node:fs");
-    const page = readFileSync("app/now/page.tsx", "utf8");
+    const page = readFileSync("app/page.tsx", "utf8");
     expect(page).toContain("<GameweekCall />");
   });
 
   it("sits above the heuristic squad board", async () => {
     // Order is the message: the model speaks first.
     const { readFileSync } = await import("node:fs");
-    const page = readFileSync("app/now/page.tsx", "utf8");
+    const page = readFileSync("app/page.tsx", "utf8");
     expect(page.indexOf("<GameweekCall />")).toBeLessThan(page.indexOf("<SquadBoard />"));
   });
 });
