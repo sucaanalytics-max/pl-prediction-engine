@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-24T07:20:49.461290Z",
-  "n_dropped": 395,
+  "generated_at": "2026-08-24T08:11:07.611146Z",
+  "n_dropped": 396,
   "dropped_by_source": {
-    "bbc_football": 117,
+    "bbc_football": 120,
     "fantasyfootballscout": 19,
     "hayters": 74,
-    "sky_football": 185
+    "sky_football": 183
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 485,
+  "n_articles": 486,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -385,6 +385,42 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "4bb4df90caaa4300",
+      "headline": "Bournemouth latest: Goalkeeper flying to UK as Cherries move edges closer",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-24T08:23:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2039d2e9b626d8bc",
+      "headline": "Mateta's contract claim leaves Palace with transfer decision",
+      "summary": "Following a dispute over the length of his contract, will Jean-Philippe Mateta stay at Crystal Palace beyond the transfer window?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cz6465pj4njo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-24T08:06:26Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "425dcd6fe60f994a",
@@ -789,6 +825,24 @@
       "touches_squad": false
     },
     {
+      "digest": "7ef0a5cd1d509950",
+      "headline": "Aston Villa latest: Club must keep hold of Emery, says Neville",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-23T19:58:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "008c6b02ff5b9692",
       "headline": "Relief for Iraola but Liverpool have work to do",
       "summary": "Dominik Szoboszlai's injury-time penalty rescues a point at the start of the Andoni Iraola era - but Liverpool need to improv after below-par performance.",
@@ -861,6 +915,24 @@
       "touches_squad": false
     },
     {
+      "digest": "7777b4765b04b2dd",
+      "headline": "Maresca's Man City reign begins with dramatic comeback against Bournemouth",
+      "summary": "Two managers in charge of new clubs face off with Manchester City under Enzo Maresca and Bournemouth under Marco Rose, as the hosts stage a late comeback to kick the new Premier League season off in dramatic fashion.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cpd7dp7zeqzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T19:03:31Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "a07325d16e80ab59",
       "headline": "Maresca's Manchester City reign begins with dramatic comeback against Bournemouth",
       "summary": "Two managers in charge of new clubs face off with Manchester City under Enzo Maresca and Bournemouth under Marco Rose, as the hosts stage a late comeback to kick the new Premier League season off in dramatic fashion.",
@@ -915,6 +987,24 @@
       "touches_squad": false
     },
     {
+      "digest": "bf999e4cde18acad",
+      "headline": "Using international football to reignite Premier League dreams",
+      "summary": "Before his potential Premier League debut for Fulham, BBC Sport looks at the role international football has played in the development of players like Shea Charles.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c7vg4dn9qymo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T18:48:32Z",
+      "players": [
+        {
+          "element_id": 580,
+          "name": "Charles",
+          "club": "FUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "e84f59812745458e",
       "headline": "Late Liverpool pen sees Szoboszlai silence Newcastle in draw",
       "summary": "FREE TO WATCH: Highlights from the Premier League match between Newcastle and Liverpool.",
@@ -922,60 +1012,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/watch/video/13576408/newcastle-2-2-liverpool-premier-league-highlights",
       "claimed_at": "2026-08-23T18:47:00Z",
-      "players": [
-        {
-          "element_id": 368,
-          "name": "Szoboszlai",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6a2d12658b951a1d",
-      "headline": "'When you score at the end it tastes better' - Iraola",
-      "summary": "Liverpool head coach Andoni Iraola reacts to his sides 2-2 draw against Newcastle United on the opening weekend of the 2026-27 Premier League season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c4gvgj0w9j2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T18:28:28Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d694d959c45d2b7b",
-      "headline": "Arsenal target Alvarez whistled and jeered on Atletico return",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13575723/european-football-news-and-transfers-barcelona-real-madrid-psg-bayern-munich-latest-and-more",
-      "claimed_at": "2026-08-23T18:20:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7dd1aef3c6b92454",
-      "headline": "Szoboszlai snatches 99th-min Liverpool leveller to deny Newcastle win",
-      "summary": "Dominik Szoboszlai's last-gasp penalty earned Andoni Iraola a debut Liverpool point to deny Newcastle a deserved win on Matthias Jaissle's managerial debut in a pulsating 2-2 draw at St James' Park.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/newcastle-united-vs-liverpool/report/559452",
-      "claimed_at": "2026-08-23T18:15:00Z",
       "players": [
         {
           "element_id": 368,
@@ -1023,42 +1059,6 @@
           "element_id": 123,
           "name": "Hinshelwood",
           "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "12a57e8c1fec8215",
-      "headline": "Al-Hilal open talks to sign Arsenal winger Martinelli",
-      "summary": "Saudi Arabian club Al-Hilal open negotiations with Arsenal over a move for Brazil forward Gabriel Martinelli.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cgk4k444rmmo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T17:37:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "196d8f61894fa887",
-      "headline": "Wissa shines as Isak struggles - Newcastle v Liverpool player ratings",
-      "summary": "How Newcastle United and Liverpool's players rated in their Premier League match.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c9q9q2gnxvjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T17:36:18Z",
-      "players": [
-        {
-          "element_id": 464,
-          "name": "Wissa",
-          "club": "NEW",
           "held": false
         }
       ],
