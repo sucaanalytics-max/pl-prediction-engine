@@ -22,13 +22,10 @@ import {
   calibratedWeeks, gatedInSimulation, money, teamFromParam, teamOf, tenths,
   withQuartiles, xiSwap, xiTotal,
 } from "@/lib/control-room/model";
-import { read } from "@/lib/control-room/read";
-import { classify, type Artifact } from "@/lib/data/artifact";
 import type { Accuracy } from "@/lib/data/accuracy";
 import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { PlayerRow } from "@/lib/data/narrow";
 import type { Projection } from "@/lib/data/projections";
-import { narrowed } from "@/lib/data/artifact";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Fixtures
@@ -273,78 +270,14 @@ describe("money", () => {
   });
 });
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Rule 1's one expression
-// ─────────────────────────────────────────────────────────────────────────────
-
-interface Payload { readonly stamp: string | null }
-
-function artifactOf(
-  raw: unknown, now: Date, fetchError: string | null = null,
-): Artifact<Payload> {
-  return classify<Payload>({
-    path: "fpl/thing.json",
-    source: raw === undefined ? "none" : "local",
-    raw,
-    narrow: (value) => narrowed({
-      stamp: (value as { generated_at?: string } | undefined)?.generated_at ?? null,
-    }),
-    producedAtOf: (value) => value.stamp,
-    now,
-    fetchError,
-  });
-}
-
-describe("read() pairs a value with the age of the artifact it came from", () => {
-  const now = new Date("2026-08-18T12:00:00Z");
-
-  it("uses this fetch when it carries a value", () => {
-    const artifact = artifactOf({ generated_at: "2026-08-18T06:00:00Z" }, now);
-    const result = read({ artifact, retained: null, initialising: false },
-      (value) => value.stamp, now);
-    expect(result.value?.stamp).toBe("2026-08-18T06:00:00Z");
-    expect(result.age).toBe("6h old");
-  });
-
-  it("falls back to the retained value AND to its age", () => {
-    /**
-     * The half of this that is easy to get wrong.
-     *
-     * A retained value shown with the failed fetch's age is a stale figure wearing
-     * a current timestamp — worse than either honest option, and invisible.
-     */
-    const retained = artifactOf({ generated_at: "2026-08-16T06:00:00Z" }, now);
-    const artifact = artifactOf(undefined, now, "not found");
-    const result = read({ artifact, retained, initialising: false },
-      (value) => value.stamp, now);
-    expect(result.value?.stamp).toBe("2026-08-16T06:00:00Z");
-    // Beyond a day, so an instant rather than a duration the reader cannot check.
-    /* The age is what carries "this is not from the fetch you just made" — a boolean
-       saying so as well had no reader on any surface, so it went. */
-    expect(result.age).toMatch(/^as at /);
-  });
-
-  it("separates a first fetch in flight from a genuine absence", () => {
-    const artifact = artifactOf(undefined, now, "loading");
-    expect(
-      read({ artifact, retained: null, initialising: true }, (v) => v.stamp, now)
-        .initialising,
-    ).toBe(true);
-    expect(
-      read({ artifact, retained: null, initialising: false }, (v) => v.stamp, now)
-        .initialising,
-    ).toBe(false);
-  });
-
-  it("names the path, so a cell can say what was not written", () => {
-    const artifact = artifactOf(undefined, now, "not found");
-    const result = read({ artifact, initialising: false }, (v) => v.stamp, now);
-    expect(result.path).toBe("fpl/thing.json");
-    expect(result.value).toBeNull();
-    expect(result.age).toBeNull();
-  });
-});
-
+/**
+ * `read()` and its `artifactOf` helper went with `lib/control-room/read.ts`.
+ *
+ * That module paired a narrowed value with the age of the artifact it came from, and
+ * its only importers were `app/control-room/page.tsx` and the three board components
+ * beside it — all deleted by the route cut. The pairing it did is available from
+ * `classify()` and `proven()` directly, which is what the surviving surfaces use.
+ */
 // ─────────────────────────────────────────────────────────────────────────────
 // The guard
 // ─────────────────────────────────────────────────────────────────────────────
@@ -411,9 +344,11 @@ describe("no number survived from the design", () => {
   }
 
   it("finds the control room's sources at all", () => {
-    // Guards the guard: an empty list makes every assertion below vacuous. Two
-    // files now — `model.ts` and `read.ts` — where it used to be the whole board.
-    expect(sources().length).toBeGreaterThan(1);
+    // Guards the guard: an empty list makes every assertion below vacuous. Named
+    // rather than counted, because the count is down to one — `read.ts` went with
+    // the board, and `model.ts` is all that is left — and `length > 0` over one
+    // file says nothing about whether it is the right file.
+    expect(sources().map((s) => s.file.split("/").pop())).toEqual(["model.ts"]);
   });
 
   it("strips comments without stripping code", () => {

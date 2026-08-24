@@ -1,5 +1,12 @@
 /**
- * The four pure decisions behind Margin, and one guard over the whole surface.
+ * The pure decisions behind Margin, and one guard over the whole surface.
+ *
+ * Four describes went with `lib/margin/mode.ts` — the phase resolver, the countdown,
+ * the locked-phase copy and the one-clock rule. That module's only importers were
+ * `app/control-room`, `components/margin/Shell.tsx` and `components/margin/DecideView.tsx`,
+ * all deleted by the route cut, so nothing computed a phase or a countdown from it any
+ * more. `components/margin/WatchView.tsx` still reads `AGENT_STATUS` and renders its own
+ * account of it; the deadline itself is on `/` via `compactIstDeadline`.
  *
  * The rendering was asserted in `app/margin/page.test.tsx`, which went with the
  * route; the views themselves are now mounted on `/`, `/players` and `/evidence`
@@ -16,14 +23,8 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 import { geometry, meanOverMode, SCALE_HI } from "@/lib/margin/distribution";
-import {
-  clockLabel, countdown, countdownLong, describeMode, modeOf, reasonWithoutCountdown,
-  remainingMs,
-  tickPeriodMs,
-} from "@/lib/margin/mode";
 import { findTwins } from "@/lib/margin/twins";
 import { fold, hasLineup, inReadingOrder, joinProjections } from "@/lib/margin/squad";
-import type { AgentStatus } from "@/lib/data/agent-status";
 import type { Projection } from "@/lib/data/projections";
 import type { SquadPlayer } from "@/lib/data/heuristics";
 
@@ -43,15 +44,6 @@ function squadPlayer(over: Partial<SquadPlayer> = {}): SquadPlayer {
   return {
     name: "Player", position: "MID", team: "ARS", price: 10.6,
     elementId: 1, bench: undefined, role: undefined, fixture: "BUR (H)", fixtures: [],
-    ...over,
-  };
-}
-
-function status(over: Partial<AgentStatus> = {}): AgentStatus {
-  return {
-    phase: "idle", gameweek: 1, deadline: "2026-08-21T17:30:00+00:00",
-    secondsToDeadline: 718235, reason: "GW1 deadline in 199.5h; nothing due yet",
-    agentRan: false, generatedAt: "2026-08-13T09:59:24Z",
     ...over,
   };
 }
@@ -119,84 +111,6 @@ describe("the distribution glyph draws only what was published", () => {
     expect(meanOverMode(6.4, 2)).toBeCloseTo(4.4);
     expect(meanOverMode(6.4, null)).toBeNull();
     expect(meanOverMode(null, 2)).toBeNull();
-  });
-});
-
-describe("the mode is derived from the phase resolver", () => {
-  it("reads deadline mode only when the agent actually ran", () => {
-    expect(modeOf(status({ agentRan: true }))).toBe("deadline");
-    expect(modeOf(status({ agentRan: false }))).toBe("idle");
-  });
-
-  it("reads locked from the phase, not from the deadline having passed", () => {
-    expect(modeOf(status({ phase: "locked", agentRan: true }))).toBe("locked");
-  });
-
-  it("distinguishes unknown from idle", () => {
-    // The whole point. Rendering a failed fetch as "the engine has not run"
-    // puts a confident claim on screen on the strength of no evidence.
-    expect(modeOf(null)).toBe("unknown");
-    expect(describeMode("unknown", null)).toMatch(/not the same as/);
-  });
-
-  it("labels the clock by what it is measuring", () => {
-    expect(clockLabel("deadline")).toBe("Deadline in");
-    expect(clockLabel("idle")).toBe("Next gate in");
-  });
-});
-
-describe("the countdown", () => {
-  const now = new Date("2026-08-14T00:00:00Z");
-
-  it("shows seconds only inside the last day", () => {
-    expect(countdown(1000 * (3600 + 47 * 60 + 12))).toBe("01:47:12");
-    expect(countdown(1000 * 86_400 * 5.9)).toBe("5d 21h");
-  });
-
-  it("says passed rather than counting backwards", () => {
-    expect(countdown(-1)).toBe("passed");
-  });
-
-  it("returns null for an unparseable deadline instead of NaN", () => {
-    // `Date.parse("")` is NaN and NaN arithmetic propagates silently — the exact
-    // mechanism that made every expired proposal in this app read "ready".
-    expect(remainingMs("", now)).toBeNull();
-    expect(remainingMs("not a date", now)).toBeNull();
-    expect(remainingMs(null, now)).toBeNull();
-    expect(countdown(null)).toBe("—");
-  });
-
-  it("measures against the injected clock", () => {
-    expect(remainingMs("2026-08-14T01:00:00Z", now)).toBe(3_600_000);
-  });
-
-  /**
-   * The long form, for a masthead whose clock ticks per minute outside the last
-   * day. `countdown` drops to `3d 8h` there, and a display whose smallest unit is
-   * an hour gives a per-minute tick nothing to change.
-   */
-  it("keeps the minutes visible beyond a day", () => {
-    expect(countdownLong(1000 * (3 * 86_400 + 8 * 3600 + 43 * 60))).toBe("3d 08h 43m");
-  });
-
-  it("agrees with the short form inside the last day", () => {
-    const inside = 1000 * (3600 + 47 * 60 + 12);
-    expect(countdownLong(inside)).toBe(countdown(inside));
-  });
-
-  it("shares the short form's answers at the edges", () => {
-    expect(countdownLong(-1)).toBe("passed");
-    expect(countdownLong(null)).toBe("—");
-    expect(countdownLong(Number.NaN)).toBe("—");
-  });
-
-  it("ticks per second only inside the last day", () => {
-    // Seconds six days out are motion dressed as urgency, and 86,400 re-renders
-    // for a digit nobody is watching.
-    expect(tickPeriodMs(1000 * 3600)).toBe(1_000);
-    expect(tickPeriodMs(1000 * 86_400 * 3)).toBe(60_000);
-    expect(tickPeriodMs(null)).toBe(60_000);
-    expect(tickPeriodMs(-1)).toBe(60_000);
   });
 });
 
@@ -415,95 +329,3 @@ describe("no number survived from the prototype", () => {
   });
 });
 
-describe("the locked phase is BEFORE the deadline, not after", () => {
-  /**
-   * `pipeline/learning/schedule.py:288` emits this phase when
-   * `remaining <= LOCKOUT_BEFORE_DEADLINE`, where `LOCKOUT_BEFORE_DEADLINE` is 30 minutes
-   * and `remaining` is time UNTIL the deadline. So it is the last half hour before it,
-   * and it can never be emitted after.
-   *
-   * The copy said "The deadline has passed and this gameweek is settled. Nothing below is
-   * actionable." — exactly backwards, in the only thirty minutes where being wrong about
-   * it costs a team, because the reader can still change theirs.
-   */
-  const locked = {
-    schemaVersion: 1,
-    generatedAt: "2026-08-21T17:05:00Z",
-    phase: "locked",
-    gameweek: 1,
-    deadline: "2026-08-21T17:30:00Z",
-    secondsToDeadline: 1500,
-    reason: null,
-    agentRan: true,
-  } as unknown as AgentStatus;
-
-  it("does not tell the reader the deadline has passed", () => {
-    const copy = describeMode("locked", locked);
-    expect(copy).not.toMatch(/deadline has passed/i);
-    expect(copy).not.toMatch(/settled/i);
-  });
-
-  it("does not tell the reader their team is beyond changing", () => {
-    expect(describeMode("locked", locked)).not.toMatch(/nothing below is actionable/i);
-  });
-
-  it("says what is actually locked — the agent, not the owner", () => {
-    const copy = describeMode("locked", locked);
-    expect(copy).toMatch(/agent/i);
-    expect(copy).toMatch(/still yours to change|until the deadline/i);
-  });
-
-  it("keeps the clock counting down to the deadline, not up from it", () => {
-    // "Locked since" put the deadline in the past and the countdown beside it in the
-    // future, on the same line.
-    expect(clockLabel("locked")).toBe("Deadline in");
-  });
-
-  it("still prefers the producer's own reason when it sends one", () => {
-    const withReason = { ...locked, reason: "within 30 minutes of the GW1 deadline" };
-    expect(describeMode("locked", withReason as AgentStatus))
-      .toBe("within 30 minutes of the GW1 deadline");
-  });
-});
-
-describe("one clock for one deadline", () => {
-  /**
-   * `schedule.py:362` writes `GW1 deadline in 71.0h; nothing due yet`, stamped when the
-   * agent ran. The board rendered that beside a countdown recomputed from the same
-   * deadline on every tick, so hours later the screen showed a frozen "71.0h" next to a
-   * live "2d 23h" — two clocks for one deadline, one of them wrong.
-   */
-  it("drops the frozen duration and keeps the producer's explanation", () => {
-    expect(reasonWithoutCountdown("GW1 deadline in 71.0h; nothing due yet"))
-      .toBe("Nothing due yet");
-  });
-
-  it("handles the days-away form the same way", () => {
-    expect(reasonWithoutCountdown("GW3 deadline is 9 days away")).toBeNull();
-  });
-
-  it("returns null when the duration was the whole sentence", () => {
-    // schedule.py:315 and :324 write exactly this, with no clause after it.
-    expect(reasonWithoutCountdown("GW1 deadline in 3.2h")).toBeNull();
-  });
-
-  it("leaves a reason of any other shape untouched", () => {
-    // It trims a known prefix; it does not try to parse prose.
-    for (const reason of [
-      "GW1 is already sealed",
-      "GW2 is settled but not scored",
-      "within 30 minutes of the GW1 deadline",
-    ]) {
-      expect(reasonWithoutCountdown(reason)).toBe(reason);
-    }
-  });
-
-  it("passes null through, so an absent reason stays absent", () => {
-    expect(reasonWithoutCountdown(null)).toBeNull();
-  });
-
-  it("agrees with the shipped artifact, which is what prompted this", () => {
-    expect(reasonWithoutCountdown("GW1 deadline in 71.0h; nothing due yet"))
-      .not.toMatch(/71/);
-  });
-});

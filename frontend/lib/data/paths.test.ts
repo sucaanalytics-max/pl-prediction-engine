@@ -30,8 +30,6 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { ALL_DESCRIPTORS, decisionDescriptor } from "@/lib/data/narrow";
-import { matchDetailDescriptor } from "@/lib/data/match-detail";
-import { sensitivityDescriptor } from "@/lib/data/sensitivity";
 import { ACCURACY } from "@/lib/data/accuracy";
 import { NEWS_FEED } from "@/lib/data/news-feed";
 import { MINUTES_CONFLICTS } from "@/lib/data/minutes-conflicts";
@@ -307,9 +305,14 @@ describe("registry hygiene", () => {
 // Descriptor factories
 //
 // `ALL_DESCRIPTORS` covers the static registry. It cannot cover the factories —
-// `decisionDescriptor`, `matchDetailDescriptor`, `sensitivityDescriptor` — which
-// mint a path per gameweek, per entry, or per fixture. Those are fetched paths
-// like any other, and until now nothing checked that a writer exists for them.
+// `decisionDescriptor`, `projectionsDescriptor` — which mint a path per gameweek
+// or per entry. Those are fetched paths like any other, and until now nothing
+// checked that a writer exists for them.
+//
+// `matchDetailDescriptor` and `sensitivityDescriptor` were checked here too, and
+// both modules are deleted: their only importers were `app/matches/[id]` and
+// `app/decide`, which the route cut removed. Nothing fetches those paths now, so
+// there is no consumer left to hold to a writer.
 //
 // That is precisely the gap `decision_latest.json` fell through: a path the
 // frontend asked for, named in two workflows, and written by nothing.
@@ -319,9 +322,6 @@ describe("descriptor factories point at paths something writes", () => {
   const factories = [
     { name: "decision (season)", d: decisionDescriptor(7, "season") },
     { name: "decision (weekly)", d: decisionDescriptor(12, "weekly") },
-    { name: "sensitivity (season)", d: sensitivityDescriptor(7, "season") },
-    { name: "sensitivity (weekly)", d: sensitivityDescriptor(38, "weekly") },
-    { name: "match detail", d: matchDetailDescriptor("ars-che") },
     { name: "projections", d: projectionsDescriptor(7) },
     // Not a factory, but declared outside `narrow.ts` and therefore invisible
     // to `ALL_DESCRIPTORS` — the same blind spot, reached a different way.
@@ -332,7 +332,7 @@ describe("descriptor factories point at paths something writes", () => {
 
   it("finds the factories to check", () => {
     // Guards the guard: an empty list would pass the loop below vacuously.
-    expect(factories.length).toBeGreaterThanOrEqual(9);
+    expect(factories.length).toBeGreaterThanOrEqual(6);
   });
 
   it.each(factories)("$name is published", ({ d }) => {
@@ -345,7 +345,7 @@ describe("descriptor factories point at paths something writes", () => {
     // consumer asks for gw7 and 404s on a file called gw07 — a mismatch no
     // type checks and both sides look correct in isolation.
     expect(decisionDescriptor(7, "season").path).toContain("gw07");
-    expect(sensitivityDescriptor(7, "season").path).toContain("gw07");
+    expect(projectionsDescriptor(7).path).toContain("gw07");
   });
 
   it("never asks for a 'latest' alias", () => {

@@ -19,6 +19,17 @@ import { join } from "node:path";
 
 const APP = join(process.cwd(), "app");
 const NAV = join(process.cwd(), "components", "Navigation.tsx");
+/**
+ * The phone nav, held to the same allow-list as the sidebar.
+ *
+ * It is mounted app-wide in `app/layout.tsx` and was NOT covered when this file was
+ * first rewritten, which is precisely the condition that let it rot: it listed five
+ * tabs of which `/optimizer`, `/projections` and `/captaincy` were redirect stubs —
+ * two of them landing on the same page — and the 2026-08-18 spec's stated reason for
+ * deleting the component outright was that this was "guarded by no test". Two navs
+ * that agree today and drift silently tomorrow is the same defect one level down.
+ */
+const BOTTOM_NAV = join(process.cwd(), "components", "MobileBottomNav.tsx");
 
 /** Every page route this app is allowed to have, and why it exists. */
 const ALLOWED: Record<string, string> = {
@@ -31,6 +42,18 @@ const ALLOWED: Record<string, string> = {
 
 /** Routes reached from the nav. `capture` and `offline` deliberately are not. */
 const IN_NAV = ["/", "/players", "/evidence"];
+
+/**
+ * Destinations a nav component lists, read from its item array.
+ *
+ * Matches `href: "/x"` — the array literal — and not `href={item.href}` in the JSX,
+ * so this asserts WHAT is linked and survives any restyle of the markup.
+ */
+function destinations(file: string): string[] {
+  const source = readFileSync(file, "utf8");
+  const linked = [...source.matchAll(/href:\s*"(\/[^"]*)"/g)].map((m) => m[1]);
+  return [...new Set(linked)].sort();
+}
 
 function routeDirs(): string[] {
   return readdirSync(APP, { withFileTypes: true })
@@ -66,9 +89,34 @@ describe("route allow-list", () => {
   });
 
   it("the nav links exactly the three destinations", () => {
-    const nav = readFileSync(NAV, "utf8");
-    const linked = [...nav.matchAll(/href:\s*"(\/[^"]*)"/g)].map((m) => m[1]);
-    expect([...new Set(linked)].sort()).toEqual([...IN_NAV].sort());
+    expect(destinations(NAV)).toEqual([...IN_NAV].sort());
+  });
+
+  it("the phone nav lists the same destinations as the sidebar", () => {
+    // Not "three items" — the same SET. Two navs over one route surface may differ
+    // in order, icon and label; a destination one of them can reach and the other
+    // cannot is a defect in whichever is wrong, and there is no way to tell which.
+    expect(destinations(BOTTOM_NAV)).toEqual(destinations(NAV));
+  });
+
+  it("neither nav links a route outside the allow-list", () => {
+    // The assertion that would have caught `/optimizer`, `/projections` and
+    // `/captaincy` sitting in the phone nav after the routes behind them were
+    // deleted. Checked per nav rather than through the set comparison above,
+    // because two navs can agree with each other and both be wrong.
+    for (const [label, file] of [["sidebar", NAV], ["phone nav", BOTTOM_NAV]] as const) {
+      for (const href of destinations(file)) {
+        const name = href === "/" ? "." : href.replace(/^\//, "");
+        expect(ALLOWED, `the ${label} links ${href}, which is not an allowed route`)
+          .toHaveProperty(name);
+      }
+    }
+  });
+
+  it("mounts both navs, so neither guard above can pass vacuously", () => {
+    const layout = readFileSync(join(APP, "layout.tsx"), "utf8");
+    expect(layout).toContain("<Navigation />");
+    expect(layout).toContain("<MobileBottomNav />");
   });
 
   it("the nav has no groups", () => {

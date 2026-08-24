@@ -14,8 +14,7 @@
  * Both are scanned rather than trusted, because both were violated by code written to a
  * document that stated the contrast requirement correctly.
  */
-import { readFileSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 import { INK, PAPER, surfaceIsLight, type MarginSurface } from "@/lib/margin/tokens";
@@ -37,38 +36,22 @@ const SURFACES: ReadonlyArray<readonly [string, MarginSurface]> = [
 /**
  * What is left of the board.
  *
- * `components/control-room` and `app/control-room` were the board itself and are
- * gone with the route cut; the kit primitives under `components/squad` are what
- * survived it, and they are still held to the rule that the board's labels broke.
- */
-const ROOTS = [
-  "components/squad",
-];
-
-/**
- * Margin components held to the same rule, so the primitives cannot drift.
+ * The board itself — `app/control-room`, `components/control-room` — went with the
+ * route cut, and the kit primitives under `components/squad` went with it in the same
+ * sweep: `components/squad/SquadRow.tsx` was `KitMark`'s only importer, so the whole
+ * directory became unreachable. `components/margin/Provenance.tsx` went the same way.
+ *
+ * `Marks.tsx` is what survived, and it is the file the rule was really about: it draws
+ * every distribution glyph on `/`, `/players` and `/evidence`, labels included. The
+ * contrast assertions below are over the tokens and hold regardless.
  *
  * The rest of `components/margin` — ScoreView, Planner, ResearchView, WatchView,
  * NewsView — carries sizes below this floor. That is a real backlog and it is
  * deliberately not in scope here: a test that fails on dozens of pre-existing
- * violations gets skipped rather than fixed. Those views are now mounted on `/`,
- * `/players` and `/evidence`, so the backlog is no longer behind a surface slated
- * for deletion — add them when one of those pages is next opened.
+ * violations gets skipped rather than fixed. Add them when one of those pages is
+ * next opened.
  */
-const BOARD_PRIMITIVES = [
-  "components/margin/Marks.tsx",
-  "components/margin/Provenance.tsx",
-];
-
-function sources(dir: string, out: string[] = []): string[] {
-  for (const entry of readdirSync(dir)) {
-    const path = join(dir, entry);
-    if (statSync(path).isDirectory()) sources(path, out);
-    else if (/\.tsx?$/.test(entry) && !/\.test\.tsx?$/.test(entry)) out.push(path);
-  }
-  return out;
-}
-const FILES = [...ROOTS.flatMap((r) => sources(r)), ...BOARD_PRIMITIVES];
+const FILES = ["components/margin/Marks.tsx"];
 
 // ── contrast ────────────────────────────────────────────────────────────────────
 

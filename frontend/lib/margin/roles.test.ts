@@ -13,13 +13,19 @@ import { describe, expect, it } from "vitest";
 
 const read = (path: string) => readFileSync(path, "utf8");
 
-/** Roles that mean "this is ours to press, or ours to follow". */
+/**
+ * Roles that mean "this is ours to press, or ours to follow".
+ *
+ * `components/data/DeltaFeed.tsx` (the source link) and `components/FixtureMatrix.tsx`
+ * (the sort toggle) were pinned here and are deleted: their only importers were
+ * `app/now` and `app/matches`. `components/margin/WatchView.tsx` renders the delta
+ * ledger on `/evidence` now and is not held to this list — it should be, and is not
+ * added here because it has never been read against the identity/verdict split.
+ */
 const IDENTITY: ReadonlyArray<readonly [string, string]> = [
   ["components/ui/Button.tsx", "the primary button"],
   ["components/ErrorBoundary.tsx", "the retry button"],
-  ["components/data/DeltaFeed.tsx", "the source link"],
   ["components/MinutesConflicts.tsx", "the read-the-post link"],
-  ["components/FixtureMatrix.tsx", "the sort toggle"],
 ];
 
 describe("identity takes the brand hue", () => {
