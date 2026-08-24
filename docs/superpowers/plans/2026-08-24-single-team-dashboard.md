@@ -369,10 +369,16 @@ stops the walk; a finished week no longer does."
 - Test: `pipeline/tests/test_agent_schedule.py` (extend), `pipeline/tests/test_refresh_cadence.py` (create)
 
 **Interfaces:**
-- Consumes: `horizon_targets` from Task 2 (indirectly — a widened window is worthless if the horizon still collapses).
+- Consumes: nothing. **Task 2 was reverted** — its premise was a misdiagnosis: `refresh_expected_points` returns `{"status": "skipped"}` at `run_agent.py:509` before `_project_horizon` is reached, so the offset-0 break it "fixed" is unreachable, while skipping a week broke `build_horizon_block`'s positional gameweek labelling. This task carries the whole fix for the blank planner on its own.
 - Produces: `projection_is_current(predictions_dir, gameweek, now, max_age) -> bool` in `run_agent.py`. Nothing later depends on it.
 
 **Measure before choosing.** The cadence is a cost decision and the spec refuses to guess it.
+
+**This task is now the entire fix for the blank planner.** The proven defect is that
+`REFRESH_WINDOW` is 48 hours while the frontend resolves its gameweek from the next
+deadline: outside the window the phase is `idle`, nothing is written, and the front page
+fetches an `xp_public_gw{NN}.json` that has never existed. Verified on 2026-08-23 — GW2
+deadline 126h out, `phase: idle`, and no `xp_public_gw02.json` anywhere in the tree.
 
 - [ ] **Step 1: Time one horizon projection**
 
@@ -635,7 +641,9 @@ for p in sorted(glob.glob('predictions/fpl/xp_public_gw*.json')):
 "
 ```
 
-Expected: a file for the **next** gameweek carrying a `horizon` block with at least 2 weeks. If `horizon` is `None`, Task 2 did not take — stop and re-check `horizon_targets`.
+Expected: a file for the **next** gameweek carrying a `horizon` block with at least 2 weeks.
+
+If `horizon` is `None`, do **not** reach for the reverted Task 2 change. `_project_horizon` returns `None` when it covered fewer than 2 weeks; check the run's log for the "horizon covers N gameweek(s)" warning and for `flat_default` goal-rate warnings, which say the Dixon-Coles export does not reach the horizon. That is a data-coverage problem, not the week-selection logic.
 
 Confirm the exact CLI entrypoint first with `grep -n "argparse\|__main__" pipeline/learning/run_agent.py`; use whatever flag that reveals rather than assuming `--once`.
 
