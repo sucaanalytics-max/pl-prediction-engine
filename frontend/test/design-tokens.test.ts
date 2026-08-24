@@ -38,6 +38,8 @@
  */
 
 import { describe, expect, it } from "vitest";
+
+import { withoutComments } from "@/test/support/comments";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -50,8 +52,8 @@ const ROOT = process.cwd();
  * are real at run time and absent from the CSS source.
  */
 const ALLOWED: Record<string, string> = {
-  "--font-plex-sans": "emitted onto <html> by next/font in app/layout.tsx",
-  "--font-plex-mono": "emitted onto <html> by next/font in app/layout.tsx",
+  "--font-archivo": "emitted onto <html> by next/font in app/layout.tsx",
+  "--font-dm-mono": "emitted onto <html> by next/font in app/layout.tsx",
 };
 
 function sources(): string[] {
@@ -194,5 +196,45 @@ describe("the design language holds", () => {
       || t.startsWith("--shadow") || t.startsWith("--glow");
     const missing = [...paper].filter((t) => !ink.has(t) && !surfaceIndependent(t));
     expect(missing, "defined for paper but not for ink").toEqual([]);
+  });
+});
+
+describe("the base face is the body face", () => {
+  /**
+   * `body { font-family: var(--font-display) }` shipped for two redesigns. It was
+   * survivable while the display face was Newsreader, a serif built for reading at
+   * length, and became a defect the moment Anton replaced it: every string that
+   * did not set its own family inherited a heavy condensed poster face, which is
+   * why the running screens read narrower and louder than the artboards.
+   *
+   * Anton sets the one figure a screen exists to deliver. It is applied per
+   * element and must never be inherited from the root.
+   */
+  const css = readFileSync("app/globals.css", "utf8");
+  /* Comments stripped, for the reason `test/support/comments.ts` records: the
+     rule carries a docstring explaining which face it used to name, and a raw
+     scan cannot tell that explanation apart from the declaration it warns about. */
+  const stripped = withoutComments(css);
+  const body = stripped.slice(
+    stripped.indexOf("  body {"),
+    stripped.indexOf("}", stripped.indexOf("  body {")),
+  );
+
+  it("sets body to --font-body, never to --font-display", () => {
+    expect(body).toContain("font-family: var(--font-body)");
+    expect(body).not.toContain("var(--font-display)");
+  });
+
+  it("has --font-body and --font-display resolve to different faces", () => {
+    // Guards the guard: if both pointed at the same variable the test above would
+    // pass while every string on every screen was still in the display face.
+    const root = stripped.slice(
+      stripped.indexOf(":root"), stripped.indexOf("}", stripped.indexOf(":root")),
+    );
+    const bodyVar = /--font-body:\s*var\((--font-[a-z-]+)\)/.exec(root)?.[1];
+    const displayVar = /--font-display:\s*var\((--font-[a-z-]+)\)/.exec(root)?.[1];
+    expect(bodyVar).toBeTruthy();
+    expect(displayVar).toBeTruthy();
+    expect(bodyVar).not.toBe(displayVar);
   });
 });

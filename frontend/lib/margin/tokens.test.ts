@@ -116,16 +116,45 @@ describe("one surface, and a ramp that means something", () => {
 describe("the display face is loaded, not merely configured", () => {
   const layout = readFileSync("app/layout.tsx", "utf8");
 
-  it("loads Anton through next/font beside the two Plex faces", () => {
-    // Anton replaced Newsreader in the floodlit redesign: a serif built for
-    // reading at length suited a surface that no longer exists. Plex Sans and
-    // Mono are deliberately unchanged — Mono's figures are what let a column of
-    // projections line up closely enough to compare two players by eye, which
-    // is exactly what the heat grid asks of them.
+  it("loads all three faces the design is drawn in, through next/font", () => {
+    /* Anton, Archivo, DM Mono — the stack the artboards specify.
+       IBM Plex Sans and Mono were here and were kept through the palette change
+       on the argument that Plex Mono's figures were what let a column of
+       projections compare by eye. Sound about mono figures, wrong about the face:
+       shipping Plex made every screen a near miss of its own approved design, and
+       DM Mono is monospaced with tabular figures too. Pinned here because a
+       half-done swap — one face changed, the variable still naming the other — is
+       the failure this file exists to catch. */
     expect(layout).toMatch(/import\s*\{[^}]*Anton[^}]*\}\s*from\s*"next\/font\/google"/);
     expect(layout).toContain('variable: "--font-display-anton"');
-    expect(layout).toMatch(/IBM_Plex_Sans/);
-    expect(layout).toMatch(/IBM_Plex_Mono/);
+    expect(layout).toMatch(/Archivo\(/);
+    expect(layout).toContain('variable: "--font-archivo"');
+    expect(layout).toMatch(/DM_Mono\(/);
+    expect(layout).toContain('variable: "--font-dm-mono"');
+    // And no trace of the pair they replaced, in either the import or a variable.
+    expect(layout).not.toMatch(/IBM_Plex/);
+    expect(layout).not.toMatch(/font-plex/);
+  });
+
+  it("asks DM Mono for no weight it does not publish", () => {
+    /* DM Mono ships 300, 400 and 500. Plex Mono shipped 600 as well and a few
+       rules asked for 700 and 800, which a browser synthesises into a faux bold —
+       a thicker stroke on the same skeleton, which is exactly the muddiness a
+       10px figure inside a coloured cell cannot afford. */
+    const block = layout.slice(layout.indexOf("DM_Mono({"));
+    const weights = block.slice(0, block.indexOf("})")).match(/"\d00"/g) ?? [];
+    expect(weights.length).toBeGreaterThan(0);
+    for (const weight of weights) {
+      expect(["\"300\"", "\"400\"", "\"500\""]).toContain(weight);
+    }
+  });
+
+  it("never sets a mono weight the face cannot answer", () => {
+    // The stylesheet's own asks, not just the loader's.
+    const css = readFileSync("app/globals.css", "utf8");
+    const offenders = [...css.matchAll(/font:\s*([678]\d0)\s[^;]*var\(--font-mono\)/g)]
+      .map((match) => match[0]);
+    expect(offenders, "asks DM Mono for a weight it does not ship").toEqual([]);
   });
 
   it("carries the one weight Anton ships", () => {

@@ -32,7 +32,7 @@ import { projectionsDescriptor, type Projection } from "@/lib/data/projections";
 import { REGISTRY, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
-import { STAT_TABS, tabByKey } from "@/lib/projections/stat-tabs";
+import { STAT_TABS, blockedTabs, tabByKey } from "@/lib/projections/stat-tabs";
 
 const S = FLOODLIT;
 
@@ -112,17 +112,19 @@ function pct(value: number | null | undefined): number | null {
 
 function chip(on: boolean): React.CSSProperties {
   return {
-    padding: "5px 9px", fontSize: 11, fontWeight: on ? 600 : 400,
+    padding: "5px 9px", fontSize: 10.5, fontWeight: on ? 600 : 400,
     background: on ? "rgba(233,238,245,.10)" : "transparent",
     color: on ? S.ink : S.ink3, borderRight: `1px solid ${S.rule}`, cursor: "pointer",
   };
 }
 
-function Label({ children }: { children: React.ReactNode }) {
+// Eyebrow labels are set in the BODY face (Archivo) at weight 600, not in Mono —
+// Mono is for figures in columns, and an eyebrow is a label, not a figure.
+function Label({ children, color = S.ink3 }: { children: React.ReactNode; color?: string }) {
   return (
     <span style={{
-      fontFamily: MONO, fontSize: 9, letterSpacing: ".14em",
-      textTransform: "uppercase", color: S.ink3, fontWeight: 600,
+      fontFamily: SANS, fontSize: 9, letterSpacing: ".15em",
+      textTransform: "uppercase", color, fontWeight: 600,
     }}>
       {children}
     </span>
@@ -132,7 +134,16 @@ function Label({ children }: { children: React.ReactNode }) {
 export function StatsTable({
   gameweek, ownedIds,
 }: {
-  readonly gameweek: number;
+  /**
+   * The gameweek, or null when no resolver could name one.
+   *
+   * Nullable because only ONE tab needs it. Season reads `player_stats.json` and
+   * Shots reads `player_events.json`, and neither is keyed by week — so a page
+   * that hid this whole table when the gameweek was unknown was refusing to show
+   * two tabs' worth of data over a number they never use. Expected is the tab
+   * that reads `xp_public_gw{NN}.json`, and it is the one that says so.
+   */
+  readonly gameweek: number | null;
   readonly ownedIds: ReadonlySet<number>;
 }) {
   const [tabKey, setTabKey] = useState(STAT_TABS[0].key);
@@ -145,7 +156,16 @@ export function StatsTable({
   const columns = COLUMNS[tab.key] ?? [];
 
   const { artifact: statsArtifact } = useArtifact(REGISTRY.playerStats);
-  const { artifact: projArtifact } = useArtifact(projectionsDescriptor(gameweek));
+  /* Hooks cannot be called conditionally, so the descriptor is still built when
+     the gameweek is unknown — but `enabled` stops the request going out. Fetching
+     `xp_public_gw00.json` instead would 404 on every render for as long as the
+     gameweek stays unreadable, and a guaranteed console error is how a real one
+     gets missed. */
+  const expectedNeedsWeek = gameweek === null;
+  const { artifact: projArtifact } = useArtifact(
+    projectionsDescriptor(gameweek ?? 0),
+    { enabled: !expectedNeedsWeek },
+  );
   const { artifact: eventArtifact } = useArtifact(PLAYER_EVENTS);
 
   const stats = proven(statsArtifact);
@@ -214,32 +234,45 @@ export function StatsTable({
     });
   }, [rows, deferredQuery, show, sortKey, columns, tab.source]);
 
-  const template = `200px repeat(${columns.length}, minmax(52px, 1fr))`;
-  const missing = tab.source === null
+  // 218px name column, then one flexible column per stat — the artboard's
+  // template exactly, not a minmax approximation of it.
+  const template = `218px repeat(${columns.length}, 1fr)`;
+  const missing = tab.source === "projections" && expectedNeedsWeek
+    ? "Neither the agent's status nor FPL's own state could be read, so the "
+      + "gameweek is unknown. Guessing one would read another week's projection."
+    : tab.source === null
     ? null
     : tab.source === "playerStats" ? statsArtifact.reason
     : tab.source === "projections" ? projArtifact.reason
     : eventArtifact.reason;
 
   return (
-    <section style={{ fontFamily: SANS, color: S.ink }}>
+    <section style={{ fontFamily: SANS, color: S.ink, fontSize: 13 }}>
       <div style={{
         display: "flex", flexWrap: "wrap", alignItems: "stretch",
-        background: S.bar, border: `1px solid ${S.hair}`,
-        borderBottom: `1px solid ${S.rule}`,
+        background: S.inset, border: `1px solid ${S.hair}`,
+        borderBottom: `1px solid ${S.rule}`, padding: "0 18px",
       }}>
         {STAT_TABS.map((entry) => {
           const on = entry.key === tabKey;
-          const blocked = entry.source === null;
+          // Blocked for want of a feed, or — for Expected alone — for want of a
+          // gameweek to point at.
+          const blocked = entry.source === null
+            || (entry.source === "projections" && expectedNeedsWeek);
           return (
             <button
               key={entry.key}
               onClick={() => { if (!blocked) { setTabKey(entry.key); setSortKey(null); } }}
               disabled={blocked}
-              title={blocked ? entry.blockedBy : entry.note}
+              title={
+                entry.source === "projections" && expectedNeedsWeek
+                  ? "Neither the agent's status nor FPL's own state could be read, so "
+                    + "there is no gameweek to point a projection at."
+                  : blocked ? entry.blockedBy : entry.note
+              }
               aria-pressed={on}
               style={{
-                padding: "0 13px", height: 38, display: "flex", alignItems: "center",
+                padding: "0 13px", height: 40, display: "flex", alignItems: "center",
                 fontSize: 12, fontWeight: on ? 600 : 400,
                 color: blocked ? S.ink4 : on ? S.ink : S.ink2,
                 textDecoration: blocked ? "line-through" : "none",
@@ -256,7 +289,7 @@ export function StatsTable({
 
       <div style={{
         display: "flex", flexWrap: "wrap", alignItems: "center", gap: 14,
-        padding: "10px 14px", background: S.inset,
+        padding: "11px 18px", background: S.bar,
         border: `1px solid ${S.hair}`, borderTop: "none",
       }}>
         <input
@@ -265,7 +298,7 @@ export function StatsTable({
           placeholder="name or club"
           aria-label="Filter by player name or club"
           style={{
-            width: 150, padding: "6px 9px", fontSize: 12, color: S.ink,
+            width: 160, padding: "6px 9px", fontSize: 12, color: S.ink,
             border: `1px solid ${S.rule}`, background: S.shell, fontFamily: SANS,
           }}
         />
@@ -293,12 +326,12 @@ export function StatsTable({
         </p>
       ) : (
         <div style={{ overflowX: "auto", border: `1px solid ${S.hair}`, borderTop: "none" }}>
-          <div style={{ minWidth: 700 }}>
+          <div style={{ minWidth: 218 + columns.length * 70 }}>
             <div style={{
               display: "grid", gridTemplateColumns: template,
               background: S.bar, borderBottom: `1px solid ${S.rule}`,
             }}>
-              <div style={{ padding: "0 12px", height: 28, display: "flex", alignItems: "center" }}>
+              <div style={{ padding: "0 12px", height: 32, display: "flex", alignItems: "center" }}>
                 <Label>Player</Label>
               </div>
               {columns.map((column) => (
@@ -307,8 +340,8 @@ export function StatsTable({
                   onClick={() => setSortKey(column.key)}
                   aria-pressed={(sortKey ?? columns[0]?.key) === column.key}
                   style={{
-                    height: 28, display: "flex", alignItems: "center",
-                    justifyContent: "flex-end", paddingRight: 8,
+                    height: 32, display: "flex", alignItems: "center",
+                    justifyContent: "flex-end", paddingRight: 10,
                     background: (sortKey ?? columns[0]?.key) === column.key
                       ? "rgba(233,238,245,.06)" : "none",
                     border: 0, cursor: "pointer",
@@ -330,11 +363,11 @@ export function StatsTable({
                 }}
               >
                 <div style={{
-                  padding: "0 12px", height: 32, display: "flex", alignItems: "center",
-                  gap: 6, minWidth: 0,
+                  padding: "0 12px", height: 36, display: "flex", alignItems: "center",
+                  gap: 7, minWidth: 0,
                 }}>
                   <span style={{
-                    fontSize: 12, fontWeight: 600, whiteSpace: "nowrap",
+                    fontSize: 12.5, fontWeight: 600, whiteSpace: "nowrap",
                     overflow: "hidden", textOverflow: "ellipsis",
                   }}>
                     {row.name}
@@ -348,7 +381,7 @@ export function StatsTable({
                   return (
                     <div key={column.key} style={{
                       display: "flex", alignItems: "center", justifyContent: "flex-end",
-                      paddingRight: 8, fontFamily: MONO, fontSize: 11,
+                      paddingRight: 10, fontFamily: MONO, fontSize: 11.5,
                       color: value === null ? S.ink4 : S.ink2,
                     }}>
                       {value === null
@@ -375,17 +408,37 @@ export function StatsTable({
       )}
 
       <div style={{
-        display: "flex", flexWrap: "wrap", gap: 26, padding: 14,
+        display: "flex", flexWrap: "wrap", gap: 34, padding: "14px 18px",
         background: S.bar, border: `1px solid ${S.hair}`, borderTop: "none",
       }}>
-        <div style={{ maxWidth: 430 }}>
-          <div style={{ marginBottom: 6 }}><Label>{tab.label}</Label></div>
+        <div style={{ maxWidth: 470 }}>
+          <div style={{ marginBottom: 7 }}><Label>{tab.label}</Label></div>
           <p style={{ fontSize: 11.5, lineHeight: 1.55, color: S.ink2, margin: 0 }}>
             {tab.note}
           </p>
         </div>
-        <div style={{ maxWidth: 300 }}>
-          <div style={{ marginBottom: 6 }}><Label>The ∅ mark</Label></div>
+        {/* What this app cannot build, and why — one paragraph per blocked tab, so
+            a reader learns the column exists in the game and why it is not here,
+            same as the two-tab version of this block on the artboard. There are
+            three now: Understat got wired since that was drawn, so Shots & creation
+            went live and Defending, Set pieces and Market took its place. */}
+        <div style={{
+          maxWidth: 440, borderLeft: `1px solid ${S.hair}`, paddingLeft: 22,
+        }}>
+          <div style={{ marginBottom: 7 }}>
+            <Label color={S.conflict}>Tabs we cannot build</Label>
+          </div>
+          {blockedTabs().map((blocked) => (
+            <p key={blocked.key} style={{
+              fontSize: 11.5, lineHeight: 1.55, color: S.ink2, margin: "0 0 6px",
+            }}>
+              <strong style={{ color: S.ink }}>{blocked.label}</strong>
+              {" "}({blocked.note}) {blocked.blockedBy}
+            </p>
+          ))}
+        </div>
+        <div style={{ maxWidth: 290 }}>
+          <div style={{ marginBottom: 7 }}><Label color={S.noise}>The ∅ mark</Label></div>
           <p style={{ fontSize: 11.5, lineHeight: 1.55, color: S.ink2, margin: 0 }}>
             Withheld, not zero. A per-90 over eight minutes and a figure the feed does
             not carry are both shown this way, because a zero in either place would be
@@ -394,7 +447,7 @@ export function StatsTable({
         </div>
         {tab.source === "playerEvents" && events !== null ? (
           <div style={{ maxWidth: 330 }}>
-            <div style={{ marginBottom: 6 }}><Label>This feed&apos;s reach</Label></div>
+            <div style={{ marginBottom: 7 }}><Label>This feed&apos;s reach</Label></div>
             <p style={{ fontSize: 11.5, lineHeight: 1.55, color: S.ink2, margin: 0 }}>
               The name join matched {events.coverage.matched} of{" "}
               {events.coverage.understatRows} rows Understat offered

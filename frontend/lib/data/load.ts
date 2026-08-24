@@ -60,6 +60,15 @@ export interface LoadOptions {
   /** Overrides the environment. For tests and for the local-only build. */
   readonly remote?: string | null;
   readonly signal?: AbortSignal;
+  /**
+   * Whether to fetch at all. Read by `useArtifact`, not by `load` itself.
+   *
+   * For a descriptor built from a value that may not be known yet: hooks cannot
+   * be called conditionally, so without this the only options are to fetch a path
+   * assembled from a placeholder — which 404s forever — or to withhold a whole
+   * screen over a number most of it never uses.
+   */
+  readonly enabled?: boolean;
 }
 
 interface Fetched {

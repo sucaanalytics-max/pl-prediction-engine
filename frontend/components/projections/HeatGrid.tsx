@@ -53,7 +53,7 @@ const SORTS: ReadonlyArray<readonly [Sort, string]> = [
 function chip(on: boolean): React.CSSProperties {
   return {
     padding: "5px 9px",
-    fontSize: 11,
+    fontSize: 10.5,
     fontWeight: on ? 600 : 400,
     background: on ? "rgba(233,238,245,.10)" : "transparent",
     color: on ? S.ink : S.ink3,
@@ -66,10 +66,13 @@ function Group({ children }: { children: React.ReactNode }) {
   return <div style={{ display: "flex", border: `1px solid ${S.rule}` }}>{children}</div>;
 }
 
+// Eyebrow labels are the body face (Archivo), not MONO — MONO is reserved for
+// figures in columns. This was the bug named in the redesign brief: several
+// components, this one included, had eyebrows set in MONO.
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <span style={{
-      fontFamily: MONO, fontSize: 9, letterSpacing: ".14em",
+      fontFamily: SANS, fontSize: 9, letterSpacing: ".15em",
       textTransform: "uppercase", color: S.ink3, fontWeight: 600,
     }}>
       {children}
@@ -142,13 +145,29 @@ export function HeatGrid(props: HeatGridProps) {
     0.1, ...visible.map((row) => row.cells[index]?.xp ?? 0),
   )), [weeks, visible]);
 
-  const template = `210px 46px repeat(${weeks.length}, minmax(58px, 1fr)) 86px`;
+  /**
+   * Player, P10 ring, one column per week, total.
+   *
+   * The artboard's template is `196px 32px 48px 50px repeat(8, 1fr) 78px` — two
+   * more columns than this, for price and ownership. They are deliberately not
+   * here: `xp_public` publishes neither, and this grid runs over the whole
+   * 609-player pool rather than the fifteen on your squad, so there is no second
+   * artifact to join them from either.
+   *
+   * They were briefly rendered as an em dash on every row to hold the artboard's
+   * geometry. That is the wrong trade. Ninety-eight pixels of a table saying
+   * nothing on all 609 rows is not fidelity to a design, it is fidelity to the
+   * PROTOTYPE DATA the design was drawn against — and a column that can never
+   * hold a value is exactly what `/stats` greys a whole tab out to avoid. The
+   * eight week columns take the width back.
+   */
+  const template = `196px 32px repeat(${weeks.length}, 1fr) 78px`;
 
   return (
     <section style={{ fontFamily: SANS, color: S.ink }}>
       <div style={{
-        display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16,
-        padding: "11px 14px", background: S.inset,
+        display: "flex", flexWrap: "wrap", alignItems: "center", gap: 18,
+        padding: "11px 18px", background: S.inset,
         border: `1px solid ${S.hair}`, borderBottom: "none",
       }}>
         <input
@@ -180,19 +199,23 @@ export function HeatGrid(props: HeatGridProps) {
             ))}
           </Group>
         </div>
-        <Group>
-          {([["all", "everyone"], ["mine", "my squad"]] as const).map(([key, label]) => (
-            <button key={key} onClick={() => setShow(key)} style={chip(show === key)}
-              aria-pressed={show === key}>
-              {label}
-            </button>
-          ))}
-        </Group>
+        <div style={{ flexGrow: 1 }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          <Label>Show</Label>
+          <Group>
+            {([["all", "everyone"], ["mine", "my squad"]] as const).map(([key, label]) => (
+              <button key={key} onClick={() => setShow(key)} style={chip(show === key)}
+                aria-pressed={show === key}>
+                {label}
+              </button>
+            ))}
+          </Group>
+        </div>
       </div>
 
       <div style={{
-        display: "flex", flexWrap: "wrap", alignItems: "center", gap: 14,
-        padding: "12px 14px", background: S.bar,
+        display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16,
+        padding: "12px 18px", background: S.bar,
         border: `1px solid ${S.hair}`, borderBottom: `1px solid ${S.rule}`,
       }}>
         <Label>Total the next</Label>
@@ -230,32 +253,35 @@ export function HeatGrid(props: HeatGridProps) {
       </div>
 
       <div style={{ overflowX: "auto", border: `1px solid ${S.hair}`, borderTop: "none" }}>
-        <div style={{ minWidth: 860 }}>
+        <div style={{ minWidth: 900 }}>
           <div style={{
             display: "grid", gridTemplateColumns: template, alignItems: "center",
             background: S.bar, borderBottom: `1px solid ${S.rule}`,
           }}>
-            <div style={{ padding: "0 12px", height: 30, display: "flex", alignItems: "center" }}>
+            <div style={{ padding: "0 12px", height: 32, display: "flex", alignItems: "center" }}>
               <Label>Player</Label>
             </div>
-            <div style={{ height: 30, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ height: 32, display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Label>P10</Label>
             </div>
             {weeks.map((week, index) => (
               <div key={week} style={{
-                height: 30, display: "flex", alignItems: "center", justifyContent: "center",
+                height: 32, display: "flex", alignItems: "center", justifyContent: "center",
               }}>
                 <span style={{
-                  fontFamily: MONO, fontSize: 9, letterSpacing: ".1em", fontWeight: 600,
-                  // Inside the span it is part of the answer; outside it is context.
+                  fontFamily: SANS, fontSize: 9, letterSpacing: ".15em", fontWeight: 600,
+                  // Case marks the boundary the way the artboard's prototype data
+                  // does — "GW2" inside the span, lowercase "gw2" beyond it — and
+                  // colour still dims outward on top of that, rather than instead
+                  // of it.
                   color: index < span ? S.ink2 : S.ink4,
                 }}>
-                  GW{week}
+                  {(index < span ? "GW" : "gw") + week}
                 </span>
               </div>
             ))}
             <div style={{
-              height: 30, display: "flex", alignItems: "center",
+              height: 32, display: "flex", alignItems: "center",
               justifyContent: "flex-end", paddingRight: 12,
             }}>
               {/* Always a span of two or more: `SPANS` starts at two, because a
@@ -285,7 +311,7 @@ export function HeatGrid(props: HeatGridProps) {
                 }}
               >
                 <div style={{
-                  padding: "0 12px", height: 40, display: "flex",
+                  padding: "0 12px", height: 42, display: "flex",
                   flexDirection: "column", justifyContent: "center", minWidth: 0,
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -328,13 +354,13 @@ export function HeatGrid(props: HeatGridProps) {
                   return (
                     <div key={cell.gameweek} style={{ padding: 1, position: "relative" }}>
                       <div style={{
-                        height: 38, background, color: ink,
+                        height: 34, background, color: ink,
                         display: "flex", flexDirection: "column",
                         alignItems: "center", justifyContent: "center",
                         // Outside the span the cell is context for the total, so
                         // it is dimmed rather than removed: fixtures beyond the
                         // span are exactly what makes a span worth changing.
-                        opacity: index < span ? 1 : 0.42,
+                        opacity: index < span ? 1 : 0.34,
                         border: band === null ? `1px solid ${S.hair}` : "none",
                       }}>
                         <span style={{
@@ -390,7 +416,7 @@ export function HeatGrid(props: HeatGridProps) {
       </div>
 
       <div style={{
-        display: "flex", flexWrap: "wrap", gap: 28, padding: "14px",
+        display: "flex", flexWrap: "wrap", gap: 32, padding: "14px 18px",
         background: S.bar, border: `1px solid ${S.hair}`, borderTop: "none",
       }}>
         <div style={{ maxWidth: 420 }}>

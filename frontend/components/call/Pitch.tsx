@@ -31,6 +31,7 @@
 
 import type { SquadRow } from "@/lib/margin/squad";
 import { DISPLAY, FLOODLIT, MONO, SANS, difficultyTint } from "@/lib/margin/tokens";
+import { EYEBROW } from "@/lib/margin/type";
 import { byLine, intervalBar } from "@/lib/call/board";
 
 const S = FLOODLIT;
@@ -77,8 +78,10 @@ function FixtureChip({ row }: { row: SquadRow }) {
         ? `${label} — FPL published no difficulty for this fixture`
         : `${label} — FPL rates this fixture ${difficulty} of 5 for ${row.player.team}`}
       style={{
-        fontFamily: MONO, fontSize: 9, fontWeight: 600, padding: "2px 5px",
-        background, color: colour, whiteSpace: "nowrap",
+        // A club code is a word, not a figure, so it takes the body face — and
+        // DM Mono ships no 600 to set it in anyway.
+        fontFamily: SANS, fontSize: 9, fontWeight: 600, padding: "2px 5px",
+        letterSpacing: ".02em", background, color: colour, whiteSpace: "nowrap",
       }}
     >
       {label}
@@ -227,12 +230,7 @@ export function Pitch({
         padding: "10px 14px", background: S.bar,
         borderBottom: `1px solid ${S.hair}`,
       }}>
-        <span style={{
-          fontFamily: MONO, fontSize: 9, letterSpacing: ".14em",
-          textTransform: "uppercase", color: S.ink3, fontWeight: 600,
-        }}>
-          The eleven
-        </span>
+        <span style={{ ...EYEBROW, color: S.ink3 }}>The eleven</span>
         <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
           click a shirt to bench · totals recompute
         </span>
@@ -296,11 +294,7 @@ export function Pitch({
         padding: "11px 14px", background: S.inset,
         borderTop: `1px solid ${S.rule}`,
       }}>
-        <div style={{
-          fontFamily: MONO, fontSize: 9, letterSpacing: ".14em",
-          textTransform: "uppercase", color: S.ink3, fontWeight: 600,
-          marginBottom: 9,
-        }}>
+        <div style={{ ...EYEBROW, color: S.ink3, marginBottom: 9 }}>
           {/* NOT "autosub order", which the design called it. The order here is
               descending projection — the four the optimiser left out, best first.
               FPL's real autosub depends on who blanks and which formations stay

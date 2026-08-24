@@ -29,6 +29,7 @@
  */
 
 import { DISPLAY, FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
+import { EYEBROW } from "@/lib/margin/type";
 
 const S = FLOODLIT;
 
@@ -42,12 +43,7 @@ function Tile({
 }) {
   return (
     <div data-testid={testId} style={{ background: S.bar, padding: "14px 16px" }}>
-      <div style={{
-        fontFamily: MONO, fontSize: 9, letterSpacing: ".14em",
-        textTransform: "uppercase", color: S.ink3, fontWeight: 600, marginBottom: 7,
-      }}>
-        {label}
-      </div>
+      <div style={{ ...EYEBROW, color: S.ink3, marginBottom: 7 }}>{label}</div>
       {children}
       <div style={{
         fontFamily: MONO, fontSize: 10.5, color: S.ink2, marginTop: 7, lineHeight: 1.4,

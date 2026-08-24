@@ -190,7 +190,28 @@ export function useArtifact<T>(
    */
   const identity = descriptor.key;
 
+  /**
+   * Whether to fetch at all.
+   *
+   * Added for one shape that had no honest answer without it: a descriptor built
+   * from a value that may not be known yet. `/stats` reads
+   * `xp_public_gw{NN}.json` for one of its three tabs, and hooks cannot be called
+   * conditionally — so with no resolved gameweek the choice was to fetch week
+   * `00`, which 404s on every render forever, or to withhold two tabs that never
+   * needed the week at all.
+   *
+   * Default true, so no existing caller changes behaviour. When false the hook
+   * settles immediately into the descriptor's `absent` state with a reason,
+   * because "we did not ask" and "we asked and there was nothing" are different
+   * facts and only the second one is a statement about the data.
+   */
+  const enabled = options.enabled ?? true;
+
   useEffect(() => {
+    if (!enabled) {
+      setInitialising(false);
+      return () => {};
+    }
     let cancelled = false;
     loadShared(descriptor, optionsRef.current, nonce > 0).then((result) => {
       // A resolved fetch for a screen the user has left must not set state.
@@ -207,7 +228,7 @@ export function useArtifact<T>(
     // still refetches. Neither is `descriptor` itself, which an inline factory rebuilds
     // every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [identity, path, nonce]);
+  }, [identity, path, nonce, enabled]);
 
   const reload = useCallback(() => setNonce((n) => n + 1), []);
 

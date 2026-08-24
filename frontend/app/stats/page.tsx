@@ -20,7 +20,6 @@ import { StatsTable } from "@/components/stats/StatsTable";
 import { proven } from "@/lib/data/artifact";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
 import { useHeuristics } from "@/lib/data/useHeuristics";
-import { blockedTabs } from "@/lib/projections/stat-tabs";
 
 export default function StatsPage() {
   const gameweek = useCurrentGameweek();
@@ -48,39 +47,17 @@ export default function StatsPage() {
           </p>
         </header>
 
-        {gameweek === null ? (
-          // One line, the same rule every `useCurrentGameweek` surface follows: a
-          // guessed gameweek would point the Expected tab at another week's file.
-          <p className="text-xs" style={{ color: "var(--text-4)" }}>
-            Neither the agent&apos;s status nor FPL&apos;s own state could be read, so
-            the gameweek is unknown. The Season and Shots tabs do not depend on it,
-            but Expected does, and guessing would read the wrong projection.
-          </p>
-        ) : (
-          <StatsTable gameweek={gameweek} ownedIds={ownedIds} />
-        )}
+        {/* No gameweek gate on the whole table. Season reads `player_stats.json`
+            and Shots reads `player_events.json`; neither is keyed by week, so
+            withholding them over an unresolved gameweek refuses two tabs' worth
+            of data for a number they never use. `StatsTable` blocks the one tab
+            that does need it — Expected — and says why on that tab. */}
+        <StatsTable gameweek={gameweek} ownedIds={ownedIds} />
 
-        <section>
-          <h2
-            className="text-xs mb-2"
-            style={{
-              color: "var(--text-3)", fontFamily: "var(--font-mono)",
-              letterSpacing: ".14em", textTransform: "uppercase",
-            }}
-          >
-            Tabs this app cannot fill yet
-          </h2>
-          <dl className="space-y-2">
-            {blockedTabs().map((tab) => (
-              <div key={tab.key} className="text-xs">
-                <dt style={{ color: "var(--text-2)", fontWeight: 600 }}>{tab.label}</dt>
-                <dd style={{ color: "var(--text-3)", margin: 0, lineHeight: 1.55 }}>
-                  {tab.note} {tab.blockedBy}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </section>
+        {/* The blocked tabs are named by `StatsTable`'s own footer, directly under
+            the struck-through tab a reader just tried to click. A duplicate list
+            lived here too and said the same three things a second time; the
+            footer is the one that is where the question gets asked. */}
       </div>
     </ErrorBoundary>
   );

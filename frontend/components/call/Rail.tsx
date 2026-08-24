@@ -32,6 +32,7 @@
 import type { Horizon } from "@/lib/data/projections";
 import type { SquadRow } from "@/lib/margin/squad";
 import { DISPLAY, FLOODLIT, MONO, SANS, heatStep } from "@/lib/margin/tokens";
+import { EYEBROW } from "@/lib/margin/type";
 import { ABSOLUTE_CEILING, HEAT_STEPS, bandOf } from "@/lib/projections/grid";
 import type { Callout } from "@/lib/call/board";
 
@@ -53,12 +54,7 @@ export type HorizonScale = "absolute" | "week";
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <span style={{
-      fontFamily: MONO, fontSize: 9, letterSpacing: ".14em",
-      textTransform: "uppercase", color: S.ink3, fontWeight: 600,
-    }}>
-      {children}
-    </span>
+    <span style={{ ...EYEBROW, color: S.ink3 }}>{children}</span>
   );
 }
 
@@ -117,7 +113,7 @@ export function Rail({
             }}
           >
             <span style={{
-              fontFamily: MONO, fontSize: 8.5, letterSpacing: ".12em", fontWeight: 700,
+              fontFamily: SANS, fontSize: 8.5, letterSpacing: ".12em", fontWeight: 700,
               padding: "3px 6px", whiteSpace: "nowrap",
               border: `1px solid ${BADGE_COLOUR[callout.kind]}`,
               color: BADGE_COLOUR[callout.kind],
@@ -188,7 +184,8 @@ export function Rail({
             {weeks.map((week) => (
               <div key={week} style={{ textAlign: "center" }}>
                 <span style={{
-                  fontFamily: MONO, fontSize: 8, letterSpacing: ".1em",
+                  // "GW3" is a label; the cells below it are the figures.
+                  fontFamily: SANS, fontSize: 8.5, letterSpacing: ".1em",
                   color: S.ink3, fontWeight: 600,
                 }}>
                   GW{week}

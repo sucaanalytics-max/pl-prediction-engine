@@ -107,10 +107,17 @@ describe("a tab nothing can fill", () => {
     expect(defending.style.textDecoration).toBe("line-through");
   });
 
-  it("says what feed is missing, in the page's own prose", async () => {
+  it("says what feed is missing, in exactly one place", async () => {
     await mountStats();
-    expect(screen.getByText(/does not carry\s+them into an artifact yet/i))
-      .toBeInTheDocument();
+    /* Exactly one. The claim was briefly rendered twice — the table's footer and
+       a page-level list below it — and this assertion was loosened to
+       `getAllByText(...).length > 0` to tolerate that. Tolerating it is the wrong
+       fix: two copies of a sentence drift, and a reader who finds the second one
+       after the first has learned nothing. The page-level list went; the footer
+       stayed, because it sits directly under the struck-through tab that raises
+       the question. */
+    expect(screen.getAllByText(/does not carry\s+them into an artifact yet/i))
+      .toHaveLength(1);
   });
 
   it("names every blocked tab, so none is quietly dropped", async () => {
@@ -142,11 +149,20 @@ describe("the page states its own absence", () => {
     expect(screen.getByText("nothing is published at this path")).toBeInTheDocument();
   });
 
-  it("says the gameweek is unknown without hiding the tabs that do not need it", async () => {
+  it("blocks only the tab that needs a gameweek, not the whole table", async () => {
+    /**
+     * The two tabs that do not read a weekly file keep working. Season reads
+     * `player_stats.json` and Shots reads `player_events.json`; neither is keyed
+     * by week, and this page used to withhold both over a number they never use.
+     * Expected is the tab that reads `xp_public_gw{NN}.json`, so Expected is the
+     * tab that goes dark — and it says why on itself rather than in a line that
+     * replaced the screen.
+     */
     await mountStats({ gameweek: null });
-    expect(screen.getByText(/the gameweek is unknown/i)).toBeInTheDocument();
-    // The blocked-tab list is page furniture and survives, so the reader still
-    // learns what this screen can and cannot answer.
-    expect(screen.getByText("Defending")).toBeInTheDocument();
+    expect(screen.getAllByTestId("stats-row").length).toBeGreaterThan(0);
+    expect(screen.getByRole("button", { name: "Expected" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Season" })).not.toBeDisabled();
+    // And the reader still learns what the screen cannot answer at all.
+    expect(screen.getByRole("button", { name: "Defending" })).toBeDisabled();
   });
 });

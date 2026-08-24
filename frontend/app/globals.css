@@ -147,8 +147,8 @@
 
   /* Fonts */
   --font-display: var(--font-display-anton), 'Arial Narrow', system-ui, sans-serif;
-  --font-body:    var(--font-plex-sans), system-ui, sans-serif;
-  --font-mono:    var(--font-plex-mono), ui-monospace, monospace;
+  --font-body:    var(--font-archivo), 'Helvetica Neue', system-ui, sans-serif;
+  --font-mono:    var(--font-dm-mono), ui-monospace, monospace;
 
   /* Radii. Square, because a hairline rule reads as a boundary and a rounded
      corner reads as an object — and most of these panels are boundaries. */
@@ -243,7 +243,17 @@
   body {
     @apply antialiased;
     background: var(--ambient-bg);
-    font-family: var(--font-display);
+    /* The BODY face, not the display face.
+       This read `var(--font-display)` for two redesigns. It was survivable while
+       that resolved to Newsreader — a serif for reading at length — and became a
+       real defect when Anton replaced it: every string in the app that did not
+       set its own family was rendering in a heavy condensed poster face, which is
+       why the running screens looked narrower and louder than the artboards they
+       were drawn from. Anton sets the ONE figure a screen exists to deliver and
+       nothing else; it is applied per element, never inherited. */
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
     color: var(--text-1);
   }
 
@@ -770,7 +780,7 @@ input[type="range"]::-moz-range-thumb {
 .decision-card textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-muted); }
 .decision-card textarea + .primary-action { margin-top: 10px; }
 .captain-week { padding: 13px; border: 1px solid var(--border); border-radius: 0; background: var(--surface2); }
-.captain-week > span { color: var(--accent-text); font: 800 8px var(--font-mono); }
+.captain-week > span { color: var(--accent-text); font: 500 8px var(--font-mono); }
 .captain-week strong { display: block; margin-top: 5px; color: var(--text-1); font-size: 11px; }
 .captain-week small { display: block; margin-top: 2px; color: var(--text-4); font-size: 8px; }
 .captain-week em { display: block; margin-top: 5px; color: var(--text-4); font-size: 7px; font-style: normal; }
@@ -795,7 +805,7 @@ input[type="range"]::-moz-range-thumb {
 .masthead-nav > a:hover { color: var(--text-1); background: var(--surface2); }
 .masthead-nav > a.active { color: var(--text-1); box-shadow: inset 0 -2px 0 var(--accent); }
 .masthead-right { display: flex; flex-shrink: 0; align-items: stretch; }
-.masthead-gw { display: flex; align-items: center; padding: 0 13px; color: var(--accent-text); border-left: 1px solid var(--border); font: 700 9px var(--font-mono); letter-spacing: .1em; }
+.masthead-gw { display: flex; align-items: center; padding: 0 13px; color: var(--accent-text); border-left: 1px solid var(--border); font: 500 9px var(--font-mono); letter-spacing: .1em; }
 .masthead-team { display: flex; border-left: 1px solid var(--border); }
 .masthead-team > a,
 .masthead-team-plain { display: grid; align-content: center; gap: 2px; padding: 0 14px; }
@@ -894,7 +904,7 @@ input[type="range"]::-moz-range-thumb {
 .historical-team-name { color: var(--text-1); font-size: 13px; font-weight: 800; }
 .historical-final-score { display: grid; place-items: center; padding: 14px 8px; border: 1px solid var(--border); border-radius: 0; background: var(--surface); }
 .historical-final-score span, .historical-final-score small { color: var(--text-4); font-size: 7px; text-transform: uppercase; }
-.historical-final-score strong { color: var(--text-1); font: 850 2rem var(--font-mono); letter-spacing: -.08em; }
+.historical-final-score strong { color: var(--text-1); font: 500 2rem var(--font-mono); letter-spacing: -.08em; }
 .historical-player-values { display: flex; flex-wrap: wrap; gap: 5px; }
 .historical-score-events .away .historical-player-values { justify-content: flex-end; }
 .historical-player-values > span { display: inline-flex; align-items: baseline; gap: 4px; padding: 5px 7px; border: 1px solid var(--border); border-radius: 0; background: var(--surface); }
@@ -908,7 +918,7 @@ input[type="range"]::-moz-range-thumb {
 .historical-stat-row > span { display: grid; }
 .historical-stat-row strong { color: var(--text-2); font-size: 8px; }
 .historical-stat-row small { color: var(--text-4); font-size: 7px; }
-.historical-stat-row b { color: var(--text-2); font: 750 8px var(--font-mono); white-space: nowrap; }
+.historical-stat-row b { color: var(--text-2); font: 500 8px var(--font-mono); white-space: nowrap; }
 .historical-inline-stat { display: inline-block; margin-top: 7px; padding: 4px 6px; color: var(--warning); border-radius: 0; background: var(--warning-muted); font-size: 7px; }
 .historical-inline-stat.danger { color: var(--error); background: var(--error-muted); }
 .historical-exceptions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }

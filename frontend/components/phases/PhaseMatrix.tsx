@@ -41,7 +41,7 @@ const ORDERS: ReadonlyArray<readonly [PhaseOrder, string]> = [
 
 function chip(on: boolean): React.CSSProperties {
   return {
-    padding: "4px 9px", fontSize: 11, fontWeight: on ? 600 : 400,
+    padding: "4px 9px", fontSize: 10.5, fontWeight: on ? 600 : 400,
     background: on ? "rgba(233,238,245,.10)" : "transparent",
     color: on ? S.ink : S.ink3, borderRight: `1px solid ${S.rule}`, cursor: "pointer",
   };
@@ -51,10 +51,15 @@ function Group({ children }: { children: React.ReactNode }) {
   return <div style={{ display: "flex", border: `1px solid ${S.rule}` }}>{children}</div>;
 }
 
+/**
+ * The eyebrow face, per the artboard: body face (Archivo) at weight 600 with
+ * .15em tracking — NOT mono. This used to be set in MONO, which is the bug
+ * the density pass fixed; a label is apparatus, not a figure.
+ */
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <span style={{
-      fontFamily: MONO, fontSize: 9, letterSpacing: ".14em",
+      fontFamily: SANS, fontSize: 9, letterSpacing: ".15em",
       textTransform: "uppercase", color: S.ink3, fontWeight: 600,
     }}>
       {children}
@@ -75,54 +80,72 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
   const ordered = useMemo(() => orderClubs(clubs, order), [clubs, order]);
   const phases = useMemo(() => allPhases(clubs), [clubs]);
 
-  const template = `104px repeat(${gameweeks.length}, minmax(46px, 1fr)) 54px`;
+  const template = `122px repeat(${gameweeks.length}, 1fr) 62px`;
 
   return (
     <section style={{ fontFamily: SANS, color: S.ink }}>
       <div style={{
-        display: "flex", flexWrap: "wrap", alignItems: "center", gap: 14,
-        padding: "12px 14px", background: S.inset,
+        display: "flex", flexWrap: "wrap", alignItems: "center", gap: 22,
+        padding: "11px 18px", background: S.inset,
         border: `1px solid ${S.hair}`, borderBottom: `1px solid ${S.rule}`,
       }}>
-        <Label>A run is</Label>
-        <Group>
-          {RUN_LENGTHS.map((value) => (
-            <button
-              key={value}
-              onClick={() => setMinLength(value)}
-              style={{ ...chip(minLength === value), fontFamily: MONO, minWidth: 26,
-                       textAlign: "center" }}
-              aria-pressed={minLength === value}
-              aria-label={`A run is ${value} or more gameweeks`}
-            >
-              {value}
-            </button>
-          ))}
-        </Group>
-        <Label>or more weeks of</Label>
-        <Group>
-          {THRESHOLDS.map((threshold) => (
-            <button
-              key={threshold.max}
-              onClick={() => setMaxDifficulty(threshold.max)}
-              style={chip(maxDifficulty === threshold.max)}
-              aria-pressed={maxDifficulty === threshold.max}
-            >
-              {threshold.label}
-            </button>
-          ))}
-        </Group>
-        <div style={{ width: 1, height: 20, background: S.rule }} />
-        <Label>Order</Label>
-        <Group>
-          {ORDERS.map(([key, label]) => (
-            <button key={key} onClick={() => setOrder(key)} style={chip(order === key)}
-              aria-pressed={order === key}>
-              {label}
-            </button>
-          ))}
-        </Group>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <Label>A run is</Label>
+          <Group>
+            {RUN_LENGTHS.map((value) => (
+              <button
+                key={value}
+                onClick={() => setMinLength(value)}
+                style={{ ...chip(minLength === value), minWidth: 22, textAlign: "center" }}
+                aria-pressed={minLength === value}
+                aria-label={`A run is ${value} or more gameweeks`}
+              >
+                {value}
+              </button>
+            ))}
+          </Group>
+          <Label>or more weeks of</Label>
+          <Group>
+            {THRESHOLDS.map((threshold) => (
+              <button
+                key={threshold.max}
+                onClick={() => setMaxDifficulty(threshold.max)}
+                style={chip(maxDifficulty === threshold.max)}
+                aria-pressed={maxDifficulty === threshold.max}
+              >
+                {threshold.label}
+              </button>
+            ))}
+          </Group>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <Label>Order</Label>
+          <Group>
+            {ORDERS.map(([key, label]) => (
+              <button key={key} onClick={() => setOrder(key)} style={chip(order === key)}
+                aria-pressed={order === key}>
+                {label}
+              </button>
+            ))}
+          </Group>
+        </div>
         <div style={{ flexGrow: 1 }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+          <Label>Weakest</Label>
+          {Array.from({ length: HEAT_STEPS }, (_, band) => (
+            <span key={band} style={{
+              width: 20, height: 10, display: "inline-block",
+              background: heatStep(band, HEAT_STEPS - 1)[0],
+            }} />
+          ))}
+          <Label>Strongest</Label>
+        </div>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 7 }}>
+          <Label>Runs found</Label>
+          <span style={{ fontFamily: DISPLAY, fontSize: 18, lineHeight: 1 }}>
+            {phases.length}
+          </span>
+        </div>
         <span data-testid="phase-count" style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
           {phases.length} run{phases.length === 1 ? "" : "s"} in {clubs.length} clubs
         </span>
@@ -133,25 +156,23 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
           flex: "1 1 560px", minWidth: 0, overflowX: "auto",
           border: `1px solid ${S.hair}`, borderTop: "none",
         }}>
-          <div style={{ minWidth: 560, padding: "0 0 8px" }}>
+          <div style={{ minWidth: 596, padding: "0 18px 14px" }}>
             <div style={{
               display: "grid", gridTemplateColumns: template, alignItems: "center",
-              background: S.bar, borderBottom: `1px solid ${S.rule}`,
+              background: S.bar, borderBottom: `1px solid ${S.rule}`, padding: "9px 0 5px",
             }}>
-              <div style={{ padding: "0 10px", height: 28, display: "flex", alignItems: "center" }}>
+              <div style={{ padding: "0 10px", display: "flex", alignItems: "center" }}>
                 <Label>Club</Label>
               </div>
               {gameweeks.map((week) => (
                 <div key={week} style={{
-                  height: 28, display: "flex", alignItems: "center", justifyContent: "center",
+                  display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink2, fontWeight: 600 }}>
-                    {week}
-                  </span>
+                  <Label>{`GW${week}`}</Label>
                 </div>
               ))}
               <div style={{
-                height: 28, display: "flex", alignItems: "center",
+                display: "flex", alignItems: "center",
                 justifyContent: "flex-end", paddingRight: 10,
               }}>
                 <Label>FDR</Label>
@@ -165,7 +186,10 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                 <div
                   key={cclub.teamId}
                   data-testid="phase-row"
-                  style={{ display: "grid", gridTemplateColumns: template, gap: 2, padding: "2px 0" }}
+                  style={{
+                    display: "grid", gridTemplateColumns: template, gap: 3,
+                    marginBottom: 3,
+                  }}
                 >
                   <div style={{
                     padding: "0 10px", display: "flex", alignItems: "center", gap: 6,
@@ -184,6 +208,12 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                     const [background, ink] = band === null
                       ? ["transparent", S.ink4] as const
                       : heatStep(band, HEAT_STEPS - 1);
+                    const on = inPhase(index);
+                    // Home carries the heavier of DM Mono's two usable weights
+                    // (300/400/500 are all it ships — never above 500); away
+                    // stays at 400. A double is weighted by whether ANY leg is
+                    // home, same spirit as the worst-of-the-week difficulty rule.
+                    const home = week.labels.some((label) => /\(H\)\s*$/.test(label));
                     return (
                       <div key={week.gameweek} style={{ position: "relative" }}>
                         <div
@@ -191,10 +221,12 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                             ? `GW${week.gameweek}: no fixture`
                             : `GW${week.gameweek}: ${week.labels.join(" · ")} · FDR ${week.difficulty}`}
                           style={{
-                            height: 24, background, color: ink,
+                            height: 26, background, color: ink,
                             display: "flex", alignItems: "center", justifyContent: "center",
-                            fontFamily: MONO, fontSize: 9,
+                            fontFamily: MONO, fontSize: 10.5, fontWeight: home ? 500 : 400,
                             border: band === null ? `1px dashed ${S.hair}` : "none",
+                            outline: on ? `1px solid ${S.brand}` : "none",
+                            outlineOffset: on ? -1 : undefined,
                           }}
                         >
                           {/* Lowercase at home, uppercase away — a convention the
@@ -207,7 +239,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                                 .map((label) => venue(label))
                                 .join("/")}
                         </div>
-                        {inPhase(index) ? (
+                        {on ? (
                           <div style={{
                             position: "absolute", left: 0, right: 0, bottom: -2,
                             height: 2, background: S.brand,
@@ -217,10 +249,16 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                     );
                   })}
 
+                  {/* The artboard's matching column is a sum of projected points
+                      (its "total"), set in Anton because it is that row's headline
+                      figure. This screen has no points model — phases.ts is explicit
+                      that nothing here simulates a return — so the figure is the
+                      club's mean FDR instead. Same display weight, different number,
+                      because the artboard's own number does not exist in this app. */}
                   <div style={{
                     display: "flex", alignItems: "center", justifyContent: "flex-end",
-                    paddingRight: 10, fontFamily: MONO, fontSize: 10,
-                    color: cclub.phases.length > 0 ? S.brand : S.ink3,
+                    paddingRight: 10, fontFamily: DISPLAY, fontSize: 15,
+                    color: cclub.phases.length > 0 ? S.brand : S.ink2,
                   }}>
                     {cclub.meanDifficulty === null ? "—" : cclub.meanDifficulty.toFixed(2)}
                   </div>
@@ -259,7 +297,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                     {phase.shortName || phase.team}
                   </span>
                   <div style={{ minWidth: 0, flexGrow: 1 }}>
-                    <div style={{ fontFamily: MONO, fontSize: 10, color: S.ink2 }}>
+                    <div style={{ fontFamily: MONO, fontSize: 10.5, color: S.brand }}>
                       GW{phase.fromGameweek}–{phase.toGameweek}
                     </div>
                     <div style={{ display: "flex", gap: 2, marginTop: 3, flexWrap: "wrap" }}>
@@ -270,7 +308,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                           : heatStep(band, HEAT_STEPS - 1);
                         return (
                           <span key={week.gameweek} style={{
-                            fontFamily: MONO, fontSize: 9, padding: "1px 4px",
+                            fontFamily: MONO, fontSize: 9.5, padding: "2px 5px",
                             background, color: ink,
                           }}>
                             {week.labels.map((label) => venue(label)).join("/")}
@@ -295,7 +333,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
       </div>
 
       <div style={{
-        display: "flex", flexWrap: "wrap", gap: 26, padding: 14,
+        display: "flex", flexWrap: "wrap", gap: 32, padding: "14px 18px",
         background: S.bar, border: `1px solid ${S.hair}`, borderTop: "none",
       }}>
         <div style={{ maxWidth: 300 }}>
@@ -344,9 +382,9 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
 /**
  * `COV (H)` becomes `cov`, `MCI (A)` becomes `MCI`.
  *
- * Case carries the venue so the cell needs no second glyph, which is what makes a
- * 46px column readable. A label the matrix did not produce is passed through
- * rather than parsed into something else.
+ * Case carries the venue so the cell needs no second glyph, which is what keeps a
+ * narrow matrix column readable. A label the matrix did not produce is passed
+ * through rather than parsed into something else.
  */
 function venue(label: string): string {
   const match = /^(.+?)\s*\((H|A)\)\s*$/.exec(label);

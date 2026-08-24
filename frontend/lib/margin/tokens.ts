@@ -233,10 +233,10 @@ export function hatch(surface: MarginSurface): string {
   return `repeating-linear-gradient(45deg, ${stroke} 0 3px, transparent 3px 6px)`;
 }
 
-/** IBM Plex Mono, applied by `app/margin/layout.tsx` through next/font. */
-export const MONO = "var(--font-plex-mono), ui-monospace, monospace";
-/** IBM Plex Sans, likewise. */
-export const SANS = "var(--font-plex-sans), system-ui, sans-serif";
+/** DM Mono, loaded by the root layout through next/font. */
+export const MONO = "var(--font-dm-mono), ui-monospace, monospace";
+/** Archivo, likewise. */
+export const SANS = "var(--font-archivo), 'Helvetica Neue', system-ui, sans-serif";
 
 /**
  * Anton, the display face, likewise loaded by the root layout.

@@ -145,3 +145,45 @@ describe("initialising distinguishes loading from absent", () => {
     expect(result.current.artifact.state).toBe("absent");
   });
 });
+
+describe("a read that was never asked for", () => {
+  /**
+   * `enabled: false` exists for a descriptor built from a value that may not be
+   * known yet. `/stats` reads `xp_public_gw{NN}.json` for one of three tabs, and
+   * hooks cannot be called conditionally — so with no resolved gameweek the
+   * choice was to fetch week `00`, which 404s on every render for as long as the
+   * gameweek stays unreadable, or to withhold two tabs that never needed it.
+   *
+   * The distinction the flag protects: "we did not ask" and "we asked and there
+   * was nothing" are different facts, and only the second is a statement about
+   * the data.
+   */
+  it("issues no request", async () => {
+    let calls = 0;
+    const fetchImpl = (async () => {
+      calls += 1;
+      return new Response("{}", { status: 200 });
+    }) as unknown as typeof fetch;
+
+    renderHook(() => useArtifact(descriptor("never-asked.json"), {
+      enabled: false, fetchImpl, now: NOW,
+    }));
+    await act(async () => { await Promise.resolve(); });
+    expect(calls).toBe(0);
+  });
+
+  it("still issues one when enabled", async () => {
+    // Guards the guard: a hook that never fetched would pass the test above.
+    let calls = 0;
+    const fetchImpl = (async () => {
+      calls += 1;
+      return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    }) as unknown as typeof fetch;
+
+    renderHook(() => useArtifact(descriptor("asked.json"), {
+      enabled: true, fetchImpl, now: NOW,
+    }));
+    await act(async () => { await Promise.resolve(); await Promise.resolve(); });
+    expect(calls).toBeGreaterThan(0);
+  });
+});
