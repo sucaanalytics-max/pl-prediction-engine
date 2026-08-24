@@ -1,19 +1,43 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-24T10:03:58.698095Z",
-  "n_dropped": 392,
+  "generated_at": "2026-08-24T10:53:30.686695Z",
+  "n_dropped": 393,
   "dropped_by_source": {
     "bbc_football": 119,
     "fantasyfootballscout": 20,
     "hayters": 70,
-    "sky_football": 183
+    "sky_football": 184
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 482,
+  "n_articles": 483,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "b943c08fcf11409a",
+      "headline": "FPL notes: Garner\u2019s fitness, Sarr latest + Ndiaye\u2019s threat",
+      "summary": "Everton ride their luck to a clean sheet against Crystal Palace The post FPL notes: Garner's fitness, Sarr latest + Ndiaye's threat appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/24/fpl-notes-garners-fitness-sarr-latest-ndiayes-threat",
+      "claimed_at": "2026-08-24T10:10:00Z",
+      "players": [
+        {
+          "element_id": 237,
+          "name": "Ndiaye",
+          "club": "EVE",
+          "held": true
+        },
+        {
+          "element_id": 239,
+          "name": "Garner",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "5a5edce689441bc5",
       "headline": "'It would appear he's no longer wanting to play for Aston Villa' - does Watkins want out?",
@@ -349,6 +373,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "7dfd496bbd684856",
+      "headline": "Ref Watch LIVE! Were Liverpool right to be awarded penalty at Newcastle?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13576553/ref-watch-premier-league-weekend-reaction-live-dermot-gallagher-assesses-the-big-refereeing-decisions",
+      "claimed_at": "2026-08-24T09:47:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "73f09c1ab6fffb16",
@@ -969,24 +1011,6 @@
       "touches_squad": false
     },
     {
-      "digest": "493041bebda601f9",
-      "headline": "Brighton dominate 10-man Villa",
-      "summary": "Brighton start their season with an emphatic win at home against Europa League winners Aston Villa, with four first-half goals.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c78g8gdkgnzo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T19:02:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "e84f59812745458e",
       "headline": "Late Liverpool pen sees Szoboszlai silence Newcastle in draw",
       "summary": "FREE TO WATCH: Highlights from the Premier League match between Newcastle and Liverpool.",
@@ -999,24 +1023,6 @@
           "element_id": 368,
           "name": "Szoboszlai",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d694d959c45d2b7b",
-      "headline": "Arsenal target Alvarez whistled and jeered on Atletico return",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13575723/european-football-news-and-transfers-barcelona-real-madrid-psg-bayern-munich-latest-and-more",
-      "claimed_at": "2026-08-23T18:20:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
