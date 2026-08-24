@@ -104,7 +104,14 @@ export const AGENT_STATUS: Descriptor<AgentStatus> = {
  * exactly one (`compactIstDeadline`, rendered once by
  * `components/DeadlineClock.tsx`).
  *
- * Nothing is lost: `reason` on this artifact already carries the resolver's own
- * sentence — "GW1 deadline in 247.4h; nothing due yet" — written by the code that
- * decided it, and `agentRan` is the boolean a surface should branch on.
+ * The reasoning at the time was that nothing is lost, because `reason` already
+ * carries the resolver's own sentence — "GW1 deadline in 247.4h; nothing due yet"
+ * — and `agentRan` is the boolean a surface should branch on. Both true, and both
+ * beside the point: for a while no surface branched on either, so the artifact
+ * that exists to distinguish "idle by design" from "broken" distinguished nothing
+ * for a reader.
+ *
+ * `components/AgentIdleNotice.tsx` is what reads them now — one line on
+ * `/evidence`, quoting `reason` rather than recomposing a sentence from the parts,
+ * which is what grew the second deadline format the first time.
  */

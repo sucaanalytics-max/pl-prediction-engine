@@ -29,6 +29,25 @@ describe("rescued mounts", () => {
     expect(source).toContain("PlanGrid");
   });
 
+  it("mounts the agent's message feed and its idle line on /evidence", () => {
+    /**
+     * The same class of defect one layer down, and it did happen: `/inbox` was
+     * deleted and `REGISTRY.messages` was left narrowed with no consumer, so
+     * `_deliver`'s "ONLY channel" — including the critical "GW{n} was never
+     * sealed" announcement — reached no screen. `agentRan` and `reason` were in
+     * the same state, which is how "idle by design" and "broken" came to look
+     * identical on the page built to tell them apart.
+     */
+    const source = read("app", "evidence", "page.tsx");
+    expect(source).toContain("AgentMessages");
+    expect(source).toContain("AgentIdleNotice");
+  });
+
+  it("links /capture from /, since the navs deliberately do not", () => {
+    // The write path's own reachability, asserted beside the read path's.
+    expect(read("app", "page.tsx")).toContain('href="/capture"');
+  });
+
   it("does not reach for the two detached entries", () => {
     for (const page of [
       read("app", "page.tsx"),

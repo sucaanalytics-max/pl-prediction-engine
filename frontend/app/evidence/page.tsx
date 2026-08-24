@@ -13,8 +13,17 @@
  *
  * The page's own `CapturedHeadlines` is gone: it read the identical NEWS_FEED
  * artifact that NewsView reads better.
+ *
+ * The `/inbox` half of that claim was, for a while, only a claim: the route was
+ * deleted and its feed was not re-mounted anywhere, so `fpl/messages.json` — the
+ * ONLY channel the agent has, `_deliver`'s own word — had no reader. It is the
+ * last section, because it is a record of what was said rather than a reading of
+ * what is true, and `AgentIdleNotice` sits with it: when the agent has not run,
+ * one line saying so is the whole explanation for every absence on this page.
  */
 
+import AgentMessages from "@/components/AgentMessages";
+import { AgentIdleNotice } from "@/components/AgentIdleNotice";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { NewsView } from "@/components/margin/NewsView";
 import { WatchView } from "@/components/margin/WatchView";
@@ -69,6 +78,17 @@ export default function EvidencePage() {
           ) : (
             <WatchView gameweek={gameweek} />
           )}
+        </Section>
+
+        {/* Last: what the agent said, rather than what is true. */}
+        <Section
+          title="What the agent said"
+          subtitle="Its only channel — decisions, caveats and anything it could not do, newest first"
+        >
+          <div className="space-y-3">
+            <AgentIdleNotice />
+            <AgentMessages />
+          </div>
         </Section>
       </div>
     </ErrorBoundary>
