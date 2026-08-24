@@ -685,6 +685,11 @@ def _project_horizon(
             # A genuinely empty gameweek (or one past the published schedule).
             # Stopping is right: padding with zeros would tell the optimiser
             # every player blanks, and it would plan around a fiction.
+            # The caller already gates on offset 0 (run_agent.py:509), so this
+            # can only fire for a LATER week. Do not turn it into `continue`:
+            # build_horizon_block labels `weeks` positionally by
+            # first_gameweek + offset, so skipping a week — rather than
+            # stopping on it — would relabel every week after it.
             break
 
         # Roles re-derived for THIS week. The availability path knows how each
