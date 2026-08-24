@@ -604,6 +604,41 @@ def refresh_expected_points(
     }
 
 
+def horizon_targets(
+    fixtures_raw: Any, first_gameweek: int, eval_horizon: int
+) -> List[int]:
+    """
+    The gameweeks the horizon should cover, in order.
+
+    A week qualifies when it has at least one UNPLAYED fixture. Weeks whose
+    matches are already finished are **skipped**, not fatal: between the last
+    match of one gameweek and the deadline of the next — most of a week — the
+    current week has nothing left to simulate while the next seven do.
+
+    The walk still STOPS at the first week with no fixtures at all, which is
+    either a genuinely blank gameweek or the end of the published schedule.
+    Jumping that gap would plan a squad across a week the optimiser has no view
+    of, and padding it with zeros would tell the optimiser every player blanks.
+    So a gap ends the horizon; a finished week does not.
+    """
+    scheduled: Dict[int, bool] = {}
+    for fixture in fixtures_raw:
+        event = fixture.get("event")
+        if not isinstance(event, int):
+            continue  # FPL leaves `event` null until a fixture is scheduled.
+        scheduled[event] = scheduled.get(event, False) or not fixture.get("finished")
+
+    targets: List[int] = []
+    week = int(first_gameweek)
+    while len(targets) < int(eval_horizon):
+        if week not in scheduled:
+            break  # A blank week, or past the published schedule.
+        if scheduled[week]:
+            targets.append(week)
+        week += 1
+    return targets
+
+
 def _project_horizon(
     gameweek: int,
     fixtures_raw: Any,
@@ -658,8 +693,8 @@ def _project_horizon(
 
     weeks: list = []
     diagnostics: list = []
-    for offset in range(EVAL_HORIZON):
-        target = int(gameweek) + offset
+    targets = horizon_targets(fixtures_raw, int(gameweek), EVAL_HORIZON)
+    for offset, target in enumerate(targets):
         specs = []
         week_sources: Dict[str, int] = {}
         for fixture in fixtures_raw:
@@ -682,10 +717,11 @@ def _project_horizon(
             )
 
         if not specs:
-            # A genuinely empty gameweek (or one past the published schedule).
-            # Stopping is right: padding with zeros would tell the optimiser
-            # every player blanks, and it would plan around a fiction.
-            break
+            # horizon_targets already excluded weeks with nothing unplayed, so
+            # reaching here means a fixture named a team this bootstrap does not
+            # carry. Skip the week rather than truncate the horizon.
+            logger.warning("GW%s: no usable fixture specs; skipping", target)
+            continue
 
         # Roles re-derived for THIS week. The availability path knows how each
         # player's absence is expected to end, so a suspension expires and an
