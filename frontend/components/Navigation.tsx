@@ -140,11 +140,18 @@ export default function Navigation() {
         </nav>
 
         <div className="portal-sidebar-footer">
-          {/* No second deadline clock and no artifact-age readout. The deadline is
-              on `/`, beside the decision it constrains, and the age of
-              `latest.json` said nothing about whether the captured position or the
-              live FPL sync was current — which is what the words next to it
-              claimed. What is left here is the one control that belongs in chrome. */}
+          {/* No deadline clock here and no artifact-age readout.
+              The clock this sidebar used to carry was called "the second" because
+              Margin had the first; the route cut deleted `/margin`, so for a week
+              the app had none at all. It is now `components/DeadlineClock.tsx`,
+              mounted once in the header of `/` — beside the decision it constrains,
+              not in the chrome of every page. Do not add a second one here: two
+              clocks over one deadline can disagree on a Friday, and
+              `app/page.test.tsx` asserts the count.
+              The age readout went because the age of `latest.json` said nothing
+              about whether the captured position or the live FPL sync was current,
+              which is what the words next to it claimed. What is left is the one
+              control that belongs in chrome. */}
           <ThemeToggle />
         </div>
       </aside>

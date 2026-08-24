@@ -166,6 +166,12 @@ async function mountPage(
     projections = PROJECTIONS as typeof PROJECTIONS | null,
     agentGameweek = 1 as number | null,
     eventId = 1 as number | null,
+    // Deliberately NOT 2026-08-21T17:30:00Z: `compactIstDeadline` returns exactly
+    // that date's formatting — "Fri 21 Aug · 23:00 IST" — as a hardcoded fallback
+    // when handed no argument, so using it here would make the placeholder and a
+    // real deadline indistinguishable in the assertions below.
+    deadline = "2026-09-12T10:00:00Z" as string | null,
+    agentStatusAbsent = false,
   } = {},
 ) {
   vi.resetModules();
@@ -196,9 +202,12 @@ async function mountPage(
       }
       if (key === "agentStatus") {
         return ok(
-          agentGameweek === null
+          agentGameweek === null || agentStatusAbsent
             ? null
-            : { gameweek: agentGameweek, agentRan: false, phase: "idle" },
+            : {
+              gameweek: agentGameweek, agentRan: false, phase: "idle",
+              deadline, secondsToDeadline: null, reason: null, generatedAt: null,
+            },
         );
       }
       if (key === "playerStats") return ok(PLAYER_STATS);
@@ -545,5 +554,91 @@ describe("the default behaviour /margin depends on is unchanged", () => {
     expect(cells.length, "no cells to check, so `every` would pass vacuously")
       .toBe(6);
     expect(cells.every((o) => o === "0.45")).toBe(true);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The deadline
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("the deadline is on the page, exactly once", () => {
+  /**
+   * This app shipped for a week with no deadline anywhere.
+   *
+   * Two clocks used to run — Margin's countdown and one in the sidebar chrome. The
+   * route cut deleted `/margin`, and the same commit removed "the second deadline
+   * clock" from the sidebar, a description that was accurate when written and wrong
+   * by the time it was applied. Nothing failed: no test asserted that a planner
+   * whose purpose is deciding before a deadline shows the deadline, and
+   * `compactIstDeadline` sat with zero callers.
+   *
+   * The count matters as much as the presence. The rule the surviving code was
+   * written against is that ONE clock renders: `schedule.py` stamps a duration into
+   * `agent_status.reason` when the agent runs, and a second live countdown beside it
+   * showed a frozen "71.0h" next to "2d 23h" — two clocks for one deadline, one of
+   * them wrong. Two readouts with independent staleness budgets disagree on a
+   * Friday, which is the day it matters. So `toHaveLength(1)` below is the assertion
+   * that the old defect never had.
+   */
+  const FORMATTED = "Sat 12 Sept · 15:30 IST";
+
+  it("prints the deadline from the agent's status", async () => {
+    const { container } = await mountPage();
+    expect(container.textContent).toContain(FORMATTED);
+  });
+
+  it("labels it with the gameweek it belongs to", async () => {
+    const { container } = await mountPage({ agentGameweek: 4 });
+    expect(container.querySelector("[data-testid='deadline-clock']")?.textContent)
+      .toContain("GW4 deadline");
+  });
+
+  it("renders exactly one clock", async () => {
+    const { container } = await mountPage();
+    expect(container.querySelectorAll("[data-testid='deadline-clock']"))
+      .toHaveLength(1);
+    // Belt and braces: the formatted time itself appears once, so a second clock
+    // built without the test id still fails.
+    expect(container.textContent?.split(FORMATTED).length).toBe(2);
+  });
+
+  it("agrees with the tested formatter rather than formatting its own date", async () => {
+    // The point of reusing `compactIstDeadline` is that the app has ONE definition
+    // of what a deadline looks like. Losing its last caller is what let the clock
+    // disappear unnoticed.
+    const { compactIstDeadline } = await import("@/lib/formats");
+    const { container } = await mountPage();
+    expect(container.textContent)
+      .toContain(compactIstDeadline("2026-09-12T10:00:00Z"));
+  });
+
+  it("says so in one line when the status carries no deadline", async () => {
+    const { container } = await mountPage({ deadline: null });
+    const line = container.querySelector("[data-testid='deadline-unknown']");
+    expect(line?.tagName).toBe("P");
+    expect(line?.textContent).toMatch(/no deadline/i);
+    expect(container.querySelector("[data-testid='deadline-clock']")).toBeNull();
+  });
+
+  it("says so in one line when the status cannot be read at all", async () => {
+    const { container } = await mountPage({ agentStatusAbsent: true });
+    expect(container.querySelector("[data-testid='deadline-unknown']")?.textContent)
+      .toMatch(/could not be read/i);
+  });
+
+  it("never shows the formatter's fabricated placeholder", async () => {
+    /**
+     * `compactIstDeadline(undefined)` returns the literal "Fri 21 Aug · 23:00 IST",
+     * a date from the design document. On screen an invented deadline is
+     * indistinguishable from a measured one — the `fpl-portal.ts` failure this repo
+     * has a scan for on two other surfaces. So absence must render as prose, and
+     * the guard belongs on the page rather than on the formatter, which is shared.
+     */
+    for (const args of [{ deadline: null }, { agentStatusAbsent: true }]) {
+      const { container } = await mountPage(args);
+      expect(container.textContent).not.toContain("Fri 21 Aug");
+      expect(container.textContent).not.toContain("23:00 IST");
+      cleanup();
+    }
   });
 });

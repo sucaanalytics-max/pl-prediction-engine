@@ -57,6 +57,7 @@
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Section } from "@/components/data/Artifact";
+import { DeadlineClock } from "@/components/DeadlineClock";
 import GameweekCall from "@/components/GameweekCall";
 import SquadBoard from "@/components/SquadBoard";
 import { PlanGridSection } from "@/components/PlanGridSection";
@@ -69,19 +70,27 @@ export default function CallPage() {
   return (
     <ErrorBoundary pageName="The call">
       <div className="space-y-8">
-        <header>
-          <h1
-            className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
-          >
-            Your call
-          </h1>
-          {/* No gameweek literal in the chrome. `GameweekCall` names the week
-              once, beside the artifact it read it from, and a hardcoded "GW1"
-              here would be wrong for 37 weeks of 38. */}
-          <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-            What your XI is, and who is captain, before the deadline
-          </p>
+        <header className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+          <div>
+            <h1
+              className="text-3xl font-extrabold tracking-tight"
+              style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
+            >
+              Your call
+            </h1>
+            {/* No gameweek literal in the chrome. `GameweekCall` names the week
+                once, beside the artifact it read it from, and a hardcoded "GW1"
+                here would be wrong for 37 weeks of 38. */}
+            <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
+              What your XI is, and who is captain, before the deadline
+            </p>
+          </div>
+          {/* The deadline the sentence above refers to, and the app's ONLY clock.
+              It sits here rather than in the sidebar because it constrains this
+              page's decision, and it is mounted once because two clocks over one
+              deadline is a defect this repo has already shipped — see
+              `components/DeadlineClock.tsx`. */}
+          <DeadlineClock />
         </header>
 
         {/* The model's call leads, and it is the only captain on this page. */}
