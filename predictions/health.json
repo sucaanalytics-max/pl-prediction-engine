@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-08-23T06:22:28.410260Z",
+  "last_updated": "2026-08-24T06:34:49.427175Z",
   "gameweek": 1,
-  "n_predictions": 4,
+  "n_predictions": 1,
   "status": "healthy",
   "sources": {
     "bootstrap": {
@@ -44,7 +44,7 @@
   "fpl": {
     "status": "ok",
     "gameweek": 1,
-    "n_players": 604,
+    "n_players": 609,
     "n_draws": 5000,
     "rules_source": "bootstrap+signed_yaml",
     "rules_degraded": false,
@@ -53,18 +53,18 @@
     "fixtures_missing": [],
     "diagnostics": {
       "n_clubs": 20,
-      "n_players": 604,
-      "n_without_history": 144,
-      "n_availability_gated": 98,
+      "n_players": 609,
+      "n_without_history": 146,
+      "n_availability_gated": 96,
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 486,
-        "open_ended": 48,
-        "graded": 20,
+        "none": 491,
+        "open_ended": 47,
+        "graded": 22,
         "permanent": 39,
         "dated_eligibility": 3,
-        "dated_fitness": 8
+        "dated_fitness": 7
       },
       "n_evidence_conflicts": 0
     },
@@ -73,14 +73,11 @@
       "n_fixtures": 10,
       "n_fixtures_skipped": 0,
       "skipped_fixtures": [],
-      "n_players": 604,
+      "n_players": 609,
       "n_double_gameweek_players": 0,
       "n_blank_gameweek_players": 0,
       "seed_entropy": 1681305205,
       "dgw_rotation_correlation_modelled": false
     }
-  },
-  "validated_at": "2026-08-23T10:31:05.271028+00:00",
-  "artifact_contract": "valid",
-  "prediction_age_hours": 4.143572411666667
+  }
 }
