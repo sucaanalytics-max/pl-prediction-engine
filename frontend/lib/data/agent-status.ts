@@ -92,32 +92,26 @@ export const AGENT_STATUS: Descriptor<AgentStatus> = {
   isEmpty: agentStatusIsEmpty,
 };
 
-/** One sentence a reader can act on, or null when the agent is working normally. */
-export function describeIdleAgent(status: AgentStatus): string | null {
-  if (status.agentRan) return null;
-
-  const parts: string[] = [];
-  parts.push(
-    status.phase === "locked"
-      ? "The agent is locked: the deadline has passed and this gameweek is settled."
-      : "The agent has not run because nothing is due yet.",
-  );
-  if (status.reason) parts.push(status.reason);
-  if (status.deadline) {
-    // Date-only formatting via the artifact's own ISO string. `calendarDate` exists
-    // for date-only values; this one carries a time that matters.
-    const when = new Date(status.deadline);
-    if (!Number.isNaN(when.getTime())) {
-      parts.push(
-        `GW${status.gameweek ?? "?"} deadline: ${when.toLocaleString(undefined, {
-          dateStyle: "medium",
-          timeStyle: "short",
-        })}.`,
-      );
-    }
-  }
-  parts.push(
-    "Projections, the evidence view and the message feed appear once it starts.",
-  );
-  return parts.join(" ");
-}
+/*
+ * `describeIdleAgent` was here.
+ *
+ * It composed one sentence from `phase`, `reason` and `deadline` for a screen to
+ * print when the agent had not run. Its only-ever caller was
+ * `AgentIdleNotice.tsx`, and its only-ever mount point in the whole git history
+ * was `app/evidence/page.tsx` — by the time it was removed it had no callers,
+ * and it formatted the deadline with its own `toLocaleString`, which made it a
+ * SECOND definition of what a deadline looks like in a tree that now has
+ * exactly one (`compactIstDeadline`, rendered once by
+ * `components/DeadlineClock.tsx`).
+ *
+ * The reasoning at the time was that nothing is lost, because `reason` already
+ * carries the resolver's own sentence — "GW1 deadline in 247.4h; nothing due yet"
+ * — and `agentRan` is the boolean a surface should branch on. Both true, and both
+ * beside the point: for a while no surface branched on either, so the artifact
+ * that exists to distinguish "idle by design" from "broken" distinguished nothing
+ * for a reader.
+ *
+ * `components/AgentIdleNotice.tsx` is what reads them now — one line on
+ * `/evidence`, quoting `reason` rather than recomposing a sentence from the parts,
+ * which is what grew the second deadline format the first time.
+ */

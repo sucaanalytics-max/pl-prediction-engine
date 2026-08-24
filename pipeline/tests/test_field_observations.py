@@ -165,7 +165,8 @@ class TestConsecutiveRun(unittest.TestCase):
 
 class WeeklyGateWiringTests(unittest.TestCase):
     """
-    The gate that decides whether Wazza is Wazza or a second Ronny.
+    The gate that decides whether a weekly-objective entry runs on a measured
+    tail or silently falls back to the season plan under a different name.
 
     `run_decide.decide` takes `field_calibrated_gameweeks=0`, so for a long time
     the agent simply omitted the argument and got the number a closed gate wants

@@ -1,56 +1,54 @@
 "use client";
 
-import { AGENT_STATUS, describeIdleAgent, type AgentStatus } from "@/lib/data/agent-status";
-import { useArtifact } from "@/lib/data/useArtifact";
+import { AGENT_STATUS, type AgentStatus } from "@/lib/data/agent-status";
 import { proven } from "@/lib/data/artifact";
+import { useArtifact } from "@/lib/data/useArtifact";
 
 /**
- * Says why an agent-owned artifact is absent.
+ * Why the agent has produced nothing, in one line.
  *
- * ## The measured problem
+ * ## The fact this restores
  *
- * The agent self-gates on phase and is skipped whenever nothing is due. On
- * 2026-08-11 that was every run: the GW1 deadline was 247 hours away, and the
- * resolver correctly reported "nothing due yet". It writes `evidence_view.json`,
- * `messages.json` and `xp_gw*`, so those are absent for about ten days before each
- * deadline.
+ * `agent_status.json` exists for exactly one purpose, stated in
+ * `schedule.py:475-492`: the agent self-gates, so its artifacts are absent for
+ * most of a gameweek cycle, and a screen must be able to tell **idle by design**
+ * from **broken**. Those are opposite facts and every absence on this page
+ * rendered them identically.
  *
- * Without this, `/evidence` showed the same `absent` state whether the agent was
- * idle by design or had crashed — and `evidence_view.json` has in fact **never**
- * been published, which looks alarming until you know the reason.
+ * `agentRan` and `reason` were narrowed and read by nothing. The previous
+ * consumer was removed on the reasoning that `reason` "already carries the
+ * resolver's own sentence" — true, and beside the point: a sentence nothing
+ * renders is not available to a reader.
  *
- * ## Why it renders nothing when the agent is working
+ * ## One line, and only when it says something
  *
- * A banner that is always present stops being read. This returns null the moment
- * `agent_ran` is true, so its appearance carries information.
+ * `null` when the agent ran, because then the artifacts below are the answer and
+ * a line about the agent's phase would be noise. `null` too when the status
+ * artifact itself cannot be read — the sections below already declare their own
+ * state, and a notice that cannot say why would be a shrug with a border.
+ *
+ * The resolver's `reason` is quoted rather than recomposed. Composing one here is
+ * what the deleted `describeIdleAgent` did, and it grew a second definition of
+ * how a deadline is formatted; the sentence is written by the code that made the
+ * decision, which is the only place that knows it.
  */
-export default function AgentIdleNotice() {
+export function AgentIdleNotice() {
   const { artifact } = useArtifact<AgentStatus>(AGENT_STATUS);
-
-  // `proven` rather than `.value`: the payload is behind a module-private symbol
-  // precisely so a page cannot read it without passing through a state check.
   const status = proven(artifact);
-  if (!status) {
-    // The status file itself is missing. That is a different and much smaller
-    // problem than the agent being broken, and saying nothing is better than
-    // guessing which one it is.
-    return null;
-  }
 
-  const sentence = describeIdleAgent(status);
-  if (!sentence) return null;
+  if (!status || status.agentRan) return null;
 
   return (
-    <div
-      className="glass-inset p-3 text-xs"
+    <p
+      className="text-xs"
       role="status"
-      data-testid="agent-idle-notice"
-      style={{ color: "var(--text-2)", borderLeft: "3px solid var(--warning)" }}
+      data-testid="agent-idle"
+      style={{ color: "var(--text-4)" }}
     >
-      <p>
-        <strong style={{ color: "var(--text-1)" }}>The agent is idle.</strong>{" "}
-        {sentence}
-      </p>
-    </div>
+      The agent has not run, so what it writes is absent by design rather than
+      broken
+      {status.reason ? ` — ${status.reason}` : ""}
+      {status.phase ? ` (phase ${status.phase})` : ""}.
+    </p>
   );
 }

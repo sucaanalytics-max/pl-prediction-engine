@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { TEAMS } from "@/lib/control-room/model";
+import { OWNER_ENTRY } from "@/lib/entry";
 import { saveOwnerCapture, type OwnerCapture } from "@/lib/hub-position-store";
 
 /**
@@ -14,13 +14,14 @@ import { saveOwnerCapture, type OwnerCapture } from "@/lib/hub-position-store";
  * rather than one already in flight — every thirty minutes inside a Friday seal
  * window — which did not justify a second store and a second secret.
  *
- * ## Two entries, not three
+ * ## One entry, and it is the owner's
  *
- * The allowlist is derived from `TEAMS` rather than written out, so it cannot
- * drift from the model: only entries with `kind: "bot"` are accepted, because
- * only those reach `_decide_for_entries`. The owner's own team (20945) is a
- * display entity — a capture for it would have no consumer, and accepting one
- * would imply a proposal that never arrives.
+ * The allowlist is {@link OWNER_ENTRY}, which mirrors `pipeline/config.py`
+ * `FPL_ENTRIES` — the one entry the agent solves for. It is not derived from a
+ * team list here: this route once built its allowlist from the deleted control
+ * room's three-team model, which meant it accepted the two bot entries that had
+ * detached to their own project and refused the only entry a capture can reach.
+ * A capture for anything else is a file `_read_entry` never opens.
  *
  * ## No auth layer here, deliberately
  *
@@ -35,10 +36,6 @@ export const dynamic = "force-dynamic";
 const SQUAD_SIZE = 15;
 const FIRST_GAMEWEEK = 1;
 const LAST_GAMEWEEK = 38;
-
-const DECIDED_FOR = new Set(
-  TEAMS.filter((team) => team.kind === "bot").map((team) => team.entryId)
-);
 
 function isWholeNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && value >= 0;
@@ -60,11 +57,12 @@ function parse(body: unknown): { capture: OwnerCapture } | { error: string } {
   const raw = body as Record<string, unknown>;
 
   const entryId = raw.entryId;
-  if (!isWholeNumber(entryId) || !DECIDED_FOR.has(entryId)) {
+  if (!isWholeNumber(entryId) || entryId !== OWNER_ENTRY) {
     return {
       error:
-        `entryId must be one of the entries the agent decides for ` +
-        `(${[...DECIDED_FOR].join(", ")}). The owner's own team is advisory only.`,
+        `entryId must be ${OWNER_ENTRY}, the one entry this repo decides for. ` +
+        `The two bot entries moved to their own project on 2026-08-24, and a ` +
+        `capture for any other entry is a file the agent never reads.`,
     };
   }
 

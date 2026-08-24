@@ -346,6 +346,31 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     if fbref_stats is not None:
         fbref_features = build_advanced_features(fbref_stats, passing_stats)
 
+    # Understat player-level shots and creation, for the stats surface only.
+    #
+    # Deliberately AFTER the feature build and deliberately not feeding it: this
+    # is a scraped source with no warranty, and the rule is that anything a model
+    # depends on must fail loudly. Nothing in `pipeline/` reads the artifact it
+    # writes, so it is allowed to come back None on any given day — which is why
+    # it is in the OPTIONAL half of the workflow's sync list.
+    #
+    # One request per refresh, cached 48h: this is the whole league in a single
+    # season table, not 609 player pages.
+    try:
+        with step_timeout(120, "Understat player events"):
+            from pipeline.fpl.player_events import publish as publish_player_events
+
+            publish_player_events(
+                season_label=CURRENT_SEASON_LABEL,
+                season=CURRENT_SEASON,
+                bootstrap=bootstrap,
+                cache_dir=DATA_PROCESSED / "understat",
+                out_dirs=[PREDICTIONS_DIR],
+                force=force_refresh,
+            )
+    except Exception as e:
+        logger.warning(f"  Understat player events failed: {e}")
+
     logger.info(
         f"  Matches: {len(matches)}, Upcoming: {len(upcoming)}, "
         f"Players: {len(player_stats)}, FBref teams: {len(fbref_features)}"

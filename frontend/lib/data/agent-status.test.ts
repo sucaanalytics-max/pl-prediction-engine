@@ -11,7 +11,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import {
-  AGENT_STATUS, describeIdleAgent, narrowAgentStatus, agentStatusIsEmpty,
+  AGENT_STATUS, narrowAgentStatus, agentStatusIsEmpty,
 } from "@/lib/data/agent-status";
 
 const IDLE = {
@@ -55,39 +55,6 @@ describe("narrowAgentStatus", () => {
     // An idle agent IS the content. `chartable()` refuses `empty`, so treating this
     // as empty would hide the explanation exactly when it is needed.
     expect(agentStatusIsEmpty()).toBe(false);
-  });
-});
-
-describe("describeIdleAgent", () => {
-  it("explains an idle agent and names the deadline", () => {
-    const sentence = describeIdleAgent(narrow(IDLE)!);
-    expect(sentence).toBeTruthy();
-    expect(sentence).toContain("nothing due yet");
-    expect(sentence).toMatch(/deadline/i);
-  });
-
-  it("distinguishes locked from idle", () => {
-    const locked = describeIdleAgent(narrow({ ...IDLE, phase: "locked" })!);
-    expect(locked).toContain("locked");
-    expect(locked).not.toContain("nothing is due yet");
-  });
-
-  it("says nothing when the agent is working", () => {
-    // A banner that is always there stops being read, so its presence must carry
-    // information.
-    expect(describeIdleAgent(narrow({ ...IDLE, agent_ran: true })!)).toBeNull();
-  });
-
-  it("survives a missing deadline", () => {
-    const sentence = describeIdleAgent(narrow({ ...IDLE, deadline: null })!);
-    expect(sentence).toBeTruthy();
-    expect(sentence).not.toContain("Invalid");
-  });
-
-  it("names what will appear once it runs", () => {
-    const sentence = describeIdleAgent(narrow(IDLE)!);
-    expect(sentence).toMatch(/projection/i);
-    expect(sentence).toMatch(/evidence/i);
   });
 });
 

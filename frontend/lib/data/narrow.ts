@@ -34,8 +34,7 @@ import {
 } from "@/lib/data/check";
 import { parseFeed, type MessageFeed } from "@/lib/fpl-messages";
 import {
-  DAY, explainabilityIsEmpty, h2hIsEmpty, healthIsEmpty, matchesAreEmpty,
-  playerStatsAreEmpty, tableIsEmpty,
+  DAY, healthIsEmpty, matchesAreEmpty, playerStatsAreEmpty,
   type Descriptor, type OpaqueDescriptor,
 } from "@/lib/data/registry";
 import { toFraction, type Fraction } from "@/lib/data/units";
@@ -108,7 +107,6 @@ export interface MatchRow {
   readonly confidence_pct: number;
   readonly referee: string | null;
   readonly is_derby: boolean | null;
-  readonly n_value_bets: number | null;
 }
 
 export interface MatchesFile {
@@ -145,7 +143,6 @@ export function narrowMatches(raw: unknown): NarrowResult<MatchesFile> {
       // models degrade gracefully by design, so absence is expected.
       referee: optString(row.referee),
       is_derby: optBoolean(row.is_derby),
-      n_value_bets: optNumber(row.n_value_bets),
     } satisfies MatchRow;
   });
 
@@ -1489,30 +1486,27 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
   });
 }
 
-/** The two mandates, as `pipeline/config.py::FPL_ENTRIES` names them. */
-export const ENTRY_LABELS = ["season", "weekly"] as const;
-export type EntryLabel = (typeof ENTRY_LABELS)[number];
+/** The single entry's label, as `pipeline/config.py::FPL_ENTRIES` names it. */
+const ENTRY = "owner";
 
 /**
- * A descriptor for one entry's decision in one gameweek.
+ * A descriptor for the decision in one gameweek.
  *
- * Built per call because the path carries the gameweek — the registry holds only
- * static paths. Deliberately NOT a `decision_latest.json`: that name was fetched
- * by the old page, staged by one workflow, excluded by another, and **written by
- * nothing**, so the page could never render and the private decisions were
- * discarded every run.
+ * Took a label until 2026-08-24, when the two bot entries moved to their own
+ * project. The label survives in the FILENAME because `write_decision` still
+ * composes `decision_gw{NN}_{label}.json` and the staging glob depends on that
+ * shape; it no longer survives as a choice a caller can get wrong.
+ *
+ * Deliberately NOT a `decision_latest.json`: that name was fetched by the old
+ * page, staged by one workflow, excluded by another, and written by nothing.
  */
-export function decisionDescriptor(
-  gameweek: number, label: EntryLabel,
-): Descriptor<PublicDecision> {
+export function decisionDescriptor(gameweek: number): Descriptor<PublicDecision> {
   const padded = String(gameweek).padStart(2, "0");
   return {
-    key: `decision:${label}:${padded}`,
-    path: `fpl/decision_public_gw${padded}_${label}.json`,
+    key: `decision:${padded}`,
+    path: `fpl/decision_public_gw${padded}_${ENTRY}.json`,
     owner: "agent",
-    describes: `the ${label} team's proposal for GW${gameweek}`,
-    // A proposal is advice about one deadline; freshness is judged on that
-    // deadline by the consumer, not on a byte age.
+    describes: `the proposal for GW${gameweek}`,
     freshnessBudgetMs: null,
     narrow: narrowPublicDecision,
     producedAtOf: (v) => v.generated_at,
@@ -1527,11 +1521,11 @@ export function decisionDescriptor(
 /**
  * Every artifact the app may fetch.
  *
- * Each entry keeps its own payload type — `REGISTRY.table` is a
- * `Descriptor<readonly Standing[]>`, not a `Descriptor<any>`. An earlier draft
+ * Each entry keeps its own payload type — `REGISTRY.matches` is a
+ * `Descriptor<MatchesFile>`, not a `Descriptor<any>`. An earlier draft
  * funnelled them through a `Descriptor<any>` helper to make the record
  * homogeneous, which typechecked and quietly erased every payload type in the
- * app: `proven(load(REGISTRY.table))` came back `any`, so the layer built to
+ * app: `proven(load(REGISTRY.matches))` came back `any`, so the layer built to
  * replace `res.json() as T` reintroduced exactly the same hole one level up.
  *
  * `unpublished: true` marks a path no workflow writes yet. The paths test fails
@@ -1540,16 +1534,6 @@ export function decisionDescriptor(
  * added silently again.
  */
 export const REGISTRY = {
-  table: ({
-    key: "table",
-    path: "table.json",
-    owner: "daily",
-    describes: "the Premier League table",
-    freshnessBudgetMs: 2 * DAY,
-    narrow: narrowTable,
-    isEmpty: tableIsEmpty,
-  }) satisfies Descriptor<readonly Standing[]>,
-
   matches: ({
     key: "matches",
     path: "matches.json",
@@ -1585,31 +1569,6 @@ export const REGISTRY = {
     isEmpty: healthIsEmpty,
   }) satisfies Descriptor<Health>,
 
-  latest: ({
-    key: "latest",
-    path: "latest.json",
-    owner: "daily",
-    describes: "match probabilities, value bets and explanations",
-    freshnessBudgetMs: DAY,
-    narrow: narrowLatest,
-    producedAtOf: (v) => v.generated_at,
-    producerVersionOf: (v) => v.pipeline_version,
-    // Partial emptiness: the probability payload is real, the SHAP and
-    // odds-comparison panels are not. See explainabilityIsEmpty.
-    isEmpty: explainabilityIsEmpty,
-  }) satisfies Descriptor<Latest>,
-
-  h2h: ({
-    key: "h2h",
-    path: "h2h.json",
-    owner: "daily",
-    describes: "head-to-head history",
-    // A historical record does not go off.
-    freshnessBudgetMs: null,
-    narrow: narrowH2H,
-    isEmpty: h2hIsEmpty,
-  }) satisfies Descriptor<readonly H2HEntry[]>,
-
   messages: ({
     key: "messages",
     path: "fpl/messages.json",
@@ -1623,18 +1582,6 @@ export const REGISTRY = {
     // publishes nothing when it has nothing to say.
     isEmpty: (v) => v.messages.length === 0,
   }) satisfies Descriptor<MessageFeed>,
-
-  blendWeight: ({
-    key: "blendWeight",
-    path: "market_blend_weight.json",
-    owner: "daily",
-    describes: "the fitted market blend weight and its caveats",
-    // A fit does not go off; it is superseded.
-    freshnessBudgetMs: null,
-    narrow: narrowBlendWeight,
-    producedAtOf: (v) => v.generated_at,
-    isEmpty: (v) => v.n_matches === 0,
-  }) satisfies Descriptor<BlendWeight>,
 
   fixtureXg: ({
     key: "fixtureXg",

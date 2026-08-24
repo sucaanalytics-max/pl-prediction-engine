@@ -14,8 +14,7 @@
  * Both are scanned rather than trusted, because both were violated by code written to a
  * document that stated the contrast requirement correctly.
  */
-import { readFileSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 import { INK, PAPER, surfaceIsLight, type MarginSurface } from "@/lib/margin/tokens";
@@ -34,36 +33,25 @@ const SURFACES: ReadonlyArray<readonly [string, MarginSurface]> = [
   ["PAPER", PAPER], ["INK", INK],
 ];
 
-/** The board and everything it renders. */
-const ROOTS = [
-  "components/control-room",
-  "components/squad",
-  "app/control-room",
-];
-
 /**
- * Margin components the BOARD renders, so its primitives are held to the board's rule.
+ * What is left of the board.
  *
- * The rest of `components/margin` — ScoreView, Planner, DecideView, ResearchView,
- * WatchView, NewsView — carries 91 sizes below this floor. That is a real backlog and it
- * is deliberately not in scope here: those are the `/margin` surface, several are slated
- * for deletion by the surface cut, and a test that fails on 91 pre-existing violations
- * gets skipped rather than fixed. Add them when that surface is next opened.
+ * The board itself — `app/control-room`, `components/control-room` — went with the
+ * route cut, and the kit primitives under `components/squad` went with it in the same
+ * sweep: `components/squad/SquadRow.tsx` was `KitMark`'s only importer, so the whole
+ * directory became unreachable. `components/margin/Provenance.tsx` went the same way.
+ *
+ * `Marks.tsx` is what survived, and it is the file the rule was really about: it draws
+ * every distribution glyph on `/`, `/players` and `/evidence`, labels included. The
+ * contrast assertions below are over the tokens and hold regardless.
+ *
+ * The rest of `components/margin` — ScoreView, Planner, ResearchView, WatchView,
+ * NewsView — carries sizes below this floor. That is a real backlog and it is
+ * deliberately not in scope here: a test that fails on dozens of pre-existing
+ * violations gets skipped rather than fixed. Add them when one of those pages is
+ * next opened.
  */
-const BOARD_PRIMITIVES = [
-  "components/margin/Marks.tsx",
-  "components/margin/Provenance.tsx",
-];
-
-function sources(dir: string, out: string[] = []): string[] {
-  for (const entry of readdirSync(dir)) {
-    const path = join(dir, entry);
-    if (statSync(path).isDirectory()) sources(path, out);
-    else if (/\.tsx?$/.test(entry) && !/\.test\.tsx?$/.test(entry)) out.push(path);
-  }
-  return out;
-}
-const FILES = [...ROOTS.flatMap((r) => sources(r)), ...BOARD_PRIMITIVES];
+const FILES = ["components/margin/Marks.tsx"];
 
 // ── contrast ────────────────────────────────────────────────────────────────────
 

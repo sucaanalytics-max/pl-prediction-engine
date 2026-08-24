@@ -12,6 +12,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import CaptureForm, { fold, type PickablePlayer } from "./CaptureForm";
+import { OWNER_ENTRY } from "@/lib/entry";
 
 const PLAYERS: PickablePlayer[] = [
   { elementId: 1, name: "David Raya", team: "Arsenal" },
@@ -27,13 +28,10 @@ const PLAYERS: PickablePlayer[] = [
   })),
 ];
 
-const TARGETS = [
-  { entryId: 2561567, name: "Ronny" },
-  { entryId: 2561099, name: "Wazza" },
-];
-
 function form() {
-  return render(<CaptureForm players={PLAYERS} targets={TARGETS} gameweek={2} />);
+  return render(
+    <CaptureForm players={PLAYERS} entryId={OWNER_ENTRY} gameweek={2} />,
+  );
 }
 
 /** Fifteen resolvable lines, so validity is not the thing under test. */
@@ -57,7 +55,7 @@ beforeEach(() => {
         status: "saved",
         capturedAt: "2026-08-25T09:00:00.000Z",
         commit: "abc1234def5678",
-        recorded: { entryId: 2561567, gameweek: 2, players: 15, pricesSupplied: 0 },
+        recorded: { entryId: OWNER_ENTRY, gameweek: 2, players: 15, pricesSupplied: 0 },
       }),
       { status: 201 }
     )
@@ -85,12 +83,15 @@ describe("fold", () => {
   });
 });
 
-describe("who can be captured", () => {
-  it("offers the two bot entries and never the owner's team", () => {
+describe("who is being captured", () => {
+  it("names the owner's own entry, and offers no other", () => {
+    // Inverted when this shipped: the form filtered the deleted control room's
+    // three-team list to `kind === "bot"`, so the only two ids it offered were
+    // the entries that had moved to another project, and the one entry
+    // `_read_entry` opens a capture file for could not be selected at all.
     form();
-    expect(screen.getByText(/Ronny · 2561567/)).toBeTruthy();
-    expect(screen.getByText(/Wazza · 2561099/)).toBeTruthy();
-    expect(screen.queryByText(/20945/)).toBeNull();
+    expect(screen.getByText(new RegExp(String(OWNER_ENTRY)))).toBeTruthy();
+    expect(screen.queryByText(/2561567|2561099/)).toBeNull();
   });
 });
 
@@ -190,7 +191,7 @@ describe("submitting", () => {
     const body = JSON.parse(String(fetchMock.mock.calls[0][1].body));
     expect(body.bank).toBe(35);
     expect(body.squad).toHaveLength(15);
-    expect(body.entryId).toBe(2561567);
+    expect(body.entryId).toBe(OWNER_ENTRY);
     expect(body.gameweek).toBe(2);
   });
 

@@ -4,23 +4,30 @@
  * This is the boundary between a browser form and an optimiser that spends a
  * £100m budget, and it now writes to `main`. Like the scan trigger beside it, most
  * of these tests are about refusing: a squad of fourteen reads downstream as a free
- * slot and the bank gets spent on it, and a capture for the owner's advisory team
- * would imply a proposal that never arrives.
+ * slot and the bank gets spent on it.
+ *
+ * The allowlist itself is asserted in BOTH directions, because it shipped
+ * inverted. This route derived it from the deleted control room's three-team
+ * model, so it accepted the two entries that had moved to another project and
+ * refused 20945 — the only entry `_read_entry` opens a capture file for. A test
+ * that only checked "some ids are refused" passed throughout.
  */
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { POST } from "./route";
+import { OWNER_ENTRY } from "@/lib/entry";
 
-const RONNY = 2561567;
-const WAZZA = 2561099;
-const MINE = 20945;
+/** Named rather than typed, so this cannot disagree with the route it tests. */
+const MINE = OWNER_ENTRY;
+/** The entries that detached on 2026-08-24. Nothing here decides for them. */
+const DETACHED = [2561567, 2561099];
 
 const SQUAD = Array.from({ length: 15 }, (_, index) => index + 1);
 
 function body(overrides: Record<string, unknown> = {}) {
   return {
-    entryId: RONNY,
+    entryId: MINE,
     gameweek: 2,
     squad: SQUAD,
     bank: 35,
@@ -68,10 +75,16 @@ beforeEach(() => {
 });
 
 describe("refusing", () => {
-  it("refuses the owner's own team, which no agent decides for", async () => {
-    const response = await POST(post(body({ entryId: MINE })));
+  it.each(DETACHED)("refuses the detached bot entry %i", async (entryId) => {
+    const response = await POST(post(body({ entryId })));
     expect(response.status).toBe(400);
-    expect((await response.json()).error).toContain("advisory only");
+    expect((await response.json()).error).toContain(String(OWNER_ENTRY));
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("refuses an entry id nobody has heard of", async () => {
+    const response = await POST(post(body({ entryId: 1 })));
+    expect(response.status).toBe(400);
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
@@ -141,7 +154,7 @@ describe("committing", () => {
   it("writes one file per entry, on the path the agent reads", async () => {
     await POST(post(body()));
     expect(written().url).toContain(
-      `/repos/sucaanalytics-max/pl-prediction-engine/contents/predictions/fpl/hub/capture/${RONNY}.json`
+      `/repos/sucaanalytics-max/pl-prediction-engine/contents/predictions/fpl/hub/capture/${MINE}.json`
     );
   });
 
@@ -151,7 +164,7 @@ describe("committing", () => {
     const payload = await response.json();
     expect(payload.status).toBe("saved");
     expect(payload.commit).toBe("abc1234def");
-    expect(payload.recorded).toMatchObject({ entryId: RONNY, gameweek: 2, players: 15 });
+    expect(payload.recorded).toMatchObject({ entryId: MINE, gameweek: 2, players: 15 });
   });
 
   it("commits the shape hub_state.py reads, in tenths", async () => {
@@ -159,7 +172,7 @@ describe("committing", () => {
     const content = decoded(written().body.content);
     expect(content.source).toBe("owner_captured");
     expect(content.bank).toBe(35);
-    expect(content.entry_id).toBe(RONNY);
+    expect(content.entry_id).toBe(MINE);
     expect(content.gameweek).toBe(2);
     expect(content.squad).toHaveLength(15);
     expect(content.free_transfers).toBe(1);
@@ -192,12 +205,12 @@ describe("committing", () => {
     expect(Date.parse(content.captured_at)).toBeGreaterThan(Date.parse("2026-01-01"));
   });
 
-  it("accepts both bot entries", async () => {
-    for (const entryId of [RONNY, WAZZA]) {
-      fetchMock.mockClear();
-      const response = await POST(post(body({ entryId })));
-      expect(response.status).toBe(201);
-      expect(written().url).toContain(`capture/${entryId}.json`);
-    }
+  it("accepts the owner's own entry, which is the one the agent reads", async () => {
+    // The assertion the suite lacked. `_read_entry` looks for
+    // `predictions/fpl/hub/capture/20945.json` and nothing else, so this path
+    // being writable is the whole reason the screen exists.
+    const response = await POST(post(body({ entryId: OWNER_ENTRY })));
+    expect(response.status).toBe(201);
+    expect(written().url).toContain(`capture/${OWNER_ENTRY}.json`);
   });
 });

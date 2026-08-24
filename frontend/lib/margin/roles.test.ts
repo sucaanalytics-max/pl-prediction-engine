@@ -13,14 +13,19 @@ import { describe, expect, it } from "vitest";
 
 const read = (path: string) => readFileSync(path, "utf8");
 
-/** Roles that mean "this is ours to press, or ours to follow". */
+/**
+ * Roles that mean "this is ours to press, or ours to follow".
+ *
+ * `components/data/DeltaFeed.tsx` (the source link) and `components/FixtureMatrix.tsx`
+ * (the sort toggle) were pinned here and are deleted: their only importers were
+ * `app/now` and `app/matches`. `components/margin/WatchView.tsx` renders the delta
+ * ledger on `/evidence` now and is not held to this list — it should be, and is not
+ * added here because it has never been read against the identity/verdict split.
+ */
 const IDENTITY: ReadonlyArray<readonly [string, string]> = [
   ["components/ui/Button.tsx", "the primary button"],
   ["components/ErrorBoundary.tsx", "the retry button"],
-  ["components/data/DeltaFeed.tsx", "the source link"],
   ["components/MinutesConflicts.tsx", "the read-the-post link"],
-  ["components/FixtureMatrix.tsx", "the sort toggle"],
-  ["components/XScanButton.tsx", "the scan button"],
 ];
 
 describe("identity takes the brand hue", () => {
@@ -31,7 +36,6 @@ describe("identity takes the brand hue", () => {
   }
 
   it("leaves no identity role on the agreement hue in those files", () => {
-    // `FixtureTable` is excluded on purpose — see the verdict below.
     const regressed = IDENTITY
       .map(([path]) => path)
       .filter((path) => /var\(--accent[),]/.test(read(path)));
@@ -40,14 +44,12 @@ describe("identity takes the brand hue", () => {
 });
 
 describe("verdicts keep the semantic hue", () => {
-  it("keeps the value-bet badge on --accent, because an edge is a judgement", () => {
-    const source = read("components/FixtureTable.tsx");
-    /* The badge sits on --success-muted and says "there is an edge here". Recolouring
-       it as identity would make the palette silent about the one thing it exists to
-       say. */
-    expect(source).toContain('color: "var(--accent)"');
-    expect(source).toContain('border: "1px solid var(--accent-border)"');
-  });
+  /* The value-bet badge on `components/FixtureTable.tsx` used to be pinned here as
+     the worked example of a verdict — it said "there is an edge here" on --accent
+     while the identity roles above moved to --brand. That file was the betting
+     surface's fixture table and went with the surface, so the example is gone; the
+     split it demonstrated is still asserted from both sides — no identity role may
+     regress onto --accent, and both hues must stay defined. */
 
   it("still defines both hues, so neither role is homeless", () => {
     const css = read("app/globals.css");

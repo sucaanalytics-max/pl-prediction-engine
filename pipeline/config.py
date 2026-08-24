@@ -436,39 +436,46 @@ FPL_SIM = {
 # score stays under predictions/fpl/.
 FPL_PUBLIC_DIR = ROOT_DIR / "frontend" / "public" / "predictions" / "fpl"
 
-# ── FPL agent: the two entries ─────────────────────────────────────────────
-# Two teams, two mandates, one simulator. The objectives are mathematically
-# opposed and that is the point: writing your margin over the field as
-# D = sum_j (m_j - EO_j) * P_j, the term sum_j EO_j * xP_j is a constant nobody
-# can influence, so effective ownership CANNOT change the EV-optimal pick — it
-# only changes Var[D]. The season team therefore ignores ownership entirely and
-# the weekly team is entirely about it. Three players from one attack is wrong
-# for one squad and right for the other, from identical projections.
+# ── FPL agent: the owner's entry ───────────────────────────────────────────
+# One entry, one objective: maximise expected points; variance is a cost.
+# Effective ownership cannot move that pick anyway — writing the margin over
+# the field as D = sum_j (m_j - EO_j) * xP_j, the term sum_j EO_j * xP_j is a
+# constant nobody can influence, so EO changes Var[D] but never the EV-optimal
+# squad.
 #
-# `entry_id` stays None until the accounts exist. `squad` empty means the
+# A `weekly` objective — maximise P(score >= threshold), where EO and
+# correlated players ARE the point — used to run here as a second entry. It
+# is gone, not merged: it was gated on `field_is_usable`, which reads a
+# calibration verdict store that nothing writes, so the gate never opened and
+# the weekly entry silently fell back to this same season objective on every
+# run while claiming to be different. One entry on the objective it was
+# actually running retires that dead gate along with the second account.
+#
+# `entry_id` stays None until the account exists. `squad` empty means the
 # opening build, where the whole budget is cash; once a squad is held, `bank`
 # (cash in hand, in TENTHS) and `purchase_prices` must both be supplied, because
 # selling price is purchase plus half the rise and cannot be recovered from
 # now_cost alone.
 FPL_ENTRIES: Dict[str, Dict[str, Any]] = {
-    "season": {
-        # "Ronny" — https://fantasy.premierleague.com/en/entry/2561567/
-        "entry_id": int(os.environ.get("FPL_ENTRY_SEASON", "2561567")),
-        "team_name": "Ronny",
-        "objective": "season",       # maximise expected points; variance is a cost
-        "squad": [],
-        "bank": None,
-        "free_transfers": 1,
-        "purchase_prices": None,
-    },
-    "weekly": {
-        # "Wazza" — https://fantasy.premierleague.com/en/entry/2561099/
-        "entry_id": int(os.environ.get("FPL_ENTRY_WEEKLY", "2561099")),
-        "team_name": "Wazza",
-        # Maximise P(score >= threshold). Variance is an ASSET here: a weekly
-        # prize needs a right-tail outcome, and correlated players are how a
-        # tail is reached.
-        "objective": "weekly",
+    # The owner's own team, and the only one this repo decides for.
+    # https://fantasy.premierleague.com/en/entry/20945/
+    #
+    # Ronny (2561567) and Wazza (2561099) were removed on 2026-08-24 and moved to
+    # a separate project that runs them on its own scheduled workflows. They read
+    # this repo's published `xp_public_gw{NN}.json`; they must never write into
+    # `predictions/fpl/ledger/` or any seal path here.
+    #
+    # The label is what names the artifact: `decision_gw{NN}_owner.json`.
+    "owner": {
+        "entry_id": int(os.environ.get("FPL_ENTRY_OWNER", "20945")),
+        "team_name": "Jay's Team",
+        # Maximise expected points; variance is a cost. The `weekly` objective is
+        # deliberately absent: it is gated on `field_is_usable`, which reads a
+        # calibration verdict store that nothing writes, so a weekly entry fell
+        # back to this objective on every run while claiming to be different.
+        "objective": "season",
+        # Manual override and pre-season default only. `_read_entry` prefers the
+        # committed capture, then FPL live, and only then these.
         "squad": [],
         "bank": None,
         "free_transfers": 1,

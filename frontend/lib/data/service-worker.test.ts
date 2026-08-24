@@ -65,7 +65,10 @@ describe("the precache list parses", () => {
   });
 
   it("finds the app's real routes", () => {
-    expect(ROUTES.length).toBeGreaterThan(5);
+    // More than one, so the walker is proven to recurse rather than to have found
+    // only `app/page.tsx`. The exact count is not asserted here — the allow-list in
+    // `test/nav-coverage.test.tsx` owns it, and it is five.
+    expect(ROUTES.length).toBeGreaterThan(1);
     expect(ROUTES).toContain("/");
   });
 });
@@ -152,25 +155,33 @@ describe("the shell caches the app that exists now", () => {
    *
    * Navigations are network-first (`sw.js` bottom: fetch, cache a copy, reach for
    * the cache only in the `.catch`), so this list is the offline fallback rather
-   * than what an online visitor sees. It listed `/markets` and `/matches` — which
-   * moved behind `/bet` — and not `/margin`, which is the workspace the root opens
-   * on, so an offline PWA fell back to the previous shape of the app.
+   * than what an online visitor sees. It has been wrong in both directions: it
+   * once listed `/markets` and `/matches` while omitting the page the root opens
+   * on, so an offline PWA fell back to a previous shape of the app.
+   *
+   * The route surface is now five pages and the list is all five of them, so the
+   * "which of many routes deserve the install budget" assertions that used to sit
+   * here — `/margin` and `/bet` had to be present, both now deleted — have no
+   * subject left. What remains is the direction that can still go wrong: naming a
+   * route that does not exist, which `every precached route exists` above catches,
+   * and shipping a stale list under an unchanged cache key, which is below.
    */
   const routes = shellRoutes();
 
-  it("precaches the workspace the root opens on", () => {
-    expect(routes).toContain("/margin");
+  it("precaches every page the app serves", () => {
+    // Five routes fit an install budget whole, so an offline visitor gets the
+    // whole app rather than a chosen subset of it. This is only affordable
+    // because the surface is small; see `stays small enough to install` above.
+    for (const route of ROUTES) expect(routes).toContain(route);
   });
 
-  it("precaches the door the betting screens moved behind", () => {
-    expect(routes).toContain("/bet");
-  });
-
-  it("does not precache a route that is no longer in the sidebar", () => {
-    // Not wrong to reach, but wrong to spend an install budget on: these are
-    // reached from /bet now, and the budget is what keeps this installable.
-    expect(routes).not.toContain("/markets");
-    expect(routes).not.toContain("/matches");
+  it("names no route the app no longer serves", () => {
+    // The 23 deleted routes are the failure mode this guards: `addAll` is atomic,
+    // so one leftover entry precaches NOTHING on every installed app.
+    for (const route of routes.filter((r) => !r.includes("."))) {
+      expect(ROUTES, `sw.js precaches ${route}, which app/ does not serve`)
+        .toContain(route);
+    }
   });
 
   it("bumps the cache name when the list changes", () => {
@@ -182,19 +193,22 @@ describe("the shell caches the app that exists now", () => {
      * bump cannot happen silently — you must come here and say why — but it
      * cannot tell whether a bump was NEEDED. That judgement stays human.
      *
-     * v6 -> v7, and this is the whole of what it buys: `/` stopped being a 307
-     * redirect to `/margin` and became the call itself, so a v6 precache holds a
-     * redirect that the OFFLINE branch would replay, forwarding an offline visitor
-     * away from the front door.
+     * v8 -> v9, and this is the whole of what it buys. The route list did not
+     * change; two pages on it did, in ways a stale offline copy misleads with.
+     * `/` gained the app's only link to `/capture`, so a v8 copy is the version of
+     * the front door with no route to the write path; and `/capture` now captures
+     * for entry 20945 instead of offering the two entries that detached, so a v8
+     * copy goes on posting captures nothing reads.
      *
-     * It is not an explanation of the reported stale `/`. This test and `sw.js`
-     * both used to say `/` was "served cache-first" and that this was why the
-     * deploy went unseen. Neither was true: the navigation handler is
-     * network-first and v6's was byte-identical, so an online installed app always
-     * received the fresh `/`. The "frontend not updating" report was never
-     * diagnosed — HTTP-level caching of the old 307 is the likeliest cause and was
-     * not measured. Recorded as unknown rather than as this.
+     * The earlier v7 -> v8 bump was for the list itself: `/margin`, `/bet`, `/now`,
+     * `/decide` and `/accuracy` were deleted, so a v7 precache held five pages
+     * that no longer exist.
+     *
+     * The earlier v6 -> v7 bump was for the same class of reason: `/` had stopped
+     * being a 307 redirect to `/margin`, and a v6 precache still held the
+     * redirect. Neither bump explains the once-reported stale `/` — the navigation
+     * handler is and was network-first — and that report was never diagnosed.
      */
-    expect(swSource).toContain("suca-fpl-shell-v7");
+    expect(swSource).toContain("suca-fpl-shell-v9");
   });
 });

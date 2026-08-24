@@ -9,10 +9,16 @@
  * four were *correct code applied to real data of an unexpected shape*. A fixture
  * only ever contains what its author already knew.
  *
- * These assertions are deliberately about the CURRENT committed files, and three
- * of them assert `empty`. When the pipeline next runs for real those will change,
- * and the test is written to say so loudly rather than to silently keep passing:
- * a table with matches played must NOT be `empty`, and that is asserted too.
+ * These assertions are deliberately about the CURRENT committed files, and some
+ * assert `empty`. When the pipeline next runs for real those will change, and the
+ * test is written to say so loudly rather than to silently keep passing.
+ *
+ * The `table.json`, `latest.json` and `h2h.json` sections are gone with the
+ * registry entries they exercised. Those three files were read only by the match
+ * and betting screens, and the nav's unrendered value-bet badge; no surface in the
+ * app fetches them now, so there is no descriptor left to classify. The files stay
+ * in `predictions/` and their narrowers stay exported — restoring the section means
+ * restoring the registry entry it loaded.
  */
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
@@ -75,82 +81,6 @@ describe("every registered artifact narrows without being unreadable", () => {
       ).not.toBe("unreadable");
     });
   }
-});
-
-describe("table.json — the all-Champions-League bug", () => {
-  const artifact = load(REGISTRY.table);
-
-  it("is empty, because no match has been played", () => {
-    expect(artifact.state).toBe("empty");
-  });
-
-  it("still carries all 20 rows for rendering", () => {
-    expect(proven(artifact)).toHaveLength(20);
-  });
-
-  it("refuses to chart, so no zone can be highlighted", () => {
-    expect(chartable(artifact, (rows) => rows)).toBeNull();
-  });
-
-  /**
-   * The emptiness verdict comes from `played`, and from nothing else.
-   *
-   * This test used to assert `position === 0` on all 20 rows, which was true of
-   * the artifact committed at the time. The writer has since run and assigns
-   * 1..20 — so the assertion failed while the design it was defending was
-   * working perfectly. A test pinned to a snapshot of a file the pipeline
-   * rewrites daily reports a regression every time the pipeline succeeds.
-   *
-   * What is asserted now is the property that must hold in every season state.
-   */
-  it("is empty on the count of matches played, whatever the positions say", () => {
-    const rows = proven(artifact) ?? [];
-    expect(rows).toHaveLength(20);
-    expect(rows.every((r) => r.played === 0)).toBe(true);
-    expect(artifact.state).toBe("empty");
-  });
-
-  /**
-   * The trap, no longer hypothetical.
-   *
-   * When this was written, `position` was 0 everywhere and the tempting fix
-   * `position !== 0` correctly rejected the file — which was precisely what made
-   * it dangerous: it would have passed review and passed any test written
-   * against that fixture.
-   *
-   * The writer has now run. The committed file carries real positions 1..20 with
-   * every counter still zero, so the position gate would today label Arsenal,
-   * Aston Villa, Bournemouth and Brentford as Champions League places on a table
-   * where nobody has kicked a ball. The prediction came true; the played gate is
-   * unmoved.
-   */
-  it("would today be wrongly accepted by a position gate", () => {
-    const rows = proven(artifact) ?? [];
-
-    // No longer a constructed fixture — this is the live file.
-    expect(rows.every((r) => r.position !== 0)).toBe(true);   // the gate accepts
-    expect(rows.every((r) => r.played === 0)).toBe(true);     // yet nothing is played
-
-    const relabelled = classify({
-      path: "table.json", source: "local", raw: rows, now: NOW,
-      narrow: REGISTRY.table.narrow,
-      isEmpty: REGISTRY.table.isEmpty,
-      freshnessBudgetMs: null,
-    });
-    expect(relabelled.state).toBe("empty");
-  });
-
-  it("becomes non-empty the moment one match is played", () => {
-    const rows = proven(artifact) ?? [];
-    const withOneGame = rows.map((r, i) => (i === 0 ? { ...r, played: 1 } : r));
-    const live = classify({
-      path: "table.json", source: "local", raw: withOneGame, now: NOW,
-      narrow: REGISTRY.table.narrow,
-      isEmpty: REGISTRY.table.isEmpty,
-      freshnessBudgetMs: null,
-    });
-    expect(live.state).toBe("ok");
-  });
 });
 
 describe("health.json — the 4.0.0 producer", () => {
@@ -302,208 +232,6 @@ describe("player_stats.json — real data, so NOT empty", () => {
   });
 });
 
-describe("latest.json — probabilities real, explainability absent", () => {
-  const artifact = load(REGISTRY.latest);
-
-  /**
-   * Partial emptiness: a file can be complete on the naive checks — rows
-   * present, gameweek non-zero — and still carry nothing to explain a decision
-   * with. That is what the explainability predicate exists to catch.
-   *
-   * These three tests asserted the absence of SHAP and odds, which was true of
-   * the artifact committed at the time and is no longer: the 4.1.0 producer
-   * emits both on all ten predictions. Testing for the absence meant the suite
-   * went red exactly when explainability started working.
-   *
-   * The predicate is now asserted in both directions instead — stripped data is
-   * empty, real data is not — so it is the rule under test rather than the day's
-   * file.
-   */
-  it("is empty when explainability is stripped, whatever else is present", () => {
-    const value = proven(artifact);
-    expect(value?.predictions.length).toBeGreaterThan(0);
-    expect(value?.gameweek).not.toBe(0);
-
-    // Stripped from the RAW file, not from `proven()`. `has_odds_comparison` is
-    // derived by the narrower and does not exist in the artifact, so feeding the
-    // narrowed shape back in produced `unreadable` rather than `empty` — a fixture
-    // that tests the narrower's tolerance for its own output, which is not the
-    // question.
-    const rawFile = raw("latest.json") as {
-      predictions: Array<Record<string, unknown>>;
-    };
-    const stripped = {
-      ...rawFile,
-      predictions: rawFile.predictions.map((p) => ({
-        ...p, shap_features: [], odds_comparison: undefined,
-      })),
-    };
-    const classified = classify({
-      path: "latest.json", source: "local", raw: stripped, now: NOW,
-      narrow: REGISTRY.latest.narrow,
-      isEmpty: REGISTRY.latest.isEmpty,
-      producedAtOf: REGISTRY.latest.producedAtOf,
-      freshnessBudgetMs: null,
-    });
-    expect(classified.state).toBe("empty");
-  });
-
-  it("agrees with the file: explainability present means not empty", () => {
-    const value = proven(artifact);
-    const explained = (value?.predictions ?? []).filter(
-      (p) => p.shap_features.length > 0 || p.has_odds_comparison,
-    );
-    // Whichever way the current artifact falls, the verdict must follow the data
-    // rather than a remembered snapshot of it.
-    expect(artifact.state === "empty").toBe(explained.length === 0);
-  });
-
-  it("still carries informative probabilities that sum to one", () => {
-    const value = proven(artifact);
-    for (const p of value?.predictions ?? []) {
-      expect(p.prob_home + p.prob_draw + p.prob_away).toBeCloseTo(1, 3);
-    }
-  });
-
-  it("agrees with health.json about which producer wrote this run", () => {
-    // Version drift BETWEEN artifacts is the defect worth catching: it means two
-    // files a page joins were written by different code. The absolute version is
-    // not — pinning "4.0.0" made this fail on the 4.1.0 release.
-    expect(describeProducer(artifact.provenance))
-      .toBe(describeProducer(load(REGISTRY.health).provenance));
-  });
-
-  describe("value bets — the real-money path", () => {
-    const bets = (proven(artifact)?.predictions ?? []).flatMap((p) => p.value_bets);
-
-    it("found the five bets in the committed file", () => {
-      // Count from the file, not from memory: odds move daily and so does this.
-      expect(bets).toHaveLength(
-        raw("latest.json").predictions.flatMap(
-          (p: { value_bets?: unknown[] }) => p.value_bets ?? [],
-        ).length,
-      );
-    });
-
-    /**
-     * The hazard. `half_kelly` in the file is 25.0 — a CURRENCY stake against a
-     * hardcoded 1000.0 bankroll. `half_kelly_pct` is 0.025. Both were typed as
-     * bare `number` on ValueBet.
-     */
-    it("resolves every stake to a fraction, never a currency amount", () => {
-      for (const bet of bets) {
-        expect(bet.halfKelly).not.toBeNull();
-        expect(bet.halfKelly!).toBeGreaterThan(0);
-        expect(bet.halfKelly!).toBeLessThanOrEqual(1);
-      }
-    });
-
-    it("resolves to 0.025, not 25.0", () => {
-      for (const bet of bets) {
-        expect(bet.halfKelly).toBeCloseTo(0.025, 6);
-      }
-    });
-
-    it("carries no currency-unit stake field at all", () => {
-      for (const bet of bets) {
-        // A field that does not exist cannot be rendered by mistake. The
-        // pipeline's value is a stake against a bankroll this app does not use.
-        expect("half_kelly" in bet).toBe(false);
-        expect("full_kelly" in bet).toBe(false);
-      }
-    });
-
-    /**
-     * The drift case, and the one the real file cannot exercise.
-     *
-     * Every bet in the committed artifact HAS `half_kelly_pct`, so the fallback
-     * chain never runs and a mutation that reaches for the currency field instead
-     * survives every assertion above. A producer that stops emitting the `_pct`
-     * fields — exactly the drift that removed `model_metrics` from `health.json` —
-     * is what makes the chain load-bearing.
-     *
-     * Correct behaviour is **null**, not 25.0: no usable stake could be derived,
-     * and a caller must render "no stake" rather than a number.
-     */
-    it("returns no stake when only the currency field survives", () => {
-      const withoutPct = {
-        metadata: { gameweek: 1 },
-        predictions: [{
-          match_id: "x",
-          fixture: { home_team: "Arsenal", away_team: "Chelsea" },
-          probabilities: { "1x2": { home: 0.5, draw: 0.3, away: 0.2 } },
-          value_bets: [{
-            market: "Home Win",
-            // The _pct fields are gone. Only the currency stakes remain.
-            half_kelly: 25.0,
-            full_kelly: 50.0,
-          }],
-        }],
-      };
-      const result = REGISTRY.latest.narrow(withoutPct);
-      expect(result.ok).toBe(true);
-      if (!result.ok) return;
-      const bet = result.value.predictions[0].value_bets[0];
-      expect(bet.halfKelly).toBeNull();
-      // And emphatically not the currency amount, which would render as 2500%.
-      expect(bet.halfKelly).not.toBe(25.0);
-      expect(bet.halfKelly).not.toBe(0.025);
-    });
-
-    it("derives half from full when only full_kelly_pct survives", () => {
-      const onlyFull = {
-        metadata: { gameweek: 1 },
-        predictions: [{
-          match_id: "x",
-          fixture: { home_team: "Arsenal", away_team: "Chelsea" },
-          probabilities: { "1x2": { home: 0.5, draw: 0.3, away: 0.2 } },
-          value_bets: [{ market: "Home Win", full_kelly_pct: 0.05 }],
-        }],
-      };
-      const result = REGISTRY.latest.narrow(onlyFull);
-      expect(result.ok).toBe(true);
-      if (!result.ok) return;
-      // Halved, because under-staking is recoverable and over-staking is not.
-      expect(result.value.predictions[0].value_bets[0].halfKelly)
-        .toBeCloseTo(0.025, 10);
-    });
-
-    it("rejects a _pct field that is itself out of range", () => {
-      // A producer bug that puts a currency amount in the _pct field must not
-      // become a stake either.
-      const corrupt = {
-        metadata: { gameweek: 1 },
-        predictions: [{
-          match_id: "x",
-          fixture: { home_team: "Arsenal", away_team: "Chelsea" },
-          probabilities: { "1x2": { home: 0.5, draw: 0.3, away: 0.2 } },
-          value_bets: [{ market: "Home Win", half_kelly_pct: 25.0 }],
-        }],
-      };
-      const result = REGISTRY.latest.narrow(corrupt);
-      expect(result.ok).toBe(true);
-      if (!result.ok) return;
-      expect(result.value.predictions[0].value_bets[0].halfKelly).toBeNull();
-    });
-  });
-});
-
-describe("h2h.json — historical, and empty for this season", () => {
-  const artifact = load(REGISTRY.h2h);
-
-  it("narrows 241KB of history without dropping records", () => {
-    expect(proven(artifact)?.length ?? 0).toBeGreaterThan(0);
-  });
-
-  it("is empty because no record carries a 2627 match", () => {
-    expect(artifact.state).toBe("empty");
-  });
-
-  it("has no freshness budget, so history is never stale", () => {
-    expect(artifact.provenance.freshnessBudgetMs).toBeNull();
-  });
-});
-
 /**
  * fixture_xg.json — the artifact that was silently unreadable.
  *
@@ -563,10 +291,6 @@ describe("the state of the app, stated plainly", () => {
     // of today's data and will change all season; that SOME are, and that the
     // layer notices, is the claim worth holding.
     expect(empty.length).toBeGreaterThan(0);
-
-    // The table is the durable case: no gameweek has been played, so it must be
-    // empty regardless of what the writer put in `position`.
-    expect(empty).toContain("table");
   });
 
   it("no artifact is unreadable", () => {

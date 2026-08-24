@@ -19,7 +19,7 @@ import json
 import logging
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
@@ -27,7 +27,9 @@ from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS
 from pipeline.decide.horizon import EVAL_HORIZON
 from pipeline.learning.ledger import read_forecast
 from pipeline.learning.outcomes import LedgerError, read_outcomes
-from pipeline.learning.schedule import Phase, ScheduleState, resolve
+from pipeline.learning.schedule import (
+    Phase, REFRESH_WINDOW, ScheduleState, resolve,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -531,8 +533,9 @@ def refresh_expected_points(
     xp_by_week, horizon_diagnostics = horizon if horizon else (None, [])
 
     # Record what was known about availability at this moment. The seal freezes
-    # the bootstrap once per gameweek; this runs every three hours, so it is what
-    # preserves the intra-week news PATH rather than only the deadline state.
+    # the bootstrap once per gameweek; this runs on every refresh — hourly inside
+    # REFRESH_WINDOW — so it is what preserves the intra-week news PATH rather
+    # than only the deadline state.
     # Non-fatal: an unrecorded claim costs one observation, while failing the run
     # costs the forecast, which is irreplaceable.
     evidence: Dict[str, Any] = {}
@@ -685,6 +688,11 @@ def _project_horizon(
             # A genuinely empty gameweek (or one past the published schedule).
             # Stopping is right: padding with zeros would tell the optimiser
             # every player blanks, and it would plan around a fiction.
+            # The caller already gates on offset 0 (run_agent.py:509), so this
+            # can only fire for a LATER week. Do not turn it into `continue`:
+            # build_horizon_block labels `weeks` positionally by
+            # first_gameweek + offset, so skipping a week — rather than
+            # stopping on it — would relabel every week after it.
             break
 
         # Roles re-derived for THIS week. The availability path knows how each
@@ -1046,9 +1054,13 @@ def _field_calibrated_gameweeks(predictions_dir: Path) -> int:
 
     **This is deliberately 0 today, and says so rather than defaulting.** The
     gate it feeds is real: `run_decide.py` refuses the weekly objective while
-    `field_is_usable` is False, so Wazza falls back to Ronny's EV-optimal plan.
-    That fallback is the pre-registered honest outcome, not a bug — presenting a
-    modelled tail as a measured one would be worse than having no weekly team.
+    `field_is_usable` is False, so any entry configured for it falls back to
+    the season objective's EV-optimal plan instead. That fallback is the
+    pre-registered honest outcome, not a bug — presenting a modelled tail as a
+    measured one would be worse than having no weekly team. Today the gate
+    never even fires: the only configured entry already runs season (see
+    `FPL_ENTRIES` in `pipeline/config.py`), so there is nothing left to fall
+    back from.
 
     What is missing is the verdict store, not the counter.
     `field_observations.consecutive_calibrated` already exists and is tested, but
@@ -1422,6 +1434,53 @@ def _score(predictions_dir: Path, state: ScheduleState) -> int:
     return 0
 
 
+#: How stale a published projection may be before a run outside REFRESH_WINDOW
+#: rebuilds it. Inside that window the age is not consulted at all — every tick
+#: refreshes. Set from a measured `_project_horizon` runtime — see
+#: docs/superpowers/plans/2026-08-24-single-team-dashboard.md Task 3 Step 1.
+PROJECTION_MAX_AGE = timedelta(hours=6)
+
+
+def projection_is_current(
+    gameweek: int,
+    now: datetime,
+    max_age: timedelta = PROJECTION_MAX_AGE,
+    public_dir: Path = FPL_PUBLIC_DIR,
+) -> bool:
+    """
+    Whether a published projection for THIS gameweek is young enough to keep.
+
+    Keyed on the gameweek, not on "the newest file present". That distinction is
+    the whole defect: `xp_public_gw01.json` sat on disk looking fresh while the
+    frontend asked for `gw02`, which had never been written.
+
+    Reads FPL_PUBLIC_DIR, not PREDICTIONS_DIR, and the two are not
+    interchangeable: PREDICTIONS_DIR holds the private artifact
+    (`xp_gw{NN}.json`) that feeds the optimiser, while FPL_PUBLIC_DIR
+    (`frontend/public/predictions/fpl/`) holds `xp_public_gw{NN}.json` — the
+    display contract the frontend actually fetches, and the thing this gate
+    exists to keep warm. Checking PREDICTIONS_DIR here always missed: that
+    file has never lived there.
+
+    Anything unreadable counts as not current. A projection is cheap to rebuild
+    and wrong to guess at.
+    """
+    path = Path(public_dir) / f"xp_public_gw{int(gameweek):02d}.json"
+    try:
+        stamp = json.loads(path.read_text(encoding="utf-8")).get("generated_at")
+    except (OSError, ValueError):
+        return False
+    if not isinstance(stamp, str):
+        return False
+    try:
+        generated = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    if generated.tzinfo is None:
+        generated = generated.replace(tzinfo=timezone.utc)
+    return (now - generated) < max_age
+
+
 def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
     """Execute the resolved phase. Returns a process exit code."""
     predictions_dir = Path(PREDICTIONS_DIR)
@@ -1455,6 +1514,30 @@ def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
         return 1
 
     if state.phase is Phase.REFRESH:
+        # Inside REFRESH_WINDOW every run refreshes, and the gate is deliberately
+        # tied to that window rather than to SEAL_WINDOW: late team news dominates
+        # projection error for the last two days before a deadline, not just the
+        # last four hours. Gating on SEAL_WINDOW instead let the news-dense
+        # 48h-to-4h band rebuild roughly every PROJECTION_MAX_AGE rather than
+        # every tick, which also throttled `record_claims` — the intra-week
+        # evidence path `/evidence` is built from.
+        #
+        # Further out than that, refresh only when the published projection for
+        # THIS gameweek has aged out, so the eight-day PROJECTION_WINDOW costs
+        # about four full simulations a day (PROJECTION_MAX_AGE is 6h) rather than
+        # one an hour, which is the workflow's cron (`.github/workflows/
+        # fpl_agent.yml`: `0 * * * *`).
+        remaining = timedelta(seconds=state.seconds_to_deadline or 0)
+        now = datetime.now(timezone.utc)
+        if remaining > REFRESH_WINDOW and projection_is_current(
+            state.gameweek, now
+        ):
+            logger.info(
+                "refresh skipped: GW%s projection is younger than %s and the "
+                "deadline is %.1fh away",
+                state.gameweek, PROJECTION_MAX_AGE, remaining.total_seconds() / 3600,
+            )
+            return 0
         outcome = refresh_expected_points(predictions_dir, state.gameweek)
         logger.info("refresh: %s", outcome)
         return 0

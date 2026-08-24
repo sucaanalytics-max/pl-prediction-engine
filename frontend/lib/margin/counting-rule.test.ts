@@ -32,19 +32,19 @@ const FILES = ["app", "components", "lib"].flatMap((d) => sources(d));
 /**
  * Files that RENDER a squad total, as opposed to computing one.
  *
- * Only `app/` and `components/` — `lib/` is arithmetic, and `lib/control-room/model.ts`
- * legitimately calls `projectedTotal` without printing anything. The rule belongs on
- * whatever puts the number in front of a reader.
+ * Only `app/` and `components/` — `lib/` is arithmetic and prints nothing, so a
+ * module there may call `projectedTotal` without carrying the rule. The rule belongs
+ * on whatever puts the number in front of a reader.
  */
 const RENDERS_A_TOTAL = FILES.filter((path) => {
   if (!path.startsWith("app/") && !path.startsWith("components/")) return false;
   const source = readFileSync(path, "utf8");
   if (!/\.toFixed\(|toLocaleString\(/.test(source)) return false;
-  // Two ways a surface gets the number: compute it, or read `XiTotal.total`, which
-  // `xiTotal` filled from the same function. The Ledger takes the second route and
-  // would otherwise sit outside this scan.
-  return source.includes("projectedTotal(")
-    || /\bXiTotal\b/.test(source);
+  // One way in now. The second route was reading `XiTotal.total`, a type that
+  // `lib/control-room/model.ts` filled from this same function for the deleted
+  // control room's Ledger; both are gone, and a clause matching a type name no
+  // module declares would read as coverage this scan does not have.
+  return source.includes("projectedTotal(");
 });
 
 describe("the counting rule travels with the number", () => {

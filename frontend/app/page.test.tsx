@@ -166,6 +166,14 @@ async function mountPage(
     projections = PROJECTIONS as typeof PROJECTIONS | null,
     agentGameweek = 1 as number | null,
     eventId = 1 as number | null,
+    // A date with no other meaning anywhere in this repo, so a deadline on screen
+    // can only have come from this fixture. It was originally chosen to avoid
+    // colliding with the hardcoded "Fri 21 Aug · 23:00 IST" that
+    // `compactIstDeadline` used to return when handed nothing; that fallback is gone
+    // and the parameter is now required, so the collision is no longer possible —
+    // the fixture stays because a distinct date is still the clearer evidence.
+    deadline = "2026-09-12T10:00:00Z" as string | null,
+    agentStatusAbsent = false,
   } = {},
 ) {
   vi.resetModules();
@@ -196,9 +204,12 @@ async function mountPage(
       }
       if (key === "agentStatus") {
         return ok(
-          agentGameweek === null
+          agentGameweek === null || agentStatusAbsent
             ? null
-            : { gameweek: agentGameweek, agentRan: false, phase: "idle" },
+            : {
+              gameweek: agentGameweek, agentRan: false, phase: "idle",
+              deadline, secondsToDeadline: null, reason: null, generatedAt: null,
+            },
         );
       }
       if (key === "playerStats") return ok(PLAYER_STATS);
@@ -226,6 +237,22 @@ describe("it is a page and not a redirect", () => {
     const { container } = await mountPage();
     expect(container.querySelector("[data-testid='gameweek-call']")).not.toBeNull();
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Your call");
+  });
+
+  it("renders the link to /capture, which is the write path's only door", async () => {
+    /**
+     * Asserted on the DOM, not on the source. `test/nav-coverage.test.tsx` reads
+     * the file text — enough to stop the link disappearing again, not enough to
+     * know it renders — and this route was reachable only by typing the URL for
+     * the whole of the route cut while two files claimed it was "reached from /".
+     *
+     * It sits beside the squad because capturing the position is what makes the
+     * squad above it true: `_read_entry` reads a committed capture BEFORE asking
+     * FPL live, so this anchor is the head of the only write path the app has.
+     */
+    await mountPage();
+    const link = screen.getByRole("link", { name: /Capture what you actually submitted/ });
+    expect(link.getAttribute("href")).toBe("/capture");
   });
 
   it("names no gameweek in its own chrome", async () => {
@@ -289,9 +316,10 @@ describe("one gameweek across the page, even when the two sources disagree", () 
 
   it("reads no projection at all when neither source can name a week", async () => {
     /**
-     * The reason there is no `?? 1` here. `xp_public_gw01.json` EXISTS, so a
-     * guess of 1 does not 404 into an honest `absent` — it renders GW1's numbers
-     * as though they were this week's, for 37 weeks of 38, silently.
+     * The reason there is no `?? 1` here. `xp_public_gw01.json` EXISTED — it was
+     * pruned when gw02 published — and a guess of 1 does not reliably 404 into an
+     * honest `absent`: whenever that file is on disk it renders GW1's numbers as
+     * though they were this week's, for 37 weeks of 38, silently.
      */
     const { container, requested } = await mountPage(
       { agentGameweek: null, eventId: null },
@@ -545,5 +573,96 @@ describe("the default behaviour /margin depends on is unchanged", () => {
     expect(cells.length, "no cells to check, so `every` would pass vacuously")
       .toBe(6);
     expect(cells.every((o) => o === "0.45")).toBe(true);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The deadline
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("the deadline is on the page, exactly once", () => {
+  /**
+   * This app shipped for a week with no deadline anywhere.
+   *
+   * Two clocks used to run — Margin's countdown and one in the sidebar chrome. The
+   * route cut deleted `/margin`, and the same commit removed "the second deadline
+   * clock" from the sidebar, a description that was accurate when written and wrong
+   * by the time it was applied. Nothing failed: no test asserted that a planner
+   * whose purpose is deciding before a deadline shows the deadline, and
+   * `compactIstDeadline` sat with zero callers.
+   *
+   * The count matters as much as the presence. The rule the surviving code was
+   * written against is that ONE clock renders: `schedule.py` stamps a duration into
+   * `agent_status.reason` when the agent runs, and a second live countdown beside it
+   * showed a frozen "71.0h" next to "2d 23h" — two clocks for one deadline, one of
+   * them wrong. Two readouts with independent staleness budgets disagree on a
+   * Friday, which is the day it matters. So `toHaveLength(1)` below is the assertion
+   * that the old defect never had.
+   */
+  const FORMATTED = "Sat 12 Sept · 15:30 IST";
+
+  it("prints the deadline from the agent's status", async () => {
+    const { container } = await mountPage();
+    expect(container.textContent).toContain(FORMATTED);
+  });
+
+  it("labels it with the gameweek it belongs to", async () => {
+    const { container } = await mountPage({ agentGameweek: 4 });
+    expect(container.querySelector("[data-testid='deadline-clock']")?.textContent)
+      .toContain("GW4 deadline");
+  });
+
+  it("renders exactly one clock", async () => {
+    const { container } = await mountPage();
+    expect(container.querySelectorAll("[data-testid='deadline-clock']"))
+      .toHaveLength(1);
+    // Belt and braces: the formatted time itself appears once, so a second clock
+    // built without the test id still fails.
+    expect(container.textContent?.split(FORMATTED).length).toBe(2);
+  });
+
+  it("agrees with the tested formatter rather than formatting its own date", async () => {
+    // The point of reusing `compactIstDeadline` is that the app has ONE definition
+    // of what a deadline looks like. Losing its last caller is what let the clock
+    // disappear unnoticed.
+    const { compactIstDeadline } = await import("@/lib/formats");
+    const { container } = await mountPage();
+    expect(container.textContent)
+      .toContain(compactIstDeadline("2026-09-12T10:00:00Z"));
+  });
+
+  it("says so in one line when the status carries no deadline", async () => {
+    const { container } = await mountPage({ deadline: null });
+    const line = container.querySelector("[data-testid='deadline-unknown']");
+    expect(line?.tagName).toBe("P");
+    expect(line?.textContent).toMatch(/no deadline/i);
+    expect(container.querySelector("[data-testid='deadline-clock']")).toBeNull();
+  });
+
+  it("says so in one line when the status cannot be read at all", async () => {
+    const { container } = await mountPage({ agentStatusAbsent: true });
+    expect(container.querySelector("[data-testid='deadline-unknown']")?.textContent)
+      .toMatch(/could not be read/i);
+  });
+
+  it("never shows the formatter's fabricated placeholder", async () => {
+    /**
+     * `compactIstDeadline` used to return the literal "Fri 21 Aug · 23:00 IST" — a
+     * date from the design document — whenever it was handed nothing. On screen an
+     * invented deadline is indistinguishable from a measured one, which is the
+     * `fpl-portal.ts` failure this repo scans two other surfaces for.
+     *
+     * The fallback is deleted and `dateStr` is now required, so no caller can ask
+     * for it; `lib/formats.test.ts` pins that there is no input for which the
+     * function returns a date it was not given. This stays as the end-to-end half of
+     * that guarantee: a hardcoded deadline reintroduced anywhere between the
+     * artifact and the DOM fails here, at the page, where a reader would see it.
+     */
+    for (const args of [{ deadline: null }, { agentStatusAbsent: true }]) {
+      const { container } = await mountPage(args);
+      expect(container.textContent).not.toContain("Fri 21 Aug");
+      expect(container.textContent).not.toContain("23:00 IST");
+      cleanup();
+    }
   });
 });

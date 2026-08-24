@@ -106,6 +106,62 @@ describe("Kolkata time formatting", () => {
   });
 });
 
+describe("compactIstDeadline invents nothing", () => {
+  /**
+   * This function used to answer `"Fri 21 Aug · 23:00 IST"` when called with no
+   * argument — GW1's real deadline, copied from a design document into a shared
+   * formatter. Every caller with nothing to show rendered that as fact, and a reader
+   * cannot tell an invented deadline from a measured one. On a planner whose entire
+   * purpose is deciding before a deadline it is the worst single wrong number
+   * available.
+   *
+   * The fix is a required parameter and no fallback, so absence became the caller's
+   * sentence to write. These assertions pin the property rather than the shape: there
+   * is no input for which this returns a date it was not given.
+   */
+  const UNPARSEABLE = ["", " ", "not a date", "undefined", "null", "2026-13-45", "GW1"];
+
+  it("formats a real ISO timestamp", () => {
+    expect(compactIstDeadline("2026-08-21T17:30:00Z")).toBe("Fri 21 Aug · 23:00 IST");
+  });
+
+  it("returns an unparseable value unchanged, as istDateTime does", () => {
+    // Degrade to the input. The alternative — substituting something printable — is
+    // the behaviour being removed.
+    for (const bad of UNPARSEABLE) {
+      expect(compactIstDeadline(bad), JSON.stringify(bad)).toBe(bad);
+    }
+  });
+
+  it("returns no date it was not given, for any input", () => {
+    for (const bad of UNPARSEABLE) {
+      const out = compactIstDeadline(bad);
+      expect(out, `${JSON.stringify(bad)} produced a formatted date`)
+        .not.toMatch(/IST$/);
+      expect(out, `${JSON.stringify(bad)} produced the old hardcoded deadline`)
+        .not.toContain("Fri 21 Aug");
+    }
+  });
+
+  it("cannot be called without a date at all", () => {
+    // A type-level assertion, and the one that keeps the fallback from coming back:
+    // if the parameter is ever made optional again, `@ts-expect-error` becomes an
+    // unused directive and the build fails.
+    // @ts-expect-error — dateStr is required on purpose; absence is the caller's to state.
+    expect(() => compactIstDeadline()).not.toThrow();
+  });
+
+  it("does not invent GW1's deadline when null is forced past the type", () => {
+    // `new Date(null)` coerces to the epoch instead of `NaN`, so the
+    // `Number.isNaN` guard alone never catches it. The type forbids this in
+    // real callers, but pin it anyway: a `null` cast through the type must not
+    // come back as a formatted date, let alone the old hardcoded one.
+    const forced = null as unknown as string;
+    expect(compactIstDeadline(forced)).toBe(forced);
+    expect(compactIstDeadline(forced)).not.toBe("Thu 01 Jan · 05:30 IST");
+  });
+});
+
 describe("featureName", () => {
   it("converts snake_case to Title Case", () => {
     expect(featureName("home_form")).toBe("Home Form");

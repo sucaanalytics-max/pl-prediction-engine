@@ -105,7 +105,14 @@ def fetch_fbref_passing_stats(season: str = None, force: bool = False) -> Option
             return pd.read_parquet(cache_path)
 
     try:
-        from fbrefdata import FBref
+        # `soccerdata`, not `fbrefdata`. This read `from fbrefdata import FBref`
+        # from the day it was written — a package that is not in
+        # pipeline/requirements.txt and never was — so the ImportError handler
+        # below swallowed it and this function returned None on EVERY run since.
+        # The graceful-degradation contract worked exactly as designed and hid a
+        # typo indefinitely: an optional source that is always absent looks
+        # identical to one that is merely quiet.
+        from soccerdata import FBref
 
         season_label = SEASON_LABELS.get(season, f"20{season[:2]}-{season[2:]}")
         logger.info(f"Fetching FBref passing stats for {season_label}...")

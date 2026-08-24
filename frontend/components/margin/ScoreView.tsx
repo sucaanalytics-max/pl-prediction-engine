@@ -5,29 +5,36 @@
  *
  * ## What this view is not
  *
- * The design puts an eight-gameweek plan here: every player a row, every week a
- * column, each cell a start, a bench or a sale, with transfers and bank tracked
- * along the bottom. Nothing publishes that for this team.
+ * The eight-gameweek plan — every player a row, every week a column, each cell a
+ * start, a bench or a sale — is drawn by `PlanGrid`, three sections below this one
+ * on `/`, from the **decision** artifact's own `horizon` block. That is the only
+ * honest source for it: a schedule of starts and sales assembled here by sorting
+ * per-week projections would be the most convincing fabrication in this app, laid
+ * out with the authority of a solver by something that never solved anything.
  *
- * Drawing the grid anyway from per-week projections would be the most convincing
- * fabrication in this app: a schedule of starts and sales, laid out with the
- * authority of a solver, assembled by sorting some numbers. So the grid is not
- * drawn. What is drawn is the planner — the reader's own scratchpad, scored
- * against the published projection — plus the two things that genuinely exist
- * over a horizon: **the fixture run**, from FPL's own difficulty ratings, and
- * **the captaincy plan** the heuristic engine builds, dotted throughout because
- * it is a ranking key rather than a simulation.
+ * So this view draws the planner — the reader's own scratchpad, scored against the
+ * published projection — plus the two things that genuinely exist over a horizon
+ * without a solver: **the fixture run**, from FPL's own difficulty ratings, and
+ * **the captaincy plan** the heuristic engine builds, dotted throughout because it
+ * is a ranking key rather than a simulation.
  *
- * ## Nothing here reads another entry's decision
+ * ## Why this view does not read the decision
  *
- * This screen used to open with a `THE CALL · NOT PUBLISHED` banner and close with
- * a refusal to draw a horizon, both reading `decision_public_gw{NN}_season.json`.
- * That artifact belongs to **Ronny**, an automated entry (2561567, see
- * `pipeline/config.py`), not to the owner's team (20945) — the only team this
- * screen displays. So the loudest and the longest elements on a planning screen
- * were both about a cron gate for a team that appears nowhere on it, and had the
- * file ever published, a bot's transfers would have been drawn under the heading
- * "Your team over the next N gameweeks". The read is gone with them.
+ * It used to open with a `THE CALL · NOT PUBLISHED` banner and close with a
+ * refusal to draw a horizon, both reading the decision artifact — and the reason
+ * recorded for removing them was wrong. It said the artifact belonged to Ronny, an
+ * automated entry, rather than to the owner's team. It does not: `FPL_ENTRIES` has
+ * held exactly one entry, the owner's, since 2026-08-24, and the artifact is
+ * `fpl/decision_public_gw{NN}_owner.json`. It is his, and `PlanGridSection` renders
+ * it on this same page.
+ *
+ * What remains true is the composition argument, which is why the reads are still
+ * gone. A page needs ONE renderer per artifact: the banner was the loudest element
+ * on the screen and the refusal essay the longest, both about an absence that
+ * `PlanGridSection` now states in a single line where the grid itself would go.
+ * Whether this view should read the decision's horizon at all — rather than only
+ * the per-player xP horizon it already takes off `xp_public` — is a live question
+ * and a separate one.
  *
  * ## Difficulty is FPL's number, not ours
  *
@@ -336,21 +343,21 @@ export function ScoreView(
         />
       )}
 
-      {/* Neither a solved-horizon grid nor a refusal to draw one.
-          Both read `decision_public_gw{NN}_season.json`, which is **Ronny's**
-          plan — an automated entry (2561567, `pipeline/config.py`) — and not the
-          owner's team (20945), the only team this screen displays. Absent, that
-          file put a full-width near-black NOT PUBLISHED banner at the top of his
-          planning screen about a cron gate for a team the app does not display;
-          present, it would have rendered a bot's transfers under the heading
-          "Your team over the next N gameweeks". Neither state was ever about the
-          reader.
+      {/* Neither a solved-horizon grid nor a refusal to draw one. Both read the
+          decision artifact — `fpl/decision_public_gw{NN}_owner.json`, which IS
+          the owner's own plan and is the only entry `FPL_ENTRIES` holds — and
+          both are now `PlanGridSection`'s job, three sections below on `/`. What
+          was wrong here was the weight, not the ownership: absent, that file put
+          a full-width near-black NOT PUBLISHED banner at the top of a planning
+          screen, where the same absence is now one line in the place the grid
+          goes.
 
-          The refusal essay went with it. It existed to answer a multi-gameweek
-          claim made elsewhere in the app — the deleted heuristic card's "+3.8 pts
-          over 4 GW" — and with that claim gone there is nothing left for it to
-          answer. The planner above already says in its own footnote that the
-          later columns are fixtures rather than a solved eleven. */}
+          The refusal essay went with it for its own reason. It existed to answer
+          a multi-gameweek claim made elsewhere in the app — the deleted heuristic
+          card's "+3.8 pts over 4 GW" — and with that claim gone there is nothing
+          left for it to answer. The planner above already says in its own
+          footnote that the later columns are fixtures rather than a solved
+          eleven. */}
 
       <WhenProvenHere
         of={heuristics}

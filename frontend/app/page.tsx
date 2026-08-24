@@ -31,12 +31,15 @@
  *     heuristic's six-week armband list would put a second, a third and a sixth
  *     captain under the one this page opens with.
  *
- * ## Nothing was deleted to make room for it
+ * ## The nine paths this absorbs are gone
  *
- * `/now`, `/margin`, `/decide` and the six other paths this is meant to absorb
- * all still work, unchanged, so the two surfaces can be compared before anything
- * is destroyed. This repo has already stranded a 612-line page by deleting the
- * only components that linked to it; rescue precedes deletion.
+ * `/now`, `/margin`, `/decide` and the six others were deleted and are served a
+ * 410 by `middleware.ts`; `test/nav-coverage.test.tsx` is an allow-list over
+ * `app/`, so a tenth door onto this question is a red build. The rescue half of
+ * the rule still held — this repo has already stranded a 612-line page by
+ * deleting the only components that linked to it — so the four components only a
+ * doomed route imported were re-mounted first, one commit earlier, and
+ * `test/rescued-mounts.test.tsx` pins where.
  *
  * ## Absence
  *
@@ -55,10 +58,14 @@
  * mislabel a figure — it reads a different file.
  */
 
+import Link from "next/link";
+
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Section } from "@/components/data/Artifact";
+import { DeadlineClock } from "@/components/DeadlineClock";
 import GameweekCall from "@/components/GameweekCall";
 import SquadBoard from "@/components/SquadBoard";
+import { PlanGridSection } from "@/components/PlanGridSection";
 import { ScoreView } from "@/components/margin/ScoreView";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
 
@@ -68,19 +75,27 @@ export default function CallPage() {
   return (
     <ErrorBoundary pageName="The call">
       <div className="space-y-8">
-        <header>
-          <h1
-            className="text-3xl font-extrabold tracking-tight"
-            style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
-          >
-            Your call
-          </h1>
-          {/* No gameweek literal in the chrome. `GameweekCall` names the week
-              once, beside the artifact it read it from, and a hardcoded "GW1"
-              here would be wrong for 37 weeks of 38. */}
-          <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
-            What your XI is, and who is captain, before the deadline
-          </p>
+        <header className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+          <div>
+            <h1
+              className="text-3xl font-extrabold tracking-tight"
+              style={{ color: "var(--text-1)", fontFamily: "var(--font-display)" }}
+            >
+              Your call
+            </h1>
+            {/* No gameweek literal in the chrome. `GameweekCall` names the week
+                once, beside the artifact it read it from, and a hardcoded "GW1"
+                here would be wrong for 37 weeks of 38. */}
+            <p className="text-sm mt-1" style={{ color: "var(--text-3)" }}>
+              What your XI is, and who is captain, before the deadline
+            </p>
+          </div>
+          {/* The deadline the sentence above refers to, and the app's ONLY clock.
+              It sits here rather than in the sidebar because it constrains this
+              page's decision, and it is mounted once because two clocks over one
+              deadline is a defect this repo has already shipped — see
+              `components/DeadlineClock.tsx`. */}
+          <DeadlineClock />
         </header>
 
         {/* The model's call leads, and it is the only captain on this page. */}
@@ -94,6 +109,22 @@ export default function CallPage() {
         <Section
           title="Your squad"
           subtitle="The fifteen, with the model's projection for each of them"
+          aside={
+            /* The app's only route to `/capture`, and deliberately not a nav
+               entry — it belongs beside the squad because capturing the position
+               is what makes the fifteen below true. `_read_entry`
+               (`run_agent.py:1023`) reads a committed capture for this entry
+               BEFORE asking FPL live, so this link is the head of the write path;
+               for a while nothing in the tree pointed at it and the page was
+               unreachable except by typing the URL. */
+            <Link
+              href="/capture"
+              className="text-xs underline"
+              style={{ color: "var(--brand)" }}
+            >
+              Capture what you actually submitted
+            </Link>
+          }
         >
           <SquadBoard />
         </Section>
@@ -117,6 +148,20 @@ export default function CallPage() {
               captaincyPlan={false}
               speaksForUnsolvedWeeks={false}
             />
+          )}
+        </Section>
+
+        <Section
+          title="Week by week"
+          subtitle="The solved plan across the horizon — who starts, who benches, who wears the armband"
+        >
+          {gameweek === null ? (
+            <p className="text-xs" style={{ color: "var(--text-4)" }}>
+              The gameweek could not be resolved, so the plan cannot be pointed at
+              a decision.
+            </p>
+          ) : (
+            <PlanGridSection gameweek={gameweek} />
           )}
         </Section>
       </div>

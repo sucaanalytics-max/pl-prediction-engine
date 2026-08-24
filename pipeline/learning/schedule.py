@@ -42,6 +42,13 @@ LOCKOUT_BEFORE_DEADLINE = timedelta(minutes=30)
 SEAL_WINDOW = timedelta(hours=4)
 # Refresh projections from this far out.
 REFRESH_WINDOW = timedelta(hours=48)
+# How far out to keep a projection warm. Distinct from REFRESH_WINDOW because it
+# must NOT outrank the missed-seal report: at 8 days this window exceeds the
+# ~7-day gap between deadlines, so a forward-looking gate placed with the others
+# would return before the MISSED_SEAL check below and silently destroy the report
+# for "a deadline passed without a seal" — one of 38 irrecoverable observations a
+# season. Checked after it instead, so it fires only when nothing else is due.
+PROJECTION_WINDOW = timedelta(days=8)
 # Beyond this the season is not close enough to be worth waking for.
 IDLE_HORIZON = timedelta(days=45)
 # FPL locks points at 09:00 UK the day after a gameweek's final match. Before
@@ -414,6 +421,23 @@ def determine_phase(
                     "meaningful if it provably predated the deadline."
                 ),
             )
+
+    # Keep the next gameweek's projection warm well before REFRESH_WINDOW opens,
+    # without letting this outrank the MISSED_SEAL report above: this check sits
+    # after that loop, not with the other forward-looking gates, precisely so a
+    # deadline within PROJECTION_WINDOW cannot preempt an outstanding missed-seal
+    # observation the way widening REFRESH_WINDOW itself once did.
+    if remaining <= PROJECTION_WINDOW:
+        return ScheduleState(
+            phase=Phase.REFRESH,
+            gameweek=gameweek,
+            deadline=deadline,
+            seconds_to_deadline=seconds,
+            reason=(
+                f"GW{gameweek} deadline in {seconds / 3600:.1f}h; keeping the "
+                "projection warm"
+            ),
+        )
 
     return ScheduleState(
         phase=Phase.IDLE,

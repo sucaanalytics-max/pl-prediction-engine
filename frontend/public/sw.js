@@ -32,20 +32,29 @@
 //
 // Bump this whenever a SHELL_ROUTES page changes what it renders, so the offline
 // branch cannot replay a version of it that no longer exists.
-const CACHE_NAME = "suca-fpl-shell-v7";
+//
+// v8 earned its bump on the same ground: `/margin`, `/bet`, `/now`, `/decide` and
+// `/accuracy` no longer exist. A v7 precache holds five pages that are gone, and
+// the offline branch would serve them to an installed app as though they were
+// still the app. Bumping evicts them. The list below is also why this is one
+// commit with the route deletion — `cache.addAll` rejects atomically, so a list
+// naming a route that 404s precaches NOTHING.
+//
+// v9 is not about the list, which is unchanged. Two of the pages ON it changed
+// what they render, and both changes are ones a stale offline copy actively
+// misleads with: `/` gained the only link to `/capture` (a v8 copy is the version
+// of the front door with no route to the write path at all), and `/capture` now
+// captures for entry 20945 rather than offering the two entries that detached —
+// a v8 copy would go on posting captures the agent never reads.
+const CACHE_NAME = "suca-fpl-shell-v9";
 const SHELL_ROUTES = [
+  // Every route the app has, which is now a short enough list to precache whole:
+  // the call, the shortlist, the evidence, the position, and the page shown when
+  // a fetch fails.
   "/",
-  // The workspace, which the root now opens on. It was absent from this list
-  // while `/markets` and `/matches` were on it — so an installed app precached
-  // the betting screens that have since moved behind `/bet`, and not the four
-  // tabs the app is actually for.
-  "/margin",
-  "/bet",
-  "/now",
-  "/decide",
   "/players",
   "/evidence",
-  "/accuracy",
+  "/capture",
   "/offline",
   "/icon.svg",
   "/icon-maskable.svg",
