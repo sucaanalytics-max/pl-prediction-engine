@@ -27,7 +27,9 @@ from pipeline.config import CURRENT_SEASON, FPL_PUBLIC_DIR, FPL_SIM, PREDICTIONS
 from pipeline.decide.horizon import EVAL_HORIZON
 from pipeline.learning.ledger import read_forecast
 from pipeline.learning.outcomes import LedgerError, read_outcomes
-from pipeline.learning.schedule import Phase, ScheduleState, SEAL_WINDOW, resolve
+from pipeline.learning.schedule import (
+    Phase, REFRESH_WINDOW, ScheduleState, resolve,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -531,8 +533,9 @@ def refresh_expected_points(
     xp_by_week, horizon_diagnostics = horizon if horizon else (None, [])
 
     # Record what was known about availability at this moment. The seal freezes
-    # the bootstrap once per gameweek; this runs every three hours, so it is what
-    # preserves the intra-week news PATH rather than only the deadline state.
+    # the bootstrap once per gameweek; this runs on every refresh — hourly inside
+    # REFRESH_WINDOW — so it is what preserves the intra-week news PATH rather
+    # than only the deadline state.
     # Non-fatal: an unrecorded claim costs one observation, while failing the run
     # costs the forecast, which is irreplaceable.
     evidence: Dict[str, Any] = {}
@@ -1431,8 +1434,9 @@ def _score(predictions_dir: Path, state: ScheduleState) -> int:
     return 0
 
 
-#: How stale a published projection may be before a run outside the seal window
-#: rebuilds it. Set from a measured `_project_horizon` runtime — see
+#: How stale a published projection may be before a run outside REFRESH_WINDOW
+#: rebuilds it. Inside that window the age is not consulted at all — every tick
+#: refreshes. Set from a measured `_project_horizon` runtime — see
 #: docs/superpowers/plans/2026-08-24-single-team-dashboard.md Task 3 Step 1.
 PROJECTION_MAX_AGE = timedelta(hours=6)
 
@@ -1510,13 +1514,22 @@ def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
         return 1
 
     if state.phase is Phase.REFRESH:
-        # Inside the seal window every run refreshes: late team news dominates
-        # projection error there. Further out, refresh only when the published
-        # projection for THIS gameweek has aged out, so an eight-day window costs
-        # about one full simulation a day rather than one every three hours.
+        # Inside REFRESH_WINDOW every run refreshes, and the gate is deliberately
+        # tied to that window rather than to SEAL_WINDOW: late team news dominates
+        # projection error for the last two days before a deadline, not just the
+        # last four hours. Gating on SEAL_WINDOW instead let the news-dense
+        # 48h-to-4h band rebuild roughly every PROJECTION_MAX_AGE rather than
+        # every tick, which also throttled `record_claims` — the intra-week
+        # evidence path `/evidence` is built from.
+        #
+        # Further out than that, refresh only when the published projection for
+        # THIS gameweek has aged out, so the eight-day PROJECTION_WINDOW costs
+        # about four full simulations a day (PROJECTION_MAX_AGE is 6h) rather than
+        # one an hour, which is the workflow's cron (`.github/workflows/
+        # fpl_agent.yml`: `0 * * * *`).
         remaining = timedelta(seconds=state.seconds_to_deadline or 0)
         now = datetime.now(timezone.utc)
-        if remaining > SEAL_WINDOW and projection_is_current(
+        if remaining > REFRESH_WINDOW and projection_is_current(
             state.gameweek, now
         ):
             logger.info(

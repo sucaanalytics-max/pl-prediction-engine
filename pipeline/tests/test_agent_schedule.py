@@ -600,6 +600,43 @@ class AgentStatusPublishTests(unittest.TestCase):
 
         self.assertGreaterEqual(PROJECTION_WINDOW, timedelta(days=7))
 
+    def test_a_deadline_five_days_out_resolves_to_refresh(self):
+        """
+        The behaviour the constant above only implies, and the whole point of
+        this change.
+
+        `PROJECTION_WINDOW`'s magnitude was the only thing asserted, so the
+        thirteen lines in `determine_phase` that act on it could be deleted and
+        the suite stayed green — while the phase fell back to IDLE, the agent job
+        was skipped, `xp_public_gw{next}.json` was never written and the planner,
+        the XI, the captain and the squad's xP were all blank for roughly 4.5
+        days of every 7. That is the blank front page, and it was one `if` away.
+
+        Five days out with nothing sealed: too far for SEAL (4h) and for REFRESH
+        (48h), no past deadline for MISSED_SEAL to report, and well inside
+        IDLE_HORIZON. The only gate that can return REFRESH here is the
+        projection-warmth one.
+        """
+        state = determine_phase(_at(-120), _events(), sealed=set())
+        self.assertEqual(state.phase, Phase.REFRESH)
+        self.assertEqual(state.gameweek, 1)
+        # Named so the reason on the status artifact says WHY it is working,
+        # rather than reading like an ordinary pre-deadline refresh.
+        self.assertIn("warm", state.reason)
+
+    def test_the_warmth_gate_covers_the_whole_gap_between_deadlines(self):
+        """
+        Not just five days. Deadlines sit about seven days apart, so a gate that
+        only reached a few days out would leave the front page blank for the
+        first half of every week — which is the state this replaced.
+        """
+        for hours_before in (49, 72, 120, 160):
+            with self.subTest(hours_before=hours_before):
+                state = determine_phase(
+                    _at(-hours_before), _events(), sealed=set(),
+                )
+                self.assertEqual(state.phase, Phase.REFRESH)
+
     def test_projection_warmth_does_not_outrank_a_missed_seal(self):
         """
         The property that broke when REFRESH_WINDOW itself was widened to 8 days:

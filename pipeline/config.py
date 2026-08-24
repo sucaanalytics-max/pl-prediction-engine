@@ -439,7 +439,7 @@ FPL_PUBLIC_DIR = ROOT_DIR / "frontend" / "public" / "predictions" / "fpl"
 # ── FPL agent: the owner's entry ───────────────────────────────────────────
 # One entry, one objective: maximise expected points; variance is a cost.
 # Effective ownership cannot move that pick anyway — writing the margin over
-# the field as D = sum_j (m_j - EO_j) * P_j, the term sum_j EO_j * xP_j is a
+# the field as D = sum_j (m_j - EO_j) * xP_j, the term sum_j EO_j * xP_j is a
 # constant nobody can influence, so EO changes Var[D] but never the EV-optimal
 # squad.
 #
