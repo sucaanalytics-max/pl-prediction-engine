@@ -31,12 +31,15 @@
  *     heuristic's six-week armband list would put a second, a third and a sixth
  *     captain under the one this page opens with.
  *
- * ## Nothing was deleted to make room for it
+ * ## The nine paths this absorbs are gone
  *
- * `/now`, `/margin`, `/decide` and the six other paths this is meant to absorb
- * all still work, unchanged, so the two surfaces can be compared before anything
- * is destroyed. This repo has already stranded a 612-line page by deleting the
- * only components that linked to it; rescue precedes deletion.
+ * `/now`, `/margin`, `/decide` and the six others were deleted and are served a
+ * 410 by `middleware.ts`; `test/nav-coverage.test.tsx` is an allow-list over
+ * `app/`, so a tenth door onto this question is a red build. The rescue half of
+ * the rule still held — this repo has already stranded a 612-line page by
+ * deleting the only components that linked to it — so the four components only a
+ * doomed route imported were re-mounted first, one commit earlier, and
+ * `test/rescued-mounts.test.tsx` pins where.
  *
  * ## Absence
  *

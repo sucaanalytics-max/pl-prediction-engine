@@ -193,16 +193,22 @@ describe("the shell caches the app that exists now", () => {
      * bump cannot happen silently — you must come here and say why — but it
      * cannot tell whether a bump was NEEDED. That judgement stays human.
      *
-     * v7 -> v8, and this is the whole of what it buys: `/margin`, `/bet`, `/now`,
-     * `/decide` and `/accuracy` were deleted, so a v7 precache holds five pages
-     * that no longer exist and the offline branch would serve them as though they
-     * were still the app. The bump evicts them.
+     * v8 -> v9, and this is the whole of what it buys. The route list did not
+     * change; two pages on it did, in ways a stale offline copy misleads with.
+     * `/` gained the app's only link to `/capture`, so a v8 copy is the version of
+     * the front door with no route to the write path; and `/capture` now captures
+     * for entry 20945 instead of offering the two entries that detached, so a v8
+     * copy goes on posting captures nothing reads.
+     *
+     * The earlier v7 -> v8 bump was for the list itself: `/margin`, `/bet`, `/now`,
+     * `/decide` and `/accuracy` were deleted, so a v7 precache held five pages
+     * that no longer exist.
      *
      * The earlier v6 -> v7 bump was for the same class of reason: `/` had stopped
      * being a 307 redirect to `/margin`, and a v6 precache still held the
      * redirect. Neither bump explains the once-reported stale `/` — the navigation
      * handler is and was network-first — and that report was never diagnosed.
      */
-    expect(swSource).toContain("suca-fpl-shell-v8");
+    expect(swSource).toContain("suca-fpl-shell-v9");
   });
 });

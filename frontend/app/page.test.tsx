@@ -300,9 +300,10 @@ describe("one gameweek across the page, even when the two sources disagree", () 
 
   it("reads no projection at all when neither source can name a week", async () => {
     /**
-     * The reason there is no `?? 1` here. `xp_public_gw01.json` EXISTS, so a
-     * guess of 1 does not 404 into an honest `absent` — it renders GW1's numbers
-     * as though they were this week's, for 37 weeks of 38, silently.
+     * The reason there is no `?? 1` here. `xp_public_gw01.json` EXISTED — it was
+     * pruned when gw02 published — and a guess of 1 does not reliably 404 into an
+     * honest `absent`: whenever that file is on disk it renders GW1's numbers as
+     * though they were this week's, for 37 weeks of 38, silently.
      */
     const { container, requested } = await mountPage(
       { agentGameweek: null, eventId: null },
