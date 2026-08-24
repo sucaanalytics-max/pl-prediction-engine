@@ -1226,7 +1226,10 @@ Create `frontend/test/gone-routes.test.ts`:
 
 ```ts
 /**
- * The 23 deleted routes announce that they are gone, not missing.
+ * The deleted routes announce that they are gone, not missing.
+ *
+ * 22 path prefixes cover 23 deleted route files: `/matches/[id]` has no entry of
+ * its own because the middleware also matches on the first path segment.
  *
  * 410 rather than 404 because these were real pages with bookmarks and a service
  * worker that precached several of them: "intentionally gone" is the true
