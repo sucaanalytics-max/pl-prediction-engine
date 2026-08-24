@@ -1438,10 +1438,10 @@ PROJECTION_MAX_AGE = timedelta(hours=6)
 
 
 def projection_is_current(
-    predictions_dir: Path,
     gameweek: int,
     now: datetime,
     max_age: timedelta = PROJECTION_MAX_AGE,
+    public_dir: Path = FPL_PUBLIC_DIR,
 ) -> bool:
     """
     Whether a published projection for THIS gameweek is young enough to keep.
@@ -1450,10 +1450,18 @@ def projection_is_current(
     the whole defect: `xp_public_gw01.json` sat on disk looking fresh while the
     frontend asked for `gw02`, which had never been written.
 
+    Reads FPL_PUBLIC_DIR, not PREDICTIONS_DIR, and the two are not
+    interchangeable: PREDICTIONS_DIR holds the private artifact
+    (`xp_gw{NN}.json`) that feeds the optimiser, while FPL_PUBLIC_DIR
+    (`frontend/public/predictions/fpl/`) holds `xp_public_gw{NN}.json` — the
+    display contract the frontend actually fetches, and the thing this gate
+    exists to keep warm. Checking PREDICTIONS_DIR here always missed: that
+    file has never lived there.
+
     Anything unreadable counts as not current. A projection is cheap to rebuild
     and wrong to guess at.
     """
-    path = Path(predictions_dir) / "fpl" / f"xp_public_gw{int(gameweek):02d}.json"
+    path = Path(public_dir) / f"xp_public_gw{int(gameweek):02d}.json"
     try:
         stamp = json.loads(path.read_text(encoding="utf-8")).get("generated_at")
     except (OSError, ValueError):
@@ -1509,7 +1517,7 @@ def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
         remaining = timedelta(seconds=state.seconds_to_deadline or 0)
         now = datetime.now(timezone.utc)
         if remaining > SEAL_WINDOW and projection_is_current(
-            predictions_dir, state.gameweek, now
+            state.gameweek, now
         ):
             logger.info(
                 "refresh skipped: GW%s projection is younger than %s and the "

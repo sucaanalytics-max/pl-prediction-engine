@@ -590,12 +590,28 @@ class AgentStatusPublishTests(unittest.TestCase):
 
     def test_refresh_reaches_a_deadline_a_week_out(self):
         """
-        The window was 48h, so for ~4.5 days of every 7 the phase was IDLE, no
-        projection was written, and the front page fetched a file that had never
-        existed. The frontend resolves the gameweek from agent_status.gameweek —
-        the NEXT deadline — so it asks for a week the producer had not reached.
+        REFRESH_WINDOW stayed at 48h on purpose — widening it silently ate the
+        missed-seal report (see the ordering test below). PROJECTION_WINDOW is
+        the one that must reach a week out, so a projection for the next
+        gameweek is kept warm well before the front page needs it.
         """
         from datetime import timedelta
-        from pipeline.learning.schedule import REFRESH_WINDOW
+        from pipeline.learning.schedule import PROJECTION_WINDOW
 
-        self.assertGreaterEqual(REFRESH_WINDOW, timedelta(days=7))
+        self.assertGreaterEqual(PROJECTION_WINDOW, timedelta(days=7))
+
+    def test_projection_warmth_does_not_outrank_a_missed_seal(self):
+        """
+        The property that broke when REFRESH_WINDOW itself was widened to 8 days:
+        a forward-looking gate that wide sits inside the window for the ENTIRE
+        gap between deadlines, so it always returns before the MISSED_SEAL check
+        ever runs, silently losing the report for "GW1 deadline passed with no
+        sealed forecast" — one of 38 irrecoverable observations a season.
+        PROJECTION_WINDOW is checked AFTER that report instead, so this scenario
+        — 6h after a missed GW1 deadline, with GW2's deadline (7 days out)
+        comfortably inside the 8-day PROJECTION_WINDOW — must still report the
+        miss rather than quietly moving on to keep GW2's projection warm.
+        """
+        state = determine_phase(_at(6), _events(), sealed=set())
+        self.assertEqual(state.phase, Phase.MISSED_SEAL)
+        self.assertEqual(state.gameweek, 1)
