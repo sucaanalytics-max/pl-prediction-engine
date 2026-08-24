@@ -131,7 +131,7 @@ jobs:
           # that logs "FPL agent will use fallback rates" precisely so a bad odds
           # response cannot stop a run, and market_blend_weight is written only by
           # fit_market_blend.py, which nothing in the pipeline may import.
-          for f in fixture_xg.json market_blend_weight.json; do
+          for f in fixture_xg.json market_blend_weight.json player_events.json; do
             if [ -f "predictions/$f" ]; then
               cp "predictions/$f" "frontend/public/predictions/$f"
             else
