@@ -11,7 +11,7 @@ import unittest
 from pathlib import Path
 
 from pipeline.fpl.player_events import (
-    NOT_AVAILABLE, SCHEMA_VERSION, UNMATCHED_CAP, build, write,
+    DECIMALS, NOT_AVAILABLE, SCHEMA_VERSION, UNMATCHED_CAP, build, write,
 )
 
 STAMP = "2026-08-24T18:00:00Z"
@@ -76,13 +76,15 @@ class Coverage(unittest.TestCase):
         self.assertEqual(c["matched"], 2)
         self.assertEqual(c["understat_rows"], 2)
         self.assertEqual(c["fpl_universe"], 609)
-        self.assertAlmostEqual(c["join_fraction"], 1.0, places=4)
-        self.assertAlmostEqual(c["league_fraction"], 2 / 609, places=4)
+        self.assertEqual(c["join_fraction"], 1.0)
+        # Rounded to 2dp like every other float; the exact integers above are
+        # what a reader divides if they want more.
+        self.assertEqual(c["league_fraction"], round(2 / 609, DECIMALS))
 
     def test_a_partial_join_shows_in_the_join_fraction_only(self):
         c = artifact(unmatched=[{"player": "X", "team": "Y", "reason": "z"}])["coverage"]
         self.assertEqual(c["understat_rows"], 3)
-        self.assertAlmostEqual(c["join_fraction"], 2 / 3, places=4)
+        self.assertEqual(c["join_fraction"], round(2 / 3, DECIMALS))
 
     def test_unmatched_players_are_published_not_discarded(self):
         a = artifact(unmatched=[{"player": "X", "team": "Y", "reason": "z"}])
@@ -131,7 +133,62 @@ class Per90Floor(unittest.TestCase):
     def test_the_totals_survive_even_when_the_rate_does_not(self):
         row = artifact()["players"][1]
         self.assertEqual(row["shots"], 1)
-        self.assertAlmostEqual(row["xg"], 0.2, places=6)
+        self.assertEqual(row["xg"], 0.2)
+
+
+class TwoDecimals(unittest.TestCase):
+    """
+    Understat sends full binary float precision: 0.2258007824420929 for a
+    quarter of an expected goal. Everything past the second decimal is
+    arithmetic rather than measurement, and publishing it invites a screen to
+    render it.
+    """
+
+    def test_a_long_float_is_cut_to_two_places(self):
+        a = artifact({9: {"minutes": 90, "xg": 0.2258007824420929,
+                          "xa": 0.040461, "shots": 4}})
+        row = a["players"][0]
+        self.assertEqual(row["xg"], 0.23)
+        self.assertEqual(row["xa"], 0.04)
+
+    def test_no_published_float_anywhere_exceeds_two_places(self):
+        a = artifact({9: {"minutes": 91, "xg": 1.41066, "shots": 4,
+                          "key_passes": 1, "xg_chain": 0.161198}})
+        def deep(value):
+            if isinstance(value, float):
+                self.assertEqual(round(value, DECIMALS), value, f"{value!r}")
+            elif isinstance(value, dict):
+                for v in value.values():
+                    deep(v)
+            elif isinstance(value, list):
+                for v in value:
+                    deep(v)
+        deep(a)
+
+    def test_counts_are_integers_not_floats(self):
+        row = artifact({9: {"minutes": 90, "shots": 4.0, "key_passes": 1.0,
+                            "goals": 0.0, "xg": 0.5}})["players"][0]
+        self.assertIsInstance(row["shots"], int)
+        self.assertIsInstance(row["minutes"], int)
+        self.assertIsInstance(row["goals"], int)
+        # A real-valued field stays a float.
+        self.assertIsInstance(row["xg"], float)
+
+    def test_a_non_whole_count_is_left_alone_rather_than_truncated(self):
+        # Understat sending 4.5 shots would mean something changed upstream.
+        # Silently flooring it to 4 would hide that.
+        row = artifact({9: {"minutes": 90, "shots": 4.5}})["players"][0]
+        self.assertEqual(row["shots"], 4.5)
+
+    def test_rates_stay_floats(self):
+        row = artifact({9: {"minutes": 90, "shots": 4.0}})["players"][0]
+        self.assertIsInstance(row["shots_per_90"], float)
+
+    def test_rounding_happens_before_the_rate_not_after(self):
+        # 4 shots in 91 minutes is 3.956..., which must publish as 3.96 and not
+        # as a sixteen-digit float that a consumer then rounds differently.
+        row = artifact({9: {"minutes": 91, "shots": 4}})["players"][0]
+        self.assertEqual(row["shots_per_90"], 3.96)
 
 
 class Coercion(unittest.TestCase):

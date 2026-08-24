@@ -54,6 +54,15 @@ NOT_AVAILABLE = (
 #: eye; not the whole league when a season label is wrong and nothing matches.
 UNMATCHED_CAP = 40
 
+#: Fields that count things. A player takes four shots, not 4.0 of them — and a
+#: float count invites a screen to render "6.0" where "6" is the fact. Published
+#: as int whenever the value is whole; a non-whole count would mean the source
+#: sent something unexpected, and that is worth seeing rather than truncating.
+_COUNTS = (
+    "minutes", "shots", "key_passes", "goals", "assists", "np_goals",
+    "yellow_cards", "red_cards", "matches",
+)
+
 #: Carried straight through, after coercion.
 _NUMERIC = (
     "minutes", "shots", "key_passes", "goals", "assists",
@@ -62,15 +71,26 @@ _NUMERIC = (
 )
 
 
+#: Decimal places every published float is rounded to.
+#:
+#: Understat returns full binary float precision — 0.2258007824420929 for a
+#: quarter of an expected goal. Sixteen significant digits is a claim about
+#: measurement nobody can support: the underlying model is fitted on a few
+#: thousand shots, so everything past the second decimal is arithmetic, not
+#: information. Rounding at the source means no consumer has to decide, and two
+#: screens cannot disagree about the same number.
+DECIMALS = 2
+
+
 def _num(value: Any) -> Optional[float]:
-    """A float, or None. Understat sends strings and pandas sends NaN."""
+    """A float rounded to DECIMALS, or None. Understat sends strings, pandas NaN."""
     if value is None:
         return None
     try:
         out = float(value)
     except (TypeError, ValueError):
         return None
-    return None if out != out else out  # NaN
+    return None if out != out else round(out, DECIMALS)  # NaN
 
 
 def _per90(total: Optional[float], minutes: Optional[float]) -> Optional[float]:
@@ -84,7 +104,7 @@ def _per90(total: Optional[float], minutes: Optional[float]) -> Optional[float]:
     """
     if total is None or minutes is None or minutes < 90:
         return None
-    return round(total * 90.0 / minutes, 3)
+    return round(total * 90.0 / minutes, DECIMALS)
 
 
 def build(
@@ -106,7 +126,10 @@ def build(
             "team": teams.get(int(eid)),
         }
         for key in _NUMERIC:
-            out[key] = _num(row.get(key))
+            value = _num(row.get(key))
+            if key in _COUNTS and value is not None and value.is_integer():
+                value = int(value)
+            out[key] = value
         minutes = out.get("minutes")
         out["shots_per_90"] = _per90(out.get("shots"), minutes)
         out["key_passes_per_90"] = _per90(out.get("key_passes"), minutes)
@@ -135,11 +158,14 @@ def build(
             "understat_rows": int(source_rows),
             "fpl_universe": int(universe_size),
             "unmatched": len(unmatched),
+            # Rounded like everything else. Nothing is lost: `matched`,
+            # `understat_rows` and `fpl_universe` above are exact integers, so a
+            # reader who wants more precision can divide them.
             "join_fraction": (
-                round(len(players) / source_rows, 4) if source_rows else None
+                round(len(players) / source_rows, DECIMALS) if source_rows else None
             ),
             "league_fraction": (
-                round(len(players) / universe_size, 4) if universe_size else None
+                round(len(players) / universe_size, DECIMALS) if universe_size else None
             ),
         },
         "unmatched": [dict(u) for u in unmatched[:UNMATCHED_CAP]],
