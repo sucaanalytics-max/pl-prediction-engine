@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-23T23:45:47.666729Z",
-  "n_dropped": 388,
+  "generated_at": "2026-08-24T01:15:46.746596Z",
+  "n_dropped": 389,
   "dropped_by_source": {
-    "bbc_football": 114,
+    "bbc_football": 115,
     "fantasyfootballscout": 19,
     "hayters": 74,
     "sky_football": 181
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 478,
+  "n_articles": 479,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -385,6 +385,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "dfcdcd5f8bcfa4fb",
+      "headline": "'A win at home in the first game was beyond anyone's dreams' - Holden on MOTD",
+      "summary": "Following their huge win against Manchester United, Hull City assistant head coach Dean Holden joins Gabby Logan, Danny Murphy and Joe Hart in the Match of the Day studio.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c0kmk6rd30no?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-23T23:37:29Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "c578473a96b6bd17",
@@ -1048,24 +1066,6 @@
       "tier": 2,
       "url": "https://hayters.com/man-city-reach-agreement-for-midfielder-latest-transfer-reports/",
       "claimed_at": "2026-08-23T15:53:31Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1f1246616169e6ea",
-      "headline": "Man City 'completely deserved to win' - Maresca",
-      "summary": "Enzo Maresca marks his first Premier League game as Manchester City manager with a dramatic late comeback against Bournemouth, making a winning start to the 2026\u201327 season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c4gkgy8ljqvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T15:52:45Z",
       "players": [
         {
           "element_id": 0,
