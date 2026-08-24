@@ -166,10 +166,12 @@ async function mountPage(
     projections = PROJECTIONS as typeof PROJECTIONS | null,
     agentGameweek = 1 as number | null,
     eventId = 1 as number | null,
-    // Deliberately NOT 2026-08-21T17:30:00Z: `compactIstDeadline` returns exactly
-    // that date's formatting — "Fri 21 Aug · 23:00 IST" — as a hardcoded fallback
-    // when handed no argument, so using it here would make the placeholder and a
-    // real deadline indistinguishable in the assertions below.
+    // A date with no other meaning anywhere in this repo, so a deadline on screen
+    // can only have come from this fixture. It was originally chosen to avoid
+    // colliding with the hardcoded "Fri 21 Aug · 23:00 IST" that
+    // `compactIstDeadline` used to return when handed nothing; that fallback is gone
+    // and the parameter is now required, so the collision is no longer possible —
+    // the fixture stays because a distinct date is still the clearer evidence.
     deadline = "2026-09-12T10:00:00Z" as string | null,
     agentStatusAbsent = false,
   } = {},
@@ -628,11 +630,16 @@ describe("the deadline is on the page, exactly once", () => {
 
   it("never shows the formatter's fabricated placeholder", async () => {
     /**
-     * `compactIstDeadline(undefined)` returns the literal "Fri 21 Aug · 23:00 IST",
-     * a date from the design document. On screen an invented deadline is
-     * indistinguishable from a measured one — the `fpl-portal.ts` failure this repo
-     * has a scan for on two other surfaces. So absence must render as prose, and
-     * the guard belongs on the page rather than on the formatter, which is shared.
+     * `compactIstDeadline` used to return the literal "Fri 21 Aug · 23:00 IST" — a
+     * date from the design document — whenever it was handed nothing. On screen an
+     * invented deadline is indistinguishable from a measured one, which is the
+     * `fpl-portal.ts` failure this repo scans two other surfaces for.
+     *
+     * The fallback is deleted and `dateStr` is now required, so no caller can ask
+     * for it; `lib/formats.test.ts` pins that there is no input for which the
+     * function returns a date it was not given. This stays as the end-to-end half of
+     * that guarantee: a hardcoded deadline reintroduced anywhere between the
+     * artifact and the DOM fails here, at the page, where a reader would see it.
      */
     for (const args of [{ deadline: null }, { agentStatusAbsent: true }]) {
       const { container } = await mountPage(args);

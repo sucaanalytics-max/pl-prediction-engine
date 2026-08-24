@@ -60,12 +60,13 @@ export function DeadlineClock() {
     );
   }
 
-  const parsed = status.deadline === null ? null : new Date(status.deadline);
-  if (parsed === null || Number.isNaN(parsed.getTime())) {
-    // Never `compactIstDeadline(undefined)`: that returns the literal
-    // "Fri 21 Aug · 23:00 IST", a fabricated date from the design document. A
-    // reader cannot tell an invented deadline from a measured one, which is the
-    // failure `lib/fpl-portal.ts` shipped and every artifact test since guards.
+  const deadline = status.deadline;
+  const parsed = deadline === null ? null : new Date(deadline);
+  if (deadline === null || parsed === null || Number.isNaN(parsed.getTime())) {
+    // Absence is this component's decision to state, not the formatter's to paper
+    // over. `compactIstDeadline` used to answer a hardcoded "Fri 21 Aug · 23:00 IST"
+    // when handed nothing; it now requires a string and returns an unparseable one
+    // unchanged, so the only way to show a date here is to have been given one.
     return (
       <Unknown why="The agent&rsquo;s status carries no deadline yet, so there is none to show." />
     );
@@ -83,7 +84,7 @@ export function DeadlineClock() {
         className="block text-sm mt-0.5"
         style={{ color: "var(--text-1)", fontFamily: "var(--font-mono)" }}
       >
-        {compactIstDeadline(status.deadline ?? undefined)}
+        {compactIstDeadline(deadline)}
       </strong>
     </div>
   );

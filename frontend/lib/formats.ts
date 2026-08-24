@@ -75,10 +75,31 @@ export function istDateTime(dateStr: string): string {
   }).format(date) + " IST";
 }
 
-/** Compact deadline format used in navigation and cards. */
-export function compactIstDeadline(dateStr?: string): string {
-  if (!dateStr) return "Fri 21 Aug · 23:00 IST";
+/**
+ * Compact deadline format: `Fri 21 Aug · 23:00 IST`.
+ *
+ * ## Why `dateStr` is required, and why there is no fallback
+ *
+ * This function used to take an optional argument and answer
+ * `"Fri 21 Aug · 23:00 IST"` when given nothing — GW1's real deadline, copied out of
+ * a design document and baked permanently into a shared formatter. Any caller that
+ * had no deadline to show rendered that one as fact, and on screen an invented
+ * deadline is indistinguishable from a measured one. On a pre-deadline planner it is
+ * close to the worst single wrong number available.
+ *
+ * So absence is the CALLER's decision now: the type stops a caller from asking this
+ * function to invent one, and each surface says in its own words that it does not
+ * know. `components/DeadlineClock.tsx` is the one caller, and it renders a line of
+ * prose rather than a time.
+ *
+ * An unparseable string comes back unchanged, which is what `istDateTime` above
+ * already does — degrade to the input rather than fabricate a substitute. The
+ * invariant `lib/formats.test.ts` pins is that there is no input for which this
+ * returns a date it was not given.
+ */
+export function compactIstDeadline(dateStr: string): string {
   const date = new Date(dateStr);
+  if (Number.isNaN(date.getTime())) return dateStr;
   const day = new Intl.DateTimeFormat("en-GB", {
     timeZone: DISPLAY_TIME_ZONE,
     weekday: "short",

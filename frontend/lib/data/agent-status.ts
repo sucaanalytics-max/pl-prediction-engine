@@ -92,32 +92,17 @@ export const AGENT_STATUS: Descriptor<AgentStatus> = {
   isEmpty: agentStatusIsEmpty,
 };
 
-/** One sentence a reader can act on, or null when the agent is working normally. */
-export function describeIdleAgent(status: AgentStatus): string | null {
-  if (status.agentRan) return null;
-
-  const parts: string[] = [];
-  parts.push(
-    status.phase === "locked"
-      ? "The agent is locked: the deadline has passed and this gameweek is settled."
-      : "The agent has not run because nothing is due yet.",
-  );
-  if (status.reason) parts.push(status.reason);
-  if (status.deadline) {
-    // Date-only formatting via the artifact's own ISO string. `calendarDate` exists
-    // for date-only values; this one carries a time that matters.
-    const when = new Date(status.deadline);
-    if (!Number.isNaN(when.getTime())) {
-      parts.push(
-        `GW${status.gameweek ?? "?"} deadline: ${when.toLocaleString(undefined, {
-          dateStyle: "medium",
-          timeStyle: "short",
-        })}.`,
-      );
-    }
-  }
-  parts.push(
-    "Projections, the evidence view and the message feed appear once it starts.",
-  );
-  return parts.join(" ");
-}
+/*
+ * `describeIdleAgent` was here.
+ *
+ * It composed one sentence from `phase`, `reason` and `deadline` for a screen to
+ * print when the agent had not run. It had no callers — `/inbox`, `/decide` and
+ * `/control-room` were the surfaces that used it — and it formatted the deadline with
+ * its own `toLocaleString`, which made it a SECOND definition of what a deadline
+ * looks like in a tree that now has exactly one (`compactIstDeadline`, rendered once
+ * by `components/DeadlineClock.tsx`).
+ *
+ * Nothing is lost: `reason` on this artifact already carries the resolver's own
+ * sentence — "GW1 deadline in 247.4h; nothing due yet" — written by the code that
+ * decided it, and `agentRan` is the boolean a surface should branch on.
+ */
