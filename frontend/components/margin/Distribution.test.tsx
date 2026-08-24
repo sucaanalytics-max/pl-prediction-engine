@@ -24,13 +24,13 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { describeGlyph, Distribution } from "@/components/margin/Marks";
 import { SCALE_HI, SCALE_LO } from "@/lib/margin/distribution";
-import { PAPER } from "@/lib/margin/tokens";
+import { FLOODLIT } from "@/lib/margin/tokens";
 
 const FERNANDES = { q10: 2, q25: 4, q50: 6, q75: 9, q90: 14, mean: 6.66, mode: 5 };
 
 function marks(emphasis?: "neutral" | "median" | "tail") {
   const { container } = render(
-    <Distribution of={FERNANDES} surface={PAPER} emphasis={emphasis} />,
+    <Distribution of={FERNANDES} surface={FLOODLIT} emphasis={emphasis} />,
   );
   const root = container.firstElementChild as HTMLElement;
   const byTitle = (t: string) =>
@@ -156,7 +156,7 @@ describe("a tail-only file draws nothing rather than a mislabelled bar", () => {
 
   it("renders the ∅ mark, not an image", () => {
     const { container } = render(
-      <Distribution of={TAIL_ONLY} surface={PAPER} emphasis="tail" />,
+      <Distribution of={TAIL_ONLY} surface={FLOODLIT} emphasis="tail" />,
     );
     expect(container.querySelector('[role="img"]')).toBeNull();
     expect(container.textContent).toContain("∅");
@@ -165,7 +165,7 @@ describe("a tail-only file draws nothing rather than a mislabelled bar", () => {
   it("says the same thing under every emphasis", () => {
     for (const e of ["neutral", "median", "tail"] as const) {
       const { container } = render(
-        <Distribution of={TAIL_ONLY} surface={PAPER} emphasis={e} />,
+        <Distribution of={TAIL_ONLY} surface={FLOODLIT} emphasis={e} />,
       );
       expect(container.querySelector('[title="right tail, q75 to q90"]')).toBeNull();
       cleanup();
@@ -186,25 +186,25 @@ describe("the label describes the emphasis, not just the numbers", () => {
   };
 
   it("names the emphasised upside under tail emphasis", () => {
-    expect(label(<Distribution of={FULL} surface={PAPER} emphasis="tail" />))
+    expect(label(<Distribution of={FULL} surface={FLOODLIT} emphasis="tail" />))
       .toContain("upside q75 8 to q90 12 emphasised");
   });
 
   it("says the median is emphasised under median emphasis", () => {
-    const words = label(<Distribution of={FULL} surface={PAPER} emphasis="median" />);
+    const words = label(<Distribution of={FULL} surface={FLOODLIT} emphasis="median" />);
     expect(words).toContain("median emphasised");
     expect(words).not.toContain("upside");
   });
 
   it("claims no emphasis at neutral, so the default reads as the default", () => {
-    expect(label(<Distribution of={FULL} surface={PAPER} />))
+    expect(label(<Distribution of={FULL} surface={FLOODLIT} />))
       .not.toContain("emphasised");
   });
 
   it("does not claim a tail it could not draw", () => {
     // The glyph needs both ends; so must the sentence.
     expect(label(
-      <Distribution of={{ ...FULL, q90: null }} surface={PAPER} emphasis="tail" />,
+      <Distribution of={{ ...FULL, q90: null }} surface={FLOODLIT} emphasis="tail" />,
     )).not.toContain("upside");
   });
 

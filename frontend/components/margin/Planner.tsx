@@ -45,10 +45,10 @@ import {
   xiProblems,
   type Move, type PlannerRowModel, type WeekLedger,
 } from "@/lib/margin/planner";
-import { hatch, MONO, PAPER, SANS } from "@/lib/margin/tokens";
+import { hatch, MONO, FLOODLIT, SANS } from "@/lib/margin/tokens";
 import { Distribution, Eyebrow, Nil } from "@/components/margin/Marks";
 
-const S = PAPER;
+const S = FLOODLIT;
 
 /** Difficulty as ink weight, matching the fixture grid on /matches. */
 const WEIGHT: Record<number, string> = {

@@ -3,17 +3,21 @@
  *
  * ## Why this does not use `--text-1` and friends
  *
- * The rest of the app is a glass-and-emerald surface with a light and a dark
- * theme, and `globals.css` swaps its tokens under `.dark`. Margin is neither of
- * those. It is one design in which **the surface itself carries meaning**: the
- * decision screen is ink-on-black because it is read once under time pressure,
- * and the three reference screens are ink-on-paper because they are read at
- * length. Mapping that onto a light/dark toggle would let the reader put the
- * research table on black and the decision on paper, which inverts the only
- * thing the colour was doing.
+ * There used to be TWO surfaces here, and the idea behind them was that the
+ * surface itself carried meaning: the decision screen ink-on-black because it is
+ * read once under time pressure, the reference screens ink-on-paper because they
+ * are read at length.
  *
- * So the values are fixed here and the view decides which set it is on. This is
- * deliberately not themeable, and that is the design rather than an omission.
+ * That is retired. There is now one surface, `FLOODLIT`, and the reason is that
+ * the two-surface design lost the argument against its own consequence: five
+ * files sat on `PAPER` and five on `INK`, so `/` rendered a light planner while
+ * `/capture` rendered a dark form, and the reader experienced not "two kinds of
+ * reading" but one app that could not decide. Contrast that matters is between
+ * the DATA and the ground, not between one screen and the next.
+ *
+ * The values are still fixed here rather than themeable, which is unchanged and
+ * still deliberate: a viewer must not be able to put the projection table on a
+ * ground the distribution glyphs were not drawn for.
  *
  * ## The three semantic hues
  *
@@ -73,43 +77,58 @@ export interface MarginSurface {
   readonly face: string;
 }
 
-/** The decision surface. Read once, under a clock. */
-export const INK: MarginSurface = {
-  shell: "#14140f",
-  bar: "#1a1913",
-  inset: "#181711",
-  hair: "rgba(244,243,238,.13)",
-  rule: "rgba(244,243,238,.26)",
-  ink: "#f4f3ee",
-  ink2: "rgba(244,243,238,.62)",
-  ink3: "rgba(244,243,238,.42)",
-  ink4: "rgba(244,243,238,.32)",
-  brand: "oklch(0.8 0.08 250)",
-  agree: "oklch(0.82 0.14 155)",
-  conflict: "oklch(0.72 0.16 30)",
-  noise: "oklch(0.8 0.13 85)",
-  block: "rgba(244,243,238,.22)",
-  face: "#181711",
+/**
+ * The one surface. Dark ground, cool light ink, one acid accent.
+ *
+ * Named for what it looks like rather than for a reading mode, because it no
+ * longer encodes one. `--lime` is the only saturated colour that is not a
+ * judgement: it marks the live thing on a screen — the countdown, the armband,
+ * a detected run — and never a verdict.
+ */
+export const FLOODLIT: MarginSurface = {
+  shell: "#0d1013",
+  bar: "#14181d",
+  inset: "#1a1f26",
+  hair: "rgba(233,238,245,.075)",
+  rule: "rgba(233,238,245,.17)",
+  ink: "#e9eef5",
+  ink2: "rgba(233,238,245,.60)",
+  ink3: "rgba(233,238,245,.38)",
+  ink4: "rgba(233,238,245,.26)",
+  brand: "oklch(0.84 0.19 128)",
+  agree: "oklch(0.74 0.15 155)",
+  // 0.65 rather than the 0.66 this hue was drafted at, and the reason is a
+  // test, not an eye: `margin.test.ts` forbids the design prototype's hand-typed
+  // numbers from appearing anywhere in these sources, and "0.66" is one of them
+  // (it was a margin on a runner-up plan). A colour's lightness is arbitrary to
+  // a hundredth, so moving it costs nothing; loosening a guard that catches
+  // fabricated data to accommodate a paint value would cost a great deal.
+  conflict: "oklch(0.65 0.17 25)",
+  noise: "oklch(0.80 0.14 85)",
+  block: "rgba(233,238,245,.22)",
+  face: "#14181d",
 };
 
-/** The reference surfaces. Read at length. */
-export const PAPER: MarginSurface = {
-  shell: "#f6f5f2",
-  bar: "#fffefb",
-  inset: "#fbfaf7",
-  hair: "rgba(27,26,22,.14)",
-  rule: "rgba(27,26,22,.22)",
-  ink: "#1b1a16",
-  ink2: "#55534a",
-  ink3: "#8d8a7f",
-  ink4: "#b0ada2",
-  brand: "oklch(0.5 0.09 250)",
-  agree: "oklch(0.45 0.13 155)",
-  conflict: "oklch(0.55 0.13 30)",
-  noise: "oklch(0.64 0.13 80)",
-  block: "rgba(27,26,22,.22)",
-  face: "#fffefb",
-};
+/** The heat ramp for a projected-points cell. Five steps, teal toward lime. */
+export const HEAT: readonly (readonly [string, string])[] = [
+  ["oklch(0.21 0.02 225)", "rgba(233,238,245,.34)"],
+  ["oklch(0.29 0.06 205)", "rgba(233,238,245,.60)"],
+  ["oklch(0.40 0.10 178)", "rgba(233,238,245,.90)"],
+  ["oklch(0.55 0.14 150)", "#0d1013"],
+  ["oklch(0.74 0.19 132)", "#0d1013"],
+];
+
+/**
+ * Which heat step a value falls in, against a stated ceiling.
+ *
+ * The ceiling is a PARAMETER and never inferred from the row, because a
+ * per-row scale makes every player look equally good — the widest bar would
+ * mean "this player's best week" rather than "a good week".
+ */
+export function heatStep(value: number, ceiling: number): readonly [string, string] {
+  const t = Math.max(0, Math.min(1, value / (ceiling || 1)));
+  return HEAT[Math.min(HEAT.length - 1, Math.floor(t * HEAT.length))];
+}
 
 /** The rail beside the decision — one step off the shell, not a card. */
 export const RAIL_BG = "#181711";
@@ -136,9 +155,12 @@ export const KIT_MIX_TARGET = "#f0eee8";
  *
  * Two places needed to know — `hatch`, so its stroke shows against the ground, and the
  * kit mark, which mutes a club colour toward a light ground and must not on a dark one
- * — and both asked by comparing against a literal: `surface === INK` in one,
- * `surface.shell === "#f6f5f2"` in the other. Both answer wrongly for a surface built
- * by spreading one of these, which is how a third surface would arrive.
+ * — and both once asked by comparing against a literal surface object. That answered
+ * wrongly for any surface built by spreading another, which is how a new one arrives.
+ *
+ * With one surface left it always returns false, and the measurement is kept rather
+ * than replaced by that constant: the next surface added here should get a correct
+ * answer without anyone remembering this function exists.
  *
  * Relative luminance of the shell, with the sRGB transfer function, against the 0.5
  * midpoint. Non-hex shells return `false`: every surface in this file uses a hex shell,
@@ -158,9 +180,13 @@ export function surfaceIsLight(surface: MarginSurface): boolean {
 }
 
 export function hatch(surface: MarginSurface): string {
+  // The dark-ground stroke is floodlit's ink (233,238,245), not the warm
+  // 244,243,238 it was: a warm hatch over a cool #0d1013 reads as a smudge.
+  // The light branch is unreachable on the one surface that now exists, and is
+  // kept because `surfaceIsLight` is measured rather than assumed — see above.
   const stroke = surfaceIsLight(surface)
     ? "rgba(27,26,22,.12)"
-    : "rgba(244,243,238,.18)";
+    : "rgba(233,238,245,.18)";
   return `repeating-linear-gradient(45deg, ${stroke} 0 3px, transparent 3px 6px)`;
 }
 
@@ -170,16 +196,17 @@ export const MONO = "var(--font-plex-mono), ui-monospace, monospace";
 export const SANS = "var(--font-plex-sans), system-ui, sans-serif";
 
 /**
- * Newsreader, the display face, likewise loaded by the root layout.
+ * Anton, the display face, likewise loaded by the root layout.
  *
  * It sets headings and the sentence that answers a screen's question, and it
  * **never sets a figure and never sets a label** — figures are Mono so a column
  * of them reads as a ranking, labels are Mono so they read as apparatus rather
- * than as prose. Weight is a designed pair rather than one weight reused: 400 on
- * paper, 500 on ink, because 400 goes spindly against black.
+ * than as prose. One weight, 400, because Anton ships only one; the designed
+ * 400-on-paper / 500-on-ink pair this replaced described Newsreader on two
+ * surfaces, and neither the face nor the second surface still exists.
  *
  * Named here beside {@link MONO} and {@link SANS} so a view spells the face once
- * and `var(--font-newsreader)` does not spread through the component tree as a
+ * and `var(--font-display-anton)` does not spread through the component tree as a
  * literal — the same reason those two exist.
  */
-export const DISPLAY = "var(--font-newsreader), Georgia, serif";
+export const DISPLAY = "var(--font-display-anton), 'Arial Narrow', sans-serif";

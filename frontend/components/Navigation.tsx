@@ -2,18 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
 import {
-  ChevronRight,
   LayoutDashboard,
-  Menu,
-  Moon,
-  Sparkles,
   Stethoscope,
-  Sun,
   Users,
-  X,
   type LucideIcon,
 } from "lucide-react";
 import { useHeuristics } from "@/lib/data/useHeuristics";
@@ -47,114 +39,110 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/evidence", label: "Evidence", icon: Stethoscope },
 ];
 
-function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return <div className="w-8 h-8" />;
-  const dark = resolvedTheme === "dark";
-  return (
-    <button
-      className="sidebar-icon-button"
-      onClick={() => setTheme(dark ? "light" : "dark")}
-      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-    >
-      {dark ? <Sun size={15} /> : <Moon size={15} />}
-    </button>
-  );
-}
-
+/**
+ * A top bar, not a sidebar.
+ *
+ * ## Why the side went away
+ *
+ * The sidebar spent 264px of every viewport to carry three links and a wordmark,
+ * on screens whose whole job is a wide table: the projection grid is players
+ * across eight gameweeks, and the phase matrix is twenty clubs across eight. Both
+ * were scrolling horizontally to make room for navigation that fits in a strip.
+ * The references this redesign was benchmarked against are all top-bar for the
+ * same reason — this is 264px returned to the data, not a change of taste.
+ *
+ * ## No clock here
+ *
+ * The deadline renders exactly once, in `components/DeadlineClock.tsx` on `/`,
+ * and `app/page.test.tsx` asserts that count. Two clocks is not hypothetical:
+ * a countdown recomputed on every tick once sat near a duration stamped by the
+ * phase resolver, and hours later the screen showed a frozen "71.0h" beside a
+ * live "2d 23h". What this bar carries is the gameweek NUMBER — a label, not a
+ * second measurement of the same instant.
+ *
+ * ## One artifact, the one already loaded
+ *
+ * The gameweek comes off `useHeuristics`, which this bar fetches for the team
+ * name regardless. Reading it from `agent_status.json` instead would add a
+ * request to every page load of every route to render four characters — which is
+ * exactly what the `latest.json` fetch removed from here used to do for a badge
+ * that was rendered nowhere.
+ *
+ * ## No theme toggle either
+ *
+ * `globals.css` now defines the same floodlit values under `:root` and `.dark`,
+ * because the surface stopped encoding a reading mode. A control that changes
+ * nothing is worse than no control, so it is gone rather than left as furniture.
+ */
 export default function Navigation() {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  // One artifact, and only for the manager card. The `latest.json` fetch that used
-  // to sit beside this one counted value bets for a badge that was rendered
-  // nowhere, on every page load of every route.
   const { artifact: liveArtifact } = useHeuristics();
   const live = proven(liveArtifact);
+  const gameweek = live?.event?.id ?? null;
 
   return (
     <>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[80] primary-action">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[80] primary-action"
+      >
         Skip to content
       </a>
-      <button
-        className="mobile-nav-toggle lg:hidden"
-        onClick={() => setMobileOpen(!mobileOpen)}
-        aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
-        aria-expanded={mobileOpen}
-      >
-        {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-      </button>
-      {mobileOpen && <button className="mobile-nav-overlay lg:hidden" onClick={() => setMobileOpen(false)} aria-label="Close navigation overlay" />}
 
-      <aside className={`portal-sidebar ${mobileOpen ? "open" : ""}`}>
-        <div className="portal-brand">
-          <Link href="/" onClick={() => setMobileOpen(false)}>
-            <span className="brand-mark"><Sparkles size={20} /></span>
-            <span><strong>Suca</strong><small>FPL Decision OS</small></span>
+      <header className="masthead">
+        <div className="masthead-left">
+          <Link href="/" className="masthead-mark">
+            Suca
           </Link>
-          <span className="season-pill">26/27</span>
+
+          <nav className="masthead-nav" aria-label="Primary navigation">
+            {NAV_ITEMS.map((item) => {
+              const active =
+                item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={active ? "active" : ""}
+                  aria-current={active ? "page" : undefined}
+                >
+                  <Icon size={15} />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
         </div>
 
-        <div className="manager-card">
-          <div className="manager-avatar">
-            {live?.entry.teamName?.slice(0, 1).toUpperCase() ?? "M"}
-          </div>
-          <div>
-            <strong>{live?.entry.teamName ?? "My FPL team"}</strong>
-            <span>{live?.entry.id !== null && live?.entry.id !== undefined ? `Manager ID ${live.entry.id}` : "Manager ID unavailable"}</span>
-          </div>
-          {/* Only linkable once the real entry id is known. The hardcoded
-              20945 that used to sit here opened somebody else's team whenever
-              the live route was unavailable. */}
-          {live?.entry.id != null ? (
-            <a
-              href={`https://fantasy.premierleague.com/en/entry/${live.entry.id}/history`}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open official FPL team"
-            >
-              <ChevronRight size={16} />
-            </a>
+        <div className="masthead-right">
+          {gameweek != null ? (
+            <span className="masthead-gw">GW{gameweek}</span>
           ) : null}
-        </div>
 
-        <nav className="portal-nav" aria-label="Primary navigation">
-          {NAV_ITEMS.map((item) => {
-            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={active ? "active" : ""}
-                onClick={() => setMobileOpen(false)}
-                aria-current={active ? "page" : undefined}
+          <div className="masthead-team">
+            {/* Only linkable once the real entry id is known. The hardcoded
+                20945 that used to sit here opened somebody else's team whenever
+                the live route was unavailable. */}
+            {live?.entry.id != null ? (
+              <a
+                href={`https://fantasy.premierleague.com/en/entry/${live.entry.id}/history`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open official FPL team"
               >
-                <Icon size={17} />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="portal-sidebar-footer">
-          {/* No deadline clock here and no artifact-age readout.
-              The clock this sidebar used to carry was called "the second" because
-              Margin had the first; the route cut deleted `/margin`, so for a week
-              the app had none at all. It is now `components/DeadlineClock.tsx`,
-              mounted once in the header of `/` — beside the decision it constrains,
-              not in the chrome of every page. Do not add a second one here: two
-              clocks over one deadline can disagree on a Friday, and
-              `app/page.test.tsx` asserts the count.
-              The age readout went because the age of `latest.json` said nothing
-              about whether the captured position or the live FPL sync was current,
-              which is what the words next to it claimed. What is left is the one
-              control that belongs in chrome. */}
-          <ThemeToggle />
+                <strong>{live.entry.teamName ?? "My FPL team"}</strong>
+                <span>{live.entry.id}</span>
+              </a>
+            ) : (
+              <span className="masthead-team-plain">
+                <strong>{live?.entry.teamName ?? "My FPL team"}</strong>
+                <span>id unavailable</span>
+              </span>
+            )}
+          </div>
         </div>
-      </aside>
+      </header>
     </>
   );
 }

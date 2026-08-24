@@ -22,11 +22,11 @@ import { proven } from "@/lib/data/artifact";
 import { REGISTRY, type MatchesFile, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { OWNER_ENTRY } from "@/lib/entry";
-import { INK, SANS } from "@/lib/margin/tokens";
+import { FLOODLIT, SANS } from "@/lib/margin/tokens";
 import CaptureForm, { type PickablePlayer } from "@/components/hub/CaptureForm";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-const S = INK;
+const S = FLOODLIT;
 
 export default function CapturePage() {
   const { artifact } = useArtifact<readonly PlayerRow[]>(REGISTRY.playerStats);

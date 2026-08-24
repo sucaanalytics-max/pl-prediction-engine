@@ -3,9 +3,15 @@
  *
  * The control room shipped with labels, band counts, provenance lines and absence
  * glyphs set between 8.5px and 10px in `ink3` and `ink4`. Measured against their own
- * ground: `ink3` is 3.17:1 on paper and 3.82:1 on ink; `ink4` is 2.06:1 and 2.71:1.
+ * ground: `ink3` was 3.17:1 on paper and 3.82:1 on ink; `ink4` was 2.06:1 and 2.71:1.
  * WCAG's floor is 4.5:1 for text under 18.66px and 3:1 for large text and UI, so every
  * one of those figures was below the line — and two of them below the line for ANY size.
+ *
+ * Floodlit collapsed the two surfaces into one and the bands did not move: on `#0d1013`,
+ * ink measures 16.37:1, ink2 6.34:1, ink3 3.21:1 and ink4 2.14:1. The same two rules
+ * bind, with one surface to check instead of two — and they are still measured below
+ * rather than read off this paragraph, because a palette edit that quietly drops ink3
+ * under 3:1 is exactly what this file exists to catch.
  *
  * The rules:
  *   1. Nothing that carries meaning is set below 11px.
@@ -17,7 +23,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
-import { INK, PAPER, surfaceIsLight, type MarginSurface } from "@/lib/margin/tokens";
+import { FLOODLIT, surfaceIsLight, type MarginSurface } from "@/lib/margin/tokens";
 
 /**
  * The floor for anything that carries meaning.
@@ -29,8 +35,16 @@ import { INK, PAPER, surfaceIsLight, type MarginSurface } from "@/lib/margin/tok
  */
 const FLOOR = 11;
 
+/**
+ * One surface, kept as a list.
+ *
+ * There were two entries; the redesign left one. The loop stays a loop so that a
+ * surface added later gets these three contrast assertions without anyone
+ * remembering to write them — which is the failure mode worth guarding, since an
+ * unchecked second surface is where a sub-3:1 label tone would hide.
+ */
 const SURFACES: ReadonlyArray<readonly [string, MarginSurface]> = [
-  ["PAPER", PAPER], ["INK", INK],
+  ["FLOODLIT", FLOODLIT],
 ];
 
 /**
@@ -110,9 +124,12 @@ describe("the tones this board paints text with", () => {
     });
   }
 
-  it("agrees with the surface helper about which ground is which", () => {
-    expect(surfaceIsLight(PAPER)).toBe(true);
-    expect(surfaceIsLight(INK)).toBe(false);
+  it("agrees with the surface helper about which ground this is", () => {
+    // The ratios above are computed against `shell` as the ground, and `hatch`
+    // picks its stroke from `surfaceIsLight` reading that same field. If the two
+    // disagreed, the hatch would be drawn to show against a ground these
+    // contrast figures were never measured on.
+    expect(surfaceIsLight(FLOODLIT)).toBe(false);
   });
 });
 
@@ -153,7 +170,7 @@ describe("rule 2 — ink4 is a border tone", () => {
     }
     expect(
       offenders,
-      "ink4 measures under 3:1 on both surfaces — use it for a border, never for text",
+      "ink4 measures 2.14:1 on this surface — use it for a border, never for text",
     ).toEqual([]);
   });
 });

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import { INK, MONO, SANS } from "@/lib/margin/tokens";
+import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
 
 /**
  * Record the squad actually submitted to FPL, so the agent plans from truth.
@@ -32,7 +32,7 @@ export interface PickablePlayer {
 }
 
 const SQUAD_SIZE = 15;
-const S = INK;
+const S = FLOODLIT;
 
 /**
  * Fold a name so a keyboard can reach it.

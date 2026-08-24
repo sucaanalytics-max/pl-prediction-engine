@@ -41,10 +41,10 @@ import { useMemo } from "react";
 import type { Artifact } from "@/lib/data/artifact";
 import type { PlayerRow } from "@/lib/data/narrow";
 import { nearest, notable, place, plot, ticks } from "@/lib/margin/scatter";
-import { INK, MONO, SANS } from "@/lib/margin/tokens";
+import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
 import { MarginState } from "@/components/margin/Marks";
 
-const S = INK;
+const S = FLOODLIT;
 
 /** Room for the axis labels, in the chart's own units. */
 const PAD = { left: 34, right: 10, top: 10, bottom: 26 };

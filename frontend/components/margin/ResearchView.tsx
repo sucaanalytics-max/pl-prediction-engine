@@ -38,12 +38,12 @@ import { istDateTime } from "@/lib/formats";
 import { findTwins } from "@/lib/margin/twins";
 import { Compare } from "@/components/margin/Compare";
 import { Scatter } from "@/components/margin/Scatter";
-import { PAPER, MONO, SANS } from "@/lib/margin/tokens";
+import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
 import {
   Distribution, Eyebrow, Hollow, MarginState, Nil, WhenProvenHere,
 } from "@/components/margin/Marks";
 
-const S = PAPER;
+const S = FLOODLIT;
 
 /** Rows shown before the reader asks for the rest. */
 const PAGE = 100;

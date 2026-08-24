@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Mono, Newsreader } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono, Anton } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -36,19 +36,25 @@ const plexMono = IBM_Plex_Mono({
 });
 
 /**
- * The display face. It sets headings and screen answers, and it NEVER sets a
- * figure or a label — figures are Mono so a column of them reads as a ranking,
- * labels are Mono so they read as apparatus rather than as prose.
+ * The display face, and the one typographic change in the floodlit redesign.
  *
- * Both 400 and 500 are loaded because the two surfaces need different weights
- * for the same optical result: 400 on paper, 500 on ink, since 400 goes spindly
- * against black. That is a designed pair, not one weight reused.
+ * Newsreader was a serif built for reading at length, which suited a surface
+ * that no longer exists. Anton is a heavy condensed grotesque — back-page
+ * scoreboard rather than book page — and it does one job: the single figure a
+ * screen exists to deliver, at a size nothing else competes with.
+ *
+ * IBM Plex Sans and Mono are deliberately KEPT. Plex Mono's figures are what let
+ * a column of projections line up closely enough to compare two players by eye,
+ * which is exactly what the new heat grid asks of them; swapping that for
+ * fashion would cost the thing the redesign is for. One face changed, two that
+ * were doing measurable work left alone.
+ *
+ * Anton ships a single weight by design, so there is no 400/500 pair to load.
  */
-const newsreader = Newsreader({
+const anton = Anton({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
-  variable: "--font-newsreader",
+  weight: ["400"],
+  variable: "--font-display-anton",
   display: "swap",
 });
 
@@ -93,11 +99,11 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${plexSans.variable} ${plexMono.variable} ${newsreader.variable}`}
+      className={`${plexSans.variable} ${plexMono.variable} ${anton.variable}`}
     >
       <head>
-        {/* The chrome colour, which is ink on both surfaces — see `--chrome`. */}
-        <meta name="theme-color" content="#14140f" />
+        {/* The chrome colour — see `--chrome`, and keep the two in step. */}
+        <meta name="theme-color" content="#14181d" />
         {/*
           Wrangler's production bundling preserves function names inside the
           next-themes bootstrap before that function is serialized as an inline
@@ -120,13 +126,15 @@ export default function RootLayout({
             `as T`. Pages now load what they need through `useArtifact`, and
             each section owns its own state. */}
         <Providers>
-          <div className="flex min-h-screen">
+          {/* A column, not a row. `Navigation` is a top bar now, so `main`
+              needs no left offset — the 264px the sidebar reserved on every
+              viewport went back to the tables, which are the reason these
+              screens exist. The wider max-width is the same decision: the
+              projection grid is players across eight gameweeks. */}
+          <div className="flex min-h-screen flex-col">
             <Navigation />
-            <main
-              id="main-content"
-              className="w-full min-w-0 flex-1 ml-0 lg:ml-[264px] transition-all duration-500"
-            >
-              <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-9 py-7 lg:py-9">
+            <main id="main-content" className="w-full min-w-0 flex-1">
+              <div className="max-w-[1680px] mx-auto px-4 sm:px-5 lg:px-6 py-5 lg:py-6">
                 {children}
               </div>
             </main>

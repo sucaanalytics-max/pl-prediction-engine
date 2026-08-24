@@ -52,12 +52,12 @@ import { Planner } from "@/components/margin/Planner";
 import { REGISTRY, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
-import { PAPER, MONO, SANS, hatch } from "@/lib/margin/tokens";
+import { FLOODLIT, MONO, SANS, hatch } from "@/lib/margin/tokens";
 import {
   Eyebrow, MarginState, WhenProvenHere,
 } from "@/components/margin/Marks";
 
-const S = PAPER;
+const S = FLOODLIT;
 
 /** How many columns the run is shown over. */
 const HORIZON = 8;

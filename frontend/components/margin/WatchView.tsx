@@ -39,12 +39,12 @@ import {
 import { REGISTRY, type DeltaFeed, type DeltaRecord } from "@/lib/data/narrow";
 import { projectionsDescriptor, type Projections } from "@/lib/data/projections";
 import { useArtifact } from "@/lib/data/useArtifact";
-import { PAPER, MONO, SANS } from "@/lib/margin/tokens";
+import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
 import {
   Eyebrow, Nil, WhenProvenHere, compactAge,
 } from "@/components/margin/Marks";
 
-const S = PAPER;
+const S = FLOODLIT;
 
 function Panel(
   { eyebrow, title, children }: {

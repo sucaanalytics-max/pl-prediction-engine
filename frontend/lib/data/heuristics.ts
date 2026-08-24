@@ -248,7 +248,7 @@ export interface HeuristicView {
   readonly generatedAt: string;
   readonly modelVersion: string;
   /**
-   * Who the entry is, for the sidebar's manager card.
+   * Who the entry is, for the team chip in the masthead.
    *
    * `id` is nullable so the hardcoded `20945` can go: a fallback entry id in
    * the chrome links a stranger's team when the real one cannot be read.

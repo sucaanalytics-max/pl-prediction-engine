@@ -18,10 +18,10 @@ import type { HorizonWeek } from "@/lib/data/narrow";
 import type { Projection } from "@/lib/data/projections";
 import type { Horizon } from "@/lib/data/narrow";
 import { buildPlanGrid, movesFor, type Cell, type PlanRow } from "@/lib/margin/plan";
-import { hatch, MONO, PAPER, SANS } from "@/lib/margin/tokens";
+import { hatch, MONO, FLOODLIT, SANS } from "@/lib/margin/tokens";
 import { Eyebrow, Nil } from "@/components/margin/Marks";
 
-const S = PAPER;
+const S = FLOODLIT;
 
 /** `170px` of name, then one column per week, then the starts tally. */
 function columns(weeks: number): string {
