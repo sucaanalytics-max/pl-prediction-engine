@@ -1486,37 +1486,27 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
   });
 }
 
-/**
- * The entry labels, as `pipeline/config.py::FPL_ENTRIES` names them.
- *
- * `owner` is the only one the pipeline still writes: the two bot entries were
- * detached to their own project. `season` and `weekly` remain legal here purely so
- * `/decide`, `/control-room` and `DecideView` keep compiling until they are deleted,
- * and Task 7 removes all three when the last of those callers is gone.
- */
-export const ENTRY_LABELS = ["season", "weekly", "owner"] as const;
-export type EntryLabel = (typeof ENTRY_LABELS)[number];
+/** The single entry's label, as `pipeline/config.py::FPL_ENTRIES` names it. */
+const ENTRY = "owner";
 
 /**
- * A descriptor for one entry's decision in one gameweek.
+ * A descriptor for the decision in one gameweek.
  *
- * Built per call because the path carries the gameweek — the registry holds only
- * static paths. Deliberately NOT a `decision_latest.json`: that name was fetched
- * by the old page, staged by one workflow, excluded by another, and **written by
- * nothing**, so the page could never render and the private decisions were
- * discarded every run.
+ * Took a label until 2026-08-24, when the two bot entries moved to their own
+ * project. The label survives in the FILENAME because `write_decision` still
+ * composes `decision_gw{NN}_{label}.json` and the staging glob depends on that
+ * shape; it no longer survives as a choice a caller can get wrong.
+ *
+ * Deliberately NOT a `decision_latest.json`: that name was fetched by the old
+ * page, staged by one workflow, excluded by another, and written by nothing.
  */
-export function decisionDescriptor(
-  gameweek: number, label: EntryLabel,
-): Descriptor<PublicDecision> {
+export function decisionDescriptor(gameweek: number): Descriptor<PublicDecision> {
   const padded = String(gameweek).padStart(2, "0");
   return {
-    key: `decision:${label}:${padded}`,
-    path: `fpl/decision_public_gw${padded}_${label}.json`,
+    key: `decision:${padded}`,
+    path: `fpl/decision_public_gw${padded}_${ENTRY}.json`,
     owner: "agent",
-    describes: `the ${label} team's proposal for GW${gameweek}`,
-    // A proposal is advice about one deadline; freshness is judged on that
-    // deadline by the consumer, not on a byte age.
+    describes: `the proposal for GW${gameweek}`,
     freshnessBudgetMs: null,
     narrow: narrowPublicDecision,
     producedAtOf: (v) => v.generated_at,

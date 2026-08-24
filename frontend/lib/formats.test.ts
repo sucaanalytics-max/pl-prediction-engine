@@ -150,6 +150,16 @@ describe("compactIstDeadline invents nothing", () => {
     // @ts-expect-error — dateStr is required on purpose; absence is the caller's to state.
     expect(() => compactIstDeadline()).not.toThrow();
   });
+
+  it("does not invent GW1's deadline when null is forced past the type", () => {
+    // `new Date(null)` coerces to the epoch instead of `NaN`, so the
+    // `Number.isNaN` guard alone never catches it. The type forbids this in
+    // real callers, but pin it anyway: a `null` cast through the type must not
+    // come back as a formatted date, let alone the old hardcoded one.
+    const forced = null as unknown as string;
+    expect(compactIstDeadline(forced)).toBe(forced);
+    expect(compactIstDeadline(forced)).not.toBe("Thu 01 Jan · 05:30 IST");
+  });
 });
 
 describe("featureName", () => {

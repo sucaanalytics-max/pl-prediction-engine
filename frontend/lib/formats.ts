@@ -98,6 +98,7 @@ export function istDateTime(dateStr: string): string {
  * returns a date it was not given.
  */
 export function compactIstDeadline(dateStr: string): string {
+  if (dateStr == null) return dateStr;
   const date = new Date(dateStr);
   if (Number.isNaN(date.getTime())) return dateStr;
   const day = new Intl.DateTimeFormat("en-GB", {

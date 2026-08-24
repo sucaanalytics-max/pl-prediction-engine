@@ -21,9 +21,7 @@ import { projectionsDescriptor } from "@/lib/data/projections";
 import { useArtifact } from "@/lib/data/useArtifact";
 
 export function PlanGridSection({ gameweek }: { gameweek: number }) {
-  const { artifact: decision } = useArtifact(
-    decisionDescriptor(gameweek, "owner"),
-  );
+  const { artifact: decision } = useArtifact(decisionDescriptor(gameweek));
   const { artifact: projections } = useArtifact(projectionsDescriptor(gameweek));
 
   const horizon = proven(decision)?.horizon ?? null;

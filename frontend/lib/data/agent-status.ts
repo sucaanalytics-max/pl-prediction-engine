@@ -96,11 +96,13 @@ export const AGENT_STATUS: Descriptor<AgentStatus> = {
  * `describeIdleAgent` was here.
  *
  * It composed one sentence from `phase`, `reason` and `deadline` for a screen to
- * print when the agent had not run. It had no callers — `/inbox`, `/decide` and
- * `/control-room` were the surfaces that used it — and it formatted the deadline with
- * its own `toLocaleString`, which made it a SECOND definition of what a deadline
- * looks like in a tree that now has exactly one (`compactIstDeadline`, rendered once
- * by `components/DeadlineClock.tsx`).
+ * print when the agent had not run. Its only-ever caller was
+ * `AgentIdleNotice.tsx`, and its only-ever mount point in the whole git history
+ * was `app/evidence/page.tsx` — by the time it was removed it had no callers,
+ * and it formatted the deadline with its own `toLocaleString`, which made it a
+ * SECOND definition of what a deadline looks like in a tree that now has
+ * exactly one (`compactIstDeadline`, rendered once by
+ * `components/DeadlineClock.tsx`).
  *
  * Nothing is lost: `reason` on this artifact already carries the resolver's own
  * sentence — "GW1 deadline in 247.4h; nothing due yet" — written by the code that
