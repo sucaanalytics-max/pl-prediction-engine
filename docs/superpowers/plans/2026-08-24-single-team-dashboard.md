@@ -1193,6 +1193,18 @@ git rm -f components/margin/DecideView.test.tsx components/margin/DecideCard.tsx
 
 `control-room/Squad` → `squad/SquadBoard` → `squad/SquadRow` is a four-link chain where each file has exactly one importer, the one above it. `components/SquadBoard.tsx` (no `squad/` prefix) is a **different** component used by `/` — do not delete it.
 
+**Two more, orphaned by Task 4 rather than by this one:**
+
+```bash
+git rm components/AgentIdleNotice.tsx components/XScanButton.tsx
+```
+
+Both lost their only importer when `/evidence` was rewritten; confirmed zero importers repo-wide, and neither has a test.
+
+**Do NOT delete `app/api/x-scan/route.ts` or its test.** `XScanButton` was its only caller, so it now has none — but it is a route handler, not a screen, it carries a passing suite, and it is the entry point by which a scan can be dispatched. Retiring it is the owner's call, not a consequence of cutting the *page* surface. The scan itself keeps running via `scripts/x_scan.sh` and `.github/workflows/x_scan.yml` regardless.
+
+**Note for the final report:** deleting `XScanButton` removes the only way to trigger an X scan from the UI. That is a lost capability, not dead code, and it must be named for the owner rather than quietly dropped.
+
 - [ ] **Step 5: Delete the test that enforced the deferral**
 
 ```bash
@@ -1248,6 +1260,14 @@ cd ~/dev/pl-prediction-engine/frontend
 npx vitest run test/nav-coverage.test.tsx 2>&1 | tail -10
 npm run test > /tmp/fe.log 2>&1; echo "exit=$?"; grep -E "FAIL|✗" /tmp/fe.log | head -30; tail -5 /tmp/fe.log
 ```
+
+**The exact expectation, measured before this task began:** `npm run test` is currently
+`90 passed | 2 failed (92)` with **1620/1620 individual tests passing**. The two failing
+suites are `components/squad/SquadBoard.test.tsx` and `components/squad/SquadRow.test.tsx`,
+both failing at import because they `readFileSync("public/predictions/fpl/xp_public_gw01.json")`,
+which an earlier commit on this branch removed via `public_xp`'s documented prune. **Both
+files are deleted by this task**, so after your deletion the suite must report **0 failed**.
+Any other failure is yours to fix.
 
 Expected: the enforcer passes. Every remaining failure is a test file whose subject is gone — delete those suites (`app/now/page.test.tsx`, `app/margin/page.test.tsx`, `app/decide/page.test.tsx`, `components/FixtureMatrix.test.tsx` if its subject went, and so on). A test whose only subject is deleted is deleted; a test that also covers surviving code is narrowed, not removed.
 
