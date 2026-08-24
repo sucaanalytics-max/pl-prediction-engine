@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
+  CalendarRange,
   Stethoscope,
   Users,
   type LucideIcon,
@@ -36,6 +37,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "The call", icon: LayoutDashboard },
   { href: "/players", label: "Projections", icon: Users },
+  { href: "/phases", label: "Phases", icon: CalendarRange },
   { href: "/evidence", label: "Evidence", icon: Stethoscope },
 ];
 

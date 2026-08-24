@@ -34,14 +34,15 @@ const BOTTOM_NAV = join(process.cwd(), "components", "MobileBottomNav.tsx");
 /** Every page route this app is allowed to have, and why it exists. */
 const ALLOWED: Record<string, string> = {
   ".": "the call: XI, captain, and the horizon",
-  players: "the shortlist, with the spread on each candidate",
+  players: "the projection grid over eight gameweeks, and the spread on each candidate",
+  phases: "the league's fixture runs: twenty clubs, where to hop on and off",
   evidence: "what moved, and whether to believe it",
   capture: "the position: squad, bank, purchase prices — reached from /, not the nav",
   offline: "served by the service worker when a fetch fails; not a destination",
 };
 
 /** Routes reached from the nav. `capture` and `offline` deliberately are not. */
-const IN_NAV = ["/", "/players", "/evidence"];
+const IN_NAV = ["/", "/players", "/phases", "/evidence"];
 
 /**
  * Destinations a nav component lists, read from its item array.
