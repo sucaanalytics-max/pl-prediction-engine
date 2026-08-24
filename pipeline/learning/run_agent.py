@@ -1046,9 +1046,13 @@ def _field_calibrated_gameweeks(predictions_dir: Path) -> int:
 
     **This is deliberately 0 today, and says so rather than defaulting.** The
     gate it feeds is real: `run_decide.py` refuses the weekly objective while
-    `field_is_usable` is False, so Wazza falls back to Ronny's EV-optimal plan.
-    That fallback is the pre-registered honest outcome, not a bug — presenting a
-    modelled tail as a measured one would be worse than having no weekly team.
+    `field_is_usable` is False, so any entry configured for it falls back to
+    the season objective's EV-optimal plan instead. That fallback is the
+    pre-registered honest outcome, not a bug — presenting a modelled tail as a
+    measured one would be worse than having no weekly team. Today the gate
+    never even fires: the only configured entry already runs season (see
+    `FPL_ENTRIES` in `pipeline/config.py`), so there is nothing left to fall
+    back from.
 
     What is missing is the verdict store, not the counter.
     `field_observations.consecutive_calibrated` already exists and is tested, but

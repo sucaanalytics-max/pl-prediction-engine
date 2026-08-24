@@ -436,16 +436,22 @@ FPL_SIM = {
 # score stays under predictions/fpl/.
 FPL_PUBLIC_DIR = ROOT_DIR / "frontend" / "public" / "predictions" / "fpl"
 
-# ── FPL agent: the two entries ─────────────────────────────────────────────
-# Two teams, two mandates, one simulator. The objectives are mathematically
-# opposed and that is the point: writing your margin over the field as
-# D = sum_j (m_j - EO_j) * P_j, the term sum_j EO_j * xP_j is a constant nobody
-# can influence, so effective ownership CANNOT change the EV-optimal pick — it
-# only changes Var[D]. The season team therefore ignores ownership entirely and
-# the weekly team is entirely about it. Three players from one attack is wrong
-# for one squad and right for the other, from identical projections.
+# ── FPL agent: the owner's entry ───────────────────────────────────────────
+# One entry, one objective: maximise expected points; variance is a cost.
+# Effective ownership cannot move that pick anyway — writing the margin over
+# the field as D = sum_j (m_j - EO_j) * P_j, the term sum_j EO_j * xP_j is a
+# constant nobody can influence, so EO changes Var[D] but never the EV-optimal
+# squad.
 #
-# `entry_id` stays None until the accounts exist. `squad` empty means the
+# A `weekly` objective — maximise P(score >= threshold), where EO and
+# correlated players ARE the point — used to run here as a second entry. It
+# is gone, not merged: it was gated on `field_is_usable`, which reads a
+# calibration verdict store that nothing writes, so the gate never opened and
+# the weekly entry silently fell back to this same season objective on every
+# run while claiming to be different. One entry on the objective it was
+# actually running retires that dead gate along with the second account.
+#
+# `entry_id` stays None until the account exists. `squad` empty means the
 # opening build, where the whole budget is cash; once a squad is held, `bank`
 # (cash in hand, in TENTHS) and `purchase_prices` must both be supplied, because
 # selling price is purchase plus half the rise and cannot be recovered from
