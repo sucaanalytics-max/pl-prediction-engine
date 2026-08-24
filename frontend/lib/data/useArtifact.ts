@@ -94,22 +94,26 @@ const inFlight = new Map<string, Promise<Artifact<unknown>>>();
 /**
  * The coalescing key: the descriptor's identity, never its path.
  *
- * Two descriptors can — and do — share a path with different narrowers.
- * `REGISTRY.latest` (key `latest`, narrowed by `narrowLatest`) and
- * `matchDetailDescriptor(id)` (key `matchDetail:<id>`) both read `latest.json`.
- * Keying on the path handed the navigation's already-narrowed `Latest` to
- * `/matches/[id]` as a `MatchDetail`, so its narrower never ran and every number on
- * that route was replaced by the error boundary — and the navigation fetches on every
- * page, so the route raced itself on load.
+ * Two descriptors can share a path while narrowing it differently, and keying the
+ * in-flight map on the path serves one descriptor's narrowed value to the other.
  *
- * Two ids collide the same way: `matchDetail:ars-che` and `matchDetail:man-liv` share
- * `latest.json`, so one match's detail would be served for the other's.
+ * The case that proved it is gone with the routes it involved: `REGISTRY.latest`
+ * and `matchDetailDescriptor(id)` both read `latest.json`, so a path key handed
+ * the navigation's already-narrowed `Latest` to `/matches/[id]` as a
+ * `MatchDetail`. Its narrower never ran, every number on the route fell to the
+ * error boundary, and because the navigation fetched on every page the route
+ * raced itself on load. Two ids collided the same way, serving one match's
+ * detail for another's.
  *
- * The cost of keying on identity is that `latest.json` can be fetched twice when two
- * different descriptors want it. That was the behaviour before coalescing existed, and
- * a duplicated 36KB fetch is worth incomparably less than a correct payload. Coalescing
- * the raw bytes and narrowing per descriptor would recover it, and needs `load` split
- * into fetch and narrow first.
+ * None of those exist now, and the key stays identity anyway: nothing prevents
+ * the collision from returning the next time two descriptors read one file, and
+ * the failure it produces is a screenful of wrong numbers rather than an error.
+ *
+ * The cost is that one file can be fetched twice when two descriptors want it —
+ * the behaviour before coalescing existed, and a duplicated fetch is worth
+ * incomparably less than a correct payload. Coalescing the raw bytes and
+ * narrowing per descriptor would recover it, and needs `load` split into fetch
+ * and narrow first.
  */
 function identityOf<T>(descriptor: Descriptor<T>): string {
   return descriptor.key;

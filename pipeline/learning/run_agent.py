@@ -1094,13 +1094,19 @@ def _decide_for_entries(
     predictions_dir: Path, state: ScheduleState, outcome: Dict[str, Any], dry_run: bool
 ) -> Dict[str, Dict[str, Path]]:
     """
-    Produce a proposal for each entry, on two independent draw streams.
+    Produce a proposal for each entry in `FPL_ENTRIES`.
 
-    The two mandates use the SAME draws and differ only in the functional
-    applied to them: the season team maximises expected points, the weekly team
-    maximises a right-tail probability. That is only coherent because clean
-    sheets are drawn jointly — with independent marginals the tail would be a
-    function of the mean and the two teams would be the same squad.
+    One entry now. This described "the two mandates" — a season team maximising
+    expected points and a weekly team maximising a right-tail probability, sharing
+    one set of draws — which was true until the two bot teams were detached to
+    their own project and `FPL_ENTRIES` came down to the owner alone.
+
+    The loop stays a loop rather than collapsing to a single call, because what
+    made the two-mandate arrangement coherent still holds and is worth keeping
+    available: clean sheets are drawn JOINTLY, so two objectives applied to the
+    same draws can disagree about the squad. With independent marginals the tail
+    would be a function of the mean and any second mandate would return the first
+    one's answer.
     """
     from pipeline.config import FPL_ENTRIES
     from pipeline.decide.run_decide import decide, write_decision
