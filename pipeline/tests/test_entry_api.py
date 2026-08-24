@@ -108,24 +108,19 @@ class TestEntryState(unittest.TestCase):
 
 
 class TestConfiguredEntries(unittest.TestCase):
-    def test_both_entries_are_configured_and_distinct(self):
+    def test_the_owner_entry_is_configured(self):
         """
-        Two accounts running the same objective on the same projections would
-        field near-identical squads, wasting the second entry entirely.
+        This repo decides for exactly one account now: the owner's. Ronny and
+        Wazza moved to their own project (see pipeline/config.py).
         """
         from pipeline.config import FPL_ENTRIES
 
         ids = {label: cfg["entry_id"] for label, cfg in FPL_ENTRIES.items()}
-        self.assertEqual(set(ids), {"season", "weekly"})
-        for label, entry_id in ids.items():
-            self.assertIsInstance(entry_id, int, label)
-            self.assertGreater(entry_id, 0, label)
-        self.assertNotEqual(
-            ids["season"], ids["weekly"], "both objectives point at one account"
-        )
+        self.assertEqual(set(ids), {"owner"})
+        self.assertIsInstance(ids["owner"], int)
+        self.assertGreater(ids["owner"], 0)
 
-    def test_objectives_are_not_both_the_same(self):
+    def test_the_owner_s_objective_is_season(self):
         from pipeline.config import FPL_ENTRIES
 
-        self.assertEqual(FPL_ENTRIES["season"]["objective"], "season")
-        self.assertEqual(FPL_ENTRIES["weekly"]["objective"], "weekly")
+        self.assertEqual(FPL_ENTRIES["owner"]["objective"], "season")

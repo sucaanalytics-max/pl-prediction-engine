@@ -451,24 +451,25 @@ FPL_PUBLIC_DIR = ROOT_DIR / "frontend" / "public" / "predictions" / "fpl"
 # selling price is purchase plus half the rise and cannot be recovered from
 # now_cost alone.
 FPL_ENTRIES: Dict[str, Dict[str, Any]] = {
-    "season": {
-        # "Ronny" — https://fantasy.premierleague.com/en/entry/2561567/
-        "entry_id": int(os.environ.get("FPL_ENTRY_SEASON", "2561567")),
-        "team_name": "Ronny",
-        "objective": "season",       # maximise expected points; variance is a cost
-        "squad": [],
-        "bank": None,
-        "free_transfers": 1,
-        "purchase_prices": None,
-    },
-    "weekly": {
-        # "Wazza" — https://fantasy.premierleague.com/en/entry/2561099/
-        "entry_id": int(os.environ.get("FPL_ENTRY_WEEKLY", "2561099")),
-        "team_name": "Wazza",
-        # Maximise P(score >= threshold). Variance is an ASSET here: a weekly
-        # prize needs a right-tail outcome, and correlated players are how a
-        # tail is reached.
-        "objective": "weekly",
+    # The owner's own team, and the only one this repo decides for.
+    # https://fantasy.premierleague.com/en/entry/20945/
+    #
+    # Ronny (2561567) and Wazza (2561099) were removed on 2026-08-24 and moved to
+    # a separate project that runs them on its own scheduled workflows. They read
+    # this repo's published `xp_public_gw{NN}.json`; they must never write into
+    # `predictions/fpl/ledger/` or any seal path here.
+    #
+    # The label is what names the artifact: `decision_gw{NN}_owner.json`.
+    "owner": {
+        "entry_id": int(os.environ.get("FPL_ENTRY_OWNER", "20945")),
+        "team_name": "Jay's Team",
+        # Maximise expected points; variance is a cost. The `weekly` objective is
+        # deliberately absent: it is gated on `field_is_usable`, which reads a
+        # calibration verdict store that nothing writes, so a weekly entry fell
+        # back to this objective on every run while claiming to be different.
+        "objective": "season",
+        # Manual override and pre-season default only. `_read_entry` prefers the
+        # committed capture, then FPL live, and only then these.
         "squad": [],
         "bank": None,
         "free_transfers": 1,
