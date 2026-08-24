@@ -1462,14 +1462,18 @@ middleware.ts, not proxy.ts: this frontend is Next.js 14.2."
 ### Task 7: Collapse the entry label
 
 **Files:**
-- Modify: `frontend/lib/data/narrow.ts:889,975,1180,1431-1447,1493-1520`
-- Modify: `frontend/lib/data/sensitivity.ts:162`
-- Modify: `frontend/components/PlanGridSection.tsx`
+- Modify: `frontend/lib/data/narrow.ts` — `ENTRY_LABELS`, `EntryLabel`, `decisionDescriptor`
+- Modify: `frontend/components/PlanGridSection.tsx` — the one production caller
+- Modify: `frontend/lib/data/paths.test.ts` — three call sites still passing `"season"`/`"weekly"`
 - Test: `frontend/test/single-entry.test.ts` (create)
+
+**`lib/data/sensitivity.ts` no longer exists.** Task 5's reachability sweep deleted it as
+unreachable, so there is no `sensitivityDescriptor` left to collapse. Any instruction below
+referring to it is void.
 
 **Interfaces:**
 - Consumes: `"owner"` as the only entry label, from Task 1. Note `ENTRY_LABELS` has **three** members at this point — `season` and `weekly` were kept in Task 4 Step 0 so the doomed routes compiled, and Task 5 deleted their last callers. All three go now.
-- Produces: `decisionDescriptor(gameweek: number)` — one argument. `sensitivityDescriptor(gameweek: number)` likewise.
+- Produces: `decisionDescriptor(gameweek: number)` — one argument.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -1489,18 +1493,11 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { decisionDescriptor } from "@/lib/data/narrow";
-import { sensitivityDescriptor } from "@/lib/data/sensitivity";
 
 describe("single entry", () => {
   it("builds a decision path from a gameweek alone", () => {
     expect(decisionDescriptor(2).path).toBe(
       "fpl/decision_public_gw02_owner.json",
-    );
-  });
-
-  it("builds a sensitivity path from a gameweek alone", () => {
-    expect(sensitivityDescriptor(2).path).toBe(
-      "fpl/sensitivity_gw02_owner.json",
     );
   });
 
@@ -1562,7 +1559,10 @@ export function decisionDescriptor(gameweek: number): Descriptor<PublicDecision>
 }
 ```
 
-Apply the same collapse to `sensitivityDescriptor` in `lib/data/sensitivity.ts:162`, using the same `ENTRY` constant exported from `narrow.ts`.
+Then fix the three remaining test call sites in `lib/data/paths.test.ts` (around `:323`,
+`:324` and `:347`) which still pass `"season"` and `"weekly"`. They assert descriptor path
+shapes, so they must now assert the `_owner` path — and one of them tests two labels that
+no longer exist, so it collapses to a single case rather than being duplicated.
 
 Keep `entry_label` on the `PublicDecision` interface and its narrowing (`:889`, `:975`, `:1180`, `:1431-1447`) — the artifact still carries the field, `WatchView` and the delta feed render it, and removing it from the wire contract would churn six Python test files for a cosmetic gain.
 
