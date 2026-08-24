@@ -10,8 +10,11 @@ import { NextResponse, type NextRequest } from "next/server";
  * `next.config.js` redirects cannot express 410 — only 307/308 — and a `route.ts`
  * per path would be 23 files to avoid 23 files. This is `middleware.ts` and not
  * `proxy.ts` because this app is on Next.js 14.2; the rename landed in Next 16.
+ *
+ * Exported so the test exercises this exact set through the handler, rather than
+ * a second, hand-copied list that can silently drift from it.
  */
-const GONE = new Set([
+export const GONE = new Set([
   // Five surfaces that all answered "who do I captain this week".
   "/now", "/margin", "/decide", "/decisions", "/control-room",
   // Absorbed into /evidence.
@@ -24,7 +27,9 @@ const GONE = new Set([
 ]);
 
 export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  // Lowercased before either lookup: a crawler retrying `/Matches` or `/HEALTH`
+  // must land on the same 410 as the canonical path, not fall through to a 404.
+  const path = request.nextUrl.pathname.toLowerCase().replace(/\/+$/, "") || "/";
   const root = "/" + (path.split("/")[1] ?? "");
   if (GONE.has(path) || GONE.has(root)) {
     return new NextResponse(null, { status: 410 });
