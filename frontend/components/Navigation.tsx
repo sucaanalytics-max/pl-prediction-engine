@@ -11,6 +11,7 @@ import {
   History,
   type LucideIcon,
 } from "lucide-react";
+import { planningGameweek } from "@/lib/data/gameweek";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { proven } from "@/lib/data/artifact";
 
@@ -76,6 +77,14 @@ const NAV_ITEMS: NavItem[] = [
  * exactly what the `latest.json` fetch removed from here used to do for a badge
  * that was rendered nowhere.
  *
+ * It is passed through `planningGameweek` rather than printed raw. FPL keeps an
+ * event current from its own deadline until the next one, so between a
+ * gameweek's last match and the following deadline `event.id` names a week
+ * already played. On 2026-08-25 this bar read "GW1" over a page showing GW2's
+ * projections — the two-resolver failure `lib/data/gameweek.ts` exists to
+ * prevent, reintroduced by a label. The function is pure, so agreeing with the
+ * shared resolver costs no request.
+ *
  * ## No theme toggle either
  *
  * `globals.css` now defines the same floodlit values under `:root` and `.dark`,
@@ -86,7 +95,11 @@ export default function Navigation() {
   const pathname = usePathname();
   const { artifact: liveArtifact } = useHeuristics();
   const live = proven(liveArtifact);
-  const gameweek = live?.event?.id ?? null;
+  const gameweek = planningGameweek(
+    live?.event?.id,
+    live?.event?.deadlineTime,
+    new Date(),
+  );
 
   return (
     <>
