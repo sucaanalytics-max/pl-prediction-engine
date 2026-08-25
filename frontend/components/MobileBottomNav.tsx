@@ -2,15 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, BarChart3, CalendarRange, Stethoscope, Users } from "lucide-react";
+import {
+  LayoutDashboard, BarChart3, CalendarRange, Stethoscope, Users, History,
+} from "lucide-react";
 
 /**
- * The same three destinations the sidebar has, because there are only three.
+ * The same destinations the masthead has, in the same order.
  *
  * Two of the five entries here — `/optimizer` and `/captaincy` — were redirect
  * stubs onto `/decide`, and `/projections` was a stub onto `/players`. On a phone
  * that made five tabs out of three screens. Those routes are gone, so this lists
- * the destinations that exist; `test/nav-coverage.test.tsx` holds the allow-list.
+ * the destinations that exist; `test/nav-coverage.test.tsx` holds the allow-list
+ * and asserts this list matches the masthead, which is what keeps the two from
+ * drifting when a route is added.
  */
 const ITEMS = [
   { href: "/", label: "The call", icon: LayoutDashboard },
@@ -18,6 +22,7 @@ const ITEMS = [
   { href: "/phases", label: "Phases", icon: CalendarRange },
   { href: "/stats", label: "Stats", icon: BarChart3 },
   { href: "/evidence", label: "Evidence", icon: Stethoscope },
+  { href: "/review", label: "Review", icon: History },
 ];
 
 export default function MobileBottomNav() {

@@ -1395,6 +1395,27 @@ def _settle(predictions_dir: Path, state: ScheduleState, final: bool) -> int:
             state.gameweek,
         )
 
+    # The manager's own decisions become scoreable at exactly this moment: the
+    # seal says what was forecast before the deadline, settlement says what
+    # happened, and the review is the join of the two. It runs on the provisional
+    # pass as well — the artifact is rewritten whole each time, so a later final
+    # settle supersedes it rather than accumulating.
+    #
+    # Non-fatal for the same reason as the block above. This is a reflective
+    # surface, not the outcome record: a manager losing one week of self-review is
+    # a cost, failing the settle over it is not.
+    try:
+        from pipeline.learning.run_decision_review import run as review_decisions
+
+        review = review_decisions(predictions_dir=predictions_dir)
+        logger.info("decision review covers %d gameweek(s)", review["observations"])
+    except Exception:
+        logger.exception(
+            "could not refresh the decision review after settling GW%s; settlement "
+            "stands and the review is simply a gameweek behind",
+            state.gameweek,
+        )
+
     return 0
 
 

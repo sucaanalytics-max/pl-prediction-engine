@@ -8,6 +8,7 @@ import {
   CalendarRange,
   Stethoscope,
   Users,
+  History,
   type LucideIcon,
 } from "lucide-react";
 import { useHeuristics } from "@/lib/data/useHeuristics";
@@ -41,6 +42,9 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/phases", label: "Phases", icon: CalendarRange },
   { href: "/stats", label: "Stats", icon: BarChart3 },
   { href: "/evidence", label: "Evidence", icon: Stethoscope },
+  // Last on purpose: the bar runs in the order of the week, and what the last
+  // gameweek cost is read after the team is picked, not before.
+  { href: "/review", label: "Review", icon: History },
 ];
 
 /**

@@ -38,6 +38,7 @@ import {
   type Descriptor, type OpaqueDescriptor,
 } from "@/lib/data/registry";
 import { toFraction, type Fraction } from "@/lib/data/units";
+import { DECISION_REVIEW } from "@/lib/data/decision-review";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // table.json
@@ -1622,6 +1623,13 @@ export const REGISTRY = {
     // Nobody flagged is the good outcome, and must not read as a broken export.
     isEmpty: (v) => v.players.length === 0,
   }) satisfies Descriptor<EvidenceView>,
+
+  // Registered here, not only exported from its own module, so
+  // `real-artifacts.test.ts` covers it: that test iterates ALL_DESCRIPTORS and is
+  // the only thing that parses the committed file, checks its provenance and
+  // proves the descriptor can actually reach `ok`. A descriptor outside this
+  // object type-checks, renders, and is guarded by nothing.
+  decisionReview: DECISION_REVIEW,
 } as const;
 
 /**
@@ -1633,3 +1641,5 @@ export const REGISTRY = {
  */
 export const ALL_DESCRIPTORS: readonly OpaqueDescriptor[] =
   Object.values(REGISTRY);
+
+

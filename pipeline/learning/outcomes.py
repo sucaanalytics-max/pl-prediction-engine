@@ -16,13 +16,22 @@ contributions move until then because Opta amends its data in a six-hour review
 window. A provisional settlement is recorded as such and superseded; scoring an
 accuracy claim from provisional data would be measuring the wrong thing.
 
-SHAPE CAVEAT, recorded deliberately: the stat *vocabulary* is verified — every
-field name here appears in ``element-summary/{id}/history_past``, which is
-populated today. The *envelope* (``elements[].stats`` and ``explain``) cannot be
-verified against a live payload until a gameweek has actually been played:
-pre-season, ``event/1/live/`` returns ``{"elements": []}``. The parser is written
-against the documented shape and tested against a committed fixture, and must be
-re-checked against the real payload at GW1.
+SHAPE CAVEAT, now discharged. The stat *vocabulary* was verified early against
+``element-summary/{id}/history_past``, but the *envelope* (``elements[].stats``
+and ``explain``) could not be checked until a gameweek had actually been played —
+pre-season, ``event/1/live/`` returns ``{"elements": []}``.
+
+Re-checked against the real GW1 2026-27 payload on 2026-08-25, as this docstring
+asked. 610 elements; every name in ``OUTCOME_STATS`` present in ``stats`` with
+none absent; ``parse_event_live`` agreeing with the raw payload on ``minutes``
+and ``total_points`` for all 610; ``explain`` populated for every player who
+recorded minutes. The envelope is confirmed and the parser needed no change.
+
+Ten fields the payload carries are deliberately outside ``OUTCOME_STATS``:
+``expected_goals``, ``expected_assists``, ``expected_goal_involvements``,
+``expected_goals_conceded``, ``influence``, ``creativity``, ``threat``,
+``ict_index``, ``in_dreamteam`` and ``played``. Those are FPL's own derived
+indices rather than scoring events, and settlement scores the rules.
 """
 from __future__ import annotations
 

@@ -56,12 +56,14 @@ const CACHE_NAME = "suca-fpl-shell-v10";
 const SHELL_ROUTES = [
   // Every route the app has, which is still a short enough list to precache
   // whole: the call, the projections, the fixture phases, the player stats, the
-  // evidence, the position, and the page shown when a fetch fails.
+  // evidence, the review of what last week cost, the position, and the page
+  // shown when a fetch fails.
   "/",
   "/players",
   "/phases",
   "/stats",
   "/evidence",
+  "/review",
   "/capture",
   "/offline",
   "/icon.svg",
