@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-25T22:26:53.000521Z",
+  "generated_at": "2026-08-25T22:56:37.849548Z",
   "n_dropped": 369,
   "dropped_by_source": {
     "bbc_football": 111,
-    "fantasyfootballscout": 17,
-    "hayters": 66,
-    "sky_football": 175
+    "fantasyfootballscout": 16,
+    "hayters": 68,
+    "sky_football": 174
   },
   "window_days": 5,
   "squad_known": false,
@@ -14,6 +14,24 @@
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "8277b7b15e547d1c",
+      "headline": "\u2018This team had a relegation battle for nine months\u2019 \u2013 Glasner says Nottingham Forest cannot \u2018ignore the reality\u2019",
+      "summary": "Oliver Glasner says Nottingham Forest cannot \u201cignore the reality\u201d after their 2-0 Carabao Cup defeat to Leeds. Forest were knocked out of the competition at the City Ground as goals from",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/glasner-says-nottingham-forest-cannot-ignore-the-reality/",
+      "claimed_at": "2026-08-25T22:51:14Z",
+      "players": [
+        {
+          "element_id": 332,
+          "name": "Justin",
+          "club": "LEE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "90ed32b5f855f7eb",
       "headline": "Papers: Man City set for late Fernandez move as Chelsea replacement emerges",
@@ -27,6 +45,30 @@
           "element_id": 155,
           "name": "Enzo",
           "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "907b0d63f42382b9",
+      "headline": "Farke excited by what is to come from new Leeds United signing after impressive debut",
+      "summary": "Daniel Farke hailed Nico Elvedi\u2019s \u201coutstanding\u201d Leeds debut after their 2-0 Carabao Cup win over Nottingham Forest. Goals from Daniel James and James Justin secured Leeds\u2019 passage into the next round, but new signi",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/farke-excited-by-what-is-to-come-from-new-leeds-united-signing-after-impressive-debut/",
+      "claimed_at": "2026-08-25T22:27:55Z",
+      "players": [
+        {
+          "element_id": 332,
+          "name": "Justin",
+          "club": "LEE",
+          "held": null
+        },
+        {
+          "element_id": 598,
+          "name": "Elvedi",
+          "club": "LEE",
           "held": null
         }
       ],
@@ -1293,42 +1335,6 @@
           "element_id": 480,
           "name": "Gibbs-White",
           "club": "NFO",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "0bbdfba8be25fa48",
-      "headline": "Leeds boss Farke on Mudryk links and transfer latest",
-      "summary": "Leeds United manager Daniel Farke has responded to his side being linked with a loan move for Chelsea winger Mykhailo Mudryk. Elland Road is being considered as a destination for the Ukraine international after being cleared to return to football.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/leeds-boss-farke-on-mudryk-links-and-transfer-latest/",
-      "claimed_at": "2026-08-24T13:21:11Z",
-      "players": [
-        {
-          "element_id": 578,
-          "name": "Mudryk",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "0aeb7e28c2c4b0b9",
-      "headline": "Arsenal dealt blow in hopes of signing winger \u2013 latest transfer reports",
-      "summary": "Manchester United have made contact over a potential move for Barcelona left-back Alejandro Balde, according to latest reports, while Arsenal have been dealt a blow in their hopes of signing Kenan Yildiz. Balde was left out of B",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-dealt-blow-in-hopes-of-signing-winger-latest-transfer-reports/",
-      "claimed_at": "2026-08-24T11:34:04Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
