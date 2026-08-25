@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-25T03:39:50.745542Z",
+  "generated_at": "2026-08-25T10:21:11.088785Z",
   "gameweek": 2,
   "players": [
     {
@@ -204,6 +204,76 @@
               "value": "d",
               "claimed_at": "2026-08-24T18:30:07.421239Z",
               "observed_at": "2026-08-24T21:19:34.551521Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 154,
+      "player_name": "Palmer",
+      "club": "Chelsea",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "72cf5c3dd7c6c081",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-08-24T22:00:07.971542Z",
+              "observed_at": "2026-08-25T03:40:24.554998Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "2143c391898ddb7e",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-08-24T22:00:07.971542Z",
+              "observed_at": "2026-08-25T03:40:24.554998Z",
+              "quote": "Calf injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "e59e9ccd4e87a357",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-08-24T22:00:07.971542Z",
+              "observed_at": "2026-08-25T03:40:24.554998Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -1480,10 +1550,10 @@
     }
   ],
   "counts": {
-    "n_claims": 446,
-    "n_players_with_claims": 102,
-    "n_players_shown": 22,
+    "n_claims": 450,
+    "n_players_with_claims": 103,
+    "n_players_shown": 23,
     "n_escalations": 4,
-    "n_players_resolved": 32
+    "n_players_resolved": 33
   }
 }
