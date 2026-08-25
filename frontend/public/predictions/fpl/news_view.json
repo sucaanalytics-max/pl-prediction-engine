@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-25T20:01:26.429647Z",
-  "n_dropped": 354,
+  "generated_at": "2026-08-25T20:45:59.317325Z",
+  "n_dropped": 356,
   "dropped_by_source": {
-    "bbc_football": 107,
-    "fantasyfootballscout": 17,
+    "bbc_football": 109,
+    "fantasyfootballscout": 16,
     "hayters": 63,
-    "sky_football": 167
+    "sky_football": 168
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 444,
+  "n_articles": 446,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "0c480bbe1816d6ab",
+      "headline": "Wednesday's gossip: Villa make offer for Palace striker Mateta",
+      "summary": "Aston Villa make a move for Jean-Philippe Mateta and Nicolas Jackson, Manchester United eye a promising defender, and Manchester City aren't ready to give up on signing Enzo Fernandez.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ce8e0l7prg6o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-25T20:12:19Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "d760182964f25822",
       "headline": "Brighton latest: Left-back Hadjam joins from Young Boys",
@@ -87,6 +105,24 @@
       "touches_squad": null
     },
     {
+      "digest": "ce0c37e958db01e6",
+      "headline": "Carabao Cup: Brentford, Leeds & Coventry all lead LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13577036/carabao-cup-round-two-live-commentary-updates-scores-streams-and-team-news-with-leeds-brentford-west-ham-in-action",
+      "claimed_at": "2026-08-25T18:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "0ce719edf8b65bcb",
       "headline": "Forest agree club-record deal for Chelsea's Delap",
       "summary": "Nottingham Forest have agreed a club-record &#163;50m deal to sign Liam Delap from Chelsea.",
@@ -117,6 +153,24 @@
           "element_id": 360,
           "name": "Bradley",
           "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ee0317538f6726ae",
+      "headline": "Forest agree \u00a350m deal for Chelsea striker Delap",
+      "summary": "Nottingham Forest have agreed a fee worth around \u00a350m to sign Chelsea striker Liam Delap.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c4g5zg526gdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-25T18:06:53Z",
+      "players": [
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "CHE",
           "held": null
         }
       ],
@@ -1137,24 +1191,6 @@
       "touches_squad": null
     },
     {
-      "digest": "10cc217fb72c8576",
-      "headline": "Newcastle latest: Injured Burn out until international break",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-24T12:37:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "0aeb7e28c2c4b0b9",
       "headline": "Arsenal dealt blow in hopes of signing winger \u2013 latest transfer reports",
       "summary": "Manchester United have made contact over a potential move for Barcelona left-back Alejandro Balde, according to latest reports, while Arsenal have been dealt a blow in their hopes of signing Kenan Yildiz. Balde was left out of B",
@@ -1233,24 +1269,6 @@
       "touches_squad": null
     },
     {
-      "digest": "4c099e73fdf9cfca",
-      "headline": "Arbeloa v Alonso: Benitez on his former players turned managers",
-      "summary": "Former Liverpool manager Rafael Benitez on his former players Xabi Alonso and Alvaro Arbeloa who face each other as managers on Monday when Fulham host Chelsea.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckge725zy1zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-24T06:59:58Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "f47ca698d934fa47",
       "headline": "FPL notes: Iraola on Szoboszlai pen + Wissa back to his best",
       "summary": "The key Fantasy takeaways from Newcastle 2-2 Liverpool The post FPL notes: Iraola on Szoboszlai pen + Wissa back to his best appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1269,24 +1287,6 @@
           "element_id": 464,
           "name": "Wissa",
           "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "6e55efb6172c9a74",
-      "headline": "Opening win was beyond anyone's dreams - Hull assistant Holden",
-      "summary": "Following their huge win against Manchester United, Hull City assistant head coach Dean Holden joins Gabby Logan, Danny Murphy and Joe Hart in the Match of the Day studio.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c0kmk6rd30no?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-23T23:37:29Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
