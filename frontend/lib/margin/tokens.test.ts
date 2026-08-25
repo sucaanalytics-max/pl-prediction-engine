@@ -17,7 +17,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
 import {
-  FLOODLIT, HEAT, KIT_MIX_TARGET, difficultyTint, hatch, heatStep,
+  FLOODLIT, HEAT, KIT_MIX_TARGET, TRAFFIC, difficultyTint, hatch, heatStep,
 } from "@/lib/margin/tokens";
 
 /** Pull the hue angle out of an oklch() triple. */
@@ -30,6 +30,55 @@ function lightness(value: string): number {
   const m = value.match(/oklch\(\s*([\d.]+)/);
   if (!m) throw new Error(`not an oklch colour: ${value}`);
   return Number(m[1]);
+}
+
+/** sRGB channels from a `#rrggbb`. Both ramps are hex so they can be measured. */
+function channels(hex: string): [number, number, number] {
+  const m = /^#([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) throw new Error(`not a hex colour: ${hex}`);
+  return [0, 2, 4].map((o) => parseInt(m[1].slice(o, o + 2), 16)) as [number, number, number];
+}
+
+function toLinear(v: number): number {
+  const c = v / 255;
+  return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+}
+
+function relLuminance(hex: string): number {
+  const [r, g, b] = channels(hex).map(toLinear);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function contrast(a: string, b: string): number {
+  const [hi, lo] = [relLuminance(a), relLuminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+/**
+ * A colour as a deuteranope sees it.
+ *
+ * The LMS-space approximation: the missing M response is reconstructed from L
+ * and S, which is what collapses a red-green distinction while leaving a
+ * lightness difference intact. Good enough to RANK ramps, which is all the
+ * assertions above ask of it.
+ */
+function deuteranope(hex: string): string {
+  const [r, g, b] = channels(hex).map(toLinear);
+  const L = 0.31399022 * r + 0.63951294 * g + 0.04649755 * b;
+  const M = 0.15537241 * r + 0.75789446 * g + 0.08670142 * b;
+  const S = 0.01775239 * r + 0.10944209 * g + 0.87256922 * b;
+  void M;
+  const M2 = 0.9513092 * L + 0.04866992 * S;
+  const out = [
+    5.47221206 * L - 4.6419601 * M2 + 0.16963708 * S,
+    -1.1252419 * L + 2.29317094 * M2 - 0.1678952 * S,
+    0.02980165 * L - 0.19318073 * M2 + 1.16364789 * S,
+  ].map((u) => {
+    const c = Math.max(0, Math.min(1, u));
+    const v = c > 0.0031308 ? 1.055 * c ** (1 / 2.4) - 0.055 : 12.92 * c;
+    return Math.round(Math.max(0, Math.min(1, v)) * 255);
+  });
+  return `#${out.map((c) => c.toString(16).padStart(2, "0")).join("")}`;
 }
 
 describe("hue carries judgement, and identity is not a judgement", () => {
@@ -90,11 +139,61 @@ describe("one surface, and a ramp that means something", () => {
     expect(KIT_MIX_TARGET).toBe("#f0eee8");
   });
 
-  it("climbs monotonically through the heat ramp", () => {
-    // A ramp that dips reads as two categories rather than one scale.
-    const ls = HEAT.map(([bg]) => lightness(bg));
+  it("climbs monotonically through the points ramp", () => {
+    // A sequential ramp that dips reads as two categories rather than one scale.
+    const ls = HEAT.map(([bg]) => relLuminance(bg));
     for (let i = 1; i < ls.length; i++) {
-      expect(ls[i]).toBeGreaterThan(ls[i - 1]);
+      expect(ls[i], `band ${i} is not brighter than ${i - 1}`)
+        .toBeGreaterThan(ls[i - 1]);
+    }
+  });
+
+  it("does NOT climb monotonically through the difficulty ramp", () => {
+    /* Correct, not a fault. Traffic is DIVERGING: both ends are dark and the
+       middle is pale, because it runs bad → neutral → good rather than less →
+       more. Asserting it here stops someone "fixing" it into a sequential ramp
+       and silently turning a verdict scale into a quantity scale. */
+    const ls = TRAFFIC.map(([bg]) => relLuminance(bg));
+    const rises = ls.slice(1).some((l, i) => l > ls[i]);
+    const falls = ls.slice(1).some((l, i) => l < ls[i]);
+    expect(rises && falls, "traffic is not diverging").toBe(true);
+  });
+
+  it("separates every neighbouring band under red-green colour blindness", () => {
+    /**
+     * The measurement both ramps were chosen on, and the reason a red-to-green
+     * ramp is safe here when it usually is not.
+     *
+     * Red-green ramps fail when the two ends share a LIGHTNESS and only hue
+     * separates them — simulate the deficiency and the scale collapses. These
+     * move lightness as well, so the steps survive. The teal-to-lime ramp both
+     * of these replaced measured 0.015 here, which is why it was the hardest of
+     * eight candidates to read.
+     */
+    for (const [name, ramp, floor] of [
+      ["points", HEAT, 0.03] as const,
+      ["difficulty", TRAFFIC, 0.08] as const,
+    ]) {
+      const ls = ramp.map(([bg]) => relLuminance(deuteranope(bg)));
+      for (let i = 1; i < ls.length; i++) {
+        const gap = Math.abs(ls[i] - ls[i - 1]);
+        expect(gap, `${name} bands ${i - 1}→${i} collapse to ${gap.toFixed(3)}`)
+          .toBeGreaterThan(floor);
+      }
+    }
+  });
+
+  it("puts legible ink on every band of both ramps", () => {
+    /* The figure sits ON the cell. A band whose own ink misses the 4.5:1 floor
+       for text this size is a band that cannot carry the number it exists to
+       colour — which is the specific defect that disqualified the ramp these
+       replaced, at 4.17:1. */
+    for (const [name, ramp] of [["points", HEAT] as const, ["difficulty", TRAFFIC] as const]) {
+      ramp.forEach(([bg, ink], index) => {
+        const ratio = contrast(bg, ink);
+        expect(ratio, `${name} band ${index} renders text at ${ratio.toFixed(2)}:1`)
+          .toBeGreaterThanOrEqual(4.5);
+      });
     }
   });
 

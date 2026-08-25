@@ -152,13 +152,66 @@ export function difficultyTint(
   return ["rgba(255,90,70,.22)", surface.conflict];
 }
 
-/** The heat ramp for a projected-points cell. Five steps, teal toward lime. */
+/**
+ * The points ramp: one warm family, dark to cream.
+ *
+ * Sequential and single-hue on purpose. It means MORE, never BETTER — a
+ * projection is a quantity, not a verdict, and a diverging ramp would paint every
+ * ordinary week as a warning. Green is deliberately not used: green already means
+ * a kind fixture on {@link TRAFFIC}, and one colour cannot mean "high points" on
+ * one screen and "easy fixture" on the next.
+ *
+ * This replaces a teal-to-lime ramp that was the hardest of eight candidates to
+ * read — 0.017 lightness between neighbouring bands, 0.015 under simulated
+ * red-green colour blindness, and one band whose figures measured 4.17:1 against
+ * the 4.5:1 floor for text that size. Copper measures 0.036 and 0.045, and every
+ * band clears the floor.
+ */
 export const HEAT: readonly (readonly [string, string])[] = [
-  ["oklch(0.21 0.02 225)", "rgba(233,238,245,.34)"],
-  ["oklch(0.29 0.06 205)", "rgba(233,238,245,.60)"],
-  ["oklch(0.40 0.10 178)", "rgba(233,238,245,.90)"],
-  ["oklch(0.55 0.14 150)", "#0d1013"],
-  ["oklch(0.74 0.19 132)", "#0d1013"],
+  ["#3b2418", "#e9eef5"],
+  ["#6b3a1f", "#e9eef5"],
+  ["#9c5726", "#e9eef5"],
+  ["#c8823f", "#0d1013"],
+  ["#e8c9a0", "#0d1013"],
+];
+
+/**
+ * The difficulty ramp: red at the worst end, green at the kindest.
+ *
+ * The one place in this app where a colour carries a VERDICT, and it is earned:
+ * an easy fixture really is good and a brutal one really is bad, which is not
+ * true of a projection — a 2.5 xP defender is a smaller number, not a warning.
+ * It is also the convention FPL itself prints a fixture list in, so a reader
+ * arrives already knowing how to read it.
+ *
+ * ## Why red-to-green is safe here and usually is not
+ *
+ * Red-green ramps fail colour blindness when the two ends share a LIGHTNESS and
+ * hue is the only thing separating them. This one runs dark red → pale amber →
+ * mid green, so the lightness does the work and the hue only reinforces it.
+ * Measured against the seven other candidates it separated best of all: 0.124
+ * between neighbouring bands under simulated deuteranopia, against 0.015 for the
+ * teal-to-lime ramp both of these replace.
+ *
+ * Bright means KIND here and bright means MORE on {@link HEAT}. That inversion is
+ * deliberate — the two ramps measure opposite kinds of thing — and it is why the
+ * two never appear on one screen without a legend saying which is which.
+ */
+export const TRAFFIC: readonly (readonly [string, string])[] = [
+  // FOUR stops, not five, and that is the fix rather than an economy. FPL rates
+  // fixtures 1 to 5 and never once assigns a 1 across a published list — the
+  // observed distribution is 2:44, 3:72, 4:36, 5:8 over 160 fixtures. A five-stop
+  // ramp therefore always had one colour that never appeared on screen. Four
+  // values, four colours, nothing idle.
+  //
+  // #b3352d, not the brighter #c8443a it was drafted at: the lighter red put its
+  // own figures at 4.15:1 — under the 4.5:1 floor, and the exact defect that
+  // disqualified the ramp this replaces. Caught by the measurement in
+  // `tokens.test.ts` rather than by eye, which is the point of measuring.
+  ["#b3352d", "#e9eef5"],
+  ["#d97a35", "#0d1013"],
+  ["#d9bb42", "#0d1013"],
+  ["#4f9455", "#0d1013"],
 ];
 
 /**
@@ -171,6 +224,22 @@ export const HEAT: readonly (readonly [string, string])[] = [
 export function heatStep(value: number, ceiling: number): readonly [string, string] {
   const t = Math.max(0, Math.min(1, value / (ceiling || 1)));
   return HEAT[Math.min(HEAT.length - 1, Math.floor(t * HEAT.length))];
+}
+
+/**
+ * A ramp's colours for a band index, clamped.
+ *
+ * Callers that have already computed a BAND — every heat surface in the app does,
+ * through `bandOf` or `difficultyBand` — were reaching them through
+ * {@link heatStep} by passing the band as a value and the step count as a
+ * ceiling. That works and reads as arithmetic on a quantity, which it is not.
+ * This says what is happening: pick stop N.
+ */
+export function stepOf(
+  ramp: readonly (readonly [string, string])[],
+  band: number,
+): readonly [string, string] {
+  return ramp[Math.max(0, Math.min(ramp.length - 1, Math.round(band)))];
 }
 
 /** The rail beside the decision — one step off the shell, not a card. */

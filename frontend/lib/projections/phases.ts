@@ -252,7 +252,29 @@ function mean(values: readonly number[]): number {
  */
 export function difficultyBand(difficulty: number | null, steps: number): number | null {
   if (difficulty === null) return null;
-  const clamped = Math.max(KINDEST, Math.min(HARDEST, difficulty));
-  // 1 -> steps-1 (brightest), 5 -> 0 (dimmest).
-  return Math.round(((HARDEST - clamped) / (HARDEST - KINDEST)) * (steps - 1));
+  const clamped = Math.round(Math.max(KINDEST, Math.min(HARDEST, difficulty)));
+
+  /*
+   * Mapped onto the values that OCCUR, not the values the scale defines.
+   *
+   * FPL's scale runs 1 to 5, and across a whole published fixture list it never
+   * once assigns a 1 — the observed distribution is 2:44, 3:72, 4:36, 5:8 over
+   * 160 fixtures. A linear 1-to-5 map therefore spends its brightest band on a
+   * rating that never happens, and squeezes the four that do into the dimmer
+   * four fifths of the ramp. Forty-five percent of the matrix landed on one band.
+   *
+   * So the ramp has FOUR stops for the four values that occur, and every colour
+   * on it appears on screen. FDR 1 shares the top stop with FDR 2: nothing is
+   * kinder than the kindest thing on the board, and if FPL ever does publish a 1
+   * it reads correctly rather than needing a fifth colour.
+   *
+   * What this does NOT do is flatten the distribution. FDR 3 is 45% of all
+   * fixtures and still lands 45% of the matrix on one colour — because that is
+   * the league, not the scale. A ramp fitted to even out those counts would be
+   * telling the reader the fixture list is more varied than it is.
+   */
+  const BY_RATING: Record<number, number> = { 1: 3, 2: 3, 3: 2, 4: 1, 5: 0 };
+  const band = BY_RATING[clamped] ?? 2;
+  // Scaled if the ramp is ever a different length than the four it is drawn for.
+  return steps === 4 ? band : Math.round((band / 3) * (steps - 1));
 }

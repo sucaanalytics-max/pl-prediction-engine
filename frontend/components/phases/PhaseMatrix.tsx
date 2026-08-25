@@ -26,8 +26,12 @@
 import { useMemo, useState } from "react";
 
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
-import { DISPLAY, FLOODLIT, MONO, SANS, heatStep } from "@/lib/margin/tokens";
-import { HEAT_STEPS } from "@/lib/projections/grid";
+import { DISPLAY, FLOODLIT, MONO, SANS, TRAFFIC, stepOf } from "@/lib/margin/tokens";
+/* TRAFFIC's own length, not HEAT's. The two ramps are deliberately different
+   sizes — four difficulty ratings occur and five point bands are useful — and
+   passing one ramp's step count to the other's band function silently produced
+   a legend swatch for a colour that does not exist. */
+const TRAFFIC_STEPS = TRAFFIC.length;
 import {
   RUN_LENGTHS, THRESHOLDS, allPhases, buildClubRows, difficultyBand,
   matrixGameweeks, orderClubs, type PhaseOrder, type RunLength,
@@ -132,10 +136,10 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
         <div style={{ flexGrow: 1 }} />
         <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
           <Label>Weakest</Label>
-          {Array.from({ length: HEAT_STEPS }, (_, band) => (
+          {Array.from({ length: TRAFFIC_STEPS }, (_, band) => (
             <span key={band} style={{
               width: 20, height: 10, display: "inline-block",
-              background: heatStep(band, HEAT_STEPS - 1)[0],
+              background: stepOf(TRAFFIC, band)[0],
             }} />
           ))}
           <Label>Strongest</Label>
@@ -204,10 +208,10 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                   </div>
 
                   {cclub.weeks.map((week, index) => {
-                    const band = difficultyBand(week.difficulty, HEAT_STEPS);
+                    const band = difficultyBand(week.difficulty, TRAFFIC_STEPS);
                     const [background, ink] = band === null
                       ? ["transparent", S.ink4] as const
-                      : heatStep(band, HEAT_STEPS - 1);
+                      : stepOf(TRAFFIC, band);
                     const on = inPhase(index);
                     // Home carries the heavier of DM Mono's two usable weights
                     // (300/400/500 are all it ships — never above 500); away
@@ -302,10 +306,10 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                     </div>
                     <div style={{ display: "flex", gap: 2, marginTop: 3, flexWrap: "wrap" }}>
                       {phase.weeks.map((week) => {
-                        const band = difficultyBand(week.difficulty, HEAT_STEPS);
+                        const band = difficultyBand(week.difficulty, TRAFFIC_STEPS);
                         const [background, ink] = band === null
                           ? ["transparent", S.ink4] as const
-                          : heatStep(band, HEAT_STEPS - 1);
+                          : stepOf(TRAFFIC, band);
                         return (
                           <span key={week.gameweek} style={{
                             fontFamily: MONO, fontSize: 9.5, padding: "2px 5px",
@@ -340,9 +344,9 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
           <div style={{ marginBottom: 6 }}><Label>Bright is kind</Label></div>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
             <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3 }}>5</span>
-            {Array.from({ length: HEAT_STEPS }, (_, band) => (
+            {Array.from({ length: TRAFFIC_STEPS }, (_, band) => (
               <span key={band} style={{
-                width: 20, height: 10, background: heatStep(band, HEAT_STEPS - 1)[0],
+                width: 20, height: 10, background: stepOf(TRAFFIC, band)[0],
               }} />
             ))}
             <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3 }}>1</span>

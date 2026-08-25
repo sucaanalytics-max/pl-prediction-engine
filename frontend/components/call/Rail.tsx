@@ -31,9 +31,9 @@
 
 import type { Horizon } from "@/lib/data/projections";
 import type { SquadRow } from "@/lib/margin/squad";
-import { DISPLAY, FLOODLIT, MONO, SANS, heatStep } from "@/lib/margin/tokens";
+import { DISPLAY, FLOODLIT, MONO, SANS, HEAT, stepOf } from "@/lib/margin/tokens";
 import { EYEBROW } from "@/lib/margin/type";
-import { ABSOLUTE_CEILING, HEAT_STEPS, bandOf } from "@/lib/projections/grid";
+import { FIXED, HEAT_STEPS, POINT_BANDS, bandOf } from "@/lib/projections/grid";
 import type { Callout } from "@/lib/call/board";
 
 const S = FLOODLIT;
@@ -149,7 +149,7 @@ export function Rail({
         </Eyebrow>
         <span style={{ flexGrow: 1 }} />
         <span style={{ display: "flex", border: `1px solid ${S.rule}` }}>
-          {([["absolute", "absolute"], ["week", "per week"]] as const).map(([key, label]) => (
+          {([["absolute", "fixed"], ["week", "per week"]] as const).map(([key, label]) => (
             <button
               key={key}
               type="button"
@@ -212,12 +212,12 @@ export function Rail({
                 const xp = xpFor(row, week, index);
                 const band = bandOf(
                   xp,
-                  scale === "absolute" ? ABSOLUTE_CEILING : ceilings[index],
+                  scale === "absolute" ? FIXED : ceilings[index],
                   HEAT_STEPS,
                 );
                 const [background, colour] = band === null
                   ? ["transparent", S.ink4] as const
-                  : heatStep(band, HEAT_STEPS - 1);
+                  : stepOf(HEAT, band);
                 return (
                   <div
                     key={week}
@@ -240,9 +240,10 @@ export function Rail({
       <div style={{ padding: "11px 14px 16px", borderTop: `1px solid ${S.hair}` }}>
         <p style={{ fontSize: 11, color: S.ink2, lineHeight: 1.5, margin: 0 }}>
           {scale === "absolute"
-            ? `Absolute scale: one 0–${ABSOLUTE_CEILING} ramp across every week. Rows fade
-               rightward because certainty decays with distance — the availability
-               haircut widens, so a week eight out is a weaker claim about the same
+            ? `Fixed bands at ${POINT_BANDS.join(", ")} points, the same on every screen
+               and in every week — so a colour here means what it means on the
+               projections grid. Rows still fade rightward, because certainty decays
+               with distance: a week eight out is a weaker claim about the same
                player, not a worse fixture. Read the fade as confidence, not as
                difficulty.`
             : `Per-week scale: each column is ranked against itself, so the brightest

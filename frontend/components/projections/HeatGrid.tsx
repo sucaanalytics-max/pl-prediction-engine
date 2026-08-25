@@ -17,8 +17,8 @@
  *
  * ## Two scales, and why both are offered
  *
- * Absolute puts all eight columns on one 0–{@link ABSOLUTE_CEILING} ramp, so a
- * cell means the same thing wherever it sits. Every row then dims rightward,
+ * Fixed puts every column on the published {@link POINT_BANDS} breakpoints, so a
+ * cell means the same thing wherever it sits and on whichever screen. Every row then dims rightward,
  * because the availability haircut widens with distance — that is certainty
  * draining, not fixtures worsening, and it is why a flat row is worth noticing.
  *
@@ -32,9 +32,9 @@ import { useDeferredValue, useMemo, useState } from "react";
 
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import type { Horizon, Projection } from "@/lib/data/projections";
-import { DISPLAY, FLOODLIT, MONO, SANS, heatStep } from "@/lib/margin/tokens";
+import { DISPLAY, FLOODLIT, MONO, SANS, HEAT, stepOf } from "@/lib/margin/tokens";
 import {
-  ABSOLUTE_CEILING, HEAT_STEPS, SPANS, bandOf, buildGridRows, findRuns,
+  FIXED, HEAT_STEPS, POINT_BANDS, SPANS, bandOf, buildGridRows, findRuns,
   gridSummary, gridWeeks, type GridRow, type Span,
 } from "@/lib/projections/grid";
 
@@ -238,7 +238,7 @@ export function HeatGrid(props: HeatGridProps) {
         <div style={{ width: 1, height: 20, background: S.rule }} />
         <Label>Heat</Label>
         <Group>
-          {([["absolute", "absolute"], ["week", "per week"]] as const).map(([key, label]) => (
+          {([["absolute", "fixed"], ["week", "per week"]] as const).map(([key, label]) => (
             <button key={key} onClick={() => setScale(key)} style={chip(scale === key)}
               aria-pressed={scale === key}>
               {label}
@@ -293,7 +293,7 @@ export function HeatGrid(props: HeatGridProps) {
           {visible.map((row) => {
             const bands = row.cells.map((cell, index) => bandOf(
               cell.xp,
-              scale === "absolute" ? ABSOLUTE_CEILING : columnCeilings[index],
+              scale === "absolute" ? FIXED : columnCeilings[index],
               HEAT_STEPS,
             ));
             const runs = findRuns(bands, HEAT_STEPS);
@@ -350,7 +350,7 @@ export function HeatGrid(props: HeatGridProps) {
                   const band = bands[index];
                   const [background, ink] = band === null
                     ? ["transparent", S.ink4] as const
-                    : heatStep(band, HEAT_STEPS - 1);
+                    : stepOf(HEAT, band);
                   return (
                     <div key={cell.gameweek} style={{ padding: 1, position: "relative" }}>
                       <div style={{
@@ -436,10 +436,13 @@ export function HeatGrid(props: HeatGridProps) {
           </div>
           <p style={{ fontSize: 11.5, lineHeight: 1.55, color: S.ink2, margin: 0 }}>
             {scale === "absolute"
-              ? `One 0–${ABSOLUTE_CEILING} ramp across every column, so a cell means the
-                 same thing wherever it sits. Rows dim rightward because the
-                 availability haircut widens with distance — certainty draining, not
-                 fixtures worsening. A flat row is the one worth noticing.`
+              ? `Fixed bands at ${POINT_BANDS.join(", ")} points, so a cell means the same
+                 thing wherever it sits and on whichever screen. This replaced a
+                 linear 0–7 stretch calibrated on a number that does not happen: real
+                 projections cluster between 3.1 and 4.0, so roughly seven cells in
+                 ten landed in one band and the ramp did almost no work. Rows still
+                 dim rightward — certainty draining, not fixtures worsening — and a
+                 flat row is the one worth noticing.`
               : `Each column ranked against itself, over the rows you can see. Good for
                  picking within a week, useless for judging whether a later week is
                  worth planning around: the brightest cell in the last column is only
