@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-25T22:56:37.849548Z",
+  "generated_at": "2026-08-25T23:27:43.930629Z",
   "n_dropped": 369,
   "dropped_by_source": {
-    "bbc_football": 111,
-    "fantasyfootballscout": 16,
+    "bbc_football": 112,
+    "fantasyfootballscout": 17,
     "hayters": 68,
-    "sky_football": 174
+    "sky_football": 172
   },
   "window_days": 5,
   "squad_known": false,
@@ -14,6 +14,24 @@
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "2ecb8b200db34d4d",
+      "headline": "'Super proud' - Smith wins consecutive PFA young player of the year",
+      "summary": "Arsenal's Olivia Smith wants to \"keep setting standards high\" as she receives her second consecutive PFA young player of the year award.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cwyzv42l624o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-25T23:06:50Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "8277b7b15e547d1c",
       "headline": "\u2018This team had a relegation battle for nine months\u2019 \u2013 Glasner says Nottingham Forest cannot \u2018ignore the reality\u2019",
@@ -339,6 +357,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "c26d5b7b47bf9d57",
+      "headline": "Knock - 50% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-08-25T19:00:08.004915Z",
+      "players": [
+        {
+          "element_id": 465,
+          "name": "Osula",
+          "club": "NEW",
           "held": null
         }
       ],
@@ -1173,24 +1209,6 @@
       "touches_squad": null
     },
     {
-      "digest": "4eb715c8af64f3f0",
-      "headline": "Sunderland sign Ahoka from Royal Antwerp",
-      "summary": "Sunderland confirm the signing of midfielder Jules Ahoka for a 10m euros (\u00a38.6m) fee.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cx2ze3dz4jro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-24T16:50:16Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "c69dc694a8cece2a",
       "headline": "Positive updates on Hull City defenders after coming off against Man Utd",
       "summary": "Hull City assistant manager Dean Holden says he is hopeful that the players who came off during Saturday's win over Manchester United will be fit in time for this weekend. Semi Ajayi, Zak Mendy and Ryan Giles were all withdrawn",
@@ -1731,24 +1749,6 @@
           "element_id": 594,
           "name": "David",
           "club": "BHA",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "95486747b69c212e",
-      "headline": "Norgaard + Garner: Everton injury latest for FPL Gameweek 1",
-      "summary": "Gameweek 1 Bench Boost users have an interest in Norgaard The post Norgaard + Garner: Everton injury latest for FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/norgaard-garner-everton-injury-latest-for-fpl-gameweek-1",
-      "claimed_at": "2026-08-21T14:50:22Z",
-      "players": [
-        {
-          "element_id": 239,
-          "name": "Garner",
-          "club": "EVE",
           "held": null
         }
       ],
