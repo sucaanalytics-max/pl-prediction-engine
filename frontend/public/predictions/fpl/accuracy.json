@@ -1,18 +1,41 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-25T10:21:44.819924Z",
+  "generated_at": "2026-08-25T16:24:24.675195Z",
   "season": "2627",
-  "gameweeks_sealed": 0,
-  "observations": 0,
-  "perfect_model_rmse": 2.2034,
+  "gameweeks_sealed": 1,
+  "observations": 499,
+  "perfect_model_rmse": 2.2045,
   "perfect_model_basis": "Root-mean-square of the simulated per-player standard deviations. A forecaster that knew each player's true distribution would still incur this, because the outcome is random.",
-  "measured": null,
-  "excess_over_ceiling": null,
+  "measured": {
+    "overall": {
+      "n": 499,
+      "rmse": 2.824,
+      "bias": 0.1175,
+      "bias_radius": 0.4971
+    },
+    "by_position": {},
+    "by_band": {
+      "blank": {
+        "n": 327,
+        "rmse": 1.6025,
+        "bias": -1.0617,
+        "bias_radius": 0.2579
+      },
+      "return": {
+        "n": 153,
+        "rmse": 3.011,
+        "bias": 1.5056,
+        "bias_radius": 0.8009
+      }
+    },
+    "by_horizon": {}
+  },
+  "excess_over_ceiling": 0.6195,
   "predicted_xi": {
     "ours": null,
     "benchmark": 0.84,
     "benchmark_source": "SportMonks published predicted-XI accuracy",
     "reason": "No gameweek has sealed, so realised lineups cannot be compared against what was forecast."
   },
-  "reason": "0 gameweek(s) sealed and 0 settled player-gameweeks recorded; at least 50 are needed before an error measurement describes the model rather than the sample."
+  "reason": null
 }
