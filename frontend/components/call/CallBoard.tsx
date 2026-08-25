@@ -42,7 +42,9 @@ import {
 } from "@/lib/margin/planner";
 import { joinProjections, type SquadRow } from "@/lib/margin/squad";
 import { FLOODLIT, MONO } from "@/lib/margin/tokens";
-import { calloutsFor, shapeOf } from "@/lib/call/board";
+import { EYEBROW } from "@/lib/margin/type";
+import { calloutsFor, shapeOf, swapFrom, swapSentence } from "@/lib/call/board";
+import { Eleven } from "@/components/call/Eleven";
 import { Pitch, type PitchMode } from "@/components/call/Pitch";
 import { Rail, type HorizonScale } from "@/components/call/Rail";
 import { Tiles } from "@/components/call/Tiles";
@@ -70,6 +72,17 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
 
   const [benched, setBenched] = useState<ReadonlySet<number>>(new Set());
   const [mode, setMode] = useState<PitchMode>("xp");
+  /**
+   * Table first, pitch second.
+   *
+   * Five of seven reviewers put a sortable table ahead of every alternative,
+   * for five unrelated reasons — comparison rides on position, it survives being
+   * used at speed, it matches the spreadsheet already being kept, it is calm, and
+   * it reuses the grammar `HeatGrid` proves at 609 rows. The pitch answers "what
+   * shape am I playing", which is real but asked less often, and it cannot be
+   * sorted, which is the operation this screen exists for.
+   */
+  const [view, setView] = useState<"table" | "pitch">("table");
   const [scale, setScale] = useState<HorizonScale>("absolute");
 
   const squad = live?.squad ?? null;
@@ -118,7 +131,13 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
       ? null
       : starterRows.find((row) => row.player === captain) ?? null;
 
+    // What to change to get from the eleven FPL has to the eleven on screen.
+    // Compared on the player OBJECTS, never on names — FPL has six Wilsons.
+    const swap = swapFrom(squad.players, xi);
+
     return {
+      swap,
+      swapLine: swapSentence(swap),
       xi,
       starterRows,
       benchRows,
@@ -202,14 +221,72 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
         className="call-board"
       >
         <div style={{ borderRight: `1px solid ${S.rule}`, minWidth: 0 }}>
-          <Pitch
-            starters={board.starterRows}
-            bench={board.benchRows}
-            captainId={board.captain?.elementId ?? null}
-            mode={mode}
-            onMode={setMode}
-            onToggle={toggle}
-          />
+          <div style={{
+            display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12,
+            padding: "10px 14px", background: S.bar,
+            borderBottom: `1px solid ${S.hair}`,
+          }}>
+            <span style={{ ...EYEBROW, color: S.ink3 }}>The eleven</span>
+
+            {/* The instruction, beside the delta it explains. The tile says the
+                optimum is worth more; without this it never says how. */}
+            {board.swapLine === null ? (
+              <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+                {board.swap.known
+                  ? "already the best eleven from this squad"
+                  : "no lineup on file to compare against"}
+              </span>
+            ) : (
+              <span data-testid="swap-line" style={{
+                fontFamily: MONO, fontSize: 10.5, color: S.ink2,
+              }}>
+                to match it: <span style={{ color: S.brand }}>{board.swapLine}</span>
+              </span>
+            )}
+
+            <span style={{ flexGrow: 1 }} />
+            <span style={{ display: "flex", border: `1px solid ${S.rule}` }}>
+              {([["table", "table"], ["pitch", "pitch"]] as const).map(([key, label]) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setView(key)}
+                  aria-pressed={view === key}
+                  style={{
+                    padding: "4px 9px", fontSize: 10.5,
+                    fontWeight: view === key ? 600 : 400,
+                    background: view === key ? "rgba(233,238,245,.10)" : "transparent",
+                    color: view === key ? S.ink : S.ink3,
+                    borderRight: `1px solid ${S.rule}`, border: 0, cursor: "pointer",
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </span>
+          </div>
+
+          {view === "table" ? (
+            <div style={{ padding: "0 8px 10px" }}>
+              <Eleven
+                starters={board.starterRows}
+                bench={board.benchRows}
+                captainId={board.captain?.elementId ?? null}
+                bringIn={board.swap.bringIn}
+                sitDown={board.swap.sitDown}
+                onToggle={toggle}
+              />
+            </div>
+          ) : (
+            <Pitch
+              starters={board.starterRows}
+              bench={board.benchRows}
+              captainId={board.captain?.elementId ?? null}
+              mode={mode}
+              onMode={setMode}
+              onToggle={toggle}
+            />
+          )}
         </div>
         <Rail
           callouts={board.callouts}

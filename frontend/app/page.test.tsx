@@ -44,7 +44,10 @@ const RUN = [1, 2, 3, 4, 5, 6].map((gameweek) => ({
  */
 const SQUAD = {
   players: [
-    { elementId: 1, name: "Verbruggen", position: "GKP", team: "BHA", price: 4.5, bench: false, fixtures: RUN },
+    { elementId: 1, name: "Verbruggen", position: "GKP", team: "BHA", price: 4.5, bench: false,
+      // A realistic label and rating: the fixture cell must show BOTH, and the
+      // rating must not live only in a title attribute.
+      fixture: "CHE (A)", difficulty: 4, ownership: 12.5, fixtures: RUN },
     { elementId: 2, name: "Gvardiol", position: "DEF", team: "MCI", price: 5.5, bench: false, fixtures: RUN },
     { elementId: 3, name: "Calafiori", position: "DEF", team: "ARS", price: 5.5, bench: false, fixtures: RUN },
     { elementId: 4, name: "Shaw", position: "DEF", team: "MUN", price: 4.5, bench: false, fixtures: RUN },
@@ -236,7 +239,10 @@ describe("it is a page and not a redirect", () => {
   it("renders the call rather than sending the reader somewhere else", async () => {
     const { container } = await mountPage();
     expect(container.querySelector("[data-testid='call-board']")).not.toBeNull();
-    expect(container.querySelectorAll("[data-testid='pitch-tile']").length).toBe(11);
+    // The table is the default view: five of seven reviewers put a sortable
+    // table ahead of the pitch, because sorting is the operation this screen
+    // exists for and a pitch cannot be sorted.
+    expect(container.querySelectorAll("[data-testid='eleven-row']").length).toBe(11);
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Your call");
   });
 
@@ -509,12 +515,12 @@ describe("the horizon rail does not claim an eleven it has not solved", () => {
      */
     const { container } = await mountPage();
     const before = container.querySelector("[data-testid='tile-xi']")?.textContent ?? "";
-    const tile = container.querySelector("[data-testid='pitch-tile']") as HTMLElement;
-    fireEvent.click(tile);
+    const row = container.querySelector("[data-testid='eleven-row']") as HTMLElement;
+    fireEvent.click(row);
     const after = container.querySelector("[data-testid='tile-xi']")?.textContent ?? "";
     expect(after).not.toBe(before);
-    // Ten on the pitch, and the benched one is now a bench tile.
-    expect(container.querySelectorAll("[data-testid='pitch-tile']")).toHaveLength(10);
+    // Ten in the eleven, and the benched one has moved to the bench block.
+    expect(container.querySelectorAll("[data-testid='eleven-row']")).toHaveLength(10);
   });
 });
 
@@ -711,5 +717,88 @@ describe("the deadline is on the page, exactly once", () => {
       expect(container.textContent).not.toContain("23:00 IST");
       cleanup();
     }
+  });
+});
+
+/**
+ * What the design council changed, and the reasons it gave.
+ *
+ * Seven independent lenses reviewed four candidate directions for this screen.
+ * These are the three findings that survived into the build, pinned here because
+ * each one is a claim about honesty rather than about taste, and each replaced
+ * something that looked finished.
+ */
+describe("the call says what to do, not just how much better it would be", () => {
+  it("names the swap, so the delta is an instruction and not a boast", async () => {
+    /**
+     * The screen printed "+2.26 better than as picked" and never said HOW. The
+     * component this one replaced computed `bringIn`/`sitDown`; folding it in
+     * kept the number and dropped the action, which makes the figure a claim the
+     * reader cannot act on.
+     *
+     * The fixture starts nobody, so every one of the eleven is a change — what
+     * matters is that the line exists and names players, not the exact count.
+     */
+    const { container } = await mountPage();
+    const line = container.querySelector("[data-testid='swap-line']");
+    expect(line, "the delta is stated with no way to act on it").not.toBeNull();
+    expect(line?.textContent).toMatch(/start|bench/);
+  });
+
+  it("puts the fixture rating on screen, not only in a tooltip", async () => {
+    /**
+     * It lived in a `title` attribute, which does not exist on a phone, for a
+     * keyboard, or for a screen reader — leaving the chip's COLOUR as the sole
+     * carrier of a five-band quantity, and colour is exactly the channel that
+     * collapses under red-green colour blindness.
+     */
+    const { container } = await mountPage();
+    const row = [...container.querySelectorAll("[data-testid='eleven-row']")]
+      .find((r) => r.getAttribute("data-player") === "Verbruggen");
+    expect(row, "the seeded starter is not in the eleven").toBeDefined();
+    // Label and rating both in the text, not one of them in an attribute.
+    expect(row?.textContent).toContain("CHE (A)");
+    expect(row?.textContent).toContain("4");
+  });
+
+  it("keeps a spread on every row, not only on the three it singles out", async () => {
+    /**
+     * Every candidate direction deleted the per-player interval and left a bare
+     * point estimate — the deletion that looks like tidying. A mean without its
+     * spread cannot answer the question a captaincy call turns on, and showing it
+     * for three players teaches a repeat reader that the other eight are certain.
+     */
+    const { container } = await mountPage();
+    const rows = container.querySelectorAll("[data-testid='eleven-row']");
+    const withInterval = [...rows].filter((row) =>
+      row.querySelector("[role='img']") !== null);
+    expect(withInterval).toHaveLength(rows.length);
+    expect(withInterval[0].querySelector("[role='img']")?.getAttribute("aria-label"))
+      .toMatch(/median .*middle half .*q10 .* to q90/);
+  });
+
+  it("offers the pitch as the second view, not as no view", async () => {
+    // The pitch answers "what shape am I playing", which no table does. It is
+    // one toggle away rather than deleted.
+    const { container } = await mountPage();
+    const pitch = screen.getByRole("button", { name: "pitch" });
+    fireEvent.click(pitch);
+    expect(container.querySelectorAll("[data-testid='pitch-tile']")).toHaveLength(11);
+    expect(container.querySelectorAll("[data-testid='eleven-row']")).toHaveLength(0);
+  });
+
+  it("links out to where the decision is actually made", async () => {
+    /**
+     * The panel's blind spot: seven lenses judged this screen as a closed system
+     * and none asked what happens after it is read. This is a planner — the
+     * binding action happens on FPL's own site, re-typed by the same hands under
+     * the same clock, and nothing on either side can notice a mismatch.
+     */
+    await mountPage();
+    const out = screen.getByRole("link", { name: /Set this on FPL/i });
+    expect(out.getAttribute("href")).toContain("fantasy.premierleague.com");
+    // And the capture link stays: it is the only way the two are reconciled.
+    expect(screen.getByRole("link", { name: /Capture what you actually submitted/ }))
+      .toBeInTheDocument();
   });
 });

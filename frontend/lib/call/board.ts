@@ -198,3 +198,67 @@ export function byLine(
       .sort((a, b) => (b.projection?.xp ?? -Infinity) - (a.projection?.xp ?? -Infinity)),
   ] as const);
 }
+
+/**
+ * What to change to get from the eleven FPL has to the eleven on screen.
+ *
+ * The screen said "+2.26 better than as picked" and did not say how, which makes
+ * the delta a boast rather than an instruction. `GameweekCall` computed this as
+ * `bringIn`/`sitDown` and it was lost when that component was folded into
+ * `CallBoard` — the number survived the move and the action did not.
+ *
+ * ## Identity, never names
+ *
+ * The sets are compared on the player OBJECTS the solver was handed back, not on
+ * names: `optimiseXi` returns the very objects it was given, and FPL has six
+ * Wilsons. A name-keyed diff would swap the wrong one.
+ *
+ * ## Empty is the common case and is not an absence
+ *
+ * Most weeks the eleven on file already is the best eleven, and both lists come
+ * back empty. That is an answer — "nothing to change" — and the caller renders it
+ * as one rather than as a missing section.
+ */
+export interface Swap {
+  /** In the eleven on screen, on the bench in the eleven FPL currently has. */
+  readonly bringIn: readonly SquadPlayer[];
+  /** Started by FPL, not in the eleven on screen. */
+  readonly sitDown: readonly SquadPlayer[];
+  /** True when a lineup is on file at all. Null-safe: see `hasLineup`. */
+  readonly known: boolean;
+}
+
+export function swapFrom(
+  squad: readonly SquadPlayer[],
+  xi: readonly SquadPlayer[],
+): Swap {
+  // `bench` is undefined until somebody has said who starts. Diffing against an
+  // unknown lineup would report all eleven as changes.
+  const known = squad.some((player) => player.bench !== undefined);
+  if (!known) return { bringIn: [], sitDown: [], known: false };
+
+  const started = new Set(squad.filter((player) => !player.bench));
+  const chosen = new Set(xi);
+  return {
+    bringIn: xi.filter((player) => !started.has(player)),
+    sitDown: squad.filter((player) => !player.bench && !chosen.has(player)),
+    known: true,
+  };
+}
+
+/**
+ * The swap as one line, or null when there is nothing to say.
+ *
+ * Written as an instruction — "start X, bench Y" — because that is the thing the
+ * reader does next. A list of two names with no verb makes them guess which way
+ * round it goes.
+ */
+export function swapSentence(swap: Swap): string | null {
+  if (!swap.known || (swap.bringIn.length === 0 && swap.sitDown.length === 0)) {
+    return null;
+  }
+  const names = (list: readonly SquadPlayer[]) => list.map((p) => p.name).join(", ");
+  if (swap.bringIn.length === 0) return `bench ${names(swap.sitDown)}`;
+  if (swap.sitDown.length === 0) return `start ${names(swap.bringIn)}`;
+  return `start ${names(swap.bringIn)} · bench ${names(swap.sitDown)}`;
+}

@@ -104,17 +104,43 @@ export default function CallPage() {
           )}
         </div>
 
-        {/* The app's only route to `/capture`, and deliberately not a nav entry —
-            it belongs beside the squad because capturing the position is what
-            makes the eleven above true. `_read_entry` in `run_agent.py` reads a
-            committed capture for this entry BEFORE asking FPL live, so this link
-            is the head of the write path; for a while nothing in the tree pointed
-            at it and the page was unreachable except by typing the URL. */}
-        <p className="text-xs">
+        {/* ── The seam ────────────────────────────────────────────────────
+            Where the decision leaves this app and gets re-typed into another one.
+
+            A design review of this screen ran seven independent lenses over it
+            and every one of them judged it as a closed system: does the call, on
+            its own, communicate correctly. None asked what happens AFTER it is
+            read — and this is a planner, not a tracker, so the binding action
+            happens somewhere else entirely. The eleven is set on FPL's own site,
+            by the same hands, under the same clock, from memory.
+
+            That is the failure mode that actually matches how this is used: read
+            "start Kadıoğlu, bench Palestra" correctly here, then set the wrong
+            one there thirty seconds later, with nothing on either side able to
+            notice before the deadline locks it.
+
+            Two links, in the order the work happens: go and do it, then record
+            what you actually did. `_read_entry` in `run_agent.py` reads a
+            committed capture BEFORE asking FPL live, so the second link is the
+            head of the only write path this app has. */}
+        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 text-xs">
+          <a
+            href="https://fantasy.premierleague.com/my-team"
+            target="_blank"
+            rel="noreferrer"
+            className="underline"
+            style={{ color: "var(--brand)" }}
+          >
+            Set this on FPL
+          </a>
           <Link href="/capture" className="underline" style={{ color: "var(--brand)" }}>
             Capture what you actually submitted
           </Link>
-        </p>
+          <span style={{ color: "var(--text-4)" }}>
+            Nothing here can see what you set. The capture is how the two are
+            reconciled, and it is what the agent reads first.
+          </span>
+        </div>
 
         <Section
           title="Week by week"
