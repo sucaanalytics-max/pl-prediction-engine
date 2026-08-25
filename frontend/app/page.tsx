@@ -24,15 +24,19 @@
  * starts and sales. The board above reads projections and solves one week. Those
  * are different warranties, so they keep their own sections.
  *
- * ## The three components this page stopped mounting
+ * ## The four components this page replaced, and then deleted
  *
- * `GameweekCall`, `SquadBoard` and `ScoreView` are no longer rendered anywhere.
- * They are deliberately NOT deleted in the same change: `/` was their only mount,
- * and this repo has already stranded a 612-line page by deleting the components
- * that linked to it, so the rule here is that rescue precedes deletion. Removing
- * them is its own change with its own review, because `ScoreView` carries
- * `Planner`, and `Planner` carries the distribution glyphs `margin.test.ts`
- * guards.
+ * `GameweekCall`, `SquadBoard`, `ScoreView` and — reached only through
+ * `ScoreView` — `Planner`, about 2,800 lines with their suites. They came off
+ * this page first and were deleted in a separate change, because `/` was their
+ * only mount and this repo has already stranded a 612-line page by deleting the
+ * components that linked to it: rescue precedes deletion, and the gap between the
+ * two is where you find out whether anything else needed them.
+ *
+ * One capability went with `Planner` and is not replaced here: a scratchpad where
+ * the reader picked transfer moves and saw the points cost of a hit. `CallBoard`
+ * deliberately does not do that — one published week cannot price a sale — so if
+ * that is wanted back it wants its own screen rather than a corner of this one.
  *
  * ## Absence
  *

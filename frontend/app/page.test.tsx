@@ -24,8 +24,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { Planner } from "@/components/margin/Planner";
-import type { FixtureMatrixRow, SquadPlayer } from "@/lib/data/heuristics";
+import type { } from "@/lib/data/heuristics";
 import type { Projection } from "@/lib/data/projections";
 
 /** Six weeks of run for every squad player, so the grid has cells to draw. */
@@ -264,8 +263,8 @@ describe("it is a page and not a redirect", () => {
 
   it("names no gameweek in its own chrome", async () => {
     /**
-     * The gameweek is named once, by `GameweekCall`, beside the artifact it was
-     * read from — `xp_public_gw01.json`. `/now`'s heading was the literal
+     * The gameweek is named once, by the board's provenance line, beside the
+     * artifact it was read from — `xp_public_gw01.json`. `/now`'s heading was the literal
      * `title="Your GW1 call"`, which is a hand-maintained number that is wrong
      * for 37 weeks of 38 and cannot 404 to tell anyone.
      */
@@ -577,57 +576,11 @@ describe("absence sits below the answers, and quietly", () => {
   });
 });
 
-/**
- * `/margin` renders exactly as it did. This is the compatibility pin.
- *
- * The two new props on `Planner` and `ScoreView` default to the shipped
- * behaviour, so the old route is untouched while the two surfaces are compared
- * side by side. These assertions pin the defaults, including the dimming the spec
- * calls a defect — deliberately. It goes when `/margin` goes, and until then a
- * silent change to it would be a change to a live route.
- */
-describe("the default behaviour /margin depends on is unchanged", () => {
-  const fifteen: SquadPlayer[] = SQUAD.players.map((p) => ({ ...p })) as SquadPlayer[];
-  const projections = PROJECTIONS as unknown as Projection[];
-  const matrix = FIXTURE_MATRIX as unknown as FixtureMatrixRow[];
-
-  function drawDefault() {
-    return render(
-      <Planner
-        squad={fifteen}
-        projections={projections}
-        horizon={null}
-        decisionDraws={10000}
-        prices={new Map(fifteen.map((p) => [p.elementId as number, p.price ?? 0]))}
-        fixtureMatrix={matrix}
-        bank={3.5}
-        gameweek={1}
-      />,
-    );
-  }
-
-  it("keeps the GW1–GW6 range in the title", () => {
-    expect(drawDefault().container.textContent).toContain("Planner · GW1–GW6");
-  });
-
-  it("keeps dimming every week a player does not start, solved or not", () => {
-    /**
-     * `cells.every(...)` on its own passes with ZERO cells examined, so this used
-     * to be satisfied by a `/margin` that had stopped rendering non-starting rows
-     * at all — the opposite of the behaviour it is here to pin. The sibling
-     * assertion above guards it properly; this now does the same.
-     */
-    const { container } = drawDefault();
-    const benched = [...container.querySelectorAll("[data-testid='planner-row']")]
-      .find((row) => row.getAttribute("data-starting") === "false");
-    expect(benched, "no benched row to check").toBeDefined();
-    const cells = [...(benched?.querySelectorAll("[data-testid='planner-cell']") ?? [])]
-      .map((cell) => (cell as HTMLElement).style.opacity);
-    expect(cells.length, "no cells to check, so `every` would pass vacuously")
-      .toBe(6);
-    expect(cells.every((o) => o === "0.45")).toBe(true);
-  });
-});
+/* The `/margin` compatibility pin is gone with the component it pinned.
+   Its own docstring set the condition — "it goes when `/margin` goes" — and that
+   route has been served a 410 for weeks; `Planner` and `ScoreView` were unmounted
+   when the call screen replaced them and are now deleted, so there is no shipped
+   behaviour left for it to protect. */
 
 // ─────────────────────────────────────────────────────────────────────────────
 // The deadline
