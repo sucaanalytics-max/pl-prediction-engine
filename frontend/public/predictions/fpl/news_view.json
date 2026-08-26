@@ -1,18 +1,180 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T16:59:10.693076Z",
-  "n_dropped": 342,
+  "generated_at": "2026-08-26T19:12:29.062797Z",
+  "n_dropped": 334,
   "dropped_by_source": {
-    "bbc_football": 109,
-    "hayters": 61,
-    "sky_football": 172
+    "bbc_football": 108,
+    "hayters": 58,
+    "sky_football": 168
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 432,
+  "n_articles": 424,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "24367dc7fceda4cf",
+      "headline": "'He's the one we wanted': Newcastle sign Gonzalez from Man City",
+      "summary": "Newcastle have signed Nico Gonzalez from Man City.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13577494/x",
+      "claimed_at": "2026-08-26T19:35:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "d86d9bee8c00922b",
+      "headline": "Newcastle sign Gonzalez from Man City for \u00a352m",
+      "summary": "Newcastle United sign Manchester City midfielder Nico Gonzalez for a fee which could rise to \u00a352m.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cx2zlnpnk4zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-26T18:35:30Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "96331952e66df7fe",
+      "headline": "Preston vs Everton on Sky LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/preston-north-end-vs-everton/live/577434",
+      "claimed_at": "2026-08-26T18:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ec890ac27d812d1a",
+      "headline": "Strong Spurs side probing vs Charlton LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/tottenham-hotspur-vs-charlton-athletic/live/577440",
+      "claimed_at": "2026-08-26T18:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "abe93eb1de33d780",
+      "headline": "Tottenham 0-0 Charlton LIVE \u2013 Top Kinsky save keeps the score level",
+      "summary": "{rsn-live-v2} The post Tottenham 0-0 Charlton LIVE - Top Kinsky save keeps the score level appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/tottenham-vs-charlton-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-26T17:50:00Z",
+      "players": [
+        {
+          "element_id": 496,
+          "name": "Kinsky",
+          "club": "TOT",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "f52a8db58314836d",
+      "headline": "Superb Price free-kick gives WBA lead at Newcastle LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/newcastle-united-vs-west-bromwich-albion/live/577432",
+      "claimed_at": "2026-08-26T17:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "a88627ebf87e9023",
+      "headline": "Palace attempt to hijack Villa move for Ordonez",
+      "summary": "Crystal Palace have had Club Brugge defender Joel Ordonez as a long-term target, while Villa made a move after struggling to agree a fee for Taylor Harwood-Bellis.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cn8myek3zz9o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-26T17:10:40Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "bdbb41429e09c5cd",
+      "headline": "Newcastle v West Brom LIVE \u2013 team news, updates and reaction",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v West Brom LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-v-west-brom-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-26T17:03:47Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "b703f86a31318f8f",
+      "headline": "Euro Leagues",
+      "summary": "Is Alvarez set for Arsenal? & Schalke boss Musli\u0107 chats about Dzeko & Karius' redemption.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0p6f6bs?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-26T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "04e77d5ec533fd00",
       "headline": "Coventry continue busy summer with defender deal",
@@ -201,6 +363,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-26T15:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "32225a1282cdc585",
+      "headline": "'Zero per cent chance' - Atleti shut down Barca's Alvarez plea amid Arsenal interest",
+      "summary": "The noise around Atletico Madrid forward Julian Alvarez refuses to go away - so where are things after a chaotic few days surrounding the in-demand Argentine?",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13577412/julian-alvarez-atletico-madrid-say-theres-zero-per-cent-chance-of-him-joining-barcelona-despite-clubs-plea-as-arsenal-wait-in-wings",
+      "claimed_at": "2026-08-26T14:45:00Z",
       "players": [
         {
           "element_id": 0,
@@ -674,24 +854,6 @@
       "touches_squad": null
     },
     {
-      "digest": "38a757d6f1fdd64f",
-      "headline": "Man City sign Bouaddi in record-breaking deal",
-      "summary": "Manchester City have completed the signing of midfielder Ayyoub Bouaddi in a record-breaking &#163;86m move from Lille.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13576515/ayyoub-bouaddi-transfer-manchester-city-complete-record-breaking-86m-deal-to-sign-18-year-old-morocco-midfielder",
-      "claimed_at": "2026-08-26T11:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "d2d83be000e003b3",
       "headline": "Man City\u2019s summer spending set to continue after completing Bouaddi signing",
       "summary": "Manchester City have completed the signing of midfielder Ayyoub Bouaddi from Lille. The 18-year-old Morocco international has signed a five-year contract with City, keeping him at the Etihad Stadium until the summer of 2031,",
@@ -752,24 +914,6 @@
       "touches_squad": null
     },
     {
-      "digest": "065778f5bae3176d",
-      "headline": "Arsenal latest: Alvarez misses Atletico Madrid training",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-26T10:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "fdddc5ebcf62e4dc",
       "headline": "Man City to make offer for \u00a3120m-rated Fernandez",
       "summary": "Manchester City are set to make an opening offer for priority midfield target Enzo Fernandez.",
@@ -777,24 +921,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cgewvygeq8vo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-26T09:55:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "b95600345f9aa636",
-      "headline": "Carabao Cup second round: Chelsea and Spurs in action tonight live on Sky",
-      "summary": "The Carabao Cup is back for the 2026/27 season, with every second-round tie live on Sky Sports!",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13576598/carabao-cup-2026-27-watch-nottm-forest-vs-leeds-chelsea-vs-luton-tottenham-vs-charlton-and-more-with-every-game-live-on-sky-sports",
-      "claimed_at": "2026-08-26T09:52:00Z",
       "players": [
         {
           "element_id": 0,
@@ -824,24 +950,6 @@
           "element_id": 180,
           "name": "Woolfenden",
           "club": "COV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "849b9b769f7c6b07",
-      "headline": "Spurs agree loan deal with obligation to buy Marmoush from Man City",
-      "summary": "Tottenham&#160;have agreed a deal to sign&#160;Omar Marmoush&#160;from&#160;Manchester City.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13577289/omar-marmoush-transfer-news-tottenham-agree-deal-to-sign-man-city-forward-on-loan-with-60m-obligation-to-buy",
-      "claimed_at": "2026-08-26T09:27:00Z",
-      "players": [
-        {
-          "element_id": 401,
-          "name": "Marmoush",
-          "club": "MCI",
           "held": null
         }
       ],
@@ -1232,24 +1340,6 @@
       "touches_squad": null
     },
     {
-      "digest": "f920c00e88bbba22",
-      "headline": "Man Utd's midfield spending is done - now for a left-back?",
-      "summary": "After spending \u00a3155m on three midfielders, now Manchester United must decide whether to try to buy a left-back",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/clykngy3gldo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-25T16:03:24Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "c132535f69b93f68",
       "headline": "Man Utd complete signing of Baleba and continue left-back pursuit",
       "summary": "Manchester United have completed the signing of Carlos Baleba from Brighton with the midfielder signing a contract until June 2031, with the option of a further year. The 22-year-old\u2019s arrival, for a fee worth \u00a365m plus \u00a35m in add-ons",
@@ -1264,24 +1354,6 @@
           "club": "MUN",
           "held": null
         },
-        {
-          "element_id": 131,
-          "name": "Baleba",
-          "club": "MUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "01265a309a778ae0",
-      "headline": "Baleba completes \u00a370m Man Utd move from Brighton",
-      "summary": "Manchester United sign Cameroon midfielder Carlos Baleba from Brighton in a \u00a370m deal.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c1mv0rxpd1no?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-25T15:55:56Z",
-      "players": [
         {
           "element_id": 131,
           "name": "Baleba",
@@ -1346,60 +1418,6 @@
           "element_id": 547,
           "name": "Mundle",
           "club": "SUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "c4c4c1fbeef4741c",
-      "headline": "Bournemouth complete goalkeeper signing",
-      "summary": "AFC Bournemouth have signed goalkeeper Michele Di Gregorio from Juventus on a season-long loan. The 29-year-old arrives on the south coast after establishing himself in Serie A and will provide competition for Djordje Petrovic. \u201cI\u2019m very happy to be here,\u201d Di",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/bournemouth-complete-goalkeeper-signing/",
-      "claimed_at": "2026-08-25T13:35:43Z",
-      "players": [
-        {
-          "element_id": 57,
-          "name": "Petrovi\u0107",
-          "club": "BOU",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "aaa95f4faa5e5ba7",
-      "headline": "Man City set for busy end to transfer window with several deals being lined up \u2013 latest transfer reports",
-      "summary": "Manchester City are stepping up their transfer activity with the window approaching its conclusion, while Newcastle have reportedly reached an agreement for Nico Gonzalez. Here are all the latest",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-set-for-busy-end-to-transfer-window-with-several-deals-being-lined-up-latest-transfer-reports/",
-      "claimed_at": "2026-08-25T12:37:30Z",
-      "players": [
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "4f962363b0415808",
-      "headline": "Chelsea confirm latest summer departure with many more to follow before deadline",
-      "summary": "Omari Kellyman has completed a permanent transfer from Chelsea to sister club RC Strasbourg. Kellyman joined Chelsea from Aston Villa in the summer of 2024 and spent last season on loan at Cardiff City, helping the Blue",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/chelsea-confirm-latest-summer-departure-with-many-more-to-follow-before-deadline/",
-      "claimed_at": "2026-08-25T12:22:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1676,24 +1694,6 @@
           "element_id": 557,
           "name": "Tzolis",
           "club": "ARS",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "718fc891e09b3482",
-      "headline": "Arsenal v Coventry team news: No Bruno G, Rice + Saka start",
-      "summary": "\u00a35.0m forward Ellis Simms spearheads the Coventry attack The post Arsenal v Coventry team news: No Bruno G, Rice + Saka start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/arsenal-v-coventry-team-news-no-bruno-g-rice-saka-start",
-      "claimed_at": "2026-08-21T18:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
