@@ -170,7 +170,12 @@ export function kitBackground(kit: Kit): string {
 export function kitStripe(kit: Kit): string {
   const a = kitTone(kit.primary);
   const b = kitTone(kit.secondary);
-  if (kit.pattern === "plain") return a;
+  // ALWAYS a gradient, including for a plain club, and that is not stylistic.
+  // A caller paints this through `background-image`, which cannot take a colour:
+  // a bare hex is simply dropped, so returning one made the rule vanish for the
+  // eleven plain clubs while the four striped ones rendered. Shipped that way —
+  // four of fifteen rows carried a stripe and the feature looked absent.
+  if (kit.pattern === "plain") return `linear-gradient(180deg, ${a} 0 100%)`;
   return `linear-gradient(180deg, ${a} 0 50%, ${b} 50% 100%)`;
 }
 

@@ -179,9 +179,20 @@ describe("a pattern needs area, and degenerates without it", () => {
     expect(stripe).toContain("180deg");
   });
 
-  it("leaves a plain club as a flat colour in both", () => {
-    expect(kitStripe(KITS.CHE)).toBe(KITS.CHE.primary);
+  it("still returns a GRADIENT for a plain club, because the caller paints an image", () => {
+    // This asserted a flat colour and so pinned a real defect: `background-image`
+    // silently drops a bare hex, so the club rule rendered for the four striped
+    // clubs and vanished for the eleven plain ones. Four of fifteen rows.
+    expect(kitStripe(KITS.CHE)).toContain("linear-gradient");
+    expect(kitStripe(KITS.CHE)).toContain(KITS.CHE.primary);
+    // kitBackground is painted through `background`, which DOES take a colour.
     expect(kitBackground(KITS.CHE)).toBe(KITS.CHE.primary);
+  });
+
+  it("gives every one of the twenty clubs a paintable rule", () => {
+    for (const kit of ALL) {
+      expect(kitStripe(kit), `${kit.code} must be a gradient`).toContain("gradient");
+    }
   });
 
   it("draws a sash as a diagonal band", () => {
