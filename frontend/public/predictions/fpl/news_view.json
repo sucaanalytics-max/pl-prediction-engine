@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T05:16:20.928904Z",
-  "n_dropped": 367,
+  "generated_at": "2026-08-26T05:59:46.160491Z",
+  "n_dropped": 366,
   "dropped_by_source": {
-    "bbc_football": 112,
+    "bbc_football": 111,
     "fantasyfootballscout": 15,
     "hayters": 68,
     "sky_football": 172
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 457,
+  "n_articles": 456,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "c9018e2c9102295a",
+      "headline": "Is Joao Pedro ready to break Chelsea's so-called number nine curse?",
+      "summary": "Joao Pedro took just 31 seconds to score his opening goal of the season - will the new number nine reach the 20 he scored last season while wearing the number 20 shirt?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cgk5ydy0vk4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-26T05:41:12Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "2ecb8b200db34d4d",
       "headline": "'Super proud' - Smith wins consecutive PFA young player of the year",
@@ -1149,24 +1167,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "452532490cceed1f",
-      "headline": "Forest working on deal for Chelsea striker Delap",
-      "summary": "Nottingham Forest are working on a deal to sign Chelsea striker Liam Delap.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c8xkl50ylweo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-24T19:12:07Z",
-      "players": [
-        {
-          "element_id": 167,
-          "name": "Delap",
-          "club": "CHE",
           "held": null
         }
       ],
