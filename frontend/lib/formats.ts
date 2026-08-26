@@ -19,35 +19,6 @@ export function xg(value: number): string {
   return value.toFixed(2);
 }
 
-/** Format a date string to "Sat 1 Mar" style */
-export function shortDate(dateStr: string): string {
-  const d = new Date(dateStr);
-  return d.toLocaleDateString("en-GB", {
-    timeZone: DISPLAY_TIME_ZONE,
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-  });
-}
-
-/**
- * Format a date-only API value without allowing the browser timezone to move it
- * into the previous or next day (e.g. "2025-12-30T00:00:00" → "30 Dec 2025").
- */
-export function calendarDate(dateStr: string): string {
-  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateStr);
-  if (!match) return dateStr;
-
-  const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-  ];
-  const monthIndex = Number(match[2]) - 1;
-  if (monthIndex < 0 || monthIndex >= monthNames.length) return dateStr;
-
-  return `${match[3]} ${monthNames[monthIndex]} ${match[1]}`;
-}
-
 /** Format a date string to "15:00" style */
 export function kickoffTime(dateStr: string): string {
   const d = new Date(dateStr);
@@ -114,58 +85,6 @@ export function compactIstDeadline(dateStr: string): string {
     hour12: false,
   }).format(date);
   return `${day} · ${time} IST`;
-}
-
-/** Format a feature name for display (snake_case → Title Case) */
-export function featureName(name: string): string {
-  return name
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-/** Confidence color class based on percentage */
-export function confidenceColor(pct: number): string {
-  if (pct >= 55) return "text-emerald-400";
-  if (pct >= 45) return "text-amber-400";
-  return "text-red-400";
-}
-
-/** Edge color for value bets */
-export function edgeColor(edge: number): string {
-  if (edge >= 0.10) return "text-emerald-400";
-  if (edge >= 0.05) return "text-amber-400";
-  return "text-slate-400";
-}
-
-/** Get result indicator emoji/label */
-export function predictionLabel(pred: string): string {
-  switch (pred) {
-    case "home": return "H";
-    case "draw": return "D";
-    case "away": return "A";
-    default: return pred.toUpperCase();
-  }
-}
-
-/** Probability → implied odds */
-export function impliedOdds(prob: number): string {
-  if (prob <= 0) return "∞";
-  return (1 / prob).toFixed(2);
-}
-
-/** Time since last update */
-export function timeAgo(dateStr: string): string {
-  const now = new Date();
-  const then = new Date(dateStr);
-  const diffMs = now.getTime() - then.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHrs = Math.floor(diffMins / 60);
-  const diffDays = Math.floor(diffHrs / 24);
-
-  if (diffDays > 0) return `${diffDays}d ago`;
-  if (diffHrs > 0) return `${diffHrs}h ago`;
-  if (diffMins > 0) return `${diffMins}m ago`;
-  return "just now";
 }
 
 /**
@@ -247,54 +166,18 @@ export function ageLine(
   return `as at ${when} ${get("hour")}:${get("minute")}`;
 }
 
-/**
- * A deadline written in the zone the deadline itself states.
+/*
+ * What used to be here: the betting surface's formatters.
  *
- * `Fri 21 Aug 2026 · 17:30 UTC` from `2026-08-21T17:30:00+00:00`.
+ * `confidenceColor`, `edgeColor`, `predictionLabel`, `impliedOdds` and
+ * `featureName` dressed a value-bet card and a SHAP waterfall — screens that went
+ * with the single-team cut. `shortDate`, `calendarDate` and `deadlineStamp` were
+ * three more date spellings on top of the four that remain, none with a caller.
  *
- * Deliberately NOT {@link DISPLAY_TIME_ZONE}. Every other timestamp in this app
- * is a reading of something that happened, and the reader's own zone is the right
- * frame for those. An FPL deadline is different: it is published in one zone, it
- * is quoted in that zone everywhere FPL and its community discuss it, and a
- * masthead that renders it as `23:00 IST` invites a reader to check it against a
- * source that says 17:30 and conclude the clock is wrong. So the stamp follows the
- * artifact's own offset, and it names that offset so the figure can be checked.
- *
- * Null when there is no timestamp, when it does not parse, or when it states no
- * zone at all. The last case is the reason this reads the string rather than the
- * `Date`: a naive `2026-08-21T17:30:00` has no zone to be faithful to, and
- * labelling it `UTC` would be an invention on the one figure the whole screen
- * counts down to.
+ * All eight had a test and no reader, which is the shape that keeps a dead module
+ * alive: a green suite over code nothing renders reads as coverage. This file is
+ * now sixteen exports down to eight, and every one of the eight is called from a
+ * screen. `ageLine` was the ninth until this pass wired it — it had a 134-line
+ * dedicated test and zero callers while all three provenance strips rendered the
+ * relative form its own docstring forbids.
  */
-export function deadlineStamp(iso: string | null | undefined): string | null {
-  if (!iso) return null;
-  const at = Date.parse(iso);
-  if (Number.isNaN(at)) return null;
-
-  const zone = /(Z)$|([+-])(\d{2}):?(\d{2})$/.exec(iso.trim());
-  if (!zone) return null;
-
-  const offsetMinutes = zone[1]
-    ? 0
-    : (zone[2] === "-" ? -1 : 1) * (Number(zone[3]) * 60 + Number(zone[4]));
-
-  // Shift the instant and then format it in UTC: that reproduces the wall clock
-  // an observer at the stated offset would read, without asking Intl for a named
-  // zone the artifact never gave us.
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "UTC",
-    weekday: "short", day: "numeric", month: "short", year: "numeric",
-    hour: "2-digit", minute: "2-digit", hour12: false,
-  }).formatToParts(new Date(at + offsetMinutes * 60_000));
-  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
-
-  const sign = offsetMinutes < 0 ? "-" : "+";
-  const abs = Math.abs(offsetMinutes);
-  const label = offsetMinutes === 0
-    ? "UTC"
-    : `UTC${sign}${String(Math.floor(abs / 60)).padStart(2, "0")}:`
-      + `${String(abs % 60).padStart(2, "0")}`;
-
-  return `${get("weekday")} ${get("day")} ${get("month")} ${get("year")} · `
-    + `${get("hour")}:${get("minute")} ${label}`;
-}

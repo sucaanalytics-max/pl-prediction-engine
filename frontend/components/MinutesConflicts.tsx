@@ -129,9 +129,30 @@ export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {
                 </p>
               </div>
 
-              {/* The model's own numbers, so the gap is readable without maths. */}
+              {/* The model's own numbers, so the gap is readable without maths.
+                  `evidenceFixtures` is the one that changes what a reader should DO:
+                  "0 fixtures" says the estimate is last season mean-reverted forward
+                  and one quote can settle it, which is the module's opening case.
+                  "31 fixtures" says the model has watched him and the quote has to
+                  beat real evidence. Null when the artifact predates the field — the
+                  line simply omits it rather than printing a zero it cannot stand
+                  behind. */}
               <p className="text-xs font-mono" style={{ color: "var(--text-3)" }}>
                 {c.eMinutes.toFixed(0)} expected minutes · {c.xp.toFixed(2)} xP
+                {c.evidenceFixtures === null ? null : (
+                  <span
+                    title={
+                      c.evidenceFixtures === 0
+                        ? "No fixtures of his own behind that estimate — it is prior-driven"
+                        : `${c.evidenceFixtures} of his own fixtures behind that estimate`
+                    }
+                  >
+                    {" · "}
+                    {c.evidenceFixtures === 0
+                      ? "prior only"
+                      : `${c.evidenceFixtures} fixtures of evidence`}
+                  </span>
+                )}
               </p>
 
               {/* Verbatim. This is the content. */}

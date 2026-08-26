@@ -31,7 +31,7 @@
 
 import type { Horizon } from "@/lib/data/projections";
 import type { SquadRow } from "@/lib/margin/squad";
-import { DISPLAY, FLOODLIT, MONO, SANS, HEAT, stepOf } from "@/lib/margin/tokens";
+import { FLOODLIT, MONO, SANS, HEAT, stepOf } from "@/lib/margin/tokens";
 import { EYEBROW } from "@/lib/margin/type";
 import { FIXED, HEAT_STEPS, POINT_BANDS, bandOf } from "@/lib/projections/grid";
 import type { Callout } from "@/lib/call/board";
@@ -160,7 +160,12 @@ export function Rail({
                 fontWeight: scale === key ? 600 : 400,
                 background: scale === key ? "rgba(233,238,245,.10)" : "transparent",
                 color: scale === key ? S.ink : S.ink3,
-                borderRight: `1px solid ${S.rule}`, border: 0, cursor: "pointer",
+                // No `border: 0` after this. React assigns style keys in insertion
+                // order, so the shorthand landed last and reset the divider to
+                // none — the two segments read as one box. Tailwind preflight
+                // already zeroes every border, which is why the sibling controls
+                // in PhaseMatrix and StatsTable, which omit it, DO show theirs.
+                borderRight: `1px solid ${S.rule}`, cursor: "pointer",
               }}
             >
               {label}
@@ -197,6 +202,7 @@ export function Rail({
             <div
               key={row.player.elementId ?? row.player.name}
               data-testid="horizon-row"
+              className="dense-row"
               style={{
                 display: "grid", gridTemplateColumns: `84px repeat(${weeks.length}, 1fr)`,
                 gap: 2, marginBottom: 2, alignItems: "center",

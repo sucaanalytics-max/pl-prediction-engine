@@ -320,18 +320,10 @@ export function nameOf(
   return review.names.get(String(element)) ?? null;
 }
 
-/** Every call the forecast says was avoidable, newest gameweek first. */
-export function lessons(
-  review: DecisionReview,
-): readonly { readonly gameweek: number; readonly call: BenchCall }[] {
-  return [...review.gameweeks]
-    .sort((a, b) => b.gameweek - a.gameweek)
-    .flatMap((week) =>
-      week.bench
-        .filter((call) => call.isLesson)
-        .map((call) => ({ gameweek: week.gameweek, call })),
-    );
-}
+// `lessons()` was here: it turned a DecisionReview into prose bullets for a panel
+// that was never built. Nothing imported it. Written speculatively alongside the
+// review artifact and left as the only unreached export in this module, so it read
+// as a contract the UI was already honouring.
 
 export const DECISION_REVIEW: Descriptor<DecisionReview> = {
   key: "decisionReview",

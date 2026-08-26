@@ -37,6 +37,7 @@ frontend has no way to tell which is current — the same failure mode as a stal
 
 from __future__ import annotations
 
+import json
 import logging
 import re
 from datetime import datetime, timezone
@@ -287,12 +288,48 @@ def notable(
     return sorted(rows, key=key)[:limit]
 
 
+def _keep_existing_horizon(
+    view: Dict[str, Any], public_dir: Path,
+) -> Dict[str, Any]:
+    """
+    Carry a published horizon forward when this publisher has none to offer.
+
+    Keyed on the view's own gameweek, so it can only ever read the file it is about
+    to replace. Silent on any failure: an unreadable previous file is not a reason to
+    fail a publish, and the horizon is additive — the page degrades to this week only.
+    """
+    if view.get("horizon") is not None:
+        return view
+    gameweek = view.get("gameweek")
+    if gameweek is None:
+        return view
+    existing = Path(public_dir) / f"xp_public_gw{int(gameweek):02d}.json"
+    try:
+        previous = json.loads(existing.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001 - absent or unreadable is the normal case
+        return view
+    carried = previous.get("horizon")
+    if carried is None:
+        return view
+    merged = dict(view)
+    merged["horizon"] = carried
+    if previous.get("horizon_draws") is not None:
+        merged["horizon_draws"] = previous["horizon_draws"]
+    logger.info(
+        "carried the existing horizon block forward for GW%s — this publisher "
+        "solved none, and dropping it would blank the plan grid", gameweek,
+    )
+    return merged
+
+
 def publish_from_artifact(
     artifact_path: Any,
     bootstrap: Mapping[str, Any],
     public_dir: Path,
     *,
     keep: int = 1,
+    horizon: Optional[Sequence[Mapping[int, float]]] = None,
+    horizon_draws: Optional[int] = None,
 ) -> Optional[Path]:
     """
     Build and write the display view for an xp artifact already on disk.
@@ -315,13 +352,28 @@ def publish_from_artifact(
     Reads the artifact back from disk rather than taking an in-memory object, so what
     the page shows is what actually landed.
 
+    ## The horizon must survive a publisher that does not have one
+
+    Two processes write this file. The AGENT solves a multi-week horizon and passes
+    it; the daily PIPELINE does not solve one and has nothing to pass. This function
+    had no horizon parameter at all, and a comment in `run_pipeline` asserted the two
+    publishers "cannot disagree: it is a pure function of an artifact neither of them
+    mutates". That was false — they disagree on SCHEMA. The agent published a view
+    with a `horizon` block, the next daily run overwrote it with one that had none,
+    and the frontend's whole plan grid reads that block.
+
+    So the parameters exist here (identical to `build`'s, so the two callers cannot
+    produce different shapes from the same source), and a publisher without a horizon
+    does not DELETE one: if the file on disk already carries a `horizon` and this call
+    has none, the existing block is carried forward. Dropping it would be a silent
+    downgrade of the richest thing the repo computes, performed by the process least
+    likely to notice.
+
     Non-fatal by design: a projection that has been computed and validated must not
     be lost because the display copy of it failed. Returns the path written, or None.
     """
-    import json as _json
-
     try:
-        artifact = _json.loads(Path(artifact_path).read_text(encoding="utf-8"))
+        artifact = json.loads(Path(artifact_path).read_text(encoding="utf-8"))
     except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
         logger.warning("could not read the xp artifact at %s: %s", artifact_path, exc)
         return None
@@ -342,7 +394,11 @@ def publish_from_artifact(
             names,
             generated_at=datetime.now(timezone.utc)
             .isoformat().replace("+00:00", "Z"),
+            horizon=horizon,
+            horizon_draws=horizon_draws,
         )
+        if horizon is None:
+            view = _keep_existing_horizon(view, Path(public_dir))
         written = write(view, Path(public_dir))
         # Prune AFTER writing, and strictly-before the current gameweek. A prune that
         # deleted its own output would leave the page with nothing.

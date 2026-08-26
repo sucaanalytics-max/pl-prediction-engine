@@ -122,7 +122,9 @@ function Tile({
         textAlign: "left",
         background: benched ? "rgba(233,238,245,.03)" : S.bar,
         border: `1px solid ${isCaptain ? S.brand : S.hair}`,
-        opacity: benched ? 0.72 : 1,
+        // No bench dim — see the note in `Eleven.tsx`. Measured at 3.40:1 for
+        // every ink3 figure in a benched row, and the bench strip is already its
+        // own labelled region.
         cursor: "pointer",
         fontFamily: SANS,
         color: S.ink,
@@ -255,7 +257,12 @@ export function Pitch({
                 fontWeight: mode === key ? 600 : 400,
                 background: mode === key ? "rgba(233,238,245,.10)" : "transparent",
                 color: mode === key ? S.ink : S.ink3,
-                borderRight: `1px solid ${S.rule}`, border: 0, cursor: "pointer",
+                // No `border: 0` after this. React assigns style keys in insertion
+                // order, so the shorthand landed last and reset the divider to
+                // none — the two segments read as one box. Tailwind preflight
+                // already zeroes every border, which is why the sibling controls
+                // in PhaseMatrix and StatsTable, which omit it, DO show theirs.
+                borderRight: `1px solid ${S.rule}`, cursor: "pointer",
               }}
             >
               {label}

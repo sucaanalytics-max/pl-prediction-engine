@@ -2,9 +2,24 @@
  * The typographic roles, as the artboards set them.
  *
  * A new file rather than more constants in `tokens.ts`, because these are not
- * colours: they are the two or three type treatments every screen repeats, and
- * having them in one place is what stops the ninth copy of an eyebrow drifting to
- * 10px and weight 700.
+ * colours: they are the type treatments every screen repeats, and having them in
+ * one place is what stops the ninth copy of an eyebrow drifting to 10px and
+ * weight 700.
+ *
+ * ## What used to be here
+ *
+ * `FIGURE`, `DENSITY` and `chipStyle` are gone. All three had zero callers: the
+ * segmented control was reimplemented inline in four places instead of importing
+ * the helper, and the inline copies drifted (4px padding against the helper's 5px)
+ * — which is precisely the failure this file's own docstring was written to
+ * prevent. The helper was written and never adopted, so it guarded nothing while
+ * looking like it did, and one of its lines carried a live bug: `borderRight`
+ * followed by `border: 0` in the same object, which React applies in order, so
+ * the divider never drew.
+ *
+ * Deleted rather than adopted because adopting it is a real consolidation of five
+ * controls and belongs in its own change. Removing the unused twin is what stops
+ * a reader believing the consolidation already happened.
  *
  * ## Why the eyebrow is not mono
  *
@@ -21,7 +36,7 @@
  * is a word — including words in small caps pretending to be apparatus.
  */
 
-import { MONO, SANS } from "@/lib/margin/tokens";
+import { SANS } from "@/lib/margin/tokens";
 
 /**
  * The small tracked uppercase label above a block.
@@ -40,44 +55,28 @@ export const EYEBROW = {
   textTransform: "uppercase",
 } as const;
 
-/** A figure in a column: mono, tabular, never above weight 500. */
-export const FIGURE = {
-  fontFamily: MONO,
-  fontVariantNumeric: "tabular-nums",
-} as const;
-
 /**
- * Density, from the artboards.
+ * A column header. 11px, because it is the only thing saying what a column means.
  *
- * Named rather than inlined because the four control bars on four screens were
- * each a slightly different height, and a reader moving between them saw the
- * chrome shift under a layout that had not changed.
+ * Separate from {@link EYEBROW} rather than a variant of it, and the split is the
+ * point: EYEBROW's exemption from the 11px floor rests on being REDUNDANT with the
+ * figure beneath it, and a column header is the opposite — strip it and a column of
+ * numbers means nothing. `legibility.test.ts` said so in prose ("those are being
+ * moved to 11px rather than exempted") while `Eleven.tsx` spread EYEBROW into all
+ * eight of its headers, so nine labels sat at 9px under a comment promising 11.
+ *
+ * Two deliberate differences beyond the size:
+ *
+ * - Tracking drops .15em → .04em. An eyebrow is tracked out so a lone word reads as
+ *   apparatus; a column header is already apparatus by POSITION. Tracking is also
+ *   what makes it fit: `Pos` sits in a 34px column and `Mins` in a 44px one, and at
+ *   .15em they overrun their content boxes at 11px.
+ * - No `textTransform`. `xP` and `q25–q75` are terms of art whose case carries
+ *   meaning — uppercased they read as `XP` (experience points) and `Q25–Q75`.
  */
-export const DENSITY = {
-  /** A control bar's padding. */
-  bar: "11px 16px",
-  /** A chip inside a segmented control. */
-  chip: "5px 9px",
-  /** The footer note block. */
-  footer: "14px 16px",
-  /** Between footer note columns. */
-  footerGap: 32,
-  /** A grid row on a dense table. */
-  row: 42,
-  /** A cell on the phase matrix, which is denser still. */
-  cell: 26,
+export const COLUMN_HEAD = {
+  fontFamily: SANS,
+  fontSize: 11,
+  fontWeight: 650,
+  letterSpacing: ".04em",
 } as const;
-
-/** The chip style for a segmented control, active or not. */
-export function chipStyle(active: boolean, rule: string, ink: string, ink3: string) {
-  return {
-    padding: DENSITY.chip,
-    fontSize: 10.5,
-    fontWeight: active ? 600 : 400,
-    background: active ? "rgba(233,238,245,.10)" : "transparent",
-    color: active ? ink : ink3,
-    borderRight: `1px solid ${rule}`,
-    border: 0,
-    cursor: "pointer",
-  } as const;
-}

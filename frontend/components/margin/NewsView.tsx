@@ -32,6 +32,24 @@
  * instead of merely suffered.
  */
 
+/*
+ * NO CONTAINER OPACITY ON TEXT IN THIS FILE.
+ *
+ * Every quiet tone here came from `color: S.ink` plus an invented `opacity` — .85,
+ * .6, .55, .5, .45, .4, .35 — which multiplies the composited colour and so sets a
+ * contrast nobody measured. Measured in the browser on `/evidence`: 262 text nodes
+ * were painted under a container opacity and 95 of them failed WCAG 1.4.3, the
+ * worst at 2.45:1 against a 4.5:1 floor for 10px text.
+ *
+ * The palette has exactly three legible text tiers — ink 16.37:1, ink2 8.73:1,
+ * ink3 5.50:1 — and a fourth invented one is how this happened. So: pick a tier.
+ * Two levels collapse into ink3 where the file previously had three, which is the
+ * right trade: a distinction the reader cannot legibly see is not a distinction.
+ *
+ * `legibility.test.ts` rule 3 forbids the pattern and scanned only `HeatGrid.tsx`
+ * until this pass, which is why it never saw any of this.
+ */
+
 import { useMemo, useState } from "react";
 import { proven } from "@/lib/data/artifact";
 import { NEWS_FEED, type NewsFeed, type NewsItem } from "@/lib/data/news-feed";
@@ -111,10 +129,10 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
     >
       <div style={{ display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap" }}>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".08em",
-                       textTransform: "uppercase", color: S.ink, opacity: .55 }}>
+                       textTransform: "uppercase", color: S.ink3 }}>
           {sourceLabel(item.source)}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink, opacity: .35 }}>
+        <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
           {ago(item.claimedAt)}
         </span>
         {hits.length ? (
@@ -144,7 +162,7 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
           style={{
             alignSelf: "flex-start", fontFamily: MONO, fontSize: 10,
             textTransform: "uppercase", letterSpacing: ".08em", cursor: "pointer",
-            background: "transparent", color: S.ink, opacity: .55,
+            background: "transparent", color: S.ink3,
             border: `1px solid ${S.hair}`, padding: "2px 7px",
           }}
         >
@@ -163,7 +181,7 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
           ) : null}
           {body.paragraphs.map((paragraph, i) => (
             <p key={i} style={{ margin: 0, fontFamily: SANS, fontSize: 13,
-                                lineHeight: 1.6, color: S.ink, opacity: .85,
+                                lineHeight: 1.6, color: S.ink2,
                                 maxWidth: "68ch" }}>
               {paragraph}
             </p>
@@ -183,7 +201,7 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
           data-testid="news-summary"
           style={{
             margin: 0, fontFamily: SANS, fontSize: 12, lineHeight: 1.5,
-            color: S.ink, opacity: .6, maxWidth: "68ch",
+            color: S.ink3, maxWidth: "68ch",
           }}
         >
           {item.summary}
@@ -289,7 +307,7 @@ export function NewsView() {
         {artifact.state === "stale" ? (
           <MarginState of={artifact} what="this reading list" surface={S} compact />
         ) : null}
-        <p style={{ margin: 0, fontFamily: MONO, fontSize: 11, color: S.ink, opacity: .55 }}>
+        <p style={{ margin: 0, fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           {shown.length === feed.items.length
             ? `${feed.items.length}`
             : `${shown.length} of ${feed.items.length}`}{" "}
@@ -318,8 +336,10 @@ export function NewsView() {
             fontFamily: MONO, fontSize: 10, textTransform: "uppercase", letterSpacing: ".08em",
             padding: "3px 8px", cursor: squadKnown ? "pointer" : "not-allowed",
             background: onlyMine ? S.agree : "transparent",
-            color: onlyMine ? S.shell : S.ink,
-            opacity: squadKnown ? 1 : .35,
+            // Pressed: ink on the agreement fill. Unpressed and unavailable:
+            // ink3, which is the "not actionable" tier and is still legible at
+            // 5.50:1 — it was `opacity: .35`, which painted 2.91:1.
+            color: onlyMine ? S.shell : squadKnown ? S.ink : S.ink3,
             border: `1px solid ${onlyMine ? S.agree : S.hair}`,
           }}
         >
@@ -334,12 +354,16 @@ export function NewsView() {
             style={{
               fontFamily: MONO, fontSize: 10, padding: "3px 8px", cursor: "pointer",
               background: source === name ? S.ink : "transparent",
-              color: source === name ? S.shell : S.ink,
-              opacity: source === name ? 1 : PREFERRED.has(name) ? .85 : .5,
+              // Selected reverses onto the shell; the rest split across the two
+              // quiet tiers so a preferred source still reads louder than the
+              // others without either dropping under the floor.
+              color: source === name
+                ? S.shell
+                : PREFERRED.has(name) ? S.ink2 : S.ink3,
               border: `1px solid ${source === name ? S.ink : S.hair}`,
             }}
           >
-            {sourceLabel(name)} <span style={{ opacity: .6 }}>{n}</span>
+            {sourceLabel(name)} <span style={{ color: S.ink3 }}>{n}</span>
           </button>
         ))}
       </div>
@@ -356,7 +380,7 @@ export function NewsView() {
 
       {feed.basis ? (
         <p style={{ margin: 0, fontFamily: SANS, fontSize: 11.5, lineHeight: 1.5,
-                    color: S.ink, opacity: .45, maxWidth: "60ch" }}>
+                    color: S.ink3, maxWidth: "60ch" }}>
           {feed.basis}
         </p>
       ) : null}

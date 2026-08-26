@@ -320,7 +320,6 @@ describe("the state of the app, stated plainly", () => {
      */
     const descriptor = REGISTRY.decisionReview;
     const emptyByConstruction = classify({
-      descriptor,
       path: descriptor.path,
       source: "local",
       raw: {

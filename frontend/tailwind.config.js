@@ -8,26 +8,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        pitch: {
-          50: '#f0fdf0',
-          100: '#d9f7d6',
-          200: '#b3efac',
-          300: '#7de070',
-          400: '#4bc83e',
-          500: '#10b981', // Mapped to our new Electric Emerald
-          600: '#059669',
-          700: '#196e13',
-          800: '#185714',
-          900: '#154812',
-          950: '#052706',
-        },
-        slate: {
-          850: '#172032',
-          925: '#0d1420',
-          950: '#050b14', // Mapped to the new deep cyber dark
-        },
-      },
+      // No `colors` block. The twelve-shade `pitch` palette and the three `slate`
+      // overrides were the previous theme's; no utility referenced any of them, and
+      // two of the fifteen still carried their conversion notes ("Electric
+      // Emerald", "the new deep cyber dark"). Colour in this app comes from the
+      // custom properties in `globals.css` and the surface tokens in
+      // `lib/margin/tokens.ts` — a second, unreachable palette in the build config
+      // is how a screen ends up half on each.
+      //
       // `--font-jakarta` no longer exists — the app is set in IBM Plex — so
       // `font-display` and `font-body` were resolving to system-ui wherever they
       // were used. Pointed at the tokens `globals.css` actually defines.
@@ -36,26 +24,17 @@ module.exports = {
         body: ['var(--font-body)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
-      animation: {
-        'fade-in': 'fadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
-        'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        'pulse-glow': 'pulseGlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'spin-slow': 'spin 4s linear infinite',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0', filter: 'blur(10px)' },
-          '100%': { opacity: '1', filter: 'blur(0)' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)', filter: 'blur(5px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)', filter: 'blur(0)' },
-        },
-        pulseGlow: {
-          '0%, 100%': { opacity: '1', filter: 'brightness(1)' },
-          '50%': { opacity: '0.8', filter: 'brightness(1.5) drop-shadow(0 0 15px rgba(0,255,163,0.5))' },
-        },
-      },
+      // No `animation`/`keyframes` block either.
+      //
+      // `fade-in`, `pulse-glow` and `spin-slow` had no user, and `pulseGlow` still
+      // carried `drop-shadow(0 0 15px rgba(0,255,163,0.5))` — the neon this app's
+      // own stylesheet header removed on the grounds that "a glow is a claim".
+      //
+      // `slide-up` DID have a user (`app/offline/page.tsx`) and that is exactly why
+      // it goes: `globals.css` defines both `@keyframes slide-up` and
+      // `.animate-slide-up` itself, so two rules of equal specificity were fighting
+      // over one class name and which won depended on stylesheet order. One
+      // definition, in the file that owns the animation.
     },
   },
   plugins: [],

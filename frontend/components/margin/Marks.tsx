@@ -32,7 +32,8 @@
  */
 
 import type { CSSProperties, ReactNode } from "react";
-import { describeAge, isStale, proven, type Artifact } from "@/lib/data/artifact";
+import { isStale, proven, type Artifact } from "@/lib/data/artifact";
+import { ageLine } from "@/lib/formats";
 import {
   geometry, SCALE_HI, SCALE_LO, type DistributionInput,
 } from "@/lib/margin/distribution";
@@ -140,7 +141,7 @@ export function Age<T>({ of, surface }: { of: Artifact<T>; surface: MarginSurfac
   const stale = isStale(of);
   return (
     <span
-      title={`produced ${describeAge(ageMs)} ago`}
+      title={ageLine(of.provenance.producedAt) ?? "produced at an unknown time"}
       style={{
         fontFamily: MONO,
         // 11 is the floor. This mark states how old a figure is, which is the one thing

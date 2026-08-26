@@ -24,8 +24,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type { } from "@/lib/data/heuristics";
-import type { Projection } from "@/lib/data/projections";
+
 
 /** Six weeks of run for every squad player, so the grid has cells to draw. */
 const RUN = [1, 2, 3, 4, 5, 6].map((gameweek) => ({

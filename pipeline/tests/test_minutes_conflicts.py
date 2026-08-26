@@ -329,3 +329,106 @@ class TheWiringThatPublishesIt(unittest.TestCase):
 
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
+
+
+class TestEvidenceFixtures(unittest.TestCase):
+    """
+    A fringe row must say WHY the model thinks the player is fringe.
+
+    `RoleProbabilities.evidence_fixtures` carries the count and its own comment says
+    "the optimiser must not treat a prior-only projection as equal to an
+    evidence-backed one". The count was computed one module earlier and dropped
+    before the artifact, so this report classified fringe players by expected minutes
+    alone — a prior-only 20 minutes and a thirty-fixture 20 minutes were the same
+    row. The case at the top of the module is the first kind: Gvardiol's 14.3 was
+    last season mean-reverted forward, and the report could not say so.
+    """
+
+    def _gvardiol(self, evidence):
+        players = [dict(p) for p in XP["players"]]
+        for player in players:
+            if player["element_id"] == 10 and evidence is not None:
+                player["evidence_fixtures"] = evidence
+        found, _ = mc.find_conflicts(
+            {"players": players}, inbox(GVARDIOL), BOOTSTRAP,
+        )
+        return next(c for c in found if c.element_id == 10)
+
+    def test_a_prior_only_estimate_reports_zero(self):
+        self.assertEqual(self._gvardiol(0).evidence_fixtures, 0)
+
+    def test_an_evidence_backed_estimate_reports_its_count(self):
+        self.assertEqual(self._gvardiol(31).evidence_fixtures, 31)
+
+    def test_an_older_artifact_reports_unknown_not_zero(self):
+        # -1, not 0. Zero is a real answer meaning "no evidence" and must not be
+        # indistinguishable from "this file cannot tell you" — otherwise every
+        # projection written before the field looks maximally suspicious.
+        self.assertEqual(self._gvardiol(None).evidence_fixtures, -1)
+
+    def test_it_reaches_the_artifact(self):
+        conflict = self._gvardiol(0)
+        art = mc.to_artifact([conflict], {}, generated_at="2026-08-26T00:00:00Z")
+        self.assertEqual(art["conflicts"][0]["evidence_fixtures"], 0)
+        self.assertIn("prior-driven", art["evidence_fixtures_note"])
+
+
+class TestAttentionOrder(unittest.TestCase):
+    """
+    Prior-only fringe rows lead the reading list.
+
+    Reading one quote can settle an assumption. It usually cannot settle a
+    disagreement between thirty of the player's own fixtures and a sentence.
+
+    Its own bootstrap, because BOOTSTRAP's elements 12 and 13 are the ambiguous
+    Wilsons — deliberately refused and never resolved to a guess, so they can never
+    appear as conflicts and cannot order anything. Two unambiguous surnames at the
+    SAME expected minutes is the only arrangement where gap is tied and the evidence
+    count is the sole tiebreak.
+    """
+
+    BOOTSTRAP = {
+        "teams": [{"id": 1, "name": "Man City"}, {"id": 2, "name": "Brighton"}],
+        "elements": [
+            {"id": 20, "second_name": "Lewis", "web_name": "Lewis", "team": 1,
+             "code": 2020},
+            {"id": 21, "second_name": "Minteh", "web_name": "Minteh", "team": 2,
+             "code": 2021},
+        ],
+    }
+    TEXT = "Lewis and Minteh both featured for their clubs at the weekend."
+
+    def _order(self, lewis_evidence, minteh_evidence):
+        artifact = {"players": [
+            {"element_id": 20, "e_minutes": 20.0, "xp": 1.0,
+             "evidence_fixtures": lewis_evidence},
+            {"element_id": 21, "e_minutes": 20.0, "xp": 1.0,
+             "evidence_fixtures": minteh_evidence},
+        ]}
+        found, _ = mc.find_conflicts(artifact, inbox(self.TEXT), self.BOOTSTRAP)
+        return [c.element_id for c in found]
+
+    def test_both_players_are_found_at_all(self):
+        # Without this the ordering assertions below could pass on an empty list,
+        # which is exactly how the first version of them passed vacuously.
+        self.assertEqual(sorted(self._order(0, 0)), [20, 21])
+
+    def test_the_prior_only_row_leads_at_equal_gap(self):
+        self.assertEqual(self._order(31, 0)[0], 21)
+        self.assertEqual(self._order(0, 31)[0], 20)
+
+    def test_unknown_is_not_promoted_like_zero(self):
+        # -1 sorts with the evidence-backed rows. Treating unknown as prior-only
+        # would put every pre-field projection at the top of the list.
+        self.assertEqual(self._order(-1, 0)[0], 21)
+        self.assertEqual(self._order(0, -1)[0], 20)
+
+    def test_gap_still_decides_when_evidence_matches(self):
+        # Evidence is the FIRST key, not the only one: with both prior-only, the
+        # wider disagreement must still lead.
+        artifact = {"players": [
+            {"element_id": 20, "e_minutes": 5.0, "xp": 0.3, "evidence_fixtures": 0},
+            {"element_id": 21, "e_minutes": 25.0, "xp": 1.2, "evidence_fixtures": 0},
+        ]}
+        found, _ = mc.find_conflicts(artifact, inbox(self.TEXT), self.BOOTSTRAP)
+        self.assertEqual([c.element_id for c in found], [20, 21])

@@ -257,7 +257,12 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
                     fontWeight: view === key ? 600 : 400,
                     background: view === key ? "rgba(233,238,245,.10)" : "transparent",
                     color: view === key ? S.ink : S.ink3,
-                    borderRight: `1px solid ${S.rule}`, border: 0, cursor: "pointer",
+                    // No `border: 0` after this. React assigns style keys in insertion
+                // order, so the shorthand landed last and reset the divider to
+                // none — the two segments read as one box. Tailwind preflight
+                // already zeroes every border, which is why the sibling controls
+                // in PhaseMatrix and StatsTable, which omit it, DO show theirs.
+                borderRight: `1px solid ${S.rule}`, cursor: "pointer",
                   }}
                 >
                   {label}

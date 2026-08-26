@@ -255,18 +255,7 @@ export function stepOf(
   return ramp[Math.max(0, Math.min(ramp.length - 1, Math.round(band)))];
 }
 
-/** The rail beside the decision — one step off the shell, not a card. */
-export const RAIL_BG = "#181711";
 
-/**
- * What a club colour is mixed toward on paper, so twenty kit hues can sit in one
- * table without twenty of them shouting.
- *
- * Paper only, and there is no ink equivalent by design: on black a kit colour is
- * already reading against a dark ground and mixing it toward a light target
- * would invert the very identity the mark exists to carry.
- */
-export const KIT_MIX_TARGET = "#f0eee8";
 
 /**
  * The hatch used wherever a cell has no view at all.

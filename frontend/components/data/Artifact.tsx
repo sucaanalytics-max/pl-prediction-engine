@@ -21,8 +21,9 @@
  */
 
 import type { ReactNode } from "react";
+import { ageLine } from "@/lib/formats";
 import {
-  describeAge, describeProducer, isStale, proven,
+  describeProducer, isStale, proven,
   type Artifact,
 } from "@/lib/data/artifact";
 
@@ -154,7 +155,7 @@ export function ProvenanceStrip<T>({
   of: Artifact<T>;
   showSource?: boolean;
 }) {
-  const { producedAt, ageMs, source } = of.provenance;
+  const { producedAt, source } = of.provenance;
   const stale = isStale(of);
   return (
     <p
@@ -162,9 +163,14 @@ export function ProvenanceStrip<T>({
       style={{ color: stale ? "var(--warning)" : "var(--text-3)" }}
       data-testid="provenance"
     >
-      {producedAt
-        ? `updated ${describeAge(ageMs ?? 0)} ago`
-        : "update time unknown"}
+      {/* `ageLine`, not `describeAge`. Beyond a day `describeAge` returns "3 days",
+          and "3 days" is a relative claim the reader cannot check — three days from
+          when? `ageLine` switches to `as at Tue 06:30`, which can be checked against
+          the last deadline. It was written for this line, given its own 134-line
+          test, and then never called: all three provenance renders kept the form it
+          exists to replace. It returns null on a missing or unparseable stamp, which
+          is exactly the branch this ternary already wanted. */}
+      {ageLine(producedAt) ?? "update time unknown"}
       {" · "}
       {/* "version unknown" rather than a reassuring blank: a writer that emits no
           version is one we cannot vouch for. */}

@@ -3,17 +3,9 @@ import {
   pct,
   odds,
   xg,
-  featureName,
-  impliedOdds,
-  confidenceColor,
-  edgeColor,
-  predictionLabel,
-  calendarDate,
   compactIstDeadline,
   istDateTime,
   kickoffTime,
-  shortDate,
-  deadlineStamp,
 } from "./formats";
 
 describe("pct", () => {
@@ -78,17 +70,6 @@ describe("xg", () => {
   });
 });
 
-describe("calendarDate", () => {
-  it("keeps a date-only fixture on the supplied calendar day", () => {
-    expect(calendarDate("2025-12-30T00:00:00")).toBe("30 Dec 2025");
-  });
-
-  it("returns malformed values unchanged", () => {
-    expect(calendarDate("unknown")).toBe("unknown");
-    expect(calendarDate("2025-13-01")).toBe("2025-13-01");
-  });
-});
-
 describe("Kolkata time formatting", () => {
   it("converts UTC kickoffs to IST and labels the timezone", () => {
     expect(kickoffTime("2026-08-21T17:30:00Z")).toBe("23:00 IST");
@@ -98,8 +79,11 @@ describe("Kolkata time formatting", () => {
   });
 
   it("moves post-midnight IST fixtures onto the correct Kolkata date", () => {
+    // The 20:30Z kickoff is 02:00 the NEXT day in Kolkata, which is the whole
+    // reason these formatters exist rather than a toLocaleString call at the point
+    // of use. `shortDate` used to be asserted here too and is gone with the rest of
+    // the unused date spellings; `istDateTime` carries the date now.
     const timestamp = "2026-08-21T20:30:00Z";
-    expect(shortDate(timestamp)).toBe("Sat 22 Aug");
     expect(kickoffTime(timestamp)).toBe("02:00 IST");
     expect(istDateTime(timestamp)).toContain("22 Aug 2026");
     expect(istDateTime(timestamp)).toContain("02:00 IST");
@@ -162,162 +146,3 @@ describe("compactIstDeadline invents nothing", () => {
   });
 });
 
-describe("featureName", () => {
-  it("converts snake_case to Title Case", () => {
-    expect(featureName("home_form")).toBe("Home Form");
-  });
-
-  it("converts multi-word snake_case", () => {
-    expect(featureName("xg_difference_last_5")).toBe("Xg Difference Last 5");
-  });
-
-  it("handles single word without underscores", () => {
-    expect(featureName("momentum")).toBe("Momentum");
-  });
-
-  it("capitalizes each word", () => {
-    expect(featureName("goals_scored")).toBe("Goals Scored");
-  });
-
-  it("handles already-spaced names", () => {
-    expect(featureName("home goal")).toBe("Home Goal");
-  });
-});
-
-describe("impliedOdds", () => {
-  it("returns '2.00' for probability 0.5", () => {
-    expect(impliedOdds(0.5)).toBe("2.00");
-  });
-
-  it("returns '4.00' for probability 0.25", () => {
-    expect(impliedOdds(0.25)).toBe("4.00");
-  });
-
-  it("returns '1.00' for probability 1.0", () => {
-    expect(impliedOdds(1)).toBe("1.00");
-  });
-
-  it("returns '∞' for probability 0", () => {
-    expect(impliedOdds(0)).toBe("∞");
-  });
-
-  it("returns '∞' for negative probability", () => {
-    expect(impliedOdds(-0.1)).toBe("∞");
-  });
-});
-
-describe("confidenceColor", () => {
-  it("returns emerald for pct exactly 55", () => {
-    expect(confidenceColor(55)).toBe("text-emerald-400");
-  });
-
-  it("returns emerald for pct above 55", () => {
-    expect(confidenceColor(70)).toBe("text-emerald-400");
-  });
-
-  it("returns amber for pct exactly 45", () => {
-    expect(confidenceColor(45)).toBe("text-amber-400");
-  });
-
-  it("returns amber for pct between 45 and 54", () => {
-    expect(confidenceColor(50)).toBe("text-amber-400");
-  });
-
-  it("returns red for pct exactly 44", () => {
-    expect(confidenceColor(44)).toBe("text-red-400");
-  });
-
-  it("returns red for pct of 0", () => {
-    expect(confidenceColor(0)).toBe("text-red-400");
-  });
-});
-
-describe("edgeColor", () => {
-  it("returns emerald for edge exactly 0.10", () => {
-    expect(edgeColor(0.10)).toBe("text-emerald-400");
-  });
-
-  it("returns emerald for edge above 0.10", () => {
-    expect(edgeColor(0.15)).toBe("text-emerald-400");
-  });
-
-  it("returns amber for edge exactly 0.05", () => {
-    expect(edgeColor(0.05)).toBe("text-amber-400");
-  });
-
-  it("returns amber for edge between 0.05 and 0.09", () => {
-    expect(edgeColor(0.07)).toBe("text-amber-400");
-  });
-
-  it("returns slate for edge below 0.05", () => {
-    expect(edgeColor(0.04)).toBe("text-slate-400");
-  });
-
-  it("returns slate for edge of 0", () => {
-    expect(edgeColor(0)).toBe("text-slate-400");
-  });
-});
-
-describe("predictionLabel", () => {
-  it("maps 'home' to 'H'", () => {
-    expect(predictionLabel("home")).toBe("H");
-  });
-
-  it("maps 'draw' to 'D'", () => {
-    expect(predictionLabel("draw")).toBe("D");
-  });
-
-  it("maps 'away' to 'A'", () => {
-    expect(predictionLabel("away")).toBe("A");
-  });
-
-  it("uppercases unknown predictions", () => {
-    expect(predictionLabel("other")).toBe("OTHER");
-  });
-
-  it("handles empty string", () => {
-    expect(predictionLabel("")).toBe("");
-  });
-});
-
-describe("deadlineStamp", () => {
-  /**
-   * The masthead's sub-line, and why it is not in the reader's own zone.
-   *
-   * An FPL deadline is published in one zone and quoted in that zone everywhere it
-   * is discussed. Rendering it as `23:00 IST` invites a reader to check it against
-   * a source that says 17:30 and conclude the clock is wrong.
-   */
-  it("writes the deadline in the zone the deadline states", () => {
-    expect(deadlineStamp("2026-08-21T17:30:00+00:00"))
-      .toBe("Fri 21 Aug 2026 · 17:30 UTC");
-  });
-
-  it("treats a Z suffix as the same stated zone", () => {
-    expect(deadlineStamp("2026-08-21T17:30:00Z"))
-      .toBe("Fri 21 Aug 2026 · 17:30 UTC");
-  });
-
-  it("keeps a non-zero offset's own wall clock and names it", () => {
-    expect(deadlineStamp("2026-08-21T23:00:00+05:30"))
-      .toBe("Fri 21 Aug 2026 · 23:00 UTC+05:30");
-  });
-
-  it("handles an offset without a colon", () => {
-    expect(deadlineStamp("2026-08-21T13:30:00-0400"))
-      .toBe("Fri 21 Aug 2026 · 13:30 UTC-04:00");
-  });
-
-  it("refuses a timestamp that states no zone", () => {
-    // There is nothing to be faithful to, and labelling it UTC would be an
-    // invention on the one figure the whole screen counts down to.
-    expect(deadlineStamp("2026-08-21T17:30:00")).toBeNull();
-  });
-
-  it("refuses an unparseable or absent value rather than returning NaN", () => {
-    expect(deadlineStamp("")).toBeNull();
-    expect(deadlineStamp(null)).toBeNull();
-    expect(deadlineStamp(undefined)).toBeNull();
-    expect(deadlineStamp("not a date")).toBeNull();
-  });
-});

@@ -60,6 +60,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence
 
+from pipeline.config import X_SCAN_MAX_AGE_DAYS
+
 from pipeline.data.news_extract import fold
 from pipeline.data.x_relevance import (
     GATE_VERSION, is_football_relevant, trusted_handles,
@@ -256,7 +258,7 @@ def to_items(
     source: str,
     club: Optional[str] = None,
     now: Optional[datetime] = None,
-    max_age_days: int = 3,
+    max_age_days: int = X_SCAN_MAX_AGE_DAYS,
     trusted: Optional[Iterable[str]] = None,
 ) -> List[Dict[str, Any]]:
     """
@@ -512,7 +514,7 @@ def write_inbox(path: Path, csv_text: str) -> Path:
 
 
 def ingest(raw: Any, *, source: str, club: Optional[str], predictions_dir: Path,
-           now: Optional[datetime] = None, max_age_days: int = 3) -> int:
+           now: Optional[datetime] = None, max_age_days: int = X_SCAN_MAX_AGE_DAYS) -> int:
     """
     Merge one browser scan into the inbox. Returns the row count afterwards.
 
@@ -559,7 +561,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--club", default=None,
                         help="pin every row to one club; omit to detect per post")
     parser.add_argument("--predictions-dir", default="predictions")
-    parser.add_argument("--max-age-days", type=int, default=3)
+    parser.add_argument("--max-age-days", type=int, default=X_SCAN_MAX_AGE_DAYS)
     args = parser.parse_args(argv)
 
     # Turn the records on. Without this the whole refusal tally is written to a

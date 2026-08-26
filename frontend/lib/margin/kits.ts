@@ -7,9 +7,12 @@
  * "delete the 21 modules only the cut routes reached" — not judged and cut, but
  * swept up, because its only importer was `components/squad/SquadRow.tsx` and that
  * whole directory became unreachable when a route was removed. Two orphans in the
- * live tree recorded the loss without anyone reading them: `KIT_MIX_TARGET` still
- * exported from `tokens.ts` and asserted by `tokens.test.ts`, imported by nothing;
- * and `surfaceIsLight()`'s docstring still naming "the kit mark" as a caller.
+ * live tree recorded the loss without anyone reading them: `KIT_MIX_TARGET`, still
+ * exported from `tokens.ts` and asserted by `tokens.test.ts` but imported by
+ * nothing; and `surfaceIsLight()`'s docstring, still naming "the kit mark" as a
+ * caller. The token has since been deleted — this file muted the three white
+ * shirts with {@link KIT_CEILING} instead, mixing toward the DARK shell, which is
+ * the surface that actually exists.
  *
  * It lives HERE, beside the palette, rather than back under `components/`, because
  * the directory was the whole cause: a token next to `tokens.ts` cannot be orphaned
@@ -53,6 +56,8 @@
  * for text this size. So the operative rule, and the reason `Kit` has no `ink`
  * field: **club colour paints geometry and never sits behind type.**
  */
+
+import { FLOODLIT } from "@/lib/margin/tokens";
 
 /** Plain, vertically striped, or a diagonal sash. Enough to separate the reds. */
 export type KitPattern = "plain" | "stripes" | "sash";
@@ -122,12 +127,18 @@ export const KIT_CEILING = 0.84;
  * the surface hairline, `rgba(233,238,245,.075)`, which composites to 1.18:1 — an
  * invisible outline around an invisible shirt.
  *
- * `ink3`'s composite is 3.21:1, which is what `legibility.test.ts` certifies at the
- * 3:1 floor for a non-text graphical object. Club-independent by design: the
- * SHAPE is then guaranteed legible whatever the fill does, which is the property a
- * per-club outline could never promise.
+ * A REFERENCE to `FLOODLIT.ink3`, not a copy of its value. It shipped as the literal
+ * `rgba(233, 238, 245, 0.38)` with a docstring calling it "a fixed ink3 outline at
+ * 3.21:1" — and three commits later ink3 was raised from .38 to .55, so the literal
+ * silently stopped being ink3 while the docstring went on claiming
+ * `legibility.test.ts` certified it. It now measures 5.50:1 and tracks the palette,
+ * which is the only version of "fixed" worth having. `kits.test.ts` pins the
+ * identity so a future edit cannot re-fork them.
+ *
+ * Club-independent by design: the SHAPE is then legible whatever the fill does,
+ * which is a property a per-club outline could never promise.
  */
-export const KIT_OUTLINE = "rgba(233, 238, 245, 0.38)";
+export const KIT_OUTLINE = FLOODLIT.ink3;
 
 /** Clamp a colour that would sit brighter than type. Others pass through. */
 export function kitTone(colour: string): string {
@@ -138,25 +149,14 @@ export function kitTone(colour: string): string {
     : colour;
 }
 
-/**
- * The pattern, as a CSS background, for anything at least 10px wide.
- *
- * Below that a 3px repeat degenerates into one flat colour and the stripe is a lie;
- * use {@link kitStripe} there instead.
+/*
+ * `kitBackground()` used to live here: the pattern as a CSS `background` string, for
+ * the bordered-div version of the mark. `KitMark` is an `<svg>` now — a `<polygon>`
+ * with a `<pattern>`/`<linearGradient>` fill — because a CSS border cannot trace a
+ * clipped shoulder, so nothing needed a CSS gradient any more and the function was
+ * left with only its own test for company. `kitStripe` below stays: the eleven's
+ * club rule really is a CSS background-image on a table row.
  */
-export function kitBackground(kit: Kit): string {
-  const a = kitTone(kit.primary);
-  const b = kitTone(kit.secondary);
-  switch (kit.pattern) {
-    case "stripes":
-      return `repeating-linear-gradient(90deg, ${a} 0 3px, ${b} 3px 6px)`;
-    case "sash":
-      return `linear-gradient(115deg, ${a} 0 38%, ${b} 38% 58%, ${a} 58% 100%)`;
-    case "plain":
-    default:
-      return a;
-  }
-}
 
 /**
  * A club's colour as a narrow rule, for a table row's leading edge.
@@ -175,8 +175,20 @@ export function kitStripe(kit: Kit): string {
   // a bare hex is simply dropped, so returning one made the rule vanish for the
   // eleven plain clubs while the four striped ones rendered. Shipped that way —
   // four of fifteen rows carried a stripe and the feature looked absent.
-  if (kit.pattern === "plain") return `linear-gradient(180deg, ${a} 0 100%)`;
-  return `linear-gradient(180deg, ${a} 0 50%, ${b} 50% 100%)`;
+  //
+  // TWO comma-separated stops for a plain club, not one stop spanning the whole
+  // bar, and that is not stylistic either. `linear-gradient(180deg, X 0 100%)` is
+  // valid CSS and Chrome paints it — this rendered correctly in production — but
+  // jsdom's parser rejects a single-stop gradient and DROPS the whole declaration,
+  // so `style.backgroundImage` came back empty and no test could ever observe the
+  // club rule on a plain club. Eleven of the twenty. Measured through
+  // `element.style`: `X 0 100%` and `X 0% 100%` both round-trip to `""`, while
+  // `X 0%, X 100%` round-trips intact. The two are the same paint, so the spelling
+  // that survives both parsers is free.
+  if (kit.pattern === "plain") {
+    return `linear-gradient(180deg, ${a} 0%, ${a} 100%)`;
+  }
+  return `linear-gradient(180deg, ${a} 0% 50%, ${b} 50% 100%)`;
 }
 
 /** The kit for a club code, or null. Never a guessed colour. */

@@ -32,6 +32,8 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
+import { withoutComments } from "@/test/support/comments";
+
 import { FLOODLIT, surfaceIsLight, type MarginSurface } from "@/lib/margin/tokens";
 
 /**
@@ -85,8 +87,22 @@ function walk(dir: string, out: string[] = []): string[] {
   return out;
 }
 
-/** Every screen and component, plus the stylesheet. */
-const FILES = [...walk("components"), ...walk("app"), "app/globals.css"];
+/**
+ * Every screen and component, the shared type scale, plus the stylesheet.
+ *
+ * `lib` is here because the type scale is there. Scanning only `components` and
+ * `app` missed the largest single offender in the tree: `EYEBROW` is defined in
+ * `lib/margin/type.ts` and SPREAD into eight of Eleven's column headers, one of
+ * them inside `COLUMNS.map`, so nine labels rendered at 9px while every explicit
+ * literal in that file was accounted for. A scale that lives outside the scan is a
+ * hole the size of every file that imports it.
+ */
+const FILES = [
+  ...walk("components"),
+  ...walk("app"),
+  ...walk("lib"),
+  "app/globals.css",
+];
 
 /**
  * Sizes below the floor that were already shipped when this scan was widened.
@@ -103,7 +119,10 @@ const FILES = [...walk("components"), ...walk("app"), "app/globals.css"];
  * moved to 11px rather than exempted.
  */
 const ALLOWED = new Map<string, number>([
-  ["app/globals.css", 15],
+  ["app/globals.css", 10],
+  // EYEBROW, the one argued exemption. `COLUMN_HEAD` sits beside it at 11px for
+  // the case the argument does not cover.
+  ["lib/margin/type.ts", 1],
   ["components/AgentMessages.tsx", 3],
   ["components/ErrorBoundary.tsx", 1],
   ["components/MinutesConflicts.tsx", 6],
@@ -124,7 +143,6 @@ const ALLOWED = new Map<string, number>([
   ["components/projections/ProjectionGridSection.tsx", 1],
   ["components/review/DecisionReview.tsx", 5],
   ["components/stats/StatsTable.tsx", 5],
-  ["components/ui/ProgressBar.tsx", 1],
 ]);
 
 // ── contrast ────────────────────────────────────────────────────────────────────
@@ -200,32 +218,164 @@ describe("the tones this board paints text with", () => {
   });
 });
 
+/**
+ * The stylesheet's own text tiers, which are the ones the browser actually paints.
+ *
+ * Everything above measures `FLOODLIT`, a TypeScript object. But two thirds of the
+ * text in this app is coloured by `var(--text-3)` from `app/globals.css` — 67
+ * occurrences against 10 for `--text-2` — and nothing read those declarations. So
+ * the raise that took `--text-2` from .60 to .72 and `--text-3` from .38 to .55 was
+ * unguarded on the half that ships: reverting both blocks to the measured WCAG
+ * failure (3.22:1) left the full suite green at 1154 passing tests.
+ *
+ * This closes it from the other side: parse the declarations out of BOTH `:root`
+ * and `.dark` — the file's own comment promises they carry the same values — and
+ * require each to equal its `FLOODLIT` twin and clear the same floor. Spelling is
+ * normalised because the two sources disagree cosmetically and always have:
+ * `rgba(233, 238, 245, 0.55)` in CSS against `rgba(233,238,245,.55)` in the token.
+ */
+const TIERS = [
+  ["--text-1", "ink", 4.5],
+  ["--text-2", "ink2", 4.5],
+  ["--text-3", "ink3", 4.5],
+  // ink4 is a border tone; rule 2 forbids it on text. 3:1 is the graphical floor.
+  ["--text-4", "ink4", 0],
+] as const;
+
+/** Collapse whitespace and `0.55`/`.55` so the two spellings compare equal. */
+const canonical = (colour: string) =>
+  colour.replace(/\s+/g, "").replace(/(^|[^0-9])0\./g, "$1.").toLowerCase();
+
+/** One CSS block's body, by selector. */
+function blockBody(css: string, selector: string): string {
+  const m = new RegExp(`^${selector}\\s*\\{([\\s\\S]*?)^\\}`, "m").exec(css);
+  if (!m) throw new Error(`no ${selector} block in app/globals.css`);
+  return m[1];
+}
+
+/** A custom property's value. Tolerates a missing final semicolon. */
+function declared(body: string, token: string): string {
+  const m = new RegExp(`${token}\\s*:\\s*([^;}\\n]+)`).exec(body);
+  if (!m) throw new Error(`${token} is not declared`);
+  return m[1].trim();
+}
+
+describe("the stylesheet's text tiers match the tokens they mirror", () => {
+  const css = readFileSync("app/globals.css", "utf8");
+
+  for (const selector of [":root", "\\.dark"] as const) {
+    const label = selector === ":root" ? ":root" : ".dark";
+
+    it(`${label} declares the same four tones as FLOODLIT`, () => {
+      const body = blockBody(css, selector);
+      for (const [token, tone] of TIERS) {
+        expect(canonical(declared(body, token)), `${token} vs FLOODLIT.${tone}`)
+          .toBe(canonical(FLOODLIT[tone]));
+      }
+    });
+
+    it(`${label} clears the contrast floor on the tones that carry text`, () => {
+      // Measured on the CSS value, not the token — so this still fails if the two
+      // are made to agree by lowering BOTH.
+      const body = blockBody(css, selector);
+      for (const [token, , floor] of TIERS) {
+        if (floor === 0) continue;
+        const r = ratio(declared(body, token), FLOODLIT)!;
+        expect(r, `${token} is ${r.toFixed(2)}:1`).toBeGreaterThanOrEqual(floor);
+      }
+    });
+  }
+
+  /**
+   * The CHROME tier, which has its own ground and was invisible to every guard.
+   *
+   * The masthead, the PWA prompt and the mobile nav are painted from
+   * `--chrome-ink-*` over `--chrome` (#14181d), not over the shell — so neither the
+   * FLOODLIT measurements above nor the `--text-*` parity check could see them. They
+   * still held .60 and .38, the exact two alphas the page tiers were raised off, in
+   * a commit whose message said the raise left nothing able to drift.
+   */
+  it("measures the chrome tier against the chrome ground, not the shell", () => {
+    const body = blockBody(css, ":root");
+    const ground = declared(body, "--chrome");
+    const chrome = { ...FLOODLIT, shell: ground };
+    for (const token of ["--chrome-ink", "--chrome-ink-2", "--chrome-ink-3"]) {
+      const r = ratio(declared(body, token), chrome)!;
+      expect(r, `${token} is ${r.toFixed(2)}:1 on ${ground}`).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
+  it("keeps ink4 under the text floor, so rule 2 still has a reason", () => {
+    const r = ratio(declared(blockBody(css, ":root"), "--text-4"), FLOODLIT)!;
+    expect(r, `--text-4 is ${r.toFixed(2)}:1`).toBeLessThan(3);
+  });
+});
+
+/**
+ * A CSS length in px. A bare number in a React style object IS px.
+ *
+ * Units matter because the guard is a numeric comparison: `font-size: 0.5rem` is
+ * 8px and `font-size: 8pt` is 10.67px, and a pattern matching only `px` passed
+ * both. Probed on the real tree before this existed — injected `text-[0.5rem]` and
+ * `font-size: 8pt` and the suite stayed green.
+ */
+const PER_UNIT: Readonly<Record<string, number>> = {
+  "": 1, px: 1, pt: 96 / 72, rem: 16, em: 16,
+};
+
+/**
+ * Every declared type size in a source file, in px.
+ *
+ * Five shapes, each of which shipped a sub-floor size past an earlier version of
+ * this scan:
+ *
+ * 1. `fontSize:` / `font-size:` — the object and stylesheet spellings, with the
+ *    value optionally quoted in any of the three JS quote characters. The backtick
+ *    is not pedantry: a template literal is how an interpolated size is written.
+ * 2. `size={n}` — the prop form.
+ * 3. `size = n` — the DEFAULT form, which is how the worst offender hid: the eight
+ *    facet labels took `Label`'s `size = 9.5` default, so no scan looking for an
+ *    explicit size could see the smallest text on the page.
+ * 4. `text-[…]` — Tailwind's arbitrary value. 17 usages across six files were
+ *    invisible to a green test.
+ * 5. `font:` — the SHORTHAND, and the last hole. `.masthead-gw` carried
+ *    `font: 500 9px var(--font-mono)` and `.masthead-team span` carried
+ *    `font: 400 8px …`; both are live global chrome rendered by `Navigation.tsx` on
+ *    every screen, and neither was visible to any pattern here.
+ */
+function* matchSizes(source: string): Generator<{ px: number; text: string }> {
+  const patterns: readonly RegExp[] = [
+    /(?:fontSize|font-size)\s*:\s*["'`]?([0-9.]+)(px|pt|rem|em)?/g,
+    /size=\{([0-9.]+)\}()/g,
+    /\bsize = ([0-9.]+)()/g,
+    /text-\[([0-9.]+)(px|pt|rem|em)\]/g,
+    /font:\s*[^;{}]*?([0-9.]+)(px|pt|rem|em)/g,
+  ];
+  for (const pattern of patterns) {
+    for (const m of source.matchAll(pattern)) {
+      const scale = PER_UNIT[m[2] ?? ""] ?? 1;
+      yield { px: Number(m[1]) * scale, text: m[0].trim() };
+    }
+  }
+}
+
+/**
+ * A size this scan cannot evaluate, which must fail rather than pass.
+ *
+ * `clamp()` and `calc()` have no single value, so a numeric floor cannot be
+ * applied — and silently passing is the worse of the two failures, because it
+ * makes `font-size: clamp(7px, 1vw, 9px)` the way to get under the floor.
+ */
+const UNSCANNABLE = /(?:fontSize|font-size)\s*:\s*["'`]?(?:clamp|calc)\(/g;
+
 describe("rule 1 — nothing meaningful below 11px", () => {
   it("finds no size under the floor anywhere on the board", () => {
     const offenders: string[] = [];
     const stale: string[] = [];
     for (const path of FILES) {
       const source = readFileSync(path, "utf8");
-      const sizes = [
-        ...source.matchAll(/fontSize:\s*([0-9.]+)/g),
-        ...source.matchAll(/size=\{([0-9.]+)\}/g),
-        /*
-         * Defaults, which is how the worst offender hid: the eight facet labels — the
-         * name of every row on the board — took `Label`'s `size = 9.5` default, so no
-         * scan looking for an explicit size could see the smallest text on the page.
-         */
-        ...source.matchAll(/\bsize = ([0-9.]+)/g),
-        /*
-         * Two more shapes the original three regexes were structurally blind to, which
-         * is why widening FILES alone would not have been enough: Tailwind's arbitrary
-         * size and a plain CSS declaration. Verified by running the old patterns
-         * against both — neither matched, so 17 Tailwind usages across six files and
-         * 33 declarations in globals.css were invisible to a green test.
-         */
-        ...source.matchAll(/text-\[([0-9.]+)px\]/g),
-        ...source.matchAll(/font-size:\s*([0-9.]+)px/g),
-      ];
-      const found = sizes.filter((m) => Number(m[1]) < FLOOR).length;
+      const sizes = [...matchSizes(source)];
+      const found = sizes.filter((m) => m.px < FLOOR).length;
       const allowance = ALLOWED.get(path) ?? 0;
       if (found > allowance) {
         offenders.push(
@@ -242,6 +392,15 @@ describe("rule 1 — nothing meaningful below 11px", () => {
     expect(stale, "allowances that no longer match reality").toEqual([]);
   });
 
+  it("refuses a size it cannot evaluate", () => {
+    const unscannable = FILES.flatMap((path) =>
+      [...readFileSync(path, "utf8").matchAll(UNSCANNABLE)]
+        .map((m) => `${path}: ${m[0].trim()}`));
+    expect(
+      unscannable,
+      "a clamp() or calc() font-size has no single value to compare — state one",
+    ).toEqual([]);
+  });
 });
 
 describe("rule 3 — no container opacity behind a figure", () => {
@@ -258,11 +417,49 @@ describe("rule 3 — no container opacity behind a figure", () => {
      * the shape of the mistake rather than trusting the fix to stay. Measured after:
      * out-of-span cells run 5.70:1 to 14.82:1.
      */
+    /*
+     * EVERY file, not just the heat grid.
+     *
+     * This scanned one path, and three captions on `/players` were dimming `S.ink`
+     * with a container opacity the whole time — measured in the browser at 5.50:1,
+     * 2.91:1 and 4.05:1, so two of the three failed 1.4.3 and one failed even the
+     * 3:1 graphical floor. A rule aimed at one file is a rule about that file, not
+     * about the practice.
+     */
     const offenders: string[] = [];
-    for (const path of ["components/projections/HeatGrid.tsx"]) {
-      const source = readFileSync(path, "utf8");
-      for (const m of source.matchAll(/opacity:\s*(?!1\b)[0-9.]+/g)) {
-        offenders.push(`${path}: ${m[0]}`);
+    for (const path of FILES) {
+      /*
+       * Comments stripped, and `@keyframes` bodies with them.
+       *
+       * Both matter for the same reason `test/support/comments.ts` exists: a rule
+       * this specific attracts explanatory prose, and a raw scan cannot tell a
+       * declaration apart from a note about one — this rule flagged its own
+       * docstrings the moment it was widened past a single file.
+       *
+       * A keyframe is a different exemption on the merits. `opacity: 0 -> 1` in a
+       * reveal is not dimming text; it is text arriving. The end state is what a
+       * reader reads, and the end state is 1.
+       */
+      const source = withoutComments(readFileSync(path, "utf8"))
+        .replace(/@keyframes[^{]*\{(?:[^{}]|\{[^{}]*\})*\}/g, " ");
+      /*
+       * The PROPERTY, not the value. The regex here used to be
+       * `/opacity:\s*(?!1\b)[0-9.]+/`, which requires a literal number — so it
+       * could not match the line it was written to forbid. The removed line was
+       * `opacity: index < span ? 1 : 0.34`, a CONDITIONAL: after `opacity:` comes
+       * `index`, the lookahead sees no `1`, and `[0-9.]+` has nothing to match. Put
+       * that exact line back into the surviving cell container and the test passes.
+       *
+       * So: flag any `opacity` in this file whose value is not exactly 1, plus the
+       * Tailwind form. The file has no legitimate use for one — dimming is done with
+       * `color-mix` against the shell — which is why a blanket rule is right here
+       * rather than a value test.
+       */
+      for (const m of source.matchAll(/opacity:\s*(?!1\s*[,}])[^,}\n]+/g)) {
+        offenders.push(`${path}: ${m[0].trim()}`);
+      }
+      for (const m of source.matchAll(/\bopacity-\[?[0-9.]/g)) {
+        offenders.push(`${path}: ${m[0].trim()}`);
       }
     }
     expect(
@@ -279,14 +476,27 @@ describe("rule 2 — ink4 is a border tone", () => {
     const offenders: string[] = [];
     for (const path of FILES) {
       const source = readFileSync(path, "utf8");
+      /*
+       * Every position that paints TEXT with ink4, not just the two idioms that
+       * happened to exist when the rule was written. Each pattern below was probed
+       * against the real tree by injecting the shape and confirming the suite went
+       * red; the first two were the only ones that ever did.
+       */
       const patterns = [
-        /(?:color:\s*|tone=\{)\s*\w+\.ink4/g,
+        // The object and prop spellings. `[^,}\n]*?` reaches THROUGH a conditional:
+        // `color: bad ? S.ink4 : S.ink` is the dominant idiom in this tree and the
+        // anchored `\s*\w+\.ink4` form could not see any of it.
+        /(?:color:|tone=\{)[^,}\n]*?\bink4\b/g,
         // Both spellings of the CSS variable. The quote is not optional cosmetics:
         // a plain stylesheet writes `color: var(--text-4);` and an inline React
-        // style writes `color: "var(--text-4)"`, and a pattern without the quote
-        // silently misses every inline one — which is how three strings at 12px
-        // in a 2.13:1 tone survived a green run of this very test.
-        /color:\s*["']?var\(--text-4\)/g,
+        // style writes `color: "var(--text-4)"` — and a template literal writes it
+        // in backticks, which `["']?` silently skipped.
+        /color:\s*["'`]?var\(--text-4\)/g,
+        // Tailwind's arbitrary colour, which is live in this tree.
+        /text-\[var\(--text-4\)\]/g,
+        // SVG text and the WebKit fill property. `<text fill={S.ink4}>` paints a
+        // glyph exactly as `color` does; nothing in the old pattern set saw it.
+        /(?:fill|WebkitTextFillColor)\s*[:=]\s*\{?[^,}\n]*?\bink4\b/g,
       ];
       for (const pattern of patterns) {
         for (const m of source.matchAll(pattern)) {

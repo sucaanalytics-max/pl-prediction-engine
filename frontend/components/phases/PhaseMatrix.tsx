@@ -342,9 +342,20 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                     <div style={{ fontFamily: DISPLAY, fontSize: 16, color: S.brand }}>
                       {phase.relief >= 0 ? "+" : ""}{phase.relief.toFixed(2)}
                     </div>
+                    {/* `worst` beside the mean, because the mean is what hides the
+                        week that ruins a run: at the screen's default FDR ≤ 3 a
+                        four-week phase reading "FDR 2.25" can be three 2s and a 3,
+                        and those are not the same plan. `worstDifficulty` was added
+                        for exactly this and was computed for nobody — the row
+                        printed only the figure it was meant to qualify. */}
                     <div style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
                       {phase.length} wk{phase.length === 1 ? "" : "s"} · FDR{" "}
                       {phase.meanDifficulty.toFixed(2)}
+                      {phase.worstDifficulty > phase.meanDifficulty && (
+                        <span title="The hardest single week inside the run">
+                          {" "}· worst {phase.worstDifficulty}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </li>

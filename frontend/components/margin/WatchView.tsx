@@ -30,7 +30,8 @@
  * how a product teaches its reader to over-trust it.
  */
 
-import { proven, describeAge, isStale, type Artifact } from "@/lib/data/artifact";
+import { proven, isStale, type Artifact } from "@/lib/data/artifact";
+import { ageLine } from "@/lib/formats";
 import { AGENT_STATUS, type AgentStatus } from "@/lib/data/agent-status";
 import { ACCURACY, beatsTheCeiling, type Accuracy } from "@/lib/data/accuracy";
 import {
@@ -119,7 +120,7 @@ function DecayRow({ row }: { row: Aged }) {
         </span>
       ) : (
         <span
-          title={`produced ${describeAge(ageMs)} ago`}
+          title={ageLine(row.artifact.provenance.producedAt) ?? "produced at an unknown time"}
           style={{
             fontFamily: MONO, fontSize: 11, textAlign: "center",
             color: stale ? S.noise : S.ink3,

@@ -22,24 +22,79 @@ const read = (path: string) => readFileSync(path, "utf8");
  * ledger on `/evidence` now and is not held to this list — it should be, and is not
  * added here because it has never been read against the identity/verdict split.
  */
-const IDENTITY: ReadonlyArray<readonly [string, string]> = [
-  ["components/ui/Button.tsx", "the primary button"],
-  ["components/ErrorBoundary.tsx", "the retry button"],
-  ["components/MinutesConflicts.tsx", "the read-the-post link"],
+/**
+ * A stylesheet cannot be read whole, so an entry may name the rule to read.
+ *
+ * `app/globals.css` DEFINES `--accent` and spends it correctly in a dozen places —
+ * the textarea focus ring, the verdict tints. Scanning the file for `var(--accent)`
+ * therefore says nothing about the button. `selector` narrows the read to one
+ * declaration block, which is the only scope at which "did this role regress" is a
+ * real question.
+ */
+interface Role {
+  readonly path: string;
+  /** What the role is, for the failure message. */
+  readonly role: string;
+  /** For a stylesheet: the rule whose block is the subject. */
+  readonly selector?: string;
+}
+
+const IDENTITY: readonly Role[] = [
+  // `app/globals.css` rather than a component: the button a user presses is the
+  // `.primary-action` CLASS (app/offline, the nav skip link), not a React
+  // component. This entry used to name `components/ui/Button.tsx`, which no route
+  // imported — so the guard passed while the live button sat on the lime
+  // `--chrome-accent`, which is precisely the regression this file forbids. A guard
+  // aimed at an unreachable file is worse than no guard: it reports a clean sweep.
+  { path: "app/globals.css", role: "the primary button", selector: ".primary-action" },
+  { path: "components/ErrorBoundary.tsx", role: "the retry button" },
+  { path: "components/MinutesConflicts.tsx", role: "the read-the-post link" },
 ];
 
+/**
+ * The declaration block for `selector`, or the whole file when there is none.
+ *
+ * Matches the rule where the selector stands ALONE — `.primary-action {` — and not
+ * where it appears in a group (`.primary-action,\n.secondary-action {`, the shared
+ * geometry) or as a descendant (`.decision-card textarea + .primary-action`). Those
+ * carry no colour and would dilute the subject.
+ */
+function subject({ path, selector }: Role): string {
+  const css = read(path);
+  if (!selector) return css;
+  const rule = new RegExp(`^\\${selector}\\s*\\{([^}]*)\\}`, "m");
+  const found = rule.exec(css);
+  if (!found) throw new Error(`${selector} has no standalone rule in ${path}`);
+  return found[1];
+}
+
 describe("identity takes the brand hue", () => {
-  for (const [path, role] of IDENTITY) {
-    it(`${role} in ${path} uses --brand`, () => {
-      expect(read(path), role).toContain("var(--brand");
+  for (const entry of IDENTITY) {
+    it(`${entry.role} in ${entry.path} uses --brand`, () => {
+      expect(subject(entry), entry.role).toContain("var(--brand");
     });
   }
 
-  it("leaves no identity role on the agreement hue in those files", () => {
+  it("leaves no identity role on the agreement hue", () => {
     const regressed = IDENTITY
-      .map(([path]) => path)
-      .filter((path) => /var\(--accent[),]/.test(read(path)));
+      .filter((entry) => /var\(--accent[),]/.test(subject(entry)))
+      .map((entry) => entry.selector ?? entry.path);
     expect(regressed, "an identity role fell back to the semantic hue").toEqual([]);
+  });
+
+  it("leaves no identity role on the chrome hue either", () => {
+    // The drift that actually happened was onto `--chrome-accent`, not `--accent`,
+    // so the original check would have missed it even aimed at the right file.
+    const regressed = IDENTITY
+      .filter((entry) => /var\(--chrome-accent[),]/.test(subject(entry)))
+      .map((entry) => entry.selector ?? entry.path);
+    expect(regressed, "an identity role took the chrome accent").toEqual([]);
+  });
+
+  it("names a rule that exists, so a renamed selector fails loudly", () => {
+    // `subject` throws on a missing rule. Without this, deleting `.primary-action`
+    // would turn every assertion above into an error nobody reads as a role gap.
+    for (const entry of IDENTITY) expect(() => subject(entry)).not.toThrow();
   });
 });
 

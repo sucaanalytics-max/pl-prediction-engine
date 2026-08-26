@@ -29,6 +29,24 @@
  * need weights nobody has fitted, and it would look like an answer.
  */
 
+/*
+ * NO CONTAINER OPACITY ON TEXT IN THIS FILE.
+ *
+ * Every quiet tone here came from `color: S.ink` plus an invented `opacity` — .85,
+ * .6, .55, .5, .45, .4, .35 — which multiplies the composited colour and so sets a
+ * contrast nobody measured. Measured in the browser on `/evidence`: 262 text nodes
+ * were painted under a container opacity and 95 of them failed WCAG 1.4.3, the
+ * worst at 2.45:1 against a 4.5:1 floor for 10px text.
+ *
+ * The palette has exactly three legible text tiers — ink 16.37:1, ink2 8.73:1,
+ * ink3 5.50:1 — and a fourth invented one is how this happened. So: pick a tier.
+ * Two levels collapse into ink3 where the file previously had three, which is the
+ * right trade: a distinction the reader cannot legibly see is not a distinction.
+ *
+ * `legibility.test.ts` rule 3 forbids the pattern and scanned only `HeatGrid.tsx`
+ * until this pass, which is why it never saw any of this.
+ */
+
 import { useMemo } from "react";
 import { proven, type Artifact } from "@/lib/data/artifact";
 import type { PlayerRow } from "@/lib/data/narrow";
@@ -104,11 +122,11 @@ export function Compare(
     >
       <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".1em",
-                       textTransform: "uppercase", color: S.ink, opacity: .55 }}>
+                       textTransform: "uppercase", color: S.ink3 }}>
           comparing {rows.length}
         </span>
         {rows.length === 1 ? (
-          <span style={{ fontFamily: SANS, fontSize: 11.5, color: S.ink, opacity: .5 }}>
+          <span style={{ fontFamily: SANS, fontSize: 11.5, color: S.ink3 }}>
             pick another to see them against each other
           </span>
         ) : null}
@@ -118,7 +136,7 @@ export function Compare(
           onClick={onClear}
           style={{
             marginLeft: "auto", fontFamily: MONO, fontSize: 10, cursor: "pointer",
-            background: "transparent", color: S.ink, opacity: .6,
+            background: "transparent", color: S.ink3,
             border: `1px solid ${S.hair}`, padding: "2px 7px",
           }}
         >
@@ -140,7 +158,7 @@ export function Compare(
                   {row.name}
                 </div>
                 <div style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                  <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink, opacity: .45 }}>
+                  <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
                     {row.position ?? "—"} {row.team ?? ""}
                   </span>
                   <button
@@ -151,7 +169,7 @@ export function Compare(
                     style={{
                       fontFamily: MONO, fontSize: 10, cursor: "pointer", lineHeight: 1,
                       background: "transparent", border: "none", padding: 0,
-                      color: S.ink, opacity: .4,
+                      color: S.ink3,
                     }}
                   >
                     ×
@@ -187,8 +205,7 @@ export function Compare(
                   paddingTop: opensRecord ? 8 : 0,
                 }}
               >
-                <div style={{ fontFamily: MONO, fontSize: 10.5, color: S.ink,
-                              opacity: .55, padding: "4px 8px 4px 0" }}>
+                <div style={{ fontFamily: MONO, fontSize: 10.5, color: S.ink3, padding: "4px 8px 4px 0" }}>
                   {metric.label}
                 </div>
                 {rows.map((row) => {
@@ -206,8 +223,9 @@ export function Compare(
                       style={{
                         fontFamily: MONO, fontSize: 12, padding: "4px 0",
                         fontVariantNumeric: "tabular-nums",
-                        color: leads ? S.agree : S.ink,
-                        opacity: shown === null ? 1 : leads ? 1 : .8,
+                        // The leader keeps the agreement hue; a trailing figure
+                        // steps down a TIER rather than being dimmed by opacity.
+                        color: leads ? S.agree : shown === null ? S.ink : S.ink2,
                       }}
                     >
                       {shown ?? <Nil surface={S} size={11} />}
@@ -221,7 +239,7 @@ export function Compare(
       </div>
 
       <p style={{ margin: 0, fontFamily: SANS, fontSize: 11, lineHeight: 1.5,
-                  color: S.ink, opacity: .45, maxWidth: "64ch" }}>
+                  color: S.ink3, maxWidth: "64ch" }}>
         Above the rule is what the simulation expects this gameweek. Below it,
         the counts and expected figures are last season&rsquo;s &mdash; what FPL
         still reports until a gameweek has been played &mdash; while price and

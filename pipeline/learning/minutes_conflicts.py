@@ -96,6 +96,17 @@ class Conflict:
     club: str
     kind: str                 # "fringe-but-discussed" | "nailed-but-doubted"
     e_minutes: float
+    # How many of the player's OWN fixtures stand behind that number. 0 means the
+    # estimate is entirely prior-driven.
+    #
+    # This is the difference between the two sentences a fringe row can be saying.
+    # "The model has thirty fixtures saying he is fringe" is a disagreement between
+    # two pieces of evidence; "the model has never seen him play" is a disagreement
+    # between evidence and an assumption, and only the second is likely to be
+    # resolved by reading the quote. The opening case of this module is the second
+    # kind — Gvardiol's 14.3 was last season mean-reverted forward — and the report
+    # could not say so, because `e_minutes` was the only thing it looked at.
+    evidence_fixtures: int
     xp: float
     gap: float                # how far from the threshold, for ranking
     source: str
@@ -149,6 +160,11 @@ def find_conflicts(
             if projection is None:
                 continue
             e_minutes = float(projection.get("e_minutes") or 0.0)
+            # Absent on an artifact written before this was published. `-1` rather
+            # than `0`, because 0 is a real answer meaning "no evidence" and must not
+            # be indistinguishable from "this file cannot tell you".
+            raw_evidence = projection.get("evidence_fixtures")
+            evidence_fixtures = -1 if raw_evidence is None else int(raw_evidence)
 
             if e_minutes < fringe_minutes:
                 kind, gap = "fringe-but-discussed", fringe_minutes - e_minutes
@@ -163,6 +179,7 @@ def find_conflicts(
                 club=index.club_of.get(element_id, ""),
                 kind=kind,
                 e_minutes=round(e_minutes, 1),
+                evidence_fixtures=evidence_fixtures,
                 xp=round(float(projection.get("xp") or 0.0), 2),
                 gap=round(gap, 1),
                 source=str(row.get("source") or ""),
@@ -173,8 +190,20 @@ def find_conflicts(
                 quote=" ".join(text.split())[:400],
             ))
 
-    # Widest disagreement first: that is where a human's attention is worth most.
-    conflicts.sort(key=lambda c: (-c.gap, c.player))
+    # Prior-only fringe rows first, then widest disagreement.
+    #
+    # Both orderings are "where a human's attention is worth most", and evidence
+    # count is the stronger of the two: a fringe projection with no fixtures behind
+    # it is an assumption being contradicted, which reading one quote can settle. A
+    # fringe projection with thirty is two pieces of evidence disagreeing, which
+    # reading a quote usually cannot. `-1` (an artifact that does not publish the
+    # count) sorts with the evidence-backed rows: unknown must not be promoted as
+    # though it were known to be zero.
+    def attention(c: Conflict) -> tuple:
+        prior_only = c.kind == "fringe-but-discussed" and c.evidence_fixtures == 0
+        return (0 if prior_only else 1, -c.gap, c.player)
+
+    conflicts.sort(key=attention)
     return conflicts, ambiguous
 
 
@@ -189,6 +218,12 @@ def to_artifact(conflicts: Sequence[Conflict],
             "fringe_minutes": FRINGE_MINUTES,
             "nailed_minutes": NAILED_MINUTES,
         },
+        # A reader needs to know that -1 is not a count.
+        "evidence_fixtures_note": (
+            "Fixtures of the player's own history behind the minutes estimate. "
+            "0 means prior-driven; -1 means the projection artifact predates the "
+            "field and the count is unknown."
+        ),
         # Spelled out so a reader of the file does not have to infer the contract.
         "note": (
             "Disagreements between the minutes model and scanned evidence. "

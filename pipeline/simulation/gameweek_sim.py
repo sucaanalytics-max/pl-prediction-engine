@@ -86,6 +86,18 @@ class GameweekDraws:
     # defender and 0 to a forward, so attributing one without the position
     # would credit strikers with points they cannot score.
     position_by_element: Dict[int, str] = field(default_factory=dict)
+    # element_id -> how many of the player's own fixtures stand behind his minutes
+    # estimate. 0 means the numbers are entirely prior-driven.
+    #
+    # Carried for the same reason as the position: it is per-player metadata the
+    # arrays cannot hold, and a consumer that cannot see it makes a wrong call.
+    # `RoleProbabilities.evidence_fixtures` says in its own comment that "the
+    # optimiser must not treat a prior-only projection as equal to an
+    # evidence-backed one" — and it was computed one module earlier and dropped
+    # here, so `minutes_conflicts` classified fringe players by expected minutes
+    # alone. A prior-only 20 minutes and a thirty-fixture 20 minutes were the same
+    # row, which is precisely the distinction that report exists to draw.
+    evidence_by_element: Dict[int, int] = field(default_factory=dict)
     notes: Dict[str, Any] = field(default_factory=dict)
 
     @property
@@ -179,6 +191,12 @@ class GameweekDraws:
                     "p_appears": float((self.minutes[:, index] > 0).mean()),
                     "p_60": float((self.minutes[:, index] >= 60).mean()),
                     "e_minutes": float(self.minutes[:, index].mean()),
+                    # Published so a consumer can tell a prior-driven estimate from
+                    # an evidence-backed one at the same expected minutes. See the
+                    # field's note on `GameweekDraws`.
+                    "evidence_fixtures": int(
+                        self.evidence_by_element.get(int(element_id), 0)
+                    ),
                     "e_goals": float(self.goals[:, index].mean()),
                     "e_assists": float(self.assists[:, index].mean()),
                     "p_goal": float((self.goals[:, index] > 0).mean()),
@@ -260,9 +278,13 @@ def simulate_gameweek(
             ordered.append(int(element_id))
 
     position_of = {}
+    evidence_of = {}
     for team_players in squads.values():
         for player in team_players:
             position_of[player.element_id] = player.position
+            evidence_of[player.element_id] = int(
+                getattr(player.roles, "evidence_fixtures", 0) or 0
+            )
 
     n_players = len(ordered)
     column_of = {element_id: index for index, element_id in enumerate(ordered)}
@@ -329,6 +351,7 @@ def simulate_gameweek(
         clean_sheets=clean_sheets,
         fixtures_by_element=fixtures_by_element,
         position_by_element=dict(position_of),
+        evidence_by_element=dict(evidence_of),
         notes={
             "n_draws": int(n_draws),
             "n_fixtures": len(fixtures),

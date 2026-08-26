@@ -86,7 +86,7 @@ export function Scatter(
                        surface={S} compact />
         ) : null}
         <p style={{ margin: 0, fontFamily: SANS, fontSize: 11.5, lineHeight: 1.5,
-                    color: S.ink, opacity: .5, maxWidth: "62ch" }}>
+                    color: S.ink3, maxWidth: "62ch" }}>
           No player has the 90 minutes this chart needs, so there is nothing to
           plot. That is a fact about the data, not an empty panel.
         </p>
@@ -128,11 +128,21 @@ export function Scatter(
   return (
     <section data-testid="scatter" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+        {/* `S.ink3`, NOT `S.ink` at reduced opacity.
+            `opacity` multiplies the composited colour, so `ink` at .35 painted
+            2.91:1 — under even the 3:1 graphical floor, on text. Measured on this
+            page before the change: .55 -> 5.50:1, .35 -> 2.91:1, and the caption
+            below at .45 -> 4.05:1. Only the first was legible, and all three read as
+            the same deliberate "quiet" treatment.
+            ink3 is 5.50:1 by construction and is the tier that MEANS quiet, so the
+            tone comes from the palette instead of an arbitrary multiply. This is
+            what `legibility.test.ts` rule 3 forbids; it could not see these because
+            it scanned only `HeatGrid.tsx`. It scans everything now. */}
         <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".1em",
-                       textTransform: "uppercase", color: S.ink, opacity: .55 }}>
+                       textTransform: "uppercase", color: S.ink3 }}>
           finishing against creating &middot; {points.length} players
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink, opacity: .35 }}>
+        <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
           click a point to compare
         </span>
       </div>
@@ -214,7 +224,7 @@ export function Scatter(
       </div>
 
       <p style={{ margin: 0, fontFamily: SANS, fontSize: 11, lineHeight: 1.5,
-                  color: S.ink, opacity: .45, maxWidth: "68ch" }}>
+                  color: S.ink3, maxWidth: "68ch" }}>
         Last season&rsquo;s totals, which is what FPL still reports until a
         gameweek has been played &mdash; there is no form line here because no
         match has been played this season. Players under 90 minutes are left out:

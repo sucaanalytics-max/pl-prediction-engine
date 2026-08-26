@@ -109,6 +109,39 @@ function uses(): Use[] {
   return out;
 }
 
+/**
+ * One block's declarations, as an ordered map.
+ *
+ * `[^;}]+` and the optional terminator matter: the earlier pattern required a
+ * trailing `;`, so the LAST declaration in a block was invisible to both parity
+ * checks. Probed — appended `--probe-nosemi: #ffffff` as the final `:root`
+ * declaration and `--probe-nosemi: #000000;` in `.dark`, which is the maximal
+ * possible difference between two blocks, and the suite stayed green at 9 passing.
+ *
+ * `indexOf("}")` is safe here only because these two blocks contain no nested
+ * rule; a media query inside would truncate the read. Asserted below.
+ */
+function declarations(css: string, selector: string): Map<string, string> {
+  const start = css.indexOf(selector);
+  if (start < 0) throw new Error(`no ${selector} block in app/globals.css`);
+  const body = css.slice(start, css.indexOf("}", start));
+  return new Map(
+    [...body.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;}]+)[;}]?/g)]
+      .map((m) => [m[1], m[2].trim()] as const),
+  );
+}
+
+/**
+ * Tokens that are deliberately the same on both grounds.
+ *
+ * The chrome is ink on both, the typeface does not change with the theme, and a
+ * radius is not a colour. `--shadow` and `--glow` are NOT here: they were, and that
+ * exemption was the only thing keeping seven dead tokens alive — an exemption from
+ * the parity check reads as "intentionally asymmetric" when it meant "unread".
+ */
+const surfaceIndependent = (t: string) =>
+  t.startsWith("--chrome") || t.startsWith("--font") || t.startsWith("--radius");
+
 describe("every CSS variable the code references is defined", () => {
   const defined = definedTokens();
   const all = uses();
@@ -136,9 +169,35 @@ describe("every CSS variable the code references is defined", () => {
   });
 
   it("keeps every allowance honest", () => {
+    /*
+     * The CLAIM, not the length of the sentence making it.
+     *
+     * This asserted `reason.length > 20` — two hardcoded strings in this file
+     * compared against a number, validating no code and unfailable except by
+     * editing the literal beside it. Both reasons say the token is "emitted onto
+     * <html> by next/font in app/layout.tsx", which is a checkable statement: the
+     * layout declares it as a `variable:` on a font loader. So check that.
+     *
+     * If a font is renamed or dropped, the allowance now goes stale loudly instead
+     * of quietly exempting a token that no longer comes from anywhere.
+     */
+    const layout = readFileSync("app/layout.tsx", "utf8");
     for (const [token, reason] of Object.entries(ALLOWED)) {
-      expect(reason.length, `${token} needs a real reason`).toBeGreaterThan(20);
+      expect(reason, `${token} needs a reason naming where it comes from`)
+        .toContain("app/layout.tsx");
+      expect(layout, `${token} is allowed but app/layout.tsx does not emit it`)
+        .toContain(`variable: "${token}"`);
     }
+  });
+
+  it("allows no token app/layout.tsx does not emit", () => {
+    // The other direction: an allowance for a font that has been removed is an
+    // exemption with nothing behind it.
+    const layout = readFileSync("app/layout.tsx", "utf8");
+    const emitted = [...layout.matchAll(/variable:\s*"(--[a-z0-9-]+)"/g)]
+      .map((m) => m[1]);
+    const orphaned = Object.keys(ALLOWED).filter((t) => !emitted.includes(t));
+    expect(orphaned, "allowed but no longer emitted").toEqual([]);
   });
 });
 
@@ -181,21 +240,19 @@ describe("the design language holds", () => {
     // Light and dark are one design, not two. A token defined for paper and not
     // for ink is a hole that renders as an inherited value from the other
     // surface — usually invisible until a screenshot in the wrong theme.
-    const block = (selector: string) => {
-      const start = css.indexOf(selector);
-      return new Set(
-        (css.slice(start, css.indexOf("}", start)).match(/--[a-z0-9-]+(?=\s*:)/g) ?? []),
-      );
-    };
-    const paper = block(":root {");
-    const ink = block(".dark {");
-    // The chrome and the fonts are deliberately surface-independent: the sidebar
-    // is ink on both, and the typeface does not change with the theme.
-    const surfaceIndependent = (t: string) =>
-      t.startsWith("--chrome") || t.startsWith("--font") || t.startsWith("--radius")
-      || t.startsWith("--shadow") || t.startsWith("--glow");
-    const missing = [...paper].filter((t) => !ink.has(t) && !surfaceIndependent(t));
-    expect(missing, "defined for paper but not for ink").toEqual([]);
+    const paper = declarations(css, ":root {");
+    const ink = declarations(css, ".dark {");
+
+    // BOTH directions. The old check walked `:root` → `.dark` only, so a token
+    // declared solely in `.dark` was invisible — and `.dark` is the block that
+    // actually ships, since providers.tsx pins it. A one-way parity check reports
+    // symmetry it never tested.
+    const missingFromInk = [...paper.keys()]
+      .filter((t) => !ink.has(t) && !surfaceIndependent(t));
+    const missingFromPaper = [...ink.keys()]
+      .filter((t) => !paper.has(t) && !surfaceIndependent(t));
+    expect(missingFromInk, "defined for paper but not for ink").toEqual([]);
+    expect(missingFromPaper, "defined for ink but not for paper").toEqual([]);
   });
 
   it("gives both blocks the SAME value, not merely the same keys", () => {
@@ -213,19 +270,8 @@ describe("the design language holds", () => {
      * landed a reader on a palette where "agrees with the market" was a green at
      * 2.79:1. This converts the decision from a claim into a guard.
      */
-    const values = (selector: string) => {
-      const start = css.indexOf(selector);
-      const body = css.slice(start, css.indexOf("}", start));
-      return new Map(
-        [...body.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/g)]
-          .map((m) => [m[1], m[2].trim()] as const),
-      );
-    };
-    const paper = values(":root {");
-    const ink = values(".dark {");
-    const surfaceIndependent = (t: string) =>
-      t.startsWith("--chrome") || t.startsWith("--font") || t.startsWith("--radius")
-      || t.startsWith("--shadow") || t.startsWith("--glow");
+    const paper = declarations(css, ":root {");
+    const ink = declarations(css, ".dark {");
 
     const differing: string[] = [];
     for (const [token, value] of paper) {

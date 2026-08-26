@@ -210,9 +210,17 @@ X_SCAN_ACCOUNTS = (
     {"handle": "robtFPL", "source": "x:robtFPL", "club": None},
 )
 
-#: Twice daily. The logged-out page shows only the most recent posts, so a
-#: missed scan loses content permanently — but scanning more often costs page
-#: loads and returns the same five posts, and `merge_inbox` dedupes them anyway.
+#: How old a scraped post may be and still count as news.
+#:
+#: The name says max age and the comment used to describe scan CADENCE ("Twice
+#: daily"), which is a different quantity — and neither mattered, because nothing
+#: imported this while `x_scan.py` hardcoded the identical `3` at three separate
+#: sites. A config constant that looks authoritative and is inert is worse than no
+#: constant: the next person changes it and nothing moves.
+#:
+#: Three days is set by the scrape, not by taste: the logged-out page shows only the
+#: most recent posts, so anything older has already fallen off the surface this can
+#: see, and a longer window would only re-admit posts `merge_inbox` already deduped.
 X_SCAN_MAX_AGE_DAYS = 3
 
 GROK_FEED = {
@@ -895,14 +903,12 @@ EVAL = {
 }
 
 # ── Premier League Teams 2026-27 ──────────────────────────────────────────
-# The live pipeline derives the authoritative mapping from FPL bootstrap data;
-# this list is a documented fallback for offline use.
-PL_TEAMS = [
-    "Arsenal", "Aston Villa", "Bournemouth", "Brentford", "Brighton",
-    "Chelsea", "Coventry City", "Crystal Palace", "Everton", "Fulham",
-    "Hull City", "Ipswich", "Leeds", "Liverpool", "Man City",
-    "Man United", "Newcastle", "Nott'm Forest", "Sunderland", "Tottenham",
-]
+# `PL_TEAMS` used to sit here, described as "a documented fallback for offline use".
+# Nothing imported it, so it was not a fallback — it was a second list of twenty
+# clubs that no code consulted and no test checked against the real roster. Every
+# path derives the mapping from FPL bootstrap (`update_fpl_team_map`), which is the
+# authoritative source the comment already named. A hand-maintained twin of a
+# promoted-and-relegated list is a thing to be wrong, not a thing to fall back on.
 
 # ── Player Data Quality Corrections ──────────────────────────────────────────
 # Keep season-specific corrections empty by default. The live FPL roster and

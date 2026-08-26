@@ -75,7 +75,6 @@
 
   /* Accent — agreement. SEMANTIC: this hue means "fine", and nothing else. */
   --accent:        oklch(0.74 0.15 155);
-  --accent-hover:  oklch(0.80 0.15 155);
   --accent-muted:  oklch(0.74 0.15 155 / 0.14);
   --accent-border: oklch(0.74 0.15 155 / 0.34);
   --accent-text:   oklch(0.74 0.15 155);
@@ -116,13 +115,19 @@
   --away:       oklch(0.72 0.16 30);
   --away-muted: oklch(0.72 0.16 30 / 0.12);
 
-  /* Semantic status */
+  /* Semantic status
+   *
+   * Each status offers the same three roles — base, muted fill, border — and the
+   * set is kept COMPLETE even where a member has no reader yet. `--warning-border`,
+   * `--accent-border` and `--brand-border` are all spent, so the triple is a live
+   * pattern rather than aspiration; deleting `--success-border` because today's
+   * screens happen not to draw a green edge is how the next person ends up
+   * hand-rolling one. This is the deliberate exception to the rule that an unread
+   * token is a dead token — every other one has been removed. */
   --success: oklch(0.82 0.14 155); --success-muted: oklch(0.82 0.14 155 / 0.12); --success-border: oklch(0.5 0.12 155);
   --warning: oklch(0.8 0.13 85);  --warning-muted: oklch(0.8 0.13 85 / 0.12);  --warning-border: oklch(0.5 0.1 85);
   --error:   oklch(0.72 0.16 30);  --error-muted:   oklch(0.72 0.16 30 / 0.12);  --error-border:   oklch(0.5 0.12 30);
   --info:    rgba(233, 238, 245, 0.72);              --info-muted:    rgba(233, 238, 245, 0.06);      --info-border:    rgba(233, 238, 245, 0.18);
-
-  --overlay: rgba(10, 12, 15, 0.82);
 
   /* Shadows and glows are retired.
      Kept as no-op variables rather than deleted: roughly forty rules across
@@ -130,20 +135,8 @@
      drops a variable renders `box-shadow: ;` — valid CSS that does nothing, but
      invisible when you are looking for why an elevation went missing. Naming
      them `none` says the decision out loud in one place. */
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
-  --glow-accent: none;
-  --glow-home:   none;
-  --glow-draw:   none;
-  --glow-away:   none;
 
   /* Chart */
-  --chart-grid:           rgba(233, 238, 245, 0.09);
-  --chart-tooltip-bg:     #14181d;
-  --chart-tooltip-border: rgba(233, 238, 245, 0.17);
-  --chart-tooltip-text:   #e9eef5;
-  --chart-tick:           rgba(233, 238, 245, 0.55);
 
   /* Fonts */
   --font-display: var(--font-display-anton), 'Arial Narrow', system-ui, sans-serif;
@@ -171,10 +164,17 @@
      colour and the vice-captain panel all name these. Pointing them at floodlit
      moves all of it in one edit; deleting them is a wider change than this one. */
   --chrome:        #14181d;
-  --chrome-raised: #1a1f26;
   --chrome-ink:    #e9eef5;
-  --chrome-ink-2:  rgba(233, 238, 245, 0.60);
-  --chrome-ink-3:  rgba(233, 238, 245, 0.38);
+  /* .72 and .55, tracking `--text-2`/`--text-3` deliberately.
+   *
+   * These held .60 and .38 — the exact two alphas the page tiers were raised OFF,
+   * in the same commit that said the raise covered "both blocks of globals.css and
+   * FLOODLIT in tokens.ts, so the token and the variable cannot drift". There was a
+   * third block, and it drifted. Measured against `--chrome` (#14181d, not the
+   * shell): .38 was 3.24:1, failing 1.4.3 for normal text on the PWA prompt and the
+   * mobile nav; .55 is 5.38:1 and .72 is 8.37:1. */
+  --chrome-ink-2:  rgba(233, 238, 245, 0.72);
+  --chrome-ink-3:  rgba(233, 238, 245, 0.55);
   --chrome-hair:   rgba(233, 238, 245, 0.13);
   --chrome-accent: oklch(0.84 0.19 128);
 
@@ -182,7 +182,6 @@
      say "pitch", not enough to compete with --accent, which on that screen has
      to keep meaning "kind fixture". Kept in step with FLOODLIT.pitch in
      lib/margin/tokens.ts. */
-  --pitch: #0f1714;
 }
 
 /* ── Ink (dark) ─────────────────────────────────────────────────────────────── */
@@ -199,7 +198,6 @@
   --text-4: rgba(233, 238, 245, 0.26);
 
   --accent:        oklch(0.74 0.15 155);
-  --accent-hover:  oklch(0.80 0.15 155);
   --accent-muted:  oklch(0.74 0.15 155 / 0.14);
   --accent-border: oklch(0.74 0.15 155 / 0.34);
   --accent-text:   oklch(0.74 0.15 155);
@@ -224,18 +222,9 @@
   --error:   oklch(0.72 0.16 30);  --error-muted:   oklch(0.72 0.16 30 / 0.12);  --error-border:   oklch(0.5 0.12 30);
   --info:    rgba(233, 238, 245, 0.72); --info-muted: rgba(233, 238, 245, 0.06); --info-border: rgba(233, 238, 245, 0.18);
 
-  --overlay: rgba(10, 12, 15, 0.82);
-
-  --chart-grid:           rgba(233, 238, 245, 0.09);
-  --chart-tooltip-bg:     #14181d;
-  --chart-tooltip-border: rgba(233, 238, 245, 0.17);
-  --chart-tooltip-text:   #e9eef5;
-  --chart-tick:           rgba(233, 238, 245, 0.55);
-
   --ambient-bg: #0d1013;
   /* See :root — kept in both blocks because it is a surface colour, and
      `test/design-tokens.test.ts` requires every surface token in both. */
-  --pitch: #0f1714;
 }
 
 /* ── Base ────────────────────────────────────────────────────────────────────── */
@@ -289,20 +278,9 @@
     @apply glass-panel;
     border-radius: var(--radius-card);
   }
-
-  .card-hover {
-    @apply card cursor-pointer;
-    transition: border-color .15s, background .15s;
-  }
-
   /* Border and ground only. The lift this replaced moved the card 4px up and
      scaled it 1%, which on a dense table of rows means the thing under the
      pointer is never quite where the pointer is. */
-  .card-hover:hover {
-    background: var(--surface2);
-    border-color: var(--border-strong);
-  }
-
   /* ── Inset panel ──────────────────────────────────────────────────────────── */
   .glass-inset {
     background: var(--surface2);
@@ -318,113 +296,18 @@
   }
 
   /* ── Data tables ──────────────────────────────────────────────────────────── */
-  .data-table {
-    @apply w-full text-sm;
-  }
-
   /* Mono headers at 10px, matching the column labels on Margin's research
      table, so the two read as the same instrument rather than two products. */
-  .data-table th {
-    @apply text-left px-3 py-2 select-none;
-    font-family: var(--font-mono);
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-3);
-    background: transparent;
-    border-bottom: 1px solid var(--border-strong);
-  }
-
   /* Figures line up because they are tabular: a column of `1.4` over `11.2`
      that shifts by a glyph width is unreadable as a ranking, which is the only
-     thing a column of numbers is for. */
-  .data-table td {
-    @apply px-3 py-2 border-b;
-    color: var(--text-2);
-    border-color: var(--border);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .data-table tbody tr {
-    @apply cursor-pointer;
-    transition: background .12s;
-  }
-
-  .data-table tbody tr:hover {
-    background: var(--surface2);
-  }
-
-  /* ── Form inputs ──────────────────────────────────────────────────────────── */
-  .form-label {
-    @apply block text-xs uppercase tracking-wider font-semibold mb-1.5;
-    color: var(--text-3);
-    letter-spacing: 0.1em;
-  }
-
-  .form-input {
-    @apply w-full px-3 py-2 text-sm;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 0;
-    color: var(--text-1);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    transition: border-color .15s;
-  }
-
-  .form-input::placeholder {
-    /* text-3, not text-4. A placeholder is read — it says what to type — and
-       text-4 is the border tone at 2.13:1. text-3 is 5.50:1 since the palette
-       edit, so a placeholder is now legible instead of a suggestion of one. */
-    color: var(--text-3);
-  }
-
-  /* A darkened border, not a ring and a lift. The focus state has to survive
+     thing a column of numbers is for. *//* ── Form inputs ──────────────────────────────────────────────────────────── *//* A darkened border, not a ring and a lift. The focus state has to survive
      next to fourteen numeric columns without becoming the loudest thing on the
-     screen. */
-  .form-input:focus {
-    outline: none;
-    border-color: var(--text-1);
-  }
-
-  .form-select {
-    @apply form-input appearance-none cursor-pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 30px;
-  }
-
-  /* ── Typography utilities ─────────────────────────────────────────────────── */
+     screen. */  /* ── Typography utilities ─────────────────────────────────────────────────── */
 
   /* Mono, solid, tabular. This was a gradient clipped to the glyphs, which is
      illegible beside a distribution glyph and cannot be lined up in a column —
      and a headline number that reads as decoration is the one number on a page
-     nobody should skim. */
-  .stat-value {
-    font-family: var(--font-mono);
-    font-size: 2rem;
-    font-weight: 500;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    color: var(--text-1);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .stat-label {
-    @apply text-[10px] uppercase;
-    font-family: var(--font-mono);
-    letter-spacing: 0.12em;
-    color: var(--text-3);
-  }
-
-  /* ── Probability bar ──────────────────────────────────────────────────────── */
-  .prob-bar {
-    @apply h-2;
-    transition: width .3s;
-  }
-
+     nobody should skim. */  /* ── Probability bar ──────────────────────────────────────────────────────── */
   /* ── Badges ───────────────────────────────────────────────────────────────── */
 
   /* Square, unfilled, no glow, no hover. A badge on this app is almost always
@@ -441,178 +324,9 @@
     border-radius: var(--radius-badge);
     border: 1px solid currentColor;
     background: transparent;
-  }
-
-  .badge-green { @apply badge; color: var(--success); }
-  .badge-amber { @apply badge; color: var(--warning); }
-  .badge-red   { @apply badge; color: var(--error); }
-  .badge-sky   { @apply badge; color: var(--info); }
-  .badge-slate { @apply badge; color: var(--text-3); }
-
-  /* ── Navigation ───────────────────────────────────────────────────────────── */
-  .nav-link {
-    @apply flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl
-           transition-all duration-300 relative overflow-hidden;
-    color: var(--text-3);
-  }
-
-  .nav-link:hover {
-    background: var(--surface2);
-    color: var(--text-1);
-    transform: translateX(4px);
-  }
-
-  .nav-link-active {
-    @apply flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl relative overflow-hidden;
-    background: var(--accent-muted);
-    border: 1px solid var(--accent-border);
-    color: var(--accent-text);
-  }
-  
-  .nav-link-active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 60%;
-    background: var(--accent);
-    border-radius: 0 4px 4px 0;
-  }
-
-  /* ── Dividers ─────────────────────────────────────────────────────────────── */
-  .glow-line {
-    @apply h-px w-full;
-    background: var(--border);
-  }
-
+  }/* ── Navigation ───────────────────────────────────────────────────────────── *//* ── Dividers ─────────────────────────────────────────────────────────────── */
   /* ── Stale data warning ───────────────────────────────────────────────────── */
-  .stale-warning {
-    @apply inline-flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold
-           uppercase tracking-wider;
-    background: var(--warning-muted);
-    border: 1px solid var(--warning-border);
-    color: var(--warning);
-    animation: stale-pulse 3s ease-in-out infinite;
-  }
-
-  /* ── Toast notification ───────────────────────────────────────────────────── */
-  .toast {
-    @apply fixed bottom-8 right-8 z-50 px-5 py-4 text-sm font-semibold glass-panel;
-    border: 1px solid var(--border-strong);
-    color: var(--text-1);
-    animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .toast-exit {
-    animation: toast-out 0.2s ease-in forwards;
-  }
-
-  /* ── Fixture prediction card classes ──────────────────────────────────────── */
-  .fixture-home {
-    background: var(--surface) !important;
-  }
-  
-  .fixture-home::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0; width: 4px;
-    background: var(--home);
-  }
-
-  .fixture-draw {
-    background: var(--surface) !important;
-  }
-  
-  .fixture-draw::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0; width: 4px;
-    background: var(--draw);
-  }
-
-  .fixture-away {
-    background: var(--surface) !important;
-  }
-  
-  .fixture-away::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0; width: 4px;
-    background: var(--away);
-  }
-
-  /* ── Prob cells (fixture card) ────────────────────────────────────────────── */
-  .prob-cell {
-    @apply flex flex-col items-center py-2.5 relative overflow-hidden;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-  }
-  
-  .prob-cell:hover {
-    transform: translateY(-2px);
-  }
-
-  .prob-cell-home[data-active="true"] {
-    background: var(--home-muted);
-    border-color: var(--home);
-  }
-  .prob-cell-home[data-active="true"] .prob-val { color: var(--home); text-shadow: 0 0 10px var(--home); }
-
-  .prob-cell-draw[data-active="true"] {
-    background: var(--draw-muted);
-    border-color: var(--draw);
-  }
-  .prob-cell-draw[data-active="true"] .prob-val { color: var(--draw); text-shadow: 0 0 10px var(--draw); }
-
-  .prob-cell-away[data-active="true"] {
-    background: var(--away-muted);
-    border-color: var(--away);
-  }
-  .prob-cell-away[data-active="true"] .prob-val { color: var(--away); text-shadow: 0 0 10px var(--away); }
-
-  /* ── SHAP bars ────────────────────────────────────────────────────────────── */
-  .shap-bar-pos {
-    background: var(--success-muted);
-    border-right: 3px solid var(--success);
-  }
-
-  .shap-bar-neg {
-    background: var(--error-muted);
-    border-left: 3px solid var(--error);
-  }
-
-  /* ── Fixture cards ────────────────────────────────────────────────────────── */
-  .fixture-card {
-    @apply glass-panel relative overflow-hidden;
-    border-radius: 0;
-    transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .fixture-card:hover {
-    transform: translateY(-4px) scale(1.01);
-    border-color: var(--border-strong);
-  }
-  
-  /* Animated border spin for best value bets */
-  .premium-glow-border {
-    position: relative;
-    border-radius: var(--radius-card);
-    background: var(--surface);
-  }
-  
-  .premium-glow-border::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: calc(var(--radius-card) + 2px);
-    background: conic-gradient(from 0deg, transparent 0%, var(--accent) 50%, transparent 100%);
-    z-index: -1;
-    animation: border-spin 4s linear infinite;
-    opacity: 0.5;
-  }
-}
+  /* ── Toast notification ───────────────────────────────────────────────────── */  /* ── Fixture prediction card classes ──────────────────────────────────────── *//* ── Prob cells (fixture card) ────────────────────────────────────────────── *//* ── SHAP bars ────────────────────────────────────────────────────────────── */  /* ── Fixture cards ────────────────────────────────────────────────────────── */  /* Animated border spin for best value bets */}
 
 /* ── Custom Scrollbar ────────────────────────────────────────────────────────────────── */
 * {
@@ -633,25 +347,6 @@
 @keyframes slide-up {
   from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
   to   { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-
-@keyframes toast-in {
-  from { opacity: 0; transform: translateY(20px) scale(0.9); filter: blur(8px); }
-  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-}
-
-@keyframes toast-out {
-  from { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-  to   { opacity: 0; transform: translateY(-20px) scale(0.9); filter: blur(8px); }
-}
-
-@keyframes pulse-shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-@keyframes border-spin {
-  100% { transform: rotate(360deg); }
 }
 
 .animate-slide-up {
@@ -720,19 +415,13 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* ── FPL Decision OS ───────────────────────────────────────────────────────── */
-.portal-page {
-  --portal-ink: var(--text-1);
-  --portal-muted: var(--text-3);
-}
-
 .portal-page h1,
 .portal-page h2,
 .portal-page p {
   margin: 0;
 }
 
-.eyebrow,
-.kicker {
+.eyebrow {
   display: flex;
   align-items: center;
   gap: 7px;
@@ -749,9 +438,6 @@ input[type="range"]::-moz-range-thumb {
   background: var(--surface);
   padding: 22px;
 }
-
-.decision-hero .eyebrow { color: #6ee7b7; }
-
 .primary-action,
 .secondary-action {
   display: inline-flex;
@@ -765,13 +451,25 @@ input[type="range"]::-moz-range-thumb {
   transition: transform .2s, background .2s, border-color .2s;
 }
 
+/* The identity button, and it must wear `--brand`.
+ *
+ * It was on `--chrome-accent` (oklch 0.84 0.19 128, a lime) with `#8ef0c6` on
+ * hover, which is the exact collapse `roles.test.ts` exists to prevent: hue
+ * carries judgement in this palette, and a green button says "agrees with the
+ * market" rather than "ours to press". It drifted because the guard was pinned to
+ * `components/ui/Button.tsx` — a file no route ever imported — so the button a
+ * user actually presses was never held to the rule that names it.
+ *
+ * `--brand-hover` and `--brand-border` were declared beside `--brand` for this and
+ * had no reader; they do now. Measured: ink 9.94:1, hover 12.07:1, border 3.25:1
+ * against the surface, so it clears 1.4.3 on both states and 1.4.11 on the edge. */
 .primary-action {
-  color: #052016;
-  background: var(--chrome-accent);
-  border: 1px solid var(--chrome-accent);
+  color: #10141a;
+  background: var(--brand);
+  border: 1px solid var(--brand-border);
 }
 
-.primary-action:hover { transform: translateY(-2px); background: #8ef0c6; }
+.primary-action:hover { transform: translateY(-2px); background: var(--brand-hover); }
 .decision-card textarea { width: 100%; resize: vertical; padding: 11px; color: var(--text-1); border: 1px solid var(--border); border-radius: 0; outline: 0; background: var(--surface2); font-size: 10px; line-height: 1.5; }
 .decision-card textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-muted); }
 .decision-card textarea + .primary-action { margin-top: 10px; }
@@ -796,12 +494,12 @@ input[type="range"]::-moz-range-thumb {
 .masthead-nav > a:hover { color: var(--text-1); background: var(--surface2); }
 .masthead-nav > a.active { color: var(--text-1); box-shadow: inset 0 -2px 0 var(--accent); }
 .masthead-right { display: flex; flex-shrink: 0; align-items: stretch; }
-.masthead-gw { display: flex; align-items: center; padding: 0 13px; color: var(--accent-text); border-left: 1px solid var(--border); font: 500 9px var(--font-mono); letter-spacing: .1em; }
+.masthead-gw { display: flex; align-items: center; padding: 0 13px; color: var(--accent-text); border-left: 1px solid var(--border); font-size: 11px; font-weight: 500; font-family: var(--font-mono); letter-spacing: .1em; }
 .masthead-team { display: flex; border-left: 1px solid var(--border); }
 .masthead-team > a,
 .masthead-team-plain { display: grid; align-content: center; gap: 2px; padding: 0 14px; }
 .masthead-team strong { color: var(--text-1); font-size: 10px; }
-.masthead-team span { color: var(--text-3); font: 400 8px var(--font-mono); }
+.masthead-team span { color: var(--text-3); font-size: 11px; font-weight: 400; font-family: var(--font-mono); }
 .masthead-team > a:hover strong { color: var(--accent-text); }
 @media (max-width: 767px) {
   /* The links go, not the bar: `MobileBottomNav` carries the same three
@@ -836,8 +534,8 @@ input[type="range"]::-moz-range-thumb {
 .pwa-install-icon { display: grid; place-items: center; width: 34px; height: 34px; color: var(--chrome); border-radius: 0; background: var(--chrome-accent); }
 .pwa-install-card > div { display: grid; gap: 2px; }
 .pwa-install-card strong { font-size: 9px; }
-.pwa-install-card span { color: var(--chrome-ink-2); font-size: 7px; }
-.pwa-install-action { padding: 7px 9px; color: var(--chrome); border-radius: 0; background: var(--chrome-accent); font-size: 8px; font-weight: 800; }
+.pwa-install-card span { color: var(--chrome-ink-2); font-size: 11px; }
+.pwa-install-action { padding: 7px 9px; color: var(--chrome); border-radius: 0; background: var(--chrome-accent); font-size: 11px; font-weight: 800; }
 .pwa-share-icon { color: var(--chrome-accent); }
 .pwa-dismiss { display: grid; place-items: center; color: var(--chrome-ink-3); }
 .offline-page { display: grid; place-items: center; min-height: 75vh; }
@@ -845,8 +543,9 @@ input[type="range"]::-moz-range-thumb {
 .offline-icon { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 18px; color: var(--accent-text); border-radius: 0; background: var(--accent-muted); }
 .offline-page .eyebrow { justify-content: center; }
 .offline-page h1 { margin-top: 9px; color: var(--text-1); font-size: 2.2rem; letter-spacing: -.06em; }
-.offline-page p { margin: 10px 0 20px; color: var(--text-3); font-size: 10px; line-height: 1.6; }@media (max-width: 1100px) {
-}@media (max-width: 767px) {
+.offline-page p { margin: 10px 0 20px; color: var(--text-3); font-size: 10px; line-height: 1.6; }
+
+@media (max-width: 767px) {
   body { padding-bottom: calc(70px + env(safe-area-inset-bottom)); }
   .mobile-bottom-nav {
     position: fixed;
@@ -862,28 +561,11 @@ input[type="range"]::-moz-range-thumb {
   .mobile-bottom-nav a.active { color: var(--chrome-accent); }
   .pwa-install-card { bottom: calc(76px + env(safe-area-inset-bottom)); }
 }
-.historical-toggle.active { color: var(--accent-text); border-color: var(--accent-border); background: var(--accent-muted); }
-.historical-score-events > section.away { text-align: right; }
-.historical-score-events > section.away > div:not(.historical-player-values) { justify-content: flex-end; }
-.historical-score-events .away .historical-player-values { justify-content: flex-end; }
-.historical-inline-stat.danger { color: var(--error); background: var(--error-muted); }
+
 .vice-captain { display: grid; padding: 17px; border: 1px solid var(--chrome-hair); border-radius: 0; background: color-mix(in oklab, var(--chrome-ink) 5%, transparent); }
 .vice-captain span { color: rgba(255,255,255,.38); font-size: 7px; text-transform: uppercase; }
 .vice-captain strong { margin-top: 4px; color: var(--chrome-ink); font-size: 13px; }
-.vice-captain small { margin-top: 2px; color: rgba(255,255,255,.4); font-size: 8px; }@media (max-width: 1100px) {
-  .historical-stat-grid { grid-template-columns: repeat(2, 1fr); }
-}@media (max-width: 767px) {
-  .historical-details { padding: 14px; }
-  .historical-score-events { grid-template-columns: 1fr; }
-  .historical-final-score { grid-row: 1; }
-  .historical-score-events > section.away { text-align: left; }
-  .historical-score-events > section.away > div:not(.historical-player-values), .historical-score-events .away .historical-player-values { justify-content: flex-start; }
-  .historical-stat-grid, .optimizer-controls, .optimizer-guardrails, .captaincy-rules, .evidence-source-rail { grid-template-columns: 1fr; }
-  .historical-source { align-items: flex-start; flex-direction: column; }
-  .historical-missing { grid-template-columns: 20px 1fr; }
-  .historical-missing a { grid-column: 2; }
-}
-
+.vice-captain small { margin-top: 2px; color: rgba(255,255,255,.4); font-size: 8px; }
 /* The call board: pitch beside rail, stacking under it when the rail can no
    longer hold its eight-column horizon table. The breakpoint is the rail's own
    minimum plus the pitch's — a 150px tile does not shrink, so squeezing the
@@ -908,13 +590,37 @@ input[type="range"]::-moz-range-thumb {
  * header that scrolls off the top, so a reader deep in six hundred rows was reading
  * a copper cell with no visible column identity at all.
  *
- * The hover tint is a locator rather than a text ground — 1.10:1 against the shell
+ * The hover tint is a locator rather than a text ground — 1.14:1 against the shell
  * — so 1.4.11 does not bind on it, and it deliberately does not shift the row's
  * own background states (a swap in or out already tints the row, and a hover that
- * overrode those would hide the thing it was pointing at).
+ * overrode those would hide the thing it was pointing at). Which is why the hover
+ * is an inset SHADOW, not a background — see below.
  */
-.dense-row { transition: background-color .12s; }
-.dense-row:hover { background-color: rgba(233, 238, 245, 0.05); }
+.dense-row { transition: box-shadow .12s; }
+
+/* The row STATES, moved off the inline style prop. Painted inline they were
+ * unreachable from here: an inline declaration beats any author rule without
+ * `!important`, so a `background-color` hover shipped completely INERT on the
+ * eleven, the heat grid and the stats table. Verified with a real pointer hover
+ * on production — the row matched `:hover` and its computed background was
+ * rgba(0, 0, 0, 0). */
+.dense-row[data-swap="in"]   { background-color: rgba(120, 220, 140, 0.07); }
+.dense-row[data-swap="out"]  { background-color: rgba(255, 90, 70, 0.07); }
+.dense-row[data-owned="yes"] { background-color: rgba(233, 238, 245, 0.03); }
+
+/* An inset shadow, NOT a background, and that is the whole trick.
+ *
+ * `background-color` can only REPLACE the state tints above, which would erase
+ * the very thing the pointer is aiming at. An inset shadow paints in a separate
+ * layer — over the background, under the text — so the green of a swap-in and the
+ * grey of an owned row both show through it, and no state is lost while hovering.
+ *
+ * It also sidesteps the cascade entirely. The eleven still sets `background-image`
+ * inline for its 3px club rule, and no author rule could ever outrank that; an
+ * inset shadow does not compete with it, so the same one line works on all four
+ * grids without a single `!important`. The 999px spread is the idiom for filling a
+ * box of unknown height. */
+.dense-row:hover { box-shadow: inset 0 0 0 999px rgba(233, 238, 245, 0.055); }
 
 /* A STICKY HEADER IS NOT AVAILABLE HERE, and the reason is structural rather
  * than a matter of taste — recorded so the next person does not spend the

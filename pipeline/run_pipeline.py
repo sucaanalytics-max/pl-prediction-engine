@@ -294,7 +294,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
     from pipeline.data.fpl_api import (
         fetch_bootstrap_static_with_provenance, fetch_fixtures_with_provenance,
-        get_upcoming_fixtures, build_player_stats, get_current_gameweek,
+        get_upcoming_fixtures, build_player_stats, planning_gameweek,
     )
     # This run writes forecast_ledger.json, so it may not run on stale cache:
     # a stale bootstrap means stale prices, a stale chance_of_playing and a
@@ -317,7 +317,12 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         "bootstrap": _provenance_summary(bootstrap_prov),
         "fixtures": _provenance_summary(fixtures_prov),
     }
-    gameweek = get_current_gameweek(bootstrap)
+    # `planning_gameweek`, NOT `get_current_gameweek`: this run predicts a week
+    # about to be played, and FPL keeps an event current from its own deadline
+    # until the next one. `get_upcoming_fixtures` below already rolls past a
+    # played week internally, so the un-rolled scalar stamped GW1 onto GW2's
+    # fixtures for the five days between them.
+    gameweek = planning_gameweek(bootstrap)
     upcoming = get_upcoming_fixtures(bootstrap, fixtures_raw)
     player_stats = build_player_stats(bootstrap)
 
@@ -1097,12 +1102,35 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     with open(latest_path, "w") as f:
         json.dump(output, f, indent=2, default=str)
 
-    # Archive
+    # Archive — written ONCE per gameweek, following `ledger.seal_forecast`'s rule
+    # ("Once. Raises rather than overwriting"), because this is a historical record
+    # and a record you can overwrite is not one.
+    #
+    # It was an unconditional overwrite keyed on `get_current_gameweek()`, and both
+    # halves of that were wrong together. FPL keeps an event current from its own
+    # deadline until the NEXT one, so for the days between a gameweek's last match
+    # and the following deadline the key did not advance — and every daily run
+    # rewrote the same file. `matchweek_1.json` was overwritten 36 times and ended
+    # up holding GW2's fixture slate; GW1's actual predictions are gone, and no
+    # `matchweek_2.json` was ever created. Nothing reads this directory, which is
+    # exactly why 36 silent overwrites went unnoticed.
+    #
+    # `gameweek` is now the PLANNING week (see the note at its assignment), so the
+    # key advances. Skipping rather than raising: an archive is a side record, and a
+    # second run on the same day must not fail the pipeline over one. The log line
+    # is what makes the skip visible.
     archive_dir = PREDICTIONS_DIR / "archive"
     archive_dir.mkdir(parents=True, exist_ok=True)
     archive_path = archive_dir / f"matchweek_{gameweek}.json"
-    with open(archive_path, "w") as f:
-        json.dump(output, f, indent=2, default=str)
+    if archive_path.exists():
+        logger.info(
+            "  Archive for GW%s already sealed at %s — not overwriting",
+            gameweek, archive_path.name,
+        )
+    else:
+        with open(archive_path, "w") as f:
+            json.dump(output, f, indent=2, default=str)
+        logger.info("  Sealed archive %s", archive_path.name)
 
     # Matches metadata
     matches_meta = {
@@ -1446,8 +1474,20 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             # decision)`, and it already stages the whole `frontend/public/predictions`
             # tree.
             #
-            # The agent keeps its own call. Both writing the same derived file is
-            # harmless: it is a pure function of an artifact neither of them mutates.
+            # The agent keeps its own call, and the two are NOT interchangeable.
+            #
+            # This comment used to say both writing the same derived file was
+            # "harmless: it is a pure function of an artifact neither of them
+            # mutates". It is a pure function of an artifact AND of a horizon, and
+            # only the agent solves one. So the two publishers produced different
+            # SCHEMAS from the same source: the agent wrote a view carrying the
+            # `horizon` block the frontend's plan grid is built from, and the next
+            # daily run overwrote it with one that had none.
+            #
+            # `publish_from_artifact` now carries an existing horizon forward when
+            # its caller has none, so this call can no longer downgrade the agent's
+            # output. The parameters are threaded through rather than absent so the
+            # two callers cannot drift again by omission.
             from pipeline.fpl.public_xp import publish_from_artifact
             from pipeline.config import FPL_PUBLIC_DIR
 

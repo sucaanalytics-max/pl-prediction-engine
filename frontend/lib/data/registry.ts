@@ -28,7 +28,7 @@
  * `FORBID_PATHS` enforces it at run time; the paths test checks the table agrees.
  */
 
-import type { Artifact, NarrowResult } from "@/lib/data/artifact";
+import type { NarrowResult } from "@/lib/data/artifact";
 
 export const MINUTE = 60_000;
 export const HOUR = 60 * MINUTE;
@@ -103,30 +103,16 @@ export interface Descriptor<T = unknown> {
 //
 // Kept as named functions rather than inline arrows so each can carry the
 // evidence that produced it, and so they are individually testable.
+//
+// There used to be three more — `tableIsEmpty`, `explainabilityIsEmpty` and
+// `h2hIsEmpty` — for table.json, latest.json and h2h.json. No REGISTRY entry
+// names those files any more, so no `classify` call could reach the predicates,
+// and each carried a paragraph of measured evidence for a screen that no longer
+// exists. Kept honest by deletion: a predicate that cannot run is not a guard,
+// and their evidence was the most convincing thing in the file.
 // ─────────────────────────────────────────────────────────────────────────────
 
-interface PlayedRow { played?: number }
 interface MinutesRow { minutes?: number }
-
-/**
- * The league table before a ball is kicked.
- *
- * Verified against the committed `table.json`: all 20 rows have `played: 0`,
- * `won/drawn/lost/gf/ga/gd/points: 0`, `form: []` — and `position: 0`.
- *
- * **Do not add `r.position === 0`.** It is true on today's file, so it would pass
- * every test written against today's file. But `fpl_api.py:345` assigns positions
- * with `enumerate(table, start=1)`, so the next real run emits 1..20 with the
- * counters still zero — and a position-based signature then reports the table as
- * *ranked*, highlighting whichever four clubs the degenerate all-zero sort put on
- * top (alphabetically: Arsenal, Aston Villa, Bournemouth, Brentford).
- *
- * A predicate that passes on the fixture and fails in production is worse than
- * none, because it will be trusted. Matches played is the only real evidence.
- */
-export function tableIsEmpty(rows: readonly PlayedRow[]): boolean {
-  return rows.length > 0 && rows.every((r) => (r.played ?? 0) === 0);
-}
 
 /**
  * Player season stats before anyone has played.
@@ -155,37 +141,6 @@ export function matchesAreEmpty(
 }
 
 /**
- * Predictions present, but the stages that make them inspectable never ran.
- *
- * Verified against the committed `latest.json`: `shap_features` is `[]` on 10/10
- * predictions and `odds_comparison` is `null` on 10/10, while the core
- * probability payload is genuinely informative — ten distinct 1x2 tuples, full
- * 49-cell scoreline grids summing to ~1.0.
- *
- * So this is `empty` in a partial sense the UI must respect: the fixture and
- * probability sections have real content, and the SHAP waterfall and the
- * bookmaker-odds panel have none. The predicate exists so those two panels render
- * a reason instead of an axis with no series. `predictions.length > 0` and
- * `metadata.gameweek !== 0` both PASS on exactly this data.
- */
-export function explainabilityIsEmpty(
-  value: {
-    predictions: readonly {
-      shap_features?: readonly unknown[];
-      odds_comparison?: unknown;
-    }[];
-  },
-): boolean {
-  const { predictions } = value;
-  return (
-    predictions.length > 0 &&
-    predictions.every(
-      (p) => (p.shap_features?.length ?? 0) === 0 && p.odds_comparison == null,
-    )
-  );
-}
-
-/**
  * Model health with nothing measured.
  *
  * The 4.0.0-producer case. A *successful, complete, fresh* run of the older
@@ -201,21 +156,6 @@ export function healthIsEmpty(
   return keys.length === 0 && value.calibration == null;
 }
 
-/**
- * Head-to-head with nothing for the current season.
- *
- * Not `recs.length === 0` alone: the file is 241KB of genuine history. It is
- * empty *for this season's purposes* when no record carries a `2627` match.
- */
-export function h2hIsEmpty(
-  records: readonly {
-    matches?: readonly { season?: string | null }[] | null;
-  }[],
-): boolean {
-  if (records.length === 0) return true;
-  return records.every((r) => (r.matches ?? []).every((m) => m.season !== "2627"));
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // The table
 //
@@ -227,8 +167,8 @@ export function h2hIsEmpty(
 /**
  * A descriptor with its payload type deliberately erased.
  *
- * The registry is heterogeneous — `table` carries `Standing[]`, `health` carries
- * `Health` — and `Descriptor<T>` cannot be widened to `Descriptor<unknown>`
+ * The registry is heterogeneous — `playerStats` carries `PlayerRow[]`, `health`
+ * carries `Health` — and `Descriptor<T>` cannot be widened to `Descriptor<unknown>`
  * because `isEmpty: (value: T) => boolean` puts the payload in a contravariant
  * position. TypeScript has no existential types, so this is the encoding: keep
  * the metadata and the payload-agnostic `narrow`, and omit the members that
@@ -246,5 +186,3 @@ export type OpaqueDescriptor =
     >
   & { readonly narrow: (raw: unknown) => NarrowResult<unknown> };
 
-/** Convenience type for a page holding a loaded artifact by key. */
-export type Loaded<T> = Artifact<T>;

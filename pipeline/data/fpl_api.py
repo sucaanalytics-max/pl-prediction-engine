@@ -144,7 +144,13 @@ def fetch_fixtures(force: bool = False, allow_stale: bool = True) -> list:
 
 
 def get_current_gameweek(bootstrap: dict) -> int:
-    """Determine current gameweek from events data."""
+    """
+    The gameweek FPL currently calls current — the one being SCORED.
+
+    Correct for anything retrospective (settling a week, reviewing a decision).
+    Deliberately NOT the answer for anything forward-looking: see
+    :func:`planning_gameweek`, and never swap one for the other here.
+    """
     events = bootstrap.get("events", [])
     for event in events:
         if event.get("is_current", False):
@@ -153,6 +159,67 @@ def get_current_gameweek(bootstrap: dict) -> int:
     for event in events:
         if not event.get("finished", False):
             return event["id"]
+    return max(e["id"] for e in events)
+
+
+def planning_gameweek(bootstrap: dict, now: pd.Timestamp | None = None) -> int:
+    """
+    The gameweek a squad is being PICKED for. Never a week already locked.
+
+    FPL keeps an event ``is_current`` from its own deadline until the NEXT one, so
+    for the days between a gameweek's last match and the following deadline
+    :func:`get_current_gameweek` names a week already played. Anything
+    forward-looking that trusts it points at the past.
+
+    Measured on 2026-08-26: ``is_current`` was GW1, played five days earlier,
+    while the squad being priced was GW2's. ``get_upcoming_fixtures`` already
+    rolls past it internally and returns GW2's matches, but
+    ``run_pipeline`` stamped the un-rolled scalar beside them — so every
+    prediction row for GW2's fixtures carried ``gameweek: 1``.
+
+    The frontend answers this with ``planningEventId`` in
+    ``frontend/lib/fpl-live-server.ts``; the two must agree, and
+    ``test_planning_gameweek.py`` pins the same cases that file's test does.
+    """
+    if now is None:
+        now = pd.Timestamp.now(tz="UTC")
+    events = bootstrap.get("events", [])
+    if not events:
+        # The id becomes a fixture filter and a request path segment. A loud 1 is
+        # better than a NaN that fails silently downstream.
+        return 1
+
+    def deadline(event: dict) -> pd.Timestamp | None:
+        raw = event.get("deadline_time")
+        if not raw:
+            return None
+        try:
+            ts = pd.Timestamp(raw)
+        except (ValueError, TypeError):
+            return None
+        if ts is pd.NaT or pd.isna(ts):
+            return None
+        return ts.tz_localize("UTC") if ts.tzinfo is None else ts.tz_convert("UTC")
+
+    anchor = next((e for e in events if e.get("is_current")), None)
+    if anchor is None:
+        anchor = next((e for e in events if e.get("is_next")), None)
+    if anchor is None:
+        anchor = next((e for e in events if not e.get("finished")), None)
+    if anchor is None:
+        return max(e["id"] for e in events)
+
+    at = deadline(anchor)
+    # No parseable deadline is no EVIDENCE the week has closed. Rolling forward on
+    # a guess would aim the whole run at a week that may not be next.
+    if at is None or now < at:
+        return anchor["id"]
+
+    later = [e for e in events
+             if (d := deadline(e)) is not None and d > now]
+    if later:
+        return min(later, key=lambda e: e["id"])["id"]
+    # Past the last deadline of the season: clamp rather than invent a GW39.
     return max(e["id"] for e in events)
 
 

@@ -15,12 +15,12 @@ import {
   KITS,
   KIT_CEILING,
   KIT_OUTLINE,
-  kitBackground,
   kitFor,
   kitStripe,
   kitTone,
   type Kit,
 } from "@/lib/margin/kits";
+import { FLOODLIT } from "@/lib/margin/tokens";
 
 const SHELL: RGB = [13, 16, 19]; // #0d1013
 const INK: RGB = [233, 238, 245]; // #e9eef5
@@ -167,10 +167,6 @@ describe("the reds are separated by pattern and secondary, not by hue", () => {
 });
 
 describe("a pattern needs area, and degenerates without it", () => {
-  it("uses a repeating gradient for stripes at mark size", () => {
-    expect(kitBackground(KITS.NEW)).toContain("repeating-linear-gradient");
-  });
-
   it("uses a two-stop split for a narrow rule instead", () => {
     // A 3px repeat inside a 4px bar renders as one arbitrary colour, so a striped
     // club would read as a plain one — and as a DIFFERENT plain one under rounding.
@@ -185,8 +181,6 @@ describe("a pattern needs area, and degenerates without it", () => {
     // clubs and vanished for the eleven plain ones. Four of fifteen rows.
     expect(kitStripe(KITS.CHE)).toContain("linear-gradient");
     expect(kitStripe(KITS.CHE)).toContain(KITS.CHE.primary);
-    // kitBackground is painted through `background`, which DOES take a colour.
-    expect(kitBackground(KITS.CHE)).toBe(KITS.CHE.primary);
   });
 
   it("gives every one of the twenty clubs a paintable rule", () => {
@@ -195,8 +189,13 @@ describe("a pattern needs area, and degenerates without it", () => {
     }
   });
 
-  it("draws a sash as a diagonal band", () => {
-    expect(kitBackground(KITS.AVL)).toContain("115deg");
+  it("keeps both of a two-tone club's colours in the narrow rule", () => {
+    // A sash club is the case that proves the split is not cosmetic: AVL's claret
+    // is 1.54:1 on this ground, so dropping the pale blue leaves a near-invisible
+    // bar rather than a two-tone one.
+    const stripe = kitStripe(KITS.AVL);
+    expect(stripe).toContain(KITS.AVL.primary);
+    expect(stripe).toContain(KITS.AVL.secondary);
   });
 });
 
@@ -207,5 +206,44 @@ describe("an unknown club is refused, never guessed", () => {
 
   it("accepts a lowercase code, since callers vary", () => {
     expect(kitFor("mun")).toBe(KITS.MUN);
+  });
+});
+
+describe("the outline tracks the palette rather than copying it", () => {
+  it("IS ink3, not a literal that once equalled it", () => {
+    // It shipped as `rgba(233, 238, 245, 0.38)` under a docstring calling it "a
+    // fixed ink3 outline at 3.21:1". Three commits later ink3 was raised to .55 and
+    // the literal silently stopped being ink3, while the docstring went on citing a
+    // certification that no longer applied to it. An identity assertion is the only
+    // thing that makes "fixed" mean "fixed to the token".
+    expect(KIT_OUTLINE).toBe(FLOODLIT.ink3);
+  });
+
+  it("clears the 3:1 graphical floor on the shell it is drawn against", () => {
+    // The outline is the whole reason AVL (1.54:1) and NEW (1.17:1) are visible at
+    // all, so this is the assertion the mark's legibility actually rests on. Read
+    // the alpha off the token rather than restating it — restating it is exactly how
+    // the literal drifted.
+    const alpha = Number(/,\s*\.?([0-9.]+)\s*\)$/.exec(KIT_OUTLINE)![1].replace(/^\./, "0."));
+    expect(alpha, "could not read the outline's alpha").toBeGreaterThan(0);
+    expect(ratio(over(INK, alpha, SHELL), SHELL)).toBeGreaterThanOrEqual(3);
+  });
+});
+
+describe("the rule survives a CSS parser, not just Chrome's", () => {
+  it("keeps the declaration when set through element.style", () => {
+    // Both `0` and `0%` are valid CSS and Chrome paints both, so the bare form
+    // rendered correctly in production and no test could see it: jsdom's parser
+    // rejects the unitless length and drops the WHOLE declaration, so
+    // `style.backgroundImage` came back as "". Every club is checked, because the
+    // two patterns build their stop lists differently.
+    const element = document.createElement("div");
+    const dropped: string[] = [];
+    for (const kit of ALL) {
+      element.style.backgroundImage = "";
+      element.style.backgroundImage = kitStripe(kit);
+      if (element.style.backgroundImage === "") dropped.push(kit.code);
+    }
+    expect(dropped, "a parser dropped these clubs' rules entirely").toEqual([]);
   });
 });

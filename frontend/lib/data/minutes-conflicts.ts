@@ -49,6 +49,20 @@ export interface MinutesConflict {
   readonly xp: number;
   /** Distance from the threshold, which is how the producer ranked these. */
   readonly gap: number;
+  /**
+   * Fixtures of the player's OWN history behind the minutes estimate.
+   *
+   * 0 means prior-driven. `null` means the producing artifact predates the field —
+   * NOT zero, because zero is a real answer and "unknown" must not be able to
+   * masquerade as the most suspicious possible one.
+   *
+   * This is the difference between the two sentences a fringe row can be saying:
+   * "the model has thirty fixtures saying he is fringe" is evidence against
+   * evidence, and "the model has never seen him play" is evidence against an
+   * assumption. Only the second is likely to be settled by reading the quote,
+   * which is why the producer now ranks those first.
+   */
+  readonly evidenceFixtures: number | null;
   readonly source: string;
   readonly url: string;
   readonly claimedAt: string | null;
@@ -98,6 +112,12 @@ function narrowConflict(raw: unknown): MinutesConflict | null {
     eMinutes,
     xp: optNumber(row.xp) ?? 0,
     gap: optNumber(row.gap) ?? 0,
+    // The producer writes -1 for "this artifact cannot tell you". Mapped to null
+    // here so the type carries the distinction instead of a sentinel a renderer
+    // could print.
+    evidenceFixtures: ((v) => (v === null || v < 0 ? null : v))(
+      optNumber(row.evidence_fixtures) ?? null,
+    ),
     source: optString(row.source) ?? "",
     url,
     claimedAt: optString(row.claimed_at),

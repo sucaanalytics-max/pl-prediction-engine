@@ -17,17 +17,12 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
 import {
-  FLOODLIT, HEAT, KIT_MIX_TARGET, TRAFFIC, difficultyTint, hatch, heatStep,
+  FLOODLIT, HEAT, TRAFFIC, difficultyTint, hatch, heatStep,
 } from "@/lib/margin/tokens";
 
 /** Pull the hue angle out of an oklch() triple. */
 function hue(value: string): number {
   const m = value.match(/oklch\(\s*[\d.]+\s+[\d.]+\s+([\d.]+)/);
-  if (!m) throw new Error(`not an oklch colour: ${value}`);
-  return Number(m[1]);
-}
-function lightness(value: string): number {
-  const m = value.match(/oklch\(\s*([\d.]+)/);
   if (!m) throw new Error(`not an oklch colour: ${value}`);
   return Number(m[1]);
 }
@@ -131,12 +126,6 @@ describe("one surface, and a ramp that means something", () => {
     // A light stroke, because the ground it must show against is dark — and
     // floodlit's ink, so the hatch is the same colour as the text near it.
     expect(g).toContain("233,238,245");
-  });
-
-  it("keeps the kit mix target, which only a light ground would use", () => {
-    // Retained rather than deleted: mixing a club colour toward a light target
-    // is wrong on this surface, and `surfaceIsLight` is what refuses it.
-    expect(KIT_MIX_TARGET).toBe("#f0eee8");
   });
 
   it("climbs monotonically through the points ramp", () => {

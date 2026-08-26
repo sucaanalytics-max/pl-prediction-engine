@@ -357,10 +357,12 @@ export function StatsTable({
                 key={row.elementId}
                 data-testid="stats-row"
                   className="dense-row"
+                data-owned={row.owned ? "yes" : undefined}
                 style={{
                   display: "grid", gridTemplateColumns: template,
                   borderBottom: `1px solid ${S.hair}`,
-                  background: row.owned ? "rgba(233,238,245,.03)" : "transparent",
+                  // The owned tint is CSS, keyed on `data-owned`. Inline, it beat
+                  // `.dense-row:hover` and the hover painted nothing.
                 }}
               >
                 <div style={{

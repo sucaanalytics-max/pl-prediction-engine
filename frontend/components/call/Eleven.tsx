@@ -43,7 +43,7 @@ import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { SquadRow } from "@/lib/margin/squad";
 import { DISPLAY, FLOODLIT, MONO, SANS, difficultyTint } from "@/lib/margin/tokens";
 import { kitFor, kitStripe } from "@/lib/margin/kits";
-import { EYEBROW } from "@/lib/margin/type";
+import { COLUMN_HEAD, EYEBROW } from "@/lib/margin/type";
 import { INTERVAL_AXIS, intervalBar } from "@/lib/call/board";
 import { HAUL_MARK } from "@/components/call/Pitch";
 
@@ -145,7 +145,7 @@ function FixtureCell({ row }: { readonly row: SquadRow }) {
       </span>
       {/* The rating, visible. It lived in a tooltip, which is no place for a
           five-band quantity on a screen used on a phone. */}
-      <span style={{ fontFamily: MONO, fontSize: 9.5, opacity: 0.85 }}>
+      <span style={{ fontFamily: MONO, fontSize: 9.5, color: S.ink2 }}>
         {difficulty === null ? "·" : difficulty}
       </span>
     </span>
@@ -229,10 +229,10 @@ export function Eleven(props: ElevenProps) {
             title={column.title}
             aria-pressed={live}
             style={{
-              ...EYEBROW,
+              ...COLUMN_HEAD,
               color: live ? S.ink : S.ink3,
               background: live ? "rgba(233,238,245,.06)" : "none",
-              border: 0, cursor: "pointer", height: 30, padding: "0 6px",
+              border: 0, cursor: "pointer", height: 30, padding: "0 4px",
               textAlign: column.key === "line" ? "left" : "right",
             }}
           >
@@ -243,7 +243,7 @@ export function Eleven(props: ElevenProps) {
           return (
             <span key="lead" style={{ display: "contents" }}>
               {cell}
-              <span style={{ ...EYEBROW, color: S.ink3, padding: "0 6px" }}>Player</span>
+              <span style={{ ...COLUMN_HEAD, color: S.ink3, padding: "0 4px" }}>Player</span>
             </span>
           );
         }
@@ -261,7 +261,7 @@ export function Eleven(props: ElevenProps) {
           return (
             <span key="mins-and-interval" style={{ display: "contents" }}>
               {cell}
-              <span style={{ ...EYEBROW, color: S.ink3, padding: "0 6px", textAlign: "center" }}>
+              <span style={{ ...COLUMN_HEAD, color: S.ink3, padding: "0 4px", textAlign: "center" }}>
                 q25–q75
               </span>
             </span>
@@ -293,9 +293,15 @@ export function Eleven(props: ElevenProps) {
         style={{
           display: "grid", gridTemplateColumns: TEMPLATE, alignItems: "center",
           width: "100%", height: 34, padding: 0, textAlign: "left",
-          background: coming
-            ? "rgba(120,220,140,.07)"
-            : going ? "rgba(255,90,70,.07)" : "transparent",
+          // The swap tints live in CSS, keyed on `data-swap` above, NOT here. An
+          // inline declaration outranks any author rule without `!important`, so
+          // painting the base colour inline made `.dense-row:hover` unable to win
+          // — it shipped inert on this grid, the heat grid and the stats table.
+          // Verified with a real pointer hover: the row matched :hover and its
+          // computed background was rgba(0,0,0,0).
+          //
+          // `backgroundImage` below is a DIFFERENT property and stays inline: the
+          // club rule is per-row data, not a state, and it does not compete.
           // A 3px club rule at the leading edge. `kitStripe` rather than
           // `kitBackground` because a 3px-repeat stripe inside a 3px bar renders
           // as one arbitrary colour, so a striped club would read as a plain one
@@ -307,7 +313,17 @@ export function Eleven(props: ElevenProps) {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "left center",
           border: 0, borderBottom: `1px solid ${S.hair}`,
-          cursor: "pointer", opacity: benched ? 0.72 : 1,
+          cursor: "pointer",
+          // NO bench dim. It was `opacity: benched ? 0.72 : 1`, and it cost
+          // legibility for nothing: measured in the browser, every ink3 figure in a
+          // bench row — position, P10, minutes, ownership — painted 3.40:1 against a
+          // 4.5:1 floor, because a container opacity multiplies the composited
+          // colour and ink3 is already the quietest legible tier.
+          //
+          // Nothing is lost. The bench is a SEPARATE section under its own "BENCH"
+          // heading with its own caption, so position already says which four are
+          // out; the dim was restating that in the one channel that can make a
+          // number unreadable.
           fontFamily: SANS, color: S.ink,
         }}
       >
@@ -350,7 +366,7 @@ export function Eleven(props: ElevenProps) {
           ) : null}
         </span>
 
-        <span style={{ textAlign: "right", padding: "0 6px" }}>
+        <span data-cell="xp" style={{ textAlign: "right", padding: "0 6px" }}>
           <span style={{
             fontFamily: MONO, fontSize: 12.5, fontWeight: 500,
             color: row.projection?.xp == null ? S.ink3 : S.ink,
@@ -359,7 +375,7 @@ export function Eleven(props: ElevenProps) {
           </span>
         </span>
 
-        <span style={{ textAlign: "right", padding: "0 6px" }}>
+        <span data-cell="haul" style={{ textAlign: "right", padding: "0 6px" }}>
           <span style={{
             fontFamily: MONO, fontSize: 11,
             color: haul === null ? S.ink3 : haul >= HAUL_MARK ? S.brand : S.ink3,
@@ -368,19 +384,19 @@ export function Eleven(props: ElevenProps) {
           </span>
         </span>
 
-        <span style={{ textAlign: "right", padding: "0 6px" }}>
+        <span data-cell="minutes" style={{ textAlign: "right", padding: "0 6px" }}>
           <Figure value={row.projection?.eMinutes ?? null} places={0} dim />
         </span>
 
-        <span style={{ padding: "0 6px" }}>
+        <span data-cell="interval" style={{ padding: "0 6px" }}>
           <Interval row={row} />
         </span>
 
-        <span style={{ textAlign: "right", padding: "0 6px" }}>
+        <span data-cell="fdr" style={{ textAlign: "right", padding: "0 6px" }}>
           <FixtureCell row={row} />
         </span>
 
-        <span style={{ textAlign: "right", padding: "0 6px" }}>
+        <span data-cell="ownership" style={{ textAlign: "right", padding: "0 6px" }}>
           <Figure value={row.player.ownership ?? null} places={0} dim />
         </span>
       </button>

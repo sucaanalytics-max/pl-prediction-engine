@@ -68,17 +68,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 }
 
-/** Loading skeleton for pages waiting on data */
-export function PageSkeleton({ rows = 3 }: { rows?: number }) {
-  return (
-    <div className="space-y-4">
-      {Array.from({ length: rows }, (_, i) => (
-        <div key={i} className="card p-6 animate-pulse">
-          <div className="skeleton h-4 w-1/3 mb-3" />
-          <div className="skeleton h-3 w-full mb-2" />
-          <div className="skeleton h-3 w-2/3" />
-        </div>
-      ))}
-    </div>
-  );
-}
+// `PageSkeleton` was here — a shimmering row placeholder for a loading state this
+// app does not have. Every screen renders from an `Artifact<T>` whose `absent` and
+// `unreadable` states say WHAT is missing and why; a generic skeleton is the one
+// thing that says nothing, which is why nothing ever imported it.
