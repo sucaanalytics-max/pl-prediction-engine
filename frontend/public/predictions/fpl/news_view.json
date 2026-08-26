@@ -1,19 +1,108 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T14:26:42.769280Z",
-  "n_dropped": 361,
+  "generated_at": "2026-08-26T16:01:10.413175Z",
+  "n_dropped": 351,
   "dropped_by_source": {
     "bbc_football": 111,
-    "fantasyfootballscout": 4,
-    "hayters": 65,
-    "sky_football": 181
+    "hayters": 62,
+    "sky_football": 178
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 451,
+  "n_articles": 441,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "795d500e374907ea",
+      "headline": "Sunderland explore late move for Grealish",
+      "summary": "Sunderland are exploring a potential late deal for Manchester City winger Jack Grealish.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13577448/jack-grealish-transfer-sunderland-explore-move-for-manchester-city-winger-with-former-loan-side-everton-still-interested",
+      "claimed_at": "2026-08-26T16:18:00Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ffa60eed68abb4d3",
+      "headline": "Barcelona president says they are \u2018ready to buy\u2019 Arsenal target Alvarez but Atletico continue to hold firm",
+      "summary": "Barcelona president Joan Laporta has confirmed the club remain hopeful of signing Atletico Madrid striker Julian Alvarez this summer. Laporta made it clear Barca would be prepared to complete a",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/barcelona-president-says-they-are-ready-to-buy-arsenal-target-alvarez-but-atletico-continue-to-hold-firm/",
+      "claimed_at": "2026-08-26T16:00:08Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "23be1527caa84cc5",
+      "headline": "Liverpool turn attention to Sarr after Brighton reject Minteh bids",
+      "summary": "Liverpool are exploring a move for Crystal Palace's Ismaila Sarr after Brighton reject their two bids for Yankuba Minteh.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cr7d5m4d928o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-26T15:42:13Z",
+      "players": [
+        {
+          "element_id": 122,
+          "name": "Minteh",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "88b27459d305057b",
+      "headline": "Carabao Cup third-round draw: When it is and why certain clubs cannot play each other",
+      "summary": "The Carabao Cup reaches its third-round stage this week, with the competition's biggest clubs entering the draw and a host of potentially intriguing ties on offer. The draw takes place on Wednesday night, August 26",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/carabao-cup-third-round-draw-when-it-is-and-why-certain-clubs-cannot-play-each-other/",
+      "claimed_at": "2026-08-26T15:38:42Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "9c6c8b92830d714f",
+      "headline": "Newport sign Dibley-Dias on loan from Fulham",
+      "summary": "Newport County complete their 11th signing of the summer as midfielder Matt Dibley-Dias arrives on loan from Premier League Fulham.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c4gr0xdlk8zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-26T15:32:07Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "ba501ac34c3a5b4b",
       "headline": "Bournemouth latest: Scott 'not for sale' with bids to be rejected",
@@ -27,6 +116,24 @@
           "element_id": 69,
           "name": "Scott",
           "club": "BOU",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "a51b13439d6b63ac",
+      "headline": "Coventry sign defender Pinnock from Brentford",
+      "summary": "Coventry City have signed Jamaica centre-back Ethan Pinnock from Brentford for an undisclosed fee, reported to be around \u00a36m.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cew9lqzx9jeo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-26T15:00:52Z",
+      "players": [
+        {
+          "element_id": 91,
+          "name": "Pinnock",
+          "club": "BRE",
           "held": null
         }
       ],
@@ -53,6 +160,24 @@
     {
       "digest": "9e2c0e1b03b1fab8",
       "headline": "Tottenham latest: Savio in line to make Spurs debut tonight",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-26T15:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "c9c52efd7f9595a4",
+      "headline": "Tottenham latest: Savio in line to make debut tonight",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -144,6 +269,24 @@
       "digest": "872a64383bb589c6",
       "headline": "Will a Premier League club break record for transfer sales in one window?",
       "summary": "Aston Villa, Man City and Newcastle are closing in on Monaco's record for transfer income generated in a single window.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ce9ejxvky8vo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-26T13:45:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "c76b5230a257d89f",
+      "headline": "Will a Premier League club break record for transfer sales in one window?",
+      "summary": "Aston Villa, Manchester City and Newcastle are closing in on Monaco's record for transfer income generated in a single window.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/ce9ejxvky8vo?at_medium=RSS&at_campaign=rss",
@@ -339,6 +482,12 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        },
+        {
+          "element_id": 614,
+          "name": "Hadjam",
+          "club": "BHA",
           "held": null
         }
       ],
@@ -1107,42 +1256,6 @@
       "touches_squad": null
     },
     {
-      "digest": "01265a309a778ae0",
-      "headline": "Baleba completes \u00a370m Man Utd move from Brighton",
-      "summary": "Manchester United sign Cameroon midfielder Carlos Baleba from Brighton in a \u00a370m deal.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c1mv0rxpd1no?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-25T15:55:56Z",
-      "players": [
-        {
-          "element_id": 131,
-          "name": "Baleba",
-          "club": "MUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "4359c77e2bd28aab",
-      "headline": "Why is Crystal Palace's home kit white?",
-      "summary": "BBC Sport's Ask Me Anything team explains why Crystal Palace are wearing a white home shirt during the 2026-27 season",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/articles/czxzlv8dpj2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-25T15:43:13Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "8489bd7d4caf444d",
       "headline": "De Zerbi explains why Spurs have spent big to sign Savio",
       "summary": "Tottenham boss Roberto De Zerbi believes new signing Savio has the potential to become one of the best wingers in the world. Savio has joined Spurs from Manchester City in a deal worth \u00a375m plus \u00a310m in potential add-ons and De Zerbi believes",
@@ -1179,24 +1292,6 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "bb574a0f145bda9c",
-      "headline": "All the best Savinho - welcome Savio... new club, new name for Spurs signing",
-      "summary": "Tottenham sign Brazil winger Savinho from Manchester City for an initial \u00a375m - and he reverts to being called Savio.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cy7z637nj8jo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-25T13:57:46Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1623,120 +1718,6 @@
           "element_id": 439,
           "name": "\u0160e\u0161ko",
           "club": "MUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "89e1c1928972dc90",
-      "headline": "Dedic + Livramento: Newcastle injury latest for FPL Gameweek 1",
-      "summary": "Matthias Jaissle hinted at a debut for his new full-back signing The post Dedic + Livramento: Newcastle injury latest for FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scou",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/dedic-livramento-newcastle-injury-latest-for-fpl-gameweek-1",
-      "claimed_at": "2026-08-21T16:00:29Z",
-      "players": [
-        {
-          "element_id": 450,
-          "name": "Livramento",
-          "club": "NEW",
-          "held": null
-        },
-        {
-          "element_id": 593,
-          "name": "Dedi\u0107",
-          "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "8cbf52782d66fdcb",
-      "headline": "Manzambi, Madjo + Watkins: Aston Villa injury latest for FPL Gameweek 1",
-      "summary": "Unai Emery spoke to the press on Thursday The post Manzambi, Madjo + Watkins: Aston Villa injury latest for FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/manzambi-madjo-watkins-aston-villa-injury-latest-for-fpl-gameweek-1",
-      "claimed_at": "2026-08-21T15:54:42Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": null
-        },
-        {
-          "element_id": 55,
-          "name": "Watkins",
-          "club": "AVL",
-          "held": null
-        },
-        {
-          "element_id": 582,
-          "name": "Madjo",
-          "club": "AVL",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "62a3e540b334e57d",
-      "headline": "Lack of match fitness - 75% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-08-21T15:22:48.149081Z",
-      "players": [
-        {
-          "element_id": 499,
-          "name": "Pedro Porro",
-          "club": "TOT",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "2306b7452c2ab1a7",
-      "headline": "Bruno G, Saka, Timber: Arsenal injury latest for FPL Gameweek 1",
-      "summary": "The champions host newly promoted Coventry on Friday night The post Bruno G, Saka, Timber: Arsenal injury latest for FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/bruno-g-saka-timber-arsenal-injury-latest-for-fpl-gameweek-1",
-      "claimed_at": "2026-08-21T15:00:42Z",
-      "players": [
-        {
-          "element_id": 5,
-          "name": "J.Timber",
-          "club": "ARS",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1e9557debe915a61",
-      "headline": "Gomez, David + Minteh: Brighton injury latest for FPL Gameweek 1",
-      "summary": "There's a short turnaround for the Seagulls, after their 0-0 at Tromso The post Gomez, David + Minteh: Brighton injury latest for FPL Gameweek 1 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/21/gomez-david-minteh-brighton-injury-latest-for-fpl-gameweek-1",
-      "claimed_at": "2026-08-21T14:55:05Z",
-      "players": [
-        {
-          "element_id": 122,
-          "name": "Minteh",
-          "club": "BHA",
-          "held": null
-        },
-        {
-          "element_id": 594,
-          "name": "David",
-          "club": "BHA",
           "held": null
         }
       ],
