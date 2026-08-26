@@ -286,6 +286,7 @@ export function Eleven(props: ElevenProps) {
         type="button"
         onClick={() => onToggle(row)}
         data-testid={benched ? "eleven-bench-row" : "eleven-row"}
+        className="dense-row"
         data-player={row.player.name}
         data-swap={coming ? "in" : going ? "out" : undefined}
         aria-label={`${benched ? "Start" : "Bench"} ${row.player.name}`}

@@ -356,6 +356,7 @@ export function StatsTable({
               <div
                 key={row.elementId}
                 data-testid="stats-row"
+                  className="dense-row"
                 style={{
                   display: "grid", gridTemplateColumns: template,
                   borderBottom: `1px solid ${S.hair}`,

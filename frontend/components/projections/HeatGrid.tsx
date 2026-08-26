@@ -304,6 +304,7 @@ export function HeatGrid(props: HeatGridProps) {
               <div
                 key={row.elementId}
                 data-testid="grid-row"
+                  className="dense-row"
                 style={{
                   display: "grid", gridTemplateColumns: template,
                   borderBottom: `1px solid ${S.hair}`,
@@ -348,24 +349,48 @@ export function HeatGrid(props: HeatGridProps) {
 
                 {row.cells.map((cell, index) => {
                   const band = bands[index];
-                  const [background, ink] = band === null
+                  const [full, fullInk] = band === null
                     ? ["transparent", S.ink3] as const
                     : stepOf(HEAT, band);
+                  const beyond = index >= span;
+                  /*
+                   * Dim the BACKGROUND, never the cell.
+                   *
+                   * `opacity` on the container multiplied the fill AND the figure
+                   * inside it, and the figure is the thing being compared. At 0.34
+                   * every band measured between 1.71:1 and 2.62:1 — below even the
+                   * 3:1 floor for a graphical object — and the two BRIGHTEST bands
+                   * were the worst, because a light figure and a lightening ground
+                   * converge as both fade toward the shell. The comment beside it
+                   * said out-of-span fixtures "are exactly what makes a span worth
+                   * changing", and the implementation made them unreadable. Nobody
+                   * changes a span over a cell they cannot read.
+                   *
+                   * Mixed 55% toward the shell instead, with the ink left at full
+                   * strength. At that depth every band clears 4.5:1 against the
+                   * light ink — so the pair's step-4 flip to dark ink is dropped
+                   * out of span, because a dimmed fill is always dark enough for
+                   * the light one. Measured, not eyeballed; `tokens.test.ts` holds
+                   * the in-span figures and the mix is checked below it.
+                   */
+                  const background = beyond && full !== "transparent"
+                    ? `color-mix(in oklab, ${full} 45%, ${S.shell})`
+                    : full;
+                  const ink = beyond && full !== "transparent" ? S.ink : fullInk;
                   return (
                     <div key={cell.gameweek} style={{ padding: 1, position: "relative" }}>
                       <div style={{
                         height: 34, background, color: ink,
                         display: "flex", flexDirection: "column",
                         alignItems: "center", justifyContent: "center",
-                        // Outside the span the cell is context for the total, so
-                        // it is dimmed rather than removed: fixtures beyond the
-                        // span are exactly what makes a span worth changing.
-                        opacity: index < span ? 1 : 0.34,
                         border: band === null ? `1px solid ${S.hair}` : "none",
                       }}>
+                        {/* No nested opacity. It compounded with the container's
+                            and put this label at 2.11:1 out of span — and even IN
+                            span it dropped bands 2 and 3 to 3.39 and 4.26:1, on a
+                            label that names the opponent. */}
                         <span style={{
                           fontFamily: MONO, fontSize: 8, letterSpacing: ".04em",
-                          opacity: 0.75,
                         }}>
                           {cell.blank ? "—" : cell.fixture ?? "?"}
                         </span>

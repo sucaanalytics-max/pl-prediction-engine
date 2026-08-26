@@ -191,6 +191,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                 <div
                   key={cclub.teamId}
                   data-testid="phase-row"
+                  className="dense-row"
                   style={{
                     display: "grid", gridTemplateColumns: template, gap: 3,
                     marginBottom: 3,
@@ -293,6 +294,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                 <li
                   key={`${phase.teamId}-${phase.fromGameweek}`}
                   data-testid="phase-entry"
+                  className="dense-row"
                   style={{
                     display: "flex", alignItems: "center", gap: 10,
                     padding: "8px 12px", borderBottom: `1px solid ${S.hair}`,

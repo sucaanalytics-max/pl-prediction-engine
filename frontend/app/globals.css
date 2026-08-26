@@ -103,26 +103,26 @@
    * /markets, /players, /matches/[id], /health and /evidence. Those routes are the
    * ones the surface restructure removes -- 26 routes down to 4 -- so recolouring
    * them is work that gets deleted. They keep the green until they go. */
-  --brand:        oklch(0.5 0.09 250);
-  --brand-hover:  oklch(0.42 0.09 250);
-  --brand-muted:  oklch(0.5 0.09 250 / 0.08);
-  --brand-border: oklch(0.5 0.09 250 / 0.32);
+  --brand:        oklch(0.8 0.08 250);
+  --brand-hover:  oklch(0.86 0.08 250);
+  --brand-muted:  oklch(0.8 0.08 250 / 0.12);
+  --brand-border: oklch(0.52 0.08 250);
 
   /* Prediction outcomes, on the semantic trio rather than a palette of their own */
-  --home:       oklch(0.45 0.13 155);
-  --home-muted: oklch(0.45 0.13 155 / 0.08);
-  --draw:       oklch(0.64 0.13 80);
-  --draw-muted: oklch(0.64 0.13 80 / 0.10);
-  --away:       oklch(0.55 0.13 30);
-  --away-muted: oklch(0.55 0.13 30 / 0.09);
+  --home:       oklch(0.82 0.14 155);
+  --home-muted: oklch(0.82 0.14 155 / 0.12);
+  --draw:       oklch(0.8 0.13 85);
+  --draw-muted: oklch(0.8 0.13 85 / 0.12);
+  --away:       oklch(0.72 0.16 30);
+  --away-muted: oklch(0.72 0.16 30 / 0.12);
 
   /* Semantic status */
-  --success: oklch(0.45 0.13 155); --success-muted: oklch(0.45 0.13 155 / 0.08); --success-border: oklch(0.45 0.13 155 / 0.30);
-  --warning: oklch(0.64 0.13 80);  --warning-muted: oklch(0.64 0.13 80 / 0.10);  --warning-border: oklch(0.64 0.13 80 / 0.32);
-  --error:   oklch(0.55 0.13 30);  --error-muted:   oklch(0.55 0.13 30 / 0.09);  --error-border:   oklch(0.55 0.13 30 / 0.32);
-  --info:    #55534a;              --info-muted:    rgba(27, 26, 22, 0.06);      --info-border:    rgba(27, 26, 22, 0.18);
+  --success: oklch(0.82 0.14 155); --success-muted: oklch(0.82 0.14 155 / 0.12); --success-border: oklch(0.5 0.12 155);
+  --warning: oklch(0.8 0.13 85);  --warning-muted: oklch(0.8 0.13 85 / 0.12);  --warning-border: oklch(0.5 0.1 85);
+  --error:   oklch(0.72 0.16 30);  --error-muted:   oklch(0.72 0.16 30 / 0.12);  --error-border:   oklch(0.5 0.12 30);
+  --info:    rgba(233, 238, 245, 0.72);              --info-muted:    rgba(233, 238, 245, 0.06);      --info-border:    rgba(233, 238, 245, 0.18);
 
-  --overlay: rgba(27, 26, 22, 0.45);
+  --overlay: rgba(10, 12, 15, 0.82);
 
   /* Shadows and glows are retired.
      Kept as no-op variables rather than deleted: roughly forty rules across
@@ -139,11 +139,11 @@
   --glow-away:   none;
 
   /* Chart */
-  --chart-grid:           rgba(27, 26, 22, 0.09);
+  --chart-grid:           rgba(233, 238, 245, 0.09);
   --chart-tooltip-bg:     #14181d;
   --chart-tooltip-border: rgba(233, 238, 245, 0.17);
   --chart-tooltip-text:   #e9eef5;
-  --chart-tick:           rgba(233, 238, 245, 0.38);
+  --chart-tick:           rgba(233, 238, 245, 0.55);
 
   /* Fonts */
   --font-display: var(--font-display-anton), 'Arial Narrow', system-ui, sans-serif;
@@ -222,15 +222,15 @@
   --success: oklch(0.82 0.14 155); --success-muted: oklch(0.82 0.14 155 / 0.12); --success-border: oklch(0.5 0.12 155);
   --warning: oklch(0.8 0.13 85);   --warning-muted: oklch(0.8 0.13 85 / 0.12);   --warning-border: oklch(0.5 0.1 85);
   --error:   oklch(0.72 0.16 30);  --error-muted:   oklch(0.72 0.16 30 / 0.12);  --error-border:   oklch(0.5 0.12 30);
-  --info:    rgba(244, 243, 238, 0.62); --info-muted: rgba(244, 243, 238, 0.06); --info-border: rgba(244, 243, 238, 0.18);
+  --info:    rgba(233, 238, 245, 0.72); --info-muted: rgba(233, 238, 245, 0.06); --info-border: rgba(233, 238, 245, 0.18);
 
-  --overlay: rgba(10, 10, 7, 0.82);
+  --overlay: rgba(10, 12, 15, 0.82);
 
-  --chart-grid:           rgba(244, 243, 238, 0.09);
-  --chart-tooltip-bg:     #1a1913;
-  --chart-tooltip-border: rgba(244, 243, 238, 0.18);
-  --chart-tooltip-text:   #f4f3ee;
-  --chart-tick:           rgba(244, 243, 238, 0.42);
+  --chart-grid:           rgba(233, 238, 245, 0.09);
+  --chart-tooltip-bg:     #14181d;
+  --chart-tooltip-border: rgba(233, 238, 245, 0.17);
+  --chart-tooltip-text:   #e9eef5;
+  --chart-tick:           rgba(233, 238, 245, 0.55);
 
   --ambient-bg: #0d1013;
   /* See :root — kept in both blocks because it is a surface colour, and
@@ -670,8 +670,17 @@
 
 /* ── Focus visible ────────────────────────────────────────────────────────────── */
 *:focus-visible {
-  outline: 2px solid var(--accent-border);
-  outline-offset: 2px;
+  /* Full-alpha accent, not --accent-border. That token is the accent at 0.34
+     alpha and composites to 2.01:1 against the shell — WCAG 1.4.11 wants 3:1 for
+     a non-text indicator, and this was the app's ONLY keyboard affordance. The
+     full-strength hue measures 8.80:1 and was already in the palette.
+
+     Offset inward rather than outward: an outward ring falls outside the
+     `overflow-x: auto` wrappers on HeatGrid, StatsTable and the eleven, and gets
+     clipped exactly where the dense tables are — so the one place a keyboard
+     user most needs it is where it disappeared. */
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
   border-radius: 0;
 }
 
@@ -883,4 +892,53 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 1100px) {
   .call-board { grid-template-columns: minmax(0, 1fr) !important; }
   .call-board > div:first-child { border-right: 0 !important; }
+}
+
+/* ── Dense grids: hover and a header that stays ────────────────────────────────
+ *
+ * The eleven, the heat grid, the stats table, the phase matrix, the plan grid and
+ * the rail all style through the React `style` prop, which cannot express `:hover`
+ * or `position: sticky` sensibly — so neither affordance was ever rejected, it was
+ * unreachable. A grep across those six found zero pointer affordances and zero
+ * sticky positioning.
+ *
+ * Both cost nothing in vertical space, which is why they are the cheapest thing on
+ * the list: a hover band adds no height to a row and a pinned header adds none to
+ * the table. The heat grid scrolls sideways across eight gameweek columns with a
+ * header that scrolls off the top, so a reader deep in six hundred rows was reading
+ * a copper cell with no visible column identity at all.
+ *
+ * The hover tint is a locator rather than a text ground — 1.10:1 against the shell
+ * — so 1.4.11 does not bind on it, and it deliberately does not shift the row's
+ * own background states (a swap in or out already tints the row, and a hover that
+ * overrode those would hide the thing it was pointing at).
+ */
+.dense-row { transition: background-color .12s; }
+.dense-row:hover { background-color: rgba(233, 238, 245, 0.05); }
+
+/* A STICKY HEADER IS NOT AVAILABLE HERE, and the reason is structural rather
+ * than a matter of taste — recorded so the next person does not spend the
+ * afternoon I did.
+ *
+ * Every dense grid wraps its columns in `overflow-x: auto` so the week columns can
+ * scroll sideways. CSS computes the other axis to `auto` as well, which makes that
+ * wrapper the nearest scrolling ancestor — and `position: sticky` sticks inside its
+ * scrolling ancestor, not the viewport. Measured on /players: the wrapper's
+ * scrollHeight equals its clientHeight (26349px both), so it never scrolls
+ * vertically and a header pinned inside it has nothing to stick against. It
+ * scrolled away with the page, exactly as if the rule were absent.
+ *
+ * Two routes actually work, and both are decisions rather than fixes:
+ *   1. Give the wrapper a max-height so it scrolls internally. Sticky then works,
+ *      but the reader scrolls inside a box instead of down the page — a real change
+ *      to how a desk-first planner behaves.
+ *   2. Freeze the identity columns outside the horizontal scroller and scroll only
+ *      the week columns. Better, and a restructure of four grids.
+ *
+ * Neither is a one-line CSS rule, so neither is here. What is NOT here either is an
+ * inert `.dense-head` class that looks like it works.
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  .dense-row { transition: none; }
 }

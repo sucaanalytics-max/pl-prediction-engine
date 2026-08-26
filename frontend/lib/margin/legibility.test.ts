@@ -244,6 +244,34 @@ describe("rule 1 — nothing meaningful below 11px", () => {
 
 });
 
+describe("rule 3 — no container opacity behind a figure", () => {
+  it("never dims a cell that holds text", () => {
+    /*
+     * `opacity` on a container multiplies the fill AND the text inside it, and on a
+     * heat cell the text is the thing being compared. HeatGrid dimmed out-of-span
+     * cells to 0.34 and every band landed between 1.71:1 and 2.62:1 — below even the
+     * 3:1 graphical floor — with the two BRIGHTEST bands worst, because a light
+     * figure and a lightening ground converge as both fade toward the shell. An 8px
+     * label inside carried a second 0.75 and compounded to 2.11:1.
+     *
+     * The fix is to dim the BACKGROUND and leave the ink alone, so this scans for
+     * the shape of the mistake rather than trusting the fix to stay. Measured after:
+     * out-of-span cells run 5.70:1 to 14.82:1.
+     */
+    const offenders: string[] = [];
+    for (const path of ["components/projections/HeatGrid.tsx"]) {
+      const source = readFileSync(path, "utf8");
+      for (const m of source.matchAll(/opacity:\s*(?!1\b)[0-9.]+/g)) {
+        offenders.push(`${path}: ${m[0]}`);
+      }
+    }
+    expect(
+      offenders,
+      "dim the background with color-mix, never the container that holds the figure",
+    ).toEqual([]);
+  });
+});
+
 describe("rule 2 — ink4 is a border tone", () => {
   it("never paints text with it", () => {
     /* `color: surface.ink4` and `tone={S.ink4}` are the two ways this board sets a text

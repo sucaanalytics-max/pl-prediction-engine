@@ -197,6 +197,49 @@ describe("the design language holds", () => {
     const missing = [...paper].filter((t) => !ink.has(t) && !surfaceIndependent(t));
     expect(missing, "defined for paper but not for ink").toEqual([]);
   });
+
+  it("gives both blocks the SAME value, not merely the same keys", () => {
+    /*
+     * The no-theme-toggle decision is justified by ":root and .dark hold the same
+     * floodlit values, so a toggle would change nothing". That was true of the
+     * surfaces and the four text tiers and false of everything else: 28 of 44
+     * shared tokens differed, and `:root` still carried light-mode hues drawn for
+     * a paper ground. Measured on the floodlit shell they inherit, `--success` was
+     * 2.79:1, `--info` 2.47:1, `--brand` 3.18:1 and `--error` 3.69:1 — three of
+     * them below even the 3:1 UI floor.
+     *
+     * Harmless only because providers.tsx pins dark. A stale `theme` in
+     * localStorage from when this app shipped light mode, or a pre-hydration paint,
+     * landed a reader on a palette where "agrees with the market" was a green at
+     * 2.79:1. This converts the decision from a claim into a guard.
+     */
+    const values = (selector: string) => {
+      const start = css.indexOf(selector);
+      const body = css.slice(start, css.indexOf("}", start));
+      return new Map(
+        [...body.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/g)]
+          .map((m) => [m[1], m[2].trim()] as const),
+      );
+    };
+    const paper = values(":root {");
+    const ink = values(".dark {");
+    const surfaceIndependent = (t: string) =>
+      t.startsWith("--chrome") || t.startsWith("--font") || t.startsWith("--radius")
+      || t.startsWith("--shadow") || t.startsWith("--glow");
+
+    const differing: string[] = [];
+    for (const [token, value] of paper) {
+      if (surfaceIndependent(token)) continue;
+      const other = ink.get(token);
+      if (other !== undefined && other !== value) {
+        differing.push(`${token}: :root ${value} vs .dark ${other}`);
+      }
+    }
+    expect(
+      differing,
+      "one design, one value — a differing token means the toggle is not a no-op",
+    ).toEqual([]);
+  });
 });
 
 describe("the base face is the body face", () => {
