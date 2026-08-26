@@ -47,7 +47,7 @@ export default function ReviewPage() {
 
         <p
           className="text-[11px] leading-relaxed max-w-2xl"
-          style={{ color: "var(--text-4)" }}
+          style={{ color: "var(--text-3)" }}
         >
           Every judgement on this page is made against{" "}
           <span className="font-mono">predictions/fpl/ledger/</span>, the record

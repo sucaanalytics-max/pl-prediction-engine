@@ -274,7 +274,7 @@ export function HeatGrid(props: HeatGridProps) {
                   // does — "GW2" inside the span, lowercase "gw2" beyond it — and
                   // colour still dims outward on top of that, rather than instead
                   // of it.
-                  color: index < span ? S.ink2 : S.ink4,
+                  color: index < span ? S.ink2 : S.ink3,
                 }}>
                   {(index < span ? "GW" : "gw") + week}
                 </span>
@@ -349,7 +349,7 @@ export function HeatGrid(props: HeatGridProps) {
                 {row.cells.map((cell, index) => {
                   const band = bands[index];
                   const [background, ink] = band === null
-                    ? ["transparent", S.ink4] as const
+                    ? ["transparent", S.ink3] as const
                     : stepOf(HEAT, band);
                   return (
                     <div key={cell.gameweek} style={{ padding: 1, position: "relative" }}>
@@ -398,7 +398,7 @@ export function HeatGrid(props: HeatGridProps) {
                   ) : null}
                   <span style={{
                     fontFamily: DISPLAY, fontSize: 17,
-                    color: row.total === null ? S.ink4 : S.ink,
+                    color: row.total === null ? S.ink3 : S.ink,
                   }}>
                     {row.total === null ? "—" : row.total.toFixed(1)}
                   </span>

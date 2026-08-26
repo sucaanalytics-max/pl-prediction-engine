@@ -301,7 +301,7 @@ export default function CaptureForm({
             width: "auto",
             cursor: ready && !pending ? "pointer" : "not-allowed",
             background: ready ? S.ink : S.inset,
-            color: ready ? S.shell : S.ink4,
+            color: ready ? S.shell : S.ink3,
           }}
         >
           {pending ? "Recording…" : "Record this position"}

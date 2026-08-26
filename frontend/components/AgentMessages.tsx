@@ -80,7 +80,7 @@ export default function AgentMessages() {
 
   if (feed.messages.length === 0) {
     return (
-      <p className="text-xs" style={{ color: "var(--text-4)" }}>
+      <p className="text-xs" style={{ color: "var(--text-3)" }}>
         The agent has said nothing. That is its normal state rather than a gap —
         it publishes a message when it has one, and silence here means no
         decision, no caveat and no missed seal to report.
@@ -121,7 +121,7 @@ export default function AgentMessages() {
                   <strong>{message.title}</strong>
                 </p>
                 {message.createdAt ? (
-                  <p className="text-[10px] font-mono" style={{ color: "var(--text-4)" }}>
+                  <p className="text-[10px] font-mono" style={{ color: "var(--text-3)" }}>
                     {istDateTime(message.createdAt)}
                   </p>
                 ) : null}
@@ -137,7 +137,7 @@ export default function AgentMessages() {
       </ul>
 
       {feed.malformedCount > 0 ? (
-        <p className="text-[10px]" style={{ color: "var(--text-4)" }}>
+        <p className="text-[10px]" style={{ color: "var(--text-3)" }}>
           {feed.malformedCount} record
           {feed.malformedCount === 1 ? "" : "s"} in the feed could not be read and
           are shown above as broken messages. They are counted rather than

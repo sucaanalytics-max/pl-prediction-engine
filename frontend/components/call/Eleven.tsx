@@ -120,7 +120,7 @@ function Figure({ value, places = 1, dim }: {
   return (
     <span style={{
       fontFamily: MONO, fontSize: 11.5,
-      color: value === null ? S.ink4 : dim ? S.ink3 : S.ink2,
+      color: value === null ? S.ink3 : dim ? S.ink3 : S.ink2,
     }}>
       {/* A dash, never a zero: unpublished and nought are different claims. */}
       {value === null ? "—" : value.toFixed(places)}
@@ -133,7 +133,7 @@ function FixtureCell({ row }: { readonly row: SquadRow }) {
   const [background, colour] = difficultyTint(difficulty);
   const label = row.player.fixture ?? row.player.fixtures?.[0]?.label ?? null;
   if (label === null) {
-    return <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink4 }}>—</span>;
+    return <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>—</span>;
   }
   return (
     <span style={{
@@ -160,7 +160,7 @@ function Interval({ row }: { readonly row: SquadRow }) {
 
   if (bar === null) {
     return (
-      <span style={{ fontFamily: MONO, fontSize: 9.5, color: S.ink4 }}>
+      <span style={{ fontFamily: MONO, fontSize: 9.5, color: S.ink3 }}>
         no interval
       </span>
     );
@@ -352,7 +352,7 @@ export function Eleven(props: ElevenProps) {
         <span style={{ textAlign: "right", padding: "0 6px" }}>
           <span style={{
             fontFamily: MONO, fontSize: 12.5, fontWeight: 500,
-            color: row.projection?.xp == null ? S.ink4 : S.ink,
+            color: row.projection?.xp == null ? S.ink3 : S.ink,
           }}>
             {row.projection?.xp == null ? "—" : row.projection.xp.toFixed(2)}
           </span>
@@ -361,7 +361,7 @@ export function Eleven(props: ElevenProps) {
         <span style={{ textAlign: "right", padding: "0 6px" }}>
           <span style={{
             fontFamily: MONO, fontSize: 11,
-            color: haul === null ? S.ink4 : haul >= HAUL_MARK ? S.brand : S.ink3,
+            color: haul === null ? S.ink3 : haul >= HAUL_MARK ? S.brand : S.ink3,
           }}>
             {haul === null ? "—" : `${Math.round(haul * 100)}`}
           </span>

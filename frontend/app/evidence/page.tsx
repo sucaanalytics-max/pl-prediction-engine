@@ -71,7 +71,7 @@ export default function EvidencePage() {
           subtitle="What has decayed, and how close the model is to the best any forecaster could do"
         >
           {gameweek === null ? (
-            <p className="text-xs" style={{ color: "var(--text-4)" }}>
+            <p className="text-xs" style={{ color: "var(--text-3)" }}>
               The gameweek could not be resolved, so the decay ledger cannot be
               pointed at a projection.
             </p>

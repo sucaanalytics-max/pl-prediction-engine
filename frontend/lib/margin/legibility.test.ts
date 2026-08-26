@@ -7,11 +7,19 @@
  * WCAG's floor is 4.5:1 for text under 18.66px and 3:1 for large text and UI, so every
  * one of those figures was below the line — and two of them below the line for ANY size.
  *
- * Floodlit collapsed the two surfaces into one and the bands did not move: on `#0d1013`,
- * ink measures 16.37:1, ink2 6.34:1, ink3 3.21:1 and ink4 2.14:1. The same two rules
- * bind, with one surface to check instead of two — and they are still measured below
- * rather than read off this paragraph, because a palette edit that quietly drops ink3
- * under 3:1 is exactly what this file exists to catch.
+ * Floodlit collapsed the two surfaces into one and the bands did not move for a long
+ * while: ink 16.37:1, ink2 6.34:1, ink3 3.21:1, ink4 2.14:1. Two of those were
+ * failures rather than choices. ink3 was the second most common text colour on the
+ * call screen, at 3.22:1 and mostly at 9.5px, where 1.4.3's 3:1 large-text allowance
+ * does not apply — that needs 24px, or 18.66px bold. It is now 0.55 alpha / 5.50:1,
+ * and ink2 0.72 / 8.73:1.
+ *
+ * ink4 was deliberately NOT raised. It is a border tone; one that cleared the text
+ * floor would stop being one, and rule 2 below would lose its premise. The places
+ * painting text with it moved to ink3 instead.
+ *
+ * All of it is still measured below rather than read off this paragraph, because a
+ * palette edit that quietly drops a tier is exactly what this file exists to catch.
  *
  * The rules:
  *   1. Nothing that carries meaning is set below 11px.
@@ -20,7 +28,8 @@
  * Both are scanned rather than trusted, because both were violated by code written to a
  * document that stated the contrast requirement correctly.
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { FLOODLIT, surfaceIsLight, type MarginSurface } from "@/lib/margin/tokens";
@@ -65,7 +74,58 @@ const SURFACES: ReadonlyArray<readonly [string, MarginSurface]> = [
  * violations gets skipped rather than fixed. Add them when one of those pages is
  * next opened.
  */
-const FILES = ["components/margin/Marks.tsx"];
+function walk(dir: string, out: string[] = []): string[] {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) walk(path, out);
+    else if (/\.tsx?$/.test(entry.name) && !/\.test\.tsx?$/.test(entry.name)) {
+      out.push(path);
+    }
+  }
+  return out;
+}
+
+/** Every screen and component, plus the stylesheet. */
+const FILES = [...walk("components"), ...walk("app"), "app/globals.css"];
+
+/**
+ * Sizes below the floor that were already shipped when this scan was widened.
+ *
+ * An allowlist rather than a lowered floor, and it exists to be burned down: an
+ * allowlist that shrinks is enforcement, a one-file FILES array was not. Adding a
+ * NEW sub-floor size fails the test; the entries here only stop the suite failing
+ * on a backlog nobody has had a chance to fix yet.
+ *
+ * The one deliberate exemption is EYEBROW at 9px, argued in `lib/margin/type.ts`:
+ * an eyebrow names a region the reader is already looking at, so it is redundant
+ * with the figure beneath it. That argument does NOT stretch to a column header,
+ * which is the only thing saying what a column of numbers means — those are being
+ * moved to 11px rather than exempted.
+ */
+const ALLOWED = new Map<string, number>([
+  ["app/globals.css", 15],
+  ["components/AgentMessages.tsx", 3],
+  ["components/ErrorBoundary.tsx", 1],
+  ["components/MinutesConflicts.tsx", 6],
+  ["components/call/CallBoard.tsx", 4],
+  ["components/call/Eleven.tsx", 8],
+  ["components/call/Pitch.tsx", 8],
+  ["components/call/Rail.tsx", 5],
+  ["components/call/Tiles.tsx", 1],
+  ["components/data/Artifact.tsx", 1],
+  ["components/margin/Compare.tsx", 5],
+  ["components/margin/NewsView.tsx", 7],
+  ["components/margin/PlanGrid.tsx", 9],
+  ["components/margin/ResearchView.tsx", 11],
+  ["components/margin/Scatter.tsx", 2],
+  ["components/margin/WatchView.tsx", 4],
+  ["components/phases/PhaseMatrix.tsx", 8],
+  ["components/projections/HeatGrid.tsx", 9],
+  ["components/projections/ProjectionGridSection.tsx", 1],
+  ["components/review/DecisionReview.tsx", 5],
+  ["components/stats/StatsTable.tsx", 5],
+  ["components/ui/ProgressBar.tsx", 1],
+]);
 
 // ── contrast ────────────────────────────────────────────────────────────────────
 
@@ -112,10 +172,17 @@ describe("the tones this board paints text with", () => {
       }
     });
 
-    it(`${name}: ink3 clears 3:1, so tracked labels may use it but body may not`, () => {
+    it(`${name}: ink3 now clears 4.5:1, so it may carry body text too`, () => {
+      // This assertion is inverted from what it was, and the old docstring
+      // anticipated it: "if ink3 ever clears 4.5 this rule can relax". It has.
+      //
+      // ink3 was 0.38 alpha at 3.22:1 and FAILED 1.4.3 for normal text — 89 nodes
+      // on the call screen, mostly at 9.5px, where the 3:1 large-text allowance is
+      // categorically unavailable. At 0.55 it measures 5.50:1 and the tier is
+      // usable for the absence states, provenance lines and column headers that
+      // were already using it.
       const r = ratio(surface.ink3, surface)!;
-      expect(r).toBeGreaterThanOrEqual(3);
-      expect(r, "if ink3 ever clears 4.5 this rule can relax").toBeLessThan(4.5);
+      expect(r, `${name}.ink3 is ${r.toFixed(2)}:1`).toBeGreaterThanOrEqual(4.5);
     });
 
     it(`${name}: ink4 fails 3:1, which is why it may not paint text`, () => {
@@ -136,6 +203,7 @@ describe("the tones this board paints text with", () => {
 describe("rule 1 — nothing meaningful below 11px", () => {
   it("finds no size under the floor anywhere on the board", () => {
     const offenders: string[] = [];
+    const stale: string[] = [];
     for (const path of FILES) {
       const source = readFileSync(path, "utf8");
       const sizes = [
@@ -147,12 +215,31 @@ describe("rule 1 — nothing meaningful below 11px", () => {
          * scan looking for an explicit size could see the smallest text on the page.
          */
         ...source.matchAll(/\bsize = ([0-9.]+)/g),
+        /*
+         * Two more shapes the original three regexes were structurally blind to, which
+         * is why widening FILES alone would not have been enough: Tailwind's arbitrary
+         * size and a plain CSS declaration. Verified by running the old patterns
+         * against both — neither matched, so 17 Tailwind usages across six files and
+         * 33 declarations in globals.css were invisible to a green test.
+         */
+        ...source.matchAll(/text-\[([0-9.]+)px\]/g),
+        ...source.matchAll(/font-size:\s*([0-9.]+)px/g),
       ];
-      for (const m of sizes) {
-        if (Number(m[1]) < FLOOR) offenders.push(`${path}: ${m[0]}`);
+      const found = sizes.filter((m) => Number(m[1]) < FLOOR).length;
+      const allowance = ALLOWED.get(path) ?? 0;
+      if (found > allowance) {
+        offenders.push(
+          `${path}: ${found} below ${FLOOR}px, ${allowance} allowed`,
+        );
+      }
+      if (found < allowance) {
+        // The ratchet. Fixing sizes without lowering the allowance leaves room
+        // for them to come back, which is how an allowlist becomes a floor.
+        stale.push(`${path}: now ${found}, allowance still ${allowance} — lower it`);
       }
     }
     expect(offenders, `below the ${FLOOR}px floor`).toEqual([]);
+    expect(stale, "allowances that no longer match reality").toEqual([]);
   });
 
 });
@@ -164,8 +251,19 @@ describe("rule 2 — ink4 is a border tone", () => {
     const offenders: string[] = [];
     for (const path of FILES) {
       const source = readFileSync(path, "utf8");
-      for (const m of source.matchAll(/(?:color:\s*|tone=\{)\s*\w+\.ink4/g)) {
-        offenders.push(`${path}: ${m[0].trim()}`);
+      const patterns = [
+        /(?:color:\s*|tone=\{)\s*\w+\.ink4/g,
+        // Both spellings of the CSS variable. The quote is not optional cosmetics:
+        // a plain stylesheet writes `color: var(--text-4);` and an inline React
+        // style writes `color: "var(--text-4)"`, and a pattern without the quote
+        // silently misses every inline one — which is how three strings at 12px
+        // in a 2.13:1 tone survived a green run of this very test.
+        /color:\s*["']?var\(--text-4\)/g,
+      ];
+      for (const pattern of patterns) {
+        for (const m of source.matchAll(pattern)) {
+          offenders.push(`${path}: ${m[0].trim()}`);
+        }
       }
     }
     expect(

@@ -29,7 +29,7 @@ export function PlanGridSection({ gameweek }: { gameweek: number }) {
 
   if (horizon === null || players.length === 0) {
     return (
-      <p className="text-xs" style={{ color: "var(--text-4)" }}>
+      <p className="text-xs" style={{ color: "var(--text-3)" }}>
         No solved plan has been published for GW{gameweek}. The optimiser writes
         one when it decides, which is inside the seal window before the deadline.
       </p>

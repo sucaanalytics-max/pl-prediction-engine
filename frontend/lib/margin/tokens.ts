@@ -44,17 +44,30 @@ export interface MarginSurface {
   readonly rule: string;
   /** Primary text. */
   readonly ink: string;
-  /** Secondary text — labels, units, captions. */
+  /** Secondary text — labels, units, captions. 8.73:1 on this ground. */
   readonly ink2: string;
-  /** Tertiary text — the eyebrow labels above every panel. */
+  /**
+   * Tertiary text — the eyebrow labels above every panel. 5.50:1.
+   *
+   * Was 0.38 alpha, which measured 3.22:1 and FAILED WCAG 1.4.3 for normal text.
+   * It was the second most common text colour on the call screen — 89 nodes,
+   * most of them at 9.5px, where the 3:1 large-text allowance is categorically
+   * unavailable (that needs 24px, or 18.66px bold). 0.55 is the first alpha above
+   * the measured 0.487 minimum that leaves a round number.
+   */
   readonly ink3: string;
   /**
-   * Quaternary, and deliberately below the AA-Large bar (2.06:1 on paper).
+   * Quaternary, and deliberately below the AA bar at 2.14:1 on this ground.
    *
    * Scoped to two uses and no others: the dotted-underline rule colour that
    * marks a third-party figure, and the queue index numeral. Anything doing
-   * explanatory work sits on ink2 (7.65:1). If you reach for this for running
+   * explanatory work sits on ink2 (8.73:1). If you reach for this for running
    * copy, the answer is ink2.
+   *
+   * Deliberately NOT raised when ink2 and ink3 were. A border tone that cleared
+   * the text floor would stop being a border tone, and the rule that keeps it
+   * off text would lose its premise. The fix for the places that painted text
+   * with it was to move them to ink3, not to make this one safe.
    */
   readonly ink4: string;
   /**
@@ -103,8 +116,8 @@ export const FLOODLIT: MarginSurface = {
   hair: "rgba(233,238,245,.075)",
   rule: "rgba(233,238,245,.17)",
   ink: "#e9eef5",
-  ink2: "rgba(233,238,245,.60)",
-  ink3: "rgba(233,238,245,.38)",
+  ink2: "rgba(233,238,245,.72)",
+  ink3: "rgba(233,238,245,.55)",
   ink4: "rgba(233,238,245,.26)",
   brand: "oklch(0.84 0.19 128)",
   agree: "oklch(0.74 0.15 155)",

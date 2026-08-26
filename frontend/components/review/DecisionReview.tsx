@@ -91,7 +91,7 @@ function VerdictChip({
     return (
       <span
         className="text-[10px] font-mono"
-        style={{ color: "var(--text-4)" }}
+        style={{ color: "var(--text-3)" }}
         title={
           noComparison
             ? "He did not come on, so benching him cannot be judged either way."
@@ -162,7 +162,7 @@ function Week({ week, review }: { week: GameweekReview; review: Review }) {
         >
           Gameweek {week.gameweek}
         </h3>
-        <span className="text-[10px] font-mono" style={{ color: "var(--text-4)" }}>
+        <span className="text-[10px] font-mono" style={{ color: "var(--text-3)" }}>
           {week.points === null ? WITHHELD : `${week.points} pts`}
           {week.hitCost ? ` · ${week.hitCost} on hits` : ""}
           {week.secondsBeforeDeadline !== null
@@ -301,10 +301,10 @@ export default function DecisionReview() {
           style={{
             color: "var(--text-3)",
             background: "var(--surface2)",
-            borderLeft: "2px solid var(--text-4)",
+            borderLeft: "2px solid var(--text-3)",
           }}
         >
-          <span className="font-mono" style={{ color: "var(--text-4)" }}>
+          <span className="font-mono" style={{ color: "var(--text-3)" }}>
             {WITHHELD}
           </span>{" "}
           {review.aggregateReason ??
@@ -313,7 +313,7 @@ export default function DecisionReview() {
       )}
 
       {weeks.length === 0 ? (
-        <p className="text-xs" style={{ color: "var(--text-4)" }}>
+        <p className="text-xs" style={{ color: "var(--text-3)" }}>
           No gameweek has settled, so there is nothing to review. This fills in as the
           season goes.
         </p>
@@ -333,7 +333,7 @@ function Figure({ label, value }: { label: string; value: string }) {
     <div>
       <div
         className="text-[9px] font-semibold uppercase"
-        style={{ color: "var(--text-4)", letterSpacing: ".15em" }}
+        style={{ color: "var(--text-3)", letterSpacing: ".15em" }}
       >
         {label}
       </div>

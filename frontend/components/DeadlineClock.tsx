@@ -42,7 +42,7 @@ function Unknown({ why }: { why: string }) {
   return (
     <p
       className="text-xs"
-      style={{ color: "var(--text-4)" }}
+      style={{ color: "var(--text-3)" }}
       data-testid="deadline-unknown"
     >
       {why}
@@ -76,7 +76,7 @@ export function DeadlineClock() {
     <div className="text-right" data-testid="deadline-clock">
       <span
         className="block text-xs uppercase"
-        style={{ color: "var(--text-4)", letterSpacing: ".08em" }}
+        style={{ color: "var(--text-3)", letterSpacing: ".08em" }}
       >
         {status.gameweek === null ? "Next deadline" : `GW${status.gameweek} deadline`}
       </span>

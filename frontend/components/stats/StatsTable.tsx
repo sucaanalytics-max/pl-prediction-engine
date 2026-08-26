@@ -274,7 +274,7 @@ export function StatsTable({
               style={{
                 padding: "0 13px", height: 40, display: "flex", alignItems: "center",
                 fontSize: 12, fontWeight: on ? 600 : 400,
-                color: blocked ? S.ink4 : on ? S.ink : S.ink2,
+                color: blocked ? S.ink3 : on ? S.ink : S.ink2,
                 textDecoration: blocked ? "line-through" : "none",
                 cursor: blocked ? "not-allowed" : "pointer",
                 boxShadow: on ? `inset 0 -2px 0 ${S.brand}` : "none",
@@ -382,7 +382,7 @@ export function StatsTable({
                     <div key={column.key} style={{
                       display: "flex", alignItems: "center", justifyContent: "flex-end",
                       paddingRight: 10, fontFamily: MONO, fontSize: 11.5,
-                      color: value === null ? S.ink4 : S.ink2,
+                      color: value === null ? S.ink3 : S.ink2,
                     }}>
                       {value === null
                         ? "∅"

@@ -53,7 +53,7 @@ export default function PlayersPage() {
         {gameweek === null ? (
           // One line, not a panel. There is no substance on this page to be
           // outweighed, but the rule is the rule.
-          <p className="text-xs" style={{ color: "var(--text-4)" }}>
+          <p className="text-xs" style={{ color: "var(--text-3)" }}>
             Neither the agent&apos;s status nor FPL&apos;s own state could be read,
             so the gameweek is unknown. Guessing one would read a different
             gameweek&apos;s projection.

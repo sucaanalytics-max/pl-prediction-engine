@@ -44,7 +44,7 @@ export default function PhasesPage() {
         {fixtures.length === 0 ? (
           // One line, not a panel: there is no other substance on this page for a
           // panel to outweigh, and the whole screen is the fixture list.
-          <p className="text-xs" style={{ color: "var(--text-4)" }}>
+          <p className="text-xs" style={{ color: "var(--text-3)" }}>
             {artifact.reason
               ?? "FPL's fixture list could not be read, so there is no matrix to draw."}
           </p>

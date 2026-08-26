@@ -211,7 +211,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                   {cclub.weeks.map((week, index) => {
                     const band = difficultyBand(week.difficulty, TRAFFIC_STEPS);
                     const [background, ink] = band === null
-                      ? ["transparent", S.ink4] as const
+                      ? ["transparent", S.ink3] as const
                       : stepOf(TRAFFIC, band);
                     const on = inPhase(index);
                     // Home carries the heavier of DM Mono's two usable weights
@@ -309,7 +309,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                       {phase.weeks.map((week) => {
                         const band = difficultyBand(week.difficulty, TRAFFIC_STEPS);
                         const [background, ink] = band === null
-                          ? ["transparent", S.ink4] as const
+                          ? ["transparent", S.ink3] as const
                           : stepOf(TRAFFIC, band);
                         return (
                           <span key={week.gameweek} style={{

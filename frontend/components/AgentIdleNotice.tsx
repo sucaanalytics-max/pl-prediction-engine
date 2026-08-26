@@ -43,7 +43,7 @@ export function AgentIdleNotice() {
       className="text-xs"
       role="status"
       data-testid="agent-idle"
-      style={{ color: "var(--text-4)" }}
+      style={{ color: "var(--text-3)" }}
     >
       The agent has not run, so what it writes is absent by design rather than
       broken

@@ -35,7 +35,7 @@ const TONE: Record<string, { colour: string; label: string }> = {
   // Real data, past its budget. Usable with a caveat.
   stale: { colour: "var(--warning)", label: "Out of date" },
   // Nothing published. The normal state for most artifacts most of the time.
-  absent: { colour: "var(--text-4)", label: "Not published" },
+  absent: { colour: "var(--text-3)", label: "Not published" },
   // Published but the shape is wrong — the only state that means something broke.
   unreadable: { colour: "var(--error)", label: "Unreadable" },
 };
@@ -81,7 +81,7 @@ export function StateCard<T>({
         role="status"
         data-state={of.state}
         data-weight="line"
-        style={{ color: "var(--text-4)" }}
+        style={{ color: "var(--text-3)" }}
       >
         <span style={{ color: tone.colour }}>{tone.label}</span>
         {" — "}
@@ -107,7 +107,7 @@ export function StateCard<T>({
         {what}
       </p>
       {of.reason ? (
-        <p className="text-xs mt-2" style={{ color: "var(--text-4)" }}>
+        <p className="text-xs mt-2" style={{ color: "var(--text-3)" }}>
           {of.reason}
         </p>
       ) : null}
@@ -159,7 +159,7 @@ export function ProvenanceStrip<T>({
   return (
     <p
       className="text-[10px] font-mono"
-      style={{ color: stale ? "var(--warning)" : "var(--text-4)" }}
+      style={{ color: stale ? "var(--warning)" : "var(--text-3)" }}
       data-testid="provenance"
     >
       {producedAt

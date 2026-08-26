@@ -97,7 +97,7 @@ export default function CallPage() {
             <p
               data-weight="line"
               className="text-xs"
-              style={{ color: "var(--text-4)" }}
+              style={{ color: "var(--text-3)" }}
             >
               Neither the agent&apos;s status nor FPL&apos;s own state could be
               read, so the gameweek is unknown and the call cannot be pointed at a
@@ -140,7 +140,7 @@ export default function CallPage() {
           <Link href="/capture" className="underline" style={{ color: "var(--brand)" }}>
             Capture what you actually submitted
           </Link>
-          <span style={{ color: "var(--text-4)" }}>
+          <span style={{ color: "var(--text-3)" }}>
             Nothing here can see what you set. The capture is how the two are
             reconciled, and it is what the agent reads first.
           </span>
@@ -151,7 +151,7 @@ export default function CallPage() {
           subtitle="The solved plan across the horizon — who starts, who benches, who wears the armband"
         >
           {gameweek === null ? (
-            <p className="text-xs" style={{ color: "var(--text-4)" }}>
+            <p className="text-xs" style={{ color: "var(--text-3)" }}>
               The gameweek could not be resolved, so the plan cannot be pointed at
               a decision.
             </p>

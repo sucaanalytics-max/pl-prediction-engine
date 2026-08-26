@@ -216,7 +216,7 @@ export function Rail({
                   HEAT_STEPS,
                 );
                 const [background, colour] = band === null
-                  ? ["transparent", S.ink4] as const
+                  ? ["transparent", S.ink3] as const
                   : stepOf(HEAT, band);
                 return (
                   <div

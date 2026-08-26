@@ -69,8 +69,8 @@
 
   /* Text */
   --text-1: #e9eef5;
-  --text-2: rgba(233, 238, 245, 0.60);
-  --text-3: rgba(233, 238, 245, 0.38);
+  --text-2: rgba(233, 238, 245, 0.72);
+  --text-3: rgba(233, 238, 245, 0.55);
   --text-4: rgba(233, 238, 245, 0.26);
 
   /* Accent — agreement. SEMANTIC: this hue means "fine", and nothing else. */
@@ -194,8 +194,8 @@
   --border-strong: rgba(233, 238, 245, 0.17);
 
   --text-1: #e9eef5;
-  --text-2: rgba(233, 238, 245, 0.60);
-  --text-3: rgba(233, 238, 245, 0.38);
+  --text-2: rgba(233, 238, 245, 0.72);
+  --text-3: rgba(233, 238, 245, 0.55);
   --text-4: rgba(233, 238, 245, 0.26);
 
   --accent:        oklch(0.74 0.15 155);
@@ -374,7 +374,10 @@
   }
 
   .form-input::placeholder {
-    color: var(--text-4);
+    /* text-3, not text-4. A placeholder is read — it says what to type — and
+       text-4 is the border tone at 2.13:1. text-3 is 5.50:1 since the palette
+       edit, so a placeholder is now legible instead of a suggestion of one. */
+    color: var(--text-3);
   }
 
   /* A darkened border, not a ring and a lift. The focus state has to survive
@@ -665,18 +668,6 @@
   }
 }
 
-/* ── Heatmap cells ────────────────────────────────────────────────────────────── */
-.heatmap-cell {
-  @apply transition-all duration-200 cursor-default;
-  border: 1px solid var(--border) !important;
-}
-
-.heatmap-cell:hover {
-  box-shadow: 0 0 0 1px var(--border-strong);
-  z-index: 10;
-  position: relative;
-}
-
 /* ── Focus visible ────────────────────────────────────────────────────────────── */
 *:focus-visible {
   outline: 2px solid var(--accent-border);
@@ -772,18 +763,9 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .primary-action:hover { transform: translateY(-2px); background: #8ef0c6; }
-.fixture-row { display: grid; grid-template-columns: 112px repeat(6, 1fr); gap: 6px; padding: 5px 0; align-items: center; }
-.fixture-row > span { display: flex; align-items: center; justify-content: center; min-height: 38px; padding: 6px 4px; border-radius: 0; font-size: 9px; font-weight: 750; }
-.fixture-row > span:first-child { align-items: flex-start; flex-direction: column; color: var(--text-1); }
-.fixture-row > span:first-child small { margin-top: 1px; color: var(--text-4); font-size: 8px; }
 .decision-card textarea { width: 100%; resize: vertical; padding: 11px; color: var(--text-1); border: 1px solid var(--border); border-radius: 0; outline: 0; background: var(--surface2); font-size: 10px; line-height: 1.5; }
 .decision-card textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-muted); }
 .decision-card textarea + .primary-action { margin-top: 10px; }
-.captain-week { padding: 13px; border: 1px solid var(--border); border-radius: 0; background: var(--surface2); }
-.captain-week > span { color: var(--accent-text); font: 500 8px var(--font-mono); }
-.captain-week strong { display: block; margin-top: 5px; color: var(--text-1); font-size: 11px; }
-.captain-week small { display: block; margin-top: 2px; color: var(--text-4); font-size: 8px; }
-.captain-week em { display: block; margin-top: 5px; color: var(--text-4); font-size: 7px; font-style: normal; }
 
 /* Masthead */
 .masthead {
@@ -871,67 +853,11 @@ input[type="range"]::-moz-range-thumb {
   .mobile-bottom-nav a.active { color: var(--chrome-accent); }
   .pwa-install-card { bottom: calc(76px + env(safe-area-inset-bottom)); }
 }
-
-/* Historical match evidence */
-.historical-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 8px;
-  color: var(--text-4);
-  border: 1px solid var(--border);
-  border-radius: 0;
-  background: var(--surface2);
-  font-size: 8px;
-  font-weight: 750;
-  white-space: nowrap;
-}
 .historical-toggle.active { color: var(--accent-text); border-color: var(--accent-border); background: var(--accent-muted); }
-.data-table .historical-detail-row,
-.data-table .historical-detail-row:hover { background: var(--surface2); box-shadow: none; cursor: default; }
-.data-table .historical-detail-row > td { padding: 0; }
-.historical-details { padding: 22px; border-top: 1px solid var(--accent-border); }
-.historical-score-events {
-  display: grid;
-  grid-template-columns: 1fr 110px 1fr;
-  gap: 18px;
-  align-items: start;
-}
-.historical-score-events > section { display: grid; gap: 8px; }
 .historical-score-events > section.away { text-align: right; }
-.historical-score-events > section > div:not(.historical-player-values) { display: flex; align-items: center; gap: 6px; color: var(--text-4); font-size: 8px; text-transform: uppercase; letter-spacing: .08em; }
 .historical-score-events > section.away > div:not(.historical-player-values) { justify-content: flex-end; }
-.historical-team-name { color: var(--text-1); font-size: 13px; font-weight: 800; }
-.historical-final-score { display: grid; place-items: center; padding: 14px 8px; border: 1px solid var(--border); border-radius: 0; background: var(--surface); }
-.historical-final-score span, .historical-final-score small { color: var(--text-4); font-size: 7px; text-transform: uppercase; }
-.historical-final-score strong { color: var(--text-1); font: 500 2rem var(--font-mono); letter-spacing: -.08em; }
-.historical-player-values { display: flex; flex-wrap: wrap; gap: 5px; }
 .historical-score-events .away .historical-player-values { justify-content: flex-end; }
-.historical-player-values > span { display: inline-flex; align-items: baseline; gap: 4px; padding: 5px 7px; border: 1px solid var(--border); border-radius: 0; background: var(--surface); }
-.historical-player-values strong { color: var(--text-2); font-size: 8px; }
-.historical-player-values small { color: var(--text-4); font-size: 7px; }
-.historical-empty { color: var(--text-4); font-size: 8px; }
-.historical-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 20px; }
-.historical-stat-grid > section { padding: 12px; border: 1px solid var(--border); border-radius: 0; background: var(--surface); }
-.historical-stat-title { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; color: var(--accent-text); font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
-.historical-stat-row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid var(--border); }
-.historical-stat-row > span { display: grid; }
-.historical-stat-row strong { color: var(--text-2); font-size: 8px; }
-.historical-stat-row small { color: var(--text-4); font-size: 7px; }
-.historical-stat-row b { color: var(--text-2); font: 500 8px var(--font-mono); white-space: nowrap; }
-.historical-inline-stat { display: inline-block; margin-top: 7px; padding: 4px 6px; color: var(--warning); border-radius: 0; background: var(--warning-muted); font-size: 7px; }
 .historical-inline-stat.danger { color: var(--error); background: var(--error-muted); }
-.historical-exceptions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
-.historical-exceptions span { padding: 5px 7px; color: var(--warning); border: 1px solid var(--warning-border); border-radius: 0; background: var(--warning-muted); font-size: 8px; }
-.historical-source { display: flex; align-items: center; gap: 10px; margin-top: 16px; padding-top: 13px; border-top: 1px solid var(--border); }
-.historical-source > div { display: grid; flex: 1; }
-.historical-source strong { color: var(--text-2); font-size: 8px; }
-.historical-source span { color: var(--text-4); font-size: 7px; }
-.historical-source a, .historical-missing a { display: inline-flex; align-items: center; gap: 4px; color: var(--accent-text); font-size: 8px; font-weight: 750; }
-.historical-missing { display: grid; grid-template-columns: 20px 1fr auto; align-items: center; gap: 9px; padding: 17px; color: var(--warning); }
-.historical-missing > div { display: grid; }
-.historical-missing strong { color: var(--text-2); font-size: 9px; }
-.historical-missing span { color: var(--text-4); font-size: 8px; }
 .vice-captain { display: grid; padding: 17px; border: 1px solid var(--chrome-hair); border-radius: 0; background: color-mix(in oklab, var(--chrome-ink) 5%, transparent); }
 .vice-captain span { color: rgba(255,255,255,.38); font-size: 7px; text-transform: uppercase; }
 .vice-captain strong { margin-top: 4px; color: var(--chrome-ink); font-size: 13px; }
