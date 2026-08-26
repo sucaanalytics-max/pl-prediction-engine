@@ -86,8 +86,20 @@ describe("every registered artifact narrows without being unreadable", () => {
 describe("health.json — the 4.0.0 producer", () => {
   const artifact = load(REGISTRY.health);
 
-  it("is empty, because nothing has been measured", () => {
-    expect(artifact.state).toBe("empty");
+  it("reads as empty or ok, and says which, depending on what has been measured", () => {
+    /*
+     * This asserted `empty` and broke the morning the pipeline first published
+     * metrics — the third time this file has rotted the same way. The version pin
+     * broke on a successful release; the matches.json fingerprint broke when the
+     * defect it described was fixed; this broke when the producer started working.
+     *
+     * The invariant is not which state the file is in today. It is that the two
+     * states are DISTINGUISHED — a populated file must not read as empty, and an
+     * empty one must not read as ok — because conflating them is what makes an
+     * absence render as data.
+     */
+    const metrics = Object.keys(proven(artifact)?.model_metrics ?? {}).length;
+    expect(artifact.state).toBe(metrics === 0 ? "empty" : "ok");
   });
 
   it("names the producer that emitted no metrics", () => {
@@ -104,12 +116,22 @@ describe("health.json — the 4.0.0 producer", () => {
     expect(producer).toMatch(/^\d+\.\d+\.\d+$/);
   });
 
-  it("has no calibration series to chart", () => {
-    expect(chartable(artifact, (h) => h.calibration_bins)).toBeNull();
+  it("offers a calibration series only when there is one", () => {
+    const bins = proven(artifact)?.calibration_bins;
+    const series = chartable(artifact, (h) => h.calibration_bins);
+    // `chartable` must refuse an absent series and pass a present one. Asserting
+    // it is always null was asserting that the producer never works.
+    if (!bins || bins.length === 0) expect(series).toBeNull();
+    else expect(series).not.toBeNull();
   });
 
-  it("reports zero metrics rather than zero-valued metrics", () => {
-    expect(Object.keys(proven(artifact)?.model_metrics ?? {})).toHaveLength(0);
+  it("never reports a metric it did not measure", () => {
+    // The original claim, kept: a zero-VALUED metric is a measurement of zero and
+    // a missing one is no measurement, and the file must not turn the second into
+    // the first. Whatever keys exist must carry a real number.
+    for (const [name, value] of Object.entries(proven(artifact)?.model_metrics ?? {})) {
+      expect(Number.isFinite(value as number), `${name} is not a number`).toBe(true);
+    }
   });
 });
 
@@ -286,11 +308,35 @@ describe("the state of the app, stated plainly", () => {
       .filter((r) => r.state === "empty")
       .map((r) => r.key);
 
-    // Named individually before, which meant a pipeline run that legitimately
-    // filled `matches` broke the test. Which artifacts are empty is a property
-    // of today's data and will change all season; that SOME are, and that the
-    // layer notices, is the claim worth holding.
-    expect(empty.length).toBeGreaterThan(0);
+    /*
+     * This required at least one empty artifact, and broke the morning the last
+     * one filled — the same rot as the health.json state above, one level up. Its
+     * own comment already said which artifacts are empty "will change all season";
+     * so does whether ANY are.
+     *
+     * What must hold is that the layer can still tell the difference, which is a
+     * property of the classifier rather than of today's data. So the mechanism is
+     * asserted directly and the live count is only reported.
+     */
+    const descriptor = REGISTRY.decisionReview;
+    const emptyByConstruction = classify({
+      descriptor,
+      path: descriptor.path,
+      source: "local",
+      raw: {
+        generated_at: new Date().toISOString(),
+        observations: 0,
+        minimum_observations: 6,
+        aggregate: null,
+        gameweeks: [],
+      },
+      narrow: descriptor.narrow,
+      producedAtOf: descriptor.producedAtOf,
+      isEmpty: descriptor.isEmpty,
+      now: new Date(),
+    });
+    expect(emptyByConstruction.state, `live empties: ${empty.join(", ") || "none"}`)
+      .toBe("empty");
   });
 
   it("no artifact is unreadable", () => {
