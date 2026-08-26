@@ -1,19 +1,55 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T11:01:17.439815Z",
-  "n_dropped": 367,
+  "generated_at": "2026-08-26T11:44:59.981889Z",
+  "n_dropped": 364,
   "dropped_by_source": {
-    "bbc_football": 111,
+    "bbc_football": 110,
     "fantasyfootballscout": 5,
-    "hayters": 69,
+    "hayters": 67,
     "sky_football": 182
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 457,
+  "n_articles": 454,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "ba705fd4f3a29b42",
+      "headline": "Palace latest: Disasi joins on loan from Chelsea",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-26T12:00:00Z",
+      "players": [
+        {
+          "element_id": 153,
+          "name": "Disasi",
+          "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "22f96ba02f2326a6",
+      "headline": "Man City considering bid for Chelsea's Fernandez",
+      "summary": "Manchester City are considering making a bid for Enzo Fernandez before the deadline.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13570597/enzo-fernandez-transfer-news-man-city-considering-bid-for-chelsea-midfielder",
+      "claimed_at": "2026-08-26T11:45:00Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "6f43c91e33c4dc70",
       "headline": "Aston Villa latest: Major changes on the way? Leao, Jackson & Matata updates",
@@ -35,6 +71,24 @@
     {
       "digest": "80a2a26eeec22f0e",
       "headline": "Man City latest: Bouaddi's first words after \u00a386m move",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-26T11:25:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "e62ee2668766ca53",
+      "headline": "Man City latest: Club also keen on Scott and Kone as midfield options",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -801,60 +855,6 @@
           "element_id": 465,
           "name": "Osula",
           "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "7ef1735dc639764a",
-      "headline": "Alvarez left with two options: Atletico or Arsenal",
-      "summary": "Julian Alvarez must take one of two paths before the transfer deadline: stay at Atletico Madrid and try to rebuild his connection with the fans or get his head around a potential move to Arsenal.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13576975/julian-alvarez-transfer-latest-atletico-standing-firm-on-barcelona-as-arsenal-become-only-get-out-for-argentine-striker",
-      "claimed_at": "2026-08-25T19:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "078938c6ec66998a",
-      "headline": "Carabao Cup highlights: Brentford hit six; Leeds, West Ham & Ipswich win",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13577036/carabao-cup-round-two-live-commentary-updates-scores-streams-and-team-news-with-leeds-brentford-west-ham-in-action",
-      "claimed_at": "2026-08-25T18:55:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "188c57ea667b6243",
-      "headline": "Carabao Cup: Brentford pegged back; Coventry, Wolves lead LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13577036/carabao-cup-round-two-live-commentary-updates-scores-streams-and-team-news-with-leeds-brentford-west-ham-in-action",
-      "claimed_at": "2026-08-25T18:55:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
