@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T07:02:07.084031Z",
+  "generated_at": "2026-08-26T07:59:23.462045Z",
   "n_dropped": 366,
   "dropped_by_source": {
-    "bbc_football": 111,
+    "bbc_football": 110,
     "fantasyfootballscout": 15,
     "hayters": 68,
-    "sky_football": 172
+    "sky_football": 173
   },
   "window_days": 5,
   "squad_known": false,
@@ -14,6 +14,42 @@
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "8e3c82ea76a45e7d",
+      "headline": "Brighton latest: Asking price for Minteh revealed amid Liverpool interest",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-26T08:49:00Z",
+      "players": [
+        {
+          "element_id": 122,
+          "name": "Minteh",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "faa01820b6f74788",
+      "headline": "Liverpool latest: Talks for Minteh not progressing after rejected bids",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-26T08:46:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "41b15d9307d9fd7c",
       "headline": "Liverpool's midfield is fragile - will they act in the window?",
@@ -843,30 +879,6 @@
       "touches_squad": null
     },
     {
-      "digest": "0ef7c68cf14dae95",
-      "headline": "Could an ageing Van Dijk have a problem in Iraola's Liverpool team?",
-      "summary": "There was a moment during Liverpool's recent win over Como that barely registered with the Anfield crowd at the time. It was their final pre-season friendly and Andoni Iraola's side won the game 2-0 with Jeremy Jacquet impressing on",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13576925/virgil-van-dijks-role-at-liverpool-andoni-iraolas-team-are-pressing-high-but-is-that-a-problem-for-their-35-year-old-captain",
-      "claimed_at": "2026-08-25T14:00:00Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "bb574a0f145bda9c",
       "headline": "All the best Savinho - welcome Savio... new club, new name for Spurs signing",
       "summary": "Tottenham sign Brazil winger Savinho from Manchester City for an initial \u00a375m - and he reverts to being called Savio.",
@@ -915,24 +927,6 @@
           "element_id": 57,
           "name": "Petrovi\u0107",
           "club": "BOU",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "271022b13e333032",
-      "headline": "EFL latest: Birmingham captain & manager apologise to fans after Brentford hammering",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13163353/championship-news-transfer-latest-and-gossip-plus-efl-updates-from-league-one-and-league-two",
-      "claimed_at": "2026-08-25T12:38:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
