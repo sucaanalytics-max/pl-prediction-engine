@@ -1,23 +1,77 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T08:54:53.728142Z",
-  "n_dropped": 370,
+  "generated_at": "2026-08-26T09:40:47.927953Z",
+  "n_dropped": 365,
   "dropped_by_source": {
     "bbc_football": 112,
-    "fantasyfootballscout": 15,
+    "fantasyfootballscout": 6,
     "hayters": 68,
-    "sky_football": 175
+    "sky_football": 179
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 460,
+  "n_articles": 455,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
     {
+      "digest": "065778f5bae3176d",
+      "headline": "Arsenal latest: Alvarez misses Atletico Madrid training",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-26T10:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "b95600345f9aa636",
+      "headline": "Carabao Cup second round: Chelsea and Spurs in action tonight live on Sky",
+      "summary": "The Carabao Cup is back for the 2026/27 season, with every second-round tie live on Sky Sports!",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13576598/carabao-cup-2026-27-watch-nottm-forest-vs-leeds-chelsea-vs-luton-tottenham-vs-charlton-and-more-with-every-game-live-on-sky-sports",
+      "claimed_at": "2026-08-26T09:52:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "849b9b769f7c6b07",
       "headline": "Spurs agree loan deal with obligation to buy Marmoush from Man City",
       "summary": "Tottenham&#160;have agreed a deal to sign&#160;Omar Marmoush&#160;from&#160;Manchester City.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13577289/omar-marmoush-transfer-news-tottenham-agree-deal-to-sign-man-city-forward-on-loan-with-60m-obligation-to-buy",
+      "claimed_at": "2026-08-26T09:27:00Z",
+      "players": [
+        {
+          "element_id": 401,
+          "name": "Marmoush",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "a371e5a1e1387404",
+      "headline": "Tottenham agree deal for Man City's Marmoush",
+      "summary": "Tottenham&#160;have agreed a deal to sign&#160;Omar Marmoush from Manchester City.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13577289/omar-marmoush-transfer-news-tottenham-agree-deal-to-sign-man-city-forward-on-loan-with-60m-obligation-to-buy",
@@ -63,6 +117,24 @@
           "element_id": 122,
           "name": "Minteh",
           "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "c620e92e1e8e76ae",
+      "headline": "Liverpool latest: Talks for Minteh stall after rejected bids",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-26T08:46:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": null
         }
       ],
@@ -699,78 +771,6 @@
           "element_id": 167,
           "name": "Delap",
           "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "3e59157aea303d44",
-      "headline": "Tottenham latest: Savio could make debut on Wednesday...",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-25T17:24:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "d19474ca014cd8c7",
-      "headline": "Aston Villa latest: 'Talks begin with Chelsea over \u00a365m Jackson deal'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-25T17:21:00Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e329bd3c4851cfae",
-      "headline": "Aston Villa latest: 'Talks begin with Chelsea over \u00a365m striker deal'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-25T17:21:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1800a7cacdd20e36",
-      "headline": "Man Utd latest: 'Club of my dreams' - Baleba's first words after arrival...",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-25T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
