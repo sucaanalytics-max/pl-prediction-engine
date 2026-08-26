@@ -13,6 +13,7 @@ import { describe, expect, it } from "vitest";
 
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import {
+  DEFAULT_MAX_DIFFICULTY, THRESHOLDS,
   allPhases, bestPhase, buildClubRows, clubWeeks, difficultyBand, findPhases,
   matrixGameweeks, orderClubs, type PhaseOptions,
 } from "@/lib/projections/phases";
@@ -255,5 +256,69 @@ describe("the difficulty ramp", () => {
   it("clamps a rating outside FPL's own scale", () => {
     expect(difficultyBand(0, 5)).toBe(4);
     expect(difficultyBand(9, 5)).toBe(0);
+  });
+});
+
+/**
+ * The screen has to open on something a reader can use.
+ *
+ * These run against the real published 2026/27 difficulties over the eight-week
+ * horizon, read from `/api/fpl/state`'s fixture matrix on 2026-08-26, rather than
+ * a synthetic ladder — the whole point is what THIS league's distribution does to
+ * a threshold, and a made-up matrix cannot show that.
+ */
+describe("the default threshold, against the real fixture list", () => {
+  const REAL: Readonly<Record<string, readonly number[]>> = {
+    LIV: [3, 3, 2, 2, 3, 4, 3, 2], CRY: [3, 4, 3, 2, 3, 3, 3, 2],
+    MUN: [2, 2, 3, 4, 3, 3, 3, 3], NEW: [4, 3, 3, 3, 2, 2, 3, 3],
+    SUN: [2, 2, 3, 4, 5, 2, 3, 2], ARS: [2, 4, 4, 3, 3, 2, 3, 3],
+    CHE: [3, 2, 5, 2, 3, 3, 3, 3], COV: [5, 2, 5, 2, 3, 2, 3, 2],
+    FUL: [4, 3, 3, 4, 4, 2, 2, 2], MCI: [3, 3, 2, 4, 2, 4, 2, 4],
+    NFO: [2, 4, 3, 4, 2, 3, 4, 2], TOT: [3, 2, 3, 3, 3, 4, 2, 4],
+    AVL: [3, 4, 2, 3, 3, 3, 3, 4], BRE: [3, 3, 2, 3, 4, 4, 4, 2],
+    BHA: [3, 4, 2, 2, 4, 3, 3, 4], HUL: [4, 2, 3, 4, 3, 3, 3, 3],
+    EVE: [3, 3, 4, 3, 2, 2, 4, 5], IPS: [2, 4, 4, 3, 3, 2, 5, 3],
+    LEE: [3, 3, 3, 2, 3, 5, 4, 3], BOU: [5, 3, 3, 3, 4, 4, 2, 4],
+  };
+
+  const league = () =>
+    Object.entries(REAL).map(([code, ds], i) =>
+      club(code, code, [...ds], i + 1));
+
+  const runsAt = (max: number) =>
+    allPhases(buildClubRows(league(), { minLength: 3, maxDifficulty: max }));
+
+  it("opens on a board with something on it", () => {
+    expect(runsAt(DEFAULT_MAX_DIFFICULTY).length).toBeGreaterThan(10);
+  });
+
+  it("would have opened on an all-but-empty one at the strictest setting", () => {
+    // One run in twenty clubs. The reader arrives at a matrix that looks broken,
+    // and the cause is the fixture list rather than the code: FPL never assigns a
+    // 1 and FDR 3 is 45% of all fixtures.
+    expect(runsAt(2)).toHaveLength(1);
+  });
+
+  it("does not just take the first threshold on offer", () => {
+    // THRESHOLDS is ordered kindest-first, which is right for a toggle and wrong
+    // for a default. This is what stops the two being conflated again.
+    expect(DEFAULT_MAX_DIFFICULTY).not.toBe(THRESHOLDS[0].max);
+    expect(THRESHOLDS.some((t) => t.max === DEFAULT_MAX_DIFFICULTY)).toBe(true);
+  });
+
+  it("still separates good runs from ordinary ones at the wider gate", () => {
+    // The wider threshold does not cost discrimination, because relief does that
+    // work now: a run of flat 3s buys almost nothing and sorts to the bottom.
+    const ordered = runsAt(DEFAULT_MAX_DIFFICULTY);
+    expect(ordered[0].relief).toBeGreaterThan(3);
+    expect(ordered[ordered.length - 1].relief).toBeLessThan(0.5);
+  });
+
+  it("no longer ranks four flat threes above three straight twos", () => {
+    const ordered = runsAt(DEFAULT_MAX_DIFFICULTY);
+    const at = (code: string) => ordered.findIndex((p) => p.shortName === code);
+    // Man United's [3,3,3,3] against Fulham's [2,2,2] — the pair that made the
+    // case for ranking on relief.
+    expect(at("FUL")).toBeLessThan(at("MUN"));
   });
 });

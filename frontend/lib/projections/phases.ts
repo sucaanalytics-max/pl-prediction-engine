@@ -54,6 +54,26 @@ export const THRESHOLDS = [
   { max: 3, label: "not hard (FDR 1–3)" },
 ] as const;
 
+/**
+ * The threshold the screen opens on.
+ *
+ * Named rather than taken as `THRESHOLDS[0]`, because the array is ordered
+ * kindest-first — which is the right order for a toggle and the wrong one for a
+ * default. Opening on the strictest setting meant opening on an empty screen:
+ * measured against the published 2026/27 list over its eight-week horizon,
+ * FDR <= 2 yields exactly ONE qualifying run in the entire league, and the reader
+ * arrives at a matrix that appears broken.
+ *
+ * That is a fact about the fixture list rather than about the code. FPL never
+ * assigns a 1, and FDR 3 is 45% of all fixtures (2:44, 3:72, 4:36, 5:8 over 160),
+ * so "every week at 2 or kinder for three straight weeks" is close to the rarest
+ * thing the schedule contains. FDR <= 3 yields seventeen runs, which is a board
+ * worth reading — and relief is what separates them, so the wider gate no longer
+ * costs the discrimination it used to: a run of flat 3s scores near zero and sorts
+ * to the bottom on its own.
+ */
+export const DEFAULT_MAX_DIFFICULTY = 3;
+
 export interface PhaseWeek {
   readonly gameweek: number;
   /** Every fixture the club plays that week, as FPL labels them. */

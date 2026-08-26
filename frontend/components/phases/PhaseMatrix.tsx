@@ -33,7 +33,8 @@ import { DISPLAY, FLOODLIT, MONO, SANS, TRAFFIC, stepOf } from "@/lib/margin/tok
    a legend swatch for a colour that does not exist. */
 const TRAFFIC_STEPS = TRAFFIC.length;
 import {
-  RUN_LENGTHS, THRESHOLDS, allPhases, buildClubRows, difficultyBand,
+  DEFAULT_MAX_DIFFICULTY, RUN_LENGTHS, THRESHOLDS, allPhases, buildClubRows,
+  difficultyBand,
   matrixGameweeks, orderClubs, type PhaseOrder, type RunLength,
 } from "@/lib/projections/phases";
 
@@ -73,7 +74,7 @@ function Label({ children }: { children: React.ReactNode }) {
 
 export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[] }) {
   const [minLength, setMinLength] = useState<RunLength>(3);
-  const [maxDifficulty, setMaxDifficulty] = useState<number>(THRESHOLDS[0].max);
+  const [maxDifficulty, setMaxDifficulty] = useState<number>(DEFAULT_MAX_DIFFICULTY);
   const [order, setOrder] = useState<PhaseOrder>("phase");
 
   const gameweeks = useMemo(() => matrixGameweeks(fixtures), [fixtures]);
