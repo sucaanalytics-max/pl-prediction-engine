@@ -105,45 +105,38 @@ const FILES = [
 ];
 
 /**
- * Sizes below the floor that were already shipped when this scan was widened.
+ * Sizes below the floor that were already shipped. THE MAP IS EMPTY, and that is the
+ * point of having built it as a ratchet.
  *
- * An allowlist rather than a lowered floor, and it exists to be burned down: an
- * allowlist that shrinks is enforcement, a one-file FILES array was not. Adding a
- * NEW sub-floor size fails the test; the entries here only stop the suite failing
- * on a backlog nobody has had a chance to fix yet.
+ * It held 22 files and 113 occurrences. Every one is gone: 123 sites raised across 21
+ * components plus the stylesheet, and four of the stylesheet's ten were in rules with no
+ * renderer at all — `.badge`, `.skeleton`, `.vice-captain` and a `.decision-card textarea`
+ * for a textarea this app does not contain — so deleting them cleared the floor without a
+ * rendered pixel changing.
  *
- * The one deliberate exemption is EYEBROW at 9px, argued in `lib/margin/type.ts`:
- * an eyebrow names a region the reader is already looking at, so it is redundant
- * with the figure beneath it. That argument does NOT stretch to a column header,
- * which is the only thing saying what a column of numbers means — those are being
- * moved to 11px rather than exempted.
+ * ## What made the burn-down possible was a measurement, not a decision
+ *
+ * The reason this backlog sat here was a belief that raising a 9px tracked label to 11px
+ * would overflow the grid tracks it sits in — `Pos` lives in a 34px column. Rendered in
+ * the browser with the page's own Archivo, that is false, because tracking costs more
+ * width than size does:
+ *
+ *     Pos       23.1px at 9px/.15em   ->  23.3px at 11px/.04em
+ *     Mins      28.1px                ->  27.8px
+ *     Own       26.1px                ->  27.0px
+ *     BENCH     39.6px                ->  40.1px
+ *     TEMPLATE  59.7px                ->  59.8px
+ *
+ * So every tracked uppercase label could clear the floor for free by trading .15em of
+ * tracking for 2px of size. That is what was done, and it is why `EYEBROW` — previously
+ * the ONE argued exemption in this file — is 11px now and there are no exemptions left.
+ *
+ * If a size below the floor reappears, this map is where a reason goes. An entry needs to
+ * say what the element is and why the floor does not bind on it; the EYEBROW argument
+ * ("redundant with the figure beneath it") is available but was not needed once the width
+ * question was settled by measurement rather than by estimate.
  */
-const ALLOWED = new Map<string, number>([
-  ["app/globals.css", 10],
-  // EYEBROW, the one argued exemption. `COLUMN_HEAD` sits beside it at 11px for
-  // the case the argument does not cover.
-  ["lib/margin/type.ts", 1],
-  ["components/AgentMessages.tsx", 3],
-  ["components/ErrorBoundary.tsx", 1],
-  ["components/MinutesConflicts.tsx", 6],
-  ["components/call/CallBoard.tsx", 4],
-  ["components/call/Eleven.tsx", 8],
-  ["components/call/Pitch.tsx", 8],
-  ["components/call/Rail.tsx", 5],
-  ["components/call/Tiles.tsx", 1],
-  ["components/data/Artifact.tsx", 1],
-  ["components/margin/Compare.tsx", 5],
-  ["components/margin/NewsView.tsx", 7],
-  ["components/margin/PlanGrid.tsx", 9],
-  ["components/margin/ResearchView.tsx", 11],
-  ["components/margin/Scatter.tsx", 2],
-  ["components/margin/WatchView.tsx", 4],
-  ["components/phases/PhaseMatrix.tsx", 8],
-  ["components/projections/HeatGrid.tsx", 9],
-  ["components/projections/ProjectionGridSection.tsx", 1],
-  ["components/review/DecisionReview.tsx", 5],
-  ["components/stats/StatsTable.tsx", 5],
-]);
+const ALLOWED = new Map<string, number>([]);
 
 // ── contrast ────────────────────────────────────────────────────────────────────
 
@@ -338,14 +331,20 @@ const PER_UNIT: Readonly<Record<string, number>> = {
  *    explicit size could see the smallest text on the page.
  * 4. `text-[…]` — Tailwind's arbitrary value. 17 usages across six files were
  *    invisible to a green test.
- * 5. `font:` — the SHORTHAND, and the last hole. `.masthead-gw` carried
- *    `font: 500 9px var(--font-mono)` and `.masthead-team span` carried
- *    `font: 400 8px …`; both are live global chrome rendered by `Navigation.tsx` on
- *    every screen, and neither was visible to any pattern here.
+ * 5. `font:` — the SHORTHAND. `.masthead-gw` carried `font: 500 9px var(--font-mono)`
+ *    and `.masthead-team span` carried `font: 400 8px …`; both are live global chrome
+ *    rendered by `Navigation.tsx` on every screen, and neither was visible here.
+ * 6. `fontSize={9}` — the SVG ATTRIBUTE form, which is an `=` and not a `:`. Every
+ *    pattern above wanted a colon, so the Scatter's axis ticks and both axis titles sat
+ *    at 9px through the whole burn-down and were caught only by measuring the rendered
+ *    page. An SVG `<text>` is text; the floor binds on it exactly as on a `<span>`.
  */
 function* matchSizes(source: string): Generator<{ px: number; text: string }> {
   const patterns: readonly RegExp[] = [
     /(?:fontSize|font-size)\s*:\s*["'`]?([0-9.]+)(px|pt|rem|em)?/g,
+    // The SVG attribute form: `fontSize={9}` or `font-size="9"`. No colon.
+    /fontSize=\{([0-9.]+)\}()/g,
+    /font-size="([0-9.]+)"()/g,
     /size=\{([0-9.]+)\}()/g,
     /\bsize = ([0-9.]+)()/g,
     /text-\[([0-9.]+)(px|pt|rem|em)\]/g,
@@ -373,7 +372,14 @@ describe("rule 1 — nothing meaningful below 11px", () => {
     const offenders: string[] = [];
     const stale: string[] = [];
     for (const path of FILES) {
-      const source = readFileSync(path, "utf8");
+      /*
+       * Comments stripped, for the reason rule 3 already records: a rule this specific
+       * attracts prose about itself, and a raw scan cannot tell a declaration apart
+       * from a sentence describing one. This rule flagged `type.tsx` the moment that
+       * file grew a docstring containing the words "inline `fontSize: 9`" — a note
+       * explaining why three components no longer do that.
+       */
+      const source = withoutComments(readFileSync(path, "utf8"));
       const sizes = [...matchSizes(source)];
       const found = sizes.filter((m) => m.px < FLOOR).length;
       const allowance = ALLOWED.get(path) ?? 0;
@@ -394,7 +400,7 @@ describe("rule 1 — nothing meaningful below 11px", () => {
 
   it("refuses a size it cannot evaluate", () => {
     const unscannable = FILES.flatMap((path) =>
-      [...readFileSync(path, "utf8").matchAll(UNSCANNABLE)]
+      [...withoutComments(readFileSync(path, "utf8")).matchAll(UNSCANNABLE)]
         .map((m) => `${path}: ${m[0].trim()}`));
     expect(
       unscannable,

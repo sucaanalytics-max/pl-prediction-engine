@@ -138,11 +138,11 @@ export function Scatter(
             tone comes from the palette instead of an arbitrary multiply. This is
             what `legibility.test.ts` rule 3 forbids; it could not see these because
             it scanned only `HeatGrid.tsx`. It scans everything now. */}
-        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".1em",
+        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".04em",
                        textTransform: "uppercase", color: S.ink3 }}>
           finishing against creating &middot; {points.length} players
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+        <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           click a point to compare
         </span>
       </div>
@@ -164,7 +164,7 @@ export function Scatter(
                 <line x1={x} y1={PAD.top} x2={x} y2={PAD.top + innerH}
                       stroke={S.hair} strokeWidth={1} />
                 <text x={x} y={H - 8} fill={S.ink} fillOpacity={.45}
-                      fontFamily={MONO} fontSize={9} textAnchor="middle">{value}</text>
+                      fontFamily={MONO} fontSize={11} textAnchor="middle">{value}</text>
               </g>
             );
           })}
@@ -175,15 +175,15 @@ export function Scatter(
                 <line x1={PAD.left} y1={y} x2={PAD.left + innerW} y2={y}
                       stroke={S.hair} strokeWidth={1} />
                 <text x={PAD.left - 6} y={y + 3} fill={S.ink} fillOpacity={.45}
-                      fontFamily={MONO} fontSize={9} textAnchor="end">{value}</text>
+                      fontFamily={MONO} fontSize={11} textAnchor="end">{value}</text>
               </g>
             );
           })}
 
           <text x={PAD.left + innerW / 2} y={H - 20} fill={S.ink} fillOpacity={.55}
-                fontFamily={MONO} fontSize={9} textAnchor="middle">expected goals</text>
+                fontFamily={MONO} fontSize={11} textAnchor="middle">expected goals</text>
           <text x={12} y={PAD.top + innerH / 2} fill={S.ink} fillOpacity={.55}
-                fontFamily={MONO} fontSize={9} textAnchor="middle"
+                fontFamily={MONO} fontSize={11} textAnchor="middle"
                 transform={`rotate(-90 12 ${PAD.top + innerH / 2})`}>expected assists</text>
 
           {points.map((point) => {
@@ -206,7 +206,7 @@ export function Scatter(
                 />
                 {named.has(point.elementId) || isPinned ? (
                   <text x={cx + 7} y={cy + 3} fill={S.ink} fillOpacity={.7}
-                        fontFamily={SANS} fontSize={9.5}>{point.name}</text>
+                        fontFamily={SANS} fontSize={11}>{point.name}</text>
                 ) : null}
                 {/* No per-point control. Every point used to be a tab stop —
                     367 of them, in front of the comparison panel and the whole

@@ -46,7 +46,7 @@ function Tile({
       <div style={{ ...EYEBROW, color: S.ink3, marginBottom: 7 }}>{label}</div>
       {children}
       <div style={{
-        fontFamily: MONO, fontSize: 10.5, color: S.ink2, marginTop: 7, lineHeight: 1.4,
+        fontFamily: MONO, fontSize: 11, color: S.ink2, marginTop: 7, lineHeight: 1.4,
       }}>
         {note}
       </div>

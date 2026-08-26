@@ -90,7 +90,7 @@ function VerdictChip({
     const noComparison = kind === "no_claim" || kind === "correct";
     return (
       <span
-        className="text-[10px] font-mono"
+        className="text-[11px] font-mono"
         style={{ color: "var(--text-3)" }}
         title={
           noComparison
@@ -105,7 +105,7 @@ function VerdictChip({
   const copy = VERDICT_COPY[verdict];
   return (
     <span
-      className="text-[10px] font-mono px-1.5 py-0.5"
+      className="text-[11px] font-mono px-1.5 py-0.5"
       style={{ color: copy.tone, background: "rgba(233,238,245,.06)" }}
       title={copy.gloss}
     >
@@ -137,7 +137,7 @@ function BenchRow({ call, review }: { call: BenchCall; review: Review }) {
             &minus;{call.pointsForgone}
           </span>
         ) : call.kind === "rescued" && call.isLesson ? (
-          <span className="text-[10px]" style={{ color: "var(--text-3)" }}>
+          <span className="text-[11px]" style={{ color: "var(--text-3)" }}>
             cost nothing this time
           </span>
         ) : null}
@@ -162,7 +162,7 @@ function Week({ week, review }: { week: GameweekReview; review: Review }) {
         >
           Gameweek {week.gameweek}
         </h3>
-        <span className="text-[10px] font-mono" style={{ color: "var(--text-3)" }}>
+        <span className="text-[11px] font-mono" style={{ color: "var(--text-3)" }}>
           {week.points === null ? WITHHELD : `${week.points} pts`}
           {week.hitCost ? ` · ${week.hitCost} on hits` : ""}
           {week.secondsBeforeDeadline !== null
@@ -332,7 +332,7 @@ function Figure({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <div
-        className="text-[9px] font-semibold uppercase"
+        className="text-[11px] font-semibold uppercase"
         style={{ color: "var(--text-3)", letterSpacing: ".15em" }}
       >
         {label}

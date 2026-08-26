@@ -57,7 +57,7 @@ function Ring({ haul }: { haul: number | null }) {
       style={{
         width: 20, height: 20, flexShrink: 0, borderRadius: "50%",
         display: "flex", alignItems: "center", justifyContent: "center",
-        fontFamily: MONO, fontSize: 9.5,
+        fontFamily: MONO, fontSize: 11,
         border: `1.5px solid ${hot ? S.brand : "rgba(233,238,245,.22)"}`,
         color: hot ? S.brand : S.ink3,
       }}
@@ -81,7 +81,7 @@ function FixtureChip({ row }: { row: SquadRow }) {
       style={{
         // A club code is a word, not a figure, so it takes the body face — and
         // DM Mono ships no 600 to set it in anyway.
-        fontFamily: SANS, fontSize: 9, fontWeight: 600, padding: "2px 5px",
+        fontFamily: SANS, fontSize: 11, fontWeight: 600, padding: "2px 5px",
         letterSpacing: ".02em", background, color: colour, whiteSpace: "nowrap",
       }}
     >
@@ -150,7 +150,7 @@ function Tile({
             data-testid="captain-marker"
             title="Captain. His points are doubled; the armband tile shows both figures."
             style={{
-              fontFamily: DISPLAY, fontSize: 10, color: S.shell,
+              fontFamily: DISPLAY, fontSize: 11, color: S.shell,
               background: S.brand, padding: "0 4px", lineHeight: "14px",
             }}
           >
@@ -165,7 +165,7 @@ function Tile({
             ? "—"
             : mode === "xp" ? figure.toFixed(1) : `${figure.toFixed(0)}%`}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 9.5, color: S.ink3 }}>
+        <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           {projection?.eMinutes === null || projection?.eMinutes === undefined
             ? ""
             : `${projection.eMinutes.toFixed(0)}m`}
@@ -206,7 +206,7 @@ function Tile({
 
       <span style={{
         display: "flex", justifyContent: "space-between", marginTop: 4,
-        fontFamily: MONO, fontSize: 9, color: S.ink3,
+        fontFamily: MONO, fontSize: 11, color: S.ink3,
       }}>
         <span>
           {projection?.q10 === null || projection?.q10 === undefined
@@ -241,7 +241,7 @@ export function Pitch({
         borderBottom: `1px solid ${S.hair}`,
       }}>
         <span style={{ ...EYEBROW, color: S.ink3 }}>The eleven</span>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+        <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           click a shirt to bench · totals recompute
         </span>
         <span style={{ flexGrow: 1 }} />
@@ -253,7 +253,7 @@ export function Pitch({
               onClick={() => onMode(key)}
               aria-pressed={mode === key}
               style={{
-                padding: "4px 9px", fontSize: 10.5,
+                padding: "4px 9px", fontSize: 11,
                 fontWeight: mode === key ? 600 : 400,
                 background: mode === key ? "rgba(233,238,245,.10)" : "transparent",
                 color: mode === key ? S.ink : S.ink3,
@@ -319,7 +319,7 @@ export function Pitch({
           Bench · the four left out, best first
         </div>
         {bench.length === 0 ? (
-          <p style={{ fontFamily: MONO, fontSize: 10, color: S.ink3, margin: 0 }}>
+          <p style={{ fontFamily: MONO, fontSize: 11, color: S.ink3, margin: 0 }}>
             Nobody is benched. Every player you own is in this eleven, which happens
             only when the squad is short of fifteen.
           </p>

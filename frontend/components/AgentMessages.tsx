@@ -104,7 +104,7 @@ export default function AgentMessages() {
               <div className="flex items-baseline justify-between gap-3 flex-wrap">
                 <p className="text-sm" style={{ color: "var(--text-1)" }}>
                   <span
-                    className="text-[10px] uppercase tracking-wider font-mono"
+                    className="text-[11px] uppercase tracking-wider font-mono"
                     style={{ color: tone.colour }}
                   >
                     {tone.label}
@@ -121,7 +121,7 @@ export default function AgentMessages() {
                   <strong>{message.title}</strong>
                 </p>
                 {message.createdAt ? (
-                  <p className="text-[10px] font-mono" style={{ color: "var(--text-3)" }}>
+                  <p className="text-[11px] font-mono" style={{ color: "var(--text-3)" }}>
                     {istDateTime(message.createdAt)}
                   </p>
                 ) : null}
@@ -137,7 +137,7 @@ export default function AgentMessages() {
       </ul>
 
       {feed.malformedCount > 0 ? (
-        <p className="text-[10px]" style={{ color: "var(--text-3)" }}>
+        <p className="text-[11px]" style={{ color: "var(--text-3)" }}>
           {feed.malformedCount} record
           {feed.malformedCount === 1 ? "" : "s"} in the feed could not be read and
           are shown above as broken messages. They are counted rather than

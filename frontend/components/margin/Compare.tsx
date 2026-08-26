@@ -121,7 +121,7 @@ export function Compare(
       }}
     >
       <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".1em",
+        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".04em",
                        textTransform: "uppercase", color: S.ink3 }}>
           comparing {rows.length}
         </span>
@@ -135,7 +135,7 @@ export function Compare(
           data-testid="compare-clear"
           onClick={onClear}
           style={{
-            marginLeft: "auto", fontFamily: MONO, fontSize: 10, cursor: "pointer",
+            marginLeft: "auto", fontFamily: MONO, fontSize: 11, cursor: "pointer",
             background: "transparent", color: S.ink3,
             border: `1px solid ${S.hair}`, padding: "2px 7px",
           }}
@@ -158,7 +158,7 @@ export function Compare(
                   {row.name}
                 </div>
                 <div style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-                  <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+                  <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
                     {row.position ?? "—"} {row.team ?? ""}
                   </span>
                   <button
@@ -167,7 +167,7 @@ export function Compare(
                     aria-label={`remove ${row.name} from the comparison`}
                     onClick={() => onRemove(row.elementId)}
                     style={{
-                      fontFamily: MONO, fontSize: 10, cursor: "pointer", lineHeight: 1,
+                      fontFamily: MONO, fontSize: 11, cursor: "pointer", lineHeight: 1,
                       background: "transparent", border: "none", padding: 0,
                       color: S.ink3,
                     }}
@@ -205,7 +205,7 @@ export function Compare(
                   paddingTop: opensRecord ? 8 : 0,
                 }}
               >
-                <div style={{ fontFamily: MONO, fontSize: 10.5, color: S.ink3, padding: "4px 8px 4px 0" }}>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: S.ink3, padding: "4px 8px 4px 0" }}>
                   {metric.label}
                 </div>
                 {rows.map((row) => {

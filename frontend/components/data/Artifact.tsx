@@ -159,7 +159,7 @@ export function ProvenanceStrip<T>({
   const stale = isStale(of);
   return (
     <p
-      className="text-[10px] font-mono"
+      className="text-[11px] font-mono"
       style={{ color: stale ? "var(--warning)" : "var(--text-3)" }}
       data-testid="provenance"
     >

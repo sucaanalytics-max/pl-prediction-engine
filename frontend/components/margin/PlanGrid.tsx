@@ -54,7 +54,7 @@ function CellMark({ cell }: { cell: Cell }) {
           style={{
             width: 18, height: 18, borderRadius: "50%",
             border: `1.5px solid ${S.agree}`, display: "grid", placeItems: "center",
-            fontFamily: MONO, fontSize: 9, fontWeight: 600, color: S.agree,
+            fontFamily: MONO, fontSize: 11, fontWeight: 600, color: S.agree,
           }}
         >
           C
@@ -107,7 +107,7 @@ function SummaryRow(
         borderBottom: `1px solid rgba(27,26,22,.06)`,
       }}
     >
-      <div style={{ padding: "5px 0", fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+      <div style={{ padding: "5px 0", fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
         {label}
       </div>
       {weeks.map((week) => (
@@ -151,7 +151,7 @@ export function PlanGrid(
         <Eyebrow surface={S}>
           The plan &middot; GW{weeks[0]?.gameweek}&ndash;GW{weeks[weeks.length - 1]?.gameweek}
         </Eyebrow>
-        <Eyebrow surface={S} style={{ letterSpacing: 0, textTransform: "none", fontSize: 10 }}>
+        <Eyebrow surface={S} style={{ letterSpacing: 0, textTransform: "none", fontSize: 11 }}>
           transfers planned {model.transferHorizon} of {model.evalHorizon} weeks
         </Eyebrow>
       </div>
@@ -164,7 +164,7 @@ export function PlanGrid(
           borderBottom: `1px solid ${S.hair}`,
         }}
       >
-        <div style={{ padding: "6px 0", fontFamily: MONO, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", color: S.ink3 }}>
+        <div style={{ padding: "6px 0", fontFamily: MONO, fontSize: 11, letterSpacing: ".04em", textTransform: "uppercase", color: S.ink3 }}>
           Player
         </div>
         {weeks.map((week) => (
@@ -172,12 +172,12 @@ export function PlanGrid(
             <div style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: S.ink }}>
               GW{week.gameweek}
             </div>
-            <div style={{ fontFamily: MONO, fontSize: 9, color: week.planned ? S.ink3 : S.ink3 }}>
+            <div style={{ fontFamily: MONO, fontSize: 11, color: week.planned ? S.ink3 : S.ink3 }}>
               {week.planned ? "planned" : "eval only"}
             </div>
           </div>
         ))}
-        <div style={{ padding: "6px 0", textAlign: "right", fontFamily: MONO, fontSize: 10, textTransform: "uppercase", color: S.ink3 }}>
+        <div style={{ padding: "6px 0", textAlign: "right", fontFamily: MONO, fontSize: 11, textTransform: "uppercase", color: S.ink3 }}>
           Starts
         </div>
       </div>
@@ -205,7 +205,7 @@ export function PlanGrid(
               {(w.bank_after / 10).toFixed(1)}
               {" · "}
               {w.free_transfers_after === null
-                ? <Nil surface={S} size={10} />
+                ? <Nil surface={S} size={11} />
                 : w.free_transfers_after}
             </span>
           )}
@@ -242,7 +242,7 @@ export function PlanGrid(
       </p>
 
       {/* Legend */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 18px", marginTop: 12, fontFamily: MONO, fontSize: 10, color: S.ink2 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 18px", marginTop: 12, fontFamily: MONO, fontSize: 11, color: S.ink2 }}>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
           <span style={{ width: 13, height: 13, background: S.ink }} />start
         </span>
@@ -274,7 +274,7 @@ function PlanGridRow({ row, grid }: { row: PlanRow; grid: string }) {
       }}
     >
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, padding: "3px 8px 3px 0", minWidth: 0 }}>
-        <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3, width: 26 }}>
+        <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3, width: 26 }}>
           {row.position || "—"}
         </span>
         <span

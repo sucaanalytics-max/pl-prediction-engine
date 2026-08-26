@@ -36,22 +36,43 @@
  * is a word — including words in small caps pretending to be apparatus.
  */
 
-import { SANS } from "@/lib/margin/tokens";
+import type React from "react";
+
+import { FLOODLIT, SANS } from "@/lib/margin/tokens";
 
 /**
  * The small tracked uppercase label above a block.
  *
- * 9px is deliberate and is the floor: `lib/margin/legibility.test.ts` fixes 11px
- * as the minimum for anything that carries MEANING, and an eyebrow does not — it
- * names a region the reader is already looking at, and the thing carrying meaning
- * is the figure underneath. A label below the floor is only acceptable because it
- * is redundant with what it labels.
+ * ## 11px, and it used to be 9px on an argument that measurement dissolved
+ *
+ * This was the ONE exemption from the 11px floor in `legibility.test.ts`, argued like
+ * this: an eyebrow names a region the reader is already looking at, so it is redundant
+ * with the figure underneath, so it may be small. The argument was sound as far as it
+ * went. It was also unnecessary, and an unnecessary exemption in a legibility guard is
+ * a hole with a good story attached.
+ *
+ * What settled it was measuring instead of reasoning. Rendered in the browser with the
+ * page's own Archivo, a tracked uppercase label at 11px/.04em occupies the SAME width as
+ * the same label at 9px/.15em:
+ *
+ *     Pos       23.1px at 9/.15    ->  23.3px at 11/.04
+ *     Mins      28.1px             ->  27.8px
+ *     BENCH     39.6px             ->  40.1px
+ *     TEMPLATE  59.7px             ->  59.8px
+ *
+ * Tracking was costing more width than the two extra pixels of size. So clearing the
+ * floor here is free — no grid track widens, no label wraps — and the exemption bought
+ * nothing but smaller text. It is gone, and `legibility.test.ts` now has no exemptions
+ * at all.
+ *
+ * The tracking that remains (.04em) is what still makes this read as apparatus rather
+ * than as a heading; {@link COLUMN_HEAD} uses the same value for the same reason.
  */
 export const EYEBROW = {
   fontFamily: SANS,
-  fontSize: 9,
+  fontSize: 11,
   fontWeight: 600,
-  letterSpacing: ".15em",
+  letterSpacing: ".04em",
   textTransform: "uppercase",
 } as const;
 
@@ -80,3 +101,32 @@ export const COLUMN_HEAD = {
   fontWeight: 650,
   letterSpacing: ".04em",
 } as const;
+
+/**
+ * The eyebrow as a component, because three grids had written it themselves.
+ *
+ * `HeatGrid`, `StatsTable` and `PhaseMatrix` each declared a local `Label` with an
+ * inline `fontSize: 9`, and each carried its own paragraph making the SAME argument —
+ * that an eyebrow is set in the body face at 600 and not in mono, because mono is for
+ * figures in columns. Three copies of one rule is three places for it to drift, and it
+ * had already drifted: the tracking differed between them.
+ *
+ * What settled the case was the floor pass. Raised independently to clear 11px, all
+ * three bodies came out BYTE-IDENTICAL — same face, same size, same .04em, same weight,
+ * same tone. Three files had converged on one answer by accident, which is the moment to
+ * write it once.
+ *
+ * `color` is a prop only because `StatsTable` genuinely varies it; everything else takes
+ * the default.
+ */
+export function Label(
+  { children, color }: {
+    readonly children: React.ReactNode;
+    /** Defaults to the surface's third ink tier, which is what a label wants. */
+    readonly color?: string;
+  },
+) {
+  return (
+    <span style={{ ...EYEBROW, color: color ?? FLOODLIT.ink3 }}>{children}</span>
+  );
+}

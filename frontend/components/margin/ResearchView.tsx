@@ -75,7 +75,20 @@ function Num({ of, dp = 1 }: { of: number | null; dp?: number }) {
   return <>{of.toFixed(dp)}</>;
 }
 
-const COLUMNS = "24px 26px minmax(92px,1.3fr) 44px 100px 38px 38px 44px 44px 44px 46px 44px 42px 40px 40px 60px";
+/*
+ * Fixed tracks, and the twelfth is 52px rather than 44px for a measured reason.
+ *
+ * When the header rose from 9px to 11px to clear the legibility floor, exactly one
+ * label stopped fitting: `P(GOAL)` — the widest of the sixteen, seven characters and
+ * two parentheses — needed 51px in a 44px track. Measured in the browser, every other
+ * cell still fit exactly. Widening this one is free because `minmax(92px,1.3fr)` in the
+ * name column absorbs it: the tracks sum to ~856px in a 1124px row, so the 8px comes
+ * out of the name column's slack rather than out of the table.
+ *
+ * The alternative was dropping the header's uppercase, which is what makes the label
+ * wide. That would have been a bigger change to the design language than one track.
+ */
+const COLUMNS = "24px 26px minmax(92px,1.3fr) 44px 100px 38px 38px 44px 44px 44px 46px 52px 42px 40px 40px 60px";
 
 function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => void }) {
   // A spacer for the pin column. Without it the header labels sit one column
@@ -102,7 +115,7 @@ function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => voi
       style={{
         display: "grid", gridTemplateColumns: COLUMNS, gap: 6,
         padding: "7px 18px", borderBottom: `1px solid rgba(27,26,22,.25)`,
-        fontFamily: MONO, fontSize: 9, letterSpacing: ".06em",
+        fontFamily: MONO, fontSize: 11, letterSpacing: ".06em",
         textTransform: "uppercase", color: S.ink3,
         position: "sticky", top: 52, background: S.shell, zIndex: 2,
       }}
@@ -165,7 +178,7 @@ function Row(
       >
         {pinned ? "✓" : "+"}
       </button>
-      <span style={{ fontSize: 9, color: S.ink3 }}>{player.position ?? "—"}</span>
+      <span style={{ fontSize: 11, color: S.ink3 }}>{player.position ?? "—"}</span>
       <span
         style={{
           fontFamily: SANS, fontSize: 12.5, whiteSpace: "nowrap",
@@ -206,9 +219,9 @@ function Row(
       <span style={{ textAlign: "right", color: S.ink2 }}><Pct of={player.pCleanSheet} /></span>
       <span style={{ textAlign: "right", color: S.ink2 }}><Pct of={player.pGe5} /></span>
       <span style={{ textAlign: "right", color: S.ink2 }}><Pct of={player.pGe10} /></span>
-      <span style={{ textAlign: "right", color: S.ink3, fontSize: 10.5 }}>
+      <span style={{ textAlign: "right", color: S.ink3, fontSize: 11 }}>
         {player.q10 === null || player.q90 === null
-          ? <Nil surface={S} size={10} />
+          ? <Nil surface={S} size={11} />
           : `${player.q10}–${player.q90}`}
       </span>
     </div>
@@ -256,7 +269,7 @@ function Twins({ players }: { players: readonly Projection[] }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 22 }}>
       <div>
-        <Eyebrow surface={S} style={{ fontSize: 10, letterSpacing: ".1em", marginBottom: 8 }}>
+        <Eyebrow surface={S} style={{ fontSize: 11, letterSpacing: ".04em", marginBottom: 8 }}>
           Same mean, different asset
         </Eyebrow>
         {line(pair.steady)}
@@ -290,7 +303,7 @@ function Selected({ player, file }: { player: Projection; file: Projections }) {
   return (
     <div style={{ padding: "18px 20px", display: "flex", flexDirection: "column", gap: 15 }}>
       <div>
-        <Eyebrow surface={S} style={{ fontSize: 10, letterSpacing: ".12em" }}>Selected</Eyebrow>
+        <Eyebrow surface={S} style={{ fontSize: 11, letterSpacing: ".04em" }}>Selected</Eyebrow>
         <h2 style={{ margin: "5px 0 2px", fontFamily: SANS, fontSize: 20, fontWeight: 600, letterSpacing: "-.02em", color: S.ink }}>
           {player.name ?? `#${player.elementId}`}
         </h2>
@@ -323,7 +336,7 @@ function Selected({ player, file }: { player: Projection; file: Projections }) {
             height={22}
           />
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5, fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5, fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           <span>q10 {player.q10 ?? "—"}</span>
           <span>median {player.q50 ?? "—"}</span>
           <span>q90 {player.q90 ?? "—"}</span>
@@ -338,7 +351,7 @@ function Selected({ player, file }: { player: Projection; file: Projections }) {
       </div>
 
       <div>
-        <Eyebrow surface={S} style={{ fontSize: 10, letterSpacing: ".12em", marginBottom: 9 }}>
+        <Eyebrow surface={S} style={{ fontSize: 11, letterSpacing: ".04em", marginBottom: 9 }}>
           Where the points come from
         </Eyebrow>
         {parts === null ? (
@@ -489,7 +502,7 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
           <span style={{ fontFamily: MONO, fontSize: 11, padding: "5px 10px", border: `1px solid ${S.hair}`, color: S.ink2 }}>
             sort {SORTS.find((s) => s.key === sort)?.label} &darr;
           </span>
-          <span style={{ marginLeft: "auto", fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+          <span style={{ marginLeft: "auto", fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
             {file?.nDraws ? `${file.nDraws.toLocaleString()} draws` : "draw count unstated"}
             {" · joint clean sheets · producer "}
             {/* Labelled. `describeProducer` returns a bare "1" for this artifact,
@@ -540,7 +553,7 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
 
               {/* Never a list that quietly ends. */}
               <div style={{ padding: "12px 18px", borderBottom: `1px solid ${S.hair}`, display: "flex", gap: 12, alignItems: "baseline", flexWrap: "wrap" }}>
-                <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+                <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
                   showing {shown.length} of {ranked.length}
                   {query ? ` matching “${query}”` : ""}
                   {ranked.length !== players.length ? ` · ${players.length} in the file` : ""}
@@ -550,7 +563,7 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
                     type="button"
                     onClick={() => setShowAll(true)}
                     style={{
-                      fontFamily: MONO, fontSize: 10, letterSpacing: ".08em",
+                      fontFamily: MONO, fontSize: 11, letterSpacing: ".04em",
                       textTransform: "uppercase", color: S.ink,
                       background: "transparent", border: 0, cursor: "pointer",
                       borderBottom: `1px solid ${S.hair}`, padding: 0,

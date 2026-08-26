@@ -27,6 +27,7 @@ import { useMemo, useState } from "react";
 
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import { DISPLAY, FLOODLIT, MONO, SANS, TRAFFIC, stepOf } from "@/lib/margin/tokens";
+import { Label } from "@/lib/margin/type";
 /* TRAFFIC's own length, not HEAT's. The two ramps are deliberately different
    sizes — four difficulty ratings occur and five point bands are useful — and
    passing one ramp's step count to the other's band function silently produced
@@ -46,7 +47,7 @@ const ORDERS: ReadonlyArray<readonly [PhaseOrder, string]> = [
 
 function chip(on: boolean): React.CSSProperties {
   return {
-    padding: "4px 9px", fontSize: 10.5, fontWeight: on ? 600 : 400,
+    padding: "4px 9px", fontSize: 11, fontWeight: on ? 600 : 400,
     background: on ? "rgba(233,238,245,.10)" : "transparent",
     color: on ? S.ink : S.ink3, borderRight: `1px solid ${S.rule}`, cursor: "pointer",
   };
@@ -56,21 +57,6 @@ function Group({ children }: { children: React.ReactNode }) {
   return <div style={{ display: "flex", border: `1px solid ${S.rule}` }}>{children}</div>;
 }
 
-/**
- * The eyebrow face, per the artboard: body face (Archivo) at weight 600 with
- * .15em tracking — NOT mono. This used to be set in MONO, which is the bug
- * the density pass fixed; a label is apparatus, not a figure.
- */
-function Label({ children }: { children: React.ReactNode }) {
-  return (
-    <span style={{
-      fontFamily: SANS, fontSize: 9, letterSpacing: ".15em",
-      textTransform: "uppercase", color: S.ink3, fontWeight: 600,
-    }}>
-      {children}
-    </span>
-  );
-}
 
 export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[] }) {
   const [minLength, setMinLength] = useState<RunLength>(3);
@@ -151,7 +137,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
             {phases.length}
           </span>
         </div>
-        <span data-testid="phase-count" style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+        <span data-testid="phase-count" style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           {phases.length} run{phases.length === 1 ? "" : "s"} in {clubs.length} clubs
         </span>
       </div>
@@ -229,7 +215,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                           style={{
                             height: 26, background, color: ink,
                             display: "flex", alignItems: "center", justifyContent: "center",
-                            fontFamily: MONO, fontSize: 10.5, fontWeight: home ? 500 : 400,
+                            fontFamily: MONO, fontSize: 11, fontWeight: home ? 500 : 400,
                             border: band === null ? `1px dashed ${S.hair}` : "none",
                             outline: on ? `1px solid ${S.brand}` : "none",
                             outlineOffset: on ? -1 : undefined,
@@ -304,7 +290,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                     {phase.shortName || phase.team}
                   </span>
                   <div style={{ minWidth: 0, flexGrow: 1 }}>
-                    <div style={{ fontFamily: MONO, fontSize: 10.5, color: S.brand }}>
+                    <div style={{ fontFamily: MONO, fontSize: 11, color: S.brand }}>
                       GW{phase.fromGameweek}–{phase.toGameweek}
                     </div>
                     <div style={{ display: "flex", gap: 2, marginTop: 3, flexWrap: "wrap" }}>
@@ -315,7 +301,7 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                           : stepOf(TRAFFIC, band);
                         return (
                           <span key={week.gameweek} style={{
-                            fontFamily: MONO, fontSize: 9.5, padding: "2px 5px",
+                            fontFamily: MONO, fontSize: 11, padding: "2px 5px",
                             background, color: ink,
                           }}>
                             {week.labels.map((label) => venue(label)).join("/")}
@@ -372,13 +358,13 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
         <div style={{ maxWidth: 300 }}>
           <div style={{ marginBottom: 6 }}><Label>Bright is kind</Label></div>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
-            <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3 }}>5</span>
+            <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>5</span>
             {Array.from({ length: TRAFFIC_STEPS }, (_, band) => (
               <span key={band} style={{
                 width: 20, height: 10, background: stepOf(TRAFFIC, band)[0],
               }} />
             ))}
-            <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3 }}>1</span>
+            <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>1</span>
           </div>
           <p style={{ fontSize: 11.5, lineHeight: 1.55, color: S.ink2, margin: 0 }}>
             The opposite of the projection grid, where bright is a big number.

@@ -140,12 +140,12 @@ function FixtureCell({ row }: { readonly row: SquadRow }) {
       display: "inline-flex", alignItems: "center", gap: 4,
       padding: "2px 5px", background, color: colour, whiteSpace: "nowrap",
     }}>
-      <span style={{ fontFamily: SANS, fontSize: 9.5, fontWeight: 600, letterSpacing: ".02em" }}>
+      <span style={{ fontFamily: SANS, fontSize: 11, fontWeight: 600, letterSpacing: ".02em" }}>
         {label}
       </span>
       {/* The rating, visible. It lived in a tooltip, which is no place for a
           five-band quantity on a screen used on a phone. */}
-      <span style={{ fontFamily: MONO, fontSize: 9.5, color: S.ink2 }}>
+      <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink2 }}>
         {difficulty === null ? "·" : difficulty}
       </span>
     </span>
@@ -160,7 +160,7 @@ function Interval({ row }: { readonly row: SquadRow }) {
 
   if (bar === null) {
     return (
-      <span style={{ fontFamily: MONO, fontSize: 9.5, color: S.ink3 }}>
+      <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
         no interval
       </span>
     );
@@ -330,14 +330,14 @@ export function Eleven(props: ElevenProps) {
         {/* The swap mark. A shape and a letter, not a colour alone — the tint
             behind the row is reinforcement, never the sole carrier. */}
         <span style={{
-          fontFamily: MONO, fontSize: 9, textAlign: "center",
+          fontFamily: MONO, fontSize: 11, textAlign: "center",
           color: coming ? S.agree : going ? S.conflict : "transparent",
         }}>
           {coming ? "▲" : going ? "▼" : ""}
         </span>
 
         <span style={{
-          fontFamily: MONO, fontSize: 9.5, color: S.ink3, padding: "0 6px",
+          fontFamily: MONO, fontSize: 11, color: S.ink3, padding: "0 6px",
           letterSpacing: ".04em",
         }}>
           {row.player.position.toUpperCase()}
@@ -357,7 +357,7 @@ export function Eleven(props: ElevenProps) {
               data-testid="captain-marker"
               title="Captain. His points are doubled; the armband tile shows both figures."
               style={{
-                fontFamily: DISPLAY, fontSize: 10, color: S.shell,
+                fontFamily: DISPLAY, fontSize: 11, color: S.shell,
                 background: S.brand, padding: "0 4px", lineHeight: "14px",
               }}
             >
@@ -416,7 +416,7 @@ export function Eleven(props: ElevenProps) {
             borderTop: `1px solid ${S.rule}`, borderBottom: `1px solid ${S.hair}`,
           }}>
             <span style={{ ...EYEBROW, color: S.ink3 }}>Bench</span>
-            <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+            <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
               {/* Not "autosub order": FPL's autosub depends on who blanks and
                   which formations stay legal after they do, and nothing here
                   solves that. */}
@@ -428,7 +428,7 @@ export function Eleven(props: ElevenProps) {
       </div>
 
       <p style={{
-        fontFamily: MONO, fontSize: 10, color: S.ink3,
+        fontFamily: MONO, fontSize: 11, color: S.ink3,
         margin: 0, padding: "9px 6px 0", lineHeight: 1.6,
       }}>
         Click any row to move a player between the eleven and the bench; every total

@@ -420,7 +420,7 @@ export function MarginState<T>(
         data-state={of.state}
         style={{ margin: 0, fontSize: 11.5, lineHeight: 1.5, color: surface.ink3 }}
       >
-        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".1em", textTransform: "uppercase", color: tone }}>
+        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".04em", textTransform: "uppercase", color: tone }}>
           {label}
         </span>
         {" — "}

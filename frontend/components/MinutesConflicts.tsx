@@ -101,7 +101,7 @@ export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {
           {view.conflicts.length === 1 ? "" : "s"} our own scanned evidence argues
           with. Reported, never applied — read the quote and decide.
         </p>
-        <p className="text-[10px]" style={{ color: "var(--text-3)" }}>
+        <p className="text-[11px]" style={{ color: "var(--text-3)" }}>
           Flagged when the model expects under {view.fringeMinutes} minutes for a
           player somebody is writing about, or over {view.nailedMinutes} for one
           discussed with injury language.
@@ -124,7 +124,7 @@ export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {
                     {c.club ? ` · ${c.club}` : ""}
                   </span>
                 </p>
-                <p className="text-[10px] font-mono" style={{ color: "var(--text-3)" }}>
+                <p className="text-[11px] font-mono" style={{ color: "var(--text-3)" }}>
                   {copy?.label ?? c.kind}
                 </p>
               </div>
@@ -163,7 +163,7 @@ export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {
                 {c.quote}
               </blockquote>
 
-              <p className="text-[10px] font-mono" style={{ color: "var(--text-3)" }}>
+              <p className="text-[11px] font-mono" style={{ color: "var(--text-3)" }}>
                 {c.source}
                 {c.claimedAt ? ` · ${c.claimedAt}` : ""}
                 {" · "}
@@ -173,7 +173,7 @@ export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {
                 </a>
               </p>
               {copy ? (
-                <p className="text-[10px]" style={{ color: "var(--text-3)" }}>
+                <p className="text-[11px]" style={{ color: "var(--text-3)" }}>
                   {copy.gist}
                 </p>
               ) : null}
@@ -183,7 +183,7 @@ export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {
       </ul>
 
       {view.ambiguousSurnames.size > 0 ? (
-        <p className="text-[10px]" style={{ color: "var(--text-3)" }}>
+        <p className="text-[11px]" style={{ color: "var(--text-3)" }}>
           Refused rather than guessed: {[...view.ambiguousSurnames.keys()].join(", ")}
           {" "}— shared surnames that could be more than one player. 441 of 663
           surname keys are ambiguous, so a guess here would make every other line
@@ -191,7 +191,7 @@ export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {
         </p>
       ) : null}
 
-      <p className="text-[10px]" style={{ color: "var(--text-3)" }}>
+      <p className="text-[11px]" style={{ color: "var(--text-3)" }}>
         A player NOT listed here has not been verified — it means nobody in the
         scanned feeds wrote about them. Absence of a flag is absence of evidence,
         not agreement.

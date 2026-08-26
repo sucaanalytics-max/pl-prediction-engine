@@ -289,12 +289,6 @@
   }
 
   /* ── Skeleton loading ─────────────────────────────────────────────────────── */
-  .skeleton {
-    @apply animate-pulse;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-  }
-
   /* ── Data tables ──────────────────────────────────────────────────────────── */
   /* Mono headers at 10px, matching the column labels on Margin's research
      table, so the two read as the same instrument rather than two products. */
@@ -314,17 +308,7 @@
      saying something is NOT trustworthy — `HEURISTIC — NOT A MODEL`,
      `NOT YET MEASURABLE`, `DEADLINE PASSED` — and the previous treatment gave
      each of those a coloured halo at the same energy as a live recommendation.
-     The word carries the meaning; the border only groups it. */
-  .badge {
-    @apply inline-flex items-center px-1.5 py-0.5 uppercase;
-    font-family: var(--font-mono);
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    border-radius: var(--radius-badge);
-    border: 1px solid currentColor;
-    background: transparent;
-  }/* ── Navigation ───────────────────────────────────────────────────────────── *//* ── Dividers ─────────────────────────────────────────────────────────────── */
+     The word carries the meaning; the border only groups it. *//* ── Navigation ───────────────────────────────────────────────────────────── *//* ── Dividers ─────────────────────────────────────────────────────────────── */
   /* ── Stale data warning ───────────────────────────────────────────────────── */
   /* ── Toast notification ───────────────────────────────────────────────────── */  /* ── Fixture prediction card classes ──────────────────────────────────────── *//* ── Prob cells (fixture card) ────────────────────────────────────────────── *//* ── SHAP bars ────────────────────────────────────────────────────────────── */  /* ── Fixture cards ────────────────────────────────────────────────────────── */  /* Animated border spin for best value bets */}
 
@@ -426,10 +410,18 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
   gap: 7px;
   color: var(--accent-text);
-  font-size: 10px;
+  /* 11px, and the tracking pays for it.
+   *
+   * Measured in the browser with the page's own Archivo: a tracked uppercase label
+   * at 11px/.04em occupies the SAME width as the same label at 9-10px/.15em — for
+   * "Pos" 23.3px against 23.1px, for "TEMPLATE" 59.8px against 59.7px. Tracking was
+   * costing more width than the two extra pixels of size, so clearing the 11px floor
+   * here is free. That measurement is why the whole eyebrow class could be raised
+   * rather than exempted. */
+  font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: .15em;
+  letter-spacing: .04em;
 }
 
 .decision-card {
@@ -438,19 +430,6 @@ input[type="range"]::-moz-range-thumb {
   background: var(--surface);
   padding: 22px;
 }
-.primary-action,
-.secondary-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 42px;
-  padding: 0 16px;
-  border-radius: 0;
-  font-size: 12px;
-  font-weight: 750;
-  transition: transform .2s, background .2s, border-color .2s;
-}
-
 /* The identity button, and it must wear `--brand`.
  *
  * It was on `--chrome-accent` (oklch 0.84 0.19 128, a lime) with `#8ef0c6` on
@@ -464,15 +443,21 @@ input[type="range"]::-moz-range-thumb {
  * had no reader; they do now. Measured: ink 9.94:1, hover 12.07:1, border 3.25:1
  * against the surface, so it clears 1.4.3 on both states and 1.4.11 on the edge. */
 .primary-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 750;
+  transition: transform .2s, background .2s, border-color .2s;
   color: #10141a;
   background: var(--brand);
   border: 1px solid var(--brand-border);
 }
 
 .primary-action:hover { transform: translateY(-2px); background: var(--brand-hover); }
-.decision-card textarea { width: 100%; resize: vertical; padding: 11px; color: var(--text-1); border: 1px solid var(--border); border-radius: 0; outline: 0; background: var(--surface2); font-size: 10px; line-height: 1.5; }
-.decision-card textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-muted); }
-.decision-card textarea + .primary-action { margin-top: 10px; }
 
 /* Masthead */
 .masthead {
@@ -490,7 +475,7 @@ input[type="range"]::-moz-range-thumb {
 .masthead-left { display: flex; align-items: stretch; min-width: 0; }
 .masthead-mark { display: flex; align-items: center; padding: 0 15px; color: var(--text-1); font: 400 21px/1 var(--font-display); letter-spacing: .015em; text-transform: uppercase; }
 .masthead-nav { display: flex; align-items: stretch; min-width: 0; overflow-x: auto; }
-.masthead-nav > a { display: flex; align-items: center; gap: 7px; padding: 0 13px; color: var(--text-2); font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; box-shadow: inset 0 -2px 0 transparent; transition: color .18s, background .18s, box-shadow .18s; }
+.masthead-nav > a { display: flex; align-items: center; gap: 7px; padding: 0 13px; color: var(--text-2); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; box-shadow: inset 0 -2px 0 transparent; transition: color .18s, background .18s, box-shadow .18s; }
 .masthead-nav > a:hover { color: var(--text-1); background: var(--surface2); }
 .masthead-nav > a.active { color: var(--text-1); box-shadow: inset 0 -2px 0 var(--accent); }
 .masthead-right { display: flex; flex-shrink: 0; align-items: stretch; }
@@ -498,7 +483,7 @@ input[type="range"]::-moz-range-thumb {
 .masthead-team { display: flex; border-left: 1px solid var(--border); }
 .masthead-team > a,
 .masthead-team-plain { display: grid; align-content: center; gap: 2px; padding: 0 14px; }
-.masthead-team strong { color: var(--text-1); font-size: 10px; }
+.masthead-team strong { color: var(--text-1); font-size: 11px; }
 .masthead-team span { color: var(--text-3); font-size: 11px; font-weight: 400; font-family: var(--font-mono); }
 .masthead-team > a:hover strong { color: var(--accent-text); }
 @media (max-width: 767px) {
@@ -533,7 +518,7 @@ input[type="range"]::-moz-range-thumb {
 }
 .pwa-install-icon { display: grid; place-items: center; width: 34px; height: 34px; color: var(--chrome); border-radius: 0; background: var(--chrome-accent); }
 .pwa-install-card > div { display: grid; gap: 2px; }
-.pwa-install-card strong { font-size: 9px; }
+.pwa-install-card strong { font-size: 12px; }
 .pwa-install-card span { color: var(--chrome-ink-2); font-size: 11px; }
 .pwa-install-action { padding: 7px 9px; color: var(--chrome); border-radius: 0; background: var(--chrome-accent); font-size: 11px; font-weight: 800; }
 .pwa-share-icon { color: var(--chrome-accent); }
@@ -543,10 +528,25 @@ input[type="range"]::-moz-range-thumb {
 .offline-icon { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 18px; color: var(--accent-text); border-radius: 0; background: var(--accent-muted); }
 .offline-page .eyebrow { justify-content: center; }
 .offline-page h1 { margin-top: 9px; color: var(--text-1); font-size: 2.2rem; letter-spacing: -.06em; }
-.offline-page p { margin: 10px 0 20px; color: var(--text-3); font-size: 10px; line-height: 1.6; }
+.offline-page p { margin: 10px 0 20px; color: var(--text-3); font-size: 12px; line-height: 1.6; }
 
 @media (max-width: 767px) {
-  body { padding-bottom: calc(70px + env(safe-area-inset-bottom)); }
+  /* Reserve the bar's REAL height, which is 99px and not 70px.
+   *
+   * Six destinations in a four-column grid is always two rows; each row is a 42px
+   * touch target (`min-height` below, and the icon-plus-label content needs exactly
+   * that anyway); the bar adds 7px of padding top and bottom and a 1px border.
+   * 2*42 + 14 + 1 = 99. `body` reserved 70, so the last 29px of every page on a phone
+   * sat behind a fixed bar.
+   *
+   * Measured on `/` at a phone width: the closing sentence of "Week by week" ended 9px
+   * below the bar's top edge. This is pre-existing and the 7px-to-11px label raise did
+   * not cause it — the row height comes from `min-height`, not from the type — but
+   * checking the raise is what surfaced it.
+   *
+   * Written as the arithmetic rather than as `99px` so the next person changing the
+   * column count or the touch target can see what depends on it. */
+  body { padding-bottom: calc((2 * 42px) + 15px + env(safe-area-inset-bottom)); }
   .mobile-bottom-nav {
     position: fixed;
     inset: auto 0 0;
@@ -557,16 +557,14 @@ input[type="range"]::-moz-range-thumb {
     border-top: 1px solid rgba(255, 255, 255, .08);
     background: rgba(7, 19, 15, .97);
   }
-  .mobile-bottom-nav a { display: grid; place-items: center; gap: 3px; min-height: 42px; color: rgba(255, 255, 255, .38); font-size: 7px; font-weight: 700; }
+  /* 7px was the smallest text in the app, in the one place a phone user navigates
+     from, and `rgba(255,255,255,.38)` measured 3.55:1 on this bar's own ground —
+     failing 1.4.3 for normal text. The chrome tier is 5.48:1 here and is the token
+     the rest of this bar already uses. */
+  .mobile-bottom-nav a { display: grid; place-items: center; gap: 3px; min-height: 42px; color: var(--chrome-ink-3); font-size: 11px; font-weight: 700; }
   .mobile-bottom-nav a.active { color: var(--chrome-accent); }
   .pwa-install-card { bottom: calc(76px + env(safe-area-inset-bottom)); }
-}
-
-.vice-captain { display: grid; padding: 17px; border: 1px solid var(--chrome-hair); border-radius: 0; background: color-mix(in oklab, var(--chrome-ink) 5%, transparent); }
-.vice-captain span { color: rgba(255,255,255,.38); font-size: 7px; text-transform: uppercase; }
-.vice-captain strong { margin-top: 4px; color: var(--chrome-ink); font-size: 13px; }
-.vice-captain small { margin-top: 2px; color: rgba(255,255,255,.4); font-size: 8px; }
-/* The call board: pitch beside rail, stacking under it when the rail can no
+}/* The call board: pitch beside rail, stacking under it when the rail can no
    longer hold its eight-column horizon table. The breakpoint is the rail's own
    minimum plus the pitch's — a 150px tile does not shrink, so squeezing the
    pitch to keep the rail alongside would break the tiles rather than the

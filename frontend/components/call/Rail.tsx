@@ -113,7 +113,7 @@ export function Rail({
             }}
           >
             <span style={{
-              fontFamily: SANS, fontSize: 8.5, letterSpacing: ".12em", fontWeight: 700,
+              fontFamily: SANS, fontSize: 11, letterSpacing: ".04em", fontWeight: 700,
               padding: "3px 6px", whiteSpace: "nowrap",
               border: `1px solid ${BADGE_COLOUR[callout.kind]}`,
               color: BADGE_COLOUR[callout.kind],
@@ -156,7 +156,7 @@ export function Rail({
               onClick={() => onScale(key)}
               aria-pressed={scale === key}
               style={{
-                padding: "4px 9px", fontSize: 10.5,
+                padding: "4px 9px", fontSize: 11,
                 fontWeight: scale === key ? 600 : 400,
                 background: scale === key ? "rgba(233,238,245,.10)" : "transparent",
                 color: scale === key ? S.ink : S.ink3,
@@ -190,7 +190,7 @@ export function Rail({
               <div key={week} style={{ textAlign: "center" }}>
                 <span style={{
                   // "GW3" is a label; the cells below it are the figures.
-                  fontFamily: SANS, fontSize: 8.5, letterSpacing: ".1em",
+                  fontFamily: SANS, fontSize: 11, letterSpacing: ".04em",
                   color: S.ink3, fontWeight: 600,
                 }}>
                   GW{week}
@@ -209,7 +209,7 @@ export function Rail({
               }}
             >
               <div style={{
-                fontSize: 10.5, color: S.ink2, whiteSpace: "nowrap",
+                fontSize: 11, color: S.ink2, whiteSpace: "nowrap",
                 overflow: "hidden", textOverflow: "ellipsis",
               }}>
                 {row.player.name}
@@ -228,7 +228,7 @@ export function Rail({
                   <div
                     key={week}
                     style={{
-                      background, color: colour, fontFamily: MONO, fontSize: 9.5,
+                      background, color: colour, fontFamily: MONO, fontSize: 11,
                       textAlign: "center", padding: "3px 0",
                       border: band === null ? `1px solid ${S.hair}` : "none",
                     }}

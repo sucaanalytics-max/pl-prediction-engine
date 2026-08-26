@@ -32,6 +32,7 @@ import { projectionsDescriptor, type Projection } from "@/lib/data/projections";
 import { REGISTRY, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
+import { Label } from "@/lib/margin/type";
 import { STAT_TABS, blockedTabs, tabByKey } from "@/lib/projections/stat-tabs";
 
 const S = FLOODLIT;
@@ -112,24 +113,12 @@ function pct(value: number | null | undefined): number | null {
 
 function chip(on: boolean): React.CSSProperties {
   return {
-    padding: "5px 9px", fontSize: 10.5, fontWeight: on ? 600 : 400,
+    padding: "5px 9px", fontSize: 11, fontWeight: on ? 600 : 400,
     background: on ? "rgba(233,238,245,.10)" : "transparent",
     color: on ? S.ink : S.ink3, borderRight: `1px solid ${S.rule}`, cursor: "pointer",
   };
 }
 
-// Eyebrow labels are set in the BODY face (Archivo) at weight 600, not in Mono —
-// Mono is for figures in columns, and an eyebrow is a label, not a figure.
-function Label({ children, color = S.ink3 }: { children: React.ReactNode; color?: string }) {
-  return (
-    <span style={{
-      fontFamily: SANS, fontSize: 9, letterSpacing: ".15em",
-      textTransform: "uppercase", color, fontWeight: 600,
-    }}>
-      {children}
-    </span>
-  );
-}
 
 export function StatsTable({
   gameweek, ownedIds,
@@ -312,7 +301,7 @@ export function StatsTable({
             ))}
         </div>
         <div style={{ flexGrow: 1 }} />
-        <span data-testid="stats-count" style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+        <span data-testid="stats-count" style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           {visible.length} players
         </span>
       </div>
@@ -375,7 +364,7 @@ export function StatsTable({
                   }}>
                     {row.name}
                   </span>
-                  <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3 }}>
+                  <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
                     {row.team}
                   </span>
                 </div>
@@ -399,7 +388,7 @@ export function StatsTable({
             ))}
             {visible.length > 200 ? (
               <p style={{
-                padding: "10px 14px", margin: 0, fontFamily: MONO, fontSize: 10,
+                padding: "10px 14px", margin: 0, fontFamily: MONO, fontSize: 11,
                 color: S.ink3,
               }}>
                 Showing the first 200 of {visible.length}. Narrow with the search or the

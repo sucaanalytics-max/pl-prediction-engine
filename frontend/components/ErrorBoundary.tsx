@@ -48,7 +48,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             {this.state.error?.message ?? "An unexpected error occurred."}
           </p>
           {this.props.pageName && (
-            <p className="text-[10px] text-slate-600">Page: {this.props.pageName}</p>
+            <p className="text-[11px] text-slate-600">Page: {this.props.pageName}</p>
           )}
           <button
             onClick={this.handleRetry}

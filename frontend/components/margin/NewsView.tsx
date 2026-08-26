@@ -128,15 +128,15 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
       }}
     >
       <div style={{ display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap" }}>
-        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".08em",
+        <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".04em",
                        textTransform: "uppercase", color: S.ink3 }}>
           {sourceLabel(item.source)}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+        <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           {ago(item.claimedAt)}
         </span>
         {hits.length ? (
-          <span style={{ fontFamily: MONO, fontSize: 10, color: S.agree }}>
+          <span style={{ fontFamily: MONO, fontSize: 11, color: S.agree }}>
             {hits.map((p) => p.name ?? `#${p.elementId}`).join(", ")} — yours
           </span>
         ) : null}
@@ -160,8 +160,8 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
           data-testid="news-read"
           onClick={read}
           style={{
-            alignSelf: "flex-start", fontFamily: MONO, fontSize: 10,
-            textTransform: "uppercase", letterSpacing: ".08em", cursor: "pointer",
+            alignSelf: "flex-start", fontFamily: MONO, fontSize: 11,
+            textTransform: "uppercase", letterSpacing: ".04em", cursor: "pointer",
             background: "transparent", color: S.ink3,
             border: `1px solid ${S.hair}`, padding: "2px 7px",
           }}
@@ -175,7 +175,7 @@ function Item({ item, owned }: { item: NewsItem; owned: ReadonlySet<number> }) {
                     borderLeft: `1px solid ${S.hair}`, paddingLeft: 12, marginTop: 2 }}>
           {body.truncated ? (
             <p data-testid="news-truncated"
-               style={{ margin: 0, fontFamily: MONO, fontSize: 10, color: S.noise }}>
+               style={{ margin: 0, fontFamily: MONO, fontSize: 11, color: S.noise }}>
               long article — the rest is at the source
             </p>
           ) : null}
@@ -333,7 +333,7 @@ export function NewsView() {
           disabled={!squadKnown}
           title={squadKnown ? undefined : "the squad could not be read, so there is nothing to match against"}
           style={{
-            fontFamily: MONO, fontSize: 10, textTransform: "uppercase", letterSpacing: ".08em",
+            fontFamily: MONO, fontSize: 11, textTransform: "uppercase", letterSpacing: ".04em",
             padding: "3px 8px", cursor: squadKnown ? "pointer" : "not-allowed",
             background: onlyMine ? S.agree : "transparent",
             // Pressed: ink on the agreement fill. Unpressed and unavailable:
@@ -352,7 +352,7 @@ export function NewsView() {
             data-testid="news-filter-source"
             onClick={() => setSource((current) => (current === name ? null : name))}
             style={{
-              fontFamily: MONO, fontSize: 10, padding: "3px 8px", cursor: "pointer",
+              fontFamily: MONO, fontSize: 11, padding: "3px 8px", cursor: "pointer",
               background: source === name ? S.ink : "transparent",
               // Selected reverses onto the shell; the rest split across the two
               // quiet tiers so a preferred source still reads louder than the

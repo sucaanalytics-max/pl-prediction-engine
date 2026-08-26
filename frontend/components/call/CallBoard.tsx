@@ -231,14 +231,14 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
             {/* The instruction, beside the delta it explains. The tile says the
                 optimum is worth more; without this it never says how. */}
             {board.swapLine === null ? (
-              <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+              <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
                 {board.swap.known
                   ? "already the best eleven from this squad"
                   : "no lineup on file to compare against"}
               </span>
             ) : (
               <span data-testid="swap-line" style={{
-                fontFamily: MONO, fontSize: 10.5, color: S.ink2,
+                fontFamily: MONO, fontSize: 11, color: S.ink2,
               }}>
                 to match it: <span style={{ color: S.brand }}>{board.swapLine}</span>
               </span>
@@ -253,7 +253,7 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
                   onClick={() => setView(key)}
                   aria-pressed={view === key}
                   style={{
-                    padding: "4px 9px", fontSize: 10.5,
+                    padding: "4px 9px", fontSize: 11,
                     fontWeight: view === key ? 600 : 400,
                     background: view === key ? "rgba(233,238,245,.10)" : "transparent",
                     color: view === key ? S.ink : S.ink3,
@@ -324,7 +324,7 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
           is where the reader learns which week they are looking at, and it names
           the artifact so the number can be checked rather than trusted. */}
       <p style={{
-        fontFamily: MONO, fontSize: 10.5, color: S.ink3, margin: "10px 0 0",
+        fontFamily: MONO, fontSize: 11, color: S.ink3, margin: "10px 0 0",
       }} data-testid="call-provenance">
         GW{projections?.gameweek ?? gameweek} · from fpl/xp_public_gw
         {String(projections?.gameweek ?? gameweek).padStart(2, "0")}.json

@@ -55,7 +55,7 @@ function Panel(
   return (
     <div style={{ background: S.bar, padding: "18px 20px", display: "flex", flexDirection: "column", gap: 13, minWidth: 0 }}>
       <div>
-        <Eyebrow surface={S} style={{ fontSize: 10, letterSpacing: ".12em" }}>{eyebrow}</Eyebrow>
+        <Eyebrow surface={S} style={{ fontSize: 11, letterSpacing: ".04em" }}>{eyebrow}</Eyebrow>
         <h2 style={{ margin: "5px 0 0", fontFamily: SANS, fontSize: 17, fontWeight: 600, letterSpacing: "-.02em", color: S.ink }}>
           {title}
         </h2>
@@ -176,7 +176,7 @@ function Change({ record }: { record: DeltaRecord }) {
   return (
     <div style={{ padding: "10px 0", borderTop: `1px solid rgba(27,26,22,.09)` }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-        <span style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+        <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           {record.observed_at ? record.observed_at.slice(0, 10) : "undated"}
         </span>
         <span style={{ fontSize: 13, color: S.ink }}>
@@ -190,7 +190,7 @@ function Change({ record }: { record: DeltaRecord }) {
             : record.player_name ?? `element ${record.element_id ?? "?"}`}
         </span>
         {impact && record.flipped ? (
-          <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".08em", textTransform: "uppercase", color: S.conflict }}>
+          <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".04em", textTransform: "uppercase", color: S.conflict }}>
             flipped the call
           </span>
         ) : null}
@@ -201,7 +201,7 @@ function Change({ record }: { record: DeltaRecord }) {
         </p>
       ) : null}
       {record.trigger ? (
-        <div style={{ marginTop: 4, fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+        <div style={{ marginTop: 4, fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           {record.trigger.source} · tier {record.trigger.source_tier}
           {record.trigger.url ? (
             <>

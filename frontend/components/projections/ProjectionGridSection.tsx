@@ -24,7 +24,7 @@ const S = FLOODLIT;
 
 function Note({ children }: { children: React.ReactNode }) {
   return (
-    <p style={{ fontFamily: MONO, fontSize: 10.5, color: S.ink3, margin: "8px 0 0" }}>
+    <p style={{ fontFamily: MONO, fontSize: 11, color: S.ink3, margin: "8px 0 0" }}>
       {children}
     </p>
   );

@@ -33,6 +33,7 @@ import { useDeferredValue, useMemo, useState } from "react";
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import type { Horizon, Projection } from "@/lib/data/projections";
 import { DISPLAY, FLOODLIT, MONO, SANS, HEAT, stepOf } from "@/lib/margin/tokens";
+import { Label } from "@/lib/margin/type";
 import {
   FIXED, HEAT_STEPS, POINT_BANDS, SPANS, bandOf, buildGridRows, findRuns,
   gridSummary, gridWeeks, type GridRow, type Span,
@@ -53,7 +54,7 @@ const SORTS: ReadonlyArray<readonly [Sort, string]> = [
 function chip(on: boolean): React.CSSProperties {
   return {
     padding: "5px 9px",
-    fontSize: 10.5,
+    fontSize: 11,
     fontWeight: on ? 600 : 400,
     background: on ? "rgba(233,238,245,.10)" : "transparent",
     color: on ? S.ink : S.ink3,
@@ -66,19 +67,6 @@ function Group({ children }: { children: React.ReactNode }) {
   return <div style={{ display: "flex", border: `1px solid ${S.rule}` }}>{children}</div>;
 }
 
-// Eyebrow labels are the body face (Archivo), not MONO — MONO is reserved for
-// figures in columns. This was the bug named in the redesign brief: several
-// components, this one included, had eyebrows set in MONO.
-function Label({ children }: { children: React.ReactNode }) {
-  return (
-    <span style={{
-      fontFamily: SANS, fontSize: 9, letterSpacing: ".15em",
-      textTransform: "uppercase", color: S.ink3, fontWeight: 600,
-    }}>
-      {children}
-    </span>
-  );
-}
 
 export interface HeatGridProps {
   readonly players: readonly Projection[];
@@ -246,7 +234,7 @@ export function HeatGrid(props: HeatGridProps) {
           ))}
         </Group>
         <div style={{ flexGrow: 1 }} />
-        <span data-testid="grid-summary" style={{ fontFamily: MONO, fontSize: 10, color: S.ink3 }}>
+        <span data-testid="grid-summary" style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           {gridSummary(visible.length, props.players.length, props.nDraws,
                        props.horizon?.nDraws ?? null, props.currentGameweek, weeks)}
         </span>
@@ -269,7 +257,7 @@ export function HeatGrid(props: HeatGridProps) {
                 height: 32, display: "flex", alignItems: "center", justifyContent: "center",
               }}>
                 <span style={{
-                  fontFamily: SANS, fontSize: 9, letterSpacing: ".15em", fontWeight: 600,
+                  fontFamily: SANS, fontSize: 11, letterSpacing: ".04em", fontWeight: 600,
                   // Case marks the boundary the way the artboard's prototype data
                   // does — "GW2" inside the span, lowercase "gw2" beyond it — and
                   // colour still dims outward on top of that, rather than instead
@@ -328,7 +316,7 @@ export function HeatGrid(props: HeatGridProps) {
                       <span
                         title="Three or more consecutive strong weeks. A statement about this player's projected cells, not about anybody's eleven."
                         style={{
-                          fontFamily: MONO, fontSize: 8, letterSpacing: ".1em",
+                          fontFamily: MONO, fontSize: 11, letterSpacing: ".04em",
                           fontWeight: 700, padding: "1px 4px",
                           border: `1px solid ${S.brand}`, color: S.brand,
                         }}
@@ -337,14 +325,14 @@ export function HeatGrid(props: HeatGridProps) {
                       </span>
                     ) : null}
                   </div>
-                  <span style={{ fontFamily: MONO, fontSize: 9, color: S.ink3 }}>
+                  <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
                     {row.position} · {row.team}
                   </span>
                 </div>
 
                 <div style={{
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontFamily: MONO, fontSize: 10, color: S.ink3,
+                  fontFamily: MONO, fontSize: 11, color: S.ink3,
                 }}>
                   {row.pGe10 === null ? "—" : `${Math.round(row.pGe10 * 100)}%`}
                 </div>
@@ -392,7 +380,7 @@ export function HeatGrid(props: HeatGridProps) {
                             span it dropped bands 2 and 3 to 3.39 and 4.26:1, on a
                             label that names the opponent. */}
                         <span style={{
-                          fontFamily: MONO, fontSize: 8, letterSpacing: ".04em",
+                          fontFamily: MONO, fontSize: 11, letterSpacing: ".04em",
                         }}>
                           {cell.blank ? "—" : cell.fixture ?? "?"}
                         </span>
@@ -418,7 +406,7 @@ export function HeatGrid(props: HeatGridProps) {
                     <span
                       data-testid="partial-mark"
                       title={`Only ${row.weeksCounted} of these ${span} gameweeks carry a projection for this player. The total is over the weeks that do.`}
-                      style={{ fontFamily: MONO, fontSize: 9, color: S.noise }}
+                      style={{ fontFamily: MONO, fontSize: 11, color: S.noise }}
                     >
                       {row.weeksCounted}/{span}
                     </span>

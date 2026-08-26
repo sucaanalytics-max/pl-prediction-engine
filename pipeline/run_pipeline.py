@@ -1119,10 +1119,25 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     # key advances. Skipping rather than raising: an archive is a side record, and a
     # second run on the same day must not fail the pipeline over one. The log line
     # is what makes the skip visible.
+    # And never seal an EMPTY week, which is the other half of the same lesson.
+    #
+    # `matchweek_38.json` was written on 2026-07-23 holding zero predictions: in
+    # pre-season the bootstrap still carried the finished 2025-26 events, every one
+    # of them `finished`, so the resolver fell through to `max(event.id)` = 38. Both
+    # resolvers still clamp to the last gameweek on an all-finished season — that is
+    # the right answer to "which week is it" and the wrong thing to seal a record
+    # for. Sealing nothing is worse than sealing late, because seal-once means the
+    # empty file can never be replaced: GW38's real archive would have been silently
+    # skipped nine months later, by the very guard added to protect it.
     archive_dir = PREDICTIONS_DIR / "archive"
     archive_dir.mkdir(parents=True, exist_ok=True)
     archive_path = archive_dir / f"matchweek_{gameweek}.json"
-    if archive_path.exists():
+    if not output.get("predictions"):
+        logger.info(
+            "  No predictions to archive for GW%s — not sealing an empty record",
+            gameweek,
+        )
+    elif archive_path.exists():
         logger.info(
             "  Archive for GW%s already sealed at %s — not overwriting",
             gameweek, archive_path.name,
