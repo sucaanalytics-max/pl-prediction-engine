@@ -76,6 +76,24 @@ export interface Phase {
   readonly length: number;
   /** Mean of the weeks' difficulties. Lower is kinder. */
   readonly meanDifficulty: number;
+  /** The hardest week inside the run. A mean hides one brutal week; this does not. */
+  readonly worstDifficulty: number;
+  /**
+   * How much easier than an average fixture this run is, summed over its weeks.
+   *
+   * `sum(leagueMean - difficulty)`, in FDR points. This is the figure that ranks a
+   * phase, and it exists because length alone ranked them wrongly. Measured on the
+   * published 2026/27 list at the screen's default settings, nineteen pairs had a
+   * LONGER run outranking one kinder by more than half a point of FDR — the worst
+   * being Man United's GW5-8 `[3,3,3,3]` above Fulham's GW6-8 `[2,2,2]`. Four weeks
+   * at exactly the league average is not an edge, and relief says so: it scores
+   * +0.20 against Fulham's +3.15.
+   *
+   * It trades length against kindness the way a manager does, because a week only
+   * adds to it by being easier than average. A run of average fixtures, however
+   * long, approaches zero rather than accumulating.
+   */
+  readonly relief: number;
   readonly weeks: readonly PhaseWeek[];
 }
 
@@ -125,6 +143,27 @@ export interface PhaseOptions {
   readonly minLength: RunLength;
   /** Inclusive: a week qualifies when its worst fixture is at most this. */
   readonly maxDifficulty: number;
+  /**
+   * The difficulty a run is scored against, normally the league's own mean.
+   *
+   * Measured rather than assumed: `buildClubRows` computes it from the fixtures it
+   * was given. On the published 2026/27 list it is 3.05, because FPL's ratings are
+   * not uniform over 1-5 — the observed spread is 2:44, 3:72, 4:36, 5:8 and a 1 is
+   * never assigned at all. Hardcoding the scale's midpoint of 3 would call an
+   * average fixture a small relief, and a whole season of them a large one.
+   */
+  readonly reference?: number;
+}
+
+/**
+ * The mean difficulty across every published fixture in the matrix.
+ *
+ * The yardstick a phase's relief is measured against. Derived from the data so a
+ * kinder or harsher season moves it, rather than fixed at the scale's midpoint.
+ */
+export function leagueMeanDifficulty(rows: readonly FixtureMatrixRow[]): number {
+  const all = rows.flatMap((row) => row.fixtures.map((f) => f.difficulty));
+  return all.length === 0 ? 3 : mean(all);
 }
 
 /** Every qualifying phase in one club's week list. */
@@ -156,6 +195,10 @@ export function findPhases(
     const length = j - i + 1;
     if (length >= options.minLength) {
       const span = weeks.slice(i, j + 1);
+      const difficulties = span.map((w) => w.difficulty as number);
+      // Falls back to the scale's midpoint only when no reference was supplied,
+      // which is the direct-call case in tests; `buildClubRows` always measures it.
+      const reference = options.reference ?? 3;
       out.push({
         teamId: row.teamId,
         team: row.team,
@@ -165,7 +208,9 @@ export function findPhases(
         fromGameweek: span[0].gameweek,
         toGameweek: span[span.length - 1].gameweek,
         length,
-        meanDifficulty: mean(span.map((w) => w.difficulty as number)),
+        meanDifficulty: mean(difficulties),
+        worstDifficulty: Math.max(...difficulties),
+        relief: difficulties.reduce((sum, d) => sum + (reference - d), 0),
         weeks: span,
       });
     }
@@ -179,6 +224,11 @@ export function buildClubRows(
   rows: readonly FixtureMatrixRow[], options: PhaseOptions,
 ): ClubRow[] {
   const gameweeks = matrixGameweeks(rows);
+  // One reference for the whole matrix, so two clubs' phases are comparable.
+  const scored: PhaseOptions = {
+    ...options,
+    reference: options.reference ?? leagueMeanDifficulty(rows),
+  };
   return rows.map((row) => {
     const weeks = clubWeeks(row, gameweeks);
     const played = weeks
@@ -189,7 +239,7 @@ export function buildClubRows(
       team: row.team,
       shortName: row.shortName,
       weeks,
-      phases: findPhases(row, weeks, options),
+      phases: findPhases(row, weeks, scored),
       // Over the weeks the club PLAYS. Averaging a blank as zero would rank an
       // idle club as having the kindest month in the league.
       meanDifficulty: played.length === 0 ? null : mean(played),
@@ -198,17 +248,24 @@ export function buildClubRows(
 }
 
 /**
- * The longest phase a club has, then the kindest.
+ * The phase that buys the most relief, then the longest.
  *
- * Length first because a phase's value is how long you can leave a player
- * alone; mean difficulty breaks ties, since two four-week runs are separated by
- * how soft they are and by nothing else here.
+ * This used to rank on length first with mean difficulty as a tiebreak, and that
+ * was wrong in a way the fixture list makes obvious. Length only helps if the
+ * weeks are actually easier than average: measured on the published 2026/27 list
+ * at the screen's defaults, Man United's four-week `[3,3,3,3]` outranked Fulham's
+ * three-week `[2,2,2]`, and four weeks at exactly the league average is not a run
+ * worth planning around.
+ *
+ * Relief already contains length — it is a sum over weeks — so ordering by it
+ * trades the two against each other instead of letting one dominate. Length
+ * survives only as the tiebreak between runs that buy the same total.
  */
 export function bestPhase(club: ClubRow): Phase | null {
   return club.phases.reduce<Phase | null>((best, phase) => {
     if (best === null) return phase;
-    if (phase.length !== best.length) return phase.length > best.length ? phase : best;
-    return phase.meanDifficulty < best.meanDifficulty ? phase : best;
+    if (phase.relief !== best.relief) return phase.relief > best.relief ? phase : best;
+    return phase.length > best.length ? phase : best;
   }, null);
 }
 
@@ -227,15 +284,15 @@ export function orderClubs(clubs: readonly ClubRow[], order: PhaseOrder): ClubRo
     if (x === null && y === null) return a.team.localeCompare(b.team);
     if (x === null) return 1;
     if (y === null) return -1;
-    return y.length - x.length || x.meanDifficulty - y.meanDifficulty;
+    return y.relief - x.relief || y.length - x.length;
   });
 }
 
-/** Every club's phases in one list, longest and kindest first. */
+/** Every club's phases in one list, most relief first. */
 export function allPhases(clubs: readonly ClubRow[]): Phase[] {
   return clubs
     .flatMap((club) => club.phases)
-    .sort((a, b) => b.length - a.length || a.meanDifficulty - b.meanDifficulty);
+    .sort((a, b) => b.relief - a.relief || b.length - a.length);
 }
 
 function mean(values: readonly number[]): number {

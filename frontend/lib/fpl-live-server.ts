@@ -202,6 +202,40 @@ function activeEvent(events: BootstrapEvent[]) {
   );
 }
 
+/**
+ * The gameweek a manager can still act on, which is not always the current one.
+ *
+ * FPL keeps an event `is_current` from its own deadline until the NEXT one, so for
+ * the days between a gameweek's last match and the following deadline,
+ * `activeEvent` names a week already played. `activeEvent` is right about FPL and
+ * stays as it is — the picks endpoint and the reported event both want the real
+ * current week. What must not use it is anything forward-looking.
+ *
+ * Measured in production on 2026-08-26, five days after GW1's last match and two
+ * before GW2's deadline: Raya's fixture list began
+ * `{gameweek: 1, label: "COV (H)", difficulty: 2}` — a match already played — while
+ * his real next fixture was `{gameweek: 2, label: "AVL (A)", difficulty: 4}`. The
+ * call screen therefore paired GW2 projections with GW1 opponents, and because the
+ * chip is tinted by difficulty, it painted a hard away trip in the green reserved
+ * for a kind fixture. The one place this app lets colour carry a verdict was
+ * saying the opposite of the truth, for every club whose two weeks differ.
+ *
+ * Same root cause as the fix in lib/data/gameweek.ts, on the path that fix did not
+ * reach: that one corrects which ARTIFACT is read, this one corrects which FIXTURE
+ * is called next.
+ */
+export function planningEventId(events: BootstrapEvent[], now: Date): number {
+  const active = activeEvent(events);
+  if (!active) return 1;
+  const deadline = Date.parse(active.deadline_time ?? "");
+  // An unparseable or absent deadline is not a passed one: without it there is no
+  // evidence the week has closed, and rolling forward on no evidence would point
+  // every fixture chip at a week that may not be next.
+  if (Number.isNaN(deadline) || deadline > now.getTime()) return active.id;
+  const next = events.find((event) => event.id === active.id + 1);
+  return next ? next.id : active.id;
+}
+
 /** Gameweeks of fixtures the matrix covers. Eight is what `fixture_xg` carries. */
 const FIXTURE_HORIZON = 8;
 
@@ -356,6 +390,8 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
   }
 
   const event = activeEvent(bootstrap.events);
+  // Forward-looking reads use this; `event` stays FPL's own current week.
+  const planningId = planningEventId(bootstrap.events, new Date());
   if (!event) throw new Error("Official FPL API returned no gameweeks");
 
   const picksResponse = await getOfficialJson<PicksPayload>(
@@ -392,7 +428,7 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
       throw new Error(`FPL element ${pick.elementId} is missing from bootstrap-static`);
     }
     const team = teamById.get(element.team);
-    const playerFixtures = fixtureViews(element.team, event.id, fixtures, teamById);
+    const playerFixtures = fixtureViews(element.team, planningId, fixtures, teamById);
     const nextFixture = playerFixtures[0] ?? {
       gameweek: event.id,
       label: "TBC",
@@ -441,7 +477,7 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
         status: element.status,
         chanceOfPlaying: element.chance_of_playing_next_round,
         news: element.news ?? "",
-        fixtures: fixtureViews(element.team, event.id, fixtures, teamById),
+        fixtures: fixtureViews(element.team, planningId, fixtures, teamById),
         epNext: Number.parseFloat(element.ep_next) || 0,
         form: Number.parseFloat(element.form) || 0,
         pointsPerGame: Number.parseFloat(element.points_per_game) || 0,
@@ -581,7 +617,7 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
       deadlineTime: event.deadline_time,
       phase,
     },
-    fixtureMatrix: fixtureMatrix(event.id, fixtures, teamById, FIXTURE_HORIZON),
+    fixtureMatrix: fixtureMatrix(planningId, fixtures, teamById, FIXTURE_HORIZON),
     squad: {
       source,
       sourceLabel: picks ? "Official public GW picks" : "Captured authenticated preseason draft",
@@ -640,7 +676,7 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
         bank: spendableBank,
         horizon: 4,
       }),
-      captaincyPlan: buildCaptaincyPlan(rankedSquad, event.id),
+      captaincyPlan: buildCaptaincyPlan(rankedSquad, planningId),
       // Names what actually produced these numbers. Without the export they
       // come from the heuristic engine alone, and saying `fplreview-...`
       // anyway would credit a source that contributed nothing.

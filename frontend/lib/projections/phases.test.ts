@@ -202,13 +202,38 @@ describe("ordering", () => {
       .toEqual(["ALP", "BRA", "CIE"]);
   });
 
-  it("prefers the longer phase over the kinder one", () => {
+  it("prefers the phase that buys more relief, not the longer one", () => {
+    // This used to assert the opposite. Length alone ranked runs wrongly: measured
+    // on the published 2026/27 list at the screen's defaults, nineteen pairs had a
+    // longer run outranking one kinder by more than half a point of FDR, the worst
+    // being Man United's `[3,3,3,3]` above Fulham's `[2,2,2]`.
+    //
+    // Here: three weeks at FDR 1 against four at FDR 2. Against the league's own
+    // 3.05 the short run buys 6.15 points of relief and the long one 4.20, so the
+    // short run wins — three weeks of the kindest fixtures in the league beats four
+    // weeks of merely good ones. Reference passed explicitly so the case does not
+    // depend on this fixture's own mean.
     const row = club("Liverpool", "LIV", [1, 1, 1, 5, 2, 2, 2, 2]);
-    const [c] = buildClubRows([row], OPTIONS);
-    expect(bestPhase(c)?.length).toBe(4);
+    const [c] = buildClubRows([row], { ...OPTIONS, reference: 3.05 });
+    const best = bestPhase(c);
+    expect(best?.length).toBe(3);
+    expect(best?.meanDifficulty).toBe(1);
+    expect(best?.relief).toBeCloseTo(6.15, 2);
   });
 
-  it("lists every club's phases together, longest first", () => {
+  it("still prefers the longer run when both buy the same relief", () => {
+    // Relief is a sum, so it already contains length; the tiebreak only settles
+    // runs that are equally kind in total. Against a reference of 2, a week at
+    // FDR 2 adds nothing — so `[2,2,2]` and `[1,2,2,2]` both buy exactly 1.0 and
+    // the longer one wins. OPTIONS has minLength 3, so both runs must clear it.
+    const row = club("Brentford", "BRE", [2, 2, 2, 5, 1, 2, 2, 2]);
+    const [c] = buildClubRows([row], { ...OPTIONS, reference: 2 });
+    const best = bestPhase(c);
+    expect(best?.relief).toBeCloseTo(1, 6);
+    expect(best?.length).toBe(4);
+  });
+
+  it("lists every club's phases together, most relief first", () => {
     const list = allPhases(clubs());
     expect(list).toHaveLength(2);
     expect(list[0].shortName).toBe("CIE");

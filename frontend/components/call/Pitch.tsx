@@ -33,6 +33,7 @@ import type { SquadRow } from "@/lib/margin/squad";
 import { DISPLAY, FLOODLIT, MONO, SANS, difficultyTint } from "@/lib/margin/tokens";
 import { EYEBROW } from "@/lib/margin/type";
 import { byLine, intervalBar } from "@/lib/call/board";
+import { KitMark } from "@/components/margin/KitMark";
 
 const S = FLOODLIT;
 
@@ -128,6 +129,13 @@ function Tile({
       }}
     >
       <span style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
+        {/* Club first: it is the context the rest of the tile is read inside, and
+            it is the one channel that makes a same-club cluster visible without
+            comparing three fixture chips. `lib/margin/kits.ts` has the argument. */}
+        <KitMark
+          club={row.player.team}
+          title={`${row.player.name} — ${row.player.team}`}
+        />
         <Ring haul={haul} />
         <span style={{
           fontWeight: 600, fontSize: 12, whiteSpace: "nowrap",

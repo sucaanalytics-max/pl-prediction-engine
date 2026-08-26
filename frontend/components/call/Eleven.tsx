@@ -42,6 +42,7 @@ import { useMemo, useState } from "react";
 import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { SquadRow } from "@/lib/margin/squad";
 import { DISPLAY, FLOODLIT, MONO, SANS, difficultyTint } from "@/lib/margin/tokens";
+import { kitFor, kitStripe } from "@/lib/margin/kits";
 import { EYEBROW } from "@/lib/margin/type";
 import { INTERVAL_AXIS, intervalBar } from "@/lib/call/board";
 import { HAUL_MARK } from "@/components/call/Pitch";
@@ -246,9 +247,19 @@ export function Eleven(props: ElevenProps) {
             </span>
           );
         }
-        if (index === 1) {
+        // After `Mins`, not after `xP`. The interval bar is the SEVENTH grid slot
+        // — the 116px one — because TEMPLATE lays a row out as
+        // blank · pos · name · xp · p10 · mins · interval · fix · own. Emitting
+        // this static label after COLUMNS[1] put it in the 40px P10 slot and
+        // shifted `P10` and `Mins` one column right each, so the header read
+        // `q25–q75` over the haul chance, `P10` over the minutes, and `Mins` over
+        // the bar. Shipped, and worse than cosmetic: Raya rendered under `P10` as
+        // "70", which is his expected minutes, against a real haul chance of 1%.
+        // The sort keys were never wrong — only the labels moved — which is
+        // exactly why every test stayed green.
+        if (index === 3) {
           return (
-            <span key="xp-and-interval" style={{ display: "contents" }}>
+            <span key="mins-and-interval" style={{ display: "contents" }}>
               {cell}
               <span style={{ ...EYEBROW, color: S.ink3, padding: "0 6px", textAlign: "center" }}>
                 q25–q75
@@ -266,6 +277,8 @@ export function Eleven(props: ElevenProps) {
     const coming = inSet.has(row.player);
     const going = outSet.has(row.player);
     const haul = row.projection?.pGe10 ?? null;
+    const kit = kitFor(row.player.team);
+    const clubRule = kit ? kitStripe(kit) : null;
 
     return (
       <button
@@ -282,6 +295,16 @@ export function Eleven(props: ElevenProps) {
           background: coming
             ? "rgba(120,220,140,.07)"
             : going ? "rgba(255,90,70,.07)" : "transparent",
+          // A 3px club rule at the leading edge. `kitStripe` rather than
+          // `kitBackground` because a 3px-repeat stripe inside a 3px bar renders
+          // as one arbitrary colour, so a striped club would read as a plain one
+          // — and as a different plain one depending on rounding. Painted as a
+          // background image rather than a border so a two-tone club keeps both
+          // colours; a border cannot hold a gradient.
+          backgroundImage: clubRule ?? undefined,
+          backgroundSize: "3px 100%",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "left center",
           border: 0, borderBottom: `1px solid ${S.hair}`,
           cursor: "pointer", opacity: benched ? 0.72 : 1,
           fontFamily: SANS, color: S.ink,

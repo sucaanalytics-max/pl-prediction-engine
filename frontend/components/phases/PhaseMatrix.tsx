@@ -321,12 +321,27 @@ export function PhaseMatrix({ fixtures }: { fixtures: readonly FixtureMatrixRow[
                       })}
                     </div>
                   </div>
-                  <div style={{ textAlign: "right" }}>
+                  {/* Relief leads because relief is what this list is sorted by.
+                      Showing the length largest while ordering on something else
+                      invites the reader to check the order against the wrong
+                      number — and the two genuinely disagree: on the published
+                      list, four weeks at FDR 3 buys +0.20 while three at FDR 2
+                      buys +3.15. */}
+                  <div
+                    style={{ textAlign: "right" }}
+                    title={
+                      "Relief: how much easier than an average fixture this run is, "
+                      + "in FDR points, summed over its weeks. A week only adds to it "
+                      + "by being easier than average, so a long run of ordinary "
+                      + "fixtures scores near zero."
+                    }
+                  >
                     <div style={{ fontFamily: DISPLAY, fontSize: 16, color: S.brand }}>
-                      {phase.length}
+                      {phase.relief >= 0 ? "+" : ""}{phase.relief.toFixed(2)}
                     </div>
-                    <div style={{ fontFamily: MONO, fontSize: 8.5, color: S.ink3 }}>
-                      FDR {phase.meanDifficulty.toFixed(2)}
+                    <div style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
+                      {phase.length} wk{phase.length === 1 ? "" : "s"} · FDR{" "}
+                      {phase.meanDifficulty.toFixed(2)}
                     </div>
                   </div>
                 </li>
