@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-27T13:18:53.514435Z",
+  "generated_at": "2026-08-27T23:19:55.013593Z",
   "gameweek": 2,
   "players": [
     {
@@ -652,6 +652,89 @@
       "needs_attention": true
     },
     {
+      "element_id": 465,
+      "player_name": "Osula",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 25,
+          "rule": "tier_precedence",
+          "n_conflicts": 2,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "7a5e67f11e7dd6cb",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 25,
+              "claimed_at": "2026-08-25T19:00:08.004915Z",
+              "observed_at": "2026-08-27T13:19:26.467695Z",
+              "quote": "Foot injury - 25% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "601728a552314b08",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 25,
+              "claimed_at": "2026-08-25T19:00:08.004915Z",
+              "observed_at": "2026-08-27T13:19:26.467695Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "1117214966acee41",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-25T19:00:08.004915Z",
+              "observed_at": "2026-08-25T23:17:09.443440Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "e4cba95146b55ac6",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-08-25T19:00:08.004915Z",
+              "observed_at": "2026-08-25T23:17:09.443440Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 2,
+      "needs_attention": false
+    },
+    {
       "element_id": 563,
       "player_name": "Morita",
       "club": "Hull City",
@@ -1143,6 +1226,76 @@
               "value": "d",
               "claimed_at": "2026-08-22T17:30:07.685683Z",
               "observed_at": "2026-08-24T04:34:23.745687Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 389,
+      "player_name": "Matheus N.",
+      "club": "Man City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "cbe17ffaf65e4274",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-27T11:30:08.171622Z",
+              "observed_at": "2026-08-27T13:19:26.467695Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "6dcba24c0cfcc6ae",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-27T11:30:08.171622Z",
+              "observed_at": "2026-08-27T13:19:26.467695Z",
+              "quote": "Unspecified injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "67d07b15b196f9fa",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-08-27T11:30:08.171622Z",
+              "observed_at": "2026-08-27T13:19:26.467695Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -2115,120 +2268,6 @@
       "needs_attention": false
     },
     {
-      "element_id": 465,
-      "player_name": "Osula",
-      "club": "Newcastle",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 50,
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "1117214966acee41",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 50,
-              "claimed_at": "2026-08-25T19:00:08.004915Z",
-              "observed_at": "2026-08-25T23:17:09.443440Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "e4cba95146b55ac6",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-08-25T19:00:08.004915Z",
-              "observed_at": "2026-08-25T23:17:09.443440Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 0,
-      "needs_attention": false
-    },
-    {
-      "element_id": 481,
-      "player_name": "Anderson",
-      "club": "Man City",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 75,
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "addb1531bad927d5",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-08-23T17:00:07.952697Z",
-              "observed_at": "2026-08-24T04:34:23.745687Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "32eeb986d13fe3b0",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-08-23T17:00:07.952697Z",
-              "observed_at": "2026-08-24T04:34:23.745687Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 0,
-      "needs_attention": false
-    },
-    {
       "element_id": 518,
       "player_name": "P.M.Sarr",
       "club": "Spurs",
@@ -2374,10 +2413,10 @@
     }
   ],
   "counts": {
-    "n_claims": 681,
-    "n_players_with_claims": 133,
+    "n_claims": 740,
+    "n_players_with_claims": 137,
     "n_players_shown": 32,
-    "n_escalations": 18,
-    "n_players_resolved": 44
+    "n_escalations": 20,
+    "n_players_resolved": 45
   }
 }
