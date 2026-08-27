@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-27T02:22:29.018150Z",
+  "generated_at": "2026-08-27T13:18:53.514435Z",
   "gameweek": 2,
   "players": [
     {
@@ -1800,6 +1800,63 @@
       "needs_attention": false
     },
     {
+      "element_id": 247,
+      "player_name": "Hackney",
+      "club": "Everton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "de6446092bc8d95d",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-08-26T22:00:07.797766Z",
+              "observed_at": "2026-08-27T02:23:02.067616Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "4bda21eb3539afb1",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-08-26T22:00:07.797766Z",
+              "observed_at": "2026-08-27T02:23:02.067616Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 283,
       "player_name": "Jacob",
       "club": "Hull City",
@@ -2317,10 +2374,10 @@
     }
   ],
   "counts": {
-    "n_claims": 668,
-    "n_players_with_claims": 132,
-    "n_players_shown": 31,
-    "n_escalations": 19,
-    "n_players_resolved": 43
+    "n_claims": 681,
+    "n_players_with_claims": 133,
+    "n_players_shown": 32,
+    "n_escalations": 18,
+    "n_players_resolved": 44
   }
 }
