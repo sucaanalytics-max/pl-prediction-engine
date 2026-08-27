@@ -297,6 +297,12 @@ def _keep_existing_horizon(
     Keyed on the view's own gameweek, so it can only ever read the file it is about
     to replace. Silent on any failure: an unreadable previous file is not a reason to
     fail a publish, and the horizon is additive — the page degrades to this week only.
+
+    The draws count rides INSIDE the block, as `horizon.n_draws` — `build_horizon_block`
+    puts it there and `build` emits no top-level `horizon_draws` key. Verified against the
+    published GW2 view: `horizon` is `{n_draws: 5000, weeks: [...7]}`. So carrying the
+    block carries the count, and an earlier version of this function also copied a
+    top-level `horizon_draws` that has never existed in the output.
     """
     if view.get("horizon") is not None:
         return view
@@ -313,8 +319,6 @@ def _keep_existing_horizon(
         return view
     merged = dict(view)
     merged["horizon"] = carried
-    if previous.get("horizon_draws") is not None:
-        merged["horizon_draws"] = previous["horizon_draws"]
     logger.info(
         "carried the existing horizon block forward for GW%s — this publisher "
         "solved none, and dropping it would blank the plan grid", gameweek,
