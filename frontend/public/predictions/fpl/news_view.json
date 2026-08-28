@@ -1,18 +1,613 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-28T09:53:04.298224Z",
-  "n_dropped": 305,
+  "generated_at": "2026-08-28T21:07:11.495594Z",
+  "n_dropped": 239,
   "dropped_by_source": {
-    "bbc_football": 88,
-    "hayters": 61,
-    "sky_football": 156
+    "bbc_football": 70,
+    "fantasyfootballscout": 1,
+    "hayters": 51,
+    "sky_football": 117
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 395,
+  "n_articles": 329,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "da750f35d47a0311",
+      "headline": "Cherki genius and Wharton excels - Palace v Man City player ratings",
+      "summary": "How Crystal Palace and Manchester City's players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c1j4ryr777yo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T21:01:24Z",
+      "players": [
+        {
+          "element_id": 210,
+          "name": "Wharton",
+          "club": "CRY",
+          "held": null
+        },
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "334056de9f905b36",
+      "headline": "Arsenal & Barca monitor Rashford - Saturday's gossip",
+      "summary": "Arsenal monitor Marcus Rashford, Chelsea eye Monaco's Lamine Camara and Valencia push for Liverpool midfielder Harvey Elliott, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cp8416ll9yvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T20:48:59Z",
+      "players": [
+        {
+          "element_id": 383,
+          "name": "Elliott",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "c36e6b69e322dd9d",
+      "headline": "Atletico set deadline for Alvarez decision on staying or move to Arsenal",
+      "summary": "Atletico Madrid&#160;have given&#160;Julian Alvarez&#160;until Sunday to make a decision; open up to the idea of a move to&#160;Arsenal&#160;or stay at the club.&#160;",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13578318/julian-alvarez-transfer-news-atletico-madrid-set-deadline-for-striker-to-decide-whether-he-stays-or-joins-arsenal",
+      "claimed_at": "2026-08-28T20:07:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "aed255d3e20cc302",
+      "headline": "Villa confirm club-record Jackson signing as deal agreed for Mbaye",
+      "summary": "Aston Villa have confirmed the club-record signing of Nicolas Jackson from Chelsea while also reaching a verbal agreement to sign Paris Saint-Germain winger Ibrahim Mbaye.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13578279/nicolas-jackson-transfer-news-aston-villa-confirm-club-record-65m-signing-as-deal-agreed-to-sign-ibrahim-mbaye-from-psg",
+      "claimed_at": "2026-08-28T19:20:00Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "f0f13f87ae31e44e",
+      "headline": "What will Jackson bring to Villa with Watkins set for exit?",
+      "summary": "BBC Sport examines what new striker Nicolas Jackson will bring to Aston Villa, with Ollie Watkins looking set to join Al-Hilal.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/czjz9j3r8p8o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T19:14:48Z",
+      "players": [
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "9f93ce00a82c549b",
+      "headline": "Crystal Palace v Man City team news: Cherki starts, Bouaddi a sub",
+      "summary": "Four changes for Palace, one for City The post Crystal Palace v Man City team news: Cherki starts, Bouaddi a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/crystal-palace-v-man-city-team-news-cherki-starts-bouaddi-a-sub",
+      "claimed_at": "2026-08-28T18:20:00Z",
+      "players": [
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": null
+        },
+        {
+          "element_id": 616,
+          "name": "Bouaddi",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "1b19cf9603b14b58",
+      "headline": "Liverpool latest: Valencia exploring move for Elliott",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-28T17:44:00Z",
+      "players": [
+        {
+          "element_id": 383,
+          "name": "Elliott",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "67571ef80ea43fdf",
+      "headline": "Aston Villa v Arsenal predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Aston Villa v Arsenal predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/aston-villa-v-arsenal-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-08-28T17:14:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "6d6272b48f31ee1c",
+      "headline": "Sunderland v Fulham predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Sunderland v Fulham predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/sunderland-v-fulham-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-08-28T17:13:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "8901499d28da793d",
+      "headline": "Man United v Ipswich predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Man United v Ipswich predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/man-united-v-ipswich-predicted-line-ups-fpl-team-news",
+      "claimed_at": "2026-08-28T17:12:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "92affe2a7ec3da93",
+      "headline": "Leeds v Brentford predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Leeds v Brentford predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/leeds-v-brentford-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-08-28T17:12:18Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "768362d292c68d16",
+      "headline": "Chelsea v Brighton predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Chelsea v Brighton predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/chelsea-v-brighton-predicted-line-ups-fpl-team-news",
+      "claimed_at": "2026-08-28T17:11:45Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "8c916420a94804a6",
+      "headline": "Tottenham v Newcastle predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Tottenham v Newcastle predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/tottenham-v-newcastle-predicted-line-ups-fpl-team-news",
+      "claimed_at": "2026-08-28T17:11:39Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "550d2e89c169232c",
+      "headline": "Bournemouth v Everton predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Bournemouth v Everton predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/bournemouth-v-everton-predicted-line-ups-fpl-team-news",
+      "claimed_at": "2026-08-28T17:10:39Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "a2ef175a764d14c1",
+      "headline": "Liverpool v Nott\u2019m Forest predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Liverpool v Nott'm Forest predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/liverpool-v-nottm-forest-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-08-28T17:09:45Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "7846881e83e19543",
+      "headline": "Crystal Palace v Man City predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Crystal Palace v Man City predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/crystal-palace-v-man-city-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-08-28T17:08:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "7c4667ef13d2b6b6",
+      "headline": "Palace latest: Ordonez move in doubt as Sage comments on Munoz future",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-28T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "41cbdf37b25da6e8",
+      "headline": "Crystal Palace 1-3 Man City LIVE \u2013 Two Cherki stunners at Selhurst Park",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Crystal Palace 1-3 Man City LIVE - Two Cherki stunners at Selhurst Park appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/crystal-palace-v-man-city-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-28T16:38:40Z",
+      "players": [
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "76ede0979136d157",
+      "headline": "Ipswich confident of more signings after Palacios deal",
+      "summary": "Ipswich Town boss Gary O\u2019Neil says the club are \u201chopefully not finished\u201d with their transfer business. O\u2019Neil was asked about the latest situation regarding a potential deal for Aston Villa striker Tammy Abraham but claimed there was \u201cnothing to",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/ipswich-confident-of-more-signings-after-palacios-deal/",
+      "claimed_at": "2026-08-28T16:31:33Z",
+      "players": [
+        {
+          "element_id": 56,
+          "name": "Abraham",
+          "club": "AVL",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "a1264d98fcc57730",
+      "headline": "Man Utd sign Swedish winger Jusu Bah for \u00a3400k",
+      "summary": "Manchester United have confirmed the signing of Sweden winger Monica Jusu Bah from BK Hacken for just under \u00a3400,000.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c14dlme86d8o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T16:13:12Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "52006626cd441031",
+      "headline": "West Brom keen on more summer signings before window shuts",
+      "summary": "West Brom boss James Morrison says he remains hopeful of adding further new signings before the transfer window closes, with a deal for Manchester United midfielder Toby Collyer understood to be close. The Baggies have already been active in",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/west-brom-keen-on-more-summer-signings-before-window-shuts/",
+      "claimed_at": "2026-08-28T16:03:19Z",
+      "players": [
+        {
+          "element_id": 436,
+          "name": "Collyer",
+          "club": "MUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "46f2ccbbde0f276a",
+      "headline": "Arsenal complete signing of promising striker",
+      "summary": "Arsenal have confirmed the signing of highly rated striker Igor Tyjon from Blackburn Rovers. The 18-year-old joins the Premier League champions with first-team experience already under his belt, having made three senior appearances for Blackburn. Tyjon m",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-complete-signing-of-promising-striker/",
+      "claimed_at": "2026-08-28T15:53:38Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "de539e5f7b1befe6",
+      "headline": "Ordonez's move to Palace in doubt after medical",
+      "summary": "Club Brugge defender Joel Ordonez's move to Crystal Palace runs into complications after his medical, with the Eagles set to decide whether to proceed with the deal.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/clyjg6w67g4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T15:35:11Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "da0dd4f6d5e81fcd",
+      "headline": "'Bomba!' De Zerbi delighted as Spurs transfers create 'great squad'",
+      "summary": "\"Savio is 'bomba'. All players we brought, I think are 'bomba'!\"",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13578157/tottenham-roberto-de-zerbi-delighted-with-spurs-transfer-business-after-dramatic-premier-league-survival-last-season",
+      "claimed_at": "2026-08-28T15:14:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "be2712104a5888a5",
+      "headline": "Departing Watkins apologised for refusing to play - Emery",
+      "summary": "Ollie Watkins is leaving Aston Villa as their record Premier League goalscorer.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckg7z1wyn1no?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T14:34:58Z",
+      "players": [
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "8c808fd7885265c4",
+      "headline": "Emery confirms Watkins\u2019 departure and Jackson\u2019s impending arrival \u2013 and hopes he could play against Arsenal",
+      "summary": "Unai Emery has revealed he shed a \u201csmall tear\u201d over Ollie Watkins' Aston Villa departure and confirmed the impending arrival of Nicolas Jackson. Watkins is completing a \u00a350m move to Al-Hilal a",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/emery-confirms-watkins-departure-and-jacksons-impending-arrival-and-hopes-he-could-play-against-arsenal/",
+      "claimed_at": "2026-08-28T14:06:50Z",
+      "players": [
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "b66ae0e07299074c",
+      "headline": "De Zerbi hopeful of \u2018one more\u2019 Spurs signing as talks continue over Gakpo deal",
+      "summary": "Tottenham boss Roberto De Zerbi has revealed the club could make one more signing before the transfer window closes. Hayters understands that Spurs are continuing talks over a move for Liverpool forward Cody Gakpo, which",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-hopeful-of-one-more-spurs-signing-as-talks-continue-over-gakpo-deal/",
+      "claimed_at": "2026-08-28T13:49:38Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ecf0a3b3ff51b9ad",
+      "headline": "Chelsea latest: Monaco's Camara identified as possible Fernandez replacement",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-28T13:40:00Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "d1e8e861b6ceda13",
+      "headline": "Tottenham latest: De Zerbi confident of one more signing before window shuts",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-28T13:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "55b17ea53df5e7ff",
+      "headline": "Europa League and Conference League draws: British teams learn opponents",
+      "summary": "Sunderland will travel to AC Milan in the Europa League and Bournemouth will host the Serie A giants as Brighton and Hearts discovered their Conference League opponents.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13578045/europa-league-and-conference-league-draws-celtic-bournemouth-sunderland-crystal-palace-brighton-hearts-learn-opponents",
+      "claimed_at": "2026-08-28T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "2adbace57d6cffc7",
+      "headline": "Sunderland and Bournemouth draw AC Milan in Europa League",
+      "summary": "Sunderland will mark their first European campaign since 1973 with a trip to the San Siro after drawing AC Milan in the Europa League league phase.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c5ymr4dxz9mo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T12:14:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "adcc2a4867e7bc80",
+      "headline": "Brentford sign \u00a340m defender Diouf from West Ham",
+      "summary": "Senegal defender El Hadji Malick Diouf joins Brentford in a \u00a340m deal from West Ham.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/crk3dr5pnyjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T12:00:10Z",
+      "players": [
+        {
+          "element_id": 620,
+          "name": "Diouf",
+          "club": "BRE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "07e25a12655cfbf6",
       "headline": "Glasner expects at least one more Nottingham Forest signing",
@@ -398,6 +993,24 @@
       "touches_squad": null
     },
     {
+      "digest": "75a6bef3ef0f2a86",
+      "headline": "PL Predictions: Back Spurs to bounce back against Newcastle",
+      "summary": "Our top tipster Lewis Jones, aka Jones Knows, was in flying form last weekend - can he repeat the trick?",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13577786/premier-league-predictions-jones-knows-best-bets-crystal-palace-pain-man-city-to-make-it-back-to-back-wins",
+      "claimed_at": "2026-08-27T19:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "9b1a4c5f9bf8befe",
       "headline": "Matthias Jaissle reveals what convinced Nico Gonz\u00e1lez to sign for Newcastle ahead of potential debut",
       "summary": "Matthias Jaissle believes that Newcastle United have many qualities to attract top players such as Nico Gonz\u00e1lez. When asked about what convinced Nico Gonz\u00e1lez to join the club, Jaissle mentioned sev",
@@ -459,6 +1072,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c5ywxxll10jo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-27T17:32:55Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "3e136a71cc2e4459",
+      "headline": "Arsenal latest: Alvarez will not play for Atletico Madrid this weekend",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-27T17:06:00Z",
       "players": [
         {
           "element_id": 0,
@@ -609,6 +1240,12 @@
           "name": null,
           "club": null,
           "held": null
+        },
+        {
+          "element_id": 618,
+          "name": "Goretzka",
+          "club": "AVL",
+          "held": null
         }
       ],
       "touches_squad": null
@@ -650,42 +1287,6 @@
       "touches_squad": null
     },
     {
-      "digest": "b34539947c5eb7d9",
-      "headline": "Tottenham sign Marmoush on loan with obligation to buy",
-      "summary": "Tottenham&#160;have confirmed the signing of Manchester City forward Omar Marmoush on an initial loan.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13577796/omar-marmoush-transfer-news-tottenham-sign-man-city-forward-on-loan-with-60m-obligation-to-buy",
-      "claimed_at": "2026-08-27T15:00:00Z",
-      "players": [
-        {
-          "element_id": 401,
-          "name": "Marmoush",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "d773ecbdf6dd0ee6",
-      "headline": "Man City latest: Interest in Ndiaye as Maresca eyes wingers",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-27T14:44:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "8d6f1053afdba9a0",
       "headline": "Spurs complete Marmoush signing and continue talks over another deal",
       "summary": "Tottenham have completed the signing of Omar Marmoush from Manchester City on a season-long loan, with an obligation to make the move permanent next summer. The Egypt international becomes the latest addition to Roberto De Zerbi\u2019s",
@@ -697,7 +1298,7 @@
         {
           "element_id": 401,
           "name": "Marmoush",
-          "club": "MCI",
+          "club": "TOT",
           "held": null
         }
       ],
@@ -715,25 +1316,7 @@
         {
           "element_id": 401,
           "name": "Marmoush",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "ded9e6b41b65c8ed",
-      "headline": "Chelsea agree deal for Villa's Martinez",
-      "summary": "Chelsea have agreed a deal worth &#163;7.5m with Aston Villa to sign Emi Martinez.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13577794/emiliano-martinez-transfer-news-chelsea-agree-7-5m-deal-to-sign-aston-villas-world-cup-winning-goalkeeper",
-      "claimed_at": "2026-08-27T14:26:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
+          "club": "TOT",
           "held": null
         }
       ],
@@ -800,24 +1383,6 @@
       "touches_squad": null
     },
     {
-      "digest": "62003864878ffce2",
-      "headline": "Arsenal latest: Arteta quizzed on Alvarez interest and injuries",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-27T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "c46467af3df5898a",
       "headline": "Arteta discusses futures of attacking duo ahead of transfer deadline",
       "summary": "Arsenal boss Mikel Arteta says the club are managing the \u201cpersonal situations\u201d of Gabriel Jesus and Gabriel Martinelli as uncertainty continues over their futures. Jesus has been linked with a possible departure from the Emirates,",
@@ -836,24 +1401,6 @@
       "touches_squad": null
     },
     {
-      "digest": "b9ece81e6205e11c",
-      "headline": "Bournemouth latest: Rose '120 per cent sure' Scott will stay",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-08-27T13:52:00Z",
-      "players": [
-        {
-          "element_id": 69,
-          "name": "Scott",
-          "club": "BOU",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "8efb1ab57209f019",
       "headline": "Arteta hopeful Arsenal star could feature against Aston Villa",
       "summary": "Arsenal boss Mikel Arteta says Bruno Guimaraes is potentially available for Monday\u2019s clash with Aston Villa after stepping up his recovery in recent days. Guimaraes has been managed carefully as he works his way back to full fitness, with",
@@ -861,24 +1408,6 @@
       "tier": 2,
       "url": "https://hayters.com/arteta-hopeful-arsenal-star-could-feature-against-aston-villa/",
       "claimed_at": "2026-08-27T13:47:39Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "c576ddb2021a3662",
-      "headline": "Carpenter hails Chelsea response in Champions League win",
-      "summary": "Ellie Carpenter praised Chelsea\u2019s second-half response after they secured a 5-2 victory over Real Sociedad in the first leg of their Champions League qualification tie. The Blues went into half-time level after Ainhoa Marin\u2019s stunning opener w",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/carpenter-hails-chelsea-response-in-champions-league-win/",
-      "claimed_at": "2026-08-27T13:33:29Z",
       "players": [
         {
           "element_id": 0,
@@ -932,42 +1461,6 @@
       "touches_squad": null
     },
     {
-      "digest": "3a71dfeb873f73bd",
-      "headline": "Aston Villa latest: Goretzka in, Jackson move close as Leao decision looms",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-27T13:28:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "a866f28c1825f871",
-      "headline": "Aston Villa latest: Jackson set for medical with Leao decision looming",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-27T13:28:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "e06bfb42fd623998",
       "headline": "Carragher facing bankruptcy petition over unpaid tax claim",
       "summary": "Former Liverpool and England player turned pundit Jamie Carragher faces being declared bankrupt over an unpaid tax bill.",
@@ -975,78 +1468,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cr4vl0lw4qwo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-08-27T13:05:37Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "857dd85f0c9b2f92",
-      "headline": "Man Utd latest: Fiorentina in talks over Zirkzee",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-27T13:02:00Z",
-      "players": [
-        {
-          "element_id": 440,
-          "name": "Zirkzee",
-          "club": "MUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "7b423bc5ce72d53c",
-      "headline": "Cherki faces fight for Man City starting spot",
-      "summary": "Rayan Cherki saved Enzo Maresca from a losing start as Manchester City manager - but will he get the game time he wants?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckg70leqdvlo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T12:31:32Z",
-      "players": [
-        {
-          "element_id": 399,
-          "name": "Cherki",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1bcdbb495e285a42",
-      "headline": "Is Jackson underrated? Could Emery reunion unlock more from him at Villa?",
-      "summary": "During his time at Chelsea, Nicolas Jackson earned an unwanted reputation as an unusually unreliable finisher. He missed a lot of clear chances. But does that mean other top clubs are making a mistake in turning to the Senegal",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13565547/nicolas-jackson-transfer-to-aston-villa-or-tottenham-why-striker-from-chelsea-could-yet-prove-to-be-underrated",
-      "claimed_at": "2026-08-27T12:30:00Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "857d9fee5ec7af7a",
-      "headline": "Sage: I'm not at an attraction park - I'm at Crystal Palace to win",
-      "summary": "By his own admission, Pierre Sage was frustrated with Crystal Palace's defeat to Everton on the opening weekend of the Premier League season.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13577688/pierre-sage-crystal-palace-head-coach-on-everton-loss-facing-man-city-and-how-his-career-prepared-him-for-the-premier-league",
-      "claimed_at": "2026-08-27T12:10:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1082,198 +1503,6 @@
       "touches_squad": null
     },
     {
-      "digest": "c9c4405217632495",
-      "headline": "Liverpool agree Barcola deal, Chelsea target defender, Arsenal and Man City show interest in forward \u2013 latest transfer reports",
-      "summary": "Liverpool have agreed a deal to sign Paris Saint-Germain winger Bradley Barcola in a transfer worth a potential \u00a3120m, with more than \u00a3100m of that guaranteed. Barcola is cl",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-agree-barcola-deal-chelsea-target-defender-arsenal-and-man-city-show-interest-in-forward-latest-transfer-reports/",
-      "claimed_at": "2026-08-27T10:53:24Z",
-      "players": [
-        {
-          "element_id": 360,
-          "name": "Bradley",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "bc3fa40765ea86ef",
-      "headline": "Are Moyes and Everton's owners on same page?",
-      "summary": "David Moyes said he was surprised Everton's owners regarded missing out on Europe last season as \"failure\". Phil McNulty asks if they are they on the same page.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cx2zk7lg622o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T10:35:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e626a7279632416c",
-      "headline": "Delap excited to work with Glasner after completing \u00a350m move to Nottingham Forest",
-      "summary": "Nottingham Forest have completed the signing of striker Liam Delap from Chelsea on a five-year contract. The 23-year-old arrives at the City Ground for a fee of around \u00a350m after spending last season at Stamford Bridg",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/delap-excited-to-work-with-glasner-after-completing-50m-move-to-nottingham-forest/",
-      "claimed_at": "2026-08-27T10:33:45Z",
-      "players": [
-        {
-          "element_id": 167,
-          "name": "Delap",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "976528063c5b4c49",
-      "headline": "Liverpool close in on \u00a3120m deal for PSG's Barcola",
-      "summary": "Liverpool are close to agreeing a deal with Paris St-Germain for Bradley Barcola - adding to the doubts surrounding Cody Gakpo's Anfield future.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c33kvgd3xpyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T10:31:21Z",
-      "players": [
-        {
-          "element_id": 360,
-          "name": "Bradley",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "ee6b059be1e33534",
-      "headline": "Wrexham complete signings of Ekomie and Kabore",
-      "summary": "Championship club Wrexham have completed the signings of right wing-back Issa Kabore from Manchester City and left-back Jacques Ekomie from Angers.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cn5dr0vyd3ro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T10:30:15Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "3810585855d751d6",
-      "headline": "Man City boss Maresca on Bouaddi, another player being expected to leave, and trio\u2019s fitness",
-      "summary": "Manchester City boss Enzo Maresca says new signing Ayyoub Bouaddi is ready to make his debut against Crystal Palace on Friday. The 18-year-old midfielder joined City from Lille this week and could immediatel",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-boss-maresca-on-bouaddi-another-player-being-expected-to-leave-and-trios-fitness/",
-      "claimed_at": "2026-08-27T10:03:28Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "39ca7bcd1cf50448",
-      "headline": "Palmer 'back to his best' with Alonso's freedom",
-      "summary": "Cole Palmer says this is the best he has felt \"in ages\" after starting the season strongly under Xabi Alonso at Chelsea - and he is putting the tricky previous campaign behind him.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13577403/cole-palmer-chelsea-attacker-ready-to-put-troublesome-2025-26-season-behind-him-after-promising-start-under-xabi-alonso",
-      "claimed_at": "2026-08-27T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "741e49cdc0741b90",
-      "headline": "Chelsea make huge profit on Delap as striker joins Forest",
-      "summary": "Nottingham Forest have signed striker Liam Delap in a club-record deal from Chelsea.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13577306/liam-delap-joins-nottingham-forest-in-club-record-50m-deal-as-chelsea-make-profit-on-striker",
-      "claimed_at": "2026-08-27T10:00:00Z",
-      "players": [
-        {
-          "element_id": 167,
-          "name": "Delap",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "df15fa499c64cc2a",
-      "headline": "Allan to Man City: How 'Mini Balotelli' overcame tragedy to thrive",
-      "summary": "Manchester City supporters might not know whether to be amused or afraid to hear that Allan Elias' nickname as a kid was 'Mini Balotelli' - a reference to the bleached-blonde mohawk haircut that had in fact been inspired by childhood",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13577650/allan-elias-to-man-city-how-brazilian-overcame-tragedy-to-go-from-mini-balotelli-to-palmeiras-underrated-gem",
-      "claimed_at": "2026-08-27T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "de1a19f255c08ad3",
-      "headline": "Charlton boss Jones says club will need to work \u2018very hard\u2019 before window shuts after double injury blow",
-      "summary": "Charlton boss Nathan Jones admits injuries to centre-backs Collins Sichenje and Billy Koumetio were his biggest concern after the Addicks were knocked out of the Carabao Cup by Tottenham. Charlto",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/charlton-boss-jones-says-club-will-need-to-work-very-hard-before-window-shuts-after-double-injury-blow/",
-      "claimed_at": "2026-08-27T09:44:16Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "59a3f9bed520548d",
       "headline": "Hadjam to Brighton \u2013 good or bad for De Cuyper in FPL?",
       "summary": "The 23-year-old left-back has joined the Seagulls The post Hadjam to Brighton - good or bad for De Cuyper in FPL? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1292,126 +1521,6 @@
           "element_id": 614,
           "name": "Hadjam",
           "club": "BHA",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "4bb2b36d58860670",
-      "headline": "\u00a350m Delap joins Forest \u2013 will he thrive at club?",
-      "summary": "BBC Sport examines what went wrong for Liam Delap at Chelsea and how he could bounce back in new surroundings.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvgyln21jrmo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T09:05:49Z",
-      "players": [
-        {
-          "element_id": 167,
-          "name": "Delap",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "2a08c129ff093c88",
-      "headline": "Chelsea line up Bournemouth's Scott - Thursday's gossip",
-      "summary": "Chelsea line up Bournemouth's Alex Scott, Sunderland make an offer for Manchester City's Jack Grealish, and Aston Villa set to miss out on AC Milan winger Rafael Leao, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c3eq9pjgewjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T09:00:43Z",
-      "players": [
-        {
-          "element_id": 69,
-          "name": "Scott",
-          "club": "BOU",
-          "held": null
-        },
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "bf124bbe8282f878",
-      "headline": "Villa close to \u00a365m move for Chelsea's Jackson as Watkins nears exit",
-      "summary": "Senegal striker Nicolas Jackson is nearing a move to Villa Park after three years at Chelsea.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cge4y57ygvdo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T08:48:20Z",
-      "players": [
-        {
-          "element_id": 55,
-          "name": "Watkins",
-          "club": "AVL",
-          "held": null
-        },
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "CHE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "317f62bfe42d6832",
-      "headline": "Chelsea in talks to sign Atalanta defender Ahanor",
-      "summary": "Chelsea are in talks to sign 18-year-old Atalanta and Italy defender Honest Ahanor for \u00a334.3m.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cdj4ev9nmj4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T07:28:01Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e8ed1460b11f141d",
-      "headline": "Chelsea agree \u00a340m deal for Atalanta defender Ahanor",
-      "summary": "Chelsea agree a deal worth up to \u00a340m to sign Atalanta defender Honest Ahanor.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cdj4ev9nmj4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T07:28:01Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "195d23ef3e7e79aa",
-      "headline": "Is Saka getting back to his best at Arsenal?",
-      "summary": "Bukayo Saka has struggled to produce his best on a consistent basis in recent months, but could be getting back to top form this season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cz0z7jyepgxo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T05:20:22Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1442,72 +1551,18 @@
       "touches_squad": null
     },
     {
-      "digest": "431e0e89ae34cfee",
-      "headline": "Morrison confirms West Brom signing is close \u2013 and indicates more additions are likely after selling defender",
-      "summary": "West Brom boss James Morrison has confirmed the club are close to signing Levante winger Kareem Tunde after their 3-2 Carabao Cup defeat to Newcastle. Morrison refused to discuss the deal in",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/morrison-confirms-west-brom-signing-is-close-and-indicates-more-additions-are-likely-after-selling-defender/",
-      "claimed_at": "2026-08-26T22:55:42Z",
+      "digest": "5f81c45a42624edf",
+      "headline": "Knock - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-08-26T22:00:07.797766Z",
       "players": [
         {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "ceae5ca418904e29",
-      "headline": "Moyes unsure on more new Everton signings and reveals message for hat-trick hero Barry",
-      "summary": "Everton boss David Moyes insists his side still need more players to be more competitive after Thierno Barry\u2019s hat-trick inspired a 4-0 Carabao Cup win over Preston. Barry struck three times as the Toffees cruised",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/moyes-unsure-on-more-new-everton-signings-and-reveals-message-for-hat-trick-hero-barry/",
-      "claimed_at": "2026-08-26T22:41:13Z",
-      "players": [
-        {
-          "element_id": 249,
-          "name": "Barry",
+          "element_id": 247,
+          "name": "Hackney",
           "club": "EVE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1d0bf60dbb407cd4",
-      "headline": "De Zerbi hails Spurs\u2019 new signings after Carabao Cup win and sets target for Savio",
-      "summary": "Tottenham boss Roberto De Zerbi has challenged Savio to score between 10 and 12 goals this season after the winger marked his debut with two goals in Spurs\u2019 5-1 Carabao Cup win over Charlton. Savio enjoyed a dream sta",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-hails-spurs-new-signings-after-carabao-cup-win-and-sets-target-for-savio/",
-      "claimed_at": "2026-08-26T22:31:16Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "710317ae9507d85b",
-      "headline": "Newcastle want more new signings after completing Gonzalez deal",
-      "summary": "Newcastle boss Matthias Jaissle has hailed new signing Nico Gonzalez as a \u201cgreat addition\u201d and vowed to continue pushing for further reinforcements before the transfer window closes. Gonzalez has joined Newcastle in a \u00a350m deal and the",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/newcastle-want-more-new-signings-after-completing-gonzalez-deal/",
-      "claimed_at": "2026-08-26T22:21:24Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1663,78 +1718,6 @@
         {
           "element_id": 464,
           "name": "Wissa",
-          "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "7dd3fa2bb47e1d87",
-      "headline": "FPL notes: De Cuyper + Hinshelwood haul, Villa injury latest",
-      "summary": "Plus, \u00a34.5m midfielder starts + why Kadioglu missed out The post FPL notes: De Cuyper + Hinshelwood haul, Villa injury latest appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/23/fpl-notes-de-cuyper-hinshelwood-haul-villa-injury-latest",
-      "claimed_at": "2026-08-23T21:10:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "5f81c45a42624edf",
-      "headline": "Knock - 75% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-08-23T17:00:07.952697Z",
-      "players": [
-        {
-          "element_id": 481,
-          "name": "Anderson",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 247,
-          "name": "Hackney",
-          "club": "EVE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "49f715652e4cc166",
-      "headline": "Newcastle v Liverpool team news: Dedic debut, Jacquet + Ngumoha start",
-      "summary": "The line-up information from St James' Park The post Newcastle v Liverpool team news: Dedic debut, Jacquet + Ngumoha start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/23/newcastle-v-liverpool-team-news-dedic-debut-jacquet-ngumoha-start",
-      "claimed_at": "2026-08-23T15:15:00Z",
-      "players": [
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 369,
-          "name": "Ngumoha",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 593,
-          "name": "Dedi\u0107",
           "club": "NEW",
           "held": null
         }
