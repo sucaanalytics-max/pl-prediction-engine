@@ -1,19 +1,139 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-29T21:07:41.950353Z",
-  "n_dropped": 273,
+  "generated_at": "2026-08-29T23:20:15.551331Z",
+  "n_dropped": 276,
   "dropped_by_source": {
-    "bbc_football": 83,
+    "bbc_football": 85,
     "fantasyfootballscout": 1,
     "hayters": 58,
-    "sky_football": 131
+    "sky_football": 132
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 363,
+  "n_articles": 366,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "1245e1a5cfc1c4b8",
+      "headline": "'Confidence' and 'desire' - why Bournemouth's Scott is in demand",
+      "summary": "BBC Sport pundit Ashley Williams analyses Alex Scott's \"impressive\" display, after the midfielder scored Bournemouth's only goal in their 1-1 draw against Everton in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c4gj2ze0eyxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-29T22:53:17Z",
+      "players": [
+        {
+          "element_id": 69,
+          "name": "Scott",
+          "club": "BOU",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "2c6a7ea2adba4ba3",
+      "headline": "Why Liverpool aren't getting the best out of Isak",
+      "summary": "BBC Sport pundit Joe Hart believes Alexander Isak dropping deep to receive the ball instead of staying forward is a sign the striker is low in confidence.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cx2zwrwg5d4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-29T22:34:12Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "9dd4187de2596e97",
+      "headline": "How new signing Gonzalez can be Newcastle's 'quarterback'",
+      "summary": "BBC Sport pundit Ashley Williams explains how Nico Gonzalez' ability to play forward passes quickly encouraged Anthony Elanga to make runs in behind the Tottenham defence in Newcastle's 2-0 win over the North London side in the Premier League",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cde0k31731xo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-29T22:26:51Z",
+      "players": [
+        {
+          "element_id": 454,
+          "name": "Elanga",
+          "club": "NEW",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "34c1d949830c7ad1",
+      "headline": "Hull agree deal with Frankfurt for winger Bahoya",
+      "summary": "Hull City agree a deal with Eintracht Frankfurt to sign winger Jean-Matteo Bahoya.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cdj4g2zrdpjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-29T22:24:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "cb24a2a5be79e161",
+      "headline": "Papers: Liverpool continue talks to sign Crystal Palace winger Sarr",
+      "summary": "The top stories and transfer rumours from Sunday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13578898/liverpool-transfer-news-reds-continue-talks-with-crystal-palace-to-sign-ismaila-sarr-paper-talk",
+      "claimed_at": "2026-08-29T22:22:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ccdd47f411f8f63f",
+      "headline": "FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back",
+      "summary": "FPL notes from Liverpool 2-2 Nottm Forest The post FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football S",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/29/fpl-notes-gibbs-white-on-pens-gakpo-city-bound-szoboszlai-at-right-back",
+      "claimed_at": "2026-08-29T22:10:00Z",
+      "players": [
+        {
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 480,
+          "name": "Gibbs-White",
+          "club": "NFO",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "52c3fde2ebf2e5d1",
       "headline": "Forest latest: \u00a322m Munoz deal agreed with Hutchinson set for AC Milan loan",
@@ -27,6 +147,66 @@
           "element_id": 484,
           "name": "Hutchinson",
           "club": "NFO",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "19704a09312cc276",
+      "headline": "Newcastle show there's plenty of life after Tonali",
+      "summary": "Newcastle United sold Sandro Tonali to Tottenham Hotspur, but the club look to have reinvested the money wisely following United's 2-0 win in north London.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c14d0elejzdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-29T21:28:16Z",
+      "players": [
+        {
+          "element_id": 455,
+          "name": "Tonali",
+          "club": "TOT",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "f45c8e440ab9bcbd",
+      "headline": "Napoli interested in Woltemade loan - Sunday's gossip",
+      "summary": "Napoli show interest in Newcastle forward Nick Woltemade, Manchester City winger Jack Grealish is wanted by Sunderland and Arsenal explore a move for Lille forward Matias Fernandez-Pardo.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckg8x1wwgn8o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-29T21:19:11Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "MCI",
+          "held": null
+        },
+        {
+          "element_id": 463,
+          "name": "Woltemade",
+          "club": "NEW",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "7fe972466b5f858f",
+      "headline": "\u00a3300m spent, bottom of the table... but Spurs boss De Zerbi 'not angry'",
+      "summary": "Having spent more than \u00a3300m in the summer, Tottenham find themselves bottom of the Premier League, without a point or a goal, but boss Roberto de Zerbi remains optimistic.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/clyqn158n5jo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-29T21:15:46Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": null
         }
       ],
@@ -717,24 +897,6 @@
       "touches_squad": null
     },
     {
-      "digest": "6265ad59cb873f97",
-      "headline": "Iraola angry as official's board delays subs before goal",
-      "summary": "Liverpool boss Andoni Iraola says he was angry about being prevented from making a triple substitution sooner during his side's draw against Nottingham Forest.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cd795e9ejgzo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T15:27:43Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "2a98a3fcdbf8bc2a",
       "headline": "Glasner hopeful of THREE more Nottingham Forest signings \u2013 and praises players after draw with Liverpool",
       "summary": "Nottingham Forest boss Oliver Glasner has hinted the club could make as many as three more signings before the transfer window closes. Forest drew 2-2 with Liverpool at Anfield on Saturday aftern",
@@ -825,42 +987,6 @@
           "element_id": 377,
           "name": "Munoz",
           "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "234bf373bc1fbb2d",
-      "headline": "Iraola urges 'passive' Liverpool to learn quickly after Forest draw",
-      "summary": "Liverpool head coach Andoni Iraola says his side need to \"learn lessons\" after they twice come from behind to draw 2-2 with Nottingham Forest at Anfield.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cwyz8dr7jz3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T14:23:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "8ff7f2295b4b0000",
-      "headline": "'Proud' but 'disappointed' - Glasner's mixed emotions after Liverpool draw",
-      "summary": "Nottingham Forest manager Oliver Glasner says he was \"proud\" of his side's performance at Anfield as they draw 2-2 with Liverpool in the Premier League, and believes they could have won.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c8xkj45r2jno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T14:15:12Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -969,24 +1095,6 @@
       "touches_squad": null
     },
     {
-      "digest": "567c32d03f218a2c",
-      "headline": "Gibbs-White shines - player ratings for Liverpool v Nottm Forest",
-      "summary": "How Liverpool and Nottingham Forest's players rated following their Premier League match.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckgwnnj281no?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T13:28:37Z",
-      "players": [
-        {
-          "element_id": 480,
-          "name": "Gibbs-White",
-          "club": "NFO",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "3b4905829ce21637",
       "headline": "Newcastle latest: Carragher praise after 'impressive' Magpies performance",
       "summary": null,
@@ -1041,24 +1149,6 @@
       "touches_squad": null
     },
     {
-      "digest": "3c80462689d49b2c",
-      "headline": "Forest to bid \u00a340m for Everton teenager Armstrong",
-      "summary": "Nottingham Forest launch an ambitious bid to sign Everton's teenage midfielder Harrison Armstrong.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cy0znn7lg51o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T12:41:06Z",
-      "players": [
-        {
-          "element_id": 244,
-          "name": "Armstrong",
-          "club": "EVE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "8a29db98177936c8",
       "headline": "Liverpool v Forest team news: Munoz starts, Delap a sub",
       "summary": "Two changes for Liverpool and one for Forest from last weekend The post Liverpool v Forest team news: Munoz starts, Delap a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1077,24 +1167,6 @@
           "element_id": 377,
           "name": "Munoz",
           "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "0f36d259fc9f524c",
-      "headline": "Fulham in talks for Rayo Vallecano defender Ratiu",
-      "summary": "Fulham are in talks to sign Romania defender Andrei Ratiu, 28, from Rayo Vallecano.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c07lgg84jdmo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T10:31:12Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1149,42 +1221,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "9dd29aba1d7d3e68",
-      "headline": "Barcola set to sign Liverpool contract to 2031",
-      "summary": "Bradley Barcola is set to sign a Liverpool contract to 2031 after the Premier League club reached an agreement with Paris Saint-Germain over the structure of the transfer.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13578446/bradley-barcola-set-to-sign-liverpool-contract-to-2031-after-psg-agree-transfer-worth-up-to-123m",
-      "claimed_at": "2026-08-29T08:25:00Z",
-      "players": [
-        {
-          "element_id": 360,
-          "name": "Bradley",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "cd77b9dc25b81813",
-      "headline": "Liverpool agree \u00a3123m deal for PSG's Barcola",
-      "summary": "Liverpool agree a deal worth up to \u00a3123m for Paris St-Germain forward Bradley Barcola.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c5ywgjnnn74o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T08:03:53Z",
-      "players": [
-        {
-          "element_id": 360,
-          "name": "Bradley",
-          "club": "LIV",
           "held": null
         }
       ],
@@ -1749,24 +1785,6 @@
           "element_id": 465,
           "name": "Osula",
           "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "05ff5582b0e085d5",
-      "headline": "FPL notes: Palmer + Palestra injury latest, Alonso on Chelsea attack",
-      "summary": "Notes from Fulham 2-3 Chelsea The post FPL notes: Palmer + Palestra injury latest, Alonso on Chelsea attack appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/25/fpl-notes-palmer-palestra-caicedo-latest-alonso-on-chelsea-attack",
-      "claimed_at": "2026-08-25T09:00:00Z",
-      "players": [
-        {
-          "element_id": 152,
-          "name": "Palestra",
-          "club": "CHE",
           "held": null
         }
       ],
