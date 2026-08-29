@@ -1,19 +1,247 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-28T21:07:11.495594Z",
-  "n_dropped": 239,
+  "generated_at": "2026-08-29T03:10:00.457894Z",
+  "n_dropped": 238,
   "dropped_by_source": {
-    "bbc_football": 70,
+    "bbc_football": 65,
     "fantasyfootballscout": 1,
-    "hayters": 51,
-    "sky_football": 117
+    "hayters": 54,
+    "sky_football": 118
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 329,
+  "n_articles": 328,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "20b0fc4a06f643dc",
+      "headline": "Man City latest: Grealish future will be decided before transfer deadline, says Maresca",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-28T23:00:00Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "dd8986953673cd9b",
+      "headline": "A magician and a maverick - this could be Cherki's moment for Man City",
+      "summary": "After two goals and a swaggering display against Crystal Palace, Phil McNulty asks if this is Rayan Cherki's time to shine for Manchester City.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c24j5jnnr9eo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T22:56:42Z",
+      "players": [
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "062aea068f590b9b",
+      "headline": "Redknapp: Cherki is a genius",
+      "summary": "Jamie Redknapp hailed Rayan Cherki as a genius after he scored twice to inspire Manchester City to a 4-1 win over Crystal Palace at Selhurst Park.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13578411/rayan-cherki-is-a-genius-who-just-painted-a-masterpiece-for-man-city-at-crystal-palace-says-jamie-redknapp",
+      "claimed_at": "2026-08-28T22:48:00Z",
+      "players": [
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "4261d9997668dd7b",
+      "headline": "Papers: Arsenal hold talks with Real Madrid for Endrick",
+      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13578352/arsenal-transfer-news-gunners-hold-talks-for-real-madrid-and-brazil-forward-endrick-paper-talk",
+      "claimed_at": "2026-08-28T22:26:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "354a36ba802f645d",
+      "headline": "Another Crystal Palace blow revealed after heavy defeat to Man City \u2013 and Sage expresses desire for more new signings",
+      "summary": "Crystal Palace boss Pierre Sage has confirmed Jean-Philippe Mateta could be sidelined for at least four weeks after suffering a muscular injury ahead of his side\u2019s 4-1 defeat to Manc",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/another-crystal-palace-blow-revealed-after-heavy-defeat-to-man-city-and-sage-expresses-desire-for-more-new-signings/",
+      "claimed_at": "2026-08-28T22:19:30Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "69741a41ea8b7fdd",
+      "headline": "Maresca hails Cherki\u2019s \u2018complete performance\u2019 in win over Crystal Palace",
+      "summary": "Manchester City boss Enzo Maresca praised Rayan Cherki\u2019s all-round contribution after the midfielder scored twice in their 4-1 victory over Crystal Palace. Erling Haaland was also on target twice as City claimed an emphatic win",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/maresca-hails-cherkis-complete-performance-in-win-over-crystal-palace/",
+      "claimed_at": "2026-08-28T22:04:11Z",
+      "players": [
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": null
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "788c8c601e9a59f5",
+      "headline": "Palace lost hope at 3-1 - Sage",
+      "summary": "Crystal Palace boss Pierre Sage reacts to their 4-1 defeat by Manchester City.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c770408jzeno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T21:59:14Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "feb3a4e88b304765",
+      "headline": "DefCons? Goal threat? What Nico Gonzalez could offer Newcastle",
+      "summary": "Scouting Newcastle's new big-money signing in midfield The post DefCons? Goal threat? What Nico Gonzalez could offer Newcastle appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/defcons-goal-threat-what-nico-gonzalez-could-offer-newcastle",
+      "claimed_at": "2026-08-28T21:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ff2c61c672f52aa7",
+      "headline": "Cherki magic inspires vintage Man City victory at Palace",
+      "summary": "Rayan Cherki did his best Lionel Messi impression, producing moments of pure magic as Enzo Maresca's Manchester City stayed perfect in the Premier League with a 4-1 win over Crystal Palace at Selhurst Park.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/crystal-palace-vs-manchester-city/report/559458",
+      "claimed_at": "2026-08-28T21:45:00Z",
+      "players": [
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ded97bab946d5960",
+      "headline": "Tottenham reject Danso loan move to Sunderland",
+      "summary": "Tottenham Hotspur reject a season-long loan offer from Sunderland for defender Kevin Danso.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cp3knknq5neo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T21:41:55Z",
+      "players": [
+        {
+          "element_id": 501,
+          "name": "Danso",
+          "club": "TOT",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "997fa598857d1027",
+      "headline": "Haaland and Cherki fire impressive Man City to victory at Palace",
+      "summary": "Erling Haaland and Rayan Cherki both score twice as Manchester City cruise to a 4-1 win at Crystal Palace in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c8e3k3ww56no?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-28T21:30:06Z",
+      "players": [
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": null
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "1fea75ffac98a235",
+      "headline": "De Zerbi looking forward to Kulusevski return",
+      "summary": "Roberto De Zerbi says he is looking forward to the day Dejan Kulusevski returns to action. The Swede has been out since May 2025 after suffering a serious knee injury against Crystal Palace. Despite being pictured in training of late, he is not ready to",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-on-kulusevskis-fitness-and-tonalis-huge-fee/",
+      "claimed_at": "2026-08-28T21:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "da750f35d47a0311",
       "headline": "Cherki genius and Wharton excels - Palace v Man City player ratings",
@@ -86,7 +314,7 @@
         {
           "element_id": 166,
           "name": "N.Jackson",
-          "club": "CHE",
+          "club": "AVL",
           "held": null
         }
       ],
@@ -104,6 +332,12 @@
         {
           "element_id": 55,
           "name": "Watkins",
+          "club": "AVL",
+          "held": null
+        },
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
           "club": "AVL",
           "held": null
         }
@@ -304,6 +538,24 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/crystal-palace-v-man-city-predicted-line-ups-fpl-team-news-2",
       "claimed_at": "2026-08-28T17:08:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "701ec1253d09792b",
+      "headline": "Palace latest: Sage angry with lack of energy from subs in Man City loss",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-28T17:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1083,42 +1335,6 @@
       "touches_squad": null
     },
     {
-      "digest": "3e136a71cc2e4459",
-      "headline": "Arsenal latest: Alvarez will not play for Atletico Madrid this weekend",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-27T17:06:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e25b3f639daa1be9",
-      "headline": "Arsenal latest: Al Hilal making Martinelli deal progress as Nelson leaves",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-27T17:06:00Z",
-      "players": [
-        {
-          "element_id": 24,
-          "name": "Nelson",
-          "club": "ARS",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "bad2db138ec87101",
       "headline": "Champions League draw: Premier League sides discover league stage opponents",
       "summary": "Arsenal will face Real Madrid and Bayern Munich in the league phase of the 2026/27 Champions League. Mikel Arteta\u2019s side have been handed one of the toughest schedules of the five Premier League representatives, with Real Ma",
@@ -1131,60 +1347,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "7b78c08c609cf548",
-      "headline": "Arsenal to face Real Madrid as City and Villa get PSG in CL league phase",
-      "summary": "Last season's European finalists Arsenal will play Real Madrid and Bayern Munich in this year's Champions League league phase.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13577826/champions-league-draw-arsenal-to-face-real-madrid-and-bayern-munich-in-league-phase-as-man-city-and-aston-villa-get-psg",
-      "claimed_at": "2026-08-27T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "01e7686bb9787173",
-      "headline": "Muniz nets first goal in a year as Fulham ease past Wimbledon",
-      "summary": "Rodrigo Muniz was finally all smiles again as he ended a year-long goal drought to help earn Alvaro Arbeloa his first win and see Fulham breeze past AFC Wimbledon 3-0 in the Carabao Cup.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/fulham-vs-afc-wimbledon/report/577430",
-      "claimed_at": "2026-08-27T16:26:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1df1e03750eaefce",
-      "headline": "Welbeck off the mark for Chelsea in win over Wilshere's Luton",
-      "summary": "Danny Welbeck scored on his Chelsea debut as Xabi Alonso's first competitive game at Stamford Bridge as Blues manager ended in a 2-0 win over League One Luton in the Carabao Cup second round.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-vs-luton-town/report/577427",
-      "claimed_at": "2026-08-27T16:26:00Z",
-      "players": [
-        {
-          "element_id": 136,
-          "name": "Welbeck",
-          "club": "CHE",
           "held": null
         }
       ],
@@ -1335,144 +1497,6 @@
           "element_id": 370,
           "name": "Chiesa",
           "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e0a600d0a0ae98f3",
-      "headline": "Arsenal only likely exit for Alvarez as striker skips training",
-      "summary": "Julian Alvarez has not attended Atletico Madrid training since being told privately that the club would not sell him to Barcelona.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c980e1d2vpgo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T14:18:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "469e79d6dfb0579e",
-      "headline": "Liverpool boss Iraola on Barcola and Tottenham target Gakpo\u2019s future",
-      "summary": "Liverpool boss Andoni Iraola says he is hopeful of \u201cgood news soon\u201d amid reports the club have agreed a \u00a3120m deal to sign Paris Saint-Germain winger Bradley Barcola. Liverpool have reached an agreement worth more than \u00a3100m up fro",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-boss-iraola-on-barcola-and-tottenham-target-gakpos-future/",
-      "claimed_at": "2026-08-27T14:14:53Z",
-      "players": [
-        {
-          "element_id": 360,
-          "name": "Bradley",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "c46467af3df5898a",
-      "headline": "Arteta discusses futures of attacking duo ahead of transfer deadline",
-      "summary": "Arsenal boss Mikel Arteta says the club are managing the \u201cpersonal situations\u201d of Gabriel Jesus and Gabriel Martinelli as uncertainty continues over their futures. Jesus has been linked with a possible departure from the Emirates,",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-discusses-futures-of-attacking-duo-ahead-of-transfer-deadline/",
-      "claimed_at": "2026-08-27T13:55:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "8efb1ab57209f019",
-      "headline": "Arteta hopeful Arsenal star could feature against Aston Villa",
-      "summary": "Arsenal boss Mikel Arteta says Bruno Guimaraes is potentially available for Monday\u2019s clash with Aston Villa after stepping up his recovery in recent days. Guimaraes has been managed carefully as he works his way back to full fitness, with",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-hopeful-arsenal-star-could-feature-against-aston-villa/",
-      "claimed_at": "2026-08-27T13:47:39Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "d18b411d9e5f7143",
-      "headline": "Grealish keen on Everton, Man City look at Ndiaye",
-      "summary": "Jack Grealish's preference would be to make a return to Everton should he leave Manchester City in the remaining days of the transfer window, sources have told BBC Sport.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c0qxzqdwekwo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T13:32:55Z",
-      "players": [
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "EVE",
-          "held": null
-        },
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "8563e9c0f657eacd",
-      "headline": "Fiorentina in talks with Man United over Zirkzee loan",
-      "summary": "Fiorentina are in talks with Manchester United over an initial loan move for striker Joshua Zirkzee.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwyz9lllx3xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T13:30:17Z",
-      "players": [
-        {
-          "element_id": 440,
-          "name": "Zirkzee",
-          "club": "MUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e06bfb42fd623998",
-      "headline": "Carragher facing bankruptcy petition over unpaid tax claim",
-      "summary": "Former Liverpool and England player turned pundit Jamie Carragher faces being declared bankrupt over an unpaid tax bill.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cr4vl0lw4qwo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-27T13:05:37Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1695,30 +1719,6 @@
           "element_id": 239,
           "name": "Garner",
           "club": "EVE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "f47ca698d934fa47",
-      "headline": "FPL notes: Iraola on Szoboszlai pen + Wissa back to his best",
-      "summary": "The key Fantasy takeaways from Newcastle 2-2 Liverpool The post FPL notes: Iraola on Szoboszlai pen + Wissa back to his best appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/24/fpl-notes-iraola-on-szoboszlai-pen-wissa-back-to-his-best",
-      "claimed_at": "2026-08-24T05:00:00Z",
-      "players": [
-        {
-          "element_id": 368,
-          "name": "Szoboszlai",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 464,
-          "name": "Wissa",
-          "club": "NEW",
           "held": null
         }
       ],
