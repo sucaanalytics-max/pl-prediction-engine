@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-30T10:52:36.941210Z",
+  "last_updated": "2026-08-30T10:52:30.928196Z",
   "gameweek": 3,
   "n_predictions": 5,
   "status": "healthy",
@@ -109,5 +109,18 @@
       "seed_entropy": 64264194,
       "dgw_rotation_correlation_modelled": false
     }
+  },
+  "validated_at": "2026-08-30T14:47:49.656865+00:00",
+  "artifact_contract": "valid",
+  "prediction_age_hours": 3.9218601425000004,
+  "ledger_integrity": {
+    "gw01": "verified"
+  },
+  "ledger_integrity_ok": true,
+  "eval_targets": {
+    "n_evaluated_matches": 10,
+    "backtest_min_matches": 100,
+    "assessable": false,
+    "note": "10 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
   }
 }
