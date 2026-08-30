@@ -1,19 +1,547 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-30T13:07:53.300211Z",
-  "n_dropped": 290,
+  "generated_at": "2026-08-30T17:29:30.640555Z",
+  "n_dropped": 302,
   "dropped_by_source": {
-    "bbc_football": 91,
-    "fantasyfootballscout": 1,
-    "hayters": 59,
-    "sky_football": 139
+    "bbc_football": 99,
+    "fantasyfootballscout": 2,
+    "hayters": 57,
+    "sky_football": 144
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 380,
+  "n_articles": 392,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "4bd2c39cdd7235ce",
+      "headline": "Watkins joins Al Hilal as Villa agree Harwood-Bellis deal",
+      "summary": "Ollie Watkins has completed his &#163;50m move from Aston Villa to Al Hilal.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13579158/aston-villa-transfer-news-ollie-watkins-joins-al-hilal-as-deal-agreed-for-taylor-harwood-bellis",
+      "claimed_at": "2026-08-30T17:43:00Z",
+      "players": [
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ea7077f02892124e",
+      "headline": "Watkins completes \u00a351m move to Saudi side Al-Hilal",
+      "summary": "Ollie Watkins completes his \u00a351m move to Saudi Pro League side Al Hilal from Aston Villa.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c70le5gllyeo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T17:12:52Z",
+      "players": [
+        {
+          "element_id": 55,
+          "name": "Watkins",
+          "club": "AVL",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "f8ab0b280e9740b9",
+      "headline": "Why Chelsea need more than a new goalkeeper to be title challengers",
+      "summary": "Chelsea's new goalkeeper Emiliano Martinez made his debut in a thrilling 4-3 win over Brighton - but is unable to solve his new club's defensive problems on his own.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwyzpez3x3go?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T17:12:39Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "e4a5dd2afc712260",
+      "headline": "'A hard but precious point' - Farke praises Leeds character",
+      "summary": "Leeds manager Daniel Farke praises his side \"resilience\" and character after they fought back from a goal down to salvage a 1-1 draw against Brentford in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cx2zvzpdyjdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T16:37:47Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "eac4c4bc1c0df4b2",
+      "headline": "Alonso praises Joao Pedro's 'desire' after seven-goal Brighton thriller",
+      "summary": "Chelsea maintained their perfect start to the new Premier League season as they held on to defeat Brighton in an entertaining match at Stamford Bridge.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cpq09095xjzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T16:37:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ce9ec4a25d89dde3",
+      "headline": "Man Utd pay tribute to 'proud Red' officer who died in A66 crash",
+      "summary": "The sons of PC Matthew Blades led Manchester United out at Old Trafford for Sunday's Premier League game with Ipswich.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckg8x0ex8gno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T16:30:05Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "fa4384bed32d53f9",
+      "headline": "Chelsea beat Brighton in seven-goal thriller to continue Alonso's winning start",
+      "summary": "Chelsea held off a Brighton fightback to clinch a thrilling 4-3 victory and continue their winning start under manager Xabi Alonso.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/chelsea-vs-brighton-and-hove-albion/report/559456",
+      "claimed_at": "2026-08-30T16:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "a7b7b84d0c3ee979",
+      "headline": "Chelsea had the 'quality to punish us' - Hurzeler",
+      "summary": "Brighton manager Fabian Hurzeler admits Chelsea had the \"quality to punish us\" but praised his side's attitude to \"go for it\" during a thrilling 4-3 defeat at Stamford Bridge.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c0lrgrzjnpxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T16:29:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "f822607a82bfcd47",
+      "headline": "'Never underestimate Daniel'- Andrews hails Farke after Leeds comeback",
+      "summary": "Daniel Farke earned glowing praise from Brentford manager Keith Andrews after Leeds United battled back after the break to secure a hard-fought 1-1 draw.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cy9zqzd0vvzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T16:23:30Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "dc3d740b8ec7f95d",
+      "headline": "Blues hold on in SEVEN-goal THRILLER against Seagulls",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Chelsea and Brighton & Hove Albion.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13579110/chelsea-4-3-brighton-premier-league-highlights",
+      "claimed_at": "2026-08-30T16:19:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "5f085e1b772e050e",
+      "headline": "Alonso on Caicedo injury worry, Pedro Neto\u2019s future, Enzo Fernandez latest and win over Brighton",
+      "summary": "Xabi Alonso says Moises Caicedo will be assessed after the Chelsea midfielder was forced off during his side's victory over Brighton. Caicedo was unable to complete the game after coming off the bench in",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/alonso-on-caicedo-injury-worry-pedro-netos-future-enzo-fernandez-latest-and-win-over-brighton/",
+      "claimed_at": "2026-08-30T16:18:07Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "CHE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "0206d1e8cfa9a036",
+      "headline": "'A new chapter to write' - Le Bris on Sunderland victory",
+      "summary": "Sunderland manager Regis Le Bris is pleased with his side's performance, energy and \"togetherness\" after substitute Wilson Isidor struck to secure a 1-0 victory over Fulham.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cvgyxy18d03o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T16:15:08Z",
+      "players": [
+        {
+          "element_id": 553,
+          "name": "Isidor",
+          "club": "SUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "18ed4d4182646844",
+      "headline": "Calvert-Lewin rescues draw for Leeds against impressive Brentford",
+      "summary": "Dominic Calvert-Lewin scored a late tap-in to earn Leeds United a 1-1 draw with Brentford at Elland Road.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/leeds-united-vs-brentford/report/559459",
+      "claimed_at": "2026-08-30T16:15:00Z",
+      "players": [
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "77b7e6645ef0f719",
+      "headline": "Late Leeds goal and Schade brilliance see points shared at Elland Road",
+      "summary": "Highlights from Leeds United against Brentford in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13579102/leeds-united-1-1-brentford-premier-league-highlights",
+      "claimed_at": "2026-08-30T16:11:00Z",
+      "players": [
+        {
+          "element_id": 94,
+          "name": "Schade",
+          "club": "BRE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "43693e11297d783a",
+      "headline": "Isidor strikes late to clinch three points for Sunderland",
+      "summary": "FREE TO WATCH: Highlights from Sunderland's match against Fulham in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13579100/sunderland-1-0-fulham-premier-league-highlights",
+      "claimed_at": "2026-08-30T16:10:00Z",
+      "players": [
+        {
+          "element_id": 553,
+          "name": "Isidor",
+          "club": "SUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "931704be2cb6a036",
+      "headline": "Man Utd 5-2 Ipswich LIVE \u2013 Fernandes hat-trick helps United come from behind",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd 5-2 Ipswich LIVE - Fernandes hat-trick helps United come from behind appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-utd-v-ipswich-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-08-30T16:05:20Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "33312645b541b524",
+      "headline": "Barcelona close to deal for Arsenal's Jesus",
+      "summary": "Barcelona are closing in on a move for Arsenal striker Gabriel Jesus in a deal worth \u00a38.6m.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c9qr79jr1qqo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T16:01:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "139faf790c8c3b53",
+      "headline": "Fulham must improve 'energy and attitude' - Arbeloa",
+      "summary": "Fulham manager Alvaro Arbeloa demands that his side show more \"energy\" and improve their \"attitude\" after they slumped to 1-0 defeat at Sunderland in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cwyzdzqj997o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T15:54:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "4d389ed9c677c5ed",
+      "headline": "Isidor steers Sunderland to narrow win against Fulham",
+      "summary": "Sunderland secured their first points of the season as Wilson Isidor's effort earned them a 1-0 win against Fulham.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/sunderland-vs-fulham/report/559462",
+      "claimed_at": "2026-08-30T15:45:00Z",
+      "players": [
+        {
+          "element_id": 553,
+          "name": "Isidor",
+          "club": "SUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "4a858ebd3aa5d436",
+      "headline": "Arsenal latest: Vieira set to depart for Hamburg in \u00a37.7m deal",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-30T15:35:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "f4c423f0e744a6a7",
+      "headline": "Man Utd v Ipswich team news: Rashford starts",
+      "summary": "Michael Carrick makes four changes to the team that lost at Hull The post Man Utd v Ipswich team news: Rashford starts appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/30/man-utd-v-ipswich-team-news-rashford-starts",
+      "claimed_at": "2026-08-30T15:15:00Z",
+      "players": [
+        {
+          "element_id": 429,
+          "name": "Rashford",
+          "club": "MUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "219d14b487e2f45d",
+      "headline": "Liverpool latest: Barcola undergoing medical as Van Dijk pleads for Gakpo to stay",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-30T15:10:00Z",
+      "players": [
+        {
+          "element_id": 356,
+          "name": "Virgil",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "62b76b234ca17eb6",
+      "headline": "Hull's deal for Frankfurt winger Bahoya falls through",
+      "summary": "Hull City's move for Eintracht Frankfurt winger Jean-Matteo Bahoya falls through after the player decides against joining the Premier League side.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cdj4g2zrdpjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T15:09:49Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "40955b2d07db56af",
+      "headline": "Chelsea 4-3 Brighton LIVE \u2013 Chelsea win despite Brighton fightback",
+      "summary": "{rsn-live-v2} The post Chelsea 4-3 Brighton LIVE - Chelsea win despite Brighton fightback appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/chelsea-vs-brighton-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-08-30T15:07:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "04b01b1e4ca362f0",
+      "headline": "Wilson Isidor the difference as Sunderland edge past Fulham to kickstart Premier League campaign",
+      "summary": "Sunderland bounced back from last week's defeat to Ipswich Town to return to winning ways against Fulham, although R\u00e9gis Le Bris' side were made to work hard for a far-from-convincing victory. The hosts",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/wilson-isidor-the-difference-as-sunderland-edge-past-fulham-to-kickstart-premier-league-campaign/",
+      "claimed_at": "2026-08-30T15:06:01Z",
+      "players": [
+        {
+          "element_id": 553,
+          "name": "Isidor",
+          "club": "SUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "271aa55b4fb8827c",
+      "headline": "Joao Pedro and debutant Yalcouye star - Chelsea v Brighton player ratings",
+      "summary": "Here's how the players rated as Chelsea and Brighton met in the Premier League on Sunday.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cdx5z7zk54po?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T15:02:57Z",
+      "players": [
+        {
+          "element_id": 605,
+          "name": "Yalcouy\u00e9",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "77f304a6dd085d52",
+      "headline": "Chelsea latest: I came to here to win the Premier League, says Martinez",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-30T15:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "a40ee5577a0221d0",
+      "headline": "Arsenal agree club-record \u00a355.7m Martinelli sale as Jesus heads to Barcelona",
+      "summary": "Arsenal have agreed a club-record &#163;55.7m fee with Al Hilal to sell Gabriel Martinelli, with a deal also agreed in principle for fellow Brazilian Gabriel Jesus to depart for Barcelona.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13579053/arsenal-agree-55-7m-club-record-gabriel-martinelli-sale-to-al-hilal-with-deal-also-agreed-in-principle-with-barcelona-for-gabriel-jesus",
+      "claimed_at": "2026-08-30T14:01:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ce6296b23b7f89c7",
+      "headline": "Neville urges Man Utd to sign TWO defenders before Deadline Day",
+      "summary": "Gary Neville has encouraged Man Utd to address their defensive weaknesses by signing a centre-back and full-back before the transfer window closes on Tuesday.&#160;",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13579014/manchester-united-transfer-latest-gary-neville-claims-the-red-devils-must-buy-a-centre-back-and-left-back-before-the-transfer-window-closes",
+      "claimed_at": "2026-08-30T13:48:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "8b020efa338de11a",
       "headline": "Arsenal sign highly-rated midfielder",
@@ -375,24 +903,6 @@
       "touches_squad": null
     },
     {
-      "digest": "2c6a7ea2adba4ba3",
-      "headline": "Why Liverpool aren't getting the best out of Isak",
-      "summary": "BBC Sport pundit Joe Hart believes Alexander Isak dropping deep to receive the ball instead of staying forward is a sign the striker is low in confidence.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cx2zwrwg5d4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T22:34:12Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "e3cebf8bff6e2b6a",
       "headline": "Man Utd latest: 'So easy and lazy' - Carrick defends passion and duo's leadership",
       "summary": null,
@@ -400,42 +910,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-08-29T22:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "9dd4187de2596e97",
-      "headline": "How new signing Gonzalez can be Newcastle's 'quarterback'",
-      "summary": "BBC Sport pundit Ashley Williams explains how Nico Gonzalez' ability to play forward passes quickly encouraged Anthony Elanga to make runs in behind the Tottenham defence in Newcastle's 2-0 win over the North London side in the Premier League",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cde0k31731xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T22:26:51Z",
-      "players": [
-        {
-          "element_id": 454,
-          "name": "Elanga",
-          "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "34c1d949830c7ad1",
-      "headline": "Hull agree deal with Frankfurt for winger Bahoya",
-      "summary": "Hull City agree a deal with Eintracht Frankfurt to sign winger Jean-Matteo Bahoya.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cdj4g2zrdpjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T22:24:56Z",
       "players": [
         {
           "element_id": 0,
@@ -531,66 +1005,6 @@
       "touches_squad": null
     },
     {
-      "digest": "19704a09312cc276",
-      "headline": "Newcastle show there's plenty of life after Tonali",
-      "summary": "Newcastle United sold Sandro Tonali to Tottenham Hotspur, but the club look to have reinvested the money wisely following United's 2-0 win in north London.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c14d0elejzdo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T21:28:16Z",
-      "players": [
-        {
-          "element_id": 455,
-          "name": "Tonali",
-          "club": "TOT",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "f45c8e440ab9bcbd",
-      "headline": "Napoli interested in Woltemade loan - Sunday's gossip",
-      "summary": "Napoli show interest in Newcastle forward Nick Woltemade, Manchester City winger Jack Grealish is wanted by Sunderland and Arsenal explore a move for Lille forward Matias Fernandez-Pardo.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckg8x1wwgn8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T21:19:11Z",
-      "players": [
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 463,
-          "name": "Woltemade",
-          "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "7fe972466b5f858f",
-      "headline": "\u00a3300m spent, bottom of the table... but Spurs boss De Zerbi 'not angry'",
-      "summary": "Having spent more than \u00a3300m in the summer, Tottenham find themselves bottom of the Premier League, without a point or a goal, but boss Roberto de Zerbi remains optimistic.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/clyqn158n5jo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T21:15:46Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "1b8d28e2a79f635c",
       "headline": "Tottenham latest: De Zerbi reveals trio want to leave",
       "summary": null,
@@ -603,66 +1017,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "602f49a248a6582b",
-      "headline": "Hits and misses: Newcastle duo Elanga and Wissa are reborn under Jaissle",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13578505/newcastle-duo-anthony-elanga-and-yoane-wissa-thriving-under-matthias-jaissle-after-win-over-tottenham-premier-league-hits-and-misses",
-      "claimed_at": "2026-08-29T20:30:00Z",
-      "players": [
-        {
-          "element_id": 454,
-          "name": "Elanga",
-          "club": "NEW",
-          "held": null
-        },
-        {
-          "element_id": 464,
-          "name": "Wissa",
-          "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "fedb3c7bbfc8de15",
-      "headline": "Man City open talks to sign Liverpool's Gakpo",
-      "summary": "Manchester City have opened talks with Liverpool to sign Cody Gakpo.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13578859/cody-gakpo-transfer-news-manchester-city-open-talks-to-sign-liverpool-forward",
-      "claimed_at": "2026-08-29T20:23:00Z",
-      "players": [
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "d4a5f6839f296e74",
-      "headline": "Man City open talks with Liverpool over Gakpo",
-      "summary": "The Netherlands forward has also attracted interest from Tottenham, but sources indicate Manchester City is his preferred destination if he leaves Anfield.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c39m0z4m2mpo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T20:17:18Z",
-      "players": [
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
           "held": null
         }
       ],
@@ -687,24 +1041,6 @@
           "element_id": 464,
           "name": "Wissa",
           "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "5f7bd177abf277aa",
-      "headline": "Newcastle showed 'full commitment' in Spurs win - Jaissle",
-      "summary": "Newcastle manager Matthias Jaissle says their 2-0 away win is \"well deserved\" and praises his side's decision making to secure three points against Tottenham in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c3d7x1n93j2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T20:02:44Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -759,150 +1095,6 @@
       "touches_squad": null
     },
     {
-      "digest": "1aea78ad41e5f06d",
-      "headline": "Spurs 'didn't deserve' loss to Newcastle - De Zerbi",
-      "summary": "Tottenham manager Roberto de Zerbi describes his side's 2-0 defeat by Newcastle United as an \"unfair result\", with Spurs rooted to the bottom of the Premier League table.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c0e3wpp1dj7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T19:44:47Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "7d235136e428f7cd",
-      "headline": "De Zerbi highlights biggest problem at Spurs as Carra slams 'worst start'",
-      "summary": "Roberto De Zerbi believes changing the mentality at Tottenham is his biggest challenge after Sky Sports' Jamie Carragher said their start to the season \"couldn't have gone any worse\" following defeat to Newcastle.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13578837/tottenham-hotspur-roberto-de-zerbi-highlights-biggest-problem-at-spurs-after-newcastle-defeat-as-jamie-carragher-slams-start",
-      "claimed_at": "2026-08-29T19:35:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "364a295533965cd1",
-      "headline": "Spurs beaten again as Elanga and Wissa strike for Newcastle",
-      "summary": "Tottenham have lost their first two Premier League matches and failed to score in both as rejuvenated duo Anthony Elanga and Yoane Wissa struck to earn Newcastle a 2-0 victory.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/tottenham-hotspur-vs-newcastle-united/report/559463",
-      "claimed_at": "2026-08-29T19:30:00Z",
-      "players": [
-        {
-          "element_id": 454,
-          "name": "Elanga",
-          "club": "NEW",
-          "held": null
-        },
-        {
-          "element_id": 464,
-          "name": "Wissa",
-          "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "fd424775cf4aad0f",
-      "headline": "Another defeat for Spurs as Elanga and Wissa goals seal Magpies win",
-      "summary": "FREE TO WATCH: Highlights from the Premier League match between Tottenham Hotspur and Newcastle United.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13578834/tottenham-hotspur-0-2-newcastle-premier-league-highlights",
-      "claimed_at": "2026-08-29T19:30:00Z",
-      "players": [
-        {
-          "element_id": 454,
-          "name": "Elanga",
-          "club": "NEW",
-          "held": null
-        },
-        {
-          "element_id": 464,
-          "name": "Wissa",
-          "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "5d1f00ede1ce7c93",
-      "headline": "Jaissle claims first Premier League win at lacklustre Spurs",
-      "summary": "Second-half goals from Anthony Elanga and Yoanne Wissa give manager Matthias Jaissle his first Premier League victory, as Newcastle United win 2-0 at Tottenham Hotspur.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c1kxe87ye7ro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T19:27:16Z",
-      "players": [
-        {
-          "element_id": 454,
-          "name": "Elanga",
-          "club": "NEW",
-          "held": null
-        },
-        {
-          "element_id": 464,
-          "name": "Wissa",
-          "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "cfa0c29c401fdb6c",
-      "headline": "Iraola awaits first win as Liverpool rescue late draw against Forest",
-      "summary": "Liverpool come from behind twice to rescue a 2-2 draw against Nottingham Forest at Anfield, leaving new manager Andoni Iraola in search of his first Premier League win with the club.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cx2zw96094xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T19:12:20Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "785794eee3658cdb",
-      "headline": "Hull continue perfect start with away win at Coventry",
-      "summary": "Substitute Liam Millar's late goal helps Hull secure a 1-0 away victory against Coventry City and continues their perfect start to life back in the Premier League, with two wins from two matches.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c5yjd20g6rpo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-29T19:12:12Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "710e9fed908fb947",
       "headline": "Jakirovic dismisses Ryan Giles exit talk amid Burnley links after Hull beat Coventry",
       "summary": "Hull City boss Sergej Jakirovic has insisted Ryan Giles will remain at the club despite reported interest from Burnley. Giles has been linked with a move to the Championship club, despite an impressive start to the",
@@ -945,42 +1137,6 @@
       "touches_squad": null
     },
     {
-      "digest": "a291859b615acb73",
-      "headline": "Brentford latest: Andrews admits surprise at instant Sangare impact",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279280/brentford-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-08-29T18:20:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "4ba67dca1b8955c4",
-      "headline": "Forest latest: \u00a322m deal agreed to sign Palace's Munoz",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279316/nottingham-forest-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-08-29T18:14:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "d8535fdf71c61ccc",
       "headline": "Moyes responds to \u2018don\u2019t sell Armstrong\u2019 chants from Everton supporters after offer from Nottingham Forest",
       "summary": "David Moyes has confirmed Nottingham Forest have made an offer for Harrison Armstrong but does not know whether it will be accepted. Armstrong started in Everton\u2019s 1-1 draw with Bournemouth and",
@@ -993,96 +1149,6 @@
           "element_id": 244,
           "name": "Armstrong",
           "club": "EVE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "c38b3afb4ec2a515",
-      "headline": "PL Predictions: Will set-pieces cost Man Utd again?",
-      "summary": "Our top tipster Lewis Jones, aka Jones Knows, was in flying form last weekend - can he repeat the trick?",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13577786/premier-league-predictions-jones-knows-best-bets-crystal-palace-pain-man-city-to-make-it-back-to-back-wins",
-      "claimed_at": "2026-08-29T17:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "0e6359233f8d97d5",
-      "headline": "Munoz magic salvages Liverpool point against Forest",
-      "summary": "Highlights from Liverpool against Nottingham Forest in the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13578595/liverpool-2-2-nottingham-forest-premier-league-highlights",
-      "claimed_at": "2026-08-29T17:15:00Z",
-      "players": [
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "822c3ba74f9082f9",
-      "headline": "Hull clinch late victory over Coventry to continue winning start to PL return",
-      "summary": "Highlights from Coventry City against Hull City in the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13578715/coventry-city-0-1-hull-city-premier-league-highlights",
-      "claimed_at": "2026-08-29T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "dc4aa5cbc19f2bd3",
-      "headline": "\u2060Tarkowski delivers late blow for Bournemouth to rescue point for Everton",
-      "summary": "FREE TO WATCH: Highlights from the Premier League match between Bournemouth and Everton.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13578717/bournemouth-1-1-everton-premier-league-highlights",
-      "claimed_at": "2026-08-29T17:15:00Z",
-      "players": [
-        {
-          "element_id": 229,
-          "name": "Tarkowski",
-          "club": "EVE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1f156fe1058f1fda",
-      "headline": "Iraola fumes at electronic board issue which delayed Liverpool subs before Forest pen",
-      "summary": "Andoni Iraola said Nottingham Forest's penalty in the 2-2 draw at Anfield on Saturday would not have occurred if the fourth official's electronic board was working correctly.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13578679/liverpool-andoni-iraola-says-fourth-officials-electronic-board-issue-delayed-subs-ahead-of-nottingham-forest-being-awarded-penalty",
-      "claimed_at": "2026-08-29T16:48:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1365,24 +1431,6 @@
       "touches_squad": null
     },
     {
-      "digest": "1fea75ffac98a235",
-      "headline": "De Zerbi looking forward to Kulusevski return",
-      "summary": "Roberto De Zerbi says he is looking forward to the day Dejan Kulusevski returns to action. The Swede has been out since May 2025 after suffering a serious knee injury against Crystal Palace. Despite being pictured in training of late, he is not ready to",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-on-kulusevskis-fitness-and-tonalis-huge-fee/",
-      "claimed_at": "2026-08-28T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "9f93ce00a82c549b",
       "headline": "Crystal Palace v Man City team news: Cherki starts, Bouaddi a sub",
       "summary": "Four changes for Palace, one for City The post Crystal Palace v Man City team news: Cherki starts, Bouaddi a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1569,60 +1617,6 @@
       "touches_squad": null
     },
     {
-      "digest": "41cbdf37b25da6e8",
-      "headline": "Crystal Palace 1-3 Man City LIVE \u2013 Two Cherki stunners at Selhurst Park",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Crystal Palace 1-3 Man City LIVE - Two Cherki stunners at Selhurst Park appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/crystal-palace-v-man-city-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-28T16:38:40Z",
-      "players": [
-        {
-          "element_id": 399,
-          "name": "Cherki",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "4da2a9e28e33b5cc",
-      "headline": "Crystal Palace 1-4 Man City LIVE \u2013 Two Cherki stunners at Selhurst Park",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Crystal Palace 1-4 Man City LIVE - Two Cherki stunners at Selhurst Park appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/crystal-palace-v-man-city-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-28T16:38:40Z",
-      "players": [
-        {
-          "element_id": 399,
-          "name": "Cherki",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "76ede0979136d157",
-      "headline": "Ipswich confident of more signings after Palacios deal",
-      "summary": "Ipswich Town boss Gary O\u2019Neil says the club are \u201chopefully not finished\u201d with their transfer business. O\u2019Neil was asked about the latest situation regarding a potential deal for Aston Villa striker Tammy Abraham but claimed there was \u201cnothing to",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/ipswich-confident-of-more-signings-after-palacios-deal/",
-      "claimed_at": "2026-08-28T16:31:33Z",
-      "players": [
-        {
-          "element_id": 56,
-          "name": "Abraham",
-          "club": "AVL",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "46dd4660c28b0c43",
       "headline": "Which Sunderland defender does new signing Methalie threaten?",
       "summary": "Plus, who is new \u00a34.5m Sunderland midfielder Jules Ahoka? The post Which Sunderland defender does new signing Methalie threaten? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1707,30 +1701,6 @@
           "element_id": 614,
           "name": "Hadjam",
           "club": "BHA",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "ace3b82aac33e7fd",
-      "headline": "Is Di Gregorio a threat to Bournemouth goalkeeper Petrovic?",
-      "summary": "The 29-year-old arrives from Juventus on an initial loan The post Is Di Gregorio a threat to Bournemouth goalkeeper Petrovic? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/27/is-di-gregorio-a-threat-to-bournemouth-goalkeeper-petrovic",
-      "claimed_at": "2026-08-27T05:00:00Z",
-      "players": [
-        {
-          "element_id": 57,
-          "name": "Petrovi\u0107",
-          "club": "BOU",
-          "held": null
-        },
-        {
-          "element_id": 615,
-          "name": "Di Gregorio",
-          "club": "BOU",
           "held": null
         }
       ],
