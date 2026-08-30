@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-30T20:00:01.192656Z",
+  "generated_at": "2026-08-30T22:39:34.240321Z",
   "n_dropped": 305,
   "dropped_by_source": {
-    "bbc_football": 107,
+    "bbc_football": 108,
     "fantasyfootballscout": 2,
-    "hayters": 59,
+    "hayters": 58,
     "sky_football": 137
   },
   "window_days": 5,
@@ -14,6 +14,252 @@
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "332d14b4fe6a8874",
+      "headline": "Watch: Match of the Day",
+      "summary": "Highlights of four Premier League matches, including Manchester United v Ipswich.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/iplayer/live/bbcone?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T22:40:29Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ead16841e3c208fe",
+      "headline": "Papers: Arsenal could eye Rashford loan to replace Martinelli",
+      "summary": "The top stories and transfer rumours from Monday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13579254/arsenal-transfer-news-marcus-rashford-loan-could-be-explored-as-replacement-for-gabriel-martinelli-paper-talk",
+      "claimed_at": "2026-08-30T22:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "2f497550b2117ace",
+      "headline": "Farke on big Leeds United injury worry and Gnonto\u2019s future following draw with Brentford",
+      "summary": "Daniel Farke is hopeful Joe Rodon has not suffered a serious hamstring injury after the Leeds United defender was forced off during the 1-1 draw with Brentford. Rodon was unable to continue ten minutes before ha",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/farke-on-big-leeds-united-injury-worry-and-gnontos-future-following-draw-with-brentford/",
+      "claimed_at": "2026-08-30T21:46:04Z",
+      "players": [
+        {
+          "element_id": 329,
+          "name": "Rodon",
+          "club": "LEE",
+          "held": null
+        },
+        {
+          "element_id": 341,
+          "name": "Gnonto",
+          "club": "LEE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "745881a6ec2b479a",
+      "headline": "Le Bris issues latest update on Sunderland star\u2019s injury concern after beating Fulham",
+      "summary": "R\u00e9gis Le Bris is hopeful Habib Diarra has avoided a serious injury after the Sunderland midfielder was forced off during the latter stages of the 1-0 victory over Fulham. Diarra was introduced shortly after the hou",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/le-bris-issues-latest-update-on-sunderland-stars-injury-concern-after-beating-fulham/",
+      "claimed_at": "2026-08-30T21:33:36Z",
+      "players": [
+        {
+          "element_id": 543,
+          "name": "Diarra",
+          "club": "SUN",
+          "held": null
+        },
+        {
+          "element_id": 553,
+          "name": "Isidor",
+          "club": "SUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "965163b9d9abd804",
+      "headline": "\u2018He\u2019s fit and available\u2019 \u2013 Arteta on Arsenal star\u2019s positive progress",
+      "summary": "Mikel Arteta is confident that Martin Odegaard will get back to his best this season after a frustrating last campaign. Odegaard struggled with injury problems last season and did not manage to hit the level of form that had previ",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hes-fit-and-available-arteta-on-arsenal-stars-positive-progress/",
+      "claimed_at": "2026-08-30T21:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ec4a75485ab1b909",
+      "headline": "Hurzeler gives injury update on Brighton star after defeat to Chelsea",
+      "summary": "Brighton boss Fabian Hurzeler has revealed Yasin Ayari was ruled out of his side's 4-3 defeat to Chelsea after picking up an injury, although he is hopeful the midfielder's issue is not serious. Ayari had been expected to be invol",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hurzeler-gives-injury-update-on-brighton-star-after-defeat-to-chelsea/",
+      "claimed_at": "2026-08-30T21:26:12Z",
+      "players": [
+        {
+          "element_id": 129,
+          "name": "Ayari",
+          "club": "BHA",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "f8f07230557cd353",
+      "headline": "FPL notes: Pedro \u201cterrific\u201d+ \u00a34.5m midfielder scores",
+      "summary": "Plus, Chelsea\u2019s shaky defence + Caicedo injury latest The post FPL notes: Pedro \u201cterrific\u201d+ \u00a34.5m midfielder scores appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/08/30/fpl-notes-pedro-terrific-4-5m-midfielder-scores",
+      "claimed_at": "2026-08-30T21:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "05c75501a198c086",
+      "headline": "Tottenham enquire about Pulisic - Monday's gossip",
+      "summary": "Spurs turn attention to Christian Pulisic, Liverpool and Everton show interest in Stuttgart winger Jamie Leweling, and Crystal Palace want to keep Dean Henderson after Nottingham Forest bid.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c89jxnelpywo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T20:59:21Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "822c8b36b8f004c1",
+      "headline": "Arsenal latest: Alvarez returns to Atletico training as deadline expires",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-30T20:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "1351359b875cb780",
+      "headline": "Palace latest: Sarr wants out but Eagles refusing to sell",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-08-30T20:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ee7763c494cb8a18",
+      "headline": "A new Man Utd era - but Fernandes still sets the standard",
+      "summary": "For all the new signings, it is still captain Bruno Fernandes who sets the standard at Manchester United, writes Simon Stone.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cpwl248p5vgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T20:04:26Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "a8ab9873e61b6a4a",
+      "headline": "'It doesn't feel like a goal' - O'Neil questions law after 'blatant' Maguire handball",
+      "summary": "Ipswich Town manager Gary O'Neil questions the handball rule after a loophole allowed Harry Maguire's handling offence to stand as a Jacob Greaves own goal.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cwyzxz0yvz0o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T20:01:40Z",
+      "players": [
+        {
+          "element_id": 306,
+          "name": "Greaves",
+          "club": "IPS",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "1dfecb2235fb2c47",
+      "headline": "Carrick 'really pleased' as Fernandes hat-trick sparks Man Utd comeback",
+      "summary": "Manchester United manager Michael Carrick is \"really pleased\" with his team as Bruno Fernandes' hat-trick inspires a 5-2 comeback win over Ipswich Town, following last weekend's opening-day defeat.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c05rprn1ld1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T19:41:31Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "4b97c2bda8c16fa6",
       "headline": "Man Utd latest: Carrick 'looking for more' in transfer window",
@@ -96,6 +342,24 @@
       "digest": "2a9d224d8d4017b9",
       "headline": "Isidor strike hands Sunderland first win of season",
       "summary": "Substitute Wilson Isidor strikes in the 64th minute to secure a hard-fought 1-0 victory for Sunderland over Fulham at Craven Cottage.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cy9zq3zx7veo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-08-30T19:00:24Z",
+      "players": [
+        {
+          "element_id": 553,
+          "name": "Isidor",
+          "club": "SUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "2d266b38d8614e28",
+      "headline": "Isidor strike hands Sunderland first win of season",
+      "summary": "Substitute Wilson Isidor strikes in the 75th minute to secure a hard-fought 1-0 victory for Sunderland over Fulham at the Stadium of Light.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/cy9zq3zx7veo?at_medium=RSS&at_campaign=rss",
@@ -561,42 +825,6 @@
       "touches_squad": null
     },
     {
-      "digest": "33312645b541b524",
-      "headline": "Barcelona close to deal for Arsenal's Jesus",
-      "summary": "Barcelona are closing in on a move for Arsenal striker Gabriel Jesus in a deal worth \u00a38.6m.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c9qr79jr1qqo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-30T16:01:28Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "139faf790c8c3b53",
-      "headline": "Fulham must improve 'energy and attitude' - Arbeloa",
-      "summary": "Fulham manager Alvaro Arbeloa demands that his side show more \"energy\" and improve their \"attitude\" after they slumped to 1-0 defeat at Sunderland in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cwyzdzqj997o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-30T15:54:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "4d389ed9c677c5ed",
       "headline": "Isidor steers Sunderland to narrow win against Fulham",
       "summary": "Sunderland secured their first points of the season as Wilson Isidor's effort earned them a 1-0 win against Fulham.",
@@ -675,18 +903,18 @@
       "touches_squad": null
     },
     {
-      "digest": "62b76b234ca17eb6",
-      "headline": "Hull's deal for Frankfurt winger Bahoya falls through",
-      "summary": "Hull City's move for Eintracht Frankfurt winger Jean-Matteo Bahoya falls through after the player decides against joining the Premier League side.",
-      "source": "bbc_football",
+      "digest": "4518f4f1c6c0dde6",
+      "headline": "Liverpool latest: Neville questions Gakpo exit and lack of full-backs",
+      "summary": null,
+      "source": "sky_football",
       "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cdj4g2zrdpjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-30T15:09:49Z",
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-08-30T15:10:00Z",
       "players": [
         {
-          "element_id": 0,
-          "name": null,
-          "club": null,
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
           "held": null
         }
       ],
@@ -723,24 +951,6 @@
           "element_id": 553,
           "name": "Isidor",
           "club": "SUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "271aa55b4fb8827c",
-      "headline": "Joao Pedro and debutant Yalcouye star - Chelsea v Brighton player ratings",
-      "summary": "Here's how the players rated as Chelsea and Brighton met in the Premier League on Sunday.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cdx5z7zk54po?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-30T15:02:57Z",
-      "players": [
-        {
-          "element_id": 605,
-          "name": "Yalcouy\u00e9",
-          "club": "BHA",
           "held": null
         }
       ],
@@ -837,24 +1047,6 @@
       "touches_squad": null
     },
     {
-      "digest": "679b9933ed1de70b",
-      "headline": "Man Utd pay tribute to 'proud Red' crash death officer",
-      "summary": "The widow and two children of PC Matthew Blades will be at Old Trafford for Manchester United's Premier League game with Ipswich.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckg8x0ex8gno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-30T12:46:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "f3502f0c1a541487",
       "headline": "Spurs agree Ndiaye signing with Richarlison set to go the other way \u2013 latest transfer reports",
       "summary": "Tottenham have reached an agreement with Everton to sign Iliman Ndiaye, with Richarlison set to move in the opposite direction, according to The Athletic. Ndiaye is set to leave Goodison Park, with the Sene",
@@ -927,24 +1119,6 @@
       "touches_squad": null
     },
     {
-      "digest": "c9bf603e4a1cdb0d",
-      "headline": "Fulham latest: Fee agreed with Everton for Tete sale",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-08-30T10:05:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "c6085707289bda48",
       "headline": "Chelsea complete signing of Martinez from Aston Villa",
       "summary": "Chelsea have confirmed the signing of Argentina international goalkeeper Emiliano Martinez from Aston Villa. The 33-year-old has signed a three-year contract with the Blues and joins for a fee of around \u00a37.5m. \u201cI\u2019m delighted to be at this footbal",
@@ -952,42 +1126,6 @@
       "tier": 2,
       "url": "https://hayters.com/chelsea-complete-signing-of-martinez-from-aston-villa/",
       "claimed_at": "2026-08-30T09:40:47Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e592761879ed9809",
-      "headline": "Chelsea sign Martinez in \u00a37.5m deal from Villa",
-      "summary": "Chelsea have signed Emi Martinez from Aston Villa on a three-year deal.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13578946/emi-martinez-transfer-news-chelsea-complete-signing-of-argentina-international-goalkeeper-from-aston-villa",
-      "claimed_at": "2026-08-30T09:10:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "161d698c5218a2cb",
-      "headline": "Liverpool latest: Barcola undergoing medical ahead of move from PSG",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-30T09:08:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1011,42 +1149,6 @@
           "element_id": 249,
           "name": "Barry",
           "club": "EVE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "e3cebf8bff6e2b6a",
-      "headline": "Man Utd latest: 'So easy and lazy' - Carrick defends passion and duo's leadership",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-08-29T22:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "cb24a2a5be79e161",
-      "headline": "Papers: Liverpool continue talks to sign Crystal Palace winger Sarr",
-      "summary": "The top stories and transfer rumours from Sunday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13578898/liverpool-transfer-news-reds-continue-talks-with-crystal-palace-to-sign-ismaila-sarr-paper-talk",
-      "claimed_at": "2026-08-29T22:22:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1263,84 +1365,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "aef25efda965ae40",
-      "headline": "Iraola laments lack of Liverpool \u2018intensity and urgency\u2019 in first half of draw with Forest",
-      "summary": "Liverpool boss Andoni Iraola admitted his side were not good enough in the first half of their 2-2 draw with Nottingham Forest, blaming a lack of intensity without the ball. The Reds came from behind to rescue",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/iraola-laments-lack-of-liverpool-intensity-and-urgency-in-first-half-of-draw-with-forest/",
-      "claimed_at": "2026-08-29T14:57:39Z",
-      "players": [
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "330c1c5bf8098f75",
-      "headline": "Tottenham vs Newcastle LIVE \u2013 team news, updates and reaction",
-      "summary": "{rsn-live-v2} The post Tottenham vs Newcastle LIVE - team news, updates and reaction appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/tottenham-vs-newcastle-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-08-29T14:13:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "03114cf7dd770325",
-      "headline": "Arsenal complete signing of winger",
-      "summary": "Arsenal have confirmed the signing of Gibraltar international winger James Scanlon from Manchester United. The 19-year-old arrives in north London having spent the second half of last season on loan at League Two side Swindon Town. \u201cIt\u2019s a pleasure to be here, I ca",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-complete-signing-of-winger/",
-      "claimed_at": "2026-08-29T14:11:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "480c49e69a1173bb",
-      "headline": "Munoz strikes late to rescue point for Liverpool against Nottingham Forest",
-      "summary": "Victor Munoz struck a deflected late equaliser as Liverpool came from behind to draw 2-2 with Nottingham Forest at Anfield. Dan Ndoye had given Forest the lead in the first half and Forest had further chances to extend their",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/munoz-strikes-late-to-rescue-point-for-liverpool-against-nottingham-forest/",
-      "claimed_at": "2026-08-29T13:50:53Z",
-      "players": [
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": null
-        },
-        {
-          "element_id": 483,
-          "name": "Ndoye",
-          "club": "NFO",
           "held": null
         }
       ],
@@ -1695,30 +1719,6 @@
           "element_id": 593,
           "name": "Dedi\u0107",
           "club": "NEW",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "59a3f9bed520548d",
-      "headline": "Hadjam to Brighton \u2013 good or bad for De Cuyper in FPL?",
-      "summary": "The 23-year-old left-back has joined the Seagulls The post Hadjam to Brighton - good or bad for De Cuyper in FPL? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/27/hadjam-to-brighton-good-or-bad-for-de-cuyper-in-fpl",
-      "claimed_at": "2026-08-27T09:20:00Z",
-      "players": [
-        {
-          "element_id": 115,
-          "name": "De Cuyper",
-          "club": "BHA",
-          "held": null
-        },
-        {
-          "element_id": 614,
-          "name": "Hadjam",
-          "club": "BHA",
           "held": null
         }
       ],
