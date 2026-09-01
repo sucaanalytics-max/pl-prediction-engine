@@ -223,6 +223,51 @@ def planning_gameweek(bootstrap: dict, now: pd.Timestamp | None = None) -> int:
     return max(e["id"] for e in events)
 
 
+def gameweek_of_upcoming(
+    upcoming: "pd.DataFrame",
+    bootstrap: dict,
+    now: "pd.Timestamp | None" = None,
+) -> int:
+    """
+    The gameweek the upcoming-fixture rows actually belong to.
+
+    ## Why this is read off the rows instead of computed
+
+    The scalar stamped on every prediction used to be resolved in PARALLEL with the
+    fixture list, and the two disagreed twice, in opposite directions:
+
+    - `get_current_gameweek` LAGS. An event stays `is_current` from its own deadline
+      until the next one, so between a week's last match and the following deadline it
+      names a week already played while these rows hold the next week's. Every GW2
+      prediction carried `gameweek: 1`.
+    - `planning_gameweek` LEADS. It rolls forward at the deadline, which is right for
+      "what am I picking a squad for" and wrong here, because a week's fixtures are
+      still upcoming for the two or three days between its deadline and its last match.
+      `matchweek_3.json` was written 21 minutes after GW2's deadline and stamped
+      `gameweek: 3` onto GW2's own fixtures.
+
+    No clock rule reconciles two independent answers. `get_upcoming_fixtures` has
+    already decided which week it is returning and stamps each row with that week's own
+    `event`, so the scalar is READ OFF the rows and the disagreement becomes impossible
+    rather than unlikely.
+
+    The mode rather than the first row: `get_upcoming_fixtures` filters to a single
+    event, so every row should agree — but a fixture postponed into another week is the
+    shape that would break that, and the dominant week is a better answer than whichever
+    row happened to sort first.
+
+    Falls back to :func:`planning_gameweek` only when the rows cannot answer at all — no
+    upcoming fixtures, or none carrying a gameweek. That is the question `planning_gameweek`
+    is genuinely good at, and it is the same fallback the caller wants when the season has
+    run out of fixtures.
+    """
+    if upcoming is not None and len(upcoming) and "gameweek" in upcoming:
+        weeks = pd.to_numeric(upcoming["gameweek"], errors="coerce").dropna()
+        if len(weeks):
+            return int(weeks.mode().iloc[0])
+    return planning_gameweek(bootstrap, now)
+
+
 def get_upcoming_fixtures(bootstrap: dict, fixtures: list) -> pd.DataFrame:
     """
     Get fixtures for the next gameweek.

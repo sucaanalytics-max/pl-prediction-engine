@@ -294,7 +294,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
     from pipeline.data.fpl_api import (
         fetch_bootstrap_static_with_provenance, fetch_fixtures_with_provenance,
-        get_upcoming_fixtures, build_player_stats, planning_gameweek,
+        get_upcoming_fixtures, build_player_stats, gameweek_of_upcoming,
     )
     # This run writes forecast_ledger.json, so it may not run on stale cache:
     # a stale bootstrap means stale prices, a stale chance_of_playing and a
@@ -317,13 +317,21 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         "bootstrap": _provenance_summary(bootstrap_prov),
         "fixtures": _provenance_summary(fixtures_prov),
     }
-    # `planning_gameweek`, NOT `get_current_gameweek`: this run predicts a week
-    # about to be played, and FPL keeps an event current from its own deadline
-    # until the next one. `get_upcoming_fixtures` below already rolls past a
-    # played week internally, so the un-rolled scalar stamped GW1 onto GW2's
-    # fixtures for the five days between them.
-    gameweek = planning_gameweek(bootstrap)
+    # FIXTURES FIRST, then the gameweek READ OFF THEM. The order matters.
+    #
+    # This scalar was resolved in parallel with the fixture list twice, and disagreed
+    # with it both times, in opposite directions. `get_current_gameweek` lags — an event
+    # stays current from its own deadline until the NEXT one, so it stamped GW1 onto
+    # GW2's fixtures for the five days between them. `planning_gameweek` leads — it rolls
+    # forward at the deadline, so `matchweek_3.json`, written 21 minutes after GW2's
+    # deadline while GW2's matches were still to play, stamped GW3 onto GW2's fixtures.
+    #
+    # Both resolvers are right about their own question. Neither is the question here,
+    # which is only ever "which week are these rows". `get_upcoming_fixtures` has already
+    # answered it and stamped every row with that week's own `event`, so the scalar comes
+    # from the rows and the two cannot drift apart again.
     upcoming = get_upcoming_fixtures(bootstrap, fixtures_raw)
+    gameweek = gameweek_of_upcoming(upcoming, bootstrap)
     player_stats = build_player_stats(bootstrap)
 
     from pipeline.data.fbref import (

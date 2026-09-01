@@ -75,6 +75,65 @@ def assess_eval_targets(health: dict) -> dict:
     return verdicts
 
 
+def missing_seals(predictions_dir: Path, current_gameweek: int | None) -> dict:
+    """
+    Which played gameweeks have no sealed forecast at all.
+
+    `verify_sealed_ledger` checks the integrity of the seals that EXIST. It is silent
+    about a week that was never sealed, which is the more serious condition: a seal is
+    the only evidence that a forecast predated its deadline, so a missing one cannot be
+    recovered and the week is permanently unscoreable.
+
+    ## Why this needs to live here
+
+    The agent already detects the miss — `schedule.Phase.MISSED_SEAL` — but that phase is
+    deliberately transient: `MISSED_SEAL_REPORT_WINDOW` is three days, "long enough to be
+    noticed, short enough not to shout about the same loss for a week", and it is checked
+    last precisely because an earlier placement once starved the agent into a livelock.
+    Both choices are right for a phase. Their consequence is that the record of the loss
+    expires.
+
+    Measured: GW2's deadline passed on 2026-08-28T17:30Z with no seal. For three days the
+    agent reported `missed_seal gw=2`; by 2026-09-01 the window had elapsed and
+    `agent_status.json` read `outstanding: []`. The gameweek was played, its forecast is
+    unverifiable forever, and nothing said so any more.
+
+    ## It never manufactures the seal
+
+    Writing a seal now would be worse than the gap. The whole value of the record is that
+    it provably predated the deadline; a seal created afterwards is a fabricated
+    provenance claim, which is the one failure a ledger exists to make impossible. This
+    reports and stops.
+
+    The rule needs no clock: if the pipeline is now projecting gameweek N, then every week
+    below N is in the past and should carry a seal.
+    """
+    ledger_dir = predictions_dir / "fpl" / "ledger"
+    sealed = set()
+    if ledger_dir.is_dir():
+        for week in ledger_dir.glob("gw*"):
+            if (week / "forecast.jsonl").is_file():
+                try:
+                    sealed.add(int(week.name[2:]))
+                except ValueError:
+                    continue
+    if not current_gameweek or current_gameweek < 2:
+        return {"expected_through": None, "sealed": sorted(sealed), "missing": []}
+    expected = range(1, int(current_gameweek))
+    missing = [gw for gw in expected if gw not in sealed]
+    return {
+        "expected_through": int(current_gameweek) - 1,
+        "sealed": sorted(sealed),
+        "missing": missing,
+        # Stated in the artifact so a reader does not have to know the rule.
+        "note": (
+            "A gameweek below the current one with no sealed forecast is permanently "
+            "unscoreable. A seal is only meaningful if it provably predated the "
+            "deadline, so this is never repaired by writing one now."
+        ) if missing else None,
+    }
+
+
 def verify_sealed_ledger(predictions_dir: Path) -> dict:
     """
     Re-verify every sealed gameweek's frozen inputs against its recorded digest.
@@ -160,6 +219,7 @@ def run_validation(predictions_dir: Path = Path("predictions")) -> dict:
             health = {}
 
     ledger_integrity = verify_sealed_ledger(predictions_dir)
+    seals = missing_seals(predictions_dir, metadata.get("gameweek"))
 
     health.update({
         "last_updated": generated_at,
@@ -173,6 +233,7 @@ def run_validation(predictions_dir: Path = Path("predictions")) -> dict:
         "ledger_integrity": ledger_integrity,
         # Surfaced as its own flag so a reader does not have to scan the per-week
         # map to learn that something is wrong.
+        "missing_seals": seals,
         "ledger_integrity_ok": all(
             v == "verified" or v == "no frozen inputs recorded"
             for v in ledger_integrity.values()

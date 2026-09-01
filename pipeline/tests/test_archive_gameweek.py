@@ -81,6 +81,32 @@ class TestArchiveNamesMatchContent(unittest.TestCase):
         ]
         self.assertEqual(empty, [], "a sealed archive file holds no predictions")
 
+    def test_no_two_archive_files_hold_the_same_fixture(self):
+        """
+        The assertion that would have caught the second bug on day one.
+
+        `test_every_fixture_belongs_to_the_gameweek_in_the_filename` compares the stamp
+        to the filename, and both can be wrong TOGETHER — which is exactly what happened:
+        `matchweek_3.json` was written 21 minutes after GW2's deadline holding GW2's ten
+        fixtures, every one re-stamped `gameweek: 3`. Internally consistent, correctly
+        named, and the wrong week's matches.
+
+        A match belongs to one gameweek. Two files claiming the same `match_id` is
+        therefore always a defect, and needs no clock to detect.
+        """
+        seen = {}
+        clashes = []
+        for gameweek, path, payload in self.files:
+            for record in payload.get("predictions") or []:
+                match_id = record.get("match_id")
+                if match_id is None:
+                    continue
+                if match_id in seen:
+                    clashes.append(f"{match_id} in both {seen[match_id]} and {path.name}")
+                else:
+                    seen[match_id] = path.name
+        self.assertEqual(clashes, [], "two archive files claim the same fixture")
+
     def test_gw1_holds_the_slate_that_was_actually_played(self):
         # The specific repair, pinned. GW1 2026-27 ran 21-24 August; the restored file is
         # the last daily run before the 21 Aug 17:30Z deadline. If this file is ever

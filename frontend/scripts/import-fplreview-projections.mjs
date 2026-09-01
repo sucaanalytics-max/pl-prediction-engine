@@ -3,15 +3,52 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const EXPECTED_HEADERS = [
-  "Pos", "ID", "Name", "BV", "SV", "Team",
-  ...Array.from({ length: 10 }, (_, index) => [
-    `${index + 1}_xMins`,
-    `${index + 1}_Pts`,
-  ]).flat(),
-  "Elite%",
-];
+const LEAD = ["Pos", "ID", "Name", "BV", "SV", "Team"];
 const POSITIONS = new Set(["GKP", "DEF", "MID", "FWD"]);
+/** FPLReview exports the next ten gameweeks. Ten is the count, not the range. */
+const HORIZON = 10;
+const LAST_GAMEWEEK = 38;
+
+/**
+ * Which gameweeks this export covers, read off the headers.
+ *
+ * The window used to be hardcoded as 1..10, which is only right in pre-season. FPLReview
+ * exports the next ten gameweeks from wherever the season currently is, so the moment GW2
+ * was played the columns became `3_xMins`..`12_Pts` and the importer refused the file
+ * outright — `Unexpected FPLReview columns`. The export was not malformed; the assumption
+ * was.
+ *
+ * Requires the ten pairs to be CONSECUTIVE and in order, because that is what makes an
+ * array index meaningful downstream: `projectedPoints[0]` is `gameweeks[0]`, and a gap
+ * would silently shift every later week by one.
+ */
+function gameweeksFromHeaders(headers) {
+  const lead = headers.slice(0, LEAD.length);
+  if (JSON.stringify(lead) !== JSON.stringify(LEAD)) {
+    throw new Error(`Unexpected leading FPLReview columns: ${lead.join(", ")}`);
+  }
+  if (headers[headers.length - 1] !== "Elite%") {
+    throw new Error(`Expected Elite% last, found: ${headers[headers.length - 1]}`);
+  }
+  const middle = headers.slice(LEAD.length, -1);
+  if (middle.length !== HORIZON * 2) {
+    throw new Error(
+      `Expected ${HORIZON * 2} gameweek columns, found ${middle.length}: ${middle.join(", ")}`,
+    );
+  }
+  const first = Number(/^(\d+)_xMins$/.exec(middle[0])?.[1]);
+  if (!Number.isInteger(first) || first < 1 || first + HORIZON - 1 > LAST_GAMEWEEK) {
+    throw new Error(`Cannot read a first gameweek from: ${middle[0]}`);
+  }
+  const gameweeks = Array.from({ length: HORIZON }, (_, index) => first + index);
+  const expected = gameweeks.flatMap((gw) => [`${gw}_xMins`, `${gw}_Pts`]);
+  if (JSON.stringify(middle) !== JSON.stringify(expected)) {
+    throw new Error(
+      `FPLReview gameweek columns are not consecutive from GW${first}: ${middle.join(", ")}`,
+    );
+  }
+  return gameweeks;
+}
 
 function parseCsv(text) {
   const rows = [];
@@ -77,9 +114,7 @@ const [csvText, inputStat] = await Promise.all([
 ]);
 const csvRows = parseCsv(csvText);
 const headers = csvRows[0].map((value) => value.replace(/^\uFEFF/, ""));
-if (JSON.stringify(headers) !== JSON.stringify(EXPECTED_HEADERS)) {
-  throw new Error(`Unexpected FPLReview columns: ${headers.join(", ")}`);
-}
+const gameweeks = gameweeksFromHeaders(headers);
 
 const headerIndex = Object.fromEntries(headers.map((header, index) => [header, index]));
 const seen = new Set();
@@ -104,7 +139,7 @@ for (const row of csvRows.slice(1)) {
   if (!POSITIONS.has(position)) throw new Error(`Unsupported position: ${position}`);
   const expectedMinutes = [];
   const projectedPoints = [];
-  for (let gameweek = 1; gameweek <= 10; gameweek += 1) {
+  for (const gameweek of gameweeks) {
     const minutes = number(row[headerIndex[`${gameweek}_xMins`]], `GW${gameweek} expected minutes`);
     const points = number(row[headerIndex[`${gameweek}_Pts`]], `GW${gameweek} projected points`);
     if (minutes < 0 || minutes > 180 || points < 0 || points > 30) {
@@ -134,7 +169,7 @@ const output = {
   sourceFile: fileName,
   exportedAt: exportedAtFromName(fileName, inputStat.mtime.toISOString()),
   checksum: crypto.createHash("sha256").update(csvText).digest("hex"),
-  gameweeks: Array.from({ length: 10 }, (_, index) => index + 1),
+  gameweeks,
   rawRecordCount: csvRows.length - 1,
   recordCount: players.length,
   excludedSyntheticRows,
@@ -143,4 +178,7 @@ const output = {
 
 await fs.mkdir(path.dirname(outputPath), { recursive: true });
 await fs.writeFile(outputPath, `${JSON.stringify(output)}\n`, "utf8");
-console.log(`Imported ${players.length} official-ID projections; excluded ${excludedSyntheticRows} synthetic catalogue rows.`);
+console.log(
+  `Imported ${players.length} official-ID projections for GW${gameweeks[0]}-GW${gameweeks[gameweeks.length - 1]}; `
+  + `excluded ${excludedSyntheticRows} synthetic catalogue rows.`,
+);
