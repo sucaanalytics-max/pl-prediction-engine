@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-08-31T12:01:50.908556Z",
+    "generated_at": "2026-09-01T10:41:19.616305Z",
     "season": "2026-27",
     "gameweek": 3,
     "pipeline_version": "4.1.0",
@@ -18,10 +18,10 @@
     "n_simulations": 5000,
     "n_simulations_requested": 5000,
     "portfolio": {
-      "total_exposure_pct": 0.05,
-      "n_bets_before_limits": 2,
-      "n_bets_after_limits": 2,
-      "n_reduced_by_limits": 0,
+      "total_exposure_pct": 0.2,
+      "n_bets_before_limits": 11,
+      "n_bets_after_limits": 8,
+      "n_reduced_by_limits": 3,
       "limits": {
         "max_per_match_pct": 0.15,
         "max_per_team_pct": 0.3,
@@ -39,245 +39,245 @@
   },
   "predictions": [
     {
-      "match_id": "20260831_Aston_Villa_Arsenal",
+      "match_id": "20260904_Ipswich_Liverpool",
       "fixture": {
-        "date": "2026-08-31T19:00:00Z",
-        "home_team": "Aston Villa",
-        "away_team": "Arsenal",
+        "date": "2026-09-04T19:00:00Z",
+        "home_team": "Ipswich",
+        "away_team": "Liverpool",
         "gameweek": 3,
         "referee": null,
         "is_derby": false
       },
       "probabilities": {
         "1x2": {
-          "home": 0.3134,
-          "draw": 0.2716,
-          "away": 0.415
+          "home": 0.2752,
+          "draw": 0.2556,
+          "away": 0.4692
         },
         "over_under": {
           "0.5": {
-            "over": 0.9282,
-            "under": 0.0718
+            "over": 0.9368,
+            "under": 0.0632
           },
           "1.5": {
-            "over": 0.7786,
-            "under": 0.2214
+            "over": 0.8138,
+            "under": 0.1862
           },
           "2.5": {
-            "over": 0.5338,
-            "under": 0.4662
+            "over": 0.5896,
+            "under": 0.4104
           },
           "3.5": {
-            "over": 0.3226,
-            "under": 0.6774
+            "over": 0.3766,
+            "under": 0.6234
           },
           "4.5": {
-            "over": 0.1592,
-            "under": 0.8408
+            "over": 0.2074,
+            "under": 0.7926
           }
         },
         "btts": {
-          "yes": 0.5708,
-          "no": 0.4292
+          "yes": 0.6058,
+          "no": 0.3942
         },
         "clean_sheet": {
-          "home": 0.2188,
-          "away": 0.2822
+          "home": 0.1772,
+          "away": 0.2802
         },
         "correct_score": {
-          "0-0": 0.0718,
-          "0-1": 0.0848,
-          "0-2": 0.0702,
-          "0-3": 0.0346,
-          "0-4": 0.0144,
-          "0-5": 0.0052,
-          "0-6": 0.0012,
-          "1-0": 0.0648,
-          "1-1": 0.1242,
-          "1-2": 0.0868,
-          "1-3": 0.041,
-          "1-4": 0.0158,
-          "1-5": 0.0066,
-          "1-6": 0.0016,
-          "2-0": 0.0504,
-          "2-1": 0.0688,
-          "2-2": 0.0628,
-          "2-3": 0.0288,
-          "2-4": 0.0138,
-          "2-5": 0.0036,
-          "2-6": 0.0006,
-          "3-0": 0.021,
-          "3-1": 0.037,
-          "3-2": 0.0264,
-          "3-3": 0.0098,
-          "3-4": 0.0042,
-          "3-5": 0.0008,
-          "3-6": 0.0002,
-          "4-0": 0.0082,
-          "4-1": 0.0094,
-          "4-2": 0.0098,
-          "4-3": 0.0062,
-          "4-4": 0.0024,
-          "4-5": 0.0002,
-          "4-6": 0.0,
-          "5-0": 0.002,
+          "0-0": 0.0632,
+          "0-1": 0.0744,
+          "0-2": 0.0714,
+          "0-3": 0.041,
+          "0-4": 0.0192,
+          "0-5": 0.006,
+          "0-6": 0.0034,
+          "1-0": 0.0486,
+          "1-1": 0.1132,
+          "1-2": 0.089,
+          "1-3": 0.0516,
+          "1-4": 0.0212,
+          "1-5": 0.0092,
+          "1-6": 0.0044,
+          "2-0": 0.0396,
+          "2-1": 0.0658,
+          "2-2": 0.0606,
+          "2-3": 0.0356,
+          "2-4": 0.0152,
+          "2-5": 0.0078,
+          "2-6": 0.002,
+          "3-0": 0.0172,
+          "3-1": 0.0312,
+          "3-2": 0.0298,
+          "3-3": 0.0152,
+          "3-4": 0.0068,
+          "3-5": 0.004,
+          "3-6": 0.0008,
+          "4-0": 0.0066,
+          "4-1": 0.0116,
+          "4-2": 0.0072,
+          "4-3": 0.0038,
+          "4-4": 0.0028,
+          "4-5": 0.0014,
+          "4-6": 0.0004,
+          "5-0": 0.0016,
           "5-1": 0.003,
-          "5-2": 0.0016,
-          "5-3": 0.002,
-          "5-4": 0.0002,
-          "5-5": 0.0006,
+          "5-2": 0.002,
+          "5-3": 0.0016,
+          "5-4": 0.0012,
+          "5-5": 0.0004,
           "5-6": 0.0,
           "6-0": 0.0004,
-          "6-1": 0.0006,
-          "6-2": 0.0006,
-          "6-3": 0.0002,
-          "6-4": 0.0,
-          "6-5": 0.0,
-          "6-6": 0.0
+          "6-1": 0.001,
+          "6-2": 0.0,
+          "6-3": 0.0006,
+          "6-4": 0.0006,
+          "6-5": 0.0002,
+          "6-6": 0.0002
         },
         "asian_handicap": {
-          "home_-2.5": 0.0478,
-          "home_-1.5": 0.147,
-          "home_-1.0": 0.147,
-          "home_-0.5": 0.3134,
-          "home_0": 0.3134,
-          "home_0.5": 0.585,
-          "home_1.0": 0.585,
-          "home_1.5": 0.7898,
-          "home_2.5": 0.9156
+          "home_-2.5": 0.0456,
+          "home_-1.5": 0.1258,
+          "home_-1.0": 0.1258,
+          "home_-0.5": 0.2752,
+          "home_0": 0.2752,
+          "home_0.5": 0.5308,
+          "home_1.0": 0.5308,
+          "home_1.5": 0.738,
+          "home_2.5": 0.8806
         },
         "ht_ft": {
-          "H/H": 0.1886,
-          "H/D": 0.055,
-          "H/A": 0.0228,
-          "D/H": 0.102,
-          "D/D": 0.1612,
-          "D/A": 0.1382,
-          "A/H": 0.0228,
-          "A/D": 0.0554,
-          "A/A": 0.254
+          "H/H": 0.1634,
+          "H/D": 0.0518,
+          "H/A": 0.0318,
+          "D/H": 0.0906,
+          "D/D": 0.1528,
+          "D/A": 0.1506,
+          "A/H": 0.0212,
+          "A/D": 0.051,
+          "A/A": 0.2868
         },
         "corners": {
           "7.5": {
-            "over": 0.5986,
-            "under": 0.4014
+            "over": 0.7388,
+            "under": 0.2612
           },
           "8.5": {
-            "over": 0.481,
-            "under": 0.519
+            "over": 0.6702,
+            "under": 0.3298
           },
           "9.5": {
-            "over": 0.3754,
-            "under": 0.6246
+            "over": 0.5952,
+            "under": 0.4048
           },
           "10.5": {
-            "over": 0.2868,
-            "under": 0.7132
+            "over": 0.5296,
+            "under": 0.4704
           },
           "11.5": {
-            "over": 0.2082,
-            "under": 0.7918
+            "over": 0.4574,
+            "under": 0.5426
           },
           "12.5": {
-            "over": 0.1444,
-            "under": 0.8556
+            "over": 0.3904,
+            "under": 0.6096
           }
         },
         "cards": {
           "1.5": {
-            "over": 0.8162,
-            "under": 0.1838
+            "over": 0.7148,
+            "under": 0.2852
           },
           "2.5": {
-            "over": 0.5868,
-            "under": 0.4132
+            "over": 0.4778,
+            "under": 0.5222
           },
           "3.5": {
-            "over": 0.3642,
-            "under": 0.6358
+            "over": 0.2762,
+            "under": 0.7238
           },
           "4.5": {
-            "over": 0.2028,
-            "under": 0.7972
+            "over": 0.1378,
+            "under": 0.8622
           },
           "5.5": {
-            "over": 0.1036,
-            "under": 0.8964
+            "over": 0.063,
+            "under": 0.937
           },
           "6.5": {
-            "over": 0.0506,
-            "under": 0.9494
+            "over": 0.0288,
+            "under": 0.9712
           }
         }
       },
       "expected_goals": {
-        "home": 1.3062,
-        "away": 1.5272
+        "home": 1.324,
+        "away": 1.7852
       },
-      "expected_corners": 8.6566,
-      "expected_cards": 3.1114,
+      "expected_corners": 11.6852,
+      "expected_cards": 2.6242,
       "distributions": {
         "goals_home": [
-          0.2822,
-          0.3412,
-          0.229,
-          0.0994,
-          0.0362,
-          0.0094,
-          0.0018,
-          0.0002
+          0.2802,
+          0.3388,
+          0.2274,
+          0.1052,
+          0.034,
+          0.0098,
+          0.003,
+          0.001
         ],
         "goals_away": [
-          0.2188,
-          0.3282,
-          0.2582,
-          0.1228,
-          0.0508,
-          0.017,
-          0.0036,
-          0.0004
+          0.1772,
+          0.3006,
+          0.2608,
+          0.1496,
+          0.067,
+          0.0292,
+          0.0112,
+          0.0028
         ],
         "corners": [
           0.0014,
-          0.0042,
-          0.0184,
-          0.035,
-          0.053,
-          0.082,
-          0.1,
-          0.1074,
-          0.1176,
-          0.1056,
-          0.0886,
-          0.0786,
-          0.0638,
-          0.046,
-          0.0348,
-          0.0254,
-          0.0166,
-          0.0084,
-          0.0056,
-          0.0032,
-          0.002
+          0.005,
+          0.0132,
+          0.0246,
+          0.0352,
+          0.0484,
+          0.0608,
+          0.0726,
+          0.0686,
+          0.075,
+          0.0656,
+          0.0722,
+          0.067,
+          0.0632,
+          0.052,
+          0.048,
+          0.0388,
+          0.0374,
+          0.0292,
+          0.026,
+          0.0196
         ],
         "cards": [
-          0.044,
-          0.1398,
-          0.2294,
-          0.2226,
-          0.1614,
-          0.0992,
-          0.053,
-          0.0312,
-          0.012,
-          0.0044,
-          0.0018,
+          0.091,
+          0.1942,
+          0.237,
+          0.2016,
+          0.1384,
+          0.0748,
+          0.0342,
+          0.0192,
+          0.005,
+          0.003,
+          0.0006,
           0.001,
-          0.0002
+          0.0
         ]
       },
       "confidence": {
-        "entropy": 1.082623222220946,
+        "entropy": 1.0588092711299275,
         "home_goals_ci": [
           0.0,
           3.0
@@ -299,117 +299,587 @@
       },
       "odds_comparison": {
         "h2h": {
-          "betfred_uk": {
-            "away": 1.5,
-            "home": 6.5,
-            "draw": 4.2
-          },
-          "skybet": {
-            "away": 1.5,
-            "home": 6.0,
+          "leovegas": {
+            "home": 5.2,
+            "away": 1.53,
             "draw": 4.5
           },
-          "paddypower": {
-            "away": 1.5,
-            "home": 6.0,
-            "draw": 4.33
-          },
-          "betfair_ex_uk": {
-            "away": 1.56,
-            "home": 6.8,
-            "draw": 4.6
-          },
-          "leovegas": {
-            "away": 1.52,
-            "home": 6.0,
-            "draw": 4.33
-          },
-          "smarkets": {
-            "away": 1.56,
-            "home": 6.8,
-            "draw": 4.6
+          "betfred_uk": {
+            "home": 5.5,
+            "away": 1.53,
+            "draw": 4.5
           },
           "unibet_uk": {
-            "away": 1.54,
-            "home": 6.0,
+            "home": 5.25,
+            "away": 1.52,
+            "draw": 4.6
+          },
+          "paddypower": {
+            "home": 5.5,
+            "away": 1.5,
             "draw": 4.5
           },
-          "betway": {
-            "away": 1.53,
-            "home": 5.5,
-            "draw": 4.33
+          "skybet": {
+            "home": 5.25,
+            "away": 1.5,
+            "draw": 4.5
+          },
+          "smarkets": {
+            "home": 5.8,
+            "away": 1.59,
+            "draw": 4.8
+          },
+          "betfair_ex_uk": {
+            "home": 5.8,
+            "away": 1.59,
+            "draw": 4.8
           },
           "sport888": {
+            "home": 5.0,
             "away": 1.53,
-            "home": 5.75,
-            "draw": 4.0
-          },
-          "williamhill": {
-            "away": 1.53,
-            "home": 5.8,
-            "draw": 4.0
-          },
-          "virginbet": {
-            "away": 1.5,
-            "home": 6.1,
-            "draw": 4.2
-          },
-          "casumo": {
-            "away": 1.51,
-            "home": 6.4,
-            "draw": 4.3
-          },
-          "grosvenor": {
-            "away": 1.51,
-            "home": 6.4,
-            "draw": 4.3
-          },
-          "livescorebet": {
-            "away": 1.52,
-            "home": 6.1,
-            "draw": 4.2
-          },
-          "boylesports": {
-            "away": 1.55,
-            "home": 5.5,
             "draw": 4.33
           },
-          "coral": {
-            "away": 1.5,
-            "home": 5.5,
-            "draw": 4.0
+          "williamhill": {
+            "home": 5.0,
+            "away": 1.57,
+            "draw": 4.4
           },
-          "ladbrokes_uk": {
-            "away": 1.5,
-            "home": 5.5,
-            "draw": 4.0
-          },
-          "betano_uk": {
-            "away": 1.5,
-            "home": 6.5,
+          "boylesports": {
+            "home": 5.0,
+            "away": 1.55,
             "draw": 4.33
           },
           "betvictor": {
+            "home": 5.5,
             "away": 1.5,
-            "home": 6.5,
-            "draw": 4.33
+            "draw": 4.4
           },
-          "matchbook": {
-            "away": 1.56,
-            "home": 6.8,
+          "betano_uk": {
+            "home": 5.5,
+            "away": 1.5,
+            "draw": 4.4
+          },
+          "betway": {
+            "home": 4.75,
+            "away": 1.57,
             "draw": 4.5
           },
-          "betfair_sb_uk": {
+          "virginbet": {
+            "home": 5.1,
             "away": 1.5,
-            "home": 6.5,
+            "draw": 4.5
+          },
+          "casumo": {
+            "home": 5.4,
+            "away": 1.54,
+            "draw": 4.7
+          },
+          "livescorebet": {
+            "home": 5.0,
+            "away": 1.49,
             "draw": 4.4
+          },
+          "grosvenor": {
+            "home": 5.4,
+            "away": 1.54,
+            "draw": 4.7
+          },
+          "matchbook": {
+            "home": 5.8,
+            "away": 1.59,
+            "draw": 4.8
+          },
+          "coral": {
+            "home": 4.8,
+            "away": 1.53,
+            "draw": 4.33
+          },
+          "ladbrokes_uk": {
+            "home": 4.8,
+            "away": 1.53,
+            "draw": 4.33
+          },
+          "betfair_sb_uk": {
+            "home": 5.5,
+            "away": 1.5,
+            "draw": 4.5
+          }
+        },
+        "totals": {
+          "3.5": {
+            "over": 2.34,
+            "bookmaker_over": "matchbook",
+            "under": 1.68,
+            "bookmaker_under": "matchbook"
+          },
+          "2.5": {
+            "over": 1.5,
+            "bookmaker_over": "williamhill",
+            "under": 2.5,
+            "bookmaker_under": "williamhill"
+          }
+        },
+        "bookmaker_home": "smarkets",
+        "bookmaker_draw": "smarkets",
+        "bookmaker_away": "smarkets"
+      },
+      "model_disagreement": 0.08712709108977869,
+      "shap_features": [
+        {
+          "feature": "elo_diff",
+          "value": -123.65636069854872,
+          "shap_value": 0.053848620504140854,
+          "shap_abs": 0.1606113649904728
+        },
+        {
+          "feature": "home_ewm_goals_against_10",
+          "value": 2.3484569611542963,
+          "shap_value": 0.04145075101405382,
+          "shap_abs": 0.04145075101405382
+        },
+        {
+          "feature": "home_ewm_corners_for_10",
+          "value": 3.2494050897621367,
+          "shap_value": 0.0002411380410194397,
+          "shap_abs": 0.03562496230006218
+        },
+        {
+          "feature": "home_ewm_corners_against_5",
+          "value": 3.707521501879038,
+          "shap_value": -0.031177347525954247,
+          "shap_abs": 0.031177347525954247
+        },
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 13.139525252340356,
+          "shap_value": 0.026969484984874725,
+          "shap_abs": 0.026969484984874725
+        },
+        {
+          "feature": "away_rest_days",
+          "value": 30.0,
+          "shap_value": -0.02438848651945591,
+          "shap_abs": 0.02438848651945591
+        },
+        {
+          "feature": "home_ewm_shots_for_5",
+          "value": 13.301887162195214,
+          "shap_value": -0.024313602596521378,
+          "shap_abs": 0.024313602596521378
+        },
+        {
+          "feature": "away_ewm_shots_for_5",
+          "value": 16.664236449237695,
+          "shap_value": 0.022723102942109108,
+          "shap_abs": 0.022723102942109108
+        },
+        {
+          "feature": "home_ewm_corners_for_5",
+          "value": 3.2993019858460997,
+          "shap_value": -0.022649625316262245,
+          "shap_abs": 0.022649625316262245
+        },
+        {
+          "feature": "away_ewm_yellows_10",
+          "value": 1.4378572809100998,
+          "shap_value": -0.02035984769463539,
+          "shap_abs": 0.02035984769463539
+        }
+      ],
+      "value_bets": [
+        {
+          "market": "Home Win",
+          "market_type": "1x2",
+          "confidence": "medium",
+          "confidence_tier": "medium",
+          "bookmaker": "smarkets",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.10443882400322191,
+          "model_prob": 0.2752,
+          "implied_prob": 0.1707611759967781,
+          "raw_implied_prob": 0.1724137931034483,
+          "expected_value": 0.5961599999999999,
+          "recommendation": "bet",
+          "decimal_odds": 5.8
+        }
+      ],
+      "narrative": "Ipswich vs Liverpool \u2014 Matchweek 3\n\nOur model rates Liverpool as 47% favorites (fair odds: 2.13), driven primarily by elo diff, home ewm goals against 10, home ewm corners for 10. Ipswich's expected goals stand at 1.3 while Liverpool are projected for 1.8 xG.\n\nThe match has a 59% chance of going over 2.5 goals, with both teams to score probability at 61%. We expect around 12 total corners and 3 cards."
+    },
+    {
+      "match_id": "20260905_Newcastle_Bournemouth",
+      "fixture": {
+        "date": "2026-09-05T11:30:00Z",
+        "home_team": "Newcastle",
+        "away_team": "Bournemouth",
+        "gameweek": 3,
+        "referee": null,
+        "is_derby": false
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.4096,
+          "draw": 0.2544,
+          "away": 0.336
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.9416,
+            "under": 0.0584
+          },
+          "1.5": {
+            "over": 0.8112,
+            "under": 0.1888
+          },
+          "2.5": {
+            "over": 0.5794,
+            "under": 0.4206
+          },
+          "3.5": {
+            "over": 0.3594,
+            "under": 0.6406
+          },
+          "4.5": {
+            "over": 0.1914,
+            "under": 0.8086
+          }
+        },
+        "btts": {
+          "yes": 0.6066,
+          "no": 0.39339999999999997
+        },
+        "clean_sheet": {
+          "home": 0.2472,
+          "away": 0.2046
+        },
+        "correct_score": {
+          "0-0": 0.0584,
+          "0-1": 0.064,
+          "0-2": 0.0496,
+          "0-3": 0.0214,
+          "0-4": 0.0076,
+          "0-5": 0.0024,
+          "0-6": 0.001,
+          "1-0": 0.0664,
+          "1-1": 0.1182,
+          "1-2": 0.0792,
+          "1-3": 0.0418,
+          "1-4": 0.0118,
+          "1-5": 0.0034,
+          "1-6": 0.0014,
+          "2-0": 0.064,
+          "2-1": 0.0846,
+          "2-2": 0.0578,
+          "2-3": 0.0278,
+          "2-4": 0.0094,
+          "2-5": 0.0046,
+          "2-6": 0.001,
+          "3-0": 0.0348,
+          "3-1": 0.045,
+          "3-2": 0.0342,
+          "3-3": 0.0172,
+          "3-4": 0.0054,
+          "3-5": 0.002,
+          "3-6": 0.0002,
+          "4-0": 0.0158,
+          "4-1": 0.019,
+          "4-2": 0.0138,
+          "4-3": 0.0058,
+          "4-4": 0.0024,
+          "4-5": 0.0012,
+          "4-6": 0.0,
+          "5-0": 0.0056,
+          "5-1": 0.0044,
+          "5-2": 0.0038,
+          "5-3": 0.0018,
+          "5-4": 0.0008,
+          "5-5": 0.0004,
+          "5-6": 0.0,
+          "6-0": 0.0018,
+          "6-1": 0.0022,
+          "6-2": 0.002,
+          "6-3": 0.0008,
+          "6-4": 0.0004,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.0928,
+          "home_-1.5": 0.2178,
+          "home_-1.0": 0.2178,
+          "home_-0.5": 0.4096,
+          "home_0": 0.4096,
+          "home_0.5": 0.664,
+          "home_1.0": 0.664,
+          "home_1.5": 0.8416,
+          "home_2.5": 0.9444
+        },
+        "ht_ft": {
+          "H/H": 0.2576,
+          "H/D": 0.0534,
+          "H/A": 0.0192,
+          "D/H": 0.1308,
+          "D/D": 0.1452,
+          "D/A": 0.1148,
+          "A/H": 0.0212,
+          "A/D": 0.0558,
+          "A/A": 0.202
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.7978,
+            "under": 0.2022
+          },
+          "8.5": {
+            "over": 0.7104,
+            "under": 0.2896
+          },
+          "9.5": {
+            "over": 0.616,
+            "under": 0.384
+          },
+          "10.5": {
+            "over": 0.5188,
+            "under": 0.4812
+          },
+          "11.5": {
+            "over": 0.4318,
+            "under": 0.5682
+          },
+          "12.5": {
+            "over": 0.3468,
+            "under": 0.6532
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.9322,
+            "under": 0.0678
+          },
+          "2.5": {
+            "over": 0.8036,
+            "under": 0.1964
+          },
+          "3.5": {
+            "over": 0.6234,
+            "under": 0.3766
+          },
+          "4.5": {
+            "over": 0.447,
+            "under": 0.553
+          },
+          "5.5": {
+            "over": 0.2974,
+            "under": 0.7026
+          },
+          "6.5": {
+            "over": 0.1788,
+            "under": 0.8212
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.6158,
+        "away": 1.4206
+      },
+      "expected_corners": 11.0736,
+      "expected_cards": 4.4472,
+      "distributions": {
+        "goals_home": [
+          0.2046,
+          0.3226,
+          0.2492,
+          0.139,
+          0.058,
+          0.0168,
+          0.0072,
+          0.0022
+        ],
+        "goals_away": [
+          0.2472,
+          0.3384,
+          0.2412,
+          0.1168,
+          0.0378,
+          0.0142,
+          0.0036,
+          0.0008
+        ],
+        "corners": [
+          0.0002,
+          0.0016,
+          0.0054,
+          0.011,
+          0.02,
+          0.0372,
+          0.0558,
+          0.071,
+          0.0874,
+          0.0944,
+          0.0972,
+          0.087,
+          0.085,
+          0.0856,
+          0.0622,
+          0.0578,
+          0.0402,
+          0.0282,
+          0.0238,
+          0.014,
+          0.0112
+        ],
+        "cards": [
+          0.0136,
+          0.0542,
+          0.1286,
+          0.1802,
+          0.1764,
+          0.1496,
+          0.1186,
+          0.0836,
+          0.0472,
+          0.0276,
+          0.0112,
+          0.0058,
+          0.0024
+        ]
+      },
+      "confidence": {
+        "entropy": 1.0802896091116763,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          4.0
+        ]
+      },
+      "n_simulations": 5000,
+      "player_bookings": {
+        "top_bookings": [],
+        "adjustments": {}
+      },
+      "goalscorer": {
+        "home_scorers": [],
+        "away_scorers": [],
+        "top_scorers": []
+      },
+      "odds_comparison": {
+        "h2h": {
+          "leovegas": {
+            "away": 2.95,
+            "home": 2.2,
+            "draw": 3.6
+          },
+          "betfred_uk": {
+            "away": 3.0,
+            "home": 2.2,
+            "draw": 3.75
+          },
+          "unibet_uk": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.6
+          },
+          "paddypower": {
+            "away": 3.0,
+            "home": 2.15,
+            "draw": 3.6
+          },
+          "skybet": {
+            "away": 3.0,
+            "home": 2.15,
+            "draw": 3.6
+          },
+          "betfair_ex_uk": {
+            "away": 3.2,
+            "home": 2.28,
+            "draw": 3.85
+          },
+          "sport888": {
+            "away": 2.9,
+            "home": 2.2,
+            "draw": 3.5
+          },
+          "williamhill": {
+            "away": 2.9,
+            "home": 2.2,
+            "draw": 3.6
+          },
+          "boylesports": {
+            "away": 2.9,
+            "home": 2.2,
+            "draw": 3.6
+          },
+          "smarkets": {
+            "away": 3.2,
+            "home": 2.28,
+            "draw": 3.85
+          },
+          "betway": {
+            "away": 2.88,
+            "home": 2.15,
+            "draw": 3.6
+          },
+          "livescorebet": {
+            "away": 2.9,
+            "home": 2.17,
+            "draw": 3.45
+          },
+          "grosvenor": {
+            "away": 3.0,
+            "home": 2.23,
+            "draw": 3.6
+          },
+          "virginbet": {
+            "away": 2.9,
+            "home": 2.17,
+            "draw": 3.45
+          },
+          "casumo": {
+            "away": 3.0,
+            "home": 2.23,
+            "draw": 3.6
+          },
+          "betano_uk": {
+            "away": 3.0,
+            "home": 2.15,
+            "draw": 3.7
+          },
+          "betvictor": {
+            "away": 3.0,
+            "home": 2.15,
+            "draw": 3.7
+          },
+          "coral": {
+            "away": 2.9,
+            "home": 2.15,
+            "draw": 3.5
+          },
+          "ladbrokes_uk": {
+            "away": 2.9,
+            "home": 2.15,
+            "draw": 3.5
+          },
+          "matchbook": {
+            "away": 3.2,
+            "home": 2.28,
+            "draw": 3.85
+          },
+          "betfair_sb_uk": {
+            "away": 3.0,
+            "home": 2.15,
+            "draw": 3.6
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.8,
-            "bookmaker_over": "matchbook",
-            "under": 2.22,
+            "over": 1.65,
+            "bookmaker_over": "grosvenor",
+            "under": 2.46,
             "bookmaker_under": "matchbook"
           }
         },
@@ -417,67 +887,2854 @@
         "bookmaker_draw": "betfair_ex_uk",
         "bookmaker_away": "betfair_ex_uk"
       },
-      "model_disagreement": 0.04131415257978325,
+      "model_disagreement": 0.01312899382759686,
       "shap_features": [
         {
-          "feature": "elo_diff",
-          "value": -91.73796673177026,
-          "shap_value": 0.026096343994140625,
-          "shap_abs": 0.15814180672168732
-        },
-        {
-          "feature": "away_form_5",
-          "value": 1.0,
-          "shap_value": 0.04091475531458855,
-          "shap_abs": 0.04091475531458855
+          "feature": "home_ewm_shots_against_5",
+          "value": 16.663315071663302,
+          "shap_value": 0.07191114127635956,
+          "shap_abs": 0.07191114127635956
         },
         {
           "feature": "home_ewm_fouls_committed_5",
-          "value": 8.373999224501793,
-          "shap_value": 0.03861193964257836,
-          "shap_abs": 0.03861193964257836
+          "value": 8.51801716725768,
+          "shap_value": 0.06527578830718994,
+          "shap_abs": 0.06527578830718994
+        },
+        {
+          "feature": "elo_diff",
+          "value": -26.107975752932816,
+          "shap_value": 0.0025060269981622696,
+          "shap_abs": 0.05274445377290249
         },
         {
           "feature": "home_elo",
-          "value": 1541.4028510310911,
-          "shap_value": 0.03381647169589996,
-          "shap_abs": 0.03381647169589996
+          "value": 1514.4995655951718,
+          "shap_value": 0.040340762585401535,
+          "shap_abs": 0.040340762585401535
         },
         {
           "feature": "home_rest_days",
           "value": 30.0,
-          "shap_value": -0.011260967701673508,
-          "shap_abs": 0.028595488518476486
+          "shap_value": -0.02881502639502287,
+          "shap_abs": 0.039204989559948444
         },
         {
-          "feature": "away_ewm_goals_for_5",
-          "value": 1.5881118846627096,
-          "shap_value": -0.027501458302140236,
-          "shap_abs": 0.027501458302140236
+          "feature": "referee_avg_yellows",
+          "value": 0.0,
+          "shap_value": -0.0009963372722268105,
+          "shap_abs": 0.03169564064592123
         },
         {
-          "feature": "away_ewm_shots_against_5",
-          "value": 8.361246160492795,
-          "shap_value": -0.026692206040024757,
-          "shap_abs": 0.026692206040024757
+          "feature": "home_ewm_fouls_committed_10",
+          "value": 9.450451723082443,
+          "shap_value": 0.02786598540842533,
+          "shap_abs": 0.02786598540842533
+        },
+        {
+          "feature": "away_ewm_fouls_committed_5",
+          "value": 11.988840366604071,
+          "shap_value": 0.025770891457796097,
+          "shap_abs": 0.025770891457796097
+        },
+        {
+          "feature": "away_form_5",
+          "value": 0.6,
+          "shap_value": -0.017239533364772797,
+          "shap_abs": 0.017239533364772797
+        },
+        {
+          "feature": "away_rest_days",
+          "value": 30.0,
+          "shap_value": -0.016381273046135902,
+          "shap_abs": 0.016381273046135902
+        }
+      ],
+      "value_bets": [],
+      "narrative": "Newcastle vs Bournemouth \u2014 Matchweek 3\n\nOur model rates Newcastle as 41% favorites (fair odds: 2.44), driven primarily by home ewm shots against 5, home ewm fouls committed 5, elo diff. Newcastle's expected goals stand at 1.6 while Bournemouth are projected for 1.4 xG.\n\nThe match has a 58% chance of going over 2.5 goals, with both teams to score probability at 61%. We expect around 11 total corners and 4 cards."
+    },
+    {
+      "match_id": "20260905_Brentford_Sunderland",
+      "fixture": {
+        "date": "2026-09-05T14:00:00Z",
+        "home_team": "Brentford",
+        "away_team": "Sunderland",
+        "gameweek": 3,
+        "referee": null,
+        "is_derby": false
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.4582,
+          "draw": 0.2552,
+          "away": 0.2866
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.9358,
+            "under": 0.0642
+          },
+          "1.5": {
+            "over": 0.7902,
+            "under": 0.2098
+          },
+          "2.5": {
+            "over": 0.5532,
+            "under": 0.4468
+          },
+          "3.5": {
+            "over": 0.3344,
+            "under": 0.6656
+          },
+          "4.5": {
+            "over": 0.1714,
+            "under": 0.8286
+          }
+        },
+        "btts": {
+          "yes": 0.5788,
+          "no": 0.4212
+        },
+        "clean_sheet": {
+          "home": 0.2874,
+          "away": 0.198
+        },
+        "correct_score": {
+          "0-0": 0.0642,
+          "0-1": 0.064,
+          "0-2": 0.0442,
+          "0-3": 0.0176,
+          "0-4": 0.0066,
+          "0-5": 0.0012,
+          "0-6": 0.0002,
+          "1-0": 0.0816,
+          "1-1": 0.116,
+          "1-2": 0.0716,
+          "1-3": 0.027,
+          "1-4": 0.0088,
+          "1-5": 0.0028,
+          "1-6": 0.001,
+          "2-0": 0.0768,
+          "2-1": 0.0906,
+          "2-2": 0.059,
+          "2-3": 0.0248,
+          "2-4": 0.0074,
+          "2-5": 0.0028,
+          "2-6": 0.0002,
+          "3-0": 0.039,
+          "3-1": 0.0538,
+          "3-2": 0.0252,
+          "3-3": 0.0138,
+          "3-4": 0.0046,
+          "3-5": 0.0008,
+          "3-6": 0.0002,
+          "4-0": 0.0166,
+          "4-1": 0.0214,
+          "4-2": 0.0148,
+          "4-3": 0.005,
+          "4-4": 0.0022,
+          "4-5": 0.0004,
+          "4-6": 0.0002,
+          "5-0": 0.0066,
+          "5-1": 0.0076,
+          "5-2": 0.0056,
+          "5-3": 0.0028,
+          "5-4": 0.001,
+          "5-5": 0.0,
+          "5-6": 0.0,
+          "6-0": 0.0022,
+          "6-1": 0.0032,
+          "6-2": 0.002,
+          "6-3": 0.0004,
+          "6-4": 0.0004,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.1062,
+          "home_-1.5": 0.2548,
+          "home_-1.0": 0.2548,
+          "home_-0.5": 0.4582,
+          "home_0": 0.4582,
+          "home_0.5": 0.7134,
+          "home_1.0": 0.7134,
+          "home_1.5": 0.8788,
+          "home_2.5": 0.9584
+        },
+        "ht_ft": {
+          "H/H": 0.2862,
+          "H/D": 0.0524,
+          "H/A": 0.0176,
+          "D/H": 0.146,
+          "D/D": 0.1474,
+          "D/A": 0.1012,
+          "A/H": 0.026,
+          "A/D": 0.0554,
+          "A/A": 0.1678
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.6638,
+            "under": 0.3362
+          },
+          "8.5": {
+            "over": 0.5494,
+            "under": 0.4506
+          },
+          "9.5": {
+            "over": 0.4342,
+            "under": 0.5658
+          },
+          "10.5": {
+            "over": 0.3294,
+            "under": 0.6706
+          },
+          "11.5": {
+            "over": 0.249,
+            "under": 0.751
+          },
+          "12.5": {
+            "over": 0.1778,
+            "under": 0.8222
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.8568,
+            "under": 0.1432
+          },
+          "2.5": {
+            "over": 0.686,
+            "under": 0.314
+          },
+          "3.5": {
+            "over": 0.485,
+            "under": 0.515
+          },
+          "4.5": {
+            "over": 0.3146,
+            "under": 0.6854
+          },
+          "5.5": {
+            "over": 0.1918,
+            "under": 0.8082
+          },
+          "6.5": {
+            "over": 0.1048,
+            "under": 0.8952
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.6654,
+        "away": 1.2538
+      },
+      "expected_corners": 9.1778,
+      "expected_cards": 3.6876,
+      "distributions": {
+        "goals_home": [
+          0.198,
+          0.309,
+          0.2616,
+          0.1374,
+          0.0606,
+          0.0236,
+          0.0082,
+          0.0014
+        ],
+        "goals_away": [
+          0.2874,
+          0.3574,
+          0.2226,
+          0.0914,
+          0.0312,
+          0.008,
+          0.0018,
+          0.0002
+        ],
+        "corners": [
+          0.0004,
+          0.0042,
+          0.014,
+          0.0266,
+          0.0452,
+          0.062,
+          0.083,
+          0.1008,
+          0.1144,
+          0.1152,
+          0.1048,
+          0.0804,
+          0.0712,
+          0.0576,
+          0.0426,
+          0.0286,
+          0.019,
+          0.0128,
+          0.008,
+          0.003,
+          0.002
+        ],
+        "cards": [
+          0.037,
+          0.1062,
+          0.1708,
+          0.201,
+          0.1704,
+          0.1228,
+          0.087,
+          0.054,
+          0.028,
+          0.0134,
+          0.0072,
+          0.0018,
+          0.0004
+        ]
+      },
+      "confidence": {
+        "entropy": 1.0642853581120035,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          3.0
+        ]
+      },
+      "n_simulations": 5000,
+      "player_bookings": {
+        "top_bookings": [],
+        "adjustments": {}
+      },
+      "goalscorer": {
+        "home_scorers": [],
+        "away_scorers": [],
+        "top_scorers": []
+      },
+      "odds_comparison": {
+        "h2h": {
+          "leovegas": {
+            "home": 1.57,
+            "away": 5.5,
+            "draw": 4.0
+          },
+          "unibet_uk": {
+            "home": 1.58,
+            "away": 5.75,
+            "draw": 4.0
+          },
+          "betfred_uk": {
+            "home": 1.6,
+            "away": 5.5,
+            "draw": 4.0
+          },
+          "smarkets": {
+            "home": 1.64,
+            "away": 6.2,
+            "draw": 4.1
+          },
+          "paddypower": {
+            "home": 1.57,
+            "away": 5.5,
+            "draw": 3.8
+          },
+          "skybet": {
+            "home": 1.57,
+            "away": 5.75,
+            "draw": 3.8
+          },
+          "betfair_ex_uk": {
+            "home": 1.64,
+            "away": 6.2,
+            "draw": 4.1
+          },
+          "sport888": {
+            "home": 1.6,
+            "away": 5.0,
+            "draw": 3.8
+          },
+          "williamhill": {
+            "home": 1.6,
+            "away": 5.0,
+            "draw": 3.9
+          },
+          "boylesports": {
+            "home": 1.55,
+            "away": 5.5,
+            "draw": 3.8
+          },
+          "betway": {
+            "home": 1.55,
+            "away": 5.25,
+            "draw": 4.0
+          },
+          "casumo": {
+            "home": 1.64,
+            "away": 5.6,
+            "draw": 3.8
+          },
+          "grosvenor": {
+            "home": 1.64,
+            "away": 5.6,
+            "draw": 3.8
+          },
+          "livescorebet": {
+            "home": 1.6,
+            "away": 5.3,
+            "draw": 3.65
+          },
+          "virginbet": {
+            "home": 1.6,
+            "away": 5.3,
+            "draw": 3.65
+          },
+          "betano_uk": {
+            "home": 1.55,
+            "away": 5.5,
+            "draw": 4.0
+          },
+          "betvictor": {
+            "home": 1.55,
+            "away": 5.5,
+            "draw": 4.0
+          },
+          "coral": {
+            "home": 1.57,
+            "away": 5.25,
+            "draw": 3.9
+          },
+          "ladbrokes_uk": {
+            "home": 1.57,
+            "away": 5.25,
+            "draw": 3.9
+          },
+          "matchbook": {
+            "home": 1.64,
+            "away": 6.4,
+            "draw": 4.1
+          },
+          "betfair_sb_uk": {
+            "home": 1.57,
+            "away": 5.5,
+            "draw": 3.9
+          }
+        },
+        "totals": {
+          "2.5": {
+            "over": 1.88,
+            "bookmaker_over": "casumo",
+            "under": 2.06,
+            "bookmaker_under": "matchbook"
+          }
+        },
+        "bookmaker_home": "smarkets",
+        "bookmaker_draw": "smarkets",
+        "bookmaker_away": "matchbook"
+      },
+      "model_disagreement": 0.013418948566198336,
+      "shap_features": [
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 18.924066590791117,
+          "shap_value": 0.15537147223949432,
+          "shap_abs": 0.15537147223949432
+        },
+        {
+          "feature": "elo_diff",
+          "value": 19.699094700609294,
+          "shap_value": -0.03794453293085098,
+          "shap_abs": 0.0831184834241867
+        },
+        {
+          "feature": "home_ewm_fouls_committed_10",
+          "value": 9.337955585673964,
+          "shap_value": 0.07029760628938675,
+          "shap_abs": 0.07029760628938675
+        },
+        {
+          "feature": "home_elo",
+          "value": 1518.8309657237346,
+          "shap_value": 0.058607567101716995,
+          "shap_abs": 0.058607567101716995
+        },
+        {
+          "feature": "away_ewm_corners_for_10",
+          "value": 4.401674048561997,
+          "shap_value": -0.03830458223819733,
+          "shap_abs": 0.03830458223819733
+        },
+        {
+          "feature": "home_rest_days",
+          "value": 30.0,
+          "shap_value": -0.03731394559144974,
+          "shap_abs": 0.03731394559144974
         },
         {
           "feature": "home_ewm_shots_for_5",
-          "value": 12.839875397367019,
-          "shap_value": -0.02309851162135601,
-          "shap_abs": 0.02309851162135601
+          "value": 11.128780014123857,
+          "shap_value": 0.026547735556960106,
+          "shap_abs": 0.026547735556960106
         },
         {
-          "feature": "away_ewm_yellows_10",
-          "value": 1.4135767564325235,
-          "shap_value": -0.020319124683737755,
-          "shap_abs": 0.020319124683737755
+          "feature": "home_ewm_corners_against_10",
+          "value": 7.18344283737564,
+          "shap_value": 0.02649472840130329,
+          "shap_abs": 0.02649472840130329
         },
         {
-          "feature": "referee_avg_fouls",
+          "feature": "home_ewm_yellows_5",
+          "value": 1.9490336972346594,
+          "shap_value": -0.02122402749955654,
+          "shap_abs": 0.02122402749955654
+        },
+        {
+          "feature": "home_ewm_fouls_committed_5",
+          "value": 9.138870856125262,
+          "shap_value": 0.020883601158857346,
+          "shap_abs": 0.020883601158857346
+        }
+      ],
+      "value_bets": [
+        {
+          "market": "Away Win",
+          "market_type": "1x2",
+          "confidence": "high",
+          "confidence_tier": "high",
+          "bookmaker": "matchbook",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.13188301886792453,
+          "model_prob": 0.2866,
+          "implied_prob": 0.1547169811320755,
+          "raw_implied_prob": 0.15625,
+          "expected_value": 0.8342400000000001,
+          "recommendation": "bet",
+          "decimal_odds": 6.4
+        }
+      ],
+      "narrative": "Brentford vs Sunderland \u2014 Matchweek 3\n\nOur model rates Brentford as 46% favorites (fair odds: 2.18), driven primarily by home ewm shots against 5, elo diff, home ewm fouls committed 10. Brentford's expected goals stand at 1.7 while Sunderland are projected for 1.3 xG.\n\nThe match has a 55% chance of going over 2.5 goals, with both teams to score probability at 58%. We expect around 9 total corners and 4 cards."
+    },
+    {
+      "match_id": "20260905_Brighton_Leeds",
+      "fixture": {
+        "date": "2026-09-05T14:00:00Z",
+        "home_team": "Brighton",
+        "away_team": "Leeds",
+        "gameweek": 3,
+        "referee": null,
+        "is_derby": false
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.4708,
+          "draw": 0.2638,
+          "away": 0.2654
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.9278,
+            "under": 0.0722
+          },
+          "1.5": {
+            "over": 0.7596,
+            "under": 0.2404
+          },
+          "2.5": {
+            "over": 0.5162,
+            "under": 0.4838
+          },
+          "3.5": {
+            "over": 0.3054,
+            "under": 0.6946
+          },
+          "4.5": {
+            "over": 0.15,
+            "under": 0.85
+          }
+        },
+        "btts": {
+          "yes": 0.5422,
+          "no": 0.4578
+        },
+        "clean_sheet": {
+          "home": 0.3254,
+          "away": 0.2046
+        },
+        "correct_score": {
+          "0-0": 0.0722,
+          "0-1": 0.0684,
+          "0-2": 0.0386,
+          "0-3": 0.0172,
+          "0-4": 0.0062,
+          "0-5": 0.0014,
+          "0-6": 0.0002,
+          "1-0": 0.0998,
+          "1-1": 0.1194,
+          "1-2": 0.0642,
+          "1-3": 0.0262,
+          "1-4": 0.007,
+          "1-5": 0.0006,
+          "1-6": 0.0004,
+          "2-0": 0.0854,
+          "2-1": 0.0868,
+          "2-2": 0.0574,
+          "2-3": 0.0212,
+          "2-4": 0.0066,
+          "2-5": 0.0014,
+          "2-6": 0.0,
+          "3-0": 0.0426,
+          "3-1": 0.0476,
+          "3-2": 0.028,
+          "3-3": 0.0136,
+          "3-4": 0.0032,
+          "3-5": 0.0014,
+          "3-6": 0.0002,
+          "4-0": 0.018,
+          "4-1": 0.0192,
+          "4-2": 0.0116,
+          "4-3": 0.0056,
+          "4-4": 0.0012,
+          "4-5": 0.0,
+          "4-6": 0.0002,
+          "5-0": 0.0052,
+          "5-1": 0.0068,
+          "5-2": 0.005,
+          "5-3": 0.0022,
+          "5-4": 0.0,
+          "5-5": 0.0,
+          "5-6": 0.0,
+          "6-0": 0.0018,
+          "6-1": 0.002,
+          "6-2": 0.0008,
+          "6-3": 0.0006,
+          "6-4": 0.0002,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.1036,
+          "home_-1.5": 0.2506,
+          "home_-1.0": 0.2506,
+          "home_-0.5": 0.4708,
+          "home_0": 0.4708,
+          "home_0.5": 0.7346,
+          "home_1.0": 0.7346,
+          "home_1.5": 0.8916,
+          "home_2.5": 0.9646
+        },
+        "ht_ft": {
+          "H/H": 0.2922,
+          "H/D": 0.053,
+          "H/A": 0.0154,
+          "D/H": 0.1532,
+          "D/D": 0.1602,
+          "D/A": 0.0946,
+          "A/H": 0.0254,
+          "A/D": 0.0506,
+          "A/A": 0.1554
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.7516,
+            "under": 0.2484
+          },
+          "8.5": {
+            "over": 0.666,
+            "under": 0.334
+          },
+          "9.5": {
+            "over": 0.57,
+            "under": 0.43
+          },
+          "10.5": {
+            "over": 0.4794,
+            "under": 0.5206
+          },
+          "11.5": {
+            "over": 0.389,
+            "under": 0.611
+          },
+          "12.5": {
+            "over": 0.3098,
+            "under": 0.6902
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.8728,
+            "under": 0.1272
+          },
+          "2.5": {
+            "over": 0.7086,
+            "under": 0.2914
+          },
+          "3.5": {
+            "over": 0.5016,
+            "under": 0.4984
+          },
+          "4.5": {
+            "over": 0.3196,
+            "under": 0.6804
+          },
+          "5.5": {
+            "over": 0.189,
+            "under": 0.811
+          },
+          "6.5": {
+            "over": 0.098,
+            "under": 0.902
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.609,
+        "away": 1.1568
+      },
+      "expected_corners": 10.7674,
+      "expected_cards": 3.747,
+      "distributions": {
+        "goals_home": [
+          0.2046,
+          0.3176,
+          0.259,
+          0.1366,
+          0.056,
+          0.0192,
+          0.0054,
+          0.0016
+        ],
+        "goals_away": [
+          0.3254,
+          0.351,
+          0.2058,
+          0.0868,
+          0.0244,
+          0.0048,
+          0.001,
+          0.0004
+        ],
+        "corners": [
+          0.0008,
+          0.002,
+          0.0068,
+          0.0164,
+          0.0324,
+          0.0488,
+          0.0622,
+          0.079,
+          0.0856,
+          0.096,
+          0.0906,
+          0.0904,
+          0.0792,
+          0.0628,
+          0.0526,
+          0.0466,
+          0.0352,
+          0.0316,
+          0.0202,
+          0.0204,
+          0.0106
+        ],
+        "cards": [
+          0.0294,
+          0.0978,
+          0.1642,
+          0.207,
+          0.182,
+          0.1306,
+          0.091,
+          0.0478,
+          0.0276,
+          0.0136,
+          0.0056,
+          0.002,
+          0.0012
+        ]
+      },
+      "confidence": {
+        "entropy": 1.0582519991118815,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          3.0
+        ]
+      },
+      "n_simulations": 5000,
+      "player_bookings": {
+        "top_bookings": [],
+        "adjustments": {}
+      },
+      "goalscorer": {
+        "home_scorers": [],
+        "away_scorers": [],
+        "top_scorers": []
+      },
+      "odds_comparison": {
+        "h2h": {
+          "leovegas": {
+            "home": 1.83,
+            "away": 4.0,
+            "draw": 3.6
+          },
+          "unibet_uk": {
+            "home": 1.85,
+            "away": 4.2,
+            "draw": 3.6
+          },
+          "betfred_uk": {
+            "home": 1.83,
+            "away": 4.2,
+            "draw": 3.75
+          },
+          "paddypower": {
+            "home": 1.8,
+            "away": 4.33,
+            "draw": 3.6
+          },
+          "skybet": {
+            "home": 1.8,
+            "away": 4.2,
+            "draw": 3.6
+          },
+          "betfair_ex_uk": {
+            "home": 1.89,
+            "away": 4.5,
+            "draw": 3.85
+          },
+          "sport888": {
+            "home": 1.83,
+            "away": 4.0,
+            "draw": 3.5
+          },
+          "williamhill": {
+            "home": 1.85,
+            "away": 4.0,
+            "draw": 3.5
+          },
+          "boylesports": {
+            "home": 1.8,
+            "away": 4.0,
+            "draw": 3.6
+          },
+          "smarkets": {
+            "home": 1.89,
+            "away": 4.5,
+            "draw": 3.85
+          },
+          "betway": {
+            "home": 1.77,
+            "away": 4.0,
+            "draw": 3.6
+          },
+          "livescorebet": {
+            "home": 1.79,
+            "away": 4.1,
+            "draw": 3.5
+          },
+          "grosvenor": {
+            "home": 1.83,
+            "away": 4.35,
+            "draw": 3.65
+          },
+          "casumo": {
+            "home": 1.83,
+            "away": 4.35,
+            "draw": 3.65
+          },
+          "virginbet": {
+            "home": 1.79,
+            "away": 4.1,
+            "draw": 3.5
+          },
+          "betano_uk": {
+            "home": 1.83,
+            "away": 4.0,
+            "draw": 3.6
+          },
+          "betvictor": {
+            "home": 1.83,
+            "away": 4.0,
+            "draw": 3.6
+          },
+          "coral": {
+            "home": 1.8,
+            "away": 4.0,
+            "draw": 3.6
+          },
+          "ladbrokes_uk": {
+            "home": 1.8,
+            "away": 4.0,
+            "draw": 3.6
+          },
+          "matchbook": {
+            "home": 1.89,
+            "away": 4.5,
+            "draw": 3.85
+          },
+          "betfair_sb_uk": {
+            "home": 1.8,
+            "away": 4.33,
+            "draw": 3.6
+          }
+        },
+        "totals": {
+          "2.5": {
+            "over": 1.86,
+            "bookmaker_over": "matchbook",
+            "under": 2.08,
+            "bookmaker_under": "matchbook"
+          }
+        },
+        "bookmaker_home": "betfair_ex_uk",
+        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_away": "betfair_ex_uk"
+      },
+      "model_disagreement": 0.02108507830808733,
+      "shap_features": [
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 9.196054441504083,
+          "shap_value": -0.06613501161336899,
+          "shap_abs": 0.06613501161336899
+        },
+        {
+          "feature": "elo_diff",
+          "value": 20.32394389073147,
+          "shap_value": -0.02627920638769865,
+          "shap_abs": 0.05303486157208681
+        },
+        {
+          "feature": "home_elo",
+          "value": 1523.2978871315163,
+          "shap_value": 0.007513225078582764,
+          "shap_abs": 0.0379856638610363
+        },
+        {
+          "feature": "home_rest_days",
+          "value": 30.0,
+          "shap_value": -0.03730405122041702,
+          "shap_abs": 0.03730405122041702
+        },
+        {
+          "feature": "away_ewm_corners_against_5",
+          "value": 7.483461980710778,
+          "shap_value": 0.03241991251707077,
+          "shap_abs": 0.03241991251707077
+        },
+        {
+          "feature": "home_ewm_yellows_10",
+          "value": 1.3465924686085058,
+          "shap_value": -0.03203572332859039,
+          "shap_abs": 0.03203572332859039
+        },
+        {
+          "feature": "away_rest_days",
+          "value": 30.0,
+          "shap_value": -0.03175808861851692,
+          "shap_abs": 0.03175808861851692
+        },
+        {
+          "feature": "away_ewm_shots_for_5",
+          "value": 11.902291593801362,
+          "shap_value": 0.026881230995059013,
+          "shap_abs": 0.026881230995059013
+        },
+        {
+          "feature": "referee_avg_yellows",
           "value": 0.0,
-          "shap_value": 0.01955580525100231,
-          "shap_abs": 0.01955580525100231
+          "shap_value": 0.00020830612629652023,
+          "shap_abs": 0.026398534886538982
+        },
+        {
+          "feature": "away_ewm_corners_for_10",
+          "value": 4.330177966067729,
+          "shap_value": -0.02520878240466118,
+          "shap_abs": 0.02520878240466118
+        }
+      ],
+      "value_bets": [],
+      "narrative": "Brighton vs Leeds \u2014 Matchweek 3\n\nOur model rates Brighton as 47% favorites (fair odds: 2.12), driven primarily by home ewm shots against 5, elo diff, home elo. Brighton's expected goals stand at 1.6 while Leeds are projected for 1.2 xG.\n\nThe match has a 52% chance of going over 2.5 goals, with both teams to score probability at 54%. We expect around 11 total corners and 4 cards."
+    },
+    {
+      "match_id": "20260905_Fulham_Crystal_Palace",
+      "fixture": {
+        "date": "2026-09-05T14:00:00Z",
+        "home_team": "Fulham",
+        "away_team": "Crystal Palace",
+        "gameweek": 3,
+        "referee": null,
+        "is_derby": false
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.463,
+          "draw": 0.2816,
+          "away": 0.2554
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.9062,
+            "under": 0.0938
+          },
+          "1.5": {
+            "over": 0.7308,
+            "under": 0.2692
+          },
+          "2.5": {
+            "over": 0.4782,
+            "under": 0.5218
+          },
+          "3.5": {
+            "over": 0.2676,
+            "under": 0.7324
+          },
+          "4.5": {
+            "over": 0.1242,
+            "under": 0.8758
+          }
+        },
+        "btts": {
+          "yes": 0.515,
+          "no": 0.485
+        },
+        "clean_sheet": {
+          "home": 0.358,
+          "away": 0.2208
+        },
+        "correct_score": {
+          "0-0": 0.0938,
+          "0-1": 0.0668,
+          "0-2": 0.04,
+          "0-3": 0.016,
+          "0-4": 0.0036,
+          "0-5": 0.0004,
+          "0-6": 0.0002,
+          "1-0": 0.1086,
+          "1-1": 0.1298,
+          "1-2": 0.0654,
+          "1-3": 0.026,
+          "1-4": 0.0068,
+          "1-5": 0.002,
+          "1-6": 0.0002,
+          "2-0": 0.0828,
+          "2-1": 0.0856,
+          "2-2": 0.0492,
+          "2-3": 0.0184,
+          "2-4": 0.0048,
+          "2-5": 0.0014,
+          "2-6": 0.0004,
+          "3-0": 0.0436,
+          "3-1": 0.045,
+          "3-2": 0.0274,
+          "3-3": 0.0078,
+          "3-4": 0.0022,
+          "3-5": 0.0002,
+          "3-6": 0.0002,
+          "4-0": 0.0196,
+          "4-1": 0.0144,
+          "4-2": 0.0102,
+          "4-3": 0.003,
+          "4-4": 0.001,
+          "4-5": 0.0,
+          "4-6": 0.0,
+          "5-0": 0.0072,
+          "5-1": 0.0058,
+          "5-2": 0.0038,
+          "5-3": 0.0008,
+          "5-4": 0.0,
+          "5-5": 0.0,
+          "5-6": 0.0,
+          "6-0": 0.0018,
+          "6-1": 0.0014,
+          "6-2": 0.0004,
+          "6-3": 0.0004,
+          "6-4": 0.0,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.0994,
+          "home_-1.5": 0.2384,
+          "home_-1.0": 0.2384,
+          "home_-0.5": 0.463,
+          "home_0": 0.463,
+          "home_0.5": 0.7446,
+          "home_1.0": 0.7446,
+          "home_1.5": 0.8974,
+          "home_2.5": 0.9684
+        },
+        "ht_ft": {
+          "H/H": 0.2812,
+          "H/D": 0.0498,
+          "H/A": 0.021,
+          "D/H": 0.1568,
+          "D/D": 0.178,
+          "D/A": 0.097,
+          "A/H": 0.025,
+          "A/D": 0.0538,
+          "A/A": 0.1374
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.7012,
+            "under": 0.2988
+          },
+          "8.5": {
+            "over": 0.5968,
+            "under": 0.4032
+          },
+          "9.5": {
+            "over": 0.4826,
+            "under": 0.5174
+          },
+          "10.5": {
+            "over": 0.3698,
+            "under": 0.6302
+          },
+          "11.5": {
+            "over": 0.2734,
+            "under": 0.7266
+          },
+          "12.5": {
+            "over": 0.1934,
+            "under": 0.8066
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.902,
+            "under": 0.098
+          },
+          "2.5": {
+            "over": 0.7456,
+            "under": 0.2544
+          },
+          "3.5": {
+            "over": 0.5528,
+            "under": 0.4472
+          },
+          "4.5": {
+            "over": 0.3684,
+            "under": 0.6316
+          },
+          "5.5": {
+            "over": 0.2258,
+            "under": 0.7742
+          },
+          "6.5": {
+            "over": 0.1254,
+            "under": 0.8746
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.5172,
+        "away": 1.0626
+      },
+      "expected_corners": 9.5602,
+      "expected_cards": 4.0116,
+      "distributions": {
+        "goals_home": [
+          0.2208,
+          0.339,
+          0.2428,
+          0.1264,
+          0.0482,
+          0.0176,
+          0.004,
+          0.001
+        ],
+        "goals_away": [
+          0.358,
+          0.3492,
+          0.1964,
+          0.0724,
+          0.0184,
+          0.0042,
+          0.001,
+          0.0004
+        ],
+        "corners": [
+          0.0004,
+          0.0032,
+          0.0074,
+          0.0242,
+          0.0358,
+          0.0584,
+          0.0782,
+          0.0912,
+          0.1044,
+          0.1142,
+          0.1128,
+          0.0964,
+          0.08,
+          0.0542,
+          0.0438,
+          0.0316,
+          0.025,
+          0.014,
+          0.009,
+          0.0056,
+          0.0048
+        ],
+        "cards": [
+          0.0188,
+          0.0792,
+          0.1564,
+          0.1928,
+          0.1844,
+          0.1426,
+          0.1004,
+          0.0604,
+          0.0358,
+          0.0186,
+          0.0072,
+          0.0018,
+          0.0012
+        ]
+      },
+      "confidence": {
+        "entropy": 1.0619873149468266,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          3.0
+        ]
+      },
+      "n_simulations": 5000,
+      "player_bookings": {
+        "top_bookings": [],
+        "adjustments": {}
+      },
+      "goalscorer": {
+        "home_scorers": [],
+        "away_scorers": [],
+        "top_scorers": []
+      },
+      "odds_comparison": {
+        "h2h": {
+          "leovegas": {
+            "away": 3.05,
+            "home": 2.3,
+            "draw": 3.3
+          },
+          "unibet_uk": {
+            "away": 3.1,
+            "home": 2.3,
+            "draw": 3.3
+          },
+          "betfred_uk": {
+            "away": 3.1,
+            "home": 2.25,
+            "draw": 3.5
+          },
+          "paddypower": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.3
+          },
+          "skybet": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.25
+          },
+          "betfair_ex_uk": {
+            "away": 3.25,
+            "home": 2.4,
+            "draw": 3.5
+          },
+          "smarkets": {
+            "away": 3.25,
+            "home": 2.4,
+            "draw": 3.5
+          },
+          "williamhill": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.3
+          },
+          "sport888": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.3
+          },
+          "boylesports": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.3
+          },
+          "betway": {
+            "away": 3.0,
+            "home": 2.2,
+            "draw": 3.4
+          },
+          "livescorebet": {
+            "away": 2.95,
+            "home": 2.25,
+            "draw": 3.25
+          },
+          "grosvenor": {
+            "away": 3.05,
+            "home": 2.32,
+            "draw": 3.4
+          },
+          "casumo": {
+            "away": 3.05,
+            "home": 2.32,
+            "draw": 3.4
+          },
+          "virginbet": {
+            "away": 2.95,
+            "home": 2.25,
+            "draw": 3.25
+          },
+          "coral": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.3
+          },
+          "ladbrokes_uk": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.3
+          },
+          "matchbook": {
+            "away": 3.25,
+            "home": 2.4,
+            "draw": 3.5
+          },
+          "betfair_sb_uk": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.3
+          },
+          "betano_uk": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.4
+          },
+          "betvictor": {
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.4
+          }
+        },
+        "totals": {
+          "2.5": {
+            "over": 1.94,
+            "bookmaker_over": "matchbook",
+            "under": 2.04,
+            "bookmaker_under": "matchbook"
+          }
+        },
+        "bookmaker_home": "betfair_ex_uk",
+        "bookmaker_draw": "betfred_uk",
+        "bookmaker_away": "betfair_ex_uk"
+      },
+      "model_disagreement": 0.033124121283606,
+      "shap_features": [
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 10.415831884928966,
+          "shap_value": -0.07568396627902985,
+          "shap_abs": 0.07568396627902985
+        },
+        {
+          "feature": "elo_diff",
+          "value": 13.22147552755132,
+          "shap_value": -0.04040793143212795,
+          "shap_abs": 0.07323801703751087
+        },
+        {
+          "feature": "home_ewm_shots_for_5",
+          "value": 15.70349567076407,
+          "shap_value": -0.05845552682876587,
+          "shap_abs": 0.05845552682876587
+        },
+        {
+          "feature": "home_rest_days",
+          "value": 30.0,
+          "shap_value": -0.04329563304781914,
+          "shap_abs": 0.04329563304781914
+        },
+        {
+          "feature": "home_elo",
+          "value": 1504.21425845858,
+          "shap_value": -0.03117009997367859,
+          "shap_abs": 0.03117009997367859
+        },
+        {
+          "feature": "home_ewm_goals_against_10",
+          "value": 0.9654235442464906,
+          "shap_value": -0.028011461719870567,
+          "shap_abs": 0.028011461719870567
+        },
+        {
+          "feature": "away_rest_days",
+          "value": 30.0,
+          "shap_value": -0.02622133307158947,
+          "shap_abs": 0.02622133307158947
+        },
+        {
+          "feature": "referee_avg_yellows",
+          "value": 0.0,
+          "shap_value": -0.012620091903954744,
+          "shap_abs": 0.025433904957026243
+        },
+        {
+          "feature": "away_ewm_corners_for_10",
+          "value": 4.059690461251286,
+          "shap_value": -0.021885918453335762,
+          "shap_abs": 0.021885918453335762
+        },
+        {
+          "feature": "away_ewm_goals_against_5",
+          "value": 2.1353639427360576,
+          "shap_value": -0.021546484902501106,
+          "shap_abs": 0.021546484902501106
+        }
+      ],
+      "value_bets": [],
+      "narrative": "Fulham vs Crystal Palace \u2014 Matchweek 3\n\nOur model rates Fulham as 46% favorites (fair odds: 2.16), driven primarily by home ewm shots against 5, elo diff, home ewm shots for 5. Fulham's expected goals stand at 1.5 while Crystal Palace are projected for 1.1 xG.\n\nThe match has a 48% chance of going over 2.5 goals, with both teams to score probability at 52%. We expect around 10 total corners and 4 cards."
+    },
+    {
+      "match_id": "20260905_Man_City_Coventry_City",
+      "fixture": {
+        "date": "2026-09-05T14:00:00Z",
+        "home_team": "Man City",
+        "away_team": "Coventry City",
+        "gameweek": 3,
+        "referee": null,
+        "is_derby": false
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.5676,
+          "draw": 0.2408,
+          "away": 0.1916
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.9316,
+            "under": 0.0684
+          },
+          "1.5": {
+            "over": 0.793,
+            "under": 0.207
+          },
+          "2.5": {
+            "over": 0.5538,
+            "under": 0.4462
+          },
+          "3.5": {
+            "over": 0.3364,
+            "under": 0.6636
+          },
+          "4.5": {
+            "over": 0.1776,
+            "under": 0.8224
+          }
+        },
+        "btts": {
+          "yes": 0.5464,
+          "no": 0.4536
+        },
+        "clean_sheet": {
+          "home": 0.3654,
+          "away": 0.1566
+        },
+        "correct_score": {
+          "0-0": 0.0684,
+          "0-1": 0.042,
+          "0-2": 0.032,
+          "0-3": 0.0114,
+          "0-4": 0.0016,
+          "0-5": 0.001,
+          "0-6": 0.0,
+          "1-0": 0.0966,
+          "1-1": 0.1088,
+          "1-2": 0.0516,
+          "1-3": 0.0196,
+          "1-4": 0.0052,
+          "1-5": 0.0006,
+          "1-6": 0.0002,
+          "2-0": 0.0984,
+          "2-1": 0.095,
+          "2-2": 0.0504,
+          "2-3": 0.0174,
+          "2-4": 0.0044,
+          "2-5": 0.0014,
+          "2-6": 0.0002,
+          "3-0": 0.0594,
+          "3-1": 0.0584,
+          "3-2": 0.0348,
+          "3-3": 0.0122,
+          "3-4": 0.002,
+          "3-5": 0.0002,
+          "3-6": 0.0002,
+          "4-0": 0.0288,
+          "4-1": 0.031,
+          "4-2": 0.016,
+          "4-3": 0.0048,
+          "4-4": 0.001,
+          "4-5": 0.0004,
+          "4-6": 0.0,
+          "5-0": 0.0096,
+          "5-1": 0.0106,
+          "5-2": 0.007,
+          "5-3": 0.0028,
+          "5-4": 0.0004,
+          "5-5": 0.0,
+          "5-6": 0.0,
+          "6-0": 0.0034,
+          "6-1": 0.0038,
+          "6-2": 0.0026,
+          "6-3": 0.0002,
+          "6-4": 0.0002,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.1602,
+          "home_-1.5": 0.336,
+          "home_-1.0": 0.336,
+          "home_-0.5": 0.5676,
+          "home_0": 0.5676,
+          "home_0.5": 0.8084,
+          "home_1.0": 0.8084,
+          "home_1.5": 0.9218,
+          "home_2.5": 0.978
+        },
+        "ht_ft": {
+          "H/H": 0.356,
+          "H/D": 0.0448,
+          "H/A": 0.0124,
+          "D/H": 0.1824,
+          "D/D": 0.1498,
+          "D/A": 0.0698,
+          "A/H": 0.0292,
+          "A/D": 0.0462,
+          "A/A": 0.1094
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.777,
+            "under": 0.223
+          },
+          "8.5": {
+            "over": 0.6772,
+            "under": 0.3228
+          },
+          "9.5": {
+            "over": 0.571,
+            "under": 0.429
+          },
+          "10.5": {
+            "over": 0.4658,
+            "under": 0.5342
+          },
+          "11.5": {
+            "over": 0.3604,
+            "under": 0.6396
+          },
+          "12.5": {
+            "over": 0.2666,
+            "under": 0.7334
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.8948,
+            "under": 0.1052
+          },
+          "2.5": {
+            "over": 0.7642,
+            "under": 0.2358
+          },
+          "3.5": {
+            "over": 0.5888,
+            "under": 0.4112
+          },
+          "4.5": {
+            "over": 0.4264,
+            "under": 0.5736
+          },
+          "5.5": {
+            "over": 0.29,
+            "under": 0.71
+          },
+          "6.5": {
+            "over": 0.1816,
+            "under": 0.8184
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.8876,
+        "away": 1.0308
+      },
+      "expected_corners": 10.4008,
+      "expected_cards": 4.3348,
+      "distributions": {
+        "goals_home": [
+          0.1566,
+          0.2826,
+          0.2672,
+          0.1672,
+          0.082,
+          0.0304,
+          0.0102,
+          0.0028
+        ],
+        "goals_away": [
+          0.3654,
+          0.351,
+          0.1956,
+          0.0688,
+          0.0148,
+          0.0036,
+          0.0006,
+          0.0002
+        ],
+        "corners": [
+          0.0,
+          0.001,
+          0.0014,
+          0.011,
+          0.0246,
+          0.037,
+          0.0596,
+          0.0884,
+          0.0998,
+          0.1062,
+          0.1052,
+          0.1054,
+          0.0938,
+          0.0778,
+          0.0584,
+          0.0456,
+          0.0308,
+          0.019,
+          0.0128,
+          0.0078,
+          0.0058
+        ],
+        "cards": [
+          0.028,
+          0.0772,
+          0.1306,
+          0.1754,
+          0.1624,
+          0.1364,
+          0.1084,
+          0.072,
+          0.0526,
+          0.0288,
+          0.0146,
+          0.0086,
+          0.0028
+        ]
+      },
+      "confidence": {
+        "entropy": 0.9808913060059564,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          3.0
+        ]
+      },
+      "n_simulations": 5000,
+      "player_bookings": {
+        "top_bookings": [],
+        "adjustments": {}
+      },
+      "goalscorer": {
+        "home_scorers": [],
+        "away_scorers": [],
+        "top_scorers": []
+      },
+      "odds_comparison": {
+        "h2h": {
+          "leovegas": {
+            "away": 11.0,
+            "home": 1.19,
+            "draw": 7.0
+          },
+          "unibet_uk": {
+            "away": 13.0,
+            "home": 1.19,
+            "draw": 7.0
+          },
+          "betfred_uk": {
+            "away": 13.0,
+            "home": 1.18,
+            "draw": 7.5
+          },
+          "paddypower": {
+            "away": 14.0,
+            "home": 1.17,
+            "draw": 7.5
+          },
+          "skybet": {
+            "away": 12.0,
+            "home": 1.17,
+            "draw": 7.5
+          },
+          "smarkets": {
+            "away": 16.5,
+            "home": 1.2,
+            "draw": 8.6
+          },
+          "betfair_ex_uk": {
+            "away": 16.5,
+            "home": 1.2,
+            "draw": 8.8
+          },
+          "sport888": {
+            "away": 13.0,
+            "home": 1.18,
+            "draw": 7.0
+          },
+          "williamhill": {
+            "away": 13.0,
+            "home": 1.18,
+            "draw": 7.0
+          },
+          "boylesports": {
+            "away": 13.0,
+            "home": 1.18,
+            "draw": 7.0
+          },
+          "betway": {
+            "away": 10.0,
+            "home": 1.18,
+            "draw": 7.0
+          },
+          "virginbet": {
+            "away": 12.0,
+            "home": 1.17,
+            "draw": 7.0
+          },
+          "livescorebet": {
+            "away": 12.0,
+            "home": 1.17,
+            "draw": 7.0
+          },
+          "grosvenor": {
+            "away": 13.0,
+            "home": 1.19,
+            "draw": 7.5
+          },
+          "casumo": {
+            "away": 13.0,
+            "home": 1.19,
+            "draw": 7.5
+          },
+          "betano_uk": {
+            "away": 13.0,
+            "home": 1.17,
+            "draw": 7.0
+          },
+          "betvictor": {
+            "away": 13.0,
+            "home": 1.17,
+            "draw": 7.0
+          },
+          "coral": {
+            "away": 10.0,
+            "home": 1.2,
+            "draw": 6.5
+          },
+          "ladbrokes_uk": {
+            "away": 10.0,
+            "home": 1.2,
+            "draw": 6.5
+          },
+          "matchbook": {
+            "away": 16.5,
+            "home": 1.2,
+            "draw": 8.8
+          },
+          "betfair_sb_uk": {
+            "away": 14.0,
+            "home": 1.15,
+            "draw": 7.5
+          }
+        },
+        "totals": {
+          "3.5": {
+            "over": 1.97,
+            "bookmaker_over": "matchbook",
+            "under": 1.91,
+            "bookmaker_under": "casumo"
+          },
+          "2.5": {
+            "over": 1.35,
+            "bookmaker_over": "williamhill",
+            "under": 3.1,
+            "bookmaker_under": "williamhill"
+          }
+        },
+        "bookmaker_home": "smarkets",
+        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_away": "smarkets"
+      },
+      "model_disagreement": 0.007504363075060962,
+      "shap_features": [
+        {
+          "feature": "elo_diff",
+          "value": 118.78069940918294,
+          "shap_value": -0.07429435104131699,
+          "shap_abs": 0.12385972589254379
+        },
+        {
+          "feature": "away_ewm_shots_for_5",
+          "value": 0.0,
+          "shap_value": -0.06953451782464981,
+          "shap_abs": 0.06953451782464981
+        },
+        {
+          "feature": "home_rest_days",
+          "value": 30.0,
+          "shap_value": -0.06718671321868896,
+          "shap_abs": 0.06718671321868896
+        },
+        {
+          "feature": "away_ewm_corners_against_5",
+          "value": 0.0,
+          "shap_value": -0.04871644824743271,
+          "shap_abs": 0.04871644824743271
+        },
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 9.639944227062967,
+          "shap_value": -0.03405962837859988,
+          "shap_abs": 0.0469791148789227
+        },
+        {
+          "feature": "away_ewm_corners_against_10",
+          "value": 0.0,
+          "shap_value": -0.04219498112797737,
+          "shap_abs": 0.04219498112797737
+        },
+        {
+          "feature": "away_ewm_shots_against_5",
+          "value": 0.0,
+          "shap_value": -0.00887219700962305,
+          "shap_abs": 0.036636373959481716
+        },
+        {
+          "feature": "home_ewm_shots_for_5",
+          "value": 17.27941924727759,
+          "shap_value": -0.034776169806718826,
+          "shap_abs": 0.034776169806718826
+        },
+        {
+          "feature": "home_ewm_fouls_committed_10",
+          "value": 8.526593104087384,
+          "shap_value": 0.02978266030550003,
+          "shap_abs": 0.02978266030550003
+        },
+        {
+          "feature": "home_ewm_fouls_committed_5",
+          "value": 8.100540427059242,
+          "shap_value": 0.028692318126559258,
+          "shap_abs": 0.028692318126559258
+        }
+      ],
+      "value_bets": [
+        {
+          "market": "Under 3.5 Goals",
+          "market_type": "over_under",
+          "confidence": "high",
+          "confidence_tier": "high",
+          "bookmaker": "casumo",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.1558680412371134,
+          "model_prob": 0.6636,
+          "implied_prob": 0.5077319587628866,
+          "raw_implied_prob": 0.5235602094240838,
+          "expected_value": 0.26747599999999994,
+          "recommendation": "bet",
+          "decimal_odds": 1.91
+        },
+        {
+          "market": "Away Win",
+          "market_type": "1x2",
+          "confidence": "high",
+          "confidence_tier": "high",
+          "bookmaker": "smarkets",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.13144962406015037,
+          "model_prob": 0.1916,
+          "implied_prob": 0.06015037593984963,
+          "raw_implied_prob": 0.06060606060606061,
+          "expected_value": 2.1613999999999995,
+          "recommendation": "bet",
+          "decimal_odds": 16.5
+        },
+        {
+          "market": "Draw",
+          "market_type": "1x2",
+          "confidence": "high",
+          "confidence_tier": "high",
+          "bookmaker": "betfair_ex_uk",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.12801804511278195,
+          "model_prob": 0.2408,
+          "implied_prob": 0.11278195488721804,
+          "raw_implied_prob": 0.11363636363636363,
+          "expected_value": 1.11904,
+          "recommendation": "bet",
+          "decimal_odds": 8.8
+        }
+      ],
+      "narrative": "Man City vs Coventry City \u2014 Matchweek 3\n\nOur model rates Man City as 57% favorites (fair odds: 1.76), driven primarily by elo diff, away ewm shots for 5, home rest days. Man City's expected goals stand at 1.9 while Coventry City are projected for 1.0 xG.\n\nThe match has a 55% chance of going over 2.5 goals, with both teams to score probability at 55%. We expect around 10 total corners and 4 cards."
+    },
+    {
+      "match_id": "20260905_Nott'm_Forest_Tottenham",
+      "fixture": {
+        "date": "2026-09-05T14:00:00Z",
+        "home_team": "Nott'm Forest",
+        "away_team": "Tottenham",
+        "gameweek": 3,
+        "referee": null,
+        "is_derby": false
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.4862,
+          "draw": 0.2572,
+          "away": 0.2566
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.9324,
+            "under": 0.0676
+          },
+          "1.5": {
+            "over": 0.7972,
+            "under": 0.2028
+          },
+          "2.5": {
+            "over": 0.5634,
+            "under": 0.4366
+          },
+          "3.5": {
+            "over": 0.337,
+            "under": 0.663
+          },
+          "4.5": {
+            "over": 0.1704,
+            "under": 0.8296
+          }
+        },
+        "btts": {
+          "yes": 0.5766,
+          "no": 0.4234
+        },
+        "clean_sheet": {
+          "home": 0.3062,
+          "away": 0.1848
+        },
+        "correct_score": {
+          "0-0": 0.0676,
+          "0-1": 0.0554,
+          "0-2": 0.0396,
+          "0-3": 0.0164,
+          "0-4": 0.0046,
+          "0-5": 0.0006,
+          "0-6": 0.0006,
+          "1-0": 0.0798,
+          "1-1": 0.1178,
+          "1-2": 0.0618,
+          "1-3": 0.0312,
+          "1-4": 0.0084,
+          "1-5": 0.0022,
+          "1-6": 0.001,
+          "2-0": 0.0764,
+          "2-1": 0.0986,
+          "2-2": 0.058,
+          "2-3": 0.0192,
+          "2-4": 0.0084,
+          "2-5": 0.001,
+          "2-6": 0.0008,
+          "3-0": 0.0496,
+          "3-1": 0.0538,
+          "3-2": 0.0328,
+          "3-3": 0.0118,
+          "3-4": 0.0036,
+          "3-5": 0.001,
+          "3-6": 0.0004,
+          "4-0": 0.019,
+          "4-1": 0.0196,
+          "4-2": 0.0144,
+          "4-3": 0.0056,
+          "4-4": 0.002,
+          "4-5": 0.0002,
+          "4-6": 0.0002,
+          "5-0": 0.008,
+          "5-1": 0.0092,
+          "5-2": 0.0048,
+          "5-3": 0.0016,
+          "5-4": 0.0008,
+          "5-5": 0.0,
+          "5-6": 0.0,
+          "6-0": 0.0034,
+          "6-1": 0.0024,
+          "6-2": 0.0014,
+          "6-3": 0.0006,
+          "6-4": 0.0002,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.1222,
+          "home_-1.5": 0.2686,
+          "home_-1.0": 0.2686,
+          "home_-0.5": 0.4862,
+          "home_0": 0.4862,
+          "home_0.5": 0.7434,
+          "home_1.0": 0.7434,
+          "home_1.5": 0.8836,
+          "home_2.5": 0.964
+        },
+        "ht_ft": {
+          "H/H": 0.3046,
+          "H/D": 0.0542,
+          "H/A": 0.0204,
+          "D/H": 0.1554,
+          "D/D": 0.1534,
+          "D/A": 0.086,
+          "A/H": 0.0262,
+          "A/D": 0.0496,
+          "A/A": 0.1502
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.5732,
+            "under": 0.4268
+          },
+          "8.5": {
+            "over": 0.4518,
+            "under": 0.5482
+          },
+          "9.5": {
+            "over": 0.338,
+            "under": 0.662
+          },
+          "10.5": {
+            "over": 0.2482,
+            "under": 0.7518
+          },
+          "11.5": {
+            "over": 0.1762,
+            "under": 0.8238
+          },
+          "12.5": {
+            "over": 0.1194,
+            "under": 0.8806
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.8694,
+            "under": 0.1306
+          },
+          "2.5": {
+            "over": 0.7294,
+            "under": 0.2706
+          },
+          "3.5": {
+            "over": 0.555,
+            "under": 0.445
+          },
+          "4.5": {
+            "over": 0.4066,
+            "under": 0.5934
+          },
+          "5.5": {
+            "over": 0.2768,
+            "under": 0.7232
+          },
+          "6.5": {
+            "over": 0.1698,
+            "under": 0.8302
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.731,
+        "away": 1.2002
+      },
+      "expected_corners": 8.3728,
+      "expected_cards": 4.1366,
+      "distributions": {
+        "goals_home": [
+          0.1848,
+          0.3022,
+          0.2624,
+          0.153,
+          0.061,
+          0.0244,
+          0.008,
+          0.0026
+        ],
+        "goals_away": [
+          0.3062,
+          0.3576,
+          0.2132,
+          0.0868,
+          0.0282,
+          0.005,
+          0.003,
+          0.0
+        ],
+        "corners": [
+          0.002,
+          0.0066,
+          0.0214,
+          0.0424,
+          0.0546,
+          0.0802,
+          0.1042,
+          0.1154,
+          0.1214,
+          0.1138,
+          0.0898,
+          0.072,
+          0.0568,
+          0.0398,
+          0.0276,
+          0.0184,
+          0.0118,
+          0.0076,
+          0.005,
+          0.0032,
+          0.0016
+        ],
+        "cards": [
+          0.0462,
+          0.0844,
+          0.14,
+          0.1744,
+          0.1484,
+          0.1298,
+          0.107,
+          0.075,
+          0.0496,
+          0.0246,
+          0.0112,
+          0.0058,
+          0.0024
+        ]
+      },
+      "confidence": {
+        "entropy": 1.0489049232294323,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          3.0
+        ]
+      },
+      "n_simulations": 5000,
+      "player_bookings": {
+        "top_bookings": [],
+        "adjustments": {}
+      },
+      "goalscorer": {
+        "home_scorers": [],
+        "away_scorers": [],
+        "top_scorers": []
+      },
+      "odds_comparison": {
+        "h2h": {
+          "leovegas": {
+            "home": 2.5,
+            "away": 2.7,
+            "draw": 3.3
+          },
+          "unibet_uk": {
+            "home": 2.5,
+            "away": 2.75,
+            "draw": 3.3
+          },
+          "betfred_uk": {
+            "home": 2.5,
+            "away": 2.75,
+            "draw": 3.4
+          },
+          "skybet": {
+            "home": 2.45,
+            "away": 2.75,
+            "draw": 3.3
+          },
+          "paddypower": {
+            "home": 2.5,
+            "away": 2.75,
+            "draw": 3.3
+          },
+          "betfair_ex_uk": {
+            "home": 2.6,
+            "away": 2.92,
+            "draw": 3.55
+          },
+          "sport888": {
+            "home": 2.45,
+            "away": 2.75,
+            "draw": 3.25
+          },
+          "williamhill": {
+            "home": 2.5,
+            "away": 2.75,
+            "draw": 3.3
+          },
+          "boylesports": {
+            "home": 2.4,
+            "away": 2.75,
+            "draw": 3.3
+          },
+          "smarkets": {
+            "home": 2.6,
+            "away": 2.92,
+            "draw": 3.55
+          },
+          "betway": {
+            "home": 2.4,
+            "away": 2.62,
+            "draw": 3.4
+          },
+          "casumo": {
+            "home": 2.55,
+            "away": 2.8,
+            "draw": 3.3
+          },
+          "virginbet": {
+            "home": 2.48,
+            "away": 2.7,
+            "draw": 3.2
+          },
+          "livescorebet": {
+            "home": 2.48,
+            "away": 2.7,
+            "draw": 3.2
+          },
+          "grosvenor": {
+            "home": 2.55,
+            "away": 2.8,
+            "draw": 3.3
+          },
+          "betano_uk": {
+            "home": 2.45,
+            "away": 2.75,
+            "draw": 3.3
+          },
+          "betvictor": {
+            "home": 2.45,
+            "away": 2.75,
+            "draw": 3.3
+          },
+          "coral": {
+            "home": 2.45,
+            "away": 2.7,
+            "draw": 3.2
+          },
+          "ladbrokes_uk": {
+            "home": 2.45,
+            "away": 2.7,
+            "draw": 3.2
+          },
+          "matchbook": {
+            "home": 2.6,
+            "away": 2.92,
+            "draw": 3.55
+          },
+          "betfair_sb_uk": {
+            "home": 2.5,
+            "away": 2.75,
+            "draw": 3.3
+          }
+        },
+        "totals": {
+          "2.5": {
+            "over": 2.02,
+            "bookmaker_over": "casumo",
+            "under": 1.88,
+            "bookmaker_under": "matchbook"
+          }
+        },
+        "bookmaker_home": "betfair_ex_uk",
+        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_away": "betfair_ex_uk"
+      },
+      "model_disagreement": 0.013439176306776922,
+      "shap_features": [
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 18.729550965896667,
+          "shap_value": 0.17191709578037262,
+          "shap_abs": 0.17191709578037262
+        },
+        {
+          "feature": "elo_diff",
+          "value": 44.97589113666095,
+          "shap_value": -0.0389372780919075,
+          "shap_abs": 0.10797186940908432
+        },
+        {
+          "feature": "home_rest_days",
+          "value": 30.0,
+          "shap_value": -0.04172241687774658,
+          "shap_abs": 0.04172241687774658
+        },
+        {
+          "feature": "away_ewm_shots_against_5",
+          "value": 9.106730315681725,
+          "shap_value": 0.03473994880914688,
+          "shap_abs": 0.03473994880914688
+        },
+        {
+          "feature": "home_ewm_yellows_5",
+          "value": 1.4561005263336693,
+          "shap_value": -0.03412209451198578,
+          "shap_abs": 0.03412209451198578
+        },
+        {
+          "feature": "home_opponent_corners_conceded",
+          "value": 3.3,
+          "shap_value": -0.033034034073352814,
+          "shap_abs": 0.033034034073352814
+        },
+        {
+          "feature": "home_elo",
+          "value": 1514.3970822425633,
+          "shap_value": 0.031798508018255234,
+          "shap_abs": 0.031798508018255234
+        },
+        {
+          "feature": "referee_avg_yellows",
+          "value": 0.0,
+          "shap_value": -0.012999416328966618,
+          "shap_abs": 0.02858890127390623
+        },
+        {
+          "feature": "away_ewm_fouls_committed_5",
+          "value": 14.726016455165686,
+          "shap_value": 0.025292420759797096,
+          "shap_abs": 0.025292420759797096
+        },
+        {
+          "feature": "away_elo",
+          "value": 1469.4211911059024,
+          "shap_value": -0.02427631802856922,
+          "shap_abs": 0.02427631802856922
+        }
+      ],
+      "value_bets": [
+        {
+          "market": "Home Win",
+          "market_type": "1x2",
+          "confidence": "medium",
+          "confidence_tier": "medium",
+          "bookmaker": "betfair_ex_uk",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.1049288509636605,
+          "model_prob": 0.4862,
+          "implied_prob": 0.3812711490363395,
+          "raw_implied_prob": 0.3846153846153846,
+          "expected_value": 0.26412,
+          "recommendation": "bet",
+          "decimal_odds": 2.6
+        },
+        {
+          "market": "Over 2.5 Goals",
+          "market_type": "over_under",
+          "confidence": "medium",
+          "confidence_tier": "medium",
+          "bookmaker": "casumo",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.08134871794871795,
+          "model_prob": 0.5634,
+          "implied_prob": 0.48205128205128206,
+          "raw_implied_prob": 0.49504950495049505,
+          "expected_value": 0.13806800000000008,
+          "recommendation": "bet",
+          "decimal_odds": 2.02
+        }
+      ],
+      "narrative": "Nott'm Forest vs Tottenham \u2014 Matchweek 3\n\nOur model rates Nott'm Forest as 49% favorites (fair odds: 2.06), driven primarily by home ewm shots against 5, elo diff, home rest days. Nott'm Forest's expected goals stand at 1.7 while Tottenham are projected for 1.2 xG.\n\nThe match has a 56% chance of going over 2.5 goals, with both teams to score probability at 58%. We expect around 8 total corners and 4 cards."
+    },
+    {
+      "match_id": "20260905_Hull_City_Aston_Villa",
+      "fixture": {
+        "date": "2026-09-05T16:30:00Z",
+        "home_team": "Hull City",
+        "away_team": "Aston Villa",
+        "gameweek": 3,
+        "referee": null,
+        "is_derby": false
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.3826,
+          "draw": 0.2608,
+          "away": 0.3566
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.941,
+            "under": 0.059
+          },
+          "1.5": {
+            "over": 0.802,
+            "under": 0.198
+          },
+          "2.5": {
+            "over": 0.5736,
+            "under": 0.4264
+          },
+          "3.5": {
+            "over": 0.3482,
+            "under": 0.6518
+          },
+          "4.5": {
+            "over": 0.1744,
+            "under": 0.8256
+          }
+        },
+        "btts": {
+          "yes": 0.6016,
+          "no": 0.3984
+        },
+        "clean_sheet": {
+          "home": 0.2354,
+          "away": 0.222
+        },
+        "correct_score": {
+          "0-0": 0.059,
+          "0-1": 0.0724,
+          "0-2": 0.0522,
+          "0-3": 0.0256,
+          "0-4": 0.009,
+          "0-5": 0.0026,
+          "0-6": 0.0008,
+          "1-0": 0.0666,
+          "1-1": 0.1174,
+          "1-2": 0.0824,
+          "1-3": 0.0404,
+          "1-4": 0.0124,
+          "1-5": 0.005,
+          "1-6": 0.0016,
+          "2-0": 0.0588,
+          "2-1": 0.0868,
+          "2-2": 0.068,
+          "2-3": 0.0276,
+          "2-4": 0.012,
+          "2-5": 0.0028,
+          "2-6": 0.0006,
+          "3-0": 0.0306,
+          "3-1": 0.0418,
+          "3-2": 0.0288,
+          "3-3": 0.0148,
+          "3-4": 0.0062,
+          "3-5": 0.0008,
+          "3-6": 0.0,
+          "4-0": 0.0146,
+          "4-1": 0.018,
+          "4-2": 0.0122,
+          "4-3": 0.004,
+          "4-4": 0.0016,
+          "4-5": 0.0008,
+          "4-6": 0.0006,
+          "5-0": 0.0044,
+          "5-1": 0.005,
+          "5-2": 0.0026,
+          "5-3": 0.0028,
+          "5-4": 0.0012,
+          "5-5": 0.0,
+          "5-6": 0.0,
+          "6-0": 0.0012,
+          "6-1": 0.0008,
+          "6-2": 0.0012,
+          "6-3": 0.0002,
+          "6-4": 0.0,
+          "6-5": 0.0002,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.0794,
+          "home_-1.5": 0.195,
+          "home_-1.0": 0.195,
+          "home_-0.5": 0.3826,
+          "home_0": 0.3826,
+          "home_0.5": 0.6434,
+          "home_1.0": 0.6434,
+          "home_1.5": 0.8328,
+          "home_2.5": 0.9388
+        },
+        "ht_ft": {
+          "H/H": 0.2372,
+          "H/D": 0.0528,
+          "H/A": 0.0242,
+          "D/H": 0.1226,
+          "D/D": 0.1524,
+          "D/A": 0.1204,
+          "A/H": 0.0228,
+          "A/D": 0.0556,
+          "A/A": 0.212
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.7206,
+            "under": 0.2794
+          },
+          "8.5": {
+            "over": 0.6088,
+            "under": 0.3912
+          },
+          "9.5": {
+            "over": 0.4948,
+            "under": 0.5052
+          },
+          "10.5": {
+            "over": 0.39,
+            "under": 0.61
+          },
+          "11.5": {
+            "over": 0.2916,
+            "under": 0.7084
+          },
+          "12.5": {
+            "over": 0.2152,
+            "under": 0.7848
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.8574,
+            "under": 0.1426
+          },
+          "2.5": {
+            "over": 0.688,
+            "under": 0.312
+          },
+          "3.5": {
+            "over": 0.491,
+            "under": 0.509
+          },
+          "4.5": {
+            "over": 0.3166,
+            "under": 0.6834
+          },
+          "5.5": {
+            "over": 0.1928,
+            "under": 0.8072
+          },
+          "6.5": {
+            "over": 0.1016,
+            "under": 0.8984
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.523,
+        "away": 1.4428
+      },
+      "expected_corners": 9.783,
+      "expected_cards": 3.7062,
+      "distributions": {
+        "goals_home": [
+          0.222,
+          0.3262,
+          0.2566,
+          0.123,
+          0.0518,
+          0.016,
+          0.0036,
+          0.0006
+        ],
+        "goals_away": [
+          0.2354,
+          0.3422,
+          0.2478,
+          0.1154,
+          0.0426,
+          0.0122,
+          0.0036,
+          0.0006
+        ],
+        "corners": [
+          0.0002,
+          0.002,
+          0.0082,
+          0.0176,
+          0.03,
+          0.051,
+          0.0748,
+          0.0956,
+          0.1118,
+          0.114,
+          0.1048,
+          0.0984,
+          0.0764,
+          0.0578,
+          0.0488,
+          0.0354,
+          0.0254,
+          0.019,
+          0.0112,
+          0.008,
+          0.0044
+        ],
+        "cards": [
+          0.0378,
+          0.1048,
+          0.1694,
+          0.197,
+          0.1744,
+          0.1238,
+          0.0912,
+          0.0516,
+          0.0236,
+          0.0152,
+          0.005,
+          0.0042,
+          0.0012
+        ]
+      },
+      "confidence": {
+        "entropy": 1.085809080337896,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          4.0
+        ]
+      },
+      "n_simulations": 5000,
+      "player_bookings": {
+        "top_bookings": [],
+        "adjustments": {}
+      },
+      "goalscorer": {
+        "home_scorers": [],
+        "away_scorers": [],
+        "top_scorers": []
+      },
+      "odds_comparison": {
+        "h2h": {
+          "leovegas": {
+            "away": 1.85,
+            "home": 3.95,
+            "draw": 3.65
+          },
+          "unibet_uk": {
+            "away": 1.85,
+            "home": 4.0,
+            "draw": 3.7
+          },
+          "betfred_uk": {
+            "away": 1.83,
+            "home": 4.2,
+            "draw": 3.75
+          },
+          "paddypower": {
+            "away": 1.83,
+            "home": 4.0,
+            "draw": 3.6
+          },
+          "skybet": {
+            "away": 1.83,
+            "home": 4.0,
+            "draw": 3.6
+          },
+          "betfair_ex_uk": {
+            "away": 1.91,
+            "home": 4.4,
+            "draw": 3.85
+          },
+          "sport888": {
+            "away": 1.85,
+            "home": 4.0,
+            "draw": 3.5
+          },
+          "williamhill": {
+            "away": 1.85,
+            "home": 4.0,
+            "draw": 3.5
+          },
+          "boylesports": {
+            "away": 1.8,
+            "home": 4.2,
+            "draw": 3.6
+          },
+          "smarkets": {
+            "away": 1.9,
+            "home": 4.4,
+            "draw": 3.85
+          },
+          "betway": {
+            "away": 1.77,
+            "home": 4.0,
+            "draw": 3.6
+          },
+          "livescorebet": {
+            "away": 1.79,
+            "home": 4.0,
+            "draw": 3.55
+          },
+          "virginbet": {
+            "away": 1.79,
+            "home": 4.0,
+            "draw": 3.55
+          },
+          "casumo": {
+            "away": 1.83,
+            "home": 4.2,
+            "draw": 3.7
+          },
+          "grosvenor": {
+            "away": 1.83,
+            "home": 4.2,
+            "draw": 3.7
+          },
+          "betano_uk": {
+            "away": 1.8,
+            "home": 4.1,
+            "draw": 3.6
+          },
+          "betvictor": {
+            "away": 1.8,
+            "home": 4.1,
+            "draw": 3.6
+          },
+          "coral": {
+            "away": 1.8,
+            "home": 3.9,
+            "draw": 3.5
+          },
+          "ladbrokes_uk": {
+            "away": 1.8,
+            "home": 3.9,
+            "draw": 3.5
+          },
+          "matchbook": {
+            "away": 1.91,
+            "home": 4.4,
+            "draw": 3.85
+          },
+          "betfair_sb_uk": {
+            "away": 1.83,
+            "home": 4.1,
+            "draw": 3.6
+          }
+        },
+        "totals": {
+          "2.5": {
+            "over": 1.9,
+            "bookmaker_over": "matchbook",
+            "under": 2.02,
+            "bookmaker_under": "matchbook"
+          }
+        },
+        "bookmaker_home": "betfair_ex_uk",
+        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_away": "betfair_ex_uk"
+      },
+      "model_disagreement": 0.020895744124520985,
+      "shap_features": [
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 0.0,
+          "shap_value": -0.057623603381216526,
+          "shap_abs": 0.07538642641156912
+        },
+        {
+          "feature": "home_ewm_shots_for_5",
+          "value": 0.0,
+          "shap_value": 0.07518959045410156,
+          "shap_abs": 0.07518959045410156
+        },
+        {
+          "feature": "elo_diff",
+          "value": -41.40285103109113,
+          "shap_value": 0.027962280437350273,
+          "shap_abs": 0.06172938086092472
+        },
+        {
+          "feature": "home_ewm_goals_against_10",
+          "value": 0.0,
+          "shap_value": 0.050788115710020065,
+          "shap_abs": 0.050788115710020065
+        },
+        {
+          "feature": "home_ewm_corners_against_5",
+          "value": 0.0,
+          "shap_value": -0.04875258728861809,
+          "shap_abs": 0.04875258728861809
+        },
+        {
+          "feature": "home_ewm_corners_for_10",
+          "value": 0.0,
+          "shap_value": -0.04313000664114952,
+          "shap_abs": 0.04313000664114952
+        },
+        {
+          "feature": "home_ewm_fouls_committed_10",
+          "value": 0.0,
+          "shap_value": 0.04269669950008392,
+          "shap_abs": 0.04269669950008392
+        },
+        {
+          "feature": "home_ewm_corners_against_10",
+          "value": 0.0,
+          "shap_value": -0.0013525765389204025,
+          "shap_abs": 0.03805915452539921
+        },
+        {
+          "feature": "home_ewm_goals_for_5",
+          "value": 0.0,
+          "shap_value": 0.036490458995103836,
+          "shap_abs": 0.036490458995103836
+        },
+        {
+          "feature": "home_ewm_yellows_10",
+          "value": 0.0,
+          "shap_value": -0.030922342091798782,
+          "shap_abs": 0.030922342091798782
         }
       ],
       "value_bets": [
@@ -491,34 +3748,901 @@
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.1671420511984347,
-          "model_prob": 0.3134,
-          "implied_prob": 0.1462579488015653,
-          "raw_implied_prob": 0.14705882352941177,
-          "expected_value": 1.1311200000000001,
+          "edge": 0.15770513036164843,
+          "model_prob": 0.3826,
+          "implied_prob": 0.22489486963835156,
+          "raw_implied_prob": 0.22727272727272727,
+          "expected_value": 0.6834400000000003,
           "recommendation": "bet",
-          "decimal_odds": 6.8
-        },
-        {
-          "market": "Draw",
-          "market_type": "1x2",
-          "confidence": "low",
-          "confidence_tier": "low",
-          "bookmaker": "betfair_ex_uk",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.055392597423773005,
-          "model_prob": 0.2716,
-          "implied_prob": 0.216207402576227,
-          "raw_implied_prob": 0.2173913043478261,
-          "expected_value": 0.24936000000000003,
-          "recommendation": "bet",
-          "decimal_odds": 4.6
+          "decimal_odds": 4.4
         }
       ],
-      "narrative": "Aston Villa vs Arsenal \u2014 Matchweek 3\n\nOur model rates Arsenal as 42% favorites (fair odds: 2.41), driven primarily by elo diff, away form 5, home ewm fouls committed 5. Aston Villa's expected goals stand at 1.3 while Arsenal are projected for 1.5 xG.\n\nThe match has a 53% chance of going over 2.5 goals, with both teams to score probability at 57%. We expect around 9 total corners and 3 cards."
+      "narrative": "Hull City vs Aston Villa \u2014 Matchweek 3\n\nOur model rates Hull City as 38% favorites (fair odds: 2.61), driven primarily by home ewm shots against 5, home ewm shots for 5, elo diff. Hull City's expected goals stand at 1.5 while Aston Villa are projected for 1.4 xG.\n\nThe match has a 57% chance of going over 2.5 goals, with both teams to score probability at 60%. We expect around 10 total corners and 4 cards."
+    },
+    {
+      "match_id": "20260906_Everton_Man_United",
+      "fixture": {
+        "date": "2026-09-06T13:00:00Z",
+        "home_team": "Everton",
+        "away_team": "Man United",
+        "gameweek": 3,
+        "referee": null,
+        "is_derby": false
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.3504,
+          "draw": 0.264,
+          "away": 0.3856
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.9284,
+            "under": 0.0716
+          },
+          "1.5": {
+            "over": 0.7894,
+            "under": 0.2106
+          },
+          "2.5": {
+            "over": 0.55,
+            "under": 0.45
+          },
+          "3.5": {
+            "over": 0.3244,
+            "under": 0.6756
+          },
+          "4.5": {
+            "over": 0.1706,
+            "under": 0.8294
+          }
+        },
+        "btts": {
+          "yes": 0.5818,
+          "no": 0.4182
+        },
+        "clean_sheet": {
+          "home": 0.2392,
+          "away": 0.2506
+        },
+        "correct_score": {
+          "0-0": 0.0716,
+          "0-1": 0.0676,
+          "0-2": 0.0628,
+          "0-3": 0.0302,
+          "0-4": 0.0138,
+          "0-5": 0.0036,
+          "0-6": 0.0008,
+          "1-0": 0.0714,
+          "1-1": 0.118,
+          "1-2": 0.09,
+          "1-3": 0.041,
+          "1-4": 0.0168,
+          "1-5": 0.0058,
+          "1-6": 0.0008,
+          "2-0": 0.0586,
+          "2-1": 0.0786,
+          "2-2": 0.0586,
+          "2-3": 0.0288,
+          "2-4": 0.0102,
+          "2-5": 0.0034,
+          "2-6": 0.0006,
+          "3-0": 0.0268,
+          "3-1": 0.0334,
+          "3-2": 0.028,
+          "3-3": 0.0142,
+          "3-4": 0.0052,
+          "3-5": 0.002,
+          "3-6": 0.0002,
+          "4-0": 0.007,
+          "4-1": 0.0154,
+          "4-2": 0.0102,
+          "4-3": 0.0044,
+          "4-4": 0.0014,
+          "4-5": 0.0006,
+          "4-6": 0.0002,
+          "5-0": 0.0022,
+          "5-1": 0.0044,
+          "5-2": 0.0032,
+          "5-3": 0.0008,
+          "5-4": 0.001,
+          "5-5": 0.0002,
+          "5-6": 0.0,
+          "6-0": 0.0012,
+          "6-1": 0.0016,
+          "6-2": 0.0008,
+          "6-3": 0.0008,
+          "6-4": 0.0,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.064,
+          "home_-1.5": 0.167,
+          "home_-1.0": 0.167,
+          "home_-0.5": 0.3504,
+          "home_0": 0.3504,
+          "home_0.5": 0.6144,
+          "home_1.0": 0.6144,
+          "home_1.5": 0.8066,
+          "home_2.5": 0.9228
+        },
+        "ht_ft": {
+          "H/H": 0.206,
+          "H/D": 0.0528,
+          "H/A": 0.0274,
+          "D/H": 0.1204,
+          "D/D": 0.1596,
+          "D/A": 0.1232,
+          "A/H": 0.024,
+          "A/D": 0.0516,
+          "A/A": 0.235
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.5246,
+            "under": 0.4754
+          },
+          "8.5": {
+            "over": 0.4246,
+            "under": 0.5754
+          },
+          "9.5": {
+            "over": 0.3218,
+            "under": 0.6782
+          },
+          "10.5": {
+            "over": 0.245,
+            "under": 0.755
+          },
+          "11.5": {
+            "over": 0.1772,
+            "under": 0.8228
+          },
+          "12.5": {
+            "over": 0.1256,
+            "under": 0.8744
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.8004,
+            "under": 0.1996
+          },
+          "2.5": {
+            "over": 0.586,
+            "under": 0.414
+          },
+          "3.5": {
+            "over": 0.3928,
+            "under": 0.6072
+          },
+          "4.5": {
+            "over": 0.235,
+            "under": 0.765
+          },
+          "5.5": {
+            "over": 0.1294,
+            "under": 0.8706
+          },
+          "6.5": {
+            "over": 0.0624,
+            "under": 0.9376
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.3986,
+        "away": 1.483
+      },
+      "expected_corners": 8.126,
+      "expected_cards": 3.191,
+      "distributions": {
+        "goals_home": [
+          0.2506,
+          0.3446,
+          0.239,
+          0.1098,
+          0.0392,
+          0.0118,
+          0.0044,
+          0.0004
+        ],
+        "goals_away": [
+          0.2392,
+          0.319,
+          0.2536,
+          0.1204,
+          0.0484,
+          0.0156,
+          0.0026,
+          0.0012
+        ],
+        "corners": [
+          0.0018,
+          0.0134,
+          0.036,
+          0.0544,
+          0.0668,
+          0.087,
+          0.099,
+          0.117,
+          0.1,
+          0.1028,
+          0.0768,
+          0.0678,
+          0.0516,
+          0.0356,
+          0.0276,
+          0.0218,
+          0.013,
+          0.0092,
+          0.0054,
+          0.0046,
+          0.0036
+        ],
+        "cards": [
+          0.0598,
+          0.1398,
+          0.2144,
+          0.1932,
+          0.1578,
+          0.1056,
+          0.067,
+          0.0344,
+          0.0164,
+          0.0074,
+          0.0034,
+          0.0006,
+          0.0002
+        ]
+      },
+      "confidence": {
+        "entropy": 1.0865136129449497,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          4.0
+        ]
+      },
+      "n_simulations": 5000,
+      "player_bookings": {
+        "top_bookings": [],
+        "adjustments": {}
+      },
+      "goalscorer": {
+        "home_scorers": [],
+        "away_scorers": [],
+        "top_scorers": []
+      },
+      "odds_comparison": {
+        "h2h": {
+          "leovegas": {
+            "home": 3.05,
+            "away": 2.25,
+            "draw": 3.45
+          },
+          "unibet_uk": {
+            "home": 3.1,
+            "away": 2.25,
+            "draw": 3.4
+          },
+          "betfred_uk": {
+            "home": 3.0,
+            "away": 2.25,
+            "draw": 3.6
+          },
+          "paddypower": {
+            "home": 3.1,
+            "away": 2.15,
+            "draw": 3.5
+          },
+          "skybet": {
+            "home": 3.1,
+            "away": 2.15,
+            "draw": 3.5
+          },
+          "betfair_ex_uk": {
+            "home": 3.25,
+            "away": 2.3,
+            "draw": 3.75
+          },
+          "sport888": {
+            "home": 3.0,
+            "away": 2.25,
+            "draw": 3.3
+          },
+          "williamhill": {
+            "home": 3.0,
+            "away": 2.25,
+            "draw": 3.3
+          },
+          "boylesports": {
+            "home": 3.1,
+            "away": 2.2,
+            "draw": 3.3
+          },
+          "smarkets": {
+            "home": 3.2,
+            "away": 2.26,
+            "draw": 3.75
+          },
+          "ladbrokes_uk": {
+            "home": 2.9,
+            "away": 2.2,
+            "draw": 3.4
+          },
+          "coral": {
+            "home": 2.9,
+            "away": 2.2,
+            "draw": 3.4
+          },
+          "betway": {
+            "home": 2.9,
+            "away": 2.25,
+            "draw": 3.4
+          },
+          "casumo": {
+            "home": 3.05,
+            "away": 2.23,
+            "draw": 3.6
+          },
+          "virginbet": {
+            "home": 2.95,
+            "away": 2.17,
+            "draw": 3.45
+          },
+          "livescorebet": {
+            "home": 2.95,
+            "away": 2.17,
+            "draw": 3.45
+          },
+          "grosvenor": {
+            "home": 3.05,
+            "away": 2.23,
+            "draw": 3.6
+          },
+          "betvictor": {
+            "home": 3.1,
+            "away": 2.15,
+            "draw": 3.5
+          },
+          "betano_uk": {
+            "home": 3.1,
+            "away": 2.15,
+            "draw": 3.5
+          },
+          "matchbook": {
+            "home": 3.3,
+            "away": 2.3,
+            "draw": 3.75
+          },
+          "betfair_sb_uk": {
+            "home": 3.1,
+            "away": 2.15,
+            "draw": 3.5
+          }
+        },
+        "totals": {
+          "2.5": {
+            "over": 1.76,
+            "bookmaker_over": "matchbook",
+            "under": 2.2,
+            "bookmaker_under": "matchbook"
+          }
+        },
+        "bookmaker_home": "matchbook",
+        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_away": "betfair_ex_uk"
+      },
+      "model_disagreement": 0.02953985160815711,
+      "shap_features": [
+        {
+          "feature": "elo_diff",
+          "value": -63.3997062302351,
+          "shap_value": 0.07015485130250454,
+          "shap_abs": 0.08787318505346775
+        },
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 16.351533485161966,
+          "shap_value": 0.07806535065174103,
+          "shap_abs": 0.07806535065174103
+        },
+        {
+          "feature": "home_ewm_shots_for_5",
+          "value": 10.403428463095107,
+          "shap_value": 0.04106859117746353,
+          "shap_abs": 0.04106859117746353
+        },
+        {
+          "feature": "away_form_5",
+          "value": 0.8666666666666667,
+          "shap_value": 0.03654847294092178,
+          "shap_abs": 0.03654847294092178
+        },
+        {
+          "feature": "home_rest_days",
+          "value": 30.0,
+          "shap_value": -0.019844026304781437,
+          "shap_abs": 0.02983709704130888
+        },
+        {
+          "feature": "home_elo",
+          "value": 1498.0964119590217,
+          "shap_value": -0.025977950543165207,
+          "shap_abs": 0.025977950543165207
+        },
+        {
+          "feature": "referee_avg_yellows",
+          "value": 0.0,
+          "shap_value": 0.025143200531601906,
+          "shap_abs": 0.025143200531601906
+        },
+        {
+          "feature": "away_ewm_goals_for_5",
+          "value": 2.2842523252181546,
+          "shap_value": 0.02481384575366974,
+          "shap_abs": 0.02481384575366974
+        },
+        {
+          "feature": "home_ewm_corners_against_10",
+          "value": 5.05745402180928,
+          "shap_value": -0.02397894859313965,
+          "shap_abs": 0.02397894859313965
+        },
+        {
+          "feature": "referee_avg_fouls",
+          "value": 0.0,
+          "shap_value": 0.022259147837758064,
+          "shap_abs": 0.022259147837758064
+        }
+      ],
+      "value_bets": [],
+      "narrative": "Everton vs Man United \u2014 Matchweek 3\n\nOur model rates Man United as 39% favorites (fair odds: 2.59), driven primarily by elo diff, home ewm shots against 5, home ewm shots for 5. Everton's expected goals stand at 1.4 while Man United are projected for 1.5 xG.\n\nThe match has a 55% chance of going over 2.5 goals, with both teams to score probability at 58%. We expect around 8 total corners and 3 cards."
+    },
+    {
+      "match_id": "20260906_Arsenal_Chelsea",
+      "fixture": {
+        "date": "2026-09-06T15:30:00Z",
+        "home_team": "Arsenal",
+        "away_team": "Chelsea",
+        "gameweek": 3,
+        "referee": null,
+        "is_derby": true
+      },
+      "probabilities": {
+        "1x2": {
+          "home": 0.5524,
+          "draw": 0.2472,
+          "away": 0.2004
+        },
+        "over_under": {
+          "0.5": {
+            "over": 0.9326,
+            "under": 0.0674
+          },
+          "1.5": {
+            "over": 0.7842,
+            "under": 0.2158
+          },
+          "2.5": {
+            "over": 0.5452,
+            "under": 0.4548
+          },
+          "3.5": {
+            "over": 0.3262,
+            "under": 0.6738
+          },
+          "4.5": {
+            "over": 0.1606,
+            "under": 0.8394
+          }
+        },
+        "btts": {
+          "yes": 0.539,
+          "no": 0.46099999999999997
+        },
+        "clean_sheet": {
+          "home": 0.3688,
+          "away": 0.1596
+        },
+        "correct_score": {
+          "0-0": 0.0674,
+          "0-1": 0.047,
+          "0-2": 0.032,
+          "0-3": 0.0092,
+          "0-4": 0.0032,
+          "0-5": 0.0008,
+          "0-6": 0.0,
+          "1-0": 0.1014,
+          "1-1": 0.113,
+          "1-2": 0.0596,
+          "1-3": 0.0174,
+          "1-4": 0.0068,
+          "1-5": 0.0012,
+          "1-6": 0.0,
+          "2-0": 0.094,
+          "2-1": 0.0922,
+          "2-2": 0.0556,
+          "2-3": 0.0162,
+          "2-4": 0.0028,
+          "2-5": 0.0004,
+          "2-6": 0.0,
+          "3-0": 0.058,
+          "3-1": 0.0576,
+          "3-2": 0.0304,
+          "3-3": 0.0094,
+          "3-4": 0.002,
+          "3-5": 0.0006,
+          "3-6": 0.0004,
+          "4-0": 0.0318,
+          "4-1": 0.0264,
+          "4-2": 0.0116,
+          "4-3": 0.0066,
+          "4-4": 0.0014,
+          "4-5": 0.0002,
+          "4-6": 0.0004,
+          "5-0": 0.0116,
+          "5-1": 0.0118,
+          "5-2": 0.0056,
+          "5-3": 0.0018,
+          "5-4": 0.0008,
+          "5-5": 0.0004,
+          "5-6": 0.0,
+          "6-0": 0.0034,
+          "6-1": 0.0022,
+          "6-2": 0.0016,
+          "6-3": 0.0004,
+          "6-4": 0.0002,
+          "6-5": 0.0,
+          "6-6": 0.0
+        },
+        "asian_handicap": {
+          "home_-2.5": 0.1558,
+          "home_-1.5": 0.321,
+          "home_-1.0": 0.321,
+          "home_-0.5": 0.5524,
+          "home_0": 0.5524,
+          "home_0.5": 0.7996,
+          "home_1.0": 0.7996,
+          "home_1.5": 0.9246,
+          "home_2.5": 0.9778
+        },
+        "ht_ft": {
+          "H/H": 0.35,
+          "H/D": 0.0474,
+          "H/A": 0.0124,
+          "D/H": 0.1748,
+          "D/D": 0.1556,
+          "D/A": 0.0734,
+          "A/H": 0.0276,
+          "A/D": 0.0442,
+          "A/A": 0.1146
+        },
+        "corners": {
+          "7.5": {
+            "over": 0.7118,
+            "under": 0.2882
+          },
+          "8.5": {
+            "over": 0.5984,
+            "under": 0.4016
+          },
+          "9.5": {
+            "over": 0.4904,
+            "under": 0.5096
+          },
+          "10.5": {
+            "over": 0.3878,
+            "under": 0.6122
+          },
+          "11.5": {
+            "over": 0.2938,
+            "under": 0.7062
+          },
+          "12.5": {
+            "over": 0.2164,
+            "under": 0.7836
+          }
+        },
+        "cards": {
+          "1.5": {
+            "over": 0.9316,
+            "under": 0.0684
+          },
+          "2.5": {
+            "over": 0.8236,
+            "under": 0.1764
+          },
+          "3.5": {
+            "over": 0.653,
+            "under": 0.347
+          },
+          "4.5": {
+            "over": 0.4794,
+            "under": 0.5206
+          },
+          "5.5": {
+            "over": 0.3318,
+            "under": 0.6682
+          },
+          "6.5": {
+            "over": 0.2158,
+            "under": 0.7842
+          }
+        }
+      },
+      "expected_goals": {
+        "home": 1.84,
+        "away": 1.0222
+      },
+      "expected_corners": 9.7308,
+      "expected_cards": 4.6556,
+      "distributions": {
+        "goals_home": [
+          0.1596,
+          0.2994,
+          0.2612,
+          0.1586,
+          0.0784,
+          0.032,
+          0.0078,
+          0.0022
+        ],
+        "goals_away": [
+          0.3688,
+          0.351,
+          0.197,
+          0.0614,
+          0.0172,
+          0.0036,
+          0.0008,
+          0.0002
+        ],
+        "corners": [
+          0.0,
+          0.0024,
+          0.011,
+          0.0214,
+          0.0352,
+          0.053,
+          0.0762,
+          0.089,
+          0.1134,
+          0.108,
+          0.1026,
+          0.094,
+          0.0774,
+          0.0576,
+          0.0516,
+          0.0336,
+          0.0254,
+          0.0156,
+          0.012,
+          0.0066,
+          0.0064
+        ],
+        "cards": [
+          0.0138,
+          0.0546,
+          0.108,
+          0.1706,
+          0.1736,
+          0.1476,
+          0.116,
+          0.0948,
+          0.0546,
+          0.037,
+          0.018,
+          0.0074,
+          0.0022
+        ]
+      },
+      "confidence": {
+        "entropy": 0.9954471155720511,
+        "home_goals_ci": [
+          0.0,
+          4.0
+        ],
+        "away_goals_ci": [
+          0.0,
+          3.0
+        ]
+      },
+      "n_simulations": 5000,
+      "player_bookings": {
+        "top_bookings": [],
+        "adjustments": {}
+      },
+      "goalscorer": {
+        "home_scorers": [],
+        "away_scorers": [],
+        "top_scorers": []
+      },
+      "odds_comparison": {
+        "h2h": {
+          "betfred_uk": {
+            "home": 1.7,
+            "away": 5.0,
+            "draw": 3.75
+          },
+          "paddypower": {
+            "home": 1.7,
+            "away": 4.75,
+            "draw": 3.6
+          },
+          "leovegas": {
+            "home": 1.68,
+            "away": 4.7,
+            "draw": 3.75
+          },
+          "skybet": {
+            "home": 1.7,
+            "away": 4.75,
+            "draw": 3.6
+          },
+          "unibet_uk": {
+            "home": 1.7,
+            "away": 4.75,
+            "draw": 3.8
+          },
+          "betfair_ex_uk": {
+            "home": 1.78,
+            "away": 5.3,
+            "draw": 3.9
+          },
+          "sport888": {
+            "home": 1.73,
+            "away": 4.8,
+            "draw": 3.5
+          },
+          "williamhill": {
+            "home": 1.73,
+            "away": 4.8,
+            "draw": 3.5
+          },
+          "smarkets": {
+            "home": 1.76,
+            "away": 5.4,
+            "draw": 3.8
+          },
+          "boylesports": {
+            "home": 1.67,
+            "away": 5.0,
+            "draw": 3.6
+          },
+          "coral": {
+            "home": 1.7,
+            "away": 4.6,
+            "draw": 3.5
+          },
+          "ladbrokes_uk": {
+            "home": 1.7,
+            "away": 4.6,
+            "draw": 3.5
+          },
+          "betway": {
+            "home": 1.67,
+            "away": 4.75,
+            "draw": 3.6
+          },
+          "casumo": {
+            "home": 1.7,
+            "away": 5.0,
+            "draw": 3.8
+          },
+          "grosvenor": {
+            "home": 1.7,
+            "away": 5.0,
+            "draw": 3.8
+          },
+          "livescorebet": {
+            "home": 1.66,
+            "away": 4.75,
+            "draw": 3.6
+          },
+          "virginbet": {
+            "home": 1.66,
+            "away": 4.75,
+            "draw": 3.6
+          },
+          "betvictor": {
+            "home": 1.67,
+            "away": 4.75,
+            "draw": 3.8
+          },
+          "betano_uk": {
+            "home": 1.67,
+            "away": 4.75,
+            "draw": 3.8
+          },
+          "matchbook": {
+            "home": 1.78,
+            "away": 5.3,
+            "draw": 3.9
+          }
+        },
+        "totals": {
+          "2.5": {
+            "over": 1.87,
+            "bookmaker_over": "matchbook",
+            "under": 2.12,
+            "bookmaker_under": "matchbook"
+          }
+        },
+        "bookmaker_home": "betfair_ex_uk",
+        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_away": "smarkets"
+      },
+      "model_disagreement": 0.031109458267666368,
+      "shap_features": [
+        {
+          "feature": "home_ewm_shots_against_5",
+          "value": 8.361246160492795,
+          "shap_value": -0.08977436274290085,
+          "shap_abs": 0.08977436274290085
+        },
+        {
+          "feature": "elo_diff",
+          "value": 112.73007428041274,
+          "shap_value": -0.038145873695611954,
+          "shap_abs": 0.08276389166712761
+        },
+        {
+          "feature": "home_ewm_goals_against_10",
+          "value": 0.5897039233575525,
+          "shap_value": 0.04580090194940567,
+          "shap_abs": 0.04580090194940567
+        },
+        {
+          "feature": "home_elo",
+          "value": 1633.1408177628614,
+          "shap_value": 0.045412179082632065,
+          "shap_abs": 0.045412179082632065
+        },
+        {
+          "feature": "home_rest_days",
+          "value": 30.0,
+          "shap_value": -0.04034142568707466,
+          "shap_abs": 0.04034142568707466
+        },
+        {
+          "feature": "away_ewm_yellows_10",
+          "value": 2.6313977044325703,
+          "shap_value": -0.03877081722021103,
+          "shap_abs": 0.03877081722021103
+        },
+        {
+          "feature": "away_ewm_goals_against_10",
+          "value": 1.7999031427291132,
+          "shap_value": -0.0329853780567646,
+          "shap_abs": 0.0329853780567646
+        },
+        {
+          "feature": "referee_avg_yellows",
+          "value": 0.0,
+          "shap_value": 0.030205368995666504,
+          "shap_abs": 0.030205368995666504
+        },
+        {
+          "feature": "home_ewm_corners_against_5",
+          "value": 3.4087799079658567,
+          "shap_value": -0.02882356569170952,
+          "shap_abs": 0.02882356569170952
+        },
+        {
+          "feature": "away_rest_days",
+          "value": 30.0,
+          "shap_value": -0.028340885415673256,
+          "shap_abs": 0.028340885415673256
+        }
+      ],
+      "value_bets": [],
+      "narrative": "Arsenal vs Chelsea \u2014 Matchweek 3\n\nOur model rates Arsenal as 55% favorites (fair odds: 1.81), driven primarily by home ewm shots against 5, elo diff, home ewm goals against 10. Arsenal's expected goals stand at 1.8 while Chelsea are projected for 1.0 xG.\n\nThe match has a 55% chance of going over 2.5 goals, with both teams to score probability at 54%. We expect around 10 total corners and 5 cards."
     }
   ]
 }

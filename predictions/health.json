@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-08-31T12:01:55.911140Z",
+  "last_updated": "2026-09-01T10:41:25.514113Z",
   "gameweek": 3,
-  "n_predictions": 1,
+  "n_predictions": 10,
   "status": "healthy",
   "sources": {
     "bootstrap": {
@@ -16,38 +16,38 @@
   "degraded": [],
   "forecast_validation_status": "collecting",
   "model_metrics": {
-    "n_evaluated_matches": 10,
-    "brier_1x2_home": 0.262614668,
-    "brier_1x2_draw": 0.11644571600000002,
-    "brier_1x2_away": 0.17492591200000002,
-    "log_loss_home": 0.720052676332242,
-    "rps_mean": 0.21877029,
-    "ece": 0.25742,
-    "brier_ou25": 0.22534750799999997,
-    "brier_btts": 0.266464032
+    "n_evaluated_matches": 20,
+    "brier_1x2_home": 0.23419205400000004,
+    "brier_1x2_draw": 0.16492629800000003,
+    "brier_1x2_away": 0.190214952,
+    "log_loss_home": 0.6608593946386492,
+    "rps_mean": 0.21220350300000002,
+    "ece": 0.09491000000000004,
+    "brier_ou25": 0.233331664,
+    "brier_btts": 0.25646864599999997
   },
   "calibration": {
     "bins": [
       {
         "bin_center": 0.35000000000000003,
-        "predicted_mean": 0.3584,
-        "actual_mean": 0.6666666666666666,
-        "count": 3
+        "predicted_mean": 0.33903999999999995,
+        "actual_mean": 0.4,
+        "count": 5
       },
       {
         "bin_center": 0.45,
-        "predicted_mean": 0.43110000000000004,
-        "actual_mean": 0.5,
-        "count": 4
+        "predicted_mean": 0.43104,
+        "actual_mean": 0.4,
+        "count": 10
       },
       {
         "bin_center": 0.55,
-        "predicted_mean": 0.5420666666666666,
-        "actual_mean": 1.0,
-        "count": 3
+        "predicted_mean": 0.5433999999999999,
+        "actual_mean": 0.8,
+        "count": 5
       }
     ],
-    "ece": 0.25742
+    "ece": 0.09491000000000004
   },
   "pipeline_version": "4.1.0",
   "models": {
@@ -89,11 +89,11 @@
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 495,
+        "none": 497,
         "open_ended": 49,
         "permanent": 51,
-        "graded": 21,
         "dated_eligibility": 1,
+        "graded": 19,
         "dated_fitness": 9
       },
       "n_evidence_conflicts": 0
