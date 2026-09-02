@@ -1,18 +1,72 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-02T18:07:50.658664Z",
-  "n_dropped": 239,
+  "generated_at": "2026-09-02T21:03:34.341822Z",
+  "n_dropped": 234,
   "dropped_by_source": {
-    "bbc_football": 119,
-    "hayters": 27,
-    "sky_football": 93
+    "bbc_football": 117,
+    "hayters": 26,
+    "sky_football": 91
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 329,
+  "n_articles": 324,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "0eca5aff42c81259",
+      "headline": "Papers: Wantaway Spurs striker Richarlison agrees Trabzonspor terms",
+      "summary": "The top stories and transfer rumours from Thursday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13580536/richarlison-transfer-news-tottenham-striker-agrees-terms-with-trabzonspor-paper-talk",
+      "claimed_at": "2026-09-02T21:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "47dfcaf692eee654",
+      "headline": "Man Utd sign Bernal from Washington Spirit",
+      "summary": "Manchester United have completed the signing of Mexico international Rebeca Bernal from Washington Spirit.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c780weq4146o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-02T19:47:24Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "c77120175afce95e",
+      "headline": "Spurs latest: Club braced for Richarlison approach from Trabzonspor",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-02T18:36:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "fc7b106386baa0c3",
       "headline": "Spurs latest: Club braced for Richarlison approach from Turkish side",
@@ -62,6 +116,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "c4ab0e79b1c3fbb6",
+      "headline": "Sunderland latest: Fofana FINALLY arrives in North East as Adingra leaves",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-02T18:00:00Z",
+      "players": [
+        {
+          "element_id": 546,
+          "name": "Adingra",
+          "club": "SUN",
           "held": null
         }
       ],
@@ -806,24 +878,6 @@
       "touches_squad": null
     },
     {
-      "digest": "3812149368e70d2e",
-      "headline": "Deal off! Monaco pull out of selling Fernandez replacement Camara to Chelsea",
-      "summary": "Monaco have pulled out of the deal to sell Lamine Camara to Chelsea - who feel the French club have acted in an extraordinary and deeply unprofessional way.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13580189/lamine-camara-monaco-pull-out-of-selling-midfielder-to-chelsea-in-47m-deal-after-blues-agreed-deal-for-enzo-fernandez-replacement",
-      "claimed_at": "2026-09-01T23:15:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "a6f0c1a2040b1ee2",
       "headline": "Brighton sign midfielder Chema Andres from Stuttgart",
       "summary": "Brighton secure deadline day deal to sign former Real Madrid midfielder Chema Andres from Stuttgart for \u00a315.5m",
@@ -854,42 +908,6 @@
           "element_id": 240,
           "name": "Iroegbunam",
           "club": "HUL",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "d28844a7782300dc",
-      "headline": "Alvarez stays at Atletico - so are Arsenal too short in attack?",
-      "summary": "No Julian Alvarez to Arsenal. He joins Morgan Rogers and Vinicius Junior in not moving to the Premier League champions this summer. And Mikel Arteta has missed out on the star attacker he wanted.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13579965/arsenal-fail-to-sign-julian-alvarez-and-with-no-elite-attacker-in-are-mikel-artetas-team-short-in-the-forward-options",
-      "claimed_at": "2026-09-01T23:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "cf312d1037e7042d",
-      "headline": "Man City latest: Fernandez posts Chelsea farewell message",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-01T22:57:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
           "held": null
         }
       ],
@@ -986,24 +1004,6 @@
           "element_id": 578,
           "name": "Mudryk",
           "club": "TOT",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1f824bbef0c37004",
-      "headline": "Camara's \u00a347.1m move from Monaco to Chelsea collapses",
-      "summary": "Lamine Camara is staying at Monaco after the Senegal midfielder's \u00a347.1m move to Chelsea collapses.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ce8emxm7xmzo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-01T22:26:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1586,6 +1586,24 @@
       "touches_squad": null
     },
     {
+      "digest": "965163b9d9abd804",
+      "headline": "\u2018He\u2019s fit and available\u2019 \u2013 Arteta on Arsenal star\u2019s positive progress",
+      "summary": "Mikel Arteta is confident that Martin Odegaard will get back to his best this season after a frustrating last campaign. Odegaard struggled with injury problems last season and did not manage to hit the level of form that had previ",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hes-fit-and-available-arteta-on-arsenal-stars-positive-progress/",
+      "claimed_at": "2026-08-30T21:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
       "digest": "f8f07230557cd353",
       "headline": "FPL notes: Pedro \u201cterrific\u201d+ \u00a34.5m midfielder scores",
       "summary": "Plus, Chelsea\u2019s shaky defence + Caicedo injury latest The post FPL notes: Pedro \u201cterrific\u201d+ \u00a34.5m midfielder scores appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1784,30 +1802,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "9f93ce00a82c549b",
-      "headline": "Crystal Palace v Man City team news: Cherki starts, Bouaddi a sub",
-      "summary": "Four changes for Palace, one for City The post Crystal Palace v Man City team news: Cherki starts, Bouaddi a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/28/crystal-palace-v-man-city-team-news-cherki-starts-bouaddi-a-sub",
-      "claimed_at": "2026-08-28T18:20:00Z",
-      "players": [
-        {
-          "element_id": 399,
-          "name": "Cherki",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 616,
-          "name": "Bouaddi",
-          "club": "MCI",
           "held": null
         }
       ],
