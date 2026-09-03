@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-03T18:12:30.182639Z",
+  "generated_at": "2026-09-03T21:29:28.094162Z",
   "gameweek": 3,
   "players": [
     {
@@ -3824,6 +3824,93 @@
       "needs_attention": false
     },
     {
+      "element_id": 407,
+      "player_name": "Echeverri",
+      "club": "Man City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "permanence_beats_gradation",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "995394b4a0066c90",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-03T15:41:24.710479Z",
+              "observed_at": "2026-09-03T18:13:03.623130Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "permanent_exit",
+          "resolved_value": {
+            "kind": "loan",
+            "club": "Benfica"
+          },
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8099e7a7255ec49d",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "permanent_exit",
+              "value": {
+                "kind": "loan",
+                "club": "Benfica"
+              },
+              "claimed_at": "2026-09-03T15:41:24.710479Z",
+              "observed_at": "2026-09-03T18:13:03.623130Z",
+              "quote": "Has joined Benfica on loan for the rest of the season",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "u",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "b90002f87e3c7834",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "u",
+              "claimed_at": "2026-09-03T15:41:24.710479Z",
+              "observed_at": "2026-09-03T18:13:03.623130Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 409,
       "player_name": "Mukasa",
       "club": "Man City",
@@ -5070,10 +5157,10 @@
     }
   ],
   "counts": {
-    "n_claims": 703,
-    "n_players_with_claims": 146,
-    "n_players_shown": 61,
+    "n_claims": 733,
+    "n_players_with_claims": 149,
+    "n_players_shown": 62,
     "n_escalations": 10,
-    "n_players_resolved": 72
+    "n_players_resolved": 74
   }
 }
