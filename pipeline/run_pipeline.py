@@ -1611,8 +1611,43 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             "referee_profiles_count": len(referee_profiles),
             "fpl": fpl_status,
         }
-        with open(PREDICTIONS_DIR / "health.json", "w") as f:
-            json.dump(health_data, f, indent=2, default=str)
+        # MERGE onto what is already there, do not replace it.
+        #
+        # `health.json` has two writers on different cadences: this pipeline daily, and
+        # `run_validation` weekly (Sundays 10:00 UTC, per .github/workflows/validate.yml).
+        # Validation already merges — it reads the file and `update`s its own keys onto it
+        # — but this side rebuilt the whole document and wrote it with "w", so every
+        # verification result was destroyed by the next daily run.
+        #
+        # Measured in the history of the file: 2152c2e (2026-08-30T14:47) carries
+        # `validated_at` and `ledger_integrity`; 270be90 (2026-08-31T12:01), the next
+        # daily run, carries neither. A weekly check whose output survives twenty hours
+        # is a check nobody reads — which is the exact failure the ledger verification and
+        # the missing-seal report were added to end.
+        #
+        # This is the same defect as the one fixed in `public_xp.publish_from_artifact`:
+        # two publishers of one artifact, and the frequent one silently dropping the rare
+        # one's contribution. The shared keys below are still overwritten, because for
+        # those this run IS the fresher source; only the keys validation alone writes are
+        # carried forward. Each carries its own timestamp, so a reader can tell how old
+        # the verification is.
+        health_path = PREDICTIONS_DIR / "health.json"
+        VALIDATION_OWNED = (
+            "validated_at", "artifact_contract", "prediction_age_hours",
+            "ledger_integrity", "ledger_integrity_ok", "missing_seals", "eval_targets",
+        )
+        try:
+            previous = json.loads(health_path.read_text())
+        except Exception:  # noqa: BLE001 - absent or unreadable is the normal first run
+            previous = {}
+        carried = {k: previous[k] for k in VALIDATION_OWNED if k in previous}
+        if carried:
+            logger.info(
+                "  carrying %d validation field(s) forward: %s",
+                len(carried), ", ".join(sorted(carried)),
+            )
+        with open(health_path, "w") as f:
+            json.dump({**carried, **health_data}, f, indent=2, default=str)
         logger.info("  health.json exported")
     except Exception as e:
         logger.warning(f"  health.json export failed: {e}")
