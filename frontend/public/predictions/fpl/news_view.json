@@ -1,18 +1,162 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-03T11:18:46.513467Z",
-  "n_dropped": 225,
+  "generated_at": "2026-09-03T15:06:32.298272Z",
+  "n_dropped": 219,
   "dropped_by_source": {
-    "bbc_football": 113,
-    "hayters": 24,
-    "sky_football": 88
+    "bbc_football": 110,
+    "hayters": 25,
+    "sky_football": 84
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 315,
+  "n_articles": 309,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "9883ad28ad4aac00",
+      "headline": "Palace latest: 'Sarr needs time after failed Liverpool move' - Sage",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-03T14:52:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "cfa364501bd96e31",
+      "headline": "Leeds' Rodon out for up to 10 weeks with hamstring injury",
+      "summary": "Leeds United manager Daniel Farke says centre-back Joe Rodon will be out for eight to 10 weeks because of a \"serious hamstring injury\".",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/crm93nv8n7yo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-03T14:39:30Z",
+      "players": [
+        {
+          "element_id": 329,
+          "name": "Rodon",
+          "club": "LEE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "90cdea2719e192c5",
+      "headline": "Leeds latest: Timescale for Rodon injury return revealed",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-03T14:26:00Z",
+      "players": [
+        {
+          "element_id": 329,
+          "name": "Rodon",
+          "club": "LEE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "46de5b9691ed9f74",
+      "headline": "Newcastle boss Jaissle maintains stance on star man despite Manchester United links",
+      "summary": "Matthias Jaissle has outlined his aim for Lewis Hall to remain at Newcastle United for the long term. Hall was the subject of interest from Manchester United during the summer transfer window, although no formal bid",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-boss-jaissle-maintains-stance-on-star-man-despite-manchester-united-links/",
+      "claimed_at": "2026-09-03T14:14:37Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "0c99ea5ba426c499",
+      "headline": "Le Bris admits Sunderland star could still leave the club this summer",
+      "summary": "Regis Le Bris admitted a move away from the club for Chemsdine Talbi is still possible this summer. Talbi has been linked with a move to Turkey, with both Fenerbahce and Galatasaray interested. He has also been omitted from Sunder",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/le-bris-admits-sunderland-star-could-still-leave-the-club-this-summer/",
+      "claimed_at": "2026-09-03T13:20:20Z",
+      "players": [
+        {
+          "element_id": 549,
+          "name": "Talbi",
+          "club": "SUN",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "fe39d337a1879dc4",
+      "headline": "Sage insists Sarr needs time to \u2018digest\u2019 failed Liverpool move",
+      "summary": "Pierre Sage insisted Ismaila Sarr needs time to &#8220;digest&#8221; his failed move to Liverpool and revealed that Jean-Philippe Mateta will be out for at least three weeks. Sarr and Mateta have both been linked with moves away from the",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/sage-insists-sarr-needs-time-to-digest-failed-liverpool-move/",
+      "claimed_at": "2026-09-03T13:09:25Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "fe0ca695938b7f4c",
+      "headline": "Farke reveals injury blow for Leeds star",
+      "summary": "Daniel Farke revealed that Joe Rodon has suffered a severe hamstring injury and will be out for eight to 10 weeks. Rodon was taken off early in Leeds' 1-1 draw with Brentford last weekend and Farke gave an update on the defender's fitness. &#8220;Bad news wit",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/farke-reveals-injury-blow-for-leeds-star/",
+      "claimed_at": "2026-09-03T13:02:00Z",
+      "players": [
+        {
+          "element_id": 329,
+          "name": "Rodon",
+          "club": "LEE",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "5974f37d8ece63d3",
+      "headline": "Jakirovic reveals he will be signing a new contract with Hull City",
+      "summary": "Hull City boss, Sergej Jakirovic, revealed that he will be signing a new deal with the club very soon. Jakirovic's current deal expires in 2027, although Hull do have an option to extend it for another year. Reports had suggested tha",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/jakirovic-reveals-he-will-be-signing-a-new-contract-with-hull-city/",
+      "claimed_at": "2026-09-03T12:42:15Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "eea613a5e58512fb",
       "headline": "Burnley boss Hayen on club\u2019s failure to sign Flemming replacement on deadline day",
@@ -74,6 +218,30 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "8b6ca939eeeec98a",
+      "headline": "Man Utd latest: Rashford looks happy to be back, says Mbeumo",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-03T10:00:00Z",
+      "players": [
+        {
+          "element_id": 427,
+          "name": "Mbeumo",
+          "club": "MUN",
+          "held": null
+        },
+        {
+          "element_id": 429,
+          "name": "Rashford",
+          "club": "MUN",
           "held": null
         }
       ],
@@ -350,6 +518,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "53c00022d7591f73",
+      "headline": "Sunderland latest: Al Ittihad in talks to sign Talbi",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-02T18:00:00Z",
+      "players": [
+        {
+          "element_id": 549,
+          "name": "Talbi",
+          "club": "SUN",
           "held": null
         }
       ],
@@ -735,6 +921,12 @@
           "name": null,
           "club": null,
           "held": null
+        },
+        {
+          "element_id": 652,
+          "name": "Azeez",
+          "club": "BHA",
+          "held": null
         }
       ],
       "touches_squad": null
@@ -926,24 +1118,6 @@
       "touches_squad": null
     },
     {
-      "digest": "f0c5bcdabb06df38",
-      "headline": "Balogun walks away from Everton deal",
-      "summary": "Everton's move for Monaco striker Folarin Balogun has fallen through after a change of heart from the player - after the deal scuppered Chelsea's chances of signing Lamine Camara.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13580201/folarin-balogun-monaco-strikers-move-to-everton-falls-through-after-deal-scuppered-chelseas-chances-of-signing-lamine-camara",
-      "claimed_at": "2026-09-02T00:21:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "341cd8611b502f20",
       "headline": "Palace sign Chilwell and Timber after deadline",
       "summary": "Crystal Palace have signed internationals Ben Chilwell and Quinten Timber on permanent deals",
@@ -968,24 +1142,6 @@
       "touches_squad": null
     },
     {
-      "digest": "c87340405b9fb41e",
-      "headline": "Sunderland complete Fofana signing after dramatic saga",
-      "summary": "Sunderland have finally completed the signing of Lyon winger Malick Fofana after a dramatic Deadline Day transfer saga involving two private jets and the player changing his mind multiple times.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13580106/malick-fofana-sunderland-finally-complete-signing-of-lyon-winger-after-deadline-day-drama-with-crystal-palace",
-      "claimed_at": "2026-09-02T00:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "61659fad1f2dee68",
       "headline": "Everton sell Scotland's Patterson to Torino",
       "summary": "Everton sell Scotland right-back Nathan Patterson to Torino for an undisclosed fee.",
@@ -1004,24 +1160,6 @@
       "touches_squad": null
     },
     {
-      "digest": "699534774d32986d",
-      "headline": "Everton latest: Toffees only have ONE striker until January",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-02T00:04:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "b153fdff9808f8cd",
       "headline": "Balogun's Everton deal collapses after he walks away",
       "summary": "Everton's pursuit of Folarin Balogun from Monaco collapses after Balogun decides against move.",
@@ -1029,24 +1167,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c780e6q84l4o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-01T23:41:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "ad8e7990c6a4fcba",
-      "headline": "Fofana seals \u00a330m move to Sunderland",
-      "summary": "Sunderland have beaten Crystal Palace to the signing of Malick Fofana from Lyon.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c0m31e8v9jgo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-01T23:34:50Z",
       "players": [
         {
           "element_id": 0,
@@ -1430,24 +1550,6 @@
       "touches_squad": null
     },
     {
-      "digest": "4729d55070846c09",
-      "headline": "Liverpool sign Barcola from PSG \u2013 and hope for another winger signing before deadline",
-      "summary": "Liverpool have completed the signing of Bradley Barcola from Paris Saint-Germain. The French forward has put pen to paper on a long-term contract with the Premier League champions, joining in a deal worth \u00a3120m inc",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-sign-barcola-from-psg-and-hope-for-another-winger-signing-before-deadline/",
-      "claimed_at": "2026-08-31T14:15:00Z",
-      "players": [
-        {
-          "element_id": 360,
-          "name": "Bradley",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "247f060da9deaeb3",
       "headline": "FPL notes: Isidor v Brobbey, Mukiele + Ballard bag DefCon",
       "summary": "A few observations from Sunderland 1-0 Fulham The post FPL notes: Isidor v Brobbey, Mukiele + Ballard bag DefCon appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1478,60 +1580,6 @@
           "element_id": 553,
           "name": "Isidor",
           "club": "SUN",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "59afe83fec514c57",
-      "headline": "Man City eye more signings after completing Allan deal but youngster set for exit",
-      "summary": "Manchester City have announced the signing of Brazilian winger Allan Elias from Palmeiras. The 22-year-old has signed a five-year contract at the Etihad Stadium, keeping him with Manchester City until the summer of 203",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-eye-more-signings-after-completing-allan-deal/",
-      "claimed_at": "2026-08-31T12:00:00Z",
-      "players": [
-        {
-          "element_id": 410,
-          "name": "Monga",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 481,
-          "name": "Anderson",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 587,
-          "name": "Rulli",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 616,
-          "name": "Bouaddi",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1fe7570a9d858b2d",
-      "headline": "Arsenal triple exit close \u2013 latest transfer reports",
-      "summary": "Gabriel Martinelli and Gabriel Jesus both look set to leave Arsenal before the transfer window shuts. Barcelona have agreed an \u00a38.6million deal with Arsenal for Jesus. Martinelli is also heading for an exit, with The Athletic reporting that Al Hila",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-triple-exit-close-latest-transfer-reports/",
-      "claimed_at": "2026-08-31T11:36:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": null
         }
       ],
@@ -1616,54 +1664,6 @@
           "element_id": 616,
           "name": "Bouaddi",
           "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "2f497550b2117ace",
-      "headline": "Farke on big Leeds United injury worry and Gnonto\u2019s future following draw with Brentford",
-      "summary": "Daniel Farke is hopeful Joe Rodon has not suffered a serious hamstring injury after the Leeds United defender was forced off during the 1-1 draw with Brentford. Rodon was unable to continue ten minutes before ha",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/farke-on-big-leeds-united-injury-worry-and-gnontos-future-following-draw-with-brentford/",
-      "claimed_at": "2026-08-30T21:46:04Z",
-      "players": [
-        {
-          "element_id": 329,
-          "name": "Rodon",
-          "club": "LEE",
-          "held": null
-        },
-        {
-          "element_id": 341,
-          "name": "Gnonto",
-          "club": "LEE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "745881a6ec2b479a",
-      "headline": "Le Bris issues latest update on Sunderland star\u2019s injury concern after beating Fulham",
-      "summary": "R\u00e9gis Le Bris is hopeful Habib Diarra has avoided a serious injury after the Sunderland midfielder was forced off during the latter stages of the 1-0 victory over Fulham. Diarra was introduced shortly after the hou",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/le-bris-issues-latest-update-on-sunderland-stars-injury-concern-after-beating-fulham/",
-      "claimed_at": "2026-08-30T21:33:36Z",
-      "players": [
-        {
-          "element_id": 543,
-          "name": "Diarra",
-          "club": "SUN",
-          "held": null
-        },
-        {
-          "element_id": 553,
-          "name": "Isidor",
-          "club": "SUN",
           "held": null
         }
       ],
@@ -1766,30 +1766,6 @@
           "element_id": 401,
           "name": "Marmoush",
           "club": "TOT",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "43108c74980b8468",
-      "headline": "3pm team news: Ndiaye + Garner start, Awoniyi in for Simms",
-      "summary": "Coventry v Hull and Bournemouth v Everton are our two matches this afternoon The post 3pm team news: Ndiaye + Garner start, Awoniyi in for Simms appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/29/3pm-team-news-ndiaye-garner-start-awoniyi-in-for-simms",
-      "claimed_at": "2026-08-29T13:35:00Z",
-      "players": [
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 239,
-          "name": "Garner",
-          "club": "EVE",
           "held": null
         }
       ],
