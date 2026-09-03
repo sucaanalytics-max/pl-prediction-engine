@@ -1221,9 +1221,23 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 "status": (
                     str(row["status"]) if pd.notna(row.get("status")) else None
                 ),
+                # `chance_of_playing`, NOT `chance_of_playing_next_round`.
+                #
+                # `build_player_stats` renames FPL's field on the way in
+                # (fpl_api.py:366), and this read the ORIGINAL name — so `row.get`
+                # returned None, `pd.notna(None)` was False, and the field took its
+                # else-branch on every row since it was added. Measured against the live
+                # bootstrap: the column holds 218 non-null values (147 at 0, 54 at 100,
+                # 15 at 75, one each at 50 and 25) and none of them reached the file.
+                #
+                # Undetectable without looking for it: the producer was right, this was
+                # syntactically valid, the artifact was well-formed, and the field is
+                # nullable — so an all-null column read as "FPL told us nothing" rather
+                # than "we asked the wrong question". `test_player_stats_export.py`
+                # asserts the column name on both sides.
                 "chance_of_playing": (
-                    int(row["chance_of_playing_next_round"])
-                    if pd.notna(row.get("chance_of_playing_next_round"))
+                    int(row["chance_of_playing"])
+                    if pd.notna(row.get("chance_of_playing"))
                     else None
                 ),
             })
