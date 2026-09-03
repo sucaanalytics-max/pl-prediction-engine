@@ -1,18 +1,180 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-03T06:12:25.999961Z",
-  "n_dropped": 224,
+  "generated_at": "2026-09-03T11:18:46.513467Z",
+  "n_dropped": 225,
   "dropped_by_source": {
     "bbc_football": 113,
-    "hayters": 23,
+    "hayters": 24,
     "sky_football": 88
   },
   "window_days": 5,
   "squad_known": false,
-  "n_articles": 314,
+  "n_articles": 315,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "eea613a5e58512fb",
+      "headline": "Burnley boss Hayen on club\u2019s failure to sign Flemming replacement on deadline day",
+      "summary": "Nicky Hayen has revealed Burnley had a deal for a replacement striker collapse just hours before the transfer deadline. Zian Flemming departed to join Ipswich Town on Tuesday night. \u201cIt\u2019s really unfortunate, of course,",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/burnley-boss-hayen-on-clubs-failure-to-sign-flemming-replacement-on-deadline-day/",
+      "claimed_at": "2026-09-03T11:09:30Z",
+      "players": [
+        {
+          "element_id": 640,
+          "name": "Flemming",
+          "club": "IPS",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ac2aa95734b49c52",
+      "headline": "Iraola happy with signings as Barcola set for debut",
+      "summary": "Manager Andoni Iraola discusses Liverpool's transfer business, the arrival of Bradley Barcola and keeping Cody Gakpo.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c14dx8eze1do?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-03T10:58:42Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ddf2680b47b5659c",
+      "headline": "Racist abuse of new signing Vaz abhorrent - Hull",
+      "summary": "Hull City criticise the \"abhorrent racist abuse\" directed at new signing Robinio Vaz when they announced his signing.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/clyeq3v7829o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-03T10:28:25Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "ada20a35285da417",
+      "headline": "Ex-Man Utd assistant Queiroz returns as Ghana boss",
+      "summary": "Carlos Queiroz is reappointed as head coach of Ghana's men's national team, two months after he appeared to step down following their exit from the World Cup.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/clyeqly7r0po?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-03T09:59:29Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "cb4b3c7f4110f39e",
+      "headline": "Liverpool latest: Barcola to make debut vs Ipswich? Iraola's verdict...",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-03T09:40:00Z",
+      "players": [
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "6a3d9dc7edbed03d",
+      "headline": "Iraola reveals if Liverpool star is ready to make debut against Ipswich",
+      "summary": "Andoni Iraola revealed that Bradley Barcola could make his Liverpool debut against Ipswich Town on Friday. The winger joined the club from Paris St. Germain for a deal worth over \u00a3100 million, including add-ons. &#8220;We are ve",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/iraola-reveals-whether-liverpool-new-star-bradley-barcola-could-make-debut-against-ipswich/",
+      "claimed_at": "2026-09-03T09:38:02Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": null
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "b35f75ddfe75dd3c",
+      "headline": "Olid promises 'brave' Man Utd with new-look style",
+      "summary": "New Manchester United manager Eva Olid has urged her players to be \"brave\" and have an \"attacking mindset\" this season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq5xwd2el9zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-03T09:00:39Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
+    {
+      "digest": "701d1b1b610b6b7f",
+      "headline": "Liverpool spent big but this squad is still imbalanced and it could be a problem",
+      "summary": "It might be surprising to discover that Liverpool's net spend this summer was actually bigger than it was last summer. Another &#163;200m plus invested. But Andoni Iraola finishes the transfer window with more questions",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13580278/liverpools-first-transfer-window-under-andoni-iraola-sees-bradley-barcola-sign-but-this-squad-is-still-not-balanced",
+      "claimed_at": "2026-09-03T09:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": null
+        }
+      ],
+      "touches_squad": null
+    },
     {
       "digest": "650a029573e1a2e1",
       "headline": "Aston Villa latest: Bailey joins Greek side in permanent move",
@@ -860,24 +1022,6 @@
       "touches_squad": null
     },
     {
-      "digest": "c8a327518a420eb8",
-      "headline": "Record-breaking transfer spend but is anyone really happy?",
-      "summary": "It sums up a wild Transfer Deadline Day that the British transfer record was matched in the final hours of the window. Enzo Fernandez's move from Chelsea to Manchester City completed an extraordinary summer in which spending went stratospher",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13580082/transfer-deadline-day-brings-record-spending-but-will-any-money-be-enough-for-these-premier-league-clubs",
-      "claimed_at": "2026-09-02T00:00:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "b153fdff9808f8cd",
       "headline": "Balogun's Everton deal collapses after he walks away",
       "summary": "Everton's pursuit of Folarin Balogun from Monaco collapses after Balogun decides against move.",
@@ -908,78 +1052,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "d9c46a53f41b3e74",
-      "headline": "Man City sign Fernandez in British-record-equalling deal",
-      "summary": "Manchester City have signed Enzo Fernandez from Chelsea for a joint-British-record fee of &#163;125m.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13579972/enzo-fernandez-transfer-news-man-city-sign-midfielder-from-chelsea-in-british-record-equalling-125m-deal",
-      "claimed_at": "2026-09-01T23:30:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1bb8d312203a5d94",
-      "headline": "Deadlines, acrimony and a record as Man City back Maresca for Fernandez deal",
-      "summary": "The summer's longest-running transfer saga ends with Manchester City paying a joint-British record fee to bring in midfielder Enzo Fernandez from Chelsea.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cz0z377mxero?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-01T23:16:59Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "a6f0c1a2040b1ee2",
-      "headline": "Brighton sign midfielder Chema Andres from Stuttgart",
-      "summary": "Brighton secure deadline day deal to sign former Real Madrid midfielder Chema Andres from Stuttgart for \u00a315.5m",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cdx5e590qqeo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-01T23:13:16Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "19962e21c13e3111",
-      "headline": "Hull sign six players including \u00a322m Iroegbunam from Everton",
-      "summary": "Hull City sign six players on transfer deadline day including midfielder Tim Iroegbunam from Everton and forward Robinio Vaz from Roma.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cje8x575v51o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-01T23:04:13Z",
-      "players": [
-        {
-          "element_id": 240,
-          "name": "Iroegbunam",
-          "club": "HUL",
           "held": null
         }
       ],
@@ -1598,24 +1670,6 @@
       "touches_squad": null
     },
     {
-      "digest": "965163b9d9abd804",
-      "headline": "\u2018He\u2019s fit and available\u2019 \u2013 Arteta on Arsenal star\u2019s positive progress",
-      "summary": "Mikel Arteta is confident that Martin Odegaard will get back to his best this season after a frustrating last campaign. Odegaard struggled with injury problems last season and did not manage to hit the level of form that had previ",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/hes-fit-and-available-arteta-on-arsenal-stars-positive-progress/",
-      "claimed_at": "2026-08-30T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
       "digest": "f8f07230557cd353",
       "headline": "FPL notes: Pedro \u201cterrific\u201d+ \u00a34.5m midfielder scores",
       "summary": "Plus, Chelsea\u2019s shaky defence + Caicedo injury latest The post FPL notes: Pedro \u201cterrific\u201d+ \u00a34.5m midfielder scores appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1736,66 +1790,6 @@
           "element_id": 239,
           "name": "Garner",
           "club": "EVE",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "8a29db98177936c8",
-      "headline": "Liverpool v Forest team news: Munoz starts, Delap a sub",
-      "summary": "Two changes for Liverpool and one for Forest from last weekend The post Liverpool v Forest team news: Munoz starts, Delap a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/29/liverpool-v-forest-team-news-munoz-starts-delap-a-sub",
-      "claimed_at": "2026-08-29T11:15:00Z",
-      "players": [
-        {
-          "element_id": 167,
-          "name": "Delap",
-          "club": "NFO",
-          "held": null
-        },
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": null
-        }
-      ],
-      "touches_squad": null
-    },
-    {
-      "digest": "1bac7e860a83c057",
-      "headline": "FPL notes: Cherki \u201cs**t\u201d, Foden threat, Mateta injury + Haaland brace",
-      "summary": "Looking back on Crystal Palace 1-4 Man City The post FPL notes: Cherki &#8220;s**t&#8221;, Foden threat, Mateta injury + Haaland brace appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/08/29/fpl-notes-cherki-st-foden-threat-mateta-injury-haalands-back",
-      "claimed_at": "2026-08-29T10:15:00Z",
-      "players": [
-        {
-          "element_id": 223,
-          "name": "Mateta",
-          "club": "CRY",
-          "held": null
-        },
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 399,
-          "name": "Cherki",
-          "club": "MCI",
-          "held": null
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
           "held": null
         }
       ],
