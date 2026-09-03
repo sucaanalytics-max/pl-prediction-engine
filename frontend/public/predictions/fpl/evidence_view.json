@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-03T21:29:28.094162Z",
+  "generated_at": "2026-09-03T23:39:03.516830Z",
   "gameweek": 3,
   "players": [
     {
@@ -4664,63 +4664,6 @@
       "needs_attention": false
     },
     {
-      "element_id": 488,
-      "player_name": "I.Sangar\u00e9",
-      "club": "Nott'm Forest",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 0,
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "e16c25ca04d5f9d3",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 0,
-              "claimed_at": "2026-08-28T09:30:07.471668Z",
-              "observed_at": "2026-08-31T21:12:31.840653Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "i",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "ba0b9157d7eea13d",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "i",
-              "claimed_at": "2026-08-28T09:30:07.471668Z",
-              "observed_at": "2026-08-31T21:12:31.840653Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 0,
-      "needs_attention": false
-    },
-    {
       "element_id": 511,
       "player_name": "Souza",
       "club": "Spurs",
@@ -5157,10 +5100,10 @@
     }
   ],
   "counts": {
-    "n_claims": 733,
-    "n_players_with_claims": 149,
-    "n_players_shown": 62,
+    "n_claims": 741,
+    "n_players_with_claims": 152,
+    "n_players_shown": 61,
     "n_escalations": 10,
-    "n_players_resolved": 74
+    "n_players_resolved": 75
   }
 }
