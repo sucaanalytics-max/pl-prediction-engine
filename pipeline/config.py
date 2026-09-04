@@ -923,19 +923,73 @@ EXCLUDED_PLAYERS: set = set()
 # docs/superpowers/specs/2026-09-04-verified-team-metrics-design.md, decision 1.
 TEAM_VIEW = {
     # Empirical-Bayes shrinkage weight: a club's own rate gets n/(n+k) and the
-    # league mean gets the rest. At k=6, two matches of evidence carry a quarter
-    # of the weight — which is the point. The measurement that set this: across
-    # the six columns of a widely-read GW3 "zonal weakness" thread, only 16% of
-    # the 720 team pairs were separable at 95% from two matches, and one column
-    # separated 2%. An unshrunk rank off two games is a rank attached to noise.
+    # league mean gets the rest. Under the normal-normal hierarchical model k is
+    # not a taste parameter — it is exactly sigma^2_within / tau^2_between, the
+    # per-match noise divided by the genuine between-club spread. So it is
+    # measurable, and it was measured.
     #
-    # PROVISIONAL. `quant-modeller` owns this number; 6 is a defensible starting
-    # point (roughly "trust the club over the league once it has played ~6"), not
-    # a fitted value. Fit it against forecast_ledger.json before defending it.
+    # FITTED 2026-09-04, no longer provisional. Ten prior Understat PL seasons
+    # (2016-17..2025-26, 3800 matches, `read_team_match_stats`). Criterion: for
+    # each club take its first n matches, shrink toward the league mean of the
+    # same window, and score against that club's mean over the REMAINDER of the
+    # season. The holdout mean is noisy but its error is independent of the
+    # training window, so it adds a constant to the MSE and leaves the argmin
+    # over k unbiased. Minimised over n = 2..10, the window where shrinkage is
+    # actually load-bearing:
+    #
+    #     np_xg_for            k* = 5.25      xg_for            k* = 5.00
+    #     np_xg_against        k* = 8.50      xg_against        k* = 8.25
+    #     deep_completions_for k* = 2.00      deep_..._against  k* = 7.00
+    #     goals_for            k* = 8.00      goals_against     k* = 15.00
+    #
+    # Pooled over all eight columns k* = 6.25, and 6.0 costs 0.05% of MSE.
+    # Only np_xg_for/against carry a *_shrunk field into team_metrics.json and
+    # thence to the page, and against those two 6.0 costs 0.35% and 1.65%
+    # respectively; anything in k = [5.25, 8.25] is within 1% of their joint
+    # optimum. Leave-one-season-out moves the attack fit only within
+    # [4.75, 5.25] and the defence fit within [8.25, 9.00], so the split is
+    # stable, not an artefact of one season.
+    #
+    # The structural result behind those numbers: attack separates better than
+    # defence (clubs differ more in what they create than in what they concede,
+    # relative to per-match noise), and goals separate worse than xG at every n.
+    # A per-metric k table is the statistically correct design and is the open
+    # refinement here; a single k is defensible today only because the two
+    # columns that reach a reader both sit inside the flat region around 6.
+    #
+    # What k does NOT do: change the published ordering. At equal n the shrink
+    # is mean + (raw-mean)*w with the same w for every club — a strictly
+    # increasing affine map, so the ranks are identical for every k > 0.
+    # Verified across the grid. k sets the *spread* of the printed number (at
+    # n=3 the club carries 0.375 of its own deviation at k=5, 0.333 at k=6,
+    # 0.261 at k=8.5), and reorders only clubs holding different match counts —
+    # worth 0.2 places on average between k=3 and k=6.
     "shrinkage_k": 6.0,
     # Below this, no rank is shown at all — the club renders "not yet
     # measurable". Shrinkage alone would still emit an ordering, and an ordering
     # is what gets read off a page regardless of the interval beside it.
+    #
+    # Measured on the same ten seasons, in the unit a reader actually uses: a
+    # rank is a set of pairwise claims, so score the fraction of the 190 club
+    # pairs whose first-n ordering still holds over the rest of the season
+    # (chance = 0.500), with the mean |rank move| out of 20 beside it:
+    #
+    #     n     np_xg_for        np_xg_against
+    #     1     0.608  move 5.4  0.614  move 5.3
+    #     2     0.654  move 4.9  0.638  move 5.0
+    #     3     0.684  move 4.5  0.647  move 4.8
+    #     4     0.713  move 4.1  0.682  move 4.4
+    #     5     0.720  move 4.0  0.675  move 4.6
+    #     10    0.763  move 3.4  0.706  move 4.0
+    #
+    # There is no cliff. The curve is smooth and concave, so any threshold is a
+    # judgement about an acceptable error rate rather than a discovery, and it
+    # should be defended as one. 3 is kept because roughly two thirds of the
+    # pairwise claims survive, each further match buys only ~3pp with no natural
+    # stopping point, and withholding the page has its own cost. Two facts to
+    # carry to the page rather than bury: defence is about one match behind
+    # attack in reliability at every n, and goals separate barely better than
+    # chance at n=1 (0.502) — which is why np_xg, not goals, carries the rank.
     "min_matches_for_rank": 3,
     # Metrics carried per club, each in both directions where the source has
     # both. `ppda` is one-directional by definition: it describes the pressing

@@ -76,6 +76,13 @@ STANDALONE: Dict[str, str] = {
         "corpus. Nothing may import it: it fits market.blend_weight, and a pipeline "
         "that called it would be refitting a shipped parameter mid-run"
     ),
+    "pipeline.learning.fit_team_view_k": (
+        "out-of-sample fit of TEAM_VIEW shrinkage_k and min_matches_for_rank, run "
+        "by hand against ten prior Understat seasons. Nothing may import it, for "
+        "the same reason as fit_market_blend: it fits shipped constants, and a "
+        "pipeline that called it would be refitting them mid-run — and it fetches "
+        "ten seasons, which is a bounded hand-run cost and an unbounded daily one"
+    ),
     "pipeline.validation.fplreview_benchmark": (
         "temporary premium parity benchmark, run by hand during the shadow period"
     ),
