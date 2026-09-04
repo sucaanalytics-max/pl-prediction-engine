@@ -2,6 +2,10 @@
 
 Premier League match prediction and value-betting engine, plus an FPL decision-support frontend.
 
+**This repo is public** (`sucaanalytics-max/pl-prediction-engine`) and so is the deployed
+site (`pl2627.vercel.app`). Anything committed under `predictions/` is published to the
+world. That rules out committing licensed third-party data — see *Third-party data* below.
+
 ## Architecture
 
 ```
@@ -11,33 +15,87 @@ Python pipeline (GitHub Actions, daily 06:00 UTC)
   → Next.js 14 frontend (Vercel + Cloudflare)
 ```
 
-There is **no runtime coupling between Python and Node**. The only contract is the shape of the JSON — produced by `pipeline/run_pipeline.py` step 10, consumed by the TypeScript interfaces in `frontend/lib/predictions.ts`. Nothing enforces it, so drift is silent until a page renders blank. Changing one side means changing the other.
+There is **no runtime coupling between Python and Node**. The only contract is the shape
+of the JSON — produced by `pipeline/run_pipeline.py`, consumed by the narrowers in
+`frontend/lib/data/narrow.ts`. Nothing enforces it, so drift is silent until a page
+renders blank. Changing one side means changing the other.
+
+`narrow.ts` carries the repo's **rule 4: runtime narrowing, never `as T`.** Every
+`raw.foo` access in the app lives in that one file, because a field read outside a
+narrower is a field the fixture tests cannot protect. Its predecessor,
+`frontend/lib/predictions.ts`, did `return await res.json()` inside a generic — an
+implicit cast that let `HealthData` drift to a producer emitting no metrics with no
+error anywhere. That file is gone; do not reintroduce the pattern.
 
 ### Pipeline
 
-`pipeline/run_pipeline.py` — one 12-step `run_pipeline()` function, steps marked `# ── Step N`: fetch data → referee profiles → feature engineering → PenaltyBlog baseline → PyMC Dixon-Coles → XGBoost → sub-models (corners/cards/player cards) → optional stacking → live odds → Monte Carlo (10k sims, 7×7 scoreline grid) → export JSON → Supabase upload.
+`pipeline/run_pipeline.py` — one `run_pipeline()` function, **14 steps** marked
+`# ── Step N`: fetch data → referee profiles → feature engineering → PenaltyBlog
+baseline → PyMC Dixon-Coles → XGBoost → sub-models → optional stacking → live odds →
+Monte Carlo (10k sims, 7×7 scoreline grid) → export JSON → Supabase upload.
 
-- `pipeline/config.py` — **all** hyperparameters, URLs, env vars, ensemble weights, risk limits. Put configuration here, not inline in modules.
-- `pipeline/models/` — `dixon_coles.py` (PyMC/NUTS), `xgboost_model.py`, `penaltyblog_baseline.py`, `ensemble.py` (60/30/10 DC/XGB/PB), `corners_negbin.py`, `cards_zip.py`, `player_cards.py`, `goalscorer.py`, `calibration.py`
-- `pipeline/data/` — `football_data.py`, `fpl_api.py`, `fbref.py`, `odds_api.py`, `referee_profiles.py`, `team_mapping.py`
-- `pipeline/features/engineer.py`, `pipeline/simulation/montecarlo.py`, `pipeline/risk/kelly.py`, `pipeline/explainability/shap_explain.py`
-- `pipeline/validation/` — `run_validation.py`, `metrics.py`, `ledger.py` (forward-validation ledger), `artifacts.py`
+- `pipeline/config.py` — **all** hyperparameters, URLs, env vars, ensemble weights, risk
+  limits, `X_SCAN_ACCOUNTS`. Put configuration here, not inline in modules.
+- `pipeline/models/` (17) — `dixon_coles.py` (PyMC/NUTS), `dc_mle.py`,
+  `xgboost_model.py`, `penaltyblog_baseline.py`, `ensemble.py` (60/30/10 DC/XGB/PB),
+  `market_rates.py`, `devig.py`, `fixture_rates.py`, `minutes.py`, `player_events.py`,
+  `fpl_inputs.py`, `corners_negbin.py`, `cards_zip.py`, `player_cards.py`,
+  `goalscorer.py`, `calibration.py`
+- `pipeline/data/` (16) — `football_data.py`, `fpl_api.py`, `fbref.py`, `understat.py`,
+  `odds_api.py`, `market_snapshots.py`, `referee_profiles.py`, `team_mapping.py`,
+  `news_feeds.py`, `news_extract.py`, `availability_news.py`, `grok_feed.py`,
+  `x_scan.py`, `x_relevance.py`, `youtube.py`, plus `priors/` and `schemas/`
+- `pipeline/learning/` (28) — **the largest package.** Phase machine and seal
+  (`schedule.py`, `ledger.py`, `outcomes.py`, `run_agent.py`), the manual claim lane
+  (`file_claim.py`), evidence and conflicts (`availability_evidence.py`,
+  `minutes_conflicts.py`, `availability_conflicts.py`), views (`news_view.py`,
+  `evidence_view.py`, `messages.py`), and the learning loop (`accuracy.py`,
+  `backtest.py`, `walk_forward.py`, `fit_market_blend.py`, `sensitivity.py`,
+  `calibration_check.py`, `scoring.py`, `gates.py`)
+- `pipeline/decide/` (7), `pipeline/fpl/` (10), `pipeline/knowledge/` (1)
+- `pipeline/features/engineer.py`, `pipeline/simulation/montecarlo.py`,
+  `pipeline/risk/kelly.py`, `pipeline/explainability/shap_explain.py`
+- `pipeline/validation/` — `run_validation.py`, `metrics.py`, `ledger.py`, `artifacts.py`
 
 ### Frontend
 
-Next.js 14 App Router, all pages `"use client"`. Routes grouped in `frontend/components/Navigation.tsx`: FPL (`/`, `/transfers`, `/optimizer`, `/captaincy`, `/rankings`, `/planner`, `/evidence`, `/intelligence`, `/players`), Matches (`/h2h`, `/table`, `/matches/[id]`), Betting (`/value-bets`, `/bankroll`), Ops (`/health`).
+Next.js 14 App Router. **Eight live pages**, all `"use client"` except
+`app/offline/page.tsx`:
+
+`/` · `/capture` · `/evidence` · `/offline` · `/phases` · `/players` · `/review` · `/stats`
+
+- `/stats` — "what is this player actually doing": a dozen columns across three sources
+  with three different warranties (FPL's record, our simulation, Understat's own xG
+  model). **Tabs are split by warranty, not by question**, precisely so incomparable
+  columns are never read against each other. Follow this pattern for new data surfaces.
+- `/evidence` — absorbed the former `/inbox`, `/accuracy` and `/health`.
+- `/capture` — records the squad actually submitted to FPL, via `/api/hub/position`.
+  Nothing to do with capturing posts.
+
+**22 routes were deliberately retired** and return **410 Gone** via
+`frontend/middleware.ts` (410 not 404: they were real destinations, several precached by
+`public/sw.js`, some bookmarked). The `GONE` set is exported so one test exercises the
+real handler. Before proposing a page, check that set — `/table`, `/h2h`,
+`/intelligence`, `/rankings`, `/captaincy`, `/optimizer`, `/planner`, `/transfers`,
+`/value-bets`, `/bankroll`, `/matches` and `/health` are all gone.
 
 Two separate data paths:
-- **Predictions** — `frontend/lib/predictions.ts` (interfaces + loaders + derived helpers) via `frontend/lib/PredictionsContext.tsx`. Fetches Supabase Storage when `NEXT_PUBLIC_SUPABASE_URL` is set, **falling back to local `/predictions/`** on any failure. Keep that fallback.
-- **Live FPL** — `frontend/app/api/fpl/state/route.ts` → `frontend/lib/fpl-live-server.ts` → Supabase snapshot table via `fpl-snapshot-store.ts`.
+- **Predictions** — `frontend/lib/data/narrow.ts` (narrowers + descriptor table),
+  `lib/data/load.ts` and `lib/data/registry.ts`. Fetches Supabase Storage when
+  `NEXT_PUBLIC_SUPABASE_URL` is set, **falling back to local `/predictions/`** on any
+  failure. Keep that fallback.
+- **Live FPL** — `frontend/app/api/fpl/state/route.ts` → `frontend/lib/fpl-live-server.ts`
+  → Supabase snapshot table via `fpl-snapshot-store.ts`.
+
+Design tokens live in `frontend/lib/margin/tokens.ts` (`FLOODLIT`, `SANS`). Use them.
 
 ## Commands
 
 ```bash
 # Pipeline tests (unittest, NOT pytest — no pytest config exists)
 # Use the repo venv. Bare `python3` is a Homebrew 3.14 WITHOUT scipy, and the
-# suite degrades misleadingly under it: 56 import errors and 1187 tests instead
-# of 1309, which reads as a code regression rather than a missing interpreter.
+# suite degrades misleadingly under it — import errors read as a code regression
+# rather than a missing interpreter.
 PYTHONPATH=. .venv/bin/python -m unittest discover -s pipeline/tests -v
 
 # Piping to `tail`/`head` masks the exit code — `cmd | tail` reports tail's
@@ -49,186 +107,159 @@ cd frontend && npm run lint
 cd frontend && npm run build   # Vercel target; build:cloudflare for the other
 ```
 
-CI: `.github/workflows/pipeline.yml` (daily), `validate.yml` (Sundays, writes `health.json`), `frontend.yml` (test → lint → build, Node 24).
+**Green baseline, measured 2026-09-04:** 2143 python tests (5 skipped), 1081 frontend
+tests across 70 files. If you see materially fewer python tests, you are on the wrong
+interpreter.
+
+CI: `.github/workflows/pipeline.yml` (daily), `validate.yml` (Sundays, writes
+`health.json`), `frontend.yml` (test → lint → build, Node 24), `news.yml` (15-minute
+poller), `fpl_agent.yml`, `x_scan.yml` (dispatch-only), `python.yml`.
 
 ## Hard constraints
 
-- **The Odds API free tier is 500 requests/month** and the daily pipeline run consumes it (`pipeline/data/odds_api.py`, 30-min cache, per-event markets opt-in via `ODDS_FETCH_ADDITIONAL`). Never add an unbounded fetch loop or shorten the cache.
-- **Team names must be canonicalised** through `pipeline/data/team_mapping.py`. Every provider spells clubs differently; never join on raw provider strings.
-- **Kelly staking is real money.** `pipeline/risk/kelly.py` and `getHalfKellyPct`/`effectiveEdge` in `predictions.ts`. Never widen stake sizing or drop a risk cap as a side effect.
-- **The pipeline runs unattended**, so a swallowed error yields confidently wrong predictions. Optional scraped sources (FBref/Understat) degrade gracefully by design; sources the models depend on must fail loudly.
-- **Only `predictions/forecast_ledger.json` proves a prediction predated kickoff.** Never source an accuracy claim from `latest.json`.
-- **Secrets**: `ODDS_API_KEY`, `SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `FOOTBALL_DATA_TOKEN`. Service-role keys never go behind `NEXT_PUBLIC_`.
+- **The Odds API free tier is 500 requests/month** and the daily pipeline run consumes
+  it (`pipeline/data/odds_api.py`, 30-min cache, per-event markets opt-in via
+  `ODDS_FETCH_ADDITIONAL`). Never add an unbounded fetch loop or shorten the cache.
+- **Team names must be canonicalised** through `pipeline/data/team_mapping.py`. Every
+  provider spells clubs differently; never join on raw provider strings.
+- **Kelly staking is real money.** `pipeline/risk/kelly.py` sizes it. On the frontend,
+  the hazard is *units*: `latest.json` carries four Kelly fields per bet and two are
+  currency while two are fractions, a 1000× difference that one copy-paste renders as
+  "5000%". `frontend/lib/data/units.ts` closes this with branded types — keep the
+  brands. Never widen stake sizing or drop a risk cap as a side effect.
+- **The value-bet firewall.** `pipeline/models/market_rates.py` inverts no-vig prices
+  into goal rates *for the FPL projection layer only*. The value-bet path must keep
+  computing edge against a lambda **not** derived from those prices, or the "edge" is a
+  readout of the price and Kelly stakes real money on a circularity.
+- **The pipeline runs unattended**, so a swallowed error yields confidently wrong
+  predictions. Optional scraped sources (FBref/Understat) degrade gracefully by design;
+  sources the models depend on must fail loudly.
+- **Only `predictions/forecast_ledger.json` proves a prediction predated kickoff.**
+  Never source an accuracy claim from `latest.json`.
+- **Secrets**: `ODDS_API_KEY`, `SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`,
+  `FOOTBALL_DATA_TOKEN`. Service-role keys never go behind `NEXT_PUBLIC_`.
 
-## Sync-conflict duplicates
+## Third-party data
 
-Files named `foo 2.ts` appear in this working tree periodically — **743 at once** on
-one occasion, including `pipeline/risk/kelly 2.py`, a byte-identical copy of the
-real-money staking module. Editing the wrong copy is silent, and a stale duplicate
-of a test file shadows the real one.
+The repo and the site are both public, which makes redistribution the binding
+constraint rather than access:
 
-**The cause was investigated and not found.** Ruled out by measurement, so do not
-re-check these:
+- **Reading a paid source to inform a decision is fine. Committing it is not.**
+  Premium products (e.g. a FantasyFootballFix Opta subscription) may be read in-session
+  through the browser to check our numbers. Their figures must stay in a **gitignored
+  local file**, render in local dev only, and reach `predictions/` only as *our own
+  derived delta* plus a checked-on date — never as their values.
+- **Opta-defined metrics are licensed.** Big chances, big chances created and big
+  chances conceded are not obtainable from FBref or Understat at any tier we pay for.
+  Use npxG-per-shot or a labelled per-shot proxy instead, and say on the page that it
+  is a proxy.
+- **Other people's images are theirs.** Render an X post through X's own embed, which
+  keeps attribution and their analytics intact. Do not download and re-host media.
+- **What FBref actually exposes here**: `soccerdata`'s FBref reader offers five stat
+  types (standard, keeper, shooting, playing_time, misc); `fbrefdata` offers eleven,
+  including `passing`, `goal_shot_creation`, `possession` and `defense`, and takes
+  `opponent_stats=True` for the conceded side. Both libraries are installed on purpose —
+  see the comment in `fetch_fbref_passing_stats`.
 
-| Suspect | Verdict |
-|---|---|
-| **iCloud Desktop & Documents** | **CONFIRMED — this is the cause. See below.** |
-| OneDrive | Running and backs up *a* Documents folder, but not this one: different inode, unrelated contents |
-| Google Drive | Running; its root has `My Drive`/`Shared drives` and no Documents mirror |
-| `npm run build` | Zero duplicates, over both a clean and an existing `.next` |
-| Shell-written files | Not duplicated (canary) |
-| Editor/tool-written files | Not duplicated (canary) |
+## Repo hygiene
 
-### The cause, found 2026-08-13
+`~/Documents` was backed by an iCloud File Provider domain, whose conflict-copy naming
+(`foo 2.ts`) produced up to **743 duplicate files at once** — including a byte-identical
+copy of the real-money staking module — and eventually corrupted `.git` refs.
 
-iCloud Drive's *Desktop & Documents Folders* sync is **ON**, and `~/Documents` is
-backed by a File Provider domain:
+**Fixed 2026-08-13 by moving the repo to `~/dev/pl-prediction-engine`**, which is not
+file-provider backed. Verified clean again 2026-09-04: zero duplicates, zero `.git`
+duplicates, zero untracked files, both suites green.
 
-```
-$ xattr -p com.apple.file-provider-domain-id ~/Documents
-com.apple.CloudDocs.iCloudDriveFileProvider/3B597E81-4AEE-4AF1-BB21-4319A3C865DC
-```
+The detector and remedy remain, because the rest of `~/Documents` still syncs:
+- `frontend/test/no-untracked-imports.test.ts` fails on any duplicate shadowing a real file.
+- `scripts/clean_sync_duplicates.sh --apply` removes only byte-identical or build-dir
+  copies and **reports anything that differs** rather than deleting it.
+- `find .git -name "* 2*" -delete` if a git operation ever reports a bad object.
 
-`bird` (iCloudDriveCore) and `com.apple.CloudDocs.iCloudDriveFileProvider` are both
-running. The ` 2` suffix is Apple's own conflict-copy naming.
+There is deliberately **no `.gitignore` rule**: `* [0-9].*` would also hide a legitimate
+`step 2.tsx`, trading a visible problem for an invisible one.
 
-**Why the earlier verdict said OFF, and why that test was wrong.** It looked for
-`~/Library/Mobile Documents/CloudDocs/Documents` and found none. That was the right
-check for the old implementation and is useless against the current one: under the
-File Provider API the synced folder *stays* at `~/Documents` and is materialised in
-place, so it stats as an ordinary directory on the boot volume with no symlink and
-no mirror path. Everything the original investigation measured was true and the
-conclusion drawn from it was not.
-
-The correct test is the xattr above, or `ls -la@ ~/Documents` — which prints
-`com.apple.file-provider-domain-id`.
-
-**This also explains the two properties that made it look like something else:** the
-episodic bulk reconciles (743 duplicates, then 3, then 9) are iCloud reconciling
-after a period offline, not a per-file watcher — which is why two multi-minute canary
-tests never reproduced it.
-
-**It now corrupts `.git`.** On 2026-08-13 it produced seven duplicated files inside
-`.git`, including `refs/remotes/origin/main 2` pointing at a commit from hours
-earlier, plus a stale `index` and reflogs. A push failed with
-`fatal: bad object refs/remotes/origin/main 2`. Deleting the duplicates and running
-`git fsck` cleared it, but a stale ref or index is a class of corruption worse than
-a duplicated source file.
-
-**The fix is one of these, and neither is a code change:**
-
-1. Turn off *Desktop & Documents Folders* — System Settings → Apple ID → iCloud →
-   iCloud Drive → Options. Note this moves the existing contents into iCloud, so
-   read the dialog before accepting.
-2. Move this repo outside `~/Documents`, which is the narrower change and leaves
-   the rest of Documents syncing.
-
-**Done on 2026-08-13: the repo now lives at `~/dev/pl-prediction-engine`**, which
-is not file-provider backed, so iCloud cannot reach it. Verified after the move:
-698 tracked files intact, the venv relocated cleanly (`sys.prefix` follows), and the
-full gate green — 1780 python, 877 frontend, lint, build. `scripts/x_scan.sh` now
-derives its own root from `${BASH_SOURCE[0]}` rather than an absolute path, because
-a hardcoded one fails a move silently: launchd fires, `cd` fails, and the scan stops
-while reporting to a log nobody reads.
-
-The rest of `~/Documents` still syncs, so anything else kept there has the same
-exposure. Until that changes, `scripts/clean_sync_duplicates.sh --apply` and the
-detector in `frontend/test/no-untracked-imports.test.ts` remain the mitigation, and
-`find .git -name "* 2*" -delete` is worth running whenever a git operation reports a
-bad object.
-
-The events are **episodic** — 743, then 3, then 9 — which looks like a bulk
-reconcile rather than a per-file watcher, and it did not reproduce under two canary
-tests several minutes long.
-
-So the impact is managed rather than the cause fixed:
-
-- **Detector**: `frontend/test/no-untracked-imports.test.ts` fails on any duplicate
-  that shadows a real file, and its message names the remedy.
-- **Remedy**: `scripts/clean_sync_duplicates.sh --apply`. It removes only copies
-  that are byte-identical to their original or live in a build directory, and
-  **reports anything that differs rather than deleting it** — a differing copy may
-  hold the only version of some work.
-
-There is deliberately **no `.gitignore` rule**: `* [0-9].*` would also hide a
-legitimate `step 2.tsx`, trading a visible problem for an invisible one.
+Diagnosing this again: `xattr -p com.apple.file-provider-domain-id ~/Documents`. Looking
+for `~/Library/Mobile Documents/CloudDocs/Documents` is the **wrong** test — under the
+File Provider API the synced folder stays in place and stats as an ordinary directory.
 
 ## Ignore these directories
 
-Build artifacts, present on disk but not source — exclude from searches: `frontend/.open-next/`, `frontend/.wrangler/`, `frontend/dist/`, `frontend/.sites-bundle/`, `frontend/.openai/`, `node_modules/`, and generated `frontend/public/predictions/*.json`.
+Build artifacts, present on disk but not source — exclude from searches:
+`frontend/.open-next/`, `frontend/.wrangler/`, `frontend/dist/`,
+`frontend/.sites-bundle/`, `frontend/.openai/`, `node_modules/`, and generated
+`frontend/public/predictions/*.json`.
 
 ## MCP football data servers
 
-Four servers are configured at user scope (`~/.claude.json`). Three are stdio via npx; `x-api` is
+Four servers at user scope (`~/.claude.json`). Three are stdio via npx; `x-api` is
 remote HTTP.
 
 | Server | Tools | Auth | Use for |
 |---|---|---|---|
-| `matchday` | 6 (`get_standings`, `get_matches`, `get_top_scorers`, `find_team`, `get_team_matches`, `compare_teams`) | `FOOTBALL_DATA_TOKEN` | **First choice** for league tables, fixtures, results, form, scorers |
-| `sports-hub` | 57 across 6 providers — football-relevant: `espn_*` (10), `footballdata_uk_*` (2), `sportsdb_*` (13), `sportsrc_*` (7) | none | Live/in-play scores, squads, player detail, news; cross-checking the Football-Data.co.uk CSVs the pipeline ingests; **team-name aliases and cross-provider IDs** via `sportsdb_search_teams` |
-| `footballbin` | 1 (`get_match_predictions`) | none | **Benchmark only** — third-party PL/UCL predictions |
-| `x-api` | posts, full-archive search, users/timelines, trends | `X_BEARER_TOKEN` | @robtFPL and FPL team news — **dormant, see below** |
+| `matchday` | 6 | `FOOTBALL_DATA_TOKEN` | **First choice** for league tables, fixtures, results, form, scorers |
+| `sports-hub` | 57 across 6 providers | none | Live/in-play scores, squads, player detail, news; cross-checking the Football-Data.co.uk CSVs; team-name aliases via `sportsdb_search_teams` |
+| `footballbin` | 1 | none | **Benchmark only** — third-party PL/UCL predictions |
+| `x-api` | posts, search, users | `X_BEARER_TOKEN` | @robtFPL and FPL team news — **not currently working, see below** |
 
 Rules:
 
-1. **`matchday` before ESPN** for tables and fixtures — cleaner, purpose-built output. ESPN for live state, rosters, and player bios.
-2. **`footballbin` is a comparator, never a data source.** Its predictions must never feed our models. It is for asking whether our engine agrees with an outside forecaster.
-3. **MCP is for development-time verification, not production code paths.** The pipeline runs in GitHub Actions where no MCP server exists — never make a pipeline module depend on MCP data. Model training inputs come from the pipeline's own sources so runs stay reproducible.
-4. **Never route The Odds API through MCP.** `sports-hub` can be configured with a The Odds API provider; do not give it `ODDS_API_KEY`, as it would spend the production quota.
-5. **Rate limits**: football-data.org free tier is ~10 req/min. Make the fewest calls that answer the question.
-6. **Canonicalise MCP team names** via `pipeline/data/team_mapping.py` conventions before joining with pipeline data. `sportsdb_search_teams` is a useful *aid* here — it returns `strTeamAlternate` alias lists plus `idESPN`/`idAPIfootball` cross-provider IDs — but it is not authoritative (its Wolves alias list contains the typo `Wolverhapton`). Use it to propose mappings, never to auto-generate them.
-7. **`sports-hub` also carries non-football providers** (`f1_`, `openf1_`, and darts/other sports via `sportsdb_`). Those are there for the user's personal interests and are **out of scope for this repo** — never wire them into the pipeline, the frontend, or this project's agents.
+1. **`matchday` before ESPN** for tables and fixtures. ESPN for live state, rosters, bios.
+2. **`footballbin` is a comparator, never a data source.** Its predictions must never
+   feed our models.
+3. **MCP is for development-time verification, not production code paths.** The pipeline
+   runs in GitHub Actions where no MCP server exists — never make a pipeline module
+   depend on MCP data. The same applies to anything read through the browser in a
+   session: it is available to a *session* and nowhere else.
+4. **Never route The Odds API through MCP.** `sports-hub` can be configured with a The
+   Odds API provider; do not give it `ODDS_API_KEY`.
+5. **Rate limits**: football-data.org free tier is ~10 req/min.
+6. **Canonicalise MCP team names** via `team_mapping.py` conventions.
+   `sportsdb_search_teams` proposes mappings (its Wolves alias list contains the typo
+   `Wolverhapton`); never auto-generate from it.
+7. **`sports-hub` also carries non-football providers** (`f1_`, `openf1_`, darts). Out
+   of scope for this repo.
 
-### The football-data.org token
+### Known state, measured 2026-09-04
 
-`matchday` is registered with `FOOTBALL_DATA_TOKEN=${FOOTBALL_DATA_TOKEN}`, which Claude Code expands from the **process environment** — not from this repo's `.env`.
-
-The token is exported from **`~/.zshenv`**, deliberately not `~/.zshrc`: `.zshrc` is only sourced by *interactive* shells, so a token placed there is invisible to non-interactive shells, scripts, and any tooling not launched from a terminal. `.zshenv` is sourced by every zsh invocation. Verify with `claude mcp list` — no `Missing environment variables` warning means the expansion resolved.
-
-If that warning ever reappears (for example if the editor launches Claude Code without going through zsh at all), the guaranteed fallback is to store the literal value in the server's `env` block in `~/.claude.json` instead of the `${...}` reference.
-
-### The X server (`x-api`) — what it can and cannot do
-
-X's own hosted MCP, `https://api.x.com/mcp`, live since 30 June 2026. Preferred over the community
-X servers for the same reason `matchday` beats ESPN here: maintained by the data's owner, nothing to
-deploy, and no scraper whose terms position is unresolved.
-
-**Registered dormant.** The header expands `${X_BEARER_TOKEN}`, which is not set, so `claude mcp list`
-reports `Missing environment variables` — the intended state, not a fault. Export it from `~/.zshenv`
-(same reasoning as the football-data token above) to activate.
-
-Two constraints decide what this is worth, and neither is obvious:
-
-- **It cannot feed the news poller.** Rule 3 above is not a style preference here: `news.yml` runs
-  every 15 minutes in GitHub Actions, where no MCP server exists and no MCP client is running. An MCP
-  tool is available to a Claude Code *session* and nowhere else. So `x-api` does not automate
-  anything — the 3-hourly automated lane needs an HTTP API the poller can call itself, which is what
-  `pipeline/data/grok_feed.py` is for.
-- **The MCP layer is free; the X API underneath is not.** Every call bills pay-per-use — $0.005 per
-  post read, $0.010 per user read. X discontinued its free tier for new developers in February 2026,
-  so a new account must buy credits before the first call returns anything.
-
-The route from something read here into the model is **`pipeline/learning/file_claim.py`** — the
-manual claim lane. It stamps source, tier, verbatim quote, URL and `claimed_at`, and the row then goes
-through R0–R8 exactly like an RSS claim. Never let an MCP-read post reach a projection any other way:
-that path has no provenance and no conflict adjudication.
+- **`x-api` fails with HTTP 401** (`AUTH_HEADER_REJECTED`) — the configured
+  `Authorization` header is rejected, and OAuth fallback is disabled when a header is
+  set. This is a *different* failure from the earlier "Missing environment variables"
+  (unset `${X_BEARER_TOKEN}`). Export a valid token from `~/.zshenv`, not `~/.zshrc`:
+  `.zshrc` is only sourced by interactive shells, so a token there is invisible to
+  scripts. Billing is pay-per-use: $0.005/post read, $0.010/user read.
+- **`matchday get_standings` returned HTTP 400** for the Premier League, with and
+  without `season: "2026"`. Unresolved; the free tier may not cover 2026-27.
+- **The route from a session-read post into the model is
+  `pipeline/learning/file_claim.py`** — the manual claim lane. It stamps source, tier,
+  verbatim quote, URL and `claimed_at`, and the row then goes through R0–R8 exactly like
+  an RSS claim. Never let a session-read post reach a projection any other way.
+- **`minutes_conflicts_gwNN.json` is evidence-gated**: it only fires where a scanned
+  claim exists to compare against, so a short list means a stale claim feed, not a
+  healthy minutes model. Check the `claimed_at` dates on whatever did fire.
 
 ### Quirks confirmed against the live APIs
 
-These bite silently, so check them before joining MCP data with pipeline data:
-
-- **Season labels differ.** football-data.org labels a season by its *start year*: the 2025-26 season reports as `2025`. The pipeline uses `"2526"`, with `CURRENT_SEASON="2627"` (see `SEASON_LABELS` in `pipeline/config.py`). Never compare these strings directly.
-- **Club names carry legal suffixes.** `matchday` returns `Arsenal FC`, `Manchester United FC`, `Wolverhampton Wanderers FC`, `Brighton & Hove Albion FC`, `AFC Bournemouth` — whereas Football-Data.co.uk uses `Arsenal`, `Man United`, `Wolves`. Everything must go through `pipeline/data/team_mapping.py`.
-- **Off-season is genuinely empty.** As of the 2026-27 pre-season, `matchday get_matches` with `status: "SCHEDULED"` returns "No matches found" and `footballbin` errors out (below). Completed-season data (final tables, results, form) works fine. Empty results right now are correct, not a bug to chase.
-
-Notes on current state:
-- `sports-hub` is scoped to **keyless** providers via `SPORTS_HUB_PROVIDERS=espn,footballdatauk,sportsdb,sportsrc,f1,openf1` (57 tools of the 396 it can expose). Every one of these works with no credentials. Do **not** switch to the `soccer` or `all` preset — those pull in key-gated providers that fail without credentials: `API_FOOTBALL_KEY`, `SPORTMONKS_API_KEY`, `HIGHLIGHTLY_API_KEY`, `CRICKETDATA_API_KEY`, `ENTITY_SPORT_KEY`, and `FOOTBALL_DATA_API_KEY` (sports-hub's own name for the football-data.org token — distinct from matchday's `FOOTBALL_DATA_TOKEN`, though the same value works).
-- **Highest-value providers still un-enabled**, should we ever want them (each needs a free-tier signup): `apifootball_` (15 tools — real **injury** data, predicted **lineups**, transfers; the `/evidence` and `/captaincy` pages currently have no injury/lineup source) and `oddsio_`/`sgo_` (alternate books with their own quotas, so they can cross-check `/value-bets` without touching our 500-req/month `ODDS_API_KEY`).
-- `footballbin` returns an unparseable plain-text `"No matches"` from its upstream between seasons, surfacing as a JSON parse error. Expected in the off-season — re-test once fixtures resume.
+- **Season labels differ.** football-data.org labels a season by its *start year*
+  (2026-27 → `2026`). This repo uses `"2627"`, with `CURRENT_SEASON="2627"`
+  (`SEASON_LABELS` in `pipeline/config.py`). Never compare these strings directly.
+- **Club names carry legal suffixes.** `matchday` returns `Arsenal FC`,
+  `Wolverhampton Wanderers FC`, `AFC Bournemouth`; Football-Data.co.uk uses `Arsenal`,
+  `Man United`, `Wolves`. Everything goes through `team_mapping.py`.
+- `sports-hub` is scoped to **keyless** providers via
+  `SPORTS_HUB_PROVIDERS=espn,footballdatauk,sportsdb,sportsrc,f1,openf1`. Do **not**
+  switch to the `soccer` or `all` preset — those pull in key-gated providers that fail
+  without credentials.
+- **Highest-value un-enabled providers** (each needs a free signup): `apifootball_`
+  (real injury data, predicted lineups — `/evidence` has no injury/lineup source) and
+  `oddsio_`/`sgo_` (alternate books with their own quotas, so they can cross-check
+  value bets without touching our 500-req/month `ODDS_API_KEY`).
 
 ## Subagent delegation
 
-Ten agents in `.claude/agents/`, tiered by model. Route work to the cheapest agent that can do it properly.
+Ten agents in `.claude/agents/`, tiered by model. Route work to the cheapest agent that
+can do it properly.
 
 | Task | Agent | Model |
 |---|---|---|
@@ -240,30 +271,46 @@ Ten agents in `.claude/agents/`, tiered by model. Route work to the cheapest age
 | Fetching real football facts via MCP | `football-data-scout` | haiku |
 | Running test suites, checking the JSON contract | `contract-guardian` | haiku |
 | Phase machine, ledger, seal, settlement, `fpl_agent.yml` | `seal-warden` | opus |
-| Effective ownership, rank tiers, sampling error, `field_calibrated_gameweeks` | `field-analyst` | opus |
+| Effective ownership, rank tiers, sampling error | `field-analyst` | opus |
 | Live routes, cache policy, in-gameweek freshness | `live-surface` | sonnet |
 
 Guidance:
-- Send **anything that changes a predicted probability or a stake size** to `quant-modeller`. That work justifies the strongest model.
-- Send **raw data lookups** to `football-data-scout` rather than making MCP calls in a reasoning-heavy context — it is far cheaper and returns structured data without analysis. `benchmark-analyst` should delegate its fetching this way.
-- Send **verification** to `contract-guardian` before committing. It runs commands and reports; it does not fix, so route its findings to the owning agent.
-- Send **anything under `pipeline/learning/{schedule,ledger,outcomes}.py` or the `_seal`/`_settle` paths** to `seal-warden`, whatever the task was called. A seal is irrecoverable and there are 38 a season, so this is the one area where the routing is by path rather than by how the request was phrased.
-- Send **any number whose meaning depends on what other managers did** to `field-analyst`. Ownership, EO, rank and template share a failure mode: a cheaper model will emit a confident figure without stating which population it describes.
-- Launch independent agents in parallel in a single message. `data-integrator` and `frontend-dev` rarely conflict; `quant-modeller` and `contract-guardian` should run sequentially since the latter verifies the former.
+- Send **anything that changes a predicted probability or a stake size** to
+  `quant-modeller`.
+- Send **raw data lookups** to `football-data-scout` rather than making MCP calls in a
+  reasoning-heavy context. `benchmark-analyst` should delegate its fetching this way.
+- Send **verification** to `contract-guardian` before committing. It reports; it does not
+  fix, so route findings to the owning agent.
+- Send **anything under `pipeline/learning/{schedule,ledger,outcomes}.py` or the
+  `_seal`/`_settle` paths** to `seal-warden`, whatever the task was called. A seal is
+  irrecoverable and there are 38 a season.
+- Send **any number whose meaning depends on what other managers did** to
+  `field-analyst`. A cheaper model will emit a confident figure without stating which
+  population it describes.
+- Launch independent agents in parallel in a single message. `quant-modeller` and
+  `contract-guardian` run sequentially, since the latter verifies the former.
 
-**Paths own agents, not topics.** Where a path appears above, it wins over the description of the task. "Make the deadline countdown clearer" sounds like frontend work, but if it touches `schedule.py` it is `seal-warden`'s. Deterministic routing beats a judgement call about which specialist feels right.
+**Paths own agents, not topics.** Where a path appears above, it wins over the
+description of the task.
 
 ## Skills
 
 Procedures in `.claude/skills/`, for the things worth doing the same way every time:
 
-- **`rehearse-phase`** — execute the real REFRESH or SEAL against a scratch directory before shipping a change to it. The seal path runs unattended and rarely, so "it works" should be an observation.
-- **`verify-seal`** — check a sealed forecast is real (`dry_run: false`), complete (`rows_written` equals `universe_size`) and carries all four provenance fields, which are flattened into the header rather than nested.
-- **`push-and-watch`** — land a commit where three bots also push: rebase, confirm the active `gh` account, then watch whichever of the two CI gates the changed paths actually trigger.
+- **`rehearse-phase`** — execute the real REFRESH or SEAL against a scratch directory
+  before shipping a change to it.
+- **`verify-seal`** — check a sealed forecast is real (`dry_run: false`), complete
+  (`rows_written` equals `universe_size`) and carries all four provenance fields.
+- **`push-and-watch`** — land a commit where three bots also push: rebase, confirm the
+  active `gh` account, then watch whichever CI gate the changed paths trigger. The
+  active `gh` account is not always the repo owner; check before pushing.
 
 ## Saved workflows
 
 Fan-outs in `.claude/workflows/`, invoked by name via the Workflow tool:
 
-- **`seal-audit`** — find ways a seal could be lost, then have three skeptics try to refute each finding before it is reported. Takes an optional scope argument, e.g. a commit range.
-- **`field-feasibility`** — re-measure what FPL's API makes affordable: sampling frame, per-manager picks cost, live payload, and the sample size a stated error requires. Carries a hard request budget, because the same host serves the `bootstrap-static` call the seal depends on.
+- **`seal-audit`** — find ways a seal could be lost, then have three skeptics try to
+  refute each finding. Takes an optional scope argument.
+- **`field-feasibility`** — re-measure what FPL's API makes affordable. Carries a hard
+  request budget, because the same host serves the `bootstrap-static` call the seal
+  depends on.
