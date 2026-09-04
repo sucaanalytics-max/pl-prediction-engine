@@ -1,7 +1,661 @@
 {
-  "generated_at": "2026-08-31T15:37:30.252441Z",
-  "n_messages": 14,
+  "generated_at": "2026-09-04T15:22:33.055774Z",
+  "n_messages": 28,
   "messages": [
+    {
+      "id": "gw03-decision-owner",
+      "gameweek": 3,
+      "kind": "decision",
+      "severity": "info",
+      "title": "GW3 \u2014 owner team ready",
+      "body": "5 transfer(s), 4 hit(s) taken. Deadline in 2.1 hours. Nothing has been submitted for you \u2014 the agent has no write access to FPL by design.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "gameweek": 3,
+        "entry_label": "owner",
+        "objective": "season",
+        "generated_at": "2026-09-04T15:22:33.033666Z",
+        "deadline": "2026-09-04T17:30:00Z",
+        "xp_snapshot": {
+          "1": 2.902,
+          "4": 4.1032,
+          "82": 4.0599,
+          "106": 4.9435,
+          "113": 4.034,
+          "124": 4.432,
+          "152": 0.5149,
+          "165": 2.9247,
+          "173": 0.9643,
+          "249": 4.2881,
+          "368": 5.1462,
+          "379": 3.9437,
+          "411": 7.4754,
+          "418": 3.529,
+          "426": 5.4976,
+          "427": 4.3364,
+          "445": 4.6576,
+          "447": 4.6157,
+          "497": 0.1676,
+          "542": 4.256
+        },
+        "decision": {
+          "plan": {
+            "squad": [
+              82,
+              106,
+              113,
+              124,
+              173,
+              249,
+              368,
+              411,
+              418,
+              426,
+              427,
+              445,
+              447,
+              497,
+              542
+            ],
+            "xi": [
+              82,
+              106,
+              113,
+              124,
+              368,
+              411,
+              426,
+              427,
+              445,
+              447,
+              542
+            ],
+            "captain": 411,
+            "vice": 426,
+            "transfers_in": [
+              82,
+              249,
+              411,
+              445,
+              447
+            ],
+            "transfers_out": [
+              1,
+              4,
+              152,
+              165,
+              379
+            ],
+            "hits": 4,
+            "bank_after": 1,
+            "objective": 0.0,
+            "free_transfers_banked": 0,
+            "free_transfers_after": 1
+          },
+          "n_draws": 10000,
+          "mean_points": 45.1114,
+          "sd_points": 16.1746,
+          "objective": 45.1114,
+          "quantiles": {
+            "q10": 25.0,
+            "q25": 33.0,
+            "q50": 44.0,
+            "q75": 56.0,
+            "q90": 67.0,
+            "q99": 85.01
+          },
+          "tails": {
+            "p_ge_40": 0.6057,
+            "p_ge_50": 0.3793,
+            "p_ge_60": 0.189,
+            "p_ge_70": 0.0773,
+            "p_ge_80": 0.0233,
+            "p_ge_90": 0.0053
+          },
+          "autosub_rate": 0.0439,
+          "vice_rate": 0.0
+        },
+        "optimism_gap": -0.0297,
+        "credible_margin": true,
+        "pool": {
+          "n_candidates": 553,
+          "n_excluded": 99,
+          "excluded_by_reason": {
+            "status_u": 99
+          },
+          "held_missing_purchase_price": [],
+          "price_uncertain": false,
+          "n_zero_xp": 4
+        },
+        "horizon": {
+          "eval_horizon": 8,
+          "transfer_horizon": 6,
+          "provisional": [
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                165,
+                173,
+                231,
+                368,
+                411,
+                418,
+                426,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                165,
+                231,
+                368,
+                411,
+                426,
+                447
+              ],
+              "captain": 411,
+              "vice": 165,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                229,
+                231,
+                249,
+                368,
+                411,
+                418,
+                426,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                124,
+                229,
+                231,
+                249,
+                411,
+                426,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 231,
+              "transfers_in": [
+                229,
+                249
+              ],
+              "transfers_out": [
+                165,
+                173
+              ],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                229,
+                231,
+                249,
+                368,
+                411,
+                418,
+                426,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                229,
+                231,
+                249,
+                368,
+                411,
+                426,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 426,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                229,
+                231,
+                249,
+                368,
+                411,
+                418,
+                426,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                229,
+                231,
+                249,
+                368,
+                411,
+                426,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 2,
+              "free_transfers_after": 3
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                229,
+                231,
+                249,
+                368,
+                411,
+                418,
+                426,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                229,
+                231,
+                249,
+                368,
+                411,
+                426,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 426,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 3,
+              "free_transfers_after": 4
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                229,
+                231,
+                249,
+                368,
+                411,
+                418,
+                426,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                229,
+                231,
+                249,
+                368,
+                411,
+                426,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 4,
+              "free_transfers_after": 5
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                229,
+                231,
+                249,
+                368,
+                411,
+                418,
+                426,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                124,
+                229,
+                231,
+                249,
+                411,
+                426,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 5,
+              "free_transfers_after": 5
+            }
+          ]
+        },
+        "field_model": "uncalibrated",
+        "warnings": [],
+        "execution": "propose_only",
+        "evidence": {
+          "measured_on": {
+            "seasons": [
+              "2023-24",
+              "2024-25",
+              "2025-26"
+            ],
+            "gameweeks": "8-38 each, 93 paired observations",
+            "harness": "pipeline/learning/backtest_decisions.py",
+            "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+          },
+          "beats_doing_nothing": {
+            "verdict": "established",
+            "margin_2023_24": 411,
+            "margin_2024_25": 560,
+            "margin_2025_26": 184,
+            "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+          },
+          "beats_greedy_transfers": {
+            "verdict": "not established",
+            "margin_2023_24": 67,
+            "margin_2024_25": 60,
+            "margin_2025_26": -66,
+            "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+          },
+          "projection_calibration": {
+            "verdict": "established",
+            "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+          }
+        }
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-131",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3\\nMichael Carrick spoke to the media on Friday The post Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-09-04T13:42:38Z) while sky_football says \"Man Utd latest: Carrick on 'exciting' Baleba buy and injury issue\" (2026-08-27T13:02:00Z). Used the more conservative 'Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3\\nMichael Carrick spoke to the media on Friday The post Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 131,
+        "claim_type": "unparsed_news",
+        "value": "Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3\nMichael Carrick spoke to the media on Friday The post Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says 'Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3\\nMichael Carrick spoke to the media on Friday The post Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-09-04T13:42:38Z) while sky_football says \"Man Utd latest: Carrick on 'exciting' Baleba buy and injury issue\" (2026-08-27T13:02:00Z). Used the more conservative 'Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3\\nMichael Carrick spoke to the media on Friday The post Sesko, Mount, Baleba: Man United injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-166",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'Villa v Arsenal team news: Jackson debut, Konsa a sub\\nTwo alterations for Villa, who taken on unchanged Arsenal The post Villa v Arsenal team news: Jackson debut, Konsa a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-08-31T18:30:00Z) while sky_football says 'Villa confirm club-record Jackson signing as deal agreed for Mbaye\\nAston Villa have confirmed the club-record signing of Nicolas Jackson from Chelsea while also reaching a verbal agreement to sign Paris Saint-Germain winger Ibrahim Mbaye.' (2026-08-28T19:20:00Z), bbc_football says 'What will Jackson bring to Villa with Watkins set for exit?\\nBBC Sport examines what new striker Nicolas Jackson will bring to Aston Villa, with Ollie Watkins looking set to join Al-Hilal.' (2026-08-28T19:14:48Z). Used the more conservative 'Villa v Arsenal team news: Jackson debut, Konsa a sub\\nTwo alterations for Villa, who taken on unchanged Arsenal The post Villa v Arsenal team news: Jackson debut, Konsa a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 166,
+        "claim_type": "unparsed_news",
+        "value": "Villa v Arsenal team news: Jackson debut, Konsa a sub\nTwo alterations for Villa, who taken on unchanged Arsenal The post Villa v Arsenal team news: Jackson debut, Konsa a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says 'Villa v Arsenal team news: Jackson debut, Konsa a sub\\nTwo alterations for Villa, who taken on unchanged Arsenal The post Villa v Arsenal team news: Jackson debut, Konsa a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-08-31T18:30:00Z) while sky_football says 'Villa confirm club-record Jackson signing as deal agreed for Mbaye\\nAston Villa have confirmed the club-record signing of Nicolas Jackson from Chelsea while also reaching a verbal agreement to sign Paris Saint-Germain winger Ibrahim Mbaye.' (2026-08-28T19:20:00Z), bbc_football says 'What will Jackson bring to Villa with Watkins set for exit?\\nBBC Sport examines what new striker Nicolas Jackson will bring to Aston Villa, with Ollie Watkins looking set to join Al-Hilal.' (2026-08-28T19:14:48Z). Used the more conservative 'Villa v Arsenal team news: Jackson debut, Konsa a sub\\nTwo alterations for Villa, who taken on unchanged Arsenal The post Villa v Arsenal team news: Jackson debut, Konsa a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-210",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says 'Palace latest: Sage: Wharton right to stay at Selhurst' (2026-09-03T22:10:00Z) while bbc_football says \"Cherki genius and Wharton excels - Palace v Man City player ratings\\nHow Crystal Palace and Manchester City's players rated following their Premier League match.\" (2026-08-28T21:01:24Z). Used the more conservative 'Palace latest: Sage: Wharton right to stay at Selhurst'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 210,
+        "claim_type": "unparsed_news",
+        "value": "Palace latest: Sage: Wharton right to stay at Selhurst",
+        "detail": "unparsed_news: sky_football says 'Palace latest: Sage: Wharton right to stay at Selhurst' (2026-09-03T22:10:00Z) while bbc_football says \"Cherki genius and Wharton excels - Palace v Man City player ratings\\nHow Crystal Palace and Manchester City's players rated following their Premier League match.\" (2026-08-28T21:01:24Z). Used the more conservative 'Palace latest: Sage: Wharton right to stay at Selhurst'."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-480",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back\\nFPL notes from Liverpool 2-2 Nottm Forest The post FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football S' (2026-08-29T22:10:00Z) while bbc_football says \"Gibbs-White shines - player ratings for Liverpool v Nottm Forest\\nHow Liverpool and Nottingham Forest's players rated following their Premier League match.\" (2026-08-29T13:28:37Z). Used the more conservative 'FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back\\nFPL notes from Liverpool 2-2 Nottm Forest The post FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football S'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 480,
+        "claim_type": "unparsed_news",
+        "value": "FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back\nFPL notes from Liverpool 2-2 Nottm Forest The post FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football S",
+        "detail": "unparsed_news: fantasyfootballscout says 'FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back\\nFPL notes from Liverpool 2-2 Nottm Forest The post FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football S' (2026-08-29T22:10:00Z) while bbc_football says \"Gibbs-White shines - player ratings for Liverpool v Nottm Forest\\nHow Liverpool and Nottingham Forest's players rated following their Premier League match.\" (2026-08-29T13:28:37Z). Used the more conservative 'FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back\\nFPL notes from Liverpool 2-2 Nottm Forest The post FPL notes: Gibbs-White on pens, Gakpo City-bound + Szoboszlai at right-back appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football S'."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-229",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says 'Tarkowski strikes late to rescue point for Everton at Bournemouth\\nEverton captain James Tarkowski strikes in the 91st minute to rescue a point, as Bournemouth settle for a 1-1 draw at the Vitality Stadium.' (2026-08-29T19:12:07Z) while sky_football says '\\u2060Tarkowski delivers late blow for Bournemouth to rescue point for Everton\\nFREE TO WATCH: Highlights from the Premier League match between Bournemouth and Everton.' (2026-08-29T17:15:00Z). Used the more conservative 'Tarkowski strikes late to rescue point for Everton at Bournemouth\\nEverton captain James Tarkowski strikes in the 91st minute to rescue a point, as Bournemouth settle for a 1-1 draw at the Vitality Stadium.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 229,
+        "claim_type": "unparsed_news",
+        "value": "Tarkowski strikes late to rescue point for Everton at Bournemouth\nEverton captain James Tarkowski strikes in the 91st minute to rescue a point, as Bournemouth settle for a 1-1 draw at the Vitality Stadium.",
+        "detail": "unparsed_news: bbc_football says 'Tarkowski strikes late to rescue point for Everton at Bournemouth\\nEverton captain James Tarkowski strikes in the 91st minute to rescue a point, as Bournemouth settle for a 1-1 draw at the Vitality Stadium.' (2026-08-29T19:12:07Z) while sky_football says '\\u2060Tarkowski delivers late blow for Bournemouth to rescue point for Everton\\nFREE TO WATCH: Highlights from the Premier League match between Bournemouth and Everton.' (2026-08-29T17:15:00Z). Used the more conservative 'Tarkowski strikes late to rescue point for Everton at Bournemouth\\nEverton captain James Tarkowski strikes in the 91st minute to rescue a point, as Bournemouth settle for a 1-1 draw at the Vitality Stadium.'."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-346",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'FPL notes: Calvert-Lewin off the mark + Rodon injury latest\\nFPL notes from Leeds 1-1 Brentford The post FPL notes: Calvert-Lewin off the mark + Rodon injury latest appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-08-31T11:05:00Z) while bbc_football says \"Given credits Farke's second-half tactical shift in Brentford draw\\nMatch of the Day pundit Shay Given commends Leeds United's second-half tactical shift after Dominic Calvert-Lewin struck late to salvage a 1-1 draw with Brentford.\" (2026-08-30T23:09:18Z), sky_football says 'Calvert-Lewin rescues draw for Leeds against impressive Brentford\\nDominic Calvert-Lewin scored a late tap-in to earn Leeds United a 1-1 draw with Brentford at Elland Road.' (2026-08-30T16:15:00Z). Used the more conservative 'FPL notes: Calvert-Lewin off the mark + Rodon injury latest\\nFPL notes from Leeds 1-1 Brentford The post FPL notes: Calvert-Lewin off the mark + Rodon injury latest appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 346,
+        "claim_type": "unparsed_news",
+        "value": "FPL notes: Calvert-Lewin off the mark + Rodon injury latest\nFPL notes from Leeds 1-1 Brentford The post FPL notes: Calvert-Lewin off the mark + Rodon injury latest appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says 'FPL notes: Calvert-Lewin off the mark + Rodon injury latest\\nFPL notes from Leeds 1-1 Brentford The post FPL notes: Calvert-Lewin off the mark + Rodon injury latest appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-08-31T11:05:00Z) while bbc_football says \"Given credits Farke's second-half tactical shift in Brentford draw\\nMatch of the Day pundit Shay Given commends Leeds United's second-half tactical shift after Dominic Calvert-Lewin struck late to salvage a 1-1 draw with Brentford.\" (2026-08-30T23:09:18Z), sky_football says 'Calvert-Lewin rescues draw for Leeds against impressive Brentford\\nDominic Calvert-Lewin scored a late tap-in to earn Leeds United a 1-1 draw with Brentford at Elland Road.' (2026-08-30T16:15:00Z). Used the more conservative 'FPL notes: Calvert-Lewin off the mark + Rodon injury latest\\nFPL notes from Leeds 1-1 Brentford The post FPL notes: Calvert-Lewin off the mark + Rodon injury latest appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-316",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-08-31T09:30:08.306145Z) while fpl_news_parse says 75 (2026-08-31T09:30:08.306145Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 316,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-08-31T09:30:08.306145Z) while fpl_news_parse says 75 (2026-08-31T09:30:08.306145Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-329",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-08-30T16:00:08.564382Z) while fpl_news_parse says 50 (2026-08-30T16:00:08.564382Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 329,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-08-30T16:00:08.564382Z) while fpl_news_parse says 50 (2026-08-30T16:00:08.564382Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-543",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-08-30T16:30:08.428960Z) while fpl_news_parse says 75 (2026-08-30T16:30:08.428960Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 543,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-08-30T16:30:08.428960Z) while fpl_news_parse says 75 (2026-08-30T16:30:08.428960Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-440",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Everton sign Grealish as Zirkzee stays at Man Utd\\nEverton sign Jack Grealish on a season-long loan deal from Manchester City but have missed out on Manchester United's Joshua Zirkzee.\" (2026-09-01T21:54:30Z) while sky_football says 'Man Utd latest: Everton make bid for Zirkzee' (2026-09-01T20:00:00Z). Used the more conservative \"Everton sign Grealish as Zirkzee stays at Man Utd\\nEverton sign Jack Grealish on a season-long loan deal from Manchester City but have missed out on Manchester United's Joshua Zirkzee.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 440,
+        "claim_type": "unparsed_news",
+        "value": "Everton sign Grealish as Zirkzee stays at Man Utd\nEverton sign Jack Grealish on a season-long loan deal from Manchester City but have missed out on Manchester United's Joshua Zirkzee.",
+        "detail": "unparsed_news: bbc_football says \"Everton sign Grealish as Zirkzee stays at Man Utd\\nEverton sign Jack Grealish on a season-long loan deal from Manchester City but have missed out on Manchester United's Joshua Zirkzee.\" (2026-09-01T21:54:30Z) while sky_football says 'Man Utd latest: Everton make bid for Zirkzee' (2026-09-01T20:00:00Z). Used the more conservative \"Everton sign Grealish as Zirkzee stays at Man Utd\\nEverton sign Jack Grealish on a season-long loan deal from Manchester City but have missed out on Manchester United's Joshua Zirkzee.\"."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-392",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says \"Man Utd latest: Shock move explored for Man City's Ait-Nouri\" (2026-09-01T21:50:00Z) while bbc_football says 'Man Utd fail in attempt to sign Ait-Nouri from Man City\\nManchester United approached Manchester City in the final hours of the transfer window in an attempt to sign Algeria defender Rayan Ait-Nouri on loan' (2026-09-01T21:04:30Z). Used the more conservative \"Man Utd latest: Shock move explored for Man City's Ait-Nouri\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 392,
+        "claim_type": "unparsed_news",
+        "value": "Man Utd latest: Shock move explored for Man City's Ait-Nouri",
+        "detail": "unparsed_news: sky_football says \"Man Utd latest: Shock move explored for Man City's Ait-Nouri\" (2026-09-01T21:50:00Z) while bbc_football says 'Man Utd fail in attempt to sign Ait-Nouri from Man City\\nManchester United approached Manchester City in the final hours of the transfer window in an attempt to sign Algeria defender Rayan Ait-Nouri on loan' (2026-09-01T21:04:30Z). Used the more conservative \"Man Utd latest: Shock move explored for Man City's Ait-Nouri\"."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-634",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3\\nPlus, a hint that Matias Fernandez-Pardo will be eased into action The post Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy F' (2026-09-04T11:08:40Z) while bbc_football says 'Woltemade move underlines summer of change at Newcastle\\nIt was ultimately a tale of two very different forwards on deadline day as Nick Woltemade left Newcastle United to join Juventus on loan and the club announced the arrival of Matias Fernandez-Pardo.' (2026-09-02T10:01:36Z). Used the more conservative 'Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3\\nPlus, a hint that Matias Fernandez-Pardo will be eased into action The post Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy F'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 634,
+        "claim_type": "unparsed_news",
+        "value": "Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3\nPlus, a hint that Matias Fernandez-Pardo will be eased into action The post Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy F",
+        "detail": "unparsed_news: fantasyfootballscout says 'Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3\\nPlus, a hint that Matias Fernandez-Pardo will be eased into action The post Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy F' (2026-09-04T11:08:40Z) while bbc_football says 'Woltemade move underlines summer of change at Newcastle\\nIt was ultimately a tale of two very different forwards on deadline day as Nick Woltemade left Newcastle United to join Juventus on loan and the club announced the arrival of Matias Fernandez-Pardo.' (2026-09-02T10:01:36Z). Used the more conservative 'Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3\\nPlus, a hint that Matias Fernandez-Pardo will be eased into action The post Osula, Livramento, Burn: Newcastle injury latest for FPL Gameweek 3 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy F'."
+      }
+    },
+    {
+      "id": "gw03-warning-availability-conflict-122",
+      "gameweek": 3,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW3 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says 'Liverpool target Minteh can still get dream move - Hurzeler\\nBrighton boss Fabian Hurzeler says Yankuba Minteh can still \"fulfil his dream\" move in future after the Seagulls turned down Liverpool\\'s offers for the winger.' (2026-09-04T10:44:37Z) while sky_football says \"Brighton latest: Hurzeler challenges Minteh to earn 'dream' transfer\" (2026-09-02T10:30:00Z). Used the more conservative 'Liverpool target Minteh can still get dream move - Hurzeler\\nBrighton boss Fabian Hurzeler says Yankuba Minteh can still \"fulfil his dream\" move in future after the Seagulls turned down Liverpool\\'s offers for the winger.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-04T15:22:33.055774Z",
+      "detail": {
+        "element_id": 122,
+        "claim_type": "unparsed_news",
+        "value": "Liverpool target Minteh can still get dream move - Hurzeler\nBrighton boss Fabian Hurzeler says Yankuba Minteh can still \"fulfil his dream\" move in future after the Seagulls turned down Liverpool's offers for the winger.",
+        "detail": "unparsed_news: bbc_football says 'Liverpool target Minteh can still get dream move - Hurzeler\\nBrighton boss Fabian Hurzeler says Yankuba Minteh can still \"fulfil his dream\" move in future after the Seagulls turned down Liverpool\\'s offers for the winger.' (2026-09-04T10:44:37Z) while sky_football says \"Brighton latest: Hurzeler challenges Minteh to earn 'dream' transfer\" (2026-09-02T10:30:00Z). Used the more conservative 'Liverpool target Minteh can still get dream move - Hurzeler\\nBrighton boss Fabian Hurzeler says Yankuba Minteh can still \"fulfil his dream\" move in future after the Seagulls turned down Liverpool\\'s offers for the winger.'."
+      }
+    },
     {
       "id": "gw02-status-missed-seal",
       "gameweek": 2,

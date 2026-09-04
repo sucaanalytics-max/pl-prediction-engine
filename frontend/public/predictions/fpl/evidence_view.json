@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-04T11:51:58.926361Z",
+  "generated_at": "2026-09-04T15:20:56.582915Z",
   "gameweek": 3,
   "players": [
     {
@@ -1658,6 +1658,63 @@
               "value": "u",
               "claimed_at": "2026-09-02T15:38:15.529699Z",
               "observed_at": "2026-09-02T19:03:59.176695Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
+      "element_id": 130,
+      "player_name": "Wieffer",
+      "club": "Brighton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "1951b90b581975a8",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-04T09:30:08.612904Z",
+              "observed_at": "2026-09-04T11:52:32.295766Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "4a95bf8fd648ceca",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-04T09:30:08.612904Z",
+              "observed_at": "2026-09-04T11:52:32.295766Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -5097,13 +5154,94 @@
       ],
       "total_conflicts": 0,
       "needs_attention": false
+    },
+    {
+      "element_id": 652,
+      "player_name": "Azeez",
+      "club": "Brighton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "3c61cbd5d1d96303",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-04T11:30:08.661589Z",
+              "observed_at": "2026-09-04T11:52:32.295766Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-09-13",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "7c1b5dd3c02b1b55",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-09-13",
+              "claimed_at": "2026-09-04T11:30:08.661589Z",
+              "observed_at": "2026-09-04T11:52:32.295766Z",
+              "quote": "Unspecified injury - Expected back 13 Sep",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "6d2d653fd75aa850",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-04T11:30:08.661589Z",
+              "observed_at": "2026-09-04T11:52:32.295766Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
     }
   ],
   "counts": {
-    "n_claims": 753,
-    "n_players_with_claims": 153,
-    "n_players_shown": 61,
-    "n_escalations": 9,
-    "n_players_resolved": 75
+    "n_claims": 798,
+    "n_players_with_claims": 167,
+    "n_players_shown": 63,
+    "n_escalations": 13,
+    "n_players_resolved": 77
   }
 }
