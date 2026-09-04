@@ -32,9 +32,14 @@ describe("the path follows the gameweek", () => {
     expect(minutesConflictsDescriptor(1).path).toBe("fpl/minutes_conflicts_gw01.json");
   });
 
-  it("keeps everything else the constant declared", () => {
+  it("scopes the key to the gameweek, and keeps the rest of the constant", () => {
     const made = minutesConflictsDescriptor(7);
-    expect(made.key).toBe(MINUTES_CONFLICTS.key);
+    // This assertion used to require `made.key === MINUTES_CONFLICTS.key`, which
+    // encoded the bug rather than the contract. `useArtifact` coalesces
+    // in-flight fetches on the key alone, so one key across gameweeks serves one
+    // week's payload for another's — measured in production on 2026-09-04, where
+    // /evidence rendered GW1's conflicts beneath a header reading GW3.
+    expect(made.key).toBe(`${MINUTES_CONFLICTS.key}:07`);
     expect(made.owner).toBe(MINUTES_CONFLICTS.owner);
     expect(made.freshnessBudgetMs).toBe(MINUTES_CONFLICTS.freshnessBudgetMs);
     expect(made.narrow).toBe(MINUTES_CONFLICTS.narrow);

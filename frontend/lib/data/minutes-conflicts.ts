@@ -242,7 +242,21 @@ export function conflictsForSquad(
  */
 export function minutesConflictsDescriptor(gameweek: number): Descriptor<MinutesConflicts> {
   const padded = String(gameweek).padStart(2, "0");
-  return { ...MINUTES_CONFLICTS_SHAPE, path: `fpl/minutes_conflicts_gw${padded}.json` };
+  return {
+    ...MINUTES_CONFLICTS_SHAPE,
+    // Scoped per gameweek, exactly as `projectionsDescriptor` and
+    // `decisionDescriptor` scope theirs. `useArtifact` coalesces in-flight
+    // fetches on `descriptor.key` alone — "identity, never its path" — so a
+    // shared key across gameweeks serves one week's payload for another's.
+    //
+    // Observed in production: `MinutesConflicts` resolves its week as
+    // `gameweek ?? shared ?? 1`, so a cold load starts a gw01 fetch under the
+    // shared key; when the real week resolved to 3 the second call was handed
+    // gw01's in-flight promise, and /evidence rendered GW1's conflicts under a
+    // page header saying GW3.
+    key: `minutesConflicts:${padded}`,
+    path: `fpl/minutes_conflicts_gw${padded}.json`,
+  };
 }
 
 /**
