@@ -1,19 +1,55 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-04T20:20:57.840272Z",
-  "n_dropped": 193,
+  "generated_at": "2026-09-04T22:27:56.843052Z",
+  "n_dropped": 203,
   "dropped_by_source": {
-    "bbc_football": 76,
-    "fantasyfootballscout": 14,
+    "bbc_football": 80,
+    "fantasyfootballscout": 13,
     "hayters": 27,
-    "sky_football": 76
+    "sky_football": 83
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 283,
+  "n_articles": 293,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "83b617ae85f120cb",
+      "headline": "Maresca explains why Foden is not in captaincy group at Man City",
+      "summary": "Manchester City manager Enzo Maresca has admitted that he considered making Phil Foden one of the captains of his side. Following the departures of both Bernardo Silva and Rodri, just Ruben Dias and Erling Haaland remain at the Etihad",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/maresca-explains-why-foden-is-not-in-captaincy-group-at-man-city/",
+      "claimed_at": "2026-09-04T21:30:00Z",
+      "players": [
+        {
+          "element_id": 384,
+          "name": "Donnarumma",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 388,
+          "name": "Gu\u00e9hi",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "3983f7474ebbf4a1",
       "headline": "Barcola, Szoboszlai + Liverpool injury latest for FPL Gameweek 3",
@@ -141,6 +177,240 @@
       "touches_squad": true
     },
     {
+      "digest": "f3c3cfe8c58ece5f",
+      "headline": "Palace latest: Rak-Sakyi exit confirmed",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-04T22:59:00Z",
+      "players": [
+        {
+          "element_id": 219,
+          "name": "J.Rak-Sakyi",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "240cb702de4df7b1",
+      "headline": "Everton latest: Moyes has not spoken to owners since making Toffees return",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-04T22:49:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9392bd86b4273788",
+      "headline": "Papers: Chelsea offered chance to sign Bissouma as Fernandez replacement",
+      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13581538/chelsea-transfer-news-blues-offered-chance-to-sign-former-tottenham-midfielder-yves-bissouma-paper-talk",
+      "claimed_at": "2026-09-04T22:18:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5655c7d97901d3a3",
+      "headline": "Isak\u2019s quickfire double earns Iraola first PL win as Liverpool boss",
+      "summary": "FREE TO WATCH: Highlights from Ipswich Town's match against Liverpool in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13581559/ipswich-0-2-liverpool-premier-league-highlights",
+      "claimed_at": "2026-09-04T22:08:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "52c6a1e824fe1c4e",
+      "headline": "Iraola up and running at Liverpool as Isak nets double at Ipswich",
+      "summary": "Andoni Iraola registered his first win as Liverpool head coach as Alexander Isak scored twice inside nine minutes to beat Ipswich 2-0.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/ipswich-town-vs-liverpool/report/559470",
+      "claimed_at": "2026-09-04T21:49:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "dfe46030ab10ad8e",
+      "headline": "First win as Liverpool boss 'feels good' - Iraola",
+      "summary": "Liverpool head coach Andoni Iraola said it \"feels good\" to pick up his first victory in charge as his side beat Ipswich 2-0 at Portman Road.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c93enddzn5eo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-04T21:48:52Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2c7a6ac2189507a9",
+      "headline": "'I thought we were excellent' - O'Neil on Liverpool defeat",
+      "summary": "Ipswich Town manager Gary O'Neil describes his team's performance as \"excellent\" despite their 2-0 defeat to Liverpool at Portman Road.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c5y4rpj0lx4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-04T21:47:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "21fb49dd2fa6f42b",
+      "headline": "Hull City latest: Jakirovic signs new deal until 2028",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13548674/hull-city-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-04T21:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9aaa861ad5ea68f1",
+      "headline": "Isak's early double gives Liverpool victory over Ipswich",
+      "summary": "Alexander Isak scores twice in the opening ten minutes as Liverpool pick up their first win of the season with a 2-0 victory at Ipswich.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cgmr1z492k9o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-04T21:31:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0e80d85cdbea1e59",
+      "headline": "Maresca responds to Fernandez\u2019s \u2018big club\u2019 comments after completing move to Man City from Chelsea",
+      "summary": "Manchester City manager Enzo Maresca has responded to Enzo Fernandez\u2019s comment about joining a &#8220;big club&#8221; after his move from Chelsea. The Argentina international completed a deadline day m",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/maresca-responds-to-fernandezs-big-club-comments-after-completing-move-to-man-city-from-chelsea/",
+      "claimed_at": "2026-09-04T21:30:00Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3ce781ba2c417814",
+      "headline": "De Zerbi on Kulusevski\u2019s recent return to training and his continuing recovery",
+      "summary": "Roberto De Zerbi insisted that he is &#8220;positive&#8221; about Dejan Kulusevski's recovery, despite a small issue this week. The Swede has not featured for Spurs since suffering a complicated knee injury against Crysta",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-gives-positive-kulusevski-update/",
+      "claimed_at": "2026-09-04T21:30:00Z",
+      "players": [
+        {
+          "element_id": 521,
+          "name": "Kulusevski",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b6602c4016cc8d4b",
+      "headline": "Arteta responds to lack of forward signings and defends Arsenal\u2019s transfer window",
+      "summary": "Mikel Arteta admits Arsenal's transfer window was not perfect, but says he is pleased with the business that was done. Arsenal were active in the summer transfer market, but asked whether Arteta should have gone furthe",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-responds-to-lack-of-forward-signings-and-defends-arsenals-transfer-window/",
+      "claimed_at": "2026-09-04T21:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8865e111ee45310b",
+      "headline": "Bissouma was offered to Chelsea - Saturday's gossip",
+      "summary": "Chelsea were offered ex-Tottenham midfielder Yves Bissouma, Manchester City and Chelsea showed interest in Crystal Palace's Adam Wharton, Arsenal are considering move for Barcelona's Raphinha, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c7903g4nvn3o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-04T21:07:33Z",
+      "players": [
+        {
+          "element_id": 210,
+          "name": "Wharton",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "d99b746c2326afdc",
       "headline": "Star-studded London City cruise to win over Man Utd",
       "summary": "London City Lionesses started their star-studded era and the new season with a comfortable 2-1 win over Manchester United.",
@@ -159,6 +429,42 @@
       "touches_squad": false
     },
     {
+      "digest": "c17091c6deff7e40",
+      "headline": "Isak shines at last but Scherpen suffers - Ipswich v Liverpool player ratings",
+      "summary": "How Liverpool and Ipswich Town's players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c5y5g5vq00lo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-04T20:54:30Z",
+      "players": [
+        {
+          "element_id": 564,
+          "name": "Scherpen",
+          "club": "IPS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d2b7a6201fcd47c1",
+      "headline": "Isak double gives Liverpool their first win of the season",
+      "summary": "Alexander Isak's quick-fire double in the opening ten minutes of the game secured a first victory of the season for Liverpool against Ipswich Town - and a first under new boss Andoni Iraola. Isak finished emphatically on six minutes to open t",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/isak-double-gives-liverpool-their-first-win-of-the-season/",
+      "claimed_at": "2026-09-04T20:52:59Z",
+      "players": [
+        {
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "dab12ab4a1426097",
       "headline": "Liverpool latest: Barcola benched...have your say!",
       "summary": null,
@@ -171,6 +477,24 @@
           "element_id": 627,
           "name": "Barcola",
           "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e1961304d5ef41f9",
+      "headline": "Liverpool latest: Iraola - My fights with Isak aren't about goalscoring",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-04T19:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -1227,6 +1551,24 @@
       "touches_squad": false
     },
     {
+      "digest": "5d4832d64602e9c3",
+      "headline": "PL Predictions: Aston Villa to end Hull's honeymoon start",
+      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight across the weekend Premier League action.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13581012/premier-league-predictions-jones-knows-best-bets-more-andoni-iraola-issues-liverpool-to-slip-at-ipswich",
+      "claimed_at": "2026-09-03T22:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "899a67dcc6ad11aa",
       "headline": "PL Predictions: More Iraola issues? Liverpool to slip at Ipswich",
       "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight across the weekend Premier League action.",
@@ -1239,24 +1581,6 @@
           "element_id": 373,
           "name": "C.Jones",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d3f4e4efb60fd7e7",
-      "headline": "Papers: Everton eye shock Vardy move to solve striker problem",
-      "summary": "The top stories and transfer rumours from Friday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13581025/everton-transfer-news-toffees-eye-shock-move-for-free-agent-jamie-vardy-after-folarin-balogun-deal-falls-through-paper-talk",
-      "claimed_at": "2026-09-03T22:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1281,24 +1605,6 @@
           "element_id": 374,
           "name": "Endo",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b9e0d9d15336cdf4",
-      "headline": "Palace latest: Sage: Wharton right to stay at Selhurst",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-03T22:10:00Z",
-      "players": [
-        {
-          "element_id": 210,
-          "name": "Wharton",
-          "club": "CRY",
           "held": false
         }
       ],
@@ -1341,96 +1647,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b91a7354d5bb4861",
-      "headline": "Man City sign England goalkeeper Moorhouse on loan",
-      "summary": "Manchester City sign England goalkeeper Anna Moorhouse on a short-term loan from Orlando Pride.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c5yep5d6qnno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-03T20:30:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8760774065da1b6d",
-      "headline": "Bournemouth latest: Rose happy with squad as he thanks owner",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-03T19:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "54d261e85bece3ba",
-      "headline": "Arsenal latest: Arteta gives injury update on Bruno, Timber, Saliba",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-03T18:58:00Z",
-      "players": [
-        {
-          "element_id": 6,
-          "name": "Saliba",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "71bab6bbca908687",
-      "headline": "Arsenal latest: Martinelli exit leaves one remaining player from Arteta\u2019s first squad",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-03T18:58:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c92b9f0464576327",
-      "headline": "Chelsea latest: Teenage Brazilian full-back joins from Corinthians",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-03T18:31:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "https://x.com/robtFPL/status/2095573888746881090",
       "headline": "Reminder that this isn't necessarily a bad thing for #FPL \ud83d\udc47",
       "summary": "Summary data from last season and this season, including in-game position switches James Wathland @JamesWathland 3 Sept \ud83d\udea8: Dominik Szoboszlai has trained at right-back this week. \ud83c\udded\ud83c\uddfa #LFC",
@@ -1438,60 +1654,6 @@
       "tier": 3,
       "url": "https://x.com/robtFPL/status/2095573888746881090",
       "claimed_at": "2026-09-03T18:05:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6ac158629f84053d",
-      "headline": "Spurs latest: Richarlison not named in PL squad amid Trabzonspor interest",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-03T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f844cce2df9e0cb1",
-      "headline": "Spurs latest: De Zerbi on Mudryk availability and Richarlison transfer",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-03T18:00:00Z",
-      "players": [
-        {
-          "element_id": 578,
-          "name": "Mudryk",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ef7a5a284ce257c6",
-      "headline": "Spurs omit Richarlison from Premier League squad",
-      "summary": "Richarlison is left out of Tottenham's Premier League squad as he does not figure in the club's plans this season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c79038z3q4yo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-03T17:46:55Z",
       "players": [
         {
           "element_id": 0,
@@ -1539,60 +1701,6 @@
       "touches_squad": false
     },
     {
-      "digest": "61471ff0ae3be699",
-      "headline": "Martinelli joins Al Hilal in Arsenal club-record sale",
-      "summary": "Gabriel Martinelli has joined Al Hilal in a club-record &#163;60m sale for Arsenal.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13579276/gabriel-martinelli-transfer-news-forward-joins-al-hilal-in-a-club-record-sale-for-arsenal-in-60m-deal",
-      "claimed_at": "2026-09-03T17:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fd672c94dab5b55d",
-      "headline": "Arsenal's Martinelli joins Al-Hilal in \u00a360m move",
-      "summary": "Arsenal winger Gabriel Martinelli has joined Saudi Pro League side Al-Hilal for \u00a360m.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq5xl575q7no?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-03T16:30:43Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3c099c92efa32194",
-      "headline": "Breaking down Chelsea's staggering 39 summer exits",
-      "summary": "Chelsea are believed to have recouped more than \u00a3500m this summer by either selling or loaning out a staggering 39 players.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ce87vzgyzd9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-03T16:20:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "d87afc33e7563257",
       "headline": "Glasner provides positive Nottingham Forest injury update ahead of Spurs showdown",
       "summary": "Nottingham Forest midfielder Ibrahim Sangare is expected to be available for selection for this weekend\u2019s Premier League match against Tottenham Hotspur. Sangare missed last weekend\u2019s 2-2 draw with Liverpool after sust",
@@ -1629,42 +1737,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9e6fa1d74f131abd",
-      "headline": "Sarr 'needs time' to process Liverpool move collapse",
-      "summary": "Crystal Palace forward Ismaila Sarr will need time to process the collapse of his proposed move to Liverpool, says Eagles head coach Pierre Sage.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/czdz349nyl7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-03T15:05:22Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "46de5b9691ed9f74",
-      "headline": "Newcastle boss Jaissle maintains stance on star man despite Manchester United links",
-      "summary": "Matthias Jaissle has outlined his aim for Lewis Hall to remain at Newcastle United for the long term. Hall was the subject of interest from Manchester United during the summer transfer window, although no formal bid",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/newcastle-boss-jaissle-maintains-stance-on-star-man-despite-manchester-united-links/",
-      "claimed_at": "2026-09-03T14:14:37Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "https://x.com/robtFPL/status/2095504959135441330",
       "headline": "3 Sept",
       "summary": "\ud83d\udcca #FPL captaincy matrix: GW3-8 Top captaincy picks by GW, based on the latest Solio projections and expected minutes - and the gap to the next best options \ud83d\udc47",
@@ -1677,60 +1749,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0c99ea5ba426c499",
-      "headline": "Le Bris admits Sunderland star could still leave the club this summer",
-      "summary": "Regis Le Bris admitted a move away from the club for Chemsdine Talbi is still possible this summer. Talbi has been linked with a move to Turkey, with both Fenerbahce and Galatasaray interested. He has also been omitted from Sunder",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/le-bris-admits-sunderland-star-could-still-leave-the-club-this-summer/",
-      "claimed_at": "2026-09-03T13:20:20Z",
-      "players": [
-        {
-          "element_id": 549,
-          "name": "Talbi",
-          "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fe39d337a1879dc4",
-      "headline": "Sage insists Sarr needs time to \u2018digest\u2019 failed Liverpool move",
-      "summary": "Pierre Sage insisted Ismaila Sarr needs time to &#8220;digest&#8221; his failed move to Liverpool and revealed that Jean-Philippe Mateta will be out for at least three weeks. Sarr and Mateta have both been linked with moves away from the",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/sage-insists-sarr-needs-time-to-digest-failed-liverpool-move/",
-      "claimed_at": "2026-09-03T13:09:25Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fe0ca695938b7f4c",
-      "headline": "Farke reveals injury blow for Leeds star",
-      "summary": "Daniel Farke revealed that Joe Rodon has suffered a severe hamstring injury and will be out for eight to 10 weeks. Rodon was taken off early in Leeds' 1-1 draw with Brentford last weekend and Farke gave an update on the defender's fitness. &#8220;Bad news wit",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/farke-reveals-injury-blow-for-leeds-star/",
-      "claimed_at": "2026-09-03T13:02:00Z",
-      "players": [
-        {
-          "element_id": 329,
-          "name": "Rodon",
-          "club": "LEE",
           "held": false
         }
       ],
