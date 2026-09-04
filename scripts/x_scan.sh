@@ -52,6 +52,24 @@ ACCOUNTS=$(PYTHONPATH=. "$PYTHON" scripts/list_accounts.py)
 
 [ -z "$ACCOUNTS" ] && { log "no accounts configured; nothing to do"; exit 0; }
 
+# The signed-in browser this scan attaches to.
+#
+# Not the everyday Chrome: `chrome://inspect`'s toggle dies with its debugging
+# session, so a job firing at 07:17 cannot depend on it, and pointing
+# --remote-debugging-port at a daily-driver profile hands any local process
+# control of every logged-in site. `scan_browser.sh` keeps a profile used by
+# nothing else. See its header.
+#
+# Exported rather than passed, because `x_scan.mjs` reads it from the environment.
+export X_SCAN_CHROME_PROFILE="${X_SCAN_PROFILE_DIR:-$HOME/Library/Application Support/pl-prediction-x-scan}"
+
+if ! "$REPO/scripts/scan_browser.sh" start; then
+    # Loud, and not a silent empty scan. A logged-out browser is refused outright
+    # by x.com now, so continuing without one would write nothing and look calm.
+    log "could not start the scan browser; aborting rather than scanning logged out"
+    exit 1
+fi
+
 scanned=0
 failed=0
 while IFS=$'\t' read -r handle source club; do

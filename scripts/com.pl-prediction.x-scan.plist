@@ -88,21 +88,24 @@
         <key>PATH</key>
         <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
 
-        <!-- Attach to the signed-in Chrome instead of launching a fresh one.
-             Measured 2026-09-04: a logged-out Playwright browser now gets
-             `net::ERR_HTTP_RESPONSE_CODE_FAILURE` from x.com immediately — X
-             refuses the anonymous profile outright, so the route this job used
-             for its whole life no longer returns anything. `x_scan.mjs` reads
-             this variable and connects over CDP, reusing that browser's
-             existing context and cookies.
+        <!-- The scan's OWN browser profile, not the everyday Chrome.
+             Measured 2026-09-04: a logged-out browser gets
+             `net::ERR_HTTP_RESPONSE_CODE_FAILURE` from x.com, so the anonymous
+             route this job used for its whole life returns nothing. It needs a
+             signed-in session.
 
-             It needs Chrome's remote debugging actually listening. The port
-             file at <profile>/DevToolsActivePort can be present and stale — it
-             was here, and the connection still failed with `no-ws-event`. Turn
-             it on at chrome://inspect/#remote-debugging; without it this job
-             will log a refusal rather than silently scanning nothing. -->
+             Not the daily-driver profile, for two reasons. chrome://inspect's
+             remote-debugging toggle is scoped to a debugging session and the
+             port keeps listening after it ends — so the endpoint looks alive,
+             404s on the browser id, and a 07:17 job would fail silently, which
+             is how this lane already lost three weeks. And pointing
+             --remote-debugging-port at a signed-in daily profile hands any
+             local process control of every logged-in site, not just X.
+
+             `scripts/scan_browser.sh` owns this profile and x_scan.sh starts it.
+             It is signed into X once, by hand, and carries nothing else. -->
         <key>X_SCAN_CHROME_PROFILE</key>
-        <string>/Users/tusk-jvb/Library/Application Support/Google/Chrome</string>
+        <string>/Users/tusk-jvb/Library/Application Support/pl-prediction-x-scan</string>
     </dict>
 
     <!-- One scan at a time. Two overlapping runs would race on the inbox and on

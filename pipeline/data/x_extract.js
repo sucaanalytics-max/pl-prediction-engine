@@ -42,8 +42,26 @@
   // markup changed" unless the login wall is detected, and the two point at
   // opposite fixes. Read here rather than in the caller because both callers need
   // it and this is the only file that touches the DOM.
-  const signedOut = !document.cookie.includes('auth_token')
-    && /Continue with|Sign in to X|Happening now/.test(document.body.innerText);
+  // `document.cookie` THROWS rather than returning '' on a document that denies
+  // access — measured 2026-09-04 against a fresh headless profile:
+  // "SecurityError: Failed to read the 'cookie' property from 'Document'".
+  // The extractor is one expression, so an unguarded read there aborts the whole
+  // scan and reports it as "extractor threw", which reads like a markup change
+  // and points at the wrong fix entirely.
+  //
+  // An unreadable cookie jar is not evidence of being signed in, so it falls
+  // back to the text test alone — the conservative direction, because a false
+  // "signed out" makes a caller name the real cause while a false "signed in"
+  // would hide it.
+  let hasAuthCookie = false;
+  try {
+    hasAuthCookie = document.cookie.includes('auth_token');
+  } catch (e) {
+    hasAuthCookie = false;
+  }
+  const bodyText = (document.body && document.body.innerText) || '';
+  const signedOut = !hasAuthCookie
+    && /Continue with|Sign in to X|Happening now/.test(bodyText);
 
   // Whether this is the profile's own timeline, and not merely some page beneath
   // that handle.
