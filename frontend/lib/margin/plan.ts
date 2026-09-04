@@ -33,7 +33,7 @@
  */
 
 import type { Horizon, HorizonWeek } from "@/lib/data/narrow";
-import type { Projection } from "@/lib/data/projections";
+import type { Horizon as XpHorizon, Projection } from "@/lib/data/projections";
 
 /** What one player does in one gameweek. */
 export interface Cell {
@@ -52,6 +52,15 @@ export interface Cell {
   readonly off: boolean;
   readonly enter: boolean;
   readonly exit: boolean;
+  /**
+   * Expected points for this player in this week, or null.
+   *
+   * Null is never zero. Zero is a forecast of nothing; null is the absence of a
+   * forecast, and the two are a transfer decision apart. The horizon block drops
+   * weeks it has no readable players for, so absence is a state the producer
+   * emits on purpose.
+   */
+  readonly xp: number | null;
 }
 
 export interface PlanRow {
@@ -64,6 +73,26 @@ export interface PlanRow {
   readonly starts: string;
 }
 
+/**
+ * One column's footer.
+ *
+ * `xp` is the plain sum of the ELEVEN, with no captain doubling and no bench.
+ * That is what makes it checkable: a reader can add the column up and get this
+ * number. The producer's own per-week `objective` is bench-weighted,
+ * vice-weighted and carries the banked-free-transfer credit, so it is a
+ * different quantity — printing it here under a points heading is the
+ * relabelling this file has always refused.
+ *
+ * `missing` is published beside it because a total two players short is a wrong
+ * number, not a partial one, and only the footer can say which it is.
+ */
+export interface WeekTotal {
+  readonly gameweek: number;
+  readonly xp: number;
+  readonly counted: number;
+  readonly missing: number;
+}
+
 export interface PlanGridModel {
   readonly weeks: readonly HorizonWeek[];
   readonly rows: readonly PlanRow[];
@@ -72,13 +101,57 @@ export interface PlanGridModel {
   readonly evalHorizon: number;
   /** Rows whose name could not be resolved, so the grid can say so. */
   readonly unnamed: number;
+  /** One per week, in the same order as `weeks`. */
+  readonly totals: readonly WeekTotal[];
 }
 
 /** GK → DEF → MID → FWD, as every FPL surface reads. */
 const ORDER: Record<string, number> = { GKP: 0, DEF: 1, MID: 2, FWD: 3 };
 
+/**
+ * Where a cell's number comes from, given the player and the week.
+ *
+ * A function rather than a table, because the two sources are not
+ * interchangeable: the decided gameweek's number is the projection row's own,
+ * simulated at the decision's draw count, and every later week comes off the
+ * horizon block at its own lower count. {@link xpResolver} builds the one this
+ * grid uses; `cellsFor` stays agnostic so its own tests need no artifact.
+ */
+export type XpFor = (elementId: number, gameweek: number) => number | null;
+
+/**
+ * The number for one player in one week, from the right producer.
+ *
+ * The first week is the decided one and takes the projection's `xp`.
+ * `lib/data/projections.ts` states why the horizon block deliberately omits it:
+ * "two numbers for the same player in the same week would be indistinguishable
+ * on screen", and the row's own is the higher-fidelity of the two.
+ *
+ * Later weeks join on GAMEWEEK, never on column index. An index join reads
+ * correctly whenever the horizon starts where the plan starts, and shifts every
+ * number one column the moment it does not — a wrong number under a right
+ * heading, which is the shape of mistake nobody re-checks.
+ */
+export function xpResolver(
+  weeks: readonly HorizonWeek[],
+  projections: readonly Projection[],
+  xpHorizon: XpHorizon | null,
+): XpFor {
+  const own = new Map<number, number | null>();
+  for (const p of projections) own.set(p.elementId, p.xp);
+
+  const later = new Map<number, ReadonlyMap<number, number>>();
+  for (const week of xpHorizon?.weeks ?? []) later.set(week.gameweek, week.xp);
+
+  const decided = weeks[0]?.gameweek ?? null;
+  return (elementId, gameweek) =>
+    gameweek === decided
+      ? own.get(elementId) ?? null
+      : later.get(gameweek)?.get(elementId) ?? null;
+}
+
 export function cellsFor(
-  elementId: number, weeks: readonly HorizonWeek[],
+  elementId: number, weeks: readonly HorizonWeek[], xpFor: XpFor = () => null,
 ): readonly Cell[] {
   return weeks.map((week) => {
     const captain = week.captain === elementId;
@@ -95,6 +168,7 @@ export function cellsFor(
       off: !inXi && !bench,
       enter: week.transfers_in.includes(elementId),
       exit: week.transfers_out.includes(elementId),
+      xp: xpFor(elementId, week.gameweek),
     };
   });
 }
@@ -108,7 +182,9 @@ export function cellsFor(
  * the screen exists to plan.
  */
 export function buildPlanGrid(
-  horizon: Horizon, projections: readonly Projection[],
+  horizon: Horizon,
+  projections: readonly Projection[],
+  xpHorizon: XpHorizon | null = null,
 ): PlanGridModel {
   const byId = new Map<number, Projection>();
   for (const p of projections) byId.set(p.elementId, p);
@@ -116,11 +192,13 @@ export function buildPlanGrid(
   const ids = new Set<number>();
   for (const week of horizon.weeks) for (const id of week.squad) ids.add(id);
 
+  const xpFor = xpResolver(horizon.weeks, projections, xpHorizon);
+
   let unnamed = 0;
   const rows: PlanRow[] = [...ids].map((elementId) => {
     const projection = byId.get(elementId);
     if (!projection?.name) unnamed += 1;
-    const cells = cellsFor(elementId, horizon.weeks);
+    const cells = cellsFor(elementId, horizon.weeks, xpFor);
     const started = cells.filter((c) => c.start || c.captain).length;
     return {
       elementId,
@@ -146,6 +224,32 @@ export function buildPlanGrid(
     transferHorizon: horizon.transferHorizon,
     evalHorizon: horizon.evalHorizon,
     unnamed,
+    totals: horizon.weeks.map((week) => totalFor(week, xpFor)),
+  };
+}
+
+/**
+ * One week's XI total.
+ *
+ * Rounded to four places on the way out. The summands arrive already rounded by
+ * the producer, so adding eleven of them accumulates binary float error into a
+ * tail the reader can see — 13.750000000000002 under a heading that claims to
+ * be checkable by eye.
+ */
+export function totalFor(week: HorizonWeek, xpFor: XpFor): WeekTotal {
+  let xp = 0;
+  let counted = 0;
+  for (const elementId of week.xi) {
+    const value = xpFor(elementId, week.gameweek);
+    if (value === null) continue;
+    xp += value;
+    counted += 1;
+  }
+  return {
+    gameweek: week.gameweek,
+    xp: Math.round(xp * 1e4) / 1e4,
+    counted,
+    missing: week.xi.length - counted,
   };
 }
 

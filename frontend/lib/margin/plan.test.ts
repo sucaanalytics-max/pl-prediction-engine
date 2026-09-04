@@ -15,7 +15,7 @@
 import { describe, expect, it } from "vitest";
 import { narrowPublicDecision } from "@/lib/data/narrow";
 import { buildPlanGrid, cellsFor, movesFor } from "@/lib/margin/plan";
-import type { Projection } from "@/lib/data/projections";
+import type { Horizon as XpHorizon, Projection } from "@/lib/data/projections";
 
 function projection(elementId: number, name: string, position: string): Projection {
   return {
@@ -180,5 +180,110 @@ describe("the grid", () => {
     const model = buildPlanGrid(horizon, NAMES);
     expect(movesFor(horizon.weeks[1], model.rows))
       .toEqual({ out: ["Haaland"], in: ["Semenyo"] });
+  });
+});
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The numbers in the cells
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Two producers, two fidelities, and the grid has to keep them straight.
+ *
+ * The decided gameweek's xP is the projection row's own `xp`, simulated at
+ * `n_draws` (10,000 today). Every later week comes off `xp_public.horizon`,
+ * simulated at `horizon.n_draws` (5,000). `lib/data/projections.ts` says why the
+ * current week is deliberately absent from the horizon block: "two numbers for
+ * the same player in the same week would be indistinguishable on screen".
+ *
+ * So the join is by GAMEWEEK, never by column index. An index join reads
+ * correctly for a horizon that starts where the plan starts, and silently shifts
+ * every number one column left the moment it does not.
+ */
+const XP_HORIZON: XpHorizon = {
+  nDraws: 5000,
+  weeks: [
+    { gameweek: 4, xp: new Map([[1, 4.25], [2, 3.5], [3, 6.0]]) },
+    { gameweek: 5, xp: new Map([[1, 3.75], [2, 3.1]]) },
+  ],
+};
+
+describe("per-week expected points", () => {
+  it("takes the decided gameweek from the projection, not the horizon", () => {
+    /**
+     * GW3 is week 0 here and the horizon has no GW3 entry. The row's own `xp`
+     * is 5 for every fixture player, and that is the higher-fidelity number.
+     */
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES, XP_HORIZON);
+    const raya = grid.rows.find((r) => r.name === "Raya");
+    expect(raya?.cells[0].gameweek).toBe(3);
+    expect(raya?.cells[0].xp).toBe(5);
+  });
+
+  it("takes later weeks from the horizon, matched on gameweek", () => {
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES, XP_HORIZON);
+    const raya = grid.rows.find((r) => r.name === "Raya");
+    expect(raya?.cells[1].gameweek).toBe(4);
+    expect(raya?.cells[1].xp).toBe(4.25);
+    expect(raya?.cells[2].gameweek).toBe(5);
+    expect(raya?.cells[2].xp).toBe(3.75);
+  });
+
+  it("is null, never zero, for a week the horizon does not cover", () => {
+    /**
+     * Player 3 has a GW4 number and no GW5 one. Zero would read as "projected to
+     * score nothing", which is a forecast; null reads as "no forecast", which is
+     * the truth. The same distinction `narrowHorizon` drops empty weeks for.
+     */
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES, XP_HORIZON);
+    const palmer = grid.rows.find((r) => r.name === "Palmer");
+    expect(palmer?.cells[1].xp).toBe(6.0);
+    expect(palmer?.cells[2].xp).toBeNull();
+  });
+
+  it("leaves every later cell null when no horizon was published", () => {
+    /** `Projections.horizon` is null whenever the run solved no horizon. */
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES, null);
+    const raya = grid.rows.find((r) => r.name === "Raya");
+    expect(raya?.cells[0].xp).toBe(5);
+    expect(raya?.cells[1].xp).toBeNull();
+  });
+});
+
+describe("the column total", () => {
+  it("sums the XI, and says how many it could not", () => {
+    /**
+     * The XI only — a bench total would double-count the same squad under a
+     * heading that reads like a score. And it reports `missing`, because a total
+     * silently short of two players is a wrong number rather than a partial one.
+     *
+     * GW3's XI is 1, 2, 3, 4 and the projection gives every one of them 5.
+     */
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES, XP_HORIZON);
+    expect(grid.totals[0]).toEqual({ gameweek: 3, xp: 20, counted: 4, missing: 0 });
+  });
+
+  it("counts what it has and names the shortfall", () => {
+    /**
+     * GW4's XI is 1, 2, 3; the horizon has 1 at 4.25, 2 at 3.5 and 3 at 6.0, so
+     * nothing is missing. GW5's XI is 1, 2, 5 and the horizon has no 5 — so the
+     * total is 6.85 over two of three.
+     */
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES, XP_HORIZON);
+    expect(grid.totals[1]).toEqual({ gameweek: 4, xp: 13.75, counted: 3, missing: 0 });
+    expect(grid.totals[2]).toEqual({ gameweek: 5, xp: 6.85, counted: 2, missing: 1 });
+  });
+
+  it("does not double the captain", () => {
+    /**
+     * The label is "XI xP" and this is the sum of the eleven. Doubling the
+     * armband would make it a score projection, which is a different quantity
+     * with a different name — and one the reader could not check by adding up
+     * the column, which is the whole reason the total is allowed here at all.
+     */
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES, XP_HORIZON);
+    // GW3: four in the XI at 5 each. With the captain doubled it would be 25.
+    expect(grid.totals[0].xp).toBe(20);
   });
 });
