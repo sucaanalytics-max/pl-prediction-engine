@@ -165,7 +165,6 @@ ALLOWED: Dict[str, Dict[str, str]] = {
     },
 
     # ── Not yet examined, one symbol each ────────────────────────────────────────
-    "pipeline.data.fbref": {"fetch_fbref_match_stats": "not yet examined"},
     "pipeline.data.market_snapshots": {"last_before_kickoff": "not yet examined"},
     "pipeline.data.x_relevance": {"PATTERN_COUNT": "not yet examined"},
     "pipeline.data.x_scan": {

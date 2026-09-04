@@ -107,7 +107,7 @@ cd frontend && npm run lint
 cd frontend && npm run build   # Vercel target; build:cloudflare for the other
 ```
 
-**Green baseline, measured 2026-09-04:** 2143 python tests (5 skipped), 1081 frontend
+**Green baseline, measured 2026-09-04:** 2158 python tests (5 skipped), 1081 frontend
 tests across 70 files. If you see materially fewer python tests, you are on the wrong
 interpreter.
 

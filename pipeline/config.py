@@ -916,3 +916,31 @@ EVAL = {
 # when team IDs and squads roll into a new season.
 PLAYER_TEAM_OVERRIDES: dict = {}
 EXCLUDED_PLAYERS: set = set()
+
+# ── Team view: attack and defence from a second xG model ─────────────────────
+# Feeds `/teams` and nothing else. Deliberately not a model input, so nothing
+# here can move a projection or a stake — see the spec at
+# docs/superpowers/specs/2026-09-04-verified-team-metrics-design.md, decision 1.
+TEAM_VIEW = {
+    # Empirical-Bayes shrinkage weight: a club's own rate gets n/(n+k) and the
+    # league mean gets the rest. At k=6, two matches of evidence carry a quarter
+    # of the weight — which is the point. The measurement that set this: across
+    # the six columns of a widely-read GW3 "zonal weakness" thread, only 16% of
+    # the 720 team pairs were separable at 95% from two matches, and one column
+    # separated 2%. An unshrunk rank off two games is a rank attached to noise.
+    #
+    # PROVISIONAL. `quant-modeller` owns this number; 6 is a defensible starting
+    # point (roughly "trust the club over the league once it has played ~6"), not
+    # a fitted value. Fit it against forecast_ledger.json before defending it.
+    "shrinkage_k": 6.0,
+    # Below this, no rank is shown at all — the club renders "not yet
+    # measurable". Shrinkage alone would still emit an ordering, and an ordering
+    # is what gets read off a page regardless of the interval beside it.
+    "min_matches_for_rank": 3,
+    # Metrics carried per club, each in both directions where the source has
+    # both. `ppda` is one-directional by definition: it describes the pressing
+    # this club does, not what is done to it.
+    "metrics": (
+        "np_xg", "xg", "deep_completions", "goals",
+    ),
+}

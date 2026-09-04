@@ -45,6 +45,18 @@ STANDALONE: Dict[str, str] = {
     "pipeline.validation.run_validation": "entry point: .github/workflows/validate.yml",
     "pipeline.run_pipeline": "entry point: .github/workflows/pipeline.yml",
     "pipeline.learning.run_news": "entry point: .github/workflows/news.yml",
+    # Writes predictions/team_metrics.json for the /teams view. A CLI rather than
+    # a pipeline import on purpose: it feeds no projection and no stake
+    # (`model_input: false` in the artifact, asserted by a test), so nothing in
+    # the pipeline may come to depend on it. Wiring it into run_pipeline would
+    # make an optional scraped source into a step whose absence someone would
+    # eventually treat as a failure.
+    "pipeline.learning.team_view": (
+        "team attack/defence view, run by hand: "
+        "python -m pipeline.learning.team_view. Deliberately imported by "
+        "nothing — it is a read-only surface, and a pipeline that imported it "
+        "could grow a dependency on a view"
+    ),
     # A CLI the human runs to file an availability claim by hand. Deliberately not
     # imported by the pipeline: a claim is a human judgement, and code that could
     # call this could manufacture evidence.
