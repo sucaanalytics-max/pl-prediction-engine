@@ -1,12 +1,16 @@
 {
  "schema_version": 1,
- "generated_at": "2026-09-04T14:34:11.407234Z",
+ "generated_at": "2026-09-04T16:00:31.645635Z",
  "thresholds": {
   "fringe_minutes": 45.0,
   "nailed_minutes": 75.0
  },
  "evidence_fixtures_note": "Fixtures of the player's own history behind the minutes estimate. 0 means prior-driven; -1 means the projection artifact predates the field and the count is unknown.",
  "note": "Disagreements between the minutes model and scanned evidence. Reported, never applied: correcting a projection from a quote needs a fitted model of pre-season minutes, not a regex.",
+ "evidence_feed": {
+  "newest_claim_at": "2026-08-16T11:08:06Z",
+  "rows": 13
+ },
  "conflicts": [
   {
    "element_id": 557,

@@ -32,7 +32,7 @@
 
 import { malformed, narrowed, type NarrowResult } from "@/lib/data/artifact";
 import {
-  optNumber, optString, Problems, reqArray, reqRecord, reqString,
+  countOr0, isRecord, optNumber, optString, Problems, reqArray, reqRecord, reqString,
 } from "@/lib/data/check";
 import { DAY, type Descriptor } from "@/lib/data/registry";
 
@@ -84,6 +84,28 @@ export interface MinutesConflicts {
    * matcher that guessed would make every other line untrustworthy.
    */
   readonly ambiguousSurnames: ReadonlyMap<string, readonly number[]>;
+  /**
+   * How fresh the claim feed behind all of this is.
+   *
+   * Read from the producer rather than derived from `conflicts`, because with an
+   * empty conflict list there are no dates here at all — and that is exactly the
+   * case that reads most wrongly. On 2026-09-04 the feed had been dead for 19
+   * days (the launchd scan was not loaded, and X now refuses a logged-out
+   * browser outright) while this section rendered fifteen August claims with no
+   * indication of their age.
+   */
+  readonly evidenceFeed: {
+    readonly newestClaimAt: string | null;
+    /**
+     * Inbox rows the producer considered, or **null when it did not say**.
+     *
+     * Absent and zero are different facts and call for opposite copy: an
+     * artifact written before this field existed cannot support "nothing was
+     * scanned", while `0` from a current producer is exactly that claim. The
+     * producer always emits the key precisely so this stays distinguishable.
+     */
+    readonly rows: number | null;
+  };
 }
 
 const KINDS: readonly ConflictKind[] = ["fringe-but-discussed", "nailed-but-doubted"];
@@ -163,6 +185,12 @@ export function narrowMinutesConflicts(raw: unknown): NarrowResult<MinutesConfli
       .map(narrowConflict)
       .filter((c): c is MinutesConflict => c !== null),
     ambiguousSurnames: ambiguous,
+    evidenceFeed: {
+      newestClaimAt: isRecord(file.evidence_feed)
+        ? optString(file.evidence_feed.newest_claim_at)
+        : null,
+      rows: isRecord(file.evidence_feed) ? countOr0(file.evidence_feed.rows) : null,
+    },
   });
 }
 

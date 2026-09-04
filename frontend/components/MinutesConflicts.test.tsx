@@ -274,3 +274,69 @@ describe("which gameweek's conflicts it asks for", () => {
       .toContain("fpl/minutes_conflicts_gw01.json");
   });
 });
+
+/**
+ * How old the evidence is, which is a different question from what it found.
+ *
+ * Measured 2026-09-04: this section rendered fifteen conflicts, every one drawn
+ * from an August claim, with no indication that the feed behind them had been
+ * dead for nineteen days. The launchd scan was not loaded, no plist was
+ * installed, and running the scraper by hand returned
+ * `ERR_HTTP_RESPONSE_CODE_FAILURE` — X now refuses a logged-out browser.
+ *
+ * The zero-conflict copy was the worse half: "no projection contradicts the
+ * evidence. That is a result, not an absence" is precisely false when there is
+ * no evidence. So both branches are asserted here.
+ */
+function withFeed(
+  conflicts: unknown[],
+  feed: { newest_claim_at: string | null; rows: number },
+) {
+  const result = narrowMinutesConflicts({
+    schema_version: 1,
+    generated_at: "2026-09-04T10:43:31Z",
+    thresholds: { fringe_minutes: 45, nailed_minutes: 75 },
+    note: "Disagreements ...",
+    evidence_feed: feed,
+    conflicts,
+    ambiguous_surnames: {},
+  });
+  if (!("value" in result) || !result.value) throw new Error("fixture did not narrow");
+  return result.value;
+}
+
+describe("the age of the evidence", () => {
+  it("says the feed is stale when its newest claim is weeks old", async () => {
+    const view = withFeed([CONFLICT], {
+      newest_claim_at: "2026-08-16T11:08:06Z", rows: 13,
+    });
+    const { default: MinutesConflicts } = await mountWith(view);
+    render(<MinutesConflicts />);
+    expect(screen.getByTestId("feed-staleness")).toHaveTextContent(/stale|days old/i);
+    expect(screen.getByTestId("feed-staleness")).toHaveTextContent("2026-08-16");
+  });
+
+  it("stays quiet when the feed is current", async () => {
+    const fresh = new Date(Date.now() - 6 * 3600_000).toISOString();
+    const view = withFeed([CONFLICT], { newest_claim_at: fresh, rows: 13 });
+    const { default: MinutesConflicts } = await mountWith(view);
+    render(<MinutesConflicts />);
+    expect(screen.queryByTestId("feed-staleness")).toBeNull();
+  });
+
+  it("does not call an empty list a result when nothing was scanned", async () => {
+    const view = withFeed([], { newest_claim_at: null, rows: 0 });
+    const { default: MinutesConflicts } = await mountWith(view);
+    render(<MinutesConflicts />);
+    expect(screen.queryByText(/that is a result, not an absence/i)).toBeNull();
+    expect(screen.getByTestId("feed-staleness")).toHaveTextContent(/no claims/i);
+  });
+
+  it("still calls an empty list a result when the feed is genuinely current", async () => {
+    const fresh = new Date(Date.now() - 3600_000).toISOString();
+    const view = withFeed([], { newest_claim_at: fresh, rows: 9 });
+    const { default: MinutesConflicts } = await mountWith(view);
+    render(<MinutesConflicts />);
+    expect(screen.getByText(/that is a result, not an absence/i)).toBeTruthy();
+  });
+});

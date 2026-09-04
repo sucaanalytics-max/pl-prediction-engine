@@ -68,6 +68,71 @@ const KIND_COPY: Record<string, { label: string; gist: string }> = {
  * this call site, where it is visible, because a descriptor is required and week
  * 1's path is the one that exists — not because 1 is a sensible default for a week.
  */
+/**
+ * How stale a claim feed may be before saying so.
+ *
+ * Seven days, because the scan is designed to run twice daily and
+ * `X_SCAN_MAX_AGE_DAYS` is 3 — so a newest claim a week old means the scan has
+ * missed roughly a dozen runs, not that the news was quiet.
+ */
+const STALE_AFTER_DAYS = 7;
+
+/** Whole days since an ISO stamp, or null if it is absent or unparseable. */
+function daysSince(iso: string | null): number | null {
+  if (!iso) return null;
+  const at = Date.parse(iso);
+  if (Number.isNaN(at)) return null;
+  return Math.floor((Date.now() - at) / 86_400_000);
+}
+
+/**
+ * The line that stops a dead feed reading as a clean bill of health.
+ *
+ * Renders nothing when the feed is current, because a healthy feed needs no
+ * commentary and a permanent banner is a banner nobody reads.
+ */
+function FeedStaleness({
+  newestClaimAt, rows,
+}: {
+  newestClaimAt: string | null;
+  rows: number | null;
+}) {
+  const age = daysSince(newestClaimAt);
+
+  // Null means the producer never reported, which is not evidence of an empty
+  // feed — an artifact predating the field would otherwise be accused of one.
+  if (rows === null) return null;
+
+  if (rows === 0 || newestClaimAt === null) {
+    return (
+      <p
+        data-testid="feed-staleness"
+        className="text-xs"
+        style={{ color: "var(--warning)" }}
+      >
+        <strong>No claims have been scanned.</strong> This section compares the
+        minutes model against scanned evidence, and there is none on file — so
+        silence here is a gap in the feed, not agreement about who plays.
+      </p>
+    );
+  }
+
+  if (age === null || age < STALE_AFTER_DAYS) return null;
+
+  return (
+    <p
+      data-testid="feed-staleness"
+      className="text-xs"
+      style={{ color: "var(--warning)" }}
+    >
+      <strong>The evidence is stale.</strong> The newest scanned claim is from{" "}
+      {newestClaimAt.slice(0, 10)} — {age} days old, across {rows}{" "}
+      {rows === 1 ? "row" : "rows"}. A short list here means the scan has stopped,
+      not that the minutes model is right.
+    </p>
+  );
+}
+
 export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {}) {
   // Called unconditionally: `gameweek ?? useCurrentGameweek()` short-circuits, which
   // skips the hook whenever the prop is supplied and breaks hook order.
@@ -85,16 +150,36 @@ export default function MinutesConflicts({ gameweek }: { gameweek?: number } = {
   }
 
   if (view.conflicts.length === 0) {
-    return (
+    const age = daysSince(view.evidenceFeed.newestClaimAt);
+    const feedUsable =
+      view.evidenceFeed.rows === null
+      || (view.evidenceFeed.rows > 0
+          && view.evidenceFeed.newestClaimAt !== null
+          && age !== null
+          && age < STALE_AFTER_DAYS);
+
+    // "That is a result, not an absence" is only true when there was evidence to
+    // contradict. With a dead feed it is the opposite of true, and it is the most
+    // reassuring sentence on the page.
+    return feedUsable ? (
       <p className="text-xs" style={{ color: "var(--text-3)" }}>
         Checked every player the scan mentioned — no projection contradicts the
         evidence. That is a result, not an absence.
       </p>
+    ) : (
+      <FeedStaleness
+        newestClaimAt={view.evidenceFeed.newestClaimAt}
+        rows={view.evidenceFeed.rows}
+      />
     );
   }
 
   return (
     <div className="space-y-4">
+      <FeedStaleness
+        newestClaimAt={view.evidenceFeed.newestClaimAt}
+        rows={view.evidenceFeed.rows}
+      />
       <div className="space-y-1">
         <p className="text-xs" style={{ color: "var(--text-3)" }}>
           {view.conflicts.length} projection

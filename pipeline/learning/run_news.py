@@ -373,6 +373,12 @@ def _report_minutes_conflicts(
         )
         payload = minutes_conflicts.to_artifact(
             conflicts, ambiguous, generated_at=observed_at,
+            # Read from the whole inbox, not the conflicting subset: with zero
+            # conflicts there are no dates in the artifact at all, and a reader
+            # cannot then tell a quiet feed from a dead one.
+            feed=minutes_conflicts.evidence_feed_health(
+                minutes_conflicts.inbox_rows(inbox_text)
+            ),
         )
         name = f"minutes_conflicts_gw{gameweek:02d}.json"
         minutes_conflicts.write_artifact(payload, predictions_dir / "fpl" / name)

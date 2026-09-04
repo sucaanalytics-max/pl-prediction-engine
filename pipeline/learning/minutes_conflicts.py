@@ -62,6 +62,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, asdict
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
@@ -115,7 +116,7 @@ class Conflict:
     quote: str
 
 
-def _rows(inbox_csv: str) -> List[Dict[str, str]]:
+def inbox_rows(inbox_csv: str) -> List[Dict[str, str]]:
     """Inbox rows, parsed by the same reader the poller uses."""
     from pipeline.data.grok_feed import parse_sheet
 
@@ -147,7 +148,7 @@ def find_conflicts(
     conflicts: List[Conflict] = []
     ambiguous: Dict[str, Tuple[int, ...]] = {}
 
-    for row in _rows(inbox_csv):
+    for row in inbox_rows(inbox_csv):
         text = str(row.get("value") or "")
         if not text:
             continue
@@ -207,9 +208,43 @@ def find_conflicts(
     return conflicts, ambiguous
 
 
+def evidence_feed_health(rows: Sequence[Mapping[str, Any]]) -> Dict[str, Any]:
+    """
+    How fresh the claim feed is, read across the WHOLE inbox.
+
+    Deliberately not derived from the conflicts. With zero conflicts the artifact
+    carries no `claimed_at` at all, so a consumer cannot tell a healthy quiet feed
+    from a dead one — and on 2026-09-04 the difference was three weeks of silence
+    that `/evidence` rendered as "no projection contradicts the evidence. That is
+    a result, not an absence."
+
+    Parsed rather than compared as strings: the inbox carries both `...Z` and
+    `...+00:00` for the same instant, and a lexical max sorts "Z" after "+", so it
+    would name an older row as the newest.
+    """
+    newest_key = None
+    newest_raw = None
+    for row in rows:
+        raw = str(row.get("claimed_at") or "").strip()
+        if not raw:
+            continue
+        try:
+            when = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except ValueError:
+            # An unparseable stamp is not a date, and guessing one would put a
+            # fabricated freshness on the page.
+            continue
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=timezone.utc)
+        if newest_key is None or when > newest_key:
+            newest_key, newest_raw = when, raw
+    return {"newest_claim_at": newest_raw, "rows": len(list(rows))}
+
+
 def to_artifact(conflicts: Sequence[Conflict],
                 ambiguous: Mapping[str, Tuple[int, ...]],
-                *, generated_at: str) -> Dict[str, Any]:
+                *, generated_at: str,
+                feed: Optional[Mapping[str, Any]] = None) -> Dict[str, Any]:
     """The publishable shape. Aggregates and quotes only — no derived values."""
     return {
         "schema_version": 1,
@@ -230,6 +265,11 @@ def to_artifact(conflicts: Sequence[Conflict],
             "Reported, never applied: correcting a projection from a quote needs "
             "a fitted model of pre-season minutes, not a regex."
         ),
+        # How fresh the evidence behind all of this is. Always present, even as
+        # nulls: omitting the key would make "producer predates this field" and
+        # "the inbox is empty" indistinguishable to a consumer, and those call
+        # for opposite reactions.
+        "evidence_feed": dict(feed) if feed else {"newest_claim_at": None, "rows": 0},
         "conflicts": [asdict(c) for c in conflicts],
         "ambiguous_surnames": {k: list(v) for k, v in sorted(ambiguous.items())},
     }
@@ -266,10 +306,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print(f"no projection at {xp_path}; nothing to compare against")
         return 1
     inbox = root / "fpl" / "x_inbox.csv"
+    # Read once and reused for the feed-health line below: reading it twice would
+    # let the two disagree if the poller wrote between them.
+    inbox_text = inbox.read_text(encoding="utf-8") if inbox.is_file() else ""
 
     conflicts, ambiguous = find_conflicts(
         json.loads(xp_path.read_text(encoding="utf-8")),
-        inbox.read_text(encoding="utf-8") if inbox.is_file() else "",
+        inbox_text,
         json.loads(Path(args.bootstrap).read_text(encoding="utf-8")),
     )
 
@@ -286,7 +329,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     if args.write:
         stamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
-        payload = to_artifact(conflicts, ambiguous, generated_at=stamp)
+        payload = to_artifact(
+            conflicts, ambiguous, generated_at=stamp,
+            feed=evidence_feed_health(inbox_rows(inbox_text)),
+        )
         name = f"minutes_conflicts_gw{args.gameweek:02d}.json"
         # Both copies, as the poller does. A local run that wrote only the private
         # artifact would leave the app showing something else, which is the shape
