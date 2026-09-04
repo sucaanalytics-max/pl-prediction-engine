@@ -1135,6 +1135,108 @@ export function decisionDescriptor(gameweek: number): Descriptor<PublicDecision>
  * filename — `decision_latest.json`, which nothing has ever written — cannot be
  * added silently again.
  */
+// ─────────────────────────────────────────────────────────────────────────────
+// team_metrics.json — attack and defence measured by a second provider
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** One club's measured rates. Every metric is nullable: absence is a real state. */
+export interface TeamMetricRow {
+  readonly team: string;
+  readonly matches: number;
+  /** True while the club has played fewer than `minMatchesForRank`. */
+  readonly belowThreshold: boolean;
+  readonly npxgForPerMatch: number | null;
+  readonly npxgForShrunk: number | null;
+  readonly npxgAgainstPerMatch: number | null;
+  readonly npxgAgainstShrunk: number | null;
+  readonly deepForPerMatch: number | null;
+  readonly deepAgainstPerMatch: number | null;
+  /** Passes allowed per defensive action. LOWER is more pressing. */
+  readonly ppda: number | null;
+  readonly attackRank: number | null;
+  readonly defenceRank: number | null;
+}
+
+export interface TeamMetrics {
+  readonly generatedAt: string | null;
+  readonly source: string | null;
+  /**
+   * Whether this artifact feeds a projection. It must stay false.
+   *
+   * Narrowed rather than ignored so the page can render the claim, and so a
+   * producer that flipped it would be visible here instead of only in a commit
+   * message nobody re-reads.
+   */
+  readonly modelInput: boolean;
+  readonly shrinkageK: number | null;
+  readonly minMatchesForRank: number | null;
+  readonly nMatches: number;
+  readonly leagueNpxgPerMatch: number | null;
+  readonly teams: readonly TeamMetricRow[];
+}
+
+/**
+ * Narrow `team_metrics.json`.
+ *
+ * ## What the real file looks like, and the trap in it
+ *
+ * Measured on the committed artifact, 2026-09-04: twenty clubs, two matches
+ * each, and **`attack_rank` and `defence_rank` are null on all twenty** — because
+ * the producer withholds a rank below three matches on purpose. A narrower that
+ * required a numeric rank would drop every row and leave the section unreadable
+ * on precisely the day its message is "not yet measurable". So a null rank is
+ * valid data here, not a defect, and a test asserts that against the real file.
+ *
+ * `ppda` is one-directional by definition — it measures the pressing a club
+ * does — so there is no `against` counterpart to read, and inventing one would
+ * relabel the opponent's own pressing as something done to them.
+ */
+export function narrowTeamMetrics(raw: unknown): NarrowResult<TeamMetrics> {
+  const problems = new Problems();
+  const file = reqRecord(raw, "team_metrics.json", problems);
+  if (!file) return malformed(problems.all);
+
+  const list = reqArray(file.teams, "teams", problems);
+  if (!list) return malformed(problems.all);
+
+  const league = isRecord(file.league) ? file.league : {};
+
+  const teams = mapKept(list, "teams", problems, (item, i) => {
+    const row = reqRecord(item, `teams[${i}]`, problems);
+    if (!row) return null;
+    const team = reqString(row.team, `teams[${i}].team`, problems);
+    if (!team) return null;
+    return {
+      team,
+      matches: countOr0(row.matches),
+      // Defaults to true, so a producer that omitted the flag is treated as
+      // "not yet trustworthy" rather than silently promoted to ranked.
+      belowThreshold: row.below_match_threshold !== false,
+      npxgForPerMatch: optNumber(row.np_xg_for_per_match),
+      npxgForShrunk: optNumber(row.np_xg_for_shrunk),
+      npxgAgainstPerMatch: optNumber(row.np_xg_against_per_match),
+      npxgAgainstShrunk: optNumber(row.np_xg_against_shrunk),
+      deepForPerMatch: optNumber(row.deep_completions_for_per_match),
+      deepAgainstPerMatch: optNumber(row.deep_completions_against_per_match),
+      ppda: optNumber(row.ppda),
+      attackRank: optNumber(row.attack_rank),
+      defenceRank: optNumber(row.defence_rank),
+    } satisfies TeamMetricRow;
+  });
+
+  if (problems.any) return malformed(problems.all);
+  return narrowed({
+    generatedAt: optString(file.generated_at),
+    source: optString(file.source),
+    modelInput: file.model_input === true,
+    shrinkageK: optNumber(file.shrinkage_k),
+    minMatchesForRank: optNumber(file.min_matches_for_rank),
+    nMatches: countOr0(file.n_matches),
+    leagueNpxgPerMatch: optNumber(league.np_xg_for_per_match),
+    teams,
+  });
+}
+
 export const REGISTRY = {
   matches: ({
     key: "matches",
@@ -1184,6 +1286,22 @@ export const REGISTRY = {
     // publishes nothing when it has nothing to say.
     isEmpty: (v) => v.messages.length === 0,
   }) satisfies Descriptor<MessageFeed>,
+
+  teamMetrics: ({
+    key: "teamMetrics",
+    path: "team_metrics.json",
+    owner: "daily",
+    describes: "attack and defence as a second provider measured them",
+    // Understat updates after matches, not continuously, and the producer runs
+    // in the daily job — so a copy older than two days means the step stopped.
+    freshnessBudgetMs: 2 * DAY,
+    narrow: narrowTeamMetrics,
+    producedAtOf: (v) => v.generatedAt,
+    // Empty means no club has been measured at all. Twenty clubs with every
+    // rank withheld is NOT empty — it is the honest early-season state and the
+    // section has something to say about it.
+    isEmpty: (v) => v.teams.length === 0,
+  }) satisfies Descriptor<TeamMetrics>,
 
   fixtureXg: ({
     key: "fixtureXg",

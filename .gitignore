@@ -89,3 +89,14 @@ frontend/dist/
 
 # Subagent-driven-development scratch (ledger, briefs, review packages)
 .superpowers/
+
+# Read from a paid subscription in-session, never committed.
+#
+# This repo and the deployed site are both PUBLIC, so a commit here republishes
+# licensed third-party data (Opta metrics via a FantasyFootballFix premium
+# account) to the world under the owner's name. Reading it to check our own
+# numbers is using the subscription; committing it is redistribution.
+#
+# Only our own derived delta plus a checked-on date may reach predictions/.
+# See docs/superpowers/specs/2026-09-04-verified-team-metrics-design.md, part C.
+predictions/local/

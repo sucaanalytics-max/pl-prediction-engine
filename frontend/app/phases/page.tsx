@@ -18,6 +18,7 @@
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { PhaseMatrix } from "@/components/phases/PhaseMatrix";
+import { TeamStrength } from "@/components/phases/TeamStrength";
 import { proven } from "@/lib/data/artifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 
@@ -51,6 +52,24 @@ export default function PhasesPage() {
         ) : (
           <PhaseMatrix fixtures={fixtures} />
         )}
+
+        {/* A third warrant, below the fixture list and labelled as such.
+            The matrix says whose fixtures are kind; this says who has actually
+            been good, as a provider that is not us measured it. Kept apart for
+            the reason stated at the top of this file: neither may borrow the
+            other's authority. */}
+        <section className="space-y-2">
+          <h2
+            className="text-sm font-semibold tracking-tight"
+            style={{ color: "var(--text-1)" }}
+          >
+            Who has actually been good
+          </h2>
+          <p className="text-xs" style={{ color: "var(--text-3)" }}>
+            A kind run only helps a club that can use it — measured, not simulated
+          </p>
+          <TeamStrength />
+        </section>
       </div>
     </ErrorBoundary>
   );

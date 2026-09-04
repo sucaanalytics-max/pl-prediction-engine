@@ -160,8 +160,24 @@ undermine the one thing this page exists to demonstrate.
 
 ### Surface
 
-`frontend/app/teams/page.tsx` — a new path, because `/table` is retired and
-`/stats` is player-level and says so in its own docstring. Tokens from
+**Revised 2026-09-04 after reading the guards: a section on `/phases`, not a new
+route.** The spec originally called for `frontend/app/teams/page.tsx`. Two things
+found in the tree overturned it:
+
+- `test/nav-coverage.test.tsx` holds the route surface to an **allow-list of
+  eight** and states the reason: three separate specs prescribed cutting routes,
+  none was executed, "intent has now lost three times, so this is the enforcer. A
+  24th route is a red build." Adding a ninth runs directly against a guard built
+  because of exactly this pressure.
+- `/phases` is *already* the twenty-club page — "who in the LEAGUE has the kindest
+  run… that needs all twenty clubs at once" — and its docstring states the
+  warranty rule this design depends on: *"Projections are simulated; a fixture
+  list is published. Keeping the two apart means neither borrows the other's
+  authority."* A measured rate is a third warrant, so it belongs beside the
+  fixture matrix, labelled, answering the same buying question independently.
+
+So: `frontend/components/phases/TeamStrength.tsx`, mounted under a "Who has
+actually been good" heading below the matrix. Seven routes stay seven. Tokens from
 `frontend/lib/margin/tokens.ts` (`FLOODLIT`, `SANS`); table component at
 `frontend/components/teams/TeamTable.tsx`.
 

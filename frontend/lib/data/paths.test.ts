@@ -174,10 +174,15 @@ describe("the workflow declarations parse", () => {
     // Understat player-events feed, OPTIONAL because it is a scraped source
     // that may be absent on any given day, and a `cp` under `set -e` would
     // turn that into a hard pipeline failure.
+    // `team_metrics.json` joined on 2026-09-04: the /phases team-strength
+    // section, OPTIONAL for the same reason as player_events — it reads
+    // Understat, a scraped source allowed to be absent, and it feeds no
+    // projection so its absence costs a section rather than a forecast.
     expect(OPTIONAL).toEqual([
       "fixture_xg.json",
       "market_blend_weight.json",
       "player_events.json",
+      "team_metrics.json",
     ]);
   });
 
