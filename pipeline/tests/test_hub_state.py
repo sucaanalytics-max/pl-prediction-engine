@@ -211,3 +211,48 @@ class EntryStateFromCaptureTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ReadEntryFplRungTests(unittest.TestCase):
+    """
+    Rung 2 of `_read_entry`: no capture on disk, so FPL's own endpoint answers.
+
+    This rung had no test, which is how a hardcoded free-transfer count survived
+    in it. `read_entry_state` needs the banked-transfer cap, and the cap is a
+    rule — `rules.max_banked_free_transfers`, one definition, in rules.py. A
+    caller that invents its own number would be a second answer to a question
+    that already has one.
+    """
+
+    HISTORY = {
+        "current": [
+            {"event": 1, "event_transfers": 0},
+            {"event": 2, "event_transfers": 0},
+            {"event": 3, "event_transfers": 1},
+        ],
+        "chips": [],
+    }
+    PICKS = {"picks": [{"element": 1}], "entry_history": {"bank": 0}}
+
+    def test_the_banked_count_comes_from_history_not_a_constant(self):
+        from unittest import mock
+
+        from pipeline.learning.run_agent import _read_entry
+
+        with (
+            TemporaryDirectory() as tmp,
+            mock.patch("pipeline.fpl.entry_api.fetch_picks", return_value=self.PICKS),
+            mock.patch("pipeline.fpl.entry_api.fetch_transfers", return_value=[]),
+            mock.patch(
+                "pipeline.fpl.entry_api.fetch_history", return_value=self.HISTORY
+            ),
+        ):
+            state = _read_entry(
+                Path(tmp),
+                {"entry_id": ENTRY},
+                4,
+                {"elements": [{"id": 1, "now_cost": 60}]},
+                max_banked_free_transfers=5,
+            )
+
+        self.assertEqual(state.free_transfers, 2)

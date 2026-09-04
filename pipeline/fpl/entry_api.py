@@ -111,6 +111,57 @@ def fetch_picks(entry_id: int, gameweek: int) -> Dict[str, Any]:
     return _get(FPL_ENTRY_PICKS.format(entry_id=entry_id, gameweek=gameweek))
 
 
+#: Chips that grant transfers outside the free-transfer economy. A wildcard or
+#: free hit spends none of the bank, so its ``event_transfers`` must not be
+#: counted against it. Bench boost and triple captain touch transfers not at all.
+UNLIMITED_TRANSFER_CHIPS = frozenset({"wildcard", "freehit"})
+
+
+def banked_free_transfers(
+    history: Mapping[str, Any], gameweek: int, cap: int
+) -> int:
+    """
+    How many free transfers are available for ``gameweek``.
+
+    **The API does not publish this number, and the obvious substitutes are
+    wrong.** ``read_entry_state`` used to return a hardcoded 1, with a comment
+    saying the caller derived the real figure from the previous decision's
+    ``free_transfers_after``. No caller did — and that derivation would have been
+    wrong regardless, because a decision records what the agent PROPOSED. Decline
+    a five-transfer proposal and the bank it predicted never existed.
+
+    What is published is the observation this needs: ``history.current`` carries
+    ``event_transfers`` per gameweek. So the count is replayed forward from the
+    rule — one granted per gameweek, unspent ones banked to ``cap`` — over
+    transfers that actually happened rather than ones that were advised.
+
+    Starts at 1 for GW2 because GW1's transfers are unlimited: nothing before the
+    opening deadline can be banked, whatever ``event_transfers`` says about it.
+    Overspending cannot go negative — the excess was paid for in hits, and the
+    next gameweek still gets its own.
+    """
+    if int(gameweek) <= 2:
+        return 1
+
+    chip_events = {
+        int(chip["event"])
+        for chip in history.get("chips") or []
+        if chip.get("event") is not None
+        and str(chip.get("name", "")).lower() in UNLIMITED_TRANSFER_CHIPS
+    }
+    spent = {
+        int(week["event"]): int(week.get("event_transfers", 0))
+        for week in history.get("current") or []
+        if week.get("event") is not None
+    }
+
+    available = 1
+    for week in range(2, int(gameweek)):
+        used = 0 if week in chip_events else spent.get(week, 0)
+        available = min(int(cap), max(0, available - used) + 1)
+    return available
+
+
 def replay_purchase_prices(
     opening_squad: Sequence[int],
     opening_prices: Mapping[int, int],
@@ -143,6 +194,8 @@ def read_entry_state(
     entry_id: int,
     gameweek: int,
     now_costs: Optional[Mapping[int, int]] = None,
+    *,
+    max_banked_free_transfers: int,
 ) -> EntryState:
     """
     Everything the optimiser needs about a held team, for one gameweek.
@@ -200,10 +253,13 @@ def read_entry_state(
         gameweek=int(gameweek),
         squad=squad,
         bank=bank,
-        # The API does not publish the banked free-transfer count directly. It
-        # is derived by the caller from the previous decision's
-        # free_transfers_after, which is a rule rather than an observation.
-        free_transfers=1,
+        # The API does not publish the banked count directly, so it is replayed
+        # from the per-gameweek transfers it DOES publish. See
+        # banked_free_transfers: this used to be a hardcoded 1 deferring to a
+        # caller-side derivation that no caller performed.
+        free_transfers=banked_free_transfers(
+            history, int(gameweek), int(max_banked_free_transfers)
+        ),
         purchase_prices={p: v for p, v in prices.items() if p in set(squad)},
         untraced=untraced,
         chips_used=chips,

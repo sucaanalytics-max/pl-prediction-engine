@@ -993,6 +993,8 @@ def _read_entry(
     config: Dict[str, Any],
     gameweek: int,
     bootstrap: Dict[str, Any],
+    *,
+    max_banked_free_transfers: int,
 ):
     """
     Read one entry's real position, preferring what the owner captured.
@@ -1038,7 +1040,10 @@ def _read_entry(
         for e in bootstrap.get("elements", [])
     }
     try:
-        return read_entry_state(int(entry_id), int(gameweek), now_costs)
+        return read_entry_state(
+            int(entry_id), int(gameweek), now_costs,
+            max_banked_free_transfers=int(max_banked_free_transfers),
+        )
     except EntryError as exc:
         logger.warning(
             "could not read entry %s (%s); falling back to configured squad state. "
@@ -1132,7 +1137,13 @@ def _decide_for_entries(
         # meant that from GW2 onward `held` was always empty, so the agent
         # treated every gameweek as an opening build with the full 100.0m and
         # never once replayed a purchase price — the thing entry_api exists for.
-        entry = _read_entry(predictions_dir, config, state_gameweek, bootstrap)
+        entry = _read_entry(
+            predictions_dir, config, state_gameweek, bootstrap,
+            # The cap is a rule with one definition (rules.py:517, from
+            # bootstrap's max_extra_free_transfers). Passed down rather than
+            # re-derived, so there is no second answer to it.
+            max_banked_free_transfers=outcome["_rules"].max_banked_free_transfers,
+        )
         held = entry.squad or (config.get("squad") or [])
         decision = decide(
             gameweek=entry.gameweek,
