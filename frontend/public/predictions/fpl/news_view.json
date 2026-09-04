@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-04T17:49:20.609798Z",
-  "n_dropped": 199,
+  "generated_at": "2026-09-04T20:20:57.840272Z",
+  "n_dropped": 193,
   "dropped_by_source": {
-    "bbc_football": 85,
-    "fantasyfootballscout": 13,
+    "bbc_football": 76,
+    "fantasyfootballscout": 14,
     "hayters": 27,
-    "sky_football": 74
+    "sky_football": 76
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 289,
+  "n_articles": 283,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -141,22 +141,64 @@
       "touches_squad": true
     },
     {
-      "digest": "1f3f88bf3aa00e44",
-      "headline": "Why Man Utd goal was allowed to stand - despite Maguire 'handball'",
-      "summary": "The handball law often serves to confuse supporters - and it reared its head again as Harry Maguire celebrated putting Manchester United in front against Ipswich Town.",
-      "source": "bbc_football",
+      "digest": "d99b746c2326afdc",
+      "headline": "Star-studded London City cruise to win over Man Utd",
+      "summary": "London City Lionesses started their star-studded era and the new season with a comfortable 2-1 win over Manchester United.",
+      "source": "sky_football",
       "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c62ewy19w2ro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-30T18:11:57Z",
+      "url": "https://www.skysports.com/football/london-city-lionesses-vs-manchester-united-women/report/575755",
+      "claimed_at": "2026-09-04T21:00:00Z",
       "players": [
         {
-          "element_id": 418,
-          "name": "Maguire",
-          "club": "MUN",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "dab12ab4a1426097",
+      "headline": "Liverpool latest: Barcola benched...have your say!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-04T19:55:00Z",
+      "players": [
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7000f655d2165dce",
+      "headline": "Ipswich v Liverpool team news: Araujo starts, Barcola a sub",
+      "summary": "It's one change apiece at Portman Road The post Ipswich v Liverpool team news: Araujo starts, Barcola a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/ipswich-v-liverpool-team-news-araujo-starts-barcola-a-sub",
+      "claimed_at": "2026-09-04T18:15:00Z",
+      "players": [
+        {
+          "element_id": 579,
+          "name": "Araujo",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "14ce705299c65bf6",
@@ -165,6 +207,42 @@
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/london-city-lionesses-vs-manchester-united-women/live/575755",
+      "claimed_at": "2026-09-04T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "58f11de313886cf4",
+      "headline": "London City land opening night win over Man Utd LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/london-city-lionesses-vs-manchester-united-women/live/575755",
+      "claimed_at": "2026-09-04T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7a0480324de13319",
+      "headline": "Liverpool still lead at Ipswich through Isak double LIVE on Sky!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/ipswich-town-vs-liverpool/live/559470",
       "claimed_at": "2026-09-04T18:00:00Z",
       "players": [
         {
@@ -189,6 +267,24 @@
           "element_id": 627,
           "name": "Barcola",
           "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1f9a530441ae7eca",
+      "headline": "Emery gives update on Aston Villa midfielder ahead of Hull clash",
+      "summary": "Aston Villa boss Unai Emery has revealed Johan Manzambi is closing in on a return to action but is not ready to play this weekend. The Switzerland international will not be available for Saturday evening\u2019s Premier League trip to Hull C",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/emery-gives-update-on-aston-villa-midfielder-ahead-of-hull-clash/",
+      "claimed_at": "2026-09-04T17:55:47Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
           "held": false
         }
       ],
@@ -1425,24 +1521,6 @@
       "touches_squad": false
     },
     {
-      "digest": "1d924bec8597b66a",
-      "headline": "Ndiaye + Enzo to Man City: How does it affect FPL?",
-      "summary": "Both transfers have consequences for their new and old clubs The post Ndiaye + Enzo to Man City: How does it affect FPL? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/03/ndiaye-enzo-to-man-city-how-does-it-affect-fpl",
-      "claimed_at": "2026-09-03T17:45:00Z",
-      "players": [
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "94b4c5a8254e65a0",
       "headline": "Martinelli completes \u00a360m move from Arsenal to Al-Hilal",
       "summary": "Gabriel Martinelli has joined Saudi Pro League side Al-Hilal on a permanent transfer, bringing an end to his seven-year spell at Arsenal. The Brazilian forward joined the Gunners from Ituano in July 2019 and went on to make 278 appearances for",
@@ -1473,24 +1551,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4785b45f8df30dfd",
-      "headline": "Newcastle latest: Jaissle keeping close eye on Woltemade during Juve loan",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-03T17:05:00Z",
-      "players": [
-        {
-          "element_id": 463,
-          "name": "Woltemade",
-          "club": "NEW",
           "held": false
         }
       ],
@@ -1533,24 +1593,6 @@
       "touches_squad": false
     },
     {
-      "digest": "21cea72f3f3042cb",
-      "headline": "Is Chelsea's style under Alonso a major surprise?",
-      "summary": "Much of the last week in the Premier League has bordered on the ridiculous. Spending in the transfer window went stratospheric. Total expenditure topped &#163;3.4bn by Deadline Day's close.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13580427/arsenal-vs-chelsea-does-xabi-alonso-have-a-style-issue-and-will-it-affect-ability-to-compete-at-top-of-premier-league",
-      "claimed_at": "2026-09-03T16:20:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "d87afc33e7563257",
       "headline": "Glasner provides positive Nottingham Forest injury update ahead of Spurs showdown",
       "summary": "Nottingham Forest midfielder Ibrahim Sangare is expected to be available for selection for this weekend\u2019s Premier League match against Tottenham Hotspur. Sangare missed last weekend\u2019s 2-2 draw with Liverpool after sust",
@@ -1563,24 +1605,6 @@
           "element_id": 558,
           "name": "Schlager",
           "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b2f779744e76d378",
-      "headline": "Forest latest: Glasner happy with transfer window",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279316/nottingham-forest-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-03T16:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1605,13 +1629,13 @@
       "touches_squad": false
     },
     {
-      "digest": "9883ad28ad4aac00",
-      "headline": "Palace latest: 'Sarr needs time after failed Liverpool move' - Sage",
-      "summary": null,
-      "source": "sky_football",
+      "digest": "9e6fa1d74f131abd",
+      "headline": "Sarr 'needs time' to process Liverpool move collapse",
+      "summary": "Crystal Palace forward Ismaila Sarr will need time to process the collapse of his proposed move to Liverpool, says Eagles head coach Pierre Sage.",
+      "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-03T14:52:00Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/czdz349nyl7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-03T15:05:22Z",
       "players": [
         {
           "element_id": 0,
@@ -1707,24 +1731,6 @@
           "element_id": 329,
           "name": "Rodon",
           "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5974f37d8ece63d3",
-      "headline": "Jakirovic reveals he will be signing a new contract with Hull City",
-      "summary": "Hull City boss, Sergej Jakirovic, revealed that he will be signing a new deal with the club very soon. Jakirovic's current deal expires in 2027, although Hull do have an option to extend it for another year. Reports had suggested tha",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/jakirovic-reveals-he-will-be-signing-a-new-contract-with-hull-city/",
-      "claimed_at": "2026-09-03T12:42:15Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
