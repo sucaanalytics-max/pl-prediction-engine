@@ -155,11 +155,19 @@ constraint rather than access:
   is a proxy.
 - **Other people's images are theirs.** Render an X post through X's own embed, which
   keeps attribution and their analytics intact. Do not download and re-host media.
-- **What FBref actually exposes here**: `soccerdata`'s FBref reader offers five stat
-  types (standard, keeper, shooting, playing_time, misc); `fbrefdata` offers eleven,
-  including `passing`, `goal_shot_creation`, `possession` and `defense`, and takes
-  `opponent_stats=True` for the conceded side. Both libraries are installed on purpose —
-  see the comment in `fetch_fbref_passing_stats`.
+- **What FBref actually exposes here, and where**: `soccerdata` (installed, works on
+  3.14) offers five stat types — standard, keeper, shooting, playing_time, misc — and
+  takes `opponent_stats=True` for the conceded side. `fbrefdata` offers eleven,
+  including `passing`, `goal_shot_creation`, `possession` and `defense`.
+
+  **`fbrefdata` does not install locally.** Every published version caps at
+  `<3.13` and the repo venv is Python 3.14.4, so `from fbrefdata import FBref`
+  raises ImportError here and `fetch_fbref_passing_stats` returns `None` by design.
+  It is declared in `pipeline/requirements.txt` and installs under CI's Python 3.11
+  (`pipeline.yml`), so those four tables exist **only in CI**. Anything built on them
+  cannot be run or verified on this machine — fixtures are the only local test, and
+  the first real execution is a daily pipeline run. Prefer `shooting` via
+  `soccerdata` for work that needs local verification.
 
 ## Repo hygiene
 

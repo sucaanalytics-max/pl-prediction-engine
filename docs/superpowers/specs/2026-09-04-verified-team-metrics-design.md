@@ -52,11 +52,27 @@ wrong direction:
 - **`/table` returns 410**, along with 21 other retired routes, via the exported
   `GONE` set in `frontend/middleware.ts`. A "team table" page cannot reuse that
   path, and reviving it would contradict a deliberate retirement.
-- **`fbrefdata` exposes eleven stat types where `soccerdata` exposes five.** Both
-  libraries are already installed, and the comment in `fetch_fbref_passing_stats`
-  says why. `goal_shot_creation`, `shooting`, `possession` and `defense` are all
-  reachable today, and `read_team_season_stats` takes `opponent_stats` — which is
-  what makes a *defence* ranking possible rather than inferred.
+- **`fbrefdata` exposes eleven stat types where `soccerdata` exposes five — but it
+  does not install on this machine.** Measured 2026-09-04: every published
+  `fbrefdata` caps at Python `<3.13`, the repo venv is 3.14.4, so
+  `fetch_fbref_passing_stats` returns `None` locally by design. It installs under
+  CI's Python 3.11 only. `goal_shot_creation`, `possession` and `defense` are
+  therefore **CI-only tables**, testable locally by fixture and first executed for
+  real on a daily pipeline run.
+
+  `soccerdata` is installed, works on 3.14, and `read_team_season_stats` there
+  takes `opponent_stats` — which is what makes a *defence* ranking measured rather
+  than inferred. Its five types include `shooting`.
+
+  **Revised decision 6, taken 2026-09-04 after that measurement: build phase one on
+  `soccerdata`'s `shooting` table alone, both directions.** It yields shots, shots
+  on target, xG, npxG, npxG per shot, average shot distance and free-kick shots,
+  for and against — which answers "is this attack generating quality chances" and
+  "is this defence conceding them", and can be run and verified here. SCA/GCA and
+  touches-in-box are deferred to a phase two that adds the `fbrefdata` tables, once
+  the artifact, narrower and page are proven. Building the whole thing on code that
+  cannot execute locally would repeat today's embed mistake: green fixtures over a
+  feature nobody has watched work.
 - **Big chances are Opta-defined and licensed.** Not in FBref or Understat at any
   tier we pay for. They will be a labelled proxy or absent, never presented as the
   real metric.
