@@ -91,7 +91,10 @@ export function TeamStrength() {
               <th className="text-right pr-3 pb-1">shrunk</th>
               <th className="text-right pr-3 pb-1">npxG&nbsp;ag.</th>
               <th className="text-right pr-3 pb-1">shrunk</th>
-              <th className="text-right pr-3 pb-1">deep</th>
+              <th className="text-right pr-3 pb-1">goals&nbsp;for</th>
+              <th className="text-right pr-3 pb-1">goals&nbsp;ag.</th>
+              <th className="text-right pr-3 pb-1">deep&nbsp;for</th>
+              <th className="text-right pr-3 pb-1">deep&nbsp;ag.</th>
               <th className="text-right pb-1">PPDA</th>
             </tr>
           </thead>
@@ -119,7 +122,10 @@ export function TeamStrength() {
                 <td className="text-right pr-3 py-1" style={{ color: S.brand }}>
                   {num(t.npxgAgainstShrunk)}
                 </td>
+                <td className="text-right pr-3 py-1">{num(t.goalsForPerMatch, 1)}</td>
+                <td className="text-right pr-3 py-1">{num(t.goalsAgainstPerMatch, 1)}</td>
                 <td className="text-right pr-3 py-1">{num(t.deepForPerMatch, 1)}</td>
+                <td className="text-right pr-3 py-1">{num(t.deepAgainstPerMatch, 1)}</td>
                 <td className="text-right py-1">{num(t.ppda, 1)}</td>
               </tr>
             ))}
@@ -133,7 +139,9 @@ export function TeamStrength() {
         is the information. <strong>npxG</strong> excludes penalties.{" "}
         <strong>shrunk</strong> pulls a club&apos;s rate toward the league mean by
         its evidence, so a short sample reads as ordinary rather than extreme.{" "}
-        <strong>deep</strong> is completed passes near goal per match;{" "}
+        <strong>goals</strong> are actual, so the gap against npxG is finishing and
+        luck rather than chance quality. <strong>deep</strong> is completed passes
+        near goal per match;{" "}
         <strong>PPDA</strong> is passes allowed per defensive action, where lower
         means more pressing.
       </p>

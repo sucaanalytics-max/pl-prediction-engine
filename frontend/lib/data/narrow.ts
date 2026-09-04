@@ -1151,6 +1151,9 @@ export interface TeamMetricRow {
   readonly npxgAgainstShrunk: number | null;
   readonly deepForPerMatch: number | null;
   readonly deepAgainstPerMatch: number | null;
+  /** Actual goals. The gap against npxG is finishing and luck, not chance quality. */
+  readonly goalsForPerMatch: number | null;
+  readonly goalsAgainstPerMatch: number | null;
   /** Passes allowed per defensive action. LOWER is more pressing. */
   readonly ppda: number | null;
   readonly attackRank: number | null;
@@ -1218,6 +1221,8 @@ export function narrowTeamMetrics(raw: unknown): NarrowResult<TeamMetrics> {
       npxgAgainstShrunk: optNumber(row.np_xg_against_shrunk),
       deepForPerMatch: optNumber(row.deep_completions_for_per_match),
       deepAgainstPerMatch: optNumber(row.deep_completions_against_per_match),
+      goalsForPerMatch: optNumber(row.goals_for_per_match),
+      goalsAgainstPerMatch: optNumber(row.goals_against_per_match),
       ppda: optNumber(row.ppda),
       attackRank: optNumber(row.attack_rank),
       defenceRank: optNumber(row.defence_rank),

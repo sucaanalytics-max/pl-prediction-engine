@@ -39,7 +39,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/tusk-jvb/Documents/Work/PL-Prediction/pl-prediction-engine/scripts/x_scan.sh</string>
+        <string>/Users/tusk-jvb/dev/pl-prediction-engine/scripts/x_scan.sh</string>
     </array>
 
     <!-- 07:17 and 19:17 local. Off the :00 and :30 marks deliberately: nothing
@@ -57,8 +57,17 @@
         </dict>
     </array>
 
+    <!-- The repo moved out of ~/Documents on 2026-08-13, because iCloud's File
+         Provider was producing conflict copies and had begun corrupting .git.
+         These two paths were not updated with it, and that is exactly how this
+         job died: launchd fired it twice daily for three weeks and bash wrote
+         "Operation not permitted" into a log nobody reads, while x_inbox.csv
+         quietly stopped at 2026-08-16. `x_scan.sh` derives its own repo root
+         precisely so this cannot happen to IT; the plist had no such defence.
+         Absolute paths are unavoidable in a LaunchAgent, so the remedy is that
+         the failure is now documented where the next person will look. -->
     <key>WorkingDirectory</key>
-    <string>/Users/tusk-jvb/Documents/Work/PL-Prediction/pl-prediction-engine</string>
+    <string>/Users/tusk-jvb/dev/pl-prediction-engine</string>
 
     <!-- Logs, so a failed scan can be read after the fact rather than guessed at.
          The script prints a UTC timestamp per line for exactly this. -->
@@ -78,6 +87,22 @@
     <dict>
         <key>PATH</key>
         <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+
+        <!-- Attach to the signed-in Chrome instead of launching a fresh one.
+             Measured 2026-09-04: a logged-out Playwright browser now gets
+             `net::ERR_HTTP_RESPONSE_CODE_FAILURE` from x.com immediately — X
+             refuses the anonymous profile outright, so the route this job used
+             for its whole life no longer returns anything. `x_scan.mjs` reads
+             this variable and connects over CDP, reusing that browser's
+             existing context and cookies.
+
+             It needs Chrome's remote debugging actually listening. The port
+             file at <profile>/DevToolsActivePort can be present and stale — it
+             was here, and the connection still failed with `no-ws-event`. Turn
+             it on at chrome://inspect/#remote-debugging; without it this job
+             will log a refusal rather than silently scanning nothing. -->
+        <key>X_SCAN_CHROME_PROFILE</key>
+        <string>/Users/tusk-jvb/Library/Application Support/Google/Chrome</string>
     </dict>
 
     <!-- One scan at a time. Two overlapping runs would race on the inbox and on

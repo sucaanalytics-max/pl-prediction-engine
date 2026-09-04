@@ -96,3 +96,26 @@ describe("narrowTeamMetrics on malformed input", () => {
     expect(out.value.teams[0].ppda).toBeNull();
   });
 });
+
+describe("the conceded side, which is what a defence question needs", () => {
+  it("carries goals and deep completions in both directions", () => {
+    const out = narrowTeamMetrics(real());
+    if (!out.ok) throw new Error(out.problems.join("; "));
+    const t = out.value.teams.find((x) => x.team === "Arsenal")!;
+    // Arsenal conceded 0 goals and 0.42 npxG per match over the first two.
+    expect(t.goalsAgainstPerMatch).toBe(0);
+    expect(t.goalsForPerMatch).toBeGreaterThan(0);
+    expect(t.deepAgainstPerMatch).not.toBeNull();
+    expect(t.npxgAgainstPerMatch).toBeGreaterThan(0);
+  });
+
+  it("keeps a zero conceded distinct from an absent one", () => {
+    // 0 goals against is a real measurement; null is "not reported". A narrower
+    // that collapsed them would make a clean sheet look like missing data.
+    const file = real();
+    file.teams[0].goals_against_per_match = null;
+    const out = narrowTeamMetrics(file);
+    if (!out.ok) throw new Error(out.problems.join("; "));
+    expect(out.value.teams[0].goalsAgainstPerMatch).toBeNull();
+  });
+});
