@@ -69,6 +69,12 @@ Next.js 14 App Router. **Eight live pages**, all `"use client"` except
   model). **Tabs are split by warranty, not by question**, precisely so incomparable
   columns are never read against each other. Follow this pattern for new data surfaces.
 - `/evidence` — absorbed the former `/inbox`, `/accuracy` and `/health`.
+- `/phases` — the twenty-club page: fixture runs, plus a measured team-strength
+  section fed by `predictions/team_metrics.json`. Its docstring carries the rule
+  the surface is organised by — *"Projections are simulated; a fixture list is
+  published. Keeping the two apart means neither borrows the other's
+  authority."* A third warrant (measured by an outside provider) gets its own
+  labelled section rather than being mixed into either.
 - `/capture` — records the squad actually submitted to FPL, via `/api/hub/position`.
   Nothing to do with capturing posts.
 
@@ -107,8 +113,8 @@ cd frontend && npm run lint
 cd frontend && npm run build   # Vercel target; build:cloudflare for the other
 ```
 
-**Green baseline, measured 2026-09-04:** 2158 python tests (5 skipped), 1081 frontend
-tests across 70 files. If you see materially fewer python tests, you are on the wrong
+**Green baseline, measured 2026-09-04:** 2158 python tests (5 skipped), 1102 frontend
+tests across 72 files. If you see materially fewer python tests, you are on the wrong
 interpreter.
 
 CI: `.github/workflows/pipeline.yml` (daily), `validate.yml` (Sundays, writes
