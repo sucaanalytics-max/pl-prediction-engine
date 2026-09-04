@@ -261,3 +261,51 @@ class TestReadEntryStateFreeTransfers(unittest.TestCase):
 
         self.assertEqual(state.free_transfers, 2)
         self.assertEqual(state.squad, [1, 445])
+
+
+class TestBankedFreeTransfersOnIncompleteHistory(unittest.TestCase):
+    """
+    A gameweek with no history row is unknown, not zero.
+
+    The first cut of `banked_free_transfers` treated a missing week as "no
+    transfers made" and banked one for it, so asking for GW8 in September
+    returned 5 — a bank invented out of gameweeks that had not been played. The
+    live call path never has a gap, which is exactly what makes this the kind of
+    defect that waits: a late-joining entry, or a history endpoint that has not
+    caught up, and the optimiser is handed transfers the manager cannot make.
+
+    Falls back to the one transfer every gameweek grants, which errs toward
+    seeing a hit where there is none. That direction costs a plan some expected
+    points; the other direction recommends moves that silently cost -8.
+    """
+
+    def test_a_missing_gameweek_does_not_bank_a_transfer(self):
+        history = {
+            "current": [{"event": 1, "event_transfers": 0},
+                        {"event": 2, "event_transfers": 0}],
+            "chips": [],
+        }
+        # Weeks 2, 3 and 4 are needed for GW5; 3 and 4 have no row.
+        self.assertEqual(banked_free_transfers(history, gameweek=5, cap=5), 1)
+
+    def test_a_complete_history_is_unaffected(self):
+        """The guard must not fire on the case that actually occurs."""
+        history = {
+            "current": [{"event": g, "event_transfers": 0} for g in range(1, 5)],
+            "chips": [],
+        }
+        self.assertEqual(banked_free_transfers(history, gameweek=5, cap=5), 4)
+
+    def test_a_chip_week_counts_as_known(self):
+        """
+        A wildcard week has a history row like any other; the chip changes what
+        its transfers cost, not whether the week is on file. Treating it as a gap
+        would throw away a bank the manager really holds.
+        """
+        history = {
+            "current": [{"event": 1, "event_transfers": 0},
+                        {"event": 2, "event_transfers": 0},
+                        {"event": 3, "event_transfers": 12}],
+            "chips": [{"name": "wildcard", "event": 3}],
+        }
+        self.assertEqual(banked_free_transfers(history, gameweek=4, cap=5), 3)

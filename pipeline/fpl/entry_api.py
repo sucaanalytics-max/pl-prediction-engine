@@ -155,9 +155,26 @@ def banked_free_transfers(
         if week.get("event") is not None
     }
 
+    # A week with no row is UNKNOWN, not zero. Banking one for it invents
+    # transfers out of gameweeks that were never played, and the caller cannot
+    # tell an invented bank from a real one. Falls back to the single transfer
+    # every gameweek grants, which errs toward seeing a hit that is not there —
+    # that costs a plan some expected points, where the other direction
+    # recommends moves that silently cost -8.
+    needed = range(2, int(gameweek))
+    missing = [week for week in needed if week not in spent]
+    if missing:
+        logger.warning(
+            "no history row for gameweek(s) %s, so the banked free-transfer "
+            "count cannot be replayed; falling back to 1. A plan built on this "
+            "will treat a free transfer as a hit rather than the reverse.",
+            ", ".join(str(week) for week in missing),
+        )
+        return 1
+
     available = 1
-    for week in range(2, int(gameweek)):
-        used = 0 if week in chip_events else spent.get(week, 0)
+    for week in needed:
+        used = 0 if week in chip_events else spent[week]
         available = min(int(cap), max(0, available - used) + 1)
     return available
 
