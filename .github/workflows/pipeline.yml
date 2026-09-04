@@ -111,6 +111,26 @@ jobs:
             pipeline.tests.test_xp_artifact_rate_source \
             pipeline.tests.test_health_provenance
 
+      # Optional, and deliberately its own step rather than a run_pipeline stage.
+      #
+      # `pipeline.learning.team_view` is registered STANDALONE in
+      # test_module_reachability precisely so the pipeline never imports it: it
+      # feeds no projection and no stake (`model_input: false` in the artifact),
+      # and a view wired into run_pipeline eventually becomes a step whose
+      # absence someone treats as a failure.
+      #
+      # It reads Understat, which is an optional scraped source, so a bad
+      # response must not go red and must never stand between this job and
+      # `forecast_ledger.json` — the only artifact proving a prediction predated
+      # kickoff. Hence the notice rather than `continue-on-error`, which would
+      # colour the run for something the repo already classes as allowed to fail.
+      - name: Build the team view
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -m pipeline.learning.team_view \
+            || echo "::notice::team_view produced nothing (Understat unavailable); predictions/team_metrics.json not refreshed"
+
       - name: Sync predictions to frontend
         run: |
           set -euo pipefail
@@ -131,7 +151,7 @@ jobs:
           # that logs "FPL agent will use fallback rates" precisely so a bad odds
           # response cannot stop a run, and market_blend_weight is written only by
           # fit_market_blend.py, which nothing in the pipeline may import.
-          for f in fixture_xg.json market_blend_weight.json player_events.json; do
+          for f in fixture_xg.json market_blend_weight.json player_events.json team_metrics.json; do
             if [ -f "predictions/$f" ]; then
               cp "predictions/$f" "frontend/public/predictions/$f"
             else
