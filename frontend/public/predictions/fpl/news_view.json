@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-04T22:27:56.843052Z",
-  "n_dropped": 203,
+  "generated_at": "2026-09-05T00:18:52.469993Z",
+  "n_dropped": 199,
   "dropped_by_source": {
-    "bbc_football": 80,
+    "bbc_football": 75,
     "fantasyfootballscout": 13,
     "hayters": 27,
-    "sky_football": 83
+    "sky_football": 84
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 293,
+  "n_articles": 289,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -159,24 +159,6 @@
       "touches_squad": true
     },
     {
-      "digest": "d38e493852e136fb",
-      "headline": "MOTD pundits debate controversial own goal in Man Utd victory",
-      "summary": "Match of the Day pundits Ellen White and Shay Given discuss the refereeing controversy at Old Trafford whereby a loophole allowed a Harry Maguire handball to stand as a Jacob Greaves own goal.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cp93xrk5k5xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-08-30T22:47:53Z",
-      "players": [
-        {
-          "element_id": 418,
-          "name": "Maguire",
-          "club": "MUN",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
       "digest": "f3c3cfe8c58ece5f",
       "headline": "Palace latest: Rak-Sakyi exit confirmed",
       "summary": null,
@@ -207,6 +189,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cf8929387c37680a",
+      "headline": "Isak finally arrives as Gakpo proves value to Liverpool",
+      "summary": "Has the real Alexander Isak finally arrived at Liverpool after his two-goal display in their Premier League win at Ipswich Town, asks chief football writer Phil McNulty?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c209xvxe558o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-04T22:37:16Z",
+      "players": [
+        {
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
           "held": false
         }
       ],
