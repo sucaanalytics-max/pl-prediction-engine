@@ -148,7 +148,11 @@ export default function CallPage() {
 
         <Section
           title="Week by week"
-          subtitle="The solved plan across the horizon — who starts, who benches, who wears the armband"
+          // True in both states. The grid draws the squad and its fixtures
+          // whether or not a plan has been solved, and it says which it is
+          // showing on its own provenance line — a subtitle promising an
+          // armband is wrong for most of the week.
+          subtitle="Your squad across the horizon — its numbers, its fixtures, and the plan once it is solved"
         >
           {gameweek === null ? (
             <p className="text-xs" style={{ color: "var(--text-3)" }}>

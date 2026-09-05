@@ -27,6 +27,7 @@
  */
 
 import { PlanGrid } from "@/components/margin/PlanGrid";
+import { heldSquadHorizon } from "@/lib/margin/plan";
 import { useMemo } from "react";
 
 import { proven } from "@/lib/data/artifact";
@@ -62,20 +63,39 @@ export function PlanGridSection({ gameweek }: { gameweek: number }) {
   const sealed = proven(decision)?.sealed ?? true;
   const solvedAt = proven(decision)?.generated_at ?? null;
 
-  if (horizon === null || players.length === 0) {
+  // The fallback that makes this permanent. `decision_public_gwNN` exists only
+  // once the agent has solved, which is never true before a gameweek's first
+  // solve — so this section used to replace itself with a sentence, and a
+  // dashboard section that disappears when the optimiser has not run is not a
+  // section. The squad and the xP horizon are always published; the grid draws
+  // from those and claims nothing the solve would have decided.
+  const held = useMemo(() => {
+    const ids = (proven(live)?.squad?.players ?? [])
+      .map((p) => p.elementId)
+      .filter((id): id is number => typeof id === "number");
+    const gameweeks = (xpHorizon?.weeks ?? []).map((w) => w.gameweek);
+    if (ids.length === 0 || gameweeks.length === 0) return null;
+    // The decided week first: the horizon block deliberately omits it, and a grid
+    // that started at GW+1 would hide the week the reader is actually setting.
+    return heldSquadHorizon(ids, [gameweek, ...gameweeks]);
+  }, [live, xpHorizon, gameweek]);
+
+  const drawn = horizon ?? held;
+
+  if (drawn === null || players.length === 0) {
     return (
       <p className="text-xs" style={{ color: "var(--text-3)" }}>
-        No solved plan has been published for GW{gameweek} yet. The agent solves
-        on every refresh — about four times a day, hourly inside the last two
-        days — so this fills in on its next run rather than waiting for the
-        deadline.
+        Neither a solved plan nor a squad could be read for GW{gameweek}, so
+        there is nothing to draw the horizon from. The agent solves on every
+        refresh, and the squad comes from FPL&apos;s own picks — this fills in
+        when either is readable.
       </p>
     );
   }
 
   return (
     <PlanGrid
-      horizon={horizon}
+      horizon={drawn}
       projections={players}
       fixtures={fixtures}
       xpHorizon={xpHorizon}

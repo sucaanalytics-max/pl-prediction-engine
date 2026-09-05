@@ -103,7 +103,9 @@ function FixtureChip({ week, gameweek }: { week: PhaseWeek | null; gameweek: num
 }
 
 function CellMark({ cell, fixture }: { cell: Cell; fixture: PhaseWeek | null }) {
-  const title = cell.off
+  const title = cell.unplanned
+    ? "in the squad; no plan has been solved for this week, so nothing here says whether he starts"
+    : cell.off
     ? "not in the squad this week — not a zero"
     : cell.captain
       ? "captain"
@@ -119,13 +121,19 @@ function CellMark({ cell, fixture }: { cell: Cell; fixture: PhaseWeek | null }) 
       }}
       title={title}
       data-testid="plan-cell"
-      data-state={cell.off ? "off" : cell.captain ? "captain" : cell.start ? "start" : "bench"}
+      data-state={
+        cell.off ? "off"
+          : cell.unplanned ? "held"
+          : cell.captain ? "captain"
+          : cell.start ? "start"
+          : "bench"
+      }
     >
       {cell.off ? (
         <span style={{ display: "block", width: "100%", height: 26, background: hatch(S) }} />
       ) : (
         <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, height: 18 }}>
-          {cell.captain ? (
+          {cell.unplanned ? null : cell.captain ? (
         <span
           style={{
             width: 16, height: 16, borderRadius: "50%",
@@ -270,6 +278,10 @@ export function PlanGrid(
     [horizon, projections, xpHorizon],
   );
   const { weeks, rows, totals } = model;
+  // Nothing was solved when no week names an eleven. The grid still draws — the
+  // squad, its numbers and its fixtures do not depend on a solve — but every
+  // claim the solve would have made is withheld rather than faked.
+  const solved = weeks.some((w) => w.xi.length > 0);
   const grid = columns(weeks.length);
   const clubs: ClubWeekIndex = useMemo(
     () => indexClubWeeks(fixtures, weeks.map((w) => w.gameweek)),
@@ -292,9 +304,11 @@ export function PlanGrid(
         <Eyebrow surface={S}>
           The plan &middot; GW{weeks[0]?.gameweek}&ndash;GW{weeks[weeks.length - 1]?.gameweek}
         </Eyebrow>
-        <Eyebrow surface={S} style={{ letterSpacing: 0, textTransform: "none", fontSize: 11 }}>
-          transfers planned {model.transferHorizon} of {model.evalHorizon} weeks
-        </Eyebrow>
+        {!solved ? null : (
+          <Eyebrow surface={S} style={{ letterSpacing: 0, textTransform: "none", fontSize: 11 }}>
+            transfers planned {model.transferHorizon} of {model.evalHorizon} weeks
+          </Eyebrow>
+        )}
       </div>
 
       {/* Which plan this is, and how old.
@@ -312,9 +326,11 @@ export function PlanGrid(
         data-testid="plan-provenance"
         style={{ marginBottom: 9, fontFamily: MONO, fontSize: 11, color: S.ink3 }}
       >
-        {sealed
-          ? "the sealed plan for this deadline"
-          : "provisional — re-solved every few hours until the deadline"}
+        {!solved
+          ? "your squad and its fixtures — no plan has been solved for these weeks yet"
+          : sealed
+            ? "the sealed plan for this deadline"
+            : "provisional — re-solved every few hours until the deadline"}
         {ageLine(solvedAt) ? ` · solved ${ageLine(solvedAt)}` : null}
       </div>
 
@@ -334,9 +350,13 @@ export function PlanGrid(
             <div style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: S.ink }}>
               GW{week.gameweek}
             </div>
-            <div style={{ fontFamily: MONO, fontSize: 11, color: week.planned ? S.ink3 : S.ink3 }}>
-              {week.planned ? "planned" : "eval only"}
-            </div>
+            {/* Both labels describe what the SOLVE did with the week, so
+                neither is sayable when there was no solve. */}
+            {!solved ? null : (
+              <div style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
+                {week.planned ? "planned" : "eval only"}
+              </div>
+            )}
           </div>
         ))}
         <div style={{ padding: "6px 0", textAlign: "right", fontFamily: MONO, fontSize: 11, textTransform: "uppercase", color: S.ink3 }}>
@@ -356,6 +376,7 @@ export function PlanGrid(
               grid={grid}
               fixtureFor={(gameweek) =>
                 weekFor(clubs, teamOf.get(row.elementId), gameweek)}
+              solved={solved}
             />
           )),
         ];
@@ -370,6 +391,7 @@ export function PlanGrid(
           grid={grid}
           fixtureFor={(gameweek) =>
             weekFor(clubs, teamOf.get(row.elementId), gameweek)}
+          solved={solved}
         />
       ))}
 
@@ -378,8 +400,12 @@ export function PlanGrid(
         {/* Not a `SummaryRow`: that one hatches the eval-only tail, because a
             transfer count is a thing the solve chose. An XI total is not — the
             tail's eleven is priced by the same solve, and hatching it would
-            hide a number that is as real as the rest. */}
-        <div
+            hide a number that is as real as the rest.
+
+            Absent entirely with no solve behind it. Summing fifteen owned
+            players under a heading that says XI would be a different quantity
+            wearing the right label. */}
+        {!solved ? null : <div
           style={{
             display: "grid", gridTemplateColumns: grid,
             borderBottom: `1px solid rgba(27,26,22,.06)`,
@@ -392,8 +418,8 @@ export function PlanGrid(
             <TotalCell key={total.gameweek} total={total} />
           ))}
           <div />
-        </div>
-        <SummaryRow
+        </div>}
+        {!solved ? null : <SummaryRow
           label="transfers · hits"
           weeks={weeks}
           render={(w) => (
@@ -401,8 +427,8 @@ export function PlanGrid(
               {w.transfers_in.length} &middot; {w.hits === 0 ? "0" : `−${w.hits * 4}`}
             </span>
           )}
-        />
-        <SummaryRow
+        />}
+        {!solved ? null : <SummaryRow
           label="bank · FT after"
           weeks={weeks}
           render={(w) => (
@@ -414,7 +440,7 @@ export function PlanGrid(
                 : w.free_transfers_after}
             </span>
           )}
-        />
+        />}
       </div>
 
       <Transfers
@@ -424,17 +450,26 @@ export function PlanGrid(
       />
 
       <p style={{ margin: "12px 0 0", fontSize: 11.5, lineHeight: 1.5, color: S.ink3, maxWidth: 780 }}>
-        Only GW{weeks[0]?.gameweek} is a commitment. The rest exists to inform it
+        {!solved
+          ? "No plan has been solved for these weeks yet, so nothing here says who starts, who is benched or what to transfer — only what the squad is projected to score and who it plays. The agent solves on every refresh; this fills in on its next run."
+          : <>Only GW{weeks[0]?.gameweek} is a commitment. The rest exists to inform it
         and is re-solved from scratch every week against fresh prices, injuries
         and projections — publishing week three as a decision would be false
-        precision.
+        precision.</>}
         {" "}
         No simulated mean or standard deviation is published per week, so those
         rows are absent rather than filled with the solver&apos;s objective,
-        which is bench-weighted and carries the free-transfer credit. The
-        <b> XI xP</b> row is the plain sum of the eleven in the column above it,
-        with no armband doubling and no bench, so it can be checked by adding
-        them up.
+        which is bench-weighted and carries the free-transfer credit.
+        {/* Only when the row it describes is on screen. A footnote explaining a
+            heading the reader cannot see is the same stale copy as a colour note
+            naming a ramp the grid no longer uses. */}
+        {!solved ? null : (
+          <>
+            {" "}The <b>XI xP</b> row is the plain sum of the eleven in the column
+            above it, with no armband doubling and no bench, so it can be checked
+            by adding them up.
+          </>
+        )}
         {" "}
         GW{weeks[0]?.gameweek}&apos;s figures come from the decision&apos;s own
         simulation
@@ -644,10 +679,12 @@ function BandHead({ position, label }: { position: string; label: string }) {
 }
 
 function PlanGridRow(
-  { row, grid, fixtureFor }: {
+  { row, grid, fixtureFor, solved }: {
     row: PlanRow;
     grid: string;
     fixtureFor: (gameweek: number) => PhaseWeek | null;
+    /** Whether any week names an eleven. See {@link PlanGrid}. */
+    solved: boolean;
   },
 ) {
   return (
@@ -685,8 +722,10 @@ function PlanGridRow(
           fixture={fixtureFor(cell.gameweek)}
         />
       ))}
+      {/* `0/8` reads as "the solve benched him every week", which is a finding.
+          With nothing solved there is no answer, and the nil mark says so. */}
       <div style={{ textAlign: "right", fontFamily: MONO, fontSize: 11, color: S.ink2 }}>
-        {row.starts}
+        {solved ? row.starts : <Nil surface={S} size={11} />}
       </div>
     </div>
   );

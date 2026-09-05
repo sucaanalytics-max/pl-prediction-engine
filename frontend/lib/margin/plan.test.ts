@@ -14,7 +14,7 @@
 
 import { describe, expect, it } from "vitest";
 import { narrowPublicDecision } from "@/lib/data/narrow";
-import { buildPlanGrid, cellsFor } from "@/lib/margin/plan";
+import { buildPlanGrid, cellsFor, heldSquadHorizon } from "@/lib/margin/plan";
 import type { Horizon as XpHorizon, Projection } from "@/lib/data/projections";
 
 function projection(elementId: number, name: string, position: string): Projection {
@@ -278,5 +278,79 @@ describe("the column total", () => {
     const grid = buildPlanGrid(artifact()!.horizon!, NAMES, XP_HORIZON);
     // GW3: four in the XI at 5 each. With the captain doubled it would be 25.
     expect(grid.totals[0].xp).toBe(20);
+  });
+});
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The grid without a plan
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("a horizon built from the squad alone", () => {
+  /**
+   * The section used to vanish whenever no decision was published — which is most
+   * of the week, and all of it before the first solve of a gameweek. A dashboard
+   * section that disappears when the optimiser has not run is not a section.
+   *
+   * What is always available is the held squad and the published xP horizon. What
+   * is NOT available is any claim about who starts, who is benched or who wears
+   * the armband, so the cells must state none of those.
+   */
+
+  const SQUAD = [1, 2, 3, 4, 5];
+
+  it("covers every requested gameweek", () => {
+    const horizon = heldSquadHorizon(SQUAD, [4, 5, 6]);
+    expect(horizon.weeks.map((w) => w.gameweek)).toEqual([4, 5, 6]);
+  });
+
+  it("holds the squad and claims no eleven", () => {
+    const week = heldSquadHorizon(SQUAD, [4]).weeks[0];
+    expect(week.squad).toEqual(SQUAD);
+    expect(week.xi).toEqual([]);
+    expect(week.bench).toEqual([]);
+    expect(week.captain).toBeNull();
+    expect(week.vice).toBeNull();
+  });
+
+  it("plans no transfers, because none were solved", () => {
+    const week = heldSquadHorizon(SQUAD, [4]).weeks[0];
+    expect(week.transfers_in).toEqual([]);
+    expect(week.transfers_out).toEqual([]);
+    expect(week.planned).toBe(false);
+  });
+});
+
+describe("cells with no plan behind them", () => {
+  it("marks an owned player unplanned rather than benched", () => {
+    /**
+     * The trap. With an empty XI the existing rule — in the squad, not in the XI,
+     * therefore bench — would draw a hollow square on all fifteen and state that
+     * the solve benched the entire squad. It did not solve anything.
+     */
+    const horizon = heldSquadHorizon([1, 2], [4]);
+    const [cell] = cellsFor(1, horizon.weeks);
+    expect(cell.unplanned).toBe(true);
+    expect(cell.bench).toBe(false);
+    expect(cell.start).toBe(false);
+    expect(cell.captain).toBe(false);
+    expect(cell.off).toBe(false);
+  });
+
+  it("still hatches a player the squad does not hold", () => {
+    // Unplanned is not "unknown about everyone" — a player outside the squad is
+    // still definitely not owned that week.
+    const horizon = heldSquadHorizon([1, 2], [4]);
+    const [cell] = cellsFor(99, horizon.weeks);
+    expect(cell.off).toBe(true);
+    expect(cell.unplanned).toBe(false);
+  });
+
+  it("leaves a solved week's cells exactly as they were", () => {
+    // The new state must not leak into the case that already worked.
+    const weeks = artifact()!.horizon!.weeks;
+    const [cell] = cellsFor(1, weeks);
+    expect(cell.unplanned).toBe(false);
+    expect(cell.start).toBe(true);
   });
 });

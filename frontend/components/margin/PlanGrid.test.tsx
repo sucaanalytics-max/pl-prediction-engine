@@ -16,6 +16,7 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { PlanGrid } from "@/components/margin/PlanGrid";
 import type { Horizon } from "@/lib/data/narrow";
+import { heldSquadHorizon } from "@/lib/margin/plan";
 import type { Horizon as XpHorizon, Projection } from "@/lib/data/projections";
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 
@@ -515,5 +516,105 @@ describe("naming a player who was sold", () => {
       .find((el) => el.textContent?.includes("GW3"));
     expect(row?.textContent).toContain("Palestra");
     expect(row?.textContent).not.toContain("#99");
+  });
+});
+
+
+describe("the grid with no plan published", () => {
+  afterEach(cleanup);
+
+  /**
+   * What the reader gets before the agent has solved: their squad, its numbers
+   * and its fixtures. Everything the solve would have added is absent rather
+   * than faked — no marks, no total, no transfers.
+   */
+
+  function drawHeld() {
+    return render(
+      <PlanGrid
+        horizon={heldSquadHorizon([1, 2, 3], [3, 4, 5])}
+        projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON}
+      />,
+    );
+  }
+
+  it("shows the number and the fixture with no start or bench mark", () => {
+    drawHeld();
+    const cell = screen.getAllByTestId("plan-cell")[0];
+    expect(cell.getAttribute("data-state")).toBe("held");
+    expect(cell.textContent).toContain("5.0");
+    expect(within(cell).getByTestId("plan-fixture")).toBeTruthy();
+  });
+
+  it("shows no XI total, because there is no XI", () => {
+    // Summing the squad under a heading that says XI would be a different
+    // quantity wearing the right label — the thing this file keeps refusing.
+    drawHeld();
+    expect(screen.queryByTestId("plan-total-3")).toBeNull();
+    expect(screen.queryByText(/XI xP/)).toBeNull();
+  });
+
+  it("shows no transfer section, because none was solved", () => {
+    drawHeld();
+    expect(screen.queryAllByTestId("plan-move")).toHaveLength(0);
+  });
+
+  it("says these are the squad's numbers rather than a plan", () => {
+    drawHeld();
+    expect(screen.getByTestId("plan-provenance").textContent)
+      .toMatch(/no plan|not been solved|squad/i);
+  });
+
+  it("still bands the lines and draws the fixtures", () => {
+    // The half that does not depend on a solve has to keep working.
+    drawHeld();
+    expect(screen.getAllByTestId("plan-band").length).toBeGreaterThan(0);
+    expect(screen.getAllByTestId("plan-fixture").length).toBeGreaterThan(0);
+  });
+});
+
+
+describe("no plan means no plan language", () => {
+  afterEach(cleanup);
+
+  /**
+   * Every one of these is a claim about a solve, rendered in a state where no
+   * solve happened. Caught by looking at the real board after the fallback
+   * landed — the grid was right and the words around it were not.
+   */
+
+  function drawHeld() {
+    return render(
+      <PlanGrid
+        horizon={heldSquadHorizon([1, 2, 3], [3, 4, 5])}
+        projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON}
+      />,
+    );
+  }
+
+  it("does not label the columns eval only", () => {
+    // "eval only" says the solve priced this week without transferring into it.
+    // With no solve it priced nothing.
+    drawHeld();
+    expect(screen.queryByText(/eval only/)).toBeNull();
+    expect(screen.queryByText(/planned/)).toBeNull();
+  });
+
+  it("does not count transfers it never planned", () => {
+    drawHeld();
+    expect(screen.queryByText(/transfers planned/)).toBeNull();
+  });
+
+  it("does not say a player starts zero of eight", () => {
+    // `0/8` reads as "the solve benched him every week", which is a finding.
+    // Nothing was solved, so the honest mark is that there is no answer.
+    drawHeld();
+    expect(screen.queryByText(/0\/8|0\/3/)).toBeNull();
+  });
+
+  it("keeps all of it when a plan IS solved", () => {
+    render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
+    expect(screen.getAllByText(/planned|eval only/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/transfers planned/)).toBeTruthy();
   });
 });

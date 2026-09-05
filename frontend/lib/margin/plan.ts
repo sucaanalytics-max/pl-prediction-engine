@@ -61,6 +61,16 @@ export interface Cell {
    * emits on purpose.
    */
   readonly xp: number | null;
+  /**
+   * Owned this week, with nothing solved about him.
+   *
+   * Distinct from `bench`, and the distinction is the whole point: with no
+   * decision published there is no eleven, and the existing "in the squad, not in
+   * the XI, therefore benched" rule would draw a hollow square on all fifteen and
+   * state that the solve benched the entire squad. It solved nothing. This cell
+   * shows the number and the fixture and claims neither a start nor a bench.
+   */
+  readonly unplanned: boolean;
 }
 
 export interface PlanRow {
@@ -157,6 +167,11 @@ export function cellsFor(
     const captain = week.captain === elementId;
     const inXi = week.xi.includes(elementId);
     const bench = week.bench.includes(elementId);
+    // A week that names no eleven and no bench was never solved. Ownership is
+    // still known — `squad` came from the picks — so a held player is unplanned
+    // and anyone else is still plainly not owned.
+    const solved = week.xi.length > 0 || week.bench.length > 0;
+    const unplanned = !solved && week.squad.includes(elementId);
     return {
       gameweek: week.gameweek,
       captain,
@@ -165,7 +180,8 @@ export function cellsFor(
       // is two marks for one fact and reads as a different state.
       start: inXi && !captain,
       bench,
-      off: !inXi && !bench,
+      off: !inXi && !bench && !unplanned,
+      unplanned,
       enter: week.transfers_in.includes(elementId),
       exit: week.transfers_out.includes(elementId),
       xp: xpFor(elementId, week.gameweek),
@@ -225,6 +241,43 @@ export function buildPlanGrid(
     evalHorizon: horizon.evalHorizon,
     unnamed,
     totals: horizon.weeks.map((week) => totalFor(week, xpFor)),
+  };
+}
+
+/**
+ * A horizon with the squad in it and nothing else claimed.
+ *
+ * The fallback that makes this a permanent section. `decision_public_gwNN` only
+ * exists once the agent has solved, which is never true before the first solve
+ * of a gameweek and was not true of production for most of a week — so the grid
+ * drew its empty state instead, and a section that disappears when the optimiser
+ * has not run is not a section.
+ *
+ * The held squad and the published xP horizon are always there. An eleven, a
+ * bench, an armband and a transfer plan are not, so none of them is invented:
+ * every week carries the squad, an empty XI, and `planned: false`.
+ */
+export function heldSquadHorizon(
+  squad: readonly number[], gameweeks: readonly number[],
+): Horizon {
+  const ids = [...squad];
+  return {
+    evalHorizon: gameweeks.length,
+    transferHorizon: 0,
+    weeks: gameweeks.map((gameweek) => ({
+      gameweek,
+      squad: ids,
+      xi: [],
+      bench: [],
+      captain: null,
+      vice: null,
+      transfers_in: [],
+      transfers_out: [],
+      hits: 0,
+      bank_after: 0,
+      free_transfers_after: null,
+      planned: false,
+    })),
   };
 }
 
