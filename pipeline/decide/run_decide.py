@@ -267,11 +267,6 @@ def decide(
             transfer_horizon=transfer_horizon,
         )
         plans: List[Plan] = [p.now for p in horizon_plans]
-        horizon_meta: Optional[Dict[str, Any]] = {
-            "eval_horizon": horizon_plans[0].eval_horizon,
-            "transfer_horizon": horizon_plans[0].transfer_horizon,
-            "provisional": horizon_plans[0].as_dict()["provisional"],
-        }
     else:
         # Single-week fallback. Correct but myopic, and labelled as such in the
         # artifact so a horizon-less run is never mistaken for a planned one.
@@ -279,7 +274,7 @@ def decide(
             candidates, rules, current_squad=held, bank=bank,
             free_transfers=free_transfers, top_k=shortlist_size,
         )
-        horizon_meta = None
+        horizon_plans = []
         warnings.append(
             "no multi-gameweek projection available; this decision is myopic and "
             "cannot see a fixture swing beyond the current gameweek"
@@ -323,6 +318,24 @@ def decide(
             f"between plans is not credible. Increase draws before trusting the rank."
         )
 
+    # AFTER adjudication, not before: the tail has to belong to the plan the
+    # simulator picked. See `provisional_for`.
+    horizon_meta: Optional[Dict[str, Any]] = None
+    if horizon_plans:
+        horizon_meta = {
+            "eval_horizon": horizon_plans[0].eval_horizon,
+            "transfer_horizon": horizon_plans[0].transfer_horizon,
+            "provisional": provisional_for(horizon_plans, chosen.plan),
+        }
+        # Checked before it ships. A tail that does not follow from week 0 is
+        # invisible in the artifact — every field is well formed and the squads
+        # simply disagree — so it went unnoticed until the weeks were reconciled
+        # by hand.
+        for problem in reconcile_weeks(
+            chosen.plan.as_dict(), horizon_meta["provisional"]
+        ):
+            warnings.append(f"published horizon is inconsistent: {problem}")
+
     if plans[0].squad != chosen.plan.squad:
         logger.info(
             "simulator overruled the MILP: %d players differ from the linear optimum",
@@ -363,6 +376,78 @@ def _squad_xp(
     """
     relevant = set(int(p) for p in plan.squad) | {int(p) for p in held}
     return {p: float(xp[p]) for p in sorted(relevant) if p in xp}
+
+
+def reconcile_weeks(
+    week0: Mapping[str, Any], tail: Sequence[Mapping[str, Any]],
+) -> List[str]:
+    """
+    Check the published weeks chain, and describe any that do not.
+
+    Each week's squad must be the previous week's, minus what it records leaving,
+    plus what it records arriving. `solve_horizon` guarantees that WITHIN one
+    plan; what it cannot guarantee is that the tail published beside week 0 came
+    from the same plan, which is the defect `provisional_for` exists to prevent.
+    This is the check that would have caught it, run every time rather than by
+    hand.
+
+    Returns descriptions, not a raise. The decision is still the best plan for
+    THIS week — the only week anyone acts on — and losing it over a defect in the
+    advisory tail would discard the useful half to punish the broken one.
+    """
+    problems: List[str] = []
+    held = set(int(i) for i in week0.get("squad", []) or [])
+    for week in tail:
+        ins = set(int(i) for i in week.get("transfers_in", []) or [])
+        outs = set(int(i) for i in week.get("transfers_out", []) or [])
+        published = set(int(i) for i in week.get("squad", []) or [])
+        expected = (held - outs) | ins
+        if published != expected:
+            appeared = sorted(published - expected)
+            vanished = sorted(expected - published)
+            problems.append(
+                f"gameweek {week.get('gameweek', '?')} does not follow from the week "
+                f"before it: {appeared} appear with no transfer in, {vanished} vanish "
+                f"with no transfer out"
+            )
+        held = published
+    return problems
+
+
+def provisional_for(horizon_plans: Sequence[Any], chosen: Any) -> List[Dict[str, Any]]:
+    """
+    The tail belonging to the plan that was actually chosen.
+
+    `solve_horizon` returns whole plans and chains each one's squads correctly.
+    This module then hands `[p.now for p in horizon_plans]` to the simulator and
+    publishes whichever it adjudicates — but the tail was hardcoded to
+    `horizon_plans[0]`, the MILP's best. Whenever the simulator overruled the
+    MILP (it logs when it does) the artifact stitched one solve's week 0 to a
+    different solve's tail, and the frontend joined the two into a single
+    eight-week timeline. On the live GW4 decision that seam swapped six players
+    while recording one transfer, and captained a player it never bought.
+
+    Matched on the week-0 squad rather than on object identity: `adjudicate`
+    returns evaluations that wrap the plans, and depending on it not to copy them
+    would be a silent coupling. Two candidates never share a week-0 squad —
+    `solve_horizon`'s top-k are distinct — so the squad IS the key.
+
+    Falls back to the first plan's tail when nothing matches. A caller handing in
+    a plan from elsewhere gets the old behaviour rather than an exception,
+    because a decision with no tail at all is worse than one whose tail is
+    imperfect, and the seam is a reporting defect rather than a wrong decision.
+    """
+    if not horizon_plans:
+        return []
+    want = sorted(getattr(chosen, "squad", []) or [])
+    for candidate in horizon_plans:
+        if sorted(candidate.now.squad) == want:
+            return candidate.as_dict()["provisional"]
+    logger.warning(
+        "no horizon plan matches the chosen week-0 squad; publishing the first "
+        "plan's tail, so the seam between week 0 and week 1 may not reconcile"
+    )
+    return horizon_plans[0].as_dict()["provisional"]
 
 
 def strip_for_publication(decision: Decision) -> Dict[str, Any]:

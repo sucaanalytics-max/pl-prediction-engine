@@ -713,3 +713,137 @@ class TestFieldGate(unittest.TestCase):
         self.assertEqual(
             strip_for_publication(decision)["field_model"], "uncalibrated"
         )
+
+
+class TestTheHorizonTailBelongsToTheChosenPlan(unittest.TestCase):
+    """
+    Week 0 and the provisional tail must come from the SAME horizon solve.
+
+    `solve_horizon` returns `top_k` whole plans and chains each one's squads
+    correctly. `run_decide` then takes `[p.now for p in horizon_plans]`, hands
+    those to the SIMULATOR, and publishes whichever it adjudicates — while
+    `horizon.provisional` was hardcoded to `horizon_plans[0]`, the MILP's best.
+
+    So whenever the simulator overruled the MILP — which it logs, and which it
+    did on the live GW4 decision — the artifact stitched one solve's week 0 to a
+    different solve's tail. Measured on that artifact: the GW4 to GW5 transition
+    swapped six players (Botman, Haaland and Verbruggen appeared, Gabriel, Isak
+    and Raya vanished) while recording one transfer. Every later transition
+    reconciled, because those all came from the same solve.
+
+    The frontend joins the two into one eight-week timeline, so the seam was
+    drawn as continuity that never existed: Haaland was captained from GW5 in a
+    plan that never buys him.
+    """
+
+    def _plan(self, squad, ins=(), outs=()):
+        from pipeline.decide.milp import Plan
+        return Plan(
+            squad=list(squad), xi=list(squad)[:11], captain=squad[0], vice=squad[1],
+            transfers_in=list(ins), transfers_out=list(outs), hits=0, bank_after=0,
+            objective=0.0, free_transfers_banked=0, free_transfers_after=1,
+        )
+
+    def _horizon(self, weeks):
+        from pipeline.decide.horizon import HorizonPlan
+        return HorizonPlan(weeks=weeks, objective=0.0, transfer_horizon=2, eval_horizon=2)
+
+    def test_the_tail_follows_the_plan_that_was_chosen(self):
+        from pipeline.decide.run_decide import provisional_for
+
+        base = list(range(1, 16))
+        # Two candidate solves. The MILP's favourite is first; the simulator
+        # picks the second, whose week 0 holds 99 instead of 15.
+        first = self._horizon([
+            self._plan(base),
+            self._plan(base[:-1] + [50], ins=[50], outs=[base[-1]]),
+        ])
+        second = self._horizon([
+            self._plan(base[:-1] + [99]),
+            self._plan(base[:-1] + [77], ins=[77], outs=[99]),
+        ])
+
+        tail = provisional_for([first, second], second.now)
+        self.assertEqual(tail[0]["transfers_in"], [77],
+                         "the tail came from the MILP's plan, not the chosen one")
+
+    def test_the_joined_weeks_reconcile(self):
+        """
+        The property the artifact must hold, stated directly: each week's squad
+        is the previous week's, minus what left, plus what arrived.
+        """
+        from pipeline.decide.run_decide import provisional_for
+
+        base = list(range(1, 16))
+        chosen = self._horizon([
+            self._plan(base[:-1] + [99]),
+            self._plan(base[:-1] + [77], ins=[77], outs=[99]),
+        ])
+        other = self._horizon([self._plan(base), self._plan(base)])
+
+        week0 = chosen.now.as_dict()
+        tail = provisional_for([other, chosen], chosen.now)
+
+        held = set(week0["squad"])
+        for week in tail:
+            expected = (held - set(week["transfers_out"])) | set(week["transfers_in"])
+            self.assertEqual(set(week["squad"]), expected,
+                             "a published week does not follow from the one before it")
+            held = set(week["squad"])
+
+    def test_it_falls_back_to_the_first_when_the_plan_is_not_a_horizon_now(self):
+        """
+        Defensive, and it must not raise: a caller that hands in a plan from
+        somewhere else gets the MILP's tail rather than an exception, because a
+        decision with no tail is worse than one whose tail is the old behaviour.
+        """
+        from pipeline.decide.run_decide import provisional_for
+
+        base = list(range(1, 16))
+        first = self._horizon([self._plan(base), self._plan(base)])
+        self.assertEqual(
+            provisional_for([first], self._plan([999] + base[1:])),
+            first.as_dict()["provisional"],
+        )
+
+
+class TestThePublishedWeeksAreCheckedBeforeTheyShip(unittest.TestCase):
+    """
+    The seam is checked at write time, not just fixed once.
+
+    A tail that does not follow from week 0 is invisible in the artifact — every
+    field is well-formed and the squads simply disagree — so it survived until
+    someone reconciled the weeks by hand. The producer now does that itself and
+    says so in `warnings`, where the frontend already renders them.
+
+    A warning rather than a raise: the decision is still the best plan for THIS
+    week, which is the only week anyone acts on. Losing it over a defect in the
+    advisory tail would trade the useful half for the broken one.
+    """
+
+    def test_a_tail_that_does_not_follow_is_reported(self):
+        from pipeline.decide.run_decide import reconcile_weeks
+
+        week0 = {"squad": [1, 2, 3], "transfers_in": [], "transfers_out": []}
+        tail = [
+            # 9 appears and 3 vanishes with nothing recorded.
+            {"squad": [1, 2, 9], "transfers_in": [], "transfers_out": []},
+        ]
+        problems = reconcile_weeks(week0, tail)
+        self.assertEqual(len(problems), 1)
+        self.assertIn("9", problems[0])
+        self.assertIn("3", problems[0])
+
+    def test_a_tail_that_follows_is_silent(self):
+        from pipeline.decide.run_decide import reconcile_weeks
+
+        week0 = {"squad": [1, 2, 3], "transfers_in": [], "transfers_out": []}
+        tail = [
+            {"squad": [1, 2, 9], "transfers_in": [9], "transfers_out": [3]},
+            {"squad": [1, 5, 9], "transfers_in": [5], "transfers_out": [2]},
+        ]
+        self.assertEqual(reconcile_weeks(week0, tail), [])
+
+    def test_no_tail_is_nothing_to_check(self):
+        from pipeline.decide.run_decide import reconcile_weeks
+        self.assertEqual(reconcile_weeks({"squad": [1]}, []), [])
