@@ -792,6 +792,21 @@ export interface PublicDecision {
   readonly mean_points: number | null;
   readonly optimism_gap: number | null;
   readonly credible_margin: boolean;
+  /**
+   * Whether this is the committed plan or a midweek re-solve.
+   *
+   * The agent solves on every REFRESH, so an artifact exists all week and most
+   * of them are provisional — re-solved every few hours as team news lands. Only
+   * the one written inside the seal window is the commitment the forecast was
+   * sealed against.
+   *
+   * **Absent means sealed, and that is history rather than a default.** Before
+   * the producer emitted this, `_decide_for_entries` had exactly one caller —
+   * `_seal` — so every artifact already in git was sealed by construction.
+   * Reading the absent case as provisional would caveat three committed
+   * decisions that never needed one.
+   */
+  readonly sealed: boolean;
   readonly warnings: readonly string[];
   readonly xp_snapshot: Readonly<Record<string, number>>;
 
@@ -1051,6 +1066,10 @@ export function narrowPublicDecision(raw: unknown): NarrowResult<PublicDecision>
     mean_points: optNumber(decision.mean_points),
     optimism_gap: optNumber(file.optimism_gap),
     credible_margin: optBoolean(file.credible_margin) ?? false,
+    // `?? true` and not `!== false`: anything that is not a boolean — a string,
+    // a null, a malformed producer — is the absent case, and the absent case is
+    // sealed. See the field's own note for why that is a fact and not a guess.
+    sealed: optBoolean(file.sealed) ?? true,
     warnings: optArray(file.warnings).filter(
       (w): w is string => typeof w === "string",
     ),

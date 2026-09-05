@@ -795,7 +795,9 @@ def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
     # permanently lost observation, and losing it because an optimiser raised
     # would be trading the irreplaceable record for the replaceable output.
     try:
-        decisions = _decide_for_entries(predictions_dir, state, outcome, dry_run)
+        decisions = _decide_for_entries(
+            predictions_dir, state, outcome, dry_run, sealed=True,
+        )
     except Exception:
         logger.exception(
             "decision failed for GW%s; the FORECAST is sealed so the gameweek "
@@ -1096,7 +1098,12 @@ def _field_calibrated_gameweeks(predictions_dir: Path) -> int:
 
 
 def _decide_for_entries(
-    predictions_dir: Path, state: ScheduleState, outcome: Dict[str, Any], dry_run: bool
+    predictions_dir: Path,
+    state: ScheduleState,
+    outcome: Dict[str, Any],
+    dry_run: bool,
+    *,
+    sealed: bool,
 ) -> Dict[str, Dict[str, Path]]:
     """
     Produce a proposal for each entry in `FPL_ENTRIES`.
@@ -1182,18 +1189,27 @@ def _decide_for_entries(
         previous = _previous_decision(predictions_dir, state_gameweek, label)
 
         written[label] = write_decision(
-            decision, predictions_dir, public_dir=FPL_PUBLIC_DIR
+            decision, predictions_dir, public_dir=FPL_PUBLIC_DIR, sealed=sealed,
         )
-        _record_decision_impact(
-            predictions_dir=predictions_dir,
-            gameweek=entry.gameweek,
-            entry_label=label,
-            previous=previous,
-            decision=decision,
-            draws=draws_report,
-            xp_rows=artifact["players"],
-            rules=outcome["_rules"],
-        )
+        # The delta answers "what did the news do to the move you were TOLD to
+        # make", and only the seal tells anyone anything. Recording one on every
+        # provisional re-solve would fill the store with the plan disagreeing
+        # with its own last guess four times a day, which is not the same
+        # question and would drown the answer to it.
+        if sealed:
+            _record_decision_impact(
+                predictions_dir=predictions_dir,
+                gameweek=entry.gameweek,
+                entry_label=label,
+                previous=previous,
+                decision=decision,
+                draws=draws_report,
+                xp_rows=artifact["players"],
+                rules=outcome["_rules"],
+            )
+        # Published either way: it describes the decision sitting beside it, and
+        # a sensitivity artifact left pointing at a superseded plan is worse than
+        # the cost of rewriting it.
         _publish_sensitivity(int(entry.gameweek), label)
     return written
 
@@ -1578,6 +1594,37 @@ def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
             return 0
         outcome = refresh_expected_points(predictions_dir, state.gameweek)
         logger.info("refresh: %s", outcome)
+
+        # Solve against what was just rebuilt, so a plan exists between
+        # deadlines. `_decide_for_entries` used to have one caller — the seal —
+        # which meant a decision artifact existed for the four hours before a
+        # deadline and for none of the six and a half days after it. The
+        # projections were being rebuilt that whole time; only the solve was
+        # missing, and the grid that draws it said "no solved plan has been
+        # published" to anyone who looked on a Tuesday.
+        #
+        # It rides the refresh gate above rather than carrying its own: a run
+        # that kept the existing projection has nothing new to solve against.
+        #
+        # Non-fatal, and deliberately so. The refresh is the load-bearing half —
+        # `record_claims` runs inside it and the seal depends on the projection
+        # it writes — this job fires hourly, and a solver that raises must not
+        # turn the agent red for an hour over advice that will be re-solved
+        # anyway. The seal takes the opposite line for the same reason: there,
+        # the proposal IS the output.
+        if outcome.get("status") == "ok":
+            try:
+                for label, written in _decide_for_entries(
+                    predictions_dir, state, outcome, dry_run, sealed=False,
+                ).items():
+                    logger.info("provisional decision (%s) -> %s", label, written["decision"])
+            except Exception:
+                logger.exception(
+                    "provisional solve failed for GW%s; the projection is "
+                    "refreshed and the run stands. No plan was published for "
+                    "this tick and the next one will try again",
+                    state.gameweek,
+                )
         return 0
 
     if state.phase is Phase.SEAL:

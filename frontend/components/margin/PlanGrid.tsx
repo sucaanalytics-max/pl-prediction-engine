@@ -26,6 +26,7 @@ import type { PhaseWeek } from "@/lib/projections/phases";
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import type { Horizon as XpHorizon } from "@/lib/data/projections";
 import { hatch, MONO, FLOODLIT, SANS, TRAFFIC, stepOf } from "@/lib/margin/tokens";
+import { ageLine } from "@/lib/formats";
 import { Eyebrow, Nil } from "@/components/margin/Marks";
 
 const S = FLOODLIT;
@@ -223,7 +224,10 @@ function SummaryRow(
 }
 
 export function PlanGrid(
-  { horizon, projections, fixtures = [], xpHorizon = null }: {
+  {
+    horizon, projections, fixtures = [], xpHorizon = null,
+    sealed = true, solvedAt = null,
+  }: {
     horizon: Horizon;
     projections: readonly Projection[];
     /**
@@ -236,6 +240,15 @@ export function PlanGrid(
     fixtures?: readonly FixtureMatrixRow[];
     /** The per-player xP horizon off `xp_public`. Null when none was solved. */
     xpHorizon?: XpHorizon | null;
+    /**
+     * Whether this is the committed plan or a midweek re-solve.
+     *
+     * Defaults to sealed, matching the narrower: every artifact written before
+     * the producer emitted the field came from the seal.
+     */
+    sealed?: boolean;
+    /** When the solve ran, for the age line. */
+    solvedAt?: string | null;
   },
 ) {
   const model = useMemo(
@@ -263,6 +276,27 @@ export function PlanGrid(
         <Eyebrow surface={S} style={{ letterSpacing: 0, textTransform: "none", fontSize: 11 }}>
           transfers planned {model.transferHorizon} of {model.evalHorizon} weeks
         </Eyebrow>
+      </div>
+
+      {/* Which plan this is, and how old.
+
+          The agent solves on every refresh, so this grid is populated all week
+          and most of what it draws will disagree with itself as team news lands.
+          Only the solve inside the seal window is the commitment the forecast
+          was sealed against, and the cells cannot show the difference — so the
+          header does.
+
+          Age via `ageLine`, the helper every other provenance line here uses. It
+          already handles a future stamp and the point past a week where a
+          weekday names two days; a second formatter would drift from it. */}
+      <div
+        data-testid="plan-provenance"
+        style={{ marginBottom: 9, fontFamily: MONO, fontSize: 11, color: S.ink3 }}
+      >
+        {sealed
+          ? "the sealed plan for this deadline"
+          : "provisional — re-solved every few hours until the deadline"}
+        {ageLine(solvedAt) ? ` · solved ${ageLine(solvedAt)}` : null}
       </div>
 
       {/* Header */}

@@ -381,20 +381,38 @@ def strip_for_publication(decision: Decision) -> Dict[str, Any]:
 
 
 def write_decision(
-    decision: Decision, predictions_dir: Path, public_dir: Optional[Path] = None
+    decision: Decision,
+    predictions_dir: Path,
+    public_dir: Optional[Path] = None,
+    *,
+    sealed: bool,
 ) -> Dict[str, Path]:
-    """Write the private artifact and, optionally, the stripped public copy."""
+    """
+    Write the private artifact and, optionally, the stripped public copy.
+
+    ``sealed`` records HOW this run used the solve, which is not a property of
+    the solve itself — the same `Decision` is a commitment when the seal writes
+    it and provisional advice when a refresh does. It lives here rather than on
+    the dataclass for that reason.
+
+    Required, with no default. Every artifact written before this existed came
+    from `_seal`, because `_decide_for_entries` had exactly one caller; now that
+    it has two, a default would be silently wrong for whichever caller forgot
+    it — and the direction a `True` default gets wrong is a midweek plan
+    published with the seal's authority.
+    """
     directory = Path(predictions_dir) / "fpl"
     directory.mkdir(parents=True, exist_ok=True)
 
     name = f"decision_gw{decision.gameweek:02d}_{decision.entry_label}.json"
-    written = {"decision": write_json_atomically(decision.as_dict(), directory / name)}
+    private = {**decision.as_dict(), "sealed": bool(sealed)}
+    written = {"decision": write_json_atomically(private, directory / name)}
 
     if public_dir is not None:
         public = Path(public_dir)
         public.mkdir(parents=True, exist_ok=True)
         written["public"] = write_json_atomically(
-            strip_for_publication(decision),
+            {**strip_for_publication(decision), "sealed": bool(sealed)},
             public / f"decision_public_gw{decision.gameweek:02d}_{decision.entry_label}.json",
         )
     return written

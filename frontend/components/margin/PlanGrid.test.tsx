@@ -310,3 +310,66 @@ describe("the two draw counts", () => {
     expect(screen.getByText(/5,000/)).toBeTruthy();
   });
 });
+
+
+describe("provisional versus sealed", () => {
+  afterEach(cleanup);
+
+  /**
+   * The grid is populated all week now, because the agent solves on every
+   * refresh rather than only at the seal. Most of what it draws is therefore a
+   * re-solve that will disagree with itself as team news lands, and the reader
+   * has no way to tell that from the committed plan by looking at the cells.
+   *
+   * So the header carries which it is and how old it is. Age comes from
+   * `ageLine`, the same helper every other provenance line here uses — a second
+   * relative-time formatter would drift from it and disagree on the awkward
+   * cases it already handles.
+   */
+
+  const SOLVED_AT = "2026-09-05T09:00:00Z";
+
+  it("says a midweek plan is provisional, and how old it is", () => {
+    render(
+      <PlanGrid
+        horizon={HORIZON} projections={NAMES} fixtures={MATRIX}
+        xpHorizon={XP_HORIZON} sealed={false} solvedAt={SOLVED_AT}
+      />,
+    );
+    expect(screen.getByTestId("plan-provenance").textContent)
+      .toMatch(/provisional/i);
+    expect(screen.getByTestId("plan-provenance").textContent)
+      .toMatch(/old|Sep|Sat|Sun|Mon|Tue|Wed|Thu|Fri/);
+  });
+
+  it("does not caveat the sealed plan as provisional", () => {
+    /**
+     * The committed one has been notified on and the forecast was sealed against
+     * it. Putting "will be re-solved" on that would understate the only decision
+     * of the week that is actually a commitment.
+     */
+    render(
+      <PlanGrid
+        horizon={HORIZON} projections={NAMES} fixtures={MATRIX}
+        xpHorizon={XP_HORIZON} sealed={true} solvedAt={SOLVED_AT}
+      />,
+    );
+    expect(screen.getByTestId("plan-provenance").textContent)
+      .not.toMatch(/provisional/i);
+  });
+
+  it("still says which it is when the timestamp is unreadable", () => {
+    /**
+     * Age and status are two facts, and losing the stamp must not lose both.
+     * `ageLine` returns null for an absent or unparseable date by design.
+     */
+    render(
+      <PlanGrid
+        horizon={HORIZON} projections={NAMES} fixtures={MATRIX}
+        xpHorizon={XP_HORIZON} sealed={false} solvedAt={null}
+      />,
+    );
+    expect(screen.getByTestId("plan-provenance").textContent)
+      .toMatch(/provisional/i);
+  });
+});

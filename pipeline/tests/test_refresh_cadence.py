@@ -166,3 +166,77 @@ class RefreshGate(unittest.TestCase):
         refresh.assert_called_once()
         _, skipped = self._run(at + 1, projection_current=True)
         skipped.assert_not_called()
+
+
+class RefreshPublishesAProvisionalPlan(unittest.TestCase):
+    """
+    Solving on every refresh, so a plan exists between deadlines.
+
+    `_decide_for_entries` had exactly one caller — `_seal` — so a decision
+    artifact existed only from the four-hour seal window until the deadline, and
+    the grid that draws it read "no solved plan has been published" for the other
+    six and a half days. The projections were being rebuilt the whole time; only
+    the solve was missing.
+
+    What a REFRESH must NOT do is deliver. The seal notifies because a forecast
+    nobody received is not a decision; a provisional plan re-solved four times a
+    day is not something to notify about four times a day, and `_deliver` stays
+    where it is.
+    """
+
+    def _run(self, hours_out, projection_current, decide=None):
+        state = ScheduleState(
+            phase=Phase.REFRESH,
+            gameweek=2,
+            seconds_to_deadline=hours_out * 3600,
+            reason=f"GW2 deadline in {hours_out}h",
+        )
+        with mock.patch.object(
+            run_agent, "projection_is_current", return_value=projection_current
+        ), mock.patch.object(
+            run_agent, "refresh_expected_points", return_value={"status": "ok"}
+        ), mock.patch.object(
+            run_agent, "_decide_for_entries", side_effect=decide,
+            return_value={"owner": {"decision": Path("decision_gw02_owner.json")}},
+        ) as solved, mock.patch.object(
+            run_agent, "_deliver"
+        ) as delivered:
+            code = run_agent.run(state)
+        return code, solved, delivered
+
+    def test_a_refresh_solves_and_marks_the_plan_provisional(self):
+        with self.assertNoLogs("pipeline.learning.run_agent", level="ERROR"):
+            code, solved, _ = self._run(24, projection_current=True)
+
+        self.assertEqual(code, 0)
+        solved.assert_called_once()
+        self.assertIs(solved.call_args.kwargs["sealed"], False)
+
+    def test_a_refresh_does_not_notify(self):
+        """Four pushes a day about a plan that has not been committed to."""
+        _, _, delivered = self._run(24, projection_current=True)
+        delivered.assert_not_called()
+
+    def test_a_skipped_refresh_solves_nothing(self):
+        """
+        The cadence gate governs both. A run that decided the projection was
+        young enough to keep has nothing new to solve against, and solving anyway
+        would spend a minute of runner time to rewrite the same answer.
+        """
+        code, solved, _ = self._run(200, projection_current=True)
+        self.assertEqual(code, 0)
+        solved.assert_not_called()
+
+    def test_a_failed_solve_does_not_fail_the_refresh(self):
+        """
+        The refresh is the load-bearing half: `record_claims` runs inside it, the
+        seal depends on the projection it writes, and this job fires hourly. A
+        solver that raises must leave the refresh done and the run green, or one
+        bad hour turns the whole agent red and the real failures stop being
+        visible.
+        """
+        code, solved, _ = self._run(
+            24, projection_current=True, decide=RuntimeError("HiGHS fell over"),
+        )
+        self.assertEqual(code, 0)
+        solved.assert_called_once()

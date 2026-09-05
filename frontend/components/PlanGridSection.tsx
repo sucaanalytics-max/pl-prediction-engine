@@ -44,12 +44,18 @@ export function PlanGridSection({ gameweek }: { gameweek: number }) {
   // later weeks' numbers can never come from two different runs.
   const xpHorizon = proven(projections)?.horizon ?? null;
   const fixtures = proven(live)?.fixtureMatrix ?? [];
+  // Absent means sealed — see the narrower. Most solves are provisional now
+  // that the agent decides on every refresh, and the grid says which it has.
+  const sealed = proven(decision)?.sealed ?? true;
+  const solvedAt = proven(decision)?.generated_at ?? null;
 
   if (horizon === null || players.length === 0) {
     return (
       <p className="text-xs" style={{ color: "var(--text-3)" }}>
-        No solved plan has been published for GW{gameweek}. The optimiser writes
-        one when it decides, which is inside the seal window before the deadline.
+        No solved plan has been published for GW{gameweek} yet. The agent solves
+        on every refresh — about four times a day, hourly inside the last two
+        days — so this fills in on its next run rather than waiting for the
+        deadline.
       </p>
     );
   }
@@ -60,6 +66,8 @@ export function PlanGridSection({ gameweek }: { gameweek: number }) {
       projections={players}
       fixtures={fixtures}
       xpHorizon={xpHorizon}
+      sealed={sealed}
+      solvedAt={solvedAt}
     />
   );
 }

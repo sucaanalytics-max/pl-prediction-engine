@@ -145,7 +145,9 @@ class TestEndToEnd(unittest.TestCase):
         self.assertEqual(decision.reported.plan.hits, 0, "opening build took a hit")
 
         # ── publish, private and public ──────────────────────────────────
-        written = write_decision(decision, self.dir, public_dir=self.dir / "public")
+        written = write_decision(
+            decision, self.dir, public_dir=self.dir / "public", sealed=True,
+        )
         self.assertTrue(written["decision"].exists())
         self.assertTrue(written["public"].exists())
 

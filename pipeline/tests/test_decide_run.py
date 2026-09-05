@@ -245,10 +245,51 @@ class TestArtifact(unittest.TestCase):
         self.assertNotIn("selection_stream", public)
         self.assertIn("decision", public)
 
+    def test_a_written_decision_says_whether_it_was_sealed(self):
+        """
+        Until now every decision artifact came from `_seal`, so "published" and
+        "sealed" were the same fact and neither needed recording. Solving on each
+        REFRESH breaks that: most artifacts are now provisional, re-solved every
+        few hours, and a consumer cannot tell one from the other by looking.
+
+        It reaches BOTH copies. The public one is the one a screen reads, and a
+        midweek plan rendered with the seal's authority is the failure this
+        field exists to prevent.
+        """
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            written = write_decision(
+                self.decision, root, public_dir=root / "public", sealed=False,
+            )
+            for copy in ("decision", "public"):
+                payload = json.loads(written[copy].read_text())
+                self.assertIs(payload["sealed"], False, copy)
+
+    def test_a_sealed_decision_says_so(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            written = write_decision(
+                self.decision, root, public_dir=root / "public", sealed=True,
+            )
+            payload = json.loads(written["public"].read_text())
+            self.assertIs(payload["sealed"], True)
+
+    def test_the_caller_must_say_which_it_is(self):
+        """
+        No default. A default would be silently wrong for whichever caller
+        forgot it, and the expensive direction — a provisional plan published as
+        sealed — is exactly the one a `sealed=True` default would produce.
+        """
+        with TemporaryDirectory() as tmp:
+            with self.assertRaises(TypeError):
+                write_decision(self.decision, Path(tmp))
+
     def test_write_decision_produces_both_files(self):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
-            written = write_decision(self.decision, root, public_dir=root / "public")
+            written = write_decision(
+                self.decision, root, public_dir=root / "public", sealed=True,
+            )
 
             self.assertTrue(written["decision"].exists())
             self.assertTrue(written["public"].exists())
