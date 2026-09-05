@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-05T15:27:05.567907Z",
-  "n_dropped": 195,
+  "generated_at": "2026-09-05T17:29:57.691313Z",
+  "n_dropped": 212,
   "dropped_by_source": {
     "bbc_football": 71,
-    "fantasyfootballscout": 10,
-    "hayters": 29,
-    "sky_football": 85
+    "fantasyfootballscout": 11,
+    "hayters": 33,
+    "sky_football": 97
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 285,
+  "n_articles": 302,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "41d42820c304a511",
+      "headline": "Le Fee penalty rescues draw for Sunderland at Brentford",
+      "summary": "Enzo Le Fee rescued a point for Sunderland after dispatching his late penalty to secure a 1-1 draw at Brentford.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brentford-vs-sunderland/report/559465",
+      "claimed_at": "2026-09-05T17:00:00Z",
+      "players": [
+        {
+          "element_id": 542,
+          "name": "E.Le F\u00e9e",
+          "club": "SUN",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "3983f7474ebbf4a1",
       "headline": "Barcola, Szoboszlai + Liverpool injury latest for FPL Gameweek 3",
@@ -39,8 +57,194 @@
       "touches_squad": true
     },
     {
+      "digest": "3b580fc07a9cec63",
+      "headline": "Sunderland latest: Le Bris gives blunt verdict on VAR after Ballard decision",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-05T18:16:00Z",
+      "players": [
+        {
+          "element_id": 532,
+          "name": "Ballard",
+          "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bc247106f73d76dd",
+      "headline": "Brentford latest: Andrews critical of refereeing during Sunderland draw",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279280/brentford-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-05T17:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3475e4027e738735",
+      "headline": "Spurs latest: Medical staff encouraged subs that cost momentum, says De Zerbi",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-05T17:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "28111e242772f6d5",
+      "headline": "De Zerbi explains his substitutions in draw with Nottingham Forest \u2013 and says Spurs must \u2018keep more calm\u2019 in attack",
+      "summary": "Tottenham boss Roberto De Zerbi has explained his decision to withdraw Savinho and Destiny Udogie after around an hour during the goalless draw with Nottingham Forest. The pair were ta",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-explains-his-substitutions-in-draw-with-nottingham-forest-and-says-spurs-must-keep-more-calm-in-attack/",
+      "claimed_at": "2026-09-05T17:14:08Z",
+      "players": [
+        {
+          "element_id": 506,
+          "name": "Udogie",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "68cc334e7bfab72a",
+      "headline": "Haaland scores 300th career goal as Man City edge Coventry",
+      "summary": "FREE TO WATCH: Highlights from Manchester City's match against Coventry in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13581902/manchester-city-1-0-coventry-premier-league-highlights",
+      "claimed_at": "2026-09-05T17:11:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ac29ec5a40f9d99e",
+      "headline": "Haaland hits new record and Fernandez shines as Man City beat Coventry",
+      "summary": "Erling Haaland showed how much he loves playing against newly promoted sides by scoring the winner in a nervy 1-0 victory over Coventry to keep Manchester City's record under Enzo Maresca perfect.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-coventry-city/report/559471",
+      "claimed_at": "2026-09-05T17:00:00Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c3897331ddd93c40",
+      "headline": "Leeds made to pay for missed chances as Brighton fight back to draw",
+      "summary": "Leeds were made to pay for countless missed chances as Brighton fought back to claim 1-1 draw - and continue the Whites' struggles down at the south coast.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-leeds-united/report/559466",
+      "claimed_at": "2026-09-05T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ccf1e03c02d8fe80",
+      "headline": "Sage off the mark as Palace come from behind at winless Fulham",
+      "summary": "Tyrick Mitchell's double saw Crystal Palace come from behind twice to win 3-2 at Fulham as Pierre Sage recorded his first victory in charge of the Eagles.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/fulham-vs-crystal-palace/report/559468",
+      "claimed_at": "2026-09-05T17:00:00Z",
+      "players": [
+        {
+          "element_id": 204,
+          "name": "Mitchell",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "52c00ca12b58811c",
+      "headline": "Hull v Aston Villa team news: One change apiece",
+      "summary": "Villa's new winger, Ibrahim Mbaye, is among the substitutes The post Hull v Aston Villa team news: One change apiece appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/05/hull-v-aston-villa-team-news-one-change-apiece",
+      "claimed_at": "2026-09-05T16:15:00Z",
+      "players": [
+        {
+          "element_id": 631,
+          "name": "Mbaye",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "09b69a10ff1d26c8",
       "headline": "Deadline Day signings on the bench for Hull vs Villa LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/hull-city-vs-aston-villa/live/559469",
+      "claimed_at": "2026-09-05T16:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ce502bb49e82e39f",
+      "headline": "Villa first-half penalty appeal turned down against Hull LIVE on Sky!",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -105,6 +309,24 @@
           "element_id": 456,
           "name": "J.Ramsey",
           "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "197b704e88593605",
+      "headline": "Spurs fire another blank in goalless draw with Forest",
+      "summary": "Tottenham are still searching for their first goal of the Premier League season as they drew 0-0 at Nottingham Forest.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/nottingham-forest-vs-tottenham-hotspur/report/559473",
+      "claimed_at": "2026-09-05T14:14:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -279,6 +501,24 @@
       "touches_squad": false
     },
     {
+      "digest": "d3a13d83aa2e4907",
+      "headline": "Manchester City 1-0 Coventry City LIVE \u2013 Fernandez debuts as Maresca\u2019s side claim narrow win",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Manchester City 1-0 Coventry City LIVE - Fernandez debuts as Maresca\u2019s side claim narrow win appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/manchester-city-v-coventry-city-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-09-05T12:05:00Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "5277048d4da0b315",
       "headline": "Chelsea pushing for second after James' early opener vs Villa LIVE!",
       "summary": null,
@@ -351,6 +591,24 @@
       "touches_squad": false
     },
     {
+      "digest": "d3448efa16bc88d6",
+      "headline": "Nottingham Forest 0-0 Spurs LIVE \u2013 Spurs earn their first point of the season",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Nottingham Forest 0-0 Spurs LIVE - Spurs earn their first point of the season appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/nottingham-forest-v-spurs-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-09-05T12:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "d884ea89f5a9130a",
       "headline": "Nottingham Forest 0-0 Spurs LIVE \u2013 Forest goal ruled out for handball",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Nottingham Forest 0-0 Spurs LIVE - Forest goal ruled out for handball appeared first on Hayters.",
@@ -408,6 +666,24 @@
       "digest": "93a347098602f2ff",
       "headline": "Newcastle v Bournemouth LIVE \u2013 team news, updates and reaction",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v Bournemouth LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-v-bournemouth-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-09-05T10:00:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f067e13cd1068a13",
+      "headline": "Newcastle v Bournemouth LIVE \u2013 Jaissle\u2019s side come from two down to rescue draw",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v Bournemouth LIVE - Jaissle's side come from two down to rescue draw appeared first on Hayters.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/newcastle-v-bournemouth-live-team-news-updates-and-reaction/",
@@ -555,60 +831,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9392bd86b4273788",
-      "headline": "Papers: Chelsea offered chance to sign Bissouma as Fernandez replacement",
-      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13581538/chelsea-transfer-news-blues-offered-chance-to-sign-former-tottenham-midfielder-yves-bissouma-paper-talk",
-      "claimed_at": "2026-09-04T22:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5655c7d97901d3a3",
-      "headline": "Isak\u2019s quickfire double earns Iraola first PL win as Liverpool boss",
-      "summary": "FREE TO WATCH: Highlights from Ipswich Town's match against Liverpool in the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13581559/ipswich-0-2-liverpool-premier-league-highlights",
-      "claimed_at": "2026-09-04T22:08:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "52c6a1e824fe1c4e",
-      "headline": "Iraola up and running at Liverpool as Isak nets double at Ipswich",
-      "summary": "Andoni Iraola registered his first win as Liverpool head coach as Alexander Isak scored twice inside nine minutes to beat Ipswich 2-0.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/ipswich-town-vs-liverpool/report/559470",
-      "claimed_at": "2026-09-04T21:49:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "dfe46030ab10ad8e",
       "headline": "First win as Liverpool boss 'feels good' - Iraola",
       "summary": "Liverpool head coach Andoni Iraola said it \"feels good\" to pick up his first victory in charge as his side beat Ipswich 2-0 at Portman Road.",
@@ -634,24 +856,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/c5y4rpj0lx4o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-04T21:47:02Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "21fb49dd2fa6f42b",
-      "headline": "Hull City latest: Jakirovic signs new deal until 2028",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13548674/hull-city-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-04T21:40:00Z",
       "players": [
         {
           "element_id": 0,
@@ -789,24 +993,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d99b746c2326afdc",
-      "headline": "Star-studded London City cruise to win over Man Utd",
-      "summary": "London City Lionesses started their star-studded era and the new season with a comfortable 2-1 win over Manchester United.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/london-city-lionesses-vs-manchester-united-women/report/575755",
-      "claimed_at": "2026-09-04T21:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "c17091c6deff7e40",
       "headline": "Isak shines at last but Scherpen suffers - Ipswich v Liverpool player ratings",
       "summary": "How Liverpool and Ipswich Town's players rated following their Premier League match.",
@@ -843,60 +1029,6 @@
       "touches_squad": false
     },
     {
-      "digest": "085e5fbfdd6d5e83",
-      "headline": "Liverpool latest: Sporting director Hughes steps down",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-04T19:55:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "dab12ab4a1426097",
-      "headline": "Liverpool latest: Barcola benched...have your say!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-04T19:55:00Z",
-      "players": [
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e1961304d5ef41f9",
-      "headline": "Liverpool latest: Iraola - My fights with Isak aren't about goalscoring",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-04T19:55:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "7000f655d2165dce",
       "headline": "Ipswich v Liverpool team news: Araujo starts, Barcola a sub",
       "summary": "It's one change apiece at Portman Road The post Ipswich v Liverpool team news: Araujo starts, Barcola a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -915,42 +1047,6 @@
           "element_id": 627,
           "name": "Barcola",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "14ce705299c65bf6",
-      "headline": "Putellas starts but Earps on the bench for London City vs Man Utd LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/london-city-lionesses-vs-manchester-united-women/live/575755",
-      "claimed_at": "2026-09-04T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "58f11de313886cf4",
-      "headline": "London City land opening night win over Man Utd LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/london-city-lionesses-vs-manchester-united-women/live/575755",
-      "claimed_at": "2026-09-04T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1479,54 +1575,6 @@
       "touches_squad": false
     },
     {
-      "digest": "452a7b61397a876b",
-      "headline": "Arsenal defender could return against Chelsea \u2013 with Arteta also hopeful duo can be involved",
-      "summary": "Jurrien Timber could be in contention to return for Arsenal\u2019s Premier League clash with Chelsea after Mikel Arteta confirmed the defender is in \u201creally good condition\u201d. Timber has been sidelined with injury",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-defender-could-return-against-chelsea-with-arteta-also-hopeful-duo-can-be-involved/",
-      "claimed_at": "2026-09-04T13:02:49Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "45539cb6694c80fb",
-      "headline": "Arbeloa on the fitness of new signings and defender\u2019s future at Fulham",
-      "summary": "Fulham boss Alvaro Arbeloa has confirmed Tom Cairney is the only player unavailable for Saturday\u2019s Premier League clash with Crystal Palace. The Cottagers have strengthened their squad with the additions of Hugo Larsson, Manuel A",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arbeloa-on-the-fitness-of-new-signings-and-defenders-future-at-fulham/",
-      "claimed_at": "2026-09-04T12:33:53Z",
-      "players": [
-        {
-          "element_id": 266,
-          "name": "Cairney",
-          "club": "FUL",
-          "held": false
-        },
-        {
-          "element_id": 635,
-          "name": "Larsson",
-          "club": "FUL",
-          "held": false
-        },
-        {
-          "element_id": 650,
-          "name": "Affengruber",
-          "club": "FUL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "29b8b0e6d8fd5dcf",
       "headline": "not included in squad.",
       "summary": null,
@@ -1539,48 +1587,6 @@
           "element_id": 527,
           "name": "Richarlison",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ec1ee22ec90d9438",
-      "headline": "Brighton suffer another injury blow but duo could return for Leeds clash",
-      "summary": "Brighton boss Fabian Hurzeler has confirmed Mats Wieffer will be sidelined until next month with a knee injury. The right-back was forced off during Brighton\u2019s 4-3 defeat by Chelsea after being struck in the face by the ball, c",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/brighton-suffer-another-injury-blow-but-duo-could-return-for-leeds-clash/",
-      "claimed_at": "2026-09-04T12:22:23Z",
-      "players": [
-        {
-          "element_id": 130,
-          "name": "Wieffer",
-          "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "88748cb4548e3077",
-      "headline": "Lampard confirms big Coventry City fitness boost for Man City match \u2013 and gives update on summer signing",
-      "summary": "Coventry City boss Frank Lampard has confirmed Frank Onyeka is available for Saturday\u2019s trip to Manchester City. The midfielder missed Coventry\u2019s defeat to Hull City but has recovered in time to",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/lampard-confirms-big-coventry-city-fitness-boost-for-man-city-match-and-gives-update-on-summer-signing/",
-      "claimed_at": "2026-09-04T12:04:13Z",
-      "players": [
-        {
-          "element_id": 104,
-          "name": "Onyeka",
-          "club": "COV",
-          "held": false
-        },
-        {
-          "element_id": 599,
-          "name": "Cherif",
-          "club": "COV",
           "held": false
         }
       ],
@@ -1629,24 +1635,6 @@
           "element_id": 167,
           "name": "Delap",
           "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "43b73d6580772bf1",
-      "headline": "FPL Gameweek 3 Scout Picks: Man City triple-up",
-      "summary": "Our chosen XI and subs ahead of tonight's deadline The post FPL Gameweek 3 Scout Picks: Man City triple-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/fpl-gameweek-3-scout-picks-man-city-triple-up",
-      "claimed_at": "2026-09-04T11:10:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
