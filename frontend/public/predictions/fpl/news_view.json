@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-05T19:23:07.936217Z",
-  "n_dropped": 238,
+  "generated_at": "2026-09-05T21:31:11.431375Z",
+  "n_dropped": 242,
   "dropped_by_source": {
-    "bbc_football": 85,
+    "bbc_football": 87,
     "fantasyfootballscout": 12,
-    "hayters": 38,
-    "sky_football": 103
+    "hayters": 39,
+    "sky_football": 104
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 328,
+  "n_articles": 332,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "2fca6e0520300cf4",
+      "headline": "Le Fee penalty saves point for Sunderland at Brentford",
+      "summary": "Enzo le Fee scored a late penalty to rescue a point for Sunderland in a hard-fought draw with Brentford.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c4g70vn2r9eo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T19:31:31Z",
+      "players": [
+        {
+          "element_id": 542,
+          "name": "E.Le F\u00e9e",
+          "club": "SUN",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "ace292ff62583736",
       "headline": "\u2018I wasn\u2019t worried\u2019 \u2013 Le Bris hails Sunderland star after draw with Brentford",
@@ -73,6 +91,78 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "4a14160ef29936fd",
+      "headline": "Watch: Match of the Day",
+      "summary": "Highlights of eight Premier League matches, including Hull City v Aston Villa.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/iplayer/live/bbcone?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T23:01:15Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ff53e11dc3e4d421",
+      "headline": "Arteta backs Chelsea to be Premier League title contenders this season",
+      "summary": "Mikel Arteta believes Chelsea have \u201cevery ingredient\u201d to challenge for the Premier League title this season. Arteta's reigning champions take on the Blues on Sunday with both sides having won their opening two games of the campai",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-backs-chelsea-to-be-premier-league-title-contenders-this-season/",
+      "claimed_at": "2026-09-05T21:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ed01778ebae24771",
+      "headline": "Seven points from three games - are Hull on track to avoid relegation?",
+      "summary": "It might be too early to settle survival talk, but newly promoted Hull City have given themselves the perfect platform to build on in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cy8zd574yzyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T20:56:25Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bd52c67a10f06a1d",
+      "headline": "Liverpool may make January move for Sarr - Sunday's gossip",
+      "summary": "Liverpool may make another move for Crystal Palace winger Ismaila Sarr in January and Tottenham's Richarlison may look for a Saudi switch.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cdx0knz81p2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T20:24:26Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "0fbbe1451731e886",
@@ -203,6 +293,24 @@
     {
       "digest": "437a93cb9bf27baf",
       "headline": "Forest and Spurs remain winless after disallowed goal drama",
+      "summary": "Tottenham are still waiting for their first Premier League win of the season after a scrappy draw at Nottingham Forest.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c4g589gkdepo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T19:00:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a1f5d32a50c65646",
+      "headline": "Forest and Spurs remain winless after disallowed goal drama in draw",
       "summary": "Tottenham are still waiting for their first Premier League win of the season after a scrappy draw at Nottingham Forest.",
       "source": "bbc_football",
       "tier": 3,
@@ -753,30 +861,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a7901f7076dc4a58",
-      "headline": "Scott shines, Dedic struggles - Newcastle v Bournemouth player ratings",
-      "summary": "How Newcastle United and Bournemouth's players rated in their Premier League match.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cr4vzr9n2nyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-05T13:32:05Z",
-      "players": [
-        {
-          "element_id": 69,
-          "name": "Scott",
-          "club": "BOU",
-          "held": false
-        },
-        {
-          "element_id": 593,
-          "name": "Dedi\u0107",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "38cedee6635e4ece",
       "headline": "3pm team news: Foden a sub, O\u2019Reilly injured in warm-up",
       "summary": "Manchester City v Coventry City is among five Premier League matches at 3pm BST The post 3pm team news: Foden a sub, O'Reilly injured in warm-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sco",
@@ -927,30 +1011,6 @@
       "touches_squad": false
     },
     {
-      "digest": "89270c46c6989ec3",
-      "headline": "Bahoya on Leeds bench but no Rutter for Brighton LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-leeds-united/live/559466",
-      "claimed_at": "2026-09-05T13:00:00Z",
-      "players": [
-        {
-          "element_id": 125,
-          "name": "Georginio",
-          "club": "BHA",
-          "held": false
-        },
-        {
-          "element_id": 648,
-          "name": "Bahoya",
-          "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "1a4c5364bffa08e7",
       "headline": "Manchester City 1-0 Coventry City LIVE \u2013 Haaland heads City in front as Fernandez and Ndiaye debut",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Manchester City 1-0 Coventry City LIVE - Haaland heads City in front as Fernandez and Ndiaye debut appeared first on Hayters.",
@@ -1095,24 +1155,6 @@
       "touches_squad": false
     },
     {
-      "digest": "81c398f1f6598408",
-      "headline": "Hughes steps down as Liverpool sporting director",
-      "summary": "Richard Hughes steps down from his position as sporting director of Liverpool and is set to join Saudi side Al-Hilal.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c3d7483rv82o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-05T11:46:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "6f8b7268c5c14bd0",
       "headline": "Newcastle v Bournemouth team news: Fernandez-Pardo a sub",
       "summary": "The Magpies are unchanged, while the Cherries make one alteration The post Newcastle v Bournemouth team news: Fernandez-Pardo a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1156,42 +1198,6 @@
       "tier": 2,
       "url": "https://hayters.com/newcastle-v-bournemouth-live-team-news-updates-and-reaction/",
       "claimed_at": "2026-09-05T10:00:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "80023a4db290fd7d",
-      "headline": "Football Daily",
-      "summary": "Kelly Somers speaks to Brentford head coach Keith Andrews.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0p81k5b?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-05T09:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "56c7d7c9a7c8e24b",
-      "headline": "I've never spoken to Everton owner Friedkin - Moyes",
-      "summary": "Everton manager David Moyes says he has never met or spoken to the club's owner Dan Friedkin.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c4gl3wx8g64o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-05T08:40:13Z",
       "players": [
         {
           "element_id": 0,
@@ -1353,24 +1359,6 @@
           "element_id": 627,
           "name": "Barcola",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1f9a530441ae7eca",
-      "headline": "Emery gives update on Aston Villa midfielder ahead of Hull clash",
-      "summary": "Aston Villa boss Unai Emery has revealed Johan Manzambi is closing in on a return to action but is not ready to play this weekend. The Switzerland international will not be available for Saturday evening\u2019s Premier League trip to Hull C",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/emery-gives-update-on-aston-villa-midfielder-ahead-of-hull-clash/",
-      "claimed_at": "2026-09-04T17:55:47Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
           "held": false
         }
       ],
