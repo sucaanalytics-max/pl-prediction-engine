@@ -166,6 +166,12 @@ class Rules:
     play_bounds: Dict[str, Tuple[int, int]]
     sell_on_fee: float
     max_banked_free_transfers: int
+    #: Chips whose transfers do NOT come out of the free-transfer bank, read from
+    #: bootstrap's `chip_type == "transfer"` rather than named here. Wildcard and
+    #: free hit today; the point of reading it is that a new one arrives without
+    #: a code change. Bench boost and triple captain are `chip_type: "team"` —
+    #: they change the scoring, not the bank.
+    transfer_chips: Tuple[str, ...] = ()
     # Provenance
     source: str = "signed_yaml_only"
     degraded: bool = False
@@ -487,6 +493,25 @@ def load_rules(
             scoring_drift,
         )
 
+    # Which chips grant transfers outside the bank. Bootstrap says so per chip;
+    # the alternative was a hand-kept {"wildcard", "freehit"} in entry_api, which
+    # is a second answer to a published question and fails silently — a new
+    # transfer chip would have its transfers counted against a bank they never
+    # touched. Order-preserving and de-duplicated: bootstrap lists each chip once
+    # per half of the season.
+    # `bootstrap` is optional here — `load_rules()` with none is the pure-unit-test
+    # path — and no bootstrap means no published classification, which is an empty
+    # tuple rather than a guessed pair.
+    transfer_chips: List[str] = []
+    for chip in (bootstrap or {}).get("chips", []) or []:
+        name = chip.get("name")
+        if (
+            name
+            and str(chip.get("chip_type", "")).lower() == "transfer"
+            and name not in transfer_chips
+        ):
+            transfer_chips.append(str(name))
+
     return Rules(
         season=signed["season"],
         short_play=scoring["short_play"],
@@ -515,6 +540,7 @@ def load_rules(
         play_bounds=play_bounds,
         sell_on_fee=float(settings["transfers_sell_on_fee"]),
         max_banked_free_transfers=int(settings["max_extra_free_transfers"]) + 1,
+        transfer_chips=tuple(transfer_chips),
         source=source,
         degraded=bool(scoring_drift),
         drift=tuple(drift),

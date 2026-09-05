@@ -131,6 +131,12 @@ class TestConfiguredEntries(unittest.TestCase):
         self.assertEqual(FPL_ENTRIES["owner"]["objective"], "season")
 
 
+#: What bootstrap publishes today as `chip_type: "transfer"`. Tests state it
+#: explicitly rather than importing it, so a change to the live API surfaces here
+#: as a decision rather than as tests that quietly follow it.
+TRANSFER_CHIPS = ("wildcard", "freehit")
+
+
 class TestBankedFreeTransfers(unittest.TestCase):
     """
     The count FPL does not publish, derived from the history it does.
@@ -160,23 +166,23 @@ class TestBankedFreeTransfers(unittest.TestCase):
     def test_the_second_gameweek_starts_with_one(self):
         """GW1 transfers are unlimited, so nothing before GW2 can be banked."""
         history = {"current": [{"event": 1, "event_transfers": 14}], "chips": []}
-        self.assertEqual(banked_free_transfers(history, gameweek=2, cap=5), 1)
+        self.assertEqual(banked_free_transfers(history, gameweek=2, cap=5, transfer_chips=TRANSFER_CHIPS), 1)
 
     def test_an_unused_transfer_banks_for_the_next_gameweek(self):
         history = {"current": [{"event": 1, "event_transfers": 0},
                                {"event": 2, "event_transfers": 0}], "chips": []}
-        self.assertEqual(banked_free_transfers(history, gameweek=3, cap=5), 2)
+        self.assertEqual(banked_free_transfers(history, gameweek=3, cap=5, transfer_chips=TRANSFER_CHIPS), 2)
 
     def test_the_owner_s_history_gives_two_for_gw4(self):
         """The regression: this returned 1, and the hit it implied was not real."""
         self.assertEqual(
-            banked_free_transfers(self.OWNER_HISTORY, gameweek=4, cap=5), 2
+            banked_free_transfers(self.OWNER_HISTORY, gameweek=4, cap=5, transfer_chips=TRANSFER_CHIPS), 2
         )
 
     def test_a_spent_transfer_does_not_bank(self):
         history = {"current": [{"event": 1, "event_transfers": 0},
                                {"event": 2, "event_transfers": 1}], "chips": []}
-        self.assertEqual(banked_free_transfers(history, gameweek=3, cap=5), 1)
+        self.assertEqual(banked_free_transfers(history, gameweek=3, cap=5, transfer_chips=TRANSFER_CHIPS), 1)
 
     def test_banking_stops_at_the_cap(self):
         """
@@ -185,13 +191,13 @@ class TestBankedFreeTransfers(unittest.TestCase):
         """
         history = {"current": [{"event": g, "event_transfers": 0} for g in range(1, 12)],
                    "chips": []}
-        self.assertEqual(banked_free_transfers(history, gameweek=12, cap=5), 5)
+        self.assertEqual(banked_free_transfers(history, gameweek=12, cap=5, transfer_chips=TRANSFER_CHIPS), 5)
 
     def test_taking_hits_leaves_nothing_banked(self):
         """Four transfers on one banked leaves the next gameweek with just its own."""
         history = {"current": [{"event": 1, "event_transfers": 0},
                                {"event": 2, "event_transfers": 4}], "chips": []}
-        self.assertEqual(banked_free_transfers(history, gameweek=3, cap=5), 1)
+        self.assertEqual(banked_free_transfers(history, gameweek=3, cap=5, transfer_chips=TRANSFER_CHIPS), 1)
 
     def test_a_wildcard_week_does_not_spend_the_bank(self):
         """
@@ -204,7 +210,24 @@ class TestBankedFreeTransfers(unittest.TestCase):
                         {"event": 3, "event_transfers": 11}],
             "chips": [{"name": "wildcard", "event": 3}],
         }
-        self.assertEqual(banked_free_transfers(history, gameweek=4, cap=5), 3)
+        self.assertEqual(banked_free_transfers(history, gameweek=4, cap=5, transfer_chips=TRANSFER_CHIPS), 3)
+
+    def test_a_chip_the_api_does_not_call_a_transfer_chip_is_not_exempt(self):
+        """
+        The allow-list is no longer written here. It comes from
+        `rules.transfer_chips`, which reads bootstrap's `chip_type`, so a chip
+        absent from that list spends the bank like any other week — including a
+        wildcard, if the caller passed a list that does not name one.
+        """
+        history = {
+            "current": [{"event": 1, "event_transfers": 0},
+                        {"event": 2, "event_transfers": 0},
+                        {"event": 3, "event_transfers": 11}],
+            "chips": [{"name": "wildcard", "event": 3}],
+        }
+        self.assertEqual(
+            banked_free_transfers(history, gameweek=4, cap=5, transfer_chips=()), 1
+        )
 
     def test_a_bench_boost_is_not_a_transfer_chip(self):
         """Only wildcard and free hit grant transfers; the others must not exempt."""
@@ -213,7 +236,7 @@ class TestBankedFreeTransfers(unittest.TestCase):
                         {"event": 2, "event_transfers": 2}],
             "chips": [{"name": "bboost", "event": 2}],
         }
-        self.assertEqual(banked_free_transfers(history, gameweek=3, cap=5), 1)
+        self.assertEqual(banked_free_transfers(history, gameweek=3, cap=5, transfer_chips=TRANSFER_CHIPS), 1)
 
 
 class TestReadEntryStateFreeTransfers(unittest.TestCase):
@@ -256,7 +279,8 @@ class TestReadEntryStateFreeTransfers(unittest.TestCase):
             ),
         ):
             state = read_entry_state(
-                20945, 4, {1: 60, 445: 50}, max_banked_free_transfers=5
+                20945, 4, {1: 60, 445: 50},
+                max_banked_free_transfers=5, transfer_chips=TRANSFER_CHIPS,
             )
 
         self.assertEqual(state.free_transfers, 2)
@@ -286,7 +310,7 @@ class TestBankedFreeTransfersOnIncompleteHistory(unittest.TestCase):
             "chips": [],
         }
         # Weeks 2, 3 and 4 are needed for GW5; 3 and 4 have no row.
-        self.assertEqual(banked_free_transfers(history, gameweek=5, cap=5), 1)
+        self.assertEqual(banked_free_transfers(history, gameweek=5, cap=5, transfer_chips=TRANSFER_CHIPS), 1)
 
     def test_a_complete_history_is_unaffected(self):
         """The guard must not fire on the case that actually occurs."""
@@ -294,7 +318,7 @@ class TestBankedFreeTransfersOnIncompleteHistory(unittest.TestCase):
             "current": [{"event": g, "event_transfers": 0} for g in range(1, 5)],
             "chips": [],
         }
-        self.assertEqual(banked_free_transfers(history, gameweek=5, cap=5), 4)
+        self.assertEqual(banked_free_transfers(history, gameweek=5, cap=5, transfer_chips=TRANSFER_CHIPS), 4)
 
     def test_a_chip_week_counts_as_known(self):
         """
@@ -308,4 +332,4 @@ class TestBankedFreeTransfersOnIncompleteHistory(unittest.TestCase):
                         {"event": 3, "event_transfers": 12}],
             "chips": [{"name": "wildcard", "event": 3}],
         }
-        self.assertEqual(banked_free_transfers(history, gameweek=4, cap=5), 3)
+        self.assertEqual(banked_free_transfers(history, gameweek=4, cap=5, transfer_chips=TRANSFER_CHIPS), 3)

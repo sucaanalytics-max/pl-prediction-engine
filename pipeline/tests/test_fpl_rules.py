@@ -250,6 +250,34 @@ class ChipCalendarTests(unittest.TestCase):
         self.assertEqual(min(starts["bboost"]), 1)
         self.assertEqual(min(starts["3xc"]), 1)
 
+    def test_the_transfer_chips_come_from_the_api_not_a_hand_list(self):
+        """
+        `banked_free_transfers` must not count a wildcard's transfers against the
+        bank, and it used a hardcoded {"wildcard", "freehit"} to decide which
+        chips those are. Bootstrap publishes the answer: `chip_type` is
+        "transfer" for exactly those two and "team" for bench boost and triple
+        captain. A hand-list is a second answer to a published question, and the
+        way it fails is silent — a new transfer chip would have its free
+        transfers counted against a bank they never touched.
+        """
+        rules = load_rules(_bootstrap())
+        self.assertEqual(set(rules.transfer_chips), {"wildcard", "freehit"})
+
+    def test_a_team_chip_is_not_a_transfer_chip(self):
+        # Bench boost and triple captain change the scoring, not the bank.
+        rules = load_rules(_bootstrap())
+        for chip in ("bboost", "3xc"):
+            self.assertNotIn(chip, rules.transfer_chips)
+
+    def test_a_new_transfer_chip_is_picked_up_without_a_code_change(self):
+        """The whole point of reading it: the list follows the API."""
+        bootstrap = _bootstrap()
+        bootstrap["chips"] = list(bootstrap["chips"]) + [
+            {"name": "megawildcard", "chip_type": "transfer", "start_event": 20,
+             "stop_event": 38, "number": 1},
+        ]
+        self.assertIn("megawildcard", load_rules(bootstrap).transfer_chips)
+
     def test_two_of_each_chip_split_across_the_season(self):
         chips = _bootstrap()["chips"]
         counts = {}

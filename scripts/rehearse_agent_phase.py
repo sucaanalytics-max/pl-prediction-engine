@@ -176,6 +176,53 @@ def _forecast_rows(path: Path) -> int:
         return sum(1 for line in handle if json.loads(line).get("record") == "forecast")
 
 
+def _rehearse_refresh(scratch: Path, gameweek: int | None) -> Dict[str, Any]:
+    """
+    Run the REFRESH phase against the scratch tree, as a dry run.
+
+    Calls the phase HANDLER, not `refresh_expected_points`. This used to call the
+    function directly, which meant the phase dispatch was never entered — so when
+    REFRESH grew a provisional solve, this script kept passing without executing
+    any of it and the description's promise to "execute the real REFRESH" was
+    quietly false.
+
+    The phase is resolved rather than hand-built, for the same reason as the seal:
+    a hand-made ScheduleState rehearses my belief about the schedule instead of
+    the code that runs on the day. Twenty-four hours out is inside REFRESH_WINDOW
+    and well outside SEAL_WINDOW, which also puts the run past the projection-age
+    gate — so the refresh and the solve both actually happen rather than being
+    skipped as current.
+
+    `dry_run=True`, so `_decide_for_entries` returns before `write_decision` and
+    a rehearsal cannot publish a plan.
+    """
+    from datetime import timedelta
+
+    from pipeline.learning.run_agent import _refresh
+    from pipeline.learning.schedule import Phase, fetch_events, resolve
+
+    events = fetch_events()
+    live = resolve(scratch, events=events)
+    if live.deadline is None:
+        raise RuntimeError(f"no upcoming deadline in the calendar (phase {live.phase})")
+
+    at = live.deadline - timedelta(hours=24)
+    state = resolve(scratch, now=at, events=events)
+    print(f"   calendar deadline  {live.deadline:%a %d %b %H:%MZ}")
+    print(f"   rehearsing as at   {at:%a %d %b %H:%MZ}  -> phase {state.phase.value}")
+
+    if state.phase is not Phase.REFRESH:
+        raise RuntimeError(
+            f"expected REFRESH a day before the deadline, got {state.phase.value}: "
+            f"{state.reason}"
+        )
+    if gameweek is not None and state.gameweek != gameweek:
+        raise RuntimeError(f"calendar says GW{state.gameweek}, you asked for GW{gameweek}")
+
+    code = _refresh(scratch, state, dry_run=True)
+    return {"exit_code": code, "gameweek": state.gameweek, "phase": state.phase.value}
+
+
 def _rehearse_seal(scratch: Path, gameweek: int | None) -> Dict[str, Any]:
     """
     Run the seal against the scratch ledger, as a dry run.
@@ -230,11 +277,14 @@ def main() -> int:
                         help="leave the scratch directory in place for inspection")
     args = parser.parse_args()
 
-    logging.basicConfig(level=logging.ERROR, format="%(levelname)s %(name)s: %(message)s")
+    # INFO, not ERROR. The point of a rehearsal is to OBSERVE the phase, and at
+    # ERROR a run that solved and a run that skipped are both silent — `_refresh`
+    # is deliberately non-fatal, so a solve that raised would log and the script
+    # would still exit 0. The phase's own narration is the evidence.
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
     # Imported here, not at module scope: this pulls in pandas, PyMC and the rest, and the
     # argument parsing above should fail fast without paying for them.
-    from pipeline.learning.run_agent import refresh_expected_points
 
     # Refuse on a dirty published tree: the restore below is a `git checkout`, so
     # uncommitted work there would be destroyed by the very step that protects it.
@@ -255,7 +305,7 @@ def main() -> int:
         if args.phase == "seal":
             outcome = _rehearse_seal(scratch, args.gameweek)
         else:
-            outcome = refresh_expected_points(scratch, args.gameweek) or {}
+            outcome = _rehearse_refresh(scratch, args.gameweek)
     except Exception:
         print("PHASE FAILED — this is what would happen on the day:")
         traceback.print_exc()

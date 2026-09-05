@@ -750,6 +750,80 @@ def _project_horizon(
     return weeks, diagnostics
 
 
+def _refresh(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
+    """
+    Rebuild the projection, then solve against it.
+
+    A named handler rather than an inline branch, and SEAL's shape is the reason:
+    `scripts/rehearse_agent_phase.py` calls `_seal` to execute the real seal, but
+    called `refresh_expected_points` directly for refresh — so the phase dispatch
+    was never entered, and when REFRESH grew a solve the rehearsal passed without
+    touching it. One handler, called by `run` and by the script, stops that
+    recurring.
+
+    `predictions_dir` is a parameter for the same reason it is on `_seal`: the
+    rehearsal hands it a scratch directory.
+    """
+    # Inside REFRESH_WINDOW every run refreshes, and the gate is deliberately
+    # tied to that window rather than to SEAL_WINDOW: late team news dominates
+    # projection error for the last two days before a deadline, not just the
+    # last four hours. Gating on SEAL_WINDOW instead let the news-dense
+    # 48h-to-4h band rebuild roughly every PROJECTION_MAX_AGE rather than
+    # every tick, which also throttled `record_claims` — the intra-week
+    # evidence path `/evidence` is built from.
+    #
+    # Further out than that, refresh only when the published projection for
+    # THIS gameweek has aged out, so the eight-day PROJECTION_WINDOW costs
+    # about four full simulations a day (PROJECTION_MAX_AGE is 6h) rather than
+    # one an hour, which is the workflow's cron (`.github/workflows/
+    # fpl_agent.yml`: `0 * * * *`).
+    remaining = timedelta(seconds=state.seconds_to_deadline or 0)
+    now = datetime.now(timezone.utc)
+    if remaining > REFRESH_WINDOW and projection_is_current(
+        state.gameweek, now
+    ):
+        logger.info(
+            "refresh skipped: GW%s projection is younger than %s and the "
+            "deadline is %.1fh away",
+            state.gameweek, PROJECTION_MAX_AGE, remaining.total_seconds() / 3600,
+        )
+        return 0
+    outcome = refresh_expected_points(predictions_dir, state.gameweek)
+    logger.info("refresh: %s", outcome)
+
+    # Solve against what was just rebuilt, so a plan exists between
+    # deadlines. `_decide_for_entries` used to have one caller — the seal —
+    # which meant a decision artifact existed for the four hours before a
+    # deadline and for none of the six and a half days after it. The
+    # projections were being rebuilt that whole time; only the solve was
+    # missing, and the grid that draws it said "no solved plan has been
+    # published" to anyone who looked on a Tuesday.
+    #
+    # It rides the refresh gate above rather than carrying its own: a run
+    # that kept the existing projection has nothing new to solve against.
+    #
+    # Non-fatal, and deliberately so. The refresh is the load-bearing half —
+    # `record_claims` runs inside it and the seal depends on the projection
+    # it writes — this job fires hourly, and a solver that raises must not
+    # turn the agent red for an hour over advice that will be re-solved
+    # anyway. The seal takes the opposite line for the same reason: there,
+    # the proposal IS the output.
+    if outcome.get("status") == "ok":
+        try:
+            for label, written in _decide_for_entries(
+                predictions_dir, state, outcome, dry_run, sealed=False,
+            ).items():
+                logger.info("provisional decision (%s) -> %s", label, written["decision"])
+        except Exception:
+            logger.exception(
+                "provisional solve failed for GW%s; the projection is "
+                "refreshed and the run stands. No plan was published for "
+                "this tick and the next one will try again",
+                state.gameweek,
+            )
+    return 0
+
+
 def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
     """
     Produce and seal the pre-deadline forecast.
@@ -997,6 +1071,7 @@ def _read_entry(
     bootstrap: Dict[str, Any],
     *,
     max_banked_free_transfers: int,
+    transfer_chips: Sequence[str],
 ):
     """
     Read one entry's real position, preferring what the owner captured.
@@ -1045,6 +1120,7 @@ def _read_entry(
         return read_entry_state(
             int(entry_id), int(gameweek), now_costs,
             max_banked_free_transfers=int(max_banked_free_transfers),
+            transfer_chips=transfer_chips,
         )
     except EntryError as exc:
         logger.warning(
@@ -1150,6 +1226,9 @@ def _decide_for_entries(
             # bootstrap's max_extra_free_transfers). Passed down rather than
             # re-derived, so there is no second answer to it.
             max_banked_free_transfers=outcome["_rules"].max_banked_free_transfers,
+            # Also a rule with one definition, and also read rather than named:
+            # bootstrap's `chip_type` says which chips grant transfers.
+            transfer_chips=outcome["_rules"].transfer_chips,
         )
         held = entry.squad or (config.get("squad") or [])
         decision = decide(
@@ -1568,64 +1647,7 @@ def run(state: Optional[ScheduleState] = None, dry_run: bool = False) -> int:
         return 1
 
     if state.phase is Phase.REFRESH:
-        # Inside REFRESH_WINDOW every run refreshes, and the gate is deliberately
-        # tied to that window rather than to SEAL_WINDOW: late team news dominates
-        # projection error for the last two days before a deadline, not just the
-        # last four hours. Gating on SEAL_WINDOW instead let the news-dense
-        # 48h-to-4h band rebuild roughly every PROJECTION_MAX_AGE rather than
-        # every tick, which also throttled `record_claims` — the intra-week
-        # evidence path `/evidence` is built from.
-        #
-        # Further out than that, refresh only when the published projection for
-        # THIS gameweek has aged out, so the eight-day PROJECTION_WINDOW costs
-        # about four full simulations a day (PROJECTION_MAX_AGE is 6h) rather than
-        # one an hour, which is the workflow's cron (`.github/workflows/
-        # fpl_agent.yml`: `0 * * * *`).
-        remaining = timedelta(seconds=state.seconds_to_deadline or 0)
-        now = datetime.now(timezone.utc)
-        if remaining > REFRESH_WINDOW and projection_is_current(
-            state.gameweek, now
-        ):
-            logger.info(
-                "refresh skipped: GW%s projection is younger than %s and the "
-                "deadline is %.1fh away",
-                state.gameweek, PROJECTION_MAX_AGE, remaining.total_seconds() / 3600,
-            )
-            return 0
-        outcome = refresh_expected_points(predictions_dir, state.gameweek)
-        logger.info("refresh: %s", outcome)
-
-        # Solve against what was just rebuilt, so a plan exists between
-        # deadlines. `_decide_for_entries` used to have one caller — the seal —
-        # which meant a decision artifact existed for the four hours before a
-        # deadline and for none of the six and a half days after it. The
-        # projections were being rebuilt that whole time; only the solve was
-        # missing, and the grid that draws it said "no solved plan has been
-        # published" to anyone who looked on a Tuesday.
-        #
-        # It rides the refresh gate above rather than carrying its own: a run
-        # that kept the existing projection has nothing new to solve against.
-        #
-        # Non-fatal, and deliberately so. The refresh is the load-bearing half —
-        # `record_claims` runs inside it and the seal depends on the projection
-        # it writes — this job fires hourly, and a solver that raises must not
-        # turn the agent red for an hour over advice that will be re-solved
-        # anyway. The seal takes the opposite line for the same reason: there,
-        # the proposal IS the output.
-        if outcome.get("status") == "ok":
-            try:
-                for label, written in _decide_for_entries(
-                    predictions_dir, state, outcome, dry_run, sealed=False,
-                ).items():
-                    logger.info("provisional decision (%s) -> %s", label, written["decision"])
-            except Exception:
-                logger.exception(
-                    "provisional solve failed for GW%s; the projection is "
-                    "refreshed and the run stands. No plan was published for "
-                    "this tick and the next one will try again",
-                    state.gameweek,
-                )
-        return 0
+        return _refresh(predictions_dir, state, dry_run=dry_run)
 
     if state.phase is Phase.SEAL:
         return _seal(predictions_dir, state, dry_run=dry_run)

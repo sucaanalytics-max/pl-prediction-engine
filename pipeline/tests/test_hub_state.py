@@ -253,6 +253,7 @@ class ReadEntryFplRungTests(unittest.TestCase):
                 4,
                 {"elements": [{"id": 1, "now_cost": 60}]},
                 max_banked_free_transfers=5,
+                transfer_chips=("wildcard", "freehit"),
             )
 
         self.assertEqual(state.free_transfers, 2)

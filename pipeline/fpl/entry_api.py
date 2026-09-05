@@ -111,14 +111,12 @@ def fetch_picks(entry_id: int, gameweek: int) -> Dict[str, Any]:
     return _get(FPL_ENTRY_PICKS.format(entry_id=entry_id, gameweek=gameweek))
 
 
-#: Chips that grant transfers outside the free-transfer economy. A wildcard or
-#: free hit spends none of the bank, so its ``event_transfers`` must not be
-#: counted against it. Bench boost and triple captain touch transfers not at all.
-UNLIMITED_TRANSFER_CHIPS = frozenset({"wildcard", "freehit"})
-
-
 def banked_free_transfers(
-    history: Mapping[str, Any], gameweek: int, cap: int
+    history: Mapping[str, Any],
+    gameweek: int,
+    cap: int,
+    *,
+    transfer_chips: Sequence[str],
 ) -> int:
     """
     How many free transfers are available for ``gameweek``.
@@ -139,15 +137,27 @@ def banked_free_transfers(
     opening deadline can be banked, whatever ``event_transfers`` says about it.
     Overspending cannot go negative — the excess was paid for in hits, and the
     next gameweek still gets its own.
+
+    ``transfer_chips`` names the chips whose transfers do NOT come out of the
+    bank. It is `rules.transfer_chips`, read from bootstrap's ``chip_type``, and
+    it is a parameter rather than a constant here because this module had a
+    hand-kept ``{"wildcard", "freehit"}`` — a second answer to a question the API
+    publishes, and one that fails silently: a new transfer chip would have had
+    its transfers counted against a bank they never touched.
+
+    An empty list means no classification was available, and then every chip week
+    spends the bank. That under-claims rather than over-claims, which is the same
+    direction the missing-gameweek guard errs in and for the same reason.
     """
     if int(gameweek) <= 2:
         return 1
 
+    granted = {str(name).lower() for name in transfer_chips}
     chip_events = {
         int(chip["event"])
         for chip in history.get("chips") or []
         if chip.get("event") is not None
-        and str(chip.get("name", "")).lower() in UNLIMITED_TRANSFER_CHIPS
+        and str(chip.get("name", "")).lower() in granted
     }
     spent = {
         int(week["event"]): int(week.get("event_transfers", 0))
@@ -213,6 +223,7 @@ def read_entry_state(
     now_costs: Optional[Mapping[int, int]] = None,
     *,
     max_banked_free_transfers: int,
+    transfer_chips: Sequence[str],
 ) -> EntryState:
     """
     Everything the optimiser needs about a held team, for one gameweek.
@@ -275,7 +286,8 @@ def read_entry_state(
         # banked_free_transfers: this used to be a hardcoded 1 deferring to a
         # caller-side derivation that no caller performed.
         free_transfers=banked_free_transfers(
-            history, int(gameweek), int(max_banked_free_transfers)
+            history, int(gameweek), int(max_banked_free_transfers),
+            transfer_chips=transfer_chips,
         ),
         purchase_prices={p: v for p, v in prices.items() if p in set(squad)},
         untraced=untraced,

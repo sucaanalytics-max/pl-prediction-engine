@@ -240,3 +240,52 @@ class RefreshPublishesAProvisionalPlan(unittest.TestCase):
         )
         self.assertEqual(code, 0)
         solved.assert_called_once()
+
+
+class RefreshHasAHandlerTheRehearsalCanCall(unittest.TestCase):
+    """
+    REFRESH gets a named handler, like SEAL already had.
+
+    `scripts/rehearse_agent_phase.py` exists so "it works" is an observation
+    rather than an inference, and its own description promises it "executes the
+    real REFRESH or SEAL". That was true of seal, which calls `_seal`, and false
+    of refresh, which called `refresh_expected_points` directly — the phase
+    dispatch in `run` was never entered. So when REFRESH grew a solve, the
+    rehearsal passed without touching it.
+
+    One handler, called by both, is what stops that recurring.
+    """
+
+    def test_run_delegates_the_refresh_phase_to_the_handler(self):
+        state = ScheduleState(
+            phase=Phase.REFRESH, gameweek=2, seconds_to_deadline=24 * 3600,
+            reason="GW2 deadline in 24h",
+        )
+        with mock.patch.object(run_agent, "_refresh", return_value=0) as handler:
+            code = run_agent.run(state)
+
+        self.assertEqual(code, 0)
+        handler.assert_called_once()
+        # The scratch directory the rehearsal hands it has to be honoured, so the
+        # handler takes it rather than reading the module constant.
+        self.assertIsInstance(handler.call_args.args[0], Path)
+
+    def test_the_handler_refreshes_and_solves(self):
+        """What `run` used to do inline, now reachable on its own."""
+        state = ScheduleState(
+            phase=Phase.REFRESH, gameweek=2, seconds_to_deadline=24 * 3600,
+            reason="GW2 deadline in 24h",
+        )
+        with mock.patch.object(
+            run_agent, "projection_is_current", return_value=False
+        ), mock.patch.object(
+            run_agent, "refresh_expected_points", return_value={"status": "ok"}
+        ) as refresh, mock.patch.object(
+            run_agent, "_decide_for_entries", return_value={},
+        ) as solved:
+            code = run_agent._refresh(Path("/nowhere"), state, dry_run=True)
+
+        self.assertEqual(code, 0)
+        refresh.assert_called_once()
+        solved.assert_called_once()
+        self.assertIs(solved.call_args.kwargs["sealed"], False)
