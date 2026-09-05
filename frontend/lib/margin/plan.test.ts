@@ -14,7 +14,7 @@
 
 import { describe, expect, it } from "vitest";
 import { narrowPublicDecision } from "@/lib/data/narrow";
-import { buildPlanGrid, cellsFor, movesFor } from "@/lib/margin/plan";
+import { buildPlanGrid, cellsFor } from "@/lib/margin/plan";
 import type { Horizon as XpHorizon, Projection } from "@/lib/data/projections";
 
 function projection(elementId: number, name: string, position: string): Projection {
@@ -173,13 +173,6 @@ describe("the grid", () => {
     const model = buildPlanGrid(artifact()!.horizon!, [NAMES[0]]);
     expect(model.rows.map((r) => r.name)).toContain("#4");
     expect(model.unnamed).toBe(4);
-  });
-
-  it("reads the moves out as names", () => {
-    const horizon = artifact()!.horizon!;
-    const model = buildPlanGrid(horizon, NAMES);
-    expect(movesFor(horizon.weeks[1], model.rows))
-      .toEqual({ out: ["Haaland"], in: ["Semenyo"] });
   });
 });
 

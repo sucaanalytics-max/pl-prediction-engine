@@ -18,7 +18,7 @@ import type { HorizonWeek } from "@/lib/data/narrow";
 import type { Projection } from "@/lib/data/projections";
 import type { Horizon } from "@/lib/data/narrow";
 import {
-  buildPlanGrid, movesFor, type Cell, type PlanRow, type WeekTotal,
+  buildPlanGrid, type Cell, type PlanRow, type WeekTotal,
 } from "@/lib/margin/plan";
 import { indexClubWeeks, weekFor, type ClubWeekIndex } from "@/lib/margin/fdr";
 import type { PhaseWeek } from "@/lib/projections/phases";

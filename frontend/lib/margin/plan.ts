@@ -253,20 +253,17 @@ export function totalFor(week: HorizonWeek, xpFor: XpFor): WeekTotal {
   };
 }
 
-/**
- * The transfers made in a week, as names.
+/*
+ * `movesFor` was here.
  *
- * Kept beside the grid because the cell marks say *that* a move happened and
- * not *what* it was, and a plan you cannot read the moves out of is a picture
- * rather than a plan.
+ * It named a week's transfers by looking the ids up in `rows`, and the grid's
+ * moves line was its only caller. Both are gone: the moves are a section now
+ * (`components/margin/Transfers`), and it takes names from the PROJECTION.
+ *
+ * The lookup is the reason it was not kept. `rows` holds only players who appear
+ * in some week's SQUAD, and a player sold in the first planned week appears in
+ * none — week 0's squad is already post-transfer. So it returned `#152` for
+ * exactly the transfer a reader most needs named, which is what the real board
+ * showed. A tested helper whose one behaviour is that defect is a trap for the
+ * next caller, so it is deleted rather than left reachable.
  */
-export function movesFor(
-  week: HorizonWeek, rows: readonly PlanRow[],
-): { readonly out: readonly string[]; readonly in: readonly string[] } {
-  const name = (id: number) =>
-    rows.find((r) => r.elementId === id)?.name ?? `#${id}`;
-  return {
-    out: week.transfers_out.map(name),
-    in: week.transfers_in.map(name),
-  };
-}
