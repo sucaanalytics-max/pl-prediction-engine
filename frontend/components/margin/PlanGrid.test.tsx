@@ -130,18 +130,28 @@ describe("the grid", () => {
   it("prints the hit as points, not as a count", () => {
     // `hits: 1` is one hit, which costs four points. Printing "1" beside a
     // transfer count reads as a second transfer.
+    //
+    // `getAllByText` because −4 now appears twice on purpose: once in the
+    // summary row and once in the transfer section's cost column. The claim is
+    // that a hit is priced in POINTS wherever it is shown, so more than one
+    // occurrence satisfies it — a single-match query would fail on a second
+    // correct rendering.
     draw();
-    expect(screen.getByText(/−4/)).toBeInTheDocument();
+    expect(screen.getAllByText(/−4/).length).toBeGreaterThan(0);
   });
 
   it("reads the moves out in words", () => {
     // The marks say a move happened; only this says what it was. Both names
-    // appear twice by design — once in the grid, once here — so the assertion
-    // is scoped to the moves line rather than to the page.
-    const { container } = draw();
-    const moves = [...container.querySelectorAll("span")]
-      .find((s) => s.textContent?.startsWith("GW4") && s.textContent.includes("→"));
-    expect(moves, "no moves line for GW4").toBeDefined();
+    // appear twice by design — once in the grid, once here — so the assertion is
+    // scoped to the move's own row rather than to the page.
+    //
+    // It used to find that row by looking for a `<span>` starting "GW4" and
+    // containing an arrow, which was the old one-line rendering. The moves are a
+    // section now, so the query addresses it by test id; the claim is unchanged.
+    draw();
+    const moves = screen.getAllByTestId("plan-move")
+      .find((el) => el.textContent?.includes("GW4"));
+    expect(moves, "no move row for GW4").toBeDefined();
     expect(moves!.textContent).toContain("Haaland");
     expect(moves!.textContent).toContain("Semenyo");
   });
@@ -371,5 +381,139 @@ describe("provisional versus sealed", () => {
     );
     expect(screen.getByTestId("plan-provenance").textContent)
       .toMatch(/provisional/i);
+  });
+});
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Reading twenty-one rows
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("the lines are banded", () => {
+  afterEach(cleanup);
+
+  /**
+   * Twenty-one rows in four lines were an undifferentiated stack. The band is
+   * the structural half of the fix; `positionHue` is the chromatic half and is
+   * confined to the name column, never the cell field.
+   */
+
+  it("heads each line that is present, in reading order", () => {
+    render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
+    const bands = screen.getAllByTestId("plan-band").map((el) => el.textContent);
+    expect(bands).toEqual(["Goalkeepers", "Defenders", "Midfielders", "Forwards"]);
+  });
+
+  it("does not head a line nobody is picked in", () => {
+    // An empty "Forwards" heading claims a line the squad does not field.
+    const noForwards = NAMES.filter((p) => p.position !== "FWD");
+    const horizon = {
+      ...HORIZON,
+      weeks: HORIZON.weeks.map((w) => ({
+        ...w, squad: w.squad.filter((i) => i !== 4), xi: w.xi.filter((i) => i !== 4),
+        captain: w.captain === 4 ? null : w.captain,
+      })),
+    };
+    render(<PlanGrid horizon={horizon} projections={noForwards} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
+    expect(screen.getAllByTestId("plan-band").map((el) => el.textContent))
+      .not.toContain("Forwards");
+  });
+
+  it("puts every player under their own line", () => {
+    render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
+    const order = screen.getAllByTestId(/^plan-(band|row)$/)
+      .map((el) => el.getAttribute("data-player") ?? el.textContent);
+    expect(order).toEqual([
+      "Goalkeepers", "Raya",
+      "Defenders", "Gabriel",
+      "Midfielders", "Palmer", "Semenyo",
+      "Forwards", "Haaland",
+    ]);
+  });
+});
+
+describe("the transfer section", () => {
+  afterEach(cleanup);
+
+  /**
+   * The moves used to be one run-on line under the grid — every week's transfers
+   * concatenated, with no cost, no bank and no prices. It is the half of the plan
+   * a human actually executes, so it gets a section.
+   */
+
+  const PRICES = new Map([[4, 15.5], [5, 6.9]]);
+
+  it("gives each week that moves its own row, out then in", () => {
+    render(
+      <PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX}
+        xpHorizon={XP_HORIZON} prices={PRICES} />,
+    );
+    const rows = screen.getAllByTestId("plan-move");
+    expect(rows).toHaveLength(1);
+    expect(rows[0].textContent).toContain("GW4");
+    expect(rows[0].textContent).toContain("Haaland");
+    expect(rows[0].textContent).toContain("Semenyo");
+  });
+
+  it("prices a move when the price is known", () => {
+    render(
+      <PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX}
+        xpHorizon={XP_HORIZON} prices={PRICES} />,
+    );
+    expect(screen.getByTestId("plan-move").textContent).toMatch(/15\.5/);
+    expect(screen.getByTestId("plan-move").textContent).toMatch(/6\.9/);
+  });
+
+  it("still renders the move when no price is known", () => {
+    /**
+     * Prices come from `playerStats`, a THIRD artifact — the plan and the
+     * projection are the other two. A move whose price could not be looked up is
+     * still a move the human has to make; dropping the row, or printing £0.0,
+     * would both be worse than saying nothing about the price.
+     */
+    render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
+    const row = screen.getByTestId("plan-move");
+    expect(row.textContent).toContain("Haaland");
+    expect(row.textContent).not.toMatch(/£0\.0/);
+  });
+
+  it("names the weeks it plans no move for", () => {
+    // Silence would read as "no plan for GW5", when the solve did price it.
+    render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
+    expect(screen.getByTestId("plan-quiet-weeks").textContent).toMatch(/GW3/);
+    expect(screen.getByTestId("plan-quiet-weeks").textContent).toMatch(/GW5/);
+  });
+});
+
+
+describe("naming a player who was sold", () => {
+  afterEach(cleanup);
+
+  it("names a transfer-out that no week's squad contains", () => {
+    /**
+     * Caught by looking at the real board, not by a test: GW4's row read
+     * "#152 → Tavernier". A player sold in the FIRST planned week is in no
+     * week's `squad` — week 0's squad is already post-transfer — so he has no
+     * grid row, and the section was taking names from the rows.
+     *
+     * The projection has all 652 players and is already loaded here, so a sold
+     * player has a name available; falling back to an id when one is in hand is
+     * the grid's rule for a player the PROJECTION cannot see, not for one the
+     * row list happens to exclude.
+     */
+    const horizon = {
+      ...HORIZON,
+      weeks: HORIZON.weeks.map((w, i) =>
+        i === 0 ? { ...w, transfers_out: [99], transfers_in: [] } : w),
+    };
+    const sold = { ...projection(99, "Palestra", "DEF"), team: "Chelsea" };
+    render(
+      <PlanGrid horizon={horizon} projections={[...NAMES, sold]} fixtures={MATRIX}
+        xpHorizon={XP_HORIZON} />,
+    );
+    const row = screen.getAllByTestId("plan-move")
+      .find((el) => el.textContent?.includes("GW3"));
+    expect(row?.textContent).toContain("Palestra");
+    expect(row?.textContent).not.toContain("#99");
   });
 });

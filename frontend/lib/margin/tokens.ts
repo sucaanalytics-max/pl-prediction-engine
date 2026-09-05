@@ -152,6 +152,40 @@ export const FLOODLIT: MarginSurface = {
  * end: a rating we do not recognise is not a kind fixture and it is not a brutal
  * one, and guessing either way would be a claim.
  */
+/**
+ * The line a player is picked in, as a colour.
+ *
+ * **New vocabulary, and deliberately fenced.** This app colours by CLUB
+ * (`lib/margin/kits.ts`) and has never coloured by position, so this is a second
+ * colour language on a screen that already has one. It exists for the plan grid,
+ * where twenty-one rows in four lines are otherwise an undifferentiated stack —
+ * and it is confined to the NAME COLUMN and the band header. It must never enter
+ * the cell field: the fixture tint already means something there, and two
+ * languages inside one cell is the thing that made the grid unreadable enough to
+ * be redesigned.
+ *
+ * One cool family, hue varying, lightness and chroma held: a set that varied
+ * lightness would read as a ranking, and there is no ordering among the four to
+ * state. Clear of green, amber and red because those three already mean fixture
+ * difficulty here.
+ *
+ * An unrecognised line gets plain ink rather than one of the four — colouring it
+ * would claim a membership the data did not report.
+ */
+const POSITION_HUE: Readonly<Record<string, string>> = {
+  GKP: "oklch(0.72 0.10 300)",
+  DEF: "oklch(0.72 0.10 250)",
+  MID: "oklch(0.72 0.10 195)",
+  FWD: "oklch(0.72 0.10 345)",
+};
+
+export function positionHue(
+  position: string | null | undefined,
+  surface: MarginSurface = FLOODLIT,
+): string {
+  return POSITION_HUE[String(position ?? "").toUpperCase()] ?? surface.ink3;
+}
+
 export function difficultyTint(
   difficulty: number | null,
   surface: MarginSurface = FLOODLIT,
@@ -159,10 +193,17 @@ export function difficultyTint(
   const mid: readonly [string, string] = ["rgba(233,238,245,.07)", surface.ink2];
   if (difficulty === null || !Number.isFinite(difficulty)) return mid;
   if (difficulty < 1 || difficulty > 5) return mid;
-  if (difficulty <= 2) return ["rgba(120,220,140,.16)", surface.agree];
+  // FIVE steps across the same three hues, not three steps and a collapse. FPL
+  // rates 1 and 2 differently and the plan grid spends colour on every rating,
+  // so folding them together hid a distinction the source publishes. They keep
+  // one foreground and differ in how much of it the background carries — a step
+  // on the existing scale, which is what the test above pins, rather than the
+  // fourth scale this function exists to avoid.
+  if (difficulty === 1) return ["rgba(120,220,140,.24)", surface.agree];
+  if (difficulty === 2) return ["rgba(120,220,140,.13)", surface.agree];
   if (difficulty === 3) return mid;
-  if (difficulty === 4) return ["rgba(255,140,90,.15)", surface.noise];
-  return ["rgba(255,90,70,.22)", surface.conflict];
+  if (difficulty === 4) return ["rgba(255,140,90,.16)", surface.noise];
+  return ["rgba(255,90,70,.24)", surface.conflict];
 }
 
 /**

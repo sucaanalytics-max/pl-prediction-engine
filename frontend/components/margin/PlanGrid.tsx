@@ -21,11 +21,12 @@ import {
   buildPlanGrid, movesFor, type Cell, type PlanRow, type WeekTotal,
 } from "@/lib/margin/plan";
 import { indexClubWeeks, weekFor, type ClubWeekIndex } from "@/lib/margin/fdr";
-import { difficultyBand } from "@/lib/projections/phases";
 import type { PhaseWeek } from "@/lib/projections/phases";
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import type { Horizon as XpHorizon } from "@/lib/data/projections";
-import { hatch, MONO, FLOODLIT, SANS, TRAFFIC, stepOf } from "@/lib/margin/tokens";
+import {
+  hatch, MONO, FLOODLIT, SANS, difficultyTint, positionHue,
+} from "@/lib/margin/tokens";
 import { ageLine } from "@/lib/formats";
 import { Eyebrow, Nil } from "@/components/margin/Marks";
 
@@ -43,9 +44,6 @@ function columns(weeks: number): string {
   return `168px repeat(${weeks}, minmax(66px, 1fr)) 52px`;
 }
 
-/** The same four-stop ramp `/phases` colours its matrix with. */
-const TRAFFIC_STEPS = TRAFFIC.length;
-
 /**
  * The fixture chip under a cell's number.
  *
@@ -53,7 +51,7 @@ const TRAFFIC_STEPS = TRAFFIC.length;
  * colour is the part a screenshot loses and the part a colour-blind reader may
  * not resolve:
  *
- * - a fixture: FPL's own 1-5, on the `TRAFFIC` ramp;
+ * - a fixture: FPL's own 1-5, on `difficultyTint`;
  * - `blank`: the club is idle that week. Not a kind fixture. `phases.ts` names
  *   this exact trap — treating an absent difficulty as "not above the threshold"
  *   "invents the softest possible week out of a week that does not exist";
@@ -65,10 +63,17 @@ const TRAFFIC_STEPS = TRAFFIC.length;
  * surface's own dim ink, which is what every other unreadable value here uses.
  */
 function FixtureChip({ week, gameweek }: { week: PhaseWeek | null; gameweek: number }) {
-  const band = week === null ? null : difficultyBand(week.difficulty, TRAFFIC_STEPS);
-  const [background, ink] = band === null
-    ? (["transparent", S.ink3] as const)
-    : stepOf(TRAFFIC, band);
+  // `difficultyTint`, not the `TRAFFIC` ramp. TRAFFIC is built for the
+  // twenty-club matrix on /phases, where the colour IS the content and no number
+  // shares the cell. Here every chip sits under an xP, and a saturated fill
+  // under each of 168 numbers competes with the thing it is meant to support —
+  // which is what made this grid unreadable. `difficultyTint` is the app's own
+  // answer for a fixture chip beside a number, and the call screen already uses
+  // it, so this also stops one quantity being painted two ways on one app.
+  const known = week !== null && !week.blank && week.difficulty !== null;
+  const [background, ink] = known
+    ? difficultyTint(week.difficulty, S)
+    : (["transparent", S.ink3] as const);
 
   const state = week === null ? "unknown" : week.blank ? "blank" : String(week.difficulty);
   const title = week === null
@@ -89,7 +94,7 @@ function FixtureChip({ week, gameweek }: { week: PhaseWeek | null; gameweek: num
         textAlign: "center", background, color: ink,
         whiteSpace: "nowrap", overflow: "hidden",
         // A hatch for both absences, so neither reads as a rating of any kind.
-        backgroundImage: band === null ? hatch(S) : undefined,
+        backgroundImage: known ? undefined : hatch(S),
       }}
     >
       {week === null || week.blank ? "\u2014" : week.labels.join(" · ")}
@@ -226,7 +231,7 @@ function SummaryRow(
 export function PlanGrid(
   {
     horizon, projections, fixtures = [], xpHorizon = null,
-    sealed = true, solvedAt = null,
+    sealed = true, solvedAt = null, prices,
   }: {
     horizon: Horizon;
     projections: readonly Projection[];
@@ -240,6 +245,15 @@ export function PlanGrid(
     fixtures?: readonly FixtureMatrixRow[];
     /** The per-player xP horizon off `xp_public`. Null when none was solved. */
     xpHorizon?: XpHorizon | null;
+    /**
+     * Selling and buying prices by element id, off `playerStats`.
+     *
+     * A THIRD artifact — the plan and the projection are the other two — so it
+     * is optional and a miss renders no price rather than a zero. `PlayerRow`
+     * carries `fpl_price` and its own docstring says the id join exists so "the
+     * planner can price a transfer instead of leaving the bank unknown".
+     */
+    prices?: ReadonlyMap<number, number | null>;
     /**
      * Whether this is the committed plan or a midweek re-solve.
      *
@@ -261,6 +275,11 @@ export function PlanGrid(
     () => indexClubWeeks(fixtures, weeks.map((w) => w.gameweek)),
     [fixtures, weeks],
   );
+  const nameOf = useMemo(() => {
+    const byId = new Map<number, string>();
+    for (const p of projections) if (p.name) byId.set(p.elementId, p.name);
+    return byId;
+  }, [projections]);
   const teamOf = useMemo(() => {
     const byId = new Map<number, string | null>();
     for (const p of projections) byId.set(p.elementId, p.team);
@@ -325,7 +344,26 @@ export function PlanGrid(
         </div>
       </div>
 
-      {rows.map((row) => (
+      {LINES.flatMap(([position, label]) => {
+        const line = rows.filter((r) => r.position === position);
+        if (line.length === 0) return [];
+        return [
+          <BandHead key={`band-${position}`} position={position} label={label} />,
+          ...line.map((row) => (
+            <PlanGridRow
+              key={row.elementId}
+              row={row}
+              grid={grid}
+              fixtureFor={(gameweek) =>
+                weekFor(clubs, teamOf.get(row.elementId), gameweek)}
+            />
+          )),
+        ];
+      })}
+      {/* A row whose position the projection never reported still belongs on the
+          grid — it is in the squad. It sits after the four lines rather than
+          under a heading that would state a line nobody published. */}
+      {rows.filter((r) => !LINES.some(([p]) => p === r.position)).map((row) => (
         <PlanGridRow
           key={row.elementId}
           row={row}
@@ -379,20 +417,11 @@ export function PlanGrid(
         />
       </div>
 
-      {/* The moves, in words. */}
-      <div style={{ marginTop: 12, display: "flex", flexWrap: "wrap", gap: "6px 20px" }}>
-        {weeks.filter((w) => w.transfers_in.length || w.transfers_out.length).map((week) => {
-          const moves = movesFor(week, rows);
-          return (
-            <span key={week.gameweek} style={{ fontFamily: MONO, fontSize: 11, color: S.ink2 }}>
-              <span style={{ color: S.ink3 }}>GW{week.gameweek}</span>{" "}
-              <span style={{ color: S.conflict }}>{moves.out.join(", ") || "—"}</span>
-              {" → "}
-              <span style={{ color: S.agree }}>{moves.in.join(", ") || "—"}</span>
-            </span>
-          );
-        })}
-      </div>
+      <Transfers
+        weeks={weeks}
+        nameOf={(id) => nameOf.get(id) ?? `#${id}`}
+        prices={prices}
+      />
 
       <p style={{ margin: "12px 0 0", fontSize: 11.5, lineHeight: 1.5, color: S.ink3, maxWidth: 780 }}>
         Only GW{weeks[0]?.gameweek} is a commitment. The rest exists to inform it
@@ -413,8 +442,8 @@ export function PlanGrid(
           ? ` and every later week from the horizon's ${xpHorizon.nDraws.toLocaleString()} draws, which is the coarser of the two`
           : ", and no horizon was published, so later weeks carry no figure"}.
         {" "}
-        Fixture colours are FPL&apos;s own FDR, 1&ndash;5, on the same ramp as
-        Phases &mdash; published, not simulated, and not a points forecast. A
+        Fixture colours are FPL&apos;s own FDR, 1&ndash;5, on the same tint the
+        call screen uses &mdash; published, not simulated, and not a points forecast. A
         hatched chip is a blank gameweek or a fixture list that could not be
         read; neither is an easy fixture.
         {model.unnamed > 0
@@ -475,6 +504,145 @@ function TotalCell({ total }: { total: WeekTotal }) {
   );
 }
 
+/**
+ * The moves, as a section rather than a run-on line.
+ *
+ * This was one wrapped paragraph of `GW4 out → in` fragments carrying no cost,
+ * no bank and no prices. It is the half of the plan a human actually executes —
+ * everything above it is what the plan is WORTH, this is what they have to go
+ * and do — so it gets its own block, one row per week that moves.
+ *
+ * The quiet weeks are named rather than omitted. Silence would read as "nothing
+ * planned for GW5"; the solve did price GW5, it chose not to transfer into it,
+ * and those are different statements.
+ */
+function Transfers(
+  { weeks, nameOf, prices }: {
+    weeks: readonly HorizonWeek[];
+    /** Off the PROJECTION, not the row list — see the sold-player case below. */
+    nameOf: (elementId: number) => string;
+    prices?: ReadonlyMap<number, number | null>;
+  },
+) {
+  const moved = weeks.filter((w) => w.transfers_in.length || w.transfers_out.length);
+  const quiet = weeks.filter((w) => !w.transfers_in.length && !w.transfers_out.length);
+  if (moved.length === 0) return null;
+
+  const hits = moved.reduce((n, w) => n + w.hits, 0);
+  const priced = (ids: readonly number[], colour: string) =>
+    ids.map((id) => {
+      const price = prices?.get(id);
+      // Names come from the projection, never from `rows`. A player sold in the
+      // first planned week is in NO week's squad — week 0's squad is already
+      // post-transfer — so he has no row, and reading names off the rows printed
+      // "#152 → Tavernier" on the real board. The projection has all 652.
+      const name = nameOf(id);
+      return (
+        <span key={id} style={{ display: "inline-flex", alignItems: "baseline", gap: 5 }}>
+          <span style={{ fontFamily: SANS, fontSize: 12.5, color: colour }}>{name}</span>
+          {typeof price === "number" ? (
+            <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
+              &pound;{price.toFixed(1)}
+            </span>
+          ) : null}
+        </span>
+      );
+    });
+
+  return (
+    <div style={{ marginTop: 20, borderTop: `1px solid ${S.rule}`, paddingTop: 14 }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12 }}>
+        <Eyebrow surface={S}>Transfers</Eyebrow>
+        <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
+          {moved.length} {moved.length === 1 ? "move" : "moves"}
+          {" · "}
+          {hits === 0 ? "no hits" : `−${hits * 4} in hits`}
+        </span>
+      </div>
+
+      {moved.map((week) => (
+        <div
+          key={week.gameweek}
+          data-testid="plan-move"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "52px 1fr 18px 1fr 60px 124px",
+            alignItems: "center", gap: 12,
+            padding: "10px 0", borderBottom: `1px solid rgba(27,26,22,.06)`,
+          }}
+        >
+          <span style={{ fontFamily: MONO, fontSize: 12, color: S.ink2 }}>
+            GW{week.gameweek}
+          </span>
+          <span style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px" }}>
+            {priced(week.transfers_out, S.conflict)}
+          </span>
+          <span style={{ fontFamily: MONO, fontSize: 12, color: S.ink3, textAlign: "center" }}>
+            &rarr;
+          </span>
+          <span style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px" }}>
+            {priced(week.transfers_in, S.agree)}
+          </span>
+          <span style={{
+            fontFamily: MONO, fontSize: 12,
+            color: week.hits === 0 ? S.ink3 : S.conflict,
+          }}>
+            {week.hits === 0 ? "free" : `−${week.hits * 4}`}
+          </span>
+          <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3, textAlign: "right" }}>
+            &pound;{(week.bank_after / 10).toFixed(1)} left
+            {week.free_transfers_after === null ? null : ` · ${week.free_transfers_after} FT`}
+          </span>
+        </div>
+      ))}
+
+      {quiet.length === 0 ? null : (
+        <p
+          data-testid="plan-quiet-weeks"
+          style={{ margin: "10px 0 0", fontSize: 11.5, lineHeight: 1.5, color: S.ink3 }}
+        >
+          No move planned for {quiet.map((w) => `GW${w.gameweek}`).join(", ")} — the
+          solve prices those weeks, it does not transfer into them.
+        </p>
+      )}
+    </div>
+  );
+}
+
+/** The four lines, in the order every FPL surface reads them. */
+const LINES: readonly (readonly [string, string])[] = [
+  ["GKP", "Goalkeepers"], ["DEF", "Defenders"],
+  ["MID", "Midfielders"], ["FWD", "Forwards"],
+];
+
+/**
+ * A line's heading.
+ *
+ * The structural half of separating twenty-one rows; `positionHue` is the
+ * chromatic half. A line nobody is picked in gets no heading — an empty
+ * "Forwards" would claim a line the squad does not field.
+ */
+function BandHead({ position, label }: { position: string; label: string }) {
+  const hue = positionHue(position, S);
+  return (
+    <div
+      data-testid="plan-band"
+      style={{
+        display: "flex", alignItems: "center", gap: 9,
+        padding: "14px 0 6px", borderBottom: `1px solid ${S.rule}`,
+      }}
+    >
+      <span style={{ width: 16, height: 3, background: hue, borderRadius: 1 }} />
+      <span style={{
+        fontFamily: MONO, fontSize: 11, letterSpacing: ".09em",
+        textTransform: "uppercase", color: hue,
+      }}>
+        {label}
+      </span>
+    </div>
+  );
+}
+
 function PlanGridRow(
   { row, grid, fixtureFor }: {
     row: PlanRow;
@@ -491,10 +659,16 @@ function PlanGridRow(
         borderBottom: `1px solid rgba(27,26,22,.06)`,
       }}
     >
-      <div style={{ display: "flex", alignItems: "baseline", gap: 8, padding: "3px 8px 3px 0", minWidth: 0 }}>
-        <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3, width: 26 }}>
-          {row.position || "—"}
-        </span>
+      <div style={{ display: "flex", alignItems: "center", gap: 9, padding: "3px 8px 3px 0", minWidth: 0 }}>
+        {/* The hue rather than the code: the band above already names the line,
+            so repeating "MID" on all five of its rows spends a column on a word
+            the reader has just read. */}
+        <span
+          style={{
+            width: 3, height: 20, flex: "none", borderRadius: 1,
+            background: positionHue(row.position, S),
+          }}
+        />
         <span
           style={{
             fontFamily: SANS, fontSize: 12.5, color: S.ink,

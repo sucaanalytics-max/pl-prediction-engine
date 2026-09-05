@@ -27,8 +27,10 @@
  */
 
 import { PlanGrid } from "@/components/margin/PlanGrid";
+import { useMemo } from "react";
+
 import { proven } from "@/lib/data/artifact";
-import { decisionDescriptor } from "@/lib/data/narrow";
+import { REGISTRY, decisionDescriptor, type PlayerRow } from "@/lib/data/narrow";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
@@ -37,6 +39,7 @@ export function PlanGridSection({ gameweek }: { gameweek: number }) {
   const { artifact: decision } = useArtifact(decisionDescriptor(gameweek));
   const { artifact: projections } = useArtifact(projectionsDescriptor(gameweek));
   const { artifact: live } = useHeuristics();
+  const { artifact: playerRows } = useArtifact<readonly PlayerRow[]>(REGISTRY.playerStats);
 
   const horizon = proven(decision)?.horizon ?? null;
   const players = proven(projections)?.players ?? [];
@@ -44,6 +47,16 @@ export function PlanGridSection({ gameweek }: { gameweek: number }) {
   // later weeks' numbers can never come from two different runs.
   const xpHorizon = proven(projections)?.horizon ?? null;
   const fixtures = proven(live)?.fixtureMatrix ?? [];
+  // A fourth read, and the cheapest of them — `playerStats` is already fetched
+  // by /capture. It only prices the transfer section; a miss renders no price
+  // rather than a zero, so this never gates the grid.
+  const prices = useMemo(() => {
+    const byId = new Map<number, number | null>();
+    for (const row of proven(playerRows) ?? []) {
+      if (row.elementId !== null) byId.set(row.elementId, row.fpl_price);
+    }
+    return byId;
+  }, [playerRows]);
   // Absent means sealed — see the narrower. Most solves are provisional now
   // that the agent decides on every refresh, and the grid says which it has.
   const sealed = proven(decision)?.sealed ?? true;
@@ -68,6 +81,7 @@ export function PlanGridSection({ gameweek }: { gameweek: number }) {
       xpHorizon={xpHorizon}
       sealed={sealed}
       solvedAt={solvedAt}
+      prices={prices}
     />
   );
 }

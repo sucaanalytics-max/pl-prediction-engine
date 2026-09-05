@@ -17,7 +17,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
 import {
-  FLOODLIT, HEAT, TRAFFIC, difficultyTint, hatch, heatStep,
+  FLOODLIT, HEAT, TRAFFIC, difficultyTint, hatch, heatStep, positionHue,
 } from "@/lib/margin/tokens";
 
 /** Pull the hue angle out of an oklch() triple. */
@@ -277,6 +277,20 @@ describe("the fixture-difficulty chip", () => {
     expect(difficultyTint(5)[1]).toBe(FLOODLIT.conflict);
   });
 
+  it("separates a 1 from a 2 without a second green", () => {
+    /**
+     * FPL rates 1 and 2 differently and the grid now spends colour on all five,
+     * so collapsing them hid a distinction the source publishes. They keep the
+     * SAME foreground — the assertion above still holds — and differ only in how
+     * much of it the background carries, which is a step on one scale rather
+     * than a new hue.
+     */
+    const [oneBg, oneFg] = difficultyTint(1);
+    const [twoBg, twoFg] = difficultyTint(2);
+    expect(oneFg).toBe(twoFg);
+    expect(oneBg).not.toBe(twoBg);
+  });
+
   it("gives a mid fixture plain ink, not a weak green", () => {
     // FDR 3 is the median rating and the most common one. Tinting it green would
     // make most of the league look kind.
@@ -323,5 +337,55 @@ describe("the pitch", () => {
       return 0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4);
     };
     expect(luminance(FLOODLIT.pitch)).toBeLessThan(luminance(FLOODLIT.bar));
+  });
+});
+
+describe("the position hue", () => {
+  /**
+   * New vocabulary, and it is introduced under constraint.
+   *
+   * This app colours by CLUB (`lib/margin/kits.ts`), never by position, so a
+   * position palette is a second colour language on a screen that already has
+   * one. It earns its place on the plan grid only because it is confined to the
+   * name column and a band header — never inside the cell field, where the
+   * fixture tint already means something. These tests pin the two properties
+   * that keep the two languages apart.
+   */
+
+  it("gives each line its own hue", () => {
+    const hues = ["GKP", "DEF", "MID", "FWD"].map((p) => positionHue(p));
+    expect(new Set(hues).size).toBe(4);
+  });
+
+  it("holds lightness and chroma steady, varying only hue", () => {
+    // A set that also varied lightness would read as a ranking — goalkeepers
+    // dimmer than forwards — and there is no ordering here to state.
+    const parsed = ["GKP", "DEF", "MID", "FWD"].map((p) => {
+      const m = /oklch\(([0-9.]+) ([0-9.]+) ([0-9.]+)\)/.exec(positionHue(p));
+      expect(m, `${p} should be an oklch triple`).toBeTruthy();
+      return { l: m![1], c: m![2], h: m![3] };
+    });
+    expect(new Set(parsed.map((x) => x.l)).size).toBe(1);
+    expect(new Set(parsed.map((x) => x.c)).size).toBe(1);
+    expect(new Set(parsed.map((x) => x.h)).size).toBe(4);
+  });
+
+  it("stays clear of the three hues the fixture tint owns", () => {
+    /**
+     * The load-bearing one. Green, amber and red mean fixture difficulty on this
+     * screen; a defender rendered in the same green as a kind fixture would be
+     * two languages sharing a word.
+     */
+    const taken = [FLOODLIT.agree, FLOODLIT.noise, FLOODLIT.conflict];
+    for (const p of ["GKP", "DEF", "MID", "FWD"]) {
+      expect(taken, `${p} must not reuse a difficulty hue`).not.toContain(positionHue(p));
+    }
+  });
+
+  it("does not colour a position it does not recognise", () => {
+    // An unknown line rendered in one of the four would state a membership the
+    // data did not. It gets plain ink, which states nothing.
+    expect(positionHue("")).toBe(FLOODLIT.ink3);
+    expect(positionHue("MNG")).toBe(FLOODLIT.ink3);
   });
 });
