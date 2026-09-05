@@ -120,12 +120,23 @@ describe("the grid", () => {
       .toBeInTheDocument();
   });
 
-  it("labels the eval-only tail and hatches its summary cells", () => {
+  it("labels the eval-only tail, and names the weeks it declined", () => {
+    /**
+     * Two halves of one claim: a week the solve priced but did not transfer into
+     * must be labelled as such, and must never print a transfer count it did not
+     * choose.
+     *
+     * The `transfers · hits` and `bank · FT after` summary rows used to carry the
+     * second half as a hatch. They are gone — the transfer section states both
+     * per week with names, and repeating them on the board cost 56px of the
+     * vertical budget the grid needs to fit a screen. The count cannot be
+     * misstated now because it is not printed; the quiet weeks are named in
+     * words instead.
+     */
     draw();
     expect(screen.getAllByText("eval only")).toHaveLength(1);
     expect(screen.getAllByText("planned")).toHaveLength(2);
-    // Two summary rows, one hatched cell each for the unplanned week.
-    expect(screen.getAllByTitle(/it does not plan it/)).toHaveLength(2);
+    expect(screen.getByTestId("plan-quiet-weeks").textContent).toMatch(/GW5/);
   });
 
   it("prints the hit as points, not as a count", () => {
@@ -249,16 +260,18 @@ describe("the fixture in the cell", () => {
   it("shows the opponent and carries the FDR in its title", () => {
     render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
     const cells = cellsOf("Raya");
-    expect(cells[0].textContent).toContain("SUN (A)");
-    expect(within(cells[0]).getByTestId("plan-fixture").getAttribute("title"))
-      .toMatch(/FDR 2/);
+    // The opponent moved from a chip inside the cell to the cell's own title
+    // when the cell became a tile; the claim — you can learn who they play and
+    // how FPL rated it — is unchanged.
+    expect(cells[0].getAttribute("title")).toContain("SUN (A)");
+    expect(cells[0].getAttribute("title")).toMatch(/FDR 2/);
   });
 
   it("says a blank gameweek is blank, not kind", () => {
     render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
-    const fixture = within(cellsOf("Raya")[2]).getByTestId("plan-fixture");
-    expect(fixture.getAttribute("data-fdr")).toBe("blank");
-    expect(fixture.getAttribute("title")).toMatch(/blank/i);
+    const cell = cellsOf("Raya")[2];
+    expect(cell.getAttribute("data-fdr")).toBe("blank");
+    expect(cell.getAttribute("title")).toMatch(/blank/i);
   });
 
   it("says an unreadable club is unknown, not kind", () => {
@@ -268,9 +281,9 @@ describe("the fixture in the cell", () => {
      * numbers still draw — but nothing may render as a soft fixture on the way.
      */
     render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={[]} xpHorizon={XP_HORIZON} />);
-    const fixture = within(cellsOf("Raya")[0]).getByTestId("plan-fixture");
-    expect(fixture.getAttribute("data-fdr")).toBe("unknown");
-    expect(fixture.getAttribute("title")).toMatch(/not.*read|unknown/i);
+    const cell = cellsOf("Raya")[0];
+    expect(cell.getAttribute("data-fdr")).toBe("unknown");
+    expect(cell.getAttribute("title")).toMatch(/not.*read|unknown/i);
   });
 });
 
@@ -543,7 +556,7 @@ describe("the grid with no plan published", () => {
     const cell = screen.getAllByTestId("plan-cell")[0];
     expect(cell.getAttribute("data-state")).toBe("held");
     expect(cell.textContent).toContain("5.0");
-    expect(within(cell).getByTestId("plan-fixture")).toBeTruthy();
+    expect(cell.getAttribute("title")).toBeTruthy();
   });
 
   it("shows no XI total, because there is no XI", () => {
@@ -569,7 +582,8 @@ describe("the grid with no plan published", () => {
     // The half that does not depend on a solve has to keep working.
     drawHeld();
     expect(screen.getAllByTestId("plan-band").length).toBeGreaterThan(0);
-    expect(screen.getAllByTestId("plan-fixture").length).toBeGreaterThan(0);
+    expect(screen.getAllByTestId("plan-cell")
+      .filter((c) => c.getAttribute("data-tile") === "on").length).toBeGreaterThan(0);
   });
 });
 
@@ -616,5 +630,44 @@ describe("no plan means no plan language", () => {
     render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
     expect(screen.getAllByText(/planned|eval only/).length).toBeGreaterThan(0);
     expect(screen.getByText(/transfers planned/)).toBeTruthy();
+  });
+});
+
+
+describe("J · tiles, and whose team this is", () => {
+  afterEach(cleanup);
+
+  function draw() {
+    return render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
+  }
+
+  it("paints an owned week as a tile and an unowned one as bare ground", () => {
+    /**
+     * The tiles are the grid — there are no hairlines — so absence has to read
+     * as absence. A week outside the squad gets no plate at all, which is why
+     * the hatch could go: with every owned week filled, a gap is unmistakable.
+     */
+    draw();
+    const cells = screen.getAllByTestId("plan-cell");
+    const tiled = cells.filter((c) => c.getAttribute("data-tile") === "on");
+    const bare = cells.filter((c) => c.getAttribute("data-tile") === "off");
+    expect(tiled.length).toBeGreaterThan(0);
+    expect(bare.length).toBeGreaterThan(0);
+  });
+
+  it("says which rows are your team and which the plan buys", () => {
+    draw();
+    const rows = screen.getAllByTestId("plan-row");
+    const owned = rows.filter((r) => r.getAttribute("data-owned") === "true");
+    const incoming = rows.filter((r) => r.getAttribute("data-owned") === "false");
+    expect(owned.map((r) => r.getAttribute("data-player"))).toContain("Raya");
+    expect(incoming.map((r) => r.getAttribute("data-player"))).toContain("Semenyo");
+  });
+
+  it("counts the squad you hold, in words, above the grid", () => {
+    // Twenty-one rows and fifteen of them yours is the fact a reader needs
+    // before they read anything else on the board.
+    draw();
+    expect(screen.getByTestId("plan-ownership").textContent).toMatch(/4 of 5|yours/i);
   });
 });

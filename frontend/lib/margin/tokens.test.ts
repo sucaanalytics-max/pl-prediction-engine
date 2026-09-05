@@ -17,7 +17,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
 import {
-  FLOODLIT, HEAT, TRAFFIC, difficultyTint, hatch, heatStep, positionHue,
+  FLOODLIT, HEAT, TRAFFIC, difficultyTile, difficultyTint, hatch, heatStep, positionHue,
 } from "@/lib/margin/tokens";
 
 /** Pull the hue angle out of an oklch() triple. */
@@ -387,5 +387,61 @@ describe("the position hue", () => {
     // data did not. It gets plain ink, which states nothing.
     expect(positionHue("")).toBe(FLOODLIT.ink3);
     expect(positionHue("MNG")).toBe(FLOODLIT.ink3);
+  });
+});
+
+describe("the fixture-difficulty tile", () => {
+  /**
+   * A SECOND rendering of the same five-step scale, and that needs justifying.
+   *
+   * `difficultyTint` is a chip that sits beside text — low alpha, so the words
+   * next to it still read. The plan grid has no words in the cell: the tile IS
+   * the cell, and a low-alpha wash over `#0d1013` went muddy across 168 of them.
+   * So the grid gets opaque plates at controlled lightness, which mix with
+   * nothing and stay the hue they were given.
+   *
+   * What must NOT diverge is the scale underneath. These tests pin that the two
+   * renderings agree about which end is which, and that every plate can carry
+   * the figure that sits on it.
+   */
+
+  it("keeps the same three semantic hues, kind to brutal", () => {
+    // Green at the kind end, red at the brutal end, neutral in the middle —
+    // the same ordering `difficultyTint` states, so one scale is being drawn
+    // two ways rather than two scales existing.
+    const [gr, gg] = channels(difficultyTile(1));
+    const [rr, rg] = channels(difficultyTile(5));
+    const [nr, , nb] = channels(difficultyTile(3));
+    expect(gg, "FDR 1 leans green").toBeGreaterThan(gr);
+    expect(rr, "FDR 5 leans red").toBeGreaterThan(rg);
+    expect(Math.abs(nr - nb), "FDR 3 is near-neutral").toBeLessThan(20);
+  });
+
+  it("carries the figure at every step", () => {
+    /**
+     * The floor is 4.5:1 for text this size and it is MEASURED here rather than
+     * asserted in a comment — the palette this file guards was shipped once with
+     * figures at 2.06:1, and a plate edited by eye is exactly how that returns.
+     */
+    for (const fdr of [1, 2, 3, 4, 5]) {
+      const r = contrast(FLOODLIT.ink, difficultyTile(fdr));
+      expect(r, `FDR ${fdr} tile against the figure`).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
+  it("spends the most colour where a rating is actionable", () => {
+    // FDR 3 is 45% of all fixtures. If it were as loud as 1 or 5 the board would
+    // be a wall of colour, which is what the grid was redesigned away from.
+    const mid = contrast(FLOODLIT.ink, difficultyTile(3));
+    for (const fdr of [1, 2, 4, 5]) {
+      expect(contrast(FLOODLIT.ink, difficultyTile(fdr)),
+        `FDR ${fdr} is more present than the neutral middle`).toBeLessThan(mid);
+    }
+  });
+
+  it("gives an unknown rating the neutral plate, not an end", () => {
+    expect(difficultyTile(null)).toBe(difficultyTile(3));
+    expect(difficultyTile(0)).toBe(difficultyTile(3));
+    expect(difficultyTile(9)).toBe(difficultyTile(3));
   });
 });

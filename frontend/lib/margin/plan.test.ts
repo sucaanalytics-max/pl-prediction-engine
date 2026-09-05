@@ -354,3 +354,81 @@ describe("cells with no plan behind them", () => {
     expect(cell.start).toBe(true);
   });
 });
+
+
+describe("your team versus what the plan buys", () => {
+  /**
+   * The grid unions every player who appears in ANY week, which is right — a
+   * player bought in GW5 belongs on the board from the start as a hatched run.
+   * But it means a third of the rows are not your team, and nothing said so.
+   * Tavernier and Keane read exactly like Gabriel.
+   *
+   * Owned is membership of WEEK 0's squad, which is the one you actually hold.
+   */
+
+  it("marks a player you hold as owned", () => {
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES);
+    expect(grid.rows.find((r) => r.name === "Raya")?.owned).toBe(true);
+  });
+
+  it("marks a player the plan brings in as not owned", () => {
+    // Semenyo is transferred in for GW4 — week 1 of this horizon — so he is on
+    // the grid without being in the squad you hold today.
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES);
+    expect(grid.rows.find((r) => r.name === "Semenyo")?.owned).toBe(false);
+  });
+
+  it("does not call THIS week's buy yours yet", () => {
+    /**
+     * Week 0's squad is POST-transfer — it is what the plan says to hold after
+     * you act, not what you hold now. Reading ownership straight off it marked
+     * this week's two incoming players as your team, which is the exact
+     * distinction this flag was added to draw.
+     *
+     * Here week 0 buys nobody, so this pins the rule rather than the fixture: a
+     * player in week 0's squad AND in its `transfers_in` is not yours yet.
+     */
+    const bought = {
+      ...artifact()!.horizon!,
+      weeks: artifact()!.horizon!.weeks.map((w, i) =>
+        i === 0 ? { ...w, transfers_in: [1], transfers_out: [] } : w),
+    };
+    expect(buildPlanGrid(bought, NAMES).rows.find((r) => r.name === "Raya")?.owned)
+      .toBe(false);
+  });
+
+  it("keeps a player THIS week sells on the board, as yours", () => {
+    /**
+     * The other half, and the worse one: a player sold in week 0 is in no week's
+     * squad at all, so he had no row — the board claimed to show your team while
+     * omitting the two players the plan is telling you to sell. You cannot act on
+     * a sale you cannot see.
+     */
+    const sold = {
+      ...artifact()!.horizon!,
+      weeks: artifact()!.horizon!.weeks.map((w, i) =>
+        i === 0
+          ? { ...w, squad: w.squad.filter((x) => x !== 2), xi: w.xi.filter((x) => x !== 2), transfers_out: [2] }
+          : { ...w, squad: w.squad.filter((x) => x !== 2), xi: w.xi.filter((x) => x !== 2) }),
+    };
+    const row = buildPlanGrid(sold, NAMES).rows.find((r) => r.name === "Gabriel");
+    expect(row, "a player being sold still has a row").toBeDefined();
+    expect(row?.owned).toBe(true);
+  });
+
+  it("still counts a player you hold and later sell as owned", () => {
+    /**
+     * Haaland is in week 0 and sold in week 1. He IS your team right now, and
+     * the question this flag answers is "is this mine", not "does the plan keep
+     * him" — the cells already say when he leaves.
+     */
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES);
+    expect(grid.rows.find((r) => r.name === "Haaland")?.owned).toBe(true);
+  });
+
+  it("counts the owned rows, so the grid can say fifteen", () => {
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES);
+    expect(grid.owned).toBe(4);
+    expect(grid.rows.length).toBe(5);
+  });
+});

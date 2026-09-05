@@ -179,6 +179,73 @@ const POSITION_HUE: Readonly<Record<string, string>> = {
   FWD: "oklch(0.72 0.10 345)",
 };
 
+/**
+ * The same five-step difficulty scale, as an opaque plate.
+ *
+ * **Why a second rendering rather than a second scale.** `difficultyTint` is a
+ * chip that sits BESIDE text, so it is low alpha and the words next to it still
+ * read. The plan grid has no words in the cell — the tile IS the cell — and a
+ * low-alpha wash over the `#0d1013` shell went muddy brown-green across 168 of
+ * them. Opaque plates at controlled lightness mix with nothing and stay the hue
+ * they were given. `tokens.test.ts` pins that the two renderings agree on which
+ * end is which, so this is one scale drawn two ways.
+ *
+ * **Measured, not chosen by eye.** Contrast of `ink` against each plate:
+ *
+ *     FDR 1  #0f5233   7.92:1     FDR 4  #5c3512   9.13:1
+ *     FDR 2  #123a28  10.84:1     FDR 5  #7a2b27   8.18:1
+ *     FDR 3  #171b20  14.84:1
+ *
+ * Green is what bounds the kind end: a brighter `#1a7d4c` measures 4.41:1 and
+ * fails the 4.5:1 floor, which amber and red clear with room to spare. That is
+ * why the hard end reads hotter than the soft one — it is allowed to.
+ *
+ * **Intensity tracks how ACTIONABLE a rating is, not its number.** FDR 3 is 45%
+ * of all fixtures (see `difficultyBand` for the counted distribution), so it
+ * sits almost on the shell and most of the board stays quiet. Colour appearing
+ * is then itself information.
+ */
+const DIFFICULTY_TILE: Readonly<Record<number, string>> = {
+  1: "#0f5233",
+  2: "#123a28",
+  3: "#171b20",
+  4: "#5c3512",
+  5: "#7a2b27",
+};
+
+/**
+ * The same plates, mixed halfway to the shell, for a benched week.
+ *
+ * A bench must NOT be drawn with `opacity` on the cell — rule 3 of
+ * `legibility.test.ts`, and it is there because HeatGrid did exactly that and
+ * every band fell to between 1.71:1 and 2.62:1: container opacity multiplies the
+ * fill and the figure together, and a light figure over a lightening ground
+ * converge as both fade toward the shell.
+ *
+ * Dimming the PLATE moves the other way — a darker ground raises the figure's
+ * contrast. Measured with `ink2` on these: 7.02:1 at worst (FDR 1), 8.51:1 at
+ * best. The signal is carried by the plate and a dimmer ink, both of which stay
+ * above the floor.
+ */
+const DIFFICULTY_TILE_BENCHED: Readonly<Record<number, string>> = {
+  1: "#0e3123",
+  2: "#10251e",
+  3: "#12161a",
+  4: "#342212",
+  5: "#441e1d",
+};
+
+export function difficultyTile(
+  difficulty: number | null | undefined,
+  benched: boolean = false,
+): string {
+  const table = benched ? DIFFICULTY_TILE_BENCHED : DIFFICULTY_TILE;
+  const mid = table[3];
+  if (difficulty === null || difficulty === undefined) return mid;
+  if (!Number.isFinite(difficulty)) return mid;
+  return table[Math.round(difficulty)] ?? mid;
+}
+
 export function positionHue(
   position: string | null | undefined,
   surface: MarginSurface = FLOODLIT,

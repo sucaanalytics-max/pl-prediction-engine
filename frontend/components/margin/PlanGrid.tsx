@@ -25,7 +25,7 @@ import type { PhaseWeek } from "@/lib/projections/phases";
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import type { Horizon as XpHorizon } from "@/lib/data/projections";
 import {
-  hatch, MONO, FLOODLIT, SANS, difficultyTint, positionHue,
+  hatch, MONO, FLOODLIT, SANS, difficultyTile, positionHue,
 } from "@/lib/margin/tokens";
 import { ageLine } from "@/lib/formats";
 import { Eyebrow, Nil } from "@/components/margin/Marks";
@@ -41,156 +41,147 @@ const S = FLOODLIT;
  * `MCI (A)` differ by the character that gets cut.
  */
 function columns(weeks: number): string {
-  return `168px repeat(${weeks}, minmax(66px, 1fr)) 52px`;
+  return `152px repeat(${weeks}, minmax(58px, 1fr)) 38px`;
 }
+
+/** The gap between tiles. It is the only separator on the board. */
+const GAP = 3;
+
+/*
+ * `FixtureChip` was here.
+ *
+ * It drew the opponent on a tinted background beneath the figure. The tile
+ * replaced both: difficulty is the plate the figure sits on, and the opponent
+ * moved to the title. Keeping a chip that nothing rendered would have left two
+ * answers to "how is difficulty drawn here".
+ */
 
 /**
- * The fixture chip under a cell's number.
+ * One week for one player, as a tile.
  *
- * Three states, kept apart on `data-fdr` as well as in colour, because the
- * colour is the part a screenshot loses and the part a colour-blind reader may
- * not resolve:
+ * The tiles ARE the grid: no hairlines, no outlines, a 3px gap between plates
+ * and nothing else doing the separating. That is most of what makes it read
+ * calmly at twenty-one rows — the old cell had a border, a fill and a hatch all
+ * describing the same boundary.
  *
- * - a fixture: FPL's own 1-5, on `difficultyTint`;
- * - `blank`: the club is idle that week. Not a kind fixture. `phases.ts` names
- *   this exact trap — treating an absent difficulty as "not above the threshold"
- *   "invents the softest possible week out of a week that does not exist";
- * - `unknown`: the fixture list could not be read at all. `/api/fpl/state` is a
- *   live route and it has 503'd in production this week, so this is a state that
- *   happens rather than a defensive branch.
+ * Four states, and each is carried by the plate rather than by a glyph beside
+ * the figure, because a glyph costs width the 8-column grid does not have:
  *
- * Neither absence borrows the kind end of the ramp. Both are the hatch and the
- * surface's own dim ink, which is what every other unreadable value here uses.
+ * - a start is the plate at full strength;
+ * - the armband is a 1px inset ring, which does not fight a coloured plate the
+ *   way a green letter would;
+ * - a bench dims the WHOLE plate to half, as a unit, so the figure's contrast
+ *   against it goes up rather than down;
+ * - a week outside the squad gets no plate at all. With every owned week filled
+ *   the gap is unmistakable, which is what let the hatch go — six hatched blocks
+ *   a row were the darkest thing on the board and carried the least.
+ *
+ * The opponent lives on the title. That is the trade this direction makes: the
+ * cell holds one figure and a colour, and you point at it to learn who they play.
  */
-function FixtureChip({ week, gameweek }: { week: PhaseWeek | null; gameweek: number }) {
-  // `difficultyTint`, not the `TRAFFIC` ramp. TRAFFIC is built for the
-  // twenty-club matrix on /phases, where the colour IS the content and no number
-  // shares the cell. Here every chip sits under an xP, and a saturated fill
-  // under each of 168 numbers competes with the thing it is meant to support —
-  // which is what made this grid unreadable. `difficultyTint` is the app's own
-  // answer for a fixture chip beside a number, and the call screen already uses
-  // it, so this also stops one quantity being painted two ways on one app.
-  const known = week !== null && !week.blank && week.difficulty !== null;
-  const [background, ink] = known
-    ? difficultyTint(week.difficulty, S)
-    : (["transparent", S.ink3] as const);
-
-  const state = week === null ? "unknown" : week.blank ? "blank" : String(week.difficulty);
-  const title = week === null
-    ? "the fixture list could not be read, so this club's fixture is unknown — not a kind one"
-    : week.blank
-      ? `GW${gameweek}: blank gameweek — this club has no fixture, which is not the same as an easy one`
-      : `GW${gameweek}: ${week.labels.join(" · ")} · FDR ${week.difficulty}${
-          week.doubleGameweek ? " (the worst of a double)" : ""
-        }`;
-
-  return (
-    <span
-      data-testid="plan-fixture"
-      data-fdr={state}
-      title={title}
-      style={{
-        display: "block", fontFamily: MONO, fontSize: 11, lineHeight: "14px",
-        textAlign: "center", background, color: ink,
-        whiteSpace: "nowrap", overflow: "hidden",
-        // A hatch for both absences, so neither reads as a rating of any kind.
-        backgroundImage: known ? undefined : hatch(S),
-      }}
-    >
-      {week === null || week.blank ? "\u2014" : week.labels.join(" · ")}
-    </span>
-  );
-}
-
 function CellMark({ cell, fixture }: { cell: Cell; fixture: PhaseWeek | null }) {
-  const title = cell.unplanned
-    ? "in the squad; no plan has been solved for this week, so nothing here says whether he starts"
-    : cell.off
-    ? "not in the squad this week — not a zero"
-    : cell.captain
-      ? "captain"
-      : cell.start
-        ? (cell.vice ? "starts · vice-captain" : "starts")
-        : "benched";
+  const known = fixture !== null && !fixture.blank && fixture.difficulty !== null;
+  const opponent = fixture === null
+    ? "the fixture list could not be read"
+    : fixture.blank
+      ? "blank gameweek — no fixture"
+      : `${fixture.labels.join(" · ")}${known ? ` · FDR ${fixture.difficulty}` : ""}`;
 
-  return (
-    <div
-      style={{
-        position: "relative", display: "grid", gap: 1, padding: "2px 1px",
-        borderLeft: `1px solid rgba(27,26,22,.07)`,
-      }}
-      title={title}
-      data-testid="plan-cell"
-      data-state={
-        cell.off ? "off"
-          : cell.unplanned ? "held"
-          : cell.captain ? "captain"
-          : cell.start ? "start"
-          : "bench"
-      }
-    >
-      {cell.off ? (
-        <span style={{ display: "block", width: "100%", height: 26, background: hatch(S) }} />
-      ) : (
-        <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, height: 18 }}>
-          {cell.unplanned ? null : cell.captain ? (
-        <span
-          style={{
-            width: 16, height: 16, borderRadius: "50%",
-            border: `1.5px solid ${S.agree}`, display: "grid", placeItems: "center",
-            fontFamily: MONO, fontSize: 11, fontWeight: 600, color: S.agree,
-          }}
-        >
-          C
-        </span>
-          ) : cell.start ? (
-            <span style={{ width: 11, height: 11, background: S.ink }} />
-          ) : (
-            <span style={{ width: 11, height: 11, border: `1px solid rgba(27,26,22,.45)` }} />
-          )}
-
-          {/* The number, in the same weight as every other figure here. Null is
-              the surface's own nil mark and never `0.0` — a zero is a forecast
-              of nothing, and the absence of a forecast is a different claim the
-              reader would act on differently. */}
-          <span
-            style={{
-              fontFamily: MONO, fontSize: 11.5,
-              fontWeight: cell.captain ? 500 : 400,
-              color: cell.bench ? S.ink3 : S.ink,
-            }}
-          >
-            {cell.xp === null ? <Nil surface={S} size={11} /> : cell.xp.toFixed(1)}
-          </span>
-        </span>
-      )}
-
-      {/* Enter and exit sit on the edge of the week they happen in, in the two
-          hues that mean agreement and disagreement everywhere else. */}
+  if (cell.off) {
+    // Still carries the move markers. A player SOLD this week is not in the
+    // squad this week, so his exit lands on exactly this cell — dropping them
+    // here loses the mark from the half of every transfer that leaves.
+    return (
+      <div
+        data-testid="plan-cell"
+        data-state="off"
+        data-tile="off"
+        style={{ position: "relative", height: 19 }}
+        title="not in the squad this week — not a zero"
+      >
       {cell.enter ? (
         <span
+          data-testid="plan-enter"
           title="transferred in this week"
           style={{
-            position: "absolute", left: -5, top: 3, fontFamily: MONO,
-            fontSize: 12, color: S.agree, lineHeight: 1,
+            position: "absolute", left: 0, top: 0, width: 0, height: 0,
+            borderTop: `6px solid ${S.agree}`, borderRight: "6px solid transparent",
           }}
-        >
-          &#9656;
-        </span>
+        />
       ) : null}
       {cell.exit ? (
         <span
+          data-testid="plan-exit"
           title="transferred out this week"
           style={{
-            position: "absolute", left: -5, top: 3, fontFamily: MONO,
-            fontSize: 12, color: S.conflict, lineHeight: 1,
+            position: "absolute", right: 0, top: 0, width: 0, height: 0,
+            borderTop: `6px solid ${S.conflict}`, borderLeft: "6px solid transparent",
           }}
-        >
-          &#9666;
-        </span>
+        />
       ) : null}
+      </div>
+    );
+  }
 
-      <FixtureChip week={fixture} gameweek={cell.gameweek} />
+  const title = cell.unplanned
+    ? `GW${cell.gameweek} · ${opponent} · in the squad; no plan solved for this week`
+    : `GW${cell.gameweek} · ${opponent}`;
+
+  return (
+    <div
+      data-testid="plan-cell"
+      data-tile="on"
+      data-state={
+        cell.unplanned ? "held" : cell.captain ? "captain" : cell.start ? "start" : "bench"
+      }
+      data-fdr={fixture === null ? "unknown" : fixture.blank ? "blank" : String(fixture.difficulty)}
+      title={title}
+      style={{
+        position: "relative",
+        height: 19,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        // The plate dims for a bench, never the cell. `opacity` here would fade
+        // the figure with the fill and they converge — see DIFFICULTY_TILE_BENCHED.
+        background: difficultyTile(known ? fixture.difficulty : null, cell.bench),
+        gap: 4,
+      }}
+    >
+      {cell.captain ? (
+        <span style={{ fontFamily: MONO, fontSize: 11, fontWeight: 500, color: S.ink }}>C</span>
+      ) : null}
+      <span style={{
+        fontFamily: MONO, fontSize: 12.5, fontWeight: 500,
+        color: cell.bench ? S.ink2 : S.ink,
+      }}>
+        {cell.xp === null ? <Nil surface={S} size={11} /> : cell.xp.toFixed(1)}
+      </span>
+
+      {/* The week a move happens, on the edge of the plate it happens in. Kept
+          from the old cell deliberately: ownership dimming says a player is not
+          yours, and a bare run says he is not in yet, but only this says WHICH
+          week he arrives or goes — which is the week you have to act. */}
+      {cell.enter ? (
+        <span
+          data-testid="plan-enter"
+          title="transferred in this week"
+          style={{
+            position: "absolute", left: 0, top: 0, width: 0, height: 0,
+            borderTop: `6px solid ${S.agree}`, borderRight: "6px solid transparent",
+          }}
+        />
+      ) : null}
+      {cell.exit ? (
+        <span
+          data-testid="plan-exit"
+          title="transferred out this week"
+          style={{
+            position: "absolute", right: 0, top: 0, width: 0, height: 0,
+            borderTop: `6px solid ${S.conflict}`, borderLeft: "6px solid transparent",
+          }}
+        />
+      ) : null}
     </div>
   );
 }
@@ -217,7 +208,7 @@ function SummaryRow(
           key={week.gameweek}
           style={{
             padding: "5px 2px", textAlign: "center",
-            borderLeft: `1px solid rgba(27,26,22,.07)`,
+            
             fontFamily: MONO, fontSize: 11, color: S.ink,
           }}
         >
@@ -332,21 +323,24 @@ export function PlanGrid(
             ? "the sealed plan for this deadline"
             : "provisional — re-solved every few hours until the deadline"}
         {ageLine(solvedAt) ? ` · solved ${ageLine(solvedAt)}` : null}
+        <span data-testid="plan-ownership">
+          {` · ${model.owned} of ${rows.length} yours`}
+          {model.owned === rows.length ? null : `, ${rows.length - model.owned} the plan buys`}
+        </span>
       </div>
 
       {/* Header */}
       <div
         style={{
-          display: "grid", gridTemplateColumns: grid,
-          borderTop: `1px solid rgba(27,26,22,.25)`,
-          borderBottom: `1px solid ${S.hair}`,
+          display: "grid", gridTemplateColumns: grid, gap: GAP,
+          marginBottom: GAP,
         }}
       >
-        <div style={{ padding: "6px 0", fontFamily: MONO, fontSize: 11, letterSpacing: ".04em", textTransform: "uppercase", color: S.ink3 }}>
+        <div style={{ padding: "2px 0", fontFamily: MONO, fontSize: 11, letterSpacing: ".04em", textTransform: "uppercase", color: S.ink3 }}>
           Player
         </div>
         {weeks.map((week) => (
-          <div key={week.gameweek} style={{ padding: "6px 0", textAlign: "center", borderLeft: `1px solid rgba(27,26,22,.07)` }}>
+          <div key={week.gameweek} style={{ padding: "2px 0", textAlign: "center" }}>
             <div style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: S.ink }}>
               GW{week.gameweek}
             </div>
@@ -359,7 +353,7 @@ export function PlanGrid(
             )}
           </div>
         ))}
-        <div style={{ padding: "6px 0", textAlign: "right", fontFamily: MONO, fontSize: 11, textTransform: "uppercase", color: S.ink3 }}>
+        <div style={{ padding: "2px 0", textAlign: "right", fontFamily: MONO, fontSize: 11, textTransform: "uppercase", color: S.ink3 }}>
           Starts
         </div>
       </div>
@@ -419,28 +413,13 @@ export function PlanGrid(
           ))}
           <div />
         </div>}
-        {!solved ? null : <SummaryRow
-          label="transfers · hits"
-          weeks={weeks}
-          render={(w) => (
-            <span>
-              {w.transfers_in.length} &middot; {w.hits === 0 ? "0" : `−${w.hits * 4}`}
-            </span>
-          )}
-        />}
-        {!solved ? null : <SummaryRow
-          label="bank · FT after"
-          weeks={weeks}
-          render={(w) => (
-            <span>
-              {(w.bank_after / 10).toFixed(1)}
-              {" · "}
-              {w.free_transfers_after === null
-                ? <Nil surface={S} size={11} />
-                : w.free_transfers_after}
-            </span>
-          )}
-        />}
+        {/* `transfers · hits` and `bank · FT after` were here.
+
+            Both are stated per week, with names and prices, in the transfer
+            section below — so on the board they were a second telling that cost
+            56px of the vertical budget the grid needs to fit a screen. The
+            eval-only tail keeps its column label, and the weeks the solve
+            declined to transfer into are named in words down there. */}
       </div>
 
       <Transfers
@@ -498,7 +477,7 @@ export function PlanGrid(
           <span style={{ width: 15, height: 15, borderRadius: "50%", border: `1.5px solid ${S.agree}` }} />captain
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-          <span style={{ width: 14, height: 12, background: hatch(S) }} />not owned
+          <span style={{ width: 14, height: 12, background: S.shell, outline: `1px solid ${S.hair}` }} />not owned
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
           <span style={{ color: S.agree }}>&#9656;</span>in
@@ -664,7 +643,7 @@ function BandHead({ position, label }: { position: string; label: string }) {
       data-testid="plan-band"
       style={{
         display: "flex", alignItems: "center", gap: 9,
-        padding: "14px 0 6px", borderBottom: `1px solid ${S.rule}`,
+        padding: "6px 0 2px",
       }}
     >
       <span style={{ width: 16, height: 3, background: hue, borderRadius: 1 }} />
@@ -691,24 +670,35 @@ function PlanGridRow(
     <div
       data-testid="plan-row"
       data-player={row.name}
+      data-owned={row.owned}
       style={{
         display: "grid", gridTemplateColumns: grid, alignItems: "center",
-        borderBottom: `1px solid rgba(27,26,22,.06)`,
+        gap: GAP, marginBottom: GAP,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 9, padding: "3px 8px 3px 0", minWidth: 0 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 9, padding: "0 8px 0 0", minWidth: 0 }}>
         {/* The hue rather than the code: the band above already names the line,
             so repeating "MID" on all five of its rows spends a column on a word
             the reader has just read. */}
+        {/* Solid for a player you hold, mixed back toward the shell for one the
+            plan buys. A third of these rows are not your team and nothing used to
+            say so — Tavernier read exactly like Gabriel.
+
+            `color-mix`, not `opacity`: rule 3 of `legibility.test.ts` scans for
+            the SHAPE of the container-opacity mistake rather than trusting each
+            use to be harmless, and a rule that admitted "but this one holds no
+            text" would stop catching the one that does. */}
         <span
           style={{
-            width: 3, height: 20, flex: "none", borderRadius: 1,
-            background: positionHue(row.position, S),
+            width: 3, height: 14, flex: "none", borderRadius: 1,
+            background: row.owned
+              ? positionHue(row.position, S)
+              : `color-mix(in oklch, ${positionHue(row.position, S)} 38%, ${S.shell})`,
           }}
         />
         <span
           style={{
-            fontFamily: SANS, fontSize: 12.5, color: S.ink,
+            fontFamily: SANS, fontSize: 12, color: row.owned ? S.ink : S.ink3,
             whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
           }}
         >
@@ -724,7 +714,7 @@ function PlanGridRow(
       ))}
       {/* `0/8` reads as "the solve benched him every week", which is a finding.
           With nothing solved there is no answer, and the nil mark says so. */}
-      <div style={{ textAlign: "right", fontFamily: MONO, fontSize: 11, color: S.ink2 }}>
+      <div style={{ textAlign: "right", fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
         {solved ? row.starts : <Nil surface={S} size={11} />}
       </div>
     </div>

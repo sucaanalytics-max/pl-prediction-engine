@@ -81,6 +81,18 @@ export interface PlanRow {
   readonly cells: readonly Cell[];
   /** `4/8` — weeks started, over weeks in the horizon. */
   readonly starts: string;
+  /**
+   * In the squad you hold today — week 0's.
+   *
+   * A third of the rows are not your team: the grid unions everyone who appears
+   * in ANY week, so a player the plan buys in GW5 sits on the board from the
+   * start, reading exactly like one you own. This is what tells them apart.
+   *
+   * A player you hold and the plan later SELLS is still owned. The question is
+   * "is this mine", not "does the plan keep him" — the cells already say when he
+   * goes.
+   */
+  readonly owned: boolean;
 }
 
 /**
@@ -111,6 +123,8 @@ export interface PlanGridModel {
   readonly evalHorizon: number;
   /** Rows whose name could not be resolved, so the grid can say so. */
   readonly unnamed: number;
+  /** How many rows are the squad you hold, of `rows.length` on the board. */
+  readonly owned: number;
   /** One per week, in the same order as `weeks`. */
   readonly totals: readonly WeekTotal[];
 }
@@ -207,8 +221,24 @@ export function buildPlanGrid(
 
   const ids = new Set<number>();
   for (const week of horizon.weeks) for (const id of week.squad) ids.add(id);
+  // A player sold in week 0 belongs on the board: he is yours until you act.
+  for (const id of horizon.weeks[0]?.transfers_out ?? []) ids.add(id);
 
   const xpFor = xpResolver(horizon.weeks, projections, xpHorizon);
+  /**
+   * The squad you actually hold, which is NOT week 0's squad.
+   *
+   * Week 0's is POST-transfer: what to hold once you have acted. Reading
+   * ownership off it got both halves of this week's move wrong — it called the
+   * two players being bought yours, and it left the two being sold off the board
+   * entirely, because a player sold in week 0 is in no week's squad at all. The
+   * board then claimed to show your team while omitting the two the plan is
+   * telling you to sell, which is the one move you cannot act on unseen.
+   */
+  const week0 = horizon.weeks[0];
+  const held = new Set(week0?.squad ?? []);
+  for (const id of week0?.transfers_in ?? []) held.delete(id);
+  for (const id of week0?.transfers_out ?? []) held.add(id);
 
   let unnamed = 0;
   const rows: PlanRow[] = [...ids].map((elementId) => {
@@ -225,6 +255,7 @@ export function buildPlanGrid(
       position: projection?.position ?? "",
       cells,
       starts: `${started}/${horizon.weeks.length}`,
+      owned: held.has(elementId),
     };
   });
 
@@ -240,6 +271,7 @@ export function buildPlanGrid(
     transferHorizon: horizon.transferHorizon,
     evalHorizon: horizon.evalHorizon,
     unnamed,
+    owned: rows.filter((r) => r.owned).length,
     totals: horizon.weeks.map((week) => totalFor(week, xpFor)),
   };
 }
