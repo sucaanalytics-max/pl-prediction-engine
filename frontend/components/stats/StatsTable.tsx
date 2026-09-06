@@ -31,11 +31,11 @@ import { PLAYER_EVENTS, type PlayerEvent } from "@/lib/data/player-events";
 import { projectionsDescriptor, type Projection } from "@/lib/data/projections";
 import { REGISTRY, type PlayerRow } from "@/lib/data/narrow";
 import { useArtifact } from "@/lib/data/useArtifact";
-import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
+import { SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
 import { Label } from "@/lib/margin/type";
 import { STAT_TABS, blockedTabs, tabByKey } from "@/lib/projections/stat-tabs";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 type Show = "all" | "mine" | "theirs";
 
@@ -114,7 +114,7 @@ function pct(value: number | null | undefined): number | null {
 function chip(on: boolean): React.CSSProperties {
   return {
     padding: "5px 9px", fontSize: 11, fontWeight: on ? 600 : 400,
-    background: on ? "rgba(233,238,245,.10)" : "transparent",
+    background: on ? "rgba(20,23,28,.10)" : "transparent",
     color: on ? S.ink : S.ink3, borderRight: `1px solid ${S.rule}`, cursor: "pointer",
   };
 }
@@ -332,7 +332,7 @@ export function StatsTable({
                     height: 32, display: "flex", alignItems: "center",
                     justifyContent: "flex-end", paddingRight: 10,
                     background: (sortKey ?? columns[0]?.key) === column.key
-                      ? "rgba(233,238,245,.06)" : "none",
+                      ? "rgba(20,23,28,.06)" : "none",
                     border: 0, cursor: "pointer",
                   }}
                 >

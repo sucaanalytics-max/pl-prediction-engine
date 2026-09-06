@@ -41,13 +41,13 @@ import { useMemo, useState } from "react";
 
 import type { SquadPlayer } from "@/lib/data/heuristics";
 import type { SquadRow } from "@/lib/margin/squad";
-import { DISPLAY, FLOODLIT, MONO, SANS, difficultyTint } from "@/lib/margin/tokens";
+import { DISPLAY, SIGNAL, MONO, SANS, difficultyTint } from "@/lib/margin/tokens";
 import { kitFor, kitStripe } from "@/lib/margin/kits";
 import { COLUMN_HEAD, EYEBROW } from "@/lib/margin/type";
 import { INTERVAL_AXIS, intervalBar } from "@/lib/call/board";
 import { HAUL_MARK } from "@/components/call/Pitch";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 /** The line order a squad is read in. Also the default sort. */
 const LINE_ORDER: Record<string, number> = { GKP: 0, DEF: 1, MID: 2, FWD: 3 };
@@ -173,11 +173,11 @@ function Interval({ row }: { readonly row: SquadRow }) {
         + `middle half ${p?.q25} to ${p?.q75}, q10 ${p?.q10} to q90 ${p?.q90}`
       }
       title={`q10 ${p?.q10} · q25 ${p?.q25} · median ${p?.q50} · q75 ${p?.q75} · q90 ${p?.q90}`}
-      style={{ display: "block", height: 4, background: "rgba(233,238,245,.09)" }}
+      style={{ display: "block", height: 4, background: "rgba(20,23,28,.09)" }}
     >
       <span style={{
         display: "block", height: 4, marginLeft: `${bar.left}%`, width: `${bar.width}%`,
-        background: hot ? S.brand : "rgba(233,238,245,.34)",
+        background: hot ? S.brand : "rgba(20,23,28,.34)",
       }} />
     </span>
   );
@@ -231,7 +231,7 @@ export function Eleven(props: ElevenProps) {
             style={{
               ...COLUMN_HEAD,
               color: live ? S.ink : S.ink3,
-              background: live ? "rgba(233,238,245,.06)" : "none",
+              background: live ? "rgba(20,23,28,.06)" : "none",
               border: 0, cursor: "pointer", height: 30, padding: "0 4px",
               textAlign: column.key === "line" ? "left" : "right",
             }}

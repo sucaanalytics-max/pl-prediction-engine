@@ -12,8 +12,8 @@ export default function manifest(): MetadataRoute.Manifest {
     // The chrome colour, kept in step with `--chrome` and the `theme-color`
     // meta tag. An installed app whose splash screen is the previous palette
     // announces the old design before the new one has finished loading.
-    background_color: "#14181d",
-    theme_color: "#14181d",
+    background_color: "#f1f2f4",
+    theme_color: "#f1f2f4",
     orientation: "portrait-primary",
     categories: ["sports", "productivity"],
     icons: [

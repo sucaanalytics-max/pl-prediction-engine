@@ -25,12 +25,12 @@ import type { PhaseWeek } from "@/lib/projections/phases";
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import type { Horizon as XpHorizon } from "@/lib/data/projections";
 import {
-  hatch, MONO, FLOODLIT, SANS, difficultyTile, positionHue,
+  hatch, MONO, SIGNAL, SANS, difficultyTile, positionHue,
 } from "@/lib/margin/tokens";
 import { ageLine } from "@/lib/formats";
 import { Eyebrow, Nil } from "@/components/margin/Marks";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 /**
  * `170px` of name, then one column per week, then the starts tally.

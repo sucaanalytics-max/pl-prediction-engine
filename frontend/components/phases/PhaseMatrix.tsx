@@ -26,7 +26,7 @@
 import { useMemo, useState } from "react";
 
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
-import { DISPLAY, FLOODLIT, MONO, SANS, TRAFFIC, stepOf } from "@/lib/margin/tokens";
+import { DISPLAY, SIGNAL, MONO, SANS, TRAFFIC, stepOf } from "@/lib/margin/tokens";
 import { Label } from "@/lib/margin/type";
 /* TRAFFIC's own length, not HEAT's. The two ramps are deliberately different
    sizes — four difficulty ratings occur and five point bands are useful — and
@@ -39,7 +39,7 @@ import {
   matrixGameweeks, orderClubs, type PhaseOrder, type RunLength,
 } from "@/lib/projections/phases";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 const ORDERS: ReadonlyArray<readonly [PhaseOrder, string]> = [
   ["phase", "best run"], ["kindest", "kindest overall"], ["name", "A–Z"],
@@ -48,7 +48,7 @@ const ORDERS: ReadonlyArray<readonly [PhaseOrder, string]> = [
 function chip(on: boolean): React.CSSProperties {
   return {
     padding: "4px 9px", fontSize: 11, fontWeight: on ? 600 : 400,
-    background: on ? "rgba(233,238,245,.10)" : "transparent",
+    background: on ? "rgba(20,23,28,.10)" : "transparent",
     color: on ? S.ink : S.ink3, borderRight: `1px solid ${S.rule}`, cursor: "pointer",
   };
 }

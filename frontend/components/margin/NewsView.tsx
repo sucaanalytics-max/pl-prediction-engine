@@ -56,10 +56,10 @@ import { NEWS_FEED, type NewsFeed, type NewsItem } from "@/lib/data/news-feed";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 import { ARTICLE_FEEDS, readArticle } from "@/lib/news/article";
-import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
+import { SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
 import { Eyebrow, MarginState, Nil } from "@/components/margin/Marks";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 /** Sources chosen for FPL value, which the volume feeds bury. */
 const PREFERRED = new Set(["allaboutfpl", "x:robtFPL", "fantasyfootballscout", "premierfantasytools"]);

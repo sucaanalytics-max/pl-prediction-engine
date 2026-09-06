@@ -40,12 +40,12 @@ import {
 import { REGISTRY, type DeltaFeed, type DeltaRecord } from "@/lib/data/narrow";
 import { projectionsDescriptor, type Projections } from "@/lib/data/projections";
 import { useArtifact } from "@/lib/data/useArtifact";
-import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
+import { SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
 import {
   Eyebrow, Nil, WhenProvenHere, compactAge,
 } from "@/components/margin/Marks";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 function Panel(
   { eyebrow, title, children }: {

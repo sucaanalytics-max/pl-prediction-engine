@@ -17,7 +17,8 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
 import {
-  FLOODLIT, HEAT, TRAFFIC, difficultyTile, difficultyTint, hatch, heatStep, positionHue,
+  SIGNAL, HEAT, TRAFFIC, difficultyTile, difficultyTint, hatch, heatStep, positionHue,
+  surfaceIsLight,
 } from "@/lib/margin/tokens";
 
 /** Pull the hue angle out of an oklch() triple. */
@@ -77,27 +78,42 @@ function deuteranope(hex: string): string {
 }
 
 describe("hue carries judgement, and identity is not a judgement", () => {
-  it("keeps the brand off all three semantic hues", () => {
-    const semantic = [hue(FLOODLIT.agree), hue(FLOODLIT.noise), hue(FLOODLIT.conflict)];
-    for (const h of semantic) {
-      // Not merely different — far enough that no reader reads a verdict.
-      expect(Math.abs(hue(FLOODLIT.brand) - h)).toBeGreaterThan(25);
+  it("keeps the brand off every hue, semantic or otherwise", () => {
+    // The strongest possible version of "identity is not a judgement": the brand
+    // is not a hue. Signal spends colour only on data, so the wordmark, an active
+    // tab and a link are ink — separated by weight, case and a rule.
+    //
+    // This replaces an assertion that the brand hue sat >25 degrees from each of
+    // the three. That was the right claim while identity had a colour; it cannot
+    // be stated about a token that has none, and weakening it to "different from
+    // green" would have let a hue back in by the side door.
+    expect(SIGNAL.brand).toBe(SIGNAL.ink);
+    expect(() => hue(SIGNAL.brand)).toThrow();
+    for (const h of [SIGNAL.agree, SIGNAL.noise, SIGNAL.conflict]) {
+      expect(SIGNAL.brand).not.toBe(h);
     }
   });
 
   it("keeps the three semantic hues distinct from each other", () => {
     const [fine, noise, attention] =
-      [hue(FLOODLIT.agree), hue(FLOODLIT.noise), hue(FLOODLIT.conflict)];
+      [hue(SIGNAL.agree), hue(SIGNAL.noise), hue(SIGNAL.conflict)];
     expect(new Set([fine, noise, attention]).size).toBe(3);
     expect(Math.abs(fine - noise)).toBeGreaterThan(40);
     expect(Math.abs(noise - attention)).toBeGreaterThan(40);
   });
 
-  it("puts identity on the lime, not on the old blue", () => {
-    // The brand hue moved from 250 to 128 with the redesign: on a dark ground a
-    // blue identity mark sat too close to the surface to register, and the lime
-    // is the one saturated colour on the screen that is not a verdict.
-    expect(hue(FLOODLIT.brand)).toBe(128);
+  it("leaves the three semantic hues as the only saturated colour in the set", () => {
+    // Floodlit had a fourth: an acid lime that marked the live thing on a screen
+    // — the countdown, the armband, a detected run. Signal removes that job, so
+    // the only saturated tokens left are the three that carry a verdict, plus the
+    // two ramps that carry a quantity. Anything else on screen is ink on paper.
+    const saturated = [SIGNAL.agree, SIGNAL.noise, SIGNAL.conflict];
+    for (const token of [SIGNAL.brand, SIGNAL.ink, SIGNAL.ink2, SIGNAL.ink3, SIGNAL.ink4,
+                         SIGNAL.shell, SIGNAL.bar, SIGNAL.inset, SIGNAL.face]) {
+      expect(saturated).not.toContain(token);
+      expect(token).not.toMatch(/oklch/);
+    }
+    for (const token of saturated) expect(token).toMatch(/^oklch\(/);
   });
 });
 
@@ -108,33 +124,51 @@ describe("one surface, and a ramp that means something", () => {
       "ink", "ink2", "ink3", "ink4",
       "brand", "agree", "conflict", "noise", "block", "face",
     ] as const) {
-      expect(FLOODLIT[key], `missing ${key}`).toBeTruthy();
+      expect(SIGNAL[key], `missing ${key}`).toBeTruthy();
     }
   });
 
-  it("is a dark ground with light ink over it", () => {
+  it("is a paper ground with dark ink over it", () => {
     // The direction of the surface is the whole redesign; asserting it stops a
-    // later edit half-reverting to paper and leaving the glyphs unreadable.
-    expect(FLOODLIT.shell.startsWith("#0")).toBe(true);
-    expect(FLOODLIT.ink2.startsWith("rgba")).toBe(true);
+    // later edit half-reverting and leaving the glyphs unreadable. Stated as a
+    // MEASUREMENT rather than as "#0…" or "#f…", because the previous form
+    // pinned a spelling rather than a fact and had to be rewritten to move.
+    expect(surfaceIsLight(SIGNAL)).toBe(true);
+    expect(SIGNAL.ink2.startsWith("rgba")).toBe(true);
+    expect(contrast(SIGNAL.shell, SIGNAL.ink)).toBeGreaterThanOrEqual(4.5);
   });
 
-  it("hatches against a dark ground", () => {
-    const g = hatch(FLOODLIT);
+  it("hatches against a paper ground", () => {
+    const g = hatch(SIGNAL);
     expect(g).toContain("repeating-linear-gradient(45deg");
     expect(g).toContain("0 3px");
-    // A light stroke, because the ground it must show against is dark — and
-    // floodlit's ink, so the hatch is the same colour as the text near it.
-    expect(g).toContain("233,238,245");
+    // A dark stroke, because the ground it must show against is paper — and
+    // signal's ink, so the hatch is the same colour as the text near it.
+    expect(g).toContain("20,23,28");
   });
 
-  it("climbs monotonically through the points ramp", () => {
-    // A sequential ramp that dips reads as two categories rather than one scale.
+  it("orders the points ramp monotonically, in whichever direction the ground needs", () => {
+    /* A sequential ramp that dips reads as two categories rather than one scale.
+       The claim is ORDER, not direction — this asserted "brighter than the last"
+       and so baked in a dark ground: on ink more points meant more light, on
+       paper more points means more ink, and the copper ramp's ascent became the
+       slate ramp's descent without anything about the scale changing.
+
+       Both halves are needed. Monotonicity alone would accept a ramp running the
+       wrong way — five steps that get PALER as the projection grows, ordered and
+       useless. The second assertion fixes the direction to the only one that can
+       be right on any ground: the top of the scale is the band furthest from the
+       paper it is printed on. */
     const ls = HEAT.map(([bg]) => relLuminance(bg));
-    for (let i = 1; i < ls.length; i++) {
-      expect(ls[i], `band ${i} is not brighter than ${i - 1}`)
-        .toBeGreaterThan(ls[i - 1]);
-    }
+    const rising = ls.every((l, i) => i === 0 || l > ls[i - 1]);
+    const falling = ls.every((l, i) => i === 0 || l < ls[i - 1]);
+    expect(rising || falling, "the points ramp is not ordered").toBe(true);
+
+    const ground = relLuminance(SIGNAL.shell);
+    const near = Math.abs(ls[0] - ground);
+    const far = Math.abs(ls[ls.length - 1] - ground);
+    expect(far, "the top of the ramp is not the band furthest from the ground")
+      .toBeGreaterThan(near);
   });
 
   it("does NOT climb monotonically through the difficulty ramp", () => {
@@ -204,66 +238,55 @@ describe("one surface, and a ramp that means something", () => {
 describe("the display face is loaded, not merely configured", () => {
   const layout = readFileSync("app/layout.tsx", "utf8");
 
-  it("loads all three faces the design is drawn in, through next/font", () => {
-    /* Anton, Archivo, DM Mono — the stack the artboards specify.
-       IBM Plex Sans and Mono were here and were kept through the palette change
-       on the argument that Plex Mono's figures were what let a column of
-       projections compare by eye. Sound about mono figures, wrong about the face:
-       shipping Plex made every screen a near miss of its own approved design, and
-       DM Mono is monospaced with tabular figures too. Pinned here because a
-       half-done swap — one face changed, the variable still naming the other — is
-       the failure this file exists to catch. */
-    expect(layout).toMatch(/import\s*\{[^}]*Anton[^}]*\}\s*from\s*"next\/font\/google"/);
-    expect(layout).toContain('variable: "--font-display-anton"');
-    expect(layout).toMatch(/Archivo\(/);
-    expect(layout).toContain('variable: "--font-archivo"');
-    expect(layout).toMatch(/DM_Mono\(/);
-    expect(layout).toContain('variable: "--font-dm-mono"');
-    // And no trace of the pair they replaced, in either the import or a variable.
-    expect(layout).not.toMatch(/IBM_Plex/);
-    expect(layout).not.toMatch(/font-plex/);
-  });
+  it("loads exactly one face, through next/font", () => {
+    /* Signal's typographic claim is that ONE family does every job and weight
+       alone separates a figure from a label. Anton, Archivo and DM Mono were the
+       floodlit stack — a condensed poster face, a grotesque and a monospace,
+       all chosen against a dark scoreboard surface that no longer exists.
 
-  it("asks DM Mono for no weight it does not publish", () => {
-    /* DM Mono ships 300, 400 and 500. Plex Mono shipped 600 as well and a few
-       rules asked for 700 and 800, which a browser synthesises into a faux bold —
-       a thicker stroke on the same skeleton, which is exactly the muddiness a
-       10px figure inside a coloured cell cannot afford. */
-    const block = layout.slice(layout.indexOf("DM_Mono({"));
-    const weights = block.slice(0, block.indexOf("})")).match(/"\d00"/g) ?? [];
-    expect(weights.length).toBeGreaterThan(0);
-    for (const weight of weights) {
-      expect(["\"300\"", "\"400\"", "\"500\""]).toContain(weight);
+       Pinned here because a half-done swap — one face changed, a variable still
+       naming another — is the failure this file exists to catch, and because
+       "one family" is a claim that silently becomes false the moment someone
+       adds a second loader for a heading. */
+    expect(layout).toMatch(/import\s*\{[^}]*IBM_Plex_Sans[^}]*\}\s*from\s*"next\/font\/google"/);
+    expect(layout).toContain('variable: "--font-plex-sans"');
+    // One loader call, and no trace of the three it replaced.
+    expect(layout.match(/from\s*"next\/font\/google"/g) ?? []).toHaveLength(1);
+    for (const gone of [/\bAnton\(/, /\bArchivo\(/, /\bDM_Mono\(/,
+                        /--font-display-anton/, /--font-archivo/, /--font-dm-mono/]) {
+      expect(layout).not.toMatch(gone);
     }
   });
 
-  it("never sets a mono weight the face cannot answer", () => {
-    // The stylesheet's own asks, not just the loader's.
-    const css = readFileSync("app/globals.css", "utf8");
-    const offenders = [...css.matchAll(/font:\s*([678]\d0)\s[^;]*var\(--font-mono\)/g)]
-      .map((match) => match[0]);
-    expect(offenders, "asks DM Mono for a weight it does not ship").toEqual([]);
-  });
-
-  it("carries the one weight Anton ships", () => {
-    // The old pair loaded 400 and 500 because two surfaces needed different
-    // weights for the same optical result. There is one surface now, and Anton
-    // is a single-weight face, so asking for a second would fail to load rather
-    // than fall back.
-    const block = layout.slice(layout.indexOf("Anton({"));
-    expect(block).toMatch(/weight:\s*\["400"\]/);
+  it("asks Plex for no weight it does not publish", () => {
+    /* IBM Plex Sans ships 100 through 700. This replaces an assertion about DM
+       Mono's 300/400/500 ceiling, which was the constraint that forced emphasis
+       out of the figure face and into a display face; one family with a real 600
+       and 700 is what lets Signal drop the display face entirely. */
+    const block = layout.slice(layout.indexOf("IBM_Plex_Sans({"));
+    const weights = block.slice(0, block.indexOf("})")).match(/"\d00"/g) ?? [];
+    expect(weights.length).toBeGreaterThan(0);
+    for (const weight of weights) {
+      expect(["\"100\"", "\"200\"", "\"300\"", "\"400\"",
+              "\"500\"", "\"600\"", "\"700\""]).toContain(weight);
+    }
   });
 
   it("actually reaches the document via the html className", () => {
     // A font configured and never applied is a font that does not load.
-    expect(layout).toMatch(/className=\{`[^`]*\$\{anton\.variable\}[^`]*`\}/);
+    expect(layout).toMatch(/className=\{`[^`]*\$\{plexSans\.variable\}[^`]*`\}/);
   });
 
-  it("is what --font-display resolves to", () => {
-    // The indirection is what makes one edit change every heading; a page
-    // naming the face directly would drift from this.
+  it("resolves all three type ROLES to the one family", () => {
+    /* The roles survive the collapse to one face — a component asking for
+       `--font-mono` is still saying "this is a figure in a column", and that
+       stays worth reading whether or not the answer is a separate face. What
+       must not happen is a role pointing at a variable nothing emits, which is
+       what a half-finished swap leaves behind. */
     const css = readFileSync("app/globals.css", "utf8");
-    expect(css).toMatch(/--font-display:\s*var\(--font-display-anton\)/);
+    for (const role of ["--font-display", "--font-body", "--font-mono"]) {
+      expect(css).toMatch(new RegExp(`${role}:\\s*var\\(--font-plex-sans\\)`));
+    }
   });
 });
 
@@ -271,10 +294,10 @@ describe("the fixture-difficulty chip", () => {
   it("reuses the semantic three rather than inventing a fourth scale", () => {
     // Kind is agree, hard is noise, hardest is conflict. A separate palette for
     // fixtures would mean two colour languages on one screen.
-    expect(difficultyTint(1)[1]).toBe(FLOODLIT.agree);
-    expect(difficultyTint(2)[1]).toBe(FLOODLIT.agree);
-    expect(difficultyTint(4)[1]).toBe(FLOODLIT.noise);
-    expect(difficultyTint(5)[1]).toBe(FLOODLIT.conflict);
+    expect(difficultyTint(1)[1]).toBe(SIGNAL.agree);
+    expect(difficultyTint(2)[1]).toBe(SIGNAL.agree);
+    expect(difficultyTint(4)[1]).toBe(SIGNAL.noise);
+    expect(difficultyTint(5)[1]).toBe(SIGNAL.conflict);
   });
 
   it("separates a 1 from a 2 without a second green", () => {
@@ -294,7 +317,7 @@ describe("the fixture-difficulty chip", () => {
   it("gives a mid fixture plain ink, not a weak green", () => {
     // FDR 3 is the median rating and the most common one. Tinting it green would
     // make most of the league look kind.
-    expect(difficultyTint(3)[1]).toBe(FLOODLIT.ink2);
+    expect(difficultyTint(3)[1]).toBe(SIGNAL.ink2);
   });
 
   it("treats an unknown rating as mid rather than guessing an end", () => {
@@ -321,8 +344,8 @@ describe("the pitch", () => {
   it("is a distinct ground from the page and the bars on it", () => {
     // Eleven tiles on the page ground read as a list rather than as a team, so
     // the pitch has to be visibly its own surface — but only just.
-    expect(FLOODLIT.pitch).not.toBe(FLOODLIT.shell);
-    expect(FLOODLIT.pitch).not.toBe(FLOODLIT.bar);
+    expect(SIGNAL.pitch).not.toBe(SIGNAL.shell);
+    expect(SIGNAL.pitch).not.toBe(SIGNAL.bar);
   });
 
   it("is dark enough that the ink measured against the shell still reads on it", () => {
@@ -336,7 +359,7 @@ describe("the pitch", () => {
       };
       return 0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4);
     };
-    expect(luminance(FLOODLIT.pitch)).toBeLessThan(luminance(FLOODLIT.bar));
+    expect(luminance(SIGNAL.pitch)).toBeLessThan(luminance(SIGNAL.bar));
   });
 });
 
@@ -376,7 +399,7 @@ describe("the position hue", () => {
      * screen; a defender rendered in the same green as a kind fixture would be
      * two languages sharing a word.
      */
-    const taken = [FLOODLIT.agree, FLOODLIT.noise, FLOODLIT.conflict];
+    const taken = [SIGNAL.agree, SIGNAL.noise, SIGNAL.conflict];
     for (const p of ["GKP", "DEF", "MID", "FWD"]) {
       expect(taken, `${p} must not reuse a difficulty hue`).not.toContain(positionHue(p));
     }
@@ -385,8 +408,8 @@ describe("the position hue", () => {
   it("does not colour a position it does not recognise", () => {
     // An unknown line rendered in one of the four would state a membership the
     // data did not. It gets plain ink, which states nothing.
-    expect(positionHue("")).toBe(FLOODLIT.ink3);
-    expect(positionHue("MNG")).toBe(FLOODLIT.ink3);
+    expect(positionHue("")).toBe(SIGNAL.ink3);
+    expect(positionHue("MNG")).toBe(SIGNAL.ink3);
   });
 });
 
@@ -424,7 +447,7 @@ describe("the fixture-difficulty tile", () => {
      * figures at 2.06:1, and a plate edited by eye is exactly how that returns.
      */
     for (const fdr of [1, 2, 3, 4, 5]) {
-      const r = contrast(FLOODLIT.ink, difficultyTile(fdr));
+      const r = contrast(SIGNAL.ink, difficultyTile(fdr));
       expect(r, `FDR ${fdr} tile against the figure`).toBeGreaterThanOrEqual(4.5);
     }
   });
@@ -432,9 +455,9 @@ describe("the fixture-difficulty tile", () => {
   it("spends the most colour where a rating is actionable", () => {
     // FDR 3 is 45% of all fixtures. If it were as loud as 1 or 5 the board would
     // be a wall of colour, which is what the grid was redesigned away from.
-    const mid = contrast(FLOODLIT.ink, difficultyTile(3));
+    const mid = contrast(SIGNAL.ink, difficultyTile(3));
     for (const fdr of [1, 2, 4, 5]) {
-      expect(contrast(FLOODLIT.ink, difficultyTile(fdr)),
+      expect(contrast(SIGNAL.ink, difficultyTile(fdr)),
         `FDR ${fdr} is more present than the neutral middle`).toBeLessThan(mid);
     }
   });

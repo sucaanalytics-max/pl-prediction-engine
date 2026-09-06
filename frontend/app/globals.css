@@ -61,23 +61,23 @@
    * Both `:root` and `.dark` carry the same values, so a viewer whose stored
    * preference is "light" gets this set rather than a half-converted screen.
    */
-  --bg:            #0d1013;
-  --surface:       #14181d;
-  --surface2:      #1a1f26;
-  --border:        rgba(233, 238, 245, 0.075);
-  --border-strong: rgba(233, 238, 245, 0.17);
+  --bg:            #f1f2f4;
+  --surface:       #f8f9fb;
+  --surface2:      #e6e9ee;
+  --border:        rgba(20, 23, 28, 0.095);
+  --border-strong: rgba(20, 23, 28, 0.20);
 
   /* Text */
-  --text-1: #e9eef5;
-  --text-2: rgba(233, 238, 245, 0.72);
-  --text-3: rgba(233, 238, 245, 0.55);
-  --text-4: rgba(233, 238, 245, 0.26);
+  --text-1: #14171c;
+  --text-2: rgba(20, 23, 28, 0.72);
+  --text-3: rgba(20, 23, 28, 0.64);
+  --text-4: rgba(20, 23, 28, 0.26);
 
   /* Accent — agreement. SEMANTIC: this hue means "fine", and nothing else. */
-  --accent:        oklch(0.74 0.15 155);
+  --accent:        oklch(0.48 0.12 155);
   --accent-muted:  oklch(0.74 0.15 155 / 0.14);
   --accent-border: oklch(0.74 0.15 155 / 0.34);
-  --accent-text:   oklch(0.74 0.15 155);
+  --accent-text:   oklch(0.48 0.12 155);
 
   /* Brand — identity, and kept off the semantic hues on purpose.
    *
@@ -102,17 +102,17 @@
    * /markets, /players, /matches/[id], /health and /evidence. Those routes are the
    * ones the surface restructure removes -- 26 routes down to 4 -- so recolouring
    * them is work that gets deleted. They keep the green until they go. */
-  --brand:        oklch(0.8 0.08 250);
-  --brand-hover:  oklch(0.86 0.08 250);
-  --brand-muted:  oklch(0.8 0.08 250 / 0.12);
-  --brand-border: oklch(0.52 0.08 250);
+  --brand:        #14171c;
+  --brand-hover:  #000000;
+  --brand-muted:  rgba(20, 23, 28, 0.07);
+  --brand-border: rgba(20, 23, 28, 0.40);
 
   /* Prediction outcomes, on the semantic trio rather than a palette of their own */
-  --home:       oklch(0.82 0.14 155);
+  --home:       oklch(0.48 0.12 155);
   --home-muted: oklch(0.82 0.14 155 / 0.12);
-  --draw:       oklch(0.8 0.13 85);
+  --draw:       oklch(0.52 0.12 85);
   --draw-muted: oklch(0.8 0.13 85 / 0.12);
-  --away:       oklch(0.72 0.16 30);
+  --away:       oklch(0.50 0.17 30);
   --away-muted: oklch(0.72 0.16 30 / 0.12);
 
   /* Semantic status
@@ -124,10 +124,10 @@
    * screens happen not to draw a green edge is how the next person ends up
    * hand-rolling one. This is the deliberate exception to the rule that an unread
    * token is a dead token — every other one has been removed. */
-  --success: oklch(0.82 0.14 155); --success-muted: oklch(0.82 0.14 155 / 0.12); --success-border: oklch(0.5 0.12 155);
-  --warning: oklch(0.8 0.13 85);  --warning-muted: oklch(0.8 0.13 85 / 0.12);  --warning-border: oklch(0.5 0.1 85);
-  --error:   oklch(0.72 0.16 30);  --error-muted:   oklch(0.72 0.16 30 / 0.12);  --error-border:   oklch(0.5 0.12 30);
-  --info:    rgba(233, 238, 245, 0.72);              --info-muted:    rgba(233, 238, 245, 0.06);      --info-border:    rgba(233, 238, 245, 0.18);
+  --success: oklch(0.48 0.12 155); --success-muted: oklch(0.82 0.14 155 / 0.12); --success-border: oklch(0.38 0.10 155);
+  --warning: oklch(0.52 0.12 85);  --warning-muted: oklch(0.8 0.13 85 / 0.12);  --warning-border: oklch(0.42 0.10 85);
+  --error:   oklch(0.50 0.17 30);  --error-muted:   oklch(0.72 0.16 30 / 0.12);  --error-border:   oklch(0.40 0.12 30);
+  --info:    rgba(20, 23, 28, 0.72);                 --info-muted:    rgba(20, 23, 28, 0.05);         --info-border:    rgba(20, 23, 28, 0.20);
 
   /* Shadows and glows are retired.
      Kept as no-op variables rather than deleted: roughly forty rules across
@@ -139,9 +139,13 @@
   /* Chart */
 
   /* Fonts */
-  --font-display: var(--font-display-anton), 'Arial Narrow', system-ui, sans-serif;
-  --font-body:    var(--font-archivo), 'Helvetica Neue', system-ui, sans-serif;
-  --font-mono:    var(--font-dm-mono), ui-monospace, monospace;
+  /* One family, three roles. See lib/margin/tokens.ts: a column still lines up
+     because `font-variant-numeric: tabular-nums` is set on the body below, which
+     is where equal-width figures actually come from — not from a monospaced
+     face. The three names are kept because they are three ROLES a view spells. */
+  --font-display: var(--font-plex-sans), 'Helvetica Neue', system-ui, sans-serif;
+  --font-body:    var(--font-plex-sans), 'Helvetica Neue', system-ui, sans-serif;
+  --font-mono:    var(--font-plex-sans), 'Helvetica Neue', system-ui, sans-serif;
 
   /* Radii. Square, because a hairline rule reads as a boundary and a rounded
      corner reads as an object — and most of these panels are boundaries. */
@@ -151,78 +155,86 @@
   /* Flat. The two radial gradients this replaced put a green and a blue wash
      behind every page, which is a mood applied to a screen whose job is to
      report what is measured. */
-  --ambient-bg: #0d1013;
+  --ambient-bg: #f1f2f4;
 
   /* The chrome palette, now the same floodlit values as the page.
      It was a SEPARATE warm near-black (#14140f) back when the page could be
      cream: chrome that inverted with the theme would have read as a different
      application, so it stayed ink on both surfaces. Floodlit ended that — there
-     is one surface now, and a warm chrome beside a cool #14181d page read as two
-     designs bolted together.
+     is one surface now, and a warm chrome beside a cool page read as two designs
+     bolted together. Signal keeps that: `--chrome` is one step off `--bg` in the
+     same neutral, so the masthead reads as the same paper, raised.
      Kept as its own token set rather than deleted because the masthead is not
      the only consumer: the install card, the phone nav, the manifest's splash
      colour and the vice-captain panel all name these. Pointing them at floodlit
      moves all of it in one edit; deleting them is a wider change than this one. */
-  --chrome:        #14181d;
-  --chrome-ink:    #e9eef5;
+  --chrome:        #f8f9fb;
+  --chrome-ink:    #14171c;
   /* .72 and .55, tracking `--text-2`/`--text-3` deliberately.
    *
-   * These held .60 and .38 — the exact two alphas the page tiers were raised OFF,
-   * in the same commit that said the raise covered "both blocks of globals.css and
-   * FLOODLIT in tokens.ts, so the token and the variable cannot drift". There was a
-   * third block, and it drifted. Measured against `--chrome` (#14181d, not the
-   * shell): .38 was 3.24:1, failing 1.4.3 for normal text on the PWA prompt and the
-   * mobile nav; .55 is 5.38:1 and .72 is 8.37:1. */
-  --chrome-ink-2:  rgba(233, 238, 245, 0.72);
-  --chrome-ink-3:  rgba(233, 238, 245, 0.55);
-  --chrome-hair:   rgba(233, 238, 245, 0.13);
-  --chrome-accent: oklch(0.84 0.19 128);
+   * These held .60 and .38 on the dark surface — the exact two alphas the page
+   * tiers were raised OFF, in the same commit that said the raise covered "both
+   * blocks of globals.css and the surface in tokens.ts, so the token and the
+   * variable cannot drift". There was a third block, and it drifted.
+   *
+   * Re-measured for paper against `--chrome` (#f8f9fb, not the shell): .72 is
+   * 6.98:1 and .64 is 5.30:1. .55 does NOT survive the move — it measured 5.38:1
+   * on ink and measures 3.92:1 here, because compositing toward paper lightens
+   * ink where compositing toward ink lightens paper. That is why `--text-3` and
+   * this tier both went to .64 rather than being carried across unchanged. */
+  --chrome-ink-2:  rgba(20, 23, 28, 0.72);
+  --chrome-ink-3:  rgba(20, 23, 28, 0.64);
+  --chrome-hair:   rgba(20, 23, 28, 0.15);
+  /* The masthead accent is the ink. Signal spends no colour on chrome — see the
+     `brand` note in lib/margin/tokens.ts — so an active tab is weight and a
+     rule, and the countdown is simply the largest figure in the bar. */
+  --chrome-accent: #14171c;
 
   /* The ground the eleven stand on, on the call screen. Barely green — enough to
      say "pitch", not enough to compete with --accent, which on that screen has
-     to keep meaning "kind fixture". Kept in step with FLOODLIT.pitch in
+     to keep meaning "kind fixture". Kept in step with SIGNAL.pitch in
      lib/margin/tokens.ts. */
 }
 
 /* ── Ink (dark) ─────────────────────────────────────────────────────────────── */
 .dark {
-  --bg:            #0d1013;
-  --surface:       #14181d;
-  --surface2:      #1a1f26;
-  --border:        rgba(233, 238, 245, 0.075);
-  --border-strong: rgba(233, 238, 245, 0.17);
+  --bg:            #f1f2f4;
+  --surface:       #f8f9fb;
+  --surface2:      #e6e9ee;
+  --border:        rgba(20, 23, 28, 0.095);
+  --border-strong: rgba(20, 23, 28, 0.20);
 
-  --text-1: #e9eef5;
-  --text-2: rgba(233, 238, 245, 0.72);
-  --text-3: rgba(233, 238, 245, 0.55);
-  --text-4: rgba(233, 238, 245, 0.26);
+  --text-1: #14171c;
+  --text-2: rgba(20, 23, 28, 0.72);
+  --text-3: rgba(20, 23, 28, 0.64);
+  --text-4: rgba(20, 23, 28, 0.26);
 
-  --accent:        oklch(0.74 0.15 155);
+  --accent:        oklch(0.48 0.12 155);
   --accent-muted:  oklch(0.74 0.15 155 / 0.14);
   --accent-border: oklch(0.74 0.15 155 / 0.34);
-  --accent-text:   oklch(0.74 0.15 155);
+  --accent-text:   oklch(0.48 0.12 155);
 
   /* Brand on ink. A designed value, not the paper one inverted: lighter and
    * LESS saturated, because a chroma that reads as considered on paper reads as
    * a glow on black. */
-  --brand:        oklch(0.8 0.08 250);
-  --brand-hover:  oklch(0.86 0.08 250);
-  --brand-muted:  oklch(0.8 0.08 250 / 0.12);
-  --brand-border: oklch(0.52 0.08 250);
+  --brand:        #14171c;
+  --brand-hover:  #000000;
+  --brand-muted:  rgba(20, 23, 28, 0.07);
+  --brand-border: rgba(20, 23, 28, 0.40);
 
-  --home:       oklch(0.82 0.14 155);
+  --home:       oklch(0.48 0.12 155);
   --home-muted: oklch(0.82 0.14 155 / 0.12);
-  --draw:       oklch(0.8 0.13 85);
+  --draw:       oklch(0.52 0.12 85);
   --draw-muted: oklch(0.8 0.13 85 / 0.12);
-  --away:       oklch(0.72 0.16 30);
+  --away:       oklch(0.50 0.17 30);
   --away-muted: oklch(0.72 0.16 30 / 0.12);
 
-  --success: oklch(0.82 0.14 155); --success-muted: oklch(0.82 0.14 155 / 0.12); --success-border: oklch(0.5 0.12 155);
-  --warning: oklch(0.8 0.13 85);   --warning-muted: oklch(0.8 0.13 85 / 0.12);   --warning-border: oklch(0.5 0.1 85);
-  --error:   oklch(0.72 0.16 30);  --error-muted:   oklch(0.72 0.16 30 / 0.12);  --error-border:   oklch(0.5 0.12 30);
-  --info:    rgba(233, 238, 245, 0.72); --info-muted: rgba(233, 238, 245, 0.06); --info-border: rgba(233, 238, 245, 0.18);
+  --success: oklch(0.48 0.12 155); --success-muted: oklch(0.82 0.14 155 / 0.12); --success-border: oklch(0.38 0.10 155);
+  --warning: oklch(0.52 0.12 85);   --warning-muted: oklch(0.8 0.13 85 / 0.12);   --warning-border: oklch(0.42 0.10 85);
+  --error:   oklch(0.50 0.17 30);  --error-muted:   oklch(0.72 0.16 30 / 0.12);  --error-border:   oklch(0.40 0.12 30);
+  --info:    rgba(20, 23, 28, 0.72); --info-muted: rgba(20, 23, 28, 0.05); --info-border: rgba(20, 23, 28, 0.20);
 
-  --ambient-bg: #0d1013;
+  --ambient-bg: #f1f2f4;
   /* See :root — kept in both blocks because it is a surface colour, and
      `test/design-tokens.test.ts` requires every surface token in both. */
 }
@@ -325,7 +337,7 @@
   border-radius: 99px; 
   border: 1px solid var(--surface);
 }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::-webkit-scrollbar-thumb:hover { background: var(--brand); }
 
 /* ── Rich Animations ───────────────────────────────────────────────────────────────── */
 @keyframes slide-up {
@@ -358,7 +370,10 @@
      `overflow-x: auto` wrappers on HeatGrid, StatsTable and the eleven, and gets
      clipped exactly where the dense tables are — so the one place a keyboard
      user most needs it is where it disappeared. */
-  outline: 2px solid var(--accent);
+  /* --brand, not --accent: a focus ring is an affordance, not a verdict, and a
+     green one says "fine" about the act of focusing something. Ink measures
+     16.04:1 on this ground, comfortably past the 3:1 non-text floor. */
+  outline: 2px solid var(--brand);
   outline-offset: -2px;
   border-radius: 0;
 }
@@ -378,7 +393,7 @@ input[type="range"]::-webkit-slider-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--brand);
   cursor: pointer;
   border: 2px solid var(--surface);
 }
@@ -387,7 +402,7 @@ input[type="range"]::-moz-range-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--brand);
   cursor: pointer;
   border: 2px solid var(--surface);
 }
@@ -440,8 +455,14 @@ input[type="range"]::-moz-range-thumb {
  * user actually presses was never held to the rule that names it.
  *
  * `--brand-hover` and `--brand-border` were declared beside `--brand` for this and
- * had no reader; they do now. Measured: ink 9.94:1, hover 12.07:1, border 3.25:1
- * against the surface, so it clears 1.4.3 on both states and 1.4.11 on the edge. */
+ * had no reader; they do now.
+ *
+ * The LABEL is the page ground, not a near-black. It was a literal `#10141a`,
+ * chosen when `--brand` was a light lime and the button therefore needed dark
+ * type. Signal's brand is the ink, so that literal made the button ink on ink —
+ * invisible, and exactly the kind of break a hardcoded counterpart to a token
+ * produces when the token moves. Re-measured on paper: label on brand 16.04:1,
+ * border 5.55:1 against the surface, so it clears 1.4.3 and 1.4.11 with room. */
 .primary-action {
   display: inline-flex;
   align-items: center;
@@ -452,7 +473,7 @@ input[type="range"]::-moz-range-thumb {
   font-size: 12px;
   font-weight: 750;
   transition: transform .2s, background .2s, border-color .2s;
-  color: #10141a;
+  color: var(--bg);
   background: var(--brand);
   border: 1px solid var(--brand-border);
 }
@@ -477,7 +498,14 @@ input[type="range"]::-moz-range-thumb {
 .masthead-nav { display: flex; align-items: stretch; min-width: 0; overflow-x: auto; }
 .masthead-nav > a { display: flex; align-items: center; gap: 7px; padding: 0 13px; color: var(--text-2); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; box-shadow: inset 0 -2px 0 transparent; transition: color .18s, background .18s, box-shadow .18s; }
 .masthead-nav > a:hover { color: var(--text-1); background: var(--surface2); }
-.masthead-nav > a.active { color: var(--text-1); box-shadow: inset 0 -2px 0 var(--accent); }
+/* --brand, not --accent. An active tab is an IDENTITY role and --accent is the
+   semantic green, so this was the exact defect the brand token's docstring says
+   it was introduced to end: "a green nav tile and a green 'agrees with the
+   market' were the same colour". It survived unnoticed on the dark surface
+   because a lime-ish green there read as the app's own mark; on paper it reads
+   as a verdict about the page you are on. Signal's brand is the ink, so an
+   active tab is now weight plus a black rule. */
+.masthead-nav > a.active { color: var(--text-1); box-shadow: inset 0 -2px 0 var(--brand); }
 .masthead-right { display: flex; flex-shrink: 0; align-items: stretch; }
 /* The gameweek being played, beside the one being planned. Quieter than
    `.masthead-gw` in weight but carrying the only colour in the bar, because it
@@ -517,9 +545,14 @@ input[type="range"]::-moz-range-thumb {
   width: min(390px, calc(100vw - 36px));
   padding: 11px;
   color: var(--chrome-ink);
-  border: 1px solid var(--chrome-hair);
+  /* A rule and the chrome surface, not a hardcoded slab. This was
+     `rgba(7, 19, 15, .96)` — a near-black panel from the era when the chrome was
+     ink — and it survived the palette change as dark ink on a dark card, which
+     is to say an unreadable one. The border does the lifting off the page that
+     the dark fill used to. */
+  border: 1px solid var(--border-strong);
   border-radius: 0;
-  background: rgba(7, 19, 15, .96);
+  background: var(--chrome);
 }
 .pwa-install-icon { display: grid; place-items: center; width: 34px; height: 34px; color: var(--chrome); border-radius: 0; background: var(--chrome-accent); }
 .pwa-install-card > div { display: grid; gap: 2px; }
@@ -560,7 +593,7 @@ input[type="range"]::-moz-range-thumb {
     grid-template-columns: repeat(4, 1fr);
     padding: 7px 7px calc(7px + env(safe-area-inset-bottom));
     border-top: 1px solid rgba(255, 255, 255, .08);
-    background: rgba(7, 19, 15, .97);
+    background: var(--chrome);
   }
   /* 7px was the smallest text in the app, in the one place a phone user navigates
      from, and `rgba(255,255,255,.38)` measured 3.55:1 on this bar's own ground —
@@ -609,7 +642,7 @@ input[type="range"]::-moz-range-thumb {
  * rgba(0, 0, 0, 0). */
 .dense-row[data-swap="in"]   { background-color: rgba(120, 220, 140, 0.07); }
 .dense-row[data-swap="out"]  { background-color: rgba(255, 90, 70, 0.07); }
-.dense-row[data-owned="yes"] { background-color: rgba(233, 238, 245, 0.03); }
+.dense-row[data-owned="yes"] { background-color: rgba(20, 23, 28, 0.035); }
 
 /* An inset shadow, NOT a background, and that is the whole trick.
  *
@@ -623,7 +656,7 @@ input[type="range"]::-moz-range-thumb {
  * inset shadow does not compete with it, so the same one line works on all four
  * grids without a single `!important`. The 999px spread is the idiom for filling a
  * box of unknown height. */
-.dense-row:hover { box-shadow: inset 0 0 0 999px rgba(233, 238, 245, 0.055); }
+.dense-row:hover { box-shadow: inset 0 0 0 999px rgba(20, 23, 28, 0.045); }
 
 /* A STICKY HEADER IS NOT AVAILABLE HERE, and the reason is structural rather
  * than a matter of taste — recorded so the next person does not spend the

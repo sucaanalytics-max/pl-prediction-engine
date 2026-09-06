@@ -38,7 +38,7 @@
 
 import type React from "react";
 
-import { FLOODLIT, SANS } from "@/lib/margin/tokens";
+import { SIGNAL, SANS } from "@/lib/margin/tokens";
 
 /**
  * The small tracked uppercase label above a block.
@@ -127,6 +127,6 @@ export function Label(
   },
 ) {
   return (
-    <span style={{ ...EYEBROW, color: color ?? FLOODLIT.ink3 }}>{children}</span>
+    <span style={{ ...EYEBROW, color: color ?? SIGNAL.ink3 }}>{children}</span>
   );
 }

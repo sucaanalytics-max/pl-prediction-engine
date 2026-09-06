@@ -32,14 +32,14 @@ import { useDeferredValue, useMemo, useState } from "react";
 
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import type { Horizon, Projection } from "@/lib/data/projections";
-import { DISPLAY, FLOODLIT, MONO, SANS, HEAT, stepOf } from "@/lib/margin/tokens";
+import { DISPLAY, SIGNAL, MONO, SANS, HEAT, stepOf } from "@/lib/margin/tokens";
 import { Label } from "@/lib/margin/type";
 import {
   FIXED, HEAT_STEPS, POINT_BANDS, SPANS, bandOf, buildGridRows, findRuns,
   gridSummary, gridWeeks, type GridRow, type Span,
 } from "@/lib/projections/grid";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 type Scale = "absolute" | "week";
 type Sort = "total" | "now" | "tail";
@@ -56,7 +56,7 @@ function chip(on: boolean): React.CSSProperties {
     padding: "5px 9px",
     fontSize: 11,
     fontWeight: on ? 600 : 400,
-    background: on ? "rgba(233,238,245,.10)" : "transparent",
+    background: on ? "rgba(20,23,28,.10)" : "transparent",
     color: on ? S.ink : S.ink3,
     borderRight: `1px solid ${S.rule}`,
     cursor: "pointer",

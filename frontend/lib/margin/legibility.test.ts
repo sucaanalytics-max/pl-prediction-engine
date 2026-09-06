@@ -34,7 +34,7 @@ import { describe, expect, it } from "vitest";
 
 import { withoutComments } from "@/test/support/comments";
 
-import { FLOODLIT, surfaceIsLight, type MarginSurface } from "@/lib/margin/tokens";
+import { SIGNAL, surfaceIsLight, type MarginSurface } from "@/lib/margin/tokens";
 
 /**
  * The floor for anything that carries meaning.
@@ -55,7 +55,7 @@ const FLOOR = 11;
  * unchecked second surface is where a sub-3:1 label tone would hide.
  */
 const SURFACES: ReadonlyArray<readonly [string, MarginSurface]> = [
-  ["FLOODLIT", FLOODLIT],
+  ["SIGNAL", SIGNAL],
 ];
 
 /**
@@ -206,15 +206,16 @@ describe("the tones this board paints text with", () => {
     // The ratios above are computed against `shell` as the ground, and `hatch`
     // picks its stroke from `surfaceIsLight` reading that same field. If the two
     // disagreed, the hatch would be drawn to show against a ground these
-    // contrast figures were never measured on.
-    expect(surfaceIsLight(FLOODLIT)).toBe(false);
+    // contrast figures were never measured on. It answers TRUE now: the surface
+    // is paper, and this assertion moving is the whole redesign in one line.
+    expect(surfaceIsLight(SIGNAL)).toBe(true);
   });
 });
 
 /**
  * The stylesheet's own text tiers, which are the ones the browser actually paints.
  *
- * Everything above measures `FLOODLIT`, a TypeScript object. But two thirds of the
+ * Everything above measures `SIGNAL`, a TypeScript object. But two thirds of the
  * text in this app is coloured by `var(--text-3)` from `app/globals.css` — 67
  * occurrences against 10 for `--text-2` — and nothing read those declarations. So
  * the raise that took `--text-2` from .60 to .72 and `--text-3` from .38 to .55 was
@@ -223,7 +224,7 @@ describe("the tones this board paints text with", () => {
  *
  * This closes it from the other side: parse the declarations out of BOTH `:root`
  * and `.dark` — the file's own comment promises they carry the same values — and
- * require each to equal its `FLOODLIT` twin and clear the same floor. Spelling is
+ * require each to equal its `SIGNAL` twin and clear the same floor. Spelling is
  * normalised because the two sources disagree cosmetically and always have:
  * `rgba(233, 238, 245, 0.55)` in CSS against `rgba(233,238,245,.55)` in the token.
  */
@@ -259,11 +260,11 @@ describe("the stylesheet's text tiers match the tokens they mirror", () => {
   for (const selector of [":root", "\\.dark"] as const) {
     const label = selector === ":root" ? ":root" : ".dark";
 
-    it(`${label} declares the same four tones as FLOODLIT`, () => {
+    it(`${label} declares the same four tones as SIGNAL`, () => {
       const body = blockBody(css, selector);
       for (const [token, tone] of TIERS) {
-        expect(canonical(declared(body, token)), `${token} vs FLOODLIT.${tone}`)
-          .toBe(canonical(FLOODLIT[tone]));
+        expect(canonical(declared(body, token)), `${token} vs SIGNAL.${tone}`)
+          .toBe(canonical(SIGNAL[tone]));
       }
     });
 
@@ -273,7 +274,7 @@ describe("the stylesheet's text tiers match the tokens they mirror", () => {
       const body = blockBody(css, selector);
       for (const [token, , floor] of TIERS) {
         if (floor === 0) continue;
-        const r = ratio(declared(body, token), FLOODLIT)!;
+        const r = ratio(declared(body, token), SIGNAL)!;
         expect(r, `${token} is ${r.toFixed(2)}:1`).toBeGreaterThanOrEqual(floor);
       }
     });
@@ -284,14 +285,14 @@ describe("the stylesheet's text tiers match the tokens they mirror", () => {
    *
    * The masthead, the PWA prompt and the mobile nav are painted from
    * `--chrome-ink-*` over `--chrome` (#14181d), not over the shell — so neither the
-   * FLOODLIT measurements above nor the `--text-*` parity check could see them. They
+   * SIGNAL measurements above nor the `--text-*` parity check could see them. They
    * still held .60 and .38, the exact two alphas the page tiers were raised off, in
    * a commit whose message said the raise left nothing able to drift.
    */
   it("measures the chrome tier against the chrome ground, not the shell", () => {
     const body = blockBody(css, ":root");
     const ground = declared(body, "--chrome");
-    const chrome = { ...FLOODLIT, shell: ground };
+    const chrome = { ...SIGNAL, shell: ground };
     for (const token of ["--chrome-ink", "--chrome-ink-2", "--chrome-ink-3"]) {
       const r = ratio(declared(body, token), chrome)!;
       expect(r, `${token} is ${r.toFixed(2)}:1 on ${ground}`).toBeGreaterThanOrEqual(4.5);
@@ -299,7 +300,7 @@ describe("the stylesheet's text tiers match the tokens they mirror", () => {
   });
 
   it("keeps ink4 under the text floor, so rule 2 still has a reason", () => {
-    const r = ratio(declared(blockBody(css, ":root"), "--text-4"), FLOODLIT)!;
+    const r = ratio(declared(blockBody(css, ":root"), "--text-4"), SIGNAL)!;
     expect(r, `--text-4 is ${r.toFixed(2)}:1`).toBeLessThan(3);
   });
 });

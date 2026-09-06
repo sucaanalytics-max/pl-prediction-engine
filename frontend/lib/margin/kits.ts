@@ -57,7 +57,7 @@
  * field: **club colour paints geometry and never sits behind type.**
  */
 
-import { FLOODLIT } from "@/lib/margin/tokens";
+import { SIGNAL } from "@/lib/margin/tokens";
 
 /** Plain, vertically striped, or a diagonal sash. Enough to separate the reds. */
 export type KitPattern = "plain" | "stripes" | "sash";
@@ -103,31 +103,41 @@ export const KITS: Readonly<Record<string, Kit>> = {
 };
 
 /**
- * How far a shirt colour may be lightened toward the shell before it out-shouts type.
+ * How far a white shirt is pulled toward the ink before it stops being the page.
  *
- * The original shipped for two surfaces and muted DOWN toward a paper tint; that
- * surface no longer exists, and its surviving comment claimed a dark ground "needs
- * no equivalent". Measured, that is wrong on exactly three clubs. Fulham, Leeds and
- * Spurs are `#ffffff`, which is 19.08:1 against the shell — brighter than the app's
- * own primary ink at 16.37:1. Three shirts would be the loudest objects on the call
- * screen, louder than the player names beside them, which inverts the hierarchy the
- * mark exists to support: the club is context, the projection is the answer.
+ * The clamp survives the move to paper; its ARGUMENT inverts, and the fraction has
+ * to move with it. On the dark surface the three white shirts — Fulham, Leeds and
+ * Spurs — were the loudest objects on the call screen at 19.08:1, brighter than the
+ * app's own ink, and 0.84 pulled them under it. On paper `#ffffff` is 1.12:1 against
+ * the shell: the same three shirts are now the QUIETEST objects, indistinguishable
+ * from the paper they are printed on, and the same clamp at 0.84 lands them at
+ * #d4d5d6 / 1.31:1, which is still nothing.
  *
- * 0.84 lands those three at #d6d6d6 / 13.13:1 — under the ink, and still above the
- * next brightest club (Coventry at 11.23:1), so the ordering between shirts is
- * preserved and only the shouting is removed. No other club is touched.
+ * 0.50 lands them at #7f8184 / 3.49:1 — clear of the 3:1 graphical floor, and a mid
+ * grey rather than a dark one, so a white shirt still reads as the lightest kit on
+ * the board and the ordering between clubs is preserved. No other club is touched.
+ *
+ * Coventry's sky blue is 1.52:1 here and is deliberately NOT clamped, for the same
+ * reason Aston Villa's claret was not clamped on ink at 1.54:1: a shirt that is
+ * merely close to the ground is the OUTLINE's problem, and `KIT_OUTLINE` traces
+ * every shape at 5.14:1 whatever the fill does. Only the shirt that is literally the
+ * ground gets a fill adjustment.
  */
-export const KIT_CEILING = 0.84;
+export const KIT_CEILING = 0.5;
 
 /**
  * The silhouette's outline, fixed rather than derived from the club.
  *
- * Aston Villa's claret measures 1.54:1 against the shell and Newcastle's near-black
- * 1.17:1, so those two shirts are holes in the page without one. The original used
+ * On paper it is Coventry's sky blue at 1.52:1 and the three white shirts at 1.12:1
+ * that are holes in the page without one — the exact inverse of the dark surface,
+ * where Aston Villa's claret (1.54:1) and Newcastle's near-black (1.17:1) were the
+ * two that vanished and those two now measure 11.07:1 and 14.51:1. Which clubs need
+ * the outline changes with the ground; that every club has one does not, and that is
+ * the argument for a club-independent outline rather than a derived one. The original used
  * the surface hairline, `rgba(233,238,245,.075)`, which composites to 1.18:1 — an
  * invisible outline around an invisible shirt.
  *
- * A REFERENCE to `FLOODLIT.ink3`, not a copy of its value. It shipped as the literal
+ * A REFERENCE to `SIGNAL.ink3`, not a copy of its value. It shipped as the literal
  * `rgba(233, 238, 245, 0.38)` with a docstring calling it "a fixed ink3 outline at
  * 3.21:1" — and three commits later ink3 was raised from .38 to .55, so the literal
  * silently stopped being ink3 while the docstring went on claiming
@@ -138,14 +148,23 @@ export const KIT_CEILING = 0.84;
  * Club-independent by design: the SHAPE is then legible whatever the fill does,
  * which is a property a per-club outline could never promise.
  */
-export const KIT_OUTLINE = FLOODLIT.ink3;
+export const KIT_OUTLINE = SIGNAL.ink3;
 
-/** Clamp a colour that would sit brighter than type. Others pass through. */
+/**
+ * Clamp a colour that would sit brighter than type. Others pass through.
+ *
+ * Mixed toward `SIGNAL.ink`, not toward a literal. It shipped as `#0d1013` — the
+ * floodlit shell — which was the right direction on ink and the wrong one on
+ * paper: a white shirt mixed toward a light GROUND stays invisible, and the
+ * whole point of the clamp is to pull it away from whatever the page is. Ink is
+ * the thing it must move toward on either surface, and naming the token rather
+ * than the value is the same lesson `KIT_OUTLINE` above already learned.
+ */
 export function kitTone(colour: string): string {
-  // `color-mix` in oklab rather than sRGB: mixing toward the shell in sRGB darkens
-  // unevenly across hues and would break the lightness band the ceiling creates.
+  // `color-mix` in oklab rather than sRGB: mixing in sRGB shifts unevenly across
+  // hues and would break the lightness band the ceiling creates.
   return colour.toLowerCase() === "#ffffff"
-    ? `color-mix(in oklab, ${colour} ${Math.round(KIT_CEILING * 100)}%, #0d1013)`
+    ? `color-mix(in oklab, ${colour} ${Math.round(KIT_CEILING * 100)}%, ${SIGNAL.ink})`
     : colour;
 }
 

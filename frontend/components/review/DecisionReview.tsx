@@ -33,7 +33,7 @@
 import { useArtifact } from "@/lib/data/useArtifact";
 import { Section, StateCard, ProvenanceStrip } from "@/components/data/Artifact";
 import { proven } from "@/lib/data/artifact";
-import { FLOODLIT } from "@/lib/margin/tokens";
+import { SIGNAL } from "@/lib/margin/tokens";
 import {
   DECISION_REVIEW,
   nameOf,
@@ -47,7 +47,7 @@ import {
 const WITHHELD = "∅";
 
 /** The app's own semantic three. A verdict is a judgement, so it takes them. */
-const S = FLOODLIT;
+const S = SIGNAL;
 
 const VERDICT_COPY: Record<Verdict, { label: string; tone: string; gloss: string }> = {
   foreseeable: {
@@ -106,7 +106,7 @@ function VerdictChip({
   return (
     <span
       className="text-[11px] font-mono px-1.5 py-0.5"
-      style={{ color: copy.tone, background: "rgba(233,238,245,.06)" }}
+      style={{ color: copy.tone, background: "rgba(20,23,28,.06)" }}
       title={copy.gloss}
     >
       {copy.label}
@@ -121,7 +121,7 @@ function BenchRow({ call, review }: { call: BenchCall; review: Review }) {
   return (
     <li
       className="flex items-baseline justify-between gap-3 flex-wrap py-1.5"
-      style={{ borderTop: "1px solid rgba(233,238,245,.07)" }}
+      style={{ borderTop: "1px solid rgba(20,23,28,.07)" }}
       data-testid="bench-call"
     >
       <span className="text-xs" style={{ color: "var(--text-2)" }}>
@@ -202,7 +202,7 @@ function Week({ week, review }: { week: GameweekReview; review: Review }) {
       {captain ? (
         <p
           className="text-xs pt-2"
-          style={{ color: "var(--text-3)", borderTop: "1px solid rgba(233,238,245,.07)" }}
+          style={{ color: "var(--text-3)", borderTop: "1px solid rgba(20,23,28,.07)" }}
         >
           {captain.agreed === null ? (
             <>

@@ -28,10 +28,10 @@
  * means "no move needed".
  */
 
-import { DISPLAY, FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
+import { DISPLAY, SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
 import { EYEBROW } from "@/lib/margin/type";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 function Tile({
   label, children, note, testId,

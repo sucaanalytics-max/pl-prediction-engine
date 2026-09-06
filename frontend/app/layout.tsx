@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, Archivo, DM_Mono } from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -7,68 +7,43 @@ import PwaManager from "@/components/PwaManager";
 import { Providers } from "./providers";
 
 /**
- * Archivo and DM Mono, app-wide — the pair the redesign was drawn in.
+ * IBM Plex Sans, app-wide, and the only face the app loads.
  *
- * IBM Plex Sans and Mono were here, and were kept through the floodlit palette
- * change on the argument that Plex Mono's figures were what let a column of
- * projections compare by eye. That argument was sound about mono figures in
- * general and wrong about which face: the artboards this app is being built from
- * are set in Archivo and DM Mono, so shipping Plex meant every screen was a near
- * miss of its own design — the single largest reason the running app did not look
- * like the thing that was approved.
+ * Signal's typographic claim is that one family does every job: `MONO`, `SANS`
+ * and `DISPLAY` in `lib/margin/tokens.ts` all resolve to this variable, and a
+ * figure is separated from its label by weight rather than by shape.
  *
- * DM Mono keeps what Plex Mono was chosen for. It is monospaced with tabular
- * figures by construction, so a heat grid's columns still line up; it is drawn
- * lighter and narrower, which is what lets a 10px figure sit inside a 24px cell
- * without crowding the colour it sits on.
+ * ## What this removes, and why none of it is lost
  *
- * Archivo replaces Plex Sans for the same reason and one more: it is a grotesque
- * with a genuine 600, so an uppercase tracked label reads as apparatus at 9px
- * without needing a mono face to carry it.
+ * Anton, Archivo and DM Mono were the floodlit set — a condensed poster face for
+ * the one big figure, a grotesque for prose, a monospace for columns. All three
+ * were chosen against a dark scoreboard surface that no longer exists.
  *
- * ## Weights, and the one that had to move
+ * DM Mono was carried for equal-width FIGURES so a projection column compares by
+ * eye. That property belongs to `font-variant-numeric: tabular-nums`, which
+ * `globals.css` sets on the body and which Plex answers; what a monospaced face
+ * adds beyond it is equal-width letters, which nothing here needed and which is
+ * what made every tracked label read as a terminal.
  *
- * DM Mono publishes 300, 400 and 500 — there is no 600, 700 or 800. Plex Mono had
- * them and a handful of rules asked for 700 and 800, which a browser would
- * synthesise into a faux bold that thickens the stroke without changing the
- * skeleton. Those rules now ask for 500 and the emphasis they wanted comes from
- * Anton or from case and tracking, which is how the artboards do it.
+ * Anton set the single figure a screen delivers. On paper that figure is set
+ * large in this family at 600 and the SIZE does the work the condensed face used
+ * to do with weight and width.
  *
- * Italic is loaded on Archivo because it carries the typographic hedge this app
- * puts on a heuristic number, which is a real distinction and not decoration.
+ * Weights 400–700 are all loaded because one family now has to cover apparatus
+ * (400/500), labels and emphasis (600) and the display figure (700) — the four
+ * the stylesheet and the components actually name. Italic carries the
+ * typographic hedge this app puts on a heuristic number, which is a real
+ * distinction and not decoration, so it comes too.
+ *
+ * IBM Plex Sans was in this file once before and was removed for looking like a
+ * near miss of artboards drawn in Archivo. It returns because the artboards
+ * changed: Signal is drawn in Plex, and the app and its design agree again.
  */
-const archivo = Archivo({
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
-  variable: "--font-archivo",
-  display: "swap",
-});
-
-const dmMono = DM_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-dm-mono",
-  display: "swap",
-});
-
-/**
- * The display face, and the one typographic change in the floodlit redesign.
- *
- * Newsreader was a serif built for reading at length, which suited a surface
- * that no longer exists. Anton is a heavy condensed grotesque — back-page
- * scoreboard rather than book page — and it does one job: the single figure a
- * screen exists to deliver, at a size nothing else competes with.
- *
- * It is the one face the artboards and the old app already agreed on, which is
- * why it survived the type swap above unchanged.
- *
- * Anton ships a single weight by design, so there is no 400/500 pair to load.
- */
-const anton = Anton({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-display-anton",
+  variable: "--font-plex-sans",
   display: "swap",
 });
 
@@ -113,11 +88,11 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${archivo.variable} ${dmMono.variable} ${anton.variable}`}
+      className={`${plexSans.variable}`}
     >
       <head>
         {/* The chrome colour — see `--chrome`, and keep the two in step. */}
-        <meta name="theme-color" content="#14181d" />
+        <meta name="theme-color" content="#f1f2f4" />
         {/*
           Wrangler's production bundling preserves function names inside the
           next-themes bootstrap before that function is serialized as an inline

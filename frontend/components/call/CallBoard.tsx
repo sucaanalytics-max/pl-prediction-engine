@@ -41,7 +41,7 @@ import {
   COUNTING_RULE, asPickedTotal, optimiseXi, pointsFrom, projectedTotal, xiProblems,
 } from "@/lib/margin/planner";
 import { joinProjections, type SquadRow } from "@/lib/margin/squad";
-import { FLOODLIT, MONO } from "@/lib/margin/tokens";
+import { SIGNAL, MONO } from "@/lib/margin/tokens";
 import { EYEBROW } from "@/lib/margin/type";
 import { calloutsFor, shapeOf, swapFrom, swapSentence } from "@/lib/call/board";
 import { Eleven } from "@/components/call/Eleven";
@@ -49,7 +49,7 @@ import { Pitch, type PitchMode } from "@/components/call/Pitch";
 import { Rail, type HorizonScale } from "@/components/call/Rail";
 import { Tiles } from "@/components/call/Tiles";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 function Line({ children }: { children: React.ReactNode }) {
   // One line, never a panel: the rule from the usable-surface spec is that an
@@ -255,7 +255,7 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
                   style={{
                     padding: "4px 9px", fontSize: 11,
                     fontWeight: view === key ? 600 : 400,
-                    background: view === key ? "rgba(233,238,245,.10)" : "transparent",
+                    background: view === key ? "rgba(20,23,28,.10)" : "transparent",
                     color: view === key ? S.ink : S.ink3,
                     // No `border: 0` after this. React assigns style keys in insertion
                 // order, so the shorthand landed last and reset the divider to

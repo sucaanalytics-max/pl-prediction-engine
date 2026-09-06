@@ -17,10 +17,10 @@ import { proven } from "@/lib/data/artifact";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
-import { FLOODLIT, MONO } from "@/lib/margin/tokens";
+import { SIGNAL, MONO } from "@/lib/margin/tokens";
 import { HeatGrid } from "@/components/projections/HeatGrid";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 function Note({ children }: { children: React.ReactNode }) {
   return (

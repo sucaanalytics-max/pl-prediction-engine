@@ -33,9 +33,9 @@ import { useArtifact } from "@/lib/data/useArtifact";
 import { proven } from "@/lib/data/artifact";
 import { REGISTRY } from "@/lib/data/narrow";
 import { StateCard } from "@/components/data/Artifact";
-import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
+import { SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 /** One decimal, or an em dash — never a substituted zero. */
 function num(value: number | null, digits = 2): string {

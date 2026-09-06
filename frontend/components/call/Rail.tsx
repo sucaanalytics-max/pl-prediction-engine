@@ -31,12 +31,12 @@
 
 import type { Horizon } from "@/lib/data/projections";
 import type { SquadRow } from "@/lib/margin/squad";
-import { FLOODLIT, MONO, SANS, HEAT, stepOf } from "@/lib/margin/tokens";
+import { SIGNAL, MONO, SANS, HEAT, stepOf } from "@/lib/margin/tokens";
 import { EYEBROW } from "@/lib/margin/type";
 import { FIXED, HEAT_STEPS, POINT_BANDS, bandOf } from "@/lib/projections/grid";
 import type { Callout } from "@/lib/call/board";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 const BADGE_COLOUR: Record<Callout["kind"], string> = {
   widest: S.brand,
@@ -158,7 +158,7 @@ export function Rail({
               style={{
                 padding: "4px 9px", fontSize: 11,
                 fontWeight: scale === key ? 600 : 400,
-                background: scale === key ? "rgba(233,238,245,.10)" : "transparent",
+                background: scale === key ? "rgba(20,23,28,.10)" : "transparent",
                 color: scale === key ? S.ink : S.ink3,
                 // No `border: 0` after this. React assigns style keys in insertion
                 // order, so the shorthand landed last and reset the divider to

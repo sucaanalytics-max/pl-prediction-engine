@@ -106,9 +106,23 @@ describe("verdicts keep the semantic hue", () => {
      split it demonstrated is still asserted from both sides — no identity role may
      regress onto --accent, and both hues must stay defined. */
 
-  it("still defines both hues, so neither role is homeless", () => {
+  it("still defines both roles, so neither is homeless", () => {
+    /* `--brand` asserted an oklch at hue 250 — a blue identity. Signal has no
+       identity hue at all: the brand is the ink, because a surface that spends
+       colour only on data cannot also spend it on a wordmark. See the `brand`
+       token in lib/margin/tokens.ts.
+
+       The split this file exists to protect is unchanged and is still asserted
+       from both sides: an identity role may not regress onto --accent, and both
+       roles must stay defined. What moved is only that one of the two is now
+       stated as a value rather than as a hue — so this checks that --brand is
+       defined and is NOT the semantic green, which is the failure that would
+       actually matter. */
     const css = read("app/globals.css");
     expect(css).toMatch(/--accent:\s+oklch\([^)]*155\)/);
-    expect(css).toMatch(/--brand:\s+oklch\([^)]*250\)/);
+    const brand = /--brand:\s*([^;]+);/.exec(css)?.[1]?.trim();
+    expect(brand, "--brand is not defined").toBeTruthy();
+    expect(brand).not.toMatch(/155/);
+    expect(brand).not.toMatch(/oklch/);
   });
 });

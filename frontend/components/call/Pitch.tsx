@@ -30,12 +30,12 @@
  */
 
 import type { SquadRow } from "@/lib/margin/squad";
-import { DISPLAY, FLOODLIT, MONO, SANS, difficultyTint } from "@/lib/margin/tokens";
+import { DISPLAY, SIGNAL, MONO, SANS, difficultyTint } from "@/lib/margin/tokens";
 import { EYEBROW } from "@/lib/margin/type";
 import { byLine, intervalBar } from "@/lib/call/board";
 import { KitMark } from "@/components/margin/KitMark";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 /**
  * The haul chance at which the ring lights up.
@@ -58,7 +58,7 @@ function Ring({ haul }: { haul: number | null }) {
         width: 20, height: 20, flexShrink: 0, borderRadius: "50%",
         display: "flex", alignItems: "center", justifyContent: "center",
         fontFamily: MONO, fontSize: 11,
-        border: `1.5px solid ${hot ? S.brand : "rgba(233,238,245,.22)"}`,
+        border: `1.5px solid ${hot ? S.brand : "rgba(20,23,28,.22)"}`,
         color: hot ? S.brand : S.ink3,
       }}
     >
@@ -120,7 +120,7 @@ function Tile({
         width: benched ? 158 : 150,
         padding: "8px 9px 7px",
         textAlign: "left",
-        background: benched ? "rgba(233,238,245,.03)" : S.bar,
+        background: benched ? "rgba(20,23,28,.03)" : S.bar,
         border: `1px solid ${isCaptain ? S.brand : S.hair}`,
         // No bench dim — see the note in `Eleven.tsx`. Measured at 3.40:1 for
         // every ink3 figure in a benched row, and the bench strip is already its
@@ -185,7 +185,7 @@ function Tile({
           bar is drawn off-centre. */}
       <span style={{
         display: "block", height: 3, marginTop: 6,
-        background: bar === null ? "transparent" : "rgba(233,238,245,.09)",
+        background: bar === null ? "transparent" : "rgba(20,23,28,.09)",
       }}>
         {bar === null ? null : (
           <span
@@ -198,7 +198,7 @@ function Tile({
             style={{
               display: "block", height: 3, marginLeft: `${bar.left}%`,
               width: `${bar.width}%`,
-              background: hot ? S.brand : "rgba(233,238,245,.34)",
+              background: hot ? S.brand : "rgba(20,23,28,.34)",
             }}
           />
         )}
@@ -255,7 +255,7 @@ export function Pitch({
               style={{
                 padding: "4px 9px", fontSize: 11,
                 fontWeight: mode === key ? 600 : 400,
-                background: mode === key ? "rgba(233,238,245,.10)" : "transparent",
+                background: mode === key ? "rgba(20,23,28,.10)" : "transparent",
                 color: mode === key ? S.ink : S.ink3,
                 // No `border: 0` after this. React assigns style keys in insertion
                 // order, so the shorthand landed last and reset the divider to

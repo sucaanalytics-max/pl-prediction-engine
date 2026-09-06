@@ -52,11 +52,11 @@ const ROOT = process.cwd();
  * are real at run time and absent from the CSS source.
  */
 const ALLOWED: Record<string, string> = {
-  "--font-archivo": "emitted onto <html> by next/font in app/layout.tsx",
-  "--font-dm-mono": "emitted onto <html> by next/font in app/layout.tsx",
-  // Emitted the same way (layout.tsx:71) and used only from globals.css, so it
-  // was invisible until this guard started reading the stylesheet.
-  "--font-display-anton": "emitted onto <html> by next/font in app/layout.tsx",
+  // The only face the app loads. Three allowances stood here — Archivo, DM Mono
+  // and Anton — and all three went when the surface went to paper; see the
+  // loader's docstring in app/layout.tsx for why one family now covers the three
+  // roles. The pair of tests below is what caught the stale entries.
+  "--font-plex-sans": "emitted onto <html> by next/font in app/layout.tsx",
 };
 
 function sources(): string[] {
@@ -322,16 +322,26 @@ describe("the base face is the body face", () => {
     expect(body).not.toContain("var(--font-display)");
   });
 
-  it("has --font-body and --font-display resolve to different faces", () => {
-    // Guards the guard: if both pointed at the same variable the test above would
-    // pass while every string on every screen was still in the display face.
+  it("has every type role resolve to a face the layout actually emits", () => {
+    /* This asserted that --font-body and --font-display pointed at DIFFERENT
+       variables. That was guarding a real defect — the body once inherited the
+       display face, so every unstyled string on every screen was set in a heavy
+       condensed poster face — but it guarded it by proxy, and the proxy stopped
+       being true when Signal collapsed the three faces into one family.
+
+       The defect it was really protecting against is the body silently taking
+       the display ROLE, and the test above this one asserts that directly:
+       `body` must name `var(--font-body)` and must not name `var(--font-display)`.
+       What is left for this one to add is that all three roles resolve to a
+       variable something emits, rather than to a name nothing defines. */
     const root = stripped.slice(
       stripped.indexOf(":root"), stripped.indexOf("}", stripped.indexOf(":root")),
     );
-    const bodyVar = /--font-body:\s*var\((--font-[a-z-]+)\)/.exec(root)?.[1];
-    const displayVar = /--font-display:\s*var\((--font-[a-z-]+)\)/.exec(root)?.[1];
-    expect(bodyVar).toBeTruthy();
-    expect(displayVar).toBeTruthy();
-    expect(bodyVar).not.toBe(displayVar);
+    for (const role of ["--font-body", "--font-display", "--font-mono"]) {
+      const named = new RegExp(`${role}:\\s*var\\((--font-[a-z-]+)\\)`).exec(root)?.[1];
+      expect(named, `${role} does not name a face variable`).toBeTruthy();
+      expect(Object.keys(ALLOWED), `${role} names ${named}, which the layout does not emit`)
+        .toContain(named);
+    }
   });
 });

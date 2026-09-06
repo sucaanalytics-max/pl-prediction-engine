@@ -54,10 +54,10 @@ import type { Projection } from "@/lib/data/projections";
 import {
   compare, leaders, METRICS, unpublishedMetrics, type Metric,
 } from "@/lib/margin/compare";
-import { FLOODLIT, MONO, SANS } from "@/lib/margin/tokens";
+import { SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
 import { MarginState, Nil } from "@/components/margin/Marks";
 
-const S = FLOODLIT;
+const S = SIGNAL;
 
 /** Where the forecast ends and the record begins. */
 const RECORD_STARTS_AT = "minutes";

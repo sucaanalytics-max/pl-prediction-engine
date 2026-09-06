@@ -124,7 +124,7 @@ export function KitMark({
           <pattern id="kit-unknown" width="8" height="8" patternUnits="userSpaceOnUse"
                    patternTransform="rotate(45)">
             <rect width="8" height="8" fill="transparent" />
-            <rect width="4" height="8" fill="rgba(233,238,245,.14)" />
+            <rect width="4" height="8" fill="rgba(20,23,28,.14)" />
           </pattern>
         )}
       </defs>

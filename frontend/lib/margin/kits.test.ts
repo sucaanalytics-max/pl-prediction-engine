@@ -20,10 +20,14 @@ import {
   kitTone,
   type Kit,
 } from "@/lib/margin/kits";
-import { FLOODLIT } from "@/lib/margin/tokens";
+import { SIGNAL } from "@/lib/margin/tokens";
 
-const SHELL: RGB = [13, 16, 19]; // #0d1013
-const INK: RGB = [233, 238, 245]; // #e9eef5
+// Derived from the token, not copied from it. This shipped as a literal
+// `[13, 16, 19]` and went on measuring every claim in this file against a shell
+// the app had stopped using, which is the same defect `KIT_OUTLINE` was written
+// to avoid one file over.
+const SHELL: RGB = hex(SIGNAL.shell);
+const INK: RGB = hex(SIGNAL.ink);
 
 type RGB = readonly [number, number, number];
 
@@ -80,15 +84,18 @@ describe("the map covers the league as the artifacts spell it", () => {
 describe("no shirt is louder than the player's own name", () => {
   const inkVsShell = ratio(INK, SHELL);
 
-  it("the ink sets the ceiling at 16.37:1", () => {
-    expect(inkVsShell).toBeCloseTo(16.37, 1);
+  it("the ink sets the ceiling at 16.04:1", () => {
+    expect(inkVsShell).toBeCloseTo(16.04, 1);
   });
 
-  it("clamps the three white clubs, which would otherwise beat it", () => {
-    // Fulham, Leeds and Spurs are #ffffff — 19.08:1, brighter than type. That
-    // inverts the hierarchy the mark exists to support.
+  it("clamps the three white clubs, which would otherwise be the paper", () => {
+    // Fulham, Leeds and Spurs are #ffffff. On ink they were 19.08:1 and the
+    // clamp existed to stop them beating type; on paper they are 1.12:1 and the
+    // clamp exists to stop them disappearing into it. Same three clubs, same
+    // mechanism, opposite complaint — which is why the assertion below tests the
+    // GRAPHICAL FLOOR rather than the ink, and holds on either ground.
     for (const code of ["FUL", "LEE", "TOT"]) {
-      expect(ratio(hex(KITS[code].primary), SHELL)).toBeGreaterThan(inkVsShell);
+      expect(ratio(hex(KITS[code].primary), SHELL)).toBeLessThan(3);
       expect(kitTone(KITS[code].primary)).toContain("color-mix");
     }
   });
@@ -105,22 +112,30 @@ describe("no shirt is louder than the player's own name", () => {
     expect(kitTone("#ffffff")).toContain("in oklab");
   });
 
-  it("keeps the ceiling above the next brightest club", () => {
-    // 0.84 lands white at about 13.1:1; Coventry is 11.23:1. If the ceiling fell
-    // below Coventry the ordering between shirts would invert.
-    const coventry = ratio(hex(KITS.COV.primary), SHELL);
-    expect(coventry).toBeLessThan(13.2);
-    expect(KIT_CEILING).toBeGreaterThan(0.8);
-    expect(KIT_CEILING).toBeLessThan(0.9);
+  it("pulls a white shirt clear of the paper without making it a dark one", () => {
+    // On paper the clamp fights the opposite problem: `#ffffff` is 1.12:1 against
+    // the shell, so the three white shirts are the page rather than objects on it.
+    // 0.50 lands them at 3.49:1 — over the graphical floor, and still the lightest
+    // kit on the board, so the ordering between clubs survives the clamp.
+    expect(ratio(hex("#ffffff"), SHELL)).toBeLessThan(1.2);
+    expect(KIT_CEILING).toBeGreaterThan(0.4);
+    expect(KIT_CEILING).toBeLessThan(0.6);
   });
 });
 
 describe("no shirt is a hole in the page", () => {
-  it("names the two clubs that vanish without an outline", () => {
-    // Villa claret and Newcastle near-black. Recorded so a palette edit that
-    // "fixes" them by brightening has to argue with this test.
-    expect(ratio(hex(KITS.AVL.primary), SHELL)).toBeLessThan(1.6);
-    expect(ratio(hex(KITS.NEW.primary), SHELL)).toBeLessThan(1.3);
+  it("names the clubs that vanish without an outline", () => {
+    // Coventry's sky blue and the three white shirts. Recorded so a palette edit
+    // that "fixes" them by darkening has to argue with this test.
+    //
+    // This list INVERTED when the surface went to paper: it was Villa's claret
+    // (1.54:1) and Newcastle's near-black (1.17:1), and those two now measure
+    // 11.07:1 and 14.51:1 — the strongest marks on the board. The outline is
+    // club-independent precisely so that swap cost nothing.
+    expect(ratio(hex(KITS.COV.primary), SHELL)).toBeLessThan(1.6);
+    expect(ratio(hex(KITS.TOT.primary), SHELL)).toBeLessThan(1.2);
+    expect(ratio(hex(KITS.AVL.primary), SHELL)).toBeGreaterThan(10);
+    expect(ratio(hex(KITS.NEW.primary), SHELL)).toBeGreaterThan(10);
   });
 
   it("gives every shirt an outline that clears the 3:1 graphical floor", () => {
@@ -216,15 +231,22 @@ describe("the outline tracks the palette rather than copying it", () => {
     // the literal silently stopped being ink3, while the docstring went on citing a
     // certification that no longer applied to it. An identity assertion is the only
     // thing that makes "fixed" mean "fixed to the token".
-    expect(KIT_OUTLINE).toBe(FLOODLIT.ink3);
+    expect(KIT_OUTLINE).toBe(SIGNAL.ink3);
   });
 
   it("clears the 3:1 graphical floor on the shell it is drawn against", () => {
-    // The outline is the whole reason AVL (1.54:1) and NEW (1.17:1) are visible at
-    // all, so this is the assertion the mark's legibility actually rests on. Read
-    // the alpha off the token rather than restating it — restating it is exactly how
-    // the literal drifted.
-    const alpha = Number(/,\s*\.?([0-9.]+)\s*\)$/.exec(KIT_OUTLINE)![1].replace(/^\./, "0."));
+    // The outline is the whole reason COV (1.52:1) and the three white shirts
+    // (1.12:1) are visible at all, so this is the assertion the mark's legibility
+    // actually rests on. Read the alpha off the token rather than restating it —
+    // restating it is exactly how the literal drifted.
+    //
+    // The dot is INSIDE the capture. It was outside it — `\.?([0-9.]+)` — so the
+    // group caught "64" from ".64", the `replace` below never fired because the
+    // string no longer began with a dot, and the alpha came through as 64. On the
+    // dark shell that overshot into a huge luminance and the assertion passed for
+    // the wrong reason; on paper the same arithmetic goes negative and it does not.
+    // The test was never measuring the outline. Now it is.
+    const alpha = Number(/,\s*(\.?[0-9.]+)\s*\)$/.exec(KIT_OUTLINE)![1].replace(/^\./, "0."));
     expect(alpha, "could not read the outline's alpha").toBeGreaterThan(0);
     expect(ratio(over(INK, alpha, SHELL), SHELL)).toBeGreaterThanOrEqual(3);
   });
