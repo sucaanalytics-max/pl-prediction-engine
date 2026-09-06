@@ -262,6 +262,32 @@ export function buildPlanGrid(
   rows.sort((a, b) => {
     const line = (ORDER[a.position] ?? 9) - (ORDER[b.position] ?? 9);
     if (line !== 0) return line;
+    // Your team above the proposals, INSIDE each line. Sorting on name alone
+    // interleaved them, so the defenders read Kadıoğlu, Gabriel, Hill, Keane,
+    // Palestra, Tarkowski, Thiaw, Thomas — four of yours and three the plan
+    // would buy, shuffled — and "who do I actually have at the back" meant
+    // reading the ownership rail on every row.
+    if (a.owned !== b.owned) return a.owned ? -1 : 1;
+
+    // Then xP, highest first — and specifically the FIRST xP the row actually
+    // renders, which is the week the player joins the squad. For your team that
+    // is this gameweek; for a proposal it is the week he arrives, which is the
+    // number that makes him worth buying.
+    //
+    // Not week 0's, which was the first attempt and is invisible on half the
+    // board: a player bought in GW7 has a bare GW4 cell, so ranking him by a GW4
+    // figure put him above a visible 4.0 while displaying nothing at all. An
+    // order you cannot check by looking down the column is not an order.
+    //
+    // A row that renders no figure anywhere — someone sold this week, who is
+    // owned but in no future squad — sorts last in his group. Null is not zero
+    // and cannot be ranked; last is also where a player on his way out belongs.
+    const rank = (row: PlanRow) => {
+      const shown = row.cells.find((c) => !c.off && c.xp !== null);
+      return shown?.xp ?? Number.NEGATIVE_INFINITY;
+    };
+    const points = rank(b) - rank(a);
+    if (points !== 0) return points;
     return a.name.localeCompare(b.name);
   });
 

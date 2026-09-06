@@ -432,3 +432,148 @@ describe("your team versus what the plan buys", () => {
     expect(grid.rows.length).toBe(5);
   });
 });
+
+
+describe("reading order inside a line", () => {
+  /**
+   * Position, then ownership, then expected points.
+   *
+   * Name got the first two wrong in different ways: it interleaved your team
+   * with the plan's proposals, and within each group it ordered by spelling,
+   * which is information about nobody. The defenders read Kadıoğlu, Gabriel,
+   * Hill, Keane, Palestra, Tarkowski, Thiaw, Thomas — four of yours and three
+   * proposals shuffled, in an order that said nothing about which was better.
+   *
+   * xP is THIS gameweek's, the same figure in the first column, so the ordering
+   * is one the reader can check by looking down it.
+   */
+
+  function at(id: number, name: string, position: string, xp: number) {
+    return { ...projection(id, name, position), xp };
+  }
+
+  it("puts your team above the plan's proposals", () => {
+    // Adams sorts first by name and scores highest; he is still a proposal.
+    const horizon = {
+      ...artifact()!.horizon!,
+      weeks: artifact()!.horizon!.weeks.map((w, i) =>
+        i === 0 ? w : { ...w, squad: [...w.squad, 6], bench: [...w.bench, 6] }),
+    };
+    // Adams joins in GW4, so GW4 is the week his row first shows a figure.
+    const grid = buildPlanGrid(horizon, [...NAMES, at(6, "Adams", "MID", 9.9)], {
+      nDraws: 5000, weeks: [{ gameweek: 4, xp: new Map([[5, 5.0], [6, 9.9]]) }],
+    });
+    const mids = grid.rows.filter((r) => r.position === "MID");
+    expect(mids[0].name).toBe("Palmer");
+    expect(mids[0].owned).toBe(true);
+    // The point: Adams outscores Palmer 9.9 to 5.0 and is still below him,
+    // because ownership outranks points. He leads the proposals, not the line.
+    expect(mids.findIndex((r) => r.name === "Adams"))
+      .toBeGreaterThan(mids.findIndex((r) => r.name === "Palmer"));
+    expect(mids.filter((r) => !r.owned)[0].name).toBe("Adams");
+  });
+
+  it("orders each group by the first figure it shows, highest first", () => {
+    const horizon = {
+      ...artifact()!.horizon!,
+      weeks: artifact()!.horizon!.weeks.map((w, i) =>
+        i === 0 ? w : { ...w, squad: [...w.squad, 6, 7], bench: [...w.bench, 6, 7] }),
+    };
+    const grid = buildPlanGrid(horizon, [
+      ...NAMES, at(6, "Adams", "MID", 2.0), at(7, "Zane", "MID", 7.5),
+    ], {
+      nDraws: 5000,
+      weeks: [{ gameweek: 4, xp: new Map([[5, 5.0], [6, 2.0], [7, 7.5]]) }],
+    });
+    const incoming = grid.rows
+      .filter((r) => r.position === "MID" && !r.owned)
+      .map((r) => r.name);
+    // Zane 7.5, Semenyo 5.0, Adams 2.0 — nothing to do with the alphabet.
+    expect(incoming).toEqual(["Zane", "Semenyo", "Adams"]);
+  });
+
+  it("sends a player with no projection to the end of his group", () => {
+    // Null is not zero, but it cannot be ranked either, and putting an unknown
+    // above a measured 2.0 would state a preference nothing supports.
+    const horizon = {
+      ...artifact()!.horizon!,
+      weeks: artifact()!.horizon!.weeks.map((w, i) =>
+        i === 0 ? w : { ...w, squad: [...w.squad, 6], bench: [...w.bench, 6] }),
+    };
+    // No horizon at all, so Adams' arriving week renders nothing and he cannot
+    // be ranked — last in his group rather than first.
+    const grid = buildPlanGrid(horizon, [...NAMES, at(6, "Adams", "MID", 2.0)], {
+      nDraws: null, weeks: [],
+    });
+    const mids = grid.rows.filter((r) => r.position === "MID").map((r) => r.name);
+    expect(mids[mids.length - 1]).toBe("Adams");
+  });
+
+  it("keeps the lines themselves in reading order", () => {
+    // Grouping by ownership happens INSIDE a line, never across them.
+    const grid = buildPlanGrid(artifact()!.horizon!, NAMES);
+    expect(grid.rows.map((r) => r.position))
+      .toEqual(["GKP", "DEF", "MID", "MID", "FWD"]);
+  });
+});
+
+
+describe("the number a row is ranked by is one you can see", () => {
+  /**
+   * Caught by looking at the board, not by a test. Sorting on WEEK 0's xP ranked
+   * a player the plan buys in GW7 by a GW4 figure his row does not show — his
+   * GW4 cell is bare ground, because he is not in the squad yet. Botman sat
+   * above a visible `Keane 4.0` displaying nothing at all, and the ordering
+   * became unfalsifiable by eye.
+   *
+   * The rank is the first xP the row actually RENDERS: the week he joins the
+   * squad. For your team that is this gameweek; for a proposal it is the week he
+   * arrives, which is the number that makes him worth buying.
+   */
+
+  function at(id: number, name: string, position: string, xp: number) {
+    return { ...projection(id, name, position), xp };
+  }
+
+  it("ranks an incoming player by the week he arrives, not by today", () => {
+    const horizon = {
+      ...artifact()!.horizon!,
+      weeks: artifact()!.horizon!.weeks.map((w, i) =>
+        // 6 joins in the last week only; 7 is in from week 1.
+        i === 2 ? { ...w, squad: [...w.squad, 6, 7], bench: [...w.bench, 6, 7] }
+        : i === 1 ? { ...w, squad: [...w.squad, 7], bench: [...w.bench, 7] }
+        : w),
+    };
+    const xpHorizon = {
+      nDraws: 5000,
+      weeks: [
+        { gameweek: 4, xp: new Map([[6, 0.1], [7, 0.2]]) },
+        { gameweek: 5, xp: new Map([[6, 0.1], [7, 3.0]]) },
+      ],
+    };
+    const grid = buildPlanGrid(
+      horizon, [...NAMES, at(6, "Late", "MID", 9.9), at(7, "Early", "MID", 0.1)],
+      xpHorizon,
+    );
+    const incoming = grid.rows
+      .filter((r) => r.position === "MID" && !r.owned).map((r) => r.name);
+    // Late shows 9.9 in GW3 but is not owned then — his row is bare there, so it
+    // cannot rank him. Early's first owned week reads 3.0 and outranks Late's.
+    expect(incoming.indexOf("Early")).toBeLessThan(incoming.indexOf("Late"));
+  });
+
+  it("sends a player with no week on the board to the end of his group", () => {
+    // Someone the plan sells this week is owned but never appears in a squad
+    // again, so no cell renders a figure. Last in your team, on his way out.
+    const sold = {
+      ...artifact()!.horizon!,
+      weeks: artifact()!.horizon!.weeks.map((w, i) =>
+        i === 0
+          ? { ...w, squad: w.squad.filter((x) => x !== 3), xi: w.xi.filter((x) => x !== 3), transfers_out: [3] }
+          : { ...w, squad: w.squad.filter((x) => x !== 3), xi: w.xi.filter((x) => x !== 3) }),
+    };
+    const grid = buildPlanGrid(sold, NAMES);
+    const mids = grid.rows.filter((r) => r.position === "MID" && r.owned);
+    expect(mids[mids.length - 1].name).toBe("Palmer");
+  });
+});
