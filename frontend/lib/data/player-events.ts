@@ -43,6 +43,21 @@ export interface PlayerEvent {
   readonly xa: number | null;
   /** Non-penalty xG. The half of a striker's xG that is not a spot kick. */
   readonly npXg: number | null;
+  /**
+   * How many matches this row is built from — and the reason it is narrowed.
+   *
+   * The feed has always published it; nothing read it, so nothing could say how
+   * much football an Understat figure covers. That made a real defect invisible:
+   * FPL's record is three matches deep and this feed is one, so the same player
+   * reads 243 minutes on one surface and 90 on another, and a reader comparing
+   * the two xG figures sees a disagreement between models where there is only a
+   * difference in denominator.
+   *
+   * Null when the feed omits it, which is a different thing from zero — a row
+   * that does not say how many matches it covers cannot have its coverage
+   * asserted on its behalf.
+   */
+  readonly matches: number | null;
   /** Understat's possession-chain measures: involvement short of the shot. */
   readonly xgChain: number | null;
   readonly xgBuildup: number | null;
@@ -91,6 +106,7 @@ function narrowRow(raw: unknown): PlayerEvent | null {
     xg: optNumber(raw.xg),
     xa: optNumber(raw.xa),
     npXg: optNumber(raw.np_xg),
+    matches: optNumber(raw.matches),
     xgChain: optNumber(raw.xg_chain),
     xgBuildup: optNumber(raw.xg_buildup),
     shotsPer90: optNumber(raw.shots_per_90),
