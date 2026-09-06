@@ -178,10 +178,26 @@ export const CAPTURED_DRAFT: DraftPick[] = [
   { elementId: 173, position: 15, bench: true },                      // Thomas
 ];
 
+/**
+ * Responses Next's data cache cannot hold, named rather than discovered.
+ *
+ * `bootstrap-static` is 2.3 MB and the data cache tops out at 2 MB, so asking it
+ * to revalidate produced a guaranteed `Failed to set fetch cache` on every single
+ * request. The fetch always succeeded — only the caching failed — so the line was
+ * pure noise, and a log that always contains an error is a log nobody reads when
+ * a real one arrives. This file's neighbour makes the same argument about
+ * `xp_public_gw00.json` 404ing on every render.
+ *
+ * `no-store` is not a behaviour change: an over-size response was never cached,
+ * so both settings refetch every time. One of them says so.
+ */
+const UNCACHEABLE = ["/bootstrap-static/"];
+
 async function getOfficialJson<T>(path: string, allowNotFound = false): Promise<T | null> {
+  const tooBigToCache = UNCACHEABLE.some((prefix) => path.startsWith(prefix));
   const response = await fetch(`${FPL_API_BASE}${path}`, {
     headers: { Accept: "application/json" },
-    next: { revalidate: 900 },
+    ...(tooBigToCache ? { cache: "no-store" as const } : { next: { revalidate: 900 } }),
   });
 
   if (allowNotFound && response.status === 404) {

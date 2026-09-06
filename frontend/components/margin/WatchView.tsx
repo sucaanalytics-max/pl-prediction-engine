@@ -40,7 +40,7 @@ import {
 import { REGISTRY, type DeltaFeed, type DeltaRecord } from "@/lib/data/narrow";
 import { projectionsDescriptor, type Projections } from "@/lib/data/projections";
 import { useArtifact } from "@/lib/data/useArtifact";
-import { SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
+import { SIGNAL, MONO, SANS, ink } from "@/lib/margin/tokens";
 import {
   Eyebrow, Nil, WhenProvenHere, compactAge,
 } from "@/components/margin/Marks";
@@ -105,7 +105,7 @@ function DecayRow({ row }: { row: Aged }) {
       style={{
         display: "grid", gridTemplateColumns: "minmax(0,1fr) 46px", gap: 10,
         alignItems: "baseline", padding: "10px 0",
-        borderTop: `1px solid rgba(27,26,22,.09)`,
+        borderTop: `1px solid ${ink(.09)}`,
       }}
     >
       <div style={{ minWidth: 0 }}>
@@ -124,7 +124,7 @@ function DecayRow({ row }: { row: Aged }) {
           style={{
             fontFamily: MONO, fontSize: 11, textAlign: "center",
             color: stale ? S.noise : S.ink3,
-            border: `1px solid ${stale ? S.noise : "rgba(27,26,22,.22)"}`,
+            border: `1px solid ${stale ? S.noise : ink(.22)}`,
             padding: "1px 4px",
           }}
         >
@@ -144,7 +144,7 @@ function Decay(
   return (
     <Panel eyebrow="Decay watch" title="What is ageing under the current answer">
       <div>{byAge(rows).map((row) => <DecayRow key={row.label} row={row} />)}</div>
-      <div style={{ borderTop: `1px solid rgba(27,26,22,.09)`, paddingTop: 10 }}>
+      <div style={{ borderTop: `1px solid ${ink(.09)}`, paddingTop: 10 }}>
         <div style={{ fontSize: 13, color: S.ink }}>
           Unresolved minutes disagreements
         </div>
@@ -174,7 +174,7 @@ function Decay(
 function Change({ record }: { record: DeltaRecord }) {
   const impact = record.kind === "decision_impact";
   return (
-    <div style={{ padding: "10px 0", borderTop: `1px solid rgba(27,26,22,.09)` }}>
+    <div style={{ padding: "10px 0", borderTop: `1px solid ${ink(.09)}` }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
         <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
           {record.observed_at ? record.observed_at.slice(0, 10) : "undated"}

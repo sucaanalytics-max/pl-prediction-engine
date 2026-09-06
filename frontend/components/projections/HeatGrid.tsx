@@ -159,6 +159,7 @@ export function HeatGrid(props: HeatGridProps) {
         border: `1px solid ${S.hair}`, borderBottom: "none",
       }}>
         <input
+          name="projections-filter"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="name or club"

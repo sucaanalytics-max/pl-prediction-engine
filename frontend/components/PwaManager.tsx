@@ -26,6 +26,33 @@ export default function PwaManager() {
   const [dismissed, setDismissed] = useState(true);
 
   useEffect(() => {
+    /**
+     * Production only — and in development, actively torn down.
+     *
+     * `sw.js` caches `/_next/static/` first and never revalidates it, which is
+     * correct for a production build because those URLs are content-hashed. A dev
+     * server reuses chunk names across builds, so the worker serves yesterday's
+     * chunks against today's HTML: React reports a hydration mismatch, the page
+     * renders the PREVIOUS design, and the error points at the component being
+     * edited rather than at the cache.
+     *
+     * That cost real time twice during the Signal redesign, both times looking
+     * exactly like a bug in the work in progress. The unregister is the half that
+     * matters — anyone who has already run this app on localhost is carrying the
+     * worker now, and telling them to clear it by hand is not a fix.
+     */
+    if (process.env.NODE_ENV !== "production") {
+      void (async () => {
+        if (!("serviceWorker" in navigator)) return;
+        for (const registration of await navigator.serviceWorker.getRegistrations()) {
+          await registration.unregister();
+        }
+        if ("caches" in window) {
+          for (const key of await caches.keys()) await caches.delete(key);
+        }
+      })();
+      return;
+    }
     if ("serviceWorker" in navigator) {
       void navigator.serviceWorker.register("/sw.js");
     }

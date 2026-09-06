@@ -38,7 +38,7 @@ import { istDateTime } from "@/lib/formats";
 import { findTwins } from "@/lib/margin/twins";
 import { Compare } from "@/components/margin/Compare";
 import { Scatter } from "@/components/margin/Scatter";
-import { SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
+import { SIGNAL, MONO, SANS, ink } from "@/lib/margin/tokens";
 import {
   Distribution, Eyebrow, Hollow, MarginState, Nil, WhenProvenHere,
 } from "@/components/margin/Marks";
@@ -114,7 +114,7 @@ function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => voi
     <div
       style={{
         display: "grid", gridTemplateColumns: COLUMNS, gap: 6,
-        padding: "7px 18px", borderBottom: `1px solid rgba(27,26,22,.25)`,
+        padding: "7px 18px", borderBottom: `1px solid ${ink(.25)}`,
         fontFamily: MONO, fontSize: 11, letterSpacing: ".06em",
         textTransform: "uppercase", color: S.ink3,
         position: "sticky", top: 52, background: S.shell, zIndex: 2,
@@ -154,7 +154,7 @@ function Row(
       style={{
         display: "grid", gridTemplateColumns: COLUMNS, gap: 6,
         alignItems: "center", padding: "8px 18px",
-        borderBottom: `1px solid rgba(27,26,22,.06)`, cursor: "pointer",
+        borderBottom: `1px solid ${ink(.06)}`, cursor: "pointer",
         fontFamily: MONO, fontSize: 11.5, color: S.ink,
         background: selected ? S.bar : "transparent",
         boxShadow: selected ? `inset 3px 0 0 ${S.agree}` : undefined,
@@ -365,12 +365,12 @@ function Selected({ player, file }: { player: Projection; file: Projections }) {
             {rows.map((row) => (
               <div key={row.label} style={{ display: "grid", gridTemplateColumns: "78px minmax(0,1fr) 34px", gap: 10, alignItems: "center", marginBottom: 6 }}>
                 <span style={{ fontSize: 12, color: S.ink2 }}>{row.label}</span>
-                <span style={{ display: "block", height: 9, background: "rgba(27,26,22,.09)" }}>
+                <span style={{ display: "block", height: 9, background: ink(.09) }}>
                   <span
                     style={{
                       display: "block", height: 9,
                       width: `${total > 0 ? (Math.max(0, row.pts) / total) * 100 : 0}%`,
-                      background: "rgba(27,26,22,.55)",
+                      background: ink(.55),
                     }}
                   />
                 </span>
@@ -486,6 +486,7 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
           }}
         >
           <input
+            name="research-filter"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={`search ${players.length} players`}

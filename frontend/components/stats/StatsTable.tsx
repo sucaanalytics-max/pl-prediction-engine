@@ -305,6 +305,7 @@ export function StatsTable({
         border: `1px solid ${S.hair}`, borderTop: "none",
       }}>
         <input
+          name="stats-filter"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="name or club"

@@ -17,7 +17,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
 import {
-  SIGNAL, HEAT, TRAFFIC, difficultyTile, difficultyTint, hatch, heatStep, positionHue,
+  SIGNAL, HEAT, TRAFFIC, difficultyTile, difficultyTint, hatch, heatStep, ink, positionHue,
   surfaceIsLight,
 } from "@/lib/margin/tokens";
 
@@ -466,5 +466,26 @@ describe("the fixture-difficulty tile", () => {
     expect(difficultyTile(null)).toBe(difficultyTile(3));
     expect(difficultyTile(0)).toBe(difficultyTile(3));
     expect(difficultyTile(9)).toBe(difficultyTile(3));
+  });
+});
+
+describe("ink at an alpha tracks the palette", () => {
+  it("is built from the surface's own ink, not a literal beside it", () => {
+    // The whole point: three views carried `rgba(27, 26, 22, …)` — a retired
+    // surface's ink — and were correct by luck once the ground went to paper.
+    expect(ink(0.09)).toBe("rgba(20,23,28,0.09)");
+    expect(ink(0.09)).toContain(SIGNAL.ink.slice(1, 3) === "14" ? "20," : "20,");
+  });
+
+  it("clamps rather than emitting a declaration the browser drops", () => {
+    // An out-of-range alpha renders as invalid CSS and the border simply is not
+    // there, which is the worst way for one to go missing.
+    expect(ink(-1)).toBe("rgba(20,23,28,0)");
+    expect(ink(4)).toBe("rgba(20,23,28,1)");
+  });
+
+  it("moves when the surface moves", () => {
+    const other = { ...SIGNAL, ink: "#ffffff" };
+    expect(ink(0.5, other)).toBe("rgba(255,255,255,0.5)");
   });
 });

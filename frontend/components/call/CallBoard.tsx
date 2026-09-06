@@ -86,7 +86,16 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
   const [scale, setScale] = useState<HorizonScale>("absolute");
 
   const squad = live?.squad ?? null;
-  const players = projections?.players ?? [];
+  /**
+   * Memoised for its IDENTITY, not for the cost of the expression.
+   *
+   * `projections?.players ?? []` built a fresh array literal on every render
+   * whenever the artifact was absent, so both memos below saw a changed
+   * dependency every time and neither memoised anything — `optimiseXi` ran on
+   * every render of the call screen, which is the one screen read under a clock.
+   * The lint rule that flagged this reads as a style warning and was not one.
+   */
+  const players = useMemo(() => projections?.players ?? [], [projections]);
 
   const solved = useMemo(() => {
     if (squad === null || players.length === 0) return null;

@@ -25,7 +25,7 @@ import type { PhaseWeek } from "@/lib/projections/phases";
 import type { FixtureMatrixRow } from "@/lib/data/heuristics";
 import type { Horizon as XpHorizon } from "@/lib/data/projections";
 import {
-  hatch, MONO, SIGNAL, SANS, difficultyTile, positionHue,
+  ink, MONO, SIGNAL, SANS, difficultyTile, positionHue,
 } from "@/lib/margin/tokens";
 import { ageLine } from "@/lib/formats";
 import { Eyebrow, Nil } from "@/components/margin/Marks";
@@ -207,47 +207,6 @@ function CellMark({ cell, fixture }: { cell: Cell; fixture: PhaseWeek | null }) 
   );
 }
 
-function SummaryRow(
-  { label, weeks, render }: {
-    label: string;
-    weeks: readonly HorizonWeek[];
-    render: (week: HorizonWeek) => React.ReactNode;
-  },
-) {
-  return (
-    <div
-      style={{
-        display: "grid", gridTemplateColumns: columns(weeks.length),
-        borderBottom: `1px solid rgba(27,26,22,.06)`,
-      }}
-    >
-      <div style={{ padding: "5px 0", fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
-        {label}
-      </div>
-      {weeks.map((week) => (
-        <div
-          key={week.gameweek}
-          style={{
-            padding: "5px 2px", textAlign: "center",
-            
-            fontFamily: MONO, fontSize: 11, color: S.ink,
-          }}
-        >
-          {/* A week the solve planned no transfers into must not print a
-              transfer count it never chose. */}
-          {week.planned ? render(week) : (
-            <span
-              title="evaluated but not transferred into — the solve prices this week, it does not plan it"
-              style={{ display: "block", height: 12, background: hatch(S) }}
-            />
-          )}
-        </div>
-      ))}
-      <div />
-    </div>
-  );
-}
-
 export function PlanGrid(
   {
     horizon, projections, fixtures = [], xpHorizon = null,
@@ -411,11 +370,13 @@ export function PlanGrid(
       ))}
 
       {/* Summaries */}
-      <div style={{ marginTop: 8, borderTop: `1px solid rgba(27,26,22,.25)` }}>
-        {/* Not a `SummaryRow`: that one hatches the eval-only tail, because a
-            transfer count is a thing the solve chose. An XI total is not — the
-            tail's eleven is priced by the same solve, and hatching it would
-            hide a number that is as real as the rest.
+      <div style={{ marginTop: 8, borderTop: `1px solid ${ink(.25)}` }}>
+        {/* This row does NOT hatch its eval-only tail, and the reason is worth
+            keeping even though the row it used to be contrasted with has gone.
+            A transfer count is a thing the solve CHOSE, so a week it did not
+            plan into must not print one — that row hatched. An XI total is not
+            chosen: the tail's eleven is priced by the same solve, so hatching it
+            would hide a number as real as the rest.
 
             Absent entirely with no solve behind it. Summing fifteen owned
             players under a heading that says XI would be a different quantity
@@ -423,7 +384,7 @@ export function PlanGrid(
         {!solved ? null : <div
           style={{
             display: "grid", gridTemplateColumns: grid,
-            borderBottom: `1px solid rgba(27,26,22,.06)`,
+            borderBottom: `1px solid ${ink(.06)}`,
           }}
         >
           <div style={{ padding: "5px 0", fontFamily: MONO, fontSize: 11, color: S.ink3 }}>
@@ -492,7 +453,7 @@ export function PlanGrid(
           <span style={{ width: 13, height: 13, background: S.ink }} />start
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-          <span style={{ width: 13, height: 13, border: `1px solid rgba(27,26,22,.45)` }} />bench
+          <span style={{ width: 13, height: 13, border: `1px solid ${ink(.45)}` }} />bench
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
           <span style={{ width: 15, height: 15, borderRadius: "50%", border: `1.5px solid ${S.agree}` }} />captain
@@ -529,7 +490,7 @@ function TotalCell({ total }: { total: WeekTotal }) {
         : `all ${total.counted} in the XI have a projection`}
       style={{
         padding: "5px 2px", textAlign: "center",
-        borderLeft: `1px solid rgba(27,26,22,.07)`,
+        borderLeft: `1px solid ${ink(.07)}`,
         fontFamily: MONO, fontSize: 11.5, fontWeight: 500,
         color: short ? S.ink3 : S.ink,
       }}
@@ -604,7 +565,7 @@ function Transfers(
             display: "grid",
             gridTemplateColumns: "52px 1fr 18px 1fr 60px 124px",
             alignItems: "center", gap: 12,
-            padding: "10px 0", borderBottom: `1px solid rgba(27,26,22,.06)`,
+            padding: "10px 0", borderBottom: `1px solid ${ink(.06)}`,
           }}
         >
           <span style={{ fontFamily: MONO, fontSize: 12, color: S.ink2 }}>

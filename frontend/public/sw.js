@@ -52,6 +52,26 @@
 // missing. Bumping evicts it. Same reason this is one commit with the routes:
 // `cache.addAll` rejects atomically, so a list naming a route that 404s
 // precaches NOTHING.
+/**
+ * On a dev server this worker is a liability, and it removes itself.
+ *
+ * `/_next/static/` is served cache-first and never revalidated, which is right in
+ * production because those URLs are content-hashed. A dev server reuses chunk
+ * names across builds, so the worker hands yesterday's JavaScript to today's HTML:
+ * React reports a hydration mismatch, the PREVIOUS design renders, and the stack
+ * points at whatever component is being edited. It cost real time twice during
+ * the Signal redesign, both times looking like a bug in the work in progress.
+ *
+ * The teardown has to live HERE rather than in the app. `PwaManager` also guards
+ * registration, but a developer already carrying the worker is served the stale
+ * PwaManager chunk — the guard never executes, and the cache cannot bootstrap
+ * itself out. The browser byte-compares this file on every navigation, so a
+ * worker that unregisters itself is the only thing that reaches a poisoned
+ * install.
+ */
+const LOCAL_HOSTS = ["localhost", "127.0.0.1", "[::1]", "::1"];
+const IS_LOCAL = LOCAL_HOSTS.indexOf(self.location.hostname) !== -1;
+
 const CACHE_NAME = "suca-fpl-shell-v10";
 const SHELL_ROUTES = [
   // Every route the app has, which is still a short enough list to precache
@@ -74,13 +94,32 @@ const SHELL_ROUTES = [
 ];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_ROUTES))
-  );
+  // Nothing is precached locally: this install exists only to reach `activate`,
+  // where the worker deletes its caches and unregisters.
+  if (!IS_LOCAL) {
+    event.waitUntil(
+      caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_ROUTES))
+    );
+  }
   self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
+  if (IS_LOCAL) {
+    event.waitUntil(
+      (async () => {
+        // Every cache, not just the stale ones — the whole point is to leave no
+        // chunk behind. Then unregister, then reload the open tabs so they take
+        // the dev server's own JavaScript instead of what was already served.
+        const keys = await caches.keys();
+        await Promise.all(keys.map((key) => caches.delete(key)));
+        await self.registration.unregister();
+        const clients = await self.clients.matchAll({ type: "window" });
+        for (const client of clients) client.navigate(client.url);
+      })()
+    );
+    return;
+  }
   event.waitUntil(
     caches
       .keys()
@@ -94,6 +133,8 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  // Locally the worker answers nothing while it is on its way out.
+  if (IS_LOCAL) return;
   const request = event.request;
   if (request.method !== "GET") return;
 

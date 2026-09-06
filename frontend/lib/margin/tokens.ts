@@ -464,6 +464,34 @@ export function surfaceIsLight(surface: MarginSurface): boolean {
   return luminance > 0.5;
 }
 
+/**
+ * The surface's ink at an arbitrary alpha.
+ *
+ * Exists because the alternative kept shipping. Three views carried hairlines and
+ * fills written as `rgba(27, 26, 22, …)` — the ink of a PAPER surface that was
+ * retired two redesigns ago. They were invisible on the dark ground, so nothing
+ * caught them; they became visible again when Signal went to paper, correct by
+ * luck rather than by reference, and one shade off the ink beside them.
+ *
+ * That is the same defect as `.primary-action` painting its label `#10141a`
+ * against `--brand`, and as `kitTone` mixing toward `#0d1013`: a literal standing
+ * in for a token, right until the token moves. A view that needs ink at 9% should
+ * ask for ink at 9%, not for a colour that currently resembles it.
+ *
+ * Alpha is clamped rather than trusted — a value outside 0–1 renders as an
+ * invalid declaration the browser drops silently, which is the worst way for a
+ * border to go missing.
+ */
+export function ink(alpha: number, surface: MarginSurface = SIGNAL): string {
+  const hex = /^#([0-9a-f]{6})$/i.exec(surface.ink.trim());
+  // A non-hex ink cannot be given an alpha here; returning it whole is visible
+  // and wrong rather than invisible and wrong.
+  if (!hex) return surface.ink;
+  const channel = (offset: number) => parseInt(hex[1].slice(offset, offset + 2), 16);
+  const a = Math.max(0, Math.min(1, alpha));
+  return `rgba(${channel(0)},${channel(2)},${channel(4)},${a})`;
+}
+
 export function hatch(surface: MarginSurface): string {
   // Signal's ink (20,23,28) on the light branch, which is the one the single
   // surviving surface now takes — the same idea as before, that the hatch is

@@ -70,6 +70,14 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     title: "Suca FPL",
   },
+  /* `appleWebApp.capable` emits only `apple-mobile-web-app-capable`, which Chrome
+     deprecated and warns about on every load. The standard spelling has to be
+     added by hand — and the Apple one stays, because iOS Safari reads only that
+     one and dropping it would break standalone launch on the platform this PWA
+     exists for. Two tags, one meaning, both required until Safari catches up. */
+  other: {
+    "mobile-web-app-capable": "yes",
+  },
   formatDetection: {
     telephone: false,
   },

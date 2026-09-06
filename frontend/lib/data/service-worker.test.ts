@@ -216,3 +216,33 @@ describe("the shell caches the app that exists now", () => {
     expect(swSource).toContain("suca-fpl-shell-v10");
   });
 });
+
+describe("the worker is a production thing", () => {
+  const manager = readFileSync("components/PwaManager.tsx", "utf8");
+
+  it("does not register in development", () => {
+    /**
+     * `sw.js` caches `/_next/static/` first and never revalidates it, which is
+     * right for a production build because those URLs are content-hashed — and
+     * wrong on a dev server, which reuses chunk names across builds. The worker
+     * then serves yesterday's chunks against today's HTML, React reports a
+     * hydration mismatch, and the page renders the PREVIOUS design while the
+     * error points at whatever component is being edited.
+     *
+     * Pinned because the guard is one line and looks like dead weight to anyone
+     * who has not lost an afternoon to it.
+     */
+    const guard = manager.indexOf('process.env.NODE_ENV !== "production"');
+    const register = manager.indexOf('navigator.serviceWorker.register');
+    expect(guard, "no NODE_ENV guard before registration").toBeGreaterThan(-1);
+    expect(register).toBeGreaterThan(guard);
+  });
+
+  it("tears down a worker a developer is already carrying", () => {
+    // The half that matters. Anyone who ran this app on localhost before the
+    // guard has the worker installed now, and "clear it by hand" is not a fix.
+    expect(manager).toContain("getRegistrations");
+    expect(manager).toContain("unregister");
+    expect(manager).toMatch(/caches\.delete/);
+  });
+});
