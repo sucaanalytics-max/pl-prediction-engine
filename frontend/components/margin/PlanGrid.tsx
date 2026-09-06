@@ -123,9 +123,17 @@ function CellMark({ cell, fixture }: { cell: Cell; fixture: PhaseWeek | null }) 
     );
   }
 
-  const title = cell.unplanned
-    ? `GW${cell.gameweek} · ${opponent} · in the squad; no plan solved for this week`
-    : `GW${cell.gameweek} · ${opponent}`;
+  // Named in the title as well as marked, so the state does not live in a 2px
+  // accent alone — which is also what makes it readable to a screen reader.
+  const role = cell.unplanned
+    ? "in the squad; no plan solved for this week"
+    : cell.captain
+      ? "starts · captain"
+      : cell.start
+        ? "starts"
+        : "benched";
+  const title = `GW${cell.gameweek} · ${opponent} · ${role}`;
+  const inXi = cell.start || cell.captain;
 
   return (
     <div
@@ -135,6 +143,7 @@ function CellMark({ cell, fixture }: { cell: Cell; fixture: PhaseWeek | null }) 
         cell.unplanned ? "held" : cell.captain ? "captain" : cell.start ? "start" : "bench"
       }
       data-fdr={fixture === null ? "unknown" : fixture.blank ? "blank" : String(fixture.difficulty)}
+      data-xi={inXi}
       title={title}
       style={{
         position: "relative",
@@ -146,6 +155,18 @@ function CellMark({ cell, fixture }: { cell: Cell; fixture: PhaseWeek | null }) 
         // the figure with the fill and they converge — see DIFFICULTY_TILE_BENCHED.
         background: difficultyTile(known ? fixture.difficulty : null, cell.bench),
         gap: 4,
+        // The eleven, marked positively. It used to be implied — a bench is
+        // dimmed and an unowned week is bare, so the XI were "the cells that are
+        // neither", which is a fact you reach by elimination down a column of
+        // twenty-three rows, for the one question this screen answers.
+        //
+        // An accent inside the plate rather than an outline, because the armband
+        // already owns the inset ring and two rings would be one mark too many.
+        boxShadow: cell.captain
+          ? `inset 0 0 0 1px ${S.ink}`
+          : inXi
+            ? `inset 0 -2px 0 0 ${S.ink4}`
+            : undefined,
       }}
     >
       {cell.captain ? (
@@ -477,6 +498,7 @@ export function PlanGrid(
           <span style={{ width: 15, height: 15, borderRadius: "50%", border: `1.5px solid ${S.agree}` }} />captain
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+          <span style={{ width: 14, height: 12, background: S.inset, boxShadow: `inset 0 -2px 0 0 ${S.ink4}` }} />in the XI
           <span style={{ width: 14, height: 12, background: S.shell, outline: `1px solid ${S.hair}` }} />not owned
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>

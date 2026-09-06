@@ -829,10 +829,27 @@ class TestThePublishedWeeksAreCheckedBeforeTheyShip(unittest.TestCase):
             # 9 appears and 3 vanishes with nothing recorded.
             {"squad": [1, 2, 9], "transfers_in": [], "transfers_out": []},
         ]
-        problems = reconcile_weeks(week0, tail)
+        problems = reconcile_weeks(week0, tail, gameweek=4)
         self.assertEqual(len(problems), 1)
         self.assertIn("9", problems[0])
         self.assertIn("3", problems[0])
+
+    def test_the_report_names_the_gameweek(self):
+        """
+        `Plan.as_dict()` carries no gameweek — the tail is positional, week 0's
+        number plus the index — so a message that reads the field off the dict
+        says "gameweek ?" and cannot locate the problem it is reporting.
+        """
+        week0 = {"squad": [1, 2, 3], "transfers_in": [], "transfers_out": []}
+        tail = [
+            {"squad": [1, 2, 3], "transfers_in": [], "transfers_out": []},
+            {"squad": [1, 2, 9], "transfers_in": [], "transfers_out": []},
+        ]
+        from pipeline.decide.run_decide import reconcile_weeks
+        problems = reconcile_weeks(week0, tail, gameweek=4)
+        self.assertEqual(len(problems), 1)
+        self.assertIn("GW6", problems[0], problems[0])
+        self.assertNotIn("?", problems[0])
 
     def test_a_tail_that_follows_is_silent(self):
         from pipeline.decide.run_decide import reconcile_weeks
@@ -842,8 +859,8 @@ class TestThePublishedWeeksAreCheckedBeforeTheyShip(unittest.TestCase):
             {"squad": [1, 2, 9], "transfers_in": [9], "transfers_out": [3]},
             {"squad": [1, 5, 9], "transfers_in": [5], "transfers_out": [2]},
         ]
-        self.assertEqual(reconcile_weeks(week0, tail), [])
+        self.assertEqual(reconcile_weeks(week0, tail, gameweek=4), [])
 
     def test_no_tail_is_nothing_to_check(self):
         from pipeline.decide.run_decide import reconcile_weeks
-        self.assertEqual(reconcile_weeks({"squad": [1]}, []), [])
+        self.assertEqual(reconcile_weeks({"squad": [1]}, [], gameweek=4), [])

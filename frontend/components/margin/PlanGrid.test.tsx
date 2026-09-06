@@ -671,3 +671,50 @@ describe("J · tiles, and whose team this is", () => {
     expect(screen.getByTestId("plan-ownership").textContent).toMatch(/4 of 5|yours/i);
   });
 });
+
+
+describe("the eleven you are being told to field", () => {
+  afterEach(cleanup);
+
+  /**
+   * The XI was only ever implied. A bench plate is dimmed and a week outside the
+   * squad is bare, so the eleven were "the cells that are neither" — a fact you
+   * arrive at by elimination, in a column of twenty-three rows, for the one
+   * question this screen exists to answer.
+   *
+   * It is marked positively now. `Cell.start` means in the XI and NOT the
+   * captain, so the mark has to cover both or the armband drops out of his own
+   * eleven.
+   */
+
+  function draw() {
+    return render(<PlanGrid horizon={HORIZON} projections={NAMES} fixtures={MATRIX} xpHorizon={XP_HORIZON} />);
+  }
+
+  it("marks every cell in the eleven, the captain included", () => {
+    draw();
+    const cells = screen.getAllByTestId("plan-cell");
+    const marked = cells.filter((c) => c.dataset.xi === "true");
+    const states = new Set(marked.map((c) => c.dataset.state));
+    expect(states).toEqual(new Set(["start", "captain"]));
+    expect(marked.length).toBeGreaterThan(0);
+  });
+
+  it("does not mark a bench week or a week you do not own", () => {
+    draw();
+    const cells = screen.getAllByTestId("plan-cell");
+    for (const c of cells) {
+      if (c.dataset.state === "bench" || c.dataset.state === "off") {
+        expect(c.dataset.xi, `${c.dataset.state} must not read as picked`).not.toBe("true");
+      }
+    }
+  });
+
+  it("says so in words too, not only by colour", () => {
+    // The mark is a 2px accent. Anyone who cannot resolve it needs the title,
+    // which is also what makes the state readable to a screen reader.
+    draw();
+    const started = screen.getAllByTestId("plan-cell").find((c) => c.dataset.state === "start");
+    expect(started?.getAttribute("title")).toMatch(/starts/i);
+  });
+});

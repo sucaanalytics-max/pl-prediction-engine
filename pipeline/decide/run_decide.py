@@ -332,7 +332,7 @@ def decide(
         # simply disagree — so it went unnoticed until the weeks were reconciled
         # by hand.
         for problem in reconcile_weeks(
-            chosen.plan.as_dict(), horizon_meta["provisional"]
+            chosen.plan.as_dict(), horizon_meta["provisional"], gameweek=int(gameweek)
         ):
             warnings.append(f"published horizon is inconsistent: {problem}")
 
@@ -379,7 +379,10 @@ def _squad_xp(
 
 
 def reconcile_weeks(
-    week0: Mapping[str, Any], tail: Sequence[Mapping[str, Any]],
+    week0: Mapping[str, Any],
+    tail: Sequence[Mapping[str, Any]],
+    *,
+    gameweek: int,
 ) -> List[str]:
     """
     Check the published weeks chain, and describe any that do not.
@@ -395,9 +398,12 @@ def reconcile_weeks(
     THIS week — the only week anyone acts on — and losing it over a defect in the
     advisory tail would discard the useful half to punish the broken one.
     """
+    # The tail is POSITIONAL. `Plan.as_dict()` carries no gameweek — reading one
+    # off the dict yields "gameweek ?" and a report that cannot locate what it is
+    # reporting — so the number is week 0's plus the index.
     problems: List[str] = []
     held = set(int(i) for i in week0.get("squad", []) or [])
-    for week in tail:
+    for offset, week in enumerate(tail, start=1):
         ins = set(int(i) for i in week.get("transfers_in", []) or [])
         outs = set(int(i) for i in week.get("transfers_out", []) or [])
         published = set(int(i) for i in week.get("squad", []) or [])
@@ -406,8 +412,8 @@ def reconcile_weeks(
             appeared = sorted(published - expected)
             vanished = sorted(expected - published)
             problems.append(
-                f"gameweek {week.get('gameweek', '?')} does not follow from the week "
-                f"before it: {appeared} appear with no transfer in, {vanished} vanish "
+                f"GW{int(gameweek) + offset} does not follow from the week before "
+                f"it: {appeared} appear with no transfer in, {vanished} vanish "
                 f"with no transfer out"
             )
         held = published
