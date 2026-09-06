@@ -10,10 +10,20 @@
  * but has not yet materialised a team returns, and it produced an EMPTY squad labelled
  * `official_public`. A payload missing the key threw inside `.map` and took the route
  * down. Neither could be observed before the day it matters.
+ *
+ * ## Two functions now, and the guarantees did not move outward
+ *
+ * `usableSquad` used to check SHAPE and MEANING together, through a cast. Shape is
+ * `narrowPicks`'s job since the FPL boundary started narrowing, so the assertions
+ * that used to feed `usableSquad` a malformed payload feed the narrower instead —
+ * same inputs, same verdicts, asked of the function that now decides. What is left
+ * for `usableSquad` is the one question narrowing cannot answer: a well-formed
+ * payload that is not a squad.
  */
 import { describe, expect, it } from "vitest";
 
-import { usableSquad, type PicksPayload } from "@/lib/fpl-live-server";
+import { usableSquad } from "@/lib/fpl-live-server";
+import { narrowPicks, type PicksPayload } from "@/lib/data/narrow-fpl";
 
 const pick = (element: number, position: number) => ({
   element, position, is_captain: false, is_vice_captain: false,
@@ -42,35 +52,6 @@ describe("a picks payload is a squad, or it is not used", () => {
     expect(usableSquad(squad(16))).toBeNull();
   });
 
-  it("rejects a payload with no picks key rather than throwing on it", () => {
-    // This used to throw inside `.map`, taking the whole route down with it.
-    expect(usableSquad({ entry_history: { value: 995, bank: 5 } } as unknown as PicksPayload))
-      .toBeNull();
-    expect(usableSquad({ picks: null } as unknown as PicksPayload)).toBeNull();
-  });
-
-  it("rejects a missing or malformed entry_history, because bank and value read it", () => {
-    const noHistory = { picks: squad(15).picks } as unknown as PicksPayload;
-    expect(usableSquad(noHistory)).toBeNull();
-
-    const nanBank = { ...squad(15), entry_history: { value: 995, bank: Number.NaN } };
-    expect(usableSquad(nanBank)).toBeNull();
-
-    const stringValue = {
-      ...squad(15), entry_history: { value: "995", bank: 5 },
-    } as unknown as PicksPayload;
-    expect(usableSquad(stringValue)).toBeNull();
-  });
-
-  it("rejects a pick whose element or position is not a number", () => {
-    const broken = squad(15);
-    const withBadElement = {
-      ...broken,
-      picks: [{ ...broken.picks[0], element: null }, ...broken.picks.slice(1)],
-    } as unknown as PicksPayload;
-    expect(usableSquad(withBadElement)).toBeNull();
-  });
-
   it("rejects null, which is the 404 the app already handled correctly", () => {
     expect(usableSquad(null)).toBeNull();
   });
@@ -83,5 +64,52 @@ describe("a picks payload is a squad, or it is not used", () => {
     const payload = squad(15);
     expect(usableSquad(payload)).toBe(payload);
     expect(usableSquad(squad(3))).toBeNull();
+  });
+});
+
+describe("the shapes never reach usableSquad, because the narrower stops them", () => {
+  /* The same three payloads that used to be fed to `usableSquad`. They are asked
+     of `narrowPicks` now — not because they stopped mattering, but because the
+     boundary decides shape once and a second opinion downstream was a cast. */
+
+  it("rejects a payload with no picks key rather than throwing on it", () => {
+    // This used to throw inside `.map`, taking the whole route down with it.
+    expect(narrowPicks({ entry_history: { value: 995, bank: 5 } }).ok).toBe(false);
+    expect(narrowPicks({ picks: null, entry_history: { value: 995, bank: 5 } }).ok).toBe(false);
+  });
+
+  it("rejects a missing or malformed entry_history, because bank and value read it", () => {
+    expect(narrowPicks({ picks: squad(15).picks }).ok).toBe(false);
+    expect(narrowPicks({ ...squad(15), entry_history: { value: 995, bank: Number.NaN } }).ok)
+      .toBe(false);
+    expect(narrowPicks({ ...squad(15), entry_history: { value: "995", bank: 5 } }).ok)
+      .toBe(false);
+  });
+
+  it("rejects a pick whose element or position is not a number", () => {
+    const broken = squad(15);
+    expect(narrowPicks({
+      ...broken,
+      picks: [{ ...broken.picks[0], element: null }, ...broken.picks.slice(1)],
+    }).ok).toBe(false);
+  });
+
+  it("says what was wrong, which a cast could never do", () => {
+    const result = narrowPicks({ picks: squad(15).picks });
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.problems.join(" ")).toContain("entry_history");
+    }
+  });
+
+  it("passes the real shape through with its numbers intact", () => {
+    const result = narrowPicks(squad(15));
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.value.picks).toHaveLength(15);
+      expect(result.value.entry_history).toEqual({ value: 995, bank: 5 });
+      // And the narrowed value is what `usableSquad` then judges for meaning.
+      expect(usableSquad(result.value)).toBe(result.value);
+    }
   });
 });

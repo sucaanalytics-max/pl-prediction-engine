@@ -1,5 +1,12 @@
 import "server-only";
 
+import type { NarrowResult } from "@/lib/data/artifact";
+import {
+  narrowBootstrap, narrowEntry, narrowFixtures, narrowHistory, narrowPicks,
+  type BootstrapEvent, type BootstrapTeam, type FixturePayload,
+  type HistoryPayload, type PicksPayload,
+} from "@/lib/data/narrow-fpl";
+export type { PicksPayload };
 import {
   FPL_API_BASE,
   FPL_ENTRY_ID,
@@ -21,92 +28,6 @@ import {
   getFplReviewSnapshot,
 } from "./fplreview-projections";
 
-interface BootstrapEvent {
-  id: number;
-  name: string;
-  deadline_time: string;
-  is_current: boolean;
-  is_next: boolean;
-  finished: boolean;
-}
-
-interface BootstrapTeam {
-  id: number;
-  name: string;
-  short_name: string;
-}
-
-interface BootstrapElementType {
-  id: number;
-  singular_name_short: string;
-}
-
-interface BootstrapElement {
-  id: number;
-  first_name: string;
-  second_name: string;
-  web_name: string;
-  team: number;
-  element_type: number;
-  now_cost: number;
-  selected_by_percent: string;
-  status: string;
-  chance_of_playing_next_round: number | null;
-  news: string;
-  ep_next: string;
-  form: string;
-  points_per_game: string;
-  total_points: number;
-  minutes: number;
-  ict_index: string;
-  news_added: string | null;
-}
-
-interface BootstrapPayload {
-  events: BootstrapEvent[];
-  teams: BootstrapTeam[];
-  element_types: BootstrapElementType[];
-  elements: BootstrapElement[];
-}
-
-interface FixturePayload {
-  event: number | null;
-  kickoff_time: string | null;
-  team_h: number;
-  team_a: number;
-  team_h_difficulty: number;
-  team_a_difficulty: number;
-  finished: boolean;
-}
-
-interface EntryPayload {
-  id: number;
-  name: string;
-  player_first_name: string;
-  player_last_name: string;
-  years_active: number;
-  favourite_team: number | null;
-  summary_overall_points: number | null;
-  summary_overall_rank: number | null;
-  last_deadline_bank: number | null;
-}
-
-interface HistoryPayload {
-  past: Array<{ season_name: string; rank: number }>;
-}
-
-export interface PicksPayload {
-  picks: Array<{
-    element: number;
-    position: number;
-    is_captain: boolean;
-    is_vice_captain: boolean;
-  }>;
-  entry_history: {
-    value: number;
-    bank: number;
-  };
-}
 
 export interface DraftPick {
   elementId: number;
@@ -185,15 +106,46 @@ export const CAPTURED_DRAFT: DraftPick[] = [
  * to revalidate produced a guaranteed `Failed to set fetch cache` on every single
  * request. The fetch always succeeded — only the caching failed — so the line was
  * pure noise, and a log that always contains an error is a log nobody reads when
- * a real one arrives. This file's neighbour makes the same argument about
- * `xp_public_gw00.json` 404ing on every render.
+ * a real one arrives.
  *
  * `no-store` is not a behaviour change: an over-size response was never cached,
  * so both settings refetch every time. One of them says so.
  */
 const UNCACHEABLE = ["/bootstrap-static/"];
 
-async function getOfficialJson<T>(path: string, allowNotFound = false): Promise<T | null> {
+/**
+ * What came back from FPL, as three answers rather than two.
+ *
+ * `absent` and `malformed` were one value — `null` — and they mean opposite
+ * things. Before a deadline FPL withholds a picks payload BY DESIGN and the
+ * captured squad is the right answer; a payload that arrives and is not a squad
+ * means something is wrong at FPL and the capture may be stale. The caller can
+ * only tell the reader which they are looking at if the fetch tells the caller.
+ */
+type Fetched<T> =
+  | { readonly status: "ok"; readonly value: T }
+  | { readonly status: "absent" }
+  | { readonly status: "malformed"; readonly problems: readonly string[] };
+
+/**
+ * Fetch, then NARROW — rule 4 at the one boundary that had escaped it.
+ *
+ * This ended `return (await response.json()) as T`, which is the exact pattern
+ * `lib/data/narrow.ts` was written to end: TypeScript checks nothing at a cast,
+ * so five payloads from the one producer this repo does not control were trusted
+ * on their word. A field FPL renamed would have surfaced as
+ * `.map is not a function` inside a route handler rather than as a sentence
+ * naming the field.
+ *
+ * The narrower is a parameter rather than a lookup so the type comes from the
+ * function that actually checked it. There is no way to call this and get back a
+ * `T` nobody verified.
+ */
+async function getOfficialJson<T>(
+  path: string,
+  narrow: (raw: unknown) => NarrowResult<T>,
+  allowNotFound = false,
+): Promise<Fetched<T>> {
   const tooBigToCache = UNCACHEABLE.some((prefix) => path.startsWith(prefix));
   const response = await fetch(`${FPL_API_BASE}${path}`, {
     headers: { Accept: "application/json" },
@@ -201,15 +153,28 @@ async function getOfficialJson<T>(path: string, allowNotFound = false): Promise<
   });
 
   if (allowNotFound && response.status === 404) {
-    return null;
+    return { status: "absent" };
   }
   if (!response.ok) {
     throw new Error(`Official FPL API ${path} returned ${response.status}`);
   }
-  return (await response.json()) as T;
+
+  // A 200 carrying HTML — FPL's own maintenance page, which it serves under load
+  // — throws here rather than inside a narrower reporting forty missing fields.
+  let raw: unknown;
+  try {
+    raw = await response.json();
+  } catch {
+    return { status: "malformed", problems: [`${path} did not return JSON`] };
+  }
+
+  const result = narrow(raw);
+  return result.ok
+    ? { status: "ok", value: result.value }
+    : { status: "malformed", problems: result.problems };
 }
 
-function activeEvent(events: BootstrapEvent[]) {
+function activeEvent(events: readonly BootstrapEvent[]) {
   return (
     events.find((event) => event.is_current) ??
     events.find((event) => event.is_next) ??
@@ -240,7 +205,7 @@ function activeEvent(events: BootstrapEvent[]) {
  * reach: that one corrects which ARTIFACT is read, this one corrects which FIXTURE
  * is called next.
  */
-export function planningEventId(events: BootstrapEvent[], now: Date): number {
+export function planningEventId(events: readonly BootstrapEvent[], now: Date): number {
   const active = activeEvent(events);
   if (!active) return 1;
   const deadline = Date.parse(active.deadline_time ?? "");
@@ -258,7 +223,7 @@ const FIXTURE_HORIZON = 8;
 function fixtureViews(
   teamId: number,
   eventId: number,
-  fixtures: FixturePayload[],
+  fixtures: readonly FixturePayload[],
   teams: Map<number, BootstrapTeam>
 ): FplFixtureView[] {
   return fixtures
@@ -305,7 +270,7 @@ function fixtureViews(
  */
 function fixtureMatrix(
   eventId: number,
-  fixtures: FixturePayload[],
+  fixtures: readonly FixturePayload[],
   teams: Map<number, BootstrapTeam>,
   horizon: number,
 ): FplFixtureMatrixRow[] {
@@ -380,49 +345,76 @@ const SQUAD_SIZE = 15;
  * the last known answer with its age, never a blank.
  */
 export function usableSquad(payload: PicksPayload | null): PicksPayload | null {
-  if (!payload || !Array.isArray(payload.picks)) return null;
-  if (payload.picks.length !== SQUAD_SIZE) return null;
-
-  const history = payload.entry_history as PicksPayload["entry_history"] | undefined;
-  if (!history || typeof history !== "object") return null;
-  if (!Number.isFinite(history.bank) || !Number.isFinite(history.value)) return null;
-
-  for (const pick of payload.picks) {
-    if (!Number.isFinite(pick.element) || !Number.isFinite(pick.position)) return null;
-  }
-  return payload;
+  /* SHAPE is `narrowPicks`'s job now; this one asks about MEANING, and the split
+     is the point. Every check that used to sit here — is `picks` an array, is
+     `entry_history` an object, is `bank` a finite number — was this function
+     re-deciding what a narrower decides once, and it did so through
+     `payload.entry_history as …`, a cast inside the very function whose purpose
+     was to stop trusting the payload.
+     What is left is the only question narrowing cannot answer: FPL served a
+     well-formed payload, but is it a SQUAD? An endpoint that is up and has not
+     yet materialised a team returns `picks: []`, which is a perfectly valid
+     shape and an empty team. */
+  if (!payload) return null;
+  return payload.picks.length === SQUAD_SIZE ? payload : null;
 }
 
 export async function buildFplLiveState(): Promise<FplLiveState> {
-  const [bootstrap, fixtures, entry, history] = await Promise.all([
-    getOfficialJson<BootstrapPayload>("/bootstrap-static/"),
-    getOfficialJson<FixturePayload[]>("/fixtures/"),
-    getOfficialJson<EntryPayload>(`/entry/${FPL_ENTRY_ID}/`),
-    getOfficialJson<HistoryPayload>(`/entry/${FPL_ENTRY_ID}/history/`),
+  const [bootstrapFetch, fixturesFetch, entryFetch, historyFetch] = await Promise.all([
+    getOfficialJson("/bootstrap-static/", narrowBootstrap),
+    getOfficialJson("/fixtures/", narrowFixtures),
+    getOfficialJson(`/entry/${FPL_ENTRY_ID}/`, narrowEntry),
+    getOfficialJson(`/entry/${FPL_ENTRY_ID}/history/`, narrowHistory),
   ]);
 
-  if (!bootstrap || !fixtures || !entry || !history) {
-    throw new Error("Official FPL core data is incomplete");
+  /* Named, not counted. This threw "Official FPL core data is incomplete" for any
+     of four payloads and any of the dozens of ways each can be wrong, which told
+     whoever read the log nothing about which producer changed or what moved.
+
+     Written as one condition rather than a filter over a list so the compiler
+     narrows all four afterwards — the list version needed a cast per payload to
+     read `.value`, and a cast is the thing this whole change exists to remove. */
+  if (bootstrapFetch.status !== "ok" || fixturesFetch.status !== "ok"
+    || entryFetch.status !== "ok" || historyFetch.status !== "ok") {
+    const broken = ([
+      ["bootstrap-static", bootstrapFetch], ["fixtures", fixturesFetch],
+      ["entry", entryFetch], ["entry history", historyFetch],
+    ] as const)
+      .filter(([, result]) => result.status !== "ok")
+      .map(([label, result]) =>
+        result.status === "malformed"
+          ? `${label}: ${result.problems.join("; ")}`
+          : `${label}: not served`);
+    throw new Error(`Official FPL core data is unusable — ${broken.join(" | ")}`);
   }
+  const bootstrap = bootstrapFetch.value;
+  const fixtures = fixturesFetch.value;
+  const entry = entryFetch.value;
+  const history = historyFetch.value;
 
   const event = activeEvent(bootstrap.events);
   // Forward-looking reads use this; `event` stays FPL's own current week.
   const planningId = planningEventId(bootstrap.events, new Date());
   if (!event) throw new Error("Official FPL API returned no gameweeks");
 
-  const picksResponse = await getOfficialJson<PicksPayload>(
+  const picksFetch = await getOfficialJson(
     `/entry/${FPL_ENTRY_ID}/event/${event.id}/picks/`,
-    true
+    narrowPicks,
+    true,
   );
-  // Validated at the boundary, so every downstream decision reads one answer.
-  const picks = usableSquad(picksResponse);
+  /* A malformed picks payload does NOT throw. FPL reshapes this endpoint around
+     every deadline, and taking the whole route down over it would replace a
+     working screen carrying a captured squad with a 500. The narrower's verdict
+     is folded into the same "served, but not a squad" state the count check
+     already produced. */
+  const picks = picksFetch.status === "ok" ? usableSquad(picksFetch.value) : null;
   /*
    * Served, but not a squad. Distinct from "not served", because the two mean opposite
    * things: before the deadline FPL withholds picks by design and the capture is the
    * right answer; after it, a payload that is not a squad means something is wrong at
    * FPL and the capture may be out of date. The reader is told which they are looking at.
    */
-  const picksRejected = picksResponse !== null && picks === null;
+  const picksRejected = picksFetch.status !== "absent" && picks === null;
   const teamById = new Map(bootstrap.teams.map((team) => [team.id, team]));
   const positionById = new Map(
     bootstrap.element_types.map((position) => [position.id, position.singular_name_short])
