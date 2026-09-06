@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-06T13:16:33.058413Z",
+  "generated_at": "2026-09-06T20:56:34.817469Z",
   "gameweek": 4,
   "players": [
     {
@@ -10,13 +10,39 @@
       "entries": [
         {
           "claim_type": "chance_of_playing",
-          "resolved_value": 75,
+          "resolved_value": 25,
           "rule": "tier_precedence",
-          "n_conflicts": 1,
+          "n_conflicts": 3,
           "n_dropped": 0,
           "unresolved": false,
           "escalation": null,
           "claims": [
+            {
+              "claim_id": "bba5fb22560d4e99",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 25,
+              "claimed_at": "2026-09-05T18:00:06.182495Z",
+              "observed_at": "2026-09-06T13:16:55.543761Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "9bdf54c97bd1e215",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 25,
+              "claimed_at": "2026-09-05T18:00:06.182495Z",
+              "observed_at": "2026-09-06T13:16:55.543761Z",
+              "quote": "Calf injury - 25% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
             {
               "claim_id": "06da203b70258324",
               "source": "fpl_bootstrap",
@@ -27,8 +53,8 @@
               "observed_at": "2026-09-05T18:40:36.498982Z",
               "quote": null,
               "url": null,
-              "verdict": "won",
-              "beaten_by": null
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
             },
             {
               "claim_id": "016c90f60bac318e",
@@ -70,7 +96,7 @@
           ]
         }
       ],
-      "total_conflicts": 1,
+      "total_conflicts": 3,
       "needs_attention": false
     },
     {
@@ -142,13 +168,46 @@
       ],
       "total_conflicts": 1,
       "needs_attention": false
+    },
+    {
+      "element_id": 400,
+      "player_name": "Doku",
+      "club": "Man City",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-09-13",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "21eaac29dfb27928",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-09-13",
+              "claimed_at": "2026-08-18T17:00:08.385597Z",
+              "observed_at": "2026-09-06T13:16:55.543761Z",
+              "quote": "Calf injury - Expected back 13 Sep",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
     }
   ],
   "counts": {
-    "n_claims": 204,
-    "n_players_with_claims": 40,
-    "n_players_shown": 2,
+    "n_claims": 209,
+    "n_players_with_claims": 42,
+    "n_players_shown": 3,
     "n_escalations": 2,
-    "n_players_resolved": 4
+    "n_players_resolved": 6
   }
 }
