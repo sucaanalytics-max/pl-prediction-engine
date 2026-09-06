@@ -100,6 +100,10 @@ export default function Navigation() {
     live?.event?.deadlineTime,
     new Date(),
   );
+  const liveGameweek =
+    live?.event?.phase === "live" && typeof live.event.id === "number"
+      ? live.event.id
+      : null;
 
   return (
     <>
@@ -137,6 +141,22 @@ export default function Navigation() {
         </div>
 
         <div className="masthead-right">
+          {/* The week being PLAYED, which the planning badge beside it never
+              shows: `planningGameweek` advances the moment a deadline passes, so
+              during GW3's matches every surface here reads GW4. That is right —
+              GW4 is the only week left to act on — and it left a planner opened
+              on a Sunday silent about the eleven on the pitch.
+
+              On the route's own `phase`, never on the clock. Every finished week
+              has a passed deadline too, so inferring it would hang this over a
+              gameweek that ended a month ago. */}
+          {liveGameweek != null ? (
+            <span className="masthead-live" data-testid="masthead-live">
+              <span className="masthead-live-dot" aria-hidden="true" />
+              GW{liveGameweek} live
+            </span>
+          ) : null}
+
           {gameweek != null ? (
             <span className="masthead-gw">GW{gameweek}</span>
           ) : null}

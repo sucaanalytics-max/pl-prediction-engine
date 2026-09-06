@@ -250,3 +250,33 @@ describe("through the envelope", () => {
     expect(build(state()).provenance.producerVersion).toBe("heuristic-only");
   });
 });
+
+describe("the gameweek that is being played", () => {
+  /**
+   * `/api/fpl/state` has emitted `event.phase` since it was written and the
+   * narrower dropped it, so nothing in the app could tell a week that is BEING
+   * PLAYED from one that is merely past. On a Sunday with eight of ten fixtures
+   * underway the whole dashboard read GW4 — correct for a planner, since GW4 is
+   * the only week left to act on, and silent about the eleven on the pitch.
+   */
+
+  const event = (over: Record<string, unknown> = {}) =>
+    state({ event: { id: 3, deadlineTime: "2026-09-04T17:30:00Z", ...over } });
+
+  it("reads the phase the route publishes", () => {
+    expect(narrowOk(event({ phase: "live" })).event.phase).toBe("live");
+  });
+
+  it("leaves it null when the route says nothing", () => {
+    // Absent is not "not live" — it is unknown, and a marker that appeared on
+    // absence would claim matches were underway on no evidence at all.
+    expect(narrowOk(event()).event.phase).toBeNull();
+  });
+
+  it("does not invent a phase from a passed deadline", () => {
+    // A deadline in the past means the week is locked, NOT that it is live: it
+    // is also past for every week already finished.
+    expect(narrowOk(event({ deadlineTime: "2020-01-01T00:00:00Z" })).event.phase)
+      .toBeNull();
+  });
+});

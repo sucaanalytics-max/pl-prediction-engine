@@ -280,6 +280,21 @@ export interface HeuristicView {
   readonly event: {
     readonly id: number | null;
     readonly deadlineTime: string | null;
+    /**
+     * What the week is DOING, as the route reports it: `"live"` while its
+     * matches are being played.
+     *
+     * Emitted since `/api/fpl/state` was written and read by nothing, so the app
+     * could not tell a week being played from one merely past — a passed
+     * deadline is true of every finished week too. On a Sunday with eight of ten
+     * fixtures underway the whole dashboard read GW4, which is correct for a
+     * planner and says nothing about the eleven on the pitch.
+     *
+     * Null when the route does not say. Absent is unknown, not "not live": a
+     * marker that appeared on absence would claim matches were underway on no
+     * evidence.
+     */
+    readonly phase: string | null;
   };
   /** Whether the squad shown is the live one or a captured draft. */
   readonly squadSource: string | null;
@@ -661,6 +676,7 @@ export function narrowHeuristics(raw: unknown): NarrowResult<HeuristicView> {
     event: {
       id: optNumber(event.id),
       deadlineTime: optString(event.deadlineTime),
+      phase: optString(event.phase),
     },
     squadSource: optString(freshness.squad),
     notices: optArray(root.notices).filter((n): n is string => typeof n === "string"),
