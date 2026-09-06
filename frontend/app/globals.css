@@ -482,7 +482,7 @@ input[type="range"]::-moz-range-thumb {
 /* The gameweek being played, beside the one being planned. Quieter than
    `.masthead-gw` in weight but carrying the only colour in the bar, because it
    is a state that comes and goes rather than a permanent label. */
-.masthead-live { display: flex; align-items: center; gap: 6px; padding: 0 13px; color: var(--agree, oklch(0.74 0.15 155)); border-left: 1px solid var(--border); font-size: 11px; font-weight: 400; font-family: var(--font-mono); letter-spacing: .06em; white-space: nowrap; }
+.masthead-live { display: flex; align-items: center; gap: 6px; padding: 0 13px; color: var(--accent-text); border-left: 1px solid var(--border); font-size: 11px; font-weight: 400; font-family: var(--font-mono); letter-spacing: .06em; white-space: nowrap; }
 .masthead-live-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
 .masthead-gw { display: flex; align-items: center; padding: 0 13px; color: var(--accent-text); border-left: 1px solid var(--border); font-size: 11px; font-weight: 500; font-family: var(--font-mono); letter-spacing: .1em; }
 .masthead-team { display: flex; border-left: 1px solid var(--border); }

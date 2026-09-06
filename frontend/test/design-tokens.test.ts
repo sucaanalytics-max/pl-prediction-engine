@@ -54,6 +54,9 @@ const ROOT = process.cwd();
 const ALLOWED: Record<string, string> = {
   "--font-archivo": "emitted onto <html> by next/font in app/layout.tsx",
   "--font-dm-mono": "emitted onto <html> by next/font in app/layout.tsx",
+  // Emitted the same way (layout.tsx:71) and used only from globals.css, so it
+  // was invisible until this guard started reading the stylesheet.
+  "--font-display-anton": "emitted onto <html> by next/font in app/layout.tsx",
 };
 
 function sources(): string[] {
@@ -96,7 +99,12 @@ interface Use {
 
 function uses(): Use[] {
   const out: Use[] = [];
-  for (const file of sources()) {
+  // The stylesheet itself, not only the components. `sources()` walks `.ts` and
+  // `.tsx`, so a phantom written INSIDE globals.css sailed past the very test
+  // that exists to catch phantoms — which is how `--agree` got shipped there,
+  // painting from its fallback while `--accent-text` held the same value two
+  // hundred lines above it.
+  for (const file of [join(ROOT, "app", "globals.css"), ...sources()]) {
     const text = readFileSync(file, "utf8");
     for (const match of text.matchAll(/var\((--[a-z0-9-]+)\s*(?:,([^)]*))?\)/g)) {
       out.push({

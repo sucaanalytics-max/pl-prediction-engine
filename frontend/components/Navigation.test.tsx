@@ -82,3 +82,26 @@ describe("the gameweek being played", () => {
     expect(screen.queryByTestId("masthead-live")).toBeNull();
   });
 });
+
+describe("when the two resolvers name the same week", () => {
+  afterEach(() => {
+    cleanup();
+    vi.doUnmock("next/navigation");
+    vi.doUnmock("@/lib/data/useHeuristics");
+  });
+
+  it("does not print the gameweek twice", async () => {
+    /**
+     * `planningGameweek` advances only once a deadline has PASSED, so with no
+     * deadline it returns the live week itself and the bar read "GW3 live GW3".
+     * Degenerate — the route would have to report a live week without a deadline
+     * — but the two resolvers disagreeing is the failure `lib/data/gameweek.ts`
+     * exists for, and printing both is how that disagreement used to surface.
+     *
+     * The live marker names the week, so the plain badge has nothing to add.
+     */
+    await draw({ id: 3, deadlineTime: null, phase: "live" });
+    expect(screen.getByTestId("masthead-live").textContent).toMatch(/GW3/);
+    expect(screen.queryByText("GW3")).toBeNull();
+  });
+});

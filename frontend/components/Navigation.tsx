@@ -157,7 +157,11 @@ export default function Navigation() {
             </span>
           ) : null}
 
-          {gameweek != null ? (
+          {/* Suppressed when the live marker already names this week —
+              `planningGameweek` only advances once a deadline has PASSED, so a
+              live week reported without one leaves both resolvers on the same
+              number and the bar read "GW3 live GW3". */}
+          {gameweek != null && gameweek !== liveGameweek ? (
             <span className="masthead-gw">GW{gameweek}</span>
           ) : null}
 
