@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "producer_version": 1,
-  "generated_at": "2026-08-25T14:50:32.461167+00:00",
+  "generated_at": "2026-09-07T16:12:26.667992+00:00",
   "season": "2627",
-  "observations": 1,
+  "observations": 2,
   "minimum_observations": 6,
   "aggregate": null,
-  "aggregate_reason": "1 settled gameweek(s) reviewed; 6 are needed before a rate is reported. Per-gameweek calls below are complete.",
+  "aggregate_reason": "2 settled gameweek(s) reviewed; 6 are needed before a rate is reported. Per-gameweek calls below are complete.",
   "gameweeks": [
     {
       "gameweek": 1,
@@ -87,6 +87,84 @@
         "agreed": true,
         "points_delta": 0
       }
+    },
+    {
+      "gameweek": 3,
+      "sealed_at": "2026-09-04T15:21:21.638746+00:00",
+      "seconds_before_deadline": 7718.361254,
+      "sealed_universe": 506,
+      "points": 38,
+      "fpl_points_on_bench": 12,
+      "transfers": 1,
+      "hit_cost": 0,
+      "submitted_eleven": [
+        1,
+        4,
+        106,
+        113,
+        124,
+        165,
+        368,
+        379,
+        426,
+        427,
+        445
+      ],
+      "submitted_bench": [
+        497,
+        542,
+        152,
+        173
+      ],
+      "selection": {
+        "worst_starter": 1,
+        "best_bench": 542,
+        "bench_rated_higher": [
+          542
+        ],
+        "gap": 1.354,
+        "misordered": true
+      },
+      "bench": [
+        {
+          "bench_element": 497,
+          "starter_element": null,
+          "kind": "no_claim",
+          "points_forgone": 0,
+          "verdict": null,
+          "is_lesson": false
+        },
+        {
+          "bench_element": 542,
+          "starter_element": 445,
+          "kind": "cost",
+          "points_forgone": 9,
+          "verdict": "defensible",
+          "is_lesson": false
+        },
+        {
+          "bench_element": 152,
+          "starter_element": null,
+          "kind": "no_claim",
+          "points_forgone": 0,
+          "verdict": null,
+          "is_lesson": false
+        },
+        {
+          "bench_element": 173,
+          "starter_element": 445,
+          "kind": "cost",
+          "points_forgone": 5,
+          "verdict": "defensible",
+          "is_lesson": false
+        }
+      ],
+      "captain": {
+        "chosen": 426,
+        "sealed_best": 426,
+        "agreed": true,
+        "points_delta": 0
+      }
     }
   ],
   "entry_id": 20945,
@@ -105,6 +183,7 @@
     "418": "Maguire",
     "426": "B.Fernandes",
     "427": "Mbeumo",
+    "445": "Thiaw",
     "497": "Dubravka",
     "542": "E.Le F\u00e9e"
   }
