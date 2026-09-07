@@ -1,7 +1,32 @@
 {
-  "last_updated": "2026-09-06T09:51:12.916651Z",
-  "gameweek": 3,
-  "n_predictions": 2,
+  "validated_at": "2026-09-06T13:30:49.514289+00:00",
+  "artifact_contract": "valid",
+  "prediction_age_hours": 3.660155191388889,
+  "ledger_integrity": {
+    "gw01": "verified",
+    "gw03": "verified"
+  },
+  "ledger_integrity_ok": true,
+  "missing_seals": {
+    "expected_through": 2,
+    "sealed": [
+      1,
+      3
+    ],
+    "missing": [
+      2
+    ],
+    "note": "A gameweek below the current one with no sealed forecast is permanently unscoreable. A seal is only meaningful if it provably predated the deadline, so this is never repaired by writing one now."
+  },
+  "eval_targets": {
+    "n_evaluated_matches": 20,
+    "backtest_min_matches": 100,
+    "assessable": false,
+    "note": "20 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
+  },
+  "last_updated": "2026-09-07T10:56:31.181953Z",
+  "gameweek": 4,
+  "n_predictions": 10,
   "status": "healthy",
   "sources": {
     "bootstrap": {
@@ -16,38 +41,44 @@
   "degraded": [],
   "forecast_validation_status": "collecting",
   "model_metrics": {
-    "n_evaluated_matches": 20,
-    "brier_1x2_home": 0.23419205400000004,
-    "brier_1x2_draw": 0.16492629800000003,
-    "brier_1x2_away": 0.190214952,
-    "log_loss_home": 0.6608593946386492,
-    "rps_mean": 0.21220350300000002,
-    "ece": 0.09491000000000004,
-    "brier_ou25": 0.233331664,
-    "brier_btts": 0.25646864599999997
+    "n_evaluated_matches": 30,
+    "brier_1x2_home": 0.21698523600000003,
+    "brier_1x2_draw": 0.2291324173333333,
+    "brier_1x2_away": 0.178475344,
+    "log_loss_home": 0.6255755326239117,
+    "rps_mean": 0.19773028999999998,
+    "ece": 0.18394000000000002,
+    "brier_ou25": 0.24690390666666667,
+    "brier_btts": 0.25486201599999997
   },
   "calibration": {
     "bins": [
       {
+        "bin_center": 0.25,
+        "predicted_mean": 0.283,
+        "actual_mean": 0.0,
+        "count": 1
+      },
+      {
         "bin_center": 0.35000000000000003,
-        "predicted_mean": 0.33903999999999995,
-        "actual_mean": 0.4,
-        "count": 5
+        "predicted_mean": 0.34859999999999997,
+        "actual_mean": 0.2857142857142857,
+        "count": 7
       },
       {
         "bin_center": 0.45,
-        "predicted_mean": 0.43104,
-        "actual_mean": 0.4,
-        "count": 10
+        "predicted_mean": 0.4405866666666666,
+        "actual_mean": 0.26666666666666666,
+        "count": 15
       },
       {
         "bin_center": 0.55,
-        "predicted_mean": 0.5433999999999999,
-        "actual_mean": 0.8,
-        "count": 5
+        "predicted_mean": 0.5448285714285713,
+        "actual_mean": 0.8571428571428571,
+        "count": 7
       }
     ],
-    "ece": 0.09491000000000004
+    "ece": 0.18394000000000002
   },
   "pipeline_version": "4.1.0",
   "models": {
@@ -62,7 +93,7 @@
     },
     "goalscorer": {
       "status": "active",
-      "n_players": 65
+      "n_players": 79
     }
   },
   "ensemble_method": "weighted_average",
@@ -73,8 +104,8 @@
   "referee_profiles_count": 28,
   "fpl": {
     "status": "ok",
-    "gameweek": 3,
-    "n_players": 653,
+    "gameweek": 4,
+    "n_players": 654,
     "n_draws": 5000,
     "rules_source": "bootstrap+signed_yaml",
     "rules_degraded": false,
@@ -83,14 +114,14 @@
     "fixtures_missing": [],
     "diagnostics": {
       "n_clubs": 20,
-      "n_players": 653,
+      "n_players": 654,
       "n_without_history": 185,
       "n_availability_gated": 156,
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 482,
-        "graded": 15,
+        "none": 484,
+        "graded": 14,
         "open_ended": 44,
         "permanent": 99,
         "dated_fitness": 12,
@@ -103,36 +134,11 @@
       "n_fixtures": 10,
       "n_fixtures_skipped": 0,
       "skipped_fixtures": [],
-      "n_players": 653,
+      "n_players": 654,
       "n_double_gameweek_players": 0,
       "n_blank_gameweek_players": 0,
-      "seed_entropy": 64264194,
+      "seed_entropy": 52453177,
       "dgw_rotation_correlation_modelled": false
     }
-  },
-  "validated_at": "2026-09-06T13:30:49.514289+00:00",
-  "artifact_contract": "valid",
-  "prediction_age_hours": 3.660155191388889,
-  "ledger_integrity": {
-    "gw01": "verified",
-    "gw03": "verified"
-  },
-  "missing_seals": {
-    "expected_through": 2,
-    "sealed": [
-      1,
-      3
-    ],
-    "missing": [
-      2
-    ],
-    "note": "A gameweek below the current one with no sealed forecast is permanently unscoreable. A seal is only meaningful if it provably predated the deadline, so this is never repaired by writing one now."
-  },
-  "ledger_integrity_ok": true,
-  "eval_targets": {
-    "n_evaluated_matches": 20,
-    "backtest_min_matches": 100,
-    "assessable": false,
-    "note": "20 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
   }
 }

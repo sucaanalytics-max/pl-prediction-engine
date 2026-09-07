@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "season": "2627",
+  "gameweek": 4,
+  "generated_at": "2026-09-07T10:56:30.413598Z",
+  "seed_entropy": 52453177,
+  "n_draws": 5000,
+  "parameters": {
+    "events.rate_shrinkage_per90": {
+      "value": 450.0,
+      "tier": "F"
+    },
+    "events.recency_half_life_fixtures": {
+      "value": 40.0,
+      "tier": "F"
+    },
+    "market.blend_weight": {
+      "value": 0.55,
+      "tier": "F"
+    },
+    "market.prior_only_weight": {
+      "value": 0.9,
+      "tier": "C"
+    },
+    "minutes.doubtful_default": {
+      "value": 0.75,
+      "tier": "S"
+    },
+    "minutes.horizon_availability_floor": {
+      "value": 0.8,
+      "tier": "F"
+    },
+    "minutes.horizon_availability_rho": {
+      "value": 0.73,
+      "tier": "F"
+    },
+    "minutes.horizon_start_reversion_cap": {
+      "value": 0.447,
+      "tier": "F"
+    },
+    "minutes.horizon_start_reversion_rho": {
+      "value": 0.541,
+      "tier": "F"
+    },
+    "minutes.impairment_persistence_graded": {
+      "value": 0.45,
+      "tier": "S"
+    },
+    "minutes.impairment_persistence_open": {
+      "value": 0.85,
+      "tier": "S"
+    },
+    "minutes.injured_default": {
+      "value": 0.1,
+      "tier": "S"
+    },
+    "minutes.minutes_shrinkage": {
+      "value": 2.0,
+      "tier": "F"
+    },
+    "minutes.news_staleness_days": {
+      "value": 21.0,
+      "tier": "C"
+    },
+    "minutes.p60_shrinkage": {
+      "value": 0.25,
+      "tier": "F"
+    },
+    "minutes.recency_half_life_fixtures": {
+      "value": 1.5,
+      "tier": "F"
+    },
+    "minutes.return_ramp_floor": {
+      "value": 0.6,
+      "tier": "S"
+    },
+    "minutes.return_ramp_weeks": {
+      "value": 2.0,
+      "tier": "S"
+    },
+    "minutes.start_shrinkage": {
+      "value": 0.25,
+      "tier": "F"
+    },
+    "minutes.substitutes_per_fixture": {
+      "value": 4.14,
+      "tier": "F"
+    }
+  },
+  "fixtures": [
+    {
+      "match_id": "31",
+      "gameweek": 4,
+      "home_team": "Aston Villa",
+      "away_team": "Nott'm Forest",
+      "lambda_home": 1.538907,
+      "mu_away": 1.187913,
+      "rate_source": "market_blend"
+    },
+    {
+      "match_id": "32",
+      "gameweek": 4,
+      "home_team": "Bournemouth",
+      "away_team": "Brentford",
+      "lambda_home": 1.55269,
+      "mu_away": 1.390649,
+      "rate_source": "market_blend"
+    },
+    {
+      "match_id": "33",
+      "gameweek": 4,
+      "home_team": "Chelsea",
+      "away_team": "Hull City",
+      "lambda_home": 2.574875,
+      "mu_away": 0.823781,
+      "rate_source": "market_blend"
+    },
+    {
+      "match_id": "34",
+      "gameweek": 4,
+      "home_team": "Crystal Palace",
+      "away_team": "Ipswich",
+      "lambda_home": 1.633057,
+      "mu_away": 1.118697,
+      "rate_source": "market_blend"
+    },
+    {
+      "match_id": "35",
+      "gameweek": 4,
+      "home_team": "Liverpool",
+      "away_team": "Fulham",
+      "lambda_home": 2.090554,
+      "mu_away": 1.12659,
+      "rate_source": "market_blend"
+    },
+    {
+      "match_id": "37",
+      "gameweek": 4,
+      "home_team": "Tottenham",
+      "away_team": "Everton",
+      "lambda_home": 1.502,
+      "mu_away": 1.162814,
+      "rate_source": "market_blend"
+    },
+    {
+      "match_id": "36",
+      "gameweek": 4,
+      "home_team": "Sunderland",
+      "away_team": "Arsenal",
+      "lambda_home": 0.891933,
+      "mu_away": 1.667091,
+      "rate_source": "market_blend"
+    },
+    {
+      "match_id": "38",
+      "gameweek": 4,
+      "home_team": "Coventry City",
+      "away_team": "Brighton",
+      "lambda_home": 1.137741,
+      "mu_away": 1.679768,
+      "rate_source": "market_blend"
+    },
+    {
+      "match_id": "39",
+      "gameweek": 4,
+      "home_team": "Man United",
+      "away_team": "Man City",
+      "lambda_home": 1.477167,
+      "mu_away": 1.682047,
+      "rate_source": "market_blend"
+    },
+    {
+      "match_id": "40",
+      "gameweek": 4,
+      "home_team": "Leeds",
+      "away_team": "Newcastle",
+      "lambda_home": 1.514724,
+      "mu_away": 1.348863,
+      "rate_source": "market_blend"
+    }
+  ]
+}
