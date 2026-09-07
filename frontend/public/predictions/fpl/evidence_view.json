@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-06T20:56:34.817469Z",
+  "generated_at": "2026-09-07T05:24:39.932993Z",
   "gameweek": 4,
   "players": [
     {
@@ -97,6 +97,76 @@
         }
       ],
       "total_conflicts": 3,
+      "needs_attention": false
+    },
+    {
+      "element_id": 239,
+      "player_name": "Garner",
+      "club": "Everton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "69739cab61fb754f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-06T18:00:08.301702Z",
+              "observed_at": "2026-09-06T20:57:07.765860Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "3b9f3d97cb1a4417",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-06T18:00:08.301702Z",
+              "observed_at": "2026-09-06T20:57:07.765860Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f884fa613dfb731c",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-06T18:00:08.301702Z",
+              "observed_at": "2026-09-06T20:57:07.765860Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
       "needs_attention": false
     },
     {
@@ -204,10 +274,10 @@
     }
   ],
   "counts": {
-    "n_claims": 209,
-    "n_players_with_claims": 42,
-    "n_players_shown": 3,
+    "n_claims": 217,
+    "n_players_with_claims": 45,
+    "n_players_shown": 4,
     "n_escalations": 2,
-    "n_players_resolved": 6
+    "n_players_resolved": 9
   }
 }
