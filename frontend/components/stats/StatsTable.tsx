@@ -32,7 +32,8 @@
 
 import { useDeferredValue, useMemo, useState } from "react";
 
-import { proven } from "@/lib/data/artifact";
+import { isStale, proven } from "@/lib/data/artifact";
+import { ageLine } from "@/lib/formats";
 import { PLAYER_EVENTS } from "@/lib/data/player-events";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { REGISTRY } from "@/lib/data/narrow";
@@ -168,9 +169,40 @@ export function StatsTable({
      the sheet in front of the reader actually depends on. */
   const covers = useMemo(
     () => question.bands.map((band) =>
-      coverageFor(band.source, { gameweek, events: events?.players ?? null })),
-    [question, gameweek, events],
+      coverageFor(band.source, {
+        gameweek, events: events?.players ?? null, stats: stats ?? null,
+      })),
+    [question, gameweek, events, stats],
   );
+
+  /**
+   * How OLD each band's source is, which is a different question from how much
+   * it covers and the strip needs both.
+   *
+   * Understat's feed sat at one match for a fortnight while FPL's record grew to
+   * three. "1 match" was true the whole time and told a reader nothing: it reads
+   * as a young season rather than as a feed that stopped, and those call for
+   * opposite reactions. The descriptor already carries a two-day budget and the
+   * artifact layer already computes the age; nothing on this screen asked.
+   */
+  const freshness = useMemo(() => {
+    /* One reading per source, taken while each artifact still has its own type.
+       Collapsing them into a lookup first produced a union `isStale` could not be
+       called on, and the tempting fix was a cast — which is the thing the FPL
+       boundary was just cleaned of. */
+    const read = <T,>(artifact: Parameters<typeof isStale<T>>[0]) => ({
+      stale: isStale(artifact),
+      age: ageLine(artifact.provenance.producedAt),
+    });
+    const bySource = {
+      playerStats: read(statsArtifact),
+      playerEvents: read(eventArtifact),
+      projections: read(projArtifact),
+      // The market has no file of its own — it rides on the record's.
+      market: read(statsArtifact),
+    };
+    return new Map(question.bands.map((band) => [band.source, bySource[band.source]]));
+  }, [question, statsArtifact, eventArtifact, projArtifact]);
   const differs = coverageDiffers(covers);
 
   const visible = useMemo(() => {
@@ -266,27 +298,44 @@ export function StatsTable({
         }}
       >
         <span style={{ padding: "9px 14px 9px 0" }}><Label>Coverage</Label></span>
-        {covers.map((cover, index) => (
-          <span
-            key={cover.source}
-            title={cover.unknownBecause ?? undefined}
-            style={{
-              display: "flex", alignItems: "center", gap: 7, padding: "9px 16px",
-              borderLeft: index === 0 ? "none" : `1px solid ${S.hair}`,
-            }}
-          >
-            <span style={{ fontSize: 11.5, color: S.ink2 }}>
-              {question.bands[index].name}
+        {covers.map((cover, index) => {
+          const age = freshness.get(cover.source);
+          return (
+            <span
+              key={cover.source}
+              title={cover.unknownBecause ?? age?.age ?? undefined}
+              style={{
+                display: "flex", alignItems: "center", gap: 7, padding: "9px 16px",
+                borderLeft: index === 0 ? "none" : `1px solid ${S.hair}`,
+              }}
+            >
+              <span style={{ fontSize: 11.5, color: S.ink2 }}>
+                {question.bands[index].name}
+              </span>
+              <span style={{
+                fontSize: 11, fontWeight: 600, padding: "1px 6px",
+                background: "rgba(20,23,28,.07)",
+                color: cover.reach === null ? S.ink3 : S.ink,
+              }}>
+                {cover.reach ?? "∅"}
+              </span>
+              {age?.stale ? (
+                /* Only when stale. A fresh file's age is noise on a strip whose
+                   job is to be read at a glance; a stale one changes what the
+                   figures beside it are worth. */
+                <span
+                  data-testid="coverage-stale"
+                  style={{
+                    fontSize: 11, fontWeight: 600, padding: "1px 6px",
+                    color: S.noise, border: `1px solid ${S.noise}`,
+                  }}
+                >
+                  {age.age ?? "stale"}
+                </span>
+              ) : null}
             </span>
-            <span style={{
-              fontSize: 11, fontWeight: 600, padding: "1px 6px",
-              background: "rgba(20,23,28,.07)",
-              color: cover.reach === null ? S.ink3 : S.ink,
-            }}>
-              {cover.reach ?? "∅"}
-            </span>
-          </span>
-        ))}
+          );
+        })}
         {differs ? (
           <span style={{
             flexGrow: 1, minWidth: 260, textAlign: "right", padding: "9px 0",

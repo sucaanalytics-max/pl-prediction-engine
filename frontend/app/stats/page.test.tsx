@@ -30,6 +30,9 @@ async function mountStats({
   gameweek = 7 as number | null,
   stats = [statRow(1), statRow(2)] as unknown[] | null,
   squad = [{ elementId: 1 }] as unknown[],
+  /** Understat's own age, in days. Its budget is two. */
+  eventsAgeDays = 0,
+  events = null as unknown,
 } = {}) {
   vi.resetModules();
   const ok = (value: unknown) => ({
@@ -50,6 +53,22 @@ async function mountStats({
         return ok(gameweek === null ? null : { gameweek });
       }
       if (key === "playerStats") return ok(stats);
+      if (key === "playerEvents") {
+        const ms = eventsAgeDays * 24 * 60 * 60 * 1000;
+        return {
+          artifact: {
+            state: "ok",
+            provenance: {
+              source: "local",
+              producedAt: new Date(Date.now() - ms).toISOString(),
+              ageMs: ms,
+              freshnessBudgetMs: 2 * 24 * 60 * 60 * 1000,
+            },
+            reason: null,
+            value: events ?? { players: [], coverage: {}, notAvailable: [] },
+          },
+        };
+      }
       return ok(null);
     },
   }));
@@ -109,9 +128,13 @@ describe("every band says how much football it has seen", () => {
   it("states a reach for each source the open question reads", async () => {
     await mountStats({ gameweek: 4 });
     const strip = screen.getByTestId("coverage-strip");
-    // Gameweek 4 means three matches are behind the record, and the simulation
-    // points at the week itself.
-    expect(strip.textContent).toContain("3 matches");
+    /* Two matches, not three — and the difference is the point. The fixture's
+       deepest player has 180 minutes, so the RECORD holds two matches whatever
+       gameweek the calendar has reached. This asserted "3 matches" off
+       `gameweek - 1`, which is a claim about the season rather than about the
+       file on screen; the two part company the moment a deadline passes and no
+       minute of the new week has been played. */
+    expect(strip.textContent).toContain("2 matches");
     expect(strip.textContent).toContain("GW4");
   });
 
@@ -205,20 +228,49 @@ describe("the page states its own absence", () => {
     expect(screen.getByText("nothing is published at this path")).toBeInTheDocument();
   });
 
-  it("withholds the coverage that needs a gameweek, not the whole sheet", async () => {
+  it("withholds only the coverage that needs a gameweek", async () => {
     /**
-     * The bands that do not need a week keep working. What an unresolved gameweek
-     * costs is two COVERAGE claims — FPL's record, whose depth is counted from
-     * it, and the simulation's week — and both are admitted rather than guessed.
-     * The sheet used to withhold itself entirely over a number most of it never
-     * used.
+     * ONE claim now, not two. An unresolved gameweek costs the simulation its
+     * week, because a projection has to point at one. It no longer costs the
+     * RECORD its depth: that is measured from the file's own minutes, so it is
+     * answerable whether or not anything could name the week — which is the
+     * whole reason the derivation moved off the calendar.
      */
     await mountStats({ gameweek: null });
     expect(screen.getAllByTestId("stats-row").length).toBeGreaterThan(0);
     const strip = screen.getByTestId("coverage-strip");
     expect(strip.textContent).toContain("∅");
-    expect(strip.textContent).not.toContain("matches");
+    expect(strip.textContent).toContain("2 matches");
     // And the reader still learns what the screen cannot answer at all.
     expect(screen.getByText(/Defending/)).toBeInTheDocument();
+  });
+});
+
+describe("a source that stopped is not a source that is young", () => {
+  /**
+   * The failure this chip exists for, observed rather than imagined. Understat's
+   * feed sat at one match for a fortnight while FPL's record grew to three. The
+   * strip said "1 match" the whole time, which is true and reads as a young
+   * season — the opposite of the reaction a frozen feed calls for. Its descriptor
+   * has always carried a two-day budget and the artifact layer has always
+   * computed the age; nothing on this screen asked until it mattered.
+   */
+  it("says nothing about age while a feed is inside its budget", async () => {
+    await mountStats({ eventsAgeDays: 1 });
+    expect(screen.queryByTestId("coverage-stale")).not.toBeInTheDocument();
+  });
+
+  it("marks the band when its file is past its budget", async () => {
+    await mountStats({ eventsAgeDays: 15 });
+    const stale = screen.getAllByTestId("coverage-stale");
+    expect(stale.length).toBeGreaterThan(0);
+    expect(stale[0].textContent).toMatch(/\d/);
+  });
+
+  it("marks only the band that is stale, not the sheet", async () => {
+    // The record and the simulation refreshed this morning. A page-level warning
+    // would tar them with a fault that belongs to one feed.
+    await mountStats({ eventsAgeDays: 15 });
+    expect(screen.getAllByTestId("coverage-stale")).toHaveLength(1);
   });
 });

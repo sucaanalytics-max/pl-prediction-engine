@@ -17,10 +17,15 @@
  *   - Understat states `matches` on each row. The band's reach is the DEEPEST of
  *     them, because a player who missed a game carries fewer and the band's claim
  *     is about the feed rather than about one player.
- *   - FPL's record has no match count in it. It is taken from the gameweek the
- *     app resolved, minus the one not yet played. When no gameweek could be
- *     resolved, the coverage is null and the strip says so — the same discipline
- *     the ∅ mark applies to a cell.
+ *   - FPL's record has no match count in it, so it is measured from the file
+ *     itself: the deepest minutes any player carries, over ninety. It was taken
+ *     from the CALENDAR — the resolved gameweek minus the one not yet played —
+ *     and that is a claim about the season rather than about the artifact on
+ *     screen. The two agree most of the time and part company exactly where it
+ *     matters: once a deadline passes, the resolved gameweek advances while no
+ *     minute of it has been played, so the calendar version claimed a match that
+ *     did not exist yet. A file that says 270 minutes has three matches in it
+ *     whatever the calendar thinks.
  *   - The simulation covers exactly the week it was generated for.
  *   - The market has no denominator to state; it is whatever FPL published last.
  *
@@ -29,6 +34,7 @@
  */
 
 import type { PlayerEvent } from "@/lib/data/player-events";
+import type { PlayerRow } from "@/lib/data/narrow";
 import type { StatSource } from "@/lib/projections/stat-questions";
 
 export interface SourceCoverage {
@@ -37,6 +43,23 @@ export interface SourceCoverage {
   readonly reach: string | null;
   /** Why the reach is unknown. Null when it is known. */
   readonly unknownBecause: string | null;
+}
+
+/**
+ * The deepest record in FPL's own file, in matches.
+ *
+ * `max(minutes) / 90`, floored: a player who has been on for every minute of
+ * every match is the one who says how far the file goes. Floored rather than
+ * rounded because rounding 260 minutes up to three matches would claim a match
+ * nobody completed.
+ */
+export function fplMatches(rows: readonly PlayerRow[] | null): number | null {
+  if (rows === null || rows.length === 0) return null;
+  let deepest = 0;
+  for (const row of rows) {
+    if (typeof row.minutes === "number" && row.minutes > deepest) deepest = row.minutes;
+  }
+  return Math.floor(deepest / 90);
 }
 
 /** Understat publishes a per-row match count; the feed's reach is the deepest. */
@@ -59,23 +82,22 @@ export function coverageFor(
   input: {
     readonly gameweek: number | null;
     readonly events: readonly PlayerEvent[] | null;
+    readonly stats: readonly PlayerRow[] | null;
   },
 ): SourceCoverage {
   switch (source) {
     case "playerStats": {
-      // The upcoming gameweek minus the one not yet played. A gameweek of 1 means
-      // nothing has been played, which is a real state and reads as "0 matches"
-      // rather than as a negative or as unknown.
-      if (input.gameweek === null) {
+      // Measured from the file, not from the calendar — see the module docstring.
+      // A season not yet started reads as "0 matches", which is a real state.
+      const matches = fplMatches(input.stats);
+      if (matches === null) {
         return {
           source, reach: null,
-          unknownBecause: "no gameweek could be resolved, so how many matches this "
-            + "record covers cannot be stated",
+          unknownBecause: "the record is not published, so how many matches it covers "
+            + "cannot be stated",
         };
       }
-      return {
-        source, reach: matchWord(Math.max(0, input.gameweek - 1)), unknownBecause: null,
-      };
+      return { source, reach: matchWord(matches), unknownBecause: null };
     }
     case "playerEvents": {
       const matches = understatMatches(input.events);
