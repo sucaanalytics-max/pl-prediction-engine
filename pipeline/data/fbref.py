@@ -9,7 +9,6 @@ Now also fetches passing stats (completion %, progressive passes, key passes).
 Falls back gracefully if data source breaks.
 """
 import logging
-import platform
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -207,12 +206,19 @@ def fetch_fbref_passing_stats(season: str = None, force: bool = False) -> Option
         # eleven, passing included. Two scraping libraries is the price of the
         # only one that has the table.
         #
-        # It is declared in pipeline/requirements.txt and installs under CI's
-        # Python 3.11. It will NOT install on 3.13+ — every published version
-        # caps at `>=3.9,<3.13` — so on a newer local interpreter this raises
-        # ImportError and the function returns None. That is a real difference
-        # between this machine and CI, and it is why the handler below names the
-        # interpreter rather than just the package.
+        # NO LONGER DECLARED IN pipeline/requirements.txt, so this import now
+        # raises everywhere and this function always returns None. That is the
+        # intended state, not a regression — see the requirements comment. In
+        # short: `fbrefdata==0.4.1` caps `rich<14`, `soccerdata>=1.9` needs
+        # `rich>=14`, and holding fbrefdata pinned soccerdata at 1.8.2, whose
+        # Understat parser is broken. That cost the player-events artifact and the
+        # team-level xG features — both of which come from Understat through
+        # soccerdata — to keep a passing fetch that `test_fbref_passing.py`
+        # records as never having completed once.
+        #
+        # Kept rather than deleted because the column mapping below is tested and
+        # correct, and is the half worth keeping if a source for the table ever
+        # arrives. Restoring it means finding one that does not cap rich.
         from fbrefdata import FBref
 
         season_label = SEASON_LABELS.get(season, f"20{season[:2]}-{season[2:]}")
@@ -237,13 +243,15 @@ def fetch_fbref_passing_stats(season: str = None, force: bool = False) -> Option
             return passing
 
     except ImportError as exc:
-        # Names the interpreter because that is the usual cause: fbrefdata does
-        # not publish a wheel for Python 3.13+, so this is expected on a newer
-        # local venv and unexpected in CI.
-        logger.warning(
-            "fbrefdata unavailable (%s) on Python %s; skipping passing stats. "
-            "It publishes no wheel for 3.13+, so this is expected off CI.",
-            exc, platform.python_version(),
+        # Expected on every interpreter now, CI included: the package was removed
+        # from requirements because it pinned soccerdata to a version that cannot
+        # read Understat. Logged at INFO rather than WARNING so it stops competing
+        # for attention with failures that are not deliberate.
+        logger.info(
+            "fbrefdata is not installed (%s); passing stats are not collected. "
+            "Removed deliberately — it capped rich<14 and held soccerdata at "
+            "1.8.2, whose Understat parser is broken.",
+            exc,
         )
     except Exception as e:
         logger.warning(f"FBref passing stats fetch failed: {e}")

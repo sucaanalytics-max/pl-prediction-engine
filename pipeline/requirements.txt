@@ -3,10 +3,34 @@ pandas>=2.1
 numpy>=1.24
 requests>=2.31
 beautifulsoup4>=4.12
-fbrefdata>=0.4
 httpx>=0.25
 pyarrow>=14.0
-soccerdata>=1.8
+
+# soccerdata >=1.9, and the floor is load-bearing rather than tidy.
+#
+# `>=1.8` let the resolver pick 1.8.2, whose Understat parser dies on
+# `KeyError: 'statData'` — Understat changed the page and 1.9 adapted. Measured
+# 2026-09-08: 1.9.1 reads 387 Premier League rows; 1.8.2 raises. The failure was
+# invisible for fifteen days because the step catches and warns by design and the
+# workflow still reports success.
+#
+# WHY THE RESOLVER CHOSE 1.8.2 — and why `fbrefdata` is gone. `fbrefdata==0.4.1`
+# caps `rich<14.0.0`; `soccerdata>=1.9` needs `rich>=14.0.0`. Every version
+# between is excluded too: 1.8.3–1.8.7 want `lxml<5.0.0` and 1.8.8 wants
+# `rich>=14`. So 1.8.2 was the ONLY version that could coexist with fbrefdata,
+# and pip backtracked to it silently. The two packages are mutually exclusive.
+#
+# fbrefdata bought nothing for that price. It is the only source of FBref's
+# `passing` table — soccerdata's FBref reader still offers only standard, keeper,
+# shooting, playing_time and misc — but `test_fbref_passing.py` records that
+# `fetch_fbref_passing_stats` "never completed a single fetch", and the run of
+# 2026-09-08 failed it again with `Invalid league 'ENG-Premier League'`. Holding
+# it cost the Understat player artifact AND the team-level xG features, because
+# `fetch_fbref_team_stats` reads Understat through soccerdata despite its name.
+#
+# Restoring passing stats means finding a source that does not cap rich, or
+# scraping the table directly. It does not mean putting this line back.
+soccerdata>=1.9
 
 # Statistical Modeling
 scipy>=1.11
