@@ -102,6 +102,7 @@ jobs:
       # ONLY artifact that proves a prediction predated kickoff. A seal is
       # irrecoverable; a red run that still publishes is recoverable.
       - name: Verify Phase 0 artifacts
+        id: phase0_check
         continue-on-error: true
         env:
           PYTHONPATH: ${{ github.workspace }}
@@ -124,6 +125,15 @@ jobs:
       # `forecast_ledger.json` — the only artifact proving a prediction predated
       # kickoff. Hence the notice rather than `continue-on-error`, which would
       # colour the run for something the repo already classes as allowed to fail.
+
+      # Same masking as the frontend gate below, same reason for the annotation:
+      # this one must never withhold forecast_ledger.json, so it stays
+      # continue-on-error and says so out loud instead.
+      - name: Say so when the Phase 0 gate is red
+        if: always() && steps.phase0_check.outcome == 'failure'
+        run: |
+          echo "::warning::the Phase 0 artifact gate failed; the run published anyway on purpose, because a missed seal is irrecoverable and a red run that publishes is not"
+
       - name: Build the team view
         env:
           PYTHONPATH: ${{ github.workspace }}
@@ -215,9 +225,25 @@ jobs:
           cache-dependency-path: 'frontend/package-lock.json'
 
       - name: Verify the frontend still reads what we published
+        id: frontend_check
         if: always()
         continue-on-error: true
         working-directory: frontend
         run: |
           npm ci --prefer-offline --no-audit
           npm test
+
+      # `continue-on-error` is right and it was also silent. This step exists
+      # because "three real breakages went unnoticed for days"; it then failed on
+      # 2026-09-08 — GW3 finished, team_metrics crossed its three-match threshold,
+      # and five tests pinning the pre-threshold state went red — and the run
+      # still reported success, because continue-on-error turns a failed step's
+      # CONCLUSION into success while leaving its OUTCOME as failure. So the
+      # breakage detector had the same defect as the thing it was detecting.
+      #
+      # Not `::error::`: the run is deliberately green so the prediction commit
+      # survives, and an error annotation on a green run reads as a mistake.
+      - name: Say so when the frontend check is red
+        if: always() && steps.frontend_check.outcome == 'failure'
+        run: |
+          echo "::warning::the frontend suite failed against the artifacts this run published; the commit was kept on purpose, but something the app reads has changed shape"

@@ -1,17 +1,20 @@
 /**
- * The team-strength section on /phases, in the state the season is actually in.
+ * The team-strength section on /phases, in both states it can be in.
  *
- * ## Why the "no ranks yet" case leads
+ * ## Why the "no ranks yet" case is now a fixture
  *
- * The committed artifact right now has twenty clubs, two matches each, and every
- * rank null — the producer withholds a rank below three matches on purpose. That
- * is not a degraded state to be tolerated; it is the section's whole argument,
- * and it is the state a reader will meet for one more gameweek. So it is the
- * first thing asserted, and the section must say *why* the ranks are missing
- * rather than rendering a table with blank columns.
+ * It used to read the committed artifact directly, on the argument that twenty
+ * clubs with two matches each and every rank null was "the state a reader will
+ * meet for one more gameweek". That was true when it was written and stopped
+ * being true the moment GW3 finished: the producer published three matches and
+ * twenty ranks, and three assertions here began failing on a state the app
+ * handles correctly.
  *
- * The values below come from running the REAL narrower over the real file, so
- * these are not invented shapes.
+ * The lesson is not that the assertions were wrong. It is that a test which pins
+ * a TRANSIENT season state against a live artifact has an expiry date nobody
+ * writes down. Both states are derived from the real narrower over the real file
+ * — which is the virtue worth keeping — and then the one field under test is set
+ * explicitly, exactly as `ranked()` below has always done.
  */
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { render, screen } from "@testing-library/react";
@@ -27,6 +30,20 @@ const realView = () => {
   const out = narrowTeamMetrics(raw);
   if (!out.ok) throw new Error(out.problems.join("; "));
   return out.value;
+};
+
+/**
+ * The real view with ranks withheld, as the producer publishes them below the
+ * three-match threshold. Explicit rather than calendar-dependent.
+ */
+const withheld = () => {
+  const view = realView();
+  return {
+    ...view,
+    teams: view.teams.map((t) => ({
+      ...t, matches: 2, belowThreshold: true, attackRank: null, defenceRank: null,
+    })),
+  };
 };
 
 function mountWith(value: unknown) {
@@ -52,7 +69,7 @@ afterEach(() => vi.resetModules());
 
 describe("TeamStrength, before any club has three matches", () => {
   it("says why there are no ranks rather than showing blank columns", async () => {
-    const { TeamStrength } = await mountWith(realView());
+    const { TeamStrength } = await mountWith(withheld());
     render(<TeamStrength />);
     expect(screen.getByText(/not yet measurable/i)).toBeInTheDocument();
     expect(screen.getByText(/three matches|3 matches/i)).toBeInTheDocument();
@@ -67,7 +84,7 @@ describe("TeamStrength, before any club has three matches", () => {
   });
 
   it("shows no rank column while every rank is withheld", async () => {
-    const { TeamStrength } = await mountWith(realView());
+    const { TeamStrength } = await mountWith(withheld());
     render(<TeamStrength />);
     expect(screen.queryByTestId("rank-cell")).toBeNull();
   });
