@@ -30,6 +30,7 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 
+from pipeline.source_ledger import SourceLedger, annotations_for
 from pipeline.config import (
     RISK,
     PREDICTIONS_DIR, CURRENT_SEASON, CURRENT_SEASON_LABEL,
@@ -280,6 +281,10 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         Status dict with metrics and output path
     """
     start_time = datetime.utcnow()
+    # Every external source reports here, and the tail of the run summarises what
+    # arrived. See pipeline/source_ledger.py: a green run that quietly stopped
+    # collecting a source is the failure this is for.
+    sources = SourceLedger()
     logger.info("=" * 60)
     logger.info(f"PL PREDICTION ENGINE — PIPELINE START (v{PIPELINE_VERSION})")
     logger.info(f"Timestamp: {start_time.isoformat()}Z")
@@ -349,12 +354,31 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             fbref_stats = fetch_fbref_team_stats(force=force_refresh)
     except Exception as e:
         logger.warning(f"  FBref team stats failed: {e}")
+    # Recorded whether it threw or merely returned None — the second is how this
+    # source actually failed for a fortnight, and an `except` alone never saw it.
+    if fbref_stats is not None and len(fbref_stats) > 0:
+        sources.delivered("team_xg", "Team xG (Understat via soccerdata)",
+                          f"{len(fbref_stats)} teams")
+    else:
+        sources.failed("team_xg", "Team xG (Understat via soccerdata)",
+                       "no rows; the model runs without xG features")
 
     try:
         with step_timeout(60, "FBref passing stats"):
             passing_stats = fetch_fbref_passing_stats(force=force_refresh)
     except Exception as e:
         logger.warning(f"  FBref passing stats failed: {e}")
+    if passing_stats is not None and len(passing_stats) > 0:
+        sources.delivered("fbref_passing", "FBref passing", f"{len(passing_stats)} teams")
+    else:
+        # By design, and this is the entry the whole distinction exists for: the
+        # only provider of this table capped rich<14 and pinned soccerdata to a
+        # version that could not read Understat, so it was removed. Warning about
+        # it every run would make every warning here worthless.
+        sources.absent_by_design(
+            "fbref_passing", "FBref passing",
+            "no provider: fbrefdata capped rich<14 and broke Understat",
+        )
 
     if fbref_stats is not None:
         fbref_features = build_advanced_features(fbref_stats, passing_stats)
@@ -373,7 +397,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         with step_timeout(120, "Understat player events"):
             from pipeline.fpl.player_events import publish as publish_player_events
 
-            publish_player_events(
+            written = publish_player_events(
                 season_label=CURRENT_SEASON_LABEL,
                 season=CURRENT_SEASON,
                 bootstrap=bootstrap,
@@ -381,8 +405,19 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 out_dirs=[PREDICTIONS_DIR],
                 force=force_refresh,
             )
+        # `publish` returns None on an unavailable source rather than raising, so
+        # the `except` below never fired and the step looked like it had worked.
+        # That is precisely how this artifact went fifteen days without a refresh.
+        if written is None:
+            sources.failed("understat_player_events", "Understat player events",
+                           "source unavailable", publishes="player_events.json")
+        else:
+            sources.delivered("understat_player_events", "Understat player events",
+                              publishes="player_events.json")
     except Exception as e:
         logger.warning(f"  Understat player events failed: {e}")
+        sources.failed("understat_player_events", "Understat player events",
+                       str(e), publishes="player_events.json")
 
     logger.info(
         f"  Matches: {len(matches)}, Upcoming: {len(upcoming)}, "
@@ -637,6 +672,19 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             )
     except Exception as e:
         logger.warning(f"  Odds API failed: {e}. Continuing without live odds.")
+        sources.failed("odds_api", "The Odds API", str(e))
+    else:
+        # An absent key is a configuration choice, not a broken source: this repo
+        # runs without live odds on purpose when none is set.
+        if not os.environ.get("ODDS_API_KEY", ""):
+            sources.absent_by_design("odds_api", "The Odds API", "ODDS_API_KEY not set")
+        elif len(all_live_odds.get("main") or []) > 0:
+            sources.delivered("odds_api", "The Odds API",
+                              f"{len(all_live_odds.get('main') or [])} events")
+        else:
+            sources.failed("odds_api", "The Odds API",
+                           "key is set but no events came back",
+                           publishes="fixture_xg.json")
 
     # Parse live odds
     parsed_main = {}
@@ -1718,7 +1766,16 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     logger.info(f"Predictions: {latest_path}")
     logger.info(f"Matches: {len(all_predictions)}")
     logger.info(f"Value bets found: {total_value_bets}")
+    logger.info("External sources:")
+    logger.info(sources.table())
     logger.info(f"{'=' * 60}")
+
+    # Printed, not logged. Annotations are a stdout protocol GitHub reads, and
+    # they surface on the run page itself — which is the whole point: the warning
+    # that went unread for fifteen days was already in the log.
+    source_report = sources.report()
+    for line in annotations_for(source_report):
+        print(line, flush=True)
 
     return {
         "status": "success",
@@ -1727,6 +1784,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
         "gameweek": gameweek,
         "output_path": str(latest_path),
         "elapsed_seconds": elapsed,
+        "sources": source_report["sources"],
     }
 
 
