@@ -1,17 +1,41 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-09T18:46:59.624349Z",
-  "n_dropped": 59,
+  "generated_at": "2026-09-09T21:30:49.054356Z",
+  "n_dropped": 64,
   "dropped_by_source": {
-    "bbc_football": 30,
-    "sky_football": 29
+    "bbc_football": 33,
+    "sky_football": 31
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 149,
+  "n_articles": 154,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "9f3d0ffd15bebfab",
+      "headline": "Szoboszlai equalises for Liverpool after fantastic Araujo assist",
+      "summary": "Dominik Szoboszlai equalises for Liverpool against Atletico Madrid after a brilliant assist from Ronald Araujo.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c7v4lgmyl30o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-09T20:46:31Z",
+      "players": [
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": true
+        },
+        {
+          "element_id": 579,
+          "name": "Araujo",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "16a92121788ea52c",
       "headline": "FPL notes: Why Sangare was subbed off + Collins injury latest",
@@ -89,6 +113,264 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "72f505a45c33bb8e",
+      "headline": "Odegaard gives dominant Arsenal win over Napoli",
+      "summary": "Martin Odegaard's superb strike gave Arsenal a deserved 1-0 victory over Napoli in their Champions League opener.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/napoli-vs-arsenal/report/577605",
+      "claimed_at": "2026-09-09T22:07:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "18c83101f6c0a550",
+      "headline": "Chelsea super subs inspire turnaround as Blues hit Leeds for six",
+      "summary": "Cole Palmer came off the bench to inspire a remarkable Chelsea comeback as Xabi Alonso\u2019s side beat Leeds United 6-3 to reach the fourth round of the Carabao Cup. Leeds looked on course for an upset when Tarik Muharemovic headed them ah",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/chelsea-super-subs-inspire-turnaround-as-blues-hit-leeds-for-six/",
+      "claimed_at": "2026-09-09T21:27:36Z",
+      "players": [
+        {
+          "element_id": 334,
+          "name": "Muharemovi\u0107",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 337,
+          "name": "Aaronson",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9ef6893854c44ea3",
+      "headline": "Newcastle still open to Hall sale - Thursday's gossip",
+      "summary": "Lewis Hall could still leave Newcastle despite new contract, Yasin Ayari close to committing to Brighton but Kaoru Mitoma set for exit, and Chelsea to go back for Manu Kone in midfielder search.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvgy303wwpno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-09T21:24:14Z",
+      "players": [
+        {
+          "element_id": 121,
+          "name": "Mitoma",
+          "club": "BHA",
+          "held": false
+        },
+        {
+          "element_id": 129,
+          "name": "Ayari",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "886c61b059e77fa6",
+      "headline": "Mac Allister nets Liverpool winner as Barcola goes off injured against Atletico Madrid",
+      "summary": "Alexis Mac Allister scored the winner as Liverpool came from behind to beat Atletico Madrid 2-1 at Anfield in their opening Champions League game. Marcos Llorente continued his remarkable scoring record at Anfield",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/mac-allister-nets-liverpool-winner-as-barcola-goes-off-injured-against-atletico-madrid/",
+      "claimed_at": "2026-09-09T21:18:32Z",
+      "players": [
+        {
+          "element_id": 372,
+          "name": "Mac Allister",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 579,
+          "name": "Araujo",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8744e2f07a463ed1",
+      "headline": "Odegaard goal gets Arsenal off to winning start in Champions League",
+      "summary": "Martin Odegaard scored the only goal as Arsenal began their Champions League campaign with a hard-fought 1-0 victory over Napoli. The Arsenal captain struck with 15 minutes remaining at the Stadio Diego Armando Maradona, smashing in",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/odegaard-goal-gets-arsenal-off-to-winning-start-in-champions-league/",
+      "claimed_at": "2026-09-09T21:09:22Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "274f5fd15a38dfb0",
+      "headline": "Liverpool come from behind to beat Atletico Madrid",
+      "summary": "Alexis Mac Allister scores an emphatic winner as Liverpool began their Champions League campaign with a win over Atletico Madrid at Anfield.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ce874m9ld2mo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-09T21:07:13Z",
+      "players": [
+        {
+          "element_id": 372,
+          "name": "Mac Allister",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "95b0b67054ef63cd",
+      "headline": "Aston Villa ignite season in five-goal thriller against Club Brugge",
+      "summary": "Aston Villa launch their Champions League campaign with a 3-2 victory over Club Brugge in Belgium, ending their early-season goal drought.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c36l7y21rr2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-09T21:00:27Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "90ddefcdbd032ef8",
+      "headline": "Haaland strikes twice as Manchester City secure win at Porto",
+      "summary": "Erling Haaland scores twice as Manchester City open their Champions League campaign with a comfortable 2-0 victory away to Porto.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c62kj1109plo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-09T21:00:12Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6b543a5ed00d8bb1",
+      "headline": "Liverpool latest: Iraola plays down Barcola injury fears",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-09T21:00:00Z",
+      "players": [
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ab50dd94407e78f4",
+      "headline": "Mac Allister's brilliant finish puts Liverpool ahead",
+      "summary": "The ball falls to Alexis Mac Allister on the edge of the box who hits it first time past Jan Oblak to give Liverpool the lead.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c9qry93558po?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-09T20:59:20Z",
+      "players": [
+        {
+          "element_id": 372,
+          "name": "Mac Allister",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "26403db40c34149e",
+      "headline": "Forest latest: Jair Cunha given first Brazil call-up",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279316/nottingham-forest-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-09T20:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a5f4c0fe5501195a",
+      "headline": "Brentford latest: Thiago dropped by Brazil",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279280/brentford-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-09T20:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7df135d303a06260",
+      "headline": "Chelsea score SIX second-half goals to beat Leeds in crazy game LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/chelsea-vs-leeds-united/live/577586",
+      "claimed_at": "2026-09-09T18:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "ea989c4158bdf241",
@@ -415,6 +697,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bbc43c892b6487f7",
+      "headline": "Mudryk injury reports amid Spurs' slow start to season - send in your questions...",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-09T08:24:00Z",
+      "players": [
+        {
+          "element_id": 578,
+          "name": "Mudryk",
+          "club": "TOT",
           "held": false
         }
       ],
@@ -751,6 +1051,24 @@
       "touches_squad": false
     },
     {
+      "digest": "4037ad4b2a488351",
+      "headline": "Odegaard clinches win for dominant Arsenal against Napoli LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/napoli-vs-arsenal/live/577605",
+      "claimed_at": "2026-09-07T15:58:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "ae5059c02699dc82",
       "headline": "Gyokeres starts as Arsenal make four changes against Napoli LIVE!",
       "summary": null,
@@ -1003,78 +1321,6 @@
       "touches_squad": false
     },
     {
-      "digest": "10b3c77e454109fd",
-      "headline": "How Crystal Palace exposed Fulham's defence",
-      "summary": "BBC pundit and ex-Fulham midfielder Danny Murphy gives his analysis on Fulham's performance against Crystal Palace at Craven Cottage.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c5y5qpnjgglo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-05T23:03:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4a14160ef29936fd",
-      "headline": "Watch: Match of the Day",
-      "summary": "Highlights of eight Premier League matches, including Hull City v Aston Villa.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/iplayer/live/bbcone?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-05T23:01:15Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2eca088ffcd58a58",
-      "headline": "How Man Utd plan to compete at top with richer rivals",
-      "summary": "Manager Michael Carrick and chief executive Omar Berrada are united in their viewthat Manchester United can be successful despite the club's relatively low summer spending.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cg49v57rxvgo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-05T21:57:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cb4e0c1951903820",
-      "headline": "How Man Utd plan to compete at top with big-spending rivals",
-      "summary": "Manager Michael Carrick and chief executive Omar Berrada are united in their viewthat Manchester United can be successful despite the club's relatively low summer spending.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cg49v57rxvgo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-05T21:57:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ff53e11dc3e4d421",
       "headline": "Arteta backs Chelsea to be Premier League title contenders this season",
       "summary": "Mikel Arteta believes Chelsea have \u201cevery ingredient\u201d to challenge for the Premier League title this season. Arteta's reigning champions take on the Blues on Sunday with both sides having won their opening two games of the campai",
@@ -1082,60 +1328,6 @@
       "tier": 2,
       "url": "https://hayters.com/arteta-backs-chelsea-to-be-premier-league-title-contenders-this-season/",
       "claimed_at": "2026-09-05T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ed01778ebae24771",
-      "headline": "Seven points from three games - are Hull on track to avoid relegation?",
-      "summary": "It might be too early to settle survival talk, but newly promoted Hull City have given themselves the perfect platform to build on in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cy8zd574yzyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-05T20:56:25Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0fbbe1451731e886",
-      "headline": "Man City latest: Fernandez's debut performance analysed",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-05T20:00:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "38b93de0c1b39e74",
-      "headline": "Villa take first point but rue missed chances in Hull stalemate",
-      "summary": "Aston Villa picked up their first Premier League point of the season, but were left to rue missed chances in their 0-0 draw against Hull City.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13571937/hull-0-0-aston-villa-tigers-remain-unbeaten-as-unai-emerys-200th-game-in-charge-fails-to-bring-much-needed-goal",
-      "claimed_at": "2026-09-05T19:30:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1171,24 +1363,6 @@
       "touches_squad": false
     },
     {
-      "digest": "223af8d049256df5",
-      "headline": "Fulham latest: Why inexperience is proving a big problem at Craven Cottage",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-05T18:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "2d6d4d4ad579c79e",
       "headline": "Arbeloa vows Fulham\u2019s poor start \u2018will not define this season\u2019",
       "summary": "Fulham boss Alvaro Arbeloa insists his side\u2019s difficult start to the season will not define their campaign after suffering a third consecutive defeat. Fulham were beaten 3-2 by Crystal Palace having led 2-1 in the game, leaving Arbeloa\u2019s",
@@ -1196,60 +1370,6 @@
       "tier": 2,
       "url": "https://hayters.com/arbeloa-vows-fulhams-poor-start-will-not-define-this-season/",
       "claimed_at": "2026-09-05T18:17:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3b580fc07a9cec63",
-      "headline": "Sunderland latest: Le Bris gives blunt verdict on VAR after Ballard decision",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-05T18:16:00Z",
-      "players": [
-        {
-          "element_id": 532,
-          "name": "Ballard",
-          "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2917a310aba7cadd",
-      "headline": "PL Predictions: Why Man Utd is the perfect game for Everton",
-      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight across the weekend Premier League action.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13581012/premier-league-predictions-jones-knows-best-bets-more-andoni-iraola-issues-liverpool-to-slip-at-ipswich",
-      "claimed_at": "2026-09-05T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bc247106f73d76dd",
-      "headline": "Brentford latest: Andrews critical of refereeing during Sunderland draw",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279280/brentford-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-05T17:55:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1620,114 +1740,6 @@
         {
           "element_id": 627,
           "name": "Barcola",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0e80d85cdbea1e59",
-      "headline": "Maresca responds to Fernandez\u2019s \u2018big club\u2019 comments after completing move to Man City from Chelsea",
-      "summary": "Manchester City manager Enzo Maresca has responded to Enzo Fernandez\u2019s comment about joining a &#8220;big club&#8221; after his move from Chelsea. The Argentina international completed a deadline day m",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/maresca-responds-to-fernandezs-big-club-comments-after-completing-move-to-man-city-from-chelsea/",
-      "claimed_at": "2026-09-04T21:30:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3ce781ba2c417814",
-      "headline": "De Zerbi on Kulusevski\u2019s recent return to training and his continuing recovery",
-      "summary": "Roberto De Zerbi insisted that he is &#8220;positive&#8221; about Dejan Kulusevski's recovery, despite a small issue this week. The Swede has not featured for Spurs since suffering a complicated knee injury against Crysta",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-gives-positive-kulusevski-update/",
-      "claimed_at": "2026-09-04T21:30:00Z",
-      "players": [
-        {
-          "element_id": 521,
-          "name": "Kulusevski",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "83b617ae85f120cb",
-      "headline": "Maresca explains why Foden is not in captaincy group at Man City",
-      "summary": "Manchester City manager Enzo Maresca has admitted that he considered making Phil Foden one of the captains of his side. Following the departures of both Bernardo Silva and Rodri, just Ruben Dias and Erling Haaland remain at the Etihad",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/maresca-explains-why-foden-is-not-in-captaincy-group-at-man-city/",
-      "claimed_at": "2026-09-04T21:30:00Z",
-      "players": [
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 388,
-          "name": "Gu\u00e9hi",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b6602c4016cc8d4b",
-      "headline": "Arteta responds to lack of forward signings and defends Arsenal\u2019s transfer window",
-      "summary": "Mikel Arteta admits Arsenal's transfer window was not perfect, but says he is pleased with the business that was done. Arsenal were active in the summer transfer market, but asked whether Arteta should have gone furthe",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-responds-to-lack-of-forward-signings-and-defends-arsenals-transfer-window/",
-      "claimed_at": "2026-09-04T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d2b7a6201fcd47c1",
-      "headline": "Isak double gives Liverpool their first win of the season",
-      "summary": "Alexander Isak's quick-fire double in the opening ten minutes of the game secured a first victory of the season for Liverpool against Ipswich Town - and a first under new boss Andoni Iraola. Isak finished emphatically on six minutes to open t",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/isak-double-gives-liverpool-their-first-win-of-the-season/",
-      "claimed_at": "2026-09-04T20:52:59Z",
-      "players": [
-        {
-          "element_id": 367,
-          "name": "Gakpo",
           "club": "LIV",
           "held": false
         }
