@@ -215,3 +215,145 @@ def build_transfer_rows(
             },
         })
     return rows
+
+
+def build(
+    *,
+    entry_id: int,
+    settled: List[int],
+    gameweeks: List[Dict[str, Any]],
+    transfers: List[Dict[str, Any]],
+    generated_at: str,
+) -> Dict[str, Any]:
+    """Assemble the artifact. ``settled_through`` is null when nothing has."""
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "generated_at": generated_at,
+        "entry_id": int(entry_id),
+        "settled_through": max(settled) if settled else None,
+        "gameweeks": gameweeks,
+        "transfers": transfers,
+    }
+
+
+def already_current(target: Path, *, settled_through: Optional[int]) -> bool:
+    """
+    Whether the published file already covers this much of the season.
+
+    The agent runs hourly and a gameweek settles weekly, so without this the
+    producer would rewrite an identical file 167 times between gameweeks and
+    commit the churn. A schema bump republishes even when the same gameweeks
+    have settled, because the shape is part of what is being published.
+    """
+    if not target.exists():
+        return False
+    try:
+        existing = json.loads(target.read_text())
+    except (OSError, json.JSONDecodeError):
+        return False
+    if int(existing.get("schema_version") or 0) != SCHEMA_VERSION:
+        return False
+    return existing.get("settled_through") == settled_through
+
+
+def run(
+    *,
+    entry: str = "owner",
+    public_dir: Path = FPL_PUBLIC_DIR,
+    write: bool = True,
+    force: bool = False,
+) -> Dict[str, Any]:
+    """Read the settled season and, by default, publish the ledger."""
+    config = FPL_ENTRIES.get(entry)
+    if config is None:
+        raise KeyError(f"no FPL entry configured under {entry!r}")
+    entry_id = int(config["entry_id"])
+
+    bootstrap = fetch_bootstrap_static(allow_stale=True)
+    settled = settled_gameweeks(bootstrap)
+    target = Path(public_dir) / ARTIFACT_NAME
+    settled_through = max(settled) if settled else None
+
+    if not force and already_current(target, settled_through=settled_through):
+        logger.info(
+            "%s already covers GW%s; nothing to do", ARTIFACT_NAME, settled_through
+        )
+        return json.loads(target.read_text())
+
+    events = {int(e["id"]): e for e in bootstrap.get("events", [])}
+    history = fetch_history(entry_id)
+    history_rows = {int(r["event"]): r for r in history.get("current") or []}
+
+    gameweeks: List[Dict[str, Any]] = []
+    points_by_gw: Dict[int, Dict[int, int]] = {}
+    picks_by_gw: Dict[int, Dict[int, int]] = {}
+
+    for gameweek in settled:
+        history_row = history_rows.get(gameweek)
+        if history_row is None:
+            raise ManagerHistoryError(
+                f"GW{gameweek} is settled but absent from the entry's history. "
+                f"The entry may not have existed yet; that is a real state, not "
+                f"a default to paper over."
+            )
+        live = fetch_event_live(gameweek)
+        picks = fetch_picks(entry_id, gameweek)
+        points = points_by_element(live)
+        minutes = minutes_by_element(live)
+        points_by_gw[gameweek] = points
+        picks_by_gw[gameweek] = {
+            int(p["element"]): int(p.get("multiplier") or 0)
+            for p in picks.get("picks") or []
+        }
+        event = events.get(gameweek, {})
+        gameweeks.append(build_gameweek_row(
+            event=gameweek, picks=picks, history_row=history_row,
+            points=points, minutes=minutes,
+            average=event.get("average_entry_score"),
+            highest=event.get("highest_score"),
+        ))
+
+    payload = build(
+        entry_id=entry_id,
+        settled=settled,
+        gameweeks=gameweeks,
+        transfers=build_transfer_rows(
+            transfers=fetch_transfers(entry_id),
+            settled=settled,
+            points_by_gw=points_by_gw,
+            picks_by_gw=picks_by_gw,
+        ),
+        generated_at=datetime.now(timezone.utc).isoformat(),
+    )
+
+    if write:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(json.dumps(payload, indent=2) + "\n")
+        logger.info(
+            "wrote %s — %d gameweek(s), %d transfer(s)",
+            target, len(payload["gameweeks"]), len(payload["transfers"]),
+        )
+    return payload
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--entry", default="owner")
+    parser.add_argument("--no-write", action="store_true")
+    parser.add_argument("--force", action="store_true")
+    parser.add_argument("--verbose", action="store_true")
+    args = parser.parse_args(argv)
+    logging.basicConfig(
+        level=logging.INFO if args.verbose else logging.WARNING,
+        format="%(levelname)s %(message)s",
+    )
+    payload = run(entry=args.entry, write=not args.no_write, force=args.force)
+    print(json.dumps(
+        {k: v for k, v in payload.items() if k not in ("gameweeks", "transfers")},
+        indent=2,
+    ))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
