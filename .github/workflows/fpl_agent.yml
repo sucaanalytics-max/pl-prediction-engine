@@ -155,6 +155,32 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: python -m pipeline.learning.run_agent
 
+      # Deliberately its own step and NOT a gate in schedule.py, whose order is
+      # load-bearing (MISSED_SEAL last, PROJECTION_WINDOW after it, both pinned
+      # by tests) and where a new gate once caused a livelock that cost a
+      # gameweek. This depends on no seal at all: it reads only settled
+      # gameweeks off the public API, so a week the agent never sealed still
+      # gets its history. It exits early when nothing new has settled, so on the
+      # hourly tick it costs one cached bootstrap read and nothing else.
+      #
+      # continue-on-error for the same reason the other gates have it: a failure
+      # here must never be able to cost a seal. The annotation below is keyed on
+      # `outcome`, not `conclusion`, because continue-on-error rewrites a failed
+      # step's conclusion to success — measured on run 34337299988, where the
+      # conclusion-keyed condition was skipped and only the outcome-keyed one
+      # fired.
+      - name: Publish the manager's own history
+        id: manager_history
+        continue-on-error: true
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m pipeline.fpl.manager_history --verbose
+
+      - name: Say so when the manager history is red
+        if: always() && steps.manager_history.outcome == 'failure'
+        run: |
+          echo "::warning::manager_history did not publish; /review will show the last good copy or state its absence. If the reconciliation identity failed, the model of FPL scoring is wrong and the error message says which half."
+
       - name: Commit agent artifacts
         # ALWAYS, because the forecast is already on disk by the time anything
         # downstream can fail. `run_agent` deliberately returns 1 in two states where

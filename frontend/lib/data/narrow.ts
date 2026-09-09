@@ -39,6 +39,10 @@ import {
 } from "@/lib/data/registry";
 import { toFraction, type Fraction } from "@/lib/data/units";
 import { DECISION_REVIEW } from "@/lib/data/decision-review";
+import {
+  narrowManagerHistory,
+  type ManagerHistory,
+} from "@/lib/data/narrow-manager-history";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // What used to be here: table.json, latest.json, h2h.json, market_blend_weight
@@ -1310,6 +1314,26 @@ export const REGISTRY = {
     // publishes nothing when it has nothing to say.
     isEmpty: (v) => v.messages.length === 0,
   }) satisfies Descriptor<MessageFeed>,
+
+  managerHistory: ({
+    key: "managerHistory",
+    path: "fpl/manager_history.json",
+    owner: "agent",
+    describes: "your own gameweeks, and what each transfer returned",
+    // Eight days, not hours. The file only changes when a gameweek settles and
+    // gameweeks are ~7 days apart, so an hourly-tuned budget would mark it
+    // stale six days in seven while it was perfectly correct — which trains the
+    // reader to ignore the chip, and then it fails to warn when it matters.
+    // The GW5 -> GW6 international break (2026-09-18 to 2026-10-10) will trip
+    // it legitimately, and that reading is right: the file really is a month old.
+    freshnessBudgetMs: 8 * DAY,
+    narrow: narrowManagerHistory,
+    producedAtOf: (v) => v.generatedAt,
+    // Empty means nothing has settled at all. Three gameweeks with an empty
+    // transfer list is NOT empty — it is a manager who has made no transfers,
+    // and the page has something true to say about that.
+    isEmpty: (v) => v.gameweeks.length === 0,
+  }) satisfies Descriptor<ManagerHistory>,
 
   teamMetrics: ({
     key: "teamMetrics",

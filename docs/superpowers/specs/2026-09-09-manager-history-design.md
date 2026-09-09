@@ -182,8 +182,12 @@ transfers[]:
   in_points_by_gw   { gw: raw points }      # every settled gw since the transfer
   out_points_by_gw  { gw: raw points }
   in_multiplier_by_gw { gw: 0 | 1 | 2 | 3 | null }
-  in_held_through                            # gw he was sold, or null if held
 ```
+
+**`in_held_through` was specified here and deliberately dropped during
+implementation.** It is fully derivable — a `null` in `in_multiplier_by_gw`
+already means the player had left the squad — and two encodings of one fact
+drift apart. Pollution is computed in the frontend from the multiplier map alone.
 
 **Absent and `null` mean different things, everywhere in this artifact.** A
 gameweek **absent** from a by-gw map has not settled yet. A gameweek present
