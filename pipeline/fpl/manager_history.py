@@ -155,3 +155,63 @@ def build_gameweek_row(
             for p in rows
         ],
     }
+
+
+def build_transfer_rows(
+    *,
+    transfers: List[Dict[str, Any]],
+    settled: List[int],
+    points_by_gw: Dict[int, Dict[int, int]],
+    picks_by_gw: Dict[int, Dict[int, int]],
+) -> List[Dict[str, Any]]:
+    """
+    One row per transfer, carrying both players' points for every settled
+    gameweek from the transfer onwards.
+
+    JSON object keys are strings, so the by-gameweek maps are keyed by
+    ``str(gw)``.
+
+    Two absences that must not be confused, and are not:
+
+    * A gameweek **missing** from a map has not settled. The frontend renders it
+      as "not yet measurable" and excludes it from every window.
+    * A gameweek present with ``in_multiplier_by_gw[gw] is None`` settled, but
+      the incoming player was no longer in the squad. That is the pollution
+      signal, and his points are still recorded so the sale can be priced.
+
+    Windows, deltas and pollution are NOT computed here on purpose: they are
+    presentation choices, and baking them into a committed artifact means a
+    pipeline run to change 2/3/4 to 1/3/6.
+    """
+    forward = sorted(
+        transfers, key=lambda t: (int(t["event"]), str(t.get("time") or ""))
+    )
+    horizon = sorted(settled)
+
+    rows: List[Dict[str, Any]] = []
+    for transfer in forward:
+        event = int(transfer["event"])
+        came_in = int(transfer["element_in"])
+        went_out = int(transfer["element_out"])
+        covered = [gw for gw in horizon if gw >= event]
+
+        rows.append({
+            "event": event,
+            "time": transfer.get("time"),
+            "element_in": came_in,
+            "element_in_cost": transfer.get("element_in_cost"),
+            "element_out": went_out,
+            "element_out_cost": transfer.get("element_out_cost"),
+            "in_points_by_gw": {
+                str(gw): points_by_gw.get(gw, {}).get(came_in, 0)
+                for gw in covered
+            },
+            "out_points_by_gw": {
+                str(gw): points_by_gw.get(gw, {}).get(went_out, 0)
+                for gw in covered
+            },
+            "in_multiplier_by_gw": {
+                str(gw): picks_by_gw.get(gw, {}).get(came_in) for gw in covered
+            },
+        })
+    return rows
