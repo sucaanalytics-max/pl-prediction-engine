@@ -90,13 +90,47 @@ function Num({ of, dp = 1 }: { of: number | null; dp?: number }) {
  */
 const COLUMNS = "24px 26px minmax(92px,1.3fr) 44px 100px 38px 38px 44px 44px 44px 46px 52px 42px 40px 40px 60px";
 
+/*
+ * One entry per track in COLUMNS, in order, and the two leading blanks are the
+ * spacers for the select and pin columns.
+ *
+ * Position is the identity here, not the label: both spacers are labelled "",
+ * so keying by label handed them the same key, and React is free to drop one of
+ * two children that claim one key. Losing a spacer slides every label one track
+ * left of the number it names — the exact failure the note below warns about,
+ * which reads as a wrong value rather than as a broken layout.
+ */
+const HEADS: ReadonlyArray<readonly [SortKey | null, string, ("left" | "right")?]> = [
+  [null, "", "left"],
+  [null, "", "left"],
+  [null, "Player", "left"],
+  ["xp", "xP"],
+  [null, "distribution", "left"],
+  ["sd", "sd"],
+  ["mode", "mode"],
+  ["skew", "m−mo"],
+  [null, "P(app)"],
+  [null, "P(60)"],
+  ["mins", "xMins"],
+  [null, "P(goal)"],
+  ["pcs", "P(CS)"],
+  ["p5", "P≥5"],
+  ["p10", "P≥10"],
+  [null, "q10–q90"],
+];
+
 function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => void }) {
   // A spacer for the pin column. Without it the header labels sit one column
   // left of the numbers they name, which is the kind of bug that reads as a
   // wrong value rather than as a broken layout.
-  const cell = (key: SortKey | null, label: string, align: "left" | "right" = "right") => (
+  const cell = (
+    id: number,
+    key: SortKey | null,
+    label: string,
+    align: "left" | "right" = "right",
+  ) => (
     <span
-      key={label}
+      key={id}
       onClick={key ? () => onSort(key) : undefined}
       style={{
         textAlign: align,
@@ -112,6 +146,7 @@ function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => voi
 
   return (
     <div
+      data-testid="research-header"
       style={{
         display: "grid", gridTemplateColumns: COLUMNS, gap: 6,
         padding: "7px 18px", borderBottom: `1px solid ${ink(.25)}`,
@@ -120,22 +155,7 @@ function Header({ sort, onSort }: { sort: SortKey; onSort: (key: SortKey) => voi
         position: "sticky", top: 52, background: S.shell, zIndex: 2,
       }}
     >
-      {cell(null, "", "left")}
-      {cell(null, "", "left")}
-      {cell(null, "Player", "left")}
-      {cell("xp", "xP")}
-      {cell(null, "distribution", "left")}
-      {cell("sd", "sd")}
-      {cell("mode", "mode")}
-      {cell("skew", "m−mo")}
-      {cell(null, "P(app)")}
-      {cell(null, "P(60)")}
-      {cell("mins", "xMins")}
-      {cell(null, "P(goal)")}
-      {cell("pcs", "P(CS)")}
-      {cell("p5", "P≥5")}
-      {cell("p10", "P≥10")}
-      {cell(null, "q10–q90")}
+      {HEADS.map(([key, label, align], i) => cell(i, key, label, align))}
     </div>
   );
 }

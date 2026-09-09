@@ -131,3 +131,48 @@ describe("the gameweek states its own absence", () => {
     expect(screen.queryByTestId("margin-research")).not.toBeInTheDocument();
   });
 });
+
+/**
+ * The header is a grid of fixed tracks laid over rows of the same tracks, so a
+ * header cell that goes missing does not leave a hole — every label after it
+ * slides one track left and sits over the wrong number. That reads as a wrong
+ * value, not as a broken layout, which is why it gets a test rather than a note.
+ *
+ * It was reachable: both leading spacers are labelled "", and the cells were
+ * keyed by label, so the two of them claimed one key. React renders both on the
+ * first paint and is free to drop one afterwards, which is why the arity check
+ * below could not have caught it on its own — the warning is the load-bearing
+ * assertion, and the count is what keeps HEADS and COLUMNS in step from here.
+ */
+describe("the research header stays over the numbers it names", () => {
+  it("draws exactly one cell per grid track", async () => {
+    await mountPlayers();
+    const header = await screen.findByTestId("research-header");
+    const tracks = header.style.gridTemplateColumns.trim().split(/\s+/);
+    expect(tracks.length).toBeGreaterThan(1);
+    expect(header.children).toHaveLength(tracks.length);
+  });
+
+  it("names its cells uniquely, so React cannot drop one of them", async () => {
+    const errors: string[] = [];
+    const spy = vi.spyOn(console, "error").mockImplementation((...args) => {
+      errors.push(args.map(String).join(" "));
+    });
+    try {
+      await mountPlayers();
+      await screen.findByTestId("research-header");
+    } finally {
+      spy.mockRestore();
+    }
+    expect(errors.filter((line) => /same key/i.test(line))).toEqual([]);
+  });
+
+  it("puts the sortable columns after the two spacers, not over them", async () => {
+    await mountPlayers();
+    const header = await screen.findByTestId("research-header");
+    const labels = Array.from(header.children, (cell) => cell.textContent);
+    // The first two are the select and pin spacers; "Player" is the third track
+    // in COLUMNS, and xP the fourth. If a spacer were dropped these shift left.
+    expect(labels.slice(0, 4)).toEqual(["", "", "Player", "xP"]);
+  });
+});
