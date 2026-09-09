@@ -45,6 +45,17 @@ STANDALONE: Dict[str, str] = {
     "pipeline.validation.run_validation": "entry point: .github/workflows/validate.yml",
     "pipeline.run_pipeline": "entry point: .github/workflows/pipeline.yml",
     "pipeline.learning.run_news": "entry point: .github/workflows/news.yml",
+    # Deliberately its own workflow step rather than a gate in schedule.py, whose
+    # order is load-bearing (MISSED_SEAL last, PROJECTION_WINDOW after it, both
+    # pinned by tests) and where a new gate once caused a livelock that cost a
+    # gameweek. Importing it into the agent would put a read-only retrospective
+    # in the same failure path as an irrecoverable seal.
+    "pipeline.fpl.manager_history": (
+        "entry point: .github/workflows/fpl_agent.yml, as its own step. "
+        "Imported by nothing on purpose — it is a retrospective ledger that "
+        "depends on no seal, and a scheduler that imported it could come to "
+        "gate a forecast on a view"
+    ),
     # Writes predictions/team_metrics.json for the /teams view. A CLI rather than
     # a pipeline import on purpose: it feeds no projection and no stake
     # (`model_input: false` in the artifact, asserted by a test), so nothing in
