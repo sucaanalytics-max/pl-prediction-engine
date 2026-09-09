@@ -24,8 +24,7 @@
  */
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import DecisionReview from "@/components/review/DecisionReview";
-import ManagerHistory from "@/components/review/ManagerHistory";
+import ReviewTabs from "@/components/review/ReviewTabs";
 
 export default function ReviewPage() {
   return (
@@ -44,20 +43,7 @@ export default function ReviewPage() {
           </p>
         </header>
 
-        <DecisionReview />
-
-        {/*
-          * Separated by a rule and its own heading, deliberately.
-          *
-          * Above this, a verdict on whether a call was FORESEEABLE, made only
-          * against the sealed forecast. Below it, an account of what actually
-          * happened. Run together they read as one judgement, and a bad outcome
-          * starts to look like a bad decision — which is the exact confusion
-          * this page exists to hold apart.
-          */}
-        <hr style={{ borderColor: "var(--border-strong)" }} />
-
-        <ManagerHistory />
+        <ReviewTabs />
 
         <p
           className="text-[11px] leading-relaxed max-w-2xl"
