@@ -1,15 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-09T15:19:43.578512Z",
-  "n_dropped": 72,
+  "generated_at": "2026-09-09T18:46:59.624349Z",
+  "n_dropped": 59,
   "dropped_by_source": {
-    "bbc_football": 36,
-    "hayters": 5,
-    "sky_football": 31
+    "bbc_football": 30,
+    "sky_football": 29
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 162,
+  "n_articles": 149,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -90,6 +89,42 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "ea989c4158bdf241",
+      "headline": "Kick-off delayed as Chelsea give 16-year-old Watson debut vs Leeds LIVE! on Sky",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/chelsea-vs-leeds-united/live/577586",
+      "claimed_at": "2026-09-09T18:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1ac55ae8ec69ce29",
+      "headline": "Barcola starts for Liverpool as Alvarez comes in for Atletico LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/liverpool-vs-atletico-madrid/live/577604",
+      "claimed_at": "2026-09-09T18:00:00Z",
+      "players": [
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "648386022932a27c",
@@ -249,6 +284,24 @@
       "tier": 2,
       "url": "https://hayters.com/how-to-watch-napoli-vs-arsenal-team-news-predicted-line-ups-and-more/",
       "claimed_at": "2026-09-09T11:53:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0ff6261044af29a1",
+      "headline": "Man Utd latest: Transfer strategy which could cost Carrick analysed",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-09T11:27:00Z",
       "players": [
         {
           "element_id": 0,
@@ -662,6 +715,24 @@
       "touches_squad": false
     },
     {
+      "digest": "f893fec3120194db",
+      "headline": "Liverpool latest: Does Mac Allister deserve a new contract at Anfield?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-08T09:30:00Z",
+      "players": [
+        {
+          "element_id": 372,
+          "name": "Mac Allister",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "6e33f275b03be63c",
       "headline": "How Calafiori has become 'the best left-back in the league by far'",
       "summary": "Riccardo Calafiori returns to Italy with Arsenal this week - and he's a very different player compared to the one who departed for England two years ago.",
@@ -680,6 +751,24 @@
       "touches_squad": false
     },
     {
+      "digest": "ae5059c02699dc82",
+      "headline": "Gyokeres starts as Arsenal make four changes against Napoli LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/napoli-vs-arsenal/live/577605",
+      "claimed_at": "2026-09-07T15:58:00Z",
+      "players": [
+        {
+          "element_id": 25,
+          "name": "Gy\u00f6keres",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "03b0971f6f2206f4",
       "headline": "Who will be new Liverpool sporting director - and what issues do they face?",
       "summary": "The possible candidates to succeed Richard Hughes - plus the numerous tasks facing Liverpool's next sporting director.",
@@ -687,6 +776,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c5yw73ppwd1o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-07T15:52:04Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "930330bbb55d0c4f",
+      "headline": "Everton latest: Short in key positions? The cost of the transfer window assessed",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-07T15:15:00Z",
       "players": [
         {
           "element_id": 0,
@@ -896,6 +1003,78 @@
       "touches_squad": false
     },
     {
+      "digest": "10b3c77e454109fd",
+      "headline": "How Crystal Palace exposed Fulham's defence",
+      "summary": "BBC pundit and ex-Fulham midfielder Danny Murphy gives his analysis on Fulham's performance against Crystal Palace at Craven Cottage.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c5y5qpnjgglo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T23:03:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4a14160ef29936fd",
+      "headline": "Watch: Match of the Day",
+      "summary": "Highlights of eight Premier League matches, including Hull City v Aston Villa.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/iplayer/live/bbcone?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T23:01:15Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2eca088ffcd58a58",
+      "headline": "How Man Utd plan to compete at top with richer rivals",
+      "summary": "Manager Michael Carrick and chief executive Omar Berrada are united in their viewthat Manchester United can be successful despite the club's relatively low summer spending.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cg49v57rxvgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T21:57:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cb4e0c1951903820",
+      "headline": "How Man Utd plan to compete at top with big-spending rivals",
+      "summary": "Manager Michael Carrick and chief executive Omar Berrada are united in their viewthat Manchester United can be successful despite the club's relatively low summer spending.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cg49v57rxvgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T21:57:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "ff53e11dc3e4d421",
       "headline": "Arteta backs Chelsea to be Premier League title contenders this season",
       "summary": "Mikel Arteta believes Chelsea have \u201cevery ingredient\u201d to challenge for the Premier League title this season. Arteta's reigning champions take on the Blues on Sunday with both sides having won their opening two games of the campai",
@@ -903,6 +1082,24 @@
       "tier": 2,
       "url": "https://hayters.com/arteta-backs-chelsea-to-be-premier-league-title-contenders-this-season/",
       "claimed_at": "2026-09-05T21:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ed01778ebae24771",
+      "headline": "Seven points from three games - are Hull on track to avoid relegation?",
+      "summary": "It might be too early to settle survival talk, but newly promoted Hull City have given themselves the perfect platform to build on in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cy8zd574yzyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-05T20:56:25Z",
       "players": [
         {
           "element_id": 0,
@@ -968,6 +1165,24 @@
           "element_id": 643,
           "name": "Chilwell",
           "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "223af8d049256df5",
+      "headline": "Fulham latest: Why inexperience is proving a big problem at Craven Cottage",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-05T18:18:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -1094,24 +1309,6 @@
       "touches_squad": false
     },
     {
-      "digest": "3475e4027e738735",
-      "headline": "Spurs latest: Medical staff encouraged subs that cost momentum, says De Zerbi",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-05T17:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "28111e242772f6d5",
       "headline": "De Zerbi explains his substitutions in draw with Nottingham Forest \u2013 and says Spurs must \u2018keep more calm\u2019 in attack",
       "summary": "Tottenham boss Roberto De Zerbi has explained his decision to withdraw Savinho and Destiny Udogie after around an hour during the goalless draw with Nottingham Forest. The pair were ta",
@@ -1124,48 +1321,6 @@
           "element_id": 506,
           "name": "Udogie",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "68cc334e7bfab72a",
-      "headline": "Haaland scores 300th career goal as Man City edge Coventry",
-      "summary": "FREE TO WATCH: Highlights from Manchester City's match against Coventry in the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13581902/manchester-city-1-0-coventry-premier-league-highlights",
-      "claimed_at": "2026-09-05T17:11:00Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ac29ec5a40f9d99e",
-      "headline": "Haaland hits new record and Fernandez shines as Man City beat Coventry",
-      "summary": "Erling Haaland showed how much he loves playing against newly promoted sides by scoring the winner in a nervy 1-0 victory over Coventry to keep Manchester City's record under Enzo Maresca perfect.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-coventry-city/report/559471",
-      "claimed_at": "2026-09-05T17:00:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
           "held": false
         }
       ],
@@ -1508,222 +1663,72 @@
       "touches_squad": false
     },
     {
-      "digest": "7000f655d2165dce",
-      "headline": "Ipswich v Liverpool team news: Araujo starts, Barcola a sub",
-      "summary": "It's one change apiece at Portman Road The post Ipswich v Liverpool team news: Araujo starts, Barcola a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/ipswich-v-liverpool-team-news-araujo-starts-barcola-a-sub",
-      "claimed_at": "2026-09-04T18:15:00Z",
+      "digest": "83b617ae85f120cb",
+      "headline": "Maresca explains why Foden is not in captaincy group at Man City",
+      "summary": "Manchester City manager Enzo Maresca has admitted that he considered making Phil Foden one of the captains of his side. Following the departures of both Bernardo Silva and Rodri, just Ruben Dias and Erling Haaland remain at the Etihad",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/maresca-explains-why-foden-is-not-in-captaincy-group-at-man-city/",
+      "claimed_at": "2026-09-04T21:30:00Z",
       "players": [
         {
-          "element_id": 579,
-          "name": "Araujo",
-          "club": "LIV",
+          "element_id": 384,
+          "name": "Donnarumma",
+          "club": "MCI",
           "held": false
         },
         {
-          "element_id": 627,
-          "name": "Barcola",
+          "element_id": 388,
+          "name": "Gu\u00e9hi",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b6602c4016cc8d4b",
+      "headline": "Arteta responds to lack of forward signings and defends Arsenal\u2019s transfer window",
+      "summary": "Mikel Arteta admits Arsenal's transfer window was not perfect, but says he is pleased with the business that was done. Arsenal were active in the summer transfer market, but asked whether Arteta should have gone furthe",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-responds-to-lack-of-forward-signings-and-defends-arsenals-transfer-window/",
+      "claimed_at": "2026-09-04T21:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d2b7a6201fcd47c1",
+      "headline": "Isak double gives Liverpool their first win of the season",
+      "summary": "Alexander Isak's quick-fire double in the opening ten minutes of the game secured a first victory of the season for Liverpool against Ipswich Town - and a first under new boss Andoni Iraola. Isak finished emphatically on six minutes to open t",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/isak-double-gives-liverpool-their-first-win-of-the-season/",
+      "claimed_at": "2026-09-04T20:52:59Z",
+      "players": [
+        {
+          "element_id": 367,
+          "name": "Gakpo",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7efa54925967d474",
-      "headline": "Arsenal v Chelsea predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Arsenal v Chelsea predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/arsenal-v-chelsea-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-09-04T16:14:58Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0901c5263d3826e4",
-      "headline": "Everton v Man United predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Everton v Man United predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/everton-v-man-united-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-09-04T16:14:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b6ab88d0196c1ca9",
-      "headline": "Hull v Aston Villa predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Hull v Aston Villa predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/hull-v-aston-villa-predicted-line-ups-fpl-team-news",
-      "claimed_at": "2026-09-04T16:12:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6740f72d711e5383",
-      "headline": "Nott\u2019m Forest v Tottenham predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Nott'm Forest v Tottenham predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/nottm-forest-v-tottenham-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-09-04T16:11:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "490ba04bc5892d4f",
-      "headline": "Man City v Coventry predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Man City v Coventry predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/man-city-v-coventry-predicted-line-ups-fpl-team-news",
-      "claimed_at": "2026-09-04T16:10:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "94b4aadcdfeb5b99",
-      "headline": "Fulham v Crystal Palace predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Fulham v Crystal Palace predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/fulham-v-crystal-palace-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-09-04T16:09:31Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "68c132b3c046273e",
-      "headline": "Brighton v Leeds predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Brighton v Leeds predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/brighton-v-leeds-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-09-04T16:07:15Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "137473bcc2d5473d",
-      "headline": "Brentford v Sunderland predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Brentford v Sunderland predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/brentford-v-sunderland-predicted-line-ups-fpl-team-news",
-      "claimed_at": "2026-09-04T16:04:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a7057bf816ab421f",
-      "headline": "Newcastle v Bournemouth predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Newcastle v Bournemouth predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/newcastle-v-bournemouth-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-09-04T16:02:51Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fa2b227f97ed3939",
-      "headline": "Ipswich v Liverpool predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Ipswich v Liverpool predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/04/ipswich-v-liverpool-predicted-line-ups-fpl-team-news",
-      "claimed_at": "2026-09-04T16:00:27Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "https://x.com/robtFPL/status/2095895290842612197",
-      "headline": "\ud83d\udcb9 Team goal + CS projections - final update | GW3",
-      "summary": "Last look at team goal and CS projections for the this week's games, ahead of the evening deadline - and the last 7 day trends Numbers will continue to update on site up through deadline",
-      "source": "x:robtFPL",
-      "tier": 3,
-      "url": "https://x.com/robtFPL/status/2095895290842612197",
-      "claimed_at": "2026-09-04T15:22:31Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
