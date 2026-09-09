@@ -10,7 +10,7 @@ from typing import Any, Dict, Optional, Tuple
 import pandas as pd
 
 from pipeline.config import (
-    DATA_RAW, FPL_BOOTSTRAP, FPL_FIXTURES, FPL_ELEMENT_SUMMARY,
+    DATA_RAW, FPL_BOOTSTRAP, FPL_FIXTURES, FPL_ELEMENT_SUMMARY, FPL_EVENT_LIVE,
     PLAYER_TEAM_OVERRIDES, EXCLUDED_PLAYERS,
 )
 from pipeline.data.team_mapping import normalize_team_name, update_fpl_team_map
@@ -140,6 +140,29 @@ def fetch_fixtures_with_provenance(
 def fetch_fixtures(force: bool = False, allow_stale: bool = True) -> list:
     """Fetch all FPL fixtures for the season."""
     data, _ = fetch_fixtures_with_provenance(force=force, allow_stale=allow_stale)
+    return data
+
+
+def fetch_event_live(
+    gameweek: int, force: bool = False, allow_stale: bool = True
+) -> dict:
+    """
+    Realised per-element points for one gameweek.
+
+    Cached per gameweek and for a long TTL on purpose: once a gameweek is
+    `finished` and `data_checked` its points do not change, so the hourly agent
+    tick must not re-fetch thirty-eight endpoints to learn nothing. The only
+    caller asks solely for settled gameweeks, so a stale read here is a correct
+    read rather than a risk.
+    """
+    data, _ = _fetch_cached_json(
+        FPL_EVENT_LIVE.format(gameweek=int(gameweek)),
+        DATA_RAW / "fpl" / f"event_live_{int(gameweek):02d}.json",
+        ttl_hours=24 * 7,
+        force=force,
+        allow_stale=allow_stale,
+        label=f"FPL event/{gameweek}/live",
+    )
     return data
 
 
