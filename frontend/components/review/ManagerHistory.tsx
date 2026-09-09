@@ -44,7 +44,8 @@
 import { ProvenanceStrip, Section, StateCard } from "@/components/data/Artifact";
 import { proven } from "@/lib/data/artifact";
 import {
-  SPANS, basketFor, seasonTotals, transferAggregate, windowFor,
+  MINIMUM_CLEAN_WINDOWS, SPANS, basketFor, seasonTotals, transferAggregate,
+  windowFor,
 } from "@/lib/data/manager-history";
 import type { ManagerHistory as Ledger } from "@/lib/data/narrow-manager-history";
 import { REGISTRY } from "@/lib/data/narrow";
@@ -333,13 +334,34 @@ export default function ManagerHistory() {
               marginTop: 6, maxWidth: "62ch",
             }}
           >
-            {SPANS.map((span) => {
-              const aggregate = transferAggregate(ledger, span);
-              const label = span === 1 ? "Same gameweek" : `Over ${span} gameweeks`;
-              return aggregate.withheldReason === null
-                ? `${label}: ${signed(aggregate.effective ?? 0)} across ${aggregate.n}. `
-                : `${label}: ${aggregate.withheldReason}. `;
-            })}
+            {(() => {
+              // One sentence for the rule, not one per span. Rendering each
+              // span's own withheldReason repeated "a rate needs 5 before it
+              // says more than the last transfer did" four times, which reads
+              // as a stutter rather than as a caveat.
+              const rows = SPANS.map((span) => ({
+                span, aggregate: transferAggregate(ledger, span),
+              }));
+              const label = (span: number) =>
+                span === 1 ? "the same gameweek" : `${span} gameweeks`;
+              const parts = rows
+                .filter((r) => r.aggregate.withheldReason === null)
+                .map((r) =>
+                  `Over ${label(r.span)}: `
+                  + `${signed(r.aggregate.effective ?? 0)} across ${r.aggregate.n}.`);
+              const withheld = rows.filter((r) => r.aggregate.withheldReason !== null);
+              if (withheld.length > 0) {
+                const counted = withheld
+                  .map((r) => `${r.aggregate.n} over ${label(r.span)}`)
+                  .join(", ");
+                parts.push(
+                  `Clean windows so far — ${counted}. A rate needs `
+                  + `${MINIMUM_CLEAN_WINDOWS} before it says more than the last `
+                  + "transfer did.",
+                );
+              }
+              return parts.join(" ");
+            })()}
           </p>
         </>
       )}

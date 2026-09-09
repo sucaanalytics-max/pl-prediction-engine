@@ -55,7 +55,7 @@ export default function ReviewPage() {
           * starts to look like a bad decision — which is the exact confusion
           * this page exists to hold apart.
           */}
-        <hr style={{ borderColor: "var(--border)" }} />
+        <hr style={{ borderColor: "var(--border-strong)" }} />
 
         <ManagerHistory />
 
