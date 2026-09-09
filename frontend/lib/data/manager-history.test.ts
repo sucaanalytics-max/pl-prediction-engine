@@ -26,7 +26,7 @@ function transfer(over: Partial<ManagerTransfer> = {}): ManagerTransfer {
 
 const history = (transfers: ManagerTransfer[]): ManagerHistory => ({
   generatedAt: null, entryId: 20945, settledThrough: 3,
-  gameweeks: [], transfers,
+  names: new Map(), gameweeks: [], transfers,
 });
 
 describe("windowFor", () => {
@@ -125,6 +125,7 @@ describe("seasonTotals", () => {
   it("totals the bench and the margin over the field", () => {
     const totals = seasonTotals({
       generatedAt: null, entryId: 20945, settledThrough: 3, transfers: [],
+      names: new Map(),
       gameweeks: [
         week({ event: 1, points: 44, benchPoints: 2, averageEntryScore: 50 }),
         week({ event: 2, points: 109, benchPoints: 13, averageEntryScore: 81 }),
@@ -139,6 +140,7 @@ describe("seasonTotals", () => {
   it("prices the armband against the best player you already owned", () => {
     const totals = seasonTotals({
       generatedAt: null, entryId: 20945, settledThrough: 1, transfers: [],
+      names: new Map(),
       gameweeks: [week({
         event: 1, points: 15,
         captain: { element: 1, multiplier: 2, points: 2 },
@@ -156,6 +158,7 @@ describe("seasonTotals", () => {
   it("says the margin is unknown rather than wrong when an average is missing", () => {
     const totals = seasonTotals({
       generatedAt: null, entryId: 20945, settledThrough: 1, transfers: [],
+      names: new Map(),
       gameweeks: [week({ event: 1, points: 44, averageEntryScore: null })] as never,
     });
     expect(totals.vsAverage).toBeNull();

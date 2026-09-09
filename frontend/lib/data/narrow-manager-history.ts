@@ -84,6 +84,8 @@ export interface ManagerHistory {
   readonly generatedAt: string | null;
   readonly entryId: number | null;
   readonly settledThrough: number | null;
+  /** Only the elements the page prints by name; ids stand alone when absent. */
+  readonly names: ReadonlyMap<number, string>;
   readonly gameweeks: readonly ManagerGameweek[];
   readonly transfers: readonly ManagerTransfer[];
 }
@@ -229,8 +231,20 @@ export function narrowManagerHistory(raw: unknown): NarrowResult<ManagerHistory>
     } satisfies ManagerTransfer;
   });
 
+  const names = new Map<number, string>();
+  const nameRecord = file.names === undefined
+    ? {}
+    : reqRecord(file.names, "names", problems) ?? {};
+  for (const [key, value] of Object.entries(nameRecord)) {
+    const element = Number(key);
+    const label = optString(value);
+    // A wrong name beside a real number is worse than an id: skip, never guess.
+    if (Number.isFinite(element) && label) names.set(element, label);
+  }
+
   return narrowed({
     generatedAt: optString(file.generated_at),
+    names,
     entryId: optNumber(file.entry_id),
     settledThrough: optNumber(file.settled_through),
     gameweeks,

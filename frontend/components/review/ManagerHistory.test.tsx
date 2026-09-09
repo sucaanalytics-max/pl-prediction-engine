@@ -12,6 +12,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 const HISTORY = {
   generatedAt: "2026-09-09T00:00:00+00:00", entryId: 20945, settledThrough: 3,
+  names: new Map([
+    [445, "Thiaw"], [418, "Maguire"], [426, "B.Fernandes"],
+    [173, "Thomas"], [152, "Palestra"],
+  ]),
   gameweeks: [
     {
       event: 1, points: 44, grossPoints: 44, transferCost: 0, transfersMade: 0,
@@ -93,7 +97,11 @@ describe("ManagerHistory", () => {
 
   it("shows the one transfer with its settled window", async () => {
     await mount();
-    expect(screen.getByTestId("transfer-row-3").textContent).toContain("-3");
+    // U+2212, the typographic minus, not an ASCII hyphen: it shares the width
+    // of a tabular digit, so a column of negatives stays aligned with the
+    // positives above it. Asserting the real character keeps that deliberate.
+    expect(screen.getByTestId("transfer-row-3").textContent).toContain("\u22123");
+    expect(screen.getByTestId("transfer-row-3").textContent).not.toContain("-3");
   });
 
   it("says a window is not yet measurable rather than showing zero", async () => {
@@ -117,6 +125,20 @@ describe("ManagerHistory", () => {
     await mount();
     expect(screen.getByTestId("manager-week-1")).toBeInTheDocument();
     expect(screen.getByTestId("manager-week-3")).toBeInTheDocument();
+  });
+
+  it("names the players rather than printing element ids", async () => {
+    await mount();
+    const row = screen.getByTestId("transfer-row-3");
+    expect(row.textContent).toContain("Thiaw");
+    expect(row.textContent).toContain("Maguire");
+    expect(row.textContent).not.toContain("445");
+  });
+
+  it("falls back to the id rather than inventing a name", async () => {
+    // A wrong name beside a real number is worse than a bare id.
+    await mount({ ...HISTORY, names: new Map() });
+    expect(screen.getByTestId("transfer-row-3").textContent).toContain("445");
   });
 
   it("states its own absence in one line when nothing is published", async () => {

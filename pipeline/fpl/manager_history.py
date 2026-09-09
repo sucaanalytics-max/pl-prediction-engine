@@ -217,6 +217,31 @@ def build_transfer_rows(
     return rows
 
 
+def named_elements(
+    gameweeks: List[Dict[str, Any]], transfers: List[Dict[str, Any]]
+) -> set:
+    """
+    The elements this artifact actually shows by name.
+
+    Transfers and captains and auto-subs only — NOT the pick lists. Carrying
+    all 600 bootstrap names would be most of the file's bytes, and carrying the
+    45 picks would add names nothing renders. ``run_decision_review`` trims the
+    same way and for the same reason.
+    """
+    wanted = set()
+    for transfer in transfers:
+        wanted.add(int(transfer["element_in"]))
+        wanted.add(int(transfer["element_out"]))
+    for week in gameweeks:
+        captain = week.get("captain")
+        if captain:
+            wanted.add(int(captain["element"]))
+        for sub in week.get("auto_subs") or []:
+            wanted.add(int(sub["element_in"]))
+            wanted.add(int(sub["element_out"]))
+    return wanted
+
+
 def build(
     *,
     entry_id: int,
@@ -224,6 +249,7 @@ def build(
     gameweeks: List[Dict[str, Any]],
     transfers: List[Dict[str, Any]],
     generated_at: str,
+    names: Optional[Dict[str, str]] = None,
 ) -> Dict[str, Any]:
     """Assemble the artifact. ``settled_through`` is null when nothing has."""
     return {
@@ -231,6 +257,7 @@ def build(
         "generated_at": generated_at,
         "entry_id": int(entry_id),
         "settled_through": max(settled) if settled else None,
+        "names": names or {},
         "gameweeks": gameweeks,
         "transfers": transfers,
     }
@@ -313,17 +340,29 @@ def run(
             highest=event.get("highest_score"),
         ))
 
+    transfer_rows = build_transfer_rows(
+        transfers=fetch_transfers(entry_id),
+        settled=settled,
+        points_by_gw=points_by_gw,
+        picks_by_gw=picks_by_gw,
+    )
+
+    # Off the bootstrap already in hand — no extra fetch. A row reading
+    # "445 / 418" is technically complete and unreadable; an id is not a name.
+    wanted = named_elements(gameweeks, transfer_rows)
+    names = {
+        str(int(element["id"])): str(element.get("web_name") or "")
+        for element in bootstrap.get("elements", [])
+        if int(element["id"]) in wanted
+    }
+
     payload = build(
         entry_id=entry_id,
         settled=settled,
         gameweeks=gameweeks,
-        transfers=build_transfer_rows(
-            transfers=fetch_transfers(entry_id),
-            settled=settled,
-            points_by_gw=points_by_gw,
-            picks_by_gw=picks_by_gw,
-        ),
+        transfers=transfer_rows,
         generated_at=datetime.now(timezone.utc).isoformat(),
+        names=names,
     )
 
     if write:
