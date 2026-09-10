@@ -1,17 +1,42 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-10T06:35:15.086472Z",
-  "n_dropped": 69,
+  "generated_at": "2026-09-10T11:50:49.367262Z",
+  "n_dropped": 72,
   "dropped_by_source": {
     "bbc_football": 35,
-    "sky_football": 34
+    "hayters": 1,
+    "sky_football": 36
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 159,
+  "n_articles": 162,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "19fdff28a23fabac",
+      "headline": "Liverpool latest: Szoboszlai says he loves to play with Mac Allister",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-10T12:09:00Z",
+      "players": [
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": true
+        },
+        {
+          "element_id": 372,
+          "name": "Mac Allister",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "9f3d0ffd15bebfab",
       "headline": "Szoboszlai equalises for Liverpool after fantastic Araujo assist",
@@ -113,6 +138,138 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "3c1ae9bc1549a892",
+      "headline": "Tottenham latest: Mudryk not in training with live Spurs Q&A coming up at 2pm!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-10T12:08:00Z",
+      "players": [
+        {
+          "element_id": 578,
+          "name": "Mudryk",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fae597029d60a4f5",
+      "headline": "Chelsea latest: Palmer says attackers enjoying life under Alonso",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-10T12:01:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2521b9553ac8f965",
+      "headline": "Liverpool skipper van Dijk praises new centre-back partner Jacquet\u2019s start \u2013 but insists his side have plenty to improve on",
+      "summary": "Virgil van Dijk praised young Liverpool defender Jeremy Jacquet after their 2-1 Champions League victory over Atletico Madrid but admitted Andoni Iraola\u2019s side still have plent",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/liverpool-skipper-van-dijk-praises-new-centre-back-partner-jacquets-start-but-insists-his-side-have-plenty-to-improve-on/",
+      "claimed_at": "2026-09-10T11:39:35Z",
+      "players": [
+        {
+          "element_id": 356,
+          "name": "Virgil",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 362,
+          "name": "Jacquet",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d8086132da6e3681",
+      "headline": "Arsenal midfielder Declan Rice: \u2018That trophy and seeing PSG lift it, that stays with you\u2019",
+      "summary": "Declan Rice insists he is ready to put another marathon season behind him and help Arsenal make another serious Champions League challenge after admitting the pain of last season\u2019s final defeat by Paris Saint-G",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-midfielder-declan-rice-that-trophy-and-seeing-psg-lift-it-that-stays-with-you/",
+      "claimed_at": "2026-09-10T11:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fba278b4324be303",
+      "headline": "Farke explains why defender was forced off against Chelsea",
+      "summary": "Daniel Farke defended his decision to rotate his Leeds side after they surrendered a two-goal lead in a 6-3 Carabao Cup defeat to Chelsea - and eased injury worries over defender Melvin Bard. Leeds looked in control of the tie before Chelsea",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/farke-explains-why-defender-was-forced-off-against-chelsea/",
+      "claimed_at": "2026-09-10T10:10:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ae47f83356cd63c8",
+      "headline": "From winning \u00a3725 on a game show to facing Man Utd in Europe",
+      "summary": "Lithuanian coach Valdas Dambrauskas cut his teeth in English football, and now returns in the Champions League with Sabah.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvgy8w548yyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-10T09:40:39Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "aa2049f195d2a862",
+      "headline": "Spurs should be awarded 2016-17 title - Pochettino",
+      "summary": "Mauricio Pochettino believes Chelsea should be stripped of the Premier League title for 2016-17, when his Tottenham team finished runners-up.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c783ndd7ge2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-10T08:08:21Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "5adfd5e2104d6e8f",
@@ -595,6 +752,24 @@
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13279280/brentford-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-09T20:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b5964c2c6c63c691",
+      "headline": "Pochettino: Spurs should be awarded Chelsea's league title from 2017",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/12507208/football-latest-news-gossip",
       "claimed_at": "2026-09-09T20:00:00Z",
       "players": [
         {
@@ -1159,24 +1334,6 @@
       "touches_squad": false
     },
     {
-      "digest": "7c7f18f24ad026f9",
-      "headline": "Arsenal latest: Will Arteta rotate vs Napoli as fixture schedule piles up?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-08T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "db2a503bf0676f2e",
       "headline": "From shot-shy to shoot on sight - Villa find a way to win",
       "summary": "Aston Villa finally found their shooting boots with three goals at Club Brugge - but their win was not straightforward.",
@@ -1231,24 +1388,6 @@
       "touches_squad": false
     },
     {
-      "digest": "4b46de5f2a8021f1",
-      "headline": "Man Utd's \u00a31bn rebuild faces toughest test",
-      "summary": "Michael Carrick transformed Manchester United's fortunes after his appointment in January, steering the side from seventh to third and clinching their return to the Champions League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13583089/man-utd-have-highest-transfer-net-spend-since-2022-but-champions-league-return-will-test-depth-between-the-lines",
-      "claimed_at": "2026-09-08T15:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "de5de4e13c74e5d4",
       "headline": "Mac Allister 'sad' at no Liverpool contract offer",
       "summary": "Liverpool midfielder Alexis Mac Allister says he is \"very sad\" not to have been offered a new deal by the club and had \"options\" to leave in the summer.",
@@ -1274,42 +1413,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c5yw73ppwd1o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-07T15:52:04Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c6662995f3858688",
-      "headline": "New camera angle shows Williams' disallowed goal hit arm",
-      "summary": "New video footage shows the ball coming off Neco Williams' arm before his disallowed goal for Nottingham Forest in the 0-0 draw against Tottenham.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/ckg8jjq5d05o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-07T11:31:43Z",
-      "players": [
-        {
-          "element_id": 469,
-          "name": "N.Williams",
-          "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8aaf1109f0edc88e",
-      "headline": "Why is Sunderland vs Arsenal at 8pm on Saturday?",
-      "summary": "BBC Sport's Ask Me Anything team explains why Saturday's Premier League fixture between Sunderland and Arsenal is kicking off at 8pm",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cly4ll5qlvgo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-07T09:54:22Z",
       "players": [
         {
           "element_id": 0,
@@ -1663,102 +1766,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d884ea89f5a9130a",
-      "headline": "Nottingham Forest 0-0 Spurs LIVE \u2013 Forest goal ruled out for handball",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Nottingham Forest 0-0 Spurs LIVE - Forest goal ruled out for handball appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/nottingham-forest-v-spurs-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-09-05T12:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6f8b7268c5c14bd0",
-      "headline": "Newcastle v Bournemouth team news: Fernandez-Pardo a sub",
-      "summary": "The Magpies are unchanged, while the Cherries make one alteration The post Newcastle v Bournemouth team news: Fernandez-Pardo a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/05/newcastle-v-bournemouth-team-news-fernandez-pardo-a-sub",
-      "claimed_at": "2026-09-05T11:00:00Z",
-      "players": [
-        {
-          "element_id": 634,
-          "name": "Fernandez-Pardo",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "93a347098602f2ff",
-      "headline": "Newcastle v Bournemouth LIVE \u2013 team news, updates and reaction",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v Bournemouth LIVE - team news, updates and reaction appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/newcastle-v-bournemouth-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-09-05T10:00:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f067e13cd1068a13",
-      "headline": "Newcastle v Bournemouth LIVE \u2013 Jaissle\u2019s side come from two down to rescue draw",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v Bournemouth LIVE - Jaissle's side come from two down to rescue draw appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/newcastle-v-bournemouth-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-09-05T10:00:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e4bafd6af030edf2",
-      "headline": "FPL notes: Isak brace, Iraola on Gakpo + Barcola debut",
-      "summary": "Looking back on Ipswich 0-2 Liverpool The post FPL notes: Isak brace, Iraola on Gakpo + Barcola debut appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/05/fpl-notes-isak-brace-iraola-on-gakpo-barcola-debut",
-      "claimed_at": "2026-09-05T08:00:00Z",
-      "players": [
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
           "held": false
         }
       ],
