@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-10T15:54:58.592229Z",
-  "n_dropped": 59,
+  "generated_at": "2026-09-10T18:58:15.123307Z",
+  "n_dropped": 45,
   "dropped_by_source": {
-    "bbc_football": 33,
-    "sky_football": 26
+    "bbc_football": 26,
+    "sky_football": 19
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 149,
+  "n_articles": 135,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -121,40 +121,124 @@
       "touches_squad": true
     },
     {
-      "digest": "ace292ff62583736",
-      "headline": "\u2018I wasn\u2019t worried\u2019 \u2013 Le Bris hails Sunderland star after draw with Brentford",
-      "summary": "Sunderland boss Regis Le Bris hailed Enzo Le Fee after the midfielder made amends for last season by converting a penalty against Brentford to secure a point. Le Fee missed from the spot against the same opponents last seas",
+      "digest": "c5ebe471af9ae0f8",
+      "headline": "Coventry City trio nearing return to training",
+      "summary": "Frank Lampard has confirmed Josh Eccles, Kaine Kesler-Hayden and Luke Woolfenden remain sidelined for Coventry City, but hopes the trio can return to training during the international break. The trio are yet to play in the Premier League this season but",
       "source": "hayters",
       "tier": 2,
-      "url": "https://hayters.com/i-wasnt-worried-le-bris-hails-sunderland-star-after-draw-with-brentford/",
-      "claimed_at": "2026-09-05T18:23:30Z",
+      "url": "https://hayters.com/coventry-city-trio-nearing-return-to-training/",
+      "claimed_at": "2026-09-10T18:51:13Z",
       "players": [
         {
-          "element_id": 542,
-          "name": "E.Le F\u00e9e",
-          "club": "SUN",
-          "held": true
+          "element_id": 177,
+          "name": "Kesler-Hayden",
+          "club": "COV",
+          "held": false
+        },
+        {
+          "element_id": 180,
+          "name": "Woolfenden",
+          "club": "COV",
+          "held": false
+        },
+        {
+          "element_id": 187,
+          "name": "Eccles",
+          "club": "COV",
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
-      "digest": "41d42820c304a511",
-      "headline": "Le Fee penalty rescues draw for Sunderland at Brentford",
-      "summary": "Enzo Le Fee rescued a point for Sunderland after dispatching his late penalty to secure a 1-1 draw at Brentford.",
-      "source": "sky_football",
+      "digest": "6ddc7a2602559678",
+      "headline": "Spurs and Richarlison in dispute over contract",
+      "summary": "Tottenham and their forward Richarlison are in dispute over the remaining nine months on his contract.",
+      "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/brentford-vs-sunderland/report/559465",
-      "claimed_at": "2026-09-05T17:00:00Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/c62mq8j4j5lo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-10T18:48:12Z",
       "players": [
         {
-          "element_id": 542,
-          "name": "E.Le F\u00e9e",
-          "club": "SUN",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "a424e6bff2b41707",
+      "headline": "Preston North End handed major injury blow",
+      "summary": "Paul Heckingbottom has confirmed Preston North End captain Ali McCann has undergone successful surgery on a hamstring injury. The Northern Ireland international suffered the problem during North End\u2019s Carabao Cup clash with Everton and is expected to be sid",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/preston-north-end-handed-major-injury-blow/",
+      "claimed_at": "2026-09-10T18:30:18Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3cb988d4861c234a",
+      "headline": "De Zerbi 'was the key' - Fernandes on his Spurs switch and trophy ambitions",
+      "summary": "Spurs may have failed to win any of their first three Premier League games this season, but summer signing Matheus Fernandes is convinced he has joined a squad set to start fighting for trophies.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13584072/matheus-fernandes-interview-spurs-midfielder-on-the-passion-of-head-coach-roberto-de-zerbi-and-trophy-ambitions",
+      "claimed_at": "2026-09-10T17:11:00Z",
+      "players": [
+        {
+          "element_id": 525,
+          "name": "Fernandes",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "27911b86514d4937",
+      "headline": "Man Utd v Sabah LIVE \u2013 Carrick names strong side as Utd return to Champions League",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd v Sabah LIVE - Carrick names strong side as Utd return to Champions League appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-utd-v-sabah-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-09-10T17:08:11Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "79496d5f77083bbb",
+      "headline": "Tottenham latest: Michael Bridge answers YOUR questions in a Q&A!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-10T16:02:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "83a41bf1121e7b48",
@@ -164,6 +248,60 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-09-10T16:02:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "850e7769ccbccbbb",
+      "headline": "FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates",
+      "summary": "We dissect Champions League wins for Arsenal and Liverpool The post FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/10/fpl-notes-calafiori-rested-gakpo-barcola-white-injury-updates",
+      "claimed_at": "2026-09-10T15:45:00Z",
+      "players": [
+        {
+          "element_id": 8,
+          "name": "Calafiori",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 10,
+          "name": "White",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d23ed4e92ecf8a6c",
+      "headline": "Sunderland latest: Le Bris hopes Black Cats will rise to challenge of facing Arsenal",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-10T15:42:00Z",
       "players": [
         {
           "element_id": 0,
@@ -200,6 +338,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/watch/video/13584016/new-season-new-martin-odegaard-for-arsenal-whats-changed",
       "claimed_at": "2026-09-10T15:34:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2f5c8d8bc9a48ce1",
+      "headline": "Newcastle latest: Jaissle calls on 'ambitious' Newcastle to maintain strong start",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-10T15:28:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1189,6 +1345,24 @@
       "touches_squad": false
     },
     {
+      "digest": "00a4d563e96bca7e",
+      "headline": "Man City latest: Bouaddi praises Rodri as he seeks to replace him",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-09T12:35:00Z",
+      "players": [
+        {
+          "element_id": 616,
+          "name": "Bouaddi",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "bfc91dd9b1e58c02",
       "headline": "Man City latest: Merson gives PL title verdict after winning start",
       "summary": null,
@@ -1227,6 +1401,24 @@
     {
       "digest": "0ff6261044af29a1",
       "headline": "Man Utd latest: Transfer strategy which could cost Carrick analysed",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-09T11:27:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8e164aed0243562a",
+      "headline": "Man Utd latest: Gabriel scores hat-trick in UEFA Youth League debut",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -1351,24 +1543,6 @@
       "touches_squad": false
     },
     {
-      "digest": "bbc43c892b6487f7",
-      "headline": "Mudryk injury reports amid Spurs' slow start to season - send in your questions...",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-09T08:24:00Z",
-      "players": [
-        {
-          "element_id": 578,
-          "name": "Mudryk",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "89144b48778c2696",
       "headline": "Where Estevao fits into Chelsea's all-star attack",
       "summary": "A look at where Estevao Willian could feature for Chelsea this season after the reminder of his quality in his cameo against Arsenal.",
@@ -1417,24 +1591,6 @@
           "element_id": 549,
           "name": "Talbi",
           "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7e69af83a26611d5",
-      "headline": "Papers: Blow for Man Utd as top target agrees new contract",
-      "summary": "The top stories and transfer rumours from Tuesday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13583358/transfer-news-manchester-united-suffer-hammer-blow-after-top-target-lewis-hall-agrees-five-year-newcastle-deal-paper-talk",
-      "claimed_at": "2026-09-08T23:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1494,24 +1650,6 @@
         {
           "element_id": 616,
           "name": "Bouaddi",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3b49052ec46eced8",
-      "headline": "Haaland scores twice in win over Porto but Man City struggle to impress",
-      "summary": "Erling Haaland's double earned Manchester City a 2-0 win at FC Porto - but it was another game where Enzo Maresca's side won but struggled to convince.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/fc-porto-vs-manchester-city/report/577600",
-      "claimed_at": "2026-09-08T22:00:00Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
           "club": "MCI",
           "held": false
         }
@@ -1603,132 +1741,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "88f4621c55671e6d",
-      "headline": "Sage demands Crystal Palace improvement despite first win of season",
-      "summary": "Crystal Palace boss Pierre Sage admitted he was unhappy with his side\u2019s defensive display despite their 3-2 victory over Fulham. Palace secured all three points in a closely fought contest thanks to a double from Tyrick Mitchell and",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/sage-demands-crystal-palace-improvement-despite-first-win-of-season/",
-      "claimed_at": "2026-09-05T18:37:50Z",
-      "players": [
-        {
-          "element_id": 204,
-          "name": "Mitchell",
-          "club": "CRY",
-          "held": false
-        },
-        {
-          "element_id": 643,
-          "name": "Chilwell",
-          "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2d6d4d4ad579c79e",
-      "headline": "Arbeloa vows Fulham\u2019s poor start \u2018will not define this season\u2019",
-      "summary": "Fulham boss Alvaro Arbeloa insists his side\u2019s difficult start to the season will not define their campaign after suffering a third consecutive defeat. Fulham were beaten 3-2 by Crystal Palace having led 2-1 in the game, leaving Arbeloa\u2019s",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arbeloa-vows-fulhams-poor-start-will-not-define-this-season/",
-      "claimed_at": "2026-09-05T18:17:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "77e29bc5879d28b5",
-      "headline": "Glasner fumes at decision to disallow Nottingham Forest goal against Spurs",
-      "summary": "Nottingham Forest boss has claimed Neco Williams\u2019 disallowed goal should have stood after his side were held to a goalless draw by Tottenham. Williams thought he had given Forest the lead in the second half, only for the goal",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/glasner-fumes-at-decision-to-disallow-nottingham-forest-goal-against-spurs/",
-      "claimed_at": "2026-09-05T17:49:07Z",
-      "players": [
-        {
-          "element_id": 469,
-          "name": "N.Williams",
-          "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bd8d53573a565de2",
-      "headline": "Maresca on O\u2019Reilly injury worry, Fernandez debut, and Ndiaye needing to improve after Man City beat Coventry",
-      "summary": "Manchester City boss Enzo Maresca says Nico O\u2019Reilly\u2019s back injury does not appear to be serious after he was forced to withdraw during the warm-up ahead of their 1-0 win over Coventry. O\u2019Re",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/maresca-on-oreilly-injury-worry-fernandez-debut-and-ndiaye-needing-to-improve-after-man-city-beat-coventry/",
-      "claimed_at": "2026-09-05T17:31:54Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 387,
-          "name": "O'Reilly",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "28111e242772f6d5",
-      "headline": "De Zerbi explains his substitutions in draw with Nottingham Forest \u2013 and says Spurs must \u2018keep more calm\u2019 in attack",
-      "summary": "Tottenham boss Roberto De Zerbi has explained his decision to withdraw Savinho and Destiny Udogie after around an hour during the goalless draw with Nottingham Forest. The pair were ta",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-explains-his-substitutions-in-draw-with-nottingham-forest-and-says-spurs-must-keep-more-calm-in-attack/",
-      "claimed_at": "2026-09-05T17:14:08Z",
-      "players": [
-        {
-          "element_id": 506,
-          "name": "Udogie",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "52c00ca12b58811c",
-      "headline": "Hull v Aston Villa team news: One change apiece",
-      "summary": "Villa's new winger, Ibrahim Mbaye, is among the substitutes The post Hull v Aston Villa team news: One change apiece appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/05/hull-v-aston-villa-team-news-one-change-apiece",
-      "claimed_at": "2026-09-05T16:15:00Z",
-      "players": [
-        {
-          "element_id": 631,
-          "name": "Mbaye",
-          "club": "AVL",
           "held": false
         }
       ],
