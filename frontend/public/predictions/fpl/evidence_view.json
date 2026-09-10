@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-10T15:33:58.063810Z",
+  "generated_at": "2026-09-10T18:48:05.817595Z",
   "gameweek": 4,
   "players": [
     {
@@ -98,6 +98,102 @@
       ],
       "total_conflicts": 3,
       "needs_attention": false
+    },
+    {
+      "element_id": 285,
+      "player_name": "McNair",
+      "club": "Hull City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "unresolved_conservative",
+          "n_conflicts": 2,
+          "n_dropped": 0,
+          "unresolved": true,
+          "escalation": "chance_of_playing: fpl_bootstrap says 100 (2026-09-09T13:30:08.327907Z) while fpl_news_parse says 75 (2026-09-09T13:30:08.327907Z). Used the more conservative 75.",
+          "claims": [
+            {
+              "claim_id": "5db80737a176eb81",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-09T13:30:08.327907Z",
+              "observed_at": "2026-09-09T18:08:26.095522Z",
+              "quote": "Foot injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "fe8cda6c1986a2d4",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-09-09T13:30:08.327907Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "c73a8766de5ddd6d",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-09T13:30:08.327907Z",
+              "observed_at": "2026-09-09T18:08:26.095522Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "a",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "250645d950ac47fb",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-09-09T13:30:08.327907Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "2ed2e5202a7890f1",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-09T13:30:08.327907Z",
+              "observed_at": "2026-09-09T18:08:26.095522Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": true
     },
     {
       "element_id": 32,
@@ -298,76 +394,6 @@
               "value": "d",
               "claimed_at": "2026-09-06T18:00:08.301702Z",
               "observed_at": "2026-09-06T20:57:07.765860Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 1,
-      "needs_attention": false
-    },
-    {
-      "element_id": 285,
-      "player_name": "McNair",
-      "club": "Hull City",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 75,
-          "rule": "tier_precedence",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "c73a8766de5ddd6d",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-09-09T13:30:08.327907Z",
-              "observed_at": "2026-09-09T18:08:26.095522Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            },
-            {
-              "claim_id": "5db80737a176eb81",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-09-09T13:30:08.327907Z",
-              "observed_at": "2026-09-09T18:08:26.095522Z",
-              "quote": "Foot injury - 75% chance of playing",
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "2ed2e5202a7890f1",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-09-09T13:30:08.327907Z",
-              "observed_at": "2026-09-09T18:08:26.095522Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -587,6 +613,310 @@
         }
       ],
       "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 652,
+      "player_name": "Azeez",
+      "club": "Brighton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "92376d479016d31c",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-04T11:30:08.661589Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": "Hamstring injury - 50% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "15b57b4ec4d024c0",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-04T11:30:08.661589Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8d30870353a39cd4",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-04T11:30:08.661589Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 78,
+      "player_name": "Kroupi.Jr",
+      "club": "Bournemouth",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-11-07",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "10c41634a78aeb36",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-07",
+              "claimed_at": "2026-07-29T17:30:09.796802Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": "Foot injury - Expected back 7 Nov",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
+      "element_id": 121,
+      "player_name": "Mitoma",
+      "club": "Brighton",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-10-10",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "9ff7d3bea3a7921a",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-10-10",
+              "claimed_at": "2026-07-24T18:30:10.661894Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": "Hamstring injury - Expected back 10 Oct",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
+      "element_id": 135,
+      "player_name": "Yohanna",
+      "club": "Brighton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8e9c9df87e5ed041",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-10T13:00:08.617941Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-10-10",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "14aeaf45a8c68ae7",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-10-10",
+              "claimed_at": "2026-09-10T13:00:08.617941Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": "Unspecified injury - Expected back 10 Oct",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "271b88e8a17d57e5",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-10T13:00:08.617941Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
+      "element_id": 219,
+      "player_name": "J.Rak-Sakyi",
+      "club": "Crystal Palace",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "permanence_beats_gradation",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "a8828c64015ac46c",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-10T09:12:47.224598Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "permanent_exit",
+          "resolved_value": {
+            "kind": "loan",
+            "club": "Kasimpasa"
+          },
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "d69a9cc9a0e2cf4a",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "permanent_exit",
+              "value": {
+                "kind": "loan",
+                "club": "Kasimpasa"
+              },
+              "claimed_at": "2026-09-10T09:12:47.224598Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": "has joined  Kasimpasa on loan for the rest of the seaon.",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "u",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "173cf6f977d7cc5a",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "u",
+              "claimed_at": "2026-09-10T09:12:47.224598Z",
+              "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
       "needs_attention": false
     },
     {
@@ -900,10 +1230,10 @@
     }
   ],
   "counts": {
-    "n_claims": 366,
-    "n_players_with_claims": 77,
-    "n_players_shown": 13,
-    "n_escalations": 2,
-    "n_players_resolved": 20
+    "n_claims": 394,
+    "n_players_with_claims": 84,
+    "n_players_shown": 18,
+    "n_escalations": 3,
+    "n_players_resolved": 25
   }
 }
