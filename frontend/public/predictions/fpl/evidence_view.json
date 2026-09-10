@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-10T18:48:05.817595Z",
+  "generated_at": "2026-09-10T21:18:17.454490Z",
   "gameweek": 4,
   "players": [
     {
@@ -546,6 +546,76 @@
       "needs_attention": false
     },
     {
+      "element_id": 444,
+      "player_name": "Jaouen",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "dae1b6f41b242801",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-10T16:00:09.127466Z",
+              "observed_at": "2026-09-10T18:48:41.282668Z",
+              "quote": "Ankle injury - 50% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "6e56b3d412bfc253",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-10T16:00:09.127466Z",
+              "observed_at": "2026-09-10T18:48:41.282668Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "fc161010500927d6",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-10T16:00:09.127466Z",
+              "observed_at": "2026-09-10T18:48:41.282668Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
       "element_id": 593,
       "player_name": "Dedi\u0107",
       "club": "Newcastle",
@@ -821,6 +891,87 @@
               "value": "i",
               "claimed_at": "2026-09-10T13:00:08.617941Z",
               "observed_at": "2026-09-10T15:34:29.983755Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
+      "element_id": 187,
+      "player_name": "Eccles",
+      "club": "Coventry City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "045c07c65bee2c45",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-10T18:30:08.877110Z",
+              "observed_at": "2026-09-10T18:48:41.282668Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-10-12",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "90ea5af7da5411c5",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-10-12",
+              "claimed_at": "2026-09-10T18:30:08.877110Z",
+              "observed_at": "2026-09-10T18:48:41.282668Z",
+              "quote": "Unspecified injury - Expected back 12 Oct",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "d18a2cfc2b01c162",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-10T18:30:08.877110Z",
+              "observed_at": "2026-09-10T18:48:41.282668Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -1230,10 +1381,10 @@
     }
   ],
   "counts": {
-    "n_claims": 394,
-    "n_players_with_claims": 84,
-    "n_players_shown": 18,
-    "n_escalations": 3,
-    "n_players_resolved": 25
+    "n_claims": 419,
+    "n_players_with_claims": 90,
+    "n_players_shown": 20,
+    "n_escalations": 5,
+    "n_players_resolved": 27
   }
 }
