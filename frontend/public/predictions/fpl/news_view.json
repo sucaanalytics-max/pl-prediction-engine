@@ -1,15 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-10T11:50:49.367262Z",
-  "n_dropped": 72,
+  "generated_at": "2026-09-10T15:54:58.592229Z",
+  "n_dropped": 59,
   "dropped_by_source": {
-    "bbc_football": 35,
-    "hayters": 1,
-    "sky_football": 36
+    "bbc_football": 33,
+    "sky_football": 26
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 162,
+  "n_articles": 149,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -57,6 +56,24 @@
           "name": "Araujo",
           "club": "LIV",
           "held": false
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "cfa901a826d235e0",
+      "headline": "Mbeumo on his favourite position and how he knew he could \u2018achieve something good\u2019 at Manchester United",
+      "summary": "Bryan Mbeumo said that he always knew that he could &#8220;achieve something&#8221; at Manchester United when he joined the club. The Cameroon international is set to make his debut in the Champio",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/mbeumo-on-his-favourite-position-and-how-he-always-knew-he-could-achieve-something-good-at-manchester-united/",
+      "claimed_at": "2026-09-09T13:38:33Z",
+      "players": [
+        {
+          "element_id": 427,
+          "name": "Mbeumo",
+          "club": "MUN",
+          "held": true
         }
       ],
       "touches_squad": true
@@ -138,6 +155,228 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "83a41bf1121e7b48",
+      "headline": "Spurs latest: Michael Bridge answers YOUR questions in a Spurs Q&A!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-10T16:02:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "dc51cce65543cf17",
+      "headline": "Jaissle questions booking compared to rival managers",
+      "summary": "Newcastle United head coach Matthias Jaissle has questioned why he was booked for his touchline behaviour after he felt some other animated managers were not.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cp80j2x85xyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-10T15:38:44Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9b9ad891365415b7",
+      "headline": "New Odegaard, new season - what's changed?",
+      "summary": "Sky Sports' Sam Blitz takes a closer look at the numbers behind the incredible start to the season that Arsenal's Martin Odegaard is enjoying.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13584016/new-season-new-martin-odegaard-for-arsenal-whats-changed",
+      "claimed_at": "2026-09-10T15:34:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "60219d3ab18d2d33",
+      "headline": "Leeds' Okafor says he won't play for Swiss again under Yakin",
+      "summary": "Leeds United forward Noah Okafor says he will not play for Switzerland again while Murat Yakin remains as head coach.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c74e0kvm03ro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-10T14:35:31Z",
+      "players": [
+        {
+          "element_id": 336,
+          "name": "Okafor",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "57af51bdd4d0a84f",
+      "headline": "Jaissle on Dedic injury concern and Newcastle United duo\u2019s lack of recent involvement",
+      "summary": "Matthias Jaissle says Amar Dedic\u2019s hamstring injury \u201cdoes not look too serious\u201d as Newcastle await further clarity on the defender\u2019s fitness. Dedic picked up a hamstring problem in the Carabao Cup win over Millwall",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/jaissle-on-dedic-injury-concern-and-newcastle-united-duos-lack-of-recent-involvement/",
+      "claimed_at": "2026-09-10T14:24:56Z",
+      "players": [
+        {
+          "element_id": 593,
+          "name": "Dedi\u0107",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d458984bba393b9f",
+      "headline": "Arsenal close to finalising new contract for Arteta",
+      "summary": "Mikel Arteta is believed to be close to finalising a new contract with Premier League champions Arsenal.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cgrvq2xp8dwo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-10T14:16:06Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7d7df7ddc8cb7906",
+      "headline": "Can you make a case for Chelsea being stripped of 2016-17 title?",
+      "summary": "Does Mauricio Pochettino have a case that Tottenham should be retrospectively crowned Premier League champions?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c0re0n84yz7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-10T13:55:43Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c75d1ef604682528",
+      "headline": "Palace latest: Sage expects Sarr's return to training on Monday",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-10T13:49:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "39d92481bb1b7a1e",
+      "headline": "Nottingham Forest defender to miss Aston Villa clash",
+      "summary": "Oliver Glasner has confirmed Nicol\u00f2 Savona will remain Nottingham Forest\u2019s only absentee for Saturday\u2019s Premier League clash with Aston Villa. The defender has endured setbacks during his recovery, with Forest taking a cautious approach to his ret",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/nottingham-forest-defender-to-miss-aston-villa-clash/",
+      "claimed_at": "2026-09-10T13:30:55Z",
+      "players": [
+        {
+          "element_id": 475,
+          "name": "Savona",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1a364cf48c817d5e",
+      "headline": "Hull City duo available for Chelsea clash confirms Jakirovic",
+      "summary": "Sergej Jakirovic has confirmed Brooke Norton-Cuffy and Paddy McNair are fit for Hull City\u2019s Premier League clash with Chelsea. The Tigers have been handed a boost ahead of the trip to Stamford Bridge, with Norton-Cuffy given the all clear",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hull-city-duo-available-for-chelsea-clash-confirms-jakirovic/",
+      "claimed_at": "2026-09-10T13:23:52Z",
+      "players": [
+        {
+          "element_id": 285,
+          "name": "McNair",
+          "club": "HUL",
+          "held": false
+        },
+        {
+          "element_id": 638,
+          "name": "Norton-Cuffy",
+          "club": "HUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "88a6fb082547bcb1",
+      "headline": "Crystal Palace midfielder could return against Ipswich as Sage gives update on Sarr",
+      "summary": "Pierre Sage has confirmed Cheick Doucour\u00e9 is back in training and could return to Crystal Palace\u2019s squad against Ipswich Town on Saturday. Doucour\u00e9 had been in contention to feature in the 3-0 Carabao Cup win over Mi",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/crystal-palace-midfielder-could-return-against-ipswich-as-sage-gives-update-on-sarr/",
+      "claimed_at": "2026-09-10T13:14:31Z",
+      "players": [
+        {
+          "element_id": 218,
+          "name": "Doucour\u00e9",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b3e6927ec012c756",
+      "headline": "Arsenal \u2018the best team in Europe\u2019 says Sunderland boss ahead of Premier League clash",
+      "summary": "R\u00e9gis Le Bris believes Arsenal are currently the \u201cbest team in Europe\u201d as Sunderland prepare for a daunting Premier League clash with the reigning champions. Mikel Arteta\u2019s side head to the Stadium of Light on Satur",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-the-best-team-in-europe-says-sunderland-boss-ahead-of-premier-league-clash/",
+      "claimed_at": "2026-09-10T13:08:18Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "3c1ae9bc1549a892",
@@ -932,24 +1171,6 @@
       "touches_squad": false
     },
     {
-      "digest": "cfa901a826d235e0",
-      "headline": "Mbeumo on his favourite position and how he knew he could \u2018achieve something good\u2019 at Manchester United",
-      "summary": "Bryan Mbeumo said that he always knew that he could &#8220;achieve something&#8221; at Manchester United when he joined the club. The Cameroon international is set to make his debut in the Champio",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/mbeumo-on-his-favourite-position-and-how-he-always-knew-he-could-achieve-something-good-at-manchester-united/",
-      "claimed_at": "2026-09-09T13:38:33Z",
-      "players": [
-        {
-          "element_id": 427,
-          "name": "Mbeumo",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "c31426a93f5c98dd",
       "headline": "Merson: Arsenal didn't make X-factor signing to win Champions League",
       "summary": "Arsenal's record last year was amazing in the Champions League and they're going to be there or thereabouts again - but I don't think they bought that X factor signing to take them to that next level.",
@@ -1298,42 +1519,6 @@
       "touches_squad": false
     },
     {
-      "digest": "0a36935aaa051b44",
-      "headline": "Arsenal latest: 'Superb' Gunners should have scored more, says Arteta",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-08T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "420bd57330a5ec15",
-      "headline": "Arsenal latest: Rice - World Cup issues are behind me, I'm in good form",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-08T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "db2a503bf0676f2e",
       "headline": "From shot-shy to shoot on sight - Villa find a way to win",
       "summary": "Aston Villa finally found their shooting boots with three goals at Club Brugge - but their win was not straightforward.",
@@ -1377,42 +1562,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/09/08/who-are-the-best-chelsea-players-to-buy-in-fpl-2",
       "claimed_at": "2026-09-08T16:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "de5de4e13c74e5d4",
-      "headline": "Mac Allister 'sad' at no Liverpool contract offer",
-      "summary": "Liverpool midfielder Alexis Mac Allister says he is \"very sad\" not to have been offered a new deal by the club and had \"options\" to leave in the summer.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvgy0542qjvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-08T13:01:12Z",
-      "players": [
-        {
-          "element_id": 372,
-          "name": "Mac Allister",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "03b0971f6f2206f4",
-      "headline": "Who will be new Liverpool sporting director - and what issues do they face?",
-      "summary": "The possible candidates to succeed Richard Hughes - plus the numerous tasks facing Liverpool's next sporting director.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c5yw73ppwd1o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-07T15:52:04Z",
       "players": [
         {
           "element_id": 0,
@@ -1580,192 +1729,6 @@
           "element_id": 631,
           "name": "Mbaye",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "38cedee6635e4ece",
-      "headline": "3pm team news: Foden a sub, O\u2019Reilly injured in warm-up",
-      "summary": "Manchester City v Coventry City is among five Premier League matches at 3pm BST The post 3pm team news: Foden a sub, O'Reilly injured in warm-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sco",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/05/3pm-team-news-foden-a-sub-cherki-oreilly-semenyo-start",
-      "claimed_at": "2026-09-05T13:30:00Z",
-      "players": [
-        {
-          "element_id": 387,
-          "name": "O'Reilly",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a32c73e6179861b4",
-      "headline": "3pm team news: Foden a sub, Cherki, O\u2019Reilly + Semenyo start",
-      "summary": "Manchester City v Coventry City is among five Premier League matches at 3pm BST The post 3pm team news: Foden a sub, Cherki, O'Reilly + Semenyo start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Fo",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/05/3pm-team-news-foden-a-sub-cherki-oreilly-semenyo-start",
-      "claimed_at": "2026-09-05T13:30:00Z",
-      "players": [
-        {
-          "element_id": 387,
-          "name": "O'Reilly",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 399,
-          "name": "Cherki",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1a4c5364bffa08e7",
-      "headline": "Manchester City 1-0 Coventry City LIVE \u2013 Haaland heads City in front as Fernandez and Ndiaye debut",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Manchester City 1-0 Coventry City LIVE - Haaland heads City in front as Fernandez and Ndiaye debut appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/manchester-city-v-coventry-city-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-09-05T12:05:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1f0c761e334069b3",
-      "headline": "Manchester City v Coventry City LIVE \u2013 team news, updates and reaction",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Manchester City v Coventry City LIVE - team news, updates and reaction appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/manchester-city-v-coventry-city-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-09-05T12:05:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7c87d0603a989034",
-      "headline": "Manchester City v Coventry City LIVE \u2013 Ndiaye handed debut with Fernandez on the bench",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Manchester City v Coventry City LIVE - Ndiaye handed debut with Fernandez on the bench appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/manchester-city-v-coventry-city-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-09-05T12:05:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d3a13d83aa2e4907",
-      "headline": "Manchester City 1-0 Coventry City LIVE \u2013 Fernandez debuts as Maresca\u2019s side claim narrow win",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Manchester City 1-0 Coventry City LIVE - Fernandez debuts as Maresca\u2019s side claim narrow win appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/manchester-city-v-coventry-city-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-09-05T12:05:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9f8a295d3bfadeb0",
-      "headline": "Nottingham Forest v Spurs LIVE \u2013 team news, updates and reaction",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Nottingham Forest v Spurs LIVE - team news, updates and reaction appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/nottingham-forest-v-spurs-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-09-05T12:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d3448efa16bc88d6",
-      "headline": "Nottingham Forest 0-0 Spurs LIVE \u2013 Spurs earn their first point of the season",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Nottingham Forest 0-0 Spurs LIVE - Spurs earn their first point of the season appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/nottingham-forest-v-spurs-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-09-05T12:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
