@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-10T23:24:17.792648Z",
-  "n_dropped": 40,
+  "generated_at": "2026-09-11T01:20:35.309710Z",
+  "n_dropped": 41,
   "dropped_by_source": {
-    "bbc_football": 17,
+    "bbc_football": 18,
     "sky_football": 23
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 130,
+  "n_articles": 131,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -159,6 +159,24 @@
     {
       "digest": "0dc57ab97ba31fe3",
       "headline": "Man United put four past Sabah on Champions League return",
+      "summary": "Manchester United recorded their biggest Champions League victory since 2020 as they swept Sabah FK aside at Old Trafford.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/crl600nz58lo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-10T21:01:24Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c459f80b533ca9cc",
+      "headline": "Man Utd put four past Sabah on Champions League return",
       "summary": "Manchester United recorded their biggest Champions League victory since 2020 as they swept Sabah FK aside at Old Trafford.",
       "source": "bbc_football",
       "tier": 3,
@@ -1618,24 +1636,6 @@
       "digest": "26bb0be4f07f79de",
       "headline": "Is 15-year-old Gabriel set to become Man Utd's youngest ever player?",
       "summary": "Fifteen-year-old JJ Gabriel has scored two magnificent goals in two Premier League 2 appearances for Manchester United - is he ready to make his senior debut",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c7706zz7mylo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-09T10:58:38Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7bd7035b4dd91744",
-      "headline": "Is 15-year-old Gabriel set to become Man Utd's youngest ever player?",
-      "summary": "Fifteen-year-old JJ Gabriel has scored two magnificent goals in two Premier League 2 appearances for Manchester United - is he ready to make his senior debut?",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c7706zz7mylo?at_medium=RSS&at_campaign=rss",
