@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-11T16:55:46.251795Z",
+  "generated_at": "2026-09-11T18:51:20.684710Z",
   "gameweek": 4,
   "players": [
     {
@@ -124,6 +124,102 @@
       ],
       "total_conflicts": 5,
       "needs_attention": true
+    },
+    {
+      "element_id": 53,
+      "player_name": "Manzambi",
+      "club": "Aston Villa",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 3,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "08a7476f53013f68",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-15T15:30:06.388335Z",
+              "observed_at": "2026-09-11T16:56:12.250898Z",
+              "quote": "Knee injury - 50% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "05555628f3998a57",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-15T15:30:06.388335Z",
+              "observed_at": "2026-09-11T16:56:12.250898Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "08a7476f53013f68",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-15T15:30:06.388335Z",
+              "observed_at": "2026-09-11T16:56:12.250898Z",
+              "quote": "Knee injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "05555628f3998a57",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-15T15:30:06.388335Z",
+              "observed_at": "2026-09-11T16:56:12.250898Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "19b8bbe36f2d1abf",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-08-15T15:30:06.388335Z",
+              "observed_at": "2026-09-11T16:56:12.250898Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
     },
     {
       "element_id": 170,
@@ -2124,10 +2220,10 @@
     }
   ],
   "counts": {
-    "n_claims": 528,
-    "n_players_with_claims": 107,
-    "n_players_shown": 28,
-    "n_escalations": 10,
-    "n_players_resolved": 38
+    "n_claims": 543,
+    "n_players_with_claims": 109,
+    "n_players_shown": 29,
+    "n_escalations": 11,
+    "n_players_resolved": 39
   }
 }
