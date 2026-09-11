@@ -33,6 +33,7 @@ async function mountStats({
   /** Understat's own age, in days. Its budget is two. */
   eventsAgeDays = 0,
   events = null as unknown,
+  projections = null as unknown,
 } = {}) {
   vi.resetModules();
   const ok = (value: unknown) => ({
@@ -53,6 +54,7 @@ async function mountStats({
         return ok(gameweek === null ? null : { gameweek });
       }
       if (key === "playerStats") return ok(stats);
+      if (key.startsWith("projections:")) return ok(projections);
       if (key === "playerEvents") {
         const ms = eventsAgeDays * 24 * 60 * 60 * 1000;
         return {
@@ -113,6 +115,78 @@ describe("the table", () => {
     expect(screen.queryByText("G − xG")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Is he finishing?" }));
     expect(screen.getByText("G − xG")).toBeInTheDocument();
+  });
+
+  it("sorts a column the other way when its header is clicked again", async () => {
+    // Descending is only half a sheet. Re-clicking the live column used to set
+    // the identical sortKey, which React bails out of, so the order never moved.
+    await mountStats({
+      stats: [statRow(1, { minutes: 90 }), statRow(2, { minutes: 180 })],
+    });
+    const names = () =>
+      screen.getAllByTestId("stats-row").map((row) => row.textContent?.slice(0, 2));
+
+    const mins = screen.getAllByRole("button", { name: /Mins/ })[0];
+    fireEvent.click(mins);
+    expect(names()).toEqual(["P2", "P1"]);
+
+    fireEvent.click(mins);
+    expect(names()).toEqual(["P1", "P2"]);
+
+    fireEvent.click(mins);
+    expect(names()).toEqual(["P2", "P1"]);
+  });
+
+  it("opens a column at its useful end, not always descending", async () => {
+    // `±` is spread: less of it is better, so its first click must put the
+    // steadiest player on top. Every other measured column's good end is high.
+    await mountStats({
+      stats: [statRow(1, { minutes: 90 }), statRow(2, { minutes: 180 })],
+      projections: {
+        players: [
+          { elementId: 1, name: "P1", team: "LIV", position: "MID", xp: 4, xpSd: 3.5, pGe10: 0.1 },
+          { elementId: 2, name: "P2", team: "LIV", position: "MID", xp: 4, xpSd: 1.2, pGe10: 0.1 },
+        ],
+      },
+    });
+    const names = () =>
+      screen.getAllByTestId("stats-row").map((row) => row.textContent?.slice(0, 2));
+
+    const mins = screen.getAllByRole("button", { name: /Mins/ })[0];
+    fireEvent.click(mins);
+    expect(mins.getAttribute("aria-label")).toContain("highest first");
+
+    fireEvent.click(screen.getByRole("button", { name: "Is he priced right?" }));
+    const spread = screen.getByRole("button", { name: /±/ });
+    fireEvent.click(spread);
+    // P2 is the steadier of the two, so the low end opens on top.
+    expect(spread.getAttribute("aria-label")).toContain("lowest first");
+    expect(names()).toEqual(["P2", "P1"]);
+
+    fireEvent.click(spread);
+    expect(spread.getAttribute("aria-label")).toContain("highest first");
+    expect(names()).toEqual(["P1", "P2"]);
+  });
+
+  it("keeps an unmeasured figure at the bottom in both directions", async () => {
+    // ∅ is "nobody measured this", not a small number. Floating it to the top
+    // on an ascending sort would fill the sheet's first rows with blanks.
+    await mountStats({
+      stats: [
+        statRow(1, { minutes: 90 }),
+        statRow(2, { minutes: 180 }),
+        statRow(3, { minutes: null }),
+      ],
+    });
+    const names = () =>
+      screen.getAllByTestId("stats-row").map((row) => row.textContent?.slice(0, 2));
+
+    const mins = screen.getAllByRole("button", { name: /Mins/ })[0];
+    fireEvent.click(mins);
+    expect(names()).toEqual(["P2", "P1", "P3"]);
+
+    fireEvent.click(mins);
+    expect(names()).toEqual(["P1", "P2", "P3"]);
   });
 
   it("keeps a derived column inside the band both its halves come from", async () => {
