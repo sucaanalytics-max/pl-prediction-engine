@@ -5,24 +5,27 @@ import { fileURLToPath } from "node:url";
 
 const LEAD = ["Pos", "ID", "Name", "BV", "SV", "Team"];
 const POSITIONS = new Set(["GKP", "DEF", "MID", "FWD"]);
-/** FPLReview exports the next ten gameweeks. Ten is the count, not the range. */
-const HORIZON = 10;
 const LAST_GAMEWEEK = 38;
 
 /**
  * Which gameweeks this export covers, read off the headers.
  *
  * The window used to be hardcoded as 1..10, which is only right in pre-season. FPLReview
- * exports the next ten gameweeks from wherever the season currently is, so the moment GW2
- * was played the columns became `3_xMins`..`12_Pts` and the importer refused the file
- * outright — `Unexpected FPLReview columns`. The export was not malformed; the assumption
- * was.
+ * exports from wherever the season currently is, so the moment GW2 was played the columns
+ * became `3_xMins`..`12_Pts` and the importer refused the file outright — `Unexpected
+ * FPLReview columns`. The export was not malformed; the assumption was.
  *
- * Requires the ten pairs to be CONSECUTIVE and in order, because that is what makes an
- * array index meaningful downstream: `projectedPoints[0]` is `gameweeks[0]`, and a gap
- * would silently shift every later week by one.
+ * **The count was the same assumption one level down, and it broke the same way.** After
+ * the range was made dynamic, `HORIZON` stayed pinned at 10, so a six-gameweek export
+ * (GW4–GW9, 2026-09-10) was rejected with `Expected 20 gameweek columns, found 12`. The
+ * horizon is a setting on FPLReview's side, not a property of the format. So it is now
+ * read off the headers too: whatever consecutive run of pairs is present is the horizon.
+ *
+ * Requires the pairs to be CONSECUTIVE and in order, because that is what makes an array
+ * index meaningful downstream: `projectedPoints[0]` is `gameweeks[0]`, and a gap would
+ * silently shift every later week by one.
  */
-function gameweeksFromHeaders(headers) {
+export function gameweeksFromHeaders(headers) {
   const lead = headers.slice(0, LEAD.length);
   if (JSON.stringify(lead) !== JSON.stringify(LEAD)) {
     throw new Error(`Unexpected leading FPLReview columns: ${lead.join(", ")}`);
@@ -31,16 +34,17 @@ function gameweeksFromHeaders(headers) {
     throw new Error(`Expected Elite% last, found: ${headers[headers.length - 1]}`);
   }
   const middle = headers.slice(LEAD.length, -1);
-  if (middle.length !== HORIZON * 2) {
+  if (middle.length === 0 || middle.length % 2 !== 0) {
     throw new Error(
-      `Expected ${HORIZON * 2} gameweek columns, found ${middle.length}: ${middle.join(", ")}`,
+      `Expected an even, non-zero number of gameweek columns, found ${middle.length}: ${middle.join(", ")}`,
     );
   }
+  const horizon = middle.length / 2;
   const first = Number(/^(\d+)_xMins$/.exec(middle[0])?.[1]);
-  if (!Number.isInteger(first) || first < 1 || first + HORIZON - 1 > LAST_GAMEWEEK) {
+  if (!Number.isInteger(first) || first < 1 || first + horizon - 1 > LAST_GAMEWEEK) {
     throw new Error(`Cannot read a first gameweek from: ${middle[0]}`);
   }
-  const gameweeks = Array.from({ length: HORIZON }, (_, index) => first + index);
+  const gameweeks = Array.from({ length: horizon }, (_, index) => first + index);
   const expected = gameweeks.flatMap((gw) => [`${gw}_xMins`, `${gw}_Pts`]);
   if (JSON.stringify(middle) !== JSON.stringify(expected)) {
     throw new Error(
@@ -101,84 +105,95 @@ function exportedAtFromName(fileName, fallback) {
   return epoch ? new Date(Number(epoch) * 1000).toISOString() : fallback;
 }
 
-const inputPath = process.argv[2];
-if (!inputPath) {
-  throw new Error("Usage: node scripts/import-fplreview-projections.mjs /path/to/fplreview.csv");
-}
-
-const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const outputPath = path.join(projectRoot, "data", "fplreview-projections.json");
-const [csvText, inputStat] = await Promise.all([
-  fs.readFile(inputPath, "utf8"),
-  fs.stat(inputPath),
-]);
-const csvRows = parseCsv(csvText);
-const headers = csvRows[0].map((value) => value.replace(/^\uFEFF/, ""));
-const gameweeks = gameweeksFromHeaders(headers);
-
-const headerIndex = Object.fromEntries(headers.map((header, index) => [header, index]));
-const seen = new Set();
-let excludedSyntheticRows = 0;
-const players = [];
-
-for (const row of csvRows.slice(1)) {
-  if (row.length !== headers.length) {
-    throw new Error(`Expected ${headers.length} columns for ${row[2] ?? "unknown player"}, received ${row.length}`);
+/**
+ * The CLI. Guarded so the pure header logic above can be imported by a test — the
+ * whole file used to run on import, which is why `gameweeksFromHeaders` had no test
+ * and its horizon assumption went unnoticed until an export disagreed with it.
+ */
+async function main() {
+  const inputPath = process.argv[2];
+  if (!inputPath) {
+    throw new Error("Usage: node scripts/import-fplreview-projections.mjs /path/to/fplreview.csv");
   }
-  const elementId = number(row[headerIndex.ID], "element ID");
-  if (elementId >= 10_000) {
-    excludedSyntheticRows += 1;
-    continue;
-  }
-  if (!Number.isInteger(elementId) || elementId <= 0 || seen.has(elementId)) {
-    throw new Error(`Invalid or duplicate official element ID: ${elementId}`);
-  }
-  seen.add(elementId);
 
-  const position = row[headerIndex.Pos];
-  if (!POSITIONS.has(position)) throw new Error(`Unsupported position: ${position}`);
-  const expectedMinutes = [];
-  const projectedPoints = [];
-  for (const gameweek of gameweeks) {
-    const minutes = number(row[headerIndex[`${gameweek}_xMins`]], `GW${gameweek} expected minutes`);
-    const points = number(row[headerIndex[`${gameweek}_Pts`]], `GW${gameweek} projected points`);
-    if (minutes < 0 || minutes > 180 || points < 0 || points > 30) {
-      throw new Error(`Projection outside guardrails for ${row[headerIndex.Name]} in GW${gameweek}`);
+  const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  const outputPath = path.join(projectRoot, "data", "fplreview-projections.json");
+  const [csvText, inputStat] = await Promise.all([
+    fs.readFile(inputPath, "utf8"),
+    fs.stat(inputPath),
+  ]);
+  const csvRows = parseCsv(csvText);
+  const headers = csvRows[0].map((value) => value.replace(/^\uFEFF/, ""));
+  const gameweeks = gameweeksFromHeaders(headers);
+
+  const headerIndex = Object.fromEntries(headers.map((header, index) => [header, index]));
+  const seen = new Set();
+  let excludedSyntheticRows = 0;
+  const players = [];
+
+  for (const row of csvRows.slice(1)) {
+    if (row.length !== headers.length) {
+      throw new Error(`Expected ${headers.length} columns for ${row[2] ?? "unknown player"}, received ${row.length}`);
     }
-    expectedMinutes.push(minutes);
-    projectedPoints.push(points);
+    const elementId = number(row[headerIndex.ID], "element ID");
+    if (elementId >= 10_000) {
+      excludedSyntheticRows += 1;
+      continue;
+    }
+    if (!Number.isInteger(elementId) || elementId <= 0 || seen.has(elementId)) {
+      throw new Error(`Invalid or duplicate official element ID: ${elementId}`);
+    }
+    seen.add(elementId);
+
+    const position = row[headerIndex.Pos];
+    if (!POSITIONS.has(position)) throw new Error(`Unsupported position: ${position}`);
+    const expectedMinutes = [];
+    const projectedPoints = [];
+    for (const gameweek of gameweeks) {
+      const minutes = number(row[headerIndex[`${gameweek}_xMins`]], `GW${gameweek} expected minutes`);
+      const points = number(row[headerIndex[`${gameweek}_Pts`]], `GW${gameweek} projected points`);
+      if (minutes < 0 || minutes > 180 || points < 0 || points > 30) {
+        throw new Error(`Projection outside guardrails for ${row[headerIndex.Name]} in GW${gameweek}`);
+      }
+      expectedMinutes.push(minutes);
+      projectedPoints.push(points);
+    }
+
+    players.push({
+      elementId,
+      name: row[headerIndex.Name],
+      team: row[headerIndex.Team],
+      position,
+      buyValue: number(row[headerIndex.BV], "buy value"),
+      sellValue: number(row[headerIndex.SV], "sell value"),
+      eliteOwnership: number(row[headerIndex["Elite%"]], "elite ownership"),
+      expectedMinutes,
+      projectedPoints,
+    });
   }
 
-  players.push({
-    elementId,
-    name: row[headerIndex.Name],
-    team: row[headerIndex.Team],
-    position,
-    buyValue: number(row[headerIndex.BV], "buy value"),
-    sellValue: number(row[headerIndex.SV], "sell value"),
-    eliteOwnership: number(row[headerIndex["Elite%"]], "elite ownership"),
-    expectedMinutes,
-    projectedPoints,
-  });
+  const fileName = path.basename(inputPath);
+  const output = {
+    schemaVersion: 1,
+    source: "FPLReview premium CSV export",
+    sourceFile: fileName,
+    exportedAt: exportedAtFromName(fileName, inputStat.mtime.toISOString()),
+    checksum: crypto.createHash("sha256").update(csvText).digest("hex"),
+    gameweeks,
+    rawRecordCount: csvRows.length - 1,
+    recordCount: players.length,
+    excludedSyntheticRows,
+    players,
+  };
+
+  await fs.mkdir(path.dirname(outputPath), { recursive: true });
+  await fs.writeFile(outputPath, `${JSON.stringify(output)}\n`, "utf8");
+  console.log(
+    `Imported ${players.length} official-ID projections for GW${gameweeks[0]}-GW${gameweeks[gameweeks.length - 1]}; `
+    + `excluded ${excludedSyntheticRows} synthetic catalogue rows.`,
+  );
 }
 
-const fileName = path.basename(inputPath);
-const output = {
-  schemaVersion: 1,
-  source: "FPLReview premium CSV export",
-  sourceFile: fileName,
-  exportedAt: exportedAtFromName(fileName, inputStat.mtime.toISOString()),
-  checksum: crypto.createHash("sha256").update(csvText).digest("hex"),
-  gameweeks,
-  rawRecordCount: csvRows.length - 1,
-  recordCount: players.length,
-  excludedSyntheticRows,
-  players,
-};
-
-await fs.mkdir(path.dirname(outputPath), { recursive: true });
-await fs.writeFile(outputPath, `${JSON.stringify(output)}\n`, "utf8");
-console.log(
-  `Imported ${players.length} official-ID projections for GW${gameweeks[0]}-GW${gameweeks[gameweeks.length - 1]}; `
-  + `excluded ${excludedSyntheticRows} synthetic catalogue rows.`,
-);
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await main();
+}
