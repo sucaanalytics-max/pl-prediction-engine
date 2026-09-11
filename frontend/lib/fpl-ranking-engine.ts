@@ -164,10 +164,19 @@ export function scoreFplPlayers(
         projectedPoints: projection.projectedPoints,
       })
     );
+    // Only when the export actually covers the horizon. FPLReview's window is a
+    // setting on their side — the 2026-09-10 export runs six gameweeks, not ten —
+    // and `slice(0, 10)` on six weeks returns a six-week sum that reads as a
+    // ten-week one. Undefined instead, so the caller falls back to the fixture
+    // heuristic, which is at least measuring the window it claims to measure.
+    // `predictions/fpl/public_xp.py:60-67` records the same defect class: a value
+    // computed one way and rendered as another, indistinguishable on the page.
     const reviewTotal = (horizon: number) =>
-      reviewProjections
-        ?.slice(0, horizon)
-        .reduce((sum, projection) => sum + projection.projectedPoints, 0);
+      reviewProjections && reviewProjections.length >= horizon
+        ? reviewProjections
+            .slice(0, horizon)
+            .reduce((sum, projection) => sum + projection.projectedPoints, 0)
+        : undefined;
     const projected4 =
       reviewTotal(4) ?? fixtureProjection(base, player.fixtures, 4) * availabilityFactor;
     const projected6 =

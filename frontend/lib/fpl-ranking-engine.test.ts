@@ -65,6 +65,32 @@ describe("FPL ranking engine", () => {
     expect(scored.eliteOwnership).toBe(17.5);
   });
 
+  it("does not report a short export's total as a longer horizon", () => {
+    // Six gameweeks of 1..6 points. `projected6` is theirs; `projected10` cannot
+    // be, and must not silently become the same 21 under a different name.
+    const scored = scoreFplPlayers([
+      player({
+        elementId: 98,
+        name: "Six week export",
+        reviewProjection: {
+          exportedAt: "2026-09-10T21:03:42Z",
+          buyValue: 9,
+          sellValue: 9,
+          eliteOwnership: 17.5,
+          gameweeks: Array.from({ length: 6 }, (_, index) => ({
+            gameweek: index + 4,
+            expectedMinutes: 90,
+            projectedPoints: index + 1,
+          })),
+        },
+      }),
+    ])[0];
+
+    expect(scored.projected4).toBe(10);
+    expect(scored.projected6).toBe(21);
+    expect(scored.projected10).not.toBe(21);
+  });
+
   it("overlays official injury news only when it is newer than the snapshot", () => {
     const scored = scoreFplPlayers([
       player({
