@@ -1,13 +1,305 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T14:33:57.608304Z",
+  "generated_at": "2026-09-12T21:48:09.227187Z",
   "gameweek": 5,
-  "players": [],
+  "players": [
+    {
+      "element_id": 224,
+      "player_name": "Nketiah",
+      "club": "Crystal Palace",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8c7207f08b879dc7",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T14:00:09.427136Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "03bc91aaed5afb93",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T14:00:09.427136Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "96e6ffc301233e2e",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-12T14:00:09.427136Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 471,
+      "player_name": "Milenkovi\u0107",
+      "club": "Nott'm Forest",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "d81b44c20f5fed7d",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T14:00:09.705107Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": "Hamstring injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "42d1203064691892",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T14:00:09.705107Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f0a7c9e98f65e7a6",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-12T14:00:09.705107Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 474,
+      "player_name": "Jair Cunha",
+      "club": "Nott'm Forest",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "daa1334ee1082df7",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T14:00:09.724349Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": "Hamstring injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "5d4ddd1bc6bea1f1",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T14:00:09.724349Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "714999de15c957b4",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-12T14:00:09.724349Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 198,
+      "player_name": "Henderson",
+      "club": "Crystal Palace",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "38277087d9f0ae64",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-12T14:00:09.378740Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-10-11",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "1f112dee8a6dd93d",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-10-11",
+              "claimed_at": "2026-09-12T14:00:09.378740Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": "Foot injury - Expected back 11 Oct",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "1cf8a67c805061a1",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-12T14:00:09.378740Z",
+              "observed_at": "2026-09-12T14:34:20.388676Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    }
+  ],
   "counts": {
-    "n_claims": 7,
-    "n_players_with_claims": 2,
-    "n_players_shown": 0,
-    "n_escalations": 1,
-    "n_players_resolved": 0
+    "n_claims": 78,
+    "n_players_with_claims": 20,
+    "n_players_shown": 4,
+    "n_escalations": 0,
+    "n_players_resolved": 6
   }
 }

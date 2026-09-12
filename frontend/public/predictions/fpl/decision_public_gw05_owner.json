@@ -2,11 +2,11 @@
   "gameweek": 5,
   "entry_label": "owner",
   "objective": "season",
-  "generated_at": "2026-09-12T14:36:51.034448Z",
+  "generated_at": "2026-09-12T21:51:24.834140Z",
   "deadline": "2026-09-18T17:30:00Z",
   "xp_snapshot": {
-    "1": 2.6487,
-    "4": 3.9484,
+    "1": 2.6494,
+    "4": 3.8733,
     "113": 2.972,
     "124": 3.7744,
     "152": 0.0164,
@@ -24,7 +24,7 @@
     "464": 1.6213,
     "467": 4.0044,
     "497": 0.1998,
-    "542": 3.8213
+    "542": 3.8273
   },
   "decision": {
     "plan": {
@@ -81,29 +81,29 @@
       "free_transfers_after": 1
     },
     "n_draws": 10000,
-    "mean_points": 44.3462,
-    "sd_points": 15.7927,
-    "objective": 44.3462,
+    "mean_points": 44.3014,
+    "sd_points": 15.8067,
+    "objective": 44.3014,
     "quantiles": {
       "q10": 24.0,
       "q25": 33.0,
       "q50": 43.0,
       "q75": 55.0,
-      "q90": 66.0,
+      "q90": 65.0,
       "q99": 84.0
     },
     "tails": {
-      "p_ge_40": 0.5963,
-      "p_ge_50": 0.3586,
-      "p_ge_60": 0.1698,
-      "p_ge_70": 0.0644,
-      "p_ge_80": 0.0176,
-      "p_ge_90": 0.0044
+      "p_ge_40": 0.5919,
+      "p_ge_50": 0.3554,
+      "p_ge_60": 0.1703,
+      "p_ge_70": 0.0632,
+      "p_ge_80": 0.0187,
+      "p_ge_90": 0.0047
     },
-    "autosub_rate": 0.0603,
+    "autosub_rate": 0.06,
     "vice_rate": 0.0
   },
-  "optimism_gap": -0.1049,
+  "optimism_gap": -0.0519,
   "credible_margin": true,
   "pool": {
     "n_candidates": 552,
@@ -405,7 +405,7 @@
           542
         ],
         "captain": 249,
-        "vice": 411,
+        "vice": 426,
         "transfers_in": [],
         "transfers_out": [],
         "hits": 0,
