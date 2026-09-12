@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T19:21:50.599893Z",
-  "n_dropped": 149,
+  "generated_at": "2026-09-12T21:32:58.617141Z",
+  "n_dropped": 160,
   "dropped_by_source": {
-    "bbc_football": 40,
+    "bbc_football": 44,
     "fantasyfootballscout": 3,
-    "hayters": 30,
-    "sky_football": 76
+    "hayters": 33,
+    "sky_football": 80
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 239,
+  "n_articles": 250,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -159,6 +159,96 @@
       "touches_squad": true
     },
     {
+      "digest": "9cfc9f40bd79a83b",
+      "headline": "Guimaraes haunts Sunderland as Arsenal continue winning start",
+      "summary": "Bruno Guimaraes scored a stunning goal two minutes after David Raya had saved a penalty as Arsenal beat Sunderland 2-0 to move above Manchester City at the top of the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/sunderland-vs-arsenal/report/559482",
+      "claimed_at": "2026-09-12T22:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "dd7e2bc266df4517",
+      "headline": "Maresca hints at change of role for Man City star",
+      "summary": "Enzo Maresca says he currently sees Rayan Ait-Nouri as more of a winger than a full-back at Manchester City. Ait-Nouri was predominantly used as a wing-back during his time at Wolves and has largely played left-back at City. But Maresca believes the",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/maresca-hints-at-change-of-role-for-man-city-star/",
+      "claimed_at": "2026-09-12T21:30:00Z",
+      "players": [
+        {
+          "element_id": 392,
+          "name": "A\u00eft-Nouri",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "00d6ea94fbfb40c4",
+      "headline": "Spurs latest: De Zerbi 'calm' over goalless start as he explains Tel exchange",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-12T21:05:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e79fd1ce5cfba25f",
+      "headline": "Guimaraes and Raya crucial - Sunderland v Arsenal player ratings",
+      "summary": "How Sunderland and Arsenal players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/czjzpvxy0vko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-12T20:56:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9f8819b893cf9cff",
+      "headline": "Toothless Spurs blank again as new era turns into a false dawn",
+      "summary": "Toothless Spurs' draw a blank again and are now in danger of seeing a brave new era turn into a false dawn, says chief football writer Phil McNulty.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvgydkv0yxdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-12T20:38:33Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "6a9f9c70e9508b7d",
       "headline": "Spurs latest: Unwanted history made in goalless start to season",
       "summary": null,
@@ -166,6 +256,42 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-09-12T19:59:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cbfa936611f2ec7a",
+      "headline": "Spurs still not in \u2018right physical condition\u2019 says De Zerbi after another game without a goal",
+      "summary": "Roberto De Zerbi says Tottenham are still not in the \u201cright physical condition\u201d after their goalless draw with Everton extended their Premier League scoring drought to four games. Spurs have now failed to s",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/spurs-still-not-in-right-physical-condition-says-de-zerbi-after-another-game-without-a-goal/",
+      "claimed_at": "2026-09-12T19:47:22Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8ca3f4ceb02cf8e5",
+      "headline": "More dropped points at Anfield - is it too early for Liverpool to worry?",
+      "summary": "Liverpool have failed to win either of their first two Premier League games at Anfield. But is it too early to worry?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c62j0lr1rzmo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-12T19:30:02Z",
       "players": [
         {
           "element_id": 0,
@@ -219,6 +345,24 @@
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-12T19:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "214fe636c00269e9",
+      "headline": "'Tired' Liverpool, Chelsea's leaky defence and Villa's attacking concerns",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13583460/liverpool-fail-fulham-test-as-chelseas-defensive-problems-continue-to-hamper-their-title-challenge-credentials-premier-league-hits-and-misses",
       "claimed_at": "2026-09-12T19:00:00Z",
       "players": [
         {
@@ -285,6 +429,24 @@
       "touches_squad": false
     },
     {
+      "digest": "47ed6878a3979fc0",
+      "headline": "Sunderland 0-2 Arsenal LIVE \u2013 Guimaraes strike and Saka penalty earn Gunners hard fought win",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Sunderland 0-2 Arsenal LIVE - Guimaraes strike and Saka penalty earn Gunners hard fought win appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/sunderland-v-arsenal-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-09-12T18:46:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "9a3716c6ceef2147",
       "headline": "Sage says he \u2018needs more\u2019 from Crystal Palace defender after leaving him out of squad for Ipswich defeat",
       "summary": "Crystal Palace boss Pierre Sage has revealed Jaydee Canvot was dropped from his squad for the 3-2 defeat to Ipswich after failing to meet the standards expected of him. Sage said the decision was",
@@ -297,6 +459,24 @@
           "element_id": 203,
           "name": "Canvot",
           "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1e6dadcef272b278",
+      "headline": "Solanke struggles, but Branthwaite solid - Spurs v Everton player ratings",
+      "summary": "How Spurs and Everton's players rated following their Premier League match, which ended in a goalless draw.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c8043gn8ng3o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-12T18:32:15Z",
+      "players": [
+        {
+          "element_id": 230,
+          "name": "Branthwaite",
+          "club": "EVE",
           "held": false
         }
       ],
@@ -832,60 +1012,6 @@
       "tier": 2,
       "url": "https://hayters.com/tottenham-vs-everton-live-team-news-match-updates-and-more/",
       "claimed_at": "2026-09-12T14:50:37Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9843b0474763f89c",
-      "headline": "Bournemouth vs Brentford LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/bournemouth-vs-brentford/live/559475",
-      "claimed_at": "2026-09-12T13:20:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2a749021801bf05e",
-      "headline": "Crystal Palace vs Ipswich LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/crystal-palace-vs-ipswich-town/live/559478",
-      "claimed_at": "2026-09-12T13:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6548521e1ce8d715",
-      "headline": "Liverpool vs Fulham LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/liverpool-vs-fulham/live/559480",
-      "claimed_at": "2026-09-12T12:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1563,60 +1689,6 @@
       "touches_squad": false
     },
     {
-      "digest": "7c08542cf6c8f83e",
-      "headline": "Neto \u2018really excited\u2019 about Chelsea\u2019s future after signing new contract",
-      "summary": "Pedro Neto has signed a new Chelsea contract which will keep him at Stamford Bridge until 2032. The Portugal international has become a key player for the Blues since joining the club two years ago, making 108 appearances and re",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/neto-really-excited-about-chelseas-future-after-signing-new-contract/",
-      "claimed_at": "2026-09-11T13:07:29Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "27a9c15930750f2d",
-      "headline": "Four Chelsea players to miss Hull clash as Alonso gives latest updates on Caicedo and Palestra",
-      "summary": "Xabi Alonso has confirmed Moises Caicedo and Marco Palestra will remain unavailable for Chelsea\u2019s Premier League clash with Hull City. Palestra is yet to play for Chelsea this season while Caicedo was forc",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/four-chelsea-players-to-miss-hull-clash-as-alonso-gives-latest-updates-on-caicedo-and-palestra/",
-      "claimed_at": "2026-09-11T12:53:39Z",
-      "players": [
-        {
-          "element_id": 152,
-          "name": "Palestra",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d7e0f3060375003d",
-      "headline": "Hotter dressing rooms, late arrivals and less massage beds: Arteta on the methods he has used to prepare his Arsenal players for disruption",
-      "summary": "Mikel Arteta has revealed he deliberately disrupted Arsenal\u2019s pre-season preparations to teach his players how to cope when things go wrong. The Premier League",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-on-the-methods-he-has-used-to-prepare-his-arsenal-players-for-disruption/",
-      "claimed_at": "2026-09-11T12:39:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "bbb9d5a393d79655",
       "headline": "I disrupted pre-season travel plans to prepare players - Arteta",
       "summary": "Mikel Arteta says Arsenal were ready for their midweek Champions League flight delay - because he deliberately disrupted their training and travel plans in pre-season to prepare them.",
@@ -1624,78 +1696,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c5y48zdxv0ko?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-11T12:32:20Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0a9311b04ee5a8bf",
-      "headline": "Bergvall signs Tottenham deal after saying he wanted to leave",
-      "summary": "Sweden midfielder Lucas Bergvall signs a new contract at Tottenham after telling the club he wanted to leave.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c99dg2gzdl4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-11T12:01:37Z",
-      "players": [
-        {
-          "element_id": 520,
-          "name": "Bergvall",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9b4f8f8ef51381a1",
-      "headline": "Man Utd ban 685 fan accounts after touting probe",
-      "summary": "Manchester United bans 685 fan accounts after a ticket touting investigation and insists innocent fans have not been punished.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c1j4zydzk2zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-11T11:33:17Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b90714f65d4ce71a",
-      "headline": "Man Utd ban 685 fan accounts after ticket touting probe",
-      "summary": "Manchester United bans 685 fan accounts after a ticket touting investigation and insists innocent fans have not been punished.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c1j4zydzk2zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-11T11:33:17Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2b4ed04537024a3f",
-      "headline": "Teams need to adapt to fixture scheduling - Maresca",
-      "summary": "Manchester City manager Enzo Maresca says teams \"need to adapt\" to the fixture scheduling as his side head into Sunday's derby with two days extra rest over rivals Manchester United.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cx2zr11l9j6o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-11T10:55:09Z",
       "players": [
         {
           "element_id": 0,
