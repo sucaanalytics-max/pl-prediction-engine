@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T11:05:57.662230Z",
-  "n_dropped": 112,
+  "generated_at": "2026-09-12T14:07:49.923542Z",
+  "n_dropped": 118,
   "dropped_by_source": {
     "bbc_football": 36,
     "fantasyfootballscout": 1,
     "hayters": 17,
-    "sky_football": 58
+    "sky_football": 64
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 202,
+  "n_articles": 208,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -63,22 +63,94 @@
       "touches_squad": true
     },
     {
-      "digest": "cfa901a826d235e0",
-      "headline": "Mbeumo on his favourite position and how he knew he could \u2018achieve something good\u2019 at Manchester United",
-      "summary": "Bryan Mbeumo said that he always knew that he could &#8220;achieve something&#8221; at Manchester United when he joined the club. The Cameroon international is set to make his debut in the Champio",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/mbeumo-on-his-favourite-position-and-how-he-always-knew-he-could-achieve-something-good-at-manchester-united/",
-      "claimed_at": "2026-09-09T13:38:33Z",
+      "digest": "9843b0474763f89c",
+      "headline": "Bournemouth vs Brentford LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/bournemouth-vs-brentford/live/559475",
+      "claimed_at": "2026-09-12T13:20:00Z",
       "players": [
         {
-          "element_id": 427,
-          "name": "Mbeumo",
-          "club": "MUN",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "2a749021801bf05e",
+      "headline": "Crystal Palace vs Ipswich LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/crystal-palace-vs-ipswich-town/live/559478",
+      "claimed_at": "2026-09-12T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6548521e1ce8d715",
+      "headline": "Liverpool vs Fulham LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/liverpool-vs-fulham/live/559480",
+      "claimed_at": "2026-09-12T12:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d024a0b8dbe3f123",
+      "headline": "No Milenkovic or Cunha for Forest at Aston Villa LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/aston-villa-vs-nottingham-forest/live/559474",
+      "claimed_at": "2026-09-12T12:00:00Z",
+      "players": [
+        {
+          "element_id": 471,
+          "name": "Milenkovi\u0107",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fcdd0d060ec99b99",
+      "headline": "Chelsea vs Hull City LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/chelsea-vs-hull-city/live/559476",
+      "claimed_at": "2026-09-12T12:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "5b6adc9588ce07ef",
@@ -142,6 +214,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/cm2rd3m01x0o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-12T05:19:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3129de73ce927adb",
+      "headline": "Football Daily",
+      "summary": "Kelly Somers speaks to Manchester City defender R\u00faben Dias.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0p94lt5?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-12T00:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1293,96 +1383,6 @@
       "touches_squad": false
     },
     {
-      "digest": "63b862d3cd86cd98",
-      "headline": "Chelsea latest: Joao Pedro speaks after PL player of the month award",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-11T10:07:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "96a63eec42c30b97",
-      "headline": "Chelsea latest: Caicedo out of Hull game as Neto signs new contract",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-11T10:07:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0a0c55311acf4bb6",
-      "headline": "Newcastle latest: Fernandez-Pardo nearing first start, says Jaissle",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-11T10:00:00Z",
-      "players": [
-        {
-          "element_id": 634,
-          "name": "Fernandez-Pardo",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "816298527353ad3d",
-      "headline": "Newcastle latest: New contract 'really proud' moment for Hall",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-11T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a1f5930b0d86d988",
-      "headline": "Fulham latest: Arbeloa responds to squad unrest reports",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-11T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "117433d8d0e1eb61",
       "headline": "Man City star set to return against Man Utd \u2013 but forward is ruled out",
       "summary": "Enzo Maresca has confirmed Nico O\u2019Reilly is fully fit and available for Manchester City\u2019s derby clash with Manchester United. O\u2019Reilly is ready to return to contention for the game having pulled out of the starting 11 against Cov",
@@ -1545,24 +1545,6 @@
       "touches_squad": false
     },
     {
-      "digest": "834653371156a68f",
-      "headline": "Is Dorgu the answer at left -back for Man Utd?",
-      "summary": "Champions League analyst Stephen Warnock and European football journalist Julien Laurens look at the performance of Patrick Dorgu during Manchester United's 4-0 win over Sabah at Old Trafford.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c0lrkkwdj97o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-10T22:24:15Z",
-      "players": [
-        {
-          "element_id": 415,
-          "name": "Dorgu",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "7b16b9619288d201",
       "headline": "Man Utd 4-0 Sabah LIVE \u2013 United cruise to victory in Champions League",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd 4-0 Sabah LIVE - United cruise to victory in Champions League appeared first on Hayters.",
@@ -1713,6 +1695,24 @@
           "element_id": 593,
           "name": "Dedi\u0107",
           "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "39d92481bb1b7a1e",
+      "headline": "Nottingham Forest defender to miss Aston Villa clash",
+      "summary": "Oliver Glasner has confirmed Nicol\u00f2 Savona will remain Nottingham Forest\u2019s only absentee for Saturday\u2019s Premier League clash with Aston Villa. The defender has endured setbacks during his recovery, with Forest taking a cautious approach to his ret",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/nottingham-forest-defender-to-miss-aston-villa-clash/",
+      "claimed_at": "2026-09-10T13:30:55Z",
+      "players": [
+        {
+          "element_id": 475,
+          "name": "Savona",
+          "club": "NFO",
           "held": false
         }
       ],
