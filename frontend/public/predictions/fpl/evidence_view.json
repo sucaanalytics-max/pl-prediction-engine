@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-11T23:39:57.204280Z",
+  "generated_at": "2026-09-12T01:56:42.459666Z",
   "gameweek": 4,
   "players": [
     {
@@ -1457,6 +1457,87 @@
       "needs_attention": false
     },
     {
+      "element_id": 123,
+      "player_name": "Hinshelwood",
+      "club": "Brighton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "fd5f6937fd8a8e3c",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-08-27T19:30:07.780933Z",
+              "observed_at": "2026-09-11T23:40:28.377415Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-10-10",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "4c11e93dd6e50283",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-10-10",
+              "claimed_at": "2026-08-27T19:30:07.780933Z",
+              "observed_at": "2026-09-11T23:40:28.377415Z",
+              "quote": "Ankle injury - Expected back 10 Oct",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "b463b280bf5e132f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-08-27T19:30:07.780933Z",
+              "observed_at": "2026-09-11T23:40:28.377415Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 135,
       "player_name": "Yohanna",
       "club": "Brighton",
@@ -2550,10 +2631,10 @@
     }
   ],
   "counts": {
-    "n_claims": 579,
-    "n_players_with_claims": 112,
-    "n_players_shown": 33,
+    "n_claims": 589,
+    "n_players_with_claims": 113,
+    "n_players_shown": 34,
     "n_escalations": 12,
-    "n_players_resolved": 43
+    "n_players_resolved": 44
   }
 }
