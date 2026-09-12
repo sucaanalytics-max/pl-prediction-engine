@@ -1,7 +1,644 @@
 {
-  "generated_at": "2026-09-07T16:12:25.483497Z",
-  "n_messages": 29,
+  "generated_at": "2026-09-12T11:25:05.591487Z",
+  "n_messages": 42,
   "messages": [
+    {
+      "id": "gw04-decision-owner",
+      "gameweek": 4,
+      "kind": "decision",
+      "severity": "info",
+      "title": "GW4 \u2014 owner team ready",
+      "body": "2 transfer(s), 0 hit(s) taken. Deadline in 1.1 hours. Nothing has been submitted for you \u2014 the agent has no write access to FPL by design.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "gameweek": 4,
+        "entry_label": "owner",
+        "objective": "season",
+        "generated_at": "2026-09-12T11:25:05.553851Z",
+        "deadline": "2026-09-12T12:30:00Z",
+        "xp_snapshot": {
+          "1": 3.1381,
+          "4": 4.4163,
+          "68": 4.9599,
+          "106": 3.9812,
+          "113": 4.1094,
+          "124": 4.5274,
+          "152": 0.0242,
+          "165": 5.7762,
+          "173": 1.5744,
+          "368": 5.285,
+          "379": 4.0836,
+          "426": 5.3478,
+          "427": 4.062,
+          "445": 4.0307,
+          "447": 4.1802,
+          "497": 0.1954,
+          "542": 4.0155
+        },
+        "decision": {
+          "plan": {
+            "squad": [
+              1,
+              4,
+              68,
+              106,
+              113,
+              124,
+              165,
+              173,
+              368,
+              379,
+              426,
+              445,
+              447,
+              497,
+              542
+            ],
+            "xi": [
+              1,
+              4,
+              68,
+              113,
+              124,
+              165,
+              368,
+              379,
+              426,
+              445,
+              447
+            ],
+            "captain": 165,
+            "vice": 426,
+            "transfers_in": [
+              68,
+              447
+            ],
+            "transfers_out": [
+              152,
+              427
+            ],
+            "hits": 0,
+            "bank_after": 23,
+            "objective": 0.0,
+            "free_transfers_banked": 0,
+            "free_transfers_after": 1
+          },
+          "n_draws": 10000,
+          "mean_points": 55.7695,
+          "sd_points": 15.6879,
+          "objective": 55.7695,
+          "quantiles": {
+            "q10": 37.0,
+            "q25": 44.0,
+            "q50": 54.0,
+            "q75": 66.0,
+            "q90": 77.0,
+            "q99": 97.0
+          },
+          "tails": {
+            "p_ge_40": 0.8528,
+            "p_ge_50": 0.6229,
+            "p_ge_60": 0.3812,
+            "p_ge_70": 0.1905,
+            "p_ge_80": 0.0772,
+            "p_ge_90": 0.0242
+          },
+          "autosub_rate": 0.0398,
+          "vice_rate": 0.0
+        },
+        "optimism_gap": 0.0248,
+        "credible_margin": true,
+        "pool": {
+          "n_candidates": 552,
+          "n_excluded": 104,
+          "excluded_by_reason": {
+            "status_u": 104
+          },
+          "held_missing_purchase_price": [],
+          "price_uncertain": false,
+          "n_zero_xp": 0
+        },
+        "horizon": {
+          "eval_horizon": 8,
+          "transfer_horizon": 6,
+          "provisional": [
+            {
+              "squad": [
+                1,
+                68,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                68,
+                106,
+                124,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447
+              ],
+              "captain": 411,
+              "vice": 445,
+              "transfers_in": [
+                231,
+                249,
+                411
+              ],
+              "transfers_out": [
+                4,
+                165,
+                379
+              ],
+              "hits": 2,
+              "bank_after": 11,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 426,
+              "transfers_in": [
+                82
+              ],
+              "transfers_out": [
+                497
+              ],
+              "hits": 0,
+              "bank_after": 1,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                124,
+                231,
+                249,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 1,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                1,
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 426,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 1,
+              "objective": 0.0,
+              "free_transfers_banked": 2,
+              "free_transfers_after": 3
+            },
+            {
+              "squad": [
+                1,
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 1,
+              "objective": 0.0,
+              "free_transfers_banked": 3,
+              "free_transfers_after": 4
+            },
+            {
+              "squad": [
+                1,
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 1,
+              "objective": 0.0,
+              "free_transfers_banked": 4,
+              "free_transfers_after": 5
+            },
+            {
+              "squad": [
+                1,
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 1,
+              "objective": 0.0,
+              "free_transfers_banked": 5,
+              "free_transfers_after": 5
+            }
+          ]
+        },
+        "field_model": "uncalibrated",
+        "warnings": [],
+        "execution": "propose_only",
+        "evidence": {
+          "measured_on": {
+            "seasons": [
+              "2023-24",
+              "2024-25",
+              "2025-26"
+            ],
+            "gameweeks": "8-38 each, 93 paired observations",
+            "harness": "pipeline/learning/backtest_decisions.py",
+            "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+          },
+          "beats_doing_nothing": {
+            "verdict": "established",
+            "margin_2023_24": 411,
+            "margin_2024_25": 560,
+            "margin_2025_26": 184,
+            "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+          },
+          "beats_greedy_transfers": {
+            "verdict": "not established",
+            "margin_2023_24": 67,
+            "margin_2024_25": 60,
+            "margin_2025_26": -66,
+            "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+          },
+          "projection_calibration": {
+            "verdict": "established",
+            "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+          }
+        },
+        "sealed": true
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-439",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Two goals in two games - Sesko gives Man Utd a different threat\\nBenjamin Sesko's return to Manchester United's starting line-up is well timed ahead of Sunday's Premier League encounter with Manchester City\" (2026-09-10T22:41:17Z) while sky_football says \"Man Utd latest: Carrick praises Sesko's 'different kind of threat'\" (2026-09-09T11:27:00Z). Used the more conservative \"Two goals in two games - Sesko gives Man Utd a different threat\\nBenjamin Sesko's return to Manchester United's starting line-up is well timed ahead of Sunday's Premier League encounter with Manchester City\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 439,
+        "claim_type": "unparsed_news",
+        "value": "Two goals in two games - Sesko gives Man Utd a different threat\nBenjamin Sesko's return to Manchester United's starting line-up is well timed ahead of Sunday's Premier League encounter with Manchester City",
+        "detail": "unparsed_news: bbc_football says \"Two goals in two games - Sesko gives Man Utd a different threat\\nBenjamin Sesko's return to Manchester United's starting line-up is well timed ahead of Sunday's Premier League encounter with Manchester City\" (2026-09-10T22:41:17Z) while sky_football says \"Man Utd latest: Carrick praises Sesko's 'different kind of threat'\" (2026-09-09T11:27:00Z). Used the more conservative \"Two goals in two games - Sesko gives Man Utd a different threat\\nBenjamin Sesko's return to Manchester United's starting line-up is well timed ahead of Sunday's Premier League encounter with Manchester City\"."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-634",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says \"Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4\\nTino Livramento replaced Amir Dedic during Tuesday's EFL Cup win The post Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo\" (2026-09-11T14:34:30Z) while sky_football says 'Newcastle latest: Fernandez-Pardo nearing first start, says Jaissle' (2026-09-11T10:00:00Z). Used the more conservative \"Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4\\nTino Livramento replaced Amir Dedic during Tuesday's EFL Cup win The post Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 634,
+        "claim_type": "unparsed_news",
+        "value": "Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4\nTino Livramento replaced Amir Dedic during Tuesday's EFL Cup win The post Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo",
+        "detail": "unparsed_news: fantasyfootballscout says \"Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4\\nTino Livramento replaced Amir Dedic during Tuesday's EFL Cup win The post Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo\" (2026-09-11T14:34:30Z) while sky_football says 'Newcastle latest: Fernandez-Pardo nearing first start, says Jaissle' (2026-09-11T10:00:00Z). Used the more conservative \"Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4\\nTino Livramento replaced Amir Dedic during Tuesday's EFL Cup win The post Dedic + Fernandez-Pardo: Newcastle injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo\"."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-125",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4\\nNews that might affect Maxim De Cuyper The post Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-09-11T14:43:04Z) while sky_football says 'Bahoya on Leeds bench but no Rutter for Brighton LIVE!' (2026-09-05T13:00:00Z). Used the more conservative 'Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4\\nNews that might affect Maxim De Cuyper The post Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 125,
+        "claim_type": "unparsed_news",
+        "value": "Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4\nNews that might affect Maxim De Cuyper The post Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says 'Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4\\nNews that might affect Maxim De Cuyper The post Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-09-11T14:43:04Z) while sky_football says 'Bahoya on Leeds bench but no Rutter for Brighton LIVE!' (2026-09-05T13:00:00Z). Used the more conservative 'Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4\\nNews that might affect Maxim De Cuyper The post Mitoma, Minteh, Rutter: Brighton injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-456",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Ramsey strikes late as Newcastle salvage Bournemouth draw\\nNewcastle fought back from 2-0 down to earn a hard-fought Premier League point at home to Bournemouth thanks to Jacob Ramsey's 88th minute equaliser.\" (2026-09-05T19:00:52Z) while sky_football says \"Ramsey rescues draw for Newcastle against Bournemouth\\nNewcastle fought back from two goals down as Jacob Ramsey's late strike rescued a 2-2 against Bournemouth at St James' Park.\" (2026-09-05T14:30:00Z). Used the more conservative \"Ramsey strikes late as Newcastle salvage Bournemouth draw\\nNewcastle fought back from 2-0 down to earn a hard-fought Premier League point at home to Bournemouth thanks to Jacob Ramsey's 88th minute equaliser.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 456,
+        "claim_type": "unparsed_news",
+        "value": "Ramsey strikes late as Newcastle salvage Bournemouth draw\nNewcastle fought back from 2-0 down to earn a hard-fought Premier League point at home to Bournemouth thanks to Jacob Ramsey's 88th minute equaliser.",
+        "detail": "unparsed_news: bbc_football says \"Ramsey strikes late as Newcastle salvage Bournemouth draw\\nNewcastle fought back from 2-0 down to earn a hard-fought Premier League point at home to Bournemouth thanks to Jacob Ramsey's 88th minute equaliser.\" (2026-09-05T19:00:52Z) while sky_football says \"Ramsey rescues draw for Newcastle against Bournemouth\\nNewcastle fought back from two goals down as Jacob Ramsey's late strike rescued a 2-2 against Bournemouth at St James' Park.\" (2026-09-05T14:30:00Z). Used the more conservative \"Ramsey strikes late as Newcastle salvage Bournemouth draw\\nNewcastle fought back from 2-0 down to earn a hard-fought Premier League point at home to Bournemouth thanks to Jacob Ramsey's 88th minute equaliser.\"."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-84",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-05T18:00:06.182495Z) while fpl_news_parse says 25 (2026-09-05T18:00:06.182495Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 84,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-05T18:00:06.182495Z) while fpl_news_parse says 25 (2026-09-05T18:00:06.182495Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-387",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-05T18:00:06.379802Z) while fpl_news_parse says 75 (2026-09-05T18:00:06.379802Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 387,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-05T18:00:06.379802Z) while fpl_news_parse says 75 (2026-09-05T18:00:06.379802Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-239",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-06T18:00:08.301702Z) while fpl_news_parse says 75 (2026-09-06T18:00:08.301702Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 239,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-06T18:00:08.301702Z) while fpl_news_parse says 75 (2026-09-06T18:00:08.301702Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-8",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates\\nWe dissect Champions League wins for Arsenal and Liverpool The post FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc' (2026-09-10T15:45:00Z) while sky_football says \"How Calafiori has become 'the best left-back in the league by far'\\nRiccardo Calafiori returns to Italy with Arsenal this week - and he's a very different player compared to the one who departed for England two years ago.\" (2026-09-08T08:00:00Z). Used the more conservative 'FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates\\nWe dissect Champions League wins for Arsenal and Liverpool The post FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 8,
+        "claim_type": "unparsed_news",
+        "value": "FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates\nWe dissect Champions League wins for Arsenal and Liverpool The post FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc",
+        "detail": "unparsed_news: fantasyfootballscout says 'FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates\\nWe dissect Champions League wins for Arsenal and Liverpool The post FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc' (2026-09-10T15:45:00Z) while sky_football says \"How Calafiori has become 'the best left-back in the league by far'\\nRiccardo Calafiori returns to Italy with Arsenal this week - and he's a very different player compared to the one who departed for England two years ago.\" (2026-09-08T08:00:00Z). Used the more conservative 'FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates\\nWe dissect Champions League wins for Arsenal and Liverpool The post FPL notes: Calafiori rested, Gakpo, Barcola + White injury updates appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc'."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-429",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says \"Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4\\nLeft-back Shaw wasn't used in the Champions League The post Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\" (2026-09-11T15:50:17Z) while sky_football says 'Man Utd latest: Carrick explains Shaw absence as Rashford trains ahead of Sabah clash' (2026-09-09T11:27:00Z), bbc_football says \"Young praises Rashford and Shaw chemistry\\nMatch of the Day pundit Ashley Young looks at Marcus Rashford and Luke Shaw's connection on the left in Manchester United's 2-2 draw against Everton.at the Hill Dickinson Stadium.\" (2026-09-06T23:07:31Z). Used the more conservative \"Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4\\nLeft-back Shaw wasn't used in the Champions League The post Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 429,
+        "claim_type": "unparsed_news",
+        "value": "Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4\nLeft-back Shaw wasn't used in the Champions League The post Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says \"Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4\\nLeft-back Shaw wasn't used in the Champions League The post Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\" (2026-09-11T15:50:17Z) while sky_football says 'Man Utd latest: Carrick explains Shaw absence as Rashford trains ahead of Sabah clash' (2026-09-09T11:27:00Z), bbc_football says \"Young praises Rashford and Shaw chemistry\\nMatch of the Day pundit Ashley Young looks at Marcus Rashford and Luke Shaw's connection on the left in Manchester United's 2-2 draw against Everton.at the Hill Dickinson Stadium.\" (2026-09-06T23:07:31Z). Used the more conservative \"Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4\\nLeft-back Shaw wasn't used in the Champions League The post Shaw, Rashford, Amad: Man United injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\"."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-616",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says 'Man City latest: Bouaddi praises Rodri as he seeks to replace him' (2026-09-09T12:35:00Z) while bbc_football says \"Bouaddi impresses on first start - have Man City found 'a gem'?\\nAyyoub Bouaddi belies his age with a mature Champions League performance on his first Manchester City start to showcase why the club were so intent on signing the 18-year-old.\" (2026-09-08T22:09:47Z). Used the more conservative 'Man City latest: Bouaddi praises Rodri as he seeks to replace him'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 616,
+        "claim_type": "unparsed_news",
+        "value": "Man City latest: Bouaddi praises Rodri as he seeks to replace him",
+        "detail": "unparsed_news: sky_football says 'Man City latest: Bouaddi praises Rodri as he seeks to replace him' (2026-09-09T12:35:00Z) while bbc_football says \"Bouaddi impresses on first start - have Man City found 'a gem'?\\nAyyoub Bouaddi belies his age with a mature Champions League performance on his first Manchester City start to showcase why the club were so intent on signing the 18-year-old.\" (2026-09-08T22:09:47Z). Used the more conservative 'Man City latest: Bouaddi praises Rodri as he seeks to replace him'."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-170",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-09T15:00:09.063849Z) while fpl_news_parse says 75 (2026-09-09T15:00:09.063849Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 170,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-09T15:00:09.063849Z) while fpl_news_parse says 75 (2026-09-09T15:00:09.063849Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw04-warning-availability-conflict-285",
+      "gameweek": 4,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW4 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-09T13:30:08.327907Z) while fpl_news_parse says 75 (2026-09-09T13:30:08.327907Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-12T11:25:05.591487Z",
+      "detail": {
+        "element_id": 285,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-09T13:30:08.327907Z) while fpl_news_parse says 75 (2026-09-09T13:30:08.327907Z). Used the more conservative 75."
+      }
+    },
     {
       "id": "gw03-status-settled",
       "gameweek": 3,
