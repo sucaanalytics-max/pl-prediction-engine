@@ -1,19 +1,67 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-13T06:34:17.438256Z",
-  "n_dropped": 179,
+  "generated_at": "2026-09-13T12:18:06.154338Z",
+  "n_dropped": 182,
   "dropped_by_source": {
-    "bbc_football": 56,
+    "bbc_football": 57,
     "fantasyfootballscout": 5,
     "hayters": 34,
-    "sky_football": 84
+    "sky_football": 86
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 269,
+  "n_articles": 272,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "eaf7d86aab604692",
+      "headline": "Man City latest: 'Where\u2019s Erling?' \u2013 Anderson wants to keep Haaland happy",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-13T08:39:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        },
+        {
+          "element_id": 481,
+          "name": "Anderson",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "ee0d6a9785986da6",
+      "headline": "Were Arsenal unlucky to concede a penalty at Sunderland?",
+      "summary": "Was Ezri Konsa's challenge on Dan Ballard enough for Sunderland to be awarded a penalty? David Raya went on to save Enzo Le Fee's resulting spot-kick.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13585217/sunderland-v-arsenal-should-ezri-konsa-have-conceded-a-penalty-for-challenge-on-dan-ballard",
+      "claimed_at": "2026-09-13T00:00:00Z",
+      "players": [
+        {
+          "element_id": 532,
+          "name": "Ballard",
+          "club": "SUN",
+          "held": false
+        },
+        {
+          "element_id": 542,
+          "name": "E.Le F\u00e9e",
+          "club": "SUN",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "275726dda4f343b8",
       "headline": "Like Benzema & as good as Haaland - Alonso on Joao Pedro",
@@ -159,6 +207,24 @@
       "touches_squad": true
     },
     {
+      "digest": "463978920917bc94",
+      "headline": "Coventry vs Brighton team news LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/coventry-city-vs-brighton-and-hove-albion/live/559477",
+      "claimed_at": "2026-09-13T12:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "0bf33a1be165b10d",
       "headline": "FPL notes: The good and bad of Chelsea, Hull heroics + Mendy injury",
       "summary": "The Tigers' scarcely believable unbeaten start to 2026/27 continues The post FPL notes: The good and bad of Chelsea, Hull heroics + Mendy injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
@@ -256,6 +322,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c5ym4384rezo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-12T22:57:13Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9d5df8023dad8787",
+      "headline": "Raya stars as Arsenal march on at Sunderland",
+      "summary": "FREE TO WATCH: Highlights from the Premier League clash between Sunderland and Arsenal.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13585203/sunderland-0-2-arsenal-premier-league-highlights",
+      "claimed_at": "2026-09-12T22:31:00Z",
       "players": [
         {
           "element_id": 0,
@@ -915,6 +999,24 @@
       "touches_squad": false
     },
     {
+      "digest": "c2d8e12104ded37c",
+      "headline": "PL Predictions: Man Utd backed to win on derby day",
+      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight across the weekend Premier League action.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13583782/premier-league-predictions-jones-knows-best-bets-hulls-run-cant-continue-at-chelsea-can-it-oh-it-can",
+      "claimed_at": "2026-09-12T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "c7b280c1dd001d11",
       "headline": "Hull City latest: Chelsea draw is a huge result for us, says Jakirovic",
       "summary": null,
@@ -963,30 +1065,6 @@
           "element_id": 36,
           "name": "Maatsen",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f7810284b5398b78",
-      "headline": "'A clear red card' - Emery berates VAR as Villa lose late to Forest",
-      "summary": "Aston Villa manager Unai Emery was left frustrated with the match officials after they chose to not send off Nottingham Forest's James McAtee, following a challenge on Ian Maatsen which left the defender injured and meant Villa had",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cg59117eg1vo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-12T17:36:02Z",
-      "players": [
-        {
-          "element_id": 36,
-          "name": "Maatsen",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 486,
-          "name": "McAtee",
-          "club": "NFO",
           "held": false
         }
       ],
@@ -1108,78 +1186,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/watch/video/13584964/liverpool-0-0-fulham-premier-league-highlights",
       "claimed_at": "2026-09-12T17:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5a81cd41b9715977",
-      "headline": "Schade double earns Brentford point as Bournemouth await first PL win",
-      "summary": "Kevin Schade netted a double as Brentford twice came from behind to earn a 2-2 draw at Bournemouth, leaving Marco Rose still waiting for his first Premier League win as head coach.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/bournemouth-vs-brentford/report/559475",
-      "claimed_at": "2026-09-12T17:00:00Z",
-      "players": [
-        {
-          "element_id": 94,
-          "name": "Schade",
-          "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "716ab3ec3534c099",
-      "headline": "Schade double earns Brentford point as Bournemouth await first PL win",
-      "summary": "Kevin Schade netted a double as Brentford came from behind to earn a 2-2 draw at Bournemouth, leaving Marco Rose still waiting for his first Premier League win as head coach.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/bournemouth-vs-brentford/report/559475",
-      "claimed_at": "2026-09-12T17:00:00Z",
-      "players": [
-        {
-          "element_id": 94,
-          "name": "Schade",
-          "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8f0ca0de52d50a94",
-      "headline": "Glasner haunts Emery again as Forest win at Aston Villa",
-      "summary": "Nottingham Forest beat Aston Villa 2-1 at Villa Park to leave Unai Emery's side still searching for their first Premier League victory of the season.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/aston-villa-vs-nottingham-forest/report/559474",
-      "claimed_at": "2026-09-12T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e2983b927b91cac1",
-      "headline": "Liverpool held at Anfield as Fulham pick up first point",
-      "summary": "Liverpool were held to a frustrating goalless draw as Fulham picked up their first point of the Premier League season at Anfield.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/liverpool-vs-fulham/report/559480",
-      "claimed_at": "2026-09-12T17:00:00Z",
       "players": [
         {
           "element_id": 0,
