@@ -1,19 +1,139 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-13T16:33:30.717441Z",
-  "n_dropped": 187,
+  "generated_at": "2026-09-13T18:57:47.629621Z",
+  "n_dropped": 199,
   "dropped_by_source": {
-    "bbc_football": 58,
+    "bbc_football": 61,
     "fantasyfootballscout": 7,
-    "hayters": 35,
-    "sky_football": 87
+    "hayters": 36,
+    "sky_football": 95
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 277,
+  "n_articles": 289,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "0b8b8d14f82c2f1a",
+      "headline": "\u2018As obvious as it gets\u2019 \u2013 Carrick slams decision to allow Haaland winner in derby defeat",
+      "summary": "Michael Carrick was left baffled by the decision to allow Erling Haaland\u2019s winner to stand in Manchester United\u2019s 1-0 defeat to Manchester City. Carrick felt Enzo Fernandez had interfered with play in the build-",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/as-obvious-as-it-gets-carrick-slams-decision-to-allow-haaland-winner-in-derby-defeat/",
+      "claimed_at": "2026-09-13T18:30:04Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "09d7ff0e5230e838",
+      "headline": "Haaland scores controversial derby winner for Man City after Foden red",
+      "summary": "Erling Haaland's contentious winner earned 10-man Manchester City a derby win over rivals United at Old Trafford - after Phil Foden's controversial first-half red card.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-united-vs-manchester-city/report/559481",
+      "claimed_at": "2026-09-13T18:30:00Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "3066069b647d5b24",
+      "headline": "Neville: Officials got Haaland winner wrong - Man Utd can expect apology",
+      "summary": "Gary Neville believes the VAR officials were \"wrong\" to award Manchester City's winner at Manchester United in their 1-0 victory at Old Trafford.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13585530/gary-neville-man-utd-can-expect-apology-from-pro-ref-for-erling-haalands-winner-in-manchester-derby",
+      "claimed_at": "2026-09-13T18:15:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "da4a49dcd42de4d5",
+      "headline": "Carrick 'baffled' by decision to award controversial Man City goal",
+      "summary": "Manchester United manager Michael Carrick was unhappy with the match officials for the decision to award Erling Haaland's controversial goal in the Manchester derby.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ceq81nz02ddo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-13T18:13:04Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "c341a9f86b8e2f53",
+      "headline": "'I need the offside law explaining to me!' - Neville baffled by City goal award",
+      "summary": "VAR drama as Erling Haaland fires Man City ahead!",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13585518/goal-e-haaland-60-man-utd-0-1-man-city",
+      "claimed_at": "2026-09-13T17:59:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "b13b257f5b2d9af7",
+      "headline": "Man Utd 0-1 Man City LIVE \u2013 Haaland goal gives City derby victory",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd 0-1 Man City LIVE - Haaland goal gives City derby victory appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-utd-v-man-city-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-09-13T14:05:19Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "eaf7d86aab604692",
       "headline": "Man City latest: 'Where\u2019s Erling?' \u2013 Anderson wants to keep Haaland happy",
@@ -205,6 +325,102 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "6b2b1b296869a02c",
+      "headline": "Huge controversy and confusion as Man City win dramatic VAR-filled derby",
+      "summary": "FREE TO WATCH: Highlights from Manchester United's match against Manchester City in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13585545/manchester-united-0-1-manchester-city-premier-league-highlights",
+      "claimed_at": "2026-09-13T18:46:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f0bd98ea4c1f42d8",
+      "headline": "Fernandes and Foden should have been sent off - Maresca",
+      "summary": "Enzo Maresca believes both Phil Foden and Bruno Fernandes should have been sent off in Manchester City's derby victory against Manchester United.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cj061413lmqo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-13T18:26:24Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9575e980896b1bf6",
+      "headline": "Keane disagrees with Foden red card as pundits criticise Fernandes' role",
+      "summary": "Roy Keane believes Phil Foden should not have been sent off in the Manchester derby and criticised Man Utd captain Bruno Fernandes' role in the Man City forward's red card.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13585509/phil-foden-sent-off-in-manchester-derby-bruno-fernandes-role-criticised-by-roy-keane-and-micah-richards",
+      "claimed_at": "2026-09-13T17:54:00Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7fb15aea4c5b6a9a",
+      "headline": "FPL notes: Delap off the mark, Munoz superb + Villa injuries",
+      "summary": "Plus, why Jackson was subbed off at half-time The post FPL notes: Delap off the mark, Munoz superb + Villa injuries appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/13/fpl-notes-delap-off-the-mark-munoz-superb-villa-injuries",
+      "claimed_at": "2026-09-13T17:45:00Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "83e4f3da3a307edc",
+      "headline": "Foden sees red as Mainoo impresses - Manchester derby ratings",
+      "summary": "How Manchester United and Manchester City players rated in the derby clash at Old Trafford.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c2kwpk5zy23o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-13T17:27:07Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 432,
+          "name": "Mainoo",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "458dd395449d3287",
@@ -405,6 +621,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ab87dd7064c88b7f",
+      "headline": "Man City latest: Fernandes should have seen red in Foden incident - Maresca",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-13T08:39:00Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
           "held": false
         }
       ],
@@ -843,42 +1077,6 @@
       "touches_squad": false
     },
     {
-      "digest": "8ca3f4ceb02cf8e5",
-      "headline": "More dropped points at Anfield - is it too early for Liverpool to worry?",
-      "summary": "Liverpool have failed to win either of their first two Premier League games at Anfield. But is it too early to worry?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c62j0lr1rzmo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-12T19:30:02Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "63b913fcb84d386a",
-      "headline": "Winless Spurs remain goalless after another bore draw against Everton",
-      "summary": "Tottenham's winless and goalless start to the Premier League season continued with a 0-0 draw at home to unbeaten Everton.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/tottenham-hotspur-vs-everton/report/559483",
-      "claimed_at": "2026-09-12T19:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "29084c743bcb7a86",
       "headline": "Ipswich Town boss O\u2019Neil provides update on Emersonn injury worry and praises striker after win over Crystal Palace",
       "summary": "Gary O\u2019Neil played down concerns over Emersonn after the Ipswich striker was forced off with a thigh problem during their 3-2 win over Crystal Palace. Emersonn scored his second Premie",
@@ -891,60 +1089,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1b3a8fac239be435",
-      "headline": "Chelsea latest: Alonso eager for \u2018boring\u2019 win as Blues' defensive frailties continue",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-12T19:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "214fe636c00269e9",
-      "headline": "'Tired' Liverpool, Chelsea's leaky defence and Villa's attacking concerns",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13583460/liverpool-fail-fulham-test-as-chelseas-defensive-problems-continue-to-hamper-their-title-challenge-credentials-premier-league-hits-and-misses",
-      "claimed_at": "2026-09-12T19:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0771408301b30620",
-      "headline": "Iraola bemoans Liverpool's lack of cutting edge and explains Barcola plan",
-      "summary": "Liverpool manager Andoni Iraola bemoaned lack of creativity and cutting edge after his side were held to a 0-0 draw by Fulham at Anfield.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13585141/liverpool-boss-andoni-iraola-bemoans-lack-of-creativity-and-cutting-edge-against-fulham-and-explains-bradley-barcola-plan",
-      "claimed_at": "2026-09-12T18:47:00Z",
-      "players": [
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
           "held": false
         }
       ],
@@ -1023,60 +1167,6 @@
       "touches_squad": false
     },
     {
-      "digest": "1e6dadcef272b278",
-      "headline": "Solanke struggles, but Branthwaite solid - Spurs v Everton player ratings",
-      "summary": "How Spurs and Everton's players rated following their Premier League match, which ended in a goalless draw.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c8043gn8ng3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-12T18:32:15Z",
-      "players": [
-        {
-          "element_id": 230,
-          "name": "Branthwaite",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "52fcc22f04ce5cef",
-      "headline": "Solanke struggles, but Branthwaite solid - player ratings for Spurs v Everton",
-      "summary": "How Spurs and Everton's players rated following their Premier League match, which ended in a goalless draw.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c8043gn8ng3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-12T18:32:15Z",
-      "players": [
-        {
-          "element_id": 230,
-          "name": "Branthwaite",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d32ce28a6cb5201f",
-      "headline": "Liverpool latest: Barcola and other wingers will play off left and right",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-12T18:30:00Z",
-      "players": [
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "08a11f3d99f28baa",
       "headline": "Sunderland v Arsenal team news: No changes from last weekend",
       "summary": "The four Gunners benched in midweek all return The post Sunderland v Arsenal team news: No changes from last weekend appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1143,42 +1233,6 @@
           "element_id": 586,
           "name": "Mendy",
           "club": "HUL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c2d8e12104ded37c",
-      "headline": "PL Predictions: Man Utd backed to win on derby day",
-      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight across the weekend Premier League action.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13583782/premier-league-predictions-jones-knows-best-bets-hulls-run-cant-continue-at-chelsea-can-it-oh-it-can",
-      "claimed_at": "2026-09-12T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c7b280c1dd001d11",
-      "headline": "Hull City latest: Chelsea draw is a huge result for us, says Jakirovic",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13548674/hull-city-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-12T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1659,42 +1713,6 @@
           "element_id": 627,
           "name": "Barcola",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d3fd31949333d1bf",
-      "headline": "O\u2019Reilly, Doku, Enzo: Man City injury latest for FPL Gameweek 4",
-      "summary": "The Manchester derby takes place on Sunday The post O'Reilly, Doku, Enzo: Man City injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/11/oreilly-doku-enzo-man-city-injury-latest-for-fpl-gameweek-4",
-      "claimed_at": "2026-09-11T15:04:31Z",
-      "players": [
-        {
-          "element_id": 387,
-          "name": "O'Reilly",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "03aa8ff5657bfef3",
-      "headline": "Aston Villa duo could be involved against Nottingham Forest",
-      "summary": "Unai Emery will make late decisions on Matty Cash and Johan Manzambi ahead of Aston Villa\u2019s clash with Nottingham Forest. Cash missed Villa\u2019s Champions League win over Club Brugge with what Emery described as a \u201csmall injury\u201d. \u201cIt is diffic",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/aston-villa-duo-could-be-involved-against-nottingham-forest/",
-      "claimed_at": "2026-09-11T14:49:57Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
           "held": false
         }
       ],
