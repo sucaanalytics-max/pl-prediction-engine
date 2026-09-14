@@ -1,19 +1,61 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-14T06:46:10.355530Z",
-  "n_dropped": 200,
+  "generated_at": "2026-09-14T13:40:57.986456Z",
+  "n_dropped": 199,
   "dropped_by_source": {
     "bbc_football": 65,
-    "fantasyfootballscout": 7,
-    "hayters": 38,
-    "sky_football": 90
+    "fantasyfootballscout": 9,
+    "hayters": 39,
+    "sky_football": 86
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 290,
+  "n_articles": 289,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "7f2ea886fdc92277",
+      "headline": "'You can't lose focus' | Why did VAR get Haaland goal so wrong?",
+      "summary": "Former Premier League referee Dermot Gallagher and former Coventry striker Jay Bothroyd dissect the biggest talking point of the weekend and ask how VAR got Erling Haaland's winner for Manchester City against rivals United so wrong.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13585778/ref-watch-why-did-var-get-erling-haaland-goal-so-wrong",
+      "claimed_at": "2026-09-14T11:29:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "4beaef0057cbbff0",
+      "headline": "FPL notes: Spurs drought, Kinsky clean sheet + 90 mins for Barry again",
+      "summary": "It's no goals in four matches for Spurs after the stalemate with Everton The post FPL notes: Spurs drought, Kinsky clean sheet + 90 mins for Barry again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics fr",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/14/fpl-notes-spurs-drought-kinsky-clean-sheet-90-mins-for-barry-again",
+      "claimed_at": "2026-09-14T08:55:00Z",
+      "players": [
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
+          "held": true
+        },
+        {
+          "element_id": 496,
+          "name": "Kinsky",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "6392fef399ef37a4",
       "headline": "Refereeing body Pro Ref admits \u2018error of judgement\u2019 in Haaland\u2019s winning goal against Man Utd",
@@ -333,22 +375,232 @@
       "touches_squad": true
     },
     {
-      "digest": "70d85d8d7c5b9ddb",
-      "headline": "Carra: Haaland will be greatest goalscorer of all time",
-      "summary": "Jamie Carragher believes Erling Haaland will be the \"best goalscorer of all time\" after his double earned Manchester City a 2-0 win at Porto in the Champions League.",
+      "digest": "23f2a56e6fae9874",
+      "headline": "Liverpool latest: Iraola warns Reds will have to accept ups and downs as players adapt",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13583453/erling-haaland-jamie-carragher-believes-manchester-city-striker-will-be-greatest-goalscorer-of-all-time",
-      "claimed_at": "2026-09-09T09:47:00Z",
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-14T13:00:00Z",
       "players": [
         {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "8e39c0ab8073987b",
+      "headline": "Arsenal latest: 'Gunners will win the title by double digits,' says Merse",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-14T12:58:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8868fa2cc35cb049",
+      "headline": "Man City latest: Anderson reveals Foden's reaction to derby win",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-14T12:25:00Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 481,
+          "name": "Anderson",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f8dd49428a4c494e",
+      "headline": "Liverpool defender in line for return as Iraola gives updates on duo\u2019s recoveries from injury",
+      "summary": "Joe Gomez is set to return to action for Liverpool in Tuesday\u2019s Carabao Cup third-round clash with Tottenham at Anfield. The defender has been sidelined since suffering a muscle injury during Liverpool\u2019s pr",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/liverpool-defender-in-line-for-return-as-iraola-gives-updates-on-duos-returns-from-injury/",
+      "claimed_at": "2026-09-14T12:24:08Z",
+      "players": [
+        {
+          "element_id": 359,
+          "name": "Gomez",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fa264c7200b1abfa",
+      "headline": "Joint-worst Man Utd PL start! Neville says pressure is growing on Carrick",
+      "summary": "Gary Neville described Manchester United's derby defeat as a \"bad day\" for Michael Carrick's side, with the pressure increasing after failing to beat 10-man Manchester City at Old Trafford.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13585707/man-utd-pressure-on-michael-carrick-increasing-after-man-city-defeat-says-gary-neville",
+      "claimed_at": "2026-09-14T11:46:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2af418eb99083c54",
+      "headline": "Arsenal to contact Pro Ref over Konsa penalty",
+      "summary": "Arsenal will contact refereeing body Pro Ref over the incident that saw Ezri Konsa concede a penalty in Saturday's win over Sunderland.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmg49n3g7exlo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-14T11:31:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bb15e036d04890c8",
+      "headline": "Familiar questions for Man Utd, now Carrick must find answers",
+      "summary": "After one win in four Premier League games, the problems are mounting for Manchester United and manager Michael Carrick.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cddv5mqjgvlo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-14T11:25:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6467865a48c1f029",
+      "headline": "Arbeloa provides injury update on Fulham star",
+      "summary": "Fulham will again be without Ryan Sessegnon for Tuesday\u2019s Carabao Cup clash with West Ham. The left-back also a doubt for Sunday\u2019s Premier League meeting with Manchester United after missing Saturday\u2019s 0-0 draw with Liverpool because of a groin problem.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arbeloa-provides-injury-update-on-fulham-star/",
+      "claimed_at": "2026-09-14T11:09:38Z",
+      "players": [
+        {
+          "element_id": 269,
+          "name": "Sessegnon",
+          "club": "FUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "710cbde7d3943a78",
+      "headline": "Man Utd latest: VOTE! Is pressure beginning to build on Carrick?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-14T10:29:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b70b2766761efd7c",
+      "headline": "FPL notes: Schade + Tavernier strike again + DefCon bonanza",
+      "summary": "Our Fantasy notes from Bournemouth 2-2 Brentford The post FPL notes: Schade + Tavernier strike again + DefCon bonanza appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/14/fpl-notes-schade-tavernier-strike-again-defcon-bonanza",
+      "claimed_at": "2026-09-14T10:25:00Z",
+      "players": [
+        {
+          "element_id": 68,
+          "name": "Tavernier",
+          "club": "BOU",
+          "held": false
+        },
+        {
+          "element_id": 94,
+          "name": "Schade",
+          "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7467679423f24f59",
+      "headline": "How many times has a Premier League gameweek had no home wins?",
+      "summary": "BBC Sport's Ask Me Anything team explains why Monday's match between Leeds United and Newcastle United could create Premier League history",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqlwkzde10qo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-14T10:00:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "899e95b793da7f75",
+      "headline": "Farke's plan to deliver Leeds to 'fun' new heights",
+      "summary": "Monday Night Football marks the first managerial meeting between Daniel Farke and Matthias Jaissle, two of four German managers currently operating in the Premier League. Both have enjoyed unbeaten starts to this season.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13585548/leeds-vs-newcastle-daniel-farke-sets-out-blueprint-for-success-after-unbeaten-premier-league-start",
+      "claimed_at": "2026-09-14T09:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "8ac3a65b3a9139d5",
@@ -412,6 +664,24 @@
       "tier": 2,
       "url": "https://hayters.com/the-first-night-where-ive-felt-like-myself-again-fowler-delighted-after-helping-man-city-beat-aston-villa/",
       "claimed_at": "2026-09-13T21:28:43Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "251ad23fbabd9c61",
+      "headline": "Man City winner an error admits refereeing body as Man Utd receive apology",
+      "summary": "Refereeing body Pro Ref has admitted an error in awarding Manchester City's winner at Manchester United in their 1-0 victory at Old Trafford.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13585607/erling-haalands-man-city-goal-decision-vs-man-utd-an-error-of-judgement-says-pro-ref",
+      "claimed_at": "2026-09-13T21:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -867,24 +1137,6 @@
       "touches_squad": false
     },
     {
-      "digest": "ab87dd7064c88b7f",
-      "headline": "Man City latest: Fernandes should have seen red in Foden incident - Maresca",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-13T08:39:00Z",
-      "players": [
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0bf33a1be165b10d",
       "headline": "FPL notes: The good and bad of Chelsea, Hull heroics + Mendy injury",
       "summary": "The Tigers' scarcely believable unbeaten start to 2026/27 continues The post FPL notes: The good and bad of Chelsea, Hull heroics + Mendy injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
@@ -939,24 +1191,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9703c5b39e758a69",
-      "headline": "Furious Arteta rages over 'unacceptable' Sunderland penalty call",
-      "summary": "A furious Mikel Arteta described Sunderland's penalty in Arsenal's 2-0 win at the Stadium of Light as \"unacceptable\".",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13585214/mikel-arteta-rages-at-sunderland-penalty-decision-after-arsenal-win-at-stadium-of-light-this-cannot-happen",
-      "claimed_at": "2026-09-12T23:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "e3939aa4ede604a6",
       "headline": "Referee 'completely wrong' to award penalty - Williams",
       "summary": "Match of the Day pundits Ashley Williams and Thomas Frank believe Sunderland should not have been awarded a penalty after Ezri Konsa was adjudged to foul Dan Ballard, instead claiming that Arsenal should have had a free kick.",
@@ -993,60 +1227,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9d5df8023dad8787",
-      "headline": "Raya stars as Arsenal march on at Sunderland",
-      "summary": "FREE TO WATCH: Highlights from the Premier League clash between Sunderland and Arsenal.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13585203/sunderland-0-2-arsenal-premier-league-highlights",
-      "claimed_at": "2026-09-12T22:31:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9cfc9f40bd79a83b",
-      "headline": "Guimaraes haunts Sunderland as Arsenal continue winning start",
-      "summary": "Bruno Guimaraes scored a stunning goal two minutes after David Raya had saved a penalty as Arsenal beat Sunderland 2-0 to move above Manchester City at the top of the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/sunderland-vs-arsenal/report/559482",
-      "claimed_at": "2026-09-12T22:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0708b30ce3a46587",
-      "headline": "Arsenal hold off energetic Sunderland to continue perfect title defence",
-      "summary": "Arsenal maintain their 100% start to their Premier League season with a win at Sunderland, who mount an admirable push for a point before Bukayo Saka's penalty puts the result beyond doubt.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c5ympj1m71ko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-12T21:53:50Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "67b788fee2126851",
       "headline": "Arteta says Sunderland penalty decision \u2018cannot happen at this level\u2019 \u2013 but praises Raya and his team\u2019s reaction in victory",
       "summary": "Mikel Arteta hit out at an \u201cabsolutely unacceptable\u201d penalty decision despite Arsenal continuing their winning start to the season with a 2-0 victory over Sunderland. The Gunne",
@@ -1054,42 +1234,6 @@
       "tier": 2,
       "url": "https://hayters.com/arteta-says-sunderland-penalty-decision-cannot-happen-at-this-level-but-praises-raya-and-his-teams-reaction-in-victory/",
       "claimed_at": "2026-09-12T21:49:20Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "04df878553fdb673",
-      "headline": "Arteta 'very worried & very sad' over penalty incident",
-      "summary": "Mikel Arteta is pleased with Arsenal's performance against Sunderland, but is \"very worried and very sad\" about the penalty awarded to their opponents during the match at the Stadium of Light.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cd94ke0z07qo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-12T21:45:43Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5a9c6812bf9e7960",
-      "headline": "Arsenal monitoring Como's Paz - Sunday's gossip",
-      "summary": "Arsenal are monitoring Nico Paz, Liverpool and Aston Villa are tracking Cher Ndour and Sunderland are refusing to give up on Geny Catamo, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c2e0mzdwmkko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-12T21:35:12Z",
       "players": [
         {
           "element_id": 0,
@@ -1113,42 +1257,6 @@
           "element_id": 392,
           "name": "A\u00eft-Nouri",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "00d6ea94fbfb40c4",
-      "headline": "Spurs latest: De Zerbi 'calm' over goalless start as he explains Tel exchange",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-12T21:05:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6a9f9c70e9508b7d",
-      "headline": "Spurs latest: Unwanted history made in goalless start to season",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-12T19:59:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1360,60 +1468,6 @@
       "tier": 2,
       "url": "https://hayters.com/tottenham-vs-everton-live-team-news-match-updates-and-more/",
       "claimed_at": "2026-09-12T17:33:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a659e185cc968b8d",
-      "headline": "Iraola admits lack of \u2018freshness\u2019 a factor in goalless draw with Fulham",
-      "summary": "Andoni Iraola admits Liverpool lacked freshness as they were held to a goalless draw by Fulham at Anfield. The Reds were unable to build on their midweek Champions League victory over Atletico Madrid, with Iraola pointing to the",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/iraola-admits-lack-of-freshness-a-factor-in-goalless-draw-with-fulham/",
-      "claimed_at": "2026-09-12T17:26:20Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "63df688be100b4bf",
-      "headline": "Alonso admits he hopes for \u2018boring\u2019 games in future after draw with Hull \u2013 and explains reason for substitution",
-      "summary": "Xabi Alonso admits Chelsea are being hurt by recurring problems after his side were held to a 2-2 draw by Hull City at Stamford Bridge. The Blues took an early lead through Morgan Rogers b",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/alonso-admits-he-hopes-for-boring-games-in-future-after-draw-with-hull-and-explains-reason-for-substitution/",
-      "claimed_at": "2026-09-12T17:09:40Z",
-      "players": [
-        {
-          "element_id": 40,
-          "name": "Rogers",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4b35111317ca073d",
-      "headline": "Liverpool draw for third time in four Premier League games as Fulham pick up first point of season",
-      "summary": "Liverpool were held to a frustrating 0-0 draw by Fulham as Alvaro Arbeloa\u2019s side picked up their first Premier League point of the season at Anfield. Andoni Iraola\u2019s side struggled to reproduce the lev",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-draw-for-third-time-in-four-premier-league-games-as-fulham-pick-up-first-point-of-season/",
-      "claimed_at": "2026-09-12T16:13:50Z",
       "players": [
         {
           "element_id": 0,
@@ -1665,54 +1719,6 @@
           "element_id": 429,
           "name": "Rashford",
           "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "12e38ee6b635c50e",
-      "headline": "Palestra + Caicedo: Chelsea injury latest for FPL Gameweek 4",
-      "summary": "Xabi Alonso spoke to the media on Friday The post Palestra + Caicedo: Chelsea injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/11/palestra-caicedo-chelsea-injury-latest-for-fpl-gameweek-4",
-      "claimed_at": "2026-09-11T15:39:27Z",
-      "players": [
-        {
-          "element_id": 152,
-          "name": "Palestra",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "70f721421ae218e3",
-      "headline": "Gakpo, Barcola, Kerkez: Liverpool injury latest for FPL Gameweek 4",
-      "summary": "Andoni Iraola gave Friday updates The post Gakpo, Barcola, Kerkez: Liverpool injury latest for FPL Gameweek 4 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/11/gakpo-barcola-kerkez-liverpool-injury-latest-for-fpl-gameweek-4",
-      "claimed_at": "2026-09-11T15:32:13Z",
-      "players": [
-        {
-          "element_id": 358,
-          "name": "Kerkez",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
           "held": false
         }
       ],
