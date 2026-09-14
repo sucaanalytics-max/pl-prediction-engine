@@ -26,10 +26,10 @@
     "assessable": false,
     "note": "30 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
   },
-  "last_updated": "2026-09-13T10:45:46.760261Z",
+  "last_updated": "2026-09-14T11:09:21.528243Z",
   "gameweek": 4,
-  "n_predictions": 3,
-  "status": "healthy",
+  "n_predictions": 1,
+  "status": "degraded",
   "sources": {
     "bootstrap": {
       "source": "network",
@@ -97,7 +97,7 @@
     },
     "goalscorer": {
       "status": "active",
-      "n_players": 139
+      "n_players": 152
     }
   },
   "ensemble_method": "weighted_average",
@@ -109,7 +109,7 @@
   "fpl": {
     "status": "ok",
     "gameweek": 4,
-    "n_players": 657,
+    "n_players": 658,
     "n_draws": 5000,
     "rules_source": "bootstrap+signed_yaml",
     "rules_degraded": false,
@@ -118,18 +118,18 @@
     "fixtures_missing": [],
     "diagnostics": {
       "n_clubs": 20,
-      "n_players": 657,
-      "n_without_history": 186,
-      "n_availability_gated": 171,
+      "n_players": 658,
+      "n_without_history": 187,
+      "n_availability_gated": 173,
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 470,
+        "none": 469,
         "open_ended": 44,
         "graded": 16,
         "permanent": 104,
         "dated_fitness": 21,
-        "dated_eligibility": 2
+        "dated_eligibility": 4
       },
       "n_evidence_conflicts": 0
     },
@@ -138,7 +138,7 @@
       "n_fixtures": 10,
       "n_fixtures_skipped": 0,
       "skipped_fixtures": [],
-      "n_players": 657,
+      "n_players": 658,
       "n_double_gameweek_players": 0,
       "n_blank_gameweek_players": 0,
       "seed_entropy": 52453177,
