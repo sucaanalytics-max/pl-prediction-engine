@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-13T23:45:30.494509Z",
+  "generated_at": "2026-09-14T08:13:33.043533Z",
   "gameweek": 5,
   "players": [
     {
@@ -516,6 +516,87 @@
       "needs_attention": false
     },
     {
+      "element_id": 398,
+      "player_name": "Foden",
+      "club": "Man City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "80d011d499266a17",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-13T17:00:09.433455Z",
+              "observed_at": "2026-09-13T23:46:06.323092Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "s",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "4d40647cb61f417c",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "s",
+              "claimed_at": "2026-09-13T17:00:09.433455Z",
+              "observed_at": "2026-09-13T23:46:06.323092Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "unavailable_until",
+          "resolved_value": "2026-10-17",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "752c497c6f50e2b0",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "unavailable_until",
+              "value": "2026-10-17",
+              "claimed_at": "2026-09-13T17:00:09.433455Z",
+              "observed_at": "2026-09-13T23:46:06.323092Z",
+              "quote": "Suspended until 17 Oct",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 492,
       "player_name": "Awoniyi",
       "club": "Coventry City",
@@ -736,10 +817,10 @@
     }
   ],
   "counts": {
-    "n_claims": 171,
+    "n_claims": 175,
     "n_players_with_claims": 39,
-    "n_players_shown": 10,
+    "n_players_shown": 11,
     "n_escalations": 1,
-    "n_players_resolved": 14
+    "n_players_resolved": 15
   }
 }
