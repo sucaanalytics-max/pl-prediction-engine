@@ -1,14 +1,19 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-09T11:31:02.146696+00:00",
+  "generated_at": "2026-09-15T17:23:59.857443+00:00",
   "entry_id": 20945,
-  "settled_through": 3,
+  "settled_through": 4,
   "names": {
+    "106": "Thiago",
     "152": "Palestra",
+    "154": "Palmer",
+    "165": "Jo\u00e3o Pedro",
     "173": "Thomas",
     "418": "Maguire",
     "426": "B.Fernandes",
-    "445": "Thiaw"
+    "427": "Mbeumo",
+    "445": "Thiaw",
+    "464": "Wissa"
   },
   "gameweeks": [
     {
@@ -355,6 +360,125 @@
           "minutes": 90
         }
       ]
+    },
+    {
+      "event": 4,
+      "points": 80,
+      "gross_points": 80,
+      "transfer_cost": 0,
+      "transfers_made": 2,
+      "bench_points": 6,
+      "average_entry_score": 69,
+      "highest_score": 151,
+      "rank": 2568402,
+      "overall_rank": 2713147,
+      "value": 999,
+      "bank": 0,
+      "chip": null,
+      "captain": {
+        "element": 165,
+        "multiplier": 2,
+        "points": 12
+      },
+      "auto_subs": [
+        {
+          "element_in": 173,
+          "element_out": 152,
+          "points_gained": 0
+        }
+      ],
+      "picks": [
+        {
+          "element": 1,
+          "multiplier": 1,
+          "points": 14,
+          "minutes": 90
+        },
+        {
+          "element": 173,
+          "multiplier": 1,
+          "points": 0,
+          "minutes": 90
+        },
+        {
+          "element": 4,
+          "multiplier": 1,
+          "points": 9,
+          "minutes": 90
+        },
+        {
+          "element": 445,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 426,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 124,
+          "multiplier": 1,
+          "points": 17,
+          "minutes": 90
+        },
+        {
+          "element": 154,
+          "multiplier": 1,
+          "points": 5,
+          "minutes": 90
+        },
+        {
+          "element": 368,
+          "multiplier": 1,
+          "points": 3,
+          "minutes": 90
+        },
+        {
+          "element": 464,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 379,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 165,
+          "multiplier": 2,
+          "points": 12,
+          "minutes": 90
+        },
+        {
+          "element": 497,
+          "multiplier": 0,
+          "points": 0,
+          "minutes": 0
+        },
+        {
+          "element": 152,
+          "multiplier": 0,
+          "points": 0,
+          "minutes": 0
+        },
+        {
+          "element": 113,
+          "multiplier": 0,
+          "points": 6,
+          "minutes": 90
+        },
+        {
+          "element": 542,
+          "multiplier": 0,
+          "points": 0,
+          "minutes": 90
+        }
+      ]
     }
   ],
   "transfers": [
@@ -366,13 +490,50 @@
       "element_out": 418,
       "element_out_cost": 50,
       "in_points_by_gw": {
-        "3": -1
+        "3": -1,
+        "4": 2
       },
       "out_points_by_gw": {
-        "3": 2
+        "3": 2,
+        "4": 1
       },
       "in_multiplier_by_gw": {
-        "3": 1
+        "3": 1,
+        "4": 1
+      }
+    },
+    {
+      "event": 4,
+      "time": "2026-09-10T21:08:37.223496Z",
+      "element_in": 154,
+      "element_in_cost": 96,
+      "element_out": 427,
+      "element_out_cost": 79,
+      "in_points_by_gw": {
+        "4": 5
+      },
+      "out_points_by_gw": {
+        "4": 2
+      },
+      "in_multiplier_by_gw": {
+        "4": 1
+      }
+    },
+    {
+      "event": 4,
+      "time": "2026-09-10T21:08:37.230903Z",
+      "element_in": 464,
+      "element_in_cost": 62,
+      "element_out": 106,
+      "element_out_cost": 79,
+      "in_points_by_gw": {
+        "4": 2
+      },
+      "out_points_by_gw": {
+        "4": 1
+      },
+      "in_multiplier_by_gw": {
+        "4": 1
       }
     }
   ]

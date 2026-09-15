@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "producer_version": 1,
-  "generated_at": "2026-09-07T16:12:26.667992+00:00",
+  "generated_at": "2026-09-15T17:23:58.042554+00:00",
   "season": "2627",
-  "observations": 2,
+  "observations": 3,
   "minimum_observations": 6,
   "aggregate": null,
-  "aggregate_reason": "2 settled gameweek(s) reviewed; 6 are needed before a rate is reported. Per-gameweek calls below are complete.",
+  "aggregate_reason": "3 settled gameweek(s) reviewed; 6 are needed before a rate is reported. Per-gameweek calls below are complete.",
   "gameweeks": [
     {
       "gameweek": 1,
@@ -165,6 +165,87 @@
         "agreed": true,
         "points_delta": 0
       }
+    },
+    {
+      "gameweek": 4,
+      "sealed_at": "2026-09-12T11:23:15.692712+00:00",
+      "seconds_before_deadline": 4004.307288,
+      "sealed_universe": 498,
+      "points": 80,
+      "fpl_points_on_bench": 6,
+      "transfers": 2,
+      "hit_cost": 0,
+      "submitted_eleven": [
+        1,
+        4,
+        124,
+        152,
+        154,
+        165,
+        368,
+        379,
+        426,
+        445,
+        464
+      ],
+      "submitted_bench": [
+        173,
+        497,
+        113,
+        542
+      ],
+      "selection": {
+        "worst_starter": 152,
+        "best_bench": 113,
+        "bench_rated_higher": [
+          173,
+          497,
+          113,
+          542
+        ],
+        "gap": 4.0852,
+        "misordered": true
+      },
+      "bench": [
+        {
+          "bench_element": 173,
+          "starter_element": 152,
+          "kind": "rescued",
+          "points_forgone": 0,
+          "verdict": "foreseeable",
+          "is_lesson": true
+        },
+        {
+          "bench_element": 497,
+          "starter_element": null,
+          "kind": "no_claim",
+          "points_forgone": 0,
+          "verdict": null,
+          "is_lesson": false
+        },
+        {
+          "bench_element": 113,
+          "starter_element": 464,
+          "kind": "cost",
+          "points_forgone": 4,
+          "verdict": "foreseeable",
+          "is_lesson": true
+        },
+        {
+          "bench_element": 542,
+          "starter_element": null,
+          "kind": "correct",
+          "points_forgone": 0,
+          "verdict": null,
+          "is_lesson": false
+        }
+      ],
+      "captain": {
+        "chosen": 165,
+        "sealed_best": 154,
+        "agreed": false,
+        "points_delta": -14
+      }
     }
   ],
   "entry_id": 20945,
@@ -176,6 +257,7 @@
     "113": "F.Kad\u0131o\u011flu",
     "124": "Gro\u00df",
     "152": "Palestra",
+    "154": "Palmer",
     "165": "Jo\u00e3o Pedro",
     "173": "Thomas",
     "368": "Szoboszlai",
@@ -184,6 +266,7 @@
     "426": "B.Fernandes",
     "427": "Mbeumo",
     "445": "Thiaw",
+    "464": "Wissa",
     "497": "Dubravka",
     "542": "E.Le F\u00e9e"
   }
