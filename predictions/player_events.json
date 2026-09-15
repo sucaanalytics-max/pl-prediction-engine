@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-14T11:08:42.018947Z",
+  "generated_at": "2026-09-15T10:38:15.707801Z",
   "season": "2627",
   "source": "understat",
   "source_note": "Understat's own xG model, independent of FPL's. The two disagree by design; neither is a correction of the other.",
   "coverage": {
     "matched": 397,
     "understat_rows": 401,
-    "fpl_universe": 658,
+    "fpl_universe": 659,
     "unmatched": 4,
     "join_fraction": 0.99,
     "league_fraction": 0.6
@@ -6324,29 +6324,6 @@
       "xa_per_90": null
     },
     {
-      "element_id": 459,
-      "name": "L.Miley",
-      "team": "Newcastle",
-      "minutes": 233,
-      "shots": 1,
-      "key_passes": 3,
-      "goals": 0,
-      "assists": 0,
-      "xg": 0.05,
-      "xa": 0.12,
-      "np_xg": 0.05,
-      "np_goals": 0,
-      "xg_chain": 1.01,
-      "xg_buildup": 0.89,
-      "yellow_cards": 1,
-      "red_cards": 0,
-      "matches": 3,
-      "shots_per_90": 0.39,
-      "key_passes_per_90": 1.16,
-      "xg_per_90": 0.02,
-      "xa_per_90": 0.05
-    },
-    {
       "element_id": 460,
       "name": "Willock",
       "team": "Newcastle",
@@ -9174,6 +9151,29 @@
       "key_passes_per_90": 0.0,
       "xg_per_90": 0.0,
       "xa_per_90": 0.0
+    },
+    {
+      "element_id": 659,
+      "name": "Miley",
+      "team": "Newcastle",
+      "minutes": 233,
+      "shots": 1,
+      "key_passes": 3,
+      "goals": 0,
+      "assists": 0,
+      "xg": 0.05,
+      "xa": 0.12,
+      "np_xg": 0.05,
+      "np_goals": 0,
+      "xg_chain": 1.01,
+      "xg_buildup": 0.89,
+      "yellow_cards": 1,
+      "red_cards": 0,
+      "matches": 3,
+      "shots_per_90": 0.39,
+      "key_passes_per_90": 1.16,
+      "xg_per_90": 0.02,
+      "xa_per_90": 0.05
     }
   ]
 }

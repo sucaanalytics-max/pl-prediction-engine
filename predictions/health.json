@@ -26,9 +26,9 @@
     "assessable": false,
     "note": "30 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
   },
-  "last_updated": "2026-09-14T11:09:21.528243Z",
-  "gameweek": 4,
-  "n_predictions": 1,
+  "last_updated": "2026-09-15T10:38:55.911947Z",
+  "gameweek": 5,
+  "n_predictions": 10,
   "status": "degraded",
   "sources": {
     "bootstrap": {
@@ -45,35 +45,35 @@
   ],
   "forecast_validation_status": "collecting",
   "model_metrics": {
-    "n_evaluated_matches": 30,
-    "brier_1x2_home": 0.21698523600000003,
-    "brier_1x2_draw": 0.2291324173333333,
-    "brier_1x2_away": 0.178475344,
-    "log_loss_home": 0.6255755326239117,
-    "rps_mean": 0.19773028999999998,
-    "ece": 0.18394000000000002,
-    "brier_ou25": 0.24690390666666667,
-    "brier_btts": 0.25486201599999997
+    "n_evaluated_matches": 40,
+    "brier_1x2_home": 0.21135002299999997,
+    "brier_1x2_draw": 0.23670284800000002,
+    "brier_1x2_away": 0.19994544899999997,
+    "log_loss_home": 0.6139804845680852,
+    "rps_mean": 0.20564773599999997,
+    "ece": 0.21631500000000004,
+    "brier_ou25": 0.246127798,
+    "brier_btts": 0.254374652
   },
   "calibration": {
     "bins": [
       {
         "bin_center": 0.25,
-        "predicted_mean": 0.283,
+        "predicted_mean": 0.2892,
         "actual_mean": 0.0,
-        "count": 1
+        "count": 2
       },
       {
         "bin_center": 0.35000000000000003,
-        "predicted_mean": 0.34859999999999997,
-        "actual_mean": 0.2857142857142857,
-        "count": 7
+        "predicted_mean": 0.35856000000000005,
+        "actual_mean": 0.3,
+        "count": 10
       },
       {
         "bin_center": 0.45,
-        "predicted_mean": 0.4405866666666666,
-        "actual_mean": 0.26666666666666666,
-        "count": 15
+        "predicted_mean": 0.44297142857142857,
+        "actual_mean": 0.19047619047619047,
+        "count": 21
       },
       {
         "bin_center": 0.55,
@@ -82,7 +82,7 @@
         "count": 7
       }
     ],
-    "ece": 0.18394000000000002
+    "ece": 0.21631500000000004
   },
   "pipeline_version": "4.1.0",
   "models": {
@@ -97,7 +97,7 @@
     },
     "goalscorer": {
       "status": "active",
-      "n_players": 152
+      "n_players": 156
     }
   },
   "ensemble_method": "weighted_average",
@@ -108,8 +108,8 @@
   "referee_profiles_count": 28,
   "fpl": {
     "status": "ok",
-    "gameweek": 4,
-    "n_players": 658,
+    "gameweek": 5,
+    "n_players": 659,
     "n_draws": 5000,
     "rules_source": "bootstrap+signed_yaml",
     "rules_degraded": false,
@@ -118,17 +118,17 @@
     "fixtures_missing": [],
     "diagnostics": {
       "n_clubs": 20,
-      "n_players": 658,
-      "n_without_history": 187,
-      "n_availability_gated": 173,
+      "n_players": 659,
+      "n_without_history": 188,
+      "n_availability_gated": 176,
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 469,
-        "open_ended": 44,
-        "graded": 16,
-        "permanent": 104,
-        "dated_fitness": 21,
+        "none": 464,
+        "open_ended": 45,
+        "graded": 19,
+        "permanent": 105,
+        "dated_fitness": 22,
         "dated_eligibility": 4
       },
       "n_evidence_conflicts": 0
@@ -138,10 +138,10 @@
       "n_fixtures": 10,
       "n_fixtures_skipped": 0,
       "skipped_fixtures": [],
-      "n_players": 658,
+      "n_players": 659,
       "n_double_gameweek_players": 0,
       "n_blank_gameweek_players": 0,
-      "seed_entropy": 52453177,
+      "seed_entropy": 3513326299,
       "dgw_rotation_correlation_modelled": false
     }
   }
