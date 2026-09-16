@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-16T17:49:25.152001Z",
+  "generated_at": "2026-09-16T20:35:09.688651Z",
   "gameweek": 5,
   "players": [
     {
@@ -11,75 +11,114 @@
         {
           "claim_type": "chance_of_playing",
           "resolved_value": 75,
-          "rule": "tier_precedence",
+          "rule": "unresolved_conservative",
+          "n_conflicts": 5,
+          "n_dropped": 0,
+          "unresolved": true,
+          "escalation": "chance_of_playing: fpl_bootstrap says 100 (2026-07-26T08:30:10.078473Z) while fpl_news_parse says 75 (2026-07-26T08:30:10.078473Z). Used the more conservative 75.",
+          "claims": [
+            {
+              "claim_id": "128b8214107bbd3e",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-07-26T08:30:10.078473Z",
+              "observed_at": "2026-09-14T15:23:02.276252Z",
+              "quote": "Muscular injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "23d2ee41c8991d75",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-07-26T08:30:10.078473Z",
+              "observed_at": "2026-09-16T17:50:01.109419Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "5d693c30d4ece13a",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-07-26T08:30:10.078473Z",
+              "observed_at": "2026-09-14T15:23:02.276252Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "23d2ee41c8991d75",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-07-26T08:30:10.078473Z",
+              "observed_at": "2026-09-16T17:50:01.109419Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "5d693c30d4ece13a",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-07-26T08:30:10.078473Z",
+              "observed_at": "2026-09-14T15:23:02.276252Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "128b8214107bbd3e",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-07-26T08:30:10.078473Z",
+              "observed_at": "2026-09-14T15:23:02.276252Z",
+              "quote": "Muscular injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "a",
+          "rule": "recency_within_source",
           "n_conflicts": 3,
           "n_dropped": 0,
           "unresolved": false,
           "escalation": null,
           "claims": [
             {
-              "claim_id": "5d693c30d4ece13a",
+              "claim_id": "15365fd318c593d7",
               "source": "fpl_bootstrap",
               "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
+              "claim_type": "status",
+              "value": "a",
               "claimed_at": "2026-07-26T08:30:10.078473Z",
-              "observed_at": "2026-09-14T15:23:02.276252Z",
+              "observed_at": "2026-09-16T17:50:01.109419Z",
               "quote": null,
               "url": null,
               "verdict": "won",
               "beaten_by": null
             },
-            {
-              "claim_id": "128b8214107bbd3e",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-07-26T08:30:10.078473Z",
-              "observed_at": "2026-09-14T15:23:02.276252Z",
-              "quote": "Muscular injury - 75% chance of playing",
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            },
-            {
-              "claim_id": "5d693c30d4ece13a",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-07-26T08:30:10.078473Z",
-              "observed_at": "2026-09-14T15:23:02.276252Z",
-              "quote": null,
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            },
-            {
-              "claim_id": "128b8214107bbd3e",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-07-26T08:30:10.078473Z",
-              "observed_at": "2026-09-14T15:23:02.276252Z",
-              "quote": "Muscular injury - 75% chance of playing",
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
             {
               "claim_id": "77dd581ff91dcfc0",
               "source": "fpl_bootstrap",
@@ -90,8 +129,106 @@
               "observed_at": "2026-09-14T15:23:02.276252Z",
               "quote": null,
               "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            },
+            {
+              "claim_id": "15365fd318c593d7",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-07-26T08:30:10.078473Z",
+              "observed_at": "2026-09-16T17:50:01.109419Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            },
+            {
+              "claim_id": "77dd581ff91dcfc0",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-07-26T08:30:10.078473Z",
+              "observed_at": "2026-09-14T15:23:02.276252Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 8,
+      "needs_attention": true
+    },
+    {
+      "element_id": 208,
+      "player_name": "Sarr",
+      "club": "Crystal Palace",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 3,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "d636ca30d7c658ff",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-22T18:00:07.363165Z",
+              "observed_at": "2026-09-16T17:50:01.109419Z",
+              "quote": null,
+              "url": null,
               "verdict": "won",
               "beaten_by": null
+            },
+            {
+              "claim_id": "c2d4d801e0a904f4",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-22T18:00:07.363165Z",
+              "observed_at": "2026-09-16T17:50:01.109419Z",
+              "quote": "Groin injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "d636ca30d7c658ff",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-22T18:00:07.363165Z",
+              "observed_at": "2026-09-16T17:50:01.109419Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "c2d4d801e0a904f4",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-22T18:00:07.363165Z",
+              "observed_at": "2026-09-16T17:50:01.109419Z",
+              "quote": "Groin injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
             }
           ]
         }
@@ -1617,10 +1754,10 @@
     }
   ],
   "counts": {
-    "n_claims": 333,
-    "n_players_with_claims": 75,
-    "n_players_shown": 22,
-    "n_escalations": 4,
-    "n_players_resolved": 29
+    "n_claims": 358,
+    "n_players_with_claims": 79,
+    "n_players_shown": 23,
+    "n_escalations": 5,
+    "n_players_resolved": 30
   }
 }
