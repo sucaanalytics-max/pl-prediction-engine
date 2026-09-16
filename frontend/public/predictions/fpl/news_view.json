@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-16T14:59:38.861213Z",
-  "n_dropped": 154,
+  "generated_at": "2026-09-16T18:49:07.041804Z",
+  "n_dropped": 163,
   "dropped_by_source": {
-    "bbc_football": 51,
-    "fantasyfootballscout": 7,
-    "hayters": 23,
-    "sky_football": 73
+    "bbc_football": 52,
+    "fantasyfootballscout": 2,
+    "hayters": 27,
+    "sky_football": 82
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 244,
+  "n_articles": 253,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -51,6 +51,24 @@
           "element_id": 368,
           "name": "Szoboszlai",
           "club": "LIV",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "0eb15d6b75cef232",
+      "headline": "'We are still waiting for apology' - Maresca on City's VAR frustration",
+      "summary": "Manchester City manager Enzo Maresca says it is \"quite poor\" that the controversy surrounding Erling Haaland's winner has overshadowed his side's win at Manchester United.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmx2zyjylee1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-16T11:07:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
           "held": true
         }
       ],
@@ -531,6 +549,234 @@
       "touches_squad": true
     },
     {
+      "digest": "9615d1e5d76882d8",
+      "headline": "Chelsea latest: Joao Pedro out of Brazil squad with injury",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-16T19:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fb5859867cbf52cf",
+      "headline": "Transfer Centre LIVE! Wharton - I never considered leaving Palace",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
+      "claimed_at": "2026-09-16T19:30:00Z",
+      "players": [
+        {
+          "element_id": 210,
+          "name": "Wharton",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f9eb4708f6147f67",
+      "headline": "Man Utd vs Brighton LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-united-vs-brighton-and-hove-albion/live/577581",
+      "claimed_at": "2026-09-16T18:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2212741ffaca04e4",
+      "headline": "Coventry vs Aston Villa LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/coventry-city-vs-aston-villa/live/577573",
+      "claimed_at": "2026-09-16T18:28:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fa6d6dc9f7ade9af",
+      "headline": "Joao Pedro out of Brazil squad with injury in worry for Chelsea",
+      "summary": "Chelsea striker Joao Pedro has withdrawn from the Brazil squad through injury ahead of their upcoming friendlies against Australia and India, the national team have said. The Brazilian Football Confederation confirmed on Wednesday that",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/joao-pedro-out-of-brazil-squad-with-injury-in-worry-for-chelsea/",
+      "claimed_at": "2026-09-16T18:19:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "78cf9fdc50570f8f",
+      "headline": "Everton vs Wolves LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-wolverhampton-wanderers/live/577575",
+      "claimed_at": "2026-09-16T18:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e8667048b10f1209",
+      "headline": "Calvert-Lewin given Leeds' second goal vs Newcastle - what does it mean for FPL?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-16T17:42:00Z",
+      "players": [
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a83d5d66aef93416",
+      "headline": "Arsenal latest: Merino sees similarities to Lamine Yamal with Dowman",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-16T17:07:00Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c4f8ccce6900949f",
+      "headline": "Man Utd v Brighton LIVE \u2013 Fernandes, Mbeumo & Cunha benched for Carabao Cup clash",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd v Brighton LIVE - Fernandes, Mbeumo & Cunha benched for Carabao Cup clash appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-utd-v-brighton-live-updates-from-carabao-cup-clash/",
+      "claimed_at": "2026-09-16T16:49:04Z",
+      "players": [
+        {
+          "element_id": 427,
+          "name": "Mbeumo",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "274d9ae34f257974",
+      "headline": "Sunderland v AZ Alkmaar LIVE \u2013 updates from Black Cats\u2019 Europa League opener",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Sunderland v AZ Alkmaar LIVE - updates from Black Cats' Europa League opener appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/sunderland-v-az-alkmaar-live-updates-from-black-cats-europa-league-opener/",
+      "claimed_at": "2026-09-16T16:42:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5baac991ab41fb05",
+      "headline": "Rose embracing \u2018special\u2019 moment as Bournemouth prepare for European debut",
+      "summary": "Bournemouth manager Marco Rose says his squad will try to create a special night for the fans against Real Sociedad. Tomorrow\u2019s Europa League opener in San Sebasti\u00e1n will be The Cherries first appearance in European competitio",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/rose-embracing-special-moment-as-bournemouth-prepare-for-european-debut/",
+      "claimed_at": "2026-09-16T16:40:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0330122f25ceac75",
+      "headline": "Man City chief confident new-look squad can compete for years to come",
+      "summary": "Manchester City director of football Hugo Viana says the club are \u201ctruly happy\u201d with their summer transfer window and believe they have built a squad suited to Enzo Maresca\u2019s style. City experienced a busy summer of turnover follo",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-chief-confident-new-look-squad-can-compete-for-years-to-come/",
+      "claimed_at": "2026-09-16T16:32:23Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 237,
+          "name": "Ndiaye",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 481,
+          "name": "Anderson",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "5061cab362ac7dee",
       "headline": "Crystal Palace star pens new deal following summer interest from other clubs",
       "summary": "Crystal Palace captain Dean Henderson has signed a new contract that will keep him at the club until 2030. The goalkeeper has become a key figure at Selhurst Park since joining from Manchester United in August 2023, making",
@@ -538,6 +784,24 @@
       "tier": 2,
       "url": "https://hayters.com/crystal-palace-star-pens-new-deal-following-summer-interest-from-other-clubs/",
       "claimed_at": "2026-09-16T14:37:32Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ef305bad76a3c111",
+      "headline": "Sunderland make four changes in Euro return vs AZ LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/sunderland-vs-az-alkmaar/live/577749",
+      "claimed_at": "2026-09-16T14:13:00Z",
       "players": [
         {
           "element_id": 0,
@@ -621,18 +885,18 @@
       "touches_squad": false
     },
     {
-      "digest": "adc2f530cc882459",
-      "headline": "Arsenal latest: Gabriel kick on Martinez was NOT red card, says KMI panel",
-      "summary": null,
+      "digest": "1ef671dd6ce64233",
+      "headline": "Arsenal? Chelsea? Man City? Which club has most valuable teens?",
+      "summary": "The Premier League's teenage sensations are making headlines after Max Dowman's starring display for Arsenal and JJ Gabriel's revelation that he wants to leave Manchester United.",
       "source": "sky_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-16T11:15:00Z",
+      "url": "https://www.skysports.com/football/news/11095/13588569/max-dowman-shines-again-for-arsenal-and-jj-gabriel-wants-man-utd-exit-so-which-clubs-have-most-valuable-teens-between-the-lines",
+      "claimed_at": "2026-09-16T12:32:00Z",
       "players": [
         {
-          "element_id": 0,
-          "name": null,
-          "club": null,
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
           "held": false
         }
       ],
@@ -675,6 +939,24 @@
       "touches_squad": false
     },
     {
+      "digest": "37ab0c1bdc195f1c",
+      "headline": "'Mini Valverde' wanted by Chelsea - Garner is now Everton's main man",
+      "summary": "BBC Sport examines how James Garner has become Everton's most important player.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/crwyz819xw4po?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-16T10:56:23Z",
+      "players": [
+        {
+          "element_id": 239,
+          "name": "Garner",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "9fe04c0a77c9a755",
       "headline": "How exceptional Garner became Everton's main man",
       "summary": "BBC Sport examines how James Garner has become Everton's most important player.",
@@ -693,24 +975,6 @@
       "touches_squad": false
     },
     {
-      "digest": "dbd842b1916ebdcc",
-      "headline": "Spurs latest: 'Dark cloud hanging over Tottenham' - O'Hara",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-16T10:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b27e9a05a0a0a1af",
       "headline": "Man City star \u2018quite close\u2019 to returning",
       "summary": "Enzo Maresca says Jeremy Doku is closing in on a return for Manchester City. Doku has been sidelined with a calf injury since the Community Shield but Maresca revealed the winger is nearing a comeback. \u201cJeremy is quite close,\u201d the City boss said. \u201cWe are happ",
@@ -718,24 +982,6 @@
       "tier": 2,
       "url": "https://hayters.com/man-city-star-quite-close-to-returning/",
       "claimed_at": "2026-09-16T10:11:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5e83f14512892597",
-      "headline": "Man City latest: Maresca wants focus on 'unbelievable' derby performance",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-16T09:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -765,24 +1011,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e9f3a1636a288fdc",
-      "headline": "Donnarumma: Man City are not in transition, it's going to be a great season",
-      "summary": "\"This is who we are. This is our team. This is City.\"",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13586227/gianluigi-donnarumma-interview-man-city-goalkeeper-insists-club-are-not-in-a-transition-year-and-backs-club-to-have-a-great-season",
-      "claimed_at": "2026-09-16T08:00:00Z",
-      "players": [
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "30560283d3a90503",
       "headline": "Why are Man Utd better without the ball?",
       "summary": "Under Michael Carrick, Manchester United average 1.5 points per game when they have more than 50% of the ball. When they have less than 50%, this number is 2.6.",
@@ -790,78 +1018,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cxnvl2nv525ro?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-16T05:46:28Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c83437580ec9741b",
-      "headline": "Arsenal latest: Dowman is a joy to work with, says Arteta",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-16T00:00:00Z",
-      "players": [
-        {
-          "element_id": 20,
-          "name": "Dowman",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "668bba9975d4da91",
-      "headline": "What next for Arsenal prodigy Dowman after latest statement display?",
-      "summary": "Max Dowman has waited patiently for opportunities in Arsenal's first team, but when he gets them, he delivers.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13586419/max-dowman-arsenal-prodigy-delivers-latest-statement-performance-as-mikel-arteta-urges-caution-over-16-year-old",
-      "claimed_at": "2026-09-15T23:23:00Z",
-      "players": [
-        {
-          "element_id": 20,
-          "name": "Dowman",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cd009f3eca10533c",
-      "headline": "What next for 'generational' talent Dowman after latest statement display?",
-      "summary": "Max Dowman has waited patiently for opportunities in Arsenal's first team, but when he gets them, he delivers.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13586419/max-dowman-arsenal-prodigy-delivers-latest-statement-performance-as-mikel-arteta-urges-caution-over-16-year-old",
-      "claimed_at": "2026-09-15T23:23:00Z",
-      "players": [
-        {
-          "element_id": 20,
-          "name": "Dowman",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "845f69197f2fb94e",
-      "headline": "Spurs latest: De Zerbi encouraged by performance in 'undeserved' Liverpool loss",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-15T23:05:00Z",
       "players": [
         {
           "element_id": 0,
@@ -903,24 +1059,6 @@
           "element_id": 519,
           "name": "Gallagher",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2c4758e6723d30e4",
-      "headline": "Papers: Man Utd fearful of Man City swoop for JJ Gabriel",
-      "summary": "The top stories and transfer rumours from Wednesday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13586393/manchester-united-fear-teenage-sensation-jj-gabriel-may-sign-for-manchester-city-after-asking-to-leave-paper-talk",
-      "claimed_at": "2026-09-15T22:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1221,42 +1359,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b00920b6c2268153",
-      "headline": "'Style important' as McBurnie & seven uncapped players make Pocognoli's first Scotland squad",
-      "summary": "Hull City forward Oli McBurnie is called up to the Scotland squad for the first time in five years while seven uncapped make new head coach Sebastien Pocognoli's first selection.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq770klrzmvyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-15T11:23:30Z",
-      "players": [
-        {
-          "element_id": 295,
-          "name": "McBurnie",
-          "club": "HUL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c470807976910499",
-      "headline": "Spurs' Richarlison posts crying emoji after being left out of Liverpool tie",
-      "summary": "Richarlison publicly expresses his displeasure at Roberto de Zerbi's decision to leave him out of Tottenham's squad for Tuesday's Carabao Cup tie against Liverpool.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmrl6errl1p6o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-15T09:12:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "6e224f06303c41bf",
       "headline": "Farke hails \u2018one of the best performances of past 12 months\u2019 after Leeds thrash Newcastle",
       "summary": "Daniel Farke hailed Leeds\u2019 4-1 win over Newcastle as one of their best performances of the past 12 months after his side extended their unbeaten start to the Premier League season. Leeds were dominant against N",
@@ -1317,30 +1419,6 @@
       "touches_squad": false
     },
     {
-      "digest": "65bde751698f440b",
-      "headline": "De Zerbi gives fitness updates on Spurs trio",
-      "summary": "Roberto De Zerbi revealed that Mohammed Kudus is ready to start for Spurs, but James Maddison will remain on the bench. James Maddison has not started a match for Spurs since suffering a serious knee injury against Arsenal in August 2025. He has also only",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-gives-fitness-updates-on-spurs-trio/",
-      "claimed_at": "2026-09-14T21:30:00Z",
-      "players": [
-        {
-          "element_id": 512,
-          "name": "Kudus",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9d4ba21dfdfed5a0",
       "headline": "Leeds v Newcastle team news: Dedic fit, Fernandez-Pardo starts",
       "summary": "Daniel Farke names the same team from Gameweek 3 The post Leeds v Newcastle team news: Dedic fit, Fernandez-Pardo starts appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1377,78 +1455,6 @@
           "element_id": 455,
           "name": "Tonali",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f8dd49428a4c494e",
-      "headline": "Liverpool defender in line for return as Iraola gives updates on duo\u2019s recoveries from injury",
-      "summary": "Joe Gomez is set to return to action for Liverpool in Tuesday\u2019s Carabao Cup third-round clash with Tottenham at Anfield. The defender has been sidelined since suffering a muscle injury during Liverpool\u2019s pr",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-defender-in-line-for-return-as-iraola-gives-updates-on-duos-returns-from-injury/",
-      "claimed_at": "2026-09-14T12:24:08Z",
-      "players": [
-        {
-          "element_id": 359,
-          "name": "Gomez",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6467865a48c1f029",
-      "headline": "Arbeloa provides injury update on Fulham star",
-      "summary": "Fulham will again be without Ryan Sessegnon for Tuesday\u2019s Carabao Cup clash with West Ham. The left-back also a doubt for Sunday\u2019s Premier League meeting with Manchester United after missing Saturday\u2019s 0-0 draw with Liverpool because of a groin problem.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arbeloa-provides-injury-update-on-fulham-star/",
-      "claimed_at": "2026-09-14T11:09:38Z",
-      "players": [
-        {
-          "element_id": 269,
-          "name": "Sessegnon",
-          "club": "FUL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "888dd1ee93ae74ad",
-      "headline": "\u2018The first night where I\u2019ve felt like myself again\u2019 \u2013 Fowler delighted after helping Man City beat Aston Villa",
-      "summary": "Mary Fowler says she finally feels like herself again following her comeback from an ACL injury after scoring in Manchester City\u2019s 4-1 win over Aston Villa. The Australia international has",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/the-first-night-where-ive-felt-like-myself-again-fowler-delighted-after-helping-man-city-beat-aston-villa/",
-      "claimed_at": "2026-09-13T21:28:43Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e097baf4ceb336e7",
-      "headline": "Slegers admits disappointment after Arsenal drop points against Palace",
-      "summary": "Ren\u00e9e Slegers admits Arsenal must be critical of themselves after they were held to a frustrating 0-0 draw by Crystal Palace at the Emirates Stadium. The Gunners dominated for long periods but were unable to find the breakthrough",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/slegers-admits-disappointment-after-arsenal-drop-points-against-palace/",
-      "claimed_at": "2026-09-13T19:47:38Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
