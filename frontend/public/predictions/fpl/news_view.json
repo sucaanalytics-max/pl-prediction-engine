@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-16T00:39:57.252256Z",
-  "n_dropped": 177,
+  "generated_at": "2026-09-16T05:17:53.549317Z",
+  "n_dropped": 178,
   "dropped_by_source": {
     "bbc_football": 55,
     "fantasyfootballscout": 8,
     "hayters": 32,
-    "sky_football": 82
+    "sky_football": 83
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 267,
+  "n_articles": 268,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -441,6 +441,24 @@
       "touches_squad": false
     },
     {
+      "digest": "668bba9975d4da91",
+      "headline": "What next for Arsenal prodigy Dowman after latest statement display?",
+      "summary": "Max Dowman has waited patiently for opportunities in Arsenal's first team, but when he gets them, he delivers.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13586419/max-dowman-arsenal-prodigy-delivers-latest-statement-performance-as-mikel-arteta-urges-caution-over-16-year-old",
+      "claimed_at": "2026-09-15T23:23:00Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "845f69197f2fb94e",
       "headline": "Spurs latest: De Zerbi encouraged by performance in 'undeserved' Liverpool loss",
       "summary": null,
@@ -754,24 +772,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13586188/jj-gabriel-transfer-news-highly-rated-manchester-united-teenage-prospect-asks-to-leave-old-trafford",
       "claimed_at": "2026-09-15T14:21:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a8833dbcb398e770",
-      "headline": "Chelsea latest: Caicedo an injury doubt for Brentford game",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-15T14:20:00Z",
       "players": [
         {
           "element_id": 0,
