@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-15T22:17:02.883441Z",
-  "n_dropped": 172,
+  "generated_at": "2026-09-16T00:39:57.252256Z",
+  "n_dropped": 177,
   "dropped_by_source": {
     "bbc_football": 55,
     "fantasyfootballscout": 8,
-    "hayters": 30,
-    "sky_football": 79
+    "hayters": 32,
+    "sky_football": 82
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 262,
+  "n_articles": 267,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -423,6 +423,24 @@
       "touches_squad": true
     },
     {
+      "digest": "c83437580ec9741b",
+      "headline": "Arsenal latest: Dowman is a joy to work with, says Arteta",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-16T00:00:00Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "845f69197f2fb94e",
       "headline": "Spurs latest: De Zerbi encouraged by performance in 'undeserved' Liverpool loss",
       "summary": null,
@@ -441,6 +459,42 @@
       "touches_squad": false
     },
     {
+      "digest": "59785e4707df95ee",
+      "headline": "Let them ref the games and be humans - Andrews",
+      "summary": "After Brentford overcame Reading to reach the Carabao Cup fourth round, head coach Keith Andrews believes the video assistant referee (VAR) is preventing referees from making decisions in matches.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cxj06nmjl3l6o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-15T22:50:30Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1f66e08888a26ec0",
+      "headline": "De Zerbi apologises after Spurs lose to Liverpool",
+      "summary": "Roberto De Zerbi apologised after Tottenham lost 3-1 to Liverpool in the third round of the EFL Cup. Even though Spurs scored their first goal of the season against Premier League opposition when Conor Gallagher headed home 20 minutes from time, Spur",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-apologises-after-spurs-lose-to-liverpool/",
+      "claimed_at": "2026-09-15T22:44:35Z",
+      "players": [
+        {
+          "element_id": 519,
+          "name": "Gallagher",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "2c4758e6723d30e4",
       "headline": "Papers: Man Utd fearful of Man City swoop for JJ Gabriel",
       "summary": "The top stories and transfer rumours from Wednesday's newspapers...",
@@ -453,6 +507,60 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "96448e2af6c807c7",
+      "headline": "Papers: Man Utd fearful of Man City swoop for Gabriel",
+      "summary": "The top stories and transfer rumours from Wednesday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13586393/manchester-united-fear-teenage-sensation-jj-gabriel-may-sign-for-manchester-city-after-asking-to-leave-paper-talk",
+      "claimed_at": "2026-09-15T22:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "38d2e4a7aec033ab",
+      "headline": "Arteta insists it is unlikely for Dowman to play regularly in the Premier League",
+      "summary": "Mikel Arteta said that Max Dowman &#8220;made the difference&#8221; in Arsenal's win over Ipswich, but insisted it is unlikely a 16-year-old can play regularly in the Premier League The winger scored twice as Arsenal wo",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-insists-it-is-unlikely-for-dowman-to-play-regularly-in-the-premier-league/",
+      "claimed_at": "2026-09-15T22:31:35Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8a937cd214f6e713",
+      "headline": "'Superstar' Dowman shows his class - but Arsenal know caution is needed",
+      "summary": "Max Dowman shines with two goals against Ipswich Town - but boss Mikel Arteta warns Arsenal cannot rush his development.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c54g7w2jz77mo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-15T22:26:50Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
           "held": false
         }
       ],
@@ -825,24 +933,6 @@
       "touches_squad": false
     },
     {
-      "digest": "8a6ea24e566e46a1",
-      "headline": "Liverpool latest: Iraola comments on January transfer window plans",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-15T11:54:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "7701cdb1fda8b515",
       "headline": "McBurnie & seven uncapped players in Scotland squad",
       "summary": "Hull City forward Oli McBurnie is called up to the Scotland squad for the first time in five years while seven uncapped make new head coach Sebastien Pocognoli's first selection.",
@@ -904,24 +994,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cmrl6errl1p6o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-15T09:12:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "eeec398386068357",
-      "headline": "Will Iraola's pressing game work at Liverpool?",
-      "summary": "\"There are players who play every three days and have no issues, they can accept it and performances do not change too much,\" Andoni Iraola explained. \"Then there are other players where the risk is bigger and the performances are different.\"",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13586016/liverpool-under-andoni-iraola-need-to-play-three-games-a-week-but-can-they-do-it-playing-his-pressing-game-effectively",
-      "claimed_at": "2026-09-15T07:19:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1203,42 +1275,6 @@
       "touches_squad": false
     },
     {
-      "digest": "2af418eb99083c54",
-      "headline": "Arsenal to contact Pro Ref over Konsa penalty",
-      "summary": "Arsenal will contact refereeing body Pro Ref over the incident that saw Ezri Konsa concede a penalty in Saturday's win over Sunderland.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmg49n3g7exlo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-14T11:31:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bb15e036d04890c8",
-      "headline": "Familiar questions for Man Utd, now Carrick must find answers",
-      "summary": "After one win in four Premier League games, the problems are mounting for Manchester United and manager Michael Carrick.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cddv5mqjgvlo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-14T11:25:35Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "6467865a48c1f029",
       "headline": "Arbeloa provides injury update on Fulham star",
       "summary": "Fulham will again be without Ryan Sessegnon for Tuesday\u2019s Carabao Cup clash with West Ham. The left-back also a doubt for Sunday\u2019s Premier League meeting with Manchester United after missing Saturday\u2019s 0-0 draw with Liverpool because of a groin problem.",
@@ -1450,42 +1486,6 @@
       "tier": 2,
       "url": "https://hayters.com/arteta-says-sunderland-penalty-decision-cannot-happen-at-this-level-but-praises-raya-and-his-teams-reaction-in-victory/",
       "claimed_at": "2026-09-12T21:49:20Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "dd7e2bc266df4517",
-      "headline": "Maresca hints at change of role for Man City star",
-      "summary": "Enzo Maresca says he currently sees Rayan Ait-Nouri as more of a winger than a full-back at Manchester City. Ait-Nouri was predominantly used as a wing-back during his time at Wolves and has largely played left-back at City. But Maresca believes the",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/maresca-hints-at-change-of-role-for-man-city-star/",
-      "claimed_at": "2026-09-12T21:30:00Z",
-      "players": [
-        {
-          "element_id": 392,
-          "name": "A\u00eft-Nouri",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cbfa936611f2ec7a",
-      "headline": "Spurs still not in \u2018right physical condition\u2019 says De Zerbi after another game without a goal",
-      "summary": "Roberto De Zerbi says Tottenham are still not in the \u201cright physical condition\u201d after their goalless draw with Everton extended their Premier League scoring drought to four games. Spurs have now failed to s",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/spurs-still-not-in-right-physical-condition-says-de-zerbi-after-another-game-without-a-goal/",
-      "claimed_at": "2026-09-12T19:47:22Z",
       "players": [
         {
           "element_id": 0,
