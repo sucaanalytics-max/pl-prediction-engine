@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-17T17:49:57.514306Z",
+  "generated_at": "2026-09-17T20:42:10.577400Z",
   "gameweek": 5,
   "players": [
     {
@@ -669,6 +669,102 @@
       "needs_attention": false
     },
     {
+      "element_id": 456,
+      "player_name": "J.Ramsey",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "unresolved_conservative",
+          "n_conflicts": 2,
+          "n_dropped": 0,
+          "unresolved": true,
+          "escalation": "chance_of_playing: fpl_bootstrap says 0 (2026-09-15T09:00:08.191022Z) while fpl_news_parse says 25 (2026-09-15T09:00:08.191022Z). Used the more conservative 0.",
+          "claims": [
+            {
+              "claim_id": "4578b2fd6436589f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-15T09:00:08.191022Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "a32954c339c4b351",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 25,
+              "claimed_at": "2026-09-15T09:00:08.191022Z",
+              "observed_at": "2026-09-15T23:17:49.342028Z",
+              "quote": "Thigh injury - 25% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "950b66e8fc8169ee",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 25,
+              "claimed_at": "2026-09-15T09:00:08.191022Z",
+              "observed_at": "2026-09-15T23:17:49.342028Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "9bef5cd9f7e65216",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-15T09:00:08.191022Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "2553f1067546123d",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-15T09:00:08.191022Z",
+              "observed_at": "2026-09-15T23:17:49.342028Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": true
+    },
+    {
       "element_id": 471,
       "player_name": "Milenkovi\u0107",
       "club": "Nott'm Forest",
@@ -882,6 +978,255 @@
         }
       ],
       "total_conflicts": 3,
+      "needs_attention": false
+    },
+    {
+      "element_id": 405,
+      "player_name": "N.Gonzalez",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "5c45ee6f988b876c",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-14T21:30:07.343728Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "506733e48aed593a",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-14T21:30:07.343728Z",
+              "observed_at": "2026-09-14T22:59:53.868972Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "56b189b4c78e0be4",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-14T21:30:07.343728Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "8ec92400d73daa95",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-14T21:30:07.343728Z",
+              "observed_at": "2026-09-14T22:59:53.868972Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 2,
+      "needs_attention": false
+    },
+    {
+      "element_id": 586,
+      "player_name": "Mendy",
+      "club": "Hull City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "47b5f90cb399c0e9",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-12T18:00:09.334142Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "acff3f1b4d2a4492",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-12T18:00:09.334142Z",
+              "observed_at": "2026-09-12T21:48:35.976898Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "54a078311816b488",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-12T18:00:09.334142Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "4889e6629fd1b263",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-12T18:00:09.334142Z",
+              "observed_at": "2026-09-12T21:48:35.976898Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 2,
+      "needs_attention": false
+    },
+    {
+      "element_id": 593,
+      "player_name": "Dedi\u0107",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "ad307a4540150f5b",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "14db487b189bf127",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-09-09T14:30:08.475769Z",
+              "observed_at": "2026-09-14T22:59:53.868972Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "5f3610369cca914a",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "7d5ec7d153cee3c2",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-09-09T14:30:08.475769Z",
+              "observed_at": "2026-09-14T22:59:53.868972Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 2,
       "needs_attention": false
     },
     {
@@ -1561,13 +1906,13 @@
       "needs_attention": false
     },
     {
-      "element_id": 456,
-      "player_name": "J.Ramsey",
-      "club": "Newcastle",
+      "element_id": 556,
+      "player_name": "Targett",
+      "club": "Hull City",
       "entries": [
         {
           "claim_type": "chance_of_playing",
-          "resolved_value": 25,
+          "resolved_value": 75,
           "rule": "tier_precedence",
           "n_conflicts": 1,
           "n_dropped": 0,
@@ -1575,27 +1920,27 @@
           "escalation": null,
           "claims": [
             {
-              "claim_id": "a32954c339c4b351",
-              "source": "fpl_news_parse",
+              "claim_id": "eaca0540a376c810",
+              "source": "fpl_bootstrap",
               "source_tier": 1,
               "claim_type": "chance_of_playing",
-              "value": 25,
-              "claimed_at": "2026-09-15T09:00:08.191022Z",
-              "observed_at": "2026-09-15T23:17:49.342028Z",
-              "quote": "Thigh injury - 25% chance of playing",
+              "value": 75,
+              "claimed_at": "2026-09-17T14:00:26.419938Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": null,
               "url": null,
               "verdict": "won",
               "beaten_by": null
             },
             {
-              "claim_id": "950b66e8fc8169ee",
-              "source": "fpl_bootstrap",
+              "claim_id": "a42cae38d8170a9a",
+              "source": "fpl_news_parse",
               "source_tier": 1,
               "claim_type": "chance_of_playing",
-              "value": 25,
-              "claimed_at": "2026-09-15T09:00:08.191022Z",
-              "observed_at": "2026-09-15T23:17:49.342028Z",
-              "quote": null,
+              "value": 75,
+              "claimed_at": "2026-09-17T14:00:26.419938Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": "Ankle injury - 75% chance of playing",
               "url": null,
               "verdict": "lost",
               "beaten_by": "tier_precedence"
@@ -1612,13 +1957,13 @@
           "escalation": null,
           "claims": [
             {
-              "claim_id": "2553f1067546123d",
+              "claim_id": "ddf3cfd199a56457",
               "source": "fpl_bootstrap",
               "source_tier": 1,
               "claim_type": "status",
               "value": "d",
-              "claimed_at": "2026-09-15T09:00:08.191022Z",
-              "observed_at": "2026-09-15T23:17:49.342028Z",
+              "claimed_at": "2026-09-17T14:00:26.419938Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -1628,6 +1973,39 @@
         }
       ],
       "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 97,
+      "player_name": "Jensen",
+      "club": "Brentford",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-10-10",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "42d8fb52b8a45e88",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-10-10",
+              "claimed_at": "2026-08-30T12:30:08.176795Z",
+              "observed_at": "2026-09-17T17:50:30.492646Z",
+              "quote": "Unspecified injury - Expected back 10 Oct",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
       "needs_attention": false
     },
     {
@@ -1920,63 +2298,6 @@
               "claimed_at": "2026-09-13T17:00:09.433455Z",
               "observed_at": "2026-09-13T23:46:06.323092Z",
               "quote": "Suspended until 17 Oct",
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 0,
-      "needs_attention": false
-    },
-    {
-      "element_id": 405,
-      "player_name": "N.Gonzalez",
-      "club": "Newcastle",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 50,
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "506733e48aed593a",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 50,
-              "claimed_at": "2026-09-14T21:30:07.343728Z",
-              "observed_at": "2026-09-14T22:59:53.868972Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "8ec92400d73daa95",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-09-14T21:30:07.343728Z",
-              "observed_at": "2026-09-14T22:59:53.868972Z",
-              "quote": null,
               "url": null,
               "verdict": "won",
               "beaten_by": null
@@ -2382,70 +2703,13 @@
       ],
       "total_conflicts": 0,
       "needs_attention": false
-    },
-    {
-      "element_id": 586,
-      "player_name": "Mendy",
-      "club": "Hull City",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 50,
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "acff3f1b4d2a4492",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 50,
-              "claimed_at": "2026-09-12T18:00:09.334142Z",
-              "observed_at": "2026-09-12T21:48:35.976898Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "4889e6629fd1b263",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-09-12T18:00:09.334142Z",
-              "observed_at": "2026-09-12T21:48:35.976898Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 0,
-      "needs_attention": false
     }
   ],
   "counts": {
-    "n_claims": 449,
-    "n_players_with_claims": 97,
-    "n_players_shown": 32,
-    "n_escalations": 6,
-    "n_players_resolved": 39
+    "n_claims": 481,
+    "n_players_with_claims": 101,
+    "n_players_shown": 35,
+    "n_escalations": 8,
+    "n_players_resolved": 41
   }
 }
