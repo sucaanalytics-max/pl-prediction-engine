@@ -1,18 +1,54 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-17T14:43:05.379466Z",
-  "n_dropped": 177,
+  "generated_at": "2026-09-17T18:35:48.939627Z",
+  "n_dropped": 162,
   "dropped_by_source": {
-    "bbc_football": 54,
-    "hayters": 34,
-    "sky_football": 89
+    "bbc_football": 52,
+    "hayters": 30,
+    "sky_football": 80
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 267,
+  "n_articles": 252,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "b5ba692cc2ca911f",
+      "headline": "Man City 0-0 Norwich City LIVE \u2013 Haaland absent from Maresca\u2019s squad",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 0-0 Norwich City LIVE - Haaland absent from Maresca's squad appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-v-norwich-city-live-updates-from-carabao-cup-clash/",
+      "claimed_at": "2026-09-17T16:23:43Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "663455667b6311f0",
+      "headline": "FPL notes: Le Fee still on pens + \u00a34.0m defender injury",
+      "summary": "Notes from the midweek matches featuring Aston Villa, Coventry and Sunderland The post FPL notes: Le Fee still on pens + \u00a34.0m defender injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/17/fpl-notes-le-fee-still-on-pens-4-0m-defender-injury",
+      "claimed_at": "2026-09-17T01:30:00Z",
+      "players": [
+        {
+          "element_id": 542,
+          "name": "E.Le F\u00e9e",
+          "club": "SUN",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "9c093eb472323129",
       "headline": "FPL notes: Gakpo impresses, Szoboszlai goal + Porro injury boost",
@@ -506,6 +542,114 @@
       "touches_squad": true
     },
     {
+      "digest": "2d2d3ff510f81cce",
+      "headline": "Arsenal latest: Lewis-Skelly responds to summer transfer speculation",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-17T19:30:00Z",
+      "players": [
+        {
+          "element_id": 7,
+          "name": "Lewis-Skelly",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5237cf610318f043",
+      "headline": "Europa League team news LIVE! Bournemouth, Palace, Celtic in action",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/real-sociedad-vs-bournemouth/live/577757",
+      "claimed_at": "2026-09-17T18:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "878bc6e577cadccf",
+      "headline": "Man City vs Norwich LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-norwich-city/live/577580",
+      "claimed_at": "2026-09-17T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "de669f824e311122",
+      "headline": "Will Palmer, Foden and Trent be recalled to England squad?",
+      "summary": "Cole Palmer's outstanding form this season has put him in a strong position for an England recall, with the Chelsea man the most likely to be included from all the big names left out of the World Cup squad.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13588982/england-squad-will-cole-palmer-phil-foden-and-trent-alexander-arnold-be-left-out-again-after-world-cup-snubs",
+      "claimed_at": "2026-09-17T16:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "13760bd2e15332d6",
+      "headline": "Euro Leagues",
+      "summary": "Is JJ Gabriel set for Real Madrid? And former Gunners Aubameyang & Jesus keep scoring!",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0pb3ytn?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-17T16:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d7cf1f5bd32c37c7",
+      "headline": "Newcastle players see Jaissle's angry side - can they respond?",
+      "summary": "Newcastle United head coach Matthias Jaissle was forthright in the away dressing room at Elland Road on Monday night following a chastening 4-1 defeat against Leeds United.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck980pprp5n1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-17T15:58:24Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "58e59172560b11b0",
       "headline": "Alonso: Chelsea didn't need a reset - they just needed an update",
       "summary": "Xabi Alonso says Chelsea were in need of \"an update\" rather than a full reset when he was appointed manager this summer.",
@@ -518,6 +662,114 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "38572b35cb627c2d",
+      "headline": "Coventry City defender set to miss Forest clash and will undergo further assessment",
+      "summary": "Coventry City defender Aurele Amenda is set to miss their clash with Nottingham Forest after suffering a calf injury in the Carabao Cup defeat to Aston Villa. Amenda was forced off during the loss and will undergo a",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/coventry-city-defender-set-to-miss-forest-clash-and-will-undergo-further-assessment/",
+      "claimed_at": "2026-09-17T15:29:46Z",
+      "players": [
+        {
+          "element_id": 182,
+          "name": "Amenda",
+          "club": "COV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b67848d0d2e5c3c5",
+      "headline": "Arsenal star to be given extra rest during international break",
+      "summary": "Arsenal have been handed a welcome boost with Kai Havertz only set to take part in the first half of the international window with Germany. Klopp has taken the unusual decision to split 44 players into two separate groups for Germany\u2019s f",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-star-to-be-given-extra-rest-during-international-break/",
+      "claimed_at": "2026-09-17T15:14:28Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "12f130ae978c11d7",
+      "headline": "Sutton's predictions v legendary guitarist Johnny Marr",
+      "summary": "BBC Sport football expert Chris Sutton takes on legendary guitarist and Man City fan Johnny Marr, plus the BBC readers and AI with his predictions for this weekend's Premier League fixtures.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c62j06np0gpo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-17T15:10:03Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fc3db54b98f2b9a4",
+      "headline": "Nottingham Forest defender could return against Coventry City",
+      "summary": "Oliver Glasner says Jair Cunha could return for Nottingham Forest\u2019s clash with Coventry, although a final decision will depend on how he responds to training. The defender took part in a light session on Thursday and will be assessed agai",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/nottingham-forest-defender-could-return-against-coventry-city/",
+      "claimed_at": "2026-09-17T15:06:39Z",
+      "players": [
+        {
+          "element_id": 471,
+          "name": "Milenkovi\u0107",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b043c810038f7eeb",
+      "headline": "Milenkovic + Jair Cunha: Nott\u2019m Forest injury latest for FPL Gameweek 5",
+      "summary": "A few problems in defence The post Milenkovic + Jair Cunha: Nott'm Forest injury latest for FPL Gameweek 5 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/17/milenkovic-jair-cunha-nottm-forest-injury-latest-for-fpl-gameweek-5",
+      "claimed_at": "2026-09-17T15:01:17Z",
+      "players": [
+        {
+          "element_id": 471,
+          "name": "Milenkovi\u0107",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f76bee0d500a695d",
+      "headline": "Hull City defender to miss Newcastle trip as Jakirovic provides updates on several players",
+      "summary": "Hull City defender Nobel Mendy will miss Saturday\u2019s trip to Newcastle as he continues to follow concussion protocols after suffering a head injury against Chelsea. Mendy was taken to hospital for assessment af",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hull-city-defender-to-miss-newcastle-trip-as-jakirovic-provides-updates-on-several-players/",
+      "claimed_at": "2026-09-17T14:55:24Z",
+      "players": [
+        {
+          "element_id": 586,
+          "name": "Mendy",
+          "club": "HUL",
           "held": false
         }
       ],
@@ -646,6 +898,24 @@
     {
       "digest": "1fa4b09198f799c2",
       "headline": "Man Utd wonderkid JJ Gabriel attracting interest from top European clubs",
+      "summary": "Real Madrid, Barcelona, Paris Saint-Germain and Bayern Munich, along with several Premier League clubs, are interested in Manchester United forward JJ Gabriel.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13588989/jj-gabriel-transfer-news-man-utd-wonderkid-attracting-interest-from-real-madrid-barcelona-psg-bayern-munich-and-premier-league-clubs",
+      "claimed_at": "2026-09-17T13:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "73123ca05e629812",
+      "headline": "Man Utd wonderkid Gabriel attracting interest from top European clubs",
       "summary": "Real Madrid, Barcelona, Paris Saint-Germain and Bayern Munich, along with several Premier League clubs, are interested in Manchester United forward JJ Gabriel.",
       "source": "sky_football",
       "tier": 3,
@@ -842,6 +1112,24 @@
       "touches_squad": false
     },
     {
+      "digest": "07fccde9512ca5be",
+      "headline": "FPL notes: De Cuyper + Gross net again, another Everton shut-out",
+      "summary": "De Cuyper and Gross score as Brighton stun Man Utd. The post FPL notes: De Cuyper + Gross net again, another Everton shut-out appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/17/fpl-notes-de-cuyper-gross-net-again-another-everton-shut-out",
+      "claimed_at": "2026-09-17T01:00:00Z",
+      "players": [
+        {
+          "element_id": 115,
+          "name": "De Cuyper",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "344a0b4ea2e2dbb9",
       "headline": "Chelsea latest: Joao Pedro injury worry as Boehly exit confirmed",
       "summary": null,
@@ -849,60 +1137,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-09-17T00:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6d9a5d9b367afc92",
-      "headline": "Chelsea latest: Joao Pedro injury worry",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-17T00:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "95637e62f21708b4",
-      "headline": "Chelsea latest: Alonso gives Joao Pedro injury update",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-17T00:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "35a5ffd3c4bb420f",
-      "headline": "New season, same Man Utd story - Carrick is now firmly feeling the pressure",
-      "summary": "This wasn't just a defeat. This wasn't just a collapse. This wasn't just a cup exit. Another Manchester United managerial project is heading in that one, same direction. And even Michael Carrick recognises that.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13588791/man-utd-2-3-brighton-michael-carricks-old-trafford-tenure-is-only-heading-in-one-direction-as-red-devils-face-familiar-story",
-      "claimed_at": "2026-09-16T23:47:00Z",
       "players": [
         {
           "element_id": 0,
@@ -957,60 +1191,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cvrl6egl1254o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-16T23:29:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "01bdfc8419c64b59",
-      "headline": "Brighton latest: Hurzeler wants humility and focus after win at Man Utd",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-16T23:25:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ad39f13dcbf92761",
-      "headline": "Papers: Shaw could leave Man Utd next summer",
-      "summary": "The top stories and transfer rumours from Thursday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13588777/luke-shaw-may-leave-manchester-united-next-summer-with-no-new-deal-in-sight-paper-talk",
-      "claimed_at": "2026-09-16T23:20:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c8389a9d8d383e73",
-      "headline": "Papers: Shaw may leave Man Utd next summer with no new deal in sight",
-      "summary": "The top stories and transfer rumours from Thursday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13588777/luke-shaw-may-leave-manchester-united-next-summer-with-no-new-deal-in-sight-paper-talk",
-      "claimed_at": "2026-09-16T23:20:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1292,72 +1472,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5baac991ab41fb05",
-      "headline": "Rose embracing \u2018special\u2019 moment as Bournemouth prepare for European debut",
-      "summary": "Bournemouth manager Marco Rose says his squad will try to create a special night for the fans against Real Sociedad. Tomorrow\u2019s Europa League opener in San Sebasti\u00e1n will be The Cherries first appearance in European competitio",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/rose-embracing-special-moment-as-bournemouth-prepare-for-european-debut/",
-      "claimed_at": "2026-09-16T16:40:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0330122f25ceac75",
-      "headline": "Man City chief confident new-look squad can compete for years to come",
-      "summary": "Manchester City director of football Hugo Viana says the club are \u201ctruly happy\u201d with their summer transfer window and believe they have built a squad suited to Enzo Maresca\u2019s style. City experienced a busy summer of turnover follo",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-chief-confident-new-look-squad-can-compete-for-years-to-come/",
-      "claimed_at": "2026-09-16T16:32:23Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 481,
-          "name": "Anderson",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5061cab362ac7dee",
-      "headline": "Crystal Palace star pens new deal following summer interest from other clubs",
-      "summary": "Crystal Palace captain Dean Henderson has signed a new contract that will keep him at the club until 2030. The goalkeeper has become a key figure at Selhurst Park since joining from Manchester United in August 2023, making",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/crystal-palace-star-pens-new-deal-following-summer-interest-from-other-clubs/",
-      "claimed_at": "2026-09-16T14:37:32Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "476c2f0699fbf442",
       "headline": "What's gone wrong for Chelsea talent Kendry Paez?",
       "summary": "Kendry Paez was one of the world's best young talents when Chelsea signed him as a 16-year-old. Three years later, he's playing for the Under-21s. So what has gone wrong?",
@@ -1412,114 +1526,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d629f2a4db0624dd",
-      "headline": "Harwood-Bellis has chance to make his mark at Villa",
-      "summary": "Left out of Aston Villa's Champions League squad and yet to feature since his arrival, Taylor Harwood-Bellis has the chance to shine in the EFL Cup.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6wyzg91zm4wo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-16T11:00:56Z",
-      "players": [
-        {
-          "element_id": 630,
-          "name": "Harwood-Bellis",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "37ab0c1bdc195f1c",
-      "headline": "'Mini Valverde' wanted by Chelsea - Garner is now Everton's main man",
-      "summary": "BBC Sport examines how James Garner has become Everton's most important player.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/crwyz819xw4po?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-16T10:56:23Z",
-      "players": [
-        {
-          "element_id": 239,
-          "name": "Garner",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9fe04c0a77c9a755",
-      "headline": "How exceptional Garner became Everton's main man",
-      "summary": "BBC Sport examines how James Garner has become Everton's most important player.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/crwyz819xw4po?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-16T10:56:23Z",
-      "players": [
-        {
-          "element_id": 239,
-          "name": "Garner",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b27e9a05a0a0a1af",
-      "headline": "Man City star \u2018quite close\u2019 to returning",
-      "summary": "Enzo Maresca says Jeremy Doku is closing in on a return for Manchester City. Doku has been sidelined with a calf injury since the Community Shield but Maresca revealed the winger is nearing a comeback. \u201cJeremy is quite close,\u201d the City boss said. \u201cWe are happ",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-star-quite-close-to-returning/",
-      "claimed_at": "2026-09-16T10:11:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d927334e2f73bc7d",
-      "headline": "Ex-Spurs midfielder Bissouma completes Ajax move",
-      "summary": "Former Tottenham midfielder Yves Bissouma has joined Ajax on an initial deal that runs until the end of the season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cw4gr5pm7eg9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-16T08:13:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1f66e08888a26ec0",
-      "headline": "De Zerbi apologises after Spurs lose to Liverpool",
-      "summary": "Roberto De Zerbi apologised after Tottenham lost 3-1 to Liverpool in the third round of the EFL Cup. Even though Spurs scored their first goal of the season against Premier League opposition when Conor Gallagher headed home 20 minutes from time, Spur",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-apologises-after-spurs-lose-to-liverpool/",
-      "claimed_at": "2026-09-15T22:44:35Z",
-      "players": [
-        {
-          "element_id": 519,
-          "name": "Gallagher",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "29f33ecfc505074a",
       "headline": "FPL notes: Triple Newcastle injury blow + \u00a34.5m Bogle leads FPL standings",
       "summary": "FPL lessons from Leeds 4-1 Newcastle The post FPL notes: Triple Newcastle injury blow + \u00a34.5m Bogle leads FPL standings appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1550,6 +1556,42 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8e986e8430915803",
+      "headline": "Concussion - Expected back 12 Oct",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-09-14T21:30:07.343728Z",
+      "players": [
+        {
+          "element_id": 405,
+          "name": "N.Gonzalez",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "92361f1db358ac19",
+      "headline": "Concussion - 50% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-09-14T21:30:07.343728Z",
+      "players": [
+        {
+          "element_id": 405,
+          "name": "N.Gonzalez",
+          "club": "NEW",
           "held": false
         }
       ],
@@ -1712,72 +1754,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "08a11f3d99f28baa",
-      "headline": "Sunderland v Arsenal team news: No changes from last weekend",
-      "summary": "The four Gunners benched in midweek all return The post Sunderland v Arsenal team news: No changes from last weekend appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/12/sunderland-v-arsenal-team-news-no-changes-from-last-weekend",
-      "claimed_at": "2026-09-12T18:25:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "92361f1db358ac19",
-      "headline": "Concussion - 50% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-09-12T18:00:09.334142Z",
-      "players": [
-        {
-          "element_id": 586,
-          "name": "Mendy",
-          "club": "HUL",
-          "held": false
-        },
-        {
-          "element_id": 405,
-          "name": "N.Gonzalez",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8f4698ceb0266ca9",
-      "headline": "Spurs v Everton team news: Porro + Udogie out, Grealish still a sub",
-      "summary": "Four changes for the hosts, one for the Toffees The post Spurs v Everton team news: Porro + Udogie out, Grealish still a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/12/spurs-v-everton-team-news-porro-udogie-out-grealish-still-a-sub",
-      "claimed_at": "2026-09-12T16:00:00Z",
-      "players": [
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "EVE",
-          "held": false
-        },
-        {
-          "element_id": 506,
-          "name": "Udogie",
-          "club": "TOT",
           "held": false
         }
       ],
