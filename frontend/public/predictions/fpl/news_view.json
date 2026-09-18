@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-18T17:05:08.391334Z",
-  "n_dropped": 169,
+  "generated_at": "2026-09-18T19:36:29.189841Z",
+  "n_dropped": 161,
   "dropped_by_source": {
-    "bbc_football": 46,
+    "bbc_football": 41,
     "fantasyfootballscout": 6,
-    "hayters": 32,
-    "sky_football": 85
+    "hayters": 30,
+    "sky_football": 84
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 259,
+  "n_articles": 251,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -351,130 +351,58 @@
       "touches_squad": true
     },
     {
-      "digest": "99407eb80672f7ed",
-      "headline": "Haaland scores controversial winner as Man City win derby despite Foden red",
-      "summary": "Erling Haaland's goal helps Manchester City win a highly controversial Manchester derby at rivals Manchester United despite playing with 10 men for more than 70 minutes.",
+      "digest": "02bd19f6ad00431e",
+      "headline": "Brentford v Chelsea team news: Sangare benched, no Pedro",
+      "summary": "Two changes for Brentford, five for Chelsea The post Brentford v Chelsea team news: Sangare benched, no Pedro appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/18/brentford-v-chelsea-team-news-sangare-benched-no-pedro",
+      "claimed_at": "2026-09-18T18:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "64719315f53b74d6",
+      "headline": "Fulham latest: 'Arbeloa must be given time - first league win not far away'",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-09-18T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4322be82d9484610",
+      "headline": "Former Man Utd left-back Malacia joins FC Cincinnati",
+      "summary": "FC Cincinnati sign former Manchester United left-back Tyrell Malacia on a free transfer.",
       "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cpd0j54xlyyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-13T19:06:08Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6vgyjgqgdqwo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-18T17:39:15Z",
       "players": [
         {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
         }
       ],
-      "touches_squad": true
-    },
-    {
-      "digest": "0b8b8d14f82c2f1a",
-      "headline": "\u2018As obvious as it gets\u2019 \u2013 Carrick slams decision to allow Haaland winner in derby defeat",
-      "summary": "Michael Carrick was left baffled by the decision to allow Erling Haaland\u2019s winner to stand in Manchester United\u2019s 1-0 defeat to Manchester City. Carrick felt Enzo Fernandez had interfered with play in the build-",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/as-obvious-as-it-gets-carrick-slams-decision-to-allow-haaland-winner-in-derby-defeat/",
-      "claimed_at": "2026-09-13T18:30:04Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "09d7ff0e5230e838",
-      "headline": "Haaland scores controversial derby winner for Man City after Foden red",
-      "summary": "Erling Haaland's contentious winner earned 10-man Manchester City a derby win over rivals United at Old Trafford - after Phil Foden's controversial first-half red card.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-united-vs-manchester-city/report/559481",
-      "claimed_at": "2026-09-13T18:30:00Z",
-      "players": [
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "3066069b647d5b24",
-      "headline": "Neville: Officials got Haaland winner wrong - Man Utd can expect apology",
-      "summary": "Gary Neville believes the VAR officials were \"wrong\" to award Manchester City's winner at Manchester United in their 1-0 victory at Old Trafford.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13585530/gary-neville-man-utd-can-expect-apology-from-pro-ref-for-erling-haalands-winner-in-manchester-derby",
-      "claimed_at": "2026-09-13T18:15:00Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "da4a49dcd42de4d5",
-      "headline": "Carrick 'baffled' by decision to award controversial Man City goal",
-      "summary": "Manchester United manager Michael Carrick was unhappy with the match officials for the decision to award Erling Haaland's controversial goal in the Manchester derby.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/ceq81nz02ddo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-13T18:13:04Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "c341a9f86b8e2f53",
-      "headline": "'I need the offside law explaining to me!' - Neville baffled by City goal award",
-      "summary": "VAR drama as Erling Haaland fires Man City ahead!",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13585518/goal-e-haaland-60-man-utd-0-1-man-city",
-      "claimed_at": "2026-09-13T17:59:00Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        }
-      ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
       "digest": "062e4e6866616718",
@@ -484,6 +412,42 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13589387/jj-gabriel-edging-closer-to-manchester-united-exit-amid-barcelona-talks-about-a-potential-move-for-the-forward",
       "claimed_at": "2026-09-18T17:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "34ffd5de1cc4f2d2",
+      "headline": "Gabriel edging closer to Man Utd exit after Barca talks",
+      "summary": "JJ Gabriel and his family are in Barcelona for talks about a potential move to the Catalan club.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13589387/jj-gabriel-edging-closer-to-manchester-united-exit-amid-barcelona-talks-about-a-potential-move-for-the-forward",
+      "claimed_at": "2026-09-18T17:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "440eb850d6533938",
+      "headline": "Brentford 0-0 Chelsea LIVE \u2013 Chelsea on top in opening 30 minutes",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 0-0 Chelsea LIVE - Chelsea on top in opening 30 minutes appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-chelsea-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-09-18T17:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1275,6 +1239,24 @@
       "touches_squad": false
     },
     {
+      "digest": "3029426d6a8f0d34",
+      "headline": "Papers: Arsenal eyeing Kroupi and Schade in January",
+      "summary": "The top stories and transfer rumours from Friday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13589073/arsenal-transfer-news-eli-junior-kroupi-and-kevin-schade-on-mikel-artetas-target-list-ahead-of-january-paper-talk",
+      "claimed_at": "2026-09-17T22:39:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "73c3ac6f7d951e4e",
       "headline": "'Just the beginning' - Samba, 17, steals Man City show",
       "summary": "Floyd Samba's scintillating debut stole the show at Etihad Stadium but also took the headlines away from another high-profile teenager in Manchester.",
@@ -1689,18 +1671,18 @@
       "touches_squad": false
     },
     {
-      "digest": "07fccde9512ca5be",
-      "headline": "FPL notes: De Cuyper + Gross net again, another Everton shut-out",
-      "summary": "De Cuyper and Gross score as Brighton stun Man Utd. The post FPL notes: De Cuyper + Gross net again, another Everton shut-out appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
+      "digest": "3f0143f809d4bcb0",
+      "headline": "Chelsea's Lavia out to 'change narrative' after injuries",
+      "summary": "Chelsea midfielder Romeo Lavia says he is finally reaping the rewards of his hard work and is determined to \"change the narrative\" around him.",
+      "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/17/fpl-notes-de-cuyper-gross-net-again-another-everton-shut-out",
-      "claimed_at": "2026-09-17T01:00:00Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/cnvlr92eyldo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-17T07:53:38Z",
       "players": [
         {
-          "element_id": 115,
-          "name": "De Cuyper",
-          "club": "BHA",
+          "element_id": 161,
+          "name": "Lavia",
+          "club": "CHE",
           "held": false
         }
       ],
