@@ -2,7 +2,7 @@
   "gameweek": 5,
   "entry_label": "owner",
   "objective": "season",
-  "generated_at": "2026-09-18T12:02:53.453211Z",
+  "generated_at": "2026-09-18T15:46:04.348939Z",
   "deadline": "2026-09-18T17:30:00Z",
   "xp_snapshot": {
     "1": 2.7075,
@@ -17,14 +17,14 @@
     "249": 5.1152,
     "368": 4.6967,
     "379": 3.5919,
-    "411": 6.2251,
-    "426": 5.7171,
+    "411": 6.1516,
+    "426": 5.6997,
     "445": 5.3484,
     "447": 5.3313,
     "464": 1.5998,
     "467": 4.2198,
-    "497": 0.1939,
-    "542": 3.9049
+    "497": 0.1971,
+    "542": 3.8484
   },
   "decision": {
     "plan": {
@@ -81,29 +81,29 @@
       "free_transfers_after": 1
     },
     "n_draws": 10000,
-    "mean_points": 44.9104,
-    "sd_points": 15.6482,
-    "objective": 44.9104,
+    "mean_points": 44.8503,
+    "sd_points": 15.6555,
+    "objective": 44.8503,
     "quantiles": {
-      "q10": 25.9,
-      "q25": 34.0,
+      "q10": 25.0,
+      "q25": 33.0,
       "q50": 44.0,
       "q75": 55.0,
       "q90": 66.0,
       "q99": 85.0
     },
     "tails": {
-      "p_ge_40": 0.611,
-      "p_ge_50": 0.3594,
-      "p_ge_60": 0.179,
-      "p_ge_70": 0.0709,
-      "p_ge_80": 0.0207,
-      "p_ge_90": 0.0054
+      "p_ge_40": 0.6112,
+      "p_ge_50": 0.3647,
+      "p_ge_60": 0.1803,
+      "p_ge_70": 0.0678,
+      "p_ge_80": 0.0187,
+      "p_ge_90": 0.0051
     },
-    "autosub_rate": 0.0596,
+    "autosub_rate": 0.0599,
     "vice_rate": 0.0
   },
-  "optimism_gap": 0.1868,
+  "optimism_gap": 0.0304,
   "credible_margin": true,
   "pool": {
     "n_candidates": 554,
@@ -451,5 +451,5 @@
       "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
     }
   },
-  "sealed": false
+  "sealed": true
 }

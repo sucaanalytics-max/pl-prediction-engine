@@ -1,7 +1,651 @@
 {
-  "generated_at": "2026-09-15T17:23:56.017871Z",
-  "n_messages": 43,
+  "generated_at": "2026-09-18T15:46:04.395183Z",
+  "n_messages": 56,
   "messages": [
+    {
+      "id": "gw05-decision-owner",
+      "gameweek": 5,
+      "kind": "decision",
+      "severity": "info",
+      "title": "GW5 \u2014 owner team ready",
+      "body": "5 transfer(s), 4 hit(s) taken. Deadline in 1.7 hours. Nothing has been submitted for you \u2014 the agent has no write access to FPL by design.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "gameweek": 5,
+        "entry_label": "owner",
+        "objective": "season",
+        "generated_at": "2026-09-18T15:46:04.348939Z",
+        "deadline": "2026-09-18T17:30:00Z",
+        "xp_snapshot": {
+          "1": 2.7075,
+          "4": 3.8747,
+          "113": 2.8786,
+          "124": 3.788,
+          "152": 0.6715,
+          "154": 5.3083,
+          "165": 0.3615,
+          "173": 1.6316,
+          "231": 5.051,
+          "249": 5.1152,
+          "368": 4.6967,
+          "379": 3.5919,
+          "411": 6.1516,
+          "426": 5.6997,
+          "445": 5.3484,
+          "447": 5.3313,
+          "464": 1.5998,
+          "467": 4.2198,
+          "497": 0.1971,
+          "542": 3.8484
+        },
+        "decision": {
+          "plan": {
+            "squad": [
+              113,
+              124,
+              154,
+              173,
+              231,
+              249,
+              368,
+              411,
+              426,
+              445,
+              447,
+              464,
+              467,
+              497,
+              542
+            ],
+            "xi": [
+              124,
+              154,
+              231,
+              249,
+              368,
+              411,
+              426,
+              445,
+              447,
+              467,
+              542
+            ],
+            "captain": 411,
+            "vice": 426,
+            "transfers_in": [
+              231,
+              249,
+              411,
+              447,
+              467
+            ],
+            "transfers_out": [
+              1,
+              4,
+              152,
+              165,
+              379
+            ],
+            "hits": 4,
+            "bank_after": 2,
+            "objective": 0.0,
+            "free_transfers_banked": 0,
+            "free_transfers_after": 1
+          },
+          "n_draws": 10000,
+          "mean_points": 44.8503,
+          "sd_points": 15.6555,
+          "objective": 44.8503,
+          "quantiles": {
+            "q10": 25.0,
+            "q25": 33.0,
+            "q50": 44.0,
+            "q75": 55.0,
+            "q90": 66.0,
+            "q99": 85.0
+          },
+          "tails": {
+            "p_ge_40": 0.6112,
+            "p_ge_50": 0.3647,
+            "p_ge_60": 0.1803,
+            "p_ge_70": 0.0678,
+            "p_ge_80": 0.0187,
+            "p_ge_90": 0.0051
+          },
+          "autosub_rate": 0.0599,
+          "vice_rate": 0.0
+        },
+        "optimism_gap": 0.0304,
+        "credible_margin": true,
+        "pool": {
+          "n_candidates": 554,
+          "n_excluded": 105,
+          "excluded_by_reason": {
+            "status_u": 105
+          },
+          "held_missing_purchase_price": [],
+          "price_uncertain": false,
+          "n_zero_xp": 0
+        },
+        "horizon": {
+          "eval_horizon": 8,
+          "transfer_horizon": 6,
+          "provisional": [
+            {
+              "squad": [
+                113,
+                124,
+                154,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                464,
+                467,
+                497,
+                542
+              ],
+              "xi": [
+                124,
+                154,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                467,
+                542
+              ],
+              "captain": 411,
+              "vice": 426,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                68,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                467,
+                497,
+                542
+              ],
+              "xi": [
+                68,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                467,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [
+                68,
+                106
+              ],
+              "transfers_out": [
+                154,
+                464
+              ],
+              "hits": 0,
+              "bank_after": 21,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                467,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 426,
+              "transfers_in": [
+                82
+              ],
+              "transfers_out": [
+                497
+              ],
+              "hits": 0,
+              "bank_after": 11,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                467,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 445,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 11,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                467,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 11,
+              "objective": 0.0,
+              "free_transfers_banked": 2,
+              "free_transfers_after": 3
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                467,
+                542
+              ],
+              "xi": [
+                68,
+                82,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 11,
+              "objective": 0.0,
+              "free_transfers_banked": 3,
+              "free_transfers_after": 4
+            },
+            {
+              "squad": [
+                68,
+                82,
+                106,
+                113,
+                124,
+                173,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                467,
+                542
+              ],
+              "xi": [
+                68,
+                106,
+                231,
+                249,
+                368,
+                411,
+                426,
+                445,
+                447,
+                467,
+                542
+              ],
+              "captain": 411,
+              "vice": 249,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 11,
+              "objective": 0.0,
+              "free_transfers_banked": 4,
+              "free_transfers_after": 5
+            }
+          ]
+        },
+        "field_model": "uncalibrated",
+        "warnings": [],
+        "execution": "propose_only",
+        "evidence": {
+          "measured_on": {
+            "seasons": [
+              "2023-24",
+              "2024-25",
+              "2025-26"
+            ],
+            "gameweeks": "8-38 each, 93 paired observations",
+            "harness": "pipeline/learning/backtest_decisions.py",
+            "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+          },
+          "beats_doing_nothing": {
+            "verdict": "established",
+            "margin_2023_24": 411,
+            "margin_2024_25": 560,
+            "margin_2025_26": 184,
+            "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+          },
+          "beats_greedy_transfers": {
+            "verdict": "not established",
+            "margin_2023_24": 67,
+            "margin_2024_25": 60,
+            "margin_2025_26": -66,
+            "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+          },
+          "projection_calibration": {
+            "verdict": "established",
+            "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+          }
+        },
+        "sealed": true
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-224",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-12T14:00:09.427136Z) while fpl_news_parse says 75 (2026-09-12T14:00:09.427136Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 224,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-12T14:00:09.427136Z) while fpl_news_parse says 75 (2026-09-12T14:00:09.427136Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-471",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-12T14:00:09.705107Z) while fpl_news_parse says 75 (2026-09-12T14:00:09.705107Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 471,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-12T14:00:09.705107Z) while fpl_news_parse says 75 (2026-09-12T14:00:09.705107Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-94",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'FPL notes: Schade + Tavernier strike again + DefCon bonanza\\nOur Fantasy notes from Bournemouth 2-2 Brentford The post FPL notes: Schade + Tavernier strike again + DefCon bonanza appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-09-14T10:25:00Z) while sky_football says 'Schade double earns Brentford point as Bournemouth await first PL win\\nKevin Schade netted a double as Brentford came from behind to earn a 2-2 draw at Bournemouth, leaving Marco Rose still waiting for his first Premier League win as head coach.' (2026-09-12T17:00:00Z). Used the more conservative 'FPL notes: Schade + Tavernier strike again + DefCon bonanza\\nOur Fantasy notes from Bournemouth 2-2 Brentford The post FPL notes: Schade + Tavernier strike again + DefCon bonanza appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 94,
+        "claim_type": "unparsed_news",
+        "value": "FPL notes: Schade + Tavernier strike again + DefCon bonanza\nOur Fantasy notes from Bournemouth 2-2 Brentford The post FPL notes: Schade + Tavernier strike again + DefCon bonanza appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says 'FPL notes: Schade + Tavernier strike again + DefCon bonanza\\nOur Fantasy notes from Bournemouth 2-2 Brentford The post FPL notes: Schade + Tavernier strike again + DefCon bonanza appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-09-14T10:25:00Z) while sky_football says 'Schade double earns Brentford point as Bournemouth await first PL win\\nKevin Schade netted a double as Brentford came from behind to earn a 2-2 draw at Bournemouth, leaving Marco Rose still waiting for his first Premier League win as head coach.' (2026-09-12T17:00:00Z). Used the more conservative 'FPL notes: Schade + Tavernier strike again + DefCon bonanza\\nOur Fantasy notes from Bournemouth 2-2 Brentford The post FPL notes: Schade + Tavernier strike again + DefCon bonanza appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-532",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says \"Were Arsenal unlucky to concede a penalty at Sunderland?\\nWas Ezri Konsa's challenge on Dan Ballard enough for Sunderland to be awarded a penalty? David Raya went on to save Enzo Le Fee's resulting spot-kick.\" (2026-09-13T00:00:00Z) while bbc_football says \"Referee 'completely wrong' to award penalty - Williams\\nMatch of the Day pundits Ashley Williams and Thomas Frank believe Sunderland should not have been awarded a penalty after Ezri Konsa was adjudged to foul Dan Ballard, instead claiming that Arsenal should have had a free kick.\" (2026-09-12T23:00:41Z). Used the more conservative \"Were Arsenal unlucky to concede a penalty at Sunderland?\\nWas Ezri Konsa's challenge on Dan Ballard enough for Sunderland to be awarded a penalty? David Raya went on to save Enzo Le Fee's resulting spot-kick.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 532,
+        "claim_type": "unparsed_news",
+        "value": "Were Arsenal unlucky to concede a penalty at Sunderland?\nWas Ezri Konsa's challenge on Dan Ballard enough for Sunderland to be awarded a penalty? David Raya went on to save Enzo Le Fee's resulting spot-kick.",
+        "detail": "unparsed_news: sky_football says \"Were Arsenal unlucky to concede a penalty at Sunderland?\\nWas Ezri Konsa's challenge on Dan Ballard enough for Sunderland to be awarded a penalty? David Raya went on to save Enzo Le Fee's resulting spot-kick.\" (2026-09-13T00:00:00Z) while bbc_football says \"Referee 'completely wrong' to award penalty - Williams\\nMatch of the Day pundits Ashley Williams and Thomas Frank believe Sunderland should not have been awarded a penalty after Ezri Konsa was adjudged to foul Dan Ballard, instead claiming that Arsenal should have had a free kick.\" (2026-09-12T23:00:41Z). Used the more conservative \"Were Arsenal unlucky to concede a penalty at Sunderland?\\nWas Ezri Konsa's challenge on Dan Ballard enough for Sunderland to be awarded a penalty? David Raya went on to save Enzo Le Fee's resulting spot-kick.\"."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-542",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'FPL notes: Le Fee still on pens + \u00a34.0m defender injury\\nNotes from the midweek matches featuring Aston Villa, Coventry and Sunderland The post FPL notes: Le Fee still on pens + \u00a34.0m defender injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout' (2026-09-17T01:30:00Z) while sky_football says \"Were Arsenal unlucky to concede a penalty at Sunderland?\\nWas Ezri Konsa's challenge on Dan Ballard enough for Sunderland to be awarded a penalty? David Raya went on to save Enzo Le Fee's resulting spot-kick.\" (2026-09-13T00:00:00Z). Used the more conservative 'FPL notes: Le Fee still on pens + \u00a34.0m defender injury\\nNotes from the midweek matches featuring Aston Villa, Coventry and Sunderland The post FPL notes: Le Fee still on pens + \u00a34.0m defender injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 542,
+        "claim_type": "unparsed_news",
+        "value": "FPL notes: Le Fee still on pens + \u00a34.0m defender injury\nNotes from the midweek matches featuring Aston Villa, Coventry and Sunderland The post FPL notes: Le Fee still on pens + \u00a34.0m defender injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout",
+        "detail": "unparsed_news: fantasyfootballscout says 'FPL notes: Le Fee still on pens + \u00a34.0m defender injury\\nNotes from the midweek matches featuring Aston Villa, Coventry and Sunderland The post FPL notes: Le Fee still on pens + \u00a34.0m defender injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout' (2026-09-17T01:30:00Z) while sky_football says \"Were Arsenal unlucky to concede a penalty at Sunderland?\\nWas Ezri Konsa's challenge on Dan Ballard enough for Sunderland to be awarded a penalty? David Raya went on to save Enzo Le Fee's resulting spot-kick.\" (2026-09-13T00:00:00Z). Used the more conservative 'FPL notes: Le Fee still on pens + \u00a34.0m defender injury\\nNotes from the midweek matches featuring Aston Villa, Coventry and Sunderland The post FPL notes: Le Fee still on pens + \u00a34.0m defender injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout'."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-366",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says \"Merson: I'm worried for Liverpool - how long can they wait for Wirtz?\\nIn his latest Sky Sports column, Paul Merson says he is worried about Liverpool this season while also raising questions about both Florian Wirtz and Bradley Barcola.\" (2026-09-14T14:28:00Z) while bbc_football says \"Bayern monitoring Wirtz - Monday's gossip\\nFlorian Wirtz is being monitored by Bayern Munich, Bournemouth's Brazil forward Rayan could be a Liverpool target next summer and Borussia Dortmund rule out move for Jadon Sancho.\" (2026-09-13T20:23:02Z). Used the more conservative \"Merson: I'm worried for Liverpool - how long can they wait for Wirtz?\\nIn his latest Sky Sports column, Paul Merson says he is worried about Liverpool this season while also raising questions about both Florian Wirtz and Bradley Barcola.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 366,
+        "claim_type": "unparsed_news",
+        "value": "Merson: I'm worried for Liverpool - how long can they wait for Wirtz?\nIn his latest Sky Sports column, Paul Merson says he is worried about Liverpool this season while also raising questions about both Florian Wirtz and Bradley Barcola.",
+        "detail": "unparsed_news: sky_football says \"Merson: I'm worried for Liverpool - how long can they wait for Wirtz?\\nIn his latest Sky Sports column, Paul Merson says he is worried about Liverpool this season while also raising questions about both Florian Wirtz and Bradley Barcola.\" (2026-09-14T14:28:00Z) while bbc_football says \"Bayern monitoring Wirtz - Monday's gossip\\nFlorian Wirtz is being monitored by Bayern Munich, Bournemouth's Brazil forward Rayan could be a Liverpool target next summer and Borussia Dortmund rule out move for Jadon Sancho.\" (2026-09-13T20:23:02Z). Used the more conservative \"Merson: I'm worried for Liverpool - how long can they wait for Wirtz?\\nIn his latest Sky Sports column, Paul Merson says he is worried about Liverpool this season while also raising questions about both Florian Wirtz and Bradley Barcola.\"."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-359",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-07-26T08:30:10.078473Z) while fpl_news_parse says 75 (2026-07-26T08:30:10.078473Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 359,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-07-26T08:30:10.078473Z) while fpl_news_parse says 75 (2026-07-26T08:30:10.078473Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-10",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-15T19:30:09.494382Z) while fpl_news_parse says 75 (2026-09-15T19:30:09.494382Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 10,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-15T19:30:09.494382Z) while fpl_news_parse says 75 (2026-09-15T19:30:09.494382Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-104",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-15T09:00:07.851220Z) while fpl_news_parse says 50 (2026-09-15T09:00:07.851220Z). Used the more conservative 50. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 104,
+        "claim_type": "chance_of_playing",
+        "value": 50,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-15T09:00:07.851220Z) while fpl_news_parse says 50 (2026-09-15T09:00:07.851220Z). Used the more conservative 50."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-456",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-15T09:00:08.191022Z) while fpl_news_parse says 25 (2026-09-15T09:00:08.191022Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 456,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-15T09:00:08.191022Z) while fpl_news_parse says 25 (2026-09-15T09:00:08.191022Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-208",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-08-22T18:00:07.363165Z) while fpl_news_parse says 50 (2026-08-22T18:00:07.363165Z). Used the more conservative 50. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 208,
+        "claim_type": "chance_of_playing",
+        "value": 50,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-08-22T18:00:07.363165Z) while fpl_news_parse says 50 (2026-08-22T18:00:07.363165Z). Used the more conservative 50."
+      }
+    },
+    {
+      "id": "gw05-warning-availability-conflict-653",
+      "gameweek": 5,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW5 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"'Just the beginning' - Samba, 17, steals Man City show\\nFloyd Samba's scintillating debut stole the show at Etihad Stadium but also took the headlines away from another high-profile teenager in Manchester.\" (2026-09-17T22:00:18Z) while sky_football says \"Chris Samba's son Floyd shines on debut as Man City ease past Norwich\\nFloyd Samba enjoyed a dream debut by scoring twice as holders Manchester City booked their place in the Carabao Cup fourth round with a 5-0 home win over Norwich.\" (2026-09-17T21:21:00Z). Used the more conservative \"'Just the beginning' - Samba, 17, steals Man City show\\nFloyd Samba's scintillating debut stole the show at Etihad Stadium but also took the headlines away from another high-profile teenager in Manchester.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-09-18T15:46:04.395183Z",
+      "detail": {
+        "element_id": 653,
+        "claim_type": "unparsed_news",
+        "value": "'Just the beginning' - Samba, 17, steals Man City show\nFloyd Samba's scintillating debut stole the show at Etihad Stadium but also took the headlines away from another high-profile teenager in Manchester.",
+        "detail": "unparsed_news: bbc_football says \"'Just the beginning' - Samba, 17, steals Man City show\\nFloyd Samba's scintillating debut stole the show at Etihad Stadium but also took the headlines away from another high-profile teenager in Manchester.\" (2026-09-17T22:00:18Z) while sky_football says \"Chris Samba's son Floyd shines on debut as Man City ease past Norwich\\nFloyd Samba enjoyed a dream debut by scoring twice as holders Manchester City booked their place in the Carabao Cup fourth round with a 5-0 home win over Norwich.\" (2026-09-17T21:21:00Z). Used the more conservative \"'Just the beginning' - Samba, 17, steals Man City show\\nFloyd Samba's scintillating debut stole the show at Etihad Stadium but also took the headlines away from another high-profile teenager in Manchester.\"."
+      }
+    },
     {
       "id": "gw04-status-settled",
       "gameweek": 4,
