@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-18T08:30:16.157961Z",
-  "n_dropped": 148,
+  "generated_at": "2026-09-18T13:09:46.568311Z",
+  "n_dropped": 154,
   "dropped_by_source": {
     "bbc_football": 43,
-    "hayters": 23,
-    "sky_football": 82
+    "hayters": 28,
+    "sky_football": 83
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 238,
+  "n_articles": 244,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -494,28 +494,208 @@
       "touches_squad": true
     },
     {
-      "digest": "eaf7d86aab604692",
-      "headline": "Man City latest: 'Where\u2019s Erling?' \u2013 Anderson wants to keep Haaland happy",
+      "digest": "6185490e192e2599",
+      "headline": "Liverpool latest: Iraola hails Araujo's spirit ahead of trip to Bournemouth",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-18T13:55:00Z",
+      "players": [
+        {
+          "element_id": 579,
+          "name": "Araujo",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6448cd112244e583",
+      "headline": "Man City latest: 'If I don\u2019t win it\u2019s a disaster' \u2013 Maresca stays cautious after flying start",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-13T08:39:00Z",
+      "claimed_at": "2026-09-18T13:40:00Z",
       "players": [
         {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        },
-        {
-          "element_id": 481,
-          "name": "Anderson",
-          "club": "MCI",
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "9f1d3dfb95664787",
+      "headline": "Man Utd latest: Carrick dismisses 'ridiculous' pressure claims - 'It's not a catastrophe'",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-18T13:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8f885c57977e0771",
+      "headline": "Tottenham latest: Porro, Maddison, Tonali available for Villa game - De Zerbi",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-18T12:39:00Z",
+      "players": [
+        {
+          "element_id": 455,
+          "name": "Tonali",
+          "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f1c6459e1f38af46",
+      "headline": "Man City star in line for return against Sunderland",
+      "summary": "Enzo Maresca says Jeremy Doku is likely to return for Manchester City\u2019s clash with Sunderland. Doku has been sidelined with a calf injury but could be available for Sunday\u2019s game. \u201cProbably he can be available for Sunderland,\u201d Maresca said. The Cit",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-star-in-line-for-return-against-sunderland/",
+      "claimed_at": "2026-09-18T12:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6666a33264af90c4",
+      "headline": "Spurs trio ready to play against Aston Villa",
+      "summary": "Tottenham have been handed a major fitness boost ahead of their clash with Aston Villa, with Pedro Porro, Sandro Tonali and James Maddison all available. Spurs boss Roberto De Zerbi confirmed the trio are ready to be involved, although their fitness level",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/spurs-trio-ready-to-play-against-aston-villa/",
+      "claimed_at": "2026-09-18T11:53:02Z",
+      "players": [
+        {
+          "element_id": 455,
+          "name": "Tonali",
+          "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "27a38f224d6fad75",
+      "headline": "Tuchel urges Palmer and Alexander-Arnold to \u2018prove themselves\u2019 after earning England recall",
+      "summary": "Thomas Tuchel has challenged Trent Alexander-Arnold and Cole Palmer to prove themselves after earning recalls to the England squad. Alexander-Arnold is back in the Three Lions set-up after missing the World C",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/tuchel-urges-palmer-and-alexander-arnold-to-prove-themselves-after-earning-england-recall/",
+      "claimed_at": "2026-09-18T10:48:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5a64beffe5ec6259",
+      "headline": "FPL Gameweek 5 Scout Picks: Forest triple-up",
+      "summary": "Our chosen XI and four subs ahead of Friday's deadline The post FPL Gameweek 5 Scout Picks: Forest triple-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/18/fpl-gameweek-5-scout-picks-forest-triple-up",
+      "claimed_at": "2026-09-18T09:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "02ed7de99ae78833",
+      "headline": "England squad in full as Alexander-Arnold and Palmer included",
+      "summary": "Cole Palmer and Trent Alexander-Arnold have both been included in the latest England squad. Chelsea midfielder Palmer is named among the options in midfield alongside Jude Bellingham, Declan Rice and Elliot Anderson, while Real Madrid def",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/england-squad-in-full-as-alexander-arnold-and-palmer-included/",
+      "claimed_at": "2026-09-18T09:33:11Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ea5de141060881de",
+      "headline": "Arteta hopeful defenders will be available for Brighton clash",
+      "summary": "Mikel Arteta says he is \u201cvery optimistic\u201d that Cristhian Mosquera, Ben White, Jurrien Timber and Piero Hincapie will all be available for Arsenal\u2019s game against Brighton. The Gunners boss provided an encouraging fitness update on the defe",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-hopeful-defenders-will-be-available-for-brighton-clash/",
+      "claimed_at": "2026-09-18T09:25:11Z",
+      "players": [
+        {
+          "element_id": 9,
+          "name": "Hincapie",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 10,
+          "name": "White",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 11,
+          "name": "Mosquera",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "6f07d946ce18a63b",
@@ -824,60 +1004,6 @@
           "element_id": 230,
           "name": "Branthwaite",
           "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "19fc1a6e893ef3a5",
-      "headline": "Samba show! Chris celebrates as son Floyd scores twice for Man City!",
-      "summary": "Floyd Samba, son of former Premier League defender Chris, scores Man City double on his debut against Norwich in Carabao Cup.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13589100/floyd-samba-scores-man-city-opener-on-his-debut-against-norwich",
-      "claimed_at": "2026-09-17T20:10:00Z",
-      "players": [
-        {
-          "element_id": 653,
-          "name": "Samba",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2d2d3ff510f81cce",
-      "headline": "Arsenal latest: Lewis-Skelly responds to summer transfer speculation",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-17T19:30:00Z",
-      "players": [
-        {
-          "element_id": 7,
-          "name": "Lewis-Skelly",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "efbc052d55466dd9",
-      "headline": "Arsenal latest: Arteta to address injury news and more LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-17T19:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1454,96 +1580,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6b347da1a1f14ad7",
-      "headline": "\u2018The kind of player that I love\u2019 \u2013 Maresca excited by potential of young City star",
-      "summary": "Enzo Maresca has heaped praise on Manchester City youngster Ryan McAidoo ahead of the club\u2019s Carabao Cup clash with Norwich, describing the winger as exactly the type of player he likes. The 18-year-old is expected to",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/the-kind-of-player-that-i-love-maresca-excited-by-potential-of-young-city-star/",
-      "claimed_at": "2026-09-16T21:30:00Z",
-      "players": [
-        {
-          "element_id": 621,
-          "name": "McAidoo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "26c6dfd19daafcb9",
-      "headline": "Man Utd 2-3 Brighton LIVE \u2013 United throw away two-goal lead at Old Trafford to exit Carabao Cup",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd 2-3 Brighton LIVE - United throw away two-goal lead at Old Trafford to exit Carabao Cup appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-utd-v-brighton-live-updates-from-carabao-cup-clash/",
-      "claimed_at": "2026-09-16T20:35:12Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fa6d6dc9f7ade9af",
-      "headline": "Joao Pedro out of Brazil squad with injury in worry for Chelsea",
-      "summary": "Chelsea striker Joao Pedro has withdrawn from the Brazil squad through injury ahead of their upcoming friendlies against Australia and India, the national team have said. The Brazilian Football Confederation confirmed on Wednesday that",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/joao-pedro-out-of-brazil-squad-with-injury-in-worry-for-chelsea/",
-      "claimed_at": "2026-09-16T18:19:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c4f8ccce6900949f",
-      "headline": "Man Utd v Brighton LIVE \u2013 Fernandes, Mbeumo & Cunha benched for Carabao Cup clash",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd v Brighton LIVE - Fernandes, Mbeumo & Cunha benched for Carabao Cup clash appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-utd-v-brighton-live-updates-from-carabao-cup-clash/",
-      "claimed_at": "2026-09-16T16:49:04Z",
-      "players": [
-        {
-          "element_id": 427,
-          "name": "Mbeumo",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "274d9ae34f257974",
-      "headline": "Sunderland v AZ Alkmaar LIVE \u2013 updates from Black Cats\u2019 Europa League opener",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Sunderland v AZ Alkmaar LIVE - updates from Black Cats' Europa League opener appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/sunderland-v-az-alkmaar-live-updates-from-black-cats-europa-league-opener/",
-      "claimed_at": "2026-09-16T16:42:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "dfa29b566088658b",
       "headline": "FPL notes: Arteta on Gabriel half-time sub + Timber absence",
       "summary": "The Arsenal boss also discusses Piero Hincapie's no-show at Ipswich on Tuesday The post FPL notes: Arteta on Gabriel half-time sub + Timber absence appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footb",
@@ -1736,24 +1772,6 @@
           "element_id": 399,
           "name": "Cherki",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1c86ac0f59d6c816",
-      "headline": "Coventry v Brighton team news: Both sides unchanged",
-      "summary": "The Sky Blues have lost all three of their Premier League games so far The post Coventry v Brighton team news: Both sides unchanged appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/13/coventry-v-brighton-team-news-both-sides-unchanged",
-      "claimed_at": "2026-09-13T12:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
