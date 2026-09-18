@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-18T15:41:30.553517Z",
-  "phase": "seal",
+  "generated_at": "2026-09-18T16:56:06.310814Z",
+  "phase": "idle",
   "gameweek": 5,
   "deadline": "2026-09-18T17:30:00+00:00",
-  "seconds_to_deadline": 6509.613527,
-  "reason": "GW5 deadline in 1.8h",
-  "needs_work": true,
+  "seconds_to_deadline": 2033.930191,
+  "reason": "GW5 is already sealed",
+  "needs_work": false,
   "outstanding": [],
-  "agent_ran": true,
+  "agent_ran": false,
   "explains_absence": "The agent computes projections, the evidence view and the message feed. It self-gates on phase, so those artifacts are absent \u2014 not broken \u2014 whenever nothing is due."
 }
