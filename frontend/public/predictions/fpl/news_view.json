@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-18T19:36:29.189841Z",
-  "n_dropped": 161,
+  "generated_at": "2026-09-18T21:53:14.682097Z",
+  "n_dropped": 165,
   "dropped_by_source": {
-    "bbc_football": 41,
+    "bbc_football": 42,
     "fantasyfootballscout": 6,
     "hayters": 30,
-    "sky_football": 84
+    "sky_football": 87
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 251,
+  "n_articles": 255,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -333,22 +333,166 @@
       "touches_squad": true
     },
     {
-      "digest": "6392fef399ef37a4",
-      "headline": "Refereeing body Pro Ref admits \u2018error of judgement\u2019 in Haaland\u2019s winning goal against Man Utd",
-      "summary": "Refereeing body Pro Ref have admitted VAR made an error by failing to recommend an on-field review of Erling Haaland\u2019s winning goal in Manchester City\u2019s 1-0 victory over Manchester United. Haaland\u2019s goal in",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/refereeing-body-pro-ref-admits-error-of-judgement-in-haalands-winning-goal-against-man-utd/",
-      "claimed_at": "2026-09-13T21:18:17Z",
+      "digest": "7da8e4a1a130d5c8",
+      "headline": "Arteta: Dowman could go out on loan in future",
+      "summary": "Arsenal&#160;manager&#160;Mikel Arteta&#160;has not ruled out loaning out&#160;Max Dowman in the future and says the club evaluates the 16-year-old sensation's progress every six months.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13589421/max-dowman-mikel-arteta-admits-16-year-old-arsenal-wonderkid-could-go-out-on-loan-in-the-future",
+      "claimed_at": "2026-09-18T22:30:00Z",
       "players": [
         {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "0d61a3ac27ee74a8",
+      "headline": "Brentford score three in dominant win over Chelsea to continue unbeaten start",
+      "summary": "Highlights from the Premier League match between Brentford and Chelsea.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13589514/brentford-3-0-chelsea-premier-league-highlights",
+      "claimed_at": "2026-09-18T22:12:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f43eeacf92b486bf",
+      "headline": "Chelsea latest: 'We have been bullied at set-pieces,' admits Colwill",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-09-18T22:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "74de378f7a53a815",
+      "headline": "Arsenal open to Dowman loan in right circumstances",
+      "summary": "Arsenal are open to allowing teenage prodigy Max Dowman to leave the club on loan this term if it aids his development.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/crp3k23nkl8go?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-18T21:30:38Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "47bca4fb21c4f94b",
+      "headline": "De Zerbi insists Tonali is a \u2018complete midfielder\u2019",
+      "summary": "Roberto De Zerbi insisted that Sandro Tonali is &#8220;a complete midfielder&#8221;, despite the Italian struggling to make an impact for Spurs so far. The Italian joined Spurs for \u00a392.5 million plus add-ons in the summer from Newcastle United, beco",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-insists-tonali-is-a-complete-midfielder/",
+      "claimed_at": "2026-09-18T21:30:00Z",
+      "players": [
+        {
+          "element_id": 455,
+          "name": "Tonali",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d568d6709e02a98a",
+      "headline": "Arteta says Arsenal \u2018have not listened to any offers\u2019 for young star",
+      "summary": "Mikel Arteta says Arsenal will continue to assess Max Dowman\u2019s development every six months after making it clear they wanted the youngster to remain part of the first-team set-up. The Arsenal boss revealed the club did not serious",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-says-arsenal-have-not-listened-to-any-offers-for-young-star/",
+      "claimed_at": "2026-09-18T21:30:00Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "eee3911076a27f84",
+      "headline": "Anthony heads Brentford in front against Chelsea",
+      "summary": "Jaidon Anthony heads Brentford in front against Chelsea.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13589497/jaidon-anthony-heads-brentford-in-front-against-chelsea",
+      "claimed_at": "2026-09-18T21:26:00Z",
+      "players": [
+        {
+          "element_id": 105,
+          "name": "Anthony",
+          "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "18cfa5395d87ee13",
+      "headline": "A weight off Igor Thiago's shoulders - Brentford v Chelsea ratings",
+      "summary": "Brentford climb to third in the Premier League with a 2-0 victory over Chelsea - here are BBC Sport's player ratings.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm046x9l6d6po?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-18T20:57:06Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5dc7de6c08f07cf0",
+      "headline": "Liverpool watch \u00a351.5m-rated Smit - Saturday's gossip",
+      "summary": "Netherlands midfielder Kees Smit is watched by Liverpool, Tottenham lead the race for Brazil defender Arthur Dias and Monaco's Folarin Balogun is expected to leave in January.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwd083944eeko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-18T20:35:52Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "02bd19f6ad00431e",
@@ -441,9 +585,45 @@
       "touches_squad": false
     },
     {
+      "digest": "ffdf050cfd1f9627",
+      "headline": "Gabriel edging closer to Man Utd exit as Barca and Real talks advance",
+      "summary": "Barcelona and Real Madrid are in transfer talks to sign Manchester United youngster JJ Gabriel.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13589387/jj-gabriel-edging-closer-to-manchester-united-exit-amid-barcelona-talks-about-a-potential-move-for-the-forward",
+      "claimed_at": "2026-09-18T17:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "440eb850d6533938",
       "headline": "Brentford 0-0 Chelsea LIVE \u2013 Chelsea on top in opening 30 minutes",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 0-0 Chelsea LIVE - Chelsea on top in opening 30 minutes appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-chelsea-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-09-18T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "959605ef2e9ecfbb",
+      "headline": "Brentford 3-0 Chelsea LIVE \u2013 Brentford batter Chelsea after second half masterclass",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 3-0 Chelsea LIVE - Brentford batter Chelsea after second half masterclass appeared first on Hayters.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/brentford-v-chelsea-live-team-news-updates-and-reaction-2/",
@@ -1077,42 +1257,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6f07d946ce18a63b",
-      "headline": "Merson: 'Huge game' between Spurs and Aston Villa is a 'momentum swinger'",
-      "summary": "In his latest Sky Sports column, Paul Merson looks ahead to Saturday's \"huge\" game between Tottenham and Aston Villa.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13589087/tottenham-vs-aston-villa-paul-merson-believes-saturdays-huge-premier-league-match-is-a-momentum-swinger",
-      "claimed_at": "2026-09-18T08:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f575097f8238ee79",
-      "headline": "Will Carrick navigate choppy waters to steer Man Utd ship back on course?",
-      "summary": "Manchester United's Carabao Cup second-round loss at Grimsby last season was a result that many will remember.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13589079/michael-carrick-man-utd-boss-aiming-to-steer-ship-back-on-course-at-fulham-after-back-to-back-defeats",
-      "claimed_at": "2026-09-18T08:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f7c3acf3ea43b4a1",
       "headline": "From depression after Chelsea injury to playing non-league at 37",
       "summary": "Sam Hutchinson is getting ready to play for Farnham Town in the second qualifying round of the FA Cup - 19 years after making his Chelsea debut under Jose Mourinho.",
@@ -1185,24 +1329,6 @@
       "touches_squad": false
     },
     {
-      "digest": "78399c4ad618fc93",
-      "headline": "Palace latest: Sage says the fans love Sarr - and he deserves it!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-17T23:39:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "87412969bd7ff285",
       "headline": "From -17 points to dream European start for Bournemouth",
       "summary": "Bournemouth started a League Two season on -17 points in 2008, now they have made a dream start in European competition.",
@@ -1210,42 +1336,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c539mw7m0x4go?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-17T23:30:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "faea4331e37b272e",
-      "headline": "Bournemouth latest: Rose sees lots to like in Europa League win",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-17T23:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3029426d6a8f0d34",
-      "headline": "Papers: Arsenal eyeing Kroupi and Schade in January",
-      "summary": "The top stories and transfer rumours from Friday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13589073/arsenal-transfer-news-eli-junior-kroupi-and-kevin-schade-on-mikel-artetas-target-list-ahead-of-january-paper-talk",
-      "claimed_at": "2026-09-17T22:39:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1461,42 +1551,6 @@
       "touches_squad": false
     },
     {
-      "digest": "fd5c7d92aa6a6b00",
-      "headline": "Newcastle United without seven players for Hull City game",
-      "summary": "Newcastle will be without Anthony Elanga, Amar Dedic, Jacob Ramsey and Nico Gonzalez for Saturday\u2019s Premier League clash with Hull City, Matthias Jaissle has confirmed. Elanga is set to undergo a scan after suffering an injury, with Jaissle a",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/newcastle-united-without-seven-players-for-hull-city-game/",
-      "claimed_at": "2026-09-17T14:42:19Z",
-      "players": [
-        {
-          "element_id": 283,
-          "name": "Jacob",
-          "club": "HUL",
-          "held": false
-        },
-        {
-          "element_id": 454,
-          "name": "Elanga",
-          "club": "NEW",
-          "held": false
-        },
-        {
-          "element_id": 456,
-          "name": "J.Ramsey",
-          "club": "NEW",
-          "held": false
-        },
-        {
-          "element_id": 593,
-          "name": "Dedi\u0107",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "cf545d299fd72f52",
       "headline": "Dedic, Elanga, Nico: Newcastle injury latest for FPL Gameweek 5",
       "summary": "The Magpies will be without quite a few when hosting Hull The post Dedic, Elanga, Nico: Newcastle injury latest for FPL Gameweek 5 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1515,24 +1569,6 @@
           "element_id": 593,
           "name": "Dedi\u0107",
           "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "712df14816d2626a",
-      "headline": "Alonso gives updates on several Chelsea stars ahead of Brentford clash",
-      "summary": "Xabi Alonso has refused to rule Joao Pedro out of Chelsea\u2019s clash with Brentford despite the forward withdrawing from the Brazil squad through injury. The Chelsea boss was reluctant to reveal the nature of the problem but said a",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/alonso-gives-updates-on-several-chelsea-stars-ahead-of-brentford-clash/",
-      "claimed_at": "2026-09-17T14:28:22Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1617,24 +1653,6 @@
       "touches_squad": false
     },
     {
-      "digest": "60777c6535127397",
-      "headline": "Important not to 'pigeonhole' Graham - O'Neill",
-      "summary": "Northern Ireland manager Michael O'Neill says there is no rush for Everton's Braiden Graham to find his best position.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqm2m1e4mr8xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-17T12:03:25Z",
-      "players": [
-        {
-          "element_id": 654,
-          "name": "Graham",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "3362ad7eb8e807fd",
       "headline": "What is the best Arsenal triple-up in FPL?",
       "summary": "The champions have started brilliantly this season and have some good fixtures ahead The post What is the best Arsenal triple-up in FPL? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1647,42 +1665,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "09d0cf4f40d97e36",
-      "headline": "How an Aston Villa fringe player became Europe's most prolific scorer",
-      "summary": "No player in Europe's top five leagues has scored more goals than Donyell Malen since his Roma debut in January - BBC Sport examines his transformation.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvj64wg0lgeyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-17T08:30:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3f0143f809d4bcb0",
-      "headline": "Chelsea's Lavia out to 'change narrative' after injuries",
-      "summary": "Chelsea midfielder Romeo Lavia says he is finally reaping the rewards of his hard work and is determined to \"change the narrative\" around him.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cnvlr92eyldo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-17T07:53:38Z",
-      "players": [
-        {
-          "element_id": 161,
-          "name": "Lavia",
-          "club": "CHE",
           "held": false
         }
       ],
