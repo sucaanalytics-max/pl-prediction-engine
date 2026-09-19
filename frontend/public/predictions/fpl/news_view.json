@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-19T08:13:37.647922Z",
-  "n_dropped": 172,
+  "generated_at": "2026-09-19T12:32:21.848207Z",
+  "n_dropped": 166,
   "dropped_by_source": {
-    "bbc_football": 45,
-    "fantasyfootballscout": 7,
-    "hayters": 30,
-    "sky_football": 90
+    "bbc_football": 42,
+    "fantasyfootballscout": 6,
+    "hayters": 29,
+    "sky_football": 89
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 262,
+  "n_articles": 256,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -291,46 +291,112 @@
       "touches_squad": true
     },
     {
-      "digest": "7f2ea886fdc92277",
-      "headline": "'You can't lose focus' | Why did VAR get Haaland goal so wrong?",
-      "summary": "Former Premier League referee Dermot Gallagher and former Coventry striker Jay Bothroyd dissect the biggest talking point of the weekend and ask how VAR got Erling Haaland's winner for Manchester City against rivals United so wrong.",
+      "digest": "8b2eaa3b28997f52",
+      "headline": "Everton vs Ipswich team news LIVE!",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13585778/ref-watch-why-did-var-get-erling-haaland-goal-so-wrong",
-      "claimed_at": "2026-09-14T11:29:00Z",
+      "url": "https://www.skysports.com/football/everton-vs-ipswich-town/live/559487",
+      "claimed_at": "2026-09-19T13:23:00Z",
       "players": [
         {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "4beaef0057cbbff0",
-      "headline": "FPL notes: Spurs drought, Kinsky clean sheet + 90 mins for Barry again",
-      "summary": "It's no goals in four matches for Spurs after the stalemate with Everton The post FPL notes: Spurs drought, Kinsky clean sheet + 90 mins for Barry again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics fr",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/14/fpl-notes-spurs-drought-kinsky-clean-sheet-90-mins-for-barry-again",
-      "claimed_at": "2026-09-14T08:55:00Z",
-      "players": [
-        {
-          "element_id": 249,
-          "name": "Barry",
-          "club": "EVE",
-          "held": true
-        },
-        {
-          "element_id": 496,
-          "name": "Kinsky",
-          "club": "TOT",
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "fa990612859ee691",
+      "headline": "Brighton vs Arsenal build-up LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-arsenal/live/559486",
+      "claimed_at": "2026-09-19T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ee1c6613382f77b2",
+      "headline": "Newcastle vs Hull City team news LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/newcastle-united-vs-hull-city/live/559491",
+      "claimed_at": "2026-09-19T12:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c72d5da2ee59fbd9",
+      "headline": "Spurs v Aston Villa team news: Porro + Manzambi start",
+      "summary": "One change for Spurs, two for Villa The post Spurs v Aston Villa team news: Porro + Manzambi start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/19/spurs-v-aston-villa-team-news-porro-manzambi-start",
+      "claimed_at": "2026-09-19T10:45:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ec1d1b44eb2cddd7",
+      "headline": "Will Spurs ever score again? Manzambi puts Villa in front LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/tottenham-hotspur-vs-aston-villa/live/559493",
+      "claimed_at": "2026-09-19T10:00:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "497722a2fb60503f",
+      "headline": "Tottenham 0-1 Aston Villa LIVE \u2013 Manzambi fires Villa ahead",
+      "summary": "{rsn-live-v2} The post Tottenham 0-1 Aston Villa LIVE - Manzambi fires Villa ahead appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/tottenham-vs-aston-villa-live-team-news-match-updates-and-reaction/",
+      "claimed_at": "2026-09-19T09:29:49Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "beac973872f7db0e",
@@ -1107,24 +1173,6 @@
       "touches_squad": false
     },
     {
-      "digest": "1cb89271ff39fe60",
-      "headline": "Carrick dismisses 'ridiculous' speculation on future",
-      "summary": "Michael Carrick insists Manchester United's recent struggles are \"not a catastrophe or a disaster\" and dismissed talk of pressure on his position as \"ridiculous\".",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13589326/man-utd-its-not-on-the-radar-michael-carrick-dismisses-ridiculous-speculation-on-future",
-      "claimed_at": "2026-09-18T14:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "8287d047e8892a7f",
       "headline": "Wilson major Wales injury concern for Nations League",
       "summary": "Leeds United forward Harry Wilson is a major doubt for the start of Wales' Nations League campaign because of a leg muscle injury.",
@@ -1150,42 +1198,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c5n4k89j1zpeo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-18T14:09:37Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6185490e192e2599",
-      "headline": "Liverpool latest: Iraola hails Araujo's spirit ahead of trip to Bournemouth",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-18T13:55:00Z",
-      "players": [
-        {
-          "element_id": 579,
-          "name": "Araujo",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6448cd112244e583",
-      "headline": "Man City latest: 'If I don\u2019t win it\u2019s a disaster' \u2013 Maresca stays cautious after flying start",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-18T13:40:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1551,24 +1563,6 @@
           "element_id": 471,
           "name": "Milenkovi\u0107",
           "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f76bee0d500a695d",
-      "headline": "Hull City defender to miss Newcastle trip as Jakirovic provides updates on several players",
-      "summary": "Hull City defender Nobel Mendy will miss Saturday\u2019s trip to Newcastle as he continues to follow concussion protocols after suffering a head injury against Chelsea. Mendy was taken to hospital for assessment af",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/hull-city-defender-to-miss-newcastle-trip-as-jakirovic-provides-updates-on-several-players/",
-      "claimed_at": "2026-09-17T14:55:24Z",
-      "players": [
-        {
-          "element_id": 586,
-          "name": "Mendy",
-          "club": "HUL",
           "held": false
         }
       ],
