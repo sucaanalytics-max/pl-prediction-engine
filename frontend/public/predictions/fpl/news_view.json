@@ -1,19 +1,55 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-19T16:05:05.376114Z",
-  "n_dropped": 180,
+  "generated_at": "2026-09-19T18:36:39.458732Z",
+  "n_dropped": 195,
   "dropped_by_source": {
-    "bbc_football": 48,
+    "bbc_football": 52,
     "fantasyfootballscout": 6,
     "hayters": 33,
-    "sky_football": 93
+    "sky_football": 104
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 270,
+  "n_articles": 285,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "6480977618bea5ee",
+      "headline": "Barry's unconventional finish helps Everton edge 10-man Ipswich",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Everton and Ipswich Town.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13589798/everton-1-0-ipswich-premier-league-highlights",
+      "claimed_at": "2026-09-19T17:19:00Z",
+      "players": [
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "428fe1104e047d9c",
+      "headline": "Everton beat 10-man Ipswich despite VAR interference to deny Barry",
+      "summary": "Thierno Barry settled a match largely devoid of quality with a deflected effort as Everton beat Ipswich 1-0 at the Hill Dickinson, with VAR intervening to deny the Toffees forward what looked to be a legitimate second goal.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-ipswich-town/report/559487",
+      "claimed_at": "2026-09-19T16:45:00Z",
+      "players": [
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "b5ba692cc2ca911f",
       "headline": "Man City 0-0 Norwich City LIVE \u2013 Haaland absent from Maresca\u2019s squad",
@@ -289,6 +325,204 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "e6637907bce85e7b",
+      "headline": "Holmberg equalises LATE on for Arsenal!",
+      "summary": "Smilla Holmberg rescues draw for Arsenal with late goal against Manchester United.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13589917/arsenal-1-1-manchester-united-smilla-holmberg-equalises-late-on-for-gunners",
+      "claimed_at": "2026-09-19T19:24:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3ca781ac3a013d51",
+      "headline": "Arteta: We didn't respect the game against Brighton",
+      "summary": "Mikel Arteta accused his Arsenal players of failing to \"respect the game\" in their 3-0 defeat to Brighton at the Amex Stadium.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13589868/arsenal-boss-mikel-arteta-accuses-players-of-failing-to-respect-the-game-as-champions-suffer-first-defeat-of-season-to-brighton",
+      "claimed_at": "2026-09-19T17:47:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b0e071a0fc26ac22",
+      "headline": "Willock and Hall on target as Newcastle end Hull's unbeaten start",
+      "summary": "Joe Willock and Lewis Hall's goals inside the opening 10 minutes were enough to steer Newcastle to a thrilling 2-1 victory at St James' Park and end Hull's unbeaten Premier League start.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/newcastle-united-vs-hull-city/report/559491",
+      "claimed_at": "2026-09-19T17:25:00Z",
+      "players": [
+        {
+          "element_id": 460,
+          "name": "Willock",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7d762799e18b5b90",
+      "headline": "Brighton STUN champions Arsenal to move third in the table!",
+      "summary": "Highlights from the Premier League match between Brighton and Arsenal.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13589794/brighton-3-0-arsenal-premier-league-highlights",
+      "claimed_at": "2026-09-19T17:17:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1bb3bc10c210ccc6",
+      "headline": "Villa hold on at sorry Spurs to earn first PL win of season",
+      "summary": "Highlights from the Premier League match between Tottenham Hotspur and Aston Villa.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13589667/tottenham-hotspur-2-3-aston-villa-premier-league-highlights",
+      "claimed_at": "2026-09-19T17:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "20e8f4b11b52e4d4",
+      "headline": "Newcastle hand Hull first defeat since PL return",
+      "summary": "Highlights from the Premier League match between Newcastle United and Hull City.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13589782/newcastle-united-2-1-hull-city-premier-league-highlights",
+      "claimed_at": "2026-09-19T17:14:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6a1e9b64a7af799f",
+      "headline": "Arsenal's winning start ended by brilliant Brighton",
+      "summary": "Arsenal's winning start to the season came to a brutal end as brilliant Brighton secured a stunning 3-0 victory - and even that scoreline flattered Mikel Arteta's side.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-arsenal/report/559486",
+      "claimed_at": "2026-09-19T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6130d9c9352aa4d2",
+      "headline": "Suzuki proves worthy replacement for Martinez at Villa",
+      "summary": "Aston Villa new boy Zion Suzuki deserves as much credit as anyone for their first Premier League win of the season at struggling Tottenham.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmg490nn12pvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T16:58:29Z",
+      "players": [
+        {
+          "element_id": 597,
+          "name": "Suzuki",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "26c4d117de229765",
+      "headline": "'It's a big lesson to learn' - Arteta on 'painful' Brighton defeat",
+      "summary": "Arsenal manager Mikel Arteta says Arsenal were \"very far\" from the standards required to compete after the Gunners lost 3-0 to Brighton - their first defeat in the Premier League this season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6kgxl5x12y9o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T16:50:50Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9d1d6d80867bfd72",
+      "headline": "'Stay humble' - Hurzeler's plea to Brighton after huge Arsenal win",
+      "summary": "Brighton manager Fabian Hurzeler highlights his team's intensity, togetherness and squad depth following their resounding 3-0 win against Arsenal in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqx2zd858d7xo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T16:43:38Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "05a2ac737268434c",
+      "headline": "From near oblivion to Europe - Brighton celebrate 125th anniversary in style",
+      "summary": "From obscurity and near oblivion to Premier League and Europe - Brighton celebrate their 125th anniversary.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm3wjl29qp4go?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T16:41:34Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "015f26930667427c",
@@ -627,24 +861,6 @@
       "touches_squad": false
     },
     {
-      "digest": "ec1d1b44eb2cddd7",
-      "headline": "Will Spurs ever score again? Manzambi puts Villa in front LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/tottenham-hotspur-vs-aston-villa/live/559493",
-      "claimed_at": "2026-09-19T10:00:00Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "497722a2fb60503f",
       "headline": "Tottenham 0-1 Aston Villa LIVE \u2013 Manzambi fires Villa ahead",
       "summary": "{rsn-live-v2} The post Tottenham 0-1 Aston Villa LIVE - Manzambi fires Villa ahead appeared first on Hayters.",
@@ -753,24 +969,6 @@
       "touches_squad": false
     },
     {
-      "digest": "95915b016552aa83",
-      "headline": "'Bullied' and 'out of control' - Chelsea's defensive issues laid bare",
-      "summary": "\"You need to feel it. We're not feeling it,\" said Xabi Alonso after Chelsea's 3-0 loss at Brentford. Yet Chelsea are stuck in a familiar feeling.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13589535/brentford-3-0-chelsea-defensive-issues-for-xabi-alonso-laid-bare-after-chastening-west-london-derby-defeat",
-      "claimed_at": "2026-09-18T23:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "d62422102e79b982",
       "headline": "'We're unpredictable' - Andrews delighted with 'brilliant' Brentford",
       "summary": "Brentford manager Keith Andrews is full of praise after a resounding 3-0 win against West London rivals Chelsea, branding them \"brilliant\" following a unbeaten start to the Premier League campaign.",
@@ -807,42 +1005,6 @@
       "touches_squad": false
     },
     {
-      "digest": "7da8e4a1a130d5c8",
-      "headline": "Arteta: Dowman could go out on loan in future",
-      "summary": "Arsenal&#160;manager&#160;Mikel Arteta&#160;has not ruled out loaning out&#160;Max Dowman in the future and says the club evaluates the 16-year-old sensation's progress every six months.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13589421/max-dowman-mikel-arteta-admits-16-year-old-arsenal-wonderkid-could-go-out-on-loan-in-the-future",
-      "claimed_at": "2026-09-18T22:30:00Z",
-      "players": [
-        {
-          "element_id": 20,
-          "name": "Dowman",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0d61a3ac27ee74a8",
-      "headline": "Brentford score three in dominant win over Chelsea to continue unbeaten start",
-      "summary": "Highlights from the Premier League match between Brentford and Chelsea.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13589514/brentford-3-0-chelsea-premier-league-highlights",
-      "claimed_at": "2026-09-18T22:12:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0ab97f9e55878d5b",
       "headline": "Brentford stay unbeaten as they put three past Chelsea",
       "summary": "Brentford maintain their unbeaten start in the Premier League as they score three second-half goals to beat Chelsea 3-0 at the Gtech Community Stadium.",
@@ -850,42 +1012,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/cx980qll9me8o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-09-18T22:00:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cec84e834b76d5fb",
-      "headline": "Brentford latest: Andrews \u2018loving\u2019 journey after Chelsea win",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279280/brentford-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-18T22:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f43eeacf92b486bf",
-      "headline": "Chelsea latest: 'We have been bullied at set-pieces,' admits Colwill",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-09-18T22:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -969,24 +1095,6 @@
       "touches_squad": false
     },
     {
-      "digest": "eee3911076a27f84",
-      "headline": "Anthony heads Brentford in front against Chelsea",
-      "summary": "Jaidon Anthony heads Brentford in front against Chelsea.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13589497/jaidon-anthony-heads-brentford-in-front-against-chelsea",
-      "claimed_at": "2026-09-18T21:26:00Z",
-      "players": [
-        {
-          "element_id": 105,
-          "name": "Anthony",
-          "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "18cfa5395d87ee13",
       "headline": "A weight off Igor Thiago's shoulders - Brentford v Chelsea ratings",
       "summary": "Brentford climb to third in the Premier League with a 2-0 victory over Chelsea - here are BBC Sport's player ratings.",
@@ -1005,24 +1113,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5dc7de6c08f07cf0",
-      "headline": "Liverpool watch \u00a351.5m-rated Smit - Saturday's gossip",
-      "summary": "Netherlands midfielder Kees Smit is watched by Liverpool, Tottenham lead the race for Brazil defender Arthur Dias and Monaco's Folarin Balogun is expected to leave in January.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwd083944eeko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T20:35:52Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "02bd19f6ad00431e",
       "headline": "Brentford v Chelsea team news: Sangare benched, no Pedro",
       "summary": "Two changes for Brentford, five for Chelsea The post Brentford v Chelsea team news: Sangare benched, no Pedro appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1030,42 +1120,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/09/18/brentford-v-chelsea-team-news-sangare-benched-no-pedro",
       "claimed_at": "2026-09-18T18:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "64719315f53b74d6",
-      "headline": "Fulham latest: 'Arbeloa must be given time - first league win not far away'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-09-18T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4322be82d9484610",
-      "headline": "Former Man Utd left-back Malacia joins FC Cincinnati",
-      "summary": "FC Cincinnati sign former Manchester United left-back Tyrell Malacia on a free transfer.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6vgyjgqgdqwo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T17:39:15Z",
       "players": [
         {
           "element_id": 0,
@@ -1365,42 +1419,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a617427112068bb5",
-      "headline": "Gabriel, 15, in Barcelona amid speculation over future",
-      "summary": "Man Utd youngster JJ Gabriel travels to Barcelona as some of Europe's biggest clubs continue to vie for his signature.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c679052dq30ro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T15:02:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8287d047e8892a7f",
-      "headline": "Wilson major Wales injury concern for Nations League",
-      "summary": "Leeds United forward Harry Wilson is a major doubt for the start of Wales' Nations League campaign because of a leg muscle injury.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq62j7yrler2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T14:23:38Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9cab7b3bb5ef10b3",
       "headline": "Man Utd duo could feature against Fulham",
       "summary": "Michael Carrick says Carlos Baleba and Luke Shaw both have a chance of being available for Manchester United\u2019s trip to Fulham on Sunday. United head to Craven Cottage for their final game before the international break, with Carrick still waiting to make a fi",
@@ -1654,24 +1672,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/09/17/joao-pedro-james-caicedo-chelsea-injury-latest-for-fpl-gameweek-5",
       "claimed_at": "2026-09-17T14:01:27Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "01c2a78b907459de",
-      "headline": "FPL Gameweek 5 team news: Thurs\u2019 live injury updates + Pedro latest",
-      "summary": "Six managers face the media, including Chelsea's Xabi Alonso The post FPL Gameweek 5 team news: Thurs' live injury updates + Pedro latest appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/09/17/fpl-gameweek-5-team-news-thurs-live-injury-updates-pedro-latest",
-      "claimed_at": "2026-09-17T12:45:00Z",
       "players": [
         {
           "element_id": 0,
