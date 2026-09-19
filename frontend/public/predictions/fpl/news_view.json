@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-19T18:36:39.458732Z",
-  "n_dropped": 195,
+  "generated_at": "2026-09-19T21:02:37.775149Z",
+  "n_dropped": 207,
   "dropped_by_source": {
-    "bbc_football": 52,
+    "bbc_football": 60,
     "fantasyfootballscout": 6,
-    "hayters": 33,
-    "sky_football": 104
+    "hayters": 35,
+    "sky_football": 106
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 285,
+  "n_articles": 297,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "682ec98c96375fce",
+      "headline": "Everton's unbeaten run continues with win over 10-man Ipswich",
+      "summary": "Unbeaten Everton move up to fifth in the Premier League, with Thierno Barry's goal making the difference against 10-man Ipswich Town.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmvgy397e5qzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T19:00:21Z",
+      "players": [
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "6480977618bea5ee",
       "headline": "Barry's unconventional finish helps Everton edge 10-man Ipswich",
@@ -303,28 +321,112 @@
       "touches_squad": true
     },
     {
-      "digest": "a4b410581662b714",
-      "headline": "Calvert-Lewin stars but Botman struggles - player ratings for Leeds v Newcastle",
-      "summary": "How Leeds United and Newcastle United's players rated following their Premier League match.",
+      "digest": "dc49f2c0acb0d5f5",
+      "headline": "A Coventry win 25 years in the making",
+      "summary": "Coventry City's win over Nottingham Forest - thanks to Jay Dasilva's goal - was a victory which was over 25 years in the making following some dark days for the Sky Blues.",
       "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6790xr3wvr7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-14T20:54:23Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm209djp8d2xo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T20:28:19Z",
       "players": [
         {
-          "element_id": 346,
-          "name": "Calvert-Lewin",
-          "club": "LEE",
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
-        },
-        {
-          "element_id": 447,
-          "name": "Botman",
-          "club": "NEW",
-          "held": true
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "2e6279669cb75fea",
+      "headline": "Olid's Man Utd take big step forward after 'intense week'",
+      "summary": "A week ago, the picture at Manchester United looked bleak. Then on Saturday, victory was snatched away from them at Arsenal. But have we seen signs of improvement from Eva Olid's side?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cx2z7ev28zeo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T20:21:11Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "290053dc800dfa5a",
+      "headline": "Moyes demands more from Everton - but don't mention Europe",
+      "summary": "Fifth in the Premier League table and yet to lose this season, Everton are on the up, but boss David Moyes wants further improvements - and don't mention Europe.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmlye7z7q5r7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T19:48:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d258352d2e00c7e5",
+      "headline": "Coventry survive late Forest VAR controversy to claim first PL win in 25 years",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Nottingham Forest and Coventry.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13589936/nottingham-forest-0-1-coventry-premier-league-highlights",
+      "claimed_at": "2026-09-19T19:46:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e9958840c8aab237",
+      "headline": "Coventry seal first PL win in 25 years at Forest amid VAR controversy",
+      "summary": "Coventry earned their first Premier League victory in 25 years after Jay Dasilva's winner and a controversial disallowed Nottingham Forest equaliser saw the promoted side win 1-0 at the City Ground.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/nottingham-forest-vs-coventry-city/report/559492",
+      "claimed_at": "2026-09-19T19:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1f648d83c5070970",
+      "headline": "Coventry need to 'keep feet on the ground' after 'landmark' win - Lampard",
+      "summary": "Frank Lampard reacts to Coventry's \"landmark\" day after they earned their first top flight win in 25 years, beating Nottingham Forest 1-0 at the City Ground in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6kgw17vqk98o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T19:24:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "e6637907bce85e7b",
@@ -339,6 +441,114 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9c0380ca1cba395b",
+      "headline": "Coventry earn first points of season in dramatic win over Forest",
+      "summary": "Jay Dasilva's strike proves the difference as Coventry earn their first Premier League win since returning to the top flight.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmly4g0rqzwwo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T19:14:53Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "30979e7027d36606",
+      "headline": "Brighton humbling 'a big lesson' for Arsenal - Arteta",
+      "summary": "An uncharacteristic performance from Arsenal saw the Gunners ship three goals in the defeat to Brighton - but could the loss be the \"big lesson\" they needed?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmqlw745q30vo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T19:05:18Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "13154395aa5dcfd9",
+      "headline": "Newcastle hold off Hull at St James' Park",
+      "summary": "Newcastle United hold off a late Hull City fightback to seal a narrow 2-1 win.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ckrer0yl0qjjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T19:00:14Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8bfad3400e6588ff",
+      "headline": "Brighton cruise past Arsenal to end champions' perfect start",
+      "summary": "Brighton secure a 3-0 victory over Premier League champions Arsenal to inflict the Gunners' first defeat of the season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cvde048j71rdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T19:00:09Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9ed19bcc636ff34c",
+      "headline": "Spurs lose again as Villa hold on for first league win",
+      "summary": "Aston Villa pick up their first win of the Premier League season after five matches, holding off a late push from a Tottenham Hotspur side who remain without a win in the league.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c3j4jz7pgq5lo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T19:00:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8a324d5b4548bce3",
+      "headline": "Arteta admits Arsenal have \u2018big lessons\u2019 to learn after Brighton defeat",
+      "summary": "Mikel Arteta admitted that Arsenal have some &#8220;big lessons&#8221; to learn after their 3-0 defeat to Brighton at the AMEX. Arteta's side were unbeaten coming into the match, but goals from Pascal Grob, Charalampos Kostoulas",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-admits-arsenal-have-big-lessons-after-brighton-defeat/",
+      "claimed_at": "2026-09-19T18:42:24Z",
+      "players": [
+        {
+          "element_id": 138,
+          "name": "Kostoulas",
+          "club": "BHA",
           "held": false
         }
       ],
@@ -789,42 +999,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a8ee37facbbda575",
-      "headline": "Newcastle hang on with narrow victory vs Hull LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/newcastle-united-vs-hull-city/live/559491",
-      "claimed_at": "2026-09-19T12:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ee1c6613382f77b2",
-      "headline": "Newcastle vs Hull City team news LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/newcastle-united-vs-hull-city/live/559491",
-      "claimed_at": "2026-09-19T12:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "bae165a075c8c628",
       "headline": "Brighton 3-0 Arsenal LIVE \u2013 Arsenal thrashed by Brighton",
       "summary": "{rsn-live-v2} The post Brighton 3-0 Arsenal LIVE - Arsenal thrashed by Brighton appeared first on Hayters.",
@@ -915,42 +1089,6 @@
       "touches_squad": false
     },
     {
-      "digest": "74ff8de4be73134d",
-      "headline": "Winless Villa and Spurs face telling early showdown",
-      "summary": "Aston Villa and Tottenham are winless in the Premier League - and both in need of inspiration as they prepare to face each other on Saturday.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6ly7vg8n7geo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-19T05:32:46Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b33431c25cb3df4b",
-      "headline": "Nottingham Forest stadium expansion approved - so what now?",
-      "summary": "Will the dream of a bigger City Ground finally become a reality?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/news/articles/c674kw873545o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-19T05:14:39Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "3e112bbc509117d9",
       "headline": "FPL notes: Pedro injury latest + why Sangare was benched",
       "summary": "FPL lessons from Brentford 3-0 Chelsea The post FPL notes: Pedro injury latest + why Sangare was benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -963,96 +1101,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d62422102e79b982",
-      "headline": "'We're unpredictable' - Andrews delighted with 'brilliant' Brentford",
-      "summary": "Brentford manager Keith Andrews is full of praise after a resounding 3-0 win against West London rivals Chelsea, branding them \"brilliant\" following a unbeaten start to the Premier League campaign.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cj3v47q6lde1o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T22:42:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "085b4f0769990f75",
-      "headline": "Chelsea miss Joao Pedro... and can't stop conceding goals",
-      "summary": "Chelsea's problem was defending, but with Joao Pedro ruled out through injury, scoring goals has also become an issue.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm0qx3yv8z42o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T22:39:24Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0ab97f9e55878d5b",
-      "headline": "Brentford stay unbeaten as they put three past Chelsea",
-      "summary": "Brentford maintain their unbeaten start in the Premier League as they score three second-half goals to beat Chelsea 3-0 at the Gtech Community Stadium.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cx980qll9me8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T22:00:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "823a3c418587f8ec",
-      "headline": "'Everything was disappointing' - Alonso on Brentford defeat",
-      "summary": "'Everything was disappointing' - Alonso on Brentford defeat",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/programmes/p0pbdlmn?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T21:35:44Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "74de378f7a53a815",
-      "headline": "Arsenal open to Dowman loan in right circumstances",
-      "summary": "Arsenal are open to allowing teenage prodigy Max Dowman to leave the club on loan this term if it aids his development.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/crp3k23nkl8go?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T21:30:38Z",
-      "players": [
-        {
-          "element_id": 20,
-          "name": "Dowman",
-          "club": "ARS",
           "held": false
         }
       ],
@@ -1089,24 +1137,6 @@
           "element_id": 20,
           "name": "Dowman",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "18cfa5395d87ee13",
-      "headline": "A weight off Igor Thiago's shoulders - Brentford v Chelsea ratings",
-      "summary": "Brentford climb to third in the Premier League with a 2-0 victory over Chelsea - here are BBC Sport's player ratings.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm046x9l6d6po?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-18T20:57:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1527,54 +1557,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "02ed7de99ae78833",
-      "headline": "England squad in full as Alexander-Arnold and Palmer included",
-      "summary": "Cole Palmer and Trent Alexander-Arnold have both been included in the latest England squad. Chelsea midfielder Palmer is named among the options in midfield alongside Jude Bellingham, Declan Rice and Elliot Anderson, while Real Madrid def",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/england-squad-in-full-as-alexander-arnold-and-palmer-included/",
-      "claimed_at": "2026-09-18T09:33:11Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ea5de141060881de",
-      "headline": "Arteta hopeful defenders will be available for Brighton clash",
-      "summary": "Mikel Arteta says he is \u201cvery optimistic\u201d that Cristhian Mosquera, Ben White, Jurrien Timber and Piero Hincapie will all be available for Arsenal\u2019s game against Brighton. The Gunners boss provided an encouraging fitness update on the defe",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-hopeful-defenders-will-be-available-for-brighton-clash/",
-      "claimed_at": "2026-09-18T09:25:11Z",
-      "players": [
-        {
-          "element_id": 9,
-          "name": "Hincapie",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 10,
-          "name": "White",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 11,
-          "name": "Mosquera",
-          "club": "ARS",
           "held": false
         }
       ],
