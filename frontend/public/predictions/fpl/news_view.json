@@ -1,19 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-19T21:02:37.775149Z",
-  "n_dropped": 207,
+  "generated_at": "2026-09-19T23:05:15.418407Z",
+  "n_dropped": 200,
   "dropped_by_source": {
-    "bbc_football": 60,
-    "fantasyfootballscout": 6,
-    "hayters": 35,
+    "bbc_football": 58,
+    "fantasyfootballscout": 5,
+    "hayters": 31,
     "sky_football": 106
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 297,
+  "n_articles": 290,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "a2ee026f3b298c3f",
+      "headline": "FPL notes: Wissa pen miss + Newcastle the new DefCon kings?",
+      "summary": "Plus, a \u00a35.1m Hull winger is up to fourth in the FPL midfielder standings The post FPL notes: Wissa pen miss + Newcastle the new DefCon kings? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football S",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/09/19/fpl-notes-wissa-pen-miss-newcastle-the-new-defcon-kings",
+      "claimed_at": "2026-09-19T22:00:00Z",
+      "players": [
+        {
+          "element_id": 464,
+          "name": "Wissa",
+          "club": "NEW",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "682ec98c96375fce",
       "headline": "Everton's unbeaten run continues with win over 10-man Ipswich",
@@ -319,6 +337,60 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "84f26471a7dea0f0",
+      "headline": "Arsenal may move for Endrick in January - Sunday's gossip",
+      "summary": "Barcelona may launch a huge offer for Haaland, Arsenal are interested in struggling Endrick, and Liverpool insist on keeping Wirtz",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq1j478n0ll7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T21:39:38Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1d843ade404d3402",
+      "headline": "Gvardiol signals return to best at left-back for Man City",
+      "summary": "Josko Gvardiol's season last time out was disrupted by a serious injury but the defender now appears to be returning towards his best by helping Manchester City to an impressive start to the new campaign.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm0e35jrqyd7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T21:31:17Z",
+      "players": [
+        {
+          "element_id": 391,
+          "name": "Gvardiol",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "63b679b7c49293b6",
+      "headline": "Carrick has faith in VAR despite derby error",
+      "summary": "Manchester United head coach Michael Carrick still has faith in VAR despite the derby blunder that cost his side in their home defeat by Manchester City",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq8r64ppml6lo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T21:30:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "dc49f2c0acb0d5f5",
@@ -849,30 +921,6 @@
       "touches_squad": false
     },
     {
-      "digest": "8958b01166757410",
-      "headline": "Emery praises Jackson & Suzuki after 'fantastic' win at Spurs",
-      "summary": "Aston Villa manager Unai Emery admires his side's resilience in their 3-2 away victory against Tottenham Hotspur in the Premier League, highlighting the performances of striker Nicolas Jackson and goalkeeper Zion Suzuki.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmwyzg4ep1wlo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-19T14:17:07Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 597,
-          "name": "Suzuki",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "432e4fdaa3bad14a",
       "headline": "Winless Spurs in relegation zone after Villa claim first victory",
       "summary": "Tottenham head into the international break without a win in the Premier League after losing 3-2 at home to Aston Villa.",
@@ -885,24 +933,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ef2b495b0a0671fb",
-      "headline": "Manzambi catches eye as Villa beat Spurs - player ratings",
-      "summary": "Tottenham are still looking for their first Premier League goal of the season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqj3d7rvpr7ko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-19T13:32:46Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
           "held": false
         }
       ],
@@ -1060,24 +1090,6 @@
       "tier": 2,
       "url": "https://hayters.com/tottenham-vs-aston-villa-live-team-news-match-updates-and-reaction/",
       "claimed_at": "2026-09-19T09:29:49Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "beac973872f7db0e",
-      "headline": "From near oblivion to Europe - Brighton celebrate 125th anniversary",
-      "summary": "From obscurity and near oblivion to Premier League and Europe - Brighton celebrate their 125th anniversary.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm3wjl29qp4go?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-19T06:30:32Z",
       "players": [
         {
           "element_id": 0,
@@ -1563,6 +1575,24 @@
       "touches_squad": false
     },
     {
+      "digest": "02ed7de99ae78833",
+      "headline": "England squad in full as Alexander-Arnold and Palmer included",
+      "summary": "Cole Palmer and Trent Alexander-Arnold have both been included in the latest England squad. Chelsea midfielder Palmer is named among the options in midfield alongside Jude Bellingham, Declan Rice and Elliot Anderson, while Real Madrid def",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/england-squad-in-full-as-alexander-arnold-and-palmer-included/",
+      "claimed_at": "2026-09-18T09:33:11Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "9db3d4721eedfdc9",
       "headline": "Top Tips for Betting on Newly Promoted Premier League Teams",
       "summary": "Newly promoted clubs can be difficult to price early in a Premier League season. Championship form provides evidence, but promotion changes the quality of opposition, tactical demands and squad depth required. The 2026/27 season brings Cove",
@@ -1659,42 +1689,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8e986e8430915803",
-      "headline": "Concussion - Expected back 12 Oct",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-09-14T21:30:07.343728Z",
-      "players": [
-        {
-          "element_id": 405,
-          "name": "N.Gonzalez",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "92361f1db358ac19",
-      "headline": "Concussion - 50% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-09-14T21:30:07.343728Z",
-      "players": [
-        {
-          "element_id": 405,
-          "name": "N.Gonzalez",
-          "club": "NEW",
           "held": false
         }
       ],
