@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-19T23:05:15.418407Z",
-  "n_dropped": 200,
+  "generated_at": "2026-09-20T01:09:27.729964Z",
+  "n_dropped": 204,
   "dropped_by_source": {
-    "bbc_football": 58,
+    "bbc_football": 61,
     "fantasyfootballscout": 5,
-    "hayters": 31,
+    "hayters": 32,
     "sky_football": 106
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 290,
+  "n_articles": 294,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -337,6 +337,60 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "4badd95652f97b07",
+      "headline": "How Newcastle unpicked Hull's back three - Shearer",
+      "summary": "Alan Shearer talking on how Newcastle United unlocked Hulls defence in there 2-1 win on Match of the Day.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ckpd05pvz597o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T23:09:32Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "356803b5661c7ed3",
+      "headline": "How Villa's Jackson left Spurs 'battered' - Shearer",
+      "summary": "Match of the Day pundit Alan Shearer praises the performance of Aston Villa's Nicolas Jackson, saying Tottenham's centre-halves \"couldn't keep up\" with the 25-year-old striker.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cq1j47731pk3o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T23:08:52Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "55ce28429f64b697",
+      "headline": "'Brave' Brighton put in 'complete' performance to beat Arsenal - Murphy",
+      "summary": "Match of the Day pundit Danny Murphy praises Brighton's \"incredible\" performance in their 3-0 win over Arsenal, predicting they will cause problems for Premier League teams this season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqe8xjjw8ed8o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-09-19T21:59:01Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "84f26471a7dea0f0",
@@ -843,18 +897,24 @@
       "touches_squad": false
     },
     {
-      "digest": "c2ba7b6cb200d5fd",
-      "headline": "No revival in sight for 'fragile' Spurs after Villa defeat",
-      "summary": "Tottenham look no closer to solving their problems as they slip to a home defeat by Aston Villa to add to their Premier League misery.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck5ywlqxyvv2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-19T15:33:20Z",
+      "digest": "158ac09d9753a96c",
+      "headline": "De Zerbi criticises Fernandes\u2019 performance and explains why he left out Tel",
+      "summary": "Roberto De Zerbi said that he did not like Mateus Fernandes\u2019 performance when explaining why he brought off the midfielder at half-time in Spurs' loss to Aston Villa. The Italian's side were 1-0 down at half-time when he dec",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-criticises-fernandes-performance-and-explains-why-he-left-out-tel/",
+      "claimed_at": "2026-09-19T15:05:45Z",
       "players": [
         {
-          "element_id": 0,
-          "name": null,
-          "club": null,
+          "element_id": 512,
+          "name": "Kudus",
+          "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 525,
+          "name": "Fernandes",
+          "club": "TOT",
           "held": false
         }
       ],
@@ -879,42 +939,6 @@
           "element_id": 525,
           "name": "Fernandes",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "53db7016202ba35a",
-      "headline": "Ratcliffe 'must go' says Man Utd Muslim fan group",
-      "summary": "The Manchester United Muslim Supporters Club says United co-owner Sir Jim Ratcliffe \"must go\" after he spoke out against immigration and said the country was \"on the slide\".",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm9dw4663j9zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-19T14:52:38Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "33c45620e8141654",
-      "headline": "Tottenham need 'blood & fight' not just to play better - de Zerbi",
-      "summary": "Spurs head coach Roberto de Zerbi says his side \"have to be stronger\" following their loss against Aston Villa in the Premier League, focusing on the squad's \"behaviour\" rather than their quality.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c6x2zg9ry9geo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-09-19T14:38:17Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1564,24 +1588,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/09/18/fpl-gameweek-5-scout-picks-forest-triple-up",
       "claimed_at": "2026-09-18T09:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "02ed7de99ae78833",
-      "headline": "England squad in full as Alexander-Arnold and Palmer included",
-      "summary": "Cole Palmer and Trent Alexander-Arnold have both been included in the latest England squad. Chelsea midfielder Palmer is named among the options in midfield alongside Jude Bellingham, Declan Rice and Elliot Anderson, while Real Madrid def",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/england-squad-in-full-as-alexander-arnold-and-palmer-included/",
-      "claimed_at": "2026-09-18T09:33:11Z",
       "players": [
         {
           "element_id": 0,
