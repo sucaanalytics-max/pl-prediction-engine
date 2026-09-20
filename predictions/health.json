@@ -1,19 +1,21 @@
 {
-  "validated_at": "2026-09-13T14:16:12.278264+00:00",
+  "validated_at": "2026-09-20T14:03:17.930648+00:00",
   "artifact_contract": "valid",
-  "prediction_age_hours": 3.5070701869444445,
+  "prediction_age_hours": 3.7919356205555554,
   "ledger_integrity": {
     "gw01": "verified",
     "gw03": "verified",
-    "gw04": "verified"
+    "gw04": "verified",
+    "gw05": "verified"
   },
   "ledger_integrity_ok": true,
   "missing_seals": {
-    "expected_through": 3,
+    "expected_through": 4,
     "sealed": [
       1,
       3,
-      4
+      4,
+      5
     ],
     "missing": [
       2
@@ -21,15 +23,15 @@
     "note": "A gameweek below the current one with no sealed forecast is permanently unscoreable. A seal is only meaningful if it provably predated the deadline, so this is never repaired by writing one now."
   },
   "eval_targets": {
-    "n_evaluated_matches": 30,
+    "n_evaluated_matches": 40,
     "backtest_min_matches": 100,
     "assessable": false,
-    "note": "30 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
+    "note": "40 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
   },
-  "last_updated": "2026-09-20T10:15:54.994309Z",
+  "last_updated": "2026-09-20T10:15:46.917503Z",
   "gameweek": 5,
   "n_predictions": 4,
-  "status": "degraded",
+  "status": "healthy",
   "sources": {
     "bootstrap": {
       "source": "network",
