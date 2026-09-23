@@ -28,7 +28,7 @@
     "assessable": false,
     "note": "40 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
   },
-  "last_updated": "2026-09-22T10:31:21.215991Z",
+  "last_updated": "2026-09-23T10:25:47.009882Z",
   "gameweek": 6,
   "n_predictions": 10,
   "status": "degraded",
@@ -121,7 +121,7 @@
     "diagnostics": {
       "n_clubs": 20,
       "n_players": 667,
-      "n_without_history": 192,
+      "n_without_history": 0,
       "n_availability_gated": 180,
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
@@ -133,7 +133,18 @@
         "dated_fitness": 22,
         "dated_eligibility": 4
       },
-      "n_evidence_conflicts": 0
+      "n_evidence_conflicts": 0,
+      "current_season": {
+        "season": "2627",
+        "gameweeks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "n_rows": 3216
+      }
     },
     "simulation": {
       "n_draws": 5000,
