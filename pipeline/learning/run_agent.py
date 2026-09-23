@@ -395,7 +395,7 @@ def refresh_expected_points(
         load_exported_rates,
         resolve_rates,
     )
-    from pipeline.models.fpl_inputs import build_fpl_inputs
+    from pipeline.models.fpl_inputs import build_fpl_inputs, load_current_season_rows
     from pipeline.run_pipeline import stable_seed_entropy
     from pipeline.simulation.gameweek_sim import FixtureSpec, simulate_gameweek
 
@@ -448,8 +448,12 @@ def refresh_expected_points(
     except Exception as exc:  # noqa: BLE001 - see the non-fatal note above
         logger.warning("could not resolve availability evidence: %s", exc)
 
+    # This season's settled minutes. Without them the minutes model, whose
+    # 1.5-fixture half-life was only ever validated with them present, projects
+    # every player from his last three matches of last season.
     inputs = build_fpl_inputs(
-        bootstrap, archive, priors, rules, evidence=evidence_view
+        bootstrap, archive, priors, rules, evidence=evidence_view,
+        current_season=load_current_season_rows(bootstrap),
     )
 
     # Per-fixture goal rates, best source first. A flat rate for every fixture

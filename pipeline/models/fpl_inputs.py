@@ -24,6 +24,7 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import pandas as pd
 
+from pipeline.config import CURRENT_SEASON
 from pipeline.data.team_mapping import normalize_team_name
 from pipeline.fpl.rules import POSITIONS, Rules, load_rules, normalise_position
 from pipeline.models.minutes import AvailabilityState, MinutesModel, availability_state
@@ -70,6 +71,116 @@ def _news_age_days(news_added: Optional[str], now: pd.Timestamp) -> Optional[flo
         return None
 
 
+CURRENT_SEASON_COLUMNS = (
+    "name_key", "position_norm", "minutes", "starts", "GW", "fixture", "season",
+)
+
+
+def current_season_rows(
+    bootstrap: Mapping[str, Any],
+    live_by_gameweek: Mapping[int, Mapping[str, Any]],
+    season: str = CURRENT_SEASON,
+) -> pd.DataFrame:
+    """
+    This season's settled appearances, in the grain the minutes model fits on.
+
+    One row per player per fixture, from FPL's own ``event/{gw}/live/`` payload —
+    official data, not the community archive, which `backfill` rules out of any
+    live decision path. ``explain`` lists one entry per fixture the player's club
+    played, INCLUDING an unused substitute's (0 minutes). So:
+
+    * an unused substitute is a row: he was available and not picked, which is
+      exactly the evidence a start rate is made of;
+    * a blank gameweek is NOT a row: no fixture is not a benching, and recording
+      one would drag every blank-gameweek player's start rate down;
+    * a double gameweek is two rows, matching the archive's per-fixture grain.
+      FPL reports ``starts`` for the week, so the starts go to the fixtures he
+      played longest in.
+
+    Keyed exactly as `build_fpl_inputs` keys players, or the rows would be
+    appended under names nothing ever looks up.
+    """
+    from pipeline.learning.backfill import _normalise_name
+
+    element_types = {
+        et["id"]: et["singular_name_short"]
+        for et in bootstrap.get("element_types", [])
+    }
+    people: Dict[int, Tuple[str, str]] = {}
+    for element in bootstrap.get("elements", []):
+        position = normalise_position(element_types.get(element.get("element_type")))
+        if position is None:
+            continue
+        people[int(element["id"])] = (
+            _normalise_name(
+                f"{element.get('first_name', '')} {element.get('second_name', '')}"
+            ),
+            position,
+        )
+
+    rows: List[Dict[str, Any]] = []
+    for gameweek, payload in sorted(live_by_gameweek.items()):
+        for element in (payload or {}).get("elements", []) or []:
+            who = people.get(int(element.get("id", -1)))
+            if who is None:
+                continue
+            fixtures = element.get("explain") or []
+            if not fixtures:
+                continue
+            played = [
+                (
+                    fixture.get("fixture"),
+                    int(next(
+                        (
+                            stat.get("value") or 0
+                            for stat in fixture.get("stats") or []
+                            if stat.get("identifier") == "minutes"
+                        ),
+                        0,
+                    )),
+                )
+                for fixture in fixtures
+            ]
+            starts = int((element.get("stats") or {}).get("starts") or 0)
+            longest_first = sorted(range(len(played)), key=lambda i: -played[i][1])
+            started = set(longest_first[:starts])
+            for index, (fixture_id, minutes) in enumerate(played):
+                rows.append({
+                    "name_key": who[0],
+                    "position_norm": who[1],
+                    "minutes": minutes,
+                    "starts": 1 if index in started else 0,
+                    "GW": int(gameweek),
+                    "fixture": fixture_id,
+                    "season": season,
+                })
+    return pd.DataFrame(rows, columns=list(CURRENT_SEASON_COLUMNS))
+
+
+def load_current_season_rows(
+    bootstrap: Mapping[str, Any], fetch: Optional[Any] = None
+) -> pd.DataFrame:
+    """
+    Fetch and shape every settled gameweek of the current season.
+
+    Settled means ``finished`` AND ``data_checked``: before that, minutes can still
+    be corrected, and an unsettled week is not evidence yet.
+
+    Costs no new requests in the agent job — `manager_history` already reads these
+    endpoints every hourly tick, and `fetch_event_live` caches each per gameweek
+    for a week because a settled gameweek cannot change. A failure with no cached
+    copy raises: this is a model input, and a run that silently fell back to last
+    season alone would reproduce precisely the defect this exists to fix.
+    """
+    if fetch is None:
+        from pipeline.data.fpl_api import fetch_event_live as fetch
+    settled = sorted(
+        int(event["id"]) for event in bootstrap.get("events", []) or []
+        if event.get("finished") and event.get("data_checked")
+    )
+    return current_season_rows(bootstrap, {gw: fetch(gw) for gw in settled})
+
+
 def build_fpl_inputs(
     bootstrap: Dict[str, Any],
     archive: pd.DataFrame,
@@ -78,12 +189,21 @@ def build_fpl_inputs(
     key: str = "name_key",
     now: Optional[pd.Timestamp] = None,
     evidence: Optional[Mapping[int, Mapping[str, Any]]] = None,
+    current_season: Optional[pd.DataFrame] = None,
 ) -> FplInputs:
     """
     Fit the player models and assemble one squad per club.
 
     ``archive`` must carry ``name_key`` and ``position_norm`` — see
     :func:`pipeline.learning.backfill.load_archive_season`.
+
+    ``current_season`` is this season's settled rows from
+    :func:`load_current_season_rows`. Every live caller must pass it. The minutes
+    model's 1.5-fixture recency half-life was selected in harnesses that always
+    had the season's own rows (`backtest`, `walk_forward`); fitted on last season
+    alone it projects each player from his last three matches of LAST season.
+    They feed the minutes model only: the scoring model is the calibrated one,
+    and these rows carry no event columns to fit it on.
     """
     rules = rules or load_rules(bootstrap)
     now = now or pd.Timestamp.now(tz="UTC")
@@ -93,8 +213,26 @@ def build_fpl_inputs(
         frame["position_norm"] = frame["position"].map(normalise_position)
     frame = frame[frame["position_norm"].notna()]
 
+    minutes_frame = frame
+    season_seen: Dict[str, Any] = {"season": None, "gameweeks": [], "n_rows": 0}
+    if current_season is not None and len(current_season):
+        # Without a season label on the archive, `_fixture_index` cannot order the
+        # two seasons: last season's GW38 would sort after this season's GW5 and
+        # the recency weights would point backwards.
+        if "season" not in frame.columns or frame["season"].isna().any():
+            raise ValueError(
+                "the archive must carry a season label to be combined with the "
+                "current season's rows"
+            )
+        minutes_frame = pd.concat([frame, current_season], ignore_index=True, sort=False)
+        season_seen = {
+            "season": str(current_season["season"].iloc[0]),
+            "gameweeks": sorted(int(g) for g in current_season["GW"].unique()),
+            "n_rows": int(len(current_season)),
+        }
+
     minutes_model = MinutesModel().fit(
-        frame, key=key, position_column="position_norm"
+        minutes_frame, key=key, position_column="position_norm"
     )
     events = PlayerEventRates().fit(
         frame, key=key, position_column="position_norm", rules=rules
@@ -222,6 +360,9 @@ def build_fpl_inputs(
         # recognising FPL's wording, which is otherwise invisible.
         "availability_persistence": persistence_counts,
         "n_evidence_conflicts": conflicted,
+        # Logged by both callers. An empty list mid-season means the minutes model
+        # is back to projecting from last season's run-in.
+        "current_season": season_seen,
     }
     logger.info("FPL inputs assembled: %s", diagnostics)
 

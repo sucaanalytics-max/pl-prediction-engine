@@ -1400,6 +1400,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             build_fpl_inputs,
             fixture_specs_from_fixture_xg,
             fixture_specs_from_predictions,
+            load_current_season_rows,
         )
         from pipeline.simulation.gameweek_sim import simulate_gameweek
 
@@ -1510,8 +1511,12 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             fpl_status = {"status": "skipped", "reason": "no fixtures with expected goals"}
         else:
             fpl_archive = load_archive_season("2526")
+            # This season's settled minutes; see build_fpl_inputs. The agent passes
+            # them too — two producers write the same xp artifact, and a view built
+            # without them would disagree with the agent's on every rotated player.
             fpl_inputs = build_fpl_inputs(
-                bootstrap, fpl_archive, fpl_priors, fpl_rules
+                bootstrap, fpl_archive, fpl_priors, fpl_rules,
+                current_season=load_current_season_rows(bootstrap),
             )
             n_fpl_draws = (
                 FPL_SIM["n_draws_ci"] if ci_env else FPL_SIM["n_draws_decision"]
