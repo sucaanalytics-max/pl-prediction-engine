@@ -24,6 +24,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import {
+  forwardProjection,
   getFplReviewProjection,
   getFplReviewSnapshot,
   resetFplReviewSnapshotForTests,
@@ -166,5 +167,40 @@ describe("present but unusable is distinguished from absent", () => {
     write("bad.json", "{ not json");
     pointAt("bad.json");
     expect(() => getFplReviewProjection(427)).not.toThrow();
+  });
+});
+
+describe("forwardProjection", () => {
+  // The 2026-09-10 export, GW4-GW9, being read on 2026-09-23 while GW6 is planned.
+  const snapshot = { exportedAt: "2026-09-10T21:03:42Z", gameweeks: [4, 5, 6, 7, 8, 9] };
+  const review = {
+    elementId: 154, name: "Palmer", team: "CHE", position: "MID" as const,
+    buyValue: 9.6, sellValue: 9.6, eliteOwnership: 35.8,
+    expectedMinutes: [85, 80, 78, 77, 74, 72],
+    projectedPoints: [7.53, 4.94, 5.76, 4.83, 5.24, 4.77],
+  };
+
+  it("starts at the gameweek being planned, not at the first one exported", () => {
+    const forward = forwardProjection(review, snapshot, 6);
+    expect(forward?.gameweeks.map((week) => week.gameweek)).toEqual([6, 7, 8, 9]);
+    // GW6's own numbers, not GW4's shifted along by two.
+    expect(forward?.gameweeks[0]).toEqual({ gameweek: 6, expectedMinutes: 78, projectedPoints: 5.76 });
+  });
+
+  it("keeps the whole window when nothing has been played yet", () => {
+    expect(forwardProjection(review, snapshot, 4)?.gameweeks).toHaveLength(6);
+  });
+
+  it("is absent when every exported week has been played", () => {
+    // Null, so the page falls back to the heuristic and says so, rather than
+    // labelling an empty projection as FPLReview's.
+    expect(forwardProjection(review, snapshot, 10)).toBeNull();
+  });
+
+  it("carries the fields the ranking engine reads", () => {
+    const forward = forwardProjection(review, snapshot, 6);
+    expect(forward).toMatchObject({
+      exportedAt: snapshot.exportedAt, eliteOwnership: 35.8, buyValue: 9.6, sellValue: 9.6,
+    });
   });
 });

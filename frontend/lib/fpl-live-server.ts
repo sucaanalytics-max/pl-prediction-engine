@@ -24,6 +24,7 @@ import {
   scoreFplPlayers,
 } from "./fpl-ranking-engine";
 import {
+  forwardProjection,
   getFplReviewProjection,
   getFplReviewSnapshot,
 } from "./fplreview-projections";
@@ -493,19 +494,11 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
         minutes: element.minutes || 0,
         ictIndex: Number.parseFloat(element.ict_index) || 0,
         newsUpdatedAt: element.news_added,
+        // From the planning gameweek on. A stale export would otherwise be summed
+        // from weeks already played — see `forwardProjection`.
         reviewProjection:
           review && projectionSnapshot
-            ? {
-                exportedAt: projectionSnapshot.exportedAt,
-                eliteOwnership: review.eliteOwnership,
-                buyValue: review.buyValue,
-                sellValue: review.sellValue,
-                gameweeks: review.projectedPoints.map((projectedPoints, index) => ({
-                  gameweek: projectionSnapshot.gameweeks[index],
-                  expectedMinutes: review.expectedMinutes[index],
-                  projectedPoints,
-                })),
-              }
+            ? forwardProjection(review, projectionSnapshot, planningId)
             : null,
       };
     })

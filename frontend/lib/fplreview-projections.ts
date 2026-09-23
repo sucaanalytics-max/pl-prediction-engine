@@ -147,6 +147,50 @@ export function getFplReviewProjection(
   return index?.get(elementId) ?? null;
 }
 
+/** One player's export as the ranking engine consumes it. */
+export interface ForwardReviewProjection {
+  exportedAt: string;
+  eliteOwnership: number;
+  buyValue: number;
+  sellValue: number;
+  gameweeks: Array<{ gameweek: number; expectedMinutes: number; projectedPoints: number }>;
+}
+
+/**
+ * One player's export, from the gameweek being planned onward — or `null`.
+ *
+ * An export is a window fixed at the moment it was downloaded, and the season
+ * keeps moving. Handed over whole, the 2026-09-10 file (GW4-GW9) was still being
+ * summed from GW4 on 2026-09-23, with GW6 being planned: `projected4` was GW4-7,
+ * half of it already played, under a label that says "the next four". Played
+ * weeks are not a projection of anything.
+ *
+ * `null` when no forward week is left, so a fully stale export reads as ABSENT —
+ * the fixture heuristic takes over and `modelBasis` says so — rather than as an
+ * FPLReview projection built from nothing.
+ */
+export function forwardProjection(
+  review: FplReviewProjection,
+  snapshot: Pick<FplReviewSnapshot, "exportedAt" | "gameweeks">,
+  planningGameweek: number,
+): ForwardReviewProjection | null {
+  const gameweeks = review.projectedPoints
+    .map((projectedPoints, index) => ({
+      gameweek: snapshot.gameweeks[index],
+      expectedMinutes: review.expectedMinutes[index],
+      projectedPoints,
+    }))
+    .filter((week) => week.gameweek >= planningGameweek);
+  if (gameweeks.length === 0) return null;
+  return {
+    exportedAt: snapshot.exportedAt,
+    eliteOwnership: review.eliteOwnership,
+    buyValue: review.buyValue,
+    sellValue: review.sellValue,
+    gameweeks,
+  };
+}
+
 /** Test seam: forget what was loaded so a different fixture can be read. */
 export function resetFplReviewSnapshotForTests(): void {
   cached = undefined;
