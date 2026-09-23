@@ -190,6 +190,60 @@ def _sample_exact_count(
     return selected
 
 
+def _sample_exact_count_among(
+    probabilities: np.ndarray,
+    count: int,
+    eligible: np.ndarray,
+    rng: np.random.Generator,
+    max_attempts: int = 16,
+) -> np.ndarray:
+    """
+    As :func:`_sample_exact_count`, choosing only among the players ELIGIBLE in
+    each draw.
+
+    ``eligible`` is ``(n_draws, n_players)``. A draw with fewer eligible players
+    than ``count`` selects all of them, and the caller fills the shortfall.
+    Conditional Bernoulli is then conditional on the count AND on who is fit —
+    which is the point: fitness is decided first, as a fact about the world, and
+    the lineup is chosen from whoever is left.
+
+    With every player eligible it consumes the generator identically to
+    :func:`_sample_exact_count` and returns the same selections, so a fully fit
+    side's lineup is drawn exactly as it was before this existed.
+    """
+    n_draws, n_players = eligible.shape
+    selected = np.zeros((n_draws, n_players), dtype=bool)
+    if n_players == 0 or count <= 0:
+        return selected
+
+    n_eligible = eligible.sum(axis=1)
+    target = np.minimum(int(count), n_eligible)
+    everyone = target == n_eligible
+    selected[everyone] = eligible[everyone]
+    unresolved = np.flatnonzero(~everyone)
+    if unresolved.size == 0:
+        return selected
+
+    probabilities = np.clip(probabilities, 1e-6, 1 - 1e-6)
+    for _ in range(max_attempts):
+        if unresolved.size == 0:
+            break
+        trial = (
+            rng.random((unresolved.size, n_players)) < probabilities[None, :]
+        ) & eligible[unresolved]
+        accepted = trial.sum(axis=1) == target[unresolved]
+        if accepted.any():
+            selected[unresolved[accepted]] = trial[accepted]
+        unresolved = unresolved[~accepted]
+
+    for draw in unresolved:
+        pool = np.flatnonzero(eligible[draw])
+        weights = probabilities[pool] / probabilities[pool].sum()
+        picks = rng.choice(pool, size=int(target[draw]), replace=False, p=weights)
+        selected[draw, picks] = True
+    return selected
+
+
 def _categorical_rows(weights: np.ndarray, rng: np.random.Generator) -> np.ndarray:
     """
     Draw one column index per row, proportional to that row's weights.
@@ -237,12 +291,36 @@ def _simulate_side(
     # ── Roles and on-pitch intervals ───────────────────────────────────────
     starts = np.zeros((n_draws, n_players), dtype=bool)
 
+    # Fitness first, as a fact about each draw's world; the lineup is then chosen
+    # from whoever is fit. It used to be folded into the lineup draw — p_start
+    # already carries availability — and conditioning on the count "explained it
+    # away": in a thin group the only way to reach the count was to include the
+    # likeliest man, fit or not. Joao Pedro, flagged 75%, appeared in 99% of draws
+    # because every other Chelsea forward was rated lower; a keeper at 50% was
+    # replaced in 5%. Starters are now drawn at their propensity GIVEN fit,
+    # p_start / availability, which is exactly the minutes model's ungated start.
+    #
+    # No draw is spent when the whole side is fit, so a fully fit side's LINEUP is
+    # drawn exactly as before. Its substitute draws can still change, where the
+    # redistribution below used to hand surplus to zero-propensity players.
+    availability = np.array(
+        [float(np.clip(p.roles.availability, 0.0, 1.0)) for p in players]
+    )
+    if (availability < 1.0).any():
+        available = rng.random((n_draws, n_players)) < availability[None, :]
+    else:
+        available = np.ones((n_draws, n_players), dtype=bool)
+    fit_start = np.array([
+        float(np.clip(p.roles.p_start / a, 0.0, 1.0)) if a > 0 else 0.0
+        for p, a in zip(players, availability)
+    ])
+
     keeper_indices = [i for i, p in enumerate(positions) if p == "GKP"]
     if keeper_indices:
-        keeper_p = np.array([players[i].roles.p_start for i in keeper_indices])
-        chosen = _sample_exact_count(keeper_p, 1, n_draws, rng)
-        for local, index in enumerate(keeper_indices):
-            starts[:, index] = chosen[:, local]
+        keepers = np.array(keeper_indices)
+        starts[:, keepers] = _sample_exact_count_among(
+            fit_start[keepers], 1, available[:, keepers], rng
+        )
 
     expected_by_group = {
         group: sum(
@@ -256,13 +334,29 @@ def _simulate_side(
         expected_by_group, rules.play_bounds, rules.lineup_size - 1
     )
     for group, count in formation.items():
-        indices = [i for i, position in enumerate(positions) if position == group]
-        if not indices:
+        indices = np.array([i for i, position in enumerate(positions) if position == group])
+        if indices.size == 0:
             continue
-        group_p = np.array([players[i].roles.p_start for i in indices])
-        chosen = _sample_exact_count(group_p, min(count, len(indices)), n_draws, rng)
-        for local, index in enumerate(indices):
-            starts[:, index] = chosen[:, local]
+        starts[:, indices] = _sample_exact_count_among(
+            fit_start[indices], min(count, indices.size), available[:, indices], rng
+        )
+
+    # A group can run out of fit players in a draw — no fit forward, say. A club
+    # then plays someone else, not ten men, so the shortfall goes to fit outfield
+    # players not already starting, by their propensity. Real shapes are not held
+    # to FPL's play bounds, so neither is this.
+    outfield = np.array([p != "GKP" for p in positions])
+    short = (rules.lineup_size - 1) - starts[:, outfield].sum(axis=1)
+    for draw in np.flatnonzero(short > 0):
+        pool = np.flatnonzero(outfield & available[draw] & ~starts[draw])
+        if pool.size == 0:
+            continue
+        weights = np.clip(fit_start[pool], 1e-6, None)
+        picks = rng.choice(
+            pool, size=min(int(short[draw]), pool.size), replace=False,
+            p=weights / weights.sum(),
+        )
+        starts[draw, picks] = True
 
     # Substitute appearances among non-starters, drawn independently, so the
     # number of substitutions in any single draw is only right on average.
@@ -301,7 +395,7 @@ def _simulate_side(
         # player a near-certain appearance, which is how a 19%-start defender
         # ends up projecting like a nailed one. Detect it and say so rather than
         # silently producing that.
-        headroom_available = float((1.0 - starts.mean(axis=0)).sum())
+        headroom_available = float((available & ~starts).mean(axis=0).sum())
         if headroom_available < target:
             bench_saturated = True
             logger.warning(
@@ -314,10 +408,12 @@ def _simulate_side(
             )
         unconditional = unconditional * (target / total)
 
-    # Convert to the conditional the mask needs, dividing by the REALISED
-    # non-start rate rather than 1 - p_start. The exact-count sampler forces
-    # eleven starters, so the realised rate is what actually gates the draw.
-    realised_not_start = 1.0 - starts.mean(axis=0)
+    # Convert to the conditional the mask needs, dividing by the REALISED rate at
+    # which each player is eligible to come on — fit and not starting — rather
+    # than 1 - p_start. p_bench_appear already carries availability, so dividing
+    # by a rate that also does keeps his marginal right while the mask keeps an
+    # unfit player off the pitch entirely.
+    realised_not_start = (available & ~starts).mean(axis=0)
     conditional = np.divide(
         unconditional,
         np.maximum(realised_not_start, 1e-6),
@@ -326,16 +422,23 @@ def _simulate_side(
     )
 
     # Clipping loses mass where a player saturates, so redistribute once over
-    # the players with headroom to keep the squad total on target.
+    # the players with headroom to keep the squad total on target — but only over
+    # players who come on at all. Spread over everyone with room, the surplus used
+    # to hand substitute appearances to players with a zero bench propensity,
+    # including those with zero availability: one measured at 86 appearances in
+    # 600 draws.
     clipped = np.clip(conditional, 0.0, 1.0)
     shortfall = float(
         ((conditional - clipped) * realised_not_start).sum()
     )
     if shortfall > 1e-9:
-        headroom = (1.0 - clipped) * realised_not_start
+        receives = (clipped > 0) & (clipped < 1.0)
+        headroom = np.where(receives, (1.0 - clipped) * realised_not_start, 0.0)
         if headroom.sum() > 1e-9:
-            clipped = np.clip(
-                clipped + (1.0 - clipped) * (shortfall / headroom.sum()), 0.0, 1.0
+            clipped = np.where(
+                receives,
+                np.clip(clipped + (1.0 - clipped) * (shortfall / headroom.sum()), 0.0, 1.0),
+                clipped,
             )
     conditional = clipped
 
@@ -346,7 +449,7 @@ def _simulate_side(
     for index in range(n_players):
         if conditional[index] <= 0:
             continue
-        eligible = ~starts[:, index]
+        eligible = ~starts[:, index] & available[:, index]
         bench_appear[:, index] = eligible & (rng.random(n_draws) < conditional[index])
 
     entry = np.full((n_draws, n_players), -1, dtype=np.int16)

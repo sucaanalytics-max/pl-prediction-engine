@@ -22,6 +22,8 @@ from pipeline.simulation.player_sim import (
     _allocate_formation,
     _categorical_rows,
     _sample_exact_count,
+    _sample_exact_count_among,
+    _simulate_side,
     simulate_fixture_players,
 )
 
@@ -450,3 +452,106 @@ class ScoringConsistencyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def _impaired(player, availability):
+    """The player exactly as the minutes model returns him under a fitness flag."""
+    from dataclasses import replace
+
+    roles = player.roles
+    start = roles.p_start * availability
+    bench = roles.p_bench_appear * availability
+    return replace(player, roles=replace(
+        roles,
+        availability=availability,
+        p_start=start,
+        p_bench_appear=bench,
+        p_unavailable=1.0 - availability,
+        p_unused=max(0.0, availability - start - bench),
+    ))
+
+
+def _side(players, seed=5):
+    sims = FIXTURE.sims
+    return _simulate_side(
+        players, sims["home_goals"], sims["home_goal_minutes"],
+        sims["away_goal_minutes"], sims["home_yellows"], FIXTURE.events, RULES,
+        np.random.default_rng(seed),
+    )
+
+
+class AvailabilityGateTests(unittest.TestCase):
+    """
+    Fitness is a fact about the world, not a weight in the lineup draw.
+
+    The starters were drawn by conditional Bernoulli on p_start, which already had
+    availability multiplied in, so conditioning on the count "explained away" a
+    player's unfitness: in a thin group the only way to reach the count was to
+    include the likeliest man, fit or not. Measured 2026-09-23: Joao Pedro flagged
+    75%, simulated to appear in 99% of draws, because every other Chelsea forward
+    was rated lower. Palmer, same flag, deep midfield: 0.74.
+    """
+
+    def _index(self, players, key):
+        return next(i for i, p in enumerate(players) if p.player_key == key)
+
+    def test_a_flagged_player_in_a_thin_group_is_not_forced_in(self):
+        players = [
+            _impaired(p, 0.75) if p.player_key == "hf1" else p
+            for p in FIXTURE.home if p.player_key not in ("hf2", "hf3")
+        ]
+        striker = self._index(players, "hf1")
+        understudy = self._index(players, "hf4")
+        # The group really is thin: the flagged man is far the likeliest forward.
+        self.assertGreater(
+            players[striker].roles.p_start, 5 * players[understudy].roles.p_start
+        )
+        drawn = _side(players)
+        appeared = float((drawn["minutes"][:, striker] > 0).mean())
+        self.assertLessEqual(appeared, 0.75 + 0.05, f"appeared in {appeared:.0%} of draws")
+
+    def test_an_unavailable_player_never_appears_not_even_off_the_bench(self):
+        players = [_impaired(p, 0.0) if p.player_key == "hm1" else p for p in FIXTURE.home]
+        column = self._index(players, "hm1")
+        drawn = _side(players)
+        self.assertEqual(int((drawn["minutes"][:, column] > 0).sum()), 0)
+
+    def test_eleven_starters_survive_an_unfit_first_choice_keeper(self):
+        players = [_impaired(p, 0.5) if p.player_key == "hk1" else p for p in FIXTURE.home]
+        keepers = [i for i, p in enumerate(players) if p.position == "GKP"]
+        drawn = _side(players)
+        starts = drawn["starts"].astype(bool)
+        self.assertTrue((starts[:, keepers].sum(axis=1) == 1).all())
+        self.assertTrue((starts.sum(axis=1) == RULES.lineup_size).all())
+        # And the reserve really does take over when the first choice is out.
+        reserve = self._index(players, "hk2")
+        self.assertGreater(float(starts[:, reserve].mean()), 0.3)
+
+    def test_a_group_that_runs_short_is_filled_from_other_fit_players(self):
+        """No forward fit in a draw means someone else plays, not ten men."""
+        players = [
+            _impaired(p, 0.5) if p.player_key == "hf1" else p
+            for p in FIXTURE.home if p.player_key not in ("hf2", "hf3", "hf4")
+        ]
+        drawn = _side(players)
+        starts = drawn["starts"].astype(bool)
+        self.assertTrue((starts.sum(axis=1) == RULES.lineup_size).all())
+
+    def test_a_fully_fit_lineup_is_drawn_exactly_as_before(self):
+        """The gate must cost the common case nothing, not even Monte Carlo noise."""
+        probabilities = np.array([p.roles.p_start for p in FIXTURE.home if p.position == "DEF"])
+        everyone = np.ones((N_DRAWS, len(probabilities)), dtype=bool)
+        for count in (3, 4, 5):
+            with self.subTest(count=count):
+                np.testing.assert_array_equal(
+                    _sample_exact_count(probabilities, count, N_DRAWS, np.random.default_rng(9)),
+                    _sample_exact_count_among(probabilities, count, everyone, np.random.default_rng(9)),
+                )
+
+    def test_the_masked_sampler_never_picks_an_ineligible_player(self):
+        rng = np.random.default_rng(4)
+        probabilities = np.array([0.9, 0.8, 0.5, 0.2, 0.1])
+        eligible = rng.random((N_DRAWS, 5)) < 0.7
+        chosen = _sample_exact_count_among(probabilities, 3, eligible, rng)
+        self.assertFalse((chosen & ~eligible).any())
+        np.testing.assert_array_equal(chosen.sum(axis=1), np.minimum(3, eligible.sum(axis=1)))
