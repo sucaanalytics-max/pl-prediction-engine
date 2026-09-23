@@ -1120,11 +1120,18 @@ def _read_entry(
         int(e["id"]): int(e.get("now_cost", 0))
         for e in bootstrap.get("elements", [])
     }
+    # What each player cost at the season start: the exact purchase price of
+    # anyone held since GW1. See read_entry_state.
+    start_costs = {
+        int(e["id"]): int(e.get("now_cost", 0)) - int(e.get("cost_change_start", 0) or 0)
+        for e in bootstrap.get("elements", [])
+    }
     try:
         return read_entry_state(
             int(entry_id), int(gameweek), now_costs,
             max_banked_free_transfers=int(max_banked_free_transfers),
             transfer_chips=transfer_chips,
+            start_costs=start_costs,
         )
     except EntryError as exc:
         logger.warning(

@@ -224,6 +224,7 @@ def read_entry_state(
     *,
     max_banked_free_transfers: int,
     transfer_chips: Sequence[str],
+    start_costs: Optional[Mapping[int, int]] = None,
 ) -> EntryState:
     """
     Everything the optimiser needs about a held team, for one gameweek.
@@ -259,21 +260,33 @@ def read_entry_state(
     bank = int(entry_history.get("bank", 0))
 
     transfers = fetch_transfers(entry_id)
-    # The opening squad is the current one with every transfer un-applied. Its
-    # players were bought at GW1 prices, which the transfer log does not carry —
-    # so anything still held from the opening squad is priced at now_cost and
-    # flagged, rather than being invented.
+    history = fetch_history(entry_id)
+    # The opening squad is the current one with every transfer un-applied. The
+    # transfer log carries no GW1 prices, but none are needed: FPL moves no price
+    # before the GW1 deadline, so an entry that played GW1 paid the season-start
+    # price, `now_cost - cost_change_start`, for every opening player. That holds
+    # only from GW1 — a late joiner bought at prices nothing records — so anyone
+    # else is priced at now_cost and FLAGGED.
+    #
+    # The flag used to read `if not now_costs.get(p)`: it tested whether now_cost
+    # was missing, which it never is, so every opening player was priced at today's
+    # cost while `price_uncertain` said False. On entry 20945 at GW4 that was a
+    # 99.9m squad FPL valued at 99.6m, with nothing anywhere saying so.
     bought_later = {int(t["element_in"]) for t in transfers if t.get("element_in")}
     opening = [p for p in squad if p not in bought_later]
+    played_from_gw1 = any(
+        int(row.get("event", 0)) == 1 for row in history.get("current", []) or []
+    )
+    start = {int(k): int(v) for k, v in (start_costs or {}).items()}
+    exact = {p: start[p] for p in opening if played_from_gw1 and start.get(p)}
 
     prices = replay_purchase_prices(
         opening_squad=opening,
-        opening_prices={p: now_costs.get(p, 0) for p in opening},
+        opening_prices={p: exact.get(p, now_costs.get(p, 0)) for p in opening},
         transfers=transfers,
     )
-    untraced = [p for p in opening if not now_costs.get(p)]
+    untraced = [p for p in opening if p not in exact]
 
-    history = fetch_history(entry_id)
     chips = [c.get("name", "") for c in history.get("chips", []) if c.get("name")]
 
     state = EntryState(

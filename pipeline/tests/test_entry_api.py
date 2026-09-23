@@ -287,6 +287,70 @@ class TestReadEntryStateFreeTransfers(unittest.TestCase):
         self.assertEqual(state.squad, [1, 445])
 
 
+class TestOpeningSquadPurchasePrices(unittest.TestCase):
+    """
+    What was paid for the players held since GW1.
+
+    The transfer log carries no GW1 prices, so the opening squad fell back to
+    `now_cost` — and the flag meant to mark that, `untraced = [p for p in opening
+    if not now_costs.get(p)]`, tested whether now_cost was MISSING, which it never
+    is. So every opening player was priced at today's cost while `price_uncertain`
+    said False. Measured on entry 20945 at GW4: the engine held a 99.9m squad FPL
+    valued at 99.6m, the three risen players (Gross, Joao Pedro, Isak) each 0.1m
+    too rich — a plan selling one would be refused at the deadline.
+
+    FPL moves no price before the GW1 deadline, so an entry that played GW1 paid
+    `now_cost - cost_change_start` for every opening player. That is exact.
+    """
+
+    HISTORY_FROM_GW1 = {
+        "current": [
+            {"event": 1, "event_transfers": 0, "bank": 0},
+            {"event": 2, "event_transfers": 0, "bank": 0},
+            {"event": 3, "event_transfers": 1, "bank": 0},
+        ],
+        "chips": [],
+    }
+    # Joao Pedro: bought 7.5, now 7.7. Thiaw: bought in GW3 at 5.0.
+    PICKS = {"picks": [{"element": 165}, {"element": 445}], "entry_history": {"bank": 0}}
+    TRANSFERS = [{"event": 3, "element_in": 445, "element_in_cost": 50, "element_out": 418}]
+
+    def _read(self, history, start_costs):
+        from unittest import mock
+
+        with (
+            mock.patch("pipeline.fpl.entry_api.fetch_picks", return_value=self.PICKS),
+            mock.patch("pipeline.fpl.entry_api.fetch_transfers", return_value=self.TRANSFERS),
+            mock.patch("pipeline.fpl.entry_api.fetch_history", return_value=history),
+        ):
+            return read_entry_state(
+                20945, 4, {165: 77, 445: 50}, start_costs=start_costs,
+                max_banked_free_transfers=5, transfer_chips=TRANSFER_CHIPS,
+            )
+
+    def test_an_opening_player_is_priced_at_what_was_paid_not_today(self):
+        state = self._read(self.HISTORY_FROM_GW1, start_costs={165: 75, 445: 48})
+        self.assertEqual(state.purchase_prices[165], 75)
+        # Bought later: the transfer log is authoritative, not the season start.
+        self.assertEqual(state.purchase_prices[445], 50)
+        self.assertEqual(state.untraced, [])
+        self.assertFalse(state.price_uncertain)
+
+    def test_without_start_prices_the_uncertainty_is_declared(self):
+        """The dead flag. Falling back to now_cost must say so."""
+        state = self._read(self.HISTORY_FROM_GW1, start_costs=None)
+        self.assertEqual(state.purchase_prices[165], 77)
+        self.assertEqual(state.untraced, [165])
+        self.assertTrue(state.price_uncertain)
+
+    def test_a_late_joiner_did_not_pay_the_season_start_price(self):
+        """An entry created at GW3 bought at GW3 prices, which nothing records."""
+        late = {"current": self.HISTORY_FROM_GW1["current"][2:], "chips": []}
+        state = self._read(late, start_costs={165: 75, 445: 48})
+        self.assertEqual(state.purchase_prices[165], 77)
+        self.assertEqual(state.untraced, [165])
+
+
 class TestBankedFreeTransfersOnIncompleteHistory(unittest.TestCase):
     """
     A gameweek with no history row is unknown, not zero.
