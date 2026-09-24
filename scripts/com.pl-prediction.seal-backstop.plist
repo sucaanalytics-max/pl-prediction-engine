@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Seal backstop for GW6 (deadline Sat 2026-10-10 10:00 UTC; seal band 06:00-09:30 UTC).
+
+  Install:
+      cp scripts/com.pl-prediction.seal-backstop.plist ~/Library/LaunchAgents/
+      launchctl load ~/Library/LaunchAgents/com.pl-prediction.seal-backstop.plist
+
+  Check it is registered:
+      launchctl list | grep seal-backstop
+
+  See what it would do right now, without dispatching: run
+      scripts/seal_backstop.py with its dry-run flag (see its docstring).
+  The flag is not spelled out because strict XML forbids a double hyphen inside
+  a comment. launchd's parser tolerates it; Python's does not, and
+  test_seal_backstop.py reads this file to check the times below.
+
+  Remove:
+      launchctl unload ~/Library/LaunchAgents/com.pl-prediction.seal-backstop.plist
+
+  ## Why
+
+  GitHub delivered six to eight of the agent's twenty-four hourly ticks a day
+  (measured 2026-09-24), leaving a 3.5-hour seal band empty about one day in four,
+  and a missed seal can never be recovered. The workflow now ticks every fifteen
+  minutes; this is the part that does not depend on GitHub's scheduler. It asks
+  for one `workflow_dispatch` — which is not dropped the way schedules are — and
+  only when the band is open, GW is unsealed and no agent run is in flight. See
+  the docstring of scripts/seal_backstop.py for why a redundant dispatch is safe.
+
+  ## Scope
+
+  Scheduled for 10 October only. The script itself is generic — it reads the next
+  deadline from FPL and does nothing outside a seal band — so covering every
+  deadline would be a matter of widening StartCalendarInterval, deliberately not
+  done here without being asked. Being keyed on month and day, these entries also
+  fire on 10 October in later years, where the band check makes them no-ops.
+
+  ## What it cannot do
+
+  A LaunchAgent needs the Mac awake and the user logged in. A missed calendar
+  run fires on wake; one that wakes after 09:30 UTC finds the band closed and does
+  nothing. The fifteen-minute cron is the primary defence; this is the second.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.pl-prediction.seal-backstop</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/python3</string>
+        <string>/Users/tusk-jvb/dev/pl-prediction-engine/scripts/seal_backstop.py</string>
+    </array>
+
+    <!-- Local time is IST (+05:30): 12:17, 13:17, 14:17 IST are 06:47, 07:47,
+         08:47 UTC. The first leaves the cron forty-seven minutes to seal on its
+         own; the last leaves forty-three before the 09:30 lockout for a
+         dispatched run to finish. Off the round minutes, as x-scan is. -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Month</key><integer>10</integer>
+            <key>Day</key><integer>10</integer>
+            <key>Hour</key><integer>12</integer>
+            <key>Minute</key><integer>17</integer>
+        </dict>
+        <dict>
+            <key>Month</key><integer>10</integer>
+            <key>Day</key><integer>10</integer>
+            <key>Hour</key><integer>13</integer>
+            <key>Minute</key><integer>17</integer>
+        </dict>
+        <dict>
+            <key>Month</key><integer>10</integer>
+            <key>Day</key><integer>10</integer>
+            <key>Hour</key><integer>14</integer>
+            <key>Minute</key><integer>17</integer>
+        </dict>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/tusk-jvb/dev/pl-prediction-engine</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/tusk-jvb/Library/Logs/pl-prediction-seal-backstop.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/tusk-jvb/Library/Logs/pl-prediction-seal-backstop.log</string>
+
+    <!-- Never at load: installing it must not dispatch anything. -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+</dict>
+</plist>
