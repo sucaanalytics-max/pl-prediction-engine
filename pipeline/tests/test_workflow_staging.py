@@ -389,12 +389,13 @@ class SealAttemptCoverageTests(unittest.TestCase):
         ("Wed 18:00", 2, 18, 0),
     )
 
-    #: SCHEDULED ticks per seal band. This was 2, on the premise that a scheduled
-    #: tick is a delivered one. It is not: measured 2026-09-24 over 199 runs, GitHub
-    #: delivered about 6.6 of the 24 hourly ticks a day — roughly 27% — and a
-    #: 06:00-09:30 UTC band got no run on 7 of 31 days. The hourly cron passed this
-    #: test with 3 while the seals rested on one attempt each. Eight scheduled is
-    #: about two delivered in expectation; drops cluster, so treat it as a floor.
+    #: SCHEDULED ticks per seal band — a necessary condition, NOT a sufficient one.
+    #: This was 2, on the premise that a scheduled tick is a delivered one. It is
+    #: not: a 06:00-09:30 UTC band got no run on 7 of 31 days. Nor does density
+    #: buy deliveries: over 10-24 Sep a `*/15` workflow (news.yml) got 6.6 runs a
+    #: day and this one, hourly, 6.5. So passing here says the schedule asks
+    #: densely, which is free; it says nothing about attempts delivered. What
+    #: guarantees an attempt is a workflow_dispatch — scripts/seal_backstop.py.
     MINIMUM_ATTEMPTS = 8
 
     def setUp(self) -> None:

@@ -781,11 +781,10 @@ def _refresh(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
     # about four full simulations a day (PROJECTION_MAX_AGE is 6h).
     #
     # Inside the window "every run" meant hourly, because that was the cron. The
-    # cron is now every fifteen minutes (`.github/workflows/fpl_agent.yml`) so a
-    # 3.5-hour seal window gets more than the single attempt GitHub's dropped
-    # schedules were leaving it; refreshing on every one of those ticks would be
-    # four simulations, four commits and four production deploys an hour for two
-    # days. REFRESH_MIN_AGE keeps the window at roughly hourly. The seal is not
+    # cron is now every fifteen minutes (`.github/workflows/fpl_agent.yml`); GitHub
+    # delivers far fewer, but if it ever delivered all of them, refreshing on each
+    # would be four simulations, four commits and four production deploys an hour
+    # for two days. REFRESH_MIN_AGE keeps the window at roughly hourly. The seal is not
     # behind this gate — `_seal` rebuilds its own projection.
     remaining = timedelta(seconds=state.seconds_to_deadline or 0)
     now = datetime.now(timezone.utc)

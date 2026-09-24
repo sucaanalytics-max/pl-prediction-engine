@@ -9,9 +9,11 @@ SEAL_WINDOW (4h) and LOCKOUT_BEFORE_DEADLINE (30m) before a deadline, and a miss
 one can never be made up. It rides on GitHub's scheduler, which does not deliver
 what it is asked for — measured 2026-09-24 over 199 scheduled runs of an hourly
 cron: six to eight runs a day, and a 06:00-09:30 UTC band with NO run on 7 of 31
-days. The cron is now every fifteen minutes, which helps; this is the part that
-does not depend on GitHub's scheduler at all. A `workflow_dispatch` is not a
-scheduled event and is not dropped with them.
+days. The cron went to every fifteen minutes, and that does NOT help: a `*/15`
+workflow in the same repo got 6.6 scheduled runs a day over 10-24 Sep against
+6.5 for the hourly agent. This is the part that does not depend on GitHub's
+scheduler. A `workflow_dispatch` is not a scheduled event and is not queued with
+them — measured 2026-09-24: the run was created 5 seconds after the request.
 
 ## Why it is safe to run at any time
 

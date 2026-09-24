@@ -28,11 +28,16 @@ on:
     # window — GW6's seal window — got NO run on 7 of 31 days. GW4 and GW5 each
     # sealed on a single attempt. A seal is the one irrecoverable thing here.
     #
-    # Four times the ticks is four times the draws against the same drop rate. It
-    # is still free — `decide` is stdlib-only and finishes in seconds, and the repo
-    # is public — and it still cannot double-seal: the resolver returns IDLE once
-    # the gameweek is in `sealed` and seal_forecast raises AlreadySealedError rather
-    # than overwriting. What four times the ticks must NOT be is four times the
+    # Denser does NOT mean more attempts, and this line was first committed
+    # claiming it did. news.yml has always run `*/15`: over 10-24 Sep it got 6.6
+    # scheduled runs a day against this workflow's 6.5 on an hourly cron. GitHub
+    # delivers about six and a half a day per workflow here whatever is asked for.
+    # `*/15` is kept because it is free — `decide` is stdlib-only and the repo is
+    # public — and cannot double-seal (the resolver returns IDLE once sealed, and
+    # seal_forecast raises AlreadySealedError rather than overwriting). The defence
+    # that does not depend on the scheduler is a workflow_dispatch, which is not
+    # queued with schedules — measured: run created 5s after the request — and
+    # scripts/seal_backstop.py is what sends one. What four times the ticks must NOT be is four times the
     # commits, because every commit to main is a Vercel production deploy: the
     # status file is now written only on change or on a six-hour heartbeat
     # (schedule.STATUS_HEARTBEAT), and a refresh inside the 48h window is skipped
