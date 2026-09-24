@@ -496,17 +496,48 @@ STATUS_FILENAME = "agent_status.json"
 STATUS_SCHEMA_VERSION = 1
 
 
-def publish_status(state: "ScheduleState", public_dir: Path) -> Path:
+# How often an UNCHANGED status is re-stamped. It must beat the frontend's
+# freshness budget (`frontend/lib/data/agent-status.ts`, one DAY) comfortably, or a
+# healthy idle resolver would read as a stopped one.
+STATUS_HEARTBEAT = timedelta(hours=6)
+
+# Rewritten every tick and rendered by nothing: the countdown. `reason` embeds the
+# hours ("GW6 deadline in 415.8h"), so it counts as countdown too.
+_COUNTDOWN_FIELDS = ("generated_at", "seconds_to_deadline", "reason")
+
+
+def _status_unchanged(previous: Dict[str, Any], payload: Dict[str, Any], now: datetime) -> bool:
+    """True when the copy on disk says everything this one does and is not due a heartbeat."""
+    strip = lambda d: {k: v for k, v in d.items() if k not in _COUNTDOWN_FIELDS}  # noqa: E731
+    if strip(previous) != strip(payload):
+        return False
+    try:
+        stamped = datetime.fromisoformat(str(previous["generated_at"]).replace("Z", "+00:00"))
+    except (KeyError, ValueError):
+        return False
+    return now - stamped < STATUS_HEARTBEAT
+
+
+def publish_status(
+    state: "ScheduleState", public_dir: Path, now: Optional[datetime] = None
+) -> Path:
     """
     Write the phase state where the frontend can read it.
 
     Deliberately tiny and free of anything the agent computes: this must be
     writable when the agent has not run, which is its only reason to exist.
+
+    Left byte-identical when nothing but the countdown changed and the copy on
+    disk is younger than STATUS_HEARTBEAT. The workflow commits this file behind
+    `git diff --quiet`, and stamping `generated_at` every tick meant that check was
+    never taken: every tick was a commit, and every commit to main a Vercel
+    production deploy — seven a day of a timestamp, and up to ninety-six once the
+    cron went to every fifteen minutes.
     """
+    now = now or datetime.now(timezone.utc)
     payload = {
         "schema_version": STATUS_SCHEMA_VERSION,
-        "generated_at": datetime.now(timezone.utc)
-        .isoformat().replace("+00:00", "Z"),
+        "generated_at": now.isoformat().replace("+00:00", "Z"),
         **state.as_dict(),
         # Spelled out rather than left for a reader to infer from `phase`. The
         # frontend should not have to know which phases are idle.
@@ -521,6 +552,12 @@ def publish_status(state: "ScheduleState", public_dir: Path) -> Path:
     directory = Path(public_dir)
     directory.mkdir(parents=True, exist_ok=True)
     target = directory / STATUS_FILENAME
+    try:
+        previous = json.loads(target.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        previous = None
+    if isinstance(previous, dict) and _status_unchanged(previous, payload, now):
+        return target
     # Atomic: the frontend may fetch this at any moment, and a half-written file
     # would narrow as unreadable rather than fail to fetch.
     scratch = target.with_suffix(".json.tmp")

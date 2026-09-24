@@ -778,18 +778,23 @@ def _refresh(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
     #
     # Further out than that, refresh only when the published projection for
     # THIS gameweek has aged out, so the eight-day PROJECTION_WINDOW costs
-    # about four full simulations a day (PROJECTION_MAX_AGE is 6h) rather than
-    # one an hour, which is the workflow's cron (`.github/workflows/
-    # fpl_agent.yml`: `0 * * * *`).
+    # about four full simulations a day (PROJECTION_MAX_AGE is 6h).
+    #
+    # Inside the window "every run" meant hourly, because that was the cron. The
+    # cron is now every fifteen minutes (`.github/workflows/fpl_agent.yml`) so a
+    # 3.5-hour seal window gets more than the single attempt GitHub's dropped
+    # schedules were leaving it; refreshing on every one of those ticks would be
+    # four simulations, four commits and four production deploys an hour for two
+    # days. REFRESH_MIN_AGE keeps the window at roughly hourly. The seal is not
+    # behind this gate — `_seal` rebuilds its own projection.
     remaining = timedelta(seconds=state.seconds_to_deadline or 0)
     now = datetime.now(timezone.utc)
-    if remaining > REFRESH_WINDOW and projection_is_current(
-        state.gameweek, now
-    ):
+    max_age = REFRESH_MIN_AGE if remaining <= REFRESH_WINDOW else PROJECTION_MAX_AGE
+    if projection_is_current(state.gameweek, now, max_age=max_age):
         logger.info(
             "refresh skipped: GW%s projection is younger than %s and the "
             "deadline is %.1fh away",
-            state.gameweek, PROJECTION_MAX_AGE, remaining.total_seconds() / 3600,
+            state.gameweek, max_age, remaining.total_seconds() / 3600,
         )
         return 0
     outcome = refresh_expected_points(predictions_dir, state.gameweek)
@@ -808,8 +813,8 @@ def _refresh(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
     #
     # Non-fatal, and deliberately so. The refresh is the load-bearing half —
     # `record_claims` runs inside it and the seal depends on the projection
-    # it writes — this job fires hourly, and a solver that raises must not
-    # turn the agent red for an hour over advice that will be re-solved
+    # it writes — this job refreshes roughly hourly, and a solver that raises
+    # must not turn the agent red for an hour over advice that will be re-solved
     # anyway. The seal takes the opposite line for the same reason: there,
     # the proposal IS the output.
     if outcome.get("status") == "ok":
@@ -1086,7 +1091,7 @@ def _read_entry(
        entered this" beats "the API has not published it yet", which is the whole
        reason the hub exists. It is read from this checkout like any other
        artifact, so a capture reaches the NEXT run rather than one already in
-       flight — inside a Friday seal window that is the next half-hourly tick.
+       flight — the next fifteen-minute tick, when GitHub delivers it.
     2. FPL's own entry endpoint.
     3. An empty state.
 
@@ -1583,6 +1588,10 @@ def _score(predictions_dir: Path, state: ScheduleState) -> int:
 #: refreshes. Set from a measured `_project_horizon` runtime — see
 #: docs/superpowers/plans/2026-08-24-single-team-dashboard.md Task 3 Step 1.
 PROJECTION_MAX_AGE = timedelta(hours=6)
+# Inside REFRESH_WINDOW: under an hour, so the window still refreshes hourly
+# against late team news, and over the cron's fifteen minutes, so it does not
+# refresh on every tick. See `_refresh`.
+REFRESH_MIN_AGE = timedelta(minutes=45)
 
 
 def projection_is_current(

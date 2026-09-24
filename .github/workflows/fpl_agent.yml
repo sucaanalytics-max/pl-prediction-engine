@@ -17,28 +17,29 @@ name: FPL Agent
 
 on:
   schedule:
-    # Hourly. Deadlines move, so the agent checks in regularly and the phase logic
-    # decides what is actually due.
+    # Every fifteen minutes. Deadlines move, so the agent checks in often and the
+    # phase logic decides what is actually due.
     #
-    # Three-hourly left the seal — the one irrecoverable thing here — with a SINGLE
-    # attempt. SEAL opens at deadline-4h and LOCKED stops writing at deadline-30m, so
-    # the usable band is 3.5 hours, and a 3-hourly cron puts exactly one tick in it for
-    # almost every real deadline: Sat 11:00Z, Sat 11:30Z, Sat 13:30Z, Tue 17:45Z and
-    # Wed 18:00Z all get one. Measured over 30 real runs, delivery lag here has a
-    # 32-minute median and a 62-minute maximum, and GitHub drops scheduled runs outright
-    # under load — so one attempt is one bad afternoon from a permanently lost gameweek.
+    # It was hourly, on the premise that hourly "gives at least three attempts" at
+    # every seal window (SEAL opens at deadline-4h, LOCKED stops writing at
+    # deadline-30m: 3.5 usable hours). GitHub does not deliver an hourly schedule.
+    # Measured 2026-09-24 over 199 scheduled runs, 25 Aug - 24 Sep: six to eight
+    # runs a day, median gap 3.17h, p90 5.76h, worst 12.29h. A 06:00-09:30 UTC
+    # window — GW6's seal window — got NO run on 7 of 31 days. GW4 and GW5 each
+    # sealed on a single attempt. A seal is the one irrecoverable thing here.
     #
-    # Hourly gives at least three attempts at every one of those slots. It is free: the
-    # `decide` job is stdlib-only and finishes in 12 seconds, and this repo is public so
-    # Actions minutes are unmetered. And it cannot double-seal — the resolver returns
-    # IDLE once the gameweek is in `sealed` (schedule.py:300-306) and seal_forecast
-    # raises AlreadySealedError rather than overwriting (ledger.py:182-187).
-    - cron: '0 * * * *'
-    # And every half hour through a Friday afternoon, which is GW1's own band: it takes
-    # that deadline from three attempts to seven. Kept alongside the hourly line rather
-    # than instead of it, because a Friday-only rule protects exactly one gameweek and
-    # the other thirty-seven are the ones that move.
-    - cron: '0,30 13-16 * * 5'
+    # Four times the ticks is four times the draws against the same drop rate. It
+    # is still free — `decide` is stdlib-only and finishes in seconds, and the repo
+    # is public — and it still cannot double-seal: the resolver returns IDLE once
+    # the gameweek is in `sealed` and seal_forecast raises AlreadySealedError rather
+    # than overwriting. What four times the ticks must NOT be is four times the
+    # commits, because every commit to main is a Vercel production deploy: the
+    # status file is now written only on change or on a six-hour heartbeat
+    # (schedule.STATUS_HEARTBEAT), and a refresh inside the 48h window is skipped
+    # when the projection is under 45 minutes old (run_agent.REFRESH_MIN_AGE).
+    #
+    # The old extra line for Friday afternoons (`0,30 13-16 * * 5`) is subsumed.
+    - cron: '*/15 * * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -89,17 +90,18 @@ jobs:
       - name: Publish the agent status
         # A status badge must never be able to skip a seal.
         #
-        # This step commits on every tick — `publish_status` stamps `generated_at` with
-        # now (schedule.py:423-424), so the `git diff --quiet` short-circuit below is
-        # never taken — and it does a single unretried pull/rebase/push under
+        # This step commits only when the status changed or its six-hour heartbeat is
+        # due: `publish_status` leaves the file byte-identical otherwise, so the
+        # `git diff --quiet` short-circuit below is now the normal path. When it
+        # does commit, it does a single unretried pull/rebase/push under
         # `set -euo pipefail`. news.yml runs every 15 minutes in a SEPARATE concurrency
         # group and also pushes to main, so a non-fast-forward rejection here fails this
         # step, fails the `decide` job, and the `work` job's implicit success()
         # requirement then SKIPS the seal.
         #
         # The outputs `work` gates on are written by the PREVIOUS step (schedule.py:454
-        # runs before publish_status at :456-458), so a skipped status commit costs a
-        # stale badge for three hours and nothing else.
+        # runs before publish_status), so a skipped status commit costs a stale badge
+        # until the next change or heartbeat and nothing else.
         continue-on-error: true
         env:
           PYTHONPATH: ${{ github.workspace }}

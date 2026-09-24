@@ -652,3 +652,83 @@ class AgentStatusPublishTests(unittest.TestCase):
         state = determine_phase(_at(6), _events(), sealed=set())
         self.assertEqual(state.phase, Phase.MISSED_SEAL)
         self.assertEqual(state.gameweek, 1)
+
+
+class StatusHeartbeatTests(unittest.TestCase):
+    """
+    The status file is committed on change, and on a heartbeat — not on every tick.
+
+    `publish_status` stamped `generated_at` with now, so the workflow's
+    `git diff --quiet` short-circuit was never taken: every agent tick committed
+    the file, and every commit to main is a Vercel production deploy — seven a
+    day of a file whose only change was its timestamp. With the cron at every
+    fifteen minutes that would have been up to ninety-six.
+
+    The countdown fields (`seconds_to_deadline`, and `reason`, which embeds the
+    hours) change on every tick and are rendered by nothing; the frontend reads
+    `generated_at` only against a one-day freshness budget. So the file is left
+    byte-identical unless something a reader would act on changed, or the copy on
+    disk is older than STATUS_HEARTBEAT.
+    """
+
+    def _publish(self, directory, now, phase=None, **over):
+        from pipeline.learning.schedule import Phase, ScheduleState, publish_status
+
+        fields = dict(gameweek=6, deadline=datetime(2026, 10, 10, 10, tzinfo=timezone.utc))
+        fields.update(over)
+        state = ScheduleState(phase=phase or Phase.IDLE, **fields)
+        return publish_status(state, directory, now=now)
+
+    def setUp(self):
+        import tempfile
+
+        self.tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self.tmp.name)
+        self.t0 = datetime(2026, 9, 24, 10, 0, tzinfo=timezone.utc)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_republishing_the_same_state_leaves_the_file_byte_identical(self):
+        path = self._publish(self.dir, self.t0, reason="GW6 deadline in 400.0h")
+        before = path.read_bytes()
+        self._publish(self.dir, self.t0 + timedelta(minutes=15), reason="GW6 deadline in 399.8h",
+                      seconds_to_deadline=399.8 * 3600)
+        # Byte-identical is what makes `git diff --quiet` skip the commit.
+        self.assertEqual(path.read_bytes(), before)
+
+    def test_a_phase_change_is_written_at_once(self):
+        from pipeline.learning.schedule import Phase
+
+        path = self._publish(self.dir, self.t0)
+        self._publish(self.dir, self.t0 + timedelta(minutes=15), phase=Phase.REFRESH)
+        self.assertEqual(json.loads(path.read_text())["phase"], "refresh")
+
+    def test_a_new_gameweek_is_written_at_once(self):
+        path = self._publish(self.dir, self.t0)
+        self._publish(self.dir, self.t0 + timedelta(minutes=15), gameweek=7)
+        self.assertEqual(json.loads(path.read_text())["gameweek"], 7)
+
+    def test_the_heartbeat_rewrites_an_unchanged_status(self):
+        from pipeline.learning.schedule import STATUS_HEARTBEAT
+
+        path = self._publish(self.dir, self.t0)
+        later = self.t0 + STATUS_HEARTBEAT + timedelta(minutes=1)
+        self._publish(self.dir, later)
+        stamp = json.loads(path.read_text())["generated_at"]
+        self.assertEqual(stamp, later.isoformat().replace("+00:00", "Z"))
+
+    def test_an_unreadable_file_is_replaced(self):
+        target = self.dir / "agent_status.json"
+        target.write_text("{not json")
+        path = self._publish(self.dir, self.t0)
+        self.assertEqual(json.loads(path.read_text())["gameweek"], 6)
+
+    def test_the_heartbeat_beats_well_inside_the_frontends_freshness_budget(self):
+        """
+        frontend/lib/data/agent-status.ts marks the file stale after a DAY. A
+        heartbeat at or past that would show a healthy idle resolver as broken.
+        """
+        from pipeline.learning.schedule import STATUS_HEARTBEAT
+
+        self.assertLessEqual(STATUS_HEARTBEAT, timedelta(hours=6))

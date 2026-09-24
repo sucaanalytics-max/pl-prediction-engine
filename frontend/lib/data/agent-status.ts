@@ -84,8 +84,9 @@ export const AGENT_STATUS: Descriptor<AgentStatus> = {
   path: "fpl/agent_status.json",
   owner: "agent",
   describes: "the agent's phase, and why its artifacts may be absent",
-  // Republished every three hours by the phase job. A day-old copy means the
-  // resolver itself has stopped, which is worth surfacing as stale.
+  // Republished by the phase job on any change, and at least every six hours
+  // (schedule.STATUS_HEARTBEAT) otherwise. A day-old copy means the resolver
+  // itself has stopped, which is worth surfacing as stale.
   freshnessBudgetMs: DAY,
   narrow: narrowAgentStatus,
   producedAtOf: (v: AgentStatus) => v.generatedAt,

@@ -380,6 +380,7 @@ class SealAttemptCoverageTests(unittest.TestCase):
     #: commonest; GW1 and midweek rounds are the outliers that used to be worst served.
     REAL_SLOTS = (
         ("Fri 17:30", 4, 17, 30),
+        ("Sat 10:00", 5, 10, 0),  # GW6, 2026-10-10
         ("Sat 11:00", 5, 11, 0),
         ("Sat 11:30", 5, 11, 30),
         ("Sat 13:30", 5, 13, 30),
@@ -388,8 +389,13 @@ class SealAttemptCoverageTests(unittest.TestCase):
         ("Wed 18:00", 2, 18, 0),
     )
 
-    #: Below this, one bad afternoon loses a gameweek permanently.
-    MINIMUM_ATTEMPTS = 2
+    #: SCHEDULED ticks per seal band. This was 2, on the premise that a scheduled
+    #: tick is a delivered one. It is not: measured 2026-09-24 over 199 runs, GitHub
+    #: delivered about 6.6 of the 24 hourly ticks a day — roughly 27% — and a
+    #: 06:00-09:30 UTC band got no run on 7 of 31 days. The hourly cron passed this
+    #: test with 3 while the seals rested on one attempt each. Eight scheduled is
+    #: about two delivered in expectation; drops cluster, so treat it as a floor.
+    MINIMUM_ATTEMPTS = 8
 
     def setUp(self) -> None:
         text = AGENT_WORKFLOW.read_text()

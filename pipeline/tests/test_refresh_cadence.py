@@ -26,6 +26,23 @@ NOW = datetime(2026, 8, 24, 12, 0, tzinfo=timezone.utc)
 MAX_AGE = timedelta(hours=20)
 
 
+def _aged(age):
+    """
+    `projection_is_current` as it behaves for a published projection `age` old.
+
+    A bare `return_value=True` could not say HOW old, and once the gate asks two
+    different questions — younger than PROJECTION_MAX_AGE outside the refresh
+    window, younger than REFRESH_MIN_AGE inside it — a mock that answers yes to
+    both would test neither.
+    """
+    return lambda gameweek, now, max_age=run_agent.PROJECTION_MAX_AGE, **_: age <= max_age
+
+
+# What the tests below always meant by "current" and "aged": an hour old, and
+# seven hours old, against a six-hour PROJECTION_MAX_AGE.
+HOUR_OLD, AGED = timedelta(hours=1), timedelta(hours=7)
+
+
 class ProjectionIsCurrent(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -117,15 +134,16 @@ class RefreshGate(unittest.TestCase):
     the refresh.
     """
 
-    def _run(self, hours_out, projection_current):
+    def _run(self, hours_out, projection_current=True, age=None):
         state = ScheduleState(
             phase=Phase.REFRESH,
             gameweek=2,
             seconds_to_deadline=hours_out * 3600,
             reason=f"GW2 deadline in {hours_out}h",
         )
+        age = age if age is not None else (HOUR_OLD if projection_current else AGED)
         with mock.patch.object(
-            run_agent, "projection_is_current", return_value=projection_current
+            run_agent, "projection_is_current", side_effect=_aged(age)
         ), mock.patch.object(
             run_agent, "refresh_expected_points", return_value={"status": "ok"}
         ) as refresh:
@@ -167,6 +185,28 @@ class RefreshGate(unittest.TestCase):
         _, skipped = self._run(at + 1, projection_current=True)
         skipped.assert_not_called()
 
+    def test_inside_the_window_a_projection_minutes_old_is_kept(self):
+        """
+        The cron went from hourly to every fifteen minutes so a seal window gets
+        more than one attempt. Refreshing on every one of those ticks would be four
+        full simulations, four commits and four production deploys an hour for two
+        days. The window was designed for hourly refreshes; REFRESH_MIN_AGE keeps it
+        there.
+        """
+        code, refresh = self._run(24, age=timedelta(minutes=20))
+        self.assertEqual(code, 0)
+        refresh.assert_not_called()
+
+    def test_inside_the_window_a_projection_most_of_an_hour_old_is_rebuilt(self):
+        _, refresh = self._run(24, age=timedelta(minutes=50))
+        refresh.assert_called_once()
+
+    def test_the_floor_is_under_an_hour_so_hourly_refresh_survives(self):
+        # Late team news dominates the last two days; the floor must never let an
+        # hour-old projection stand inside the window.
+        self.assertLess(run_agent.REFRESH_MIN_AGE, timedelta(hours=1))
+        self.assertLess(run_agent.REFRESH_MIN_AGE, run_agent.PROJECTION_MAX_AGE)
+
 
 class RefreshPublishesAProvisionalPlan(unittest.TestCase):
     """
@@ -191,8 +231,9 @@ class RefreshPublishesAProvisionalPlan(unittest.TestCase):
             seconds_to_deadline=hours_out * 3600,
             reason=f"GW2 deadline in {hours_out}h",
         )
+        age = HOUR_OLD if projection_current else AGED
         with mock.patch.object(
-            run_agent, "projection_is_current", return_value=projection_current
+            run_agent, "projection_is_current", side_effect=_aged(age)
         ), mock.patch.object(
             run_agent, "refresh_expected_points", return_value={"status": "ok"}
         ), mock.patch.object(
