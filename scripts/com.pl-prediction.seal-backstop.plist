@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Seal backstop for GW6 (deadline Sat 2026-10-10 10:00 UTC; seal band 06:00-09:30 UTC).
+  Seal backstop for every gameweek deadline. Checks every ten minutes; acts only
+  inside a seal band (deadline minus 4h to deadline minus 30m).
 
   Install:
       cp scripts/com.pl-prediction.seal-backstop.plist ~/Library/LaunchAgents/
@@ -30,11 +31,11 @@
 
   ## Scope
 
-  Scheduled for 10 October only. The script itself is generic — it reads the next
-  deadline from FPL and does nothing outside a seal band — so covering every
-  deadline would be a matter of widening StartCalendarInterval, deliberately not
-  done here without being asked. Being keyed on month and day, these entries also
-  fire on 10 October in later years, where the band check makes them no-ops.
+  Every deadline, all season. It runs every ten minutes, and outside a seal band a
+  check is a read of the cached FPL calendar and nothing else: no token, no
+  GitHub, no log line. Inside a band (3.5 hours, so about 21 checks) it dispatches
+  at most once per ten minutes, and only while the gameweek is unsealed and no
+  agent run is in flight. Until 2026-09-25 it was scheduled for 10 October only.
 
   ## What it cannot do
 
@@ -55,31 +56,12 @@
         <string>/Users/tusk-jvb/dev/pl-prediction-engine/scripts/seal_backstop.py</string>
     </array>
 
-    <!-- Local time is IST (+05:30): 12:17, 13:17, 14:17 IST are 06:47, 07:47,
-         08:47 UTC. The first leaves the cron forty-seven minutes to seal on its
-         own; the last leaves forty-three before the 09:30 lockout for a
-         dispatched run to finish. Off the round minutes, as x-scan is. -->
-    <key>StartCalendarInterval</key>
-    <array>
-        <dict>
-            <key>Month</key><integer>10</integer>
-            <key>Day</key><integer>10</integer>
-            <key>Hour</key><integer>12</integer>
-            <key>Minute</key><integer>17</integer>
-        </dict>
-        <dict>
-            <key>Month</key><integer>10</integer>
-            <key>Day</key><integer>10</integer>
-            <key>Hour</key><integer>13</integer>
-            <key>Minute</key><integer>17</integer>
-        </dict>
-        <dict>
-            <key>Month</key><integer>10</integer>
-            <key>Day</key><integer>10</integer>
-            <key>Hour</key><integer>14</integer>
-            <key>Minute</key><integer>17</integer>
-        </dict>
-    </array>
+    <!-- Every ten minutes while the Mac is awake. launchd runs a missed interval
+         once on wake, never a backlog. Ten, not fifteen: RECENT_RUN in the script
+         is ten minutes, so a dispatched run is left alone until it could have
+         finished, and the band still gets about twenty-one checks. -->
+    <key>StartInterval</key>
+    <integer>600</integer>
 
     <key>WorkingDirectory</key>
     <string>/Users/tusk-jvb/dev/pl-prediction-engine</string>

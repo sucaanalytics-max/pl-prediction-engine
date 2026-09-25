@@ -36,7 +36,7 @@ class SealBackstopTests(unittest.TestCase):
             calls.append(args)
             return mock.Mock(returncode=0, stdout="[]", stderr="")
 
-        with mock.patch.object(backstop, "owner_token", return_value="t"), \
+        with mock.patch.object(backstop, "owner_token", return_value="t") as token, \
              mock.patch.object(backstop, "next_deadline", return_value=(6, DEADLINE)), \
              mock.patch.object(backstop, "is_sealed", return_value=sealed), \
              mock.patch.object(backstop, "agent_busy", return_value=busy), \
@@ -44,8 +44,15 @@ class SealBackstopTests(unittest.TestCase):
              mock.patch.object(backstop.time, "sleep"):
             argv = ["--now", now.isoformat()] + (["--dry-run"] if dry_run else [])
             code = backstop.main(argv)
+        self.token_used = token.called
         dispatches = [c for c in calls if c[:2] == ["workflow", "run"]]
         return code, dispatches
+
+    def test_outside_the_band_it_touches_neither_the_keychain_nor_github(self):
+        """Every ten minutes all season must cost nothing: no token read, no API."""
+        _, dispatches = self._run(DEADLINE - timedelta(days=3))
+        self.assertEqual(dispatches, [])
+        self.assertFalse(self.token_used)
 
     def test_dispatches_a_sealing_run_when_the_band_is_open_and_nothing_sealed(self):
         code, dispatches = self._run(DEADLINE - timedelta(hours=3))
@@ -93,32 +100,114 @@ class SealBackstopTests(unittest.TestCase):
 
 
 
+class CalendarCacheTests(unittest.TestCase):
+    """The season's deadlines are read from FPL rarely, and from disk otherwise."""
+
+    CALENDAR = [(5, DEADLINE - timedelta(days=22)), (6, DEADLINE), (7, DEADLINE + timedelta(days=7))]
+
+    def setUp(self):
+        import tempfile
+
+        self.tmp = tempfile.TemporaryDirectory()
+        self.cache = Path(self.tmp.name) / "calendar.json"
+        self.fetches = 0
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def fetch(self):
+        self.fetches += 1
+        return list(self.CALENDAR)
+
+    def load(self, wall, fetch=None):
+        return backstop.load_calendar(fetch=fetch or self.fetch, cache=self.cache, wall=wall)
+
+    def test_a_fresh_cache_is_read_not_refetched(self):
+        far = DEADLINE - timedelta(days=5)
+        self.load(far)
+        self.load(far + timedelta(hours=11))
+        self.assertEqual(self.fetches, 1)
+
+    def test_far_from_a_deadline_it_refreshes_twice_a_day(self):
+        far = DEADLINE - timedelta(days=5)
+        self.load(far)
+        self.load(far + timedelta(hours=12, minutes=1))
+        self.assertEqual(self.fetches, 2)
+
+    def test_within_a_day_of_a_deadline_it_refreshes_hourly(self):
+        """FPL occasionally moves a deadline; the day before is when that matters."""
+        near = DEADLINE - timedelta(hours=20)
+        self.load(near)
+        self.load(near + timedelta(hours=1, minutes=1))
+        self.assertEqual(self.fetches, 2)
+
+    def test_a_failed_refresh_falls_back_to_the_cache(self):
+        far = DEADLINE - timedelta(days=5)
+        self.load(far)
+
+        def broken():
+            raise OSError("FPL is down")
+
+        calendar = self.load(far + timedelta(hours=13), fetch=broken)
+        self.assertEqual(calendar, self.CALENDAR)
+
+    def test_no_cache_and_no_fpl_is_an_error_not_a_silent_skip(self):
+        def broken():
+            raise OSError("FPL is down")
+
+        with self.assertRaises(OSError):
+            self.load(DEADLINE - timedelta(days=5), fetch=broken)
+
+    def test_a_stamp_from_the_future_is_stale_not_fresh(self):
+        """A simulated `--now` once wrote a fetch time a fortnight ahead and froze the cache."""
+        self.load(DEADLINE)                       # stamped at the deadline
+        self.load(DEADLINE - timedelta(days=14))  # the real clock is two weeks earlier
+        self.assertEqual(self.fetches, 2)
+
+    def test_scenario_time_does_not_touch_the_cache_stamp(self):
+        """next_deadline(--now) must leave the cache aged by the wall clock."""
+        wall = datetime.now(timezone.utc)
+        with mock.patch.object(backstop, "CALENDAR_CACHE", self.cache), \
+             mock.patch.object(backstop, "fetch_calendar", side_effect=self.fetch):
+            backstop.load_calendar(fetch=self.fetch, cache=self.cache)
+            import json as _json
+            stamp = backstop._parse(_json.loads(self.cache.read_text())["fetched_at"])
+        self.assertLess(abs((stamp - wall).total_seconds()), 60)
+
+    def test_the_next_deadline_is_the_first_one_still_ahead(self):
+        calendar = self.load(DEADLINE - timedelta(days=5))
+        self.assertEqual(backstop._next(calendar, DEADLINE - timedelta(days=5)), (6, DEADLINE))
+        self.assertEqual(backstop._next(calendar, DEADLINE + timedelta(minutes=1))[0], 7)
+
+
 class LaunchdPlistTests(unittest.TestCase):
     """
-    The job that schedules the backstop fires when it is meant to, and only then.
+    The job checks often enough to catch every seal band, and never at load.
 
-    Calendar times in a LaunchAgent are local and easy to get wrong by an offset;
-    fired outside the band, the backstop would check at hours when it can do
-    nothing. The file is kept to strict XML so this test can read it — launchd's
-    own parser is more lenient than Python's.
+    The file is kept to strict XML so this test can read it — launchd's own parser
+    is more lenient than Python's.
     """
 
-    def test_the_backstop_never_runs_at_load_and_fires_inside_gw6s_band(self):
+    def _job(self):
         import plistlib
 
         with (SCRIPT.parent / "com.pl-prediction.seal-backstop.plist").open("rb") as handle:
-            job = plistlib.load(handle)
-        # Installing it must not dispatch anything.
+            return plistlib.load(handle)
+
+    def test_it_never_runs_at_load(self):
+        job = self._job()
         self.assertIs(job["RunAtLoad"], False)
         self.assertTrue(job["ProgramArguments"][-1].endswith("scripts/seal_backstop.py"))
-        # Calendar times are local; the plist documents local as IST (+05:30).
-        ist = timezone(timedelta(hours=5, minutes=30))
-        opens, closes = DEADLINE - backstop.SEAL_WINDOW, DEADLINE - backstop.LOCKOUT_BEFORE_DEADLINE
-        for entry in job["StartCalendarInterval"]:
-            fires = datetime(2026, entry["Month"], entry["Day"], entry["Hour"], entry["Minute"], tzinfo=ist)
-            with self.subTest(fires=fires.isoformat()):
-                self.assertTrue(opens <= fires < closes, f"{fires} is outside GW6's band")
 
+    def test_every_band_gets_many_checks_and_none_is_skipped_by_the_run_guard(self):
+        job = self._job()
+        self.assertNotIn("StartCalendarInterval", job, "a calendar covers some deadlines, not all")
+        interval = timedelta(seconds=job["StartInterval"])
+        band = backstop.SEAL_WINDOW - backstop.LOCKOUT_BEFORE_DEADLINE
+        self.assertGreaterEqual(band / interval, 10)
+        # At or above RECENT_RUN, so a run it dispatched is not re-dispatched while
+        # it could still be starting.
+        self.assertGreaterEqual(interval, backstop.RECENT_RUN)
 
 if __name__ == "__main__":
     unittest.main()

@@ -32,6 +32,14 @@ overwriting — so even a redundant dispatch cannot double-seal.
 `true`, which produces and notifies WITHOUT sealing — a manual trigger that looked
 like a rescue and sealed nothing.
 
+## Why it can run every ten minutes, all season
+
+Outside a seal band it touches nothing: FPL's whole-season calendar is cached
+(CALENDAR_CACHE) and re-read every 12 hours, hourly within a day of a deadline in
+case FPL moves one. The token, GitHub and the dispatch are reached only inside a
+band. So a check costs a file read almost every time, and the log gets one line per
+calendar refresh — a heartbeat — rather than one per check.
+
 ## Usage
 
     python3 scripts/seal_backstop.py                 # act, if a window is open
@@ -50,7 +58,8 @@ import sys
 import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
-from typing import List, Optional, Tuple
+from pathlib import Path
+from typing import Callable, List, Optional, Tuple
 
 REPO = "sucaanalytics-max/pl-prediction-engine"
 OWNER = "sucaanalytics-max"
@@ -65,6 +74,14 @@ SEAL_WINDOW = timedelta(hours=4)
 LOCKOUT_BEFORE_DEADLINE = timedelta(minutes=30)
 RECENT_RUN = timedelta(minutes=10)
 ACTIVE = {"queued", "in_progress", "waiting", "pending", "requested"}
+
+CALENDAR_CACHE = Path.home() / "Library" / "Caches" / "pl-prediction-seal-backstop" / "calendar.json"
+CALENDAR_MAX_AGE = timedelta(hours=12)
+# Within a day of a deadline, re-read hourly: FPL occasionally moves one.
+CALENDAR_MAX_AGE_NEAR = timedelta(hours=1)
+NEAR = timedelta(hours=24)
+
+Calendar = List[Tuple[int, datetime]]
 
 
 def log(message: str) -> None:
@@ -89,27 +106,81 @@ def owner_token() -> str:
     return token
 
 
-def next_deadline(now: datetime, token: str) -> Tuple[int, datetime]:
-    """FPL's own calendar first; the repo's published agent status if FPL is down."""
+def _parse(stamp: str) -> datetime:
+    return datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+
+
+def fetch_calendar() -> Calendar:
+    """Every gameweek's deadline, from FPL's own bootstrap."""
+    request = urllib.request.Request(BOOTSTRAP, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(request, timeout=30) as response:
+        events = json.load(response)["events"]
+    return sorted(
+        (int(e["id"]), _parse(e["deadline_time"])) for e in events if e.get("deadline_time")
+    )
+
+
+def _next(calendar: Calendar, now: datetime) -> Optional[Tuple[int, datetime]]:
+    return next(((gw, d) for gw, d in sorted(calendar, key=lambda x: x[1]) if d > now), None)
+
+
+def load_calendar(
+    fetch: Callable[[], Calendar] = fetch_calendar,
+    cache: Path = CALENDAR_CACHE,
+    wall: Optional[datetime] = None,
+) -> Calendar:
+    """
+    The season's deadlines, from cache when it is fresh enough.
+
+    Fresh means younger than CALENDAR_MAX_AGE, or than CALENDAR_MAX_AGE_NEAR once the
+    next cached deadline is within NEAR. A failed refresh falls back to a stale cache
+    with a log line — an old calendar is far better than none, since deadlines
+    rarely move — and raises only when there is no cache at all.
+
+    Age is judged on the WALL clock, never on `--now`. The first version stamped the
+    cache with the simulated time, so one `--now 2026-10-10T07:00Z` dry run wrote a
+    fetch time a fortnight ahead, and every real run after it saw a "fresh" cache and
+    would not have refreshed until then. A stamp in the future is treated as stale.
+    """
+    wall = wall or datetime.now(timezone.utc)
+    cached: Optional[Calendar] = None
+    fetched_at: Optional[datetime] = None
     try:
-        request = urllib.request.Request(BOOTSTRAP, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(request, timeout=30) as response:
-            events = json.load(response)["events"]
-        upcoming = sorted(
-            (datetime.fromisoformat(e["deadline_time"].replace("Z", "+00:00")), int(e["id"]))
-            for e in events if e.get("deadline_time")
-        )
-        for deadline, gameweek in upcoming:
-            if deadline > now:
-                return gameweek, deadline
-        raise RuntimeError("no future deadline in bootstrap")
+        payload = json.loads(cache.read_text(encoding="utf-8"))
+        fetched_at = _parse(payload["fetched_at"])
+        cached = [(int(gw), _parse(d)) for gw, d in payload["deadlines"]]
+    except (OSError, ValueError, KeyError, TypeError):
+        cached = None
+
+    if cached is not None and fetched_at is not None and fetched_at <= wall:
+        upcoming = _next(cached, wall)
+        near = upcoming is not None and upcoming[1] - wall <= NEAR
+        if wall - fetched_at < (CALENDAR_MAX_AGE_NEAR if near else CALENDAR_MAX_AGE):
+            return cached
+
+    try:
+        calendar = fetch()
     except Exception as error:  # noqa: BLE001 - fall back, and say so
-        log(f"FPL bootstrap unavailable ({error}); falling back to agent_status.json")
-        out = _gh(["api", f"repos/{REPO}/contents/frontend/public/predictions/fpl/"
-                   "agent_status.json", "-H", "Accept: application/vnd.github.raw"], token)
-        status = json.loads(out.stdout)
-        return int(status["gameweek"]), datetime.fromisoformat(
-            status["deadline"].replace("Z", "+00:00"))
+        if cached is not None:
+            log(f"calendar refresh failed ({error}); using the cached one")
+            return cached
+        raise
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_text(json.dumps({
+        "fetched_at": wall.isoformat().replace("+00:00", "Z"),
+        "deadlines": [[gw, d.isoformat().replace("+00:00", "Z")] for gw, d in calendar],
+    }), encoding="utf-8")
+    upcoming = _next(calendar, wall)
+    log(f"calendar refreshed: {len(calendar)} deadlines; next "
+        + (f"GW{upcoming[0]} {upcoming[1]:%Y-%m-%d %H:%M}Z" if upcoming else "none"))
+    return calendar
+
+
+def next_deadline(now: datetime) -> Tuple[int, datetime]:
+    upcoming = _next(load_calendar(), now)
+    if upcoming is None:
+        raise RuntimeError("no future deadline in FPL's calendar")
+    return upcoming
 
 
 def is_sealed(gameweek: int, token: str) -> bool:
@@ -140,15 +211,21 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     now = (datetime.fromisoformat(args.now.replace("Z", "+00:00"))
            if args.now else datetime.now(timezone.utc))
-    token = owner_token()
-    gameweek, deadline = next_deadline(now, token)
+    gameweek, deadline = next_deadline(now)
     opens, closes = deadline - SEAL_WINDOW, deadline - LOCKOUT_BEFORE_DEADLINE
-    log(f"GW{gameweek} deadline {deadline:%Y-%m-%d %H:%M}Z; seal window "
-        f"{opens:%H:%M}-{closes:%H:%M}Z; now {now:%Y-%m-%d %H:%M}Z")
 
+    # Outside a band: no token, no GitHub, and no log line (the calendar refresh is
+    # the heartbeat). Run every ten minutes, a line per check would bury the ones
+    # that matter.
     if not (opens <= now < closes):
-        log("outside the seal window; nothing to do")
+        if args.dry_run:
+            log(f"GW{gameweek} band {opens:%Y-%m-%d %H:%M}-{closes:%H:%M}Z; "
+                f"now {now:%Y-%m-%d %H:%M}Z: outside the seal window; nothing to do")
         return 0
+
+    log(f"GW{gameweek} deadline {deadline:%Y-%m-%d %H:%M}Z; inside the seal band "
+        f"{opens:%H:%M}-{closes:%H:%M}Z; now {now:%H:%M}Z")
+    token = owner_token()
     if is_sealed(gameweek, token):
         log(f"GW{gameweek} is already sealed on main; nothing to do")
         return 0
