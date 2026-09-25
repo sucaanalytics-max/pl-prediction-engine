@@ -41,9 +41,11 @@
 
   A LaunchAgent needs the Mac awake and the user logged in. A missed calendar
   run fires on wake; one that wakes after 09:30 UTC finds the band closed and does
-  nothing. This is the PRIMARY defence, not a second one: the fifteen-minute cron
+  nothing. It is a primary defence, not a second one: the fifteen-minute cron
   was measured not to raise GitHub's delivery (6.6 runs a day for a */15
   workflow, 6.5 for an hourly one), while a dispatch started in 5 seconds.
+  Its twin on Vercel's cron, frontend/app/api/cron/seal-backstop, covers the
+  hours the Mac is asleep once GITHUB_DISPATCH_TOKEN is set there.
 -->
 <plist version="1.0">
 <dict>

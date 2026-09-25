@@ -48,6 +48,14 @@ calendar refresh — a heartbeat — rather than one per check.
 
 Scheduled by `scripts/com.pl-prediction.seal-backstop.plist`. Standard library only;
 `gh` must be logged in as the repo owner (`gh auth token -u <owner>`).
+
+## Its twin
+
+`frontend/app/api/cron/seal-backstop` makes the same decision from Vercel's cron,
+every ten minutes, with no machine awake — once GITHUB_DISPATCH_TOKEN is set in
+Vercel. The two do not coordinate and need not: whichever dispatches second
+finds a run in flight (RECENT_RUN) or the gameweek sealed, and a dispatch that
+does slip through is a no-op run.
 """
 from __future__ import annotations
 
