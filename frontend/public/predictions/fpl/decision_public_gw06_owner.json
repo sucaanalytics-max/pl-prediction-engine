@@ -2,7 +2,7 @@
   "gameweek": 6,
   "entry_label": "owner",
   "objective": "season",
-  "generated_at": "2026-10-04T18:48:30.895997Z",
+  "generated_at": "2026-10-05T06:17:44.729558Z",
   "deadline": "2026-10-10T10:00:00Z",
   "xp_snapshot": {
     "1": 4.0778,
@@ -16,10 +16,10 @@
     "295": 3.8714,
     "368": 4.4642,
     "379": 2.8393,
-    "426": 6.1437,
+    "426": 6.1536,
     "445": 4.4037,
     "464": 4.3301,
-    "497": 0.0363,
+    "497": 0.0367,
     "542": 4.9599
   },
   "decision": {
@@ -69,29 +69,29 @@
       "free_transfers_after": 2
     },
     "n_draws": 10000,
-    "mean_points": 56.6456,
-    "sd_points": 15.0633,
-    "objective": 58.3956,
+    "mean_points": 56.5736,
+    "sd_points": 14.908,
+    "objective": 58.3236,
     "quantiles": {
       "q10": 38.0,
       "q25": 46.0,
-      "q50": 56.0,
+      "q50": 55.0,
       "q75": 66.0,
-      "q90": 77.0,
+      "q90": 76.0,
       "q99": 96.0
     },
     "tails": {
-      "p_ge_40": 0.8769,
-      "p_ge_50": 0.6611,
-      "p_ge_60": 0.3968,
-      "p_ge_70": 0.1934,
-      "p_ge_80": 0.076,
-      "p_ge_90": 0.0231
+      "p_ge_40": 0.8775,
+      "p_ge_50": 0.6618,
+      "p_ge_60": 0.3964,
+      "p_ge_70": 0.1868,
+      "p_ge_80": 0.073,
+      "p_ge_90": 0.0238
     },
-    "autosub_rate": 0.3109,
-    "vice_rate": 0.0133
+    "autosub_rate": 0.31,
+    "vice_rate": 0.0124
   },
-  "optimism_gap": -0.0506,
+  "optimism_gap": 0.0617,
   "credible_margin": true,
   "pool": {
     "n_candidates": 562,
@@ -158,10 +158,11 @@
         "squad": [
           1,
           4,
-          60,
+          28,
           68,
           113,
           124,
+          152,
           154,
           173,
           295,
@@ -169,32 +170,31 @@
           411,
           445,
           464,
-          497,
           542
         ],
         "xi": [
           1,
           4,
-          60,
           68,
           154,
           173,
           295,
           368,
           411,
+          445,
           464,
           542
         ],
         "captain": 411,
         "vice": 295,
         "transfers_in": [
-          60
+          28
         ],
         "transfers_out": [
-          152
+          497
         ],
         "hits": 0,
-        "bank_after": 11,
+        "bank_after": 3,
         "objective": 0.0,
         "free_transfers_banked": 0,
         "free_transfers_after": 1
@@ -233,10 +233,10 @@
         "captain": 411,
         "vice": 295,
         "transfers_in": [
-          28
+          60
         ],
         "transfers_out": [
-          497
+          152
         ],
         "hits": 0,
         "bank_after": 1,
