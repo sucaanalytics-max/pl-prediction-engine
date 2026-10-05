@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-05T06:14:49.582794Z",
+  "generated_at": "2026-10-05T21:42:08.407543Z",
   "gameweek": 6,
   "players": [
     {
@@ -1264,6 +1264,76 @@
       "needs_attention": false
     },
     {
+      "element_id": 422,
+      "player_name": "Mazraoui",
+      "club": "Man Utd",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "ceabce688ed503f1",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-04T21:30:08.533022Z",
+              "observed_at": "2026-10-05T06:15:29.610482Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "10414a3cbf9f6b5f",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-04T21:30:08.533022Z",
+              "observed_at": "2026-10-05T06:15:29.610482Z",
+              "quote": "Back injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "a2e8a8829475b63b",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-04T21:30:08.533022Z",
+              "observed_at": "2026-10-05T06:15:29.610482Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
       "element_id": 429,
       "player_name": "Rashford",
       "club": "Man Utd",
@@ -1964,6 +2034,76 @@
       "needs_attention": false
     },
     {
+      "element_id": 588,
+      "player_name": "Khalaili",
+      "club": "Crystal Palace",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "cc71875a9a7b2388",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-04T22:00:08.963040Z",
+              "observed_at": "2026-10-05T06:15:29.610482Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "a455528d68695542",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-04T22:00:08.963040Z",
+              "observed_at": "2026-10-05T06:15:29.610482Z",
+              "quote": "Hamstring injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "531125320f6b37e8",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-04T22:00:08.963040Z",
+              "observed_at": "2026-10-05T06:15:29.610482Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
       "element_id": 638,
       "player_name": "Norton-Cuffy",
       "club": "Hull City",
@@ -2263,10 +2403,10 @@
     }
   ],
   "counts": {
-    "n_claims": 248,
-    "n_players_with_claims": 62,
-    "n_players_shown": 33,
+    "n_claims": 256,
+    "n_players_with_claims": 64,
+    "n_players_shown": 35,
     "n_escalations": 1,
-    "n_players_resolved": 44
+    "n_players_resolved": 46
   }
 }
