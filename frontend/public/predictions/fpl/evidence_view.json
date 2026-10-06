@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-05T21:42:08.407543Z",
+  "generated_at": "2026-10-06T08:30:17.997989Z",
   "gameweek": 6,
   "players": [
     {
@@ -144,6 +144,76 @@
       "needs_attention": false
     },
     {
+      "element_id": 20,
+      "player_name": "Dowman",
+      "club": "Arsenal",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8ee458871e21a19b",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-05T19:00:10.141532Z",
+              "observed_at": "2026-10-05T21:42:48.278890Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "0195d7cbbbb3b5be",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-05T19:00:10.141532Z",
+              "observed_at": "2026-10-05T21:42:48.278890Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "103001a80a43a8ad",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-05T19:00:10.141532Z",
+              "observed_at": "2026-10-05T21:42:48.278890Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
       "element_id": 26,
       "player_name": "Havertz",
       "club": "Arsenal",
@@ -214,6 +284,76 @@
       "needs_attention": false
     },
     {
+      "element_id": 31,
+      "player_name": "Konsa",
+      "club": "Arsenal",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "c1aeca23e1982b1b",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-05T09:30:09.853316Z",
+              "observed_at": "2026-10-05T21:42:48.278890Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "a95e64eb67bb35d4",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-05T09:30:09.853316Z",
+              "observed_at": "2026-10-05T21:42:48.278890Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "31ff53995a4ecbe7",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-05T09:30:09.853316Z",
+              "observed_at": "2026-10-05T21:42:48.278890Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
       "element_id": 52,
       "player_name": "Alysson",
       "club": "Aston Villa",
@@ -272,6 +412,76 @@
               "value": "d",
               "claimed_at": "2026-09-19T11:30:09.355376Z",
               "observed_at": "2026-10-02T20:04:58.202915Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 69,
+      "player_name": "Scott",
+      "club": "Bournemouth",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "bc9c77ebe2abb4fa",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-10-05T09:30:09.910752Z",
+              "observed_at": "2026-10-05T21:42:48.278890Z",
+              "quote": "Thigh injury - 50% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "a97eb643a8b81c93",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-10-05T09:30:09.910752Z",
+              "observed_at": "2026-10-05T21:42:48.278890Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "2907bde71dde83ee",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-05T09:30:09.910752Z",
+              "observed_at": "2026-10-05T21:42:48.278890Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -2403,10 +2613,10 @@
     }
   ],
   "counts": {
-    "n_claims": 256,
-    "n_players_with_claims": 64,
-    "n_players_shown": 35,
+    "n_claims": 268,
+    "n_players_with_claims": 66,
+    "n_players_shown": 38,
     "n_escalations": 1,
-    "n_players_resolved": 46
+    "n_players_resolved": 49
   }
 }
