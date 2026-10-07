@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-06T20:29:03.875092Z",
+  "generated_at": "2026-10-07T05:25:29.037255Z",
   "gameweek": 6,
   "players": [
     {
@@ -2680,13 +2680,70 @@
       ],
       "total_conflicts": 0,
       "needs_attention": false
+    },
+    {
+      "element_id": 444,
+      "player_name": "Jaouen",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "4be8d92254f2b236",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-09-10T16:00:09.127466Z",
+              "observed_at": "2026-10-06T20:29:44.597513Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8f9c7d45a304beeb",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-09-10T16:00:09.127466Z",
+              "observed_at": "2026-10-06T20:29:44.597513Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
     }
   ],
   "counts": {
-    "n_claims": 272,
-    "n_players_with_claims": 67,
-    "n_players_shown": 39,
+    "n_claims": 275,
+    "n_players_with_claims": 68,
+    "n_players_shown": 40,
     "n_escalations": 1,
-    "n_players_resolved": 50
+    "n_players_resolved": 51
   }
 }
