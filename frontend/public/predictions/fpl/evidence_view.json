@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-09T08:01:32.431843Z",
+  "generated_at": "2026-10-09T15:18:28.138977Z",
   "gameweek": 6,
   "players": [
     {
@@ -602,6 +602,102 @@
       ],
       "total_conflicts": 3,
       "needs_attention": true
+    },
+    {
+      "element_id": 593,
+      "player_name": "Dedi\u0107",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 3,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f0447afea0604594",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": "Unspecified injury - 50% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "98cd9141093c0eb2",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "f0447afea0604594",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": "Unspecified injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "98cd9141093c0eb2",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "4ae289dfd71beb30",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
     },
     {
       "element_id": 10,
@@ -2774,76 +2870,6 @@
       "needs_attention": false
     },
     {
-      "element_id": 593,
-      "player_name": "Dedi\u0107",
-      "club": "Newcastle",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 50,
-          "rule": "tier_precedence",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "f0447afea0604594",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 50,
-              "claimed_at": "2026-09-17T14:30:09.823731Z",
-              "observed_at": "2026-10-08T21:47:45.156193Z",
-              "quote": "Unspecified injury - 50% chance of playing",
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            },
-            {
-              "claim_id": "98cd9141093c0eb2",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 50,
-              "claimed_at": "2026-09-17T14:30:09.823731Z",
-              "observed_at": "2026-10-08T21:47:45.156193Z",
-              "quote": null,
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "4ae289dfd71beb30",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-09-17T14:30:09.823731Z",
-              "observed_at": "2026-10-08T21:47:45.156193Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 1,
-      "needs_attention": false
-    },
-    {
       "element_id": 638,
       "player_name": "Norton-Cuffy",
       "club": "Hull City",
@@ -3417,10 +3443,10 @@
     }
   ],
   "counts": {
-    "n_claims": 417,
-    "n_players_with_claims": 88,
+    "n_claims": 432,
+    "n_players_with_claims": 90,
     "n_players_shown": 48,
-    "n_escalations": 4,
+    "n_escalations": 5,
     "n_players_resolved": 59
   }
 }

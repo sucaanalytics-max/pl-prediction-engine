@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-09T08:02:04.543391Z",
+  "generated_at": "2026-10-09T15:19:03.196684Z",
   "season": "2627",
   "gameweeks_sealed": 4,
   "observations": 1999,
-  "perfect_model_rmse": 2.0049,
+  "perfect_model_rmse": 2.01,
   "perfect_model_basis": "Root-mean-square of the simulated per-player standard deviations. A forecaster that knew each player's true distribution would still incur this, because the outcome is random.",
   "measured": {
     "overall": {
@@ -36,7 +36,7 @@
     },
     "by_horizon": {}
   },
-  "excess_over_ceiling": 0.6911,
+  "excess_over_ceiling": 0.686,
   "predicted_xi": {
     "ours": null,
     "benchmark": 0.84,
