@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-09T09:31:30.633972Z",
-  "n_dropped": 11,
+  "generated_at": "2026-10-09T16:36:16.505330Z",
+  "n_dropped": 36,
   "dropped_by_source": {
-    "bbc_football": 4,
-    "sky_football": 7
+    "bbc_football": 12,
+    "sky_football": 24
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 101,
+  "n_articles": 126,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -31,22 +31,478 @@
       "touches_squad": true
     },
     {
-      "digest": "050d55857bdab843",
-      "headline": "'He was on the floor' - How Barry is overcoming his Everton struggles",
-      "summary": "Perhaps you have seen the video of Thierno Barry in tears after a one-on-one session last season. The Everton striker was doing extra work with his individual coach when it all became too much. Struggling for form, he felt unable",
-      "source": "sky_football",
+      "digest": "be501db91c2bdbce",
+      "headline": "Everton up for sale again - so what next as owners TFG look for a way out?",
+      "summary": "Everton are up for sale again. Chief football writer Phil McNulty looks at what happens next as owners The Friedkin Group look for a way out.",
+      "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13595690/thierno-barrys-everton-revival-striker-hit-rock-bottom-last-season-but-is-working-hard-to-turn-his-toffees-career-around",
-      "claimed_at": "2026-10-08T10:00:00Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/c3y0e8n9q4e0o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T15:38:59Z",
       "players": [
         {
-          "element_id": 249,
-          "name": "Barry",
-          "club": "EVE",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "a665598863dd46af",
+      "headline": "Forest latest: Glasner ready for frosty reception on Palace return",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279316/nottingham-forest-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-09T15:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "262fb465e222c315",
+      "headline": "Wolves star to miss Middlesbrough meeting while Peixoto reveals duo are doubts",
+      "summary": "Wolves striker Raul Jimenez is set to miss out again when his side take on Middlesbrough. Jimenez is taking longer than initially hoped to recover from the knee injury he suffered in the Carabao Cup tie against Everton be",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/wolves-star-to-miss-middlesbrough-meeting-while-peixoto-reveals-duo-are-doubts/",
+      "claimed_at": "2026-10-09T15:14:44Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "129417ff4bf1fd93",
+      "headline": "Arbeloa reveals fitness worry for Fulham star",
+      "summary": "Fulham boss Alvaro Arbeloa hopes Antonee Robinson will be available for selection against Ipswich despite suffering an ankle issue. The defender will be assessed before a decision is made on whether he is fit enough to start at Portman Road. \u201cHe had some",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arbeloa-reveals-fitness-worry-for-fulham-star/",
+      "claimed_at": "2026-10-09T15:07:08Z",
+      "players": [
+        {
+          "element_id": 254,
+          "name": "Robinson",
+          "club": "FUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7f73061291a3f92b",
+      "headline": "'I only found out this morning' - Moyes surprised Everton are up for sale",
+      "summary": "David Moyes has admitted his surprise at Everton being put up for sale by owners The Friedkin Group - even claiming he only found out on Friday morning when the statement was released to the supporters.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13596920/david-moyes-everton-manager-admits-surprise-at-seeing-the-club-being-put-up-for-sale-by-the-friedkin-group",
+      "claimed_at": "2026-10-09T15:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "464af8f83d743e43",
+      "headline": "Hull City handed triple boost ahead of Everton meeting",
+      "summary": "Hull City have been boosted by the returns of three players to training ahead of their game against Everton. Tim Iroegbunam, Brooke Norton-Cuffy and Morita are all set to be available for the clash, with Iroegbunam avoiding a serious issue after",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hull-city-handed-triple-boost-ahead-of-everton-meeting/",
+      "claimed_at": "2026-10-09T14:59:48Z",
+      "players": [
+        {
+          "element_id": 240,
+          "name": "Iroegbunam",
+          "club": "HUL",
+          "held": false
+        },
+        {
+          "element_id": 556,
+          "name": "Targett",
+          "club": "HUL",
+          "held": false
+        },
+        {
+          "element_id": 563,
+          "name": "Morita",
+          "club": "HUL",
+          "held": false
+        },
+        {
+          "element_id": 638,
+          "name": "Norton-Cuffy",
+          "club": "HUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4abf83cb437af2fb",
+      "headline": "Sage delivers mixed Crystal Palace injury news update with trio sidelined",
+      "summary": "Pierre Sage has confirmed Anan Khalaili and Isma\u00efla Sarr are available for Crystal Palace\u2019s Premier League clash with Nottingham Forest. Palace return to action on Sunday following the international break, with Sage providing",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/sage-delivers-mixed-crystal-palace-injury-news-update-with-trio-sidelined/",
+      "claimed_at": "2026-10-09T14:44:04Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": false
+        },
+        {
+          "element_id": 588,
+          "name": "Khalaili",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f063f2dea605aa8b",
+      "headline": "Glasner reveals double Nottingham Forest injury blow",
+      "summary": "Oliver Glasner has confirmed Nikola Milenkovi\u0107 and Igor Jesus will both miss Nottingham Forest\u2019s Premier League trip to Crystal Palace, while Neco Williams is also a doubt through illness. Milenkovi\u0107 had recently returned from injury and featured",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/glasner-reveals-double-nottingham-forest-injury-blow/",
+      "claimed_at": "2026-10-09T14:38:17Z",
+      "players": [
+        {
+          "element_id": 469,
+          "name": "N.Williams",
+          "club": "NFO",
+          "held": false
+        },
+        {
+          "element_id": 471,
+          "name": "Milenkovi\u0107",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "29557e278241ebf8",
+      "headline": "Injured Aston Villa stars nearing returns but Emery to remain without several against Brentford",
+      "summary": "Unai Emery says several of Aston Villa's injured stars are closing in on returning to action. Villa host Keith Andrews\u2019 Brentford on Saturday looking to make it three wins in a row, with Emery confirming",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/injured-aston-villa-stars-nearing-returns-but-emery-to-remain-without-several-against-brentford/",
+      "claimed_at": "2026-10-09T14:33:11Z",
+      "players": [
+        {
+          "element_id": 48,
+          "name": "Onana",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bae0b37567124fad",
+      "headline": "I've got my own questions on Man City case - Carrick",
+      "summary": "Manchester United boss Michael Carrick says he was personally affected by the Manchester City case which has seen the club found guilty of breaching Premier League financial rules and still has questions about the matter.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck5ynv45lymdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T14:30:38Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "86b999822f8bacdb",
+      "headline": "Illness - 50% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-10-09T14:30:11.466887Z",
+      "players": [
+        {
+          "element_id": 469,
+          "name": "N.Williams",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c135fb35f5f388d8",
+      "headline": "Aston Villa latest: Goretzka returns to training but will not feature vs Bees",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-09T14:30:00Z",
+      "players": [
+        {
+          "element_id": 618,
+          "name": "Goretzka",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0ef21eb7edc3d040",
+      "headline": "Moyes admits \u2018surprise\u2019 at Everton owners\u2019 decision to seek sale",
+      "summary": "David Moyes has admitted he was surprised by The Friedkin Group\u2019s decision to explore a potential sale of Everton less than two years after taking control of the club. TFG completed its takeover in December 2024, succeeding Farhad Mosh",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/moyes-admits-surprise-at-everton-owners-decision-to-seek-sale/",
+      "claimed_at": "2026-10-09T14:24:42Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2a0f01201b4cede1",
+      "headline": "Chelsea latest: Alonso gives injury update on key players",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-09T14:22:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f1477bead3155090",
+      "headline": "Carrick demands Man City verdict clarity: 'It has affected me personally'",
+      "summary": "Michael Carrick has called for a swift resolution to Manchester City's financial charges case, insisting clarity is needed for everyone involved as the Premier League awaits the outcome of the club's appeal.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13596900/manchester-city-charges-manchester-united-boss-michael-carrick-calls-for-speed-and-clarity-over-rivals-guilty-verdict",
+      "claimed_at": "2026-10-09T14:16:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ed70d4ff2c6f4ec4",
+      "headline": "Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-09T14:15:00Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 557,
+          "name": "Tzolis",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0fedd71fff6ef3fa",
+      "headline": "Man City titles 'absolutely not' tainted - Maresca",
+      "summary": "Manchester City manager Enzo Maresca says the club's titles are \"absolutely not\" tainted after they were found guilty of the majority of the 115 charges brought against them by the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmzxjdvv784xo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T14:08:55Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "93ca35b32728cff3",
+      "headline": "Liverpool latest: Iraola has attacking calls to make with key duo out of City game",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-09T14:05:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "02e5e3df4aa3db4a",
+      "headline": "What reception awaits Man City at Anfield?",
+      "summary": "Bus welcomes, banners and flags expected as Man City head to Liverpool on Sunday for their first game since they were found guilty of breaching Premier League rules.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cjkgey07lq15o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T14:02:46Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "66d782424039911d",
+      "headline": "Tottenham latest: Van de Ven and Van Hecke available for Man Utd game",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-09T13:56:00Z",
+      "players": [
+        {
+          "element_id": 112,
+          "name": "Van Hecke",
+          "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 503,
+          "name": "Van de Ven",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "792a90d181d4f20c",
+      "headline": "Man Utd latest: Dorgu facing weeks out with injury, Carrick confirms",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-09T13:30:00Z",
+      "players": [
+        {
+          "element_id": 415,
+          "name": "Dorgu",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f5710976e021deb3",
+      "headline": "Man City reaction: What Premier League managers have said about verdict",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13593363/man-city-charges-latest-live-updates-appeal-news-and-reaction-after-guilty-verdict-from-independent-commission",
+      "claimed_at": "2026-10-09T12:10:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fe5ee8b808e05b29",
+      "headline": "Leeds latest: Club chairman drops major Farke contract hint",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-09T11:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a9d69c347aa89d24",
+      "headline": "Maresca on Man City guilty verdict: 'We're going to win appeal'",
+      "summary": "Manchester City boss Enzo Maresca says the club's owners are \"convinced\" they will win their appeal against an independent commission that found them guilty of all charges related to serious breaches of Premier League financial rules.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13596454/man-city-charges-enzo-maresca-says-owners-convinced-club-will-win-appeal-against-guilty-verdict-as-he-trusts-hierarchy",
+      "claimed_at": "2026-10-09T10:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "793461335947b06b",
@@ -56,6 +512,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13596764/manchester-city-enzo-maresca-holds-first-press-conference-since-verdict",
       "claimed_at": "2026-10-09T10:17:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2826da12d75e2e0e",
+      "headline": "What could Rangers' 2012 case tell us about Man City's uncertain future?",
+      "summary": "From sanctions and stripped titles to starting from scratch, BBC Scotland explains how potential consequences for Manchester City compare with the financial collapse of Rangers in 2012.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cx240n2p57y5o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T10:04:35Z",
       "players": [
         {
           "element_id": 0,
@@ -469,42 +943,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b2dd2f80aec58d40",
-      "headline": "Man City latest: 'Calm' Maresca gives first interview since guilty verdict",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-08T18:42:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0bfeea03ee232e89",
-      "headline": "PL Predictions: Spurs to condemn Man Utd to their worst start in 40 years",
-      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight across the Premier League weekend.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13591795/premier-league-predictions-jones-knows-best-bets-liverpool-vs-manchester-city-manchester-united-vs-tottenham-and-more",
-      "claimed_at": "2026-10-08T18:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "6e4bc2b2e6a5ec33",
       "headline": "Suspended fine for Xhaka over Covid-19 certificate",
       "summary": "Sunderland captain Granit Xhaka says he has received a suspended fine of 150,000 Swiss francs (\u00a3136,000) for obtaining a forged Covid-19 vaccination certificate.",
@@ -601,60 +1039,6 @@
       "touches_squad": false
     },
     {
-      "digest": "45815f54300f6c75",
-      "headline": "'Stick together, enjoy the ride and smile' - Haaland's message to Man City fans",
-      "summary": "\"Stick together, enjoy the ride and smile,\" is Erling Haaland's message to Man City fans.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13596522/man-city-charges-erling-haaland-encourages-clubs-fans-to-stay-positive-after-guilty-verdict",
-      "claimed_at": "2026-10-08T16:00:00Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c95d322c82f96ab9",
-      "headline": "Everton latest: Sherif fined by FA for breaching betting rules",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-08T16:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d654ebf449b49b9f",
-      "headline": "Haaland speaks for the first time following Man City's guilty verdict",
-      "summary": "Erling Haaland has urged fans to 'stick together and spread the love', following Manchester City being found guilty of all charges related to serious breaches of Premier League financial rules by an independent commission.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13596548/erling-haaland-sends-message-to-fans-following-man-city-guilty-verdict",
-      "claimed_at": "2026-10-08T16:00:00Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "98626a03c6a572ab",
       "headline": "Best Arsenal triple-up + what to do with Man City players: FPL Q&A",
       "summary": "Five-time top 1k finisher Tom Freeman answers your questions The post Best Arsenal triple-up + what to do with Man City players: FPL Q&A appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football",
@@ -709,24 +1093,6 @@
       "touches_squad": false
     },
     {
-      "digest": "bc19f6ca8d5773b6",
-      "headline": "Newcastle latest: Jaissle gives injury update on NINE players",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-08T14:44:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "40cf51b3ed13d9c7",
       "headline": "Everton's Sherif fined for breaching betting rules",
       "summary": "The Football Association fines Everton forward Martin Sherif \u00a35,000 for breaching its betting rules over a 15-month period.",
@@ -734,66 +1100,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c54g13we4rero?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-08T14:24:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "292fef18ddeedbe6",
-      "headline": "Sunderland latest: Le Bris confirms Ballard injury but Brobbey 'available soon'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-08T14:00:00Z",
-      "players": [
-        {
-          "element_id": 532,
-          "name": "Ballard",
-          "club": "SUN",
-          "held": false
-        },
-        {
-          "element_id": 552,
-          "name": "Brobbey",
-          "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5337d3679e3f92d1",
-      "headline": "Tottenham latest: Listen to a special Sky Sports Spurs podcast!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-08T11:13:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "24db763ea0764f34",
-      "headline": "'Void of leaders' - The problems for bottom-side Spurs after winless start",
-      "summary": "When Aston Villa went 1-0 up in north London, it felt inevitable that Tottenham would head into the international break winless in the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13596052/tottenham-sky-sports-special-podcast-tim-sherwood-and-michael-bridge-assess-spurs-problems-after-winless-start",
-      "claimed_at": "2026-10-08T11:05:00Z",
       "players": [
         {
           "element_id": 0,
@@ -823,24 +1129,6 @@
       "touches_squad": false
     },
     {
-      "digest": "491361c852c97eb8",
-      "headline": "Arsenal latest: Arteta deserves new deal, he's done an unbelievable job, says Merse",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-08T10:21:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "834e679a91e9b8e3",
       "headline": "The FPL half-term report: Spurs",
       "summary": "Spurs\u2019 FPL season so far and the best assets to consider - if any! The post The FPL half-term report: Spurs appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -853,42 +1141,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "37559d92315fc055",
-      "headline": "Liverpool latest: Man City game must-not-lose for Iraola, says Merson",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-08T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e99853c244c5504d",
-      "headline": "Why Araujo could be Liverpool\u2019s key player this season",
-      "summary": "Liverpool conceded two goals in each of their first two games of the season. Not only have they not conceded two in a game since, they have only conceded two in total in the last five matches. It is no coincidence that Ronald Araujo has come in",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13571777/ronald-araujo-has-been-liverpools-most-important-summer-signing-so-far-by-balancing-andoni-iraolas-side-from-right-back",
-      "claimed_at": "2026-10-08T10:00:00Z",
-      "players": [
-        {
-          "element_id": 579,
-          "name": "Araujo",
-          "club": "LIV",
           "held": false
         }
       ],
@@ -920,24 +1172,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c962yzlgln8po?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-08T09:04:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0e5cf35d3501e362",
-      "headline": "PL returns! Man City in spotlight, big Old Trafford showdown and Gyokeres' chance",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13595301/premier-league-talking-points-man-city-in-spotlight-with-trip-to-liverpool-man-utd-and-spurs-desperate-for-win-and-viktor-gyokeres-arsenal-chance",
-      "claimed_at": "2026-10-08T09:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1189,24 +1423,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e89a6a768b0e3369",
-      "headline": "Transfer Centre LIVE! 'Rice close to new Arsenal deal'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
-      "claimed_at": "2026-10-07T20:39:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b807fa9e4cfa7dfd",
       "headline": "Guardiola set to attend Man City's first home game since guilty verdict",
       "summary": "Pep Guardiola managed Manchester City for a decade, leaving in the summer, and has backed the club's owners since the verdict.",
@@ -1243,60 +1459,6 @@
       "touches_squad": false
     },
     {
-      "digest": "556f1716478f2bb0",
-      "headline": "Rice close to agreeing new Arsenal deal",
-      "summary": "Declan Rice is close to agreeing a new long-term Arsenal contract, sources have told BBC Sport.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c9gkvx74je7do?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-07T18:30:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b370129b51cd38bd",
-      "headline": "Liverpool latest: Iraola casts doubt on key Liverpool duo\u2019s chances of facing Man City",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-07T18:06:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e879bfb9fa4ae8f5",
-      "headline": "Ex-Spurs, Celtic and Switzerland defender Vega to stand against Infantino",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12507208/football-latest-news-gossip",
-      "claimed_at": "2026-10-07T17:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "8bf60ac1875d82ab",
       "headline": "Southampton boss escapes serious punishment over spygate scandal",
       "summary": "Southampton boss Tonda Eckert has been fined \u00a328,000 and handed a suspended six-week football ban after admitting three FA misconduct charges relating to the observation of opposition training sessions. The charges concerned incidents",
@@ -1304,42 +1466,6 @@
       "tier": 2,
       "url": "https://hayters.com/southampton-boss-escapes-serious-punishment-over-spygate-scandal/",
       "claimed_at": "2026-10-07T15:42:30Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "783c74629b5e4ce6",
-      "headline": "Ex-Spurs player Vega set to run for Fifa president",
-      "summary": "Former Tottenham defender Ramon Vega says he intends to run in next year's Fifa presidential election - becoming the first person to confirm they want to challenge Gianni Infantino.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c607397pjv37o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-07T15:16:40Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "32a8e86fbdffc404",
-      "headline": "Former Man City player Silva comes out of retirement",
-      "summary": "Former Manchester City midfielder David Silva comes out of retirement aged 40 to join Hong Kong Premier League club Sha Tin.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvp8g78xd51jo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-07T14:31:53Z",
       "players": [
         {
           "element_id": 0,
@@ -1405,42 +1531,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9d0da7140026a55b",
-      "headline": "Senior figures worried about Man City being in next season's Champions League",
-      "summary": "Senior figures within the English game are concerned that Manchester City could play in the Champions League next season even if they are relegated for breaching financial regulations.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c9p8gxgm71zzo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-07T11:44:08Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "251e76af57cdbaea",
-      "headline": "Arteta signs new contract with champions Arsenal",
-      "summary": "Mikel Arteta says this is \"only the beginning\" of Arsenal's success after signing a new contract with the Premier League champions until 2030.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/crz65j5p8l57o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-07T11:00:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9584073b0689e0c6",
       "headline": "\u2018Only the beginning of what we can achieve\u2019 \u2013 Arteta signs new Arsenal deal",
       "summary": "Mikel Arteta has signed a new long-term contract with Arsenal, committing his future to the club until June 2030. The announcement is a significant boost for Arsenal, who have placed their faith in Arteta after he guided the",
@@ -1477,24 +1567,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6f2355369ee22634",
-      "headline": "'Nothing can take my attention' - Ward on World Cup and Villa link",
-      "summary": "Republic of Ireland manager Carla Ward says that \"nothing is tempting\" her away from her job as they prepare for a World Cup qualifying double-header against Kazakhstan.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqvg07v9xrz4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-07T08:57:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9d278b4f49da9a89",
       "headline": "Brighton players, Saka, Bruno: Buy, keep or sell in Gameweek 6?",
       "summary": "Five-time top 1k finisher Tom Freeman recommends who to buy, keep and sell The post Brighton players, Saka, Bruno: Buy, keep or sell in Gameweek 6? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy F",
@@ -1502,42 +1574,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/10/07/brighton-players-saka-bruno-buy-keep-or-sell-in-gameweek-6",
       "claimed_at": "2026-10-07T07:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d478a7a9f57a9d5f",
-      "headline": "Dowman tipped to flourish with Old Firm loan - gossip",
-      "summary": "Old Firm loan move could be interesting for Arsenal rising star, says ex-England international...",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/crly0gvd44evo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-07T07:03:00Z",
-      "players": [
-        {
-          "element_id": 20,
-          "name": "Dowman",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a0a7d120299354de",
-      "headline": "More than the Score",
-      "summary": "What could the consequences of the Manchester City verdict be?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0pf8h14?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-07T00:00:00Z",
       "players": [
         {
           "element_id": 0,
