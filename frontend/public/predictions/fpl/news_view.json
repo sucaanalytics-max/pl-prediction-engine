@@ -1,12 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-09T02:28:46.017127Z",
-  "n_dropped": 0,
-  "dropped_by_source": {},
+  "generated_at": "2026-10-09T09:31:30.633972Z",
+  "n_dropped": 11,
+  "dropped_by_source": {
+    "bbc_football": 4,
+    "sky_football": 7
+  },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 87,
-  "n_shown": 87,
+  "n_articles": 101,
+  "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
     {
@@ -46,8 +49,266 @@
       "touches_squad": true
     },
     {
+      "digest": "793461335947b06b",
+      "headline": "FREE LIVE STREAM: Man City boss Maresca faces media",
+      "summary": "Enzo Maresca is holding his first press conference since Manchester City were found guilty of all charges related to serious breaches of Premier League financial rules.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13596764/manchester-city-enzo-maresca-holds-first-press-conference-since-verdict",
+      "claimed_at": "2026-10-09T10:17:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d4e80abbe26542cd",
+      "headline": "Maresca to hold first press conference since Man City verdict LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-09T09:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fca31b27d4c1c87b",
+      "headline": "Everton sale Q&A: Why are the owners doing this, and how much is club worth?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-09T09:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3a26f972ae662ff3",
+      "headline": "From doomscrolling to defiance - how do Man City fans feel?",
+      "summary": "With Manchester City found guilty of the majority of 115 charges against them, how are their fans feeling?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm040l634249o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T09:02:26Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c63656b60c2c1082",
+      "headline": "Everton owners considering club sale",
+      "summary": "The Friedkin Group are considering the potential sale of Everton Football Club - saying \"the time is right\" for the next chapter.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13596740/everton-up-for-sale-friedkin-group-considering-new-investment-options-including-the-potential-sale-of-controlling-stake",
+      "claimed_at": "2026-10-09T08:38:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4dc2df8b8f6882b2",
+      "headline": "Everton owners consider selling club two years after takeover",
+      "summary": "Everton owners the Friedkin Group are exploring the sale of the club less than two years after taking control.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmvg9pgg4keyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T08:23:50Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6e98ba237975a819",
+      "headline": "How Glasner turned McAtee into his new Wharton",
+      "summary": "When Oliver Glasner moved to Nottingham Forest after departing Crystal Palace, he tasked himself with replicating the 3-4-2-1 system that worked so well at Selhurst Park.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13595467/james-mcatee-how-oliver-glasner-has-transformed-nottingham-forest-midfielder-from-forgotten-man-to-his-new-adam-wharton",
+      "claimed_at": "2026-10-09T08:00:00Z",
+      "players": [
+        {
+          "element_id": 210,
+          "name": "Wharton",
+          "club": "CRY",
+          "held": false
+        },
+        {
+          "element_id": 486,
+          "name": "McAtee",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9e7f994fcbd794c7",
+      "headline": "Big week for Carrick and Man Utd to turn critics into Baleba's believers",
+      "summary": "As the Premier League returns this weekend, so does the focus and attention on the red side of Manchester.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13595788/manchester-united-michael-carrick-faces-defining-month-at-old-trafford-as-carlos-baleba-emerges-as-potential-game-changer",
+      "claimed_at": "2026-10-09T08:00:00Z",
+      "players": [
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "01391f7772f5be4f",
+      "headline": "Is \u00a370m Baleba ready for his Man Utd exam?",
+      "summary": "Manchester United's \u00a370m summer signing Carlos Baleba is expected to make his debut against Tottenham Hotspur at Old Trafford",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck054p2lyeplo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T07:57:23Z",
+      "players": [
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "78048942a4b47813",
+      "headline": "Yet to gel or same old struggles? - De Zerbi's Premier League dilemma",
+      "summary": "After a three-week international break, Tottenham Hotspur return to Premier League action having won none of their opening five matches and sitting bottom of the table. BBC Sport looks back at their poor start to the season and as",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cwp8g355me6no?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T07:41:09Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7002781db1723113",
+      "headline": "Carrick stays cool, but should he be worried about Man Utd's form?",
+      "summary": "After three weeks off because of the international break, BBC Sport looks back at Manchester United's indifferent start to the new Premier League season, which saw Michael Carrick's side win just one of their opening five matches.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6x29vg0p7kko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T07:36:24Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f7a52ffe5e28c329",
+      "headline": "How Arteta's response to Brighton loss may shape Arsenal's next chapter",
+      "summary": "Mikel Arteta has shown an increased appetite for risk this season but, as Arsenal look to stay at the top, failing to reinvent would be a greater gamble.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/crn8wg221lnvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T06:41:14Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6fb2eca62e97cef7",
+      "headline": "Maresca will be demanding a siege mentality from Man City - Pulis",
+      "summary": "BBC Sport columnist Tony Pulis explains why Manchester City players have a great chance to show unity and togetherness when they travel to Anfield on Sunday.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmy4x3908kpqo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-09T05:25:04Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "3705a170852f9ef5",
       "headline": "Papers: Fee Man Utd could receive for wantaway JJ Gabriel revealed",
+      "summary": "The top stories and transfer rumours from Friday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13596653/jj-gabriel-manchester-united-could-be-forced-to-accept-small-fee-for-wantaway-teen-paper-talk",
+      "claimed_at": "2026-10-08T22:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "501228461fcf61c7",
+      "headline": "Papers: Fee Man Utd could receive for wantaway Gabriel revealed",
       "summary": "The top stories and transfer rumours from Friday's newspapers...",
       "source": "sky_football",
       "tier": 3,
@@ -1144,60 +1405,6 @@
       "touches_squad": false
     },
     {
-      "digest": "c67841d037bead35",
-      "headline": "'Ruthless' Arteta enters step five of Arsenal project",
-      "summary": "Mikel Arteta has turned Arsenal into Premier League champions but does his new contract take him into a new stage of his project? And can he bring more trophies to eclipse Arsene Wenger?",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13595720/mikel-artetas-new-contract-the-challenges-facing-arsenal-boss-as-he-enters-step-five-of-his-project",
-      "claimed_at": "2026-10-07T12:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "59ebc31a53af24a5",
-      "headline": "'We want a winning era' - Arteta signs new Arsenal contract",
-      "summary": "Mikel Arteta has signed a new long-term contract to extend his stay at Arsenal.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13590915/mikel-arteta-contract-arsenal-boss-signs-new-deal-to-extend-stay-at-premier-league-champions",
-      "claimed_at": "2026-10-07T12:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c88d6224bcc0aefd",
-      "headline": "How does Arteta turn champions into serial winners?",
-      "summary": "When Mikel Arteta signed his last Arsenal contract in September 2024, his quest to bring major silverware back to the club was ongoing. Two years later, he signs his new one after leading them to a long-awaited Premier League title.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13590953/mikel-arteta-to-begin-new-era-at-arsenal-as-club-eye-premier-league-dominance-and-champions-league-success",
-      "claimed_at": "2026-10-07T12:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9d0da7140026a55b",
       "headline": "Senior figures worried about Man City being in next season's Champions League",
       "summary": "Senior figures within the English game are concerned that Manchester City could play in the Champions League next season even if they are relegated for breaching financial regulations.",
@@ -1205,24 +1412,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c9p8gxgm71zzo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-07T11:44:08Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d24324e70949f459",
-      "headline": "How Alonso could solve Chelsea's familiar problems",
-      "summary": "Chelsea made a thrilling start to the season under Xabi Alonso but after being beaten at Arsenal, blows against Hull and Brentford have set them back.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13596075/chelsea-xabi-alonso-must-solve-long-standing-defensive-issues-and-needs-moises-caicedo-fit-for-key-run-of-games",
-      "claimed_at": "2026-10-07T11:24:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1277,24 +1466,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/10/07/the-fpl-half-term-report-man-united",
       "claimed_at": "2026-10-07T10:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f94059c1f795df68",
-      "headline": "Man City reaction: You can't take glory years away from us, says Walker",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13593363/man-city-charges-reaction-and-findings-as-commission-finds-club-guilty-of-all-charges-related-to-serious-financial-breaches",
-      "claimed_at": "2026-10-07T10:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1396,42 +1567,6 @@
       "touches_squad": false
     },
     {
-      "digest": "49d79db421493a05",
-      "headline": "Villa eye Endrick loan deal - Wednesday's gossip",
-      "summary": "Aston Villa might lure Endrick to the Premier League, Bournemouth fight to keep hold of Alex Scott, top clubs are keen on Rayan Cherki, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm75pl4dw5rpo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-06T20:20:01Z",
-      "players": [
-        {
-          "element_id": 69,
-          "name": "Scott",
-          "club": "BOU",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "989a8e5cfe9a64c9",
-      "headline": "Rival clubs want retrospective and future punishments for Man City",
-      "summary": "A number of Premier League clubs want Manchester City to be hit with both retrospective punishments and sanctions in the future.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c623d8707k5lo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-06T19:30:20Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "71327eead1f3320c",
       "headline": "The FPL half-term report: Leeds",
       "summary": "The Whites are unbeaten after five Gameweeks - but the fixtures stiffen from hereon The post The FPL half-term report: Leeds appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1462,24 +1597,6 @@
           "element_id": 411,
           "name": "Haaland",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "479048b7dd7daf91",
-      "headline": "PODCAST: Is Alonso solving Chelsea's big problems?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-06T16:35:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1571,60 +1688,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/10/05/the-fpl-half-term-report-everton-2",
       "claimed_at": "2026-10-05T22:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7469eac9fb1bbdf7",
-      "headline": "ARSENAL PODCAST: Listen to an Arteta new contract special!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-05T21:50:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fdd8c4b2a81ff290",
-      "headline": "\u00a3800m in, \u00a3800m out - why Man City scandal shines light on Man Utd finances",
-      "summary": "Manchester City's owners have been found guilty of injecting money into the club. At Manchester United, fans are frustrated at how much has been taken out.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckg5j87jy3zmo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-05T08:08:02Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b749586d86c30eab",
-      "headline": "Man City fight back to beat struggling Arsenal",
-      "summary": "Manchester City twice came from behind to beat Arsenal 4-2 at the Etihad Stadium and increase the pressure on Gunners manager Renee Slegers.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c64g71j3dkw7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-04T21:20:21Z",
       "players": [
         {
           "element_id": 0,
