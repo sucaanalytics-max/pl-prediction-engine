@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-08T21:47:16.854372Z",
+  "generated_at": "2026-10-09T01:42:38.220156Z",
   "gameweek": 6,
   "players": [
     {
@@ -184,6 +184,102 @@
               "value": "d",
               "claimed_at": "2026-08-27T14:56:28.704361Z",
               "observed_at": "2026-10-08T16:52:08.652954Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
+    },
+    {
+      "element_id": 450,
+      "player_name": "Livramento",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 3,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "fc1b32414ef28a16",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-19T14:00:09.046677Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "c89c71ca8b2b09c0",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-19T14:00:09.046677Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": "Unspecified injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "b9add59f38570ea2",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-19T14:00:09.046677Z",
+              "observed_at": "2026-10-02T20:04:58.202915Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "3779d799742065e3",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-19T14:00:09.046677Z",
+              "observed_at": "2026-10-02T20:04:58.202915Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8a735430511e7545",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-19T14:00:09.046677Z",
+              "observed_at": "2026-10-02T20:04:58.202915Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -2328,76 +2424,6 @@
       "needs_attention": false
     },
     {
-      "element_id": 450,
-      "player_name": "Livramento",
-      "club": "Newcastle",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 75,
-          "rule": "tier_precedence",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "b9add59f38570ea2",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-09-19T14:00:09.046677Z",
-              "observed_at": "2026-10-02T20:04:58.202915Z",
-              "quote": "Unspecified injury - 75% chance of playing",
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            },
-            {
-              "claim_id": "3779d799742065e3",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-09-19T14:00:09.046677Z",
-              "observed_at": "2026-10-02T20:04:58.202915Z",
-              "quote": null,
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "8a735430511e7545",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-09-19T14:00:09.046677Z",
-              "observed_at": "2026-10-02T20:04:58.202915Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 1,
-      "needs_attention": false
-    },
-    {
       "element_id": 459,
       "player_name": "L.Miley",
       "club": "Newcastle",
@@ -2736,6 +2762,76 @@
               "value": "d",
               "claimed_at": "2026-10-04T22:00:08.963040Z",
               "observed_at": "2026-10-05T06:15:29.610482Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 593,
+      "player_name": "Dedi\u0107",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f0447afea0604594",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": "Unspecified injury - 50% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "98cd9141093c0eb2",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "4ae289dfd71beb30",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-09-17T14:30:09.823731Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -3254,6 +3350,39 @@
       "needs_attention": false
     },
     {
+      "element_id": 465,
+      "player_name": "Osula",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "14c012c18df2e55a",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-08-25T19:00:08.004915Z",
+              "observed_at": "2026-10-08T21:47:45.156193Z",
+              "quote": "Foot injury - 50% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 543,
       "player_name": "Diarra",
       "club": "Sunderland",
@@ -3288,10 +3417,10 @@
     }
   ],
   "counts": {
-    "n_claims": 400,
-    "n_players_with_claims": 84,
-    "n_players_shown": 46,
+    "n_claims": 417,
+    "n_players_with_claims": 88,
+    "n_players_shown": 48,
     "n_escalations": 4,
-    "n_players_resolved": 57
+    "n_players_resolved": 59
   }
 }
