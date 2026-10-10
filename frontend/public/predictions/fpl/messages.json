@@ -1,7 +1,809 @@
 {
-  "generated_at": "2026-09-21T15:27:07.506522Z",
-  "n_messages": 57,
+  "generated_at": "2026-10-10T06:03:46.029623Z",
+  "n_messages": 81,
   "messages": [
+    {
+      "id": "gw06-decision-owner",
+      "gameweek": 6,
+      "kind": "decision",
+      "severity": "info",
+      "title": "GW6 \u2014 owner team ready",
+      "body": "2 transfer(s), 0 hit(s) taken. Deadline in 3.9 hours. Nothing has been submitted for you \u2014 the agent has no write access to FPL by design.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "gameweek": 6,
+        "entry_label": "owner",
+        "objective": "season",
+        "generated_at": "2026-10-10T06:03:45.991809Z",
+        "deadline": "2026-10-10T10:00:00Z",
+        "xp_snapshot": {
+          "1": 4.1256,
+          "4": 5.4432,
+          "12": 6.0734,
+          "113": 3.4919,
+          "124": 3.9725,
+          "152": 0.1175,
+          "154": 4.3038,
+          "165": 3.2122,
+          "173": 3.2032,
+          "368": 4.502,
+          "379": 0.0,
+          "426": 6.2566,
+          "445": 4.4823,
+          "447": 4.6104,
+          "464": 4.432,
+          "497": 0.039,
+          "542": 4.9235
+        },
+        "decision": {
+          "plan": {
+            "squad": [
+              1,
+              4,
+              12,
+              113,
+              124,
+              165,
+              173,
+              368,
+              379,
+              426,
+              445,
+              447,
+              464,
+              497,
+              542
+            ],
+            "xi": [
+              1,
+              4,
+              12,
+              113,
+              124,
+              368,
+              426,
+              445,
+              447,
+              464,
+              542
+            ],
+            "captain": 426,
+            "vice": 12,
+            "transfers_in": [
+              12,
+              447
+            ],
+            "transfers_out": [
+              152,
+              154
+            ],
+            "hits": 0,
+            "bank_after": 3,
+            "objective": 0.0,
+            "free_transfers_banked": 0,
+            "free_transfers_after": 1
+          },
+          "n_draws": 10000,
+          "mean_points": 58.7028,
+          "sd_points": 15.8692,
+          "objective": 58.7028,
+          "quantiles": {
+            "q10": 39.0,
+            "q25": 47.0,
+            "q50": 58.0,
+            "q75": 69.0,
+            "q90": 80.0,
+            "q99": 99.0
+          },
+          "tails": {
+            "p_ge_40": 0.8936,
+            "p_ge_50": 0.6989,
+            "p_ge_60": 0.4526,
+            "p_ge_70": 0.239,
+            "p_ge_80": 0.105,
+            "p_ge_90": 0.037
+          },
+          "autosub_rate": 0.0509,
+          "vice_rate": 0.008
+        },
+        "optimism_gap": 0.1344,
+        "credible_margin": true,
+        "pool": {
+          "n_candidates": 562,
+          "n_excluded": 105,
+          "excluded_by_reason": {
+            "status_u": 105
+          },
+          "held_missing_purchase_price": [],
+          "price_uncertain": false,
+          "n_zero_xp": 76
+        },
+        "horizon": {
+          "eval_horizon": 8,
+          "transfer_horizon": 6,
+          "provisional": [
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                113,
+                124,
+                173,
+                295,
+                368,
+                411,
+                445,
+                447,
+                464,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                124,
+                368,
+                411,
+                445,
+                447,
+                464,
+                542
+              ],
+              "captain": 411,
+              "vice": 12,
+              "transfers_in": [
+                68,
+                295,
+                411
+              ],
+              "transfers_out": [
+                165,
+                379,
+                426
+              ],
+              "hits": 2,
+              "bank_after": 16,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                124,
+                173,
+                295,
+                368,
+                411,
+                445,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                295,
+                368,
+                411,
+                445,
+                447,
+                542
+              ],
+              "captain": 12,
+              "vice": 411,
+              "transfers_in": [
+                106
+              ],
+              "transfers_out": [
+                464
+              ],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                124,
+                173,
+                295,
+                368,
+                411,
+                445,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                295,
+                368,
+                411,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 295,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                124,
+                173,
+                295,
+                368,
+                411,
+                445,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                295,
+                368,
+                411,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 12,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 2,
+              "free_transfers_after": 3
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                124,
+                173,
+                295,
+                368,
+                411,
+                445,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                295,
+                368,
+                411,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 106,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 3,
+              "free_transfers_after": 4
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                124,
+                173,
+                295,
+                368,
+                411,
+                445,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                295,
+                368,
+                411,
+                445,
+                447,
+                542
+              ],
+              "captain": 542,
+              "vice": 411,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 4,
+              "free_transfers_after": 5
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                124,
+                173,
+                295,
+                368,
+                411,
+                445,
+                447,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                295,
+                368,
+                411,
+                445,
+                447,
+                542
+              ],
+              "captain": 411,
+              "vice": 295,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 5,
+              "free_transfers_after": 5
+            }
+          ]
+        },
+        "field_model": "uncalibrated",
+        "warnings": [],
+        "execution": "propose_only",
+        "evidence": {
+          "measured_on": {
+            "seasons": [
+              "2023-24",
+              "2024-25",
+              "2025-26"
+            ],
+            "gameweeks": "8-38 each, 93 paired observations",
+            "harness": "pipeline/learning/backtest_decisions.py",
+            "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+          },
+          "beats_doing_nothing": {
+            "verdict": "established",
+            "margin_2023_24": 411,
+            "margin_2024_25": 560,
+            "margin_2025_26": 184,
+            "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+          },
+          "beats_greedy_transfers": {
+            "verdict": "not established",
+            "margin_2023_24": 67,
+            "margin_2024_25": 60,
+            "margin_2025_26": -66,
+            "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+          },
+          "projection_calibration": {
+            "verdict": "established",
+            "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+          }
+        },
+        "sealed": true
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-249",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says \"'He was on the floor' - How Barry is overcoming his Everton struggles\\nPerhaps you have seen the video of Thierno Barry in tears after a one-on-one session last season. The Everton striker was doing extra work with his individual coach when it all became too much. Struggling for form, he felt unable \" (2026-10-08T10:00:00Z) while bbc_football says \"Everton's unbeaten run continues with win over 10-man Ipswich\\nUnbeaten Everton move up to fifth in the Premier League, with Thierno Barry's goal making the difference against 10-man Ipswich Town.\" (2026-09-19T19:00:21Z). Used the more conservative \"'He was on the floor' - How Barry is overcoming his Everton struggles\\nPerhaps you have seen the video of Thierno Barry in tears after a one-on-one session last season. The Everton striker was doing extra work with his individual coach when it all became too much. Struggling for form, he felt unable \". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 249,
+        "claim_type": "unparsed_news",
+        "value": "'He was on the floor' - How Barry is overcoming his Everton struggles\nPerhaps you have seen the video of Thierno Barry in tears after a one-on-one session last season. The Everton striker was doing extra work with his individual coach when it all became too much. Struggling for form, he felt unable ",
+        "detail": "unparsed_news: sky_football says \"'He was on the floor' - How Barry is overcoming his Everton struggles\\nPerhaps you have seen the video of Thierno Barry in tears after a one-on-one session last season. The Everton striker was doing extra work with his individual coach when it all became too much. Struggling for form, he felt unable \" (2026-10-08T10:00:00Z) while bbc_football says \"Everton's unbeaten run continues with win over 10-man Ipswich\\nUnbeaten Everton move up to fifth in the Premier League, with Thierno Barry's goal making the difference against 10-man Ipswich Town.\" (2026-09-19T19:00:21Z). Used the more conservative \"'He was on the floor' - How Barry is overcoming his Everton struggles\\nPerhaps you have seen the video of Thierno Barry in tears after a one-on-one session last season. The Everton striker was doing extra work with his individual coach when it all became too much. Struggling for form, he felt unable \"."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-10",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-20T19:30:08.247780Z) while fpl_news_parse says 75 (2026-09-20T19:30:08.247780Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 10,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-20T19:30:08.247780Z) while fpl_news_parse says 75 (2026-09-20T19:30:08.247780Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-112",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-30T16:00:09.552205Z) while fpl_news_parse says 75 (2026-09-30T16:00:09.552205Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 112,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-30T16:00:09.552205Z) while fpl_news_parse says 75 (2026-09-30T16:00:09.552205Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-116",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-22T09:30:09.629652Z) while fpl_news_parse says 75 (2026-09-22T09:30:09.629652Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 116,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-22T09:30:09.629652Z) while fpl_news_parse says 75 (2026-09-22T09:30:09.629652Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-154",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-21T13:00:09.022726Z) while fpl_news_parse says 75 (2026-09-21T13:00:09.022726Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 154,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-21T13:00:09.022726Z) while fpl_news_parse says 75 (2026-09-21T13:00:09.022726Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-158",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-26T05:30:09.245832Z) while fpl_news_parse says 75 (2026-09-26T05:30:09.245832Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 158,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-26T05:30:09.245832Z) while fpl_news_parse says 75 (2026-09-26T05:30:09.245832Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-367",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-27T21:30:07.786183Z) while fpl_news_parse says 75 (2026-09-27T21:30:07.786183Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 367,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-27T21:30:07.786183Z) while fpl_news_parse says 75 (2026-09-27T21:30:07.786183Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-379",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-27T10:30:09.051435Z) while fpl_news_parse says 75 (2026-09-27T10:30:09.051435Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 379,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-27T10:30:09.051435Z) while fpl_news_parse says 75 (2026-09-27T10:30:09.051435Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-415",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-27T21:30:07.831640Z) while fpl_news_parse says 75 (2026-09-27T21:30:07.831640Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 415,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-27T21:30:07.831640Z) while fpl_news_parse says 75 (2026-09-27T21:30:07.831640Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-439",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-20T19:30:08.505755Z) while fpl_news_parse says 75 (2026-09-20T19:30:08.505755Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 439,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-20T19:30:08.505755Z) while fpl_news_parse says 75 (2026-09-20T19:30:08.505755Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-499",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-19T12:00:08.823872Z) while fpl_news_parse says 75 (2026-09-19T12:00:08.823872Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 499,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-19T12:00:08.823872Z) while fpl_news_parse says 75 (2026-09-19T12:00:08.823872Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-532",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-25T21:30:10.370384Z) while fpl_news_parse says 75 (2026-09-25T21:30:10.370384Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 532,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-25T21:30:10.370384Z) while fpl_news_parse says 75 (2026-09-25T21:30:10.370384Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-552",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-24T21:30:10.382142Z) while fpl_news_parse says 75 (2026-09-24T21:30:10.382142Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 552,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-24T21:30:10.382142Z) while fpl_news_parse says 75 (2026-09-24T21:30:10.382142Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-557",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says 'Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates' (2026-10-09T14:15:00Z) while fantasyfootballscout says 'Tzolis, Konsa, Havertz: Arsenal Gameweek 6 early injury news\\nThe Gunners have mixed injury news as the international break draws The post Tzolis, Konsa, Havertz: Arsenal Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout' (2026-10-08T02:00:00Z). Used the more conservative 'Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 557,
+        "claim_type": "unparsed_news",
+        "value": "Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates",
+        "detail": "unparsed_news: sky_football says 'Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates' (2026-10-09T14:15:00Z) while fantasyfootballscout says 'Tzolis, Konsa, Havertz: Arsenal Gameweek 6 early injury news\\nThe Gunners have mixed injury news as the international break draws The post Tzolis, Konsa, Havertz: Arsenal Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout' (2026-10-08T02:00:00Z). Used the more conservative 'Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates'."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-577",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-09-21T13:30:09.030724Z) while fpl_news_parse says 75 (2026-09-21T13:30:09.030724Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 577,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-09-21T13:30:09.030724Z) while fpl_news_parse says 75 (2026-09-21T13:30:09.030724Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-638",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-21T08:30:09.561308Z) while fpl_news_parse says 75 (2026-09-21T08:30:09.561308Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 638,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-21T08:30:09.561308Z) while fpl_news_parse says 75 (2026-09-21T08:30:09.561308Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-588",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-04T22:00:08.963040Z) while fpl_news_parse says 75 (2026-10-04T22:00:08.963040Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 588,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-04T22:00:08.963040Z) while fpl_news_parse says 75 (2026-10-04T22:00:08.963040Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-20",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-05T19:00:10.141532Z) while fpl_news_parse says 75 (2026-10-05T19:00:10.141532Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 20,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-05T19:00:10.141532Z) while fpl_news_parse says 75 (2026-10-05T19:00:10.141532Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-69",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-05T09:30:09.910752Z) while fpl_news_parse says 50 (2026-10-05T09:30:09.910752Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 69,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-05T09:30:09.910752Z) while fpl_news_parse says 50 (2026-10-05T09:30:09.910752Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-362",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-06T00:30:10.323830Z) while fpl_news_parse says 75 (2026-10-06T00:30:10.323830Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 362,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-06T00:30:10.323830Z) while fpl_news_parse says 75 (2026-10-06T00:30:10.323830Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-26",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says 'Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates' (2026-10-09T14:15:00Z) while fantasyfootballscout says 'Tzolis, Konsa, Havertz: Arsenal Gameweek 6 early injury news\\nThe Gunners have mixed injury news as the international break draws The post Tzolis, Konsa, Havertz: Arsenal Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout' (2026-10-08T02:00:00Z). Used the more conservative 'Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 26,
+        "claim_type": "unparsed_news",
+        "value": "Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates",
+        "detail": "unparsed_news: sky_football says 'Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates' (2026-10-09T14:15:00Z) while fantasyfootballscout says 'Tzolis, Konsa, Havertz: Arsenal Gameweek 6 early injury news\\nThe Gunners have mixed injury news as the international break draws The post Tzolis, Konsa, Havertz: Arsenal Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout' (2026-10-08T02:00:00Z). Used the more conservative 'Arsenal latest: Arteta gives Tzolis, Havertz, Konsa, Rice injury updates'."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-131",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says \"Big week for Carrick and Man Utd to turn critics into Baleba's believers\\nAs the Premier League returns this weekend, so does the focus and attention on the red side of Manchester.\" (2026-10-09T08:00:00Z) while bbc_football says \"Is \u00a370m Baleba ready for his Man Utd exam?\\nManchester United's \u00a370m summer signing Carlos Baleba is expected to make his debut against Tottenham Hotspur at Old Trafford\" (2026-10-09T07:57:23Z), fantasyfootballscout says 'Rashford, Mainoo, Baleba: United Gameweek 6 early injury news\\nPlenty of fitness-related uncertainty surrounds Manchester United ahead of Gameweek 6 The post Rashford, Mainoo, Baleba: United Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fa' (2026-10-08T01:00:00Z). Used the more conservative \"Big week for Carrick and Man Utd to turn critics into Baleba's believers\\nAs the Premier League returns this weekend, so does the focus and attention on the red side of Manchester.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 131,
+        "claim_type": "unparsed_news",
+        "value": "Big week for Carrick and Man Utd to turn critics into Baleba's believers\nAs the Premier League returns this weekend, so does the focus and attention on the red side of Manchester.",
+        "detail": "unparsed_news: sky_football says \"Big week for Carrick and Man Utd to turn critics into Baleba's believers\\nAs the Premier League returns this weekend, so does the focus and attention on the red side of Manchester.\" (2026-10-09T08:00:00Z) while bbc_football says \"Is \u00a370m Baleba ready for his Man Utd exam?\\nManchester United's \u00a370m summer signing Carlos Baleba is expected to make his debut against Tottenham Hotspur at Old Trafford\" (2026-10-09T07:57:23Z), fantasyfootballscout says 'Rashford, Mainoo, Baleba: United Gameweek 6 early injury news\\nPlenty of fitness-related uncertainty surrounds Manchester United ahead of Gameweek 6 The post Rashford, Mainoo, Baleba: United Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fa' (2026-10-08T01:00:00Z). Used the more conservative \"Big week for Carrick and Man Utd to turn critics into Baleba's believers\\nAs the Premier League returns this weekend, so does the focus and attention on the red side of Manchester.\"."
+      }
+    },
+    {
+      "id": "gw06-warning-availability-conflict-563",
+      "gameweek": 6,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW6 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-09T14:00:08.474217Z) while fpl_news_parse says 50 (2026-09-09T14:00:08.474217Z). Used the more conservative 50. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-10T06:03:46.029623Z",
+      "detail": {
+        "element_id": 563,
+        "claim_type": "chance_of_playing",
+        "value": 50,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-09T14:00:08.474217Z) while fpl_news_parse says 50 (2026-09-09T14:00:08.474217Z). Used the more conservative 50."
+      }
+    },
     {
       "id": "gw05-status-settled",
       "gameweek": 5,
