@@ -1,18 +1,55 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-10T07:07:18.576736Z",
-  "n_dropped": 56,
+  "generated_at": "2026-10-10T13:41:48.713861Z",
+  "n_dropped": 67,
   "dropped_by_source": {
-    "bbc_football": 17,
-    "fantasyfootballscout": 9,
-    "sky_football": 30
+    "bbc_football": 19,
+    "fantasyfootballscout": 11,
+    "hayters": 1,
+    "sky_football": 36
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 146,
+  "n_articles": 157,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "45815f54300f6c75",
+      "headline": "'Stick together, enjoy the ride and smile' - Haaland's message to Man City fans",
+      "summary": "\"Stick together, enjoy the ride and smile,\" is Erling Haaland's message to Man City fans.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13596522/man-city-charges-erling-haaland-encourages-clubs-fans-to-stay-positive-after-guilty-verdict",
+      "claimed_at": "2026-10-08T16:00:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "d654ebf449b49b9f",
+      "headline": "Haaland speaks for the first time following Man City's guilty verdict",
+      "summary": "Erling Haaland has urged fans to 'stick together and spread the love', following Manchester City being found guilty of all charges related to serious breaches of Premier League financial rules by an independent commission.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13596548/erling-haaland-sends-message-to-fans-following-man-city-guilty-verdict",
+      "claimed_at": "2026-10-08T16:00:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "236bf9aff46a9628",
       "headline": "Jaissle backs \u2018amazing\u2019 Wissa to be key player for Newcastle",
@@ -30,6 +67,252 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "9406e24d12635ec4",
+      "headline": "Haaland, O\u2019Reilly, Semenyo: Man City Gameweek 6 early injury news",
+      "summary": "Erling Haaland\u2018s early-ish substitution on Sunday caused concern The post Haaland, O'Reilly, Semenyo: Man City Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/08/haaland-oreilly-semenyo-man-city-gameweek-6-early-injury-news",
+      "claimed_at": "2026-10-08T01:15:00Z",
+      "players": [
+        {
+          "element_id": 387,
+          "name": "O'Reilly",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 397,
+          "name": "Semenyo",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "4aa5bb645517f971",
+      "headline": "Norway boss provides update on Man City striker Haaland\u2019s fitness",
+      "summary": "Norway boss Stale Solbakken has played down injury concerns over Erling Haaland after the striker was taken off against Portugal, insisting he was simply exhausted. Haaland appeared to be struggling before asking to be substituted in",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/norway-boss-provides-update-on-man-city-striker-haalands-fitness/",
+      "claimed_at": "2026-10-06T18:00:26Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "ef2094f2767e7a5b",
+      "headline": "Is Haaland injured after early Norway substitution?",
+      "summary": "The Manchester City striker came off midway through the second half of Sunday's clash with Portugal The post Is Haaland injured after early Norway substitution? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/05/is-haaland-injured-after-early-norway-substitution",
+      "claimed_at": "2026-10-05T22:45:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "73a4bbce606cb909",
+      "headline": "Arsenal come from behind to beat stubborn Leeds",
+      "summary": "Arsenal scored two goals in eight minutes to come from behind and get back to winning ways via a 2-1 comeback win over Daniel Farke's stubborn Leeds.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-leeds-united/report/559494",
+      "claimed_at": "2026-10-10T14:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8b231668a9e74b2b",
+      "headline": "Who changed the game? - player ratings for Arsenal v Leeds",
+      "summary": "How Arsenal and Leeds players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmx2dpwv02e1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-10T13:30:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "706897d6bf62d445",
+      "headline": "Aston Villa vs Brentford LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/aston-villa-vs-brentford/live/559495",
+      "claimed_at": "2026-10-10T13:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0879ae6b204e1cb2",
+      "headline": "Palmer, Joao Pedro and Caicedo start for Chelsea vs Bournemouth LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/chelsea-vs-bournemouth/live/559496",
+      "claimed_at": "2026-10-10T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "af4798286ee684ad",
+      "headline": "'We win major trophies here': Palmer signs new Chelsea contract",
+      "summary": "Cole Palmer has signed a contract extension with Chelsea.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13597179/cole-palmer-contract-chelsea-forward-signs-extension-at-stamford-bridge-until-2034",
+      "claimed_at": "2026-10-10T11:09:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "378f3838d4832f29",
+      "headline": "Arsenal v Leeds team news: Konsa + Havertz fit to start",
+      "summary": "Three Gunners alterations from Gameweek 5, while Leeds are unchanged The post Arsenal v Leeds team news: Konsa + Havertz fit to start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/10/arsenal-v-leeds-team-news-konsa-havertz-fit-to-start",
+      "claimed_at": "2026-10-10T10:35:00Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cb244eef6b9e0576",
+      "headline": "Comeback complete! Bruno seals Arsenal victory over Leeds LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-leeds-united/live/559494",
+      "claimed_at": "2026-10-10T10:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8ed3c0836227a1b5",
+      "headline": "Palmer sets out Chelsea targets after signing new long-term deal",
+      "summary": "Cole Palmer has committed his long-term future to Chelsea by signing a new contract until 2034. The 24-year-old has become one of the club\u2019s key players since arriving from Manchester City in August 2023, registering 91 goal contributi",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/palmer-sets-out-chelsea-targets-after-signing-new-long-term-deal/",
+      "claimed_at": "2026-10-10T10:27:52Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d381ee34b38a5052",
+      "headline": "Arsenal 2-1 Leeds LIVE \u2013 Arsenal come from behind to beat Leeds",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 2-1 Leeds LIVE - Arsenal come from behind to beat Leeds appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-v-leeds-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-10-10T10:08:13Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "99a89a91b5c58ae8",
+      "headline": "Palmer signs new Chelsea contract until 2034",
+      "summary": "Cole Palmer signs a new Chelsea contract on improved terms until 2034, one of the longest active deals in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwe9lngxzjpno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-10T09:51:09Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "eef6a2c9c07fcca2",
@@ -674,6 +957,24 @@
       "touches_squad": false
     },
     {
+      "digest": "e0116c5b73f5d9ae",
+      "headline": "Chelsea latest: Palmer deal could be part of 'defining period'",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-09T14:22:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "f1477bead3155090",
       "headline": "Carrick demands Man City verdict clarity: 'It has affected me personally'",
       "summary": "Michael Carrick has called for a swift resolution to Manchester City's financial charges case, insisting clarity is needed for everyone involved as the Premier League awaits the outcome of the club's appeal.",
@@ -866,42 +1167,6 @@
       "touches_squad": false
     },
     {
-      "digest": "793461335947b06b",
-      "headline": "FREE LIVE STREAM: Man City boss Maresca faces media",
-      "summary": "Enzo Maresca is holding his first press conference since Manchester City were found guilty of all charges related to serious breaches of Premier League financial rules.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13596764/manchester-city-enzo-maresca-holds-first-press-conference-since-verdict",
-      "claimed_at": "2026-10-09T10:17:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "84bc6b87f2ea2cc8",
-      "headline": "Iraola's big dilemmas in bid for statement win vs Man City",
-      "summary": "Andoni Iraola will be hoping to kick-start his Liverpool reign when Manchester City visit Anfield on Sunday, but first the Basque must find answers to these key questions...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13596776/andoni-iraola-five-key-issues-facing-liverpool-boss-ahead-of-man-city-showdown",
-      "claimed_at": "2026-10-09T10:16:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "2826da12d75e2e0e",
       "headline": "What could Rangers' 2012 case tell us about Man City's uncertain future?",
       "summary": "From sanctions and stripped titles to starting from scratch, BBC Scotland explains how potential consequences for Manchester City compare with the financial collapse of Rangers in 2012.",
@@ -909,42 +1174,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cx240n2p57y5o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-09T10:04:35Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d4e80abbe26542cd",
-      "headline": "Maresca to hold first press conference since Man City verdict LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-09T09:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fca31b27d4c1c87b",
-      "headline": "Everton sale Q&A: Why are the owners doing this, and how much is club worth?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-09T09:30:00Z",
       "players": [
         {
           "element_id": 0,
@@ -974,24 +1203,6 @@
       "touches_squad": false
     },
     {
-      "digest": "c63656b60c2c1082",
-      "headline": "Everton owners considering club sale",
-      "summary": "The Friedkin Group are considering the potential sale of Everton Football Club - saying \"the time is right\" for the next chapter.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13596740/everton-up-for-sale-friedkin-group-considering-new-investment-options-including-the-potential-sale-of-controlling-stake",
-      "claimed_at": "2026-10-09T08:38:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "4dc2df8b8f6882b2",
       "headline": "Everton owners consider selling club two years after takeover",
       "summary": "Everton owners the Friedkin Group are exploring the sale of the club less than two years after taking control.",
@@ -1004,48 +1215,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6e98ba237975a819",
-      "headline": "How Glasner turned McAtee into his new Wharton",
-      "summary": "When Oliver Glasner moved to Nottingham Forest after departing Crystal Palace, he tasked himself with replicating the 3-4-2-1 system that worked so well at Selhurst Park.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13595467/james-mcatee-how-oliver-glasner-has-transformed-nottingham-forest-midfielder-from-forgotten-man-to-his-new-adam-wharton",
-      "claimed_at": "2026-10-09T08:00:00Z",
-      "players": [
-        {
-          "element_id": 210,
-          "name": "Wharton",
-          "club": "CRY",
-          "held": false
-        },
-        {
-          "element_id": 486,
-          "name": "McAtee",
-          "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9e7f994fcbd794c7",
-      "headline": "Big week for Carrick and Man Utd to turn critics into Baleba's believers",
-      "summary": "As the Premier League returns this weekend, so does the focus and attention on the red side of Manchester.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13595788/manchester-united-michael-carrick-faces-defining-month-at-old-trafford-as-carlos-baleba-emerges-as-potential-game-changer",
-      "claimed_at": "2026-10-09T08:00:00Z",
-      "players": [
-        {
-          "element_id": 131,
-          "name": "Baleba",
-          "club": "MUN",
           "held": false
         }
       ],
@@ -1274,24 +1443,6 @@
       "touches_squad": false
     },
     {
-      "digest": "209d393f3425cfaa",
-      "headline": "Maresca tells Man City players to stay focused and positive",
-      "summary": "Manchester City boss Enzo Maresca wants his squad to focus and be positive after the club were found guilty of breaching Premier League financial rules.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6n4ex2lgg2ko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-08T16:10:37Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "1745322a0501a9d3",
       "headline": "Farke reveals new Leeds injury blow but also provides double positive update",
       "summary": "Leeds United boss Daniel Farke has confirmed Daniel James will miss the weekend\u2019s clash with Arsenal after returning from international duty with a back injury. Joe Rodon also remains unavailable as he recovers from a hamst",
@@ -1353,42 +1504,6 @@
       "tier": 2,
       "url": "https://hayters.com/im-not-inside-the-story-lampard-responds-to-man-city-verdict/",
       "claimed_at": "2026-10-08T14:47:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "40cf51b3ed13d9c7",
-      "headline": "Everton's Sherif fined for breaching betting rules",
-      "summary": "The Football Association fines Everton forward Martin Sherif \u00a35,000 for breaching its betting rules over a 15-month period.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c54g13we4rero?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-08T14:24:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a0ce342e5a1844a4",
-      "headline": "How Brighton attract and develop the best young players ahead of their rivals",
-      "summary": "Brighton sporting director Mike Cave discusses Brighton's transfer policy and how the club signs and nurtures the best young talent in the game.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm0e35gzgdqeo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-08T10:37:14Z",
       "players": [
         {
           "element_id": 0,
@@ -1526,102 +1641,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9406e24d12635ec4",
-      "headline": "Haaland, O\u2019Reilly, Semenyo: Man City Gameweek 6 early injury news",
-      "summary": "Erling Haaland\u2018s early-ish substitution on Sunday caused concern The post Haaland, O'Reilly, Semenyo: Man City Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/08/haaland-oreilly-semenyo-man-city-gameweek-6-early-injury-news",
-      "claimed_at": "2026-10-08T01:15:00Z",
-      "players": [
-        {
-          "element_id": 387,
-          "name": "O'Reilly",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "46eccb9b229b0552",
-      "headline": "Pedro, Palmer, Caicedo: Chelsea Gameweek 6 early injury news",
-      "summary": "Moises Caicedo, Cole Palmer. Reece James and Joao Pedro are all concerns for the Blues The post Pedro, Palmer, Caicedo: Chelsea Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fan",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/08/pedro-palmer-caicedo-chelsea-gameweek-6-early-injury-news",
-      "claimed_at": "2026-10-08T01:10:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "60fb2cba6f3f147f",
-      "headline": "Rashford, Mainoo, Baleba: United Gameweek 6 early injury news",
-      "summary": "Plenty of fitness-related uncertainty surrounds Manchester United ahead of Gameweek 6 The post Rashford, Mainoo, Baleba: United Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fa",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/08/rashford-mainoo-baleba-united-gameweek-6-early-injury-news",
-      "claimed_at": "2026-10-08T01:00:00Z",
-      "players": [
-        {
-          "element_id": 131,
-          "name": "Baleba",
-          "club": "MUN",
-          "held": false
-        },
-        {
-          "element_id": 429,
-          "name": "Rashford",
-          "club": "MUN",
-          "held": false
-        },
-        {
-          "element_id": 432,
-          "name": "Mainoo",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c95e1cc715550dc6",
-      "headline": "The FPL half-term report: Nottm Forest",
-      "summary": "Forest have been strong in defence, but they're not scoring at home The post The FPL half-term report: Nottm Forest appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/07/the-fpl-half-term-report-nottm-forest",
-      "claimed_at": "2026-10-07T19:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "8bf60ac1875d82ab",
       "headline": "Southampton boss escapes serious punishment over spygate scandal",
       "summary": "Southampton boss Tonda Eckert has been fined \u00a328,000 and handed a suspended six-week football ban after admitting three FA misconduct charges relating to the observation of opposition training sessions. The charges concerned incidents",
@@ -1688,48 +1707,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4aa5bb645517f971",
-      "headline": "Norway boss provides update on Man City striker Haaland\u2019s fitness",
-      "summary": "Norway boss Stale Solbakken has played down injury concerns over Erling Haaland after the striker was taken off against Portugal, insisting he was simply exhausted. Haaland appeared to be struggling before asking to be substituted in",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/norway-boss-provides-update-on-man-city-striker-haalands-fitness/",
-      "claimed_at": "2026-10-06T18:00:26Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7b94393f45791048",
-      "headline": "Liverpool dealt another injury worry following Gakpo and Isak withdrawals",
-      "summary": "Liverpool have been handed another injury worry after Jeremy Jacquet was ruled out of France\u2019s Nations League win over Belgium. The 21-year-old had featured in France\u2019s previous two matches but was left out of the squad for Mo",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-dealt-another-injury-worry-following-gakpo-and-isak-withdrawals/",
-      "claimed_at": "2026-10-06T16:04:56Z",
-      "players": [
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
           "held": false
         }
       ],
