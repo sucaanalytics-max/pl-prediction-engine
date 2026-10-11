@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-11T06:28:43.944922Z",
-  "n_dropped": 119,
+  "generated_at": "2026-10-11T13:23:00.428001Z",
+  "n_dropped": 126,
   "dropped_by_source": {
-    "bbc_football": 43,
-    "fantasyfootballscout": 9,
-    "hayters": 11,
-    "sky_football": 56
+    "bbc_football": 44,
+    "fantasyfootballscout": 10,
+    "hayters": 12,
+    "sky_football": 60
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 209,
+  "n_articles": 216,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -117,6 +117,114 @@
       "touches_squad": true
     },
     {
+      "digest": "3965710ba63a2160",
+      "headline": "2pm team news: Williams starts, Belloumi a sub, no Mykolenko",
+      "summary": "Palace v Forest and Hull v Everton are our 2pm kick-offs The post 2pm team news: Williams starts, Belloumi a sub, no Mykolenko appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/11/2pm-team-news-williams-starts-belloumi-a-sub-no-mykolenko",
+      "claimed_at": "2026-10-11T12:45:00Z",
+      "players": [
+        {
+          "element_id": 233,
+          "name": "Mykolenko",
+          "club": "EVE",
+          "held": false
+        },
+        {
+          "element_id": 469,
+          "name": "N.Williams",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3e1432991f4c8302",
+      "headline": "Hull and Everton searching for opener LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/hull-city-vs-everton/live/559499",
+      "claimed_at": "2026-10-11T12:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "93ad0c8e16502b1a",
+      "headline": "Ndoye gives Forest early lead at Palace LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/crystal-palace-vs-nottingham-forest/live/559498",
+      "claimed_at": "2026-10-11T12:25:00Z",
+      "players": [
+        {
+          "element_id": 483,
+          "name": "Ndoye",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f9410b92c1b3328e",
+      "headline": "FPL notes: Schade + Schuster injury updates, Sangare a sub again",
+      "summary": "Yohan Manzambi impresses again as Villa v Brentford ends level The post FPL notes: Schade + Schuster injury updates, Sangare a sub again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/11/fpl-notes-schade-schuster-injury-updates-sangare-a-sub-again",
+      "claimed_at": "2026-10-11T11:30:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 93,
+          "name": "Schuster",
+          "club": "BRE",
+          "held": false
+        },
+        {
+          "element_id": 94,
+          "name": "Schade",
+          "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cce2d919eb322a61",
+      "headline": "Neville questions Man Utd effort after Tottenham draw",
+      "summary": "Gary Neville questioned Manchester United\u2019s effort and mentality in their 1-1 draw with Tottenham, warning that some players appear to be struggling with the demands of playing for the club. The former United defender was critical of the team\u2019s i",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/neville-questions-man-utd-effort-after-tottenham-draw/",
+      "claimed_at": "2026-10-11T10:28:55Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "a45ab8c2ba2c7a15",
       "headline": "Watch: Match of the Day",
       "summary": "With Man Utd v Spurs, Arsenal v Leeds and Chelsea v Bournemouth as the top flight returns",
@@ -160,6 +268,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cvy0rp14xz7lo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-11T05:27:03Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1ca95b8128c586dd",
+      "headline": "Carrick must share burden of Man Utd's failings with his players",
+      "summary": "\"We couldn't find a way to get ourselves into the game. With the ball, without the ball, we were off it.\" A fair assessment from Michael Carrick, if not a wholly explanatory one.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13597374/man-utd-1-1-spurs-michael-carrick-entering-a-defining-period-and-must-correct-underperformance-quickly",
+      "claimed_at": "2026-10-10T23:30:00Z",
       "players": [
         {
           "element_id": 0,
@@ -305,6 +431,24 @@
     {
       "digest": "92b2dade2237b588",
       "headline": "Boos, anguish & fading belief -'worrying day' for under-pressure Carrick",
+      "summary": "It couldn't happen again could it? Another failure to beat 10 men increases pressure on Man Utd boss Michael Carrick after a 1-1 draw against Tottenham Hotspur.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c62e9g09e781o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-10T20:54:46Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f60fb2c96459c1eb",
+      "headline": "Boos, anguish & fading belief - 'worrying day' for under-pressure Carrick",
       "summary": "It couldn't happen again could it? Another failure to beat 10 men increases pressure on Man Utd boss Michael Carrick after a 1-1 draw against Tottenham Hotspur.",
       "source": "bbc_football",
       "tier": 3,
@@ -843,24 +987,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9b0dfec976c56466",
-      "headline": "Timely recognition or long overdue? How Gross is proving all-time bargain",
-      "summary": "Named the Premier League's player of the month for September, BBC Sport looks at Brighton star Pascal Gross' impact both this season and over the past nine years during his two spells at the club.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq1j427zze5xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-10T17:07:02Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5e3228b11c7f814d",
       "headline": "Brentford still unbeaten after Ajer levels at Villa",
       "summary": "Kristoffer Ajer's equaliser earned a 2-2 draw for Brentford at Aston Villa to maintain their unbeaten start to the Premier League season.",
@@ -1060,60 +1186,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13279317/ipswich-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
       "claimed_at": "2026-10-10T15:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fe5c53246a3e8fbb",
-      "headline": "Solanke misses again! Wasteful Spurs still goalless at Man Utd LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-united-vs-tottenham-hotspur/live/559502",
-      "claimed_at": "2026-10-10T15:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "73a4bbce606cb909",
-      "headline": "Arsenal come from behind to beat stubborn Leeds",
-      "summary": "Arsenal scored two goals in eight minutes to come from behind and get back to winning ways via a 2-1 comeback win over Daniel Farke's stubborn Leeds.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-leeds-united/report/559494",
-      "claimed_at": "2026-10-10T14:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "706897d6bf62d445",
-      "headline": "Aston Villa vs Brentford LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/aston-villa-vs-brentford/live/559495",
-      "claimed_at": "2026-10-10T13:30:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1533,24 +1605,6 @@
       "touches_squad": false
     },
     {
-      "digest": "29557e278241ebf8",
-      "headline": "Injured Aston Villa stars nearing returns but Emery to remain without several against Brentford",
-      "summary": "Unai Emery says several of Aston Villa's injured stars are closing in on returning to action. Villa host Keith Andrews\u2019 Brentford on Saturday looking to make it three wins in a row, with Emery confirming",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/injured-aston-villa-stars-nearing-returns-but-emery-to-remain-without-several-against-brentford/",
-      "claimed_at": "2026-10-09T14:33:11Z",
-      "players": [
-        {
-          "element_id": 48,
-          "name": "Onana",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "86b999822f8bacdb",
       "headline": "Illness - 50% chance of playing",
       "summary": null,
@@ -1677,54 +1731,6 @@
           "element_id": 96,
           "name": "Damsgaard",
           "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e7bf7930b0e709cc",
-      "headline": "Isak, Gakpo, Jacquet: Liverpool Gameweek 6 early injury news",
-      "summary": "Liverpool lost both Cody Gakpo and Alexander Isak to injury over the break The post Isak, Gakpo, Jacquet: Liverpool Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/08/isak-gakpo-jacquet-liverpool-gameweek-6-early-injury-news",
-      "claimed_at": "2026-10-08T01:30:00Z",
-      "players": [
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fd6f7a2093c56b10",
-      "headline": "Dunk, Ayari, Minteh: Brighton Gameweek 6 early injury news",
-      "summary": "The latest team news from the Brighton camp ahead, with over 10 players affected by injury or illness The post Dunk, Ayari, Minteh: Brighton Gameweek 6 early injury news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statisti",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/08/dunk-ayari-minteh-brighton-gameweek-6-early-injury-news",
-      "claimed_at": "2026-10-08T01:20:00Z",
-      "players": [
-        {
-          "element_id": 122,
-          "name": "Minteh",
-          "club": "BHA",
-          "held": false
-        },
-        {
-          "element_id": 129,
-          "name": "Ayari",
-          "club": "BHA",
           "held": false
         }
       ],
