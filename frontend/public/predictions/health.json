@@ -30,10 +30,10 @@
     "assessable": false,
     "note": "50 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
   },
-  "last_updated": "2026-10-11T11:46:41.706764Z",
+  "last_updated": "2026-10-12T13:44:37.079876Z",
   "gameweek": 6,
-  "n_predictions": 4,
-  "status": "healthy",
+  "n_predictions": 1,
+  "status": "degraded",
   "sources": {
     "bootstrap": {
       "source": "network",
@@ -44,7 +44,9 @@
       "age_seconds": 0.0
     }
   },
-  "degraded": [],
+  "degraded": [
+    "model:penaltyblog"
+  ],
   "forecast_validation_status": "collecting",
   "model_metrics": {
     "n_evaluated_matches": 50,
@@ -95,11 +97,11 @@
       "status": "active"
     },
     "penaltyblog": {
-      "status": "active"
+      "status": "failed"
     },
     "goalscorer": {
       "status": "active",
-      "n_players": 196
+      "n_players": 204
     }
   },
   "ensemble_method": "weighted_average",
@@ -126,11 +128,11 @@
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 463,
+        "none": 468,
         "open_ended": 47,
         "permanent": 105,
         "dated_fitness": 22,
-        "graded": 25,
+        "graded": 20,
         "dated_eligibility": 5
       },
       "n_evidence_conflicts": 0,
