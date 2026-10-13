@@ -1,8 +1,148 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-12T19:20:32.294825Z",
+  "generated_at": "2026-10-13T01:32:22.881252Z",
   "gameweek": 7,
   "players": [
+    {
+      "element_id": 9,
+      "player_name": "Hincapie",
+      "club": "Arsenal",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "ed5d378c18438b3f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-12T15:00:07.550884Z",
+              "observed_at": "2026-10-12T19:21:12.376131Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "6f99e77358b245f0",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-12T15:00:07.550884Z",
+              "observed_at": "2026-10-12T19:21:12.376131Z",
+              "quote": "Ankle injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8fbe7537c158d48f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-12T15:00:07.550884Z",
+              "observed_at": "2026-10-12T19:21:12.376131Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 19,
+      "player_name": "Zubimendi",
+      "club": "Arsenal",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "6cb620e544654b74",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-12T15:00:07.563478Z",
+              "observed_at": "2026-10-12T19:21:12.376131Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "18b2ee1c069d2307",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-12T15:00:07.563478Z",
+              "observed_at": "2026-10-12T19:21:12.376131Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "34b5a727c0320b0a",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-12T15:00:07.563478Z",
+              "observed_at": "2026-10-12T19:21:12.376131Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
     {
       "element_id": 51,
       "player_name": "George Hemmings",
@@ -903,10 +1043,10 @@
     }
   ],
   "counts": {
-    "n_claims": 223,
-    "n_players_with_claims": 57,
-    "n_players_shown": 15,
+    "n_claims": 243,
+    "n_players_with_claims": 64,
+    "n_players_shown": 17,
     "n_escalations": 2,
-    "n_players_resolved": 37
+    "n_players_resolved": 45
   }
 }
