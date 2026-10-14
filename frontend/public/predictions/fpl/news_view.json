@@ -1,19 +1,433 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-14T18:54:50.572428Z",
-  "n_dropped": 102,
+  "generated_at": "2026-10-14T22:03:21.733852Z",
+  "n_dropped": 118,
   "dropped_by_source": {
-    "bbc_football": 46,
+    "bbc_football": 53,
     "fantasyfootballscout": 2,
-    "hayters": 4,
-    "sky_football": 50
+    "hayters": 8,
+    "sky_football": 55
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 192,
+  "n_articles": 208,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "5db5302584af625b",
+      "headline": "Man Utd latest: Martinez releases statement a day after outburst",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-14T22:46:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "43c7f40a6b4f0681",
+      "headline": "Aston Villa latest: Jackson impresses with double in Fenerbahce thrashing",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-14T22:18:00Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "65b1ede321b02a7b",
+      "headline": "Emery lauds Aston Villa\u2019s new star after Champions League triumph against Fenerbahce",
+      "summary": "Johan Manzambi earned special praise from Unai Emery after another impressive display in Aston Villa\u2019s emphatic 6-0 Champions League win over Fenerbahce. The Villa boss hailed the midfielder\u2019s attitude and adaptatio",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/emery-lauds-aston-villas-new-star-after-champions-league-triumph-against-fenerbahce/",
+      "claimed_at": "2026-10-14T22:02:48Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "da53e46f5ebdccdb",
+      "headline": "PSG on 'different level' - are they building greatest European dynasty?",
+      "summary": "Paris St-Germain are eyeing a third successive Champions League crown after dismantling Manchester City, but where do they rank against Europe's most dominant clubs?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmx2wegg2pw5o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T21:55:37Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4067adcfbb9306b8",
+      "headline": "\u2018We are there\u2019 \u2013 Maresca on Man City loss to PSG and what Luis Enrique told him afterwards",
+      "summary": "Enzo Maresca insists Manchester City are \u201cclose\u201d to Paris Saint-Germain despite suffering a 4-2 defeat in the Champions League. City found themselves 3-0 down at half-time against Luis Enrique\u2019s side, but Mare",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/we-are-there-maresca-on-man-city-loss-to-psg-and-what-luis-enrique-told-him-afterwards/",
+      "claimed_at": "2026-10-14T21:55:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6bf989bea565d0ad",
+      "headline": "Aston Villa hit Fenerbahce for six in big win at Villa Park",
+      "summary": "Aston Villa dismantled Fenerbahce with Nicolas Jackson and Ross Barkley scoring two each in a 6-0 Champions League win at Villa Park.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/aston-villa-vs-fenerbahce/report/577624",
+      "claimed_at": "2026-10-14T21:50:00Z",
+      "players": [
+        {
+          "element_id": 46,
+          "name": "Barkley",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f641ac195b32f727",
+      "headline": "Man City beaten by PSG in thriller as Pep returns to Etihad",
+      "summary": "Manchester City were beaten 4-2 by a majestic Paris Saint-Germain as Pep Guardiola watched on from the stands in an enthralling Champions League encounter.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-paris-saint-germain/report/577628",
+      "claimed_at": "2026-10-14T21:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bbf0c8d2e0b5b83b",
+      "headline": "Martinez's future at Man Utd in doubt - Thursday's gossip",
+      "summary": "Lisandro Martinez's future in doubt at Manchester United, Newcastle's Bazoumana Toure eyed by Manchester United and Arsenal, Getafe interested in free agent Jadon Sancho, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c370pnz8d90wo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T21:27:34Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        },
+        {
+          "element_id": 461,
+          "name": "Tour\u00e9",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6f7fc5ce57f72393",
+      "headline": "Villa rewrite the record books as they hit Fenerbahce for six",
+      "summary": "Aston Villa record their biggest ever win in a European competition as they thrash Turkish side Fenerbahce 6-0 at Villa Park, with Nicolas Jackson and Ross Barkley both scoring twice.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c65yn8d48ezeo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T21:24:34Z",
+      "players": [
+        {
+          "element_id": 46,
+          "name": "Barkley",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c3e7dc0364d91d86",
+      "headline": "Liverpool latest: Iraola praises Barcola, Wirtz but criticises defence",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-14T21:22:00Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e67a3577e928ced1",
+      "headline": "Man City show fight but fall short of fightback against slick PSG",
+      "summary": "Defending champions Paris Saint-Germain make it two wins from two in this season's Champions League, after beating Manchester City 4-2 at the Etihad Stadium",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqp8gn9x801po?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T21:19:45Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0d0713dc154ed536",
+      "headline": "Substitutes steal the show as Arsenal score three against Lille",
+      "summary": "Substitute Bukayo Saka scores one and sets up another to help Arsenal beat Lille 3-0 at the Emirates, as the Premier League champions made it two wins from two in the Champions League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cm207qv14442o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T21:00:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ee5ddb50fb759c7f",
+      "headline": "Yoro sent off as Man Utd stumble to defeat against Atletico Madrid",
+      "summary": "Manchester United's winless run stretches to five matches, as they're beaten 2-0 by Atletico Madrid in the Champions League, in a match which saw them concede in the opening minute before ending the game with ten men after Leny Yoro",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6pq0rg10xp1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T21:00:34Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4b0b7ec50549bb19",
+      "headline": "Brilliant Barcola scores first hat-trick to get lift-off at Liverpool",
+      "summary": "Liverpool's summer signing Bradley Barcola scores his first senior hat-trick, and his first goals for Liverpool, as he helps his side beat LASK 6-3 in Austria to make it two wins from two in this season's Champions League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmx237q7nl21o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T21:00:28Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "71c7987f8adca1cc",
+      "headline": "Barcola shines as Liverpool score six to beat LASK",
+      "summary": "Bradley Barcola scores a hat-trick as Liverpool beat LASK 6-3 in Austria to make it two wins from two in the league phase of this season's Champions League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c68jzlwpk01zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T21:00:24Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "309f80d2e0c19f2c",
+      "headline": "On night of mayhem for Liverpool, Barcola arrives in style",
+      "summary": "Bradley Barcola's form was the subject of pre-match questions before Liverpool faced LASK - but the France forward's Champions League hat-trick was the perfect answer.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c39wzg59x1yxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T20:46:35Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cbb1aa09138e09d5",
+      "headline": "Iraola delighted for Liverpool duo following recent criticism",
+      "summary": "Andoni Iraola has backed Bradley Barcola to build on his Champions League hat-trick in the 6-3 win over LASK. Barcola produced a standout display in Austria, with Iraola also pleased with the contribution of Florian Wirtz after both playe",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/iraola-delighted-for-liverpool-duo-following-recent-criticism/",
+      "claimed_at": "2026-10-14T20:07:44Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8be923e884b51d3e",
+      "headline": "Barcola scores hat-trick as Liverpool thrash LASK",
+      "summary": "Bradley Barcola scored a hat-trick and Florian Wirtz shone after recent criticism as Liverpool thrashed LASK 6-3 to earn their second win in the Champions League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/linz-ask-vs-liverpool/report/577627",
+      "claimed_at": "2026-10-14T19:30:00Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ffb497202c852e0d",
+      "headline": "Two returns and two doubts for Sunderland\u2019s Europa League clash",
+      "summary": "Regis Le Bris has confirmed Brian Brobbey and Habib Diarra have travelled with the Sunderland squad ahead of their Europa League clash with Torreense. Both players are set to be involved in the squad following their respective injuries,",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/two-returns-and-two-doubts-for-sunderlands-europa-league-clash/",
+      "claimed_at": "2026-10-14T19:06:25Z",
+      "players": [
+        {
+          "element_id": 543,
+          "name": "Diarra",
+          "club": "SUN",
+          "held": false
+        },
+        {
+          "element_id": 552,
+          "name": "Brobbey",
+          "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "a646fba03901170c",
       "headline": "Wolves star set for months out as club provide updates on four injured players",
@@ -78,6 +492,24 @@
       "digest": "9bd692bdb623f6e3",
       "headline": "Manchester City v PSG LIVE \u2013 Doku starts for City, Kvaratskhelia and Neves benched for PSG",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Manchester City v PSG LIVE - Doku starts for City, Kvaratskhelia and Neves benched for PSG appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/manchester-city-v-psg-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-10-14T17:04:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d042d22c6bf5853e",
+      "headline": "Manchester City 2-4 PSG LIVE \u2013 European champions put four past City, who fail to mount second-half comeback",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Manchester City 2-4 PSG LIVE - European champions put four past City, who fail to mount second-half comeback appeared first on Hayters.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/manchester-city-v-psg-live-team-news-updates-and-reaction/",
@@ -771,42 +1203,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e6b4b7f6082df6fc",
-      "headline": "Independent regulator waiting for Man City appeal",
-      "summary": "David Kogan, chair of football's independent regulator, says the body has to \"go on the evidence\" before making any decision in the case against Manchester City.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmze418n8ke9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T16:14:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bd1ce458f577d178",
-      "headline": "Football regulator says he would quit over Man City political interference",
-      "summary": "The head of English football's independent regulator says he will resign if he encounters any political interference over Manchester City's future.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cjkge245n0gzo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T16:00:18Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9f4c335d2e27bf34",
       "headline": "Szoboszlai, Isak, Gakpo: Latest FPL team news ahead of Gameweek 7",
       "summary": "The managers of Man City, Liverpool and Aston Villa face the media today The post Szoboszlai, Isak, Gakpo: Latest FPL team news ahead of Gameweek 7 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
@@ -849,42 +1245,6 @@
       "touches_squad": false
     },
     {
-      "digest": "233eda9d6b7f69a6",
-      "headline": "Arsenal latest: Saliba misses Gunners squad photo",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-13T12:22:00Z",
-      "players": [
-        {
-          "element_id": 6,
-          "name": "Saliba",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fe77fe73593d461a",
-      "headline": "Arsenal latest: Club staff told 60 jobs at risk of redundancy",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-13T12:22:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0c5e7ddd2e943701",
       "headline": "FPL notes: \u00a34.9m midfielder on pens + \u00a34.0m DefCon king Thomas",
       "summary": "FPL notes from Coventry's 4-1 win over Newcastle The post FPL notes: \u00a34.9m midfielder on pens + \u00a34.0m DefCon king Thomas appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -897,150 +1257,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "628afaabb6fbabe8",
-      "headline": "Were any current Man City players signed during charges period?",
-      "summary": "BBC Sport's Ask Me Anything team looks at whether any Manchester City players were signed during the time the club have been found guilty of breaching the Premier League's financial rules.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/articles/cmje5wl5ek32o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T10:13:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5ecf175a4811051f",
-      "headline": "How much did Man City's rule breaking cost your team?",
-      "summary": "The potential impact of Manchester City's rule breaking runs deep, including missed Champions League qualification, relegation and Premier League prize money.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmq5nljx7972o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T08:12:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "843458b8d4895b06",
-      "headline": "What Manchester's 'super-profit' deal with City owners has paid out so far",
-      "summary": "Manchester City Council has made almost \u00a33m from the \"super-profits\" of Man City-linked developments.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/news/articles/c62keg74dvxjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T05:12:47Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6bb2d16ee17e46d1",
-      "headline": "Barcelona vs Arsenal moved 24 hours later due to strike in Spain",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13208899/wsl-news-transfers-rumours-gossip-and-womens-football-latest",
-      "claimed_at": "2026-10-12T23:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "62981d3316d26537",
-      "headline": "Papers: Bournemouth open to \u00a3100m Scott sale in January",
-      "summary": "The top stories and transfer rumours from Wednesday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599140/alex-scott-transfer-news-bournemouth-open-to-100m-sale-of-england-international-in-january-paper-talk",
-      "claimed_at": "2026-10-12T23:00:00Z",
-      "players": [
-        {
-          "element_id": 69,
-          "name": "Scott",
-          "club": "BOU",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f04826117a86f7b7",
-      "headline": "Lampard keeping 'feet on ground' following big win over Newcastle",
-      "summary": "Coventry City head coach Frank Lampard gives his thoughts after his side pick up their first home win of the season beating Newcastle 4-1.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cqvgrp5225z7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-12T21:43:20Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1f2c303d4e57240a",
-      "headline": "Coventry thrash Newcastle to claim first home win of season",
-      "summary": "Coventry City stun Newcastle United with an emphatic 4-1 victory as they win their first Premier League game at home in 25 years.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c65y71z4rjj2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-12T21:35:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "de9b68f402b8af9d",
-      "headline": "Brighton latest: Struijk's appeal against red card successful",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-12T19:33:00Z",
-      "players": [
-        {
-          "element_id": 328,
-          "name": "Struijk",
-          "club": "BHA",
           "held": false
         }
       ],
@@ -1065,24 +1281,6 @@
           "element_id": 371,
           "name": "Gravenberch",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "05d412ba06e7420f",
-      "headline": "The 'Kane-esque' striker Spurs may regret letting go",
-      "summary": "Will Lankshear's positioning, finishing and poacher's instinct have made him an instant hit at Riverside Stadium \u2013 and a cause of lament at Tottenham Hotspur Stadium.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq1kdmej1xnvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-12T05:40:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1125,24 +1323,6 @@
           "element_id": 552,
           "name": "Brobbey",
           "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b7c446c80ad2fcb2",
-      "headline": "'Call it a day with VAR' - Rooney on Palace's controversial goal",
-      "summary": "Speaking on Match of the Day, Wayne Rooney says VAR made the wrong decision in awarding Crystal Palace their second goal, which saw the home side take the lead as they went on to beat Nottingham Forest 3-1 in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cqlyendmk7wyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-11T23:31:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1425,54 +1605,6 @@
       "touches_squad": false
     },
     {
-      "digest": "94315b36bddffb53",
-      "headline": "Alonso on James\u2019 injury and Henderson\u2019s impressive performance in Chelsea\u2019s win over Bournemouth",
-      "summary": "Xabi Alonso confirmed Reece James missed Chelsea\u2019s 5-1 win over Bournemouth with a knee issue. The Chelsea captain felt discomfort before the game and was not passed fit to play a part. \u201cYeah, he felt so",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/alonso-on-james-injury-and-hendersons-impressive-performance-in-chelseas-win-over-bournemouth/",
-      "claimed_at": "2026-10-10T18:12:08Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d4d5db0352df0ec3",
-      "headline": "Ten-man Brighton beat Sunderland to continue impressive start",
-      "summary": "Brighton held on for an impressive 2-0 win over Sunderland at the Stadium of Light despite playing the final half-hour with ten men. The visitors had the first big chance when Diego G\u00f3mez capitalised on a Kevin Danso mistake, but Robin Ro",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/ten-man-brighton-beat-sunderland-to-continue-impressive-start/",
-      "claimed_at": "2026-10-10T16:16:23Z",
-      "players": [
-        {
-          "element_id": 501,
-          "name": "Danso",
-          "club": "SUN",
-          "held": false
-        },
-        {
-          "element_id": 529,
-          "name": "Roefs",
-          "club": "SUN",
-          "held": false
-        },
-        {
-          "element_id": 541,
-          "name": "Meunier",
-          "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0787490e9838e4ad",
       "headline": "Man Utd v Spurs team news: Amad starts, Marmoush benched",
       "summary": "Two changes for United, six for Spurs The post Man Utd v Spurs team news: Amad starts, Marmoush benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1485,78 +1617,6 @@
           "element_id": 401,
           "name": "Marmoush",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "162025ca23c8793d",
-      "headline": "Henderson shines as Chelsea bounce back by thrashing Bournemouth",
-      "summary": "Chelsea responded emphatically to their pre-international break defeat at Brentford with a 5-1 thrashing of Bournemouth at Stamford Bridge. Jordan Henderson scored twice, including a stunning free-kick, as Xabi Alonso\u2019s side climbed to",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/henderson-shines-as-chelsea-bounce-back-by-thrashing-bournemouth/",
-      "claimed_at": "2026-10-10T16:11:51Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1941360184859b60",
-      "headline": "Arteta praises match winner Guimaraes\u2019 response after \u2018not being at the level\u2019 in defeat to Brighton",
-      "summary": "Mikel Arteta praised Bruno Guimaraes for bouncing back after the midfielder came off the bench to score Arsenal\u2019s winner in their 2-1 victory over Leeds. Guimaraes was left out of the starting line-u",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-praises-match-winner-guimaraes-response-after-not-being-at-the-level-in-defeat-to-brighton/",
-      "claimed_at": "2026-10-10T15:22:09Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a30912f7d155bcba",
-      "headline": "Man Utd 1-0 Tottenham LIVE \u2013 Spurs on top at Old Trafford, but Mbeumo puts Utd ahead",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd 1-0 Tottenham LIVE - Spurs on top at Old Trafford, but Mbeumo puts Utd ahead appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-utd-v-tottenham-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-10-10T15:07:12Z",
-      "players": [
-        {
-          "element_id": 427,
-          "name": "Mbeumo",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d5989e42d957aea7",
-      "headline": "Man Utd 1-1 Tottenham LIVE \u2013 Ten-man Spurs salvage draw at Old Trafford",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd 1-1 Tottenham LIVE - Ten-man Spurs salvage draw at Old Trafford appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-utd-v-tottenham-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-10-10T15:07:12Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
