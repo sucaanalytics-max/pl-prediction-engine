@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-13T08:28:03.205679Z",
+  "generated_at": "2026-10-14T00:28:19.332656Z",
   "gameweek": 7,
   "players": [
     {
@@ -61,7 +61,7 @@
         {
           "claim_type": "status",
           "resolved_value": "d",
-          "rule": "recency_within_source",
+          "rule": "fresher_claim_beats_stale",
           "n_conflicts": 1,
           "n_dropped": 0,
           "unresolved": false,
@@ -91,7 +91,7 @@
               "quote": null,
               "url": null,
               "verdict": "lost",
-              "beaten_by": "recency_within_source"
+              "beaten_by": "fresher_claim_beats_stale"
             }
           ]
         }
