@@ -1,18 +1,288 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-15T10:01:34.459563Z",
-  "n_dropped": 116,
+  "generated_at": "2026-10-15T15:01:01.068442Z",
+  "n_dropped": 120,
   "dropped_by_source": {
-    "bbc_football": 54,
-    "hayters": 6,
-    "sky_football": 56
+    "bbc_football": 56,
+    "hayters": 9,
+    "sky_football": 55
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 206,
+  "n_articles": 210,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "674ee384523dc7a7",
+      "headline": "Jaissle reveals Newcastle star set to be out for a few weeks",
+      "summary": "Matthias Jaissle confirmed that Anthony Elanga is still ruled out for this weekend's match against Aston Villa. Elanga has been suffering with a hamstring injury since September and Bazoumana Toure was withdrawn from the 4-1 loss away at C",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/jaissle-reveals-newcastle-star-set-to-be-out-for-a-few-weeks/",
+      "claimed_at": "2026-10-15T14:59:09Z",
+      "players": [
+        {
+          "element_id": 454,
+          "name": "Elanga",
+          "club": "NEW",
+          "held": false
+        },
+        {
+          "element_id": 461,
+          "name": "Tour\u00e9",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a472dc3fb4f7c9b4",
+      "headline": "Newcastle latest: Jaissle provides injury update on quartet",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-15T14:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6e2764e83f864590",
+      "headline": "Burnham requests search for more records of Man City interactions while Mayor",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13593363/man-city-charges-latest-live-updates-appeal-news-and-reaction-after-guilty-verdict-from-independent-commission",
+      "claimed_at": "2026-10-15T14:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4a907ab80d335ee5",
+      "headline": "The big decision Lampard has to make ahead of Spurs clash",
+      "summary": "Coventry City have Taiwo Awoniyi available to face Tottenham Hotspur on Monday night after the striker completed his three-match ban. The striker was sent off against Brighton last month, and in his place Sidiki Cherif scored and won a penalt",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/the-big-decision-lampard-has-to-make-ahead-of-spurs-clash/",
+      "claimed_at": "2026-10-15T13:47:26Z",
+      "players": [
+        {
+          "element_id": 492,
+          "name": "Awoniyi",
+          "club": "COV",
+          "held": false
+        },
+        {
+          "element_id": 599,
+          "name": "Cherif",
+          "club": "COV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "42309bb5980f6f6e",
+      "headline": "Jakirovic explains why Belloumi did not start Everton draw",
+      "summary": "Sergej Jakirovic explained why Mohamed Belloumi was left out of the starting 11 against Everton last weekend. Jakirovic explained that it is normal for winger Belloumi to feel fatigue, as he was left out of the starting 11 against Everton af",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/jakirovic-explains-why-belloumi-did-not-start-everton-draw/",
+      "claimed_at": "2026-10-15T13:33:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f4824c56445d9f2e",
+      "headline": "Man Utd legends criticise Martinez\u2019s outburst",
+      "summary": "Gary Neville has hit out at Lisandro Martinez\u2019s comments after the Atletico Madrid defeat, insisting they amount to a direct criticism of his own team-mates. Martinez had criticised the club's leadership and said he expected more investment in the squad",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-utd-legends-criticise-martinezs-outburst/",
+      "claimed_at": "2026-10-15T12:45:08Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5b8ad754deed69ef",
+      "headline": "\u2018It will be special\u2019 \u2013 O\u2019Nien proud to represent Sunderland in Europe",
+      "summary": "Sunderland defender Luke O'Nien has spoken of his pride at being part of the Black Cats squad representing the club on the European stage. O'Nien has been at Sunderland since they were in League One, and spoke of how special the o",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/it-will-be-special-onien-proud-to-represent-sunderland-in-europe/",
+      "claimed_at": "2026-10-15T12:34:42Z",
+      "players": [
+        {
+          "element_id": 539,
+          "name": "O'Nien",
+          "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6cb50b4f49aab12c",
+      "headline": "Bournemouth will consider Scott sale in January for over \u00a380m",
+      "summary": "Bournemouth's stance on selling Alex Scott is softening, with the England midfielder continuing to refuse offers to sign a new contract at the south coast club, Sky Sports News has been told.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13599539/alex-scott-transfer-news-bournemouth-will-consider-offers-in-excess-of-80m-for-england-international-amid-refusal-to-sign-new-contract",
+      "claimed_at": "2026-10-15T11:52:00Z",
+      "players": [
+        {
+          "element_id": 69,
+          "name": "Scott",
+          "club": "BOU",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "af610bbdc03cc488",
+      "headline": "Getafe make offer to sign free agent Sancho",
+      "summary": "Getafe make a formal offer to sign attacker Jadon Sancho, who is searching for a new club after leaving Manchester United in the summer.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm3r5p11d23no?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-15T11:45:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "276f3b1d02105051",
+      "headline": "Everton's Barry on the video he was scared to post",
+      "summary": "The Everton striker explains why he chose to post an emotional video from a training session.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/news/articles/cq8rzgry7dgko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-15T11:27:07Z",
+      "players": [
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3c10f6d9494649a4",
+      "headline": "Liverpool latest: Too early to say if trio will be fit for Brentford, says Iraola",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-15T11:26:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e787be9f14234a0f",
+      "headline": "Iraola reveals Liverpool trio could return for Brentford clash",
+      "summary": "Andoni Iraola revealed that it is &#8220;too early&#8221; to say whether Dominik Szoboszlai, Cody Gakpo and Alexander Isak will return to the side against Brentford. Both Szoboslzai, Gakpo and Isak missed Liverpool's 6-3 win over LASK in",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/iraola-gives-fitness-updates-on-liverpool-trio/",
+      "claimed_at": "2026-10-15T11:14:29Z",
+      "players": [
+        {
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "65506e226393b237",
+      "headline": "Bournemouth latest: Why Cherries are better than league position shows",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-15T11:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "603a787ccc9d64af",
+      "headline": "Man Utd a circus after Martinez comments - Keane",
+      "summary": "Lisandro Martinez's outburst shows Manchester United are in \"chaos\", says former captain Roy Keane.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c3n04gy12r91o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-15T10:57:15Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "5aa4751c3893610a",
       "headline": "'Top two - why not?' - Why Sangare turned down top clubs for Brentford",
@@ -1148,42 +1418,6 @@
       "touches_squad": false
     },
     {
-      "digest": "0a478d2330b712ab",
-      "headline": "Saka struggling? He's more of a threat than ever",
-      "summary": "Mikel Arteta challenged Bukayo Saka to start scoring \"two or three goals per game\" before Arsenal's meeting with Lille. The winger clearly was listening. He only needed six minutes to find the net. And that was after providing an assist with his first",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599187/bukayo-saka-arsenal-winger-more-of-a-goal-threat-than-ever-and-proving-doubters-wrong-as-he-evolves",
-      "claimed_at": "2026-10-14T11:25:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fc16fc2e05759869",
-      "headline": "Saka struggling? He\u2019s more of a threat than ever",
-      "summary": "Mikel Arteta challenged Bukayo Saka to start scoring \"two or three goals per game\" before Arsenal's meeting with Lille. The winger clearly was listening. He only needed six minutes to find the net. And that was after providing an assist with his first",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599187/bukayo-saka-arsenal-winger-more-of-a-goal-threat-than-ever-and-proving-doubters-wrong-as-he-evolves",
-      "claimed_at": "2026-10-14T11:25:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "fe135d5319a9b4b4",
       "headline": "\u2018The finishers are crucial\u2019 \u2013 Merino hails Arsenal\u2019s squad depth",
       "summary": "Mikel Merino believes Arsenal\u2019s ability to make an impact from the bench could prove crucial in their pursuit of multiple silverware this season, with Mikel Arteta\u2019s finishers once again helping to make the difference in the 3-0 Champi",
@@ -1191,24 +1425,6 @@
       "tier": 2,
       "url": "https://hayters.com/mikel-merino-the-inside-story-of-arsenals-finishers/",
       "claimed_at": "2026-10-14T11:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "91a5f7e86bb662c8",
-      "headline": "Set-piece sessions and finding fixes - how international break lifted Chelsea",
-      "summary": "The extended three-week break may have benefited Chelsea more than any other team in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckwy4nj4842qo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-14T10:43:19Z",
       "players": [
         {
           "element_id": 0,
@@ -1238,78 +1454,6 @@
       "touches_squad": false
     },
     {
-      "digest": "44d6d73b64d12e9b",
-      "headline": "Struijk red card shown after VAR intervention is overturned",
-      "summary": "The red card controversially shown to Brighton defender Pascal Struijk against Sunderland is overturned.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cv4g18gk8xzgo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-14T10:18:45Z",
-      "players": [
-        {
-          "element_id": 328,
-          "name": "Struijk",
-          "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f613964e44f9507c",
-      "headline": "'Awful' and 'disrespectful' - Carra and Rooney criticise Martinez outburst",
-      "summary": "Jamie Carragher has branded Lisandro Martinez's comments criticising the Manchester United hierarchy as \"awful\" - saying the player should look at himself because of his \"really poor\" start to the season.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599115/lisandro-martinez-jamie-carragher-says-man-utd-defenders-comments-criticising-hierarchy-are-awful-as-wayne-rooney-brands-them-disrespectful",
-      "claimed_at": "2026-10-14T07:06:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8416792bfca06b85",
-      "headline": "'No excuses' - but is Villa's stadium rebuild affecting team?",
-      "summary": "With Villa Park's North Stand currently closed for building work, is the reduced capacity affecting Aston Villa's performances?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cx054n684g7do?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-14T05:41:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5481f33067ad87ec",
-      "headline": "Martinez calls out Man Utd hierarchy",
-      "summary": "Manchester United's Lisandro Martinez launched an extraordinary attack on the club's hierarchy after their 2-0 Champions League loss at Atletico Madrid.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13598950/man-utd-defender-lisandro-martinez-extraordinarily-calls-out-clubs-hierarchy-after-atletico-madrid-loss-in-champions-league",
-      "claimed_at": "2026-10-13T22:30:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "32b7b9fe0f55589a",
       "headline": "Carrick responds to Martinez\u2019s criticism of Man Utd leadership",
       "summary": "Michael Carrick has responded to Lisandro Martinez\u2019s criticism of Manchester United\u2019s leadership by calling for unity following their 2-0 defeat to Atletico Madrid. Speaking after United's Champions League loss, the United defender said:",
@@ -1322,24 +1466,6 @@
           "element_id": 419,
           "name": "Martinez",
           "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2dcc6d166fc1a7d8",
-      "headline": "Saka shines as Arsenal cruise to Champions League win over Lille",
-      "summary": "Arsenal scored three goals in seven second-half minutes to beat Lille 3-0 and continue their winning start in the Champions League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-lille/report/577615",
-      "claimed_at": "2026-10-13T21:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1658,126 +1784,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5b6106eb96de025e",
-      "headline": "\u2018For the first time this season, we showed we are a team\u2019 \u2013 De Zerbi hails Spurs\u2019 character and Solanke\u2019s leadership",
-      "summary": "Roberto De Zerbi praised Tottenham\u2019s character after their 1-1 draw with Manchester United and backed Dominic Solanke to get back to his best this season. Solanke was handed the capta",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/for-the-first-time-this-season-we-showed-we-are-a-team-de-zerbi-hails-spurs-character-and-solankes-leadership/",
-      "claimed_at": "2026-10-10T20:02:24Z",
-      "players": [
-        {
-          "element_id": 516,
-          "name": "Bentancur",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ec1a28318cd46d4e",
-      "headline": "Wilder hopes Sheffield United star will return for next game",
-      "summary": "Chris Wilder expects Kalvin Phillips to be available for Sheffield United\u2019s midweek trip to Portsmouth despite missing their 3-0 win over Lincoln City. The on-loan Manchester City midfielder was left out after feeling tightness in his addu",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/wilder-hopes-sheffield-united-star-will-return-for-next-game/",
-      "claimed_at": "2026-10-10T19:22:15Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9f9520a535e407b1",
-      "headline": "Aston Villa boss Emery on duo\u2019s injuries and draw with Brentford",
-      "summary": "Unai Emery has confirmed Matteo Ruggeri suffered a hamstring injury in Aston Villa\u2019s 2-2 draw with Brentford. The left-back was replaced at half-time by Aaron Wan-Bissaka, who filled in on the left with Ian Maatsen already sidelined by",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/aston-villa-boss-emery-on-duos-injuries-and-draw-with-brentford/",
-      "claimed_at": "2026-10-10T18:44:28Z",
-      "players": [
-        {
-          "element_id": 36,
-          "name": "Maatsen",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 51,
-          "name": "George Hemmings",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 596,
-          "name": "Ruggeri",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 611,
-          "name": "Wan-Bissaka",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "94315b36bddffb53",
-      "headline": "Alonso on James\u2019 injury and Henderson\u2019s impressive performance in Chelsea\u2019s win over Bournemouth",
-      "summary": "Xabi Alonso confirmed Reece James missed Chelsea\u2019s 5-1 win over Bournemouth with a knee issue. The Chelsea captain felt discomfort before the game and was not passed fit to play a part. \u201cYeah, he felt so",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/alonso-on-james-injury-and-hendersons-impressive-performance-in-chelseas-win-over-bournemouth/",
-      "claimed_at": "2026-10-10T18:12:08Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d4d5db0352df0ec3",
-      "headline": "Ten-man Brighton beat Sunderland to continue impressive start",
-      "summary": "Brighton held on for an impressive 2-0 win over Sunderland at the Stadium of Light despite playing the final half-hour with ten men. The visitors had the first big chance when Diego G\u00f3mez capitalised on a Kevin Danso mistake, but Robin Ro",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/ten-man-brighton-beat-sunderland-to-continue-impressive-start/",
-      "claimed_at": "2026-10-10T16:16:23Z",
-      "players": [
-        {
-          "element_id": 501,
-          "name": "Danso",
-          "club": "SUN",
-          "held": false
-        },
-        {
-          "element_id": 529,
-          "name": "Roefs",
-          "club": "SUN",
-          "held": false
-        },
-        {
-          "element_id": 541,
-          "name": "Meunier",
-          "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0787490e9838e4ad",
       "headline": "Man Utd v Spurs team news: Amad starts, Marmoush benched",
       "summary": "Two changes for United, six for Spurs The post Man Utd v Spurs team news: Amad starts, Marmoush benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1790,24 +1796,6 @@
           "element_id": 401,
           "name": "Marmoush",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "378f3838d4832f29",
-      "headline": "Arsenal v Leeds team news: Konsa + Havertz fit to start",
-      "summary": "Three Gunners alterations from Gameweek 5, while Leeds are unchanged The post Arsenal v Leeds team news: Konsa + Havertz fit to start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/10/arsenal-v-leeds-team-news-konsa-havertz-fit-to-start",
-      "claimed_at": "2026-10-10T10:35:00Z",
-      "players": [
-        {
-          "element_id": 26,
-          "name": "Havertz",
-          "club": "ARS",
           "held": false
         }
       ],
