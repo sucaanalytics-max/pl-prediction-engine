@@ -1,18 +1,108 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-15T05:14:37.810548Z",
-  "n_dropped": 112,
+  "generated_at": "2026-10-15T10:01:34.459563Z",
+  "n_dropped": 116,
   "dropped_by_source": {
-    "bbc_football": 52,
+    "bbc_football": 54,
     "hayters": 6,
-    "sky_football": 54
+    "sky_football": 56
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 202,
+  "n_articles": 206,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "5aa4751c3893610a",
+      "headline": "'Top two - why not?' - Why Sangare turned down top clubs for Brentford",
+      "summary": "Mamadou Sangare could have been playing Champions League football this week. After all, the signs point to him being an elite-level player.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13599149/mamadou-sangare-interview-brentford-midfielder-reveals-why-he-turned-down-top-clubs-in-europe-for-the-bees",
+      "claimed_at": "2026-10-15T08:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5ae55973f44b6c73",
+      "headline": "The Portuguese second-tier team hosting Sunderland in Europe",
+      "summary": "Portuguese second-tier side Torreense host Sunderland in the Europa League in what will be their first ever European home match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cw99zxvyzj04o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-15T07:30:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1477d0ce71a90a78",
+      "headline": "Papers: Senior Man Utd players behind Martinez after outburst",
+      "summary": "The top stories and transfer rumours from Thursday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13599465/manchester-united-latest-senior-players-backing-lisandro-martinez-over-hierarchy-outburst-paper-talk",
+      "claimed_at": "2026-10-15T07:30:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "695a03f20e1245b1",
+      "headline": "Man Utd latest: Wilcox retains support after Martinez outburst",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-15T07:00:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3182f951d7bbe507",
+      "headline": "Could Wenger really take on Infantino and run for Fifa presidency?",
+      "summary": "Senior figures in European football tell BBC Sport they want former Arsenal manager Arsene Wenger to run as a surprise candidate against Gianni Infantino.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cx30e8dqmnzgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-15T06:35:39Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "290c498ca1d944a9",
       "headline": "'Players won't like it' - Martinez apologises, but is the damage done?",
@@ -53,6 +143,24 @@
       "digest": "7fe3bd502fb1b44d",
       "headline": "Guardiola's return, Man City's defiance - and a game of glorious chaos",
       "summary": "On their return to Etihad Stadium Manchester City put on a show of defiance - even in the face of a PSG masterclass, writes Phil McNulty.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqp8gyv8le87o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T22:57:23Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ebb2b663235b72c1",
+      "headline": "Guardiola's return, Man City's defiance - and a game of glorious chaos",
+      "summary": "Manchester City put on a show of defiance on their return to Etihad Stadium - even in the face of a PSG masterclass, writes Phil McNulty.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cqp8gyv8le87o?at_medium=RSS&at_campaign=rss",
@@ -122,6 +230,24 @@
       "touches_squad": false
     },
     {
+      "digest": "8db4fb330676da11",
+      "headline": "Outburst came out of 'anger and frustration' - Martinez",
+      "summary": "Manchester United defender Lisandro Martinez says he \"spoke out of anger and frustration\" when launching a scathing attack on the club's hierarchy.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqd09l278n15o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T22:42:02Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "4e8fc016042c4e26",
       "headline": "\u2018I spoke out of anger and frustration\u2019 \u2013 Man Utd defender Martinez issues statement following bombshell interview",
       "summary": "Lisandro Martinez has clarified his comments about Manchester United\u2019s leadership after admitting he spoke out of \u201canger and frustration\u201d following their defeat to Atletico Madrid. The d",
@@ -170,6 +296,24 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "26ee9aab496e2595",
+      "headline": "PSG on different level - but where do they rank against other great sides?",
+      "summary": "Paris St-Germain are eyeing a third successive Champions League crown after dismantling Manchester City, but where do they rank against Europe's most dominant clubs?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmx2wegg2pw5o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T21:55:37Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -1148,24 +1292,6 @@
       "touches_squad": false
     },
     {
-      "digest": "32d4067f8ede3aee",
-      "headline": "Football Daily",
-      "summary": "Kelly Cates reacts to the Lisandro Martinez comments on the Man United hierarchy.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0pgjm3k?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T23:25:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5481f33067ad87ec",
       "headline": "Martinez calls out Man Utd hierarchy",
       "summary": "Manchester United's Lisandro Martinez launched an extraordinary attack on the club's hierarchy after their 2-0 Champions League loss at Atletico Madrid.",
@@ -1220,114 +1346,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b038c501e63747fc",
-      "headline": "Man Utd defender Martinez issues scathing attack on board",
-      "summary": "Lisandro Martinez launches a blistering attack on Manchester United's hierarchy for not strengthening the squad following qualification for the Champions League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/crlykw9eevx3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T21:43:09Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "436acc366ed9b3f7",
-      "headline": "Porro eyes La Liga return - Wednesday's gossip",
-      "summary": "Tottenham's Pedro Porro wants Barcelona move, multiple Premier League clubs chase Croatia striker Dion Beljo, Chelsea eye January swoop for Frenkie de Jong.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm62yxegwy41o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T20:06:30Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4c1d31fe8a9dcb8a",
-      "headline": "Burnham denies discussing 115 charges with Man City during Mayor years",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13593363/man-city-charges-latest-live-updates-appeal-news-and-reaction-after-guilty-verdict-from-independent-commission",
-      "claimed_at": "2026-10-13T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f4d21daddafe89ed",
-      "headline": "PSG's Luis Enrique hopes Man City avoid sanctions",
-      "summary": "PSG boss Luis Enrique says he was surprised to learn Manchester City had been found guilty of breaching Premier League financial rules and hopes the club avoid sanctions.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck1wvd91v4pwo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T17:33:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9e5943aa065a31bc",
-      "headline": "Bournemouth open to selling Scott for \u00a3100m in January",
-      "summary": "Bournemouth are open to selling England midfielder Alex Scott in January under certain conditions.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqzjxn010r49o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T17:00:31Z",
-      "players": [
-        {
-          "element_id": 69,
-          "name": "Scott",
-          "club": "BOU",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4b9b34a54367731f",
-      "headline": "Is it time for Liverpool to drop Wirtz?",
-      "summary": "More than a year since his \u00a3116m move, Florian Wirtz is still struggling to hit top form at Liverpool - so does he need to be dropped?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvglw07rx6jeo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T16:45:59Z",
-      "players": [
-        {
-          "element_id": 366,
-          "name": "Wirtz",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9f4c335d2e27bf34",
       "headline": "Szoboszlai, Isak, Gakpo: Latest FPL team news ahead of Gameweek 7",
       "summary": "The managers of Man City, Liverpool and Aston Villa face the media today The post Szoboszlai, Isak, Gakpo: Latest FPL team news ahead of Gameweek 7 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
@@ -1346,24 +1364,6 @@
           "element_id": 368,
           "name": "Szoboszlai",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "15935647a086bb4f",
-      "headline": "Aston Villa vs Fenerbahce LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/aston-villa-vs-fenerbahce/live/577624",
-      "claimed_at": "2026-10-13T14:22:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
