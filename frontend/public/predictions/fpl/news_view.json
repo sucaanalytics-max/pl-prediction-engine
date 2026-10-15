@@ -1,19 +1,73 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-14T22:03:21.733852Z",
-  "n_dropped": 118,
+  "generated_at": "2026-10-15T00:31:15.699166Z",
+  "n_dropped": 123,
   "dropped_by_source": {
-    "bbc_football": 53,
+    "bbc_football": 55,
     "fantasyfootballscout": 2,
-    "hayters": 8,
-    "sky_football": 55
+    "hayters": 9,
+    "sky_football": 57
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 208,
+  "n_articles": 213,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "290c498ca1d944a9",
+      "headline": "'Players won't like it' - Martinez apologises, but is the damage done?",
+      "summary": "Champions League Match of the Day pundits Nedum Onuoha, Stephen Warnock, and Rory Smith analyse Lisandro Martinez's comments following Manchester United's 2-0 loss to Atletico Madrid and the impact they'll have on the club.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cw2409qg6pe0o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T23:13:53Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "04d5b74d8cde6cf7",
+      "headline": "Martinez releases statement to clarify outburst - but does not apologise",
+      "summary": "Manchester United defender Lisandro Martinez has clarified his outburst after Tuesday's Champions League loss at Atletico Madrid in a statement - but stopped short of an apology.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13599417/lisandro-martinez-man-utd-defender-releases-statement-to-clarify-outburst-but-does-not-apologise",
+      "claimed_at": "2026-10-14T23:05:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7fe3bd502fb1b44d",
+      "headline": "Guardiola's return, Man City's defiance - and a game of glorious chaos",
+      "summary": "On their return to Etihad Stadium Manchester City put on a show of defiance - even in the face of a PSG masterclass, writes Phil McNulty.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqp8gyv8le87o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T22:57:23Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "5db5302584af625b",
       "headline": "Man Utd latest: Martinez releases statement a day after outburst",
@@ -22,6 +76,60 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-10-14T22:46:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f25845dc263b6a7d",
+      "headline": "Jackson steps up again as Aston Villa revival continues",
+      "summary": "Nicolas Jackson continues his fine goalscoring form as Aston Villa record an impressive Champions League win.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c370pnwz0gw2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T22:45:22Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "379de7f8029d0d21",
+      "headline": "Martinez outburst came out of 'anger and frustration'",
+      "summary": "Manchester United defender Lisandro Martinez says he \"spoke out of anger and frustration\" when launching a scathing attack on the club's hierarchy.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqd09l278n15o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-14T22:42:02Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4e8fc016042c4e26",
+      "headline": "\u2018I spoke out of anger and frustration\u2019 \u2013 Man Utd defender Martinez issues statement following bombshell interview",
+      "summary": "Lisandro Martinez has clarified his comments about Manchester United\u2019s leadership after admitting he spoke out of \u201canger and frustration\u201d following their defeat to Atletico Madrid. The d",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-utd-defender-martinez-issues-statement-following-bombshell-interview/",
+      "claimed_at": "2026-10-14T22:40:34Z",
       "players": [
         {
           "element_id": 419,
@@ -94,6 +202,24 @@
       "tier": 2,
       "url": "https://hayters.com/we-are-there-maresca-on-man-city-loss-to-psg-and-what-luis-enrique-told-him-afterwards/",
       "claimed_at": "2026-10-14T21:55:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0b54f46df493b53f",
+      "headline": "Man City beaten by PSG in thriller as Guardiola returns to Etihad",
+      "summary": "Manchester City were beaten 4-2 by a majestic Paris Saint-Germain as Pep Guardiola watched on from the stands in an enthralling Champions League encounter.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-paris-saint-germain/report/577628",
+      "claimed_at": "2026-10-14T21:50:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1077,24 +1203,6 @@
       "touches_squad": false
     },
     {
-      "digest": "2dcc6d166fc1a7d8",
-      "headline": "Saka shines as Arsenal cruise to Champions League win over Lille",
-      "summary": "Arsenal scored three goals in seven second-half minutes to beat Lille 3-0 and continue their winning start in the Champions League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-lille/report/577615",
-      "claimed_at": "2026-10-13T21:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b038c501e63747fc",
       "headline": "Man Utd defender Martinez issues scathing attack on board",
       "summary": "Lisandro Martinez launches a blistering attack on Manchester United's hierarchy for not strengthening the squad following qualification for the Champions League.",
@@ -1131,78 +1239,6 @@
       "touches_squad": false
     },
     {
-      "digest": "4c1d31fe8a9dcb8a",
-      "headline": "Burnham denies discussing 115 charges with Man City during Mayor years",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13593363/man-city-charges-latest-live-updates-appeal-news-and-reaction-after-guilty-verdict-from-independent-commission",
-      "claimed_at": "2026-10-13T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f4d21daddafe89ed",
-      "headline": "PSG's Luis Enrique hopes Man City avoid sanctions",
-      "summary": "PSG boss Luis Enrique says he was surprised to learn Manchester City had been found guilty of breaching Premier League financial rules and hopes the club avoid sanctions.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck1wvd91v4pwo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T17:33:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9e5943aa065a31bc",
-      "headline": "Bournemouth open to selling Scott for \u00a3100m in January",
-      "summary": "Bournemouth are open to selling England midfielder Alex Scott in January under certain conditions.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqzjxn010r49o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T17:00:31Z",
-      "players": [
-        {
-          "element_id": 69,
-          "name": "Scott",
-          "club": "BOU",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4b9b34a54367731f",
-      "headline": "Is it time for Liverpool to drop Wirtz?",
-      "summary": "More than a year since his \u00a3116m move, Florian Wirtz is still struggling to hit top form at Liverpool - so does he need to be dropped?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvglw07rx6jeo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-13T16:45:59Z",
-      "players": [
-        {
-          "element_id": 366,
-          "name": "Wirtz",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9f4c335d2e27bf34",
       "headline": "Szoboszlai, Isak, Gakpo: Latest FPL team news ahead of Gameweek 7",
       "summary": "The managers of Man City, Liverpool and Aston Villa face the media today The post Szoboszlai, Isak, Gakpo: Latest FPL team news ahead of Gameweek 7 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
@@ -1221,24 +1257,6 @@
           "element_id": 368,
           "name": "Szoboszlai",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "15935647a086bb4f",
-      "headline": "Aston Villa vs Fenerbahce LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/aston-villa-vs-fenerbahce/live/577624",
-      "claimed_at": "2026-10-13T14:22:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1563,42 +1581,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9f9520a535e407b1",
-      "headline": "Aston Villa boss Emery on duo\u2019s injuries and draw with Brentford",
-      "summary": "Unai Emery has confirmed Matteo Ruggeri suffered a hamstring injury in Aston Villa\u2019s 2-2 draw with Brentford. The left-back was replaced at half-time by Aaron Wan-Bissaka, who filled in on the left with Ian Maatsen already sidelined by",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/aston-villa-boss-emery-on-duos-injuries-and-draw-with-brentford/",
-      "claimed_at": "2026-10-10T18:44:28Z",
-      "players": [
-        {
-          "element_id": 36,
-          "name": "Maatsen",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 51,
-          "name": "George Hemmings",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 596,
-          "name": "Ruggeri",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 611,
-          "name": "Wan-Bissaka",
-          "club": "AVL",
           "held": false
         }
       ],
