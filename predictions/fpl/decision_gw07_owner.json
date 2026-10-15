@@ -2,15 +2,15 @@
   "gameweek": 7,
   "entry_label": "owner",
   "objective": "season",
-  "generated_at": "2026-10-15T15:10:05.821671Z",
+  "generated_at": "2026-10-15T19:09:54.477501Z",
   "deadline": "2026-10-17T10:00:00Z",
   "xp_snapshot": {
     "1": 3.6677,
     "4": 4.7716,
     "12": 5.2863,
     "106": 5.3786,
-    "113": 4.2476,
-    "124": 4.682,
+    "113": 4.2321,
+    "124": 4.7242,
     "152": 0.4285,
     "154": 4.957,
     "165": 3.6807,
@@ -19,7 +19,7 @@
     "445": 4.2464,
     "464": 4.3009,
     "497": 0.0424,
-    "542": 4.562,
+    "542": 4.6621,
     "569": 5.0301
   },
   "decision": {
@@ -69,26 +69,26 @@
       "free_transfers_after": 1
     },
     "n_draws": 10000,
-    "mean_points": 57.671,
-    "sd_points": 15.9041,
-    "objective": 57.671,
+    "mean_points": 57.7996,
+    "sd_points": 15.9087,
+    "objective": 57.7996,
     "quantiles": {
       "q10": 38.0,
       "q25": 46.0,
-      "q50": 56.0,
+      "q50": 57.0,
       "q75": 68.0,
       "q90": 79.0,
-      "q99": 100.0
+      "q99": 99.0
     },
     "tails": {
-      "p_ge_40": 0.8788,
-      "p_ge_50": 0.6729,
-      "p_ge_60": 0.4245,
-      "p_ge_70": 0.2193,
-      "p_ge_80": 0.0933,
-      "p_ge_90": 0.0329
+      "p_ge_40": 0.8839,
+      "p_ge_50": 0.6735,
+      "p_ge_60": 0.4326,
+      "p_ge_70": 0.2216,
+      "p_ge_80": 0.0992,
+      "p_ge_90": 0.0337
     },
-    "autosub_rate": 0.0761,
+    "autosub_rate": 0.0778,
     "vice_rate": 0.0114
   },
   "selection_stream": {
@@ -138,29 +138,29 @@
       "free_transfers_after": 1
     },
     "n_draws": 10000,
-    "mean_points": 57.6316,
-    "sd_points": 15.5663,
-    "objective": 57.6316,
+    "mean_points": 57.7609,
+    "sd_points": 15.5584,
+    "objective": 57.7609,
     "quantiles": {
       "q10": 38.0,
       "q25": 47.0,
       "q50": 57.0,
-      "q75": 67.0,
+      "q75": 68.0,
       "q90": 78.0,
       "q99": 99.0
     },
     "tails": {
-      "p_ge_40": 0.8852,
-      "p_ge_50": 0.6783,
-      "p_ge_60": 0.4285,
-      "p_ge_70": 0.2124,
-      "p_ge_80": 0.0884,
-      "p_ge_90": 0.0306
+      "p_ge_40": 0.884,
+      "p_ge_50": 0.6834,
+      "p_ge_60": 0.4308,
+      "p_ge_70": 0.215,
+      "p_ge_80": 0.0869,
+      "p_ge_90": 0.0302
     },
-    "autosub_rate": 0.0821,
+    "autosub_rate": 0.0817,
     "vice_rate": 0.0113
   },
-  "optimism_gap": -0.0394,
+  "optimism_gap": -0.0387,
   "credible_margin": true,
   "runners_up": [
     {
@@ -210,26 +210,95 @@
         "free_transfers_after": 1
       },
       "n_draws": 10000,
-      "mean_points": 57.6143,
-      "sd_points": 15.439,
-      "objective": 57.6143,
+      "mean_points": 57.7597,
+      "sd_points": 15.4143,
+      "objective": 57.7597,
       "quantiles": {
         "q10": 39.0,
-        "q25": 46.0,
+        "q25": 47.0,
         "q50": 57.0,
-        "q75": 67.0,
+        "q75": 68.0,
         "q90": 78.0,
-        "q99": 97.0
+        "q99": 98.0
       },
       "tails": {
-        "p_ge_40": 0.8859,
-        "p_ge_50": 0.6719,
-        "p_ge_60": 0.4282,
-        "p_ge_70": 0.2143,
-        "p_ge_80": 0.0896,
-        "p_ge_90": 0.0299
+        "p_ge_40": 0.8882,
+        "p_ge_50": 0.681,
+        "p_ge_60": 0.4278,
+        "p_ge_70": 0.2163,
+        "p_ge_80": 0.089,
+        "p_ge_90": 0.0301
       },
-      "autosub_rate": 0.0636,
+      "autosub_rate": 0.0644,
+      "vice_rate": 0.0113
+    },
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
+          12,
+          113,
+          124,
+          152,
+          154,
+          173,
+          346,
+          426,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          12,
+          113,
+          124,
+          154,
+          346,
+          426,
+          445,
+          542,
+          569
+        ],
+        "captain": 12,
+        "vice": 426,
+        "transfers_in": [
+          346
+        ],
+        "transfers_out": [
+          165
+        ],
+        "hits": 0,
+        "bank_after": 19,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 57.2317,
+      "sd_points": 15.4043,
+      "objective": 57.2317,
+      "quantiles": {
+        "q10": 38.0,
+        "q25": 46.0,
+        "q50": 56.0,
+        "q75": 67.0,
+        "q90": 77.0,
+        "q99": 98.0
+      },
+      "tails": {
+        "p_ge_40": 0.8795,
+        "p_ge_50": 0.6731,
+        "p_ge_60": 0.418,
+        "p_ge_70": 0.204,
+        "p_ge_80": 0.0824,
+        "p_ge_90": 0.0287
+      },
+      "autosub_rate": 0.0817,
       "vice_rate": 0.0113
     },
     {
@@ -279,11 +348,11 @@
         "free_transfers_after": 1
       },
       "n_draws": 10000,
-      "mean_points": 56.7775,
-      "sd_points": 15.6574,
-      "objective": 56.7775,
+      "mean_points": 56.9239,
+      "sd_points": 15.6352,
+      "objective": 56.9239,
       "quantiles": {
-        "q10": 37.0,
+        "q10": 38.0,
         "q25": 46.0,
         "q50": 56.0,
         "q75": 67.0,
@@ -291,14 +360,14 @@
         "q99": 98.0
       },
       "tails": {
-        "p_ge_40": 0.8699,
-        "p_ge_50": 0.6507,
-        "p_ge_60": 0.4045,
-        "p_ge_70": 0.2033,
-        "p_ge_80": 0.0851,
-        "p_ge_90": 0.0284
+        "p_ge_40": 0.8713,
+        "p_ge_50": 0.6578,
+        "p_ge_60": 0.4051,
+        "p_ge_70": 0.2028,
+        "p_ge_80": 0.0854,
+        "p_ge_90": 0.0287
       },
-      "autosub_rate": 0.0807,
+      "autosub_rate": 0.0815,
       "vice_rate": 0.0113
     },
     {
@@ -348,26 +417,26 @@
         "free_transfers_after": 1
       },
       "n_draws": 10000,
-      "mean_points": 56.6044,
-      "sd_points": 15.3838,
-      "objective": 56.6044,
+      "mean_points": 56.7299,
+      "sd_points": 15.355,
+      "objective": 56.7299,
       "quantiles": {
         "q10": 38.0,
         "q25": 46.0,
-        "q50": 55.0,
+        "q50": 56.0,
         "q75": 66.0,
         "q90": 77.0,
         "q99": 97.0
       },
       "tails": {
-        "p_ge_40": 0.8728,
-        "p_ge_50": 0.6491,
-        "p_ge_60": 0.3986,
-        "p_ge_70": 0.1945,
-        "p_ge_80": 0.0794,
-        "p_ge_90": 0.0256
+        "p_ge_40": 0.8731,
+        "p_ge_50": 0.6583,
+        "p_ge_60": 0.4045,
+        "p_ge_70": 0.1951,
+        "p_ge_80": 0.0789,
+        "p_ge_90": 0.0267
       },
-      "autosub_rate": 0.0824,
+      "autosub_rate": 0.082,
       "vice_rate": 0.0113
     },
     {
@@ -419,26 +488,97 @@
         "free_transfers_after": 1
       },
       "n_draws": 10000,
-      "mean_points": 54.6847,
-      "sd_points": 15.5791,
-      "objective": 54.6847,
+      "mean_points": 54.8331,
+      "sd_points": 15.5816,
+      "objective": 54.8331,
       "quantiles": {
-        "q10": 35.0,
-        "q25": 43.0,
+        "q10": 36.0,
+        "q25": 44.0,
         "q50": 54.0,
         "q75": 65.0,
         "q90": 75.0,
-        "q99": 95.0
+        "q99": 96.0
       },
       "tails": {
-        "p_ge_40": 0.8301,
-        "p_ge_50": 0.6031,
-        "p_ge_60": 0.362,
-        "p_ge_70": 0.1732,
-        "p_ge_80": 0.0644,
-        "p_ge_90": 0.0198
+        "p_ge_40": 0.8347,
+        "p_ge_50": 0.609,
+        "p_ge_60": 0.3644,
+        "p_ge_70": 0.1704,
+        "p_ge_80": 0.0652,
+        "p_ge_90": 0.0211
       },
-      "autosub_rate": 0.0635,
+      "autosub_rate": 0.0643,
+      "vice_rate": 0.0113
+    },
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
+          12,
+          106,
+          113,
+          115,
+          124,
+          154,
+          173,
+          426,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          12,
+          106,
+          115,
+          124,
+          154,
+          426,
+          445,
+          542,
+          569
+        ],
+        "captain": 12,
+        "vice": 106,
+        "transfers_in": [
+          106,
+          115
+        ],
+        "transfers_out": [
+          152,
+          165
+        ],
+        "hits": 1,
+        "bank_after": 3,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 54.6974,
+      "sd_points": 15.7464,
+      "objective": 54.6974,
+      "quantiles": {
+        "q10": 35.0,
+        "q25": 44.0,
+        "q50": 54.0,
+        "q75": 65.0,
+        "q90": 75.0,
+        "q99": 96.01
+      },
+      "tails": {
+        "p_ge_40": 0.8293,
+        "p_ge_50": 0.6068,
+        "p_ge_60": 0.3578,
+        "p_ge_70": 0.1679,
+        "p_ge_80": 0.0671,
+        "p_ge_90": 0.023
+      },
+      "autosub_rate": 0.0842,
       "vice_rate": 0.0113
     },
     {
@@ -490,173 +630,27 @@
         "free_transfers_after": 1
       },
       "n_draws": 10000,
-      "mean_points": 53.6821,
-      "sd_points": 15.5533,
-      "objective": 53.6821,
+      "mean_points": 53.8131,
+      "sd_points": 15.5413,
+      "objective": 53.8131,
       "quantiles": {
-        "q10": 34.0,
+        "q10": 34.9,
         "q25": 43.0,
         "q50": 53.0,
-        "q75": 63.0,
+        "q75": 64.0,
         "q90": 74.0,
         "q99": 95.0
       },
       "tails": {
-        "p_ge_40": 0.8151,
-        "p_ge_50": 0.5786,
-        "p_ge_60": 0.3306,
-        "p_ge_70": 0.1541,
-        "p_ge_80": 0.0608,
-        "p_ge_90": 0.0196
+        "p_ge_40": 0.819,
+        "p_ge_50": 0.5869,
+        "p_ge_60": 0.3364,
+        "p_ge_70": 0.1512,
+        "p_ge_80": 0.0615,
+        "p_ge_90": 0.0193
       },
-      "autosub_rate": 0.0823,
+      "autosub_rate": 0.0819,
       "vice_rate": 0.0113
-    },
-    {
-      "plan": {
-        "squad": [
-          1,
-          4,
-          12,
-          113,
-          124,
-          127,
-          154,
-          173,
-          332,
-          411,
-          445,
-          464,
-          497,
-          542,
-          569
-        ],
-        "xi": [
-          1,
-          4,
-          12,
-          113,
-          124,
-          127,
-          154,
-          411,
-          445,
-          542,
-          569
-        ],
-        "captain": 411,
-        "vice": 12,
-        "transfers_in": [
-          127,
-          332,
-          411
-        ],
-        "transfers_out": [
-          152,
-          165,
-          426
-        ],
-        "hits": 2,
-        "bank_after": 0,
-        "objective": 0.0,
-        "free_transfers_banked": 0,
-        "free_transfers_after": 1
-      },
-      "n_draws": 10000,
-      "mean_points": 52.2229,
-      "sd_points": 16.2791,
-      "objective": 52.2229,
-      "quantiles": {
-        "q10": 32.0,
-        "q25": 40.0,
-        "q50": 51.0,
-        "q75": 63.0,
-        "q90": 74.0,
-        "q99": 94.0
-      },
-      "tails": {
-        "p_ge_40": 0.771,
-        "p_ge_50": 0.5403,
-        "p_ge_60": 0.3138,
-        "p_ge_70": 0.1477,
-        "p_ge_80": 0.0572,
-        "p_ge_90": 0.0181
-      },
-      "autosub_rate": 0.0833,
-      "vice_rate": 0.0
-    },
-    {
-      "plan": {
-        "squad": [
-          1,
-          4,
-          12,
-          113,
-          124,
-          154,
-          173,
-          290,
-          332,
-          411,
-          445,
-          464,
-          497,
-          542,
-          569
-        ],
-        "xi": [
-          1,
-          4,
-          12,
-          113,
-          124,
-          154,
-          411,
-          445,
-          464,
-          542,
-          569
-        ],
-        "captain": 411,
-        "vice": 12,
-        "transfers_in": [
-          290,
-          332,
-          411
-        ],
-        "transfers_out": [
-          152,
-          165,
-          426
-        ],
-        "hits": 2,
-        "bank_after": 5,
-        "objective": 0.0,
-        "free_transfers_banked": 0,
-        "free_transfers_after": 1
-      },
-      "n_draws": 10000,
-      "mean_points": 51.6052,
-      "sd_points": 16.0014,
-      "objective": 51.6052,
-      "quantiles": {
-        "q10": 32.0,
-        "q25": 40.0,
-        "q50": 51.0,
-        "q75": 62.0,
-        "q90": 73.0,
-        "q99": 93.0
-      },
-      "tails": {
-        "p_ge_40": 0.7604,
-        "p_ge_50": 0.528,
-        "p_ge_60": 0.3018,
-        "p_ge_70": 0.1333,
-        "p_ge_80": 0.0483,
-        "p_ge_90": 0.0158
-      },
-      "autosub_rate": 0.0735,
-      "vice_rate": 0.0
     }
   ],
   "pool": {
@@ -667,7 +661,7 @@
     },
     "held_missing_purchase_price": [],
     "price_uncertain": false,
-    "n_zero_xp": 68
+    "n_zero_xp": 66
   },
   "horizon": {
     "eval_horizon": 8,
@@ -777,9 +771,9 @@
           346,
           426,
           445,
+          464,
           497,
-          542,
-          569
+          542
         ],
         "xi": [
           1,
@@ -787,12 +781,12 @@
           12,
           68,
           106,
+          154,
           332,
           346,
           426,
           445,
-          542,
-          569
+          542
         ],
         "captain": 12,
         "vice": 346,
@@ -800,10 +794,10 @@
           346
         ],
         "transfers_out": [
-          464
+          569
         ],
         "hits": 0,
-        "bank_after": 7,
+        "bank_after": 5,
         "objective": 0.0,
         "free_transfers_banked": 0,
         "free_transfers_after": 1
@@ -822,9 +816,9 @@
           346,
           426,
           445,
+          464,
           497,
-          542,
-          569
+          542
         ],
         "xi": [
           1,
@@ -844,7 +838,7 @@
         "transfers_in": [],
         "transfers_out": [],
         "hits": 0,
-        "bank_after": 7,
+        "bank_after": 5,
         "objective": 0.0,
         "free_transfers_banked": 1,
         "free_transfers_after": 2
@@ -863,9 +857,9 @@
           346,
           426,
           445,
+          464,
           497,
-          542,
-          569
+          542
         ],
         "xi": [
           1,
@@ -874,18 +868,18 @@
           68,
           106,
           113,
+          154,
           332,
           346,
           426,
-          542,
-          569
+          542
         ],
         "captain": 12,
         "vice": 346,
         "transfers_in": [],
         "transfers_out": [],
         "hits": 0,
-        "bank_after": 7,
+        "bank_after": 5,
         "objective": 0.0,
         "free_transfers_banked": 2,
         "free_transfers_after": 3
@@ -904,9 +898,9 @@
           346,
           426,
           445,
+          464,
           497,
-          542,
-          569
+          542
         ],
         "xi": [
           1,
@@ -916,9 +910,9 @@
           106,
           154,
           173,
-          346,
           426,
           445,
+          464,
           542
         ],
         "captain": 154,
@@ -926,7 +920,7 @@
         "transfers_in": [],
         "transfers_out": [],
         "hits": 0,
-        "bank_after": 7,
+        "bank_after": 5,
         "objective": 0.0,
         "free_transfers_banked": 3,
         "free_transfers_after": 4
@@ -945,9 +939,9 @@
           346,
           426,
           445,
+          464,
           497,
-          542,
-          569
+          542
         ],
         "xi": [
           1,
@@ -960,14 +954,14 @@
           346,
           426,
           445,
-          542
+          464
         ],
         "captain": 346,
         "vice": 426,
         "transfers_in": [],
         "transfers_out": [],
         "hits": 0,
-        "bank_after": 7,
+        "bank_after": 5,
         "objective": 0.0,
         "free_transfers_banked": 4,
         "free_transfers_after": 5
