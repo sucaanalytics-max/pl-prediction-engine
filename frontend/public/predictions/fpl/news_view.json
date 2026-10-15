@@ -1,18 +1,156 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-15T15:01:01.068442Z",
-  "n_dropped": 120,
+  "generated_at": "2026-10-15T19:07:24.723193Z",
+  "n_dropped": 97,
   "dropped_by_source": {
-    "bbc_football": 56,
-    "hayters": 9,
-    "sky_football": 55
+    "bbc_football": 47,
+    "hayters": 4,
+    "sky_football": 46
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 210,
+  "n_articles": 187,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "eaf372300745ccc0",
+      "headline": "Sage suffers defeat to former side Lyon as Palace comeback falls short",
+      "summary": "Crystal Palace's comeback fell short as they suffered a 3-2 defeat to Pierre Sage's former club Lyon in the Europa League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/lyon-vs-crystal-palace/report/577769",
+      "claimed_at": "2026-10-15T19:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cb14309ceb7819a1",
+      "headline": "Man Utd latest: Martinez met hierarchy before apology - should he start vs Leeds?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-15T19:20:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a634e2bc277da034",
+      "headline": "Martinez apologises for outburst after Wilcox talks",
+      "summary": "Manchester United defender Lisandro Martinez has issued an apology for his outburst after Tuesday's Champions League loss at Atletico Madrid.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13599725/lisandro-martinez-man-utd-defender-apologises-for-outburst-and-holds-talks-with-jason-wilcox-and-michael-carrick",
+      "claimed_at": "2026-10-15T19:10:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6e67ae3c2d41026e",
+      "headline": "Martinez apologises for outburst and fined by Man Utd",
+      "summary": "Manchester United defender Lisandro Martinez issues an apology following his controversial remarks criticising the club's hierarchy.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cw77p152jz64o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-15T18:03:28Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d9eddd8bd57031b2",
+      "headline": "Moore's Germany move inspired by Sancho and Bellingham",
+      "summary": "Tottenham loanee Mikey Moore says the success of Jadon Sancho and Jude Bellingham in the Bundesliga influenced his decision to join Cologne.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c65yneln8wp0o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-15T16:09:55Z",
+      "players": [
+        {
+          "element_id": 523,
+          "name": "Moore",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1f75f7778582e743",
+      "headline": "Jaissle optimistic about Newcastle midfielder\u2019s return but cautious about defender",
+      "summary": "Matthias Jaissle explained his cautious optimism for the return of Tino Livramento from a calf injury, but said Jacob Ramsey is making good progress. Livramento was ruled out of the World Cup with England over the sum",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/jaissle-optimistic-about-newcastle-midfielders-return-but-cautious-about-defender/",
+      "claimed_at": "2026-10-15T15:33:11Z",
+      "players": [
+        {
+          "element_id": 450,
+          "name": "Livramento",
+          "club": "NEW",
+          "held": false
+        },
+        {
+          "element_id": 456,
+          "name": "J.Ramsey",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "288e646edcc08fbd",
+      "headline": "Jaissle reveals Newcastle star could return soon after hamstring injury",
+      "summary": "Matthias Jaissle confirmed that Anthony Elanga could be back soon after being out since September. Elanga has been suffering with a hamstring injury since September and Bazoumana Toure was withdrawn from the 4-1 loss away at Cov",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/jaissle-reveals-newcastle-star-could-return-soon-after-hamstring-injury/",
+      "claimed_at": "2026-10-15T14:59:09Z",
+      "players": [
+        {
+          "element_id": 454,
+          "name": "Elanga",
+          "club": "NEW",
+          "held": false
+        },
+        {
+          "element_id": 461,
+          "name": "Tour\u00e9",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "674ee384523dc7a7",
       "headline": "Jaissle reveals Newcastle star set to be out for a few weeks",
@@ -1328,24 +1466,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9f4ae8559bd9baf4",
-      "headline": "What is wrong with Bruno Fernandes?",
-      "summary": "A day before Manchester United's trip to Atletico Madrid in the Champions League, the club issued a statement on captain Bruno Fernandes. It spoke of an \"injury niggle\" but stressed there was \"nothing to worry about\". His performance on the night suggested otherwi",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599170/bruno-fernandes-what-has-happened-to-the-form-of-man-utds-best-player-and-should-michael-carrick-drop-him",
-      "claimed_at": "2026-10-14T13:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "6e8d1601054b6784",
       "headline": "Burnham had two hospitality dinners with Man City chairman, deleted records show",
       "summary": "The prime minister has been under growing pressure since the club was found guilty of Premier League rule breaches.",
@@ -1358,60 +1478,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "53c884cc95aeec8c",
-      "headline": "Quiz: Do you remember the big names who took aim at football club chiefs?",
-      "summary": "As Lisandro Martinez launches a blistering attack on the Manchester United hierarchy, do you remember these famous past examples of well-known football figure calling out leadership figures?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/articles/cqvgr7530085o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-14T12:13:38Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f9d5967061d41f09",
-      "headline": "Liverpool latest: VOTE! Who should play as No 9 against LASK?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-14T12:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ffa9c84e724066ca",
-      "headline": "Martinez's future at Man Utd in doubt after public outburst",
-      "summary": "Lisandro Martinez's Manchester United future has been called into question following his extraordinary criticism of the club's bosses, and there are real doubts about whether the Argentine defender's contract will be extended when it expire",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599196/lisandro-martinez-future-of-defender-at-man-utd-in-doubt-following-public-outburst-directed-at-clubs-hierarchy",
-      "claimed_at": "2026-10-14T12:00:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
           "held": false
         }
       ],
@@ -1742,60 +1808,6 @@
           "element_id": 94,
           "name": "Schade",
           "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cce2d919eb322a61",
-      "headline": "Neville questions Man Utd effort after Tottenham draw",
-      "summary": "Gary Neville questioned Manchester United\u2019s effort and mentality in their 1-1 draw with Tottenham, warning that some players appear to be struggling with the demands of playing for the club. The former United defender was critical of the team\u2019s i",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/neville-questions-man-utd-effort-after-tottenham-draw/",
-      "claimed_at": "2026-10-11T10:28:55Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cc51bef8909d6f9f",
-      "headline": "Carrick defends Man Utd players after disappointing draw with Spurs",
-      "summary": "Michael Carrick has insisted he does not feel let down by his Manchester United players despite their frustrating 1-1 draw with Tottenham. United were forced to settle for a point against Spurs despite leading against ten men after",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/carrick-defends-man-utd-players-after-disappointing-draw-with-spurs/",
-      "claimed_at": "2026-10-10T20:09:14Z",
-      "players": [
-        {
-          "element_id": 516,
-          "name": "Bentancur",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0787490e9838e4ad",
-      "headline": "Man Utd v Spurs team news: Amad starts, Marmoush benched",
-      "summary": "Two changes for United, six for Spurs The post Man Utd v Spurs team news: Amad starts, Marmoush benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/10/man-utd-v-spurs-team-news-amad-starts-marmoush-benched",
-      "claimed_at": "2026-10-10T16:15:00Z",
-      "players": [
-        {
-          "element_id": 401,
-          "name": "Marmoush",
-          "club": "TOT",
           "held": false
         }
       ],
