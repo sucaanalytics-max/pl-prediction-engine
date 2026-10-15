@@ -2,24 +2,25 @@
   "gameweek": 7,
   "entry_label": "owner",
   "objective": "season",
-  "generated_at": "2026-10-15T10:18:11.640077Z",
+  "generated_at": "2026-10-15T15:10:05.821671Z",
   "deadline": "2026-10-17T10:00:00Z",
   "xp_snapshot": {
-    "1": 3.6891,
-    "4": 4.7975,
-    "12": 5.3318,
-    "113": 4.2561,
-    "124": 4.685,
-    "152": 0.4316,
-    "154": 4.9901,
-    "165": 3.6639,
-    "173": 2.5159,
-    "426": 5.2138,
-    "445": 4.2743,
-    "464": 4.3086,
-    "497": 0.0464,
-    "542": 4.544,
-    "569": 5.0052
+    "1": 3.6677,
+    "4": 4.7716,
+    "12": 5.2863,
+    "106": 5.3786,
+    "113": 4.2476,
+    "124": 4.682,
+    "152": 0.4285,
+    "154": 4.957,
+    "165": 3.6807,
+    "173": 2.5488,
+    "426": 5.1662,
+    "445": 4.2464,
+    "464": 4.3009,
+    "497": 0.0424,
+    "542": 4.562,
+    "569": 5.0301
   },
   "decision": {
     "plan": {
@@ -27,11 +28,11 @@
         1,
         4,
         12,
+        106,
         113,
         124,
         152,
         154,
-        165,
         173,
         426,
         445,
@@ -44,49 +45,53 @@
         1,
         4,
         12,
+        106,
         113,
         124,
         154,
         426,
         445,
-        464,
         542,
         569
       ],
       "captain": 12,
-      "vice": 426,
-      "transfers_in": [],
-      "transfers_out": [],
+      "vice": 106,
+      "transfers_in": [
+        106
+      ],
+      "transfers_out": [
+        165
+      ],
       "hits": 0,
-      "bank_after": 3,
+      "bank_after": 1,
       "objective": 0.0,
-      "free_transfers_banked": 1,
-      "free_transfers_after": 2
+      "free_transfers_banked": 0,
+      "free_transfers_after": 1
     },
     "n_draws": 10000,
-    "mean_points": 56.833,
-    "sd_points": 15.7749,
-    "objective": 58.583,
+    "mean_points": 57.671,
+    "sd_points": 15.9041,
+    "objective": 57.671,
     "quantiles": {
-      "q10": 37.0,
-      "q25": 45.0,
+      "q10": 38.0,
+      "q25": 46.0,
       "q50": 56.0,
-      "q75": 67.0,
-      "q90": 78.0,
-      "q99": 97.0
+      "q75": 68.0,
+      "q90": 79.0,
+      "q99": 100.0
     },
     "tails": {
-      "p_ge_40": 0.8663,
-      "p_ge_50": 0.6556,
-      "p_ge_60": 0.4072,
-      "p_ge_70": 0.2136,
-      "p_ge_80": 0.0875,
-      "p_ge_90": 0.0264
+      "p_ge_40": 0.8788,
+      "p_ge_50": 0.6729,
+      "p_ge_60": 0.4245,
+      "p_ge_70": 0.2193,
+      "p_ge_80": 0.0933,
+      "p_ge_90": 0.0329
     },
-    "autosub_rate": 0.0816,
-    "vice_rate": 0.0144
+    "autosub_rate": 0.0761,
+    "vice_rate": 0.0114
   },
-  "optimism_gap": -0.0603,
+  "optimism_gap": -0.0394,
   "credible_margin": true,
   "pool": {
     "n_candidates": 562,
@@ -136,12 +141,10 @@
         "captain": 12,
         "vice": 106,
         "transfers_in": [
-          106,
           332
         ],
         "transfers_out": [
-          152,
-          165
+          152
         ],
         "hits": 0,
         "bank_after": 9,
@@ -208,9 +211,9 @@
           346,
           426,
           445,
-          464,
           497,
-          542
+          542,
+          569
         ],
         "xi": [
           1,
@@ -218,12 +221,12 @@
           12,
           68,
           106,
-          154,
           332,
           346,
           426,
           445,
-          542
+          542,
+          569
         ],
         "captain": 12,
         "vice": 346,
@@ -231,10 +234,10 @@
           346
         ],
         "transfers_out": [
-          569
+          464
         ],
         "hits": 0,
-        "bank_after": 5,
+        "bank_after": 7,
         "objective": 0.0,
         "free_transfers_banked": 0,
         "free_transfers_after": 1
@@ -253,9 +256,9 @@
           346,
           426,
           445,
-          464,
           497,
-          542
+          542,
+          569
         ],
         "xi": [
           1,
@@ -265,9 +268,9 @@
           106,
           154,
           173,
-          332,
           346,
           426,
+          445,
           542
         ],
         "captain": 106,
@@ -275,7 +278,7 @@
         "transfers_in": [],
         "transfers_out": [],
         "hits": 0,
-        "bank_after": 5,
+        "bank_after": 7,
         "objective": 0.0,
         "free_transfers_banked": 1,
         "free_transfers_after": 2
@@ -294,9 +297,9 @@
           346,
           426,
           445,
-          464,
           497,
-          542
+          542,
+          569
         ],
         "xi": [
           1,
@@ -305,18 +308,18 @@
           68,
           106,
           113,
-          154,
           332,
           346,
           426,
-          542
+          542,
+          569
         ],
         "captain": 12,
         "vice": 346,
         "transfers_in": [],
         "transfers_out": [],
         "hits": 0,
-        "bank_after": 5,
+        "bank_after": 7,
         "objective": 0.0,
         "free_transfers_banked": 2,
         "free_transfers_after": 3
@@ -335,9 +338,9 @@
           346,
           426,
           445,
-          464,
           497,
-          542
+          542,
+          569
         ],
         "xi": [
           1,
@@ -350,14 +353,14 @@
           346,
           426,
           445,
-          464
+          542
         ],
         "captain": 154,
         "vice": 68,
         "transfers_in": [],
         "transfers_out": [],
         "hits": 0,
-        "bank_after": 5,
+        "bank_after": 7,
         "objective": 0.0,
         "free_transfers_banked": 3,
         "free_transfers_after": 4
@@ -376,9 +379,9 @@
           346,
           426,
           445,
-          464,
           497,
-          542
+          542,
+          569
         ],
         "xi": [
           1,
@@ -391,14 +394,14 @@
           346,
           426,
           445,
-          464
+          542
         ],
         "captain": 346,
         "vice": 426,
         "transfers_in": [],
         "transfers_out": [],
         "hits": 0,
-        "bank_after": 5,
+        "bank_after": 7,
         "objective": 0.0,
         "free_transfers_banked": 4,
         "free_transfers_after": 5
