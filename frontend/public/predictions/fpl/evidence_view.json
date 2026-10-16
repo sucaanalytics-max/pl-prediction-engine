@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-16T09:28:43.923938Z",
+  "generated_at": "2026-10-16T14:09:16.228489Z",
   "gameweek": 7,
   "players": [
     {
@@ -1797,6 +1797,39 @@
       "needs_attention": false
     },
     {
+      "element_id": 454,
+      "player_name": "Elanga",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-10-25",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "2a71d74a8de8f659",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-10-25",
+              "claimed_at": "2026-09-14T20:00:09.505598Z",
+              "observed_at": "2026-10-16T09:29:24.057814Z",
+              "quote": "Unspecified injury - Expected back 25 Oct",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 516,
       "player_name": "Bentancur",
       "club": "Spurs",
@@ -2059,10 +2092,10 @@
     }
   ],
   "counts": {
-    "n_claims": 454,
-    "n_players_with_claims": 98,
-    "n_players_shown": 27,
+    "n_claims": 466,
+    "n_players_with_claims": 99,
+    "n_players_shown": 28,
     "n_escalations": 10,
-    "n_players_resolved": 59
+    "n_players_resolved": 60
   }
 }
