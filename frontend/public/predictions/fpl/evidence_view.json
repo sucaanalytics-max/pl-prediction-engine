@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-15T22:16:25.140845Z",
+  "generated_at": "2026-10-16T00:28:18.844215Z",
   "gameweek": 7,
   "players": [
     {
@@ -1968,6 +1968,63 @@
       "needs_attention": false
     },
     {
+      "element_id": 643,
+      "player_name": "Chilwell",
+      "club": "Crystal Palace",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "7e3c1f989deb5d87",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-10-15T20:30:08.876514Z",
+              "observed_at": "2026-10-15T22:17:00.020369Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "2e69f650f243f06f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-10-15T20:30:08.876514Z",
+              "observed_at": "2026-10-15T22:17:00.020369Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 652,
       "player_name": "Azeez",
       "club": "Brighton",
@@ -2002,10 +2059,10 @@
     }
   ],
   "counts": {
-    "n_claims": 436,
-    "n_players_with_claims": 94,
-    "n_players_shown": 26,
+    "n_claims": 452,
+    "n_players_with_claims": 98,
+    "n_players_shown": 27,
     "n_escalations": 10,
-    "n_players_resolved": 58
+    "n_players_resolved": 59
   }
 }
