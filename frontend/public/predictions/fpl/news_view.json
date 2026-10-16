@@ -1,18 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-15T22:18:00.092933Z",
-  "n_dropped": 94,
+  "generated_at": "2026-10-16T00:34:30.679195Z",
+  "n_dropped": 92,
   "dropped_by_source": {
-    "bbc_football": 42,
-    "hayters": 4,
-    "sky_football": 48
+    "bbc_football": 40,
+    "hayters": 5,
+    "sky_football": 47
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 184,
+  "n_articles": 182,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "4f03669be34378af",
+      "headline": "Papers: Conte tells Man Utd he's ready to take over if Carrick sacked",
+      "summary": "The top stories and transfer rumours from Friday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13599794/manchester-united-latest-antonio-conte-tells-man-utd-hes-ready-to-take-over-if-michael-carrick-is-sacked-paper-talk",
+      "claimed_at": "2026-10-15T23:53:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "2ef916a37190e246",
       "headline": "Sunderland latest: Late win a symbol for the fans and club, says Le Bris",
@@ -44,6 +62,24 @@
           "element_id": 64,
           "name": "Smith",
           "club": "BOU",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5f29e9b6b90c2fff",
+      "headline": "Minus 17 to European dreams as Bournemouth fairytale continues",
+      "summary": "It was a night 127 years in the making as Bournemouth added another chapter to their fairytale with victory in their first-ever European home game.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6lyez88m1n2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-15T22:42:26Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -1292,36 +1328,6 @@
       "touches_squad": false
     },
     {
-      "digest": "8be923e884b51d3e",
-      "headline": "Barcola scores hat-trick as Liverpool thrash LASK",
-      "summary": "Bradley Barcola scored a hat-trick and Florian Wirtz shone after recent criticism as Liverpool thrashed LASK 6-3 to earn their second win in the Champions League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/linz-ask-vs-liverpool/report/577627",
-      "claimed_at": "2026-10-14T19:30:00Z",
-      "players": [
-        {
-          "element_id": 360,
-          "name": "Bradley",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 366,
-          "name": "Wirtz",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ffb497202c852e0d",
       "headline": "Two returns and two doubts for Sunderland\u2019s Europa League clash",
       "summary": "Regis Le Bris has confirmed Brian Brobbey and Habib Diarra have travelled with the Sunderland squad ahead of their Europa League clash with Torreense. Both players are set to be involved in the squad following their respective injuries,",
@@ -1574,24 +1580,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "32b7b9fe0f55589a",
-      "headline": "Carrick responds to Martinez\u2019s criticism of Man Utd leadership",
-      "summary": "Michael Carrick has responded to Lisandro Martinez\u2019s criticism of Manchester United\u2019s leadership by calling for unity following their 2-0 defeat to Atletico Madrid. Speaking after United's Champions League loss, the United defender said:",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/carrick-responds-to-martinezs-criticism-of-man-utd-leadership/",
-      "claimed_at": "2026-10-13T22:11:03Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
           "held": false
         }
       ],
