@@ -1,18 +1,72 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-16T18:22:58.044620Z",
-  "n_dropped": 113,
+  "generated_at": "2026-10-16T21:31:11.150013Z",
+  "n_dropped": 99,
   "dropped_by_source": {
-    "bbc_football": 45,
-    "hayters": 13,
-    "sky_football": 55
+    "bbc_football": 40,
+    "hayters": 11,
+    "sky_football": 48
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 203,
+  "n_articles": 189,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "09badc4b9306ae3b",
+      "headline": "Papers: Liverpool set to raid Aston Villa for Manzambi",
+      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13600072/liverpool-set-to-raid-aston-villa-for-johan-manzambi-as-arsenal-eye-move-for-bayern-munich-defender-paper-talk",
+      "claimed_at": "2026-10-16T21:40:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "77543ec613f5134a",
+      "headline": "Arsenal forward in line for more opportunities as Arteta backs him to deliver",
+      "summary": "Mikel Arteta believes Arsenal are getting closer to seeing the best version of Noni Madueke this season. The Gunners boss says a sustained run of games could help him reach his highest level, with the winger having started",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-forward-in-line-for-more-opportunities-as-arteta-backs-him-to-deliver/",
+      "claimed_at": "2026-10-16T21:30:00Z",
+      "players": [
+        {
+          "element_id": 16,
+          "name": "Madueke",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b7ade192860b2a74",
+      "headline": "Bellingham agrees new Real deal - Saturday's gossip",
+      "summary": "Real Madrid midfielder Jude Bellingham ready to commit his future to La Liga club, Arsenal and Liverpool told price for Brentford's Kevin Schade, Man Utd and Chelsea among clubs monitoring Jules Kounde's future at Barcelona, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck7vprzqmr56o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-16T20:16:40Z",
+      "players": [
+        {
+          "element_id": 94,
+          "name": "Schade",
+          "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "96eedb6bc6586eb7",
       "headline": "Do Manchester City have any grounds to win their appeal?",
@@ -740,6 +794,24 @@
       "touches_squad": false
     },
     {
+      "digest": "d3afa360ffd3ae97",
+      "headline": "Does the Premier League 'Big Six' still exist?",
+      "summary": "For years the Premier League has had a defined 'Big Six', comprised of Arsenal, Chelsea, Liverpool, Manchester City, Manchester United and Tottenham Hotspur, but could this era be coming to an end?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckj0lrjzjgqno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-16T05:53:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "ff4deed29882cb56",
       "headline": "Does the Premier League 'Big Six' still exist?",
       "summary": "For years the Premier League has had a defined 'Big Six', comprised of Arsenal, Chelsea, Liverpool, Manchester City, Manchester United and Tottenham Hotspur., but could this era be coming to an end?",
@@ -1442,42 +1514,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f25845dc263b6a7d",
-      "headline": "Jackson steps up again as Aston Villa revival continues",
-      "summary": "Nicolas Jackson continues his fine goalscoring form as Aston Villa record an impressive Champions League win.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c370pnwz0gw2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-14T22:45:22Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "379de7f8029d0d21",
-      "headline": "Martinez outburst came out of 'anger and frustration'",
-      "summary": "Manchester United defender Lisandro Martinez says he \"spoke out of anger and frustration\" when launching a scathing attack on the club's hierarchy.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqd09l278n15o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-14T22:42:02Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "4e8fc016042c4e26",
       "headline": "\u2018I spoke out of anger and frustration\u2019 \u2013 Man Utd defender Martinez issues statement following bombshell interview",
       "summary": "Lisandro Martinez has clarified his comments about Manchester United\u2019s leadership after admitting he spoke out of \u201canger and frustration\u201d following their defeat to Atletico Madrid. The d",
@@ -1700,42 +1736,6 @@
           "element_id": 552,
           "name": "Brobbey",
           "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "be6907e0c65c27f1",
-      "headline": "FPL notes: Dewsbury-Haul, Moyes on Barry + why Belloumi was benched",
-      "summary": "Fantasy takeaways from Hull 2-2 Everton The post FPL notes: Dewsbury-Haul, Moyes on Barry + why Belloumi was benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/11/fpl-notes-dewsbury-haul-moyes-on-barry-why-belloumi-was-benched",
-      "claimed_at": "2026-10-11T21:15:00Z",
-      "players": [
-        {
-          "element_id": 249,
-          "name": "Barry",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "022258be31bc22f6",
-      "headline": "FPL notes: Calafiori\u2019s threat, Saka\u2019s big chances + Konsa\u2019s DefCon",
-      "summary": "Leeds impress despite defeat at the Emirates The post FPL notes: Calafiori's threat, Saka's big chances + Konsa's DefCon appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/11/fpl-notes-calafioris-threat-sakas-big-chances-konsa-defcon",
-      "claimed_at": "2026-10-11T19:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
