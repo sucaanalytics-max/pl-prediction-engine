@@ -1,18 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-16T21:31:11.150013Z",
-  "n_dropped": 99,
+  "generated_at": "2026-10-16T23:53:19.857755Z",
+  "n_dropped": 94,
   "dropped_by_source": {
-    "bbc_football": 40,
+    "bbc_football": 34,
     "hayters": 11,
-    "sky_football": 48
+    "sky_football": 49
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 189,
+  "n_articles": 184,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "788d22825ee93329",
+      "headline": "Arsenal latest: Gunners must adapt to whatever the game demands - Arteta",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-16T22:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "09badc4b9306ae3b",
       "headline": "Papers: Liverpool set to raid Aston Villa for Manzambi",
@@ -1100,24 +1118,6 @@
           "element_id": 545,
           "name": "Sadiki",
           "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cb14309ceb7819a1",
-      "headline": "Man Utd latest: Martinez met hierarchy before apology - should he start vs Leeds?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-15T19:20:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
           "held": false
         }
       ],
