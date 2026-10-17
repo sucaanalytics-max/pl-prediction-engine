@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-16T23:53:19.857755Z",
-  "n_dropped": 94,
+  "generated_at": "2026-10-17T03:13:46.462500Z",
+  "n_dropped": 93,
   "dropped_by_source": {
     "bbc_football": 34,
     "hayters": 11,
-    "sky_football": 49
+    "sky_football": 48
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 184,
+  "n_articles": 183,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -1124,6 +1124,24 @@
       "touches_squad": false
     },
     {
+      "digest": "cb14309ceb7819a1",
+      "headline": "Man Utd latest: Martinez met hierarchy before apology - should he start vs Leeds?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-15T19:20:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "6e67ae3c2d41026e",
       "headline": "Martinez apologises for outburst and fined by Man Utd",
       "summary": "Manchester United defender Lisandro Martinez issues an apology following his controversial remarks criticising the club's hierarchy.",
@@ -1712,30 +1730,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4d5af7461e815c48",
-      "headline": "FPL notes: De Cuyper + Gross share top spot in points table",
-      "summary": "Sunderland look limp without Brian Brobbey as Brighton consolidate third The post FPL notes: De Cuyper + Gross share top spot in points table appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/12/fpl-notes-de-cuyper-gross-share-top-spot-in-points-table",
-      "claimed_at": "2026-10-12T00:00:00Z",
-      "players": [
-        {
-          "element_id": 115,
-          "name": "De Cuyper",
-          "club": "BHA",
-          "held": false
-        },
-        {
-          "element_id": 552,
-          "name": "Brobbey",
-          "club": "SUN",
           "held": false
         }
       ],
