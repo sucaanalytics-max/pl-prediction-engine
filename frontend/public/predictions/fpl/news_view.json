@@ -1,18 +1,360 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-17T15:25:55.187993Z",
-  "n_dropped": 115,
+  "generated_at": "2026-10-17T17:54:08.402947Z",
+  "n_dropped": 136,
   "dropped_by_source": {
-    "bbc_football": 39,
-    "hayters": 17,
-    "sky_football": 59
+    "bbc_football": 44,
+    "hayters": 20,
+    "sky_football": 72
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 205,
+  "n_articles": 226,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "999dd76c59395448",
+      "headline": "Jacquet was 'cute and clever' for his part in Yarmoliuk red - Andrews",
+      "summary": "Brentford head coach Keith Andrews felt Jeremy Jacquet was \"cute and clever\" for his role in Yehor Yarmoliuk's red card in the 2-1 defeat to Liverpool.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13600414/brentford-liverpool-were-cute-and-clever-says-keith-andrews-after-his-side-ended-defeat-with-nine-men",
+      "claimed_at": "2026-10-17T18:45:00Z",
+      "players": [
+        {
+          "element_id": 102,
+          "name": "Yarmoliuk",
+          "club": "BRE",
+          "held": false
+        },
+        {
+          "element_id": 362,
+          "name": "Jacquet",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "95074b2ff1698a02",
+      "headline": "Man City latest: Maresca issues Haaland and Semenyo injury updates",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-17T18:37:00Z",
+      "players": [
+        {
+          "element_id": 397,
+          "name": "Semenyo",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b6274cc2b5fb123d",
+      "headline": "Fulham latest: Arbeloa says he has belief of all the players after first win",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-17T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e9bb2ecee6256d6b",
+      "headline": "PL Predictions: Leeds to pile more misery on Man Utd",
+      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight for a busy weekend of Premier League action.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13598732/premier-league-predictions-jones-knows-best-bets-leeds-vs-manchester-united-and-more",
+      "claimed_at": "2026-10-17T17:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f51efc990c5d8cef",
+      "headline": "Maresca gives updates on several Man City injury concerns after beating Ipswich",
+      "summary": "Enzo Maresca has provided an injury update on several Manchester City players following their 3-2 win over Ipswich. Mateo Kovacic, Matheus Nunes and Erling Haaland all indicated they were fine after the game, while Nico",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/maresca-gives-updates-on-several-man-city-injury-concerns-after-beating-ipswich/",
+      "claimed_at": "2026-10-17T17:49:15Z",
+      "players": [
+        {
+          "element_id": 387,
+          "name": "O'Reilly",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 406,
+          "name": "Kova\u010di\u0107",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6843fd372cb2f648",
+      "headline": "Man City maintain perfect start in five-goal thriller against Ipswich",
+      "summary": "Highlights from the Premier League match between Manchester City and Ipswich Town.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13600380/manchester-city-3-2-ipswich-town-premier-league-highlights",
+      "claimed_at": "2026-10-17T17:37:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "55f28f756d1a8daa",
+      "headline": "Hull City latest: Jakirovic bemoans 'worst performance' after defeat to Fulham",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13548674/hull-city-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-17T17:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d0fca50b07d9f445",
+      "headline": "Liverpool come from behind to beat NINE-man Brentford",
+      "summary": "Highlights from the Premier League match between Brentford and Liverpool.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13600373/brentford-1-2-liverpool-premier-league-highlights",
+      "claimed_at": "2026-10-17T17:29:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "728e9cc5b5cb499d",
+      "headline": "Man City continue to weather storm as Haaland scores twice in Ipswich win",
+      "summary": "Premier League leaders Manchester City earned a seventh straight win by beating Ipswich Town 3-2 as their on-pitch resistance showed no signs of slowing.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-ipswich-town/report/559510",
+      "claimed_at": "2026-10-17T17:28:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b29fb34b55baeed8",
+      "headline": "Yarmoliuk red card changed game dynamic - Andrews",
+      "summary": "Brentford manager Keith Andrews says Yehor Yarmoliuk's first-half red card changed the dynamic of their game against Liverpool which ended in a 2-1 defeat for the Bees.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6eq373g3vx9o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T17:14:21Z",
+      "players": [
+        {
+          "element_id": 102,
+          "name": "Yarmoliuk",
+          "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "21b30953fa0f2b7f",
+      "headline": "Man City's Maresca 'very happy' after Ipswich win",
+      "summary": "Manchester City manager Enzo Maresca praises his side after their beat Ipswich Town at home in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmp3gkge7064o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T17:08:01Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "04476165f5dcb93d",
+      "headline": "Isak clinches win for Liverpool over nine-man Brentford",
+      "summary": "Alexander Isak scored on his return from injury as Liverpool fought back from a goal down to clinch a 2-1 victory over Brentford, who had Yehor Yarmoliuk and Vitaly Janelt sent off.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brentford-vs-liverpool/report/559505",
+      "claimed_at": "2026-10-17T17:00:00Z",
+      "players": [
+        {
+          "element_id": 98,
+          "name": "Janelt",
+          "club": "BRE",
+          "held": false
+        },
+        {
+          "element_id": 102,
+          "name": "Yarmoliuk",
+          "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8b7dcd2d82e9b33b",
+      "headline": "Fulham beat Hull to earn under-pressure Arbeloa a first PL win",
+      "summary": "Under-pressure Alvaro Arbeloa earned the first Premier League win of his managerial career as Fulham beat Hull City 1-0 at Craven Cottage to climb out of the relegation zone.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/fulham-vs-hull-city/report/559508",
+      "claimed_at": "2026-10-17T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b40e136bce928852",
+      "headline": "Liverpool players in 'delicate' situation with 'demanding' schedule - Iraola",
+      "summary": "Andoni Iraola Liverpool's demanding schedule is putting his players in a \"delicate situation\" after Dominik Szoboszlai was forced off with a first-half injury during their 2-1 victory at Brentford.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ckgelqlz37w3o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T16:56:12Z",
+      "players": [
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a918c22a1a9be223",
+      "headline": "'Men against boys' - Jakirovic criticises Hull City after Fulham defeat",
+      "summary": "Hull City manager Sergej Jakirovic says Fulham were \"much better\" during his side's 1-0 defeat at Craven Cottage.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqkgj5jzvxldo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T16:48:52Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2b0e4a342c558715",
+      "headline": "Newcastle v Aston Villa team news: McGinn benched",
+      "summary": "One change for Newcastle, four for Villa The post Newcastle v Aston Villa team news: McGinn benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/17/newcastle-v-aston-villa-team-news-mcginn-benched",
+      "claimed_at": "2026-10-17T16:15:00Z",
+      "players": [
+        {
+          "element_id": 45,
+          "name": "McGinn",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a0f1f38dcb1f44fb",
+      "headline": "Chelsea's Martinez taken to hospital for 'precautionary tests'",
+      "summary": "Goalkeeper Emiliano Martinez was taken to hospital as Chelsea's 2-0 win at Everton on Saturday meant they secured their first clean sheet in nine months.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6rryqq00yp4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T16:02:31Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "56b00d3a797bb241",
       "headline": "Joelinton makes first start of the season for Newcastle vs Villa LIVE!",
@@ -26,6 +368,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a5975ffc8ad64155",
+      "headline": "Villa ahead at Newcastle despite Botman escape LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/newcastle-united-vs-aston-villa/live/559511",
+      "claimed_at": "2026-10-17T16:00:00Z",
+      "players": [
+        {
+          "element_id": 447,
+          "name": "Botman",
+          "club": "NEW",
           "held": false
         }
       ],
@@ -266,6 +626,30 @@
       "touches_squad": false
     },
     {
+      "digest": "3bc1a1be66e6104c",
+      "headline": "Man City 3-2 Ipswich LIVE \u2013 Foden and Haaland secure seventh straight league win",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 3-2 Ipswich LIVE - Foden and Haaland secure seventh straight league win appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-v-ipswich-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-10-17T12:01:43Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "6870e36d1ff86e45",
       "headline": "Man City 2-1 Ipswich LIVE \u2013 Foden and Haaland put City in front",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 2-1 Ipswich LIVE - Foden and Haaland put City in front appeared first on Hayters.",
@@ -284,6 +668,24 @@
           "element_id": 411,
           "name": "Haaland",
           "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "260e91d9bc628cdb",
+      "headline": "Brentford 1-2 Liverpool LIVE \u2013 Liverpool beat nine-men Brentford",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford 1-2 Liverpool LIVE - Liverpool beat nine-men Brentford appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-liverpool-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-10-17T11:56:47Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -890,78 +1292,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6d23fd4b4acf5a18",
-      "headline": "'We've moved on' - Martinez in Man Utd squad to face Leeds",
-      "summary": "Lisandro Martinez is set to be in Manchester United's squad for Sunday's trip to Leeds United after his incendiary post-match outburst earlier this week.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599948/lisandro-martinez-man-utd-defender-in-squad-for-leeds-trip-and-situation-resolved-after-criticism-of-hierarchy-insists-michael-carrick",
-      "claimed_at": "2026-10-16T13:33:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "741f66eeda08407e",
-      "headline": "'I'm telling you the truth' - Carrick insists Martinez situation resolved",
-      "summary": "Manchester United boss Michael Carrick insists he is telling the truth when he says the club have moved on from Lisandro Martinez's post-match outburst earlier this week.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599948/lisandro-martinez-man-utd-defender-in-squad-for-leeds-trip-and-situation-resolved-after-criticism-of-hierarchy-insists-michael-carrick",
-      "claimed_at": "2026-10-16T13:33:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "21789e61dc463a68",
-      "headline": "Chelsea latest: Alonso explains Chavarria absence for Everton trip",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-16T13:31:00Z",
-      "players": [
-        {
-          "element_id": 583,
-          "name": "Chavarria",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8dff8a67c9b0da4f",
-      "headline": "Chelsea latest: 'James injury doesn't affect January plans' - Alonso",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-16T13:31:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "29a246a771988fb0",
       "headline": "Arsenal stars nearing returns in boost for Arteta",
       "summary": "Mikel Arteta has provided a positive injury update on Piero Hincapie and Martin Zubimendi ahead of Arsenal\u2019s clash with Nottingham Forest. Hincapie is continuing to make good progress in his recovery, with Arteta hopeful the defender could return wit",
@@ -1004,24 +1334,6 @@
       "touches_squad": false
     },
     {
-      "digest": "cc45f851ae62a4a2",
-      "headline": "Man Utd latest: Could Shaw and Mainoo return from injury?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-16T13:00:00Z",
-      "players": [
-        {
-          "element_id": 432,
-          "name": "Mainoo",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "2644198b98285ad2",
       "headline": "\u2018It\u2019s done\u2019 \u2013 Carrick says Man Utd have moved on from Martinez controversy",
       "summary": "Michael Carrick insists Manchester United have \u201cmoved on\u201d from Lisandro Martinez\u2019s controversial comments and says the issue has not caused any drama inside the squad. Martinez publicly criticised aspects of the club followin",
@@ -1040,60 +1352,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b661796526c11e35",
-      "headline": "The rollercoaster that is the rebuild for Newcastle and Aston Villa",
-      "summary": "Welcome aboard the rollercoaster that is a rebuild in the Premier League. Before we begin, please ensure your seatbelt is securely fastened and keep hands, arms and legs inside the vehicle at all times.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599266/newcastle-vs-aston-villa-both-clubs-enduring-a-rollercoaster-rebuild-ahead-of-meeting-at-st-james-park",
-      "claimed_at": "2026-10-16T12:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "837d344fd9bd1f2b",
-      "headline": "Chelsea captain James out for around three months",
-      "summary": "Chelsea captain Reece James is expected to be out for around three months after knee surgery.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599896/reece-james-chelsea-captain-out-for-around-three-months-after-minor-surgery-on-knee-injury-picked-up-in-training",
-      "claimed_at": "2026-10-16T11:06:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d804a0db305ba58d",
-      "headline": "Fulham latest: Arbeloa responds to reports he has two games to save his job",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-16T11:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "79db65bfb85b6f5a",
       "headline": "'Not about me' - Arbeloa dismisses future questions",
       "summary": "Fulham head coach Alvaro Arbeloa says the focus should not be on him as his side searches for a first Premier League win this season against Hull City this weekend.",
@@ -1101,42 +1359,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c615jw414vypo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-16T10:24:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d843d7c4cc65b00f",
-      "headline": "Newcastle latest: Jaissle not dwelling on Manzambi after failed summer move",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-16T09:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f81a6966bbc71ed1",
-      "headline": "Chelsea latest: James undergoes knee surgery",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-16T09:30:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1202,24 +1424,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e23714e3e88bd1c6",
-      "headline": "Groundhog Day for Wilcox? Revisiting Man Utd's dramatic last trip to Elland Road",
-      "summary": "Manchester United go into Sunday's game at Elland Road in a position they are all too familiar with. Under pressure.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599521/jason-wilcox-finds-himself-under-exact-same-pressure-as-last-time-manchester-united-visited-elland-road-to-face-leeds",
-      "claimed_at": "2026-10-16T08:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9f650b08767ad806",
       "headline": "Getting to know Man Utd boss Olid",
       "summary": "It has been a whirlwind 10 weeks for Eva Olid since she became manager of Manchester United.",
@@ -1227,24 +1431,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c6qxneqry885o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-16T07:47:56Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d61f3e24b4d0a6cb",
-      "headline": "Leeds latest: 'We're not favourites for Man Utd clash' - Farke",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-16T07:45:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1406,42 +1592,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6e67ae3c2d41026e",
-      "headline": "Martinez apologises for outburst and fined by Man Utd",
-      "summary": "Manchester United defender Lisandro Martinez issues an apology following his controversial remarks criticising the club's hierarchy.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cw77p152jz64o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-15T18:03:28Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f6dcdb8b2c271868",
-      "headline": "Football Daily",
-      "summary": "Rick & Lloyd are back! And by popular(ish) demand. They discuss Man City's defeat to PSG.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0pgvd87?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-15T17:47:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "c26d5b7b47bf9d57",
       "headline": "Knock - 50% chance of playing",
       "summary": null,
@@ -1454,24 +1604,6 @@
           "element_id": 553,
           "name": "Isidor",
           "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d9eddd8bd57031b2",
-      "headline": "Moore's Germany move inspired by Sancho and Bellingham",
-      "summary": "Tottenham loanee Mikey Moore says the success of Jadon Sancho and Jude Bellingham in the Bundesliga influenced his decision to join Cologne.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c65yneln8wp0o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-15T16:09:55Z",
-      "players": [
-        {
-          "element_id": 523,
-          "name": "Moore",
-          "club": "TOT",
           "held": false
         }
       ],
@@ -1544,102 +1676,6 @@
           "element_id": 461,
           "name": "Tour\u00e9",
           "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4a907ab80d335ee5",
-      "headline": "The big decision Lampard has to make ahead of Spurs clash",
-      "summary": "Coventry City have Taiwo Awoniyi available to face Tottenham Hotspur on Monday night after the striker completed his three-match ban. The striker was sent off against Brighton last month, and in his place Sidiki Cherif scored and won a penalt",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/the-big-decision-lampard-has-to-make-ahead-of-spurs-clash/",
-      "claimed_at": "2026-10-15T13:47:26Z",
-      "players": [
-        {
-          "element_id": 492,
-          "name": "Awoniyi",
-          "club": "COV",
-          "held": false
-        },
-        {
-          "element_id": 599,
-          "name": "Cherif",
-          "club": "COV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "42309bb5980f6f6e",
-      "headline": "Jakirovic explains why Belloumi did not start Everton draw",
-      "summary": "Sergej Jakirovic explained why Mohamed Belloumi was left out of the starting 11 against Everton last weekend. Jakirovic explained that it is normal for winger Belloumi to feel fatigue, as he was left out of the starting 11 against Everton af",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/jakirovic-explains-why-belloumi-did-not-start-everton-draw/",
-      "claimed_at": "2026-10-15T13:33:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f4824c56445d9f2e",
-      "headline": "Man Utd legends criticise Martinez\u2019s outburst",
-      "summary": "Gary Neville has hit out at Lisandro Martinez\u2019s comments after the Atletico Madrid defeat, insisting they amount to a direct criticism of his own team-mates. Martinez had criticised the club's leadership and said he expected more investment in the squad",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-utd-legends-criticise-martinezs-outburst/",
-      "claimed_at": "2026-10-15T12:45:08Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "af610bbdc03cc488",
-      "headline": "Getafe make offer to sign free agent Sancho",
-      "summary": "Getafe make a formal offer to sign attacker Jadon Sancho, who is searching for a new club after leaving Manchester United in the summer.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm3r5p11d23no?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-15T11:45:02Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "276f3b1d02105051",
-      "headline": "Everton's Barry on the video he was scared to post",
-      "summary": "The Everton striker explains why he chose to post an emotional video from a training session.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/news/articles/cq8rzgry7dgko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-15T11:27:07Z",
-      "players": [
-        {
-          "element_id": 249,
-          "name": "Barry",
-          "club": "EVE",
           "held": false
         }
       ],
