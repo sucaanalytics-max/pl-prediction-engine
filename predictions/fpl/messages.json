@@ -1,7 +1,623 @@
 {
-  "generated_at": "2026-10-13T16:15:57.505459Z",
-  "n_messages": 82,
+  "generated_at": "2026-10-17T06:07:41.089596Z",
+  "n_messages": 94,
   "messages": [
+    {
+      "id": "gw07-decision-owner",
+      "gameweek": 7,
+      "kind": "decision",
+      "severity": "info",
+      "title": "GW7 \u2014 owner team ready",
+      "body": "0 transfer(s), 0 hit(s) taken. Deadline in 3.9 hours. Nothing has been submitted for you \u2014 the agent has no write access to FPL by design.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "gameweek": 7,
+        "entry_label": "owner",
+        "objective": "season",
+        "generated_at": "2026-10-17T06:07:41.022810Z",
+        "deadline": "2026-10-17T10:00:00Z",
+        "xp_snapshot": {
+          "1": 3.6786,
+          "4": 4.792,
+          "12": 5.2649,
+          "113": 4.328,
+          "124": 4.7601,
+          "152": 0.4441,
+          "154": 4.9891,
+          "165": 3.602,
+          "173": 2.5241,
+          "426": 5.2085,
+          "445": 4.3224,
+          "464": 4.322,
+          "497": 0.0448,
+          "542": 4.6025,
+          "569": 5.0247
+        },
+        "decision": {
+          "plan": {
+            "squad": [
+              1,
+              4,
+              12,
+              113,
+              124,
+              152,
+              154,
+              165,
+              173,
+              426,
+              445,
+              464,
+              497,
+              542,
+              569
+            ],
+            "xi": [
+              1,
+              4,
+              12,
+              113,
+              124,
+              154,
+              426,
+              445,
+              464,
+              542,
+              569
+            ],
+            "captain": 12,
+            "vice": 426,
+            "transfers_in": [],
+            "transfers_out": [],
+            "hits": 0,
+            "bank_after": 3,
+            "objective": 0.0,
+            "free_transfers_banked": 1,
+            "free_transfers_after": 2
+          },
+          "n_draws": 10000,
+          "mean_points": 56.8462,
+          "sd_points": 15.5738,
+          "objective": 58.5962,
+          "quantiles": {
+            "q10": 38.0,
+            "q25": 46.0,
+            "q50": 56.0,
+            "q75": 67.0,
+            "q90": 78.0,
+            "q99": 98.0
+          },
+          "tails": {
+            "p_ge_40": 0.8716,
+            "p_ge_50": 0.6571,
+            "p_ge_60": 0.406,
+            "p_ge_70": 0.2017,
+            "p_ge_80": 0.0822,
+            "p_ge_90": 0.0281
+          },
+          "autosub_rate": 0.0706,
+          "vice_rate": 0.0114
+        },
+        "optimism_gap": 0.0225,
+        "credible_margin": true,
+        "pool": {
+          "n_candidates": 562,
+          "n_excluded": 105,
+          "excluded_by_reason": {
+            "status_u": 105
+          },
+          "held_missing_purchase_price": [],
+          "price_uncertain": false,
+          "n_zero_xp": 66
+        },
+        "horizon": {
+          "eval_horizon": 8,
+          "transfer_horizon": 6,
+          "provisional": [
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                106,
+                113,
+                124,
+                154,
+                173,
+                332,
+                426,
+                445,
+                464,
+                497,
+                542,
+                569
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                106,
+                154,
+                332,
+                426,
+                445,
+                464,
+                542,
+                569
+              ],
+              "captain": 12,
+              "vice": 426,
+              "transfers_in": [
+                106,
+                332
+              ],
+              "transfers_out": [
+                152,
+                165
+              ],
+              "hits": 0,
+              "bank_after": 9,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                154,
+                173,
+                332,
+                426,
+                445,
+                464,
+                497,
+                542,
+                569
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                154,
+                173,
+                426,
+                445,
+                464,
+                542
+              ],
+              "captain": 106,
+              "vice": 68,
+              "transfers_in": [
+                68
+              ],
+              "transfers_out": [
+                124
+              ],
+              "hits": 0,
+              "bank_after": 6,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                154,
+                173,
+                332,
+                346,
+                426,
+                445,
+                464,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                154,
+                332,
+                346,
+                426,
+                445,
+                542
+              ],
+              "captain": 12,
+              "vice": 346,
+              "transfers_in": [
+                346
+              ],
+              "transfers_out": [
+                569
+              ],
+              "hits": 0,
+              "bank_after": 6,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                154,
+                173,
+                332,
+                346,
+                426,
+                445,
+                464,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                154,
+                173,
+                332,
+                346,
+                426,
+                542
+              ],
+              "captain": 154,
+              "vice": 106,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 6,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                154,
+                173,
+                332,
+                346,
+                426,
+                445,
+                464,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                154,
+                332,
+                346,
+                426,
+                542
+              ],
+              "captain": 426,
+              "vice": 346,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 6,
+              "objective": 0.0,
+              "free_transfers_banked": 2,
+              "free_transfers_after": 3
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                154,
+                173,
+                332,
+                346,
+                426,
+                445,
+                464,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                154,
+                173,
+                346,
+                426,
+                445,
+                464
+              ],
+              "captain": 154,
+              "vice": 12,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 6,
+              "objective": 0.0,
+              "free_transfers_banked": 3,
+              "free_transfers_after": 4
+            },
+            {
+              "squad": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                113,
+                154,
+                173,
+                332,
+                346,
+                426,
+                445,
+                464,
+                497,
+                542
+              ],
+              "xi": [
+                1,
+                4,
+                12,
+                68,
+                106,
+                154,
+                332,
+                346,
+                426,
+                445,
+                464
+              ],
+              "captain": 346,
+              "vice": 426,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 6,
+              "objective": 0.0,
+              "free_transfers_banked": 4,
+              "free_transfers_after": 5
+            }
+          ]
+        },
+        "field_model": "uncalibrated",
+        "warnings": [],
+        "execution": "propose_only",
+        "evidence": {
+          "measured_on": {
+            "seasons": [
+              "2023-24",
+              "2024-25",
+              "2025-26"
+            ],
+            "gameweeks": "8-38 each, 93 paired observations",
+            "harness": "pipeline/learning/backtest_decisions.py",
+            "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+          },
+          "beats_doing_nothing": {
+            "verdict": "established",
+            "margin_2023_24": 411,
+            "margin_2024_25": 560,
+            "margin_2025_26": 184,
+            "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+          },
+          "beats_greedy_transfers": {
+            "verdict": "not established",
+            "margin_2023_24": 67,
+            "margin_2024_25": 60,
+            "margin_2025_26": -66,
+            "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+          },
+          "projection_calibration": {
+            "verdict": "established",
+            "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+          }
+        },
+        "sealed": true
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-142",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-10T13:30:08.699019Z) while fpl_news_parse says 75 (2026-10-10T13:30:08.699019Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 142,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-10T13:30:08.699019Z) while fpl_news_parse says 75 (2026-10-10T13:30:08.699019Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-596",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-10T18:00:10.750593Z) while fpl_news_parse says 25 (2026-10-10T18:00:10.750593Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 596,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-10T18:00:10.750593Z) while fpl_news_parse says 25 (2026-10-10T18:00:10.750593Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-69",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Kane poised to extend Bayern stay - Friday's gossip\\nHarry Kane is close to signing a new deal at Bayern Munich, Arda Guler agrees a new contract with Real Madrid, Liverpool are leading the race for Bournemouth's Alex Scott, plus more.\" (2026-10-15T19:43:01Z) while sky_football says \"Bournemouth will consider Scott sale in January for over \u00a380m\\nBournemouth's stance on selling Alex Scott is softening, with the England midfielder continuing to refuse offers to sign a new contract at the south coast club, Sky Sports News has been told.\" (2026-10-15T11:52:00Z). Used the more conservative \"Kane poised to extend Bayern stay - Friday's gossip\\nHarry Kane is close to signing a new deal at Bayern Munich, Arda Guler agrees a new contract with Real Madrid, Liverpool are leading the race for Bournemouth's Alex Scott, plus more.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 69,
+        "claim_type": "unparsed_news",
+        "value": "Kane poised to extend Bayern stay - Friday's gossip\nHarry Kane is close to signing a new deal at Bayern Munich, Arda Guler agrees a new contract with Real Madrid, Liverpool are leading the race for Bournemouth's Alex Scott, plus more.",
+        "detail": "unparsed_news: bbc_football says \"Kane poised to extend Bayern stay - Friday's gossip\\nHarry Kane is close to signing a new deal at Bayern Munich, Arda Guler agrees a new contract with Real Madrid, Liverpool are leading the race for Bournemouth's Alex Scott, plus more.\" (2026-10-15T19:43:01Z) while sky_football says \"Bournemouth will consider Scott sale in January for over \u00a380m\\nBournemouth's stance on selling Alex Scott is softening, with the England midfielder continuing to refuse offers to sign a new contract at the south coast club, Sky Sports News has been told.\" (2026-10-15T11:52:00Z). Used the more conservative \"Kane poised to extend Bayern stay - Friday's gossip\\nHarry Kane is close to signing a new deal at Bayern Munich, Arda Guler agrees a new contract with Real Madrid, Liverpool are leading the race for Bournemouth's Alex Scott, plus more.\"."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-94",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Bellingham agrees new Real deal - Saturday's gossip\\nReal Madrid midfielder Jude Bellingham ready to commit his future to La Liga club, Arsenal and Liverpool told price for Brentford's Kevin Schade, Man Utd and Chelsea among clubs monitoring Jules Kounde's future at Barcelona, plus more.\" (2026-10-16T21:57:37Z) while fantasyfootballscout says 'FPL notes: Schade + Schuster injury updates, Sangare a sub again\\nYohan Manzambi impresses again as Villa v Brentford ends level The post FPL notes: Schade + Schuster injury updates, Sangare a sub again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc' (2026-10-11T11:30:00Z). Used the more conservative \"Bellingham agrees new Real deal - Saturday's gossip\\nReal Madrid midfielder Jude Bellingham ready to commit his future to La Liga club, Arsenal and Liverpool told price for Brentford's Kevin Schade, Man Utd and Chelsea among clubs monitoring Jules Kounde's future at Barcelona, plus more.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 94,
+        "claim_type": "unparsed_news",
+        "value": "Bellingham agrees new Real deal - Saturday's gossip\nReal Madrid midfielder Jude Bellingham ready to commit his future to La Liga club, Arsenal and Liverpool told price for Brentford's Kevin Schade, Man Utd and Chelsea among clubs monitoring Jules Kounde's future at Barcelona, plus more.",
+        "detail": "unparsed_news: bbc_football says \"Bellingham agrees new Real deal - Saturday's gossip\\nReal Madrid midfielder Jude Bellingham ready to commit his future to La Liga club, Arsenal and Liverpool told price for Brentford's Kevin Schade, Man Utd and Chelsea among clubs monitoring Jules Kounde's future at Barcelona, plus more.\" (2026-10-16T21:57:37Z) while fantasyfootballscout says 'FPL notes: Schade + Schuster injury updates, Sangare a sub again\\nYohan Manzambi impresses again as Villa v Brentford ends level The post FPL notes: Schade + Schuster injury updates, Sangare a sub again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc' (2026-10-11T11:30:00Z). Used the more conservative \"Bellingham agrees new Real deal - Saturday's gossip\\nReal Madrid midfielder Jude Bellingham ready to commit his future to La Liga club, Arsenal and Liverpool told price for Brentford's Kevin Schade, Man Utd and Chelsea among clubs monitoring Jules Kounde's future at Barcelona, plus more.\"."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-286",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says 'Hull continue good start with entertaining Everton draw\\nMohamed Belloumi scores a second-half leveller as Hull City and Everton continue their good starts to the season with an entertaining draw at MKM Stadium.' (2026-10-11T18:59:04Z) while sky_football says 'Belloumi earns Hull draw with Everton after thrilling four-goal second half\\nMohamed Belloumi came off the bench to earn Hull City a 2-2 draw in a thrilling four-goal second-half which leaves Everton still unbeaten.' (2026-10-11T16:00:00Z). Used the more conservative 'Hull continue good start with entertaining Everton draw\\nMohamed Belloumi scores a second-half leveller as Hull City and Everton continue their good starts to the season with an entertaining draw at MKM Stadium.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 286,
+        "claim_type": "unparsed_news",
+        "value": "Hull continue good start with entertaining Everton draw\nMohamed Belloumi scores a second-half leveller as Hull City and Everton continue their good starts to the season with an entertaining draw at MKM Stadium.",
+        "detail": "unparsed_news: bbc_football says 'Hull continue good start with entertaining Everton draw\\nMohamed Belloumi scores a second-half leveller as Hull City and Everton continue their good starts to the season with an entertaining draw at MKM Stadium.' (2026-10-11T18:59:04Z) while sky_football says 'Belloumi earns Hull draw with Everton after thrilling four-goal second half\\nMohamed Belloumi came off the bench to earn Hull City a 2-2 draw in a thrilling four-goal second-half which leaves Everton still unbeaten.' (2026-10-11T16:00:00Z). Used the more conservative 'Hull continue good start with entertaining Everton draw\\nMohamed Belloumi scores a second-half leveller as Hull City and Everton continue their good starts to the season with an entertaining draw at MKM Stadium.'."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-249",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Everton's Barry on the video he was scared to post\\nThe Everton striker explains why he chose to post an emotional video from a training session.\" (2026-10-15T11:27:07Z) while fantasyfootballscout says 'FPL notes: Dewsbury-Haul, Moyes on Barry + why Belloumi was benched\\nFantasy takeaways from Hull 2-2 Everton The post FPL notes: Dewsbury-Haul, Moyes on Barry + why Belloumi was benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-11T21:15:00Z). Used the more conservative \"Everton's Barry on the video he was scared to post\\nThe Everton striker explains why he chose to post an emotional video from a training session.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 249,
+        "claim_type": "unparsed_news",
+        "value": "Everton's Barry on the video he was scared to post\nThe Everton striker explains why he chose to post an emotional video from a training session.",
+        "detail": "unparsed_news: bbc_football says \"Everton's Barry on the video he was scared to post\\nThe Everton striker explains why he chose to post an emotional video from a training session.\" (2026-10-15T11:27:07Z) while fantasyfootballscout says 'FPL notes: Dewsbury-Haul, Moyes on Barry + why Belloumi was benched\\nFantasy takeaways from Hull 2-2 Everton The post FPL notes: Dewsbury-Haul, Moyes on Barry + why Belloumi was benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-11T21:15:00Z). Used the more conservative \"Everton's Barry on the video he was scared to post\\nThe Everton striker explains why he chose to post an emotional video from a training session.\"."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-9",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-12T15:00:07.550884Z) while fpl_news_parse says 75 (2026-10-12T15:00:07.550884Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 9,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-12T15:00:07.550884Z) while fpl_news_parse says 75 (2026-10-12T15:00:07.550884Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-618",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-09T09:30:08.229436Z) while fpl_news_parse says 75 (2026-09-09T09:30:08.229436Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 618,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-09T09:30:08.229436Z) while fpl_news_parse says 75 (2026-09-09T09:30:08.229436Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-70",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-20T15:30:09.074071Z) while fpl_news_parse says 75 (2026-09-20T15:30:09.074071Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 70,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-20T15:30:09.074071Z) while fpl_news_parse says 75 (2026-09-20T15:30:09.074071Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-77",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-08-15T16:00:07.590566Z) while fpl_news_parse says 75 (2026-08-15T16:00:07.590566Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 77,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-08-15T16:00:07.590566Z) while fpl_news_parse says 75 (2026-08-15T16:00:07.590566Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw07-warning-availability-conflict-166",
+      "gameweek": 7,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW7 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says 'Jackson steps up again as Aston Villa revival continues\\nNicolas Jackson continues his fine goalscoring form as Aston Villa record an impressive Champions League win.' (2026-10-14T22:45:22Z) while sky_football says 'Aston Villa hit Fenerbahce for six in big win at Villa Park\\nAston Villa dismantled Fenerbahce with Nicolas Jackson and Ross Barkley scoring two each in a 6-0 Champions League win at Villa Park.' (2026-10-14T21:50:00Z). Used the more conservative 'Jackson steps up again as Aston Villa revival continues\\nNicolas Jackson continues his fine goalscoring form as Aston Villa record an impressive Champions League win.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-17T06:07:41.089596Z",
+      "detail": {
+        "element_id": 166,
+        "claim_type": "unparsed_news",
+        "value": "Jackson steps up again as Aston Villa revival continues\nNicolas Jackson continues his fine goalscoring form as Aston Villa record an impressive Champions League win.",
+        "detail": "unparsed_news: bbc_football says 'Jackson steps up again as Aston Villa revival continues\\nNicolas Jackson continues his fine goalscoring form as Aston Villa record an impressive Champions League win.' (2026-10-14T22:45:22Z) while sky_football says 'Aston Villa hit Fenerbahce for six in big win at Villa Park\\nAston Villa dismantled Fenerbahce with Nicolas Jackson and Ross Barkley scoring two each in a 6-0 Champions League win at Villa Park.' (2026-10-14T21:50:00Z). Used the more conservative 'Jackson steps up again as Aston Villa revival continues\\nNicolas Jackson continues his fine goalscoring form as Aston Villa record an impressive Champions League win.'."
+      }
+    },
     {
       "id": "gw06-status-settled",
       "gameweek": 6,
