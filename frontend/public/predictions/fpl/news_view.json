@@ -1,18 +1,114 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-17T07:52:17.535243Z",
-  "n_dropped": 92,
+  "generated_at": "2026-10-17T11:59:32.556235Z",
+  "n_dropped": 99,
   "dropped_by_source": {
-    "bbc_football": 34,
-    "hayters": 10,
-    "sky_football": 48
+    "bbc_football": 36,
+    "hayters": 11,
+    "sky_football": 52
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 182,
+  "n_articles": 189,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "5a9e33a49c867c89",
+      "headline": "Arsenal vs Birmingham LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-women-vs-birmingham-city-women/live/575791",
+      "claimed_at": "2026-10-17T12:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ad25dd41061e1594",
+      "headline": "Brentford v Liverpool LIVE \u2013 team news, updates and reaction",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Brentford v Liverpool LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brentford-v-liverpool-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-10-17T11:56:47Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f4b4db461a34dc8a",
+      "headline": "Everton v Chelsea team news: Branthwaite + Mykolenko fit to start",
+      "summary": "Kick-off at the Hill Dickinson Stadium is at 12:30pm BST The post Everton v Chelsea team news: Branthwaite + Mykolenko fit to start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/17/everton-v-chelsea-team-news-branthwaite-mykolenko-fit-to-start",
+      "claimed_at": "2026-10-17T10:35:00Z",
+      "players": [
+        {
+          "element_id": 230,
+          "name": "Branthwaite",
+          "club": "EVE",
+          "held": false
+        },
+        {
+          "element_id": 233,
+          "name": "Mykolenko",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e51cde4902f0d29a",
+      "headline": "Guardiola receives standing ovation on return to Barcelona",
+      "summary": "Former Manchester City and Barcelona manager Pep Guardiola received a standing ovation from the crowd while attending Barcelona's EuroLeague basketball match against Olympiacos.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/videos/cm9dzg38n6j7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T10:00:10Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "70f0b1138971371c",
+      "headline": "Carrick opens door for January transfer activity at Man Utd",
+      "summary": "Manchester United will look at trying to strengthen in the January transfer window, according to head coach Michael Carrick, as the club draw up plans to improve the defence over the next year.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13599969/man-utd-transfer-news-michael-carrick-opens-door-to-january-signings-ahead-of-planned-defensive-rebuild",
+      "claimed_at": "2026-10-17T10:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "118b742cba56534e",
       "headline": "'I had so many medals under the bed' - Green on Chelsea success",
@@ -536,6 +632,24 @@
       "touches_squad": false
     },
     {
+      "digest": "21789e61dc463a68",
+      "headline": "Chelsea latest: Alonso explains Chavarria absence for Everton trip",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-16T13:31:00Z",
+      "players": [
+        {
+          "element_id": 583,
+          "name": "Chavarria",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "8dff8a67c9b0da4f",
       "headline": "Chelsea latest: 'James injury doesn't affect January plans' - Alonso",
       "summary": null,
@@ -693,6 +807,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c615jw414vypo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-16T10:24:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d843d7c4cc65b00f",
+      "headline": "Newcastle latest: Jaissle not dwelling on Manzambi after failed summer move",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-16T09:30:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1106,78 +1238,6 @@
       "touches_squad": false
     },
     {
-      "digest": "1ee673d80b91149f",
-      "headline": "Sage suffers defeat to former side as Palace lose in Lyon",
-      "summary": "Pierre Sage lost to his former side as Crystal Palace fell to a 3-2 defeat to Lyon in the Europa League",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/lyon-vs-crystal-palace/report/577769",
-      "claimed_at": "2026-10-15T19:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "eaf372300745ccc0",
-      "headline": "Sage suffers defeat to former side Lyon as Palace comeback falls short",
-      "summary": "Crystal Palace's comeback fell short as they suffered a 3-2 defeat to Pierre Sage's former club Lyon in the Europa League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/lyon-vs-crystal-palace/report/577769",
-      "claimed_at": "2026-10-15T19:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "efeefc6c8a430159",
-      "headline": "Sadiki nets late winner as Sunderland survive huge scare at Torreense",
-      "summary": "Sunderland survived a huge scare as they came from behind to clinch back-to-back Europa League victories with a 2-1 win over Torreense following Noah Sadiki's 93rd-minute winner.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/torreense-vs-sunderland/report/577775",
-      "claimed_at": "2026-10-15T19:30:00Z",
-      "players": [
-        {
-          "element_id": 545,
-          "name": "Sadiki",
-          "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cb14309ceb7819a1",
-      "headline": "Man Utd latest: Martinez met hierarchy before apology - should he start vs Leeds?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-15T19:20:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "6e67ae3c2d41026e",
       "headline": "Martinez apologises for outburst and fined by Man Utd",
       "summary": "Manchester United defender Lisandro Martinez issues an apology following his controversial remarks criticising the club's hierarchy.",
@@ -1514,42 +1574,6 @@
       "touches_squad": false
     },
     {
-      "digest": "290c498ca1d944a9",
-      "headline": "'Players won't like it' - Martinez apologises, but is the damage done?",
-      "summary": "Champions League Match of the Day pundits Nedum Onuoha, Stephen Warnock, and Rory Smith analyse Lisandro Martinez's comments following Manchester United's 2-0 loss to Atletico Madrid and the impact they'll have on the club.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cw2409qg6pe0o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-14T23:13:53Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7fe3bd502fb1b44d",
-      "headline": "Guardiola's return, Man City's defiance - and a game of glorious chaos",
-      "summary": "On their return to Etihad Stadium Manchester City put on a show of defiance - even in the face of a PSG masterclass, writes Phil McNulty.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqp8gyv8le87o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-14T22:57:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "4e8fc016042c4e26",
       "headline": "\u2018I spoke out of anger and frustration\u2019 \u2013 Man Utd defender Martinez issues statement following bombshell interview",
       "summary": "Lisandro Martinez has clarified his comments about Manchester United\u2019s leadership after admitting he spoke out of \u201canger and frustration\u201d following their defeat to Atletico Madrid. The d",
@@ -1628,30 +1652,6 @@
           "element_id": 627,
           "name": "Barcola",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ffb497202c852e0d",
-      "headline": "Two returns and two doubts for Sunderland\u2019s Europa League clash",
-      "summary": "Regis Le Bris has confirmed Brian Brobbey and Habib Diarra have travelled with the Sunderland squad ahead of their Europa League clash with Torreense. Both players are set to be involved in the squad following their respective injuries,",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/two-returns-and-two-doubts-for-sunderlands-europa-league-clash/",
-      "claimed_at": "2026-10-14T19:06:25Z",
-      "players": [
-        {
-          "element_id": 543,
-          "name": "Diarra",
-          "club": "SUN",
-          "held": false
-        },
-        {
-          "element_id": 552,
-          "name": "Brobbey",
-          "club": "SUN",
           "held": false
         }
       ],
