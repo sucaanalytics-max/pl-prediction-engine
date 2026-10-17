@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-17T06:12:04.933561Z",
-  "phase": "idle",
-  "gameweek": 7,
-  "deadline": "2026-10-17T10:00:00+00:00",
-  "seconds_to_deadline": 13675.343901,
-  "reason": "GW7 is already sealed",
-  "needs_work": false,
+  "generated_at": "2026-10-17T10:44:30.857736Z",
+  "phase": "refresh",
+  "gameweek": 8,
+  "deadline": "2026-10-23T17:30:00+00:00",
+  "seconds_to_deadline": 542729.57671,
+  "reason": "GW8 deadline in 150.8h; keeping the projection warm",
+  "needs_work": true,
   "outstanding": [],
-  "agent_ran": false,
+  "agent_ran": true,
   "explains_absence": "The agent computes projections, the evidence view and the message feed. It self-gates on phase, so those artifacts are absent \u2014 not broken \u2014 whenever nothing is due."
 }
