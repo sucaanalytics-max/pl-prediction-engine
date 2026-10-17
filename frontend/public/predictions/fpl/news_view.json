@@ -1,18 +1,90 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-17T20:12:30.530247Z",
-  "n_dropped": 151,
+  "generated_at": "2026-10-17T22:22:30.777582Z",
+  "n_dropped": 154,
   "dropped_by_source": {
     "bbc_football": 52,
-    "hayters": 23,
-    "sky_football": 76
+    "hayters": 24,
+    "sky_football": 78
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 241,
+  "n_articles": 244,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "f4af452e13a16746",
+      "headline": "Papers: Gyokeres keen to leave Arsenal",
+      "summary": "The top stories and transfer rumours from Sunday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13600491/viktor-gyokeres-keen-to-leave-arsenal-due-to-lack-of-first-team-opportunites-paper-talk",
+      "claimed_at": "2026-10-17T22:50:00Z",
+      "players": [
+        {
+          "element_id": 25,
+          "name": "Gy\u00f6keres",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8d004f087a491a14",
+      "headline": "\u2018His football IQ is something else\u2019 \u2013 Arteta on Arsenal star\u2019s improvement",
+      "summary": "Mikel Arteta believes Kai Havertz has the quality to score 20 to 25 goals in a season for Arsenal if he is given a consistent run of games. The Germany international has established himself as first-choice striker this season",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/his-football-iq-is-something-else-arteta-on-arsenal-stars-improvement/",
+      "claimed_at": "2026-10-17T21:30:00Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "37f6f1a2ab728d63",
+      "headline": "Villa's Manzambi shows Newcastle what they missed out on",
+      "summary": "Aston Villa are a side back in form, with Johan Manzambi scoring the winner against a Newcastle team he turned down to move to Villa Park.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck054652mv07o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T21:18:26Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2cb4f63c0b674ca2",
+      "headline": "Gyokeres pushing for Arsenal exit - Sunday's gossip",
+      "summary": "Viktor Gyokeres wants to leave Arsenal, Xabi Alonso eyes Barcelona duo and Liverpool target Dortmund's Felix Nmecha.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c9gkv34kezdko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T20:37:25Z",
+      "players": [
+        {
+          "element_id": 25,
+          "name": "Gy\u00f6keres",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "2829400ec75bfc51",
       "headline": "Wirtz delivers but remains Liverpool's conundrum",
@@ -1142,18 +1214,18 @@
       "touches_squad": false
     },
     {
-      "digest": "09badc4b9306ae3b",
-      "headline": "Papers: Liverpool set to raid Aston Villa for Manzambi",
-      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
+      "digest": "756a0cceaaaa9f52",
+      "headline": "Man Utd latest: Rashford has been managing hip injury since World Cup",
+      "summary": null,
       "source": "sky_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13600072/liverpool-set-to-raid-aston-villa-for-johan-manzambi-as-arsenal-eye-move-for-bayern-munich-defender-paper-talk",
-      "claimed_at": "2026-10-16T21:40:00Z",
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-16T22:30:00Z",
       "players": [
         {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
+          "element_id": 429,
+          "name": "Rashford",
+          "club": "MUN",
           "held": false
         }
       ],
@@ -1245,24 +1317,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cmr4yn3qyw2go?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-16T16:01:49Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "67a7cf3db1d41eaa",
-      "headline": "Palace latest: 'Brighton rivalry education started on day one' - Sage",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-16T15:40:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1460,24 +1514,6 @@
       "touches_squad": false
     },
     {
-      "digest": "ea7846899df211ba",
-      "headline": "Chelsea's James out for three months after knee surgery",
-      "summary": "Chelsea captain Reece James is set to miss three months of action after undergoing knee surgery.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq073d9l0ly9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-16T13:36:09Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "786dddeeb01af8d7",
       "headline": "\u2018We are more together\u2019 \u2013 Maresca says Man City scrutiny has united club and reveals conversation with Pep",
       "summary": "Enzo Maresca says Manchester City have become even more united amid the ongoing noise around the club and insists he remains completely focused on matters on the pitch. Maresca also revealed he",
@@ -1556,24 +1592,6 @@
       "touches_squad": false
     },
     {
-      "digest": "79db65bfb85b6f5a",
-      "headline": "'Not about me' - Arbeloa dismisses future questions",
-      "summary": "Fulham head coach Alvaro Arbeloa says the focus should not be on him as his side searches for a first Premier League win this season against Hull City this weekend.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c615jw414vypo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-16T10:24:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "45e2b87b6e62db52",
       "headline": "Chelsea injury blow as James undergoes surgery",
       "summary": "Reece James has undergone knee surgery after suffering an injury in training, Chelsea have confirmed. The Blues captain missed Saturday\u2019s 5-1 win over Bournemouth at Stamford Bridge while undergoing medical assessments on the problem. Those checks deter",
@@ -1628,24 +1646,6 @@
           "element_id": 613,
           "name": "Ahoka",
           "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6c6ee7f949678ac2",
-      "headline": "Sage hopeful Crystal Palace star could return against Brighton after missing Europa League loss",
-      "summary": "Jean-Philippe Mateta could return for Crystal Palace this weekend after missing their 3-2 Europa League defeat to Lyon, Pierre Sage has revealed. The striker did not travel to France but is progressing we",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/sage-hopeful-crystal-palace-star-could-return-against-brighton-after-missing-europa-league-loss/",
-      "claimed_at": "2026-10-15T20:37:35Z",
-      "players": [
-        {
-          "element_id": 223,
-          "name": "Mateta",
-          "club": "CRY",
           "held": false
         }
       ],
