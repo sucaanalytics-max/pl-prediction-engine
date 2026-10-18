@@ -110,6 +110,7 @@ jobs:
         continue-on-error: true
         env:
           PYTHONPATH: ${{ github.workspace }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           git config user.name  "github-actions[bot]"
@@ -120,7 +121,16 @@ jobs:
             exit 0
           fi
           git add -- frontend/public/predictions/fpl/agent_status.json
-          git commit -q -m "Agent status — ${{ steps.phase.outputs.phase }} GW${{ steps.phase.outputs.gameweek }}"
+          # Never --force here, even on a seal: the seal's artifacts follow from the
+          # work job, whose own commit forces the build. Forcing both would build
+          # twice, the first time without the seal in it.
+          # [deploy] in the message is what makes Vercel build this commit; without it
+          # frontend/scripts/vercel-ignore.sh skips it. deploy_marker.sh adds it when
+          # no build has happened for 3 hours, and cannot fail: on any error the
+          # fallback below tags the commit rather than withhold it.
+          BASE="Agent status — ${{ steps.phase.outputs.phase }} GW${{ steps.phase.outputs.gameweek }}"
+          MSG="$(.github/scripts/deploy_marker.sh tag "${BASE}")" && [ -n "${MSG}" ] || MSG="${BASE} [deploy]"
+          git commit -q -m "${MSG}"
           git pull --rebase --autostash --quiet origin main
           git push --quiet origin main
 
@@ -235,12 +245,23 @@ jobs:
           # variable costs nothing and survives a future change to that script.
           AGENT_PHASE: ${{ needs.decide.outputs.phase }}
           AGENT_GAMEWEEK: ${{ needs.decide.outputs.gameweek }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # [deploy] in the message is what makes Vercel build this commit; without it
+          # frontend/scripts/vercel-ignore.sh skips it. deploy_marker.sh adds it when
+          # no build has happened for 3 hours, and cannot fail: on any error the
+          # fallback below tags the commit rather than withhold it.
+          # A seal and a final settlement always build: they are the two events
+          # the site exists to show promptly, and there are 38 of each a season.
+          FORCE=""
+          case "${AGENT_PHASE}" in seal|settle_final) FORCE="--force" ;; esac
+          BASE="FPL agent — ${AGENT_PHASE} GW${AGENT_GAMEWEEK}"
+          MSG="$(.github/scripts/deploy_marker.sh tag "${BASE}" ${FORCE})" && [ -n "${MSG}" ] || MSG="${BASE} [deploy]"
           .github/scripts/commit_and_push.sh \
-            "FPL agent — ${AGENT_PHASE} GW${AGENT_GAMEWEEK}" \
+            "${MSG}" \
             predictions/fpl/ledger \
             predictions/fpl/decision_gw*.json \
             predictions/fpl/messages.json \

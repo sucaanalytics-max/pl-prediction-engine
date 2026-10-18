@@ -283,16 +283,25 @@ describe("fixture_xg.json — the rates the page shows", () => {
   });
 
   it("does NOT show the pre-market-anchor posterior", () => {
-    // `lambda_home_dc` is kept so the blend stays auditable, and on the committed
-    // file it differs from the consumer rate by ~27%. Showing it would be a
+    // `lambda_home_dc` is kept so the blend stays auditable. Showing it would be a
     // visibly wrong number rather than a rounding difference — and the two names
     // are one underscore apart.
-    const first = (raw("fixture_xg.json") as {
+    //
+    // Checked on the fixture where the two diverge MOST, not on fixtures[0]. The
+    // file is rewritten daily and the market anchor can land almost on the DC
+    // posterior: on 2026-10-18 fixtures[0] differed by 0.004 (another by 0.575),
+    // which failed the old assertion while proving nothing either way — a field
+    // mix-up is only detectable where the two values actually differ.
+    const fixtures = (raw("fixture_xg.json") as {
       fixtures: Array<Record<string, number>>;
-    }).fixtures[0];
-    const narrowed = proven(artifact)?.fixtures[0];
-    expect(first.lambda_home_dc).not.toBeCloseTo(first.lambda_home, 2);
-    expect(narrowed?.home_rate).not.toBeCloseTo(first.lambda_home_dc, 6);
+    }).fixtures;
+    const gap = (f: Record<string, number>) => Math.abs(f.lambda_home_dc - f.lambda_home);
+    const i = fixtures.reduce((best, f, k) => (gap(f) > gap(fixtures[best]) ? k : best), 0);
+    const widest = fixtures[i];
+    const narrowed = proven(artifact)?.fixtures[i];
+    expect(widest.lambda_home_dc).not.toBeCloseTo(widest.lambda_home, 2);
+    expect(narrowed?.home_rate).toBeCloseTo(widest.lambda_home, 6);
+    expect(narrowed?.home_rate).not.toBeCloseTo(widest.lambda_home_dc, 6);
   });
 
   it("carries a positive rate for both sides of every fixture", () => {
