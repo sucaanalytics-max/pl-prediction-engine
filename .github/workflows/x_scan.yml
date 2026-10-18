@@ -127,7 +127,9 @@ jobs:
             exit 0
           fi
           git add -- "${PATHS[@]}"
-          git commit -q -m "X scan — $(date -u +%Y-%m-%dT%H:%MZ)"
+          # Always [deploy]: the owner dispatches this by hand to see the result,
+          # and without the token frontend/scripts/vercel-ignore.sh skips the build.
+          git commit -q -m "X scan — $(date -u +%Y-%m-%dT%H:%MZ) [deploy]"
           git pull --rebase --autostash --quiet origin main
           git push --quiet origin main
 

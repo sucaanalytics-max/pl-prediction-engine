@@ -88,12 +88,19 @@ jobs:
           # therefore listed explicitly, which is both ERE-safe and the same
           # explicit-list discipline the publish step uses.
           FORBID_PATHS: '^(predictions/(latest|matches|health|table|h2h|player_stats|market_blend_weight|fixture_xg)\.json|predictions/fpl/(ledger|decision|xp_gw|sim_params|messages|hub)|predictions/archive/|frontend/public/predictions/(archive|h2h-events)/|frontend/public/predictions/[^/]+\.json|frontend/public/predictions/fpl/(messages|xp_gw|decision_public|evidence_view|accuracy|sensitivity))'
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # [deploy] in the message is what makes Vercel build this commit; without it
+          # frontend/scripts/vercel-ignore.sh skips it. deploy_marker.sh adds it when
+          # no build has happened for 3 hours, and cannot fail: on any error the
+          # fallback below tags the commit rather than withhold it.
+          BASE="Availability news — $(date -u +%Y-%m-%dT%H:%MZ)"
+          MSG="$(.github/scripts/deploy_marker.sh tag "${BASE}")" && [ -n "${MSG}" ] || MSG="${BASE} [deploy]"
           .github/scripts/commit_and_push.sh \
-            "Availability news — $(date -u +%Y-%m-%dT%H:%MZ)" \
+            "${MSG}" \
             predictions/fpl/availability_evidence.jsonl \
             predictions/fpl/deltas.jsonl \
             predictions/news_feed_state.json \
@@ -101,6 +108,22 @@ jobs:
             frontend/public/predictions/fpl/news_view.json \
             predictions/fpl/minutes_conflicts_gw*.json \
             frontend/public/predictions/fpl/minutes_conflicts_gw*.json
+
+      # The trailing edge of the 3-hour throttle. A burst of untagged data commits
+      # followed by silence would otherwise leave the site on the last tagged build
+      # indefinitely. This job is the one that runs on a 15-minute schedule
+      # regardless of state, so it is the one that notices. Pushes an empty
+      # "[deploy]" commit only when the newest commit on main was skipped AND no
+      # build has happened in 3 hours. Never fails the job.
+      - name: Flush pending data to a build
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          .github/scripts/deploy_marker.sh flush
 
       - name: Surface the run report
         if: always()

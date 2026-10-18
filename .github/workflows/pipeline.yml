@@ -183,12 +183,19 @@ jobs:
           # all — including forecast_ledger.json, the one artifact that proves a
           # prediction predated kickoff.
           FORBID_PATHS: '^predictions/fpl/(ledger|decision|hub)'
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # [deploy] in the message is what makes Vercel build this commit; without it
+          # frontend/scripts/vercel-ignore.sh skips it. deploy_marker.sh adds it when
+          # no build has happened for 3 hours, and cannot fail: on any error the
+          # fallback below tags the commit rather than withhold it.
+          BASE="Update predictions — $(date -u +%Y-%m-%d)"
+          MSG="$(.github/scripts/deploy_marker.sh tag "${BASE}")" && [ -n "${MSG}" ] || MSG="${BASE} [deploy]"
           .github/scripts/commit_and_push.sh \
-            "Update predictions — $(date -u +%Y-%m-%d)" \
+            "${MSG}" \
             predictions \
             ':(exclude)predictions/fpl/ledger' \
             ':(exclude)predictions/fpl/decision_gw*.json' \
