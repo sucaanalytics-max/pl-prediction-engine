@@ -1,18 +1,54 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-17T22:22:30.777582Z",
-  "n_dropped": 154,
+  "generated_at": "2026-10-18T00:10:00.418556Z",
+  "n_dropped": 155,
   "dropped_by_source": {
-    "bbc_football": 52,
-    "hayters": 24,
-    "sky_football": 78
+    "bbc_football": 54,
+    "hayters": 25,
+    "sky_football": 76
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 244,
+  "n_articles": 245,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "a26bf8d2c1feb153",
+      "headline": "How 'dangerous' Man City maintained 100 per cent record",
+      "summary": "Match of the Day's Joe Hart and Danny Murphy analyse how Manchester City made it seven wins from seven in the Premier League with a 3-2 victory against Ipswich.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cx7vpl5qd008o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T23:00:53Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8d344552f83aec99",
+      "headline": "Why Liverpool are still 'too easy' to play against",
+      "summary": "Match of the Day's Danny Murphy analyses how Liverpool are still to \"easy\" to play against despite their 2-1 victory over Brentford.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c65ynpkjydemo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-17T23:00:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "f4af452e13a16746",
       "headline": "Papers: Gyokeres keen to leave Arsenal",
@@ -410,6 +446,24 @@
           "element_id": 411,
           "name": "Haaland",
           "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ff0956710b1e1ef7",
+      "headline": "Illness - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-10-17T18:30:09.695564Z",
+      "players": [
+        {
+          "element_id": 144,
+          "name": "Gusto",
+          "club": "CHE",
           "held": false
         }
       ],
@@ -1328,24 +1382,6 @@
       "touches_squad": false
     },
     {
-      "digest": "085160ac72a7b871",
-      "headline": "Arteta told Arsenal job cuts will help create success",
-      "summary": "Arsenal boss Mikel Arteta says he was told the club's decision to cut 60 jobs had been made to \"achieve the success we want to create\".",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cr3wv4xd2l6yo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-16T15:31:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ce224d35ba158073",
       "headline": "Key Nottingham Forest stars could miss Arsenal game while duo are ruled out",
       "summary": "Morgan Gibbs-White and Nikola Milenkovic are both doubts for Nottingham Forest\u2019s Premier League clash with Arsenal, Oliver Glasner says. Milenkovic has missed the last few weeks with a hamstring issue and bone bruising but r",
@@ -1454,24 +1490,6 @@
           "element_id": 233,
           "name": "Mykolenko",
           "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b0ff419808ad3692",
-      "headline": "'I am telling you the truth' - Carrick on Martinez fallout",
-      "summary": "Manchester United boss Michael Carrick says he is telling the truth about the club moving on from Lisandro Martinez's explosive post-match interview.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm4g189leelno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-16T13:59:12Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
           "held": false
         }
       ],
@@ -1622,30 +1640,6 @@
           "element_id": 64,
           "name": "Smith",
           "club": "BOU",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "16f161d506f397e4",
-      "headline": "Le Bris praises impact of Sunderland bench after comeback Europa League win",
-      "summary": "Regis Le Bris praised Sunderland\u2019s young side and the impact of his substitutes after they came from behind to beat Torreense 2-1 in the Europa League. Sunderland fell behind to a superb long-range strike but responded after",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/le-bris-praises-impact-of-sunderland-bench-after-comeback-europa-league-win/",
-      "claimed_at": "2026-10-15T20:45:55Z",
-      "players": [
-        {
-          "element_id": 545,
-          "name": "Sadiki",
-          "club": "SUN",
-          "held": false
-        },
-        {
-          "element_id": 613,
-          "name": "Ahoka",
-          "club": "SUN",
           "held": false
         }
       ],
