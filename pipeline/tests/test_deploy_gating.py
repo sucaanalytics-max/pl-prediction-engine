@@ -250,6 +250,26 @@ class DeployMarkerFlushTests(_Repo):
         )
         self.assertEqual(gate.returncode, 1, gate.stdout)
 
+    def test_the_empty_commit_survives_a_rebase_onto_a_moved_remote(self):
+        # Three other writers push to main; by the time the flush pushes, the
+        # remote has usually moved. A rebase that dropped the empty commit would
+        # make the flush a silent no-op.
+        other = self.root / "other"
+        _git("clone", "-q", str(self.remote), str(other), cwd=self.root)
+        _git("config", "user.name", "Bot", cwd=other)
+        _git("config", "user.email", "bot@example.invalid", cwd=other)
+        (other / "news.json").write_text("{}\n")
+        _git("add", "news.json", cwd=other)
+        _git("commit", "-q", "-m", "Availability news — 2026-10-18T16:42Z", cwd=other)
+        _git("push", "-q", "origin", "main", cwd=other)
+
+        self._api("false\tAvailability news — 2026-10-18T16:42Z")
+        out = self._flush()
+        self.assertEqual(out.returncode, 0, out.stderr)
+        log = _git("log", "--format=%s", "main", cwd=self.remote).stdout.splitlines()
+        self.assertTrue(log[0].startswith("Deploy pending data — "), log)
+        self.assertEqual(log[1], "Availability news — 2026-10-18T16:42Z")
+
     def test_never_publishes_what_is_left_staged(self):
         # commit_and_push.sh stages before checking FORBID_PATHS, so a refused
         # path is still in the index when this `if: always()` step runs.
