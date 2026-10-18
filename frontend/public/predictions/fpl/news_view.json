@@ -1,18 +1,96 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-18T09:06:51.495523Z",
-  "n_dropped": 156,
+  "generated_at": "2026-10-18T13:17:38.039640Z",
+  "n_dropped": 151,
   "dropped_by_source": {
     "bbc_football": 54,
-    "hayters": 25,
-    "sky_football": 77
+    "hayters": 26,
+    "sky_football": 71
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 246,
+  "n_articles": 241,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "1773eec6d3deaab7",
+      "headline": "Brighton 3-0 up inside 10 minutes vs abject Palace LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brighton-and-hove-albion-vs-crystal-palace/live/559506",
+      "claimed_at": "2026-10-18T11:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a8ae18bfc90da087",
+      "headline": "Chelsea confirm Martinez has undergone surgery on fractured jaw",
+      "summary": "Emiliano Martinez has undergone successful surgery after suffering a fractured jaw in Chelsea\u2019s 2-0 win over Everton. The goalkeeper was injured following a collision midway through the second half at the Hill Dickinson Stadium and was",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/chelsea-confirm-martinez-has-undergone-surgery-on-fractured-jaw/",
+      "claimed_at": "2026-10-18T10:45:50Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "63d0419d00edf990",
+      "headline": "Martinez breaks jaw in Chelsea win at Everton",
+      "summary": "Chelsea goalkeeper Emiliano Martinez says he will be back \"in a few weeks\" after breaking his jaw in a collision with Jarrad Branthwaite.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cked3vl198eyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-18T09:42:10Z",
+      "players": [
+        {
+          "element_id": 230,
+          "name": "Branthwaite",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "db15623459e7fee9",
+      "headline": "Spurs suffer double injury blow ahead of Coventry clash with forward out for \u2018some weeks\u2019",
+      "summary": "Roberto De Zerbi has confirmed Tottenham will be without Savio and Lucas Bergvall for the clash with Coventry, but Dejan Kulusevski is set to return to the squad. Savio picked up a muscle injury before Spurs tr",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/spurs-suffer-double-injury-blow-ahead-of-coventry-clash-with-forward-out-for-some-weeks/",
+      "claimed_at": "2026-10-18T09:33:28Z",
+      "players": [
+        {
+          "element_id": 520,
+          "name": "Bergvall",
+          "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 521,
+          "name": "Kulusevski",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "f83a2672613e9e99",
       "headline": "Martinez 'back in a few weeks' after operation",
@@ -1304,24 +1382,6 @@
       "touches_squad": false
     },
     {
-      "digest": "756a0cceaaaa9f52",
-      "headline": "Man Utd latest: Rashford has been managing hip injury since World Cup",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-16T22:30:00Z",
-      "players": [
-        {
-          "element_id": 429,
-          "name": "Rashford",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "77543ec613f5134a",
       "headline": "Arsenal forward in line for more opportunities as Arteta backs him to deliver",
       "summary": "Mikel Arteta believes Arsenal are getting closer to seeing the best version of Noni Madueke this season. The Gunners boss says a sustained run of games could help him reach his highest level, with the winger having started",
@@ -1352,24 +1412,6 @@
           "element_id": 94,
           "name": "Schade",
           "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "96eedb6bc6586eb7",
-      "headline": "Do Manchester City have any grounds to win their appeal?",
-      "summary": "Manchester City face \"substantial hurdles\" to overcome if they are to have any chance of winning their appeal after being found guilty of breaking the Premier League's financial rules, a leading lawyer has told BBC Sport.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6je5lwxk5l0o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-16T16:17:01Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1622,24 +1664,6 @@
       "touches_squad": false
     },
     {
-      "digest": "73c433243fe222b0",
-      "headline": "Smith urges Bournemouth to kick on after Europa League victory",
-      "summary": "Adam Smith says Bournemouth produced a performance that reflected their true standards as they bounced back from their heavy defeat to Chelsea with a 3-0 Europa League win over Sturm Graz. Bournemouth had been left disappointed by their",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/smith-urges-bournemouth-to-kick-on-after-europa-league-victory/",
-      "claimed_at": "2026-10-15T21:59:13Z",
-      "players": [
-        {
-          "element_id": 64,
-          "name": "Smith",
-          "club": "BOU",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "c26d5b7b47bf9d57",
       "headline": "Knock - 50% chance of playing",
       "summary": null,
@@ -1712,24 +1736,6 @@
           "element_id": 368,
           "name": "Szoboszlai",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0c5e7ddd2e943701",
-      "headline": "FPL notes: \u00a34.9m midfielder on pens + \u00a34.0m DefCon king Thomas",
-      "summary": "FPL notes from Coventry's 4-1 win over Newcastle The post FPL notes: \u00a34.9m midfielder on pens + \u00a34.0m DefCon king Thomas appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/13/fpl-notes-4-9m-midfielder-on-pens-4-0m-defcon-king-thomas",
-      "claimed_at": "2026-10-13T10:50:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
