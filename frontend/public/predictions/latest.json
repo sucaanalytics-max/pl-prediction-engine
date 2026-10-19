@@ -1,13 +1,12 @@
 {
   "metadata": {
-    "generated_at": "2026-10-18T10:03:28.670811Z",
+    "generated_at": "2026-10-19T11:28:24.850890Z",
     "season": "2026-27",
     "gameweek": 7,
     "pipeline_version": "4.1.0",
     "models": [
       "dixon_coles_pymc",
-      "xgboost",
-      "penaltyblog"
+      "xgboost"
     ],
     "sub_models": [
       "corners_negbin_adj",
@@ -18,10 +17,10 @@
     "n_simulations": 5000,
     "n_simulations_requested": 5000,
     "portfolio": {
-      "total_exposure_pct": 0.175,
-      "n_bets_before_limits": 9,
-      "n_bets_after_limits": 7,
-      "n_reduced_by_limits": 2,
+      "total_exposure_pct": 0.025,
+      "n_bets_before_limits": 1,
+      "n_bets_after_limits": 1,
+      "n_reduced_by_limits": 0,
       "limits": {
         "max_per_match_pct": 0.15,
         "max_per_team_pct": 0.3,
@@ -39,3186 +38,6 @@
   },
   "predictions": [
     {
-      "match_id": "20261018_Bournemouth_Sunderland",
-      "fixture": {
-        "date": "2026-10-18T13:00:00Z",
-        "home_team": "Bournemouth",
-        "away_team": "Sunderland",
-        "gameweek": 7,
-        "referee": null,
-        "is_derby": false
-      },
-      "probabilities": {
-        "1x2": {
-          "home": 0.4614,
-          "draw": 0.2776,
-          "away": 0.261
-        },
-        "over_under": {
-          "0.5": {
-            "over": 0.9142,
-            "under": 0.0858
-          },
-          "1.5": {
-            "over": 0.7468,
-            "under": 0.2532
-          },
-          "2.5": {
-            "over": 0.4996,
-            "under": 0.5004
-          },
-          "3.5": {
-            "over": 0.2814,
-            "under": 0.7186
-          },
-          "4.5": {
-            "over": 0.141,
-            "under": 0.859
-          }
-        },
-        "btts": {
-          "yes": 0.5352,
-          "no": 0.4648
-        },
-        "clean_sheet": {
-          "home": 0.3314,
-          "away": 0.2192
-        },
-        "correct_score": {
-          "0-0": 0.0858,
-          "0-1": 0.07,
-          "0-2": 0.0396,
-          "0-3": 0.0172,
-          "0-4": 0.005,
-          "0-5": 0.0016,
-          "0-6": 0.0,
-          "1-0": 0.0974,
-          "1-1": 0.1282,
-          "1-2": 0.0606,
-          "1-3": 0.0238,
-          "1-4": 0.008,
-          "1-5": 0.0032,
-          "1-6": 0.0004,
-          "2-0": 0.0794,
-          "2-1": 0.0958,
-          "2-2": 0.0516,
-          "2-3": 0.0214,
-          "2-4": 0.004,
-          "2-5": 0.0008,
-          "2-6": 0.001,
-          "3-0": 0.0446,
-          "3-1": 0.0428,
-          "3-2": 0.0272,
-          "3-3": 0.0116,
-          "3-4": 0.003,
-          "3-5": 0.0006,
-          "3-6": 0.0,
-          "4-0": 0.0172,
-          "4-1": 0.0178,
-          "4-2": 0.0128,
-          "4-3": 0.0042,
-          "4-4": 0.0004,
-          "4-5": 0.0006,
-          "4-6": 0.0,
-          "5-0": 0.0052,
-          "5-1": 0.0056,
-          "5-2": 0.0042,
-          "5-3": 0.0016,
-          "5-4": 0.0002,
-          "5-5": 0.0,
-          "5-6": 0.0,
-          "6-0": 0.001,
-          "6-1": 0.0018,
-          "6-2": 0.0004,
-          "6-3": 0.0008,
-          "6-4": 0.0,
-          "6-5": 0.0002,
-          "6-6": 0.0
-        },
-        "asian_handicap": {
-          "home_-2.5": 0.0998,
-          "home_-1.5": 0.2364,
-          "home_-1.0": 0.2364,
-          "home_-0.5": 0.4614,
-          "home_0": 0.4614,
-          "home_0.5": 0.739,
-          "home_1.0": 0.739,
-          "home_1.5": 0.8946,
-          "home_2.5": 0.9626
-        },
-        "ht_ft": {
-          "H/H": 0.2784,
-          "H/D": 0.0528,
-          "H/A": 0.0162,
-          "D/H": 0.1548,
-          "D/D": 0.1744,
-          "D/A": 0.09,
-          "A/H": 0.0282,
-          "A/D": 0.0504,
-          "A/A": 0.1548
-        },
-        "corners": {
-          "7.5": {
-            "over": 0.673,
-            "under": 0.327
-          },
-          "8.5": {
-            "over": 0.5488,
-            "under": 0.4512
-          },
-          "9.5": {
-            "over": 0.4282,
-            "under": 0.5718
-          },
-          "10.5": {
-            "over": 0.3194,
-            "under": 0.6806
-          },
-          "11.5": {
-            "over": 0.2236,
-            "under": 0.7764
-          },
-          "12.5": {
-            "over": 0.1492,
-            "under": 0.8508
-          }
-        },
-        "cards": {
-          "1.5": {
-            "over": 0.9626,
-            "under": 0.0374
-          },
-          "2.5": {
-            "over": 0.8896,
-            "under": 0.1104
-          },
-          "3.5": {
-            "over": 0.7624,
-            "under": 0.2376
-          },
-          "4.5": {
-            "over": 0.6156,
-            "under": 0.3844
-          },
-          "5.5": {
-            "over": 0.4594,
-            "under": 0.5406
-          },
-          "6.5": {
-            "over": 0.324,
-            "under": 0.676
-          }
-        }
-      },
-      "expected_goals": {
-        "home": 1.5496,
-        "away": 1.1244
-      },
-      "expected_corners": 9.1014,
-      "expected_cards": 5.4834,
-      "distributions": {
-        "goals_home": [
-          0.2192,
-          0.3218,
-          0.254,
-          0.1298,
-          0.053,
-          0.0168,
-          0.0042,
-          0.0006
-        ],
-        "goals_away": [
-          0.3314,
-          0.3622,
-          0.1966,
-          0.0806,
-          0.0206,
-          0.007,
-          0.0014,
-          0.0002
-        ],
-        "corners": [
-          0.0004,
-          0.0022,
-          0.0102,
-          0.0222,
-          0.0422,
-          0.0598,
-          0.0834,
-          0.1066,
-          0.1242,
-          0.1206,
-          0.1088,
-          0.0958,
-          0.0744,
-          0.0494,
-          0.0394,
-          0.0236,
-          0.0164,
-          0.0094,
-          0.0032,
-          0.0032,
-          0.0026
-        ],
-        "cards": [
-          0.0064,
-          0.031,
-          0.073,
-          0.1272,
-          0.1468,
-          0.1562,
-          0.1354,
-          0.1122,
-          0.084,
-          0.0522,
-          0.0378,
-          0.024,
-          0.0076
-        ]
-      },
-      "confidence": {
-        "entropy": 1.0632375130782146,
-        "home_goals_ci": [
-          0.0,
-          4.0
-        ],
-        "away_goals_ci": [
-          0.0,
-          3.0
-        ]
-      },
-      "n_simulations": 5000,
-      "player_bookings": {
-        "top_bookings": [],
-        "adjustments": {}
-      },
-      "goalscorer": {
-        "home_scorers": [
-          {
-            "player_id": 68,
-            "name": "Marcus Tavernier",
-            "web_name": "Tavernier",
-            "team": "Bournemouth",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.32211102058814406,
-            "anytime_prob": 0.2753822616234203,
-            "two_plus_prob": 0.04197490237866741,
-            "first_scorer_prob": 0.057018030292193836,
-            "xg_per_90": 0.3084677419354839,
-            "goals_scored": 3,
-            "xg_share": 0.20671010172812077,
-            "minutes": 496
-          },
-          {
-            "player_id": 79,
-            "name": "Francisco Evanilson de Lima Barbosa",
-            "web_name": "Evanilson",
-            "team": "Bournemouth",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.2804260649826195,
-            "anytime_prob": 0.24453820294145479,
-            "two_plus_prob": 0.03268702394762868,
-            "first_scorer_prob": 0.044079408531472894,
-            "xg_per_90": 0.2591439688715953,
-            "goals_scored": 1,
-            "xg_share": 0.17995938268095218,
-            "minutes": 514
-          },
-          {
-            "player_id": 566,
-            "name": "Ant\u00f3nio Jo\u00e3o Pereira de Albuquerque Tavares da Silva",
-            "web_name": "Silva",
-            "team": "Bournemouth",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.2463201922144631,
-            "anytime_prob": 0.21832810040500994,
-            "two_plus_prob": 0.02578652784812749,
-            "first_scorer_prob": 0.03456848249857231,
-            "xg_per_90": 0.21666666666666667,
-            "goals_scored": 0,
-            "xg_share": 0.15807243073326882,
-            "minutes": 540
-          },
-          {
-            "player_id": 67,
-            "name": "Rayan Vitor Simpl\u00edcio Rocha",
-            "web_name": "Rayan",
-            "team": "Bournemouth",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.2160038608649907,
-            "anytime_prob": 0.19426780895573392,
-            "two_plus_prob": 0.020226544866964152,
-            "first_scorer_prob": 0.026973234000604664,
-            "xg_per_90": 0.19580152671755724,
-            "goals_scored": 0,
-            "xg_share": 0.13861736233532804,
-            "minutes": 524
-          },
-          {
-            "player_id": 70,
-            "name": "Justin Kluivert",
-            "web_name": "Kluivert",
-            "team": "Bournemouth",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.18758230022486036,
-            "anytime_prob": 0.171039108294876,
-            "two_plus_prob": 0.015540717432377477,
-            "first_scorer_prob": 0.02062328981927017,
-            "xg_per_90": 0.30306122448979594,
-            "goals_scored": 1,
-            "xg_share": 0.12037823571225856,
-            "minutes": 294
-          },
-          {
-            "player_id": 73,
-            "name": "Tyler Adams",
-            "web_name": "Adams",
-            "team": "Bournemouth",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.15148350762461799,
-            "anytime_prob": 0.14056794376786774,
-            "two_plus_prob": 0.010378161324786417,
-            "first_scorer_prob": 0.013687442536721916,
-            "xg_per_90": 0.007317073170731708,
-            "goals_scored": 0,
-            "xg_share": 0.09721235620576554,
-            "minutes": 369
-          },
-          {
-            "player_id": 60,
-            "name": "James Hill",
-            "web_name": "Hill",
-            "team": "Bournemouth",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.05123459998060833,
-            "anytime_prob": 0.049944238676982056,
-            "two_plus_prob": 0.0012685117863249287,
-            "first_scorer_prob": 0.0016448239130953033,
-            "xg_per_90": 0.0,
-            "goals_scored": 0,
-            "xg_share": 0.032879065592519914,
-            "minutes": 540
-          },
-          {
-            "player_id": 64,
-            "name": "Adam Smith",
-            "web_name": "Smith",
-            "team": "Bournemouth",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.05098790083425199,
-            "anytime_prob": 0.04970983181887567,
-            "two_plus_prob": 0.0012565309598918592,
-            "first_scorer_prob": 0.0016292213419350796,
-            "xg_per_90": 0.0017821782178217822,
-            "goals_scored": 0,
-            "xg_share": 0.03272074997343167,
-            "minutes": 505
-          }
-        ],
-        "away_scorers": [
-          {
-            "player_id": 552,
-            "name": "Brian Brobbey",
-            "web_name": "Brobbey",
-            "team": "Sunderland",
-            "position": "FWD",
-            "side": "away",
-            "lambda_player": 0.34775524360794763,
-            "anytime_prob": 0.29372828042084487,
-            "two_plus_prob": 0.04811858652519169,
-            "first_scorer_prob": 0.0914315918237764,
-            "xg_per_90": 0.6631578947368421,
-            "goals_scored": 3,
-            "xg_share": 0.3107589833657269,
-            "minutes": 399
-          },
-          {
-            "player_id": 542,
-            "name": "Enzo Le F\u00e9e",
-            "web_name": "E.Le F\u00e9e",
-            "team": "Sunderland",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.2460309206477997,
-            "anytime_prob": 0.21810195224245765,
-            "two_plus_prob": 0.02573085569995226,
-            "first_scorer_prob": 0.0480314918148645,
-            "xg_per_90": 0.3613899613899614,
-            "goals_scored": 1,
-            "xg_share": 0.21985669571452787,
-            "minutes": 518
-          },
-          {
-            "player_id": 544,
-            "name": "Granit Xhaka",
-            "web_name": "Xhaka",
-            "team": "Sunderland",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.1051853156227223,
-            "anytime_prob": 0.09984230615482614,
-            "two_plus_prob": 0.0051589350174996995,
-            "first_scorer_prob": 0.009400404660303088,
-            "xg_per_90": 0.024999999999999998,
-            "goals_scored": 0,
-            "xg_share": 0.09399507943802937,
-            "minutes": 540
-          },
-          {
-            "player_id": 545,
-            "name": "Noah Sadiki",
-            "web_name": "Sadiki",
-            "team": "Sunderland",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.09902460674242422,
-            "anytime_prob": 0.09427957907976281,
-            "two_plus_prob": 0.004590970579553391,
-            "first_scorer_prob": 0.008356753504719115,
-            "xg_per_90": 0.0792,
-            "goals_scored": 0,
-            "xg_share": 0.08848978321707,
-            "minutes": 500
-          },
-          {
-            "player_id": 533,
-            "name": "Nordi Mukiele",
-            "web_name": "Mukiele",
-            "team": "Sunderland",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.09581011813688355,
-            "anytime_prob": 0.09136346671292139,
-            "two_plus_prob": 0.004306893115198079,
-            "first_scorer_prob": 0.007835392864104512,
-            "xg_per_90": 0.162,
-            "goals_scored": 0,
-            "xg_share": 0.08561727092729211,
-            "minutes": 450
-          },
-          {
-            "player_id": 551,
-            "name": "Nilson Angulo",
-            "web_name": "N.Angulo",
-            "team": "Sunderland",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.07097045787917299,
-            "anytime_prob": 0.06851059010618032,
-            "two_plus_prob": 0.0024023601764152913,
-            "first_scorer_prob": 0.004352233087751617,
-            "xg_per_90": 0.14025974025974025,
-            "goals_scored": 1,
-            "xg_share": 0.06342020068688303,
-            "minutes": 385
-          },
-          {
-            "player_id": 541,
-            "name": "Thomas Meunier",
-            "web_name": "Meunier",
-            "team": "Sunderland",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.04245594731247887,
-            "anytime_prob": 0.04156731387339352,
-            "two_plus_prob": 0.0008761462486447172,
-            "first_scorer_prob": 0.0015796734808506871,
-            "xg_per_90": 0.1027972027972028,
-            "goals_scored": 0,
-            "xg_share": 0.03793923245490718,
-            "minutes": 429
-          },
-          {
-            "player_id": 536,
-            "name": "Reinildo Mandava",
-            "web_name": "Reinildo",
-            "team": "Sunderland",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.037425088121617225,
-            "anytime_prob": 0.03673342487340936,
-            "two_plus_prob": 0.0006830884146882821,
-            "first_scorer_prob": 0.0012305551563921904,
-            "xg_per_90": 0.0,
-            "goals_scored": 0,
-            "xg_share": 0.033443585828882995,
-            "minutes": 432
-          }
-        ],
-        "top_scorers": [
-          {
-            "player_id": 552,
-            "name": "Brian Brobbey",
-            "web_name": "Brobbey",
-            "team": "Sunderland",
-            "position": "FWD",
-            "side": "away",
-            "lambda_player": 0.34775524360794763,
-            "anytime_prob": 0.29372828042084487,
-            "two_plus_prob": 0.04811858652519169,
-            "first_scorer_prob": 0.0914315918237764,
-            "xg_per_90": 0.6631578947368421,
-            "goals_scored": 3,
-            "xg_share": 0.3107589833657269,
-            "minutes": 399
-          },
-          {
-            "player_id": 68,
-            "name": "Marcus Tavernier",
-            "web_name": "Tavernier",
-            "team": "Bournemouth",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.32211102058814406,
-            "anytime_prob": 0.2753822616234203,
-            "two_plus_prob": 0.04197490237866741,
-            "first_scorer_prob": 0.057018030292193836,
-            "xg_per_90": 0.3084677419354839,
-            "goals_scored": 3,
-            "xg_share": 0.20671010172812077,
-            "minutes": 496
-          },
-          {
-            "player_id": 79,
-            "name": "Francisco Evanilson de Lima Barbosa",
-            "web_name": "Evanilson",
-            "team": "Bournemouth",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.2804260649826195,
-            "anytime_prob": 0.24453820294145479,
-            "two_plus_prob": 0.03268702394762868,
-            "first_scorer_prob": 0.044079408531472894,
-            "xg_per_90": 0.2591439688715953,
-            "goals_scored": 1,
-            "xg_share": 0.17995938268095218,
-            "minutes": 514
-          },
-          {
-            "player_id": 566,
-            "name": "Ant\u00f3nio Jo\u00e3o Pereira de Albuquerque Tavares da Silva",
-            "web_name": "Silva",
-            "team": "Bournemouth",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.2463201922144631,
-            "anytime_prob": 0.21832810040500994,
-            "two_plus_prob": 0.02578652784812749,
-            "first_scorer_prob": 0.03456848249857231,
-            "xg_per_90": 0.21666666666666667,
-            "goals_scored": 0,
-            "xg_share": 0.15807243073326882,
-            "minutes": 540
-          },
-          {
-            "player_id": 542,
-            "name": "Enzo Le F\u00e9e",
-            "web_name": "E.Le F\u00e9e",
-            "team": "Sunderland",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.2460309206477997,
-            "anytime_prob": 0.21810195224245765,
-            "two_plus_prob": 0.02573085569995226,
-            "first_scorer_prob": 0.0480314918148645,
-            "xg_per_90": 0.3613899613899614,
-            "goals_scored": 1,
-            "xg_share": 0.21985669571452787,
-            "minutes": 518
-          },
-          {
-            "player_id": 67,
-            "name": "Rayan Vitor Simpl\u00edcio Rocha",
-            "web_name": "Rayan",
-            "team": "Bournemouth",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.2160038608649907,
-            "anytime_prob": 0.19426780895573392,
-            "two_plus_prob": 0.020226544866964152,
-            "first_scorer_prob": 0.026973234000604664,
-            "xg_per_90": 0.19580152671755724,
-            "goals_scored": 0,
-            "xg_share": 0.13861736233532804,
-            "minutes": 524
-          },
-          {
-            "player_id": 70,
-            "name": "Justin Kluivert",
-            "web_name": "Kluivert",
-            "team": "Bournemouth",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.18758230022486036,
-            "anytime_prob": 0.171039108294876,
-            "two_plus_prob": 0.015540717432377477,
-            "first_scorer_prob": 0.02062328981927017,
-            "xg_per_90": 0.30306122448979594,
-            "goals_scored": 1,
-            "xg_share": 0.12037823571225856,
-            "minutes": 294
-          },
-          {
-            "player_id": 73,
-            "name": "Tyler Adams",
-            "web_name": "Adams",
-            "team": "Bournemouth",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.15148350762461799,
-            "anytime_prob": 0.14056794376786774,
-            "two_plus_prob": 0.010378161324786417,
-            "first_scorer_prob": 0.013687442536721916,
-            "xg_per_90": 0.007317073170731708,
-            "goals_scored": 0,
-            "xg_share": 0.09721235620576554,
-            "minutes": 369
-          }
-        ],
-        "match_xg": {
-          "home": 1.5582742105744134,
-          "away": 1.1190512977019251
-        }
-      },
-      "odds_comparison": {
-        "h2h": {
-          "sport888": {
-            "home": 2.1,
-            "away": 3.3,
-            "draw": 3.25
-          },
-          "leovegas": {
-            "home": 2.15,
-            "away": 3.3,
-            "draw": 3.3
-          },
-          "betfred_uk": {
-            "home": 2.15,
-            "away": 3.4,
-            "draw": 3.4
-          },
-          "williamhill": {
-            "home": 2.15,
-            "away": 3.3,
-            "draw": 3.3
-          },
-          "skybet": {
-            "home": 2.1,
-            "away": 3.4,
-            "draw": 3.3
-          },
-          "paddypower": {
-            "home": 2.1,
-            "away": 3.5,
-            "draw": 3.2
-          },
-          "betfair_ex_uk": {
-            "home": 2.24,
-            "away": 3.75,
-            "draw": 3.4
-          },
-          "boylesports": {
-            "home": 2.1,
-            "away": 3.4,
-            "draw": 3.5
-          },
-          "smarkets": {
-            "home": 2.24,
-            "away": 3.75,
-            "draw": 3.4
-          },
-          "unibet_uk": {
-            "home": 2.2,
-            "away": 3.5,
-            "draw": 3.4
-          },
-          "betway": {
-            "home": 2.1,
-            "away": 3.4,
-            "draw": 3.3
-          },
-          "casumo": {
-            "home": 2.14,
-            "away": 3.5,
-            "draw": 3.35
-          },
-          "virginbet": {
-            "home": 2.1,
-            "away": 3.4,
-            "draw": 3.25
-          },
-          "grosvenor": {
-            "home": 2.12,
-            "away": 3.4,
-            "draw": 3.25
-          },
-          "livescorebet": {
-            "home": 2.14,
-            "away": 3.45,
-            "draw": 3.3
-          },
-          "betvictor": {
-            "home": 2.1,
-            "away": 3.3,
-            "draw": 3.4
-          },
-          "betano_uk": {
-            "home": 2.1,
-            "away": 3.3,
-            "draw": 3.4
-          },
-          "ladbrokes_uk": {
-            "home": 2.15,
-            "away": 3.4,
-            "draw": 3.4
-          },
-          "coral": {
-            "home": 2.15,
-            "away": 3.4,
-            "draw": 3.4
-          },
-          "matchbook": {
-            "home": 2.24,
-            "away": 3.75,
-            "draw": 3.4
-          },
-          "betfair_sb_uk": {
-            "home": 2.15,
-            "away": 3.5,
-            "draw": 3.3
-          }
-        },
-        "totals": {
-          "2.5": {
-            "over": 2.06,
-            "bookmaker_over": "matchbook",
-            "under": 1.92,
-            "bookmaker_under": "matchbook"
-          }
-        },
-        "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "boylesports",
-        "bookmaker_away": "betfair_ex_uk"
-      },
-      "model_disagreement": 0.01027245786409762,
-      "shap_features": [],
-      "value_bets": [],
-      "narrative": "Bournemouth vs Sunderland \u2014 Matchweek 7\n\nOur model rates Bournemouth as 46% favorites (fair odds: 2.17), driven primarily by form and recent results. Bournemouth's expected goals stand at 1.5 while Sunderland are projected for 1.1 xG.\n\nThe match has a 50% chance of going over 2.5 goals, with both teams to score probability at 54%. We expect around 9 total corners and 5 cards."
-    },
-    {
-      "match_id": "20261018_Brighton_Crystal_Palace",
-      "fixture": {
-        "date": "2026-10-18T13:00:00Z",
-        "home_team": "Brighton",
-        "away_team": "Crystal Palace",
-        "gameweek": 7,
-        "referee": null,
-        "is_derby": true
-      },
-      "probabilities": {
-        "1x2": {
-          "home": 0.4806,
-          "draw": 0.2724,
-          "away": 0.247
-        },
-        "over_under": {
-          "0.5": {
-            "over": 0.9204,
-            "under": 0.0796
-          },
-          "1.5": {
-            "over": 0.7556,
-            "under": 0.2444
-          },
-          "2.5": {
-            "over": 0.4974,
-            "under": 0.5026
-          },
-          "3.5": {
-            "over": 0.2844,
-            "under": 0.7156
-          },
-          "4.5": {
-            "over": 0.1338,
-            "under": 0.8662
-          }
-        },
-        "btts": {
-          "yes": 0.5322,
-          "no": 0.4678
-        },
-        "clean_sheet": {
-          "home": 0.3386,
-          "away": 0.2088
-        },
-        "correct_score": {
-          "0-0": 0.0796,
-          "0-1": 0.0644,
-          "0-2": 0.0426,
-          "0-3": 0.0156,
-          "0-4": 0.0052,
-          "0-5": 0.0008,
-          "0-6": 0.0004,
-          "1-0": 0.1004,
-          "1-1": 0.1328,
-          "1-2": 0.0586,
-          "1-3": 0.0238,
-          "1-4": 0.0058,
-          "1-5": 0.0018,
-          "1-6": 0.001,
-          "2-0": 0.0828,
-          "2-1": 0.0932,
-          "2-2": 0.0482,
-          "2-3": 0.015,
-          "2-4": 0.0058,
-          "2-5": 0.0012,
-          "2-6": 0.0004,
-          "3-0": 0.0456,
-          "3-1": 0.0522,
-          "3-2": 0.0264,
-          "3-3": 0.0104,
-          "3-4": 0.003,
-          "3-5": 0.0008,
-          "3-6": 0.0,
-          "4-0": 0.0212,
-          "4-1": 0.022,
-          "4-2": 0.0092,
-          "4-3": 0.0042,
-          "4-4": 0.0014,
-          "4-5": 0.0002,
-          "4-6": 0.0002,
-          "5-0": 0.0056,
-          "5-1": 0.006,
-          "5-2": 0.0036,
-          "5-3": 0.0012,
-          "5-4": 0.0,
-          "5-5": 0.0,
-          "5-6": 0.0,
-          "6-0": 0.0026,
-          "6-1": 0.0018,
-          "6-2": 0.0008,
-          "6-3": 0.0002,
-          "6-4": 0.0,
-          "6-5": 0.0,
-          "6-6": 0.0
-        },
-        "asian_handicap": {
-          "home_-2.5": 0.111,
-          "home_-1.5": 0.2564,
-          "home_-1.0": 0.2564,
-          "home_-0.5": 0.4806,
-          "home_0": 0.4806,
-          "home_0.5": 0.753,
-          "home_1.0": 0.753,
-          "home_1.5": 0.8942,
-          "home_2.5": 0.9674
-        },
-        "ht_ft": {
-          "H/H": 0.3026,
-          "H/D": 0.055,
-          "H/A": 0.016,
-          "D/H": 0.1536,
-          "D/D": 0.1656,
-          "D/A": 0.0846,
-          "A/H": 0.0244,
-          "A/D": 0.0518,
-          "A/A": 0.1464
-        },
-        "corners": {
-          "7.5": {
-            "over": 0.7614,
-            "under": 0.2386
-          },
-          "8.5": {
-            "over": 0.671,
-            "under": 0.329
-          },
-          "9.5": {
-            "over": 0.5666,
-            "under": 0.4334
-          },
-          "10.5": {
-            "over": 0.464,
-            "under": 0.536
-          },
-          "11.5": {
-            "over": 0.377,
-            "under": 0.623
-          },
-          "12.5": {
-            "over": 0.2932,
-            "under": 0.7068
-          }
-        },
-        "cards": {
-          "1.5": {
-            "over": 0.9352,
-            "under": 0.0648
-          },
-          "2.5": {
-            "over": 0.831,
-            "under": 0.169
-          },
-          "3.5": {
-            "over": 0.6684,
-            "under": 0.3316
-          },
-          "4.5": {
-            "over": 0.4996,
-            "under": 0.5004
-          },
-          "5.5": {
-            "over": 0.3432,
-            "under": 0.6568
-          },
-          "6.5": {
-            "over": 0.2242,
-            "under": 0.7758
-          }
-        }
-      },
-      "expected_goals": {
-        "home": 1.5922,
-        "away": 1.0876
-      },
-      "expected_corners": 10.6104,
-      "expected_cards": 4.7536,
-      "distributions": {
-        "goals_home": [
-          0.2088,
-          0.3244,
-          0.2466,
-          0.1384,
-          0.0584,
-          0.0164,
-          0.0054,
-          0.0014
-        ],
-        "goals_away": [
-          0.3386,
-          0.3726,
-          0.1898,
-          0.0706,
-          0.0212,
-          0.0048,
-          0.002,
-          0.0004
-        ],
-        "corners": [
-          0.0002,
-          0.0022,
-          0.0066,
-          0.0174,
-          0.034,
-          0.0372,
-          0.0586,
-          0.0824,
-          0.0904,
-          0.1044,
-          0.1026,
-          0.087,
-          0.0838,
-          0.0636,
-          0.0552,
-          0.046,
-          0.0362,
-          0.0292,
-          0.017,
-          0.015,
-          0.0112
-        ],
-        "cards": [
-          0.0146,
-          0.0502,
-          0.1042,
-          0.1626,
-          0.1688,
-          0.1564,
-          0.119,
-          0.092,
-          0.0606,
-          0.0338,
-          0.0224,
-          0.0092,
-          0.0042
-        ]
-      },
-      "confidence": {
-        "entropy": 1.051793606623301,
-        "home_goals_ci": [
-          0.0,
-          4.0
-        ],
-        "away_goals_ci": [
-          0.0,
-          3.0
-        ]
-      },
-      "n_simulations": 5000,
-      "player_bookings": {
-        "top_bookings": [],
-        "adjustments": {}
-      },
-      "goalscorer": {
-        "home_scorers": [
-          {
-            "player_id": 124,
-            "name": "Pascal Gro\u00df",
-            "web_name": "Gro\u00df",
-            "team": "Brighton",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.3640452155481688,
-            "anytime_prob": 0.30514022443305433,
-            "two_plus_prob": 0.052179847661033396,
-            "first_scorer_prob": 0.07100018215367808,
-            "xg_per_90": 0.33666666666666667,
-            "goals_scored": 3,
-            "xg_share": 0.23225406479106567,
-            "minutes": 540
-          },
-          {
-            "player_id": 115,
-            "name": "Maxim De Cuyper",
-            "web_name": "De Cuyper",
-            "team": "Brighton",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.32439672672609104,
-            "anytime_prob": 0.27703663341155205,
-            "two_plus_prob": 0.04250968374738451,
-            "first_scorer_prob": 0.057440516742029844,
-            "xg_per_90": 0.3306122448979592,
-            "goals_scored": 2,
-            "xg_share": 0.20695906763560307,
-            "minutes": 490
-          },
-          {
-            "player_id": 138,
-            "name": "Charalampos Kostoulas",
-            "web_name": "Kostoulas",
-            "team": "Brighton",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.24509974908193544,
-            "anytime_prob": 0.21737353192346975,
-            "two_plus_prob": 0.025551980973030824,
-            "first_scorer_prob": 0.034052907794004356,
-            "xg_per_90": 0.2970873786407767,
-            "goals_scored": 2,
-            "xg_share": 0.15636907332467787,
-            "minutes": 412
-          },
-          {
-            "player_id": 127,
-            "name": "Diego G\u00f3mez Amarilla",
-            "web_name": "Gomez",
-            "team": "Brighton",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.1838248118114516,
-            "anytime_prob": 0.16791843807969198,
-            "two_plus_prob": 0.01496120154791264,
-            "first_scorer_prob": 0.019729096172300356,
-            "xg_per_90": 0.17653846153846153,
-            "goals_scored": 0,
-            "xg_share": 0.11727680499350841,
-            "minutes": 520
-          },
-          {
-            "player_id": 129,
-            "name": "Yasin Ayari",
-            "web_name": "Ayari",
-            "team": "Brighton",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.1477807310641081,
-            "anytime_prob": 0.13737975997123064,
-            "two_plus_prob": 0.009901110269082691,
-            "first_scorer_prob": 0.01297613149263959,
-            "xg_per_90": 0.17571428571428568,
-            "goals_scored": 1,
-            "xg_share": 0.09428135303399694,
-            "minutes": 420
-          },
-          {
-            "player_id": 504,
-            "name": "Luka Vu\u0161kovi\u0107",
-            "web_name": "Vuskovic",
-            "team": "Brighton",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.13156089472780355,
-            "anytime_prob": 0.12327411447191716,
-            "two_plus_prob": 0.007931272540816714,
-            "first_scorer_prob": 0.010365813331775161,
-            "xg_per_90": 0.12466793168880456,
-            "goals_scored": 1,
-            "xg_share": 0.08393339965221679,
-            "minutes": 527
-          },
-          {
-            "player_id": 116,
-            "name": "Lewis Dunk",
-            "web_name": "Dunk",
-            "team": "Brighton",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.056673549922277994,
-            "anytime_prob": 0.05509751748810754,
-            "two_plus_prob": 0.0015465394737853924,
-            "first_scorer_prob": 0.0019958004773233495,
-            "xg_per_90": 0.006923076923076923,
-            "goals_scored": 1,
-            "xg_share": 0.036156668934018234,
-            "minutes": 390
-          },
-          {
-            "player_id": 114,
-            "name": "Olivier Boscagli",
-            "web_name": "Boscagli",
-            "team": "Brighton",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.05588490543552612,
-            "anytime_prob": 0.054352031431660675,
-            "two_plus_prob": 0.001504584132921656,
-            "first_scorer_prob": 0.0019413997749111577,
-            "xg_per_90": 0.012500000000000002,
-            "goals_scored": 0,
-            "xg_share": 0.03565352844514413,
-            "minutes": 504
-          }
-        ],
-        "away_scorers": [
-          {
-            "player_id": 222,
-            "name": "J\u00f8rgen Strand Larsen",
-            "web_name": "Strand Larsen",
-            "team": "Crystal Palace",
-            "position": "FWD",
-            "side": "away",
-            "lambda_player": 0.23201062597620284,
-            "anytime_prob": 0.20706230247518653,
-            "two_plus_prob": 0.02309233091232557,
-            "first_scorer_prob": 0.04319030836563404,
-            "xg_per_90": 0.3339473684210526,
-            "goals_scored": 1,
-            "xg_share": 0.20787875213776016,
-            "minutes": 380
-          },
-          {
-            "player_id": 588,
-            "name": "Anan Khalaili",
-            "web_name": "Khalaili",
-            "team": "Crystal Palace",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.19087399016481935,
-            "anytime_prob": 0.17376330445839605,
-            "two_plus_prob": 0.016056209559775103,
-            "first_scorer_prob": 0.02981825396783032,
-            "xg_per_90": 0.22260127931769721,
-            "goals_scored": 1,
-            "xg_share": 0.17102081736156155,
-            "minutes": 469
-          },
-          {
-            "player_id": 211,
-            "name": "Y\u00e9remy Pino Santos",
-            "web_name": "Yeremy",
-            "team": "Crystal Palace",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.14315549262361452,
-            "anytime_prob": 0.13338069449108436,
-            "two_plus_prob": 0.009319380893820853,
-            "first_scorer_prob": 0.017166366491204385,
-            "xg_per_90": 0.20128534704370182,
-            "goals_scored": 1,
-            "xg_share": 0.12826561302117118,
-            "minutes": 389
-          },
-          {
-            "player_id": 214,
-            "name": "Daichi Kamada",
-            "web_name": "Kamada",
-            "team": "Crystal Palace",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.13328270002888248,
-            "anytime_prob": 0.12478236691806854,
-            "two_plus_prob": 0.008130997668020945,
-            "first_scorer_prob": 0.014952175686208989,
-            "xg_per_90": 0.13754716981132076,
-            "goals_scored": 1,
-            "xg_share": 0.11941970867488351,
-            "minutes": 530
-          },
-          {
-            "player_id": 204,
-            "name": "Tyrick Mitchell",
-            "web_name": "Mitchell",
-            "team": "Crystal Palace",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.1283463037315165,
-            "anytime_prob": 0.12045126461106215,
-            "two_plus_prob": 0.00756443547216229,
-            "first_scorer_prob": 0.013898634041928532,
-            "xg_per_90": 0.13791748526522593,
-            "goals_scored": 2,
-            "xg_share": 0.1149967565017397,
-            "minutes": 509
-          },
-          {
-            "player_id": 210,
-            "name": "Adam Wharton",
-            "web_name": "Wharton",
-            "team": "Crystal Palace",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.10687297983797431,
-            "anytime_prob": 0.10136018888435883,
-            "two_plus_prob": 0.005319874469395872,
-            "first_scorer_prob": 0.009738963087723169,
-            "xg_per_90": 0.025665399239543727,
-            "goals_scored": 0,
-            "xg_share": 0.09575691454856401,
-            "minutes": 526
-          },
-          {
-            "player_id": 644,
-            "name": "Quinten Timber",
-            "web_name": "Timber",
-            "team": "Crystal Palace",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.10384532344225648,
-            "anytime_prob": 0.09863529337064847,
-            "two_plus_prob": 0.005032783871288832,
-            "first_scorer_prob": 0.009208664996925391,
-            "xg_per_90": 0.09970845481049563,
-            "goals_scored": 0,
-            "xg_share": 0.0930441705490358,
-            "minutes": 343
-          },
-          {
-            "player_id": 203,
-            "name": "Jaydee Canvot",
-            "web_name": "Canvot",
-            "team": "Crystal Palace",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.0371052455018679,
-            "anytime_prob": 0.036425281892501604,
-            "two_plus_prob": 0.0006716054177297176,
-            "first_scorer_prob": 0.0012151100723037831,
-            "xg_per_90": 0.01,
-            "goals_scored": 0,
-            "xg_share": 0.03324585716813115,
-            "minutes": 450
-          }
-        ],
-        "top_scorers": [
-          {
-            "player_id": 124,
-            "name": "Pascal Gro\u00df",
-            "web_name": "Gro\u00df",
-            "team": "Brighton",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.3640452155481688,
-            "anytime_prob": 0.30514022443305433,
-            "two_plus_prob": 0.052179847661033396,
-            "first_scorer_prob": 0.07100018215367808,
-            "xg_per_90": 0.33666666666666667,
-            "goals_scored": 3,
-            "xg_share": 0.23225406479106567,
-            "minutes": 540
-          },
-          {
-            "player_id": 115,
-            "name": "Maxim De Cuyper",
-            "web_name": "De Cuyper",
-            "team": "Brighton",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.32439672672609104,
-            "anytime_prob": 0.27703663341155205,
-            "two_plus_prob": 0.04250968374738451,
-            "first_scorer_prob": 0.057440516742029844,
-            "xg_per_90": 0.3306122448979592,
-            "goals_scored": 2,
-            "xg_share": 0.20695906763560307,
-            "minutes": 490
-          },
-          {
-            "player_id": 138,
-            "name": "Charalampos Kostoulas",
-            "web_name": "Kostoulas",
-            "team": "Brighton",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.24509974908193544,
-            "anytime_prob": 0.21737353192346975,
-            "two_plus_prob": 0.025551980973030824,
-            "first_scorer_prob": 0.034052907794004356,
-            "xg_per_90": 0.2970873786407767,
-            "goals_scored": 2,
-            "xg_share": 0.15636907332467787,
-            "minutes": 412
-          },
-          {
-            "player_id": 222,
-            "name": "J\u00f8rgen Strand Larsen",
-            "web_name": "Strand Larsen",
-            "team": "Crystal Palace",
-            "position": "FWD",
-            "side": "away",
-            "lambda_player": 0.23201062597620284,
-            "anytime_prob": 0.20706230247518653,
-            "two_plus_prob": 0.02309233091232557,
-            "first_scorer_prob": 0.04319030836563404,
-            "xg_per_90": 0.3339473684210526,
-            "goals_scored": 1,
-            "xg_share": 0.20787875213776016,
-            "minutes": 380
-          },
-          {
-            "player_id": 588,
-            "name": "Anan Khalaili",
-            "web_name": "Khalaili",
-            "team": "Crystal Palace",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.19087399016481935,
-            "anytime_prob": 0.17376330445839605,
-            "two_plus_prob": 0.016056209559775103,
-            "first_scorer_prob": 0.02981825396783032,
-            "xg_per_90": 0.22260127931769721,
-            "goals_scored": 1,
-            "xg_share": 0.17102081736156155,
-            "minutes": 469
-          },
-          {
-            "player_id": 127,
-            "name": "Diego G\u00f3mez Amarilla",
-            "web_name": "Gomez",
-            "team": "Brighton",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.1838248118114516,
-            "anytime_prob": 0.16791843807969198,
-            "two_plus_prob": 0.01496120154791264,
-            "first_scorer_prob": 0.019729096172300356,
-            "xg_per_90": 0.17653846153846153,
-            "goals_scored": 0,
-            "xg_share": 0.11727680499350841,
-            "minutes": 520
-          },
-          {
-            "player_id": 129,
-            "name": "Yasin Ayari",
-            "web_name": "Ayari",
-            "team": "Brighton",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.1477807310641081,
-            "anytime_prob": 0.13737975997123064,
-            "two_plus_prob": 0.009901110269082691,
-            "first_scorer_prob": 0.01297613149263959,
-            "xg_per_90": 0.17571428571428568,
-            "goals_scored": 1,
-            "xg_share": 0.09428135303399694,
-            "minutes": 420
-          },
-          {
-            "player_id": 211,
-            "name": "Y\u00e9remy Pino Santos",
-            "web_name": "Yeremy",
-            "team": "Crystal Palace",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.14315549262361452,
-            "anytime_prob": 0.13338069449108436,
-            "two_plus_prob": 0.009319380893820853,
-            "first_scorer_prob": 0.017166366491204385,
-            "xg_per_90": 0.20128534704370182,
-            "goals_scored": 1,
-            "xg_share": 0.12826561302117118,
-            "minutes": 389
-          }
-        ],
-        "match_xg": {
-          "home": 1.5674438932884196,
-          "away": 1.1160862935258078
-        }
-      },
-      "odds_comparison": {
-        "h2h": {
-          "sport888": {
-            "home": 1.44,
-            "away": 5.75,
-            "draw": 4.4
-          },
-          "leovegas": {
-            "home": 1.45,
-            "away": 6.0,
-            "draw": 4.5
-          },
-          "betfred_uk": {
-            "home": 1.44,
-            "away": 6.5,
-            "draw": 4.6
-          },
-          "williamhill": {
-            "home": 1.5,
-            "away": 6.0,
-            "draw": 4.4
-          },
-          "skybet": {
-            "home": 1.44,
-            "away": 6.5,
-            "draw": 4.75
-          },
-          "paddypower": {
-            "home": 1.44,
-            "away": 6.5,
-            "draw": 4.5
-          },
-          "betfair_ex_uk": {
-            "home": 1.52,
-            "away": 7.2,
-            "draw": 4.9
-          },
-          "boylesports": {
-            "home": 1.44,
-            "away": 6.0,
-            "draw": 4.5
-          },
-          "smarkets": {
-            "home": 1.52,
-            "away": 7.2,
-            "draw": 4.9
-          },
-          "unibet_uk": {
-            "home": 1.5,
-            "away": 6.5,
-            "draw": 4.75
-          },
-          "betway": {
-            "home": 1.48,
-            "away": 6.0,
-            "draw": 4.5
-          },
-          "virginbet": {
-            "home": 1.45,
-            "away": 6.1,
-            "draw": 4.6
-          },
-          "livescorebet": {
-            "home": 1.45,
-            "away": 6.1,
-            "draw": 4.6
-          },
-          "casumo": {
-            "home": 1.47,
-            "away": 6.4,
-            "draw": 4.75
-          },
-          "grosvenor": {
-            "home": 1.45,
-            "away": 6.1,
-            "draw": 4.6
-          },
-          "betvictor": {
-            "home": 1.45,
-            "away": 6.0,
-            "draw": 4.6
-          },
-          "betano_uk": {
-            "home": 1.45,
-            "away": 6.0,
-            "draw": 4.6
-          },
-          "ladbrokes_uk": {
-            "home": 1.5,
-            "away": 5.75,
-            "draw": 4.6
-          },
-          "coral": {
-            "home": 1.5,
-            "away": 5.75,
-            "draw": 4.6
-          },
-          "matchbook": {
-            "home": 1.51,
-            "away": 7.0,
-            "draw": 4.9
-          },
-          "betfair_sb_uk": {
-            "home": 1.47,
-            "away": 6.5,
-            "draw": 4.6
-          }
-        },
-        "totals": {
-          "3.5": {
-            "over": 2.46,
-            "bookmaker_over": "matchbook",
-            "under": 1.67,
-            "bookmaker_under": "matchbook"
-          },
-          "2.5": {
-            "over": 1.55,
-            "bookmaker_over": "williamhill",
-            "under": 2.38,
-            "bookmaker_under": "williamhill"
-          }
-        },
-        "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfair_ex_uk",
-        "bookmaker_away": "betfair_ex_uk"
-      },
-      "model_disagreement": 0.009397212434315063,
-      "shap_features": [],
-      "value_bets": [
-        {
-          "market": "Under 3.5 Goals",
-          "market_type": "over_under",
-          "confidence": "medium",
-          "confidence_tier": "medium",
-          "bookmaker": "matchbook",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.1199583535108959,
-          "model_prob": 0.7156,
-          "implied_prob": 0.5956416464891041,
-          "raw_implied_prob": 0.5988023952095809,
-          "expected_value": 0.19505199999999995,
-          "recommendation": "bet",
-          "decimal_odds": 1.67
-        },
-        {
-          "market": "Away Win",
-          "market_type": "1x2",
-          "confidence": "medium",
-          "confidence_tier": "medium",
-          "bookmaker": "betfair_ex_uk",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.10823118199433596,
-          "model_prob": 0.247,
-          "implied_prob": 0.13876881800566404,
-          "raw_implied_prob": 0.1388888888888889,
-          "expected_value": 0.7784000000000001,
-          "recommendation": "bet",
-          "decimal_odds": 7.2
-        },
-        {
-          "market": "Draw",
-          "market_type": "1x2",
-          "confidence": "low",
-          "confidence_tier": "low",
-          "bookmaker": "betfair_ex_uk",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.06849479803249367,
-          "model_prob": 0.2724,
-          "implied_prob": 0.2039052019675063,
-          "raw_implied_prob": 0.2040816326530612,
-          "expected_value": 0.33475999999999995,
-          "recommendation": "bet",
-          "decimal_odds": 4.9
-        }
-      ],
-      "narrative": "Brighton vs Crystal Palace \u2014 Matchweek 7\n\nOur model rates Brighton as 48% favorites (fair odds: 2.08), driven primarily by form and recent results. Brighton's expected goals stand at 1.6 while Crystal Palace are projected for 1.1 xG.\n\nThe match has a 50% chance of going over 2.5 goals, with both teams to score probability at 53%. We expect around 11 total corners and 5 cards."
-    },
-    {
-      "match_id": "20261018_Leeds_Man_United",
-      "fixture": {
-        "date": "2026-10-18T13:00:00Z",
-        "home_team": "Leeds",
-        "away_team": "Man United",
-        "gameweek": 7,
-        "referee": null,
-        "is_derby": true
-      },
-      "probabilities": {
-        "1x2": {
-          "home": 0.3698,
-          "draw": 0.2726,
-          "away": 0.3576
-        },
-        "over_under": {
-          "0.5": {
-            "over": 0.9346,
-            "under": 0.0654
-          },
-          "1.5": {
-            "over": 0.7912,
-            "under": 0.2088
-          },
-          "2.5": {
-            "over": 0.5524,
-            "under": 0.4476
-          },
-          "3.5": {
-            "over": 0.3342,
-            "under": 0.6658
-          },
-          "4.5": {
-            "over": 0.1724,
-            "under": 0.8276
-          }
-        },
-        "btts": {
-          "yes": 0.5888,
-          "no": 0.4112
-        },
-        "clean_sheet": {
-          "home": 0.2398,
-          "away": 0.2368
-        },
-        "correct_score": {
-          "0-0": 0.0654,
-          "0-1": 0.0704,
-          "0-2": 0.0532,
-          "0-3": 0.0316,
-          "0-4": 0.0122,
-          "0-5": 0.003,
-          "0-6": 0.0008,
-          "1-0": 0.073,
-          "1-1": 0.128,
-          "1-2": 0.084,
-          "1-3": 0.038,
-          "1-4": 0.0146,
-          "1-5": 0.005,
-          "1-6": 0.0016,
-          "2-0": 0.0576,
-          "2-1": 0.0722,
-          "2-2": 0.0602,
-          "2-3": 0.021,
-          "2-4": 0.0094,
-          "2-5": 0.0024,
-          "2-6": 0.0012,
-          "3-0": 0.0304,
-          "3-1": 0.0416,
-          "3-2": 0.0332,
-          "3-3": 0.0172,
-          "3-4": 0.0072,
-          "3-5": 0.001,
-          "3-6": 0.0008,
-          "4-0": 0.0098,
-          "4-1": 0.0136,
-          "4-2": 0.014,
-          "4-3": 0.0056,
-          "4-4": 0.0018,
-          "4-5": 0.0,
-          "4-6": 0.0,
-          "5-0": 0.0028,
-          "5-1": 0.0052,
-          "5-2": 0.0042,
-          "5-3": 0.0016,
-          "5-4": 0.0004,
-          "5-5": 0.0,
-          "5-6": 0.0,
-          "6-0": 0.0008,
-          "6-1": 0.0014,
-          "6-2": 0.0008,
-          "6-3": 0.0004,
-          "6-4": 0.0004,
-          "6-5": 0.0,
-          "6-6": 0.0
-        },
-        "asian_handicap": {
-          "home_-2.5": 0.0702,
-          "home_-1.5": 0.1854,
-          "home_-1.0": 0.1854,
-          "home_-0.5": 0.3698,
-          "home_0": 0.3698,
-          "home_0.5": 0.6424,
-          "home_1.0": 0.6424,
-          "home_1.5": 0.825,
-          "home_2.5": 0.9266
-        },
-        "ht_ft": {
-          "H/H": 0.2158,
-          "H/D": 0.0524,
-          "H/A": 0.0266,
-          "D/H": 0.1292,
-          "D/D": 0.1596,
-          "D/A": 0.122,
-          "A/H": 0.0248,
-          "A/D": 0.0606,
-          "A/A": 0.209
-        },
-        "corners": {
-          "7.5": {
-            "over": 0.6104,
-            "under": 0.3896
-          },
-          "8.5": {
-            "over": 0.5056,
-            "under": 0.4944
-          },
-          "9.5": {
-            "over": 0.405,
-            "under": 0.595
-          },
-          "10.5": {
-            "over": 0.3198,
-            "under": 0.6802
-          },
-          "11.5": {
-            "over": 0.2458,
-            "under": 0.7542
-          },
-          "12.5": {
-            "over": 0.1834,
-            "under": 0.8166
-          }
-        },
-        "cards": {
-          "1.5": {
-            "over": 0.882,
-            "under": 0.118
-          },
-          "2.5": {
-            "over": 0.723,
-            "under": 0.277
-          },
-          "3.5": {
-            "over": 0.5276,
-            "under": 0.4724
-          },
-          "4.5": {
-            "over": 0.347,
-            "under": 0.653
-          },
-          "5.5": {
-            "over": 0.2016,
-            "under": 0.7984
-          },
-          "6.5": {
-            "over": 0.1132,
-            "under": 0.8868
-          }
-        }
-      },
-      "expected_goals": {
-        "home": 1.465,
-        "away": 1.4478
-      },
-      "expected_corners": 8.9818,
-      "expected_cards": 3.8838,
-      "distributions": {
-        "goals_home": [
-          0.2368,
-          0.3442,
-          0.224,
-          0.1314,
-          0.0448,
-          0.0142,
-          0.0038,
-          0.0008
-        ],
-        "goals_away": [
-          0.2398,
-          0.333,
-          0.2496,
-          0.1156,
-          0.046,
-          0.0114,
-          0.0044,
-          0.0002
-        ],
-        "corners": [
-          0.0018,
-          0.0064,
-          0.0224,
-          0.0384,
-          0.0568,
-          0.0704,
-          0.0948,
-          0.0986,
-          0.1048,
-          0.1006,
-          0.0852,
-          0.074,
-          0.0624,
-          0.047,
-          0.042,
-          0.0302,
-          0.0184,
-          0.013,
-          0.0108,
-          0.0076,
-          0.0062
-        ],
-        "cards": [
-          0.0238,
-          0.0942,
-          0.159,
-          0.1954,
-          0.1806,
-          0.1454,
-          0.0884,
-          0.0522,
-          0.0286,
-          0.0186,
-          0.0092,
-          0.0036,
-          0.0006
-        ]
-      },
-      "confidence": {
-        "entropy": 1.0899206893985187,
-        "home_goals_ci": [
-          0.0,
-          4.0
-        ],
-        "away_goals_ci": [
-          0.0,
-          4.0
-        ]
-      },
-      "n_simulations": 5000,
-      "player_bookings": {
-        "top_bookings": [],
-        "adjustments": {}
-      },
-      "goalscorer": {
-        "home_scorers": [
-          {
-            "player_id": 346,
-            "name": "Dominic Calvert-Lewin",
-            "web_name": "Calvert-Lewin",
-            "team": "Leeds",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.45860317967074127,
-            "anytime_prob": 0.36783394852567686,
-            "two_plus_prob": 0.07792058723965478,
-            "first_scorer_prob": 0.1174748960321795,
-            "xg_per_90": 0.5304518664047151,
-            "goals_scored": 2,
-            "xg_share": 0.31884054274312545,
-            "minutes": 509
-          },
-          {
-            "player_id": 330,
-            "name": "Jayden Bogle",
-            "web_name": "Bogle",
-            "team": "Leeds",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.2277729125698015,
-            "anytime_prob": 0.20369492982316073,
-            "two_plus_prob": 0.022318204694881855,
-            "first_scorer_prob": 0.03231011419759825,
-            "xg_per_90": 0.298,
-            "goals_scored": 2,
-            "xg_share": 0.158357469562419,
-            "minutes": 450
-          },
-          {
-            "player_id": 335,
-            "name": "Anton Stach",
-            "web_name": "Stach",
-            "team": "Leeds",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.1620397901503286,
-            "anytime_prob": 0.14959263396991718,
-            "two_plus_prob": 0.011792802836108868,
-            "first_scorer_prob": 0.01688060780761362,
-            "xg_per_90": 0.1776536312849162,
-            "goals_scored": 1,
-            "xg_share": 0.11265699176923769,
-            "minutes": 537
-          },
-          {
-            "player_id": 338,
-            "name": "Ethan Ampadu",
-            "web_name": "Ampadu",
-            "team": "Leeds",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.13596605923787514,
-            "anytime_prob": 0.12712774206436672,
-            "two_plus_prob": 0.008446740934792585,
-            "first_scorer_prob": 0.012037243407019876,
-            "xg_per_90": 0.018333333333333333,
-            "goals_scored": 0,
-            "xg_share": 0.09452941899175818,
-            "minutes": 540
-          },
-          {
-            "player_id": 336,
-            "name": "Noah Okafor",
-            "web_name": "Okafor",
-            "team": "Leeds",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.13051051581251202,
-            "anytime_prob": 0.12235273627386478,
-            "two_plus_prob": 0.0078105391835271015,
-            "first_scorer_prob": 0.011120271511692276,
-            "xg_per_90": 0.056097560975609764,
-            "goals_scored": 1,
-            "xg_share": 0.09073649189528597,
-            "minutes": 369
-          },
-          {
-            "player_id": 345,
-            "name": "Tanaka Ao",
-            "web_name": "Tanaka",
-            "team": "Leeds",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.12382285851110016,
-            "anytime_prob": 0.1164636620363173,
-            "two_plus_prob": 0.007061667071224659,
-            "first_scorer_prob": 0.01004263008866301,
-            "xg_per_90": 0.22430769230769232,
-            "goals_scored": 0,
-            "xg_share": 0.08608694654064389,
-            "minutes": 325
-          },
-          {
-            "player_id": 334,
-            "name": "Tarik Muharemovi\u0107",
-            "web_name": "Muharemovi\u0107",
-            "team": "Leeds",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.05431512618748391,
-            "anytime_prob": 0.052866407128622006,
-            "two_plus_prob": 0.0014227265154080973,
-            "first_scorer_prob": 0.001999662893288094,
-            "xg_per_90": 0.08166666666666667,
-            "goals_scored": 0,
-            "xg_share": 0.03776219852032481,
-            "minutes": 540
-          },
-          {
-            "player_id": 332,
-            "name": "James Justin",
-            "web_name": "Justin",
-            "team": "Leeds",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.05071723137524039,
-            "anytime_prob": 0.04945258247995088,
-            "two_plus_prob": 0.0012434491724493194,
-            "first_scorer_prob": 0.0017466291834766661,
-            "xg_per_90": 0.06988636363636364,
-            "goals_scored": 1,
-            "xg_share": 0.035260788182324074,
-            "minutes": 528
-          }
-        ],
-        "away_scorers": [
-          {
-            "player_id": 427,
-            "name": "Bryan Mbeumo",
-            "web_name": "Mbeumo",
-            "team": "Man United",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.4422526038011394,
-            "anytime_prob": 0.35741270504078937,
-            "two_plus_prob": 0.07322680067554771,
-            "first_scorer_prob": 0.11215653025811452,
-            "xg_per_90": 0.5516666666666666,
-            "goals_scored": 3,
-            "xg_share": 0.31325296643934525,
-            "minutes": 540
-          },
-          {
-            "player_id": 426,
-            "name": "Bruno Borges Fernandes",
-            "web_name": "B.Fernandes",
-            "team": "Man United",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.34471653105949845,
-            "anytime_prob": 0.29157885960187624,
-            "two_plus_prob": 0.04737438155462109,
-            "first_scorer_prob": 0.07131852031581488,
-            "xg_per_90": 0.43,
-            "goals_scored": 3,
-            "xg_share": 0.24416696477749572,
-            "minutes": 540
-          },
-          {
-            "player_id": 432,
-            "name": "Kobbie Mainoo",
-            "web_name": "Mainoo",
-            "team": "Man United",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.13180196481742357,
-            "anytime_prob": 0.12348544138639106,
-            "two_plus_prob": 0.007959100370040634,
-            "first_scorer_prob": 0.01154840013632996,
-            "xg_per_90": 0.06081081081081081,
-            "goals_scored": 0,
-            "xg_share": 0.09335695506760017,
-            "minutes": 444
-          },
-          {
-            "player_id": 428,
-            "name": "Matheus Santos Carneiro da Cunha",
-            "web_name": "Cunha",
-            "team": "Man United",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.10822495742565649,
-            "anytime_prob": 0.10257430885195862,
-            "two_plus_prob": 0.00545045163477148,
-            "first_scorer_prob": 0.007876806980046272,
-            "xg_per_90": 0.1466800804828974,
-            "goals_scored": 1,
-            "xg_share": 0.07665707033712076,
-            "minutes": 497
-          },
-          {
-            "player_id": 429,
-            "name": "Marcus Rashford",
-            "web_name": "Rashford",
-            "team": "Man United",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.10421662566915069,
-            "anytime_prob": 0.09896990996767563,
-            "two_plus_prob": 0.005067594358135738,
-            "first_scorer_prob": 0.007318538518364194,
-            "xg_per_90": 0.19943181818181818,
-            "goals_scored": 0,
-            "xg_share": 0.07381791958389405,
-            "minutes": 352
-          },
-          {
-            "player_id": 43,
-            "name": "Youri Tielemans",
-            "web_name": "Tielemans",
-            "team": "Man United",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.08684718805762558,
-            "anytime_prob": 0.08318281445590081,
-            "two_plus_prob": 0.00355981992848943,
-            "first_scorer_prob": 0.005125940398284383,
-            "xg_per_90": 0.12717391304347828,
-            "goals_scored": 0,
-            "xg_share": 0.06151493298657838,
-            "minutes": 460
-          },
-          {
-            "player_id": 423,
-            "name": "Luke Shaw",
-            "web_name": "Shaw",
-            "team": "Man United",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.04864938975082794,
-            "anytime_prob": 0.04748496730686902,
-            "two_plus_prob": 0.0011456922378582715,
-            "first_scorer_prob": 0.0016391463106118546,
-            "xg_per_90": 0.006352941176470588,
-            "goals_scored": 0,
-            "xg_share": 0.03445896196862927,
-            "minutes": 425
-          },
-          {
-            "player_id": 418,
-            "name": "Harry Maguire",
-            "web_name": "Maguire",
-            "team": "Man United",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.048277416563824206,
-            "anytime_prob": 0.04713059134939812,
-            "two_plus_prob": 0.001128517977048181,
-            "first_scorer_prob": 0.0016144741328370019,
-            "xg_per_90": 0.05333333333333334,
-            "goals_scored": 0,
-            "xg_share": 0.034195488778729834,
-            "minutes": 540
-          }
-        ],
-        "top_scorers": [
-          {
-            "player_id": 346,
-            "name": "Dominic Calvert-Lewin",
-            "web_name": "Calvert-Lewin",
-            "team": "Leeds",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.45860317967074127,
-            "anytime_prob": 0.36783394852567686,
-            "two_plus_prob": 0.07792058723965478,
-            "first_scorer_prob": 0.1174748960321795,
-            "xg_per_90": 0.5304518664047151,
-            "goals_scored": 2,
-            "xg_share": 0.31884054274312545,
-            "minutes": 509
-          },
-          {
-            "player_id": 427,
-            "name": "Bryan Mbeumo",
-            "web_name": "Mbeumo",
-            "team": "Man United",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.4422526038011394,
-            "anytime_prob": 0.35741270504078937,
-            "two_plus_prob": 0.07322680067554771,
-            "first_scorer_prob": 0.11215653025811452,
-            "xg_per_90": 0.5516666666666666,
-            "goals_scored": 3,
-            "xg_share": 0.31325296643934525,
-            "minutes": 540
-          },
-          {
-            "player_id": 426,
-            "name": "Bruno Borges Fernandes",
-            "web_name": "B.Fernandes",
-            "team": "Man United",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.34471653105949845,
-            "anytime_prob": 0.29157885960187624,
-            "two_plus_prob": 0.04737438155462109,
-            "first_scorer_prob": 0.07131852031581488,
-            "xg_per_90": 0.43,
-            "goals_scored": 3,
-            "xg_share": 0.24416696477749572,
-            "minutes": 540
-          },
-          {
-            "player_id": 330,
-            "name": "Jayden Bogle",
-            "web_name": "Bogle",
-            "team": "Leeds",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.2277729125698015,
-            "anytime_prob": 0.20369492982316073,
-            "two_plus_prob": 0.022318204694881855,
-            "first_scorer_prob": 0.03231011419759825,
-            "xg_per_90": 0.298,
-            "goals_scored": 2,
-            "xg_share": 0.158357469562419,
-            "minutes": 450
-          },
-          {
-            "player_id": 335,
-            "name": "Anton Stach",
-            "web_name": "Stach",
-            "team": "Leeds",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.1620397901503286,
-            "anytime_prob": 0.14959263396991718,
-            "two_plus_prob": 0.011792802836108868,
-            "first_scorer_prob": 0.01688060780761362,
-            "xg_per_90": 0.1776536312849162,
-            "goals_scored": 1,
-            "xg_share": 0.11265699176923769,
-            "minutes": 537
-          },
-          {
-            "player_id": 338,
-            "name": "Ethan Ampadu",
-            "web_name": "Ampadu",
-            "team": "Leeds",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.13596605923787514,
-            "anytime_prob": 0.12712774206436672,
-            "two_plus_prob": 0.008446740934792585,
-            "first_scorer_prob": 0.012037243407019876,
-            "xg_per_90": 0.018333333333333333,
-            "goals_scored": 0,
-            "xg_share": 0.09452941899175818,
-            "minutes": 540
-          },
-          {
-            "player_id": 432,
-            "name": "Kobbie Mainoo",
-            "web_name": "Mainoo",
-            "team": "Man United",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.13180196481742357,
-            "anytime_prob": 0.12348544138639106,
-            "two_plus_prob": 0.007959100370040634,
-            "first_scorer_prob": 0.01154840013632996,
-            "xg_per_90": 0.06081081081081081,
-            "goals_scored": 0,
-            "xg_share": 0.09335695506760017,
-            "minutes": 444
-          },
-          {
-            "player_id": 336,
-            "name": "Noah Okafor",
-            "web_name": "Okafor",
-            "team": "Leeds",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.13051051581251202,
-            "anytime_prob": 0.12235273627386478,
-            "two_plus_prob": 0.0078105391835271015,
-            "first_scorer_prob": 0.011120271511692276,
-            "xg_per_90": 0.056097560975609764,
-            "goals_scored": 1,
-            "xg_share": 0.09073649189528597,
-            "minutes": 369
-          }
-        ],
-        "match_xg": {
-          "home": 1.4383465030048448,
-          "away": 1.4118065946129585
-        }
-      },
-      "odds_comparison": {
-        "h2h": {
-          "paddypower": {
-            "home": 2.5,
-            "away": 2.7,
-            "draw": 3.4
-          },
-          "sport888": {
-            "home": 2.45,
-            "away": 2.75,
-            "draw": 3.25
-          },
-          "skybet": {
-            "home": 2.45,
-            "away": 2.7,
-            "draw": 3.5
-          },
-          "leovegas": {
-            "home": 2.45,
-            "away": 2.7,
-            "draw": 3.35
-          },
-          "betfred_uk": {
-            "home": 2.5,
-            "away": 2.75,
-            "draw": 3.5
-          },
-          "williamhill": {
-            "home": 2.45,
-            "away": 2.8,
-            "draw": 3.3
-          },
-          "betfair_ex_uk": {
-            "home": 2.64,
-            "away": 2.86,
-            "draw": 3.6
-          },
-          "boylesports": {
-            "home": 2.4,
-            "away": 2.75,
-            "draw": 3.5
-          },
-          "smarkets": {
-            "home": 2.64,
-            "away": 2.86,
-            "draw": 3.6
-          },
-          "unibet_uk": {
-            "home": 2.5,
-            "away": 2.8,
-            "draw": 3.5
-          },
-          "betway": {
-            "home": 2.4,
-            "away": 2.75,
-            "draw": 3.4
-          },
-          "virginbet": {
-            "home": 2.48,
-            "away": 2.7,
-            "draw": 3.35
-          },
-          "livescorebet": {
-            "home": 2.48,
-            "away": 2.7,
-            "draw": 3.35
-          },
-          "casumo": {
-            "home": 2.5,
-            "away": 2.8,
-            "draw": 3.4
-          },
-          "grosvenor": {
-            "home": 2.48,
-            "away": 2.75,
-            "draw": 3.35
-          },
-          "betvictor": {
-            "home": 2.45,
-            "away": 2.7,
-            "draw": 3.4
-          },
-          "betano_uk": {
-            "home": 2.45,
-            "away": 2.7,
-            "draw": 3.4
-          },
-          "ladbrokes_uk": {
-            "home": 2.45,
-            "away": 2.75,
-            "draw": 3.4
-          },
-          "coral": {
-            "home": 2.5,
-            "away": 2.75,
-            "draw": 3.4
-          },
-          "matchbook": {
-            "home": 2.64,
-            "away": 2.86,
-            "draw": 3.6
-          },
-          "betfair_sb_uk": {
-            "home": 2.5,
-            "away": 2.75,
-            "draw": 3.4
-          }
-        },
-        "totals": {
-          "2.5": {
-            "over": 1.9,
-            "bookmaker_over": "matchbook",
-            "under": 2.1,
-            "bookmaker_under": "matchbook"
-          }
-        },
-        "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfair_ex_uk",
-        "bookmaker_away": "betfair_ex_uk"
-      },
-      "model_disagreement": 0.012901580912120245,
-      "shap_features": [],
-      "value_bets": [],
-      "narrative": "Leeds vs Man United \u2014 Matchweek 7\n\nOur model rates Leeds as 37% favorites (fair odds: 2.70), driven primarily by form and recent results. Leeds's expected goals stand at 1.5 while Man United are projected for 1.4 xG.\n\nThe match has a 55% chance of going over 2.5 goals, with both teams to score probability at 59%. We expect around 9 total corners and 4 cards."
-    },
-    {
-      "match_id": "20261018_Nott'm_Forest_Arsenal",
-      "fixture": {
-        "date": "2026-10-18T15:30:00Z",
-        "home_team": "Nott'm Forest",
-        "away_team": "Arsenal",
-        "gameweek": 7,
-        "referee": null,
-        "is_derby": false
-      },
-      "probabilities": {
-        "1x2": {
-          "home": 0.2832,
-          "draw": 0.2904,
-          "away": 0.4264
-        },
-        "over_under": {
-          "0.5": {
-            "over": 0.916,
-            "under": 0.084
-          },
-          "1.5": {
-            "over": 0.7468,
-            "under": 0.2532
-          },
-          "2.5": {
-            "over": 0.48,
-            "under": 0.52
-          },
-          "3.5": {
-            "over": 0.2706,
-            "under": 0.7294
-          },
-          "4.5": {
-            "over": 0.132,
-            "under": 0.868
-          }
-        },
-        "btts": {
-          "yes": 0.5288,
-          "no": 0.47119999999999995
-        },
-        "clean_sheet": {
-          "home": 0.2362,
-          "away": 0.319
-        },
-        "correct_score": {
-          "0-0": 0.084,
-          "0-1": 0.0952,
-          "0-2": 0.0798,
-          "0-3": 0.0406,
-          "0-4": 0.0142,
-          "0-5": 0.0042,
-          "0-6": 0.0006,
-          "1-0": 0.074,
-          "1-1": 0.1374,
-          "1-2": 0.085,
-          "1-3": 0.0396,
-          "1-4": 0.0152,
-          "1-5": 0.0046,
-          "1-6": 0.0012,
-          "2-0": 0.0496,
-          "2-1": 0.064,
-          "2-2": 0.055,
-          "2-3": 0.0256,
-          "2-4": 0.0092,
-          "2-5": 0.0026,
-          "2-6": 0.0008,
-          "3-0": 0.0198,
-          "3-1": 0.0234,
-          "3-2": 0.0174,
-          "3-3": 0.0132,
-          "3-4": 0.0038,
-          "3-5": 0.0008,
-          "3-6": 0.0004,
-          "4-0": 0.0064,
-          "4-1": 0.0086,
-          "4-2": 0.0076,
-          "4-3": 0.004,
-          "4-4": 0.0008,
-          "4-5": 0.0008,
-          "4-6": 0.0,
-          "5-0": 0.002,
-          "5-1": 0.0014,
-          "5-2": 0.0018,
-          "5-3": 0.0008,
-          "5-4": 0.0006,
-          "5-5": 0.0,
-          "5-6": 0.0,
-          "6-0": 0.0,
-          "6-1": 0.0004,
-          "6-2": 0.0006,
-          "6-3": 0.0002,
-          "6-4": 0.0,
-          "6-5": 0.0,
-          "6-6": 0.0
-        },
-        "asian_handicap": {
-          "home_-2.5": 0.0418,
-          "home_-1.5": 0.1232,
-          "home_-1.0": 0.1232,
-          "home_-0.5": 0.2832,
-          "home_0": 0.2832,
-          "home_0.5": 0.5736,
-          "home_1.0": 0.5736,
-          "home_1.5": 0.784,
-          "home_2.5": 0.9134
-        },
-        "ht_ft": {
-          "H/H": 0.1594,
-          "H/D": 0.053,
-          "H/A": 0.0246,
-          "D/H": 0.1054,
-          "D/D": 0.1786,
-          "D/A": 0.143,
-          "A/H": 0.0184,
-          "A/D": 0.0588,
-          "A/A": 0.2588
-        },
-        "corners": {
-          "7.5": {
-            "over": 0.7124,
-            "under": 0.2876
-          },
-          "8.5": {
-            "over": 0.6102,
-            "under": 0.3898
-          },
-          "9.5": {
-            "over": 0.506,
-            "under": 0.494
-          },
-          "10.5": {
-            "over": 0.4026,
-            "under": 0.5974
-          },
-          "11.5": {
-            "over": 0.3142,
-            "under": 0.6858
-          },
-          "12.5": {
-            "over": 0.238,
-            "under": 0.762
-          }
-        },
-        "cards": {
-          "1.5": {
-            "over": 0.7784,
-            "under": 0.2216
-          },
-          "2.5": {
-            "over": 0.5304,
-            "under": 0.4696
-          },
-          "3.5": {
-            "over": 0.3044,
-            "under": 0.6956
-          },
-          "4.5": {
-            "over": 0.158,
-            "under": 0.842
-          },
-          "5.5": {
-            "over": 0.0774,
-            "under": 0.9226
-          },
-          "6.5": {
-            "over": 0.0344,
-            "under": 0.9656
-          }
-        }
-      },
-      "expected_goals": {
-        "home": 1.167,
-        "away": 1.4714
-      },
-      "expected_corners": 9.8992,
-      "expected_cards": 2.8424,
-      "distributions": {
-        "goals_home": [
-          0.319,
-          0.3582,
-          0.2072,
-          0.079,
-          0.0282,
-          0.0066,
-          0.0012,
-          0.0004
-        ],
-        "goals_away": [
-          0.2362,
-          0.3306,
-          0.2472,
-          0.124,
-          0.0438,
-          0.013,
-          0.003,
-          0.0014
-        ],
-        "corners": [
-          0.0,
-          0.0016,
-          0.0098,
-          0.0238,
-          0.0356,
-          0.0538,
-          0.0748,
-          0.0882,
-          0.1022,
-          0.1042,
-          0.1034,
-          0.0884,
-          0.0762,
-          0.064,
-          0.0528,
-          0.0342,
-          0.0268,
-          0.0196,
-          0.0138,
-          0.0068,
-          0.0082
-        ],
-        "cards": [
-          0.059,
-          0.1626,
-          0.248,
-          0.226,
-          0.1464,
-          0.0806,
-          0.043,
-          0.0214,
-          0.0094,
-          0.0022,
-          0.001,
-          0.0004,
-          0.0
-        ]
-      },
-      "confidence": {
-        "entropy": 1.0798178261620333,
-        "home_goals_ci": [
-          0.0,
-          3.0
-        ],
-        "away_goals_ci": [
-          0.0,
-          4.0
-        ]
-      },
-      "n_simulations": 5000,
-      "player_bookings": {
-        "top_bookings": [],
-        "adjustments": {}
-      },
-      "goalscorer": {
-        "home_scorers": [
-          {
-            "player_id": 483,
-            "name": "Dan Ndoye",
-            "web_name": "Ndoye",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.2115374661522447,
-            "anytime_prob": 0.1906610423319265,
-            "two_plus_prob": 0.019455529968523372,
-            "first_scorer_prob": 0.03473934225634978,
-            "xg_per_90": 0.4511627906976744,
-            "goals_scored": 2,
-            "xg_share": 0.18190642433480386,
-            "minutes": 387
-          },
-          {
-            "player_id": 167,
-            "name": "Liam Delap",
-            "web_name": "Delap",
-            "team": "Nott'm Forest",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.2071758689119922,
-            "anytime_prob": 0.18712332232113993,
-            "two_plus_prob": 0.0187148903047287,
-            "first_scorer_prob": 0.0333917683672847,
-            "xg_per_90": 0.49137931034482757,
-            "goals_scored": 1,
-            "xg_share": 0.1781557764103749,
-            "minutes": 348
-          },
-          {
-            "player_id": 480,
-            "name": "Morgan Gibbs-White",
-            "web_name": "Gibbs-White",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.17991588616041426,
-            "anytime_prob": 0.16465952784924576,
-            "two_plus_prob": 0.014368506556583949,
-            "first_scorer_prob": 0.025516946819067656,
-            "xg_per_90": 0.27499999999999997,
-            "goals_scored": 1,
-            "xg_share": 0.15471422688269398,
-            "minutes": 540
-          },
-          {
-            "player_id": 201,
-            "name": "Daniel Mu\u00f1oz Mej\u00eda",
-            "web_name": "Mu\u00f1oz",
-            "team": "Nott'm Forest",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.1101303303163748,
-            "anytime_prob": 0.10428261144175932,
-            "two_plus_prob": 0.005636959569719643,
-            "first_scorer_prob": 0.009892160872510502,
-            "xg_per_90": 0.26195965417867434,
-            "goals_scored": 0,
-            "xg_share": 0.09470386009183086,
-            "minutes": 347
-          },
-          {
-            "player_id": 558,
-            "name": "Xaver Schlager",
-            "web_name": "Schlager",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.10176391449012252,
-            "anytime_prob": 0.09675723097120881,
-            "two_plus_prob": 0.0048397110599414095,
-            "first_scorer_prob": 0.008481048873971246,
-            "xg_per_90": 0.06326530612244897,
-            "goals_scored": 0,
-            "xg_share": 0.08750936724319126,
-            "minutes": 441
-          },
-          {
-            "player_id": 486,
-            "name": "James McAtee",
-            "web_name": "McAtee",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.09985920497530427,
-            "anytime_prob": 0.09503517638859738,
-            "two_plus_prob": 0.004666108572146249,
-            "first_scorer_prob": 0.008174191722700853,
-            "xg_per_90": 0.07470355731225296,
-            "goals_scored": 0,
-            "xg_share": 0.08587145929459315,
-            "minutes": 506
-          },
-          {
-            "player_id": 472,
-            "name": "Murillo Costa dos Santos",
-            "web_name": "Murillo",
-            "team": "Nott'm Forest",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.07632795170441818,
-            "anytime_prob": 0.07348769456007254,
-            "two_plus_prob": 0.0027689080569046065,
-            "first_scorer_prob": 0.004831372928740933,
-            "xg_per_90": 0.11688311688311688,
-            "goals_scored": 0,
-            "xg_share": 0.06563633867750654,
-            "minutes": 539
-          },
-          {
-            "player_id": 469,
-            "name": "Neco Williams",
-            "web_name": "N.Williams",
-            "team": "Nott'm Forest",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.06324315998366077,
-            "anytime_prob": 0.061284812034486214,
-            "two_plus_prob": 0.0019174972228910361,
-            "first_scorer_prob": 0.003338402911744353,
-            "xg_per_90": 0.09666666666666666,
-            "goals_scored": 0,
-            "xg_share": 0.0543843949042197,
-            "minutes": 540
-          }
-        ],
-        "away_scorers": [
-          {
-            "player_id": 12,
-            "name": "Bukayo Saka",
-            "web_name": "Saka",
-            "team": "Arsenal",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.4404489719140744,
-            "anytime_prob": 0.3562526682802074,
-            "two_plus_prob": 0.07271481785179612,
-            "first_scorer_prob": 0.10768195566054703,
-            "xg_per_90": 0.6456521739130435,
-            "goals_scored": 3,
-            "xg_share": 0.30177137301984364,
-            "minutes": 506
-          },
-          {
-            "player_id": 15,
-            "name": "Martin \u00d8degaard",
-            "web_name": "\u00d8degaard",
-            "team": "Arsenal",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.23053802937651274,
-            "anytime_prob": 0.20589376493701117,
-            "two_plus_prob": 0.022822078389987926,
-            "first_scorer_prob": 0.03257429158327968,
-            "xg_per_90": 0.3669527896995708,
-            "goals_scored": 2,
-            "xg_share": 0.15795195832994569,
-            "minutes": 466
-          },
-          {
-            "player_id": 26,
-            "name": "Kai Havertz",
-            "web_name": "Havertz",
-            "team": "Arsenal",
-            "position": "FWD",
-            "side": "away",
-            "lambda_player": 0.2196178069323622,
-            "anytime_prob": 0.1971744262962447,
-            "two_plus_prob": 0.020859634450210468,
-            "first_scorer_prob": 0.02971716285209278,
-            "xg_per_90": 0.3264529058116233,
-            "goals_scored": 2,
-            "xg_share": 0.15047002346168514,
-            "minutes": 499
-          },
-          {
-            "player_id": 8,
-            "name": "Riccardo Calafiori",
-            "web_name": "Calafiori",
-            "team": "Arsenal",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.14802968202070818,
-            "anytime_prob": 0.1375944833762609,
-            "two_plus_prob": 0.009932868977544251,
-            "first_scorer_prob": 0.013977806887083607,
-            "xg_per_90": 0.2209255533199195,
-            "goals_scored": 1,
-            "xg_share": 0.10142178376975461,
-            "minutes": 497
-          },
-          {
-            "player_id": 13,
-            "name": "Declan Rice",
-            "web_name": "Rice",
-            "team": "Arsenal",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.13472933642695248,
-            "anytime_prob": 0.12604757323491556,
-            "two_plus_prob": 0.00830054270813095,
-            "first_scorer_prob": 0.01165429125508359,
-            "xg_per_90": 0.02155688622754491,
-            "goals_scored": 0,
-            "xg_share": 0.09230911963065179,
-            "minutes": 501
-          },
-          {
-            "player_id": 7,
-            "name": "Myles Lewis-Skelly",
-            "web_name": "Lewis-Skelly",
-            "team": "Arsenal",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.13154936765121583,
-            "anytime_prob": 0.12326400832724127,
-            "two_plus_prob": 0.00792994302562823,
-            "first_scorer_prob": 0.011127926765801821,
-            "xg_per_90": 0.048648648648648644,
-            "goals_scored": 0,
-            "xg_share": 0.09013038019701432,
-            "minutes": 333
-          },
-          {
-            "player_id": 4,
-            "name": "Gabriel dos Santos Magalh\u00e3es",
-            "web_name": "Gabriel",
-            "team": "Arsenal",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.06188126051685343,
-            "anytime_prob": 0.06000550537471805,
-            "two_plus_prob": 0.0018374611684029984,
-            "first_scorer_prob": 0.002548234888155759,
-            "xg_per_90": 0.085,
-            "goals_scored": 0,
-            "xg_share": 0.04239763092014332,
-            "minutes": 540
-          },
-          {
-            "player_id": 31,
-            "name": "Ezri Konsa Ngoyo",
-            "web_name": "Konsa",
-            "team": "Arsenal",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.04521724373868947,
-            "anytime_prob": 0.04421018007658972,
-            "two_plus_prob": 0.0009919988261547635,
-            "first_scorer_prob": 0.0013718782721373478,
-            "xg_per_90": 0.055795148247978446,
-            "goals_scored": 0,
-            "xg_share": 0.030980364576396958,
-            "minutes": 371
-          }
-        ],
-        "top_scorers": [
-          {
-            "player_id": 12,
-            "name": "Bukayo Saka",
-            "web_name": "Saka",
-            "team": "Arsenal",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.4404489719140744,
-            "anytime_prob": 0.3562526682802074,
-            "two_plus_prob": 0.07271481785179612,
-            "first_scorer_prob": 0.10768195566054703,
-            "xg_per_90": 0.6456521739130435,
-            "goals_scored": 3,
-            "xg_share": 0.30177137301984364,
-            "minutes": 506
-          },
-          {
-            "player_id": 15,
-            "name": "Martin \u00d8degaard",
-            "web_name": "\u00d8degaard",
-            "team": "Arsenal",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.23053802937651274,
-            "anytime_prob": 0.20589376493701117,
-            "two_plus_prob": 0.022822078389987926,
-            "first_scorer_prob": 0.03257429158327968,
-            "xg_per_90": 0.3669527896995708,
-            "goals_scored": 2,
-            "xg_share": 0.15795195832994569,
-            "minutes": 466
-          },
-          {
-            "player_id": 26,
-            "name": "Kai Havertz",
-            "web_name": "Havertz",
-            "team": "Arsenal",
-            "position": "FWD",
-            "side": "away",
-            "lambda_player": 0.2196178069323622,
-            "anytime_prob": 0.1971744262962447,
-            "two_plus_prob": 0.020859634450210468,
-            "first_scorer_prob": 0.02971716285209278,
-            "xg_per_90": 0.3264529058116233,
-            "goals_scored": 2,
-            "xg_share": 0.15047002346168514,
-            "minutes": 499
-          },
-          {
-            "player_id": 483,
-            "name": "Dan Ndoye",
-            "web_name": "Ndoye",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.2115374661522447,
-            "anytime_prob": 0.1906610423319265,
-            "two_plus_prob": 0.019455529968523372,
-            "first_scorer_prob": 0.03473934225634978,
-            "xg_per_90": 0.4511627906976744,
-            "goals_scored": 2,
-            "xg_share": 0.18190642433480386,
-            "minutes": 387
-          },
-          {
-            "player_id": 167,
-            "name": "Liam Delap",
-            "web_name": "Delap",
-            "team": "Nott'm Forest",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.2071758689119922,
-            "anytime_prob": 0.18712332232113993,
-            "two_plus_prob": 0.0187148903047287,
-            "first_scorer_prob": 0.0333917683672847,
-            "xg_per_90": 0.49137931034482757,
-            "goals_scored": 1,
-            "xg_share": 0.1781557764103749,
-            "minutes": 348
-          },
-          {
-            "player_id": 480,
-            "name": "Morgan Gibbs-White",
-            "web_name": "Gibbs-White",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.17991588616041426,
-            "anytime_prob": 0.16465952784924576,
-            "two_plus_prob": 0.014368506556583949,
-            "first_scorer_prob": 0.025516946819067656,
-            "xg_per_90": 0.27499999999999997,
-            "goals_scored": 1,
-            "xg_share": 0.15471422688269398,
-            "minutes": 540
-          },
-          {
-            "player_id": 8,
-            "name": "Riccardo Calafiori",
-            "web_name": "Calafiori",
-            "team": "Arsenal",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.14802968202070818,
-            "anytime_prob": 0.1375944833762609,
-            "two_plus_prob": 0.009932868977544251,
-            "first_scorer_prob": 0.013977806887083607,
-            "xg_per_90": 0.2209255533199195,
-            "goals_scored": 1,
-            "xg_share": 0.10142178376975461,
-            "minutes": 497
-          },
-          {
-            "player_id": 13,
-            "name": "Declan Rice",
-            "web_name": "Rice",
-            "team": "Arsenal",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.13472933642695248,
-            "anytime_prob": 0.12604757323491556,
-            "two_plus_prob": 0.00830054270813095,
-            "first_scorer_prob": 0.01165429125508359,
-            "xg_per_90": 0.02155688622754491,
-            "goals_scored": 0,
-            "xg_share": 0.09230911963065179,
-            "minutes": 501
-          }
-        ],
-        "match_xg": {
-          "home": 1.162891673154457,
-          "away": 1.4595452428322673
-        }
-      },
-      "odds_comparison": {
-        "h2h": {
-          "sport888": {
-            "away": 1.61,
-            "home": 5.0,
-            "draw": 3.75
-          },
-          "williamhill": {
-            "away": 1.62,
-            "home": 5.0,
-            "draw": 3.75
-          },
-          "leovegas": {
-            "away": 1.58,
-            "home": 5.25,
-            "draw": 3.95
-          },
-          "betfred_uk": {
-            "away": 1.62,
-            "home": 5.5,
-            "draw": 4.0
-          },
-          "paddypower": {
-            "away": 1.57,
-            "home": 6.0,
-            "draw": 3.8
-          },
-          "skybet": {
-            "away": 1.57,
-            "home": 6.0,
-            "draw": 4.0
-          },
-          "betfair_ex_uk": {
-            "away": 1.65,
-            "home": 6.4,
-            "draw": 4.1
-          },
-          "boylesports": {
-            "away": 1.57,
-            "home": 5.5,
-            "draw": 4.0
-          },
-          "smarkets": {
-            "away": 1.65,
-            "home": 6.4,
-            "draw": 4.1
-          },
-          "unibet_uk": {
-            "away": 1.65,
-            "home": 5.5,
-            "draw": 4.0
-          },
-          "betway": {
-            "away": 1.6,
-            "home": 5.25,
-            "draw": 4.0
-          },
-          "virginbet": {
-            "away": 1.57,
-            "home": 5.75,
-            "draw": 3.8
-          },
-          "livescorebet": {
-            "away": 1.57,
-            "home": 5.75,
-            "draw": 3.8
-          },
-          "casumo": {
-            "away": 1.57,
-            "home": 6.1,
-            "draw": 3.9
-          },
-          "grosvenor": {
-            "away": 1.56,
-            "home": 5.8,
-            "draw": 3.85
-          },
-          "betvictor": {
-            "away": 1.57,
-            "home": 5.5,
-            "draw": 3.9
-          },
-          "betano_uk": {
-            "away": 1.57,
-            "home": 5.5,
-            "draw": 3.9
-          },
-          "ladbrokes_uk": {
-            "away": 1.61,
-            "home": 5.25,
-            "draw": 3.9
-          },
-          "coral": {
-            "away": 1.61,
-            "home": 5.5,
-            "draw": 3.9
-          },
-          "matchbook": {
-            "away": 1.65,
-            "home": 6.4,
-            "draw": 4.1
-          },
-          "betfair_sb_uk": {
-            "away": 1.57,
-            "home": 6.0,
-            "draw": 4.0
-          }
-        },
-        "totals": {
-          "2.5": {
-            "over": 1.93,
-            "bookmaker_over": "casumo",
-            "under": 2.06,
-            "bookmaker_under": "matchbook"
-          }
-        },
-        "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfair_ex_uk",
-        "bookmaker_away": "betfair_ex_uk"
-      },
-      "model_disagreement": 0.0384789819387121,
-      "shap_features": [],
-      "value_bets": [
-        {
-          "market": "Home Win",
-          "market_type": "1x2",
-          "confidence": "high",
-          "confidence_tier": "high",
-          "bookmaker": "betfair_ex_uk",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.12791479398599795,
-          "model_prob": 0.2832,
-          "implied_prob": 0.15528520601400206,
-          "raw_implied_prob": 0.15625,
-          "expected_value": 0.8124800000000002,
-          "recommendation": "bet",
-          "decimal_odds": 6.4
-        }
-      ],
-      "narrative": "Nott'm Forest vs Arsenal \u2014 Matchweek 7\n\nOur model rates Arsenal as 43% favorites (fair odds: 2.35), driven primarily by form and recent results. Nott'm Forest's expected goals stand at 1.2 while Arsenal are projected for 1.5 xG.\n\nThe match has a 48% chance of going over 2.5 goals, with both teams to score probability at 53%. We expect around 10 total corners and 3 cards."
-    },
-    {
       "match_id": "20261019_Tottenham_Coventry_City",
       "fixture": {
         "date": "2026-10-19T19:00:00Z",
@@ -3230,137 +49,137 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.399,
-          "draw": 0.2782,
-          "away": 0.3228
+          "home": 0.4076,
+          "draw": 0.2546,
+          "away": 0.3378
         },
         "over_under": {
           "0.5": {
-            "over": 0.9276,
-            "under": 0.0724
+            "over": 0.941,
+            "under": 0.059
           },
           "1.5": {
-            "over": 0.7888,
-            "under": 0.2112
+            "over": 0.7958,
+            "under": 0.2042
           },
           "2.5": {
-            "over": 0.5392,
-            "under": 0.4608
+            "over": 0.5564,
+            "under": 0.4436
           },
           "3.5": {
-            "over": 0.318,
-            "under": 0.682
+            "over": 0.319,
+            "under": 0.681
           },
           "4.5": {
-            "over": 0.1578,
-            "under": 0.8422
+            "over": 0.1616,
+            "under": 0.8384
           }
         },
         "btts": {
-          "yes": 0.5872,
-          "no": 0.41279999999999994
+          "yes": 0.5936,
+          "no": 0.4064
         },
         "clean_sheet": {
-          "home": 0.263,
-          "away": 0.2222
+          "home": 0.254,
+          "away": 0.2114
         },
         "correct_score": {
-          "0-0": 0.0724,
-          "0-1": 0.0628,
-          "0-2": 0.052,
-          "0-3": 0.0236,
-          "0-4": 0.0074,
-          "0-5": 0.0024,
-          "0-6": 0.0012,
-          "1-0": 0.076,
-          "1-1": 0.1342,
-          "1-2": 0.0766,
-          "1-3": 0.036,
-          "1-4": 0.0088,
-          "1-5": 0.0034,
-          "1-6": 0.0006,
-          "2-0": 0.0634,
-          "2-1": 0.0888,
-          "2-2": 0.059,
+          "0-0": 0.059,
+          "0-1": 0.0662,
+          "0-2": 0.0528,
+          "0-3": 0.024,
+          "0-4": 0.0068,
+          "0-5": 0.0016,
+          "0-6": 0.0004,
+          "1-0": 0.079,
+          "1-1": 0.121,
+          "1-2": 0.0866,
+          "1-3": 0.0324,
+          "1-4": 0.014,
+          "1-5": 0.0032,
+          "1-6": 0.0008,
+          "2-0": 0.0656,
+          "2-1": 0.0942,
+          "2-2": 0.0596,
           "2-3": 0.0274,
-          "2-4": 0.0102,
-          "2-5": 0.0032,
-          "2-6": 0.0004,
-          "3-0": 0.0322,
-          "3-1": 0.0448,
-          "3-2": 0.0246,
-          "3-3": 0.0116,
-          "3-4": 0.0042,
-          "3-5": 0.0006,
-          "3-6": 0.0006,
-          "4-0": 0.013,
-          "4-1": 0.0186,
-          "4-2": 0.012,
-          "4-3": 0.005,
-          "4-4": 0.0008,
-          "4-5": 0.0008,
-          "4-6": 0.0,
-          "5-0": 0.004,
-          "5-1": 0.0044,
-          "5-2": 0.0048,
+          "2-4": 0.01,
+          "2-5": 0.0022,
+          "2-6": 0.0008,
+          "3-0": 0.0326,
+          "3-1": 0.0464,
+          "3-2": 0.0282,
+          "3-3": 0.0126,
+          "3-4": 0.0046,
+          "3-5": 0.0016,
+          "3-6": 0.0004,
+          "4-0": 0.0122,
+          "4-1": 0.0196,
+          "4-2": 0.0104,
+          "4-3": 0.0034,
+          "4-4": 0.0024,
+          "4-5": 0.001,
+          "4-6": 0.0002,
+          "5-0": 0.0038,
+          "5-1": 0.003,
+          "5-2": 0.0028,
           "5-3": 0.0012,
           "5-4": 0.0002,
-          "5-5": 0.0002,
+          "5-5": 0.0,
           "5-6": 0.0,
-          "6-0": 0.002,
+          "6-0": 0.0008,
           "6-1": 0.001,
-          "6-2": 0.0012,
-          "6-3": 0.0002,
-          "6-4": 0.0,
+          "6-2": 0.0004,
+          "6-3": 0.0,
+          "6-4": 0.0002,
           "6-5": 0.0,
           "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.083,
-          "home_-1.5": 0.2044,
-          "home_-1.0": 0.2044,
-          "home_-0.5": 0.399,
-          "home_0": 0.399,
-          "home_0.5": 0.6772,
-          "home_1.0": 0.6772,
-          "home_1.5": 0.849,
-          "home_2.5": 0.9478
+          "home_-2.5": 0.0788,
+          "home_-1.5": 0.2026,
+          "home_-1.0": 0.2026,
+          "home_-0.5": 0.4076,
+          "home_0": 0.4076,
+          "home_0.5": 0.6622,
+          "home_1.0": 0.6622,
+          "home_1.5": 0.848,
+          "home_2.5": 0.945
         },
         "ht_ft": {
-          "H/H": 0.2416,
-          "H/D": 0.0552,
-          "H/A": 0.022,
-          "D/H": 0.1266,
-          "D/D": 0.1656,
-          "D/A": 0.1082,
-          "A/H": 0.0308,
-          "A/D": 0.0574,
-          "A/A": 0.1926
+          "H/H": 0.2444,
+          "H/D": 0.054,
+          "H/A": 0.0256,
+          "D/H": 0.1392,
+          "D/D": 0.1424,
+          "D/A": 0.1124,
+          "A/H": 0.024,
+          "A/D": 0.0582,
+          "A/A": 0.1998
         },
         "corners": {
           "7.5": {
-            "over": 0.4438,
-            "under": 0.5562
+            "over": 0.4522,
+            "under": 0.5478
           },
           "8.5": {
-            "over": 0.35,
-            "under": 0.65
+            "over": 0.3506,
+            "under": 0.6494
           },
           "9.5": {
-            "over": 0.2624,
-            "under": 0.7376
+            "over": 0.2682,
+            "under": 0.7318
           },
           "10.5": {
-            "over": 0.198,
-            "under": 0.802
+            "over": 0.2016,
+            "under": 0.7984
           },
           "11.5": {
-            "over": 0.1408,
-            "under": 0.8592
+            "over": 0.1422,
+            "under": 0.8578
           },
           "12.5": {
-            "over": 0.1018,
-            "under": 0.8982
+            "over": 0.1012,
+            "under": 0.8988
           }
         },
         "cards": {
@@ -3377,94 +196,94 @@
             "under": 0.2328
           },
           "4.5": {
-            "over": 0.627,
-            "under": 0.373
+            "over": 0.628,
+            "under": 0.372
           },
           "5.5": {
-            "over": 0.476,
-            "under": 0.524
+            "over": 0.4786,
+            "under": 0.5214
           },
           "6.5": {
-            "over": 0.344,
-            "under": 0.656
+            "over": 0.346,
+            "under": 0.654
           }
         }
       },
       "expected_goals": {
-        "home": 1.509,
-        "away": 1.3334
+        "home": 1.5216,
+        "away": 1.3608
       },
-      "expected_corners": 7.4354,
-      "expected_cards": 5.588,
+      "expected_corners": 7.4598,
+      "expected_cards": 5.5952,
       "distributions": {
         "goals_home": [
-          0.2222,
-          0.3356,
-          0.2526,
-          0.1186,
-          0.0502,
-          0.0148,
-          0.0044,
-          0.0016
+          0.2114,
+          0.337,
+          0.2598,
+          0.1266,
+          0.0492,
+          0.011,
+          0.0024,
+          0.002
         ],
         "goals_away": [
-          0.263,
-          0.3554,
-          0.2306,
-          0.1052,
-          0.0318,
-          0.0106,
-          0.0028,
-          0.0006
+          0.254,
+          0.3524,
+          0.2414,
+          0.101,
+          0.0382,
+          0.0096,
+          0.0026,
+          0.0004
         ],
         "corners": [
           0.0076,
           0.0198,
           0.0546,
-          0.0726,
-          0.0854,
-          0.0976,
-          0.1082,
-          0.1104,
-          0.0938,
-          0.0876,
-          0.0644,
-          0.0572,
-          0.039,
-          0.0264,
-          0.0236,
-          0.0166,
-          0.0112,
-          0.0076,
-          0.0064,
-          0.0022,
-          0.0032
+          0.071,
+          0.0864,
+          0.0944,
+          0.1132,
+          0.1008,
+          0.1016,
+          0.0824,
+          0.0666,
+          0.0594,
+          0.041,
+          0.0286,
+          0.021,
+          0.0152,
+          0.013,
+          0.0062,
+          0.0058,
+          0.0032,
+          0.0034
         ],
         "cards": [
           0.0066,
           0.0308,
           0.0764,
           0.119,
-          0.1402,
-          0.151,
-          0.132,
-          0.1134,
-          0.0904,
-          0.0594,
-          0.0384,
-          0.021,
-          0.0116
+          0.1392,
+          0.1494,
+          0.1326,
+          0.1164,
+          0.0872,
+          0.065,
+          0.0334,
+          0.0222,
+          0.0106
         ]
       },
       "confidence": {
-        "entropy": 1.0875291760205843,
+        "entropy": 1.0807316073880304,
         "home_goals_ci": [
           0.0,
           4.0
         ],
         "away_goals_ci": [
           0.0,
-          3.0
+          4.0
         ]
       },
       "n_simulations": 5000,
@@ -3481,30 +300,14 @@
             "team": "Tottenham",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.3230314754264827,
-            "anytime_prob": 0.27604893265929564,
-            "two_plus_prob": 0.042189951239651,
-            "first_scorer_prob": 0.05904440395373441,
+            "lambda_player": 0.4255593118456233,
+            "anytime_prob": 0.3465957738150326,
+            "two_plus_prob": 0.06853352096273585,
+            "first_scorer_prob": 0.09791855290520654,
             "xg_per_90": 0.11499999999999999,
             "goals_scored": 1,
-            "xg_share": 0.2135191011402848,
+            "xg_share": 0.28199095422060766,
             "minutes": 540
-          },
-          {
-            "player_id": 401,
-            "name": "Omar Marmoush",
-            "web_name": "Marmoush",
-            "team": "Tottenham",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.3001968954062991,
-            "anytime_prob": 0.25932762866383285,
-            "two_plus_prob": 0.03698008227549393,
-            "first_scorer_prob": 0.05154693117139037,
-            "xg_per_90": 0.09421487603305785,
-            "goals_scored": 0,
-            "xg_share": 0.19842577627344804,
-            "minutes": 363
           },
           {
             "player_id": 503,
@@ -3513,30 +316,30 @@
             "team": "Tottenham",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.27621531956757217,
-            "anytime_prob": 0.24135043892190233,
-            "two_plus_prob": 0.03179980796891721,
-            "first_scorer_prob": 0.044141154151276285,
+            "lambda_player": 0.36388404925930107,
+            "anytime_prob": 0.30502822743691504,
+            "two_plus_prob": 0.05213908471574569,
+            "first_scorer_prob": 0.07368594806052532,
             "xg_per_90": 0.14122340425531912,
             "goals_scored": 0,
-            "xg_share": 0.18257430387357687,
+            "xg_share": 0.241122699985737,
             "minutes": 376
           },
           {
-            "player_id": 403,
-            "name": "S\u00e1vio Moreira de Oliveira",
-            "web_name": "S\u00e1vio",
+            "player_id": 401,
+            "name": "Omar Marmoush",
+            "web_name": "Marmoush",
             "team": "Tottenham",
-            "position": "MID",
+            "position": "FWD",
             "side": "home",
-            "lambda_player": 0.2528072416381169,
-            "anytime_prob": 0.2233824330732428,
-            "two_plus_prob": 0.027047888170783657,
-            "first_scorer_prob": 0.0373926596486269,
-            "xg_per_90": 0.14727272727272728,
+            "lambda_player": 0.3280353028810013,
+            "anytime_prob": 0.27966241073577447,
+            "two_plus_prob": 0.043366251464913935,
+            "first_scorer_prob": 0.06090266645570431,
+            "xg_per_90": 0.09421487603305785,
             "goals_scored": 0,
-            "xg_share": 0.16710190524022292,
-            "minutes": 330
+            "xg_share": 0.21736802721171844,
+            "minutes": 363
           },
           {
             "player_id": 455,
@@ -3545,13 +348,13 @@
             "team": "Tottenham",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.1527611165676251,
-            "anytime_prob": 0.14166526072857466,
-            "two_plus_prob": 0.010545087568690353,
-            "first_scorer_prob": 0.014329268444690683,
+            "lambda_player": 0.1662765079327247,
+            "anytime_prob": 0.1531879484355695,
+            "two_plus_prob": 0.012382997626089576,
+            "first_scorer_prob": 0.01690974742664721,
             "xg_per_90": 0.043520309477756286,
             "goals_scored": 0,
-            "xg_share": 0.10097287348126803,
+            "xg_share": 0.11018081341721135,
             "minutes": 517
           },
           {
@@ -3561,13 +364,13 @@
             "team": "Tottenham",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.15209258186195984,
-            "anytime_prob": 0.14109124231205628,
-            "two_plus_prob": 0.010457591771448477,
-            "first_scorer_prob": 0.014208751515419017,
+            "lambda_player": 0.1649961294814327,
+            "anytime_prob": 0.15210301411740823,
+            "two_plus_prob": 0.012203293247807612,
+            "first_scorer_prob": 0.016660698397379867,
             "xg_per_90": 0.052141057934508815,
             "goals_scored": 0,
-            "xg_share": 0.10053098177629943,
+            "xg_share": 0.10933238845929545,
             "minutes": 397
           },
           {
@@ -3577,13 +380,13 @@
             "team": "Tottenham",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.05315693600844138,
-            "anytime_prob": 0.05176881081317397,
-            "two_plus_prob": 0.0013637461683615876,
-            "first_scorer_prob": 0.0018221157345937277,
+            "lambda_player": 0.05757262411908007,
+            "anytime_prob": 0.055946673144458225,
+            "two_plus_prob": 0.0015950458090370837,
+            "first_scorer_prob": 0.0021383161543748236,
             "xg_per_90": 0.0319672131147541,
             "goals_scored": 0,
-            "xg_share": 0.03513596060851087,
+            "xg_share": 0.038149697963167084,
             "minutes": 366
           },
           {
@@ -3593,13 +396,13 @@
             "team": "Tottenham",
             "position": "GKP",
             "side": "home",
-            "lambda_player": 0.002631067959270772,
-            "anytime_prob": 0.0026276097335747872,
-            "two_plus_prob": 3.455194083491764e-06,
-            "first_scorer_prob": 4.577630744855626e-06,
+            "lambda_player": 0.0028000569214190287,
+            "anytime_prob": 0.002796140418367399,
+            "two_plus_prob": 3.912849280079001e-06,
+            "first_scorer_prob": 5.197655165047387e-06,
             "xg_per_90": 0.0,
             "goals_scored": 0,
-            "xg_share": 0.0017390976063889865,
+            "xg_share": 0.001855418742263129,
             "minutes": 540
           }
         ],
@@ -3611,10 +414,10 @@
             "team": "Coventry City",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.41452756731497203,
-            "anytime_prob": 0.3393476792600195,
-            "two_plus_prob": 0.06548907990268477,
-            "first_scorer_prob": 0.10557768736939045,
+            "lambda_player": 0.4124737399672051,
+            "anytime_prob": 0.3379894191178572,
+            "two_plus_prob": 0.0649274389235378,
+            "first_scorer_prob": 0.10515510612478544,
             "xg_per_90": 0.4060686015831134,
             "goals_scored": 1,
             "xg_share": 0.3106786238572114,
@@ -3627,10 +430,10 @@
             "team": "Coventry City",
             "position": "FWD",
             "side": "away",
-            "lambda_player": 0.20951823183060253,
-            "anytime_prob": 0.18902514625784883,
-            "two_plus_prob": 0.019111128842711822,
-            "first_scorer_prob": 0.029724547131998142,
+            "lambda_player": 0.2084801482185119,
+            "anytime_prob": 0.18818284944073982,
+            "two_plus_prob": 0.018935089565815272,
+            "first_scorer_prob": 0.02959209442961993,
             "xg_per_90": 0.10220820189274447,
             "goals_scored": 0,
             "xg_share": 0.1570289676022151,
@@ -3643,10 +446,10 @@
             "team": "Coventry City",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.123631028848325,
-            "anytime_prob": 0.11629415730105785,
-            "two_plus_prob": 0.007040694768911587,
-            "first_scorer_prob": 0.010790938639141292,
+            "lambda_player": 0.12301848384986819,
+            "anytime_prob": 0.11575268188490717,
+            "two_plus_prob": 0.006973917462076373,
+            "first_scorer_prob": 0.010740695117661883,
             "xg_per_90": 0.1577319587628866,
             "goals_scored": 0,
             "xg_share": 0.09265853693987007,
@@ -3659,10 +462,10 @@
             "team": "Coventry City",
             "position": "DEF",
             "side": "away",
-            "lambda_player": 0.12120689102776962,
-            "anytime_prob": 0.11414933392211768,
-            "two_plus_prob": 0.00677812877193866,
-            "first_scorer_prob": 0.010384235694152926,
+            "lambda_player": 0.12060635671555706,
+            "anytime_prob": 0.11361719043242202,
+            "two_plus_prob": 0.006713789115177032,
+            "first_scorer_prob": 0.010335826270897954,
             "xg_per_90": 0.08426966292134831,
             "goals_scored": 1,
             "xg_share": 0.09084170288222557,
@@ -3675,10 +478,10 @@
             "team": "Coventry City",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.11185699145388744,
-            "anytime_prob": 0.10582787738753341,
-            "two_plus_prob": 0.00580847391016634,
-            "first_scorer_prob": 0.008884583293232792,
+            "lambda_player": 0.11130278235851897,
+            "anytime_prob": 0.10533218171751979,
+            "two_plus_prob": 0.005753164256053905,
+            "first_scorer_prob": 0.008842968082032785,
             "xg_per_90": 0.007894736842105263,
             "goals_scored": 0,
             "xg_share": 0.08383417392189067,
@@ -3691,10 +494,10 @@
             "team": "Coventry City",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.11048250530963254,
-            "anytime_prob": 0.10459800516688444,
-            "two_plus_prob": 0.005671749518479194,
-            "first_scorer_prob": 0.008673427633755785,
+            "lambda_player": 0.10993510627336454,
+            "anytime_prob": 0.10410772880167785,
+            "two_plus_prob": 0.005617716758004376,
+            "first_scorer_prob": 0.008632773162694167,
             "xg_per_90": 0.01656441717791411,
             "goals_scored": 0,
             "xg_share": 0.08280402901120623,
@@ -3707,10 +510,10 @@
             "team": "Coventry City",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.10838805023267267,
-            "anytime_prob": 0.10272066059223395,
-            "two_plus_prob": 0.00546630247976565,
-            "first_scorer_prob": 0.008356281296440435,
+            "lambda_player": 0.1078510284293197,
+            "anytime_prob": 0.10223867261583108,
+            "two_plus_prob": 0.005414190173377284,
+            "first_scorer_prob": 0.008317071783095181,
             "xg_per_90": 0.02057142857142857,
             "goals_scored": 0,
             "xg_share": 0.08123428438540137,
@@ -3723,10 +526,10 @@
             "team": "Coventry City",
             "position": "DEF",
             "side": "away",
-            "lambda_player": 0.05765326978626888,
-            "anytime_prob": 0.05602280388501579,
-            "two_plus_prob": 0.0015994319253129566,
-            "first_scorer_prob": 0.0024241675183894027,
+            "lambda_player": 0.05736761963532186,
+            "anytime_prob": 0.05575311814040196,
+            "two_plus_prob": 0.001583922180041844,
+            "first_scorer_prob": 0.0024124979235649923,
             "xg_per_90": 0.08368121442125237,
             "goals_scored": 0,
             "xg_share": 0.043209764392959406,
@@ -3735,52 +538,36 @@
         ],
         "top_scorers": [
           {
-            "player_id": 183,
-            "name": "Jack Rudoni",
-            "web_name": "Rudoni",
-            "team": "Coventry City",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.41452756731497203,
-            "anytime_prob": 0.3393476792600195,
-            "two_plus_prob": 0.06548907990268477,
-            "first_scorer_prob": 0.10557768736939045,
-            "xg_per_90": 0.4060686015831134,
-            "goals_scored": 1,
-            "xg_share": 0.3106786238572114,
-            "minutes": 379
-          },
-          {
             "player_id": 112,
             "name": "Jan Paul van Hecke",
             "web_name": "Van Hecke",
             "team": "Tottenham",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.3230314754264827,
-            "anytime_prob": 0.27604893265929564,
-            "two_plus_prob": 0.042189951239651,
-            "first_scorer_prob": 0.05904440395373441,
+            "lambda_player": 0.4255593118456233,
+            "anytime_prob": 0.3465957738150326,
+            "two_plus_prob": 0.06853352096273585,
+            "first_scorer_prob": 0.09791855290520654,
             "xg_per_90": 0.11499999999999999,
             "goals_scored": 1,
-            "xg_share": 0.2135191011402848,
+            "xg_share": 0.28199095422060766,
             "minutes": 540
           },
           {
-            "player_id": 401,
-            "name": "Omar Marmoush",
-            "web_name": "Marmoush",
-            "team": "Tottenham",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.3001968954062991,
-            "anytime_prob": 0.25932762866383285,
-            "two_plus_prob": 0.03698008227549393,
-            "first_scorer_prob": 0.05154693117139037,
-            "xg_per_90": 0.09421487603305785,
-            "goals_scored": 0,
-            "xg_share": 0.19842577627344804,
-            "minutes": 363
+            "player_id": 183,
+            "name": "Jack Rudoni",
+            "web_name": "Rudoni",
+            "team": "Coventry City",
+            "position": "MID",
+            "side": "away",
+            "lambda_player": 0.4124737399672051,
+            "anytime_prob": 0.3379894191178572,
+            "two_plus_prob": 0.0649274389235378,
+            "first_scorer_prob": 0.10515510612478544,
+            "xg_per_90": 0.4060686015831134,
+            "goals_scored": 1,
+            "xg_share": 0.3106786238572114,
+            "minutes": 379
           },
           {
             "player_id": 503,
@@ -3789,30 +576,30 @@
             "team": "Tottenham",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.27621531956757217,
-            "anytime_prob": 0.24135043892190233,
-            "two_plus_prob": 0.03179980796891721,
-            "first_scorer_prob": 0.044141154151276285,
+            "lambda_player": 0.36388404925930107,
+            "anytime_prob": 0.30502822743691504,
+            "two_plus_prob": 0.05213908471574569,
+            "first_scorer_prob": 0.07368594806052532,
             "xg_per_90": 0.14122340425531912,
             "goals_scored": 0,
-            "xg_share": 0.18257430387357687,
+            "xg_share": 0.241122699985737,
             "minutes": 376
           },
           {
-            "player_id": 403,
-            "name": "S\u00e1vio Moreira de Oliveira",
-            "web_name": "S\u00e1vio",
+            "player_id": 401,
+            "name": "Omar Marmoush",
+            "web_name": "Marmoush",
             "team": "Tottenham",
-            "position": "MID",
+            "position": "FWD",
             "side": "home",
-            "lambda_player": 0.2528072416381169,
-            "anytime_prob": 0.2233824330732428,
-            "two_plus_prob": 0.027047888170783657,
-            "first_scorer_prob": 0.0373926596486269,
-            "xg_per_90": 0.14727272727272728,
+            "lambda_player": 0.3280353028810013,
+            "anytime_prob": 0.27966241073577447,
+            "two_plus_prob": 0.043366251464913935,
+            "first_scorer_prob": 0.06090266645570431,
+            "xg_per_90": 0.09421487603305785,
             "goals_scored": 0,
-            "xg_share": 0.16710190524022292,
-            "minutes": 330
+            "xg_share": 0.21736802721171844,
+            "minutes": 363
           },
           {
             "player_id": 194,
@@ -3821,10 +608,10 @@
             "team": "Coventry City",
             "position": "FWD",
             "side": "away",
-            "lambda_player": 0.20951823183060253,
-            "anytime_prob": 0.18902514625784883,
-            "two_plus_prob": 0.019111128842711822,
-            "first_scorer_prob": 0.029724547131998142,
+            "lambda_player": 0.2084801482185119,
+            "anytime_prob": 0.18818284944073982,
+            "two_plus_prob": 0.018935089565815272,
+            "first_scorer_prob": 0.02959209442961993,
             "xg_per_90": 0.10220820189274447,
             "goals_scored": 0,
             "xg_share": 0.1570289676022151,
@@ -3837,13 +624,13 @@
             "team": "Tottenham",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.1527611165676251,
-            "anytime_prob": 0.14166526072857466,
-            "two_plus_prob": 0.010545087568690353,
-            "first_scorer_prob": 0.014329268444690683,
+            "lambda_player": 0.1662765079327247,
+            "anytime_prob": 0.1531879484355695,
+            "two_plus_prob": 0.012382997626089576,
+            "first_scorer_prob": 0.01690974742664721,
             "xg_per_90": 0.043520309477756286,
             "goals_scored": 0,
-            "xg_share": 0.10097287348126803,
+            "xg_share": 0.11018081341721135,
             "minutes": 517
           },
           {
@@ -3853,146 +640,151 @@
             "team": "Tottenham",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.15209258186195984,
-            "anytime_prob": 0.14109124231205628,
-            "two_plus_prob": 0.010457591771448477,
-            "first_scorer_prob": 0.014208751515419017,
+            "lambda_player": 0.1649961294814327,
+            "anytime_prob": 0.15210301411740823,
+            "two_plus_prob": 0.012203293247807612,
+            "first_scorer_prob": 0.016660698397379867,
             "xg_per_90": 0.052141057934508815,
             "goals_scored": 0,
-            "xg_share": 0.10053098177629943,
+            "xg_share": 0.10933238845929545,
             "minutes": 397
+          },
+          {
+            "player_id": 186,
+            "name": "Ephron Mason-Clark",
+            "web_name": "Mason-Clark",
+            "team": "Coventry City",
+            "position": "MID",
+            "side": "away",
+            "lambda_player": 0.12301848384986819,
+            "anytime_prob": 0.11575268188490717,
+            "two_plus_prob": 0.006973917462076373,
+            "first_scorer_prob": 0.010740695117661883,
+            "xg_per_90": 0.1577319587628866,
+            "goals_scored": 0,
+            "xg_share": 0.09265853693987007,
+            "minutes": 291
           }
         ],
         "match_xg": {
-          "home": 1.512892634435768,
-          "away": 1.3342648495362521
+          "home": 1.509123982440582,
+          "away": 1.3276540717419263
         }
       },
       "odds_comparison": {
         "h2h": {
           "leovegas": {
-            "away": 5.75,
-            "home": 1.47,
-            "draw": 4.5
+            "away": 5.2,
+            "home": 1.53,
+            "draw": 4.33
           },
           "betfred_uk": {
-            "away": 6.5,
-            "home": 1.5,
-            "draw": 4.5
-          },
-          "skybet": {
-            "away": 6.25,
-            "home": 1.44,
-            "draw": 4.5
+            "away": 6.0,
+            "home": 1.53,
+            "draw": 4.33
           },
           "paddypower": {
-            "away": 6.5,
-            "home": 1.44,
-            "draw": 4.5
-          },
-          "betfair_ex_uk": {
-            "away": 7.2,
-            "home": 1.52,
-            "draw": 4.8
-          },
-          "unibet_uk": {
-            "away": 6.0,
-            "home": 1.48,
-            "draw": 4.75
-          },
-          "boylesports": {
-            "away": 6.0,
-            "home": 1.44,
-            "draw": 4.5
-          },
-          "betway": {
-            "away": 5.75,
-            "home": 1.48,
-            "draw": 4.5
-          },
-          "grosvenor": {
-            "away": 6.25,
-            "home": 1.45,
-            "draw": 4.5
-          },
-          "virginbet": {
-            "away": 6.25,
-            "home": 1.47,
-            "draw": 4.5
-          },
-          "casumo": {
-            "away": 6.5,
-            "home": 1.47,
-            "draw": 4.6
-          },
-          "livescorebet": {
-            "away": 6.1,
-            "home": 1.47,
-            "draw": 4.5
-          },
-          "sport888": {
-            "away": 5.75,
+            "away": 5.5,
             "home": 1.5,
             "draw": 4.33
           },
-          "williamhill": {
-            "away": 5.8,
-            "home": 1.5,
+          "betfair_ex_uk": {
+            "away": 6.0,
+            "home": 1.59,
+            "draw": 4.7
+          },
+          "unibet_uk": {
+            "away": 5.5,
+            "home": 1.58,
+            "draw": 4.5
+          },
+          "boylesports": {
+            "away": 5.5,
+            "home": 1.55,
+            "draw": 4.33
+          },
+          "betway": {
+            "away": 5.25,
+            "home": 1.53,
+            "draw": 4.5
+          },
+          "grosvenor": {
+            "away": 5.6,
+            "home": 1.51,
             "draw": 4.4
           },
-          "smarkets": {
-            "away": 7.2,
+          "virginbet": {
+            "away": 5.6,
+            "home": 1.5,
+            "draw": 4.35
+          },
+          "casumo": {
+            "away": 5.8,
             "home": 1.51,
-            "draw": 4.8
+            "draw": 4.5
+          },
+          "livescorebet": {
+            "away": 5.6,
+            "home": 1.5,
+            "draw": 4.35
+          },
+          "sport888": {
+            "away": 5.5,
+            "home": 1.53,
+            "draw": 4.2
+          },
+          "williamhill": {
+            "away": 5.5,
+            "home": 1.53,
+            "draw": 4.2
+          },
+          "smarkets": {
+            "away": 6.2,
+            "home": 1.59,
+            "draw": 4.7
           },
           "betano_uk": {
-            "away": 6.0,
-            "home": 1.45,
-            "draw": 4.5
+            "away": 5.5,
+            "home": 1.5,
+            "draw": 4.33
           },
           "betvictor": {
-            "away": 6.0,
-            "home": 1.45,
-            "draw": 4.5
+            "away": 5.5,
+            "home": 1.5,
+            "draw": 4.33
           },
           "ladbrokes_uk": {
-            "away": 6.5,
-            "home": 1.44,
-            "draw": 4.6
+            "away": 5.5,
+            "home": 1.53,
+            "draw": 4.4
           },
           "coral": {
-            "away": 6.5,
-            "home": 1.48,
-            "draw": 4.6
+            "away": 5.5,
+            "home": 1.53,
+            "draw": 4.5
           },
           "matchbook": {
-            "away": 7.2,
-            "home": 1.52,
-            "draw": 4.8
+            "away": 6.0,
+            "home": 1.59,
+            "draw": 4.7
           },
           "betfair_sb_uk": {
-            "away": 6.5,
-            "home": 1.47,
-            "draw": 4.6
+            "away": 5.5,
+            "home": 1.55,
+            "draw": 4.5
           }
         },
         "totals": {
-          "3.5": {
-            "over": 2.3,
-            "bookmaker_over": "leovegas",
-            "under": 1.55,
-            "bookmaker_under": "leovegas"
-          },
           "2.5": {
             "over": 1.64,
             "bookmaker_over": "matchbook",
-            "under": 2.5,
+            "under": 2.52,
             "bookmaker_under": "matchbook"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
         "bookmaker_draw": "betfair_ex_uk",
-        "bookmaker_away": "betfair_ex_uk"
+        "bookmaker_away": "smarkets"
       },
       "model_disagreement": null,
       "shap_features": [],
@@ -4002,57 +794,21 @@
           "market_type": "1x2",
           "confidence": "high",
           "confidence_tier": "high",
-          "bookmaker": "betfair_ex_uk",
+          "bookmaker": "smarkets",
           "full_kelly": 50.0,
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.18461818181818182,
-          "model_prob": 0.3228,
-          "implied_prob": 0.13818181818181816,
-          "raw_implied_prob": 0.1388888888888889,
-          "expected_value": 1.32416,
+          "edge": 0.17699003249338296,
+          "model_prob": 0.3378,
+          "implied_prob": 0.16080996750661702,
+          "raw_implied_prob": 0.16129032258064516,
+          "expected_value": 1.09436,
           "recommendation": "bet",
-          "decimal_odds": 7.2
-        },
-        {
-          "market": "Under 3.5 Goals",
-          "market_type": "over_under",
-          "confidence": "medium",
-          "confidence_tier": "medium",
-          "bookmaker": "leovegas",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.08459740259740267,
-          "model_prob": 0.682,
-          "implied_prob": 0.5974025974025974,
-          "raw_implied_prob": 0.6451612903225806,
-          "expected_value": 0.057100000000000095,
-          "recommendation": "bet",
-          "decimal_odds": 1.55
-        },
-        {
-          "market": "Draw",
-          "market_type": "1x2",
-          "confidence": "low",
-          "confidence_tier": "low",
-          "bookmaker": "betfair_ex_uk",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.07092727272727276,
-          "model_prob": 0.2782,
-          "implied_prob": 0.20727272727272725,
-          "raw_implied_prob": 0.20833333333333334,
-          "expected_value": 0.3353599999999999,
-          "recommendation": "bet",
-          "decimal_odds": 4.8
+          "decimal_odds": 6.2
         }
       ],
-      "narrative": "Tottenham vs Coventry City \u2014 Matchweek 7\n\nOur model rates Tottenham as 40% favorites (fair odds: 2.51), driven primarily by form and recent results. Tottenham's expected goals stand at 1.5 while Coventry City are projected for 1.3 xG.\n\nThe match has a 54% chance of going over 2.5 goals, with both teams to score probability at 59%. We expect around 7 total corners and 6 cards."
+      "narrative": "Tottenham vs Coventry City \u2014 Matchweek 7\n\nOur model rates Tottenham as 41% favorites (fair odds: 2.45), driven primarily by form and recent results. Tottenham's expected goals stand at 1.5 while Coventry City are projected for 1.4 xG.\n\nThe match has a 56% chance of going over 2.5 goals, with both teams to score probability at 59%. We expect around 7 total corners and 6 cards."
     }
   ]
 }

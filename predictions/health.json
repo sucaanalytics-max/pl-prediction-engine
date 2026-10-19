@@ -32,10 +32,10 @@
     "assessable": false,
     "note": "60 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
   },
-  "last_updated": "2026-10-18T10:03:28.670811Z",
+  "last_updated": "2026-10-19T11:28:33.143317Z",
   "gameweek": 7,
-  "n_predictions": 5,
-  "status": "healthy",
+  "n_predictions": 1,
+  "status": "degraded",
   "sources": {
     "bootstrap": {
       "source": "network",
@@ -46,7 +46,9 @@
       "age_seconds": 0.0
     }
   },
-  "degraded": [],
+  "degraded": [
+    "model:penaltyblog"
+  ],
   "forecast_validation_status": "collecting",
   "model_metrics": {
     "n_evaluated_matches": 60,
@@ -97,7 +99,7 @@
       "status": "active"
     },
     "penaltyblog": {
-      "status": "active"
+      "status": "failed"
     },
     "goalscorer": {
       "status": "active",
@@ -113,7 +115,7 @@
   "fpl": {
     "status": "ok",
     "gameweek": 7,
-    "n_players": 667,
+    "n_players": 668,
     "n_draws": 5000,
     "rules_source": "bootstrap+signed_yaml",
     "rules_degraded": false,
@@ -122,15 +124,15 @@
     "fixtures_missing": [],
     "diagnostics": {
       "n_clubs": 20,
-      "n_players": 667,
+      "n_players": 668,
       "n_without_history": 0,
       "n_availability_gated": 176,
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 470,
-        "open_ended": 47,
-        "dated_fitness": 19,
+        "none": 471,
+        "open_ended": 46,
+        "dated_fitness": 20,
         "permanent": 105,
         "graded": 21,
         "dated_eligibility": 5
@@ -154,7 +156,7 @@
       "n_fixtures": 10,
       "n_fixtures_skipped": 0,
       "skipped_fixtures": [],
-      "n_players": 667,
+      "n_players": 668,
       "n_double_gameweek_players": 0,
       "n_blank_gameweek_players": 0,
       "seed_entropy": 1223126535,
