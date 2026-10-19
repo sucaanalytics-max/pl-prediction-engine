@@ -1,18 +1,42 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-18T23:30:20.845337Z",
-  "n_dropped": 183,
+  "generated_at": "2026-10-19T01:43:46.012259Z",
+  "n_dropped": 184,
   "dropped_by_source": {
     "bbc_football": 65,
-    "hayters": 30,
+    "hayters": 31,
     "sky_football": 88
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 273,
+  "n_articles": 274,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "ee81eaebae040b01",
+      "headline": "FPL notes: Gibbs-White injury latest + two solid defences",
+      "summary": "FPL notes from Nottm Forest 0-1 Arsenal The post FPL notes: Gibbs-White injury latest + two solid defences appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/19/fpl-notes-gibbs-white-injury-latest-two-solid-defences",
+      "claimed_at": "2026-10-18T23:30:00Z",
+      "players": [
+        {
+          "element_id": 10,
+          "name": "White",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 480,
+          "name": "Gibbs-White",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "5959c79a3d7bca3a",
       "headline": "'Why not?' - are 'breathtaking' Brighton in title race?",
@@ -1658,24 +1682,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "777820eb05a8795f",
-      "headline": "Alonso on how long Chelsea skipper James is expected to be out for \u2013 and striker\u2019s ongoing fitness issues",
-      "summary": "Xabi Alonso has confirmed Reece James is expected to be sidelined for several weeks following knee surgery, while Emmanuel Emegha is set to return to training next week. James suffered the injur",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/alonso-on-how-long-chelsea-skipper-james-is-expected-to-be-out-for-and-strikers-ongoing-fitness-issues/",
-      "claimed_at": "2026-10-16T13:46:22Z",
-      "players": [
-        {
-          "element_id": 170,
-          "name": "Emegha",
-          "club": "CHE",
           "held": false
         }
       ],
