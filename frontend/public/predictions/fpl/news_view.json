@@ -1,18 +1,54 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-19T01:43:46.012259Z",
-  "n_dropped": 184,
+  "generated_at": "2026-10-19T06:55:09.888132Z",
+  "n_dropped": 187,
   "dropped_by_source": {
-    "bbc_football": 65,
+    "bbc_football": 67,
     "hayters": 31,
-    "sky_football": 88
+    "sky_football": 89
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 274,
+  "n_articles": 277,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "157712cdce10ab9c",
+      "headline": "Beer & Blackpool beach was how British players bonded - Pulis",
+      "summary": "BBC Sport columnist Tony Pulis explains what Spurs will get from their team-bonding trip to Spain, and how differently managers built team morale in his day.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cjr4yndrz1kro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-19T06:23:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4f7c26b309bb827e",
+      "headline": "Euro Leagues",
+      "summary": "Mikey Moore is on loan at Cologne from Spurs - and loving life in the Bundesliga.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0ph7nfj?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-19T05:00:00Z",
+      "players": [
+        {
+          "element_id": 523,
+          "name": "Moore",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "ee81eaebae040b01",
       "headline": "FPL notes: Gibbs-White injury latest + two solid defences",
@@ -58,6 +94,24 @@
     {
       "digest": "8d3df964c342f452",
       "headline": "Football Daily",
+      "summary": "Paul Robinson joins to discuss Brighton and Lloyd making history, and Leeds v Man United.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0phbswc?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-18T22:26:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b00dc4b1fd4aa23e",
+      "headline": "Free-scoring Brighton & Man Utd settle for a point",
       "summary": "Paul Robinson joins to discuss Brighton and Lloyd making history, and Leeds v Man United.",
       "source": "bbc_football",
       "tier": 3,
@@ -908,6 +962,24 @@
       "touches_squad": false
     },
     {
+      "digest": "9217700d9331e0ad",
+      "headline": "Chelsea latest: Martinez has surgery on fractured jaw",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-18T08:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "f83a2672613e9e99",
       "headline": "Martinez 'back in a few weeks' after operation",
       "summary": "Chelsea goalkeeper Emiliano Martinez says he will be fit in a few weeks after being injured in the win at Everton.",
@@ -1010,60 +1082,6 @@
           "element_id": 26,
           "name": "Havertz",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "37f6f1a2ab728d63",
-      "headline": "Villa's Manzambi shows Newcastle what they missed out on",
-      "summary": "Aston Villa are a side back in form, with Johan Manzambi scoring the winner against a Newcastle team he turned down to move to Villa Park.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck054652mv07o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-17T21:18:26Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2cb4f63c0b674ca2",
-      "headline": "Gyokeres pushing for Arsenal exit - Sunday's gossip",
-      "summary": "Viktor Gyokeres wants to leave Arsenal, Xabi Alonso eyes Barcelona duo and Liverpool target Dortmund's Felix Nmecha.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c9gkv34kezdko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-17T20:37:25Z",
-      "players": [
-        {
-          "element_id": 25,
-          "name": "Gy\u00f6keres",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2829400ec75bfc51",
-      "headline": "Wirtz delivers but remains Liverpool's conundrum",
-      "summary": "Florian Wirtz is instrumental as Liverpool return to winning ways in the Premier League, but does he remain boss Andoni Iraola's great conundrum?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c9j34rke27zjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-17T20:07:40Z",
-      "players": [
-        {
-          "element_id": 366,
-          "name": "Wirtz",
-          "club": "LIV",
           "held": false
         }
       ],
@@ -1238,30 +1256,6 @@
           "element_id": 362,
           "name": "Jacquet",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "95074b2ff1698a02",
-      "headline": "Man City latest: Maresca issues Haaland and Semenyo injury updates",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-17T18:37:00Z",
-      "players": [
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
           "held": false
         }
       ],
