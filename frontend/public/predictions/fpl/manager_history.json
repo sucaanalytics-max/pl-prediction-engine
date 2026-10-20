@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-13T16:16:01.528429+00:00",
+  "generated_at": "2026-10-20T18:45:58.632183+00:00",
   "entry_id": 20945,
-  "settled_through": 6,
+  "settled_through": 7,
   "names": {
     "12": "Saka",
     "106": "Thiago",
@@ -721,6 +721,119 @@
           "minutes": 90
         }
       ]
+    },
+    {
+      "event": 7,
+      "points": 42,
+      "gross_points": 42,
+      "transfer_cost": 0,
+      "transfers_made": 0,
+      "bench_points": 8,
+      "average_entry_score": 59,
+      "highest_score": 122,
+      "rank": 9665645,
+      "overall_rank": 5217121,
+      "value": 1000,
+      "bank": 3,
+      "chip": null,
+      "captain": {
+        "element": 165,
+        "multiplier": 2,
+        "points": 2
+      },
+      "auto_subs": [],
+      "picks": [
+        {
+          "element": 1,
+          "multiplier": 1,
+          "points": 9,
+          "minutes": 90
+        },
+        {
+          "element": 113,
+          "multiplier": 1,
+          "points": 6,
+          "minutes": 90
+        },
+        {
+          "element": 4,
+          "multiplier": 1,
+          "points": 8,
+          "minutes": 90
+        },
+        {
+          "element": 152,
+          "multiplier": 1,
+          "points": 1,
+          "minutes": 1
+        },
+        {
+          "element": 426,
+          "multiplier": 1,
+          "points": 1,
+          "minutes": 90
+        },
+        {
+          "element": 154,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 12,
+          "multiplier": 1,
+          "points": 3,
+          "minutes": 90
+        },
+        {
+          "element": 124,
+          "multiplier": 1,
+          "points": 5,
+          "minutes": 70
+        },
+        {
+          "element": 165,
+          "multiplier": 2,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 569,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 84
+        },
+        {
+          "element": 464,
+          "multiplier": 1,
+          "points": 1,
+          "minutes": 90
+        },
+        {
+          "element": 497,
+          "multiplier": 0,
+          "points": 0,
+          "minutes": 0
+        },
+        {
+          "element": 542,
+          "multiplier": 0,
+          "points": 4,
+          "minutes": 90
+        },
+        {
+          "element": 445,
+          "multiplier": 0,
+          "points": 1,
+          "minutes": 90
+        },
+        {
+          "element": 173,
+          "multiplier": 0,
+          "points": 3,
+          "minutes": 90
+        }
+      ]
     }
   ],
   "transfers": [
@@ -735,19 +848,22 @@
         "3": -1,
         "4": 2,
         "5": 4,
-        "6": 0
+        "6": 0,
+        "7": 1
       },
       "out_points_by_gw": {
         "3": 2,
         "4": 1,
         "5": 2,
-        "6": 2
+        "6": 2,
+        "7": 4
       },
       "in_multiplier_by_gw": {
         "3": 1,
         "4": 1,
         "5": 1,
-        "6": 0
+        "6": 0,
+        "7": 0
       }
     },
     {
@@ -760,17 +876,20 @@
       "in_points_by_gw": {
         "4": 5,
         "5": 2,
-        "6": 8
+        "6": 8,
+        "7": 2
       },
       "out_points_by_gw": {
         "4": 2,
         "5": 2,
-        "6": 8
+        "6": 8,
+        "7": 8
       },
       "in_multiplier_by_gw": {
         "4": 1,
         "5": 1,
-        "6": 1
+        "6": 1,
+        "7": 1
       }
     },
     {
@@ -783,17 +902,20 @@
       "in_points_by_gw": {
         "4": 2,
         "5": 0,
-        "6": 2
+        "6": 2,
+        "7": 1
       },
       "out_points_by_gw": {
         "4": 1,
         "5": 5,
-        "6": 4
+        "6": 4,
+        "7": 4
       },
       "in_multiplier_by_gw": {
         "4": 1,
         "5": 1,
-        "6": 1
+        "6": 1,
+        "7": 1
       }
     },
     {
@@ -804,13 +926,16 @@
       "element_out": 368,
       "element_out_cost": 69,
       "in_points_by_gw": {
-        "6": 2
+        "6": 2,
+        "7": 3
       },
       "out_points_by_gw": {
-        "6": 0
+        "6": 0,
+        "7": 1
       },
       "in_multiplier_by_gw": {
-        "6": 2
+        "6": 2,
+        "7": 1
       }
     },
     {
@@ -821,13 +946,16 @@
       "element_out": 379,
       "element_out_cost": 90,
       "in_points_by_gw": {
-        "6": 2
+        "6": 2,
+        "7": 2
       },
       "out_points_by_gw": {
-        "6": 0
+        "6": 0,
+        "7": 9
       },
       "in_multiplier_by_gw": {
-        "6": 1
+        "6": 1,
+        "7": 1
       }
     }
   ]
