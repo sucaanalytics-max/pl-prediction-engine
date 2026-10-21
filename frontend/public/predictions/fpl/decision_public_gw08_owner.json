@@ -2,12 +2,12 @@
   "gameweek": 8,
   "entry_label": "owner",
   "objective": "season",
-  "generated_at": "2026-10-21T00:27:17.947134Z",
+  "generated_at": "2026-10-21T10:13:25.701631Z",
   "deadline": "2026-10-23T17:30:00Z",
   "xp_snapshot": {
-    "1": 4.1794,
-    "4": 5.4172,
-    "12": 5.9114,
+    "1": 4.1699,
+    "4": 5.4735,
+    "12": 5.9784,
     "113": 2.8877,
     "124": 3.8601,
     "152": 0.7158,
@@ -69,29 +69,29 @@
       "free_transfers_after": 2
     },
     "n_draws": 10000,
-    "mean_points": 60.2697,
-    "sd_points": 16.7308,
-    "objective": 62.0197,
+    "mean_points": 60.2189,
+    "sd_points": 16.82,
+    "objective": 61.9689,
     "quantiles": {
-      "q10": 40.0,
+      "q10": 39.0,
       "q25": 48.0,
       "q50": 59.0,
       "q75": 71.0,
       "q90": 82.0,
-      "q99": 104.0
+      "q99": 105.0
     },
     "tails": {
-      "p_ge_40": 0.9005,
-      "p_ge_50": 0.7216,
-      "p_ge_60": 0.4919,
-      "p_ge_70": 0.279,
-      "p_ge_80": 0.1284,
-      "p_ge_90": 0.049
+      "p_ge_40": 0.8985,
+      "p_ge_50": 0.719,
+      "p_ge_60": 0.4897,
+      "p_ge_70": 0.2776,
+      "p_ge_80": 0.1255,
+      "p_ge_90": 0.0512
     },
-    "autosub_rate": 0.0796,
+    "autosub_rate": 0.085,
     "vice_rate": 0.0049
   },
-  "optimism_gap": 0.0226,
+  "optimism_gap": 0.2077,
   "credible_margin": true,
   "pool": {
     "n_candidates": 563,
@@ -101,7 +101,7 @@
     },
     "held_missing_purchase_price": [],
     "price_uncertain": false,
-    "n_zero_xp": 73
+    "n_zero_xp": 71
   },
   "horizon": {
     "eval_horizon": 8,
