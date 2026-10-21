@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-21T19:19:50.234491Z",
+  "generated_at": "2026-10-21T22:35:54.000865Z",
   "gameweek": 8,
   "players": [
     {
@@ -435,6 +435,128 @@
       "needs_attention": false
     },
     {
+      "element_id": 36,
+      "player_name": "Maatsen",
+      "club": "Aston Villa",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "unresolved_conservative",
+          "n_conflicts": 5,
+          "n_dropped": 0,
+          "unresolved": true,
+          "escalation": "chance_of_playing: fpl_bootstrap says 100 (2026-09-12T18:00:08.729468Z) while fpl_news_parse says 75 (2026-09-12T18:00:08.729468Z). Used the more conservative 75.",
+          "claims": [
+            {
+              "claim_id": "dbe6f6e4e2cb5231",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T18:00:08.729468Z",
+              "observed_at": "2026-10-21T00:23:53.568625Z",
+              "quote": "Ankle injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "c02ae07430547292",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-09-12T18:00:08.729468Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "580067fe8694c65a",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T18:00:08.729468Z",
+              "observed_at": "2026-10-21T00:23:53.568625Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "c02ae07430547292",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-09-12T18:00:08.729468Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "dbe6f6e4e2cb5231",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T18:00:08.729468Z",
+              "observed_at": "2026-10-21T00:23:53.568625Z",
+              "quote": "Ankle injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "580067fe8694c65a",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-09-12T18:00:08.729468Z",
+              "observed_at": "2026-10-21T00:23:53.568625Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "a",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "0f51da26e09582cf",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-09-12T18:00:08.729468Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 5,
+      "needs_attention": true
+    },
+    {
       "element_id": 28,
       "player_name": "Martinez",
       "club": "Chelsea",
@@ -531,13 +653,13 @@
       "needs_attention": true
     },
     {
-      "element_id": 36,
-      "player_name": "Maatsen",
-      "club": "Aston Villa",
+      "element_id": 78,
+      "player_name": "Kroupi.Jr",
+      "club": "Bournemouth",
       "entries": [
         {
           "claim_type": "chance_of_playing",
-          "resolved_value": 75,
+          "resolved_value": 50,
           "rule": "tier_precedence",
           "n_conflicts": 3,
           "n_dropped": 0,
@@ -545,56 +667,80 @@
           "escalation": null,
           "claims": [
             {
-              "claim_id": "dbe6f6e4e2cb5231",
-              "source": "fpl_news_parse",
+              "claim_id": "b5e374813b9937a7",
+              "source": "fpl_bootstrap",
               "source_tier": 1,
               "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-09-12T18:00:08.729468Z",
-              "observed_at": "2026-10-21T00:23:53.568625Z",
-              "quote": "Ankle injury - 75% chance of playing",
+              "value": 50,
+              "claimed_at": "2026-07-29T17:30:09.796802Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": null,
               "url": null,
               "verdict": "won",
               "beaten_by": null
             },
             {
-              "claim_id": "580067fe8694c65a",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-09-12T18:00:08.729468Z",
-              "observed_at": "2026-10-21T00:23:53.568625Z",
-              "quote": null,
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            },
-            {
-              "claim_id": "dbe6f6e4e2cb5231",
+              "claim_id": "6a25748621f29ce8",
               "source": "fpl_news_parse",
               "source_tier": 1,
               "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-09-12T18:00:08.729468Z",
-              "observed_at": "2026-10-21T00:23:53.568625Z",
-              "quote": "Ankle injury - 75% chance of playing",
+              "value": 50,
+              "claimed_at": "2026-07-29T17:30:09.796802Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": "Foot injury - 50% chance of playing",
               "url": null,
               "verdict": "lost",
               "beaten_by": "tier_precedence"
             },
             {
-              "claim_id": "580067fe8694c65a",
+              "claim_id": "b5e374813b9937a7",
               "source": "fpl_bootstrap",
               "source_tier": 1,
               "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-09-12T18:00:08.729468Z",
-              "observed_at": "2026-10-21T00:23:53.568625Z",
+              "value": 50,
+              "claimed_at": "2026-07-29T17:30:09.796802Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
               "quote": null,
               "url": null,
               "verdict": "lost",
               "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "6a25748621f29ce8",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-07-29T17:30:09.796802Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": "Foot injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f5cc3b337b31a2f2",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-07-29T17:30:09.796802Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
             }
           ]
         }
@@ -2465,6 +2611,159 @@
       "needs_attention": false
     },
     {
+      "element_id": 38,
+      "player_name": "A.Garc\u00eda",
+      "club": "Aston Villa",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "permanence_beats_gradation",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "b738df71a3c6af15",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-10-21T13:24:48.628998Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "permanent_exit",
+          "resolved_value": {
+            "kind": "loan",
+            "club": "Getafe"
+          },
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "291d175bb1898754",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "permanent_exit",
+              "value": {
+                "kind": "loan",
+                "club": "Getafe"
+              },
+              "claimed_at": "2026-10-21T13:24:48.628998Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": "Has joined Getafe on loan for the rest of the season",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "u",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "469e19d0d6275a30",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "u",
+              "claimed_at": "2026-10-21T13:24:48.628998Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
+      "element_id": 63,
+      "player_name": "Milosavljevi\u0107",
+      "club": "Bournemouth",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-11-08",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "54c48e0e5f3a1b15",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-08",
+              "claimed_at": "2026-08-06T10:00:10.456051Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": "Thigh injury - Expected back 8 Nov",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
+      "element_id": 69,
+      "player_name": "Scott",
+      "club": "Bournemouth",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-11-08",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "5c72f6527b0080f6",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-08",
+              "claimed_at": "2026-10-05T09:30:09.910752Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": "Thigh injury - Expected back 8 Nov",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 98,
       "player_name": "Janelt",
       "club": "Brentford",
@@ -2978,6 +3277,39 @@
       "needs_attention": false
     },
     {
+      "element_id": 450,
+      "player_name": "Livramento",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-11-07",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "133a33652c40c92e",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-07",
+              "claimed_at": "2026-09-19T14:00:09.046677Z",
+              "observed_at": "2026-10-21T19:20:09.933188Z",
+              "quote": "Knee injury - Expected back 7 Nov",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 499,
       "player_name": "Pedro Porro",
       "club": "Spurs",
@@ -3192,10 +3524,10 @@
     }
   ],
   "counts": {
-    "n_claims": 477,
-    "n_players_with_claims": 100,
-    "n_players_shown": 42,
-    "n_escalations": 16,
-    "n_players_resolved": 61
+    "n_claims": 520,
+    "n_players_with_claims": 107,
+    "n_players_shown": 47,
+    "n_escalations": 17,
+    "n_players_resolved": 69
   }
 }
