@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-21T10:07:53.062501Z",
+  "generated_at": "2026-10-21T19:19:50.234491Z",
   "gameweek": 8,
   "players": [
     {
@@ -1105,6 +1105,102 @@
       ],
       "total_conflicts": 3,
       "needs_attention": true
+    },
+    {
+      "element_id": 637,
+      "player_name": "Vaz",
+      "club": "Hull City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 3,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "3f04633e1c4e0322",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-17T17:00:08.108262Z",
+              "observed_at": "2026-10-21T10:08:29.237266Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "3b49040340323df0",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-17T17:00:08.108262Z",
+              "observed_at": "2026-10-21T10:08:29.237266Z",
+              "quote": "Achilles injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "765237c5ed89a9c7",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-10-17T17:00:08.108262Z",
+              "observed_at": "2026-10-17T23:19:07.868850Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "16033cbca747b2ea",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-10-17T17:00:08.108262Z",
+              "observed_at": "2026-10-17T23:19:07.868850Z",
+              "quote": "Achilles injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "4a3eb671f6da0215",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-17T17:00:08.108262Z",
+              "observed_at": "2026-10-17T23:19:07.868850Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
     },
     {
       "element_id": 53,
@@ -2229,8 +2325,8 @@
       "needs_attention": false
     },
     {
-      "element_id": 637,
-      "player_name": "Vaz",
+      "element_id": 589,
+      "player_name": "Gourna-Douath",
       "club": "Hull City",
       "entries": [
         {
@@ -2243,27 +2339,27 @@
           "escalation": null,
           "claims": [
             {
-              "claim_id": "765237c5ed89a9c7",
-              "source": "fpl_bootstrap",
+              "claim_id": "8d20ca01a7523bcb",
+              "source": "fpl_news_parse",
               "source_tier": 1,
               "claim_type": "chance_of_playing",
               "value": 50,
-              "claimed_at": "2026-10-17T17:00:08.108262Z",
-              "observed_at": "2026-10-17T23:19:07.868850Z",
-              "quote": null,
+              "claimed_at": "2026-10-16T13:00:08.314070Z",
+              "observed_at": "2026-10-21T10:08:29.237266Z",
+              "quote": "Calf injury - 50% chance of playing",
               "url": null,
               "verdict": "won",
               "beaten_by": null
             },
             {
-              "claim_id": "16033cbca747b2ea",
-              "source": "fpl_news_parse",
+              "claim_id": "6ae82b9705412088",
+              "source": "fpl_bootstrap",
               "source_tier": 1,
               "claim_type": "chance_of_playing",
               "value": 50,
-              "claimed_at": "2026-10-17T17:00:08.108262Z",
-              "observed_at": "2026-10-17T23:19:07.868850Z",
-              "quote": "Achilles injury - 50% chance of playing",
+              "claimed_at": "2026-10-16T13:00:08.314070Z",
+              "observed_at": "2026-10-21T10:08:29.237266Z",
+              "quote": null,
               "url": null,
               "verdict": "lost",
               "beaten_by": "tier_precedence"
@@ -2280,13 +2376,83 @@
           "escalation": null,
           "claims": [
             {
-              "claim_id": "4a3eb671f6da0215",
+              "claim_id": "6d335b0698698254",
               "source": "fpl_bootstrap",
               "source_tier": 1,
               "claim_type": "status",
               "value": "d",
-              "claimed_at": "2026-10-17T17:00:08.108262Z",
-              "observed_at": "2026-10-17T23:19:07.868850Z",
+              "claimed_at": "2026-10-16T13:00:08.314070Z",
+              "observed_at": "2026-10-21T10:08:29.237266Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 617,
+      "player_name": "Cho",
+      "club": "Hull City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "2c13558f8d6d512b",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-10-16T17:30:09.623338Z",
+              "observed_at": "2026-10-21T10:08:29.237266Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "1092930b17b8754c",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-10-16T17:30:09.623338Z",
+              "observed_at": "2026-10-21T10:08:29.237266Z",
+              "quote": "Unspecified injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "c3dde163444cd998",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-16T17:30:09.623338Z",
+              "observed_at": "2026-10-21T10:08:29.237266Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -3026,10 +3192,10 @@
     }
   ],
   "counts": {
-    "n_claims": 436,
-    "n_players_with_claims": 93,
-    "n_players_shown": 40,
-    "n_escalations": 15,
-    "n_players_resolved": 59
+    "n_claims": 477,
+    "n_players_with_claims": 100,
+    "n_players_shown": 42,
+    "n_escalations": 16,
+    "n_players_resolved": 61
   }
 }
