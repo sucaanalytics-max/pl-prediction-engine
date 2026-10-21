@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-21T09:50:43.804561Z",
-  "n_dropped": 143,
+  "generated_at": "2026-10-21T14:53:00.032789Z",
+  "n_dropped": 132,
   "dropped_by_source": {
-    "bbc_football": 54,
-    "hayters": 19,
-    "sky_football": 70
+    "bbc_football": 52,
+    "hayters": 13,
+    "sky_football": 67
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 233,
+  "n_articles": 222,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -54,6 +54,288 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "a20151ff879d14cc",
+      "headline": "Forest latest: Gibbs-White fit to face Ipswich as Glasner challenges Delap",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279316/nottingham-forest-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-21T15:00:00Z",
+      "players": [
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "NFO",
+          "held": false
+        },
+        {
+          "element_id": 480,
+          "name": "Gibbs-White",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9df3b03300b4d21e",
+      "headline": "Rose confirms Bournemouth star returns to training",
+      "summary": "Marco Rose confirmed that striker Eli Junior Kroupi is back training with the first-team squad after injuring his foot in pre-season. The 20-year-old scored 13 Premier League goals last campaign but is yet to appear this season, although he could fe",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/rose-confirms-bournemouth-star-returns-to-training/",
+      "claimed_at": "2026-10-21T14:14:30Z",
+      "players": [
+        {
+          "element_id": 78,
+          "name": "Kroupi.Jr",
+          "club": "BOU",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2a1fb2a925a78604",
+      "headline": "Why do Man City fans boo pre-match anthems?",
+      "summary": "The cacophony of boos that greet the Premier League and Champions League anthems before kick-off have now become a fixture at Etihad Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvx28yk1j6z0o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-21T13:57:59Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5374e6b07566aa51",
+      "headline": "VAR who wrongly awarded Haaland winner vs Man Utd set for PL return",
+      "summary": "The VAR who incorrectly awarded Erling Haaland's winner in last month's Manchester derby has been reinstated to Premier League duty.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13601893/var-official-matt-donohue-set-for-premier-league-return-after-wrongly-awarding-erling-haaland-winner-vs-man-utd",
+      "claimed_at": "2026-10-21T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "75ffa49ea77a0368",
+      "headline": "Bournemouth latest: Kroupi set to return for Man Utd trip",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-21T13:00:00Z",
+      "players": [
+        {
+          "element_id": 78,
+          "name": "Kroupi.Jr",
+          "club": "BOU",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8ef2beffccc38980",
+      "headline": "Brighton latest: Struijk red card backed by panel despite being overturned",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-21T12:54:00Z",
+      "players": [
+        {
+          "element_id": 328,
+          "name": "Struijk",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7b9a8d288d02ff59",
+      "headline": "FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury",
+      "summary": "FPL lessons from Liverpool's 4-3 win over Villarreal The post FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/21/fpl-notes-why-isak-wirtz-barcola-were-benched-munoz-injury",
+      "claimed_at": "2026-10-21T12:50:00Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 377,
+          "name": "Munoz",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f315bca784634ca7",
+      "headline": "Man City latest: Foden says he has a 'long way to go' despite hat-trick",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-21T12:26:00Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1e70b0c249156d58",
+      "headline": "Liverpool latest: Van Dijk on Iraola's style and Salah's impact on Ngumoha",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-21T12:19:00Z",
+      "players": [
+        {
+          "element_id": 356,
+          "name": "Virgil",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 369,
+          "name": "Ngumoha",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6f18880c59bc831c",
+      "headline": "Man Utd latest: Carrick quizzed on Ten Hag as Fabregas reacts to Old Trafford link",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-21T11:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8288436e6d1f39a6",
+      "headline": "Van Dijk admits he had \u2018bad day at the office\u2019 despite Liverpool win",
+      "summary": "Virgil van Dijk admitted that he had a &#8220;bad day at the office&#8221; after making an early mistake in Liverpool's 4-3 win over Villarreal at Anfield. The defender was at fault for the Spanish side's first goal of the night wh",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/van-dijk-admits-he-had-bad-day-at-the-office-despite-liverpool-win/",
+      "claimed_at": "2026-10-21T11:00:00Z",
+      "players": [
+        {
+          "element_id": 356,
+          "name": "Virgil",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4b869fa9dd1220aa",
+      "headline": "Mac Allister reflects on \u2018really difficult\u2019 last year and praises Iraola\u2019s impact",
+      "summary": "Alexis Mac Allister has admitted he was below his best last season but believes Andoni Iraola has helped change the mood and direction at Liverpool. The midfielder was candid about his own performances during the last",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/mac-allister-reflects-on-really-difficult-last-year-and-praises-iraolas-impact/",
+      "claimed_at": "2026-10-21T10:32:48Z",
+      "players": [
+        {
+          "element_id": 372,
+          "name": "Mac Allister",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4596bfbdf43d92e0",
+      "headline": "Foden says he still has \u2018a long way to go\u2019 before getting back to his best",
+      "summary": "Phil Foden admits he still has \u201ca long way to go\u201d before returning to his best after scoring a hat-trick in Manchester City\u2019s 5-1 Champions League win over AEK Athens. The attacker has endured a difficult couple of seasons an",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/foden-says-he-still-has-a-long-way-to-go-before-getting-back-to-his-best/",
+      "claimed_at": "2026-10-21T10:06:35Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6f34adb5ceebb9c8",
+      "headline": "FPL notes: Haaland \u201cOK to start\u201d, key rests + Gvardiol injury update",
+      "summary": "Fantasy takeaways from Man City 5-1 AEK Athens The post FPL notes: Haaland &#8220;OK to start&#8221;, key rests + Gvardiol injury update appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/21/fpl-notes-haaland-ok-to-start-key-rests-gvardiol-injury-update",
+      "claimed_at": "2026-10-21T10:05:00Z",
+      "players": [
+        {
+          "element_id": 391,
+          "name": "Gvardiol",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "c6070ab31e5505f2",
@@ -632,6 +914,24 @@
       "touches_squad": false
     },
     {
+      "digest": "e5fc97e8d76e73d6",
+      "headline": "Man Utd to be without NINE players amid injury crisis for Como trip",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/como-vs-manchester-united/live/577645",
+      "claimed_at": "2026-10-20T18:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "b5c54f836bbe1daa",
       "headline": "Carrick gives latest updates on several Man Utd injuries",
       "summary": "Michael Carrick has confirmed Manchester United will be without several players for their Champions League clash with Como, with Lisandro Martinez, Kobbie Mainoo, Luke Shaw, Ayden Heaven and Marcus Rashford all unavailable. Martinez\u2019s issue is",
@@ -776,30 +1076,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d1a00bb10b5e9f5a",
-      "headline": "Aston Villa latest: Manzambi misses Viking tie, Wan Bissaka, Ruggeri out for longer",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-20T14:51:00Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 596,
-          "name": "Ruggeri",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b1780305eee7e623",
       "headline": "Friedel backs Arsenal to go one better in the Champions League",
       "summary": "Brad Friedel has picked Arsenal as the English side most likely to win this season\u2019s Champions League. It is not a particularly wild call. Mikel Arteta\u2019s team came within a penalty shootout of lifting the trophy in May, having already en",
@@ -848,24 +1124,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d556408ea6fda43f",
-      "headline": "Have set-piece kings Arsenal really become set-piece strugglers?",
-      "summary": "Arsenal scored a Premier League-high 25 non-penalty set-piece goals on their way to winning the title last season. But have 'Set-piece FC' lost their not-so-secret edge?",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13601338/arsenal-were-set-piece-kings-last-season-so-why-have-they-stopped-scoring-from-set-pieces-between-the-lines-explains",
-      "claimed_at": "2026-10-20T13:10:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "7c160ecea4fd581f",
       "headline": "Ronaldo let Manchester United down - Ten Hag",
       "summary": "Former Manchester United manager Erik ten Hag says Cristiano Ronaldo \"let the team and let me down\" during the Dutchman's spell at Old Trafford.",
@@ -873,42 +1131,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c8dx32rn297wo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-20T12:12:51Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "940f060b8e3aca50",
-      "headline": "Transfer Centre LIVE! Ten Hag reveals FIVE players he wanted at Man Utd",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
-      "claimed_at": "2026-10-20T10:25:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "51ea5988b364354e",
-      "headline": "Ten Hag on Man Utd's broken 'promises', wanting Kane and Ronaldo tension",
-      "summary": "Erik ten Hag has kept his counsel on Manchester United for two years since his sacking in October 2024, but the affection he built up for the club while winning two trophies still shines through when he speaks.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13601227/erik-ten-hag-interview-man-utds-broken-promises-wanting-kane-ronaldo-tension-fa-cup-glory",
-      "claimed_at": "2026-10-20T08:10:00Z",
       "players": [
         {
           "element_id": 0,
@@ -932,24 +1154,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2d468dbee367b5f9",
-      "headline": "'He still has magic in his boots' - Maddison shows Spurs what they were missing",
-      "summary": "James Maddison says he has \"so much more to give\" Tottenham after he marked his first start in nearly 18 months with a stunning goal that helped Spurs to their first Premier League win of the season.&#160;",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13601183/james-maddison-marks-first-tottenham-start-in-nearly-18-months-with-stunning-goal-in-first-premier-league-win-of-season",
-      "claimed_at": "2026-10-20T06:01:00Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
           "held": false
         }
       ],
@@ -988,30 +1192,6 @@
       "url": "https://www.bbc.co.uk/sport/football/articles/cwz0v8le7y3eo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-19T22:35:55Z",
       "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "19faf664f82ef62b",
-      "headline": "Maddison and Marmoush score as Spurs get their first PL win of season",
-      "summary": "FREE TO WATCH: Highlights from Tottenham Hotspurs' match against Coventry in the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13601159/spurs-3-1-coventry-premier-league-highlights",
-      "claimed_at": "2026-10-19T22:14:00Z",
-      "players": [
-        {
-          "element_id": 401,
-          "name": "Marmoush",
-          "club": "TOT",
-          "held": false
-        },
         {
           "element_id": 515,
           "name": "Maddison",
@@ -1094,24 +1274,6 @@
       "touches_squad": false
     },
     {
-      "digest": "427b5e39dfab1d0d",
-      "headline": "Arsenal latest: Zubimendi returns for Bayern trip",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-19T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "8acef5b44387f43a",
       "headline": "Araujo the stopgap solution fixing Liverpool's problems",
       "summary": "Ronald Araujo has impressed since arriving at Liverpool from Barcelona. Could he prove a longer-term solution?",
@@ -1137,24 +1299,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cm4g17d11zvwo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-19T16:26:44Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c55726f4923edd21",
-      "headline": "Why Man Utd continue to divide opinion",
-      "summary": "Michael Carrick called Sunday's draw at Leeds a 'fresh start'. Gary Neville described it as a 'stepping stone'. Most unattached observers came to another conclusion entirely.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13599530/why-michael-carricks-man-utd-side-continue-to-divide-opinion-following-another-disjointed-display-at-elland-road",
-      "claimed_at": "2026-10-19T15:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1244,30 +1388,6 @@
           "element_id": 411,
           "name": "Haaland",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f5e4fe1066d87d54",
-      "headline": "Liverpool latest: Iraola provides Szoboszlai & Frimpong injury updates",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-19T13:00:00Z",
-      "players": [
-        {
-          "element_id": 357,
-          "name": "Frimpong",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 368,
-          "name": "Szoboszlai",
-          "club": "LIV",
           "held": false
         }
       ],
@@ -1364,24 +1484,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4f7c26b309bb827e",
-      "headline": "Euro Leagues",
-      "summary": "Mikey Moore is on loan at Cologne from Spurs - and loving life in the Bundesliga.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0ph7nfj?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-19T05:00:00Z",
-      "players": [
-        {
-          "element_id": 523,
-          "name": "Moore",
-          "club": "TOT",
           "held": false
         }
       ],
@@ -1592,66 +1694,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d4bc4ba51d4c6639",
-      "headline": "Emery confirms injury blow for Aston Villa star \u2013 but defender in line for return",
-      "summary": "Unai Emery has confirmed Aaron Wan-Bissaka suffered a hamstring injury during Aston Villa\u2019s 1-0 win over Newcastle United. The defender's injury comes as another defensive worry for Emery, but a potential absence for t",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/emery-confirms-injury-blow-for-aston-villa-star-but-defender-in-line-for-return/",
-      "claimed_at": "2026-10-17T20:05:53Z",
-      "players": [
-        {
-          "element_id": 36,
-          "name": "Maatsen",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 611,
-          "name": "Wan-Bissaka",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "dd8482d28cb5146b",
-      "headline": "\u2018There will be ups and downs\u2019 \u2013 Jaissle on Newcastle\u2019s recent struggles following defeat to Aston Villa",
-      "summary": "Matthias Jaissle accepts Newcastle United are going through a difficult spell after their 1-0 defeat to Aston Villa, but insists the club\u2019s young squad can learn quickly from their mistakes. Newca",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/there-will-be-ups-and-downs-jaissle-on-newcastles-recent-struggles-following-defeat-to-aston-villa/",
-      "claimed_at": "2026-10-17T19:52:37Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f65ce56800577779",
-      "headline": "Emery praises Aston Villa match winner Manzambi\u2019s adaptation \u2013 and gives update on his fitness after going off",
-      "summary": "Johan Manzambi earned praise from Unai Emery after scoring the winner in Aston Villa\u2019s 1-0 victory over Newcastle United. The midfielder made the decisive impact with the only goal of the g",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/emery-praises-aston-villa-match-winner-manzambis-adaptation/",
-      "claimed_at": "2026-10-17T19:36:58Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ff0956710b1e1ef7",
       "headline": "Illness - 75% chance of playing",
       "summary": null,
@@ -1670,42 +1712,6 @@
           "element_id": 421,
           "name": "Heaven",
           "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f51efc990c5d8cef",
-      "headline": "Maresca gives updates on several Man City injury concerns after beating Ipswich",
-      "summary": "Enzo Maresca has provided an injury update on several Manchester City players following their 3-2 win over Ipswich. Mateo Kovacic, Matheus Nunes and Erling Haaland all indicated they were fine after the game, while Nico",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/maresca-gives-updates-on-several-man-city-injury-concerns-after-beating-ipswich/",
-      "claimed_at": "2026-10-17T17:49:15Z",
-      "players": [
-        {
-          "element_id": 387,
-          "name": "O'Reilly",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 406,
-          "name": "Kova\u010di\u0107",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
           "held": false
         }
       ],
@@ -1766,24 +1772,6 @@
           "element_id": 233,
           "name": "Mykolenko",
           "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "67cabab62ae27051",
-      "headline": "Manchester United meltdown: what Michael Carrick\u2019s sacking risk means for your FPL team and more",
-      "summary": "Manchester United\u2019s alarming form is more than a managerial headache, it\u2019s a genuine problem for FPL managers holding Red Devils assets. With just 6 points from 6 games (United\u2019s worst start in four deca",
-      "source": "premierfantasytools",
-      "tier": 3,
-      "url": "https://www.premierfantasytools.com/manchester-united-meltdown-what-michael-carricks-sacking-risk-means-for-your-fpl-team-and-more/",
-      "claimed_at": "2026-10-16T14:12:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
