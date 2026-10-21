@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-21T00:08:27.817839Z",
+  "generated_at": "2026-10-21T04:46:56.254023Z",
   "n_dropped": 147,
   "dropped_by_source": {
     "bbc_football": 56,
@@ -13,6 +13,48 @@
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "e34c259656111958",
+      "headline": "Webb backs Botman decision despite pundits' calls for red card",
+      "summary": "Referees' chief Howard Webb believes there was nothing \"clearly wrong\" with the decision not to send off Newcastle defender Sven Botman for his tackle on Aston Villa striker Nicolas Jackson.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13601311/sven-botman-tackle-howard-webb-says-nothing-clearly-wrong-with-var-decision-to-not-send-newcastle-defender-off",
+      "claimed_at": "2026-10-20T17:00:00Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 447,
+          "name": "Botman",
+          "club": "NEW",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "a5975ffc8ad64155",
+      "headline": "Villa ahead at Newcastle despite Botman escape LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/newcastle-united-vs-aston-villa/live/559511",
+      "claimed_at": "2026-10-17T16:00:00Z",
+      "players": [
+        {
+          "element_id": 447,
+          "name": "Botman",
+          "club": "NEW",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "939cc18a1e22c98d",
       "headline": "Spurs latest: How magic man Markanday made Tottenham Hotspur history",
@@ -584,30 +626,6 @@
           "element_id": 516,
           "name": "Bentancur",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e34c259656111958",
-      "headline": "Webb backs Botman decision despite pundits' calls for red card",
-      "summary": "Referees' chief Howard Webb believes there was nothing \"clearly wrong\" with the decision not to send off Newcastle defender Sven Botman for his tackle on Aston Villa striker Nicolas Jackson.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13601311/sven-botman-tackle-howard-webb-says-nothing-clearly-wrong-with-var-decision-to-not-send-newcastle-defender-off",
-      "claimed_at": "2026-10-20T17:00:00Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 447,
-          "name": "Botman",
-          "club": "NEW",
           "held": false
         }
       ],
@@ -1262,24 +1280,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5b3257db23fa0e0e",
-      "headline": "Spurs latest: De Zerbi reveals mealtime phone ban during Marbella training camp",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-19T07:50:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "157712cdce10ab9c",
       "headline": "Beer & Blackpool beach was how British players bonded - Pulis",
       "summary": "BBC Sport columnist Tony Pulis explains what Spurs will get from their team-bonding trip to Spain, and how differently managers built team morale in his day.",
@@ -1670,6 +1670,12 @@
           "element_id": 144,
           "name": "Gusto",
           "club": "CHE",
+          "held": false
+        },
+        {
+          "element_id": 421,
+          "name": "Heaven",
+          "club": "MUN",
           "held": false
         }
       ],
