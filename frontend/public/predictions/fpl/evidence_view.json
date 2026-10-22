@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-22T19:32:22.927792Z",
+  "generated_at": "2026-10-22T22:46:39.285130Z",
   "gameweek": 8,
   "players": [
     {
@@ -1547,13 +1547,26 @@
       "entries": [
         {
           "claim_type": "chance_of_playing",
-          "resolved_value": 50,
-          "rule": "tier_precedence",
-          "n_conflicts": 1,
+          "resolved_value": 0,
+          "rule": "asymmetric_override",
+          "n_conflicts": 2,
           "n_dropped": 0,
           "unresolved": false,
           "escalation": null,
           "claims": [
+            {
+              "claim_id": "f9c0c80a3e472c2e",
+              "source": "manual:Sports Mole injury list (Ben Knapton)",
+              "source_tier": 3,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-10-22T08:49:00Z",
+              "observed_at": "2026-10-22T19:58:52.262551Z",
+              "quote": "no chance of him facing Everton",
+              "url": "https://www.sportsmole.co.uk/football/arsenal/injury-news/injuries-and-suspensions/saka-update-hincapie-chances-arsenal-injury-suspension-list-vs-everton_607420.html",
+              "verdict": "won",
+              "beaten_by": null
+            },
             {
               "claim_id": "78702b189ac43b08",
               "source": "fpl_news_parse",
@@ -1564,8 +1577,8 @@
               "observed_at": "2026-10-21T22:36:34.332088Z",
               "quote": "Thigh injury - 50% chance of playing",
               "url": null,
-              "verdict": "won",
-              "beaten_by": null
+              "verdict": "lost",
+              "beaten_by": "asymmetric_override"
             },
             {
               "claim_id": "16d1cbf1445e3b6b",
@@ -1578,7 +1591,7 @@
               "quote": null,
               "url": null,
               "verdict": "lost",
-              "beaten_by": "tier_precedence"
+              "beaten_by": "asymmetric_override"
             }
           ]
         },
@@ -1607,7 +1620,7 @@
           ]
         }
       ],
-      "total_conflicts": 1,
+      "total_conflicts": 2,
       "needs_attention": false
     },
     {
@@ -3753,8 +3766,8 @@
     }
   ],
   "counts": {
-    "n_claims": 575,
-    "n_players_with_claims": 112,
+    "n_claims": 590,
+    "n_players_with_claims": 115,
     "n_players_shown": 49,
     "n_escalations": 19,
     "n_players_resolved": 72
