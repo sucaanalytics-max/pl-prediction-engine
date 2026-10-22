@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-22T19:46:09.897846Z",
-  "n_dropped": 149,
+  "generated_at": "2026-10-22T22:58:41.946015Z",
+  "n_dropped": 156,
   "dropped_by_source": {
-    "bbc_football": 51,
-    "hayters": 21,
-    "sky_football": 77
+    "bbc_football": 52,
+    "hayters": 22,
+    "sky_football": 82
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 239,
+  "n_articles": 246,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -56,6 +56,222 @@
       "touches_squad": true
     },
     {
+      "digest": "90b63f74bd62a6d7",
+      "headline": "Palace latest: Sage chuffed for Mateta after goal on return to line-up",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-22T23:30:00Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cb0daa5ef49d6fa5",
+      "headline": "Rose \u2018really proud\u2019 as Bournemouth beat AC Milan on historic night for club",
+      "summary": "AFC Bournemouth continued their winning start in Europe with a 3-0 win over AC Milan on a historic night for the club at the Vitality Stadium. After a lively start from Bournemouth, the home side were awarded a penalty for h",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/rose-really-proud-as-bournemouth-beat-ac-milan-on-historic-night-for-club/",
+      "claimed_at": "2026-10-22T22:37:40Z",
+      "players": [
+        {
+          "element_id": 70,
+          "name": "Kluivert",
+          "club": "BOU",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ba4adda66d930524",
+      "headline": "Sage delighted to have Mateta back scoring for Crystal Palace",
+      "summary": "Pierre Sage praised Jean-Philippe Mateta\u2019s return to scoring after netting in their 2-2 draw with Besiktas. Mateta played an hour on his first start since returning from injury and Sage says his return can be a huge boost for Palace. \u201cI\u2019m",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/sage-delighted-to-have-mateta-back-scoring-for-crystal-palace/",
+      "claimed_at": "2026-10-22T22:20:57Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5d27d971a09f500e",
+      "headline": "Bournemouth seal historic win over Amorim's 10-man Milan",
+      "summary": "Amine Adli scored a fine free-kick to cap Bournemouth's historic 3-0 win over 10-man AC Milan, which continues their brilliant start to their first-ever European campaign.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/bournemouth-vs-ac-milan/report/577779",
+      "claimed_at": "2026-10-22T22:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fa59a772932fb16b",
+      "headline": "Mateta on target as Palace draw with Besiktas in Istanbul",
+      "summary": "Jean-Philippe Mateta scored his first goal since last season's UEFA Conference League final but Crystal Palace had to settle for a 2-2 draw away at 10-man Besiktas.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/besiktas-vs-crystal-palace/report/577778",
+      "claimed_at": "2026-10-22T22:00:00Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "220e6216c039bd36",
+      "headline": "Superman at Como & is Conte right for Man Utd?",
+      "summary": "Como gets some love after that scoreline against Man United midweek",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0pj4zqk?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-22T21:58:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8283ba63bf155a75",
+      "headline": "Man Utd chief keen on Howe - Friday's gossip",
+      "summary": "Manchester United linked with Antonio Conte, Unai Emery, Eddie Howe and Julian Nagelsmann among others if they part ways with manager Michael Carrick.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c63elp2kz4exo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-22T21:53:52Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f9627bf143135192",
+      "headline": "Dream night for Bournemouth - win over Milan a sign of Premier League power",
+      "summary": "Bournemouth's 3-0 win against AC Milan further illustrated the dominance of Premier League sides against their European counterparts.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6z981p24q1eo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-22T21:30:31Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4b8eac7804fdafdb",
+      "headline": "Sunderland latest: Poznan draw \u2018good experience\u2019, says Le Bris",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-22T21:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fbb503400d0139f7",
+      "headline": "Brighton latest: Hurzeler demands improvement after disappointing draw",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-22T21:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "935d9853ea68dd2d",
+      "headline": "Hurzeler critical of Brighton performance after being held to goalless Conference League draw",
+      "summary": "Fabian Hurzeler admitted Brighton were not good enough at the basics after being held to a 0-0 draw by Jablonec in the Conference League. The Seagulls struggled to break down their opponents and were unable",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/hurzeler-critical-after-brighton-held-to-goalless-conference-league-draw/",
+      "claimed_at": "2026-10-22T20:40:33Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "80e0efdc1a4bed0a",
+      "headline": "Le Bris backs Sunderland players after draw with Lech Poznan",
+      "summary": "R\u00e9gis Le Bris praised Sunderland\u2019s response to draw 1-1 with Lech Poznan in the Europa League - and insisted recent Premier League defeats are no reason to doubt his players. The Black Cats have endured a difficult spell domestically, but",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/le-bris-backs-sunderland-players-after-draw-with-lech-poznan/",
+      "claimed_at": "2026-10-22T20:29:15Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "7fde30dfa39a0502",
       "headline": "Dominant Sunderland punished as Bengtsson earns Lech draw",
       "summary": "Timur Tutierov's first Sunderland goal was not enough to earn them the victory they deserved in Poland as their wastefulness was punished in a 1-1 draw at lowly Lech Poznan.",
@@ -68,6 +284,42 @@
           "element_id": 668,
           "name": "Tutierov",
           "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a62bedc2757a279f",
+      "headline": "Dominant Sunderland punished as Bengtsson earns Lech draw",
+      "summary": "Timur Tutierov's first Sunderland goal was not enough to earn the victory they deserved in Poland as their wastefulness was punished in a 1-1 draw at lowly Lech Poznan.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/lech-poznan-vs-sunderland/report/577787",
+      "claimed_at": "2026-10-22T19:45:00Z",
+      "players": [
+        {
+          "element_id": 668,
+          "name": "Tutierov",
+          "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7f2c99459b1f3b8b",
+      "headline": "Papers: Man Utd draw up five-man shortlist to replace Carrick",
+      "summary": "The top stories and transfer rumours from Friday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602435/manchester-united-draw-up-five-man-shortlist-to-replace-michael-carrick-paper-talk",
+      "claimed_at": "2026-10-22T18:49:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -692,42 +944,6 @@
       "touches_squad": false
     },
     {
-      "digest": "56c522a4be2b96a6",
-      "headline": "Man Utd latest: Merse says Carrick should stay, but do you agree?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-22T08:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4c145452ef5f27f7",
-      "headline": "Carra: Fernandes comments 'disgraceful', but Carrick's time may be up",
-      "summary": "Jamie Carragher has criticised Bruno Fernandes for questioning Man Utd's tactics following their 4-1 defeat to Como, but believes that it could be the end of the line for Michael Carrick.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602131/manchester-united-jamie-carragher-calls-out-bruno-fernandes-for-questioning-michael-carricks-tactics-in-4-1-como-defeat",
-      "claimed_at": "2026-10-22T07:07:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ca15c92f977afb35",
       "headline": "AC Milan\u2019s last visit to the south coast as they prepare for Bournemouth clash",
       "summary": "AC Milan head to Bournemouth on Thursday in the Europa League, 18 years on from their last visit to the South Coast. Carlo Ancelotti\u2019s side travelled to Portsmouth in November 2008 to face off against Pompey in a UEFA Cup",
@@ -800,24 +1016,6 @@
       "touches_squad": false
     },
     {
-      "digest": "32336de8f1f176a5",
-      "headline": "Papers: Brighton boss Hurzeler would be Shearer's pick to replace Carrick",
-      "summary": "The top stories and transfer rumours from Wednesday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602091/manchester-united-should-appoint-fabio-hurzeler-if-they-replace-michel-carrick-says-former-premier-league-winner-alan-shearer-paper-talk",
-      "claimed_at": "2026-10-21T23:23:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f443dcaa55b00caf",
       "headline": "Goal, assist... goal-kick - Kane underlines Ballon d'Or credentials",
       "summary": "Why Declan Rice backs his England team-mate Harry Kane to win the Ballon d'Or after Arsenal's draw with Bayern Munich in the Champions League.",
@@ -836,18 +1034,18 @@
       "touches_squad": false
     },
     {
-      "digest": "8d00b25debb284e2",
-      "headline": "'Embarrassing for Bruno' - Was Man Utd captain wrong to criticise coaches' tactics?",
-      "summary": "On Paper Talk, Henry Winter disagrees with Bruno Fernandes for publicly criticising Michael Carrick's tactics after Manchester United lost 4-1 at Como.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13602089/paper-talk-manchester-united-captain-bruno-fernandes-criticised-after-como-humbling",
-      "claimed_at": "2026-10-21T22:53:00Z",
+      "digest": "4e528b6ca2de45d0",
+      "headline": "does not look good at all",
+      "summary": null,
+      "source": "manual:Arteta post-match via BBC Sport",
+      "tier": 2,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckg5j1zdn4m3o",
+      "claimed_at": "2026-10-21T22:51:56Z",
       "players": [
         {
-          "element_id": 0,
-          "name": null,
-          "club": null,
+          "element_id": 12,
+          "name": "Saka",
+          "club": "ARS",
           "held": false
         }
       ],
@@ -872,24 +1070,6 @@
       "touches_squad": false
     },
     {
-      "digest": "75b6a5e5a3aab62d",
-      "headline": "Brighton latest: Hurzeler will not let in-form Seagulls underestimate Jablonec",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-21T22:47:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "af8993ec9ee4a349",
       "headline": "'Simply not good enough - Warnock on Man Utd's Como display",
       "summary": "Match of the Day pundits Nedum Onuoha and Stephen Warnock analyse Manchester United's performance after their 4-1 Champions League defeat to Como, and discuss midfielder Bruno Fernandes' criticism of team tactics.",
@@ -897,42 +1077,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/c8040gdrdlwwo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-21T22:36:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4518a51ad33bc3aa",
-      "headline": "Alysson stars as Villa beat Viking to make it three wins from three in Europe",
-      "summary": "Aston Villa made it three wins from three in the Champions League with a 3-1 win over Viking at Villa Park.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/aston-villa-vs-viking/report/577642",
-      "claimed_at": "2026-10-21T22:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4b248f0ea3d315ee",
-      "headline": "Arsenal fight back to draw against Bayern Munich",
-      "summary": "Declan Rice scored a superb 82nd-minute equaliser as Arsenal fought back to draw 2-2 with Bayern Munich in a thrilling Champions League encounter at the Allianz Arena.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/bayern-munich-vs-arsenal/report/577643",
-      "claimed_at": "2026-10-21T22:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1424,24 +1568,6 @@
       "touches_squad": false
     },
     {
-      "digest": "4596bfbdf43d92e0",
-      "headline": "Foden says he still has \u2018a long way to go\u2019 before getting back to his best",
-      "summary": "Phil Foden admits he still has \u201ca long way to go\u201d before returning to his best after scoring a hat-trick in Manchester City\u2019s 5-1 Champions League win over AEK Athens. The attacker has endured a difficult couple of seasons an",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/foden-says-he-still-has-a-long-way-to-go-before-getting-back-to-his-best/",
-      "claimed_at": "2026-10-21T10:06:35Z",
-      "players": [
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "6f34adb5ceebb9c8",
       "headline": "FPL notes: Haaland \u201cOK to start\u201d, key rests + Gvardiol injury update",
       "summary": "Fantasy takeaways from Man City 5-1 AEK Athens The post FPL notes: Haaland &#8220;OK to start&#8221;, key rests + Gvardiol injury update appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
@@ -1466,78 +1592,6 @@
       "touches_squad": false
     },
     {
-      "digest": "c6070ab31e5505f2",
-      "headline": "Why Eze is struggling to find his form at Arsenal",
-      "summary": "Eberechi Eze has been struggling for form this season for Arsenal, but there could be hope that the forward turns it around.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqgm0ze7vepmo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T09:22:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "77f5514235bffa90",
-      "headline": "Animal rights group asks Crystal Palace to retire eagle mascot",
-      "summary": "Animal rights group Peta is urging Crystal Palace to retire their bald eagle mascot, saying a \"bright stadium filled with boisterous fans is no place for animals\".",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmx2302r04r4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T07:24:35Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cdaf3bac21459309",
-      "headline": "'I've waited 34 years for this' - Viking's 'special' story",
-      "summary": "When Viking FK ended a 34-year Norwegian title drought last year, it was days like these they were dreaming of - preparing to visit Aston Villa in the Champions League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cv0ldne84eeyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T05:49:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "31a68227cad3a9cb",
-      "headline": "Fabregas and Como prepare for historic Man Utd tie",
-      "summary": "Serie A success story Como have gone from Serie A to the Champions League - now they are ready for a historic night against Manchester United.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmpwg17ev9xxo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T05:26:05Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "eab67e03eb1be962",
       "headline": "Which Man City players will benefit most from Semenyo\u2019s injury?",
       "summary": "The Ghanaian winger is set for eight weeks on the sidelines The post Which Man City players will benefit most from Semenyo's injury? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1549,66 +1603,6 @@
         {
           "element_id": 397,
           "name": "Semenyo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9916e630ae5ce686",
-      "headline": "Iraola delighted with Liverpool youngster\u2019s development after starring in comeback win",
-      "summary": "Andoni Iraola praised Rio Ngumoha\u2019s growing influence after the 18-year-old impressed in Liverpool\u2019s win over Villarreal. The winger set up Liverpool's second and third goals on the night as they came from 2-0 dow",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/iraola-delighted-with-liverpool-youngsters-development-after-starring-in-comeback-win/",
-      "claimed_at": "2026-10-20T22:07:51Z",
-      "players": [
-        {
-          "element_id": 369,
-          "name": "Ngumoha",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "48239610f1155e18",
-      "headline": "Man City boss Maresca backs hat-trick hero Foden to build on recent form \u2013 and gives update on Haaland",
-      "summary": "Enzo Maresca has confirmed Erling Haaland will be fit to start against Aston Villa on Saturday following Manchester City\u2019s 5-1 Champions League win over AEK Athens. The striker was rested against t",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-boss-maresca-backs-hat-trick-hero-foden-to-build-on-recent-form-and-gives-update-on-haaland/",
-      "claimed_at": "2026-10-20T21:40:19Z",
-      "players": [
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "039c5d80f374eb16",
-      "headline": "Foden nets hat-trick as Man City cruise past Athens in Champions League",
-      "summary": "Phil Foden netted a hat-trick as Manchester City thrashed AEK Athens 5-1 to return to winning ways in the Champions League. Enzo Maresca\u2019s side lost 4-2 to European champions PSG last time out in this competition, but tonight\u2019s",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/foden-nets-hat-trick-as-man-city-cruise-past-athens-in-champions-league/",
-      "claimed_at": "2026-10-20T21:08:36Z",
-      "players": [
-        {
-          "element_id": 398,
-          "name": "Foden",
           "club": "MCI",
           "held": false
         }
