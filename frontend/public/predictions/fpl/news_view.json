@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-21T22:21:35.913372Z",
-  "n_dropped": 158,
+  "generated_at": "2026-10-22T00:48:33.568605Z",
+  "n_dropped": 161,
   "dropped_by_source": {
-    "bbc_football": 59,
-    "hayters": 21,
+    "bbc_football": 61,
+    "hayters": 22,
     "sky_football": 78
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 248,
+  "n_articles": 251,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -56,6 +56,60 @@
       "touches_squad": true
     },
     {
+      "digest": "32336de8f1f176a5",
+      "headline": "Papers: Brighton boss Hurzeler would be Shearer's pick to replace Carrick",
+      "summary": "The top stories and transfer rumours from Wednesday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602091/manchester-united-should-appoint-fabio-hurzeler-if-they-replace-michel-carrick-says-former-premier-league-winner-alan-shearer-paper-talk",
+      "claimed_at": "2026-10-21T23:23:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f443dcaa55b00caf",
+      "headline": "Goal, assist... goal-kick - Kane underlines Ballon d'Or credentials",
+      "summary": "Why Declan Rice backs his England team-mate Harry Kane to win the Ballon d'Or after Arsenal's draw with Bayern Munich in the Champions League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck79p7qq1q9ro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-21T23:11:06Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f13bab0380c37f4d",
+      "headline": "Saka injury 'does not look good' - how will Arsenal cope?",
+      "summary": "Mikel Arteta says the quadriceps injury Arsenal's Bukayo Saka picked up in the Champions League draw with Bayern Munich \"does not look good at all\".",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckg5j1zdn4m3o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-21T22:51:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "75b6a5e5a3aab62d",
       "headline": "Brighton latest: Hurzeler will not let in-form Seagulls underestimate Jablonec",
       "summary": null,
@@ -63,6 +117,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
       "claimed_at": "2026-10-21T22:47:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "af8993ec9ee4a349",
+      "headline": "'Simply not good enough - Warnock on Man Utd's Como display",
+      "summary": "Match of the Day pundits Nedum Onuoha and Stephen Warnock analyse Manchester United's performance after their 4-1 Champions League defeat to Como, and discuss midfielder Bruno Fernandes' criticism of team tactics.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c8040gdrdlwwo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-21T22:36:23Z",
       "players": [
         {
           "element_id": 0,
@@ -472,6 +544,24 @@
     {
       "digest": "01b9d85296a0e5b4",
       "headline": "Arsenal latest: Merse says 'Subbuteo football' against Forest was very worrying",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-21T19:29:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "09cdd64454244fa6",
+      "headline": "Arsenal latest: Saka injury doesn't look good at all, says Arteta",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
@@ -1022,24 +1112,6 @@
       "touches_squad": false
     },
     {
-      "digest": "fc665b370f2a2146",
-      "headline": "Why Fabregas-led Como are ready for Man Utd test",
-      "summary": "Como's rise has been remarkable, but the ambition is to make their success last.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13601457/como-vs-man-utd-cesc-fabregas-prepares-for-champions-league-clash-as-ludi-reflects-on-clubs-rise-and-bruno-fernandes-reunion",
-      "claimed_at": "2026-10-21T06:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "cdaf3bac21459309",
       "headline": "'I've waited 34 years for this' - Viking's 'special' story",
       "summary": "When Viking FK ended a 34-year Norwegian title drought last year, it was days like these they were dreaming of - preparing to visit Aston Villa in the Champions League.",
@@ -1065,24 +1137,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cmpwg17ev9xxo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-21T05:26:05Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "939cc18a1e22c98d",
-      "headline": "Spurs latest: How magic man Markanday made Tottenham Hotspur history",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-20T23:45:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1496,42 +1550,6 @@
       "touches_squad": false
     },
     {
-      "digest": "7c160ecea4fd581f",
-      "headline": "Ronaldo let Manchester United down - Ten Hag",
-      "summary": "Former Manchester United manager Erik ten Hag says Cristiano Ronaldo \"let the team and let me down\" during the Dutchman's spell at Old Trafford.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c8dx32rn297wo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-20T12:12:51Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "dd7fb150335ed71e",
-      "headline": "Moyes insider doubts potential Celtic move - gossip",
-      "summary": "Former striker Louis Saha, who played under David Moyes at Everton, doubts whether Celtic would be able to lure away the Premier League boss in their hunt to land a successor to Martin O'Neill.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq74p0d8wm4ro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-20T06:52:44Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a94ad99036142aa5",
       "headline": "FPL notes: Brobbey injury latest + Tavernier third in midfielder table",
       "summary": "Notes from Bournemouth 2-0 Sunderland The post FPL notes: Brobbey injury latest + Tavernier third in midfielder table appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1592,24 +1610,6 @@
           "element_id": 368,
           "name": "Szoboszlai",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "db6e72b9425a7208",
-      "headline": "\u2018I want to be part of the future success\u2019 \u2013 Guehi says Man City players \u2018calm\u2019 over financial charges verdict",
-      "summary": "Marc Guehi says Manchester City\u2019s players have remained calm and united after the club were found guilty of breaching Premier League financial rules. The defender revealed the squad were inf",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/i-want-to-be-part-of-the-future-success-guehi-says-man-city-players-calm-over-financial-charges-verdict/",
-      "claimed_at": "2026-10-19T12:43:13Z",
-      "players": [
-        {
-          "element_id": 388,
-          "name": "Gu\u00e9hi",
-          "club": "MCI",
           "held": false
         }
       ],
