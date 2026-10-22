@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-22T15:41:17.061350Z",
+  "generated_at": "2026-10-22T19:32:22.927792Z",
   "gameweek": 8,
   "players": [
     {
@@ -747,6 +747,126 @@
       ],
       "total_conflicts": 3,
       "needs_attention": false
+    },
+    {
+      "element_id": 267,
+      "player_name": "Luki\u0107",
+      "club": "Ipswich Town",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "unresolved_conservative",
+          "n_conflicts": 2,
+          "n_dropped": 0,
+          "unresolved": true,
+          "escalation": "chance_of_playing: fpl_bootstrap says 0 (2026-10-19T15:30:08.949503Z) while fpl_news_parse says 75 (2026-10-19T15:30:08.949503Z). Used the more conservative 0.",
+          "claims": [
+            {
+              "claim_id": "e9b3be9cf37c587f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-10-19T15:30:08.949503Z",
+              "observed_at": "2026-10-22T15:41:57.808474Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "4a2411d3f0414020",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-19T15:30:08.949503Z",
+              "observed_at": "2026-10-19T15:54:03.563564Z",
+              "quote": "Groin injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            },
+            {
+              "claim_id": "f526a6fdb7c80d17",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-19T15:30:08.949503Z",
+              "observed_at": "2026-10-19T15:54:03.563564Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "unresolved_conservative"
+            }
+          ]
+        },
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-10-23",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "c282448d3a82839a",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-10-23",
+              "claimed_at": "2026-10-19T15:30:08.949503Z",
+              "observed_at": "2026-10-22T15:41:57.808474Z",
+              "quote": "Groin injury - Expected back 23 Oct",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "b5c07e73896dad34",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "i",
+              "claimed_at": "2026-10-19T15:30:08.949503Z",
+              "observed_at": "2026-10-22T15:41:57.808474Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "53e01702d5ab480e",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-19T15:30:08.949503Z",
+              "observed_at": "2026-10-19T15:54:03.563564Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": true
     },
     {
       "element_id": 357,
@@ -1713,76 +1833,6 @@
               "value": "d",
               "claimed_at": "2026-10-19T22:30:08.516742Z",
               "observed_at": "2026-10-20T00:06:27.838381Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 1,
-      "needs_attention": false
-    },
-    {
-      "element_id": 267,
-      "player_name": "Luki\u0107",
-      "club": "Ipswich Town",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 75,
-          "rule": "tier_precedence",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "f526a6fdb7c80d17",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-10-19T15:30:08.949503Z",
-              "observed_at": "2026-10-19T15:54:03.563564Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            },
-            {
-              "claim_id": "4a2411d3f0414020",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-10-19T15:30:08.949503Z",
-              "observed_at": "2026-10-19T15:54:03.563564Z",
-              "quote": "Groin injury - 75% chance of playing",
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "53e01702d5ab480e",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-10-19T15:30:08.949503Z",
-              "observed_at": "2026-10-19T15:54:03.563564Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -3703,10 +3753,10 @@
     }
   ],
   "counts": {
-    "n_claims": 555,
-    "n_players_with_claims": 110,
+    "n_claims": 575,
+    "n_players_with_claims": 112,
     "n_players_shown": 49,
-    "n_escalations": 17,
+    "n_escalations": 19,
     "n_players_resolved": 72
   }
 }
