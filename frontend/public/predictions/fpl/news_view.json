@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-22T15:54:35.832299Z",
-  "n_dropped": 169,
+  "generated_at": "2026-10-22T19:46:09.897846Z",
+  "n_dropped": 149,
   "dropped_by_source": {
-    "bbc_football": 61,
+    "bbc_football": 51,
     "hayters": 21,
-    "sky_football": 87
+    "sky_football": 77
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 259,
+  "n_articles": 239,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -56,6 +56,114 @@
       "touches_squad": true
     },
     {
+      "digest": "7fde30dfa39a0502",
+      "headline": "Dominant Sunderland punished as Bengtsson earns Lech draw",
+      "summary": "Timur Tutierov's first Sunderland goal was not enough to earn them the victory they deserved in Poland as their wastefulness was punished in a 1-1 draw at lowly Lech Poznan.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/lech-poznan-vs-sunderland/report/577787",
+      "claimed_at": "2026-10-22T19:45:00Z",
+      "players": [
+        {
+          "element_id": 668,
+          "name": "Tutierov",
+          "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2bd48f9f0f63cf1c",
+      "headline": "Fernandes has home burgled while in Italy with Man Utd",
+      "summary": "Manchester United captain Bruno Fernandes had his home burgled on Wednesday while he was in Italy for his club's Champions League game against Como.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq9vz19p41x8o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-22T18:04:21Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a1571816da771059",
+      "headline": "FPL notes: Bruno rant, Manzambi latest + \u00a35.9m mid on pens",
+      "summary": "FPL takeaways from Wednesday's European ties involving Aston Villa and Man Utd The post FPL notes: Bruno rant, Manzambi latest + \u00a35.9m mid on pens appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/22/fpl-notes-bruno-rant-manzambi-latest-5-9m-mid-on-pens",
+      "claimed_at": "2026-10-22T17:45:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9bc6eecc425ccca2",
+      "headline": "Brentford latest: Andrews ready for trip to 'very impressive' Hull on Sunday",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279280/brentford-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-22T17:01:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "05a1835d7b5fb879",
+      "headline": "Man Utd latest: Fernandes unlikely to be punished for criticism of tactics",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-22T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "36b3a91d902e30f0",
+      "headline": "Carrick will be in charge for 'pivotal' Bournemouth game despite growing concerns",
+      "summary": "Michael Carrick will be in charge of Manchester United against Bournemouth on Sunday but there is growing concern among club bosses about the team's poor run of form.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602371/man-utd-boss-michael-carrick-remaining-in-charge-vs-bournemouth-amid-growing-concerns-at-old-trafford",
+      "claimed_at": "2026-10-22T16:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "4b39e0fbb29772f9",
       "headline": "Ipswich latest: Lukic to miss Forest visit but should return for Hull trip",
       "summary": null,
@@ -63,6 +171,66 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13279317/ipswich-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
       "claimed_at": "2026-10-22T16:32:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b8d17907e8ec689e",
+      "headline": "Fernandes to stay captain as Rooney calls Man Utd players babies",
+      "summary": "Bruno Fernandes will remain as Manchester United captain and will not be disciplined for his post-match criticism of Michael Carrick after the 4-1 Champions League defeat by Como.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqe8rglz8p90o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-22T16:19:30Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f221b2ef96ae4841",
+      "headline": "Lampard on Coventry City midfielder\u2019s injury setback and duo\u2019s absences",
+      "summary": "Frank Lampard has explained why summer signings Loum Tchaouna and Yann Gboho have been absent from Coventry City\u2019s matchday squads. The French forwards, who joined the Sky Blues for a combined \u00a330million in the summer, have both",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/lampard-on-coventry-city-midfielders-injury-setback-and-duos-absences/",
+      "claimed_at": "2026-10-22T15:55:39Z",
+      "players": [
+        {
+          "element_id": 190,
+          "name": "Tchaouna",
+          "club": "COV",
+          "held": false
+        },
+        {
+          "element_id": 655,
+          "name": "Gboho",
+          "club": "COV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a24505b914c2a133",
+      "headline": "Football Daily",
+      "summary": "Andy Mitten & Jay Motty join Rick & Lloyd to dissect Man United's disastrous night.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/m0033tlq?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-22T15:16:00Z",
       "players": [
         {
           "element_id": 0,
@@ -122,6 +290,24 @@
           "element_id": 93,
           "name": "Schuster",
           "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8656f2de665a1fdc",
+      "headline": "Who was right about Man Utd tactics: Carrick or Fernandes?",
+      "summary": "Manchester United captain Bruno Fernandes and head coach Michael Carrick disagreed over the team's tactics in the 4-1 Champions League defeat at Como. So who was right?",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602279/man-utd-boss-michael-carrick-and-captain-bruno-fernandes-clash-over-tactics-in-como-defeat-but-who-was-right",
+      "claimed_at": "2026-10-22T14:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -830,24 +1016,6 @@
       "touches_squad": false
     },
     {
-      "digest": "022a0a0ae0e4b25f",
-      "headline": "Fernandes criticises coaches, Carrick criticises players - but who was to blame?",
-      "summary": "Who was to blame for Manchester United's miserable 4-1 defeat at Como in the Champions League?",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602045/manchester-united-bruno-fernandes-criticises-coaches-as-michael-carrick-questions-players-after-champions-league-loss-to-como",
-      "claimed_at": "2026-10-21T21:12:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "1029dca25bf5c7d7",
       "headline": "Rice strikes to earn Arsenal draw at Bayern",
       "summary": "Declan Rice scores a late equaliser as Arsenal and Bayern Munich play out an entertaining draw in the league phase of the Champions League while Bukayo Saka limps off with an early injury.",
@@ -1046,60 +1214,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a5e0e90fd7450e02",
-      "headline": "Miserable Man Utd ripped apart by Como",
-      "summary": "Michael Carrick's Manchester United were ripped apart in a dreadful 4-1 defeat at Como in the Champions League, as their miserable run of results stretched to seven without a win.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/como-vs-manchester-united/report/577645",
-      "claimed_at": "2026-10-21T19:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a8fdab76a0f407e7",
-      "headline": "Man Utd latest: Carrick, Fernandes and your views on defeat in Como",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-21T19:33:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "db41e69b16f8537c",
-      "headline": "Man Utd latest: Merse says Como result 'very, very worrying'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-21T19:33:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "154bbfcff8751998",
       "headline": "Bruno Fernandes questions Man Utd approach in heavy defeat to Como",
       "summary": "Manchester United captain Bruno Fernandes has suggested his side needed to be braver with their pressing during their humiliating 4-1 defeat to Como. United were comfortably beaten by the Italian side, with Nico Paz scoring twice, an",
@@ -1107,24 +1221,6 @@
       "tier": 2,
       "url": "https://hayters.com/bruno-fernandes-questions-man-utd-approach-in-heavy-defeat-to-como/",
       "claimed_at": "2026-10-21T19:31:09Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "01b9d85296a0e5b4",
-      "headline": "Arsenal latest: Merse says 'Subbuteo football' against Forest was very worrying",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-21T19:29:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1442,24 +1538,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f60a47ce63e63329",
-      "headline": "The night 'ruthless' Ngumoha came of age for Liverpool",
-      "summary": "Rio Ngumoha produces a coming-of-age performance in Liverpool's comeback win over Villarreal, writes Aadam Patel.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck0e0zydv33go?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-20T22:56:55Z",
-      "players": [
-        {
-          "element_id": 369,
-          "name": "Ngumoha",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "eab67e03eb1be962",
       "headline": "Which Man City players will benefit most from Semenyo\u2019s injury?",
       "summary": "The Ghanaian winger is set for eight weeks on the sidelines The post Which Man City players will benefit most from Semenyo's injury? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1471,30 +1549,6 @@
         {
           "element_id": 397,
           "name": "Semenyo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "944903379281c4e6",
-      "headline": "No Haaland, no problem - can Foden be Man City's alternative goalscorer?",
-      "summary": "Phil Foden's magnificent man-of-the-match display in Manchester City's Champions League win against AEK Athens serves as a reminder of his talent and ability to influence games.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqx2vjdnwkyyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-20T22:35:32Z",
-      "players": [
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
           "club": "MCI",
           "held": false
         }
@@ -1562,36 +1616,18 @@
       "touches_squad": false
     },
     {
-      "digest": "272ca370dc269621",
-      "headline": "Liverpool continue winning Champions League run with comeback victory over Villarreal",
-      "summary": "Liverpool came from two goals down to edge Villarreal 4-3 in a thrilling Champions League clash at Anfield. Andoni Iraola\u2019s side made a nightmare start and were behind inside four minutes when Georges Mikautadze pu",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-continue-winning-champions-league-run-with-comeback-victory-over-villarreal/",
-      "claimed_at": "2026-10-20T21:05:21Z",
+      "digest": "ff0956710b1e1ef7",
+      "headline": "Illness - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-10-20T20:00:09.902224Z",
       "players": [
         {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f5a5e0466b1091c8",
-      "headline": "Arteta on Arsenal criticism and his burning desire to secure a first Champions League trophy for the club",
-      "summary": "Mikel Arteta has defended Arsenal\u2019s style of play ahead of their Champions League clash with Bayern Munich, dismissing criticism of his side as coming from only a \u201cvery small minority\u201d. The Arse",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-on-arsenal-criticism-and-his-burning-desire-to-secure-a-first-champions-league-trophy-for-the-club/",
-      "claimed_at": "2026-10-20T18:36:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
+          "element_id": 421,
+          "name": "Heaven",
+          "club": "MUN",
           "held": false
         }
       ],
@@ -1676,48 +1712,6 @@
           "element_id": 480,
           "name": "Gibbs-White",
           "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ff0956710b1e1ef7",
-      "headline": "Illness - 75% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-10-17T18:30:09.695564Z",
-      "players": [
-        {
-          "element_id": 144,
-          "name": "Gusto",
-          "club": "CHE",
-          "held": false
-        },
-        {
-          "element_id": 421,
-          "name": "Heaven",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2b0e4a342c558715",
-      "headline": "Newcastle v Aston Villa team news: McGinn benched",
-      "summary": "One change for Newcastle, four for Villa The post Newcastle v Aston Villa team news: McGinn benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/17/newcastle-v-aston-villa-team-news-mcginn-benched",
-      "claimed_at": "2026-10-17T16:15:00Z",
-      "players": [
-        {
-          "element_id": 45,
-          "name": "McGinn",
-          "club": "AVL",
           "held": false
         }
       ],
