@@ -1,59 +1,95 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-22T00:48:33.568605Z",
-  "n_dropped": 161,
+  "generated_at": "2026-10-22T05:47:16.842729Z",
+  "n_dropped": 163,
   "dropped_by_source": {
-    "bbc_football": 61,
+    "bbc_football": 63,
     "hayters": 22,
     "sky_football": 78
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 251,
+  "n_articles": 253,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
     {
-      "digest": "e34c259656111958",
-      "headline": "Webb backs Botman decision despite pundits' calls for red card",
-      "summary": "Referees' chief Howard Webb believes there was nothing \"clearly wrong\" with the decision not to send off Newcastle defender Sven Botman for his tackle on Aston Villa striker Nicolas Jackson.",
-      "source": "sky_football",
+      "digest": "a94ad99036142aa5",
+      "headline": "FPL notes: Brobbey injury latest + Tavernier third in midfielder table",
+      "summary": "Notes from Bournemouth 2-0 Sunderland The post FPL notes: Brobbey injury latest + Tavernier third in midfielder table appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
       "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13601311/sven-botman-tackle-howard-webb-says-nothing-clearly-wrong-with-var-decision-to-not-send-newcastle-defender-off",
-      "claimed_at": "2026-10-20T17:00:00Z",
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/20/fpl-notes-brobbey-injury-latest-tavernier-third-in-midfielder-table",
+      "claimed_at": "2026-10-20T00:20:00Z",
       "players": [
         {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": false
+          "element_id": 68,
+          "name": "Tavernier",
+          "club": "BOU",
+          "held": true
         },
         {
-          "element_id": 447,
-          "name": "Botman",
-          "club": "NEW",
+          "element_id": 552,
+          "name": "Brobbey",
+          "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "4be56ed2d9e1e375",
+      "headline": "Bournemouth beat 10-man Sunderland to pick up first league win of season",
+      "summary": "Marcus Tavernier and Evanilson both struck in a comfortable 2-0 win over 10-man Sunderland as Bournemouth picked up their first Premier League win of the season.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/bournemouth-vs-sunderland/report/559504",
+      "claimed_at": "2026-10-18T16:00:00Z",
+      "players": [
+        {
+          "element_id": 68,
+          "name": "Tavernier",
+          "club": "BOU",
           "held": true
         }
       ],
       "touches_squad": true
     },
     {
-      "digest": "a5975ffc8ad64155",
-      "headline": "Villa ahead at Newcastle despite Botman escape LIVE!",
-      "summary": null,
-      "source": "sky_football",
+      "digest": "f3dc1092967b81b4",
+      "headline": "From Bury to AC Milan: Bournemouth's journey to 'dreamland'",
+      "summary": "Fifteen years to the day after they lost at home to Bury in League One, Bournemouth host seven-time champions of Europe AC Milan in the Europa League.",
+      "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/newcastle-united-vs-aston-villa/live/559511",
-      "claimed_at": "2026-10-17T16:00:00Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6x2v8x7ry17o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-22T05:37:17Z",
       "players": [
         {
-          "element_id": 447,
-          "name": "Botman",
-          "club": "NEW",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "281c02c49fbbe040",
+      "headline": "FPL notes: Saka injury \u201cdoesn\u2019t look good\u201d + not much rotation",
+      "summary": "Eberechi Eze and Declan Rice score as Arsenal draw with Bayern The post FPL notes: Saka injury &#8220;doesn't look good&#8221; + not much rotation appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/22/fpl-notes-saka-injury-doesnt-look-good-not-much-rotation",
+      "claimed_at": "2026-10-22T02:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "32336de8f1f176a5",
@@ -1112,6 +1148,24 @@
       "touches_squad": false
     },
     {
+      "digest": "fc665b370f2a2146",
+      "headline": "Why Fabregas-led Como are ready for Man Utd test",
+      "summary": "Como's rise has been remarkable, but the ambition is to make their success last.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13601457/como-vs-man-utd-cesc-fabregas-prepares-for-champions-league-clash-as-ludi-reflects-on-clubs-rise-and-bruno-fernandes-reunion",
+      "claimed_at": "2026-10-21T06:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "cdaf3bac21459309",
       "headline": "'I've waited 34 years for this' - Viking's 'special' story",
       "summary": "When Viking FK ended a 34-year Norwegian title drought last year, it was days like these they were dreaming of - preparing to visit Aston Villa in the Champions League.",
@@ -1358,42 +1412,6 @@
       "touches_squad": false
     },
     {
-      "digest": "0a892eb76b93f108",
-      "headline": "Arsenal criticism comes from very small minority - Arteta",
-      "summary": "David Raya says he does not know what to say when people call Arsenal's style of play \"boring or irritating\", as Mikel Arteta brushes off criticism.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm8xzrwv5zpko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-20T20:33:27Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "33d0731ee2c212e2",
-      "headline": "Man Utd revisit deal for Hall - Wednesday gossip",
-      "summary": "Manchester United targeting Lewis Hall and Adrien Truffert, Real Madrid remain interested in Riccardo Calafiori, Liverpool and Arsenal both keen on Xavi Espart, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck62yq0rd0vvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-20T20:17:15Z",
-      "players": [
-        {
-          "element_id": 8,
-          "name": "Calafiori",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f5a5e0466b1091c8",
       "headline": "Arteta on Arsenal criticism and his burning desire to secure a first Champions League trophy for the club",
       "summary": "Mikel Arteta has defended Arsenal\u2019s style of play ahead of their Champions League clash with Bayern Munich, dismissing criticism of his side as coming from only a \u201cvery small minority\u201d. The Arse",
@@ -1544,30 +1562,6 @@
           "element_id": 611,
           "name": "Wan-Bissaka",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a94ad99036142aa5",
-      "headline": "FPL notes: Brobbey injury latest + Tavernier third in midfielder table",
-      "summary": "Notes from Bournemouth 2-0 Sunderland The post FPL notes: Brobbey injury latest + Tavernier third in midfielder table appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/20/fpl-notes-brobbey-injury-latest-tavernier-third-in-midfielder-table",
-      "claimed_at": "2026-10-20T00:20:00Z",
-      "players": [
-        {
-          "element_id": 68,
-          "name": "Tavernier",
-          "club": "BOU",
-          "held": false
-        },
-        {
-          "element_id": 552,
-          "name": "Brobbey",
-          "club": "SUN",
           "held": false
         }
       ],
