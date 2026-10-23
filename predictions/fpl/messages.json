@@ -1,7 +1,747 @@
 {
-  "generated_at": "2026-10-20T18:45:54.023018Z",
-  "n_messages": 95,
+  "generated_at": "2026-10-23T13:36:25.798115Z",
+  "n_messages": 115,
   "messages": [
+    {
+      "id": "gw08-decision-owner",
+      "gameweek": 8,
+      "kind": "decision",
+      "severity": "info",
+      "title": "GW8 \u2014 owner team ready",
+      "body": "2 transfer(s), 0 hit(s) taken. Deadline in 3.9 hours. Nothing has been submitted for you \u2014 the agent has no write access to FPL by design.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "gameweek": 8,
+        "entry_label": "owner",
+        "objective": "season",
+        "generated_at": "2026-10-23T13:36:25.722641Z",
+        "deadline": "2026-10-23T17:30:00Z",
+        "xp_snapshot": {
+          "1": 4.1505,
+          "4": 5.6046,
+          "8": 5.2392,
+          "12": 0.0,
+          "68": 4.5549,
+          "113": 2.8574,
+          "124": 3.8338,
+          "152": 0.7154,
+          "154": 5.8539,
+          "165": 4.719,
+          "173": 3.3037,
+          "426": 5.7659,
+          "445": 4.131,
+          "464": 4.1992,
+          "497": 0.0365,
+          "542": 4.7082,
+          "569": 4.5862
+        },
+        "decision": {
+          "plan": {
+            "squad": [
+              1,
+              4,
+              8,
+              68,
+              113,
+              124,
+              154,
+              165,
+              173,
+              426,
+              445,
+              464,
+              497,
+              542,
+              569
+            ],
+            "xi": [
+              1,
+              4,
+              8,
+              68,
+              154,
+              165,
+              426,
+              445,
+              464,
+              542,
+              569
+            ],
+            "captain": 154,
+            "vice": 426,
+            "transfers_in": [
+              8,
+              68
+            ],
+            "transfers_out": [
+              12,
+              152
+            ],
+            "hits": 0,
+            "bank_after": 30,
+            "objective": 0.0,
+            "free_transfers_banked": 0,
+            "free_transfers_after": 1
+          },
+          "n_draws": 10000,
+          "mean_points": 59.9691,
+          "sd_points": 17.0775,
+          "objective": 59.9691,
+          "quantiles": {
+            "q10": 39.0,
+            "q25": 48.0,
+            "q50": 59.0,
+            "q75": 71.0,
+            "q90": 83.0,
+            "q99": 104.0
+          },
+          "tails": {
+            "p_ge_40": 0.8918,
+            "p_ge_50": 0.7096,
+            "p_ge_60": 0.4885,
+            "p_ge_70": 0.2781,
+            "p_ge_80": 0.1309,
+            "p_ge_90": 0.052
+          },
+          "autosub_rate": 0.0554,
+          "vice_rate": 0.0049
+        },
+        "optimism_gap": -0.3388,
+        "credible_margin": true,
+        "pool": {
+          "n_candidates": 562,
+          "n_excluded": 106,
+          "excluded_by_reason": {
+            "status_u": 106
+          },
+          "held_missing_purchase_price": [],
+          "price_uncertain": false,
+          "n_zero_xp": 68
+        },
+        "horizon": {
+          "eval_horizon": 8,
+          "transfer_horizon": 6,
+          "provisional": [
+            {
+              "squad": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                113,
+                124,
+                154,
+                173,
+                426,
+                445,
+                464,
+                497,
+                542,
+                569
+              ],
+              "xi": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                154,
+                426,
+                445,
+                464,
+                542,
+                569
+              ],
+              "captain": 154,
+              "vice": 106,
+              "transfers_in": [
+                106
+              ],
+              "transfers_out": [
+                165
+              ],
+              "hits": 0,
+              "bank_after": 29,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                113,
+                124,
+                154,
+                173,
+                426,
+                445,
+                464,
+                497,
+                542,
+                569
+              ],
+              "xi": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                154,
+                426,
+                445,
+                464,
+                542,
+                569
+              ],
+              "captain": 426,
+              "vice": 106,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 29,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                113,
+                124,
+                154,
+                173,
+                411,
+                445,
+                464,
+                497,
+                542,
+                558
+              ],
+              "xi": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                154,
+                173,
+                411,
+                464,
+                542,
+                558
+              ],
+              "captain": 411,
+              "vice": 106,
+              "transfers_in": [
+                411,
+                558
+              ],
+              "transfers_out": [
+                426,
+                569
+              ],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                113,
+                124,
+                154,
+                173,
+                411,
+                445,
+                464,
+                497,
+                542,
+                558
+              ],
+              "xi": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                154,
+                411,
+                445,
+                464,
+                542,
+                558
+              ],
+              "captain": 411,
+              "vice": 542,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                113,
+                124,
+                154,
+                173,
+                411,
+                445,
+                464,
+                497,
+                542,
+                558
+              ],
+              "xi": [
+                1,
+                4,
+                68,
+                106,
+                154,
+                173,
+                411,
+                445,
+                464,
+                542,
+                558
+              ],
+              "captain": 411,
+              "vice": 154,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 2,
+              "free_transfers_after": 3
+            },
+            {
+              "squad": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                113,
+                124,
+                154,
+                173,
+                411,
+                445,
+                464,
+                497,
+                542,
+                558
+              ],
+              "xi": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                154,
+                411,
+                445,
+                464,
+                542,
+                558
+              ],
+              "captain": 411,
+              "vice": 154,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 3,
+              "free_transfers_after": 4
+            },
+            {
+              "squad": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                113,
+                124,
+                154,
+                173,
+                411,
+                445,
+                464,
+                497,
+                542,
+                558
+              ],
+              "xi": [
+                1,
+                4,
+                8,
+                68,
+                106,
+                154,
+                411,
+                445,
+                464,
+                542,
+                558
+              ],
+              "captain": 411,
+              "vice": 106,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 0,
+              "objective": 0.0,
+              "free_transfers_banked": 4,
+              "free_transfers_after": 5
+            }
+          ]
+        },
+        "field_model": "uncalibrated",
+        "warnings": [],
+        "execution": "propose_only",
+        "evidence": {
+          "measured_on": {
+            "seasons": [
+              "2023-24",
+              "2024-25",
+              "2025-26"
+            ],
+            "gameweeks": "8-38 each, 93 paired observations",
+            "harness": "pipeline/learning/backtest_decisions.py",
+            "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+          },
+          "beats_doing_nothing": {
+            "verdict": "established",
+            "margin_2023_24": 411,
+            "margin_2024_25": 560,
+            "margin_2025_26": 184,
+            "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+          },
+          "beats_greedy_transfers": {
+            "verdict": "not established",
+            "margin_2023_24": 67,
+            "margin_2024_25": 60,
+            "margin_2025_26": -66,
+            "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+          },
+          "projection_calibration": {
+            "verdict": "established",
+            "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+          }
+        },
+        "sealed": true
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-230",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says 'Martinez breaks jaw in Chelsea win at Everton\\nChelsea goalkeeper Emiliano Martinez says he will be back \"in a few weeks\" after breaking his jaw in a collision with Jarrad Branthwaite.' (2026-10-18T09:42:10Z) while fantasyfootballscout says 'Everton v Chelsea team news: Branthwaite + Mykolenko fit to start\\nKick-off at the Hill Dickinson Stadium is at 12:30pm BST The post Everton v Chelsea team news: Branthwaite + Mykolenko fit to start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-17T10:35:00Z). Used the more conservative 'Martinez breaks jaw in Chelsea win at Everton\\nChelsea goalkeeper Emiliano Martinez says he will be back \"in a few weeks\" after breaking his jaw in a collision with Jarrad Branthwaite.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 230,
+        "claim_type": "unparsed_news",
+        "value": "Martinez breaks jaw in Chelsea win at Everton\nChelsea goalkeeper Emiliano Martinez says he will be back \"in a few weeks\" after breaking his jaw in a collision with Jarrad Branthwaite.",
+        "detail": "unparsed_news: bbc_football says 'Martinez breaks jaw in Chelsea win at Everton\\nChelsea goalkeeper Emiliano Martinez says he will be back \"in a few weeks\" after breaking his jaw in a collision with Jarrad Branthwaite.' (2026-10-18T09:42:10Z) while fantasyfootballscout says 'Everton v Chelsea team news: Branthwaite + Mykolenko fit to start\\nKick-off at the Hill Dickinson Stadium is at 12:30pm BST The post Everton v Chelsea team news: Branthwaite + Mykolenko fit to start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-17T10:35:00Z). Used the more conservative 'Martinez breaks jaw in Chelsea win at Everton\\nChelsea goalkeeper Emiliano Martinez says he will be back \"in a few weeks\" after breaking his jaw in a collision with Jarrad Branthwaite.'."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-102",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says 'Liverpool come from behind to beat nine-man Brentford\\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.' (2026-10-17T19:00:13Z) while sky_football says 'Isak clinches win for Liverpool over nine-man Brentford\\nAlexander Isak scored on his return from injury as Liverpool fought back from a goal down to clinch a 2-1 victory over Brentford, who had Yehor Yarmoliuk and Vitaly Janelt sent off.' (2026-10-17T17:00:00Z). Used the more conservative 'Liverpool come from behind to beat nine-man Brentford\\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 102,
+        "claim_type": "unparsed_news",
+        "value": "Liverpool come from behind to beat nine-man Brentford\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.",
+        "detail": "unparsed_news: bbc_football says 'Liverpool come from behind to beat nine-man Brentford\\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.' (2026-10-17T19:00:13Z) while sky_football says 'Isak clinches win for Liverpool over nine-man Brentford\\nAlexander Isak scored on his return from injury as Liverpool fought back from a goal down to clinch a 2-1 victory over Brentford, who had Yehor Yarmoliuk and Vitaly Janelt sent off.' (2026-10-17T17:00:00Z). Used the more conservative 'Liverpool come from behind to beat nine-man Brentford\\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.'."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-261",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Iwobi delivers Fulham's first win of season\\nAlex Iwobi fires Fulham to their first Premier League win of the season against Hull.\" (2026-10-17T19:00:06Z) while sky_football says 'Fulham still in front after Iwobi strike vs Hull City LIVE!' (2026-10-17T13:25:00Z). Used the more conservative \"Iwobi delivers Fulham's first win of season\\nAlex Iwobi fires Fulham to their first Premier League win of the season against Hull.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 261,
+        "claim_type": "unparsed_news",
+        "value": "Iwobi delivers Fulham's first win of season\nAlex Iwobi fires Fulham to their first Premier League win of the season against Hull.",
+        "detail": "unparsed_news: bbc_football says \"Iwobi delivers Fulham's first win of season\\nAlex Iwobi fires Fulham to their first Premier League win of the season against Hull.\" (2026-10-17T19:00:06Z) while sky_football says 'Fulham still in front after Iwobi strike vs Hull City LIVE!' (2026-10-17T13:25:00Z). Used the more conservative \"Iwobi delivers Fulham's first win of season\\nAlex Iwobi fires Fulham to their first Premier League win of the season against Hull.\"."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-28",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T13:30:08.724000Z) while fpl_news_parse says 25 (2026-10-17T13:30:08.724000Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 28,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T13:30:08.724000Z) while fpl_news_parse says 25 (2026-10-17T13:30:08.724000Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-357",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T15:30:09.979166Z) while fpl_news_parse says 75 (2026-10-17T15:30:09.979166Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 357,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T15:30:09.979166Z) while fpl_news_parse says 75 (2026-10-17T15:30:09.979166Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-368",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T15:00:08.293301Z) while fpl_news_parse says 75 (2026-10-17T15:00:08.293301Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 368,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T15:00:08.293301Z) while fpl_news_parse says 75 (2026-10-17T15:00:08.293301Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-98",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says 'Liverpool come from behind to beat nine-man Brentford\\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.' (2026-10-17T19:00:13Z) while sky_football says 'Isak clinches win for Liverpool over nine-man Brentford\\nAlexander Isak scored on his return from injury as Liverpool fought back from a goal down to clinch a 2-1 victory over Brentford, who had Yehor Yarmoliuk and Vitaly Janelt sent off.' (2026-10-17T17:00:00Z). Used the more conservative 'Liverpool come from behind to beat nine-man Brentford\\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 98,
+        "claim_type": "unparsed_news",
+        "value": "Liverpool come from behind to beat nine-man Brentford\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.",
+        "detail": "unparsed_news: bbc_football says 'Liverpool come from behind to beat nine-man Brentford\\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.' (2026-10-17T19:00:13Z) while sky_football says 'Isak clinches win for Liverpool over nine-man Brentford\\nAlexander Isak scored on his return from injury as Liverpool fought back from a goal down to clinch a 2-1 victory over Brentford, who had Yehor Yarmoliuk and Vitaly Janelt sent off.' (2026-10-17T17:00:00Z). Used the more conservative 'Liverpool come from behind to beat nine-man Brentford\\nLiverpool come from behind to beat Brentford 2-1 at the Gtech Community Stadium as the hosts finish with nine men after red cards for Yehor Yarmoliuk and Vitaly Janelt.'."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-366",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says 'Signs of life finally for Wirtz, but Liverpool still need more from playmaker\\nFlorian Wirtz produced one of his most impressive displays in a Liverpool shirt last weekend at Brentford, but Andoni Iraola needs his No 10 to keep sparkling with the Reds now facing three crucial tests at home that will ' (2026-10-23T08:00:00Z) while fantasyfootballscout says \"FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury\\nFPL lessons from Liverpool's 4-3 win over Villarreal The post FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\" (2026-10-21T12:50:00Z), bbc_football says \"Ramos could make La Liga return - Monday's gossip\\nSergio Ramos could make a surprise return to football in Madrid, Bournemouth put a high price on Alex Scott, and Florian Wirtz is staying at Liverpool.\" (2026-10-18T20:21:54Z). Used the more conservative 'Signs of life finally for Wirtz, but Liverpool still need more from playmaker\\nFlorian Wirtz produced one of his most impressive displays in a Liverpool shirt last weekend at Brentford, but Andoni Iraola needs his No 10 to keep sparkling with the Reds now facing three crucial tests at home that will '. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 366,
+        "claim_type": "unparsed_news",
+        "value": "Signs of life finally for Wirtz, but Liverpool still need more from playmaker\nFlorian Wirtz produced one of his most impressive displays in a Liverpool shirt last weekend at Brentford, but Andoni Iraola needs his No 10 to keep sparkling with the Reds now facing three crucial tests at home that will ",
+        "detail": "unparsed_news: sky_football says 'Signs of life finally for Wirtz, but Liverpool still need more from playmaker\\nFlorian Wirtz produced one of his most impressive displays in a Liverpool shirt last weekend at Brentford, but Andoni Iraola needs his No 10 to keep sparkling with the Reds now facing three crucial tests at home that will ' (2026-10-23T08:00:00Z) while fantasyfootballscout says \"FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury\\nFPL lessons from Liverpool's 4-3 win over Villarreal The post FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\" (2026-10-21T12:50:00Z), bbc_football says \"Ramos could make La Liga return - Monday's gossip\\nSergio Ramos could make a surprise return to football in Madrid, Bournemouth put a high price on Alex Scott, and Florian Wirtz is staying at Liverpool.\" (2026-10-18T20:21:54Z). Used the more conservative 'Signs of life finally for Wirtz, but Liverpool still need more from playmaker\\nFlorian Wirtz produced one of his most impressive displays in a Liverpool shirt last weekend at Brentford, but Andoni Iraola needs his No 10 to keep sparkling with the Reds now facing three crucial tests at home that will '."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-397",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T17:30:09.977110Z) while fpl_news_parse says 75 (2026-10-17T17:30:09.977110Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 397,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T17:30:09.977110Z) while fpl_news_parse says 75 (2026-10-17T17:30:09.977110Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-611",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T19:30:10.120990Z) while fpl_news_parse says 75 (2026-10-17T19:30:10.120990Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 611,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-17T19:30:10.120990Z) while fpl_news_parse says 75 (2026-10-17T19:30:10.120990Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-521",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-07-23T12:01:23.895175Z) while fpl_news_parse says 75 (2026-07-23T12:01:23.895175Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 521,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-07-23T12:01:23.895175Z) while fpl_news_parse says 75 (2026-07-23T12:01:23.895175Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-68",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'FPL notes: Brobbey injury latest + Tavernier third in midfielder table\\nNotes from Bournemouth 2-0 Sunderland The post FPL notes: Brobbey injury latest + Tavernier third in midfielder table appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-20T00:20:00Z) while sky_football says 'Bournemouth beat 10-man Sunderland to pick up first league win of season\\nMarcus Tavernier and Evanilson both struck in a comfortable 2-0 win over 10-man Sunderland as Bournemouth picked up their first Premier League win of the season.' (2026-10-18T16:00:00Z). Used the more conservative 'FPL notes: Brobbey injury latest + Tavernier third in midfielder table\\nNotes from Bournemouth 2-0 Sunderland The post FPL notes: Brobbey injury latest + Tavernier third in midfielder table appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 68,
+        "claim_type": "unparsed_news",
+        "value": "FPL notes: Brobbey injury latest + Tavernier third in midfielder table\nNotes from Bournemouth 2-0 Sunderland The post FPL notes: Brobbey injury latest + Tavernier third in midfielder table appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says 'FPL notes: Brobbey injury latest + Tavernier third in midfielder table\\nNotes from Bournemouth 2-0 Sunderland The post FPL notes: Brobbey injury latest + Tavernier third in midfielder table appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-20T00:20:00Z) while sky_football says 'Bournemouth beat 10-man Sunderland to pick up first league win of season\\nMarcus Tavernier and Evanilson both struck in a comfortable 2-0 win over 10-man Sunderland as Bournemouth picked up their first Premier League win of the season.' (2026-10-18T16:00:00Z). Used the more conservative 'FPL notes: Brobbey injury latest + Tavernier third in midfielder table\\nNotes from Bournemouth 2-0 Sunderland The post FPL notes: Brobbey injury latest + Tavernier third in midfielder table appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-346",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Leeds extend Man Utd's winless run to six games\\nDominic Calvert-Lewin earns a point for Leeds and extends Manchester United's winless run to six games.\" (2026-10-18T18:59:10Z) while sky_football says 'Calvert-Lewin strike sees Leeds hold Man Utd to draw\\nHighlights of the Premier League match between Leeds and Manchester United.' (2026-10-18T16:01:00Z). Used the more conservative \"Leeds extend Man Utd's winless run to six games\\nDominic Calvert-Lewin earns a point for Leeds and extends Manchester United's winless run to six games.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 346,
+        "claim_type": "unparsed_news",
+        "value": "Leeds extend Man Utd's winless run to six games\nDominic Calvert-Lewin earns a point for Leeds and extends Manchester United's winless run to six games.",
+        "detail": "unparsed_news: bbc_football says \"Leeds extend Man Utd's winless run to six games\\nDominic Calvert-Lewin earns a point for Leeds and extends Manchester United's winless run to six games.\" (2026-10-18T18:59:10Z) while sky_football says 'Calvert-Lewin strike sees Leeds hold Man Utd to draw\\nHighlights of the Premier League match between Leeds and Manchester United.' (2026-10-18T16:01:00Z). Used the more conservative \"Leeds extend Man Utd's winless run to six games\\nDominic Calvert-Lewin earns a point for Leeds and extends Manchester United's winless run to six games.\"."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-533",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says '\\'Maybe we became arrogant\\' - Sunderland struggles continue\\nSunderland defender Nordi Mukiele suggested the Black Cats may have become \"arrogant\" as last season\\'s surprise package stutter in the Premier League this term.' (2026-10-18T18:49:00Z) while sky_football says \"Sunderland latest: 'We struggle everywhere' - Mukiele slams 'arrogant' Black Cats\" (2026-10-18T17:44:00Z). Used the more conservative '\\'Maybe we became arrogant\\' - Sunderland struggles continue\\nSunderland defender Nordi Mukiele suggested the Black Cats may have become \"arrogant\" as last season\\'s surprise package stutter in the Premier League this term.'. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 533,
+        "claim_type": "unparsed_news",
+        "value": "'Maybe we became arrogant' - Sunderland struggles continue\nSunderland defender Nordi Mukiele suggested the Black Cats may have become \"arrogant\" as last season's surprise package stutter in the Premier League this term.",
+        "detail": "unparsed_news: bbc_football says '\\'Maybe we became arrogant\\' - Sunderland struggles continue\\nSunderland defender Nordi Mukiele suggested the Black Cats may have become \"arrogant\" as last season\\'s surprise package stutter in the Premier League this term.' (2026-10-18T18:49:00Z) while sky_football says \"Sunderland latest: 'We struggle everywhere' - Mukiele slams 'arrogant' Black Cats\" (2026-10-18T17:44:00Z). Used the more conservative '\\'Maybe we became arrogant\\' - Sunderland struggles continue\\nSunderland defender Nordi Mukiele suggested the Black Cats may have become \"arrogant\" as last season\\'s surprise package stutter in the Premier League this term.'."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-69",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says \"Bournemouth latest: 'Foley convinced Cherries are best club for Scott'\" (2026-10-22T12:30:00Z) while bbc_football says \"Ramos could make La Liga return - Monday's gossip\\nSergio Ramos could make a surprise return to football in Madrid, Bournemouth put a high price on Alex Scott, and Florian Wirtz is staying at Liverpool.\" (2026-10-18T20:21:54Z). Used the more conservative \"Bournemouth latest: 'Foley convinced Cherries are best club for Scott'\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 69,
+        "claim_type": "unparsed_news",
+        "value": "Bournemouth latest: 'Foley convinced Cherries are best club for Scott'",
+        "detail": "unparsed_news: sky_football says \"Bournemouth latest: 'Foley convinced Cherries are best club for Scott'\" (2026-10-22T12:30:00Z) while bbc_football says \"Ramos could make La Liga return - Monday's gossip\\nSergio Ramos could make a surprise return to football in Madrid, Bournemouth put a high price on Alex Scott, and Florian Wirtz is staying at Liverpool.\" (2026-10-18T20:21:54Z). Used the more conservative \"Bournemouth latest: 'Foley convinced Cherries are best club for Scott'\"."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-267",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-19T15:30:08.949503Z) while fpl_news_parse says 75 (2026-10-19T15:30:08.949503Z). Used the more conservative 0. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 267,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-19T15:30:08.949503Z) while fpl_news_parse says 75 (2026-10-19T15:30:08.949503Z). Used the more conservative 0."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-411",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-19T13:00:10.543876Z) while fpl_news_parse says 75 (2026-10-19T13:00:10.543876Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 411,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-19T13:00:10.543876Z) while fpl_news_parse says 75 (2026-10-19T13:00:10.543876Z). Used the more conservative 75."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-627",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says \"FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury\\nFPL lessons from Liverpool's 4-3 win over Villarreal The post FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\" (2026-10-21T12:50:00Z) while sky_football says 'Liverpool latest: Iraola explains why he benched Isak, Wirtz and Barcola' (2026-10-20T19:09:00Z). Used the more conservative \"FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury\\nFPL lessons from Liverpool's 4-3 win over Villarreal The post FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\". The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 627,
+        "claim_type": "unparsed_news",
+        "value": "FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury\nFPL lessons from Liverpool's 4-3 win over Villarreal The post FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says \"FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury\\nFPL lessons from Liverpool's 4-3 win over Villarreal The post FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\" (2026-10-21T12:50:00Z) while sky_football says 'Liverpool latest: Iraola explains why he benched Isak, Wirtz and Barcola' (2026-10-20T19:09:00Z). Used the more conservative \"FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury\\nFPL lessons from Liverpool's 4-3 win over Villarreal The post FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\"."
+      }
+    },
+    {
+      "id": "gw08-warning-availability-conflict-36",
+      "gameweek": 8,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW8 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-12T18:00:08.729468Z) while fpl_news_parse says 75 (2026-09-12T18:00:08.729468Z). Used the more conservative 75. The projection used the more conservative reading, so this player may be understated rather than overstated.",
+      "created_at": "2026-10-23T13:36:25.798115Z",
+      "detail": {
+        "element_id": 36,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-12T18:00:08.729468Z) while fpl_news_parse says 75 (2026-09-12T18:00:08.729468Z). Used the more conservative 75."
+      }
+    },
     {
       "id": "gw07-status-settled",
       "gameweek": 7,
