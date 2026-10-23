@@ -1,18 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-23T11:55:43.269572Z",
-  "n_dropped": 162,
+  "generated_at": "2026-10-23T16:38:23.522729Z",
+  "n_dropped": 178,
   "dropped_by_source": {
-    "bbc_football": 55,
-    "hayters": 22,
-    "sky_football": 85
+    "bbc_football": 57,
+    "hayters": 30,
+    "sky_football": 91
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 252,
+  "n_articles": 268,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "33d0731ee2c212e2",
+      "headline": "Man Utd revisit deal for Hall - Wednesday gossip",
+      "summary": "Manchester United targeting Lewis Hall and Adrien Truffert, Real Madrid remain interested in Riccardo Calafiori, Liverpool and Arsenal both keen on Xavi Espart, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck62yq0rd0vvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-20T20:17:15Z",
+      "players": [
+        {
+          "element_id": 8,
+          "name": "Calafiori",
+          "club": "ARS",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "a94ad99036142aa5",
       "headline": "FPL notes: Brobbey injury latest + Tavernier third in midfielder table",
@@ -38,22 +56,520 @@
       "touches_squad": true
     },
     {
-      "digest": "4be56ed2d9e1e375",
-      "headline": "Bournemouth beat 10-man Sunderland to pick up first league win of season",
-      "summary": "Marcus Tavernier and Evanilson both struck in a comfortable 2-0 win over 10-man Sunderland as Bournemouth picked up their first Premier League win of the season.",
-      "source": "sky_football",
+      "digest": "6cdfe9bf7cb5ab5a",
+      "headline": "Man United v Bournemouth predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Man United v Bournemouth predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
       "tier": 3,
-      "url": "https://www.skysports.com/football/bournemouth-vs-sunderland/report/559504",
-      "claimed_at": "2026-10-18T16:00:00Z",
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/man-united-v-bournemouth-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-10-23T16:00:40Z",
       "players": [
         {
-          "element_id": 68,
-          "name": "Tavernier",
-          "club": "BOU",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "37dc197ad7b9c1ce",
+      "headline": "Sunderland v Leeds predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Sunderland v Leeds predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/sunderland-v-leeds-predicted-line-ups-fpl-team-news",
+      "claimed_at": "2026-10-23T16:00:33Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c5b93c97af2a1f30",
+      "headline": "Liverpool v Brighton predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Liverpool v Brighton predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/liverpool-v-brighton-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-10-23T16:00:31Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b87d30e84aee7e12",
+      "headline": "Crystal Palace v Newcastle predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Crystal Palace v Newcastle predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/crystal-palace-v-newcastle-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-10-23T16:00:23Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "defda132810d9de7",
+      "headline": "Hull v Brentford predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Hull v Brentford predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/hull-v-brentford-predicted-line-ups-fpl-team-news",
+      "claimed_at": "2026-10-23T16:00:05Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c84968119d53100d",
+      "headline": "Chelsea v Tottenham predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Chelsea v Tottenham predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/chelsea-v-tottenham-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-10-23T16:00:03Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "73a3a605a2354efc",
+      "headline": "Coventry v Fulham predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Coventry v Fulham predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/coventry-v-fulham-predicted-line-ups-fpl-team-news",
+      "claimed_at": "2026-10-23T16:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1d7cbabef63cb96e",
+      "headline": "Arsenal v Everton predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Arsenal v Everton predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/arsenal-v-everton-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-10-23T15:59:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7dd6b63b84fe2c08",
+      "headline": "Aston Villa v Man City predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Aston Villa v Man City predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/aston-villa-v-man-city-predicted-line-ups-fpl-team-news-2",
+      "claimed_at": "2026-10-23T15:59:54Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bf8dae74636120a9",
+      "headline": "Ipswich v Nott\u2019m Forest predicted line-ups + FPL team news",
+      "summary": "Team form, absentees and our predicted XIs The post Ipswich v Nott'm Forest predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/ipswich-v-nottm-forest-predicted-line-ups-fpl-team-news",
+      "claimed_at": "2026-10-23T15:59:50Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a0c8bb6430cc753a",
+      "headline": "Derby day - when Chelsea and Spurs meet, is chaos guaranteed?",
+      "summary": "Chelsea face Tottenham Hotspur in the Premier League this weekend - and BBC Sport looks back at five memorable matches between the London rivals.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c50mex301jjno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T14:49:59Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "dbfff0680394cd91",
+      "headline": "Newcastle United handed big boost ahead of Crystal Palace clash",
+      "summary": "Matthias Jaissle has confirmed Anthony Elanga is closing in on a return for Newcastle, while Jacob Ramsey is also stepping up his recovery. Elanga has trained this week and could be involved in the squad to face Crystal Palace, although",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-united-handed-big-boost-ahead-of-crystal-palace-clash/",
+      "claimed_at": "2026-10-23T14:21:22Z",
+      "players": [
+        {
+          "element_id": 454,
+          "name": "Elanga",
+          "club": "NEW",
+          "held": false
+        },
+        {
+          "element_id": 456,
+          "name": "J.Ramsey",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "06e5d207f7581053",
+      "headline": "Emery provides latest update on Aston Villa star ahead of Man City",
+      "summary": "Johan Manzambi faces a late fitness test ahead of Aston Villa\u2019s Premier League clash with Manchester City on Saturday. The attacking midfielder missed Wednesday\u2019s Champions League win over Viking with a \u201csmall injury\u201d and will be ass",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/emery-provides-latest-update-on-aston-villa-star-ahead-of-man-city/",
+      "claimed_at": "2026-10-23T14:15:47Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f553952b9b6af35f",
+      "headline": "Arsenal fear Saka could be out for two months",
+      "summary": "Arsenal forward Bukayo Saka could be sidelined for up to eight weeks with the quadriceps injury he suffered against Bayern Munich.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmwyql6v5q82o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T14:09:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8892f3a73b2154ef",
+      "headline": "Key Leeds trio could miss Sunderland clash",
+      "summary": "Daniel Farke has revealed Leeds United are facing a triple injury worry ahead of Sunday\u2019s Premier League trip to Sunderland. Dominic Calvert-Lewin, Noah Okafor and Anton Stach are all major doubts for the clash at the Stadium of Light after picking up probl",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/key-leeds-trio-could-miss-sunderland-clash/",
+      "claimed_at": "2026-10-23T14:07:43Z",
+      "players": [
+        {
+          "element_id": 335,
+          "name": "Stach",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 336,
+          "name": "Okafor",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f3bfc732d694ef6f",
+      "headline": "Spurs latest: Porro back for Chelsea trip but Maddison a doubt",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-23T14:05:00Z",
+      "players": [
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "aa1e796c130b0c58",
+      "headline": "Alonso on Martinez\u2019s recovery timeframe and defensive duo\u2019s fitness",
+      "summary": "Xabi Alonso says Emiliano Martinez is expected to be out for a few weeks after undergoing surgery on a fractured jaw. The goalkeeper was taken to hospital after colliding with Jarrad Branthwaite against Everton. \u201cHe\u2019s been better; h",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/alonso-on-martinezs-recovery-timeframe-and-defensive-duos-fitness/",
+      "claimed_at": "2026-10-23T13:58:40Z",
+      "players": [
+        {
+          "element_id": 230,
+          "name": "Branthwaite",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ddb3c00d8556085d",
+      "headline": "Carrick refuses to rule out dropping Fernandes in emotional address",
+      "summary": "Michael Carrick speaks for five uninterrupted minutes at media briefing to outline what Manchester United means to him, then refuses to rule out dropping Bruno Fernandes.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq78pv0073dlo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T13:55:37Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fb5ad3d998653e86",
+      "headline": "Iraola provides latest updates on Liverpool trio ahead of Brighton game",
+      "summary": "Andoni Iraola has confirmed Bradley Barcola is available for Liverpool\u2019s clash with Brighton, but Victor Munoz remains a major doubt while Dominik Szoboszlai will miss out. Barcola was absent from training on Thursday but return",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/iraola-provides-latest-updates-on-liverpool-trio-ahead-of-brighton-game/",
+      "claimed_at": "2026-10-23T13:49:12Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 377,
+          "name": "Munoz",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f9a91c98082ac018",
+      "headline": "Porro back for Spurs but De Zerbi raises doubts over duo\u2019s involvement against Chelsea",
+      "summary": "Pedro Porro is back available for Tottenham, but Roberto De Zerbi has raised doubts over the fitness of James Maddison and Dejan Kulusevski for the clash with Chelsea. Porro has not played since before the last in",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/porro-back-for-spurs-but-de-zerbi-raises-doubts-over-duos-involvement-against-chelsea/",
+      "claimed_at": "2026-10-23T13:39:24Z",
+      "players": [
+        {
+          "element_id": 401,
+          "name": "Marmoush",
+          "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 502,
+          "name": "Robertson",
+          "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 521,
+          "name": "Kulusevski",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cc4857243daa864c",
+      "headline": "\u2018I am a fighter\u2019 - how Jakirovic is taking on the Premier League",
+      "summary": "No visitor can escape the fact that Hull City are back. Lampposts are adorned with the simple but telling declaration in amber that 'We are Premier League.' There are flags in windows with messages such as 'Dare to Dream.' Sergej Jakir",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13598103/sergej-jakirovic-interview-hull-city-head-coach-on-making-people-proud-and-taking-on-the-premier-league-in-their-own-way",
+      "claimed_at": "2026-10-23T13:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9971a7f27e83a4c1",
+      "headline": "Liverpool latest: Barcola, Munoz, Szoboszlai updates ahead of Brighton clash",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-23T13:15:00Z",
+      "players": [
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 377,
+          "name": "Munoz",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "226ff476f60f01b8",
+      "headline": "Newcastle latest: This project will take time, says Jaissle",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-23T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e2b38faae5e2cd9a",
+      "headline": "Transfer Centre LIVE! Conte releases statement amid Man Utd links",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
+      "claimed_at": "2026-10-23T12:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "65c5f723daaee218",
+      "headline": "Conte plays down 'unfounded' Man Utd speculation",
+      "summary": "Antonio Conte says he is not in advanced talks with any club, in response to speculation he has held talks with Manchester United.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmvg6j8jezn7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T12:15:53Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "e7094c9a359b2e85",
@@ -182,6 +698,24 @@
       "touches_squad": false
     },
     {
+      "digest": "ea117f798b86aa99",
+      "headline": "Defiant Carrick denies dressing room divide and backs himself to turn Man Utd around",
+      "summary": "A defiant Michael Carrick has insisted there is no divide in the Manchester United dressing room and backed himself to turn things around at Old Trafford amid growing uncertainty over his future.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602589/man-utd-boss-michael-carrick-insists-there-is-no-divide-despite-bruno-fernandes-criticism",
+      "claimed_at": "2026-10-23T09:39:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "b9449d3781248cce",
       "headline": "Should Man Utd boss Carrick drop captain Fernandes?",
       "summary": "Manchester United head coach Michael Carrick must decide whether to leave skipper Bruno Fernandes out of Sunday's crucial Premier League clash with Bournemouth",
@@ -257,6 +791,24 @@
       "digest": "b9d24d238354de9c",
       "headline": "Signs of life finally for Wirtz, but Liverpool still need more from playmaker",
       "summary": "Florian Wirtz produced one of his most impressive displays in a Liverpool shirt last weekend at Brentford, but Andoni Iraola needs his No 10 to keep sparkling with the Reds now facing three crucial tests at home that will",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602355/florian-wirtz-is-finally-showing-signs-of-life-at-liverpool-but-andoni-iraola-still-needs-more-from-his-116m-playmaker",
+      "claimed_at": "2026-10-23T08:00:00Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cad233cca59f1587",
+      "headline": "Signs of life finally for Wirtz, but Liverpool still need more from playmaker",
+      "summary": "Florian Wirtz has produced some of his most impressive displays in a Liverpool shirt in the last three games, but Andoni Iraola needs his No 10 to keep sparkling with the Reds now facing three crucial tests at home that wi",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13602355/florian-wirtz-is-finally-showing-signs-of-life-at-liverpool-but-andoni-iraola-still-needs-more-from-his-116m-playmaker",
@@ -506,6 +1058,24 @@
       "touches_squad": false
     },
     {
+      "digest": "a5103714d2fc8d7f",
+      "headline": "Brighton latest: Hurzeler dismisses Man Utd job links",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-22T21:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "fbb503400d0139f7",
       "headline": "Brighton latest: Hurzeler demands improvement after disappointing draw",
       "summary": null,
@@ -668,60 +1238,6 @@
       "touches_squad": false
     },
     {
-      "digest": "05a1835d7b5fb879",
-      "headline": "Man Utd latest: Fernandes unlikely to be punished for criticism of tactics",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-22T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "36b3a91d902e30f0",
-      "headline": "Carrick will be in charge for 'pivotal' Bournemouth game despite growing concerns",
-      "summary": "Michael Carrick will be in charge of Manchester United against Bournemouth on Sunday but there is growing concern among club bosses about the team's poor run of form.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602371/man-utd-boss-michael-carrick-remaining-in-charge-vs-bournemouth-amid-growing-concerns-at-old-trafford",
-      "claimed_at": "2026-10-22T16:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4b39e0fbb29772f9",
-      "headline": "Ipswich latest: Lukic to miss Forest visit but should return for Hull trip",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279317/ipswich-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-22T16:32:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b8d17907e8ec689e",
       "headline": "Fernandes to stay captain as Rooney calls Man Utd players babies",
       "summary": "Bruno Fernandes will remain as Manchester United captain and will not be disciplined for his post-match criticism of Michael Carrick after the 4-1 Champions League defeat by Como.",
@@ -836,24 +1352,6 @@
       "touches_squad": false
     },
     {
-      "digest": "8656f2de665a1fdc",
-      "headline": "Who was right about Man Utd tactics: Carrick or Fernandes?",
-      "summary": "Manchester United captain Bruno Fernandes and head coach Michael Carrick disagreed over the team's tactics in the 4-1 Champions League defeat at Como. So who was right?",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602279/man-utd-boss-michael-carrick-and-captain-bruno-fernandes-clash-over-tactics-in-como-defeat-but-who-was-right",
-      "claimed_at": "2026-10-22T14:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ad7be35f8a5f284f",
       "headline": "Carrick carrying on but senior Man Utd figures concerned by performances",
       "summary": "While head coach Michael Carrick is expected to be in charge for Sunday's match against Bournemouth, Manchester United begin the process of identifying possible replacements.",
@@ -932,114 +1430,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6c6630274da53f45",
-      "headline": "Bournemouth latest: 'Foley convinced Cherries are best club for Scott'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279286/bournemouth-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-22T12:30:00Z",
-      "players": [
-        {
-          "element_id": 69,
-          "name": "Scott",
-          "club": "BOU",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6ceb082d536b930d",
-      "headline": "Forest latest: Williams on goal struggles, new role and recovery under Glasner",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279316/nottingham-forest-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-22T12:10:00Z",
-      "players": [
-        {
-          "element_id": 469,
-          "name": "N.Williams",
-          "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "79e7a2595bb9c1ef",
-      "headline": "Man Utd latest: 'Changing won't do anything!' Merse says Carrick should stay",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-22T12:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a01d1d7ede81f5d3",
-      "headline": "'They're not special anymore' - How Man Utd reached their latest low",
-      "summary": "Manchester United's 4-1 defeat to Como was the latest chapter in their continued downward trajectory in recent years.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602213/man-utds-21-year-deterioration-with-glazers-jim-ratcliffe-michael-carrick-and-alex-ferguson-all-responsible",
-      "claimed_at": "2026-10-22T11:51:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3d6f426193b3dae1",
-      "headline": "EFL latest: Birmingham appoint ex-Man Utd transfer chief to lead recruitment",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13163353/championship-news-transfer-latest-and-gossip-plus-efl-updates-from-league-one-and-league-two",
-      "claimed_at": "2026-10-22T11:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f1f1943a1da556f9",
-      "headline": "Man City latest: Maresca confirms Haaland return vs Villa",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-22T11:15:00Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "d152341124b192eb",
       "headline": "'Not what a captain should be' - the debate around Fernandes' outburst",
       "summary": "Bruno Fernandes' comments after Manchester United's humbling by Como have got fans and pundits talking - but what now for the captain?",
@@ -1047,24 +1437,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cq5ynp67grjro?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-22T10:58:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "73a749675ed1fdbf",
-      "headline": "Palace latest: Besiktas Q&A - what can the Eagles expect in Turkey?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-22T10:45:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1160,24 +1532,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f3dc1092967b81b4",
-      "headline": "From Bury to AC Milan: Bournemouth's journey to 'dreamland'",
-      "summary": "Fifteen years to the day after they lost at home to Bury in League One, Bournemouth host seven-time champions of Europe AC Milan in the Europa League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6x2v8x7ry17o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-22T05:37:17Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "281c02c49fbbe040",
       "headline": "FPL notes: Saka injury \u201cdoesn\u2019t look good\u201d + not much rotation",
       "summary": "Eberechi Eze and Declan Rice score as Arsenal draw with Bayern The post FPL notes: Saka injury &#8220;doesn't look good&#8221; + not much rotation appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo",
@@ -1185,42 +1539,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/10/22/fpl-notes-saka-injury-doesnt-look-good-not-much-rotation",
       "claimed_at": "2026-10-22T02:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "96c6061a765f8323",
-      "headline": "Football Daily",
-      "summary": "Reaction as Manchester United lose 4-1 at Como in the Champions League",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0phxkv1?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T23:25:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f443dcaa55b00caf",
-      "headline": "Goal, assist... goal-kick - Kane underlines Ballon d'Or credentials",
-      "summary": "Why Declan Rice backs his England team-mate Harry Kane to win the Ballon d'Or after Arsenal's draw with Bayern Munich in the Champions League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck79p7qq1q9ro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T23:11:06Z",
       "players": [
         {
           "element_id": 0,
@@ -1250,42 +1568,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f13bab0380c37f4d",
-      "headline": "Saka injury 'does not look good' - how will Arsenal cope?",
-      "summary": "Mikel Arteta says the quadriceps injury Arsenal's Bukayo Saka picked up in the Champions League draw with Bayern Munich \"does not look good at all\".",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckg5j1zdn4m3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T22:51:56Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "af8993ec9ee4a349",
-      "headline": "'Simply not good enough - Warnock on Man Utd's Como display",
-      "summary": "Match of the Day pundits Nedum Onuoha and Stephen Warnock analyse Manchester United's performance after their 4-1 Champions League defeat to Como, and discuss midfielder Bruno Fernandes' criticism of team tactics.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c8040gdrdlwwo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T22:36:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0a447153f696aa66",
       "headline": "\u2019Wow\u2019 \u2013 Emery delighted with Aston Villa youngster\u2019s progression after shining in win over Viking",
       "summary": "Unai Emery praised Alysson\u2019s growing confidence following Aston Villa\u2019s 3-1 win over Viking, but insists the winger still has plenty to learn. The Villa boss was impressed by the youngster\u2019s performance",
@@ -1293,132 +1575,6 @@
       "tier": 2,
       "url": "https://hayters.com/wow-emery-delighted-with-aston-villa-youngsters-progression-after-shining-in-win-over-viking/",
       "claimed_at": "2026-10-21T21:56:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d8ac273d00e81167",
-      "headline": "Arteta admits \u2018concern\u2019 over Saka injury but praises players after draw with Bayern Munich",
-      "summary": "Arsenal boss Mikel Arteta has admitted there is concern over Bukayo Saka\u2019s injury after the winger was forced off during his side\u2019s 2-2 Champions League draw with Bayern Munich. Saka was forced off early on in",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-admits-concern-over-saka-injury-but-praises-players-after-draw-with-bayern-munich/",
-      "claimed_at": "2026-10-21T21:42:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3c66c53aec57d84c",
-      "headline": "Real Madrid dominate Leipzig for third straight win",
-      "summary": "Real Madrid maintain their 100 per cent start in the Champions League as they comfortably beat Leipzig 4-1, with Bernardo Silva scoring his first goal for Madrid since moving from Manchester City in the summer.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c3qjnerzngkqo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T21:38:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f651ea8c82db3094",
-      "headline": "Villa maintain perfect Champions League start with Viking victory",
-      "summary": "Aston Villa win their third game from three in the Champions League by defeating Norwegian side Viking - the dominant display taking them up to second in the league phase.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmj47yxry4k9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T21:19:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d5b901b93f6ede98",
-      "headline": "Rice rescues point for Arsenal at Bayern Munich but Gunners dealt Saka injury worry",
-      "summary": "Declan Rice scored a late equaliser as Arsenal came from behind to draw 2-2 with Bayern Munich in the Champions League. Mikel Arteta\u2019s side suffered an early setback when Bukayo Saka was forced off with an injury aft",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/rice-rescues-point-for-arsenal-at-bayern-munich-but-gunners-dealt-saka-injury-worry/",
-      "claimed_at": "2026-10-21T20:58:27Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "20c8dcd666c260d2",
-      "headline": "\u2018If you\u2019re not going to run\u2026\u2019 \u2013 Michael Carrick on Bruno Fernandes\u2019 comments and his future after heavy defeat to Como",
-      "summary": "Michael Carrick questioned his Manchester United players\u2019 effort during their humiliating 4-1 defeat to Como, insisting they cannot pick and choose when to give everything for the c",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/michael-carrick-on-bruno-fernandes-comments-and-his-future-after-heavy-defeat-to-como/",
-      "claimed_at": "2026-10-21T20:06:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "154bbfcff8751998",
-      "headline": "Bruno Fernandes questions Man Utd approach in heavy defeat to Como",
-      "summary": "Manchester United captain Bruno Fernandes has suggested his side needed to be braver with their pressing during their humiliating 4-1 defeat to Como. United were comfortably beaten by the Italian side, with Nico Paz scoring twice, an",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/bruno-fernandes-questions-man-utd-approach-in-heavy-defeat-to-como/",
-      "claimed_at": "2026-10-21T19:31:09Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "12196c6f66e5683b",
-      "headline": "Man Utd hammered by Como as pressure on Carrick builds",
-      "summary": "Manchester United suffered a humiliating 4-1 defeat to Como as Nico Paz scored twice and provided an assist in a dominant display from the Italian side. Paz opened the scoring inside two minutes before setting up Anastasios Douvikas to double Co",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-utd-hammered-by-como-as-pressure-on-carrick-builds/",
-      "claimed_at": "2026-10-21T18:51:23Z",
       "players": [
         {
           "element_id": 0,
@@ -1442,78 +1598,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b077a127f282acdf",
-      "headline": "Amorim insists he still loves United despite being sacked by the club",
-      "summary": "Ruben Amorim insisted that he still loves Manchester United, despite being sacked by the club last season. Amorim was sacked by the Manchester side last January after a 1-1 draw with Leeds United and clashing with the board in pre",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/amorim-insists-he-still-loves-united-despite-being-sacked-by-the-club/",
-      "claimed_at": "2026-10-21T18:29:51Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "af48f9b570d069d5",
-      "headline": "Sunderland boss Le Bris: \u2018This team cares\u2019",
-      "summary": "Sunderland Head Coach Regis Le Bris has made clear that poor recent results have left his players emotional, and stressed that his players &#8220;care&#8221; about getting things right for the club. Sunderland currently sit bottom of the Premier League tabl",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/sunderland-boss-le-bris-this-team-cares/",
-      "claimed_at": "2026-10-21T18:02:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9d0db285972622bc",
-      "headline": "Why Bournemouth vs Milan is not the biggest game in their history",
-      "summary": "Tomorrow night Bournemouth will host AC Milan as the sides face off as equals in the Europa League. However, 17 years ago the two clubs were stratospheres apart in many ways, not least in league position and squad. For Bournemouth, th",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/why-bournemouth-vs-milan-is-not-the-biggest-game-in-their-history/",
-      "claimed_at": "2026-10-21T15:49:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9df3b03300b4d21e",
-      "headline": "Rose confirms Bournemouth star returns to training",
-      "summary": "Marco Rose confirmed that striker Eli Junior Kroupi is back training with the first-team squad after injuring his foot in pre-season. The 20-year-old scored 13 Premier League goals last campaign but is yet to appear this season, although he could fe",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/rose-confirms-bournemouth-star-returns-to-training/",
-      "claimed_at": "2026-10-21T14:14:30Z",
-      "players": [
-        {
-          "element_id": 78,
-          "name": "Kroupi.Jr",
-          "club": "BOU",
           "held": false
         }
       ],
@@ -1653,30 +1737,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/10/19/fpl-notes-gibbs-white-injury-latest-two-solid-defences",
       "claimed_at": "2026-10-18T23:30:00Z",
-      "players": [
-        {
-          "element_id": 10,
-          "name": "White",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 480,
-          "name": "Gibbs-White",
-          "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "61c355d1d4b879b3",
-      "headline": "Nottm Forest v Arsenal team news: No Gibbs-White",
-      "summary": "There are two changes for both sides from Gameweek 6 The post Nottm Forest v Arsenal team news: No Gibbs-White appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/18/nottm-forest-v-arsenal-team-news-no-gibbs-white",
-      "claimed_at": "2026-10-18T15:05:00Z",
       "players": [
         {
           "element_id": 10,
