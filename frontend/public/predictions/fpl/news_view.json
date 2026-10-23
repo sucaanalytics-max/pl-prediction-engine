@@ -1,36 +1,19 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-23T16:38:23.522729Z",
-  "n_dropped": 178,
+  "generated_at": "2026-10-23T20:05:39.793055Z",
+  "n_dropped": 161,
   "dropped_by_source": {
-    "bbc_football": 57,
-    "hayters": 30,
-    "sky_football": 91
+    "bbc_football": 45,
+    "fantasyfootballscout": 1,
+    "hayters": 28,
+    "sky_football": 87
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 268,
+  "n_articles": 251,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
-    {
-      "digest": "33d0731ee2c212e2",
-      "headline": "Man Utd revisit deal for Hall - Wednesday gossip",
-      "summary": "Manchester United targeting Lewis Hall and Adrien Truffert, Real Madrid remain interested in Riccardo Calafiori, Liverpool and Arsenal both keen on Xavi Espart, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck62yq0rd0vvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-20T20:17:15Z",
-      "players": [
-        {
-          "element_id": 8,
-          "name": "Calafiori",
-          "club": "ARS",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
     {
       "digest": "a94ad99036142aa5",
       "headline": "FPL notes: Brobbey injury latest + Tavernier third in midfielder table",
@@ -54,6 +37,102 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "20a32e393fe8ba93",
+      "headline": "Enciso capitalises on Milenkovic error to level for Ipswich",
+      "summary": "Julio Enciso capitalises on poor Nikola Milenkovic back-pass to get Ipswich Town level against Nottingham Forest.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13602860/goal-j-enciso-41-ipswich-1-1-nottm-forest",
+      "claimed_at": "2026-10-23T20:47:00Z",
+      "players": [
+        {
+          "element_id": 471,
+          "name": "Milenkovi\u0107",
+          "club": "NFO",
+          "held": false
+        },
+        {
+          "element_id": 591,
+          "name": "Enciso",
+          "club": "IPS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a6caa618c1b56048",
+      "headline": "Williams volleys Forest in front at Ipswich!",
+      "summary": "Neco Williams volleys Nottingham Forest in front at Ipswich Town.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13602847/goal-n-williams-13-ipswich-0-0-nottm-forest",
+      "claimed_at": "2026-10-23T20:20:00Z",
+      "players": [
+        {
+          "element_id": 469,
+          "name": "N.Williams",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9030f01391fa09fa",
+      "headline": "When Carra met Chelsea boss Alonso",
+      "summary": "Sky Sports' Jamie Carragher sat down for a wide-ranging interview with Chelsea manager Xabi Alonso in which the pair discussed his appointment at Stamford Bridge and his aims for the season, as well as looking back at their time playing together at Liverpool.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602758/xabi-alonso-chelsea-manager-sits-down-with-former-liverpool-team-mate-jamie-carragher-for-new-boss-youtube-series",
+      "claimed_at": "2026-10-23T18:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c905d3a0fea3e63b",
+      "headline": "Ipswich v Nottm Forest team news: Gibbs-White starts",
+      "summary": "Gameweek 8 gets underway at Portman Road this evening The post Ipswich v Nottm Forest team news: Gibbs-White starts appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/ipswich-v-nottm-forest-team-news-gibbs-white-starts",
+      "claimed_at": "2026-10-23T18:15:00Z",
+      "players": [
+        {
+          "element_id": 480,
+          "name": "Gibbs-White",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4e2a753f165cc641",
+      "headline": "FNF: Enciso brings Ipswich level vs Forest LIVE! & highlights",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/ipswich-town-vs-nottingham-forest/live/559520",
+      "claimed_at": "2026-10-23T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "6cdfe9bf7cb5ab5a",
@@ -1148,42 +1227,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a62bedc2757a279f",
-      "headline": "Dominant Sunderland punished as Bengtsson earns Lech draw",
-      "summary": "Timur Tutierov's first Sunderland goal was not enough to earn the victory they deserved in Poland as their wastefulness was punished in a 1-1 draw at lowly Lech Poznan.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/lech-poznan-vs-sunderland/report/577787",
-      "claimed_at": "2026-10-22T19:45:00Z",
-      "players": [
-        {
-          "element_id": 668,
-          "name": "Tutierov",
-          "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7f2c99459b1f3b8b",
-      "headline": "Papers: Man Utd draw up five-man shortlist to replace Carrick",
-      "summary": "The top stories and transfer rumours from Friday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602435/manchester-united-draw-up-five-man-shortlist-to-replace-michael-carrick-paper-talk",
-      "claimed_at": "2026-10-22T18:49:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "2bd48f9f0f63cf1c",
       "headline": "Fernandes has home burgled while in Italy with Man Utd",
       "summary": "Manchester United captain Bruno Fernandes had his home burgled on Wednesday while he was in Italy for his club's Champions League game against Como.",
@@ -1214,24 +1257,6 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9bc6eecc425ccca2",
-      "headline": "Brentford latest: Andrews ready for trip to 'very impressive' Hull on Sunday",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279280/brentford-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-22T17:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1532,6 +1557,24 @@
       "touches_squad": false
     },
     {
+      "digest": "f3dc1092967b81b4",
+      "headline": "From Bury to AC Milan: Bournemouth's journey to 'dreamland'",
+      "summary": "Fifteen years to the day after they lost at home to Bury in League One, Bournemouth host seven-time champions of Europe AC Milan in the Europa League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6x2v8x7ry17o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-22T05:37:17Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "281c02c49fbbe040",
       "headline": "FPL notes: Saka injury \u201cdoesn\u2019t look good\u201d + not much rotation",
       "summary": "Eberechi Eze and Declan Rice score as Arsenal draw with Bayern The post FPL notes: Saka injury &#8220;doesn't look good&#8221; + not much rotation appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo",
@@ -1562,24 +1605,6 @@
           "element_id": 12,
           "name": "Saka",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0a447153f696aa66",
-      "headline": "\u2019Wow\u2019 \u2013 Emery delighted with Aston Villa youngster\u2019s progression after shining in win over Viking",
-      "summary": "Unai Emery praised Alysson\u2019s growing confidence following Aston Villa\u2019s 3-1 win over Viking, but insists the winger still has plenty to learn. The Villa boss was impressed by the youngster\u2019s performance",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/wow-emery-delighted-with-aston-villa-youngsters-progression-after-shining-in-win-over-viking/",
-      "claimed_at": "2026-10-21T21:56:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1689,6 +1714,12 @@
           "name": "Heaven",
           "club": "MUN",
           "held": false
+        },
+        {
+          "element_id": 634,
+          "name": "Fernandez-Pardo",
+          "club": "NEW",
+          "held": false
         }
       ],
       "touches_squad": false
@@ -1724,30 +1755,6 @@
           "element_id": 504,
           "name": "Vuskovic",
           "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ee81eaebae040b01",
-      "headline": "FPL notes: Gibbs-White injury latest + two solid defences",
-      "summary": "FPL notes from Nottm Forest 0-1 Arsenal The post FPL notes: Gibbs-White injury latest + two solid defences appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/19/fpl-notes-gibbs-white-injury-latest-two-solid-defences",
-      "claimed_at": "2026-10-18T23:30:00Z",
-      "players": [
-        {
-          "element_id": 10,
-          "name": "White",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 480,
-          "name": "Gibbs-White",
-          "club": "NFO",
           "held": false
         }
       ],
