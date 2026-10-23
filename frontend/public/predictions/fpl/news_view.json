@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-23T06:18:40.250384Z",
-  "n_dropped": 155,
+  "generated_at": "2026-10-23T11:55:43.269572Z",
+  "n_dropped": 162,
   "dropped_by_source": {
-    "bbc_football": 50,
+    "bbc_football": 55,
     "hayters": 22,
-    "sky_football": 83
+    "sky_football": 85
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 245,
+  "n_articles": 252,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -54,6 +54,258 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "e7094c9a359b2e85",
+      "headline": "Birmingham City appoint former Man Utd chief as new director of football",
+      "summary": "Birmingham City have appointed former Manchester United football director John Murtough as their new director of football. Murtough, who most recently served as director of global development at Atalanta, brings almost three de",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/birmingham-city-appoint-former-man-utd-chief-as-new-director-of-football/",
+      "claimed_at": "2026-10-23T11:41:58Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5f81c45a42624edf",
+      "headline": "Knock - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-10-23T11:30:09.310090Z",
+      "players": [
+        {
+          "element_id": 262,
+          "name": "Smith Rowe",
+          "club": "FUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a8ab46a7f0bc6dc3",
+      "headline": "Emery's Villa 2.0 reboot restores optimism before Man City meeting",
+      "summary": "Unai Emery's impressive 2.0 reboot has Aston Villa's fans in buoyant mood on the fourth anniversary of his appointment, says chief football writer Phil McNulty.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwg7xvz8e8dpo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T11:23:37Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "65236d7b1c858f12",
+      "headline": "Former Man United chief Murtough joins Birmingham",
+      "summary": "Birmingham City appoint ex-Manchester United chief John Murtough as director of football.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c9zrdkv775r1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T11:20:20Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8ea27ea7643062f5",
+      "headline": "Rooney criticises Man Utd players following recent run",
+      "summary": "Wayne Rooney has launched a scathing attack on Manchester United\u2019s players, accusing them of being \u201cselfish\u201d and failing to take responsibility for the club\u2019s problems. The former United striker said players must stop deflecting blame and instea",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/rooney-criticises-man-utd-players-following-recent-run/",
+      "claimed_at": "2026-10-23T10:46:39Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ece454e3dafa569a",
+      "headline": "Ex-Arsenal director of football Edu to advise Northampton",
+      "summary": "Nottingham Forest's former global head of football Edu will serve as a senior advisor to the new owners of Northampton Town.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqrky7n63l6po?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T10:27:27Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f39fbfb702a4349f",
+      "headline": "Merson: Brighton are one million per cent title contenders \u2013 if they win next two",
+      "summary": "Sky Sports' Paul Merson says Brighton will enter the Premier League title race if they win their next two games.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602288/brighton-will-be-in-premier-league-title-race-if-they-beat-liverpool-and-man-city-says-paul-merson",
+      "claimed_at": "2026-10-23T10:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b9449d3781248cce",
+      "headline": "Should Man Utd boss Carrick drop captain Fernandes?",
+      "summary": "Manchester United head coach Michael Carrick must decide whether to leave skipper Bruno Fernandes out of Sunday's crucial Premier League clash with Bournemouth",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cked3x8452pdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T08:28:21Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "91eaeaca0cf9db1f",
+      "headline": "Forest's start raises questions - but belief in Glasner remains",
+      "summary": "Nottingham Forest go to Ipswich in the bottom three of the Premier League, but boss Oliver Glasner believes they have deserved more this season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cw3djpg15045o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T08:14:50Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "77a8fbd805f59aa8",
+      "headline": "Jaissle needs some wins to quieten down the noise at Newcastle",
+      "summary": "In his latest Reporter Notebook, Sky Sports News' Keith Downie looks into what is going wrong at Newcastle United.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602481/newcastle-united-reporter-notebook-matthias-jaissle-needs-some-wins-to-quieten-down-the-noise-on-tyneside",
+      "claimed_at": "2026-10-23T08:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9ff213546e2419b6",
+      "headline": "Reporter Notebook: No panic stations at Sunderland despite tough start",
+      "summary": "It's certainly been a different start to the season for Sunderland compared to last year, when they flew out of the traps on their Premier League return and went months without a home league defeat.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602265/sunderland-reporter-notebook-no-panic-for-regis-le-bris-side-despite-sitting-bottom-of-premier-league-table",
+      "claimed_at": "2026-10-23T08:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b9d24d238354de9c",
+      "headline": "Signs of life finally for Wirtz, but Liverpool still need more from playmaker",
+      "summary": "Florian Wirtz produced one of his most impressive displays in a Liverpool shirt last weekend at Brentford, but Andoni Iraola needs his No 10 to keep sparkling with the Reds now facing three crucial tests at home that will",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602355/florian-wirtz-is-finally-showing-signs-of-life-at-liverpool-but-andoni-iraola-still-needs-more-from-his-116m-playmaker",
+      "claimed_at": "2026-10-23T08:00:00Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6f574b8d91cf2c32",
+      "headline": "New Victor Moses? How Alonso has transformed Neto",
+      "summary": "Those following Chelsea closely may feel history is repeating itself as Pedro Neto excels at wing-back, much like Victor Moses did a decade ago.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c9gkvrkkjv0lo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T07:57:27Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0f586a60319e9052",
+      "headline": "What is going on at 'chaotic' Newcastle?",
+      "summary": "Will the alarm bells be ringing at Newcastle United if they lose to struggling Crystal Palace on Sunday?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c60qkpe0e54qo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-23T06:37:20Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "6cb999d4c00616a6",
@@ -752,6 +1004,24 @@
       "touches_squad": false
     },
     {
+      "digest": "3d6f426193b3dae1",
+      "headline": "EFL latest: Birmingham appoint ex-Man Utd transfer chief to lead recruitment",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13163353/championship-news-transfer-latest-and-gossip-plus-efl-updates-from-league-one-and-league-two",
+      "claimed_at": "2026-10-22T11:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "f1f1943a1da556f9",
       "headline": "Man City latest: Maresca confirms Haaland return vs Villa",
       "summary": null,
@@ -824,42 +1094,6 @@
       "touches_squad": false
     },
     {
-      "digest": "8ec5201655f0ba12",
-      "headline": "From the highest highs to the lowest lows: How Bjorn is rediscovering her best self",
-      "summary": "Returning from months on the sidelines is a huge challenge for any footballer. To do it twice in succession is a daunting prospect &#8212; but Chelsea's Nathalie Bjorn has overcome the odds to do just that.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13601848/nathalie-bjorn-chelsea-women-defender-on-her-incredible-injury-comeback-vice-captaincy-and-wsl-improvements",
-      "claimed_at": "2026-10-22T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "65ee2732cae39cd4",
-      "headline": "How will Arsenal cope without Saka?",
-      "summary": "An innocuous swing of his left boot, a \"sharp pain\" in his quadriceps, and now an anxious wait for Arsenal. Bukayo Saka's injury was a blot on a positive night against Bayern Munich.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602180/how-will-arsenal-cope-without-injured-bukayo-saka-noni-madueke-and-max-dowman-in-frame-for-more-minutes",
-      "claimed_at": "2026-10-22T09:51:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "d9e2adbaf7a96c30",
       "headline": "Man City trio doubts for Aston Villa game",
       "summary": "Enzo Maresca has confirmed Erling Haaland is fully fit to face Aston Villa on Saturday, but Manchester City are still waiting to make decisions on Nico O\u2019Reilly, Mateo Kovacic and Matheus Nunes. All four players have been dealing with fitness concerns, with",
@@ -890,24 +1124,6 @@
       "touches_squad": false
     },
     {
-      "digest": "38f1fc44e5515357",
-      "headline": "Transfer Centre LIVE! 'Nagelsmann frontrunner if Man Utd sack Carrick'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
-      "claimed_at": "2026-10-22T09:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "1385cb8e8e7c3812",
       "headline": "Aston Villa star a doubt for Man City clash",
       "summary": "Johan Manzambi remains a doubt for Aston Villa\u2019s clash with Manchester City on Saturday. The 21-year-old scored the winner in last weekend\u2019s 1-0 victory over Newcastle United but was forced off in the second half. Manzambi then missed Wednesday night\u2019s Cha",
@@ -920,42 +1136,6 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e26872961b2c0073",
-      "headline": "Sage must show willingness to adapt with pressure mounting at Palace",
-      "summary": "If Crystal Palace had made the start they have this season under Oliver Glasner, they wouldn't be a story.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602144/crystal-palace-pierre-sage-has-two-games-to-turn-things-around-and-must-show-willingness-to-adapt-reporter-notebook",
-      "claimed_at": "2026-10-22T08:50:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e25357b9f141ea97",
-      "headline": "Fabregas: I told Como to slow down in final stages against Man Utd",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12507208/football-latest-news-gossip",
-      "claimed_at": "2026-10-22T08:47:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1178,102 +1358,6 @@
       "touches_squad": false
     },
     {
-      "digest": "1029dca25bf5c7d7",
-      "headline": "Rice strikes to earn Arsenal draw at Bayern",
-      "summary": "Declan Rice scores a late equaliser as Arsenal and Bayern Munich play out an entertaining draw in the league phase of the Champions League while Bukayo Saka limps off with an early injury.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/crx23nx0vp8jo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T21:09:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "51d9d4c15c645acc",
-      "headline": "Foden nets hat-trick as Man City beat AEK Athens",
-      "summary": "Phil Foden scores a sublime hat-trick as he produces a virtuoso display to help Manchester City return to winning ways in the Champions League group phase by easing past Greek side AEK Athens.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmrly5r1jp41o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T21:00:44Z",
-      "players": [
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bf11cad9469e753a",
-      "headline": "Mac Allister scores twice as Liverpool fight back to beat Villarreal",
-      "summary": "Rio Ngumoha provides the spark as Liverpool come from two goals down to beat Villarreal at Anfield in the Champions League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmvg6qxp6lj7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T21:00:28Z",
-      "players": [
-        {
-          "element_id": 369,
-          "name": "Ngumoha",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 372,
-          "name": "Mac Allister",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "495b5061f16f16d3",
-      "headline": "'What a goal, what a moment' - Rice snatches late equaliser against Bayern",
-      "summary": "Declan Rice sends the travelling Arsenal support into raptures with his late equaliser in their heavyweight Champions League clash with Bayern Munich.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cwvgd7nvrgp4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T21:00:05Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "973dd761ed1b1f99",
-      "headline": "Man Utd humbled by four-goal Como to pile pressure on Carrick",
-      "summary": "Manchester United suffer a heavy defeat to a Como side playing just their third ever game of Champions League football, as Nico Paz stars for the hosts to pile the pressure on Michael Carrick.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmz7xr3z2vz7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T20:59:43Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "d5b901b93f6ede98",
       "headline": "Rice rescues point for Arsenal at Bayern Munich but Gunners dealt Saka injury worry",
       "summary": "Declan Rice scored a late equaliser as Arsenal came from behind to draw 2-2 with Bayern Munich in the Champions League. Mikel Arteta\u2019s side suffered an early setback when Bukayo Saka was forced off with an injury aft",
@@ -1292,54 +1376,6 @@
       "touches_squad": false
     },
     {
-      "digest": "1a957996b350d044",
-      "headline": "Paz, Fabregas and Como teach Man Utd a lesson",
-      "summary": "Serie A success story Como have gone from Serie D to the Champions League - now they have taught Manchester United a lesson in Europe.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqrly2d6jnp7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T20:46:40Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "56d2ca7a13186534",
-      "headline": "Chelsea eye Brighton's Ayari - Thursday's gossip",
-      "summary": "Brighton midfielder Yasin Ayari is being targeted by Chelsea, Barcelona and Real Madrid are keeping an eye on Aston Villa's Johan Manzambi and Arsenal striker Viktor Gyokeres could be on moved on.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cme3xk2jkyv0o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T20:17:45Z",
-      "players": [
-        {
-          "element_id": 25,
-          "name": "Gy\u00f6keres",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 129,
-          "name": "Ayari",
-          "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "20c8dcd666c260d2",
       "headline": "\u2018If you\u2019re not going to run\u2026\u2019 \u2013 Michael Carrick on Bruno Fernandes\u2019 comments and his future after heavy defeat to Como",
       "summary": "Michael Carrick questioned his Manchester United players\u2019 effort during their humiliating 4-1 defeat to Como, insisting they cannot pick and choose when to give everything for the c",
@@ -1347,24 +1383,6 @@
       "tier": 2,
       "url": "https://hayters.com/michael-carrick-on-bruno-fernandes-comments-and-his-future-after-heavy-defeat-to-como/",
       "claimed_at": "2026-10-21T20:06:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "199d90d6b4c61180",
-      "headline": "Fernandes rounds on Carrick after Man Utd humiliation",
-      "summary": "Manchester United captain Bruno Fernandes blames head coach Michael Carrick for the tactics that led to an embarrassing 4-1 defeat by Como in the Champions League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq74pjn80x4wo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-21T19:59:30Z",
       "players": [
         {
           "element_id": 0,
@@ -1525,42 +1543,6 @@
         {
           "element_id": 627,
           "name": "Barcola",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8288436e6d1f39a6",
-      "headline": "Van Dijk admits he had \u2018bad day at the office\u2019 despite Liverpool win",
-      "summary": "Virgil van Dijk admitted that he had a &#8220;bad day at the office&#8221; after making an early mistake in Liverpool's 4-3 win over Villarreal at Anfield. The defender was at fault for the Spanish side's first goal of the night wh",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/van-dijk-admits-he-had-bad-day-at-the-office-despite-liverpool-win/",
-      "claimed_at": "2026-10-21T11:00:00Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4b869fa9dd1220aa",
-      "headline": "Mac Allister reflects on \u2018really difficult\u2019 last year and praises Iraola\u2019s impact",
-      "summary": "Alexis Mac Allister has admitted he was below his best last season but believes Andoni Iraola has helped change the mood and direction at Liverpool. The midfielder was candid about his own performances during the last",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/mac-allister-reflects-on-really-difficult-last-year-and-praises-iraolas-impact/",
-      "claimed_at": "2026-10-21T10:32:48Z",
-      "players": [
-        {
-          "element_id": 372,
-          "name": "Mac Allister",
           "club": "LIV",
           "held": false
         }
