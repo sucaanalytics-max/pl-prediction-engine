@@ -1,0 +1,1015 @@
+{
+  "gameweek": 9,
+  "entry_label": "owner",
+  "objective": "season",
+  "generated_at": "2026-10-23T19:50:11.195374Z",
+  "deadline": "2026-10-31T11:00:00Z",
+  "xp_snapshot": {
+    "1": 3.0597,
+    "4": 4.2905,
+    "68": 5.122,
+    "113": 2.4918,
+    "124": 3.6072,
+    "152": 0.7333,
+    "154": 5.6616,
+    "165": 4.5333,
+    "173": 3.6119,
+    "398": 2.8776,
+    "426": 5.0005,
+    "445": 4.4683,
+    "464": 4.3436,
+    "497": 0.0377,
+    "542": 4.9502,
+    "569": 3.9746
+  },
+  "decision": {
+    "plan": {
+      "squad": [
+        1,
+        4,
+        68,
+        113,
+        124,
+        152,
+        154,
+        165,
+        173,
+        426,
+        445,
+        464,
+        497,
+        542,
+        569
+      ],
+      "xi": [
+        1,
+        4,
+        68,
+        154,
+        165,
+        173,
+        426,
+        445,
+        464,
+        542,
+        569
+      ],
+      "captain": 154,
+      "vice": 68,
+      "transfers_in": [
+        68
+      ],
+      "transfers_out": [
+        398
+      ],
+      "hits": 0,
+      "bank_after": 37,
+      "objective": 0.0,
+      "free_transfers_banked": 1,
+      "free_transfers_after": 2
+    },
+    "n_draws": 10000,
+    "mean_points": 55.0112,
+    "sd_points": 15.1727,
+    "objective": 56.7612,
+    "quantiles": {
+      "q10": 36.0,
+      "q25": 44.0,
+      "q50": 54.0,
+      "q75": 64.0,
+      "q90": 76.0,
+      "q99": 95.0
+    },
+    "tails": {
+      "p_ge_40": 0.8465,
+      "p_ge_50": 0.611,
+      "p_ge_60": 0.3586,
+      "p_ge_70": 0.1694,
+      "p_ge_80": 0.0658,
+      "p_ge_90": 0.0193
+    },
+    "autosub_rate": 0.0704,
+    "vice_rate": 0.0069
+  },
+  "selection_stream": {
+    "plan": {
+      "squad": [
+        1,
+        4,
+        68,
+        113,
+        124,
+        152,
+        154,
+        165,
+        173,
+        426,
+        445,
+        464,
+        497,
+        542,
+        569
+      ],
+      "xi": [
+        1,
+        4,
+        68,
+        154,
+        165,
+        173,
+        426,
+        445,
+        464,
+        542,
+        569
+      ],
+      "captain": 154,
+      "vice": 68,
+      "transfers_in": [
+        68
+      ],
+      "transfers_out": [
+        398
+      ],
+      "hits": 0,
+      "bank_after": 37,
+      "objective": 0.0,
+      "free_transfers_banked": 1,
+      "free_transfers_after": 2
+    },
+    "n_draws": 10000,
+    "mean_points": 54.9369,
+    "sd_points": 15.2132,
+    "objective": 56.6869,
+    "quantiles": {
+      "q10": 37.0,
+      "q25": 44.0,
+      "q50": 54.0,
+      "q75": 64.25,
+      "q90": 75.0,
+      "q99": 96.0
+    },
+    "tails": {
+      "p_ge_40": 0.8512,
+      "p_ge_50": 0.6037,
+      "p_ge_60": 0.3517,
+      "p_ge_70": 0.1651,
+      "p_ge_80": 0.0676,
+      "p_ge_90": 0.0236
+    },
+    "autosub_rate": 0.0677,
+    "vice_rate": 0.0057
+  },
+  "optimism_gap": -0.0743,
+  "credible_margin": true,
+  "runners_up": [
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          165,
+          173,
+          426,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          154,
+          165,
+          426,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 154,
+        "vice": 68,
+        "transfers_in": [
+          60,
+          68
+        ],
+        "transfers_out": [
+          152,
+          398
+        ],
+        "hits": 0,
+        "bank_after": 35,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 55.8349,
+      "sd_points": 15.5419,
+      "objective": 55.8349,
+      "quantiles": {
+        "q10": 37.0,
+        "q25": 45.0,
+        "q50": 54.0,
+        "q75": 66.0,
+        "q90": 77.0,
+        "q99": 97.0
+      },
+      "tails": {
+        "p_ge_40": 0.8596,
+        "p_ge_50": 0.6239,
+        "p_ge_60": 0.3758,
+        "p_ge_70": 0.1858,
+        "p_ge_80": 0.0773,
+        "p_ge_90": 0.0274
+      },
+      "autosub_rate": 0.0564,
+      "vice_rate": 0.0057
+    },
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
+          13,
+          60,
+          113,
+          124,
+          154,
+          165,
+          173,
+          426,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          13,
+          60,
+          154,
+          165,
+          426,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 154,
+        "vice": 426,
+        "transfers_in": [
+          13,
+          60
+        ],
+        "transfers_out": [
+          152,
+          398
+        ],
+        "hits": 0,
+        "bank_after": 24,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 55.1294,
+      "sd_points": 15.4035,
+      "objective": 55.1294,
+      "quantiles": {
+        "q10": 36.0,
+        "q25": 44.0,
+        "q50": 54.0,
+        "q75": 65.0,
+        "q90": 76.0,
+        "q99": 97.0
+      },
+      "tails": {
+        "p_ge_40": 0.8473,
+        "p_ge_50": 0.6093,
+        "p_ge_60": 0.3559,
+        "p_ge_70": 0.1721,
+        "p_ge_80": 0.0701,
+        "p_ge_90": 0.0241
+      },
+      "autosub_rate": 0.0588,
+      "vice_rate": 0.0057
+    },
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
+          68,
+          113,
+          124,
+          152,
+          154,
+          173,
+          398,
+          411,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          68,
+          124,
+          154,
+          173,
+          411,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 411,
+        "vice": 154,
+        "transfers_in": [
+          68,
+          411
+        ],
+        "transfers_out": [
+          165,
+          426
+        ],
+        "hits": 0,
+        "bank_after": 7,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 55.0118,
+      "sd_points": 14.9232,
+      "objective": 55.0118,
+      "quantiles": {
+        "q10": 37.0,
+        "q25": 44.0,
+        "q50": 54.0,
+        "q75": 64.0,
+        "q90": 75.0,
+        "q99": 94.0
+      },
+      "tails": {
+        "p_ge_40": 0.8518,
+        "p_ge_50": 0.6202,
+        "p_ge_60": 0.3543,
+        "p_ge_70": 0.1655,
+        "p_ge_80": 0.0632,
+        "p_ge_90": 0.0193
+      },
+      "autosub_rate": 0.0399,
+      "vice_rate": 0.0
+    },
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
+          60,
+          113,
+          124,
+          154,
+          165,
+          173,
+          366,
+          426,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          154,
+          165,
+          366,
+          426,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 154,
+        "vice": 426,
+        "transfers_in": [
+          60,
+          366
+        ],
+        "transfers_out": [
+          152,
+          398
+        ],
+        "hits": 0,
+        "bank_after": 25,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 54.9441,
+      "sd_points": 14.7745,
+      "objective": 54.9441,
+      "quantiles": {
+        "q10": 37.0,
+        "q25": 44.0,
+        "q50": 53.0,
+        "q75": 64.0,
+        "q90": 75.0,
+        "q99": 95.0
+      },
+      "tails": {
+        "p_ge_40": 0.8596,
+        "p_ge_50": 0.6124,
+        "p_ge_60": 0.3447,
+        "p_ge_70": 0.1615,
+        "p_ge_80": 0.0636,
+        "p_ge_90": 0.0204
+      },
+      "autosub_rate": 0.0527,
+      "vice_rate": 0.0057
+    },
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          165,
+          173,
+          398,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          154,
+          165,
+          173,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 154,
+        "vice": 68,
+        "transfers_in": [
+          60,
+          68
+        ],
+        "transfers_out": [
+          152,
+          426
+        ],
+        "hits": 0,
+        "bank_after": 85,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 54.4801,
+      "sd_points": 15.2872,
+      "objective": 54.4801,
+      "quantiles": {
+        "q10": 36.0,
+        "q25": 43.0,
+        "q50": 53.0,
+        "q75": 64.0,
+        "q90": 75.0,
+        "q99": 95.0
+      },
+      "tails": {
+        "p_ge_40": 0.8396,
+        "p_ge_50": 0.5897,
+        "p_ge_60": 0.3445,
+        "p_ge_70": 0.1639,
+        "p_ge_80": 0.0632,
+        "p_ge_90": 0.0207
+      },
+      "autosub_rate": 0.0623,
+      "vice_rate": 0.0057
+    },
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          106,
+          113,
+          124,
+          154,
+          173,
+          426,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          106,
+          154,
+          426,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 154,
+        "vice": 106,
+        "transfers_in": [
+          60,
+          68,
+          106
+        ],
+        "transfers_out": [
+          152,
+          165,
+          398
+        ],
+        "hits": 1,
+        "bank_after": 34,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 52.3015,
+      "sd_points": 15.4302,
+      "objective": 52.3015,
+      "quantiles": {
+        "q10": 33.0,
+        "q25": 41.0,
+        "q50": 51.0,
+        "q75": 62.0,
+        "q90": 73.0,
+        "q99": 93.0
+      },
+      "tails": {
+        "p_ge_40": 0.7907,
+        "p_ge_50": 0.5369,
+        "p_ge_60": 0.3017,
+        "p_ge_70": 0.1356,
+        "p_ge_80": 0.0516,
+        "p_ge_90": 0.0148
+      },
+      "autosub_rate": 0.0203,
+      "vice_rate": 0.0057
+    },
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          173,
+          398,
+          411,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          154,
+          173,
+          411,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 411,
+        "vice": 154,
+        "transfers_in": [
+          60,
+          68,
+          411
+        ],
+        "transfers_out": [
+          152,
+          165,
+          426
+        ],
+        "hits": 1,
+        "bank_after": 5,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 51.9262,
+      "sd_points": 15.1148,
+      "objective": 51.9262,
+      "quantiles": {
+        "q10": 33.0,
+        "q25": 41.0,
+        "q50": 51.0,
+        "q75": 62.0,
+        "q90": 72.0,
+        "q99": 91.01
+      },
+      "tails": {
+        "p_ge_40": 0.7833,
+        "p_ge_50": 0.5391,
+        "p_ge_60": 0.2906,
+        "p_ge_70": 0.1265,
+        "p_ge_80": 0.0462,
+        "p_ge_90": 0.013
+      },
+      "autosub_rate": 0.0264,
+      "vice_rate": 0.0
+    }
+  ],
+  "pool": {
+    "n_candidates": 562,
+    "n_excluded": 106,
+    "excluded_by_reason": {
+      "status_u": 106
+    },
+    "held_missing_purchase_price": [],
+    "price_uncertain": false,
+    "n_zero_xp": 69
+  },
+  "horizon": {
+    "eval_horizon": 8,
+    "transfer_horizon": 6,
+    "provisional": [
+      {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          165,
+          173,
+          426,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          124,
+          154,
+          426,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 426,
+        "vice": 4,
+        "transfers_in": [
+          60
+        ],
+        "transfers_out": [
+          152
+        ],
+        "hits": 0,
+        "bank_after": 35,
+        "objective": 0.0,
+        "free_transfers_banked": 1,
+        "free_transfers_after": 2
+      },
+      {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          173,
+          366,
+          411,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          154,
+          173,
+          366,
+          411,
+          464,
+          542,
+          569
+        ],
+        "captain": 411,
+        "vice": 154,
+        "transfers_in": [
+          366,
+          411
+        ],
+        "transfers_out": [
+          165,
+          426
+        ],
+        "hits": 0,
+        "bank_after": 1,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          173,
+          366,
+          411,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          154,
+          366,
+          411,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 411,
+        "vice": 542,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 1,
+        "objective": 0.0,
+        "free_transfers_banked": 1,
+        "free_transfers_after": 2
+      },
+      {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          173,
+          366,
+          411,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          154,
+          366,
+          411,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 411,
+        "vice": 154,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 1,
+        "objective": 0.0,
+        "free_transfers_banked": 2,
+        "free_transfers_after": 3
+      },
+      {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          173,
+          366,
+          411,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          154,
+          366,
+          411,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 411,
+        "vice": 154,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 1,
+        "objective": 0.0,
+        "free_transfers_banked": 3,
+        "free_transfers_after": 4
+      },
+      {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          173,
+          366,
+          411,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          68,
+          113,
+          154,
+          366,
+          411,
+          445,
+          464,
+          542,
+          569
+        ],
+        "captain": 411,
+        "vice": 4,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 1,
+        "objective": 0.0,
+        "free_transfers_banked": 4,
+        "free_transfers_after": 5
+      },
+      {
+        "squad": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          124,
+          154,
+          173,
+          366,
+          411,
+          445,
+          464,
+          497,
+          542,
+          569
+        ],
+        "xi": [
+          1,
+          4,
+          60,
+          68,
+          113,
+          154,
+          366,
+          411,
+          464,
+          542,
+          569
+        ],
+        "captain": 411,
+        "vice": 154,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 1,
+        "objective": 0.0,
+        "free_transfers_banked": 5,
+        "free_transfers_after": 5
+      }
+    ]
+  },
+  "field_model": "uncalibrated",
+  "warnings": [],
+  "execution": "propose_only",
+  "evidence": {
+    "measured_on": {
+      "seasons": [
+        "2023-24",
+        "2024-25",
+        "2025-26"
+      ],
+      "gameweeks": "8-38 each, 93 paired observations",
+      "harness": "pipeline/learning/backtest_decisions.py",
+      "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+    },
+    "beats_doing_nothing": {
+      "verdict": "established",
+      "margin_2023_24": 411,
+      "margin_2024_25": 560,
+      "margin_2025_26": 184,
+      "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+    },
+    "beats_greedy_transfers": {
+      "verdict": "not established",
+      "margin_2023_24": 67,
+      "margin_2024_25": 60,
+      "margin_2025_26": -66,
+      "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+    },
+    "projection_calibration": {
+      "verdict": "established",
+      "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+    }
+  },
+  "sealed": false
+}
