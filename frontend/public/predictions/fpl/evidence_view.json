@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-24T05:51:46.907119Z",
+  "generated_at": "2026-10-24T14:01:48.883805Z",
   "gameweek": 9,
   "players": [
     {
@@ -170,6 +170,76 @@
       "needs_attention": false
     },
     {
+      "element_id": 469,
+      "player_name": "N.Williams",
+      "club": "Nott'm Forest",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "abbb894070a6c46f",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-24T00:00:10.181593Z",
+              "observed_at": "2026-10-24T05:52:26.965938Z",
+              "quote": "Arm injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "67e0acf292fff126",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-24T00:00:10.181593Z",
+              "observed_at": "2026-10-24T05:52:26.965938Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "b9b2c7a886a6607e",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-24T00:00:10.181593Z",
+              "observed_at": "2026-10-24T05:52:26.965938Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
       "element_id": 515,
       "player_name": "Maddison",
       "club": "Spurs",
@@ -298,10 +368,10 @@
     }
   ],
   "counts": {
-    "n_claims": 35,
-    "n_players_with_claims": 12,
-    "n_players_shown": 4,
+    "n_claims": 50,
+    "n_players_with_claims": 17,
+    "n_players_shown": 5,
     "n_escalations": 0,
-    "n_players_resolved": 6
+    "n_players_resolved": 7
   }
 }
