@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-24T06:28:34.271313Z",
-  "n_dropped": 162,
+  "generated_at": "2026-10-24T11:29:02.773327Z",
+  "n_dropped": 164,
   "dropped_by_source": {
     "bbc_football": 44,
-    "hayters": 29,
-    "sky_football": 89
+    "hayters": 30,
+    "sky_football": 90
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 252,
+  "n_articles": 254,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -36,6 +36,120 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "3f4207ef5938f74a",
+      "headline": "Villa v Man City team news: Haaland + Manzambi start, Foden sub",
+      "summary": "Both sides make four changes from midweek The post Villa v Man City team news: Haaland + Manzambi start, Foden sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/24/villa-v-man-city-team-news-haaland-manzambi-start-foden-sub",
+      "claimed_at": "2026-10-24T11:20:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "70045867a6b6383c",
+      "headline": "Villa vs Man City: Can Premier League leaders maintain winning start? LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/aston-villa-vs-manchester-city/live/559515",
+      "claimed_at": "2026-10-24T11:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "50f8e9c0af1447c7",
+      "headline": "Neco Williams injury latest after Nottingham Forest defender is forced off against Ipswich",
+      "summary": "Neco Williams has played down fears over the injury he suffered during Nottingham Forest\u2019s 1-1 draw with Ipswich Town. The Wales international gave Forest the lead at Portman Road but was forced off late on af",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/neco-williams-injury-latest-after-nottingham-forest-defender-is-forced-off-against-ipswich/",
+      "claimed_at": "2026-10-24T10:10:47Z",
+      "players": [
+        {
+          "element_id": 469,
+          "name": "N.Williams",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ec32a84f517e982f",
+      "headline": "Aston Villa v Man City LIVE \u2013 No Nunes for City with Foden on bench, Manzambi starts for hosts",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Aston Villa v Man City LIVE - No Nunes for City with Foden on bench, Manzambi starts for hosts appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/aston-villa-v-man-city-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-10-24T09:50:06Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "053fe0c9b7e7fa87",
+      "headline": "Lammens: We're united and behind Carrick",
+      "summary": "It has been another eventful week at Manchester United.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13602864/senne-lammens-manchester-united-players-are-united-and-behind-under-pressure-boss-michael-carrick",
+      "claimed_at": "2026-10-24T09:00:00Z",
+      "players": [
+        {
+          "element_id": 412,
+          "name": "Lammens",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "4bd765d3dd546a14",
@@ -1226,24 +1340,6 @@
       "touches_squad": false
     },
     {
-      "digest": "fa59a772932fb16b",
-      "headline": "Mateta on target as Palace draw with Besiktas in Istanbul",
-      "summary": "Jean-Philippe Mateta scored his first goal since last season's UEFA Conference League final but Crystal Palace had to settle for a 2-2 draw away at 10-man Besiktas.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/besiktas-vs-crystal-palace/report/577778",
-      "claimed_at": "2026-10-22T22:00:00Z",
-      "players": [
-        {
-          "element_id": 223,
-          "name": "Mateta",
-          "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "220e6216c039bd36",
       "headline": "Superman at Como & is Conte right for Man Utd?",
       "summary": "Como gets some love after that scoreline against Man United midweek",
@@ -1287,24 +1383,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c6z981p24q1eo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-22T21:30:31Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4b8eac7804fdafdb",
-      "headline": "Sunderland latest: Poznan draw \u2018good experience\u2019, says Le Bris",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-22T21:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1382,24 +1460,6 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b8d17907e8ec689e",
-      "headline": "Fernandes to stay captain as Rooney calls Man Utd players babies",
-      "summary": "Bruno Fernandes will remain as Manchester United captain and will not be disciplined for his post-match criticism of Michael Carrick after the 4-1 Champions League defeat by Como.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqe8rglz8p90o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-22T16:19:30Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1538,36 +1598,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d9e2adbaf7a96c30",
-      "headline": "Man City trio doubts for Aston Villa game",
-      "summary": "Enzo Maresca has confirmed Erling Haaland is fully fit to face Aston Villa on Saturday, but Manchester City are still waiting to make decisions on Nico O\u2019Reilly, Mateo Kovacic and Matheus Nunes. All four players have been dealing with fitness concerns, with",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-trio-doubts-for-aston-villa-game/",
-      "claimed_at": "2026-10-22T09:47:28Z",
-      "players": [
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 406,
-          "name": "Kova\u010di\u0107",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
           "held": false
         }
       ],
@@ -1736,24 +1766,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5ddecdb83e73402a",
-      "headline": "FPL notes: Vuskovic furthers case + why didn\u2019t Gross get the goal?",
-      "summary": "Brighton's supporting cast star as Palace crumble at the back again The post FPL notes: Vuskovic furthers case + why didn't Gross get the goal? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Fo",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/19/fpl-notes-vuskovic-furthers-case-why-didnt-gross-get-the-goal",
-      "claimed_at": "2026-10-19T11:00:00Z",
-      "players": [
-        {
-          "element_id": 504,
-          "name": "Vuskovic",
-          "club": "BHA",
           "held": false
         }
       ],
