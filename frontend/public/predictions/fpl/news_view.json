@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-24T11:29:02.773327Z",
-  "n_dropped": 164,
+  "generated_at": "2026-10-24T14:47:26.629703Z",
+  "n_dropped": 162,
   "dropped_by_source": {
-    "bbc_football": 44,
+    "bbc_football": 45,
     "hayters": 30,
-    "sky_football": 90
+    "sky_football": 87
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 254,
+  "n_articles": 252,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -36,6 +36,102 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "f12e864e7937db61",
+      "headline": "Arsenal get much needed win in north London derby",
+      "summary": "Arsenal claimed a 2-1 victory in the first north London derby of the season after turning around an early 1-0 deficit. Cathinka Tandberg put the hosts ahead when she headed home from a superb Victoria Pelova cross after 13 minutes. However, Arsenal l",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-get-much-needed-win-in-north-london-derby/",
+      "claimed_at": "2026-10-24T14:28:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0d7cb9fd0f4f96f0",
+      "headline": "3pm team news: Calafiori + Havertz benched",
+      "summary": "Arsenal v Everton and Coventry v Fulham are the only two 3pm BST games The post 3pm team news: Calafiori + Havertz benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/24/3pm-team-news-calafiori-havertz-benched",
+      "claimed_at": "2026-10-24T13:35:00Z",
+      "players": [
+        {
+          "element_id": 8,
+          "name": "Calafiori",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4f2f62b1c3b13632",
+      "headline": "King hits the post as Fulham chase opener at Coventry LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/coventry-city-vs-fulham/live/559517",
+      "claimed_at": "2026-10-24T13:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "693a182c2dec1604",
+      "headline": "Jackson stars with two goals - player ratings for Aston Villa v Man City",
+      "summary": "How Aston Villa and Man City players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck4g14j85y9xo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-24T13:25:59Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7b4012b36f4d55ff",
+      "headline": "Arsenal 1-0 Everton LIVE \u2013 Konsa puts hosts ahead early on",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 1-0 Everton LIVE - Konsa puts hosts ahead early on appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-v-everton-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-10-24T12:22:52Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "3f4207ef5938f74a",
@@ -104,6 +200,24 @@
       "touches_squad": false
     },
     {
+      "digest": "9c6319fa83a69b6f",
+      "headline": "Aston Villa 2-1 Man City LIVE \u2013 Jackson brace sees City beaten for first time this season",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Aston Villa 2-1 Man City LIVE - Jackson brace sees City beaten for first time this season appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/aston-villa-v-man-city-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-10-24T09:50:06Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "ec32a84f517e982f",
       "headline": "Aston Villa v Man City LIVE \u2013 No Nunes for City with Foden on bench, Manzambi starts for hosts",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Aston Villa v Man City LIVE - No Nunes for City with Foden on bench, Manzambi starts for hosts appeared first on Hayters.",
@@ -154,6 +268,24 @@
     {
       "digest": "4bd765d3dd546a14",
       "headline": "Why Tottenham v Arsenal could define their seasons - live on BBC One",
+      "summary": "With Tottenham stuttering and Arsenal floundering, these fierce rivals both need a victory in Saturday's showdown, live on BBC One.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck240l3n774zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-24T06:02:44Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "80803b19f18dbfc6",
+      "headline": "Why Tottenham v Arsenal could define their seasons",
       "summary": "With Tottenham stuttering and Arsenal floundering, these fierce rivals both need a victory in Saturday's showdown, live on BBC One.",
       "source": "bbc_football",
       "tier": 3,
@@ -1322,24 +1454,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5d27d971a09f500e",
-      "headline": "Bournemouth seal historic win over Amorim's 10-man Milan",
-      "summary": "Amine Adli scored a fine free-kick to cap Bournemouth's historic 3-0 win over 10-man AC Milan, which continues their brilliant start to their first-ever European campaign.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/bournemouth-vs-ac-milan/report/577779",
-      "claimed_at": "2026-10-22T22:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "220e6216c039bd36",
       "headline": "Superman at Como & is Conte right for Man Utd?",
       "summary": "Como gets some love after that scoreline against Man United midweek",
@@ -1376,24 +1490,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f9627bf143135192",
-      "headline": "Dream night for Bournemouth - win over Milan a sign of Premier League power",
-      "summary": "Bournemouth's 3-0 win against AC Milan further illustrated the dominance of Premier League sides against their European counterparts.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6z981p24q1eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-22T21:30:31Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "935d9853ea68dd2d",
       "headline": "Hurzeler critical of Brighton performance after being held to goalless Conference League draw",
       "summary": "Fabian Hurzeler admitted Brighton were not good enough at the basics after being held to a 0-0 draw by Jablonec in the Conference League. The Seagulls struggled to break down their opponents and were unable",
@@ -1419,24 +1515,6 @@
       "tier": 2,
       "url": "https://hayters.com/le-bris-backs-sunderland-players-after-draw-with-lech-poznan/",
       "claimed_at": "2026-10-22T20:29:15Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2bd48f9f0f63cf1c",
-      "headline": "Fernandes has home burgled while in Italy with Man Utd",
-      "summary": "Manchester United captain Bruno Fernandes had his home burgled on Wednesday while he was in Italy for his club's Champions League game against Como.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq9vz19p41x8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-22T18:04:21Z",
       "players": [
         {
           "element_id": 0,
@@ -1538,66 +1616,6 @@
           "element_id": 93,
           "name": "Schuster",
           "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b905720a06df3bd8",
-      "headline": "How to watch Lech Pozn\u00e1n v Sunderland in the Europa League, team news, predicted line-ups and more",
-      "summary": "Sunderland travel to Poland to take on the Polish Champions in their Europa League clash on Thursday night. He is everything you need to know about the tie\u2026 Kick-off time The game will kick off at 5:45",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/how-to-watch-lech-poznan-v-sunderland-in-the-europa-league-team-news-predicted-line-ups-and-more/",
-      "claimed_at": "2026-10-22T14:03:11Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f8136ee13f5e4cae",
-      "headline": "Nottingham Forest handed big boost ahead of Ipswich clash",
-      "summary": "Oliver Glasner has confirmed Morgan Gibbs-White will return for Nottingham Forest\u2019s Premier League trip to Ipswich Town. The England midfielder missed the weekend defeat to Arsenal after picking up a knock against Crystal Palace, with Forest",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/nottingham-forest-handed-big-boost-ahead-of-ipswich-clash/",
-      "claimed_at": "2026-10-22T12:53:48Z",
-      "players": [
-        {
-          "element_id": 10,
-          "name": "White",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 480,
-          "name": "Gibbs-White",
-          "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "78629f57636e54e1",
-      "headline": "Hurzeler issues warning to Brighton players ahead of Conference League clash",
-      "summary": "Brighton boss Fabian Hurzeler has sent a warning to his players that their mentality must be right when facing Conference League opponents, for who playing the Premier League club \u201cmight be the game of their lives.\u201d Speakin",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/hurzeler-issues-warning-to-brighton-players-ahead-of-conference-league-clash/",
-      "claimed_at": "2026-10-22T10:43:52Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1748,24 +1766,6 @@
           "element_id": 634,
           "name": "Fernandez-Pardo",
           "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "53c99aacef48c11a",
-      "headline": "FPL notes: Neto brace, Chelsea clean sheet + Martinez injury latest",
-      "summary": "Scout Notes from Everton 0-2 Chelsea The post FPL notes: Neto brace, Chelsea clean sheet + Martinez injury latest appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/19/fpl-notes-neto-brace-chelsea-clean-sheet-martinez-injury-latest",
-      "claimed_at": "2026-10-19T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
