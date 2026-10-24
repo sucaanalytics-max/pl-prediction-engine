@@ -1063,9 +1063,19 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     #
     # This only ever reduces. That direction matters on this path and is asserted
     # in the tests.
-    from pipeline.risk.kelly import apply_portfolio_limits
+    #
+    # The 1X2 hold guards need to know how much of each club the models have
+    # seen. `features` is the frame Dixon-Coles and XGBoost were fitted on, so a
+    # promoted club absent from it counts 0 — the posterior's league prior —
+    # and is held, as is any club this lookup cannot place.
+    from pipeline.risk.kelly import apply_portfolio_limits, matches_in_window
 
-    portfolio = apply_portfolio_limits(all_predictions, bankroll=RISK["bankroll"])
+    team_match_counts = matches_in_window(
+        features,
+        set(upcoming["home_team"]) | set(upcoming["away_team"]) if len(upcoming) else set(),
+    )
+    portfolio = apply_portfolio_limits(all_predictions, bankroll=RISK["bankroll"],
+                                       team_match_counts=team_match_counts)
 
     # ── Step 10: Export JSON ──────────────────────────────────────────
     logger.info("\n[10/12] Exporting predictions JSON...")
@@ -1115,7 +1125,9 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 "n_bets_before_limits": portfolio["n_bets_before"],
                 "n_bets_after_limits": portfolio["n_bets_after"],
                 "n_reduced_by_limits": len(portfolio["reductions"]),
+                "n_held_by_guards": portfolio["n_held"],
                 "limits": portfolio["limits"],
+                "guards": portfolio["guards"],
             },
             "calibrated": False,
             "odds_source": "the_odds_api" if parsed_main else "unavailable",

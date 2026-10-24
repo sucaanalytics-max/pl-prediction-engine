@@ -424,6 +424,29 @@ RISK = {
     "max_correlated_bets": 5,
     "max_total_exposure_pct": 0.20,
     "max_per_direction_pct": 0.10,
+
+    # ── 1X2 guards (pipeline/risk/kelly.py `one_x_two_hold_reasons`) ──────────
+    # Both only ever HOLD a 1X2 selection (stake 0, published under `held_bets`
+    # with its reasons). Neither can raise a stake: the portfolio pass takes the
+    # min of the guarded and unguarded stake for every selection it keeps.
+    #
+    # A club with fewer matches than this in the TRAINING frame is one the
+    # posterior has barely seen (0 = the league-average prior). Every PL club
+    # plays 38 a season, so "< 10 in the window" is exactly "new to the window
+    # and not yet a quarter-season into it"; a returning club (Ipswich 2026-27)
+    # carries its earlier season and is not caught. JUDGEMENT, not fitted: on
+    # the sealed GW1-7 ledger the 16 1X2 bets on such fixtures won 5 against 4.9
+    # model-expected and 2.5 market-expected — too few to support or refute it.
+    "min_matches_in_window_1x2": 10,
+    # Fixture-level max |model - de-vigged market| over home/draw/away above
+    # which every 1X2 selection on the fixture is held for review. The price
+    # may only VETO here; it never enters the edge or the lambda. Partly
+    # measured: on the sealed ledger 1X2 bets won 7 against 10.9 model-expected
+    # and 6.5 market-expected, and on all 60 outcome-sides with |gap| >= 0.10
+    # the market's Brier (0.2072) beat the model's (0.2158). The 0.10 cut-point
+    # itself is judgement: at it, 32 of the 35 sealed 1X2 bets would have held.
+    "max_market_gap_1x2": 0.10,
+
     "drawdown_soft_limit": 0.20,    # Reduce stakes at 20% drawdown
     "drawdown_hard_limit": 0.30,    # Pause at 30% drawdown
 }

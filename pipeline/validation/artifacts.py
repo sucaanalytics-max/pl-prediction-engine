@@ -103,6 +103,20 @@ def validate_prediction_output(output: Dict) -> List[str]:
                 )
                 break
 
+    # A held selection is published so it can be reviewed, never so it can be
+    # staked: all four stake fields (two currency, two fraction) must be zero
+    # and it must say why it was held.
+    for index, prediction in enumerate(predictions):
+        for held in prediction.get("held_bets") or []:
+            staked = [f for f in ("full_kelly", "half_kelly", "full_kelly_pct", "half_kelly_pct")
+                      if float(held.get(f) or 0.0) != 0.0]
+            if staked or not held.get("hold_reasons"):
+                errors.append(
+                    f"predictions[{index}].held_bets has a held selection with "
+                    f"non-zero stake {staked} or no hold_reasons"
+                )
+                break
+
     if metadata.get("odds_source") == "unavailable":
         n_bets = sum(len(p.get("value_bets", [])) for p in predictions)
         if n_bets:
