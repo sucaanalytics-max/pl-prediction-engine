@@ -36,7 +36,9 @@ posterior). Two designs were on the table:
   so a higher home rate moves individual draws monotonically rather than
   reshuffling them, and each component has its own child stream (posterior
   indices, rho, scorelines, half-time, corners, cards) so a change in one does
-  not shift the draws of the others.
+  not shift the draws of the others. (Since rho was paired to the posterior
+  draw of lambda and mu, the rho stream is still spawned but unused, so the
+  other five keep their identity.)
 
 Neither design reduces the Monte Carlo error itself: a fixed seed is a fixed
 draw of noise, so a published probability is still ``p_hat`` with standard error
@@ -122,9 +124,17 @@ def simulate_fixture(
     :func:`fixture_rng` of ``match_id``; pass one only to override the seed
     (e.g. to measure Monte Carlo error across seeds).
 
-    Probability semantics are unchanged from the inline code this replaced: the
-    DC posterior's relative uncertainty is kept and recentred on the blended
-    rates, and ``derive_all_markets`` is untouched.
+    The DC posterior's relative uncertainty is kept and recentred on the
+    blended rates, and ``derive_all_markets`` is untouched. One semantic change
+    from the inline code this replaced: rho is paired to the same posterior draw
+    as each (lambda, mu) (``get_paired_posterior_samples`` with
+    ``rho_paired=True``) rather than drawn independently from its marginal.
+    Measured on the GW8 card (2026-10-25): the posterior correlation between
+    rho and intercept / home_adv / log-rates is |r| <= 0.07, the exact (no-MC)
+    shift in any 1X2, O/U 1.5 or BTTS probability is <= 0.013pp (O/U 2.5 and
+    3.5 cannot move: tau only redistributes mass among 0-0, 1-0, 0-1, 1-1), and
+    that is ~50x below the 5,000-sim MC standard deviation. A correctness fix,
+    not a re-tune.
     """
     generator = rng if rng is not None else fixture_rng(match_id)
     posterior_rng, simulation_rng = generator.spawn(2)
@@ -135,17 +145,22 @@ def simulate_fixture(
 
     if dc_model is not None:
         try:
-            # Fitted, and until now discarded: the whole reason to prefer
-            # Dixon-Coles over independent Poisson is this parameter.
-            dc_rho_samples = dc_model.get_rho_samples()
-            dc_lam_samples, dc_mu_samples = dc_model.get_lambda_mu_samples(
-                home, away, simulator.n_sims, rng=posterior_rng
+            # rho is the whole reason to prefer Dixon-Coles over independent
+            # Poisson, and it is taken from the SAME posterior draw as each
+            # (lambda, mu): the predictive integrates over the joint posterior,
+            # not the product of its marginals. The draw indices consume
+            # posterior_rng exactly as get_lambda_mu_samples always has, so
+            # lambda and mu are unchanged by the pairing.
+            dc_lam_samples, dc_mu_samples, dc_rho_samples = (
+                dc_model.get_paired_posterior_samples(
+                    home, away, simulator.n_sims, rng=posterior_rng
+                )
             )
             lambda_h = float(np.mean(dc_lam_samples))
             mu_a = float(np.mean(dc_mu_samples))
         except Exception as e:
             logger.warning(f"  DC prediction failed for {home} vs {away}: {e}")
-            dc_lam_samples = dc_mu_samples = None
+            dc_lam_samples = dc_mu_samples = dc_rho_samples = None
 
     model_lambdas: Dict[str, Tuple[float, float]] = {}
     if dc_lam_samples is not None and dc_mu_samples is not None:
@@ -161,13 +176,16 @@ def simulate_fixture(
     from_posterior = dc_lam_samples is not None and dc_mu_samples is not None
     if from_posterior:
         # Preserve the Bayesian posterior's relative uncertainty while
-        # centring it on the actual ensemble-blended goal rates.
+        # centring it on the actual ensemble-blended goal rates. The rescale is
+        # one scalar per side for the fixture, so it keeps sample order (and
+        # hence the rho pairing) and leaves corr(rho, log lambda) unchanged.
         lam_mean = max(float(np.mean(dc_lam_samples)), 1e-6)
         mu_mean = max(float(np.mean(dc_mu_samples)), 1e-6)
         sims = simulator.simulate_from_posterior(
             dc_lam_samples * (lambda_h / lam_mean),
             dc_mu_samples * (mu_a / mu_mean),
             rho_samples=dc_rho_samples,
+            rho_paired=True,
             rng=simulation_rng,
             **sim_kwargs,
         )
