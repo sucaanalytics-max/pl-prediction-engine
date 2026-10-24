@@ -136,6 +136,7 @@ class CornersNegBinModel:
         home: str,
         away: str,
         goal_sims: Optional[np.ndarray] = None,
+        rng: Optional[np.random.Generator] = None,
     ) -> Dict:
         """
         Predict corner distributions for a match.
@@ -146,6 +147,8 @@ class CornersNegBinModel:
             goal_sims: Optional (n_sims, 2) array of [home_goals, away_goals] for
                         match-state correlation. If provided, corners are boosted
                         when a team is trailing.
+            rng: Optional Generator for the NegBin draws. ``None`` keeps scipy's
+                 default, numpy's legacy global state.
 
         Returns:
             Probabilities for over/under corner lines + distributions.
@@ -163,8 +166,8 @@ class CornersNegBinModel:
 
         # Simulate total corners
         n_sims = len(goal_sims) if goal_sims is not None else N_SIMULATIONS
-        sim_home = nbinom.rvs(n_h, p_h, size=n_sims)
-        sim_away = nbinom.rvs(n_a, p_a, size=n_sims)
+        sim_home = nbinom.rvs(n_h, p_h, size=n_sims, random_state=rng)
+        sim_away = nbinom.rvs(n_a, p_a, size=n_sims, random_state=rng)
 
         # Match-state correlation: boost corners when trailing
         if goal_sims is not None:

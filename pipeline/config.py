@@ -1233,6 +1233,27 @@ PARAM_REGISTRY = {
             "prior. 450 is five full matches. Unfitted."
         ),
     },
+    "simulation.value_path_seed": {
+        "value": 20261025,
+        "bounds": (0, 2**32 - 1),
+        "tier": "C",
+        "source": (
+            "Base entropy for the per-fixture Monte Carlo Generator on the "
+            "value-bet path (pipeline/simulation/fixture_sim.py). The fixture "
+            "seed is SeedSequence(this, spawn_key=(sha256(match_id),)) and "
+            "deliberately excludes the model inputs: common random numbers, so "
+            "a model change moves probabilities by its own effect and not by a "
+            "fresh draw of noise on top. The value is arbitrary (the date it "
+            "was introduced); changing it re-draws every fixture's noise, "
+            "which is the one legitimate way to do that.\n\n"
+            "Constant, never fitted: choosing a seed by its out-of-sample "
+            "score would be selecting on noise. Measured 2026-10-25: before "
+            "this existed, identical offline replays of the GW8 card moved "
+            "1X2/totals by 1-2pp at 5,000 simulations and flipped 1-2 of ~8 "
+            "value bets, because sample_dixon_coles drew from an unseeded "
+            "Generator."
+        ),
+    },
 }
 
 # ── Derby / Rivalry Matchups ──────────────────────────────────────────────
