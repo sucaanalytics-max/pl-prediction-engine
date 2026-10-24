@@ -71,6 +71,14 @@ PERSISTENCE_PERMANENT = "permanent"                  # transferred, loaned, rele
 # assuming the position mean — would have the optimiser buy unknowns eagerly.
 NEW_SIGNING_START_RATE = 0.35
 
+# Optional `fit` column: the player's availability AT THAT FIXTURE'S DEADLINE,
+# in [0, 1], as the projection that week computed it from the flags FPL showed
+# then (`availability_state(...).now`; see `fpl_inputs.deadline_availability`).
+# NaN, or the column being absent, means "not known" and leaves the row
+# exactly as it was before this column existed. The archive seasons carry no
+# flag of any kind, so for them it is always absent.
+AVAILABILITY_AT_DEADLINE = "availability_at_deadline"
+
 
 def _param(name: str) -> float:
     return float(PARAM_REGISTRY[name]["value"])
@@ -329,6 +337,21 @@ def availability_state(
     )
 
 
+def is_fit_now(state: AvailabilityState) -> bool:
+    """
+    Whether FPL shows the player as fully, unconditionally available today.
+
+    Status 'a' with no chance-of-playing below 100 and no staleness override —
+    exactly the fast path of :func:`availability_state`. A graded flag, a stale
+    note cleared to 1.0, or a lowering evidence claim all fail it.
+    """
+    return (
+        float(state.now) >= 1.0
+        and state.gate_reason is None
+        and state.persistence == PERSISTENCE_NONE
+    )
+
+
 def horizon_availability(
     state: AvailabilityState,
     horizon: int,
@@ -539,6 +562,42 @@ def _shrink(
     return (observed_numerator + strength * prior) / (observed_denominator + strength)
 
 
+def unavailability_posterior(
+    availability_at_deadline: Any, p_appear_if_available: Any
+) -> np.ndarray:
+    """
+    P(he was unavailable | he did not play), for a fixture he did not play in.
+
+    A non-appearance has two causes, and only one of them is evidence about his
+    place in the side::
+
+        P(0 min) = (1 - a)  +  a * (1 - pi)
+                   unavailable   available and not picked
+
+    where ``a`` is availability at that deadline and ``pi`` is his probability of
+    appearing when available. Bayes gives the share of the zero owed to the first
+    term. That share is what the role fit must NOT count as a benching, because
+    ``predict`` multiplies by availability separately and would charge the same
+    absence twice.
+
+    The posterior is what keeps the opposite failure out. A nailed starter
+    (``pi`` 0.95) who misses a match at 75% is ~0.87 unavailable — the knock
+    explains the zero. A fringe player (``pi`` 0.3) who misses one at 75% is only
+    ~0.32 unavailable, because "not picked" explained his zeros before the knock
+    and still explains most of this one. Only a hard zero (``a`` = 0) removes a
+    row outright, and that is correct whatever his role: a player who cannot be
+    selected tells you nothing about whether he would have been.
+    """
+    a = np.clip(np.asarray(availability_at_deadline, dtype=float), 0.0, 1.0)
+    pi = np.clip(np.asarray(p_appear_if_available, dtype=float), 0.0, 1.0)
+    unavailable = 1.0 - a
+    not_picked = a * (1.0 - pi)
+    denominator = unavailable + not_picked
+    with np.errstate(invalid="ignore", divide="ignore"):
+        share = np.where(denominator > 0, unavailable / denominator, 0.0)
+    return np.clip(share, 0.0, 1.0)
+
+
 class MinutesModel:
     """
     Fitted role and minutes model.
@@ -554,6 +613,7 @@ class MinutesModel:
     def __init__(self) -> None:
         self.by_player: Dict[Any, Dict[str, float]] = {}
         self.by_position: Dict[str, Dict[str, float]] = {}
+        self.availability_diagnostics: Dict[str, Any] = {}
         self.fitted = False
 
     @staticmethod
@@ -649,43 +709,222 @@ class MinutesModel:
                 else 0.3,
             }
 
-        grouped = frame.groupby(key, dropna=True)
-        for player_key, rows in grouped:
-            rows_started = rows[rows["starts"] > 0]
-            rows_not_started = rows[rows["starts"] == 0]
-            rows_bench = rows_not_started[rows_not_started["minutes"] > 0]
-            positions = rows["_position"].dropna()
-            # Every count is a recency-weighted sum. `n_fixtures` becomes an
-            # effective sample size, which is also the right input to the
-            # evidence weight surfaced downstream: thirty stale fixtures should
-            # not read as strong evidence.
-            self.by_player[player_key] = {
-                "n_fixtures": float(rows["_w"].sum()),
-                "n_starts": float(rows.loc[rows["starts"] > 0, "_w"].sum()),
-                "n_not_started": float(rows_not_started["_w"].sum()),
-                "n_bench_appearances": float(rows_bench["_w"].sum()),
-                "sum_minutes_if_start": float(
-                    (rows_started["minutes"] * rows_started["_w"]).sum()
-                ),
-                "n_started_rows": float(rows_started["_w"].sum()),
-                "sum_minutes_if_bench": float(
-                    (rows_bench["minutes"] * rows_bench["_w"]).sum()
-                ),
-                "n_60_starts": float(
-                    rows_started.loc[rows_started["minutes"] >= 60, "_w"].sum()
-                ),
-                "raw_fixtures": int(len(rows)),
-                "position": positions.iloc[-1] if len(positions) else None,
-            }
+        # The weight each row carries as evidence about his ROLE. Equal to `_w`
+        # unless the row is a non-appearance at a deadline where he was flagged;
+        # see `_discount_unavailable`.
+        frame["_w_role"], self.availability_diagnostics = self._discount_unavailable(
+            frame, key
+        )
+
+        for player_key, rows in frame.groupby(key, dropna=True):
+            self.by_player[player_key] = self._player_stats(rows, "_w_role")
+
+        self._fit_now_stats(frame, key)
 
         self.fitted = True
         logger.info(
-            "MinutesModel fitted on %d rows: %d players, position start rates %s",
+            "MinutesModel fitted on %d rows: %d players, position start rates %s, "
+            "deadline availability %s",
             len(frame),
             len(self.by_player),
             {p: round(v["start_rate"], 3) for p, v in self.by_position.items()},
+            self.availability_diagnostics,
         )
         return self
+
+    @staticmethod
+    def _player_stats(rows: pd.DataFrame, weight: str) -> Dict[str, Any]:
+        """
+        One player's recency-weighted role and minutes sufficient statistics.
+
+        Every count is a weighted sum. `n_fixtures` becomes an effective sample
+        size, which is also the right input to the evidence weight surfaced
+        downstream: thirty stale fixtures should not read as strong evidence.
+
+        ``weight`` names the column to weight by. `_w_role` differs from `_w`
+        only on non-appearances, so every conditional-on-appearing quantity
+        (minutes if started or benched, P(60 | started)) is unchanged by the
+        unavailability discount by construction — it only moves the role split.
+        """
+        w = rows[weight]
+        started = rows["starts"] > 0
+        not_started = ~started
+        bench = not_started & (rows["minutes"] > 0)
+        positions = rows["_position"].dropna()
+        return {
+            "n_fixtures": float(w.sum()),
+            "n_starts": float(w[started].sum()),
+            "n_not_started": float(w[not_started].sum()),
+            "n_bench_appearances": float(w[bench].sum()),
+            "sum_minutes_if_start": float((rows.loc[started, "minutes"] * w[started]).sum()),
+            "n_started_rows": float(w[started].sum()),
+            "sum_minutes_if_bench": float((rows.loc[bench, "minutes"] * w[bench]).sum()),
+            "n_60_starts": float(w[started & (rows["minutes"] >= 60)].sum()),
+            "raw_fixtures": int(len(rows)),
+            # Raw (unweighted) fixtures' worth of non-appearances the fit
+            # attributed to unavailability rather than selection. Carried so an
+            # artifact can say WHY a flagged player's role did not fall.
+            "fixtures_discounted_as_unavailable": float(rows["_discounted"].sum()),
+            "position": positions.iloc[-1] if len(positions) else None,
+        }
+
+    def _fit_now_stats(self, frame: pd.DataFrame, key: str) -> None:
+        """
+        Attach a ``fit_now`` role fit to every player with a flagged absence.
+
+        Used by ``predict`` ONLY when the player is fit at the prediction
+        deadline (status 'a', no chance-of-playing below 100, no lowering
+        evidence; see :func:`is_fit_now`). For everyone else the published fit
+        above is used, unchanged — so this is inert for every player who is
+        flagged today and for every player who never carried a flag.
+
+        In the ``fit_now`` fit each non-appearance at a flagged deadline keeps
+        ``1 - s * q`` of its role weight, where ``s`` is
+        ``minutes.fit_now_absence_credit`` and ``q`` is
+        :func:`unavailability_posterior` — P(he was unavailable | he did not
+        play). That is the injury double count `_discount_unavailable` removes,
+        restricted to the one case where it can be removed safely: today's
+        availability is exactly 1.0, so the face-value miscalibration of FPL's
+        graded flags (which the double count was partly cancelling for flagged
+        players) cannot re-enter through ``predict``'s availability multiplier.
+
+        Recency age is deliberately NOT moved onto an "available clock" that
+        would keep his pre-injury rows fresh. Measured on the sealed ledger,
+        that version did no better than this one on start and was worse on 60+:
+        a player back from injury does not walk straight back into his old role.
+        See the registry entry for the numbers.
+
+        Identification is by the sealed flags, never by the zeros alone: a
+        player dropped while fit carries no flag, has ``q`` = 0 everywhere, and
+        gets no ``fit_now`` entry.
+        """
+        strength = _param("minutes.fit_now_absence_credit")
+        if strength <= 0 or "_q_unavailable" not in frame.columns:
+            return
+        flagged = frame["_q_unavailable"] > 0
+        if not flagged.any():
+            return
+        players = frame.loc[flagged, key].dropna().unique()
+        rows = frame[frame[key].isin(players)].copy()
+        # Never weaker than the global discount, should both ever be on.
+        removal = max(
+            1.0 - _param("minutes.unavailable_fixture_retention"), strength
+        ) * rows["_q_unavailable"]
+        rows["_w_fit_now"] = rows["_w"] * (1.0 - removal)
+        n_players = 0
+        for player_key, player_rows in rows.groupby(key, dropna=True):
+            if player_key in self.by_player:
+                self.by_player[player_key]["fit_now"] = self._player_stats(
+                    player_rows, "_w_fit_now"
+                )
+                n_players += 1
+        self.availability_diagnostics["players_with_fit_now_fit"] = n_players
+
+    def _discount_unavailable(
+        self, frame: pd.DataFrame, key: str
+    ) -> Tuple[pd.Series, Dict[str, Any]]:
+        """
+        Role weights with flagged non-appearances discounted, plus diagnostics.
+
+        **The defect this removes.** ``predict`` returns ``p_start * availability``,
+        which is right only if ``p_start`` is P(start | available). Fitted on raw
+        rows it is P(start) unconditionally, so a fixture missed through injury
+        enters twice: once as a benching in ``p_start``, and again through the flag
+        in ``availability``. With a 1.5-fixture half-life the missed fixture is the
+        heaviest row in the fit, and the horizon never recovers from it, because
+        ``horizon_start_reversion`` pulls toward the POSITION base rate rather than
+        back to the role he held before the knock. Measured 2026-10-06: Joao Pedro,
+        four 90-minute starts then 0 minutes at 75% in GW5, fitted p_start 0.569
+        with the GW5 row and 0.862 without it; published GW6 p_appears 0.46.
+
+        **Off by default, on measurement.** ``minutes.unavailable_fixture_retention``
+        is 1.0, which makes this an exact no-op. Removing the double count made
+        calibration WORSE on this season's real deadline flags, because FPL's
+        graded flags resolve far below face value and the double count was partly
+        cancelling that. The registry entry carries the numbers and the order of
+        work that would let it be switched on.
+
+        Each non-appearance at a known, sub-1.0 deadline availability keeps
+        ``1 - (1 - retention) * q`` of its weight, where ``q`` is
+        :func:`unavailability_posterior` evaluated at his role estimated from his
+        OTHER rows — the clean ones, where availability is known to be full or
+        unknown, or where he played. One step, not iterated to convergence: the
+        clean-row estimate is already the role conditional on being available,
+        which is the quantity the posterior needs.
+
+        Appearances are never discounted: a player who played was available, and
+        whether he started is clean evidence about his role.
+
+        What is deliberately NOT changed:
+
+        * **Recency age.** Weights stay relative to the latest fixture in the
+          training data, so a long absence still makes the pre-injury role STALE
+          and pulls a returning player toward the position prior rather than
+          restoring him as nailed. That is the conservative reading of a long
+          absence — the side moves on — and it is not double counting, because the
+          stale rows are not counted as benchings.
+        * **Position priors.** Computed over every row, as before. They are both
+          the shrinkage target and the horizon reversion target, and the latter
+          was measured unconditionally over two archive seasons that carry no
+          flags. Conditioning one and not the other would be worse than neither.
+        """
+        weights = frame["_w"].astype(float)
+        frame["_discounted"] = 0.0
+        # P(unavailable | did not play) per row; 0 wherever the row is not a
+        # non-appearance at a known, flagged deadline. Read by the fit-now path.
+        frame["_q_unavailable"] = 0.0
+        diagnostics: Dict[str, Any] = {
+            "rows_with_deadline_availability": 0,
+            "rows_discounted": 0,
+            "fixtures_removed": 0.0,
+        }
+        if AVAILABILITY_AT_DEADLINE not in frame.columns:
+            return weights, diagnostics
+
+        known = pd.to_numeric(frame[AVAILABILITY_AT_DEADLINE], errors="coerce")
+        diagnostics["rows_with_deadline_availability"] = int(known.notna().sum())
+        ambiguous = (frame["minutes"] <= 0) & known.notna() & (known < 1.0)
+        if not ambiguous.any():
+            return weights, diagnostics
+
+        # Role when available, from the clean rows, shrunk exactly as `predict`
+        # shrinks — so the posterior judges each zero against the same role the
+        # model would otherwise have projected.
+        strength = _param("minutes.start_shrinkage")
+        clean = frame[~ambiguous]
+        clean_started = clean["starts"] > 0
+        clean_bench = (~clean_started) & (clean["minutes"] > 0)
+        per_player = pd.DataFrame({
+            "n": clean.groupby(key)["_w"].sum(),
+            "starts": clean[clean_started].groupby(key)["_w"].sum(),
+            "not_started": clean[~clean_started].groupby(key)["_w"].sum(),
+            "bench": clean[clean_bench].groupby(key)["_w"].sum(),
+        }).fillna(0.0)
+
+        targets = frame.loc[ambiguous, [key, "_position"]]
+        prior_start = targets["_position"].map(
+            lambda p: self.by_position.get(p, {}).get("start_rate", NEW_SIGNING_START_RATE)
+        ).astype(float)
+        prior_bench = targets["_position"].map(
+            lambda p: self.by_position.get(p, {}).get("bench_appear_rate", 0.3)
+        ).astype(float)
+        counts = per_player.reindex(targets[key].values).fillna(0.0)
+        counts.index = targets.index
+        p_start = _shrink(counts["starts"], counts["n"], prior_start, strength)
+        p_bench = _shrink(counts["bench"], counts["not_started"], prior_bench, strength)
+        p_appear = p_start + (1.0 - p_start) * p_bench
+
+        share = unavailability_posterior(known[ambiguous], p_appear)
+        frame.loc[ambiguous, "_q_unavailable"] = share
+        retention = _param("minutes.unavailable_fixture_retention")
+        removed = (1.0 - retention) * share
+
+        weights = weights.copy()
+        weights.loc[ambiguous] = weights.loc[ambiguous] * (1.0 - removed)
+        frame.loc[ambiguous, "_discounted"] = removed
+        diagnostics["rows_discounted"] = int((removed > 0).sum())
+        diagnostics["fixtures_removed"] = round(float(removed.sum()), 3)
+        return weights, diagnostics
 
     def predict(
         self,
@@ -729,7 +968,16 @@ class MinutesModel:
         if fallback_start_rate is not None:
             start_prior = float(np.clip(fallback_start_rate, 0.0, 1.0))
 
+        state = availability_override or availability_state(
+            status, chance_of_playing, news_age_days
+        )
+
         stats = self.by_player.get(player_key) if player_key is not None else None
+        # A player fit NOW whose recent zeros came at flagged deadlines is fitted
+        # with those absences credited to the flag; see `_fit_now_stats`. Exists
+        # only when minutes.fit_now_absence_credit > 0 and he carries a flag.
+        if stats and "fit_now" in stats and is_fit_now(state):
+            stats = stats["fit_now"]
         n_fixtures = int(stats.get("raw_fixtures", 0)) if stats else 0
         n_effective = float(stats["n_fixtures"]) if stats else 0.0
 
@@ -771,10 +1019,6 @@ class MinutesModel:
             toward = prior["start_rate"]
             pull = horizon_start_reversion(horizon)
             p_start = p_start + (toward - p_start) * pull
-
-        state = availability_override or availability_state(
-            status, chance_of_playing, news_age_days
-        )
 
         # Availability is projected forward through the horizon path, which knows
         # how this player's absence is expected to END. Applied to the AVAILABILITY

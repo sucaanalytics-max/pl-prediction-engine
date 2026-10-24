@@ -616,6 +616,107 @@ PARAM_REGISTRY = {
             "jointly with it on the 2024-25 tuning season."
         ),
     },
+    "minutes.unavailable_fixture_retention": {
+        # 1.0 = OFF: every non-appearance counts as a benching, exactly as before
+        # the option existed. Measured below; do not lower it on its own.
+        "value": 1.0,
+        "bounds": (0.0, 1.0),
+        "tier": "S",
+        "source": (
+            "Fraction of a flagged non-appearance's weight the ROLE fit keeps, as "
+            "1 - (1 - value) * P(unavailable | did not play). 1.0 keeps all of it "
+            "(today's model); 0.0 removes the share Bayes attributes to the flag. "
+            "Inert unless the fitted rows carry availability_at_deadline, which "
+            "only fpl_inputs.with_deadline_availability attaches; the live "
+            "callers attach it only while this or "
+            "minutes.fit_now_absence_credit is switched on.\n\n"
+            "THE DEFECT IT ADDRESSES IS REAL. predict() returns p_start * "
+            "availability, so a match missed injured is charged to the role AND to "
+            "the flag. Joao Pedro, four 90-minute starts then 0 at 75% in GW5: "
+            "fitted p_start 0.569 with the GW5 row, 0.862 without.\n\n"
+            "WHY IT IS OFF. Measured 2026-10-06 on the only data carrying real "
+            "deadline flags — 2026-27 GW1/3/4/5 sealed bootstraps, walk-forward "
+            "on 2025-26 plus this season, 3,216 player-fixtures at h=0 — setting "
+            "0.0 worsened every Brier score on the 201 rows it touched, all three "
+            "player-clustered intervals excluding zero: start +0.025 [+0.014, "
+            "+0.038], appear +0.041 [+0.021, +0.062], 60+ +0.024 [+0.014, "
+            "+0.036]; the same at h=1-3. Monotone: 0.25 and 0.5 sit between.\n\n"
+            "The cause is not the posterior but what it multiplies. FPL's graded "
+            "flags resolve far below face value: at the seal, 75% players "
+            "appeared in 24% of fixtures [12%, 38%] (41 rows, 38 players), and "
+            "role-adjusted the implied availability is ~0.42. The double count "
+            "was partly cancelling that. Removing rows also returns a player "
+            "whose only evidence is u/i fixtures to the position prior — 121 such "
+            "rows predicted to start 0.17 against a realised 0.04.\n\n"
+            "Against a CALIBRATED availability the change is right: with a "
+            "pre-deadline transfer-outflow proxy (owned regulars, mapped on "
+            "2023-24) over 2024-25 and 2025-26, 0.0 cut ECE by a quarter or more "
+            "on all three outcomes in both folds (2025-26 appear 0.0237 -> "
+            "0.0172) at near-flat Brier, and 0.5 had the best Brier in both. "
+            "So the order is: calibrate graded availability first, guard "
+            "players with no clean evidence, then re-measure this against the "
+            "accumulated seals before moving it."
+        ),
+    },
+    "minutes.fit_now_absence_credit": {
+        # 0.0 = OFF, and the live callers then skip the ledger read entirely.
+        # SEAL PATH: > 0 makes run_agent.refresh_expected_points (the seal's input)
+        # join deadline flags from the sealed bootstraps. Non-fatal by
+        # construction; seal-warden to review before this is relied on.
+        "value": 1.0,
+        "bounds": (0.0, 1.0),
+        "tier": "S",
+        "source": (
+            "For a player who is FIT AT THE PREDICTION DEADLINE (status 'a', no "
+            "chance below 100: minutes.is_fit_now), the fraction of the Bayes "
+            "share P(unavailable | did not play) removed from each of his "
+            "non-appearances at a FLAGGED deadline before his role is fitted. "
+            "Players flagged today, and players never flagged, are untouched — "
+            "their fit is bit-identical to 0.0. Flags come from the sealed "
+            "bootstraps via fpl_inputs.with_deadline_availability.\n\n"
+            "WHY THIS SUCCEEDS WHERE unavailable_fixture_retention FAILED. That "
+            "discount applied to everyone, including players still flagged, whose "
+            "face-value availability (75% players appear ~24%) the double count "
+            "was partly cancelling. Gating on availability == 1.0 today removes "
+            "that channel: nothing multiplies a fit-now player by a miscalibrated "
+            "flag.\n\n"
+            "MEASURED 2026-10-25, walk-forward over seals GW1/3/4/5/6/7 (2025-26 "
+            "archive + this season's settled rows before each seal, flags from "
+            "the seals, predictions with that seal's flags). TARGET = fit now "
+            "with >= 1 flagged non-appearance in the previous 4 GWs: 161 rows, 73 "
+            "players at h=0. Differences 1.0 minus 0.0, player-clustered "
+            "bootstrap 95% CI. Brier: start -0.0076 [-0.0295, +0.0118], appear "
+            "-0.0583 [-0.0859, -0.0344], 60+ -0.0077 [-0.0272, +0.0091]. "
+            "Log-loss: start -0.024 [-0.084, +0.034], appear -0.145 [-0.221, "
+            "-0.075], 60+ -0.027 [-0.082, +0.024]. Mean predicted start 0.221 -> "
+            "0.301 against a realised 0.311; 60+ 0.190 -> 0.256 against 0.280. "
+            "h=1-3 (225 rows, 50 players): appear Brier -0.0235 [-0.0423, "
+            "-0.0074], start and 60+ point estimates favourable, CIs span zero. "
+            "ALL 3,901 h=0 rows: start -0.0003 [-0.0012, +0.0005], appear "
+            "-0.0024 [-0.0035, -0.0013], 60+ -0.0003 [-0.0011, +0.0004]; the "
+            "3,740 non-target rows move by under 0.0001. Monotone in the value "
+            "(0.25 / 0.5 / 0.75 / 1.0 improve in order on all three outcomes), "
+            "so 1.0 is the principled endpoint, not a fitted interior point. Gains "
+            "concentrate in the GW6/GW7 seals (longest flag history); GW3 (17 "
+            "rows) is slightly worse.\n\n"
+            "IDENTIFICATION. Fit-now players whose recent zeros were UNflagged "
+            "(dropped or benched, 965 rows) realised a 0.145 start rate against a "
+            "0.311 for the flagged group; the model already had them right (0.129) "
+            "and this leaves them unchanged.\n\n"
+            "LARGER-SAMPLE PROXY, 2024-25 and 2025-26 (no flags in the archive): "
+            "'flagged' = zeros in a run of >= 2 by a player who started >= 3 of the "
+            "4 fixtures before it; 'fit now' = appeared in his last fixture, so "
+            "this tests the SECOND fixture back, never the first. 1,593 rows, 414 "
+            "player-seasons. Brier: start -0.031 [-0.040, -0.023], appear -0.043 "
+            "[-0.053, -0.032], 60+ -0.032 [-0.039, -0.024].\n\n"
+            "REJECTED: also running recency age on an 'available clock' so the "
+            "pre-injury role stays fresh. Better on the proxy, but on the real "
+            "flags it was worse than this on start (-0.0018 vs -0.0076) and 60+ "
+            "(+0.0004 vs -0.0077). Returning players do not walk back into their "
+            "old role: even pre-spell regulars averaged 44 minutes and started 47% "
+            "of their first fixture back on the ledger."
+        ),
+    },
     "minutes.doubtful_default": {
         "value": 0.75,
         "bounds": (0.3, 0.95),

@@ -19,7 +19,8 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field, replace
-from datetime import datetime
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import pandas as pd
@@ -73,6 +74,10 @@ def _news_age_days(news_added: Optional[str], now: pd.Timestamp) -> Optional[flo
 
 CURRENT_SEASON_COLUMNS = (
     "name_key", "position_norm", "minutes", "starts", "GW", "fixture", "season",
+    # This season's FPL id. Never a cross-season key (the archive reuses ids);
+    # carried only so a row can be joined to the flags FPL showed at that
+    # gameweek's deadline, which are keyed by it.
+    "element",
 )
 
 
@@ -153,8 +158,226 @@ def current_season_rows(
                     "GW": int(gameweek),
                     "fixture": fixture_id,
                     "season": season,
+                    "element": int(element["id"]),
                 })
     return pd.DataFrame(rows, columns=list(CURRENT_SEASON_COLUMNS))
+
+
+def _parse_utc(value: Any) -> Optional[datetime]:
+    if not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
+
+
+def deadline_availability(
+    snapshots: Sequence[Tuple[datetime, Mapping[str, Any]]],
+    deadlines: Mapping[int, datetime],
+) -> pd.DataFrame:
+    """
+    Each player's availability at each gameweek's deadline, from bootstrap snapshots.
+
+    ``snapshots`` are ``(captured_at, bootstrap)`` pairs, normally the sealed
+    bootstraps. ``deadlines`` maps gameweek to deadline. For each gameweek the
+    snapshot used is the LATEST one captured inside that gameweek's own window —
+    after the previous deadline and before this one — which for a sealed week is
+    the seal, frozen one to four hours before the deadline (GW1/3/4/5 of 2026-27:
+    3.9, 2.1, 1.1 and 1.8 hours). Returns one row per (``element``, ``GW``) with
+    the availability production computes from that snapshot's flags and news —
+    ``availability_state(...).now``, so an exit note zeroes it exactly as it would
+    have in the projection made that week.
+
+    A gameweek with no snapshot in its window is ABSENT from the result, and an
+    absent row means "not known", which the minutes model treats exactly as it did
+    before this existed. That is deliberate rather than a gap to fill:
+
+    * **A later snapshot cannot stand in.** FPL does NOT restamp ``news_added``
+      when it changes a flag — measured in our own evidence log, Henderson went
+      0% -> 50% -> available under one unchanged timestamp — so nothing in a later
+      payload says whether its flag held at an earlier deadline. A rule that
+      assumed otherwise put Doku's GW5-seal 75% onto the GW4 deadline.
+    * **An earlier one cannot either.** A flag a week old is a different week's.
+
+    The residual error is the hours between seal and deadline. A flag cleared in
+    that gap and followed by a benching would be read as unavailability, but the
+    seal is what the forecast was made on, so it is also the honest record of what
+    was known.
+    """
+    gameweeks = sorted(deadlines)
+    records: List[Dict[str, Any]] = []
+    for position, gameweek in enumerate(gameweeks):
+        deadline = deadlines[gameweek]
+        window_opened = deadlines[gameweeks[position - 1]] if position else None
+        inside = [
+            (stamp, snapshot) for stamp, snapshot in snapshots
+            if stamp is not None and stamp < deadline
+            and (window_opened is None or stamp >= window_opened)
+        ]
+        if not inside:
+            continue
+        _, snapshot = max(inside, key=lambda pair: pair[0])
+        for element in snapshot.get("elements") or []:
+            if not element.get("id"):
+                continue
+            news_added = _parse_utc(element.get("news_added"))
+            age = (
+                (deadline - news_added).total_seconds() / 86400.0
+                if news_added is not None else None
+            )
+            state = availability_state(
+                status=element.get("status"),
+                chance_of_playing=element.get("chance_of_playing_next_round"),
+                news_age_days=age,
+                news=element.get("news"),
+                news_added=element.get("news_added"),
+            )
+            records.append({
+                "element": int(element["id"]),
+                "GW": int(gameweek),
+                "availability_at_deadline": float(state.now),
+                "availability_source": "seal",
+            })
+    return pd.DataFrame(
+        records,
+        columns=["element", "GW", "availability_at_deadline", "availability_source"],
+    )
+
+
+def sealed_snapshots(predictions_dir: Path) -> List[Tuple[datetime, Dict[str, Any]]]:
+    """
+    Every real (not dry-run) sealed bootstrap, with the time it was sealed.
+
+    Read through the ledger's own verifying reader, so a frozen input whose digest
+    disagrees with its header is refused rather than trusted. A gameweek that
+    cannot be read is skipped with a warning: it costs that week's flags, which
+    then read as "not known" — the pre-existing behaviour.
+    """
+    from pipeline.learning.ledger import load_frozen_bootstrap, read_forecast
+
+    root = Path(predictions_dir) / "fpl" / "ledger"
+    snapshots: List[Tuple[datetime, Dict[str, Any]]] = []
+    if not root.exists():
+        return snapshots
+    for directory in sorted(root.glob("gw[0-9][0-9]")):
+        forecast = directory / "forecast.jsonl"
+        if not forecast.exists():
+            continue
+        try:
+            header = read_forecast(forecast)["header"]
+            if header.get("dry_run"):
+                continue
+            sealed_at = _parse_utc(header.get("sealed_at"))
+            if sealed_at is None:
+                continue
+            snapshots.append((sealed_at, load_frozen_bootstrap(directory, header)))
+        except Exception as exc:  # noqa: BLE001 - one unreadable week costs one week
+            logger.warning("deadline flags unavailable for %s: %s", directory.name, exc)
+    return snapshots
+
+
+def with_deadline_availability(
+    rows: pd.DataFrame,
+    bootstrap: Mapping[str, Any],
+    predictions_dir: Path,
+) -> pd.DataFrame:
+    """
+    This season's rows with ``availability_at_deadline`` attached, where known.
+
+    The join that lets the minutes model tell a knock from a benching, and the
+    substrate for measuring how FPL's flags actually resolve. Both live callers
+    (`run_agent.refresh_expected_points`, `run_pipeline` step 10b) reach it through
+    :func:`with_deadline_availability_if_used`, so they cannot disagree on a player
+    who missed a match injured. The agent's refresh is also the seal's, so this is
+    a seal input: it must stay non-fatal, and changes to it need seal-warden's
+    review.
+
+    Non-fatal by design, and the reason is asymmetric cost. Without the column
+    the model counts every zero as a benching, which is what it has always done.
+    Raising would cost the refresh, and on the seal path the forecast, which
+    cannot be recovered.
+    """
+    if rows is None or rows.empty or "element" not in rows.columns:
+        return rows
+    try:
+        deadlines = {
+            int(event["id"]): _parse_utc(event.get("deadline_time"))
+            for event in bootstrap.get("events", []) or []
+            if event.get("id") is not None
+        }
+        settled = {int(g) for g in rows["GW"].unique()}
+        deadlines = {
+            gw: stamp for gw, stamp in deadlines.items()
+            if stamp is not None and gw in settled
+        }
+        table = deadline_availability(sealed_snapshots(predictions_dir), deadlines)
+        merged = rows.merge(
+            table[["element", "GW", "availability_at_deadline"]],
+            on=["element", "GW"], how="left",
+        )
+        if len(merged) != len(rows):
+            raise ValueError(
+                f"join changed the row count ({len(rows)} -> {len(merged)}); "
+                "a duplicated (element, GW) would double-count a fixture"
+            )
+        merged.index = rows.index
+    except Exception as exc:  # noqa: BLE001 - see the asymmetric-cost note above
+        logger.warning(
+            "deadline availability not attached (%s); every non-appearance this "
+            "season will count as a benching", exc,
+        )
+        return rows
+
+    logger.info(
+        "deadline availability: %d of %d rows known, %d at a flagged deadline, "
+        "sources %s",
+        int(merged["availability_at_deadline"].notna().sum()), len(merged),
+        int((merged["availability_at_deadline"] < 1.0).sum()),
+        table["availability_source"].value_counts().to_dict() if len(table) else {},
+    )
+    return merged
+
+
+def deadline_availability_in_use() -> bool:
+    """
+    Whether any registry parameter makes the minutes model read deadline flags.
+
+    False means attaching ``availability_at_deadline`` could not change a single
+    projection, so the live callers skip the ledger read entirely and their
+    inputs stay exactly what they were before the join existed.
+    """
+    from pipeline.config import PARAM_REGISTRY
+
+    return (
+        float(PARAM_REGISTRY["minutes.fit_now_absence_credit"]["value"]) > 0.0
+        or float(PARAM_REGISTRY["minutes.unavailable_fixture_retention"]["value"]) < 1.0
+    )
+
+
+def with_deadline_availability_if_used(
+    rows: pd.DataFrame,
+    bootstrap: Mapping[str, Any],
+    predictions_dir: Path,
+) -> pd.DataFrame:
+    """
+    :func:`with_deadline_availability` when a parameter consumes it, else ``rows``.
+
+    The one entry point both live callers use — `run_agent.refresh_expected_points`
+    (which is also the SEAL's input path) and `run_pipeline` step 10b — so the two
+    producers of the same xp artifact cannot disagree on a returning player.
+    Never raises: a broken ledger read degrades to "flags unknown", which is the
+    pre-existing behaviour, because on the seal path a raise would cost a forecast
+    that cannot be recovered.
+    """
+    try:
+        if not deadline_availability_in_use():
+            return rows
+        return with_deadline_availability(rows, bootstrap, predictions_dir)
+    except Exception as exc:  # noqa: BLE001 - see the docstring
+        logger.warning("deadline availability skipped (%s)", exc)
+        return rows
 
 
 def load_current_season_rows(
@@ -204,6 +427,12 @@ def build_fpl_inputs(
     alone it projects each player from his last three matches of LAST season.
     They feed the minutes model only: the scoring model is the calibrated one,
     and these rows carry no event columns to fit it on.
+
+    Rows passed through :func:`with_deadline_availability` carry the flags in
+    force at each settled deadline, which lets the minutes model stop charging a
+    match missed injured to the role of a player who is fit again
+    (``minutes.fit_now_absence_credit``). Both live callers pass them through
+    :func:`with_deadline_availability_if_used`.
     """
     rules = rules or load_rules(bootstrap)
     now = now or pd.Timestamp.now(tz="UTC")
@@ -363,6 +592,11 @@ def build_fpl_inputs(
         # Logged by both callers. An empty list mid-season means the minutes model
         # is back to projecting from last season's run-in.
         "current_season": season_seen,
+        # How many of this season's non-appearances were read as unavailability
+        # rather than selection. Zero rows WITH deadline availability mid-season
+        # means the join to the sealed bootstraps has broken, and every knock is
+        # being charged to the player's role a second time.
+        "deadline_availability": dict(minutes_model.availability_diagnostics),
     }
     logger.info("FPL inputs assembled: %s", diagnostics)
 

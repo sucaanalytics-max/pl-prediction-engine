@@ -221,15 +221,20 @@ def seal_forecast(
     }
     header.update(metadata or {})
 
+    # Serialise EVERYTHING before forecast.jsonl exists. The phase machine reads
+    # the file's mere existence as "sealed" (schedule._gameweeks_with), so a
+    # TypeError from one unserialisable metadata value raised after open() would
+    # leave an empty file that every later tick treats as a completed seal — the
+    # gameweek lost with no retry. Raised here, the file never appears and the
+    # next tick inside the window can try again.
+    lines = [json.dumps(header, sort_keys=True) + "\n"]
+    lines.extend(
+        json.dumps({"record": RECORD_FORECAST, **row}, sort_keys=True) + "\n"
+        for row in rows
+    )
+
     with forecast_path.open("w", encoding="utf-8") as handle:
-        handle.write(json.dumps(header, sort_keys=True) + "\n")
-        for row in rows:
-            handle.write(
-                json.dumps(
-                    {"record": RECORD_FORECAST, **row}, sort_keys=True
-                )
-                + "\n"
-            )
+        handle.writelines(lines)
 
     marker.unlink(missing_ok=True)
     logger.info(

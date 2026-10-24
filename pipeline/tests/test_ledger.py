@@ -167,6 +167,27 @@ class SealTests(unittest.TestCase):
             marker = gameweek_dir(Path(tmp), 5) / IN_PROGRESS_MARKER
             self.assertFalse(marker.exists())
 
+    def test_unserialisable_metadata_leaves_no_file_and_the_seal_can_retry(self):
+        """
+        forecast.jsonl's mere existence reads as sealed, so a serialisation error
+        raised after open() would leave an empty file that no later tick retries.
+        """
+        from pipeline.learning.schedule import ledger_state
+
+        with TemporaryDirectory() as tmp:
+            with self.assertRaises(TypeError):
+                seal_forecast(
+                    gameweek=5, deadline=DEADLINE, projections=_projections(),
+                    universe=resolve_universe(_bootstrap()), bootstrap=_bootstrap(),
+                    predictions_dir=Path(tmp), now=BEFORE,
+                    metadata={"unserialisable": object()},
+                )
+            self.assertFalse((gameweek_dir(Path(tmp), 5) / "forecast.jsonl").exists())
+            self.assertNotIn(5, ledger_state(Path(tmp) / "fpl" / "ledger")["sealed"])
+
+            data = read_forecast(_seal(tmp))
+            self.assertEqual(len(data["rows"]), 3)
+
     def test_a_truncated_forecast_is_detected_on_read(self):
         """Header row count vs actual, so silent truncation cannot pass."""
         with TemporaryDirectory() as tmp:
