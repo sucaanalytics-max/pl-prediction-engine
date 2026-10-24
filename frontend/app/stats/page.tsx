@@ -16,21 +16,33 @@
  */
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { StatsPhone } from "@/components/stats/StatsPhone";
 import { StatsTable } from "@/components/stats/StatsTable";
 import { proven } from "@/lib/data/artifact";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
 import { useHeuristics } from "@/lib/data/useHeuristics";
+import { useIsPhone } from "@/lib/phone";
 
 export default function StatsPage() {
   const gameweek = useCurrentGameweek();
   const { artifact } = useHeuristics();
   const live = proven(artifact);
+  const phone = useIsPhone();
 
   const ownedIds = new Set(
     (live?.squad?.players ?? [])
       .map((player) => player.elementId)
       .filter((id): id is number => typeof id === "number"),
   );
+
+  if (phone) {
+    // Tabs split by SOURCE, not by question: see `StatsPhone`.
+    return (
+      <ErrorBoundary pageName="Stats">
+        <StatsPhone gameweek={gameweek} ownedIds={ownedIds} />
+      </ErrorBoundary>
+    );
+  }
 
   return (
     <ErrorBoundary pageName="Stats">

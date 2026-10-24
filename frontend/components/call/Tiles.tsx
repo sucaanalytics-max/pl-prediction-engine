@@ -101,6 +101,23 @@ export interface AgentTransfer {
   readonly sealed: boolean;
 }
 
+/**
+ * The line under the agent's transfer, as text. Exported so the phone `CallCard`
+ * prints the same sentence as this tile: two surfaces describing one plan in two
+ * wordings is how this tile came to say "None" above a grid naming the move.
+ */
+export function agentTransferNote(plan: AgentTransfer): string {
+  const status = plan.sealed
+    ? "sealed"
+    : "provisional, re-solved until the deadline";
+  const moved = plan.out.length > 0 || plan.in.length > 0;
+  // The eleven and totals on this board are the squad BEFORE the move, so the
+  // note says so rather than let the two be read as one plan.
+  return moved
+    ? `the agent's plan · ${status} · not applied to the eleven below`
+    : `the agent's plan makes no transfer this week · ${status}`;
+}
+
 function TransferTile({ plan }: { readonly plan: AgentTransfer | null }) {
   if (plan === null) {
     return (
@@ -115,19 +132,12 @@ function TransferTile({ plan }: { readonly plan: AgentTransfer | null }) {
       </Tile>
     );
   }
-  const status = plan.sealed
-    ? "sealed"
-    : "provisional, re-solved until the deadline";
   const moved = plan.out.length > 0 || plan.in.length > 0;
   return (
     <Tile
       label="Transfer"
       testId="tile-transfer"
-      note={moved
-        // The eleven and totals on this board are the squad BEFORE the move, so
-        // the tile says so rather than let the two be read as one plan.
-        ? <>the agent&apos;s plan · {status} · not applied to the eleven below</>
-        : <>the agent&apos;s plan makes no transfer this week · {status}</>}
+      note={agentTransferNote(plan)}
     >
       <span style={{
         fontFamily: DISPLAY, fontSize: 22, lineHeight: 1.1,

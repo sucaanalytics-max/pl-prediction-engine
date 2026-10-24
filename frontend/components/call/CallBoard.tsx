@@ -51,7 +51,8 @@ import { calloutsFor, shapeOf, swapFrom, swapSentence } from "@/lib/call/board";
 import { Eleven } from "@/components/call/Eleven";
 import { Pitch, type PitchMode } from "@/components/call/Pitch";
 import { Rail, type HorizonScale } from "@/components/call/Rail";
-import { Tiles, type AgentTransfer } from "@/components/call/Tiles";
+import { Tiles, agentTransferNote, type AgentTransfer } from "@/components/call/Tiles";
+import { CallCard, type CardRange } from "@/components/call/CallCard";
 
 const S = SIGNAL;
 
@@ -192,6 +193,29 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
     };
   }, [squad, solved, benched, players]);
 
+  /**
+   * The decision's published total distribution, or null when absent.
+   *
+   * Every field is the narrower's; nothing is derived. The mean and the quantiles
+   * are over the SAME draws (see `PublicDecision`), and a missing `mean_points`
+   * drops the whole range rather than pairing quantiles with a different centre.
+   */
+  const range: CardRange | null = useMemo(() => {
+    if (decision === null || decision.mean_points === null) return null;
+    const p60 = decision.probAtLeast.find((t) => t.points === 60);
+    return {
+      mean: decision.mean_points,
+      q10: decision.points_q10,
+      q25: decision.points_q25,
+      q75: decision.points_q75,
+      q90: decision.points_q90,
+      p60: p60 === undefined ? null : p60.p,
+      nDraws: decision.nDraws,
+      generatedAt: decision.generated_at,
+      sealed: decision.sealed,
+    };
+  }, [decision]);
+
   const toggle = (row: SquadRow) => {
     const id = row.player.elementId;
     if (id === undefined) return;
@@ -226,6 +250,37 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
 
   return (
     <div>
+      {/* Phone: one card instead of four tiles. Same board, same figures; the
+          desktop tiles below are untouched and hidden at 767px by globals.css. */}
+      <div className="call-phone-only" style={{ paddingBottom: 14 }}>
+        <CallCard
+          gameweek={gameweek}
+          captain={board.captain === null ? null : {
+            name: board.captain.name,
+            team: board.captain.team,
+            fixture: board.captain.fixture ?? null,
+            xp: board.captainRow?.projection?.xp ?? null,
+          }}
+          /* Null, exactly as the Transfer tile below is given nothing: the row
+             reads the same source and logic as the tile, so the two cannot
+             disagree. */
+          transfer={agentTransfer === null ? null : {
+            out: agentTransfer.out,
+            in: agentTransfer.in,
+            note: agentTransferNote(agentTransfer),
+          }}
+          bringIn={board.swap.bringIn.map((player) => player.name)}
+          sitDown={board.swap.sitDown.map((player) => player.name)}
+          lineupKnown={board.swap.known}
+          shape={board.shape}
+          range={range}
+          total={board.total}
+          countingRule={COUNTING_RULE}
+          projectionDraws={projections?.nDraws ?? null}
+        />
+      </div>
+
+      <div className="call-desktop-only">
       <Tiles
         total={board.total}
         asPicked={board.asPicked}
@@ -248,6 +303,7 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
         countingRule={COUNTING_RULE}
         agentTransfer={agentTransfer}
       />
+      </div>
 
       <div style={{
         display: "grid",
@@ -259,7 +315,7 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
         className="call-board"
       >
         <div style={{ borderRight: `1px solid ${S.rule}`, minWidth: 0 }}>
-          <div style={{
+          <div id="the-eleven" className="call-anchor" style={{
             display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12,
             padding: "10px 14px", background: S.bar,
             borderBottom: `1px solid ${S.hair}`,

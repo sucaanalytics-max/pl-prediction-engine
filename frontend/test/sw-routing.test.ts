@@ -83,9 +83,21 @@ describe("sw-routing classify", () => {
     expect(routing.classify("not a url", "GET", "cors", ORIGIN)).toBe("bypass");
   });
 
-  it("bypasses ordinary same-origin assets", () => {
-    expect(classify("/icon-192.png")).toBe("bypass");
-    expect(classify("/manifest.webmanifest")).toBe("bypass");
+  it("serves exactly the shell's icons and manifest as assets", () => {
+    for (const path of [
+      "/icon.svg", "/icon-maskable.svg", "/icon-192.png", "/icon-512.png",
+      "/icon-maskable-512.png", "/apple-touch-icon.png", "/manifest.webmanifest",
+    ]) {
+      expect(classify(path)).toBe("asset");
+    }
+  });
+
+  it("bypasses every other same-origin asset, and assets that are not plain GETs", () => {
+    expect(classify("/og.png")).toBe("bypass");
+    expect(classify("/icon-192.png.map")).toBe("bypass");
+    expect(classify("/icons/icon-192.png")).toBe("bypass");
+    expect(classify("/icon-192.png", "POST")).toBe("bypass");
+    expect(classify("https://elsewhere.test/icon.svg")).toBe("bypass");
   });
 
   it("accepts a URL object", () => {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { CloudOff } from "lucide-react";
 import { SANS, SIGNAL } from "@/lib/margin/tokens";
 import {
   getCachedAt, narrowServedCached, noteCachedAt, resetCachedAt, subscribeCachedAt,
@@ -31,8 +32,8 @@ export function formatClock(iso: string): string {
  * says only "Offline", not a time it cannot back.
  *
  * It sits in the page flow under the masthead rather than fixed to the bottom:
- * the mobile bottom nav is fixed and 99px plus the safe-area inset tall, and a
- * second fixed element there would have to know that number.
+ * the mobile bottom nav is fixed (`--bottom-nav-h` tall), and a second fixed
+ * element there would have to know that number.
  */
 export default function OfflineBanner() {
   // `true` on the first render regardless of the browser, so server and client
@@ -90,6 +91,10 @@ export default function OfflineBanner() {
 
   // The live region is always in the DOM and only its content comes and goes:
   // a region inserted already populated is announced unreliably.
+  //
+  // A warm band under the masthead, as drawn: an icon, the claim in one line, and
+  // under it what the claim means for the figures. The second line only appears
+  // with a time to be true about: "since then" needs a "then".
   return (
     <div role="status" aria-live="polite" data-testid="offline-banner">
       {visible && (
@@ -97,25 +102,23 @@ export default function OfflineBanner() {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            padding: "6px 16px",
-            background: SIGNAL.inset,
+            gap: 10,
+            padding: "10px 16px",
+            background: "var(--warm)",
             borderBottom: `1px solid ${SIGNAL.rule}`,
             color: SIGNAL.ink,
             fontFamily: SANS,
-            fontSize: 13,
-            fontWeight: 600,
           }}
         >
-          <span
-            aria-hidden="true"
-            style={{
-              width: 8, height: 8, borderRadius: "50%",
-              background: SIGNAL.noise, flexShrink: 0,
-            }}
-          />
-          <span>{text}</span>
+          <CloudOff size={18} aria-hidden="true" style={{ flex: "none" }} />
+          <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            <span style={{ fontSize: 14, fontWeight: 600 }}>{text}</span>
+            {cachedAt ? (
+              <span style={{ fontSize: 12, color: SIGNAL.ink2 }}>
+                Nothing below has refreshed since then
+              </span>
+            ) : null}
+          </div>
         </div>
       )}
     </div>

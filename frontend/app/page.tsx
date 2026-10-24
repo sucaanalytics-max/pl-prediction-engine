@@ -66,8 +66,8 @@ export default function CallPage() {
 
   return (
     <ErrorBoundary pageName="The call">
-      <div className="space-y-8">
-        <header className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+      <div className="call-page space-y-8">
+        <header className="call-page-head flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
           <div>
             <h1
               className="text-3xl font-extrabold tracking-tight"
@@ -127,7 +127,9 @@ export default function CallPage() {
             what you actually did. `_read_entry` in `run_agent.py` reads a
             committed capture BEFORE asking FPL live, so the second link is the
             head of the only write path this app has. */}
-        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2 text-xs">
+        {/* Desktop only: on a phone the same two actions are the card's own buttons
+            ("Set on FPL", "Capture what I set"), where the thumb already is. */}
+        <div className="call-desktop-only flex flex-wrap items-baseline gap-x-5 gap-y-2 text-xs">
           <a
             href="https://fantasy.premierleague.com/my-team"
             target="_blank"

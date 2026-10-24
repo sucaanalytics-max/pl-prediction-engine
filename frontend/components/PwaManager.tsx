@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Download, RefreshCw, Share2, X } from "lucide-react";
+import { Check, RefreshCw } from "lucide-react";
 import { SANS, SIGNAL } from "@/lib/margin/tokens";
 
 interface InstallPromptEvent extends Event {
@@ -21,6 +21,14 @@ function isStandalone() {
   );
 }
 
+/**
+ * Dispatched on `window` by `/more` ("Add to home screen") to open the install
+ * sheet on demand, including after it was dismissed. A DOM event rather than a
+ * shared store: the sender needs nothing back, and PwaManager stays the only
+ * owner of the browser's install prompt.
+ */
+export const INSTALL_SHEET_EVENT = "suca:install-sheet";
+
 /** How often a long-lived tab asks the browser whether `/sw.js` has changed. */
 export const UPDATE_CHECK_MS = 30 * 60_000;
 
@@ -28,6 +36,9 @@ export default function PwaManager() {
   const [prompt, setPrompt] = useState<InstallPromptEvent | null>(null);
   const [showIosHint, setShowIosHint] = useState(false);
   const [dismissed, setDismissed] = useState(true);
+  // Asked for from `/more`, which shows the sheet whether or not it was dismissed.
+  const [requested, setRequested] = useState(false);
+  const sheetRef = useRef<HTMLElement | null>(null);
   // A worker that has installed and is waiting for the page's word to take over.
   const [waiting, setWaiting] = useState<ServiceWorker | null>(null);
   // Set only by a tap on "Reload". `controllerchange` also fires when a FIRST
@@ -115,18 +126,28 @@ export default function PwaManager() {
   }, []);
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== "production") return;
-    if (isStandalone() || localStorage.getItem("suca-pwa-dismissed") === "1") {
-      return;
-    }
+    const onRequest = () => {
+      setShowIosHint(isIos());
+      setRequested(true);
+    };
+    window.addEventListener(INSTALL_SHEET_EVENT, onRequest);
+    return () => window.removeEventListener(INSTALL_SHEET_EVENT, onRequest);
+  }, []);
 
-    setDismissed(false);
-    setShowIosHint(isIos());
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") return;
+    // Captured even after a dismissal or inside the installed app's own tab, so
+    // `/more` can still offer the native install; only the AUTOMATIC sheet
+    // respects the dismissal.
     const onInstallPrompt = (event: Event) => {
       event.preventDefault();
       setPrompt(event as InstallPromptEvent);
     };
     window.addEventListener("beforeinstallprompt", onInstallPrompt);
+    if (!isStandalone() && localStorage.getItem("suca-pwa-dismissed") !== "1") {
+      setDismissed(false);
+      setShowIosHint(isIos());
+    }
     return () => window.removeEventListener("beforeinstallprompt", onInstallPrompt);
   }, []);
 
@@ -137,28 +158,26 @@ export default function PwaManager() {
   }
 
   function dismiss() {
-    localStorage.setItem("suca-pwa-dismissed", "1");
+    try { localStorage.setItem("suca-pwa-dismissed", "1"); } catch { /* storage blocked */ }
     setDismissed(true);
+    setRequested(false);
   }
 
   async function install() {
     if (!prompt) return;
     await prompt.prompt();
     const choice = await prompt.userChoice;
-    if (choice.outcome === "accepted") setDismissed(true);
+    if (choice.outcome === "accepted") { setDismissed(true); setRequested(false); }
     setPrompt(null);
   }
 
   const updateBar = waiting ? (
     <>
-      {/* Above the mobile bottom nav, which is fixed and 99px plus the
-          safe-area inset tall at 767px and below; a media query cannot live in
-          an inline style, so the offset is a scoped rule. */}
+      {/* Above the mobile bottom nav, whose height (inset included) is
+          `--bottom-nav-h`, defined once in globals.css and zero off a phone; a
+          media query cannot live in an inline style, so this is a scoped rule. */}
       <style>{`
-        .sw-update-bar { bottom: 16px; }
-        @media (max-width: 767px) {
-          .sw-update-bar { bottom: calc(99px + env(safe-area-inset-bottom) + 8px); }
-        }
+        .sw-update-bar { bottom: calc(var(--bottom-nav-h) + 16px); }
       `}</style>
       <div
         className="sw-update-bar"
@@ -188,32 +207,115 @@ export default function PwaManager() {
     </>
   ) : null;
 
-  if (dismissed || (!prompt && !showIosHint)) return updateBar;
+  const open = requested || (!dismissed && (prompt !== null || showIosHint));
+  if (!open) return updateBar;
 
   return (
     <>
-    {updateBar}
-    <aside className="pwa-install-card" aria-label="Install Suca FPL app">
-      <span className="pwa-install-icon"><Download size={17} /></span>
-      <div>
-        <strong>Install Suca FPL</strong>
-        <span>
-          {showIosHint
-            ? "Tap Share, then Add to Home Screen."
-            : "Add the decision portal to your home screen."}
+      {updateBar}
+      <InstallSheet
+        sheetRef={sheetRef}
+        canPrompt={prompt !== null}
+        ios={showIosHint}
+        onInstall={() => void install()}
+        onDismiss={dismiss}
+      />
+    </>
+  );
+}
+
+const SELLING_POINTS = [
+  "Opens full screen, straight to this week's call",
+  "Keeps the last call readable offline, marked with its age",
+  "Long-press the icon for Players, Fixtures and Capture",
+];
+
+/**
+ * The install prompt as a modal bottom sheet.
+ *
+ * Dialog semantics are real: `aria-modal`, a label, focus moved in on open and
+ * held there with Tab, Escape to leave, and focus handed back on close. "Not now"
+ * and Escape both persist the dismissal, as the old card's X did. Where the
+ * browser gave no install event (iOS Safari, most desktop browsers) there is
+ * nothing for a button to call, so the primary action becomes "Got it" and the
+ * hint line says how to do it by hand.
+ */
+function InstallSheet({
+  sheetRef, canPrompt, ios, onInstall, onDismiss,
+}: {
+  sheetRef: React.MutableRefObject<HTMLElement | null>;
+  canPrompt: boolean;
+  ios: boolean;
+  onInstall: () => void;
+  onDismiss: () => void;
+}) {
+  useEffect(() => {
+    const before = document.activeElement as HTMLElement | null;
+    const first = sheetRef.current?.querySelector<HTMLElement>("button");
+    first?.focus();
+    return () => before?.focus?.();
+  }, [sheetRef]);
+
+  function onKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Escape") {
+      event.stopPropagation();
+      onDismiss();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const items = sheetRef.current?.querySelectorAll<HTMLElement>("button");
+    if (!items || items.length === 0) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  return (
+    <>
+      <div className="pwa-install-scrim" aria-hidden="true" />
+      <section
+        ref={sheetRef}
+        className="pwa-install-sheet"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="install-title"
+        onKeyDown={onKeyDown}
+      >
+        <div className="pwa-sheet-grip" aria-hidden="true" />
+        <div className="pwa-sheet-head">
+          <div className="pwa-sheet-icon" aria-hidden="true">SU</div>
+          <div>
+            <h2 id="install-title" className="pwa-sheet-title">Put Suca on your home screen</h2>
+            <span className="pwa-sheet-host">{typeof location === "undefined" ? "" : location.host}</span>
+          </div>
+        </div>
+        <ul className="pwa-sheet-list">
+          {SELLING_POINTS.map((text) => (
+            <li key={text}><Check size={18} aria-hidden="true" />{text}</li>
+          ))}
+        </ul>
+        <div className="pwa-sheet-actions">
+          {canPrompt ? (
+            <>
+              <button type="button" className="pwa-sheet-btn" onClick={onDismiss}>Not now</button>
+              <button type="button" className="pwa-sheet-btn primary" onClick={onInstall}>Install</button>
+            </>
+          ) : (
+            <button type="button" className="pwa-sheet-btn primary" onClick={onDismiss}>Got it</button>
+          )}
+        </div>
+        <span className="pwa-sheet-hint">
+          {ios || canPrompt
+            ? "On iPhone: tap Share in Safari, then Add to Home Screen."
+            : "In your browser's menu, choose Install app or Add to Home Screen."}
         </span>
-      </div>
-      {prompt ? (
-        <button className="pwa-install-action" onClick={() => void install()}>
-          Install
-        </button>
-      ) : (
-        <Share2 className="pwa-share-icon" size={16} />
-      )}
-      <button className="pwa-dismiss" onClick={dismiss} aria-label="Dismiss install prompt">
-        <X size={14} />
-      </button>
-    </aside>
+      </section>
     </>
   );
 }

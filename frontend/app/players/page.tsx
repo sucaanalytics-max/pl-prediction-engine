@@ -27,13 +27,60 @@
  * one-point difference in the first is worth a transfer.
  */
 
+import { useState, type ReactNode } from "react";
+
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ResearchView } from "@/components/margin/ResearchView";
+import { PlayersPhone } from "@/components/projections/PlayersPhone";
 import { ProjectionGridSection } from "@/components/projections/ProjectionGridSection";
 import { useCurrentGameweek } from "@/lib/data/gameweek";
+import { useIsPhone } from "@/lib/phone";
+import { SANS, SIGNAL } from "@/lib/margin/tokens";
+
+/**
+ * A closed section whose body is not even mounted until it is opened.
+ *
+ * On a phone the list is the page. The eight-week grid and the distribution tools
+ * are still reachable, but they are 600 rows apiece, and mounting them behind a
+ * closed disclosure would pay for them on every visit.
+ */
+function Disclosure({ summary, children }: { summary: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <details
+      onToggle={(event) => setOpen(event.currentTarget.open)}
+      style={{ marginTop: 16, background: SIGNAL.bar, border: `1px solid ${SIGNAL.hair}`, fontFamily: SANS }}
+    >
+      <summary
+        style={{
+          minHeight: 44, display: "flex", alignItems: "center", padding: "0 12px",
+          fontSize: 14, fontWeight: 600, color: SIGNAL.ink, cursor: "pointer",
+        }}
+      >
+        {summary}
+      </summary>
+      {open ? <div style={{ padding: "0 0 12px", overflowX: "auto" }}>{children}</div> : null}
+    </details>
+  );
+}
 
 export default function PlayersPage() {
   const gameweek = useCurrentGameweek();
+  const phone = useIsPhone();
+
+  if (phone && gameweek !== null) {
+    return (
+      <ErrorBoundary pageName="Players">
+        <PlayersPhone gameweek={gameweek} />
+        <Disclosure summary="Eight-week projection grid">
+          <ProjectionGridSection gameweek={gameweek} />
+        </Disclosure>
+        <Disclosure summary="Distributions, scatter and compare">
+          <ResearchView gameweek={gameweek} />
+        </Disclosure>
+      </ErrorBoundary>
+    );
+  }
 
   return (
     <ErrorBoundary pageName="Players">

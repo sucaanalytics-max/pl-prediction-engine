@@ -189,6 +189,8 @@
      `brand` note in lib/margin/tokens.ts — so an active tab is weight and a
      rule, and the countdown is simply the largest figure in the bar. */
   --chrome-accent: #14171c;
+  /* The offline band: the amber difficulty tile (`DIFFICULTY_TILE[4]`), as a ground. */
+  --warm: #f2dec2;
 
   /* The ground the eleven stand on, on the call screen. Barely green — enough to
      say "pitch", not enough to compete with --accent, which on that screen has
@@ -198,6 +200,7 @@
 
 /* ── Ink (dark) ─────────────────────────────────────────────────────────────── */
 .dark {
+  --warm:          #f2dec2;
   --bg:            #f1f2f4;
   --surface:       #f8f9fb;
   --surface2:      #e6e9ee;
@@ -520,16 +523,29 @@ input[type="range"]::-moz-range-thumb {
 .masthead-team span { color: var(--text-3); font-size: 11px; font-weight: 400; font-family: var(--font-mono); }
 .masthead-team > a:hover strong { color: var(--accent-text); }
 @media (max-width: 767px) {
-  /* The links go, not the bar: `MobileBottomNav` carries the same three
-     destinations within thumb reach, and `test/nav-coverage.test.tsx` asserts
-     the two navs list the same set. What stays here is what the phone nav has
-     no room for — the wordmark, the gameweek and whose team this is. */
-  .masthead-mark { padding: 0 12px; font-size: 18px; }
+  /* The links go, not the bar: `MobileBottomNav` carries the destinations within
+     thumb reach, and `test/nav-coverage.test.tsx` holds the two navs to the same
+     allow-list. What stays here is what the phone nav has no room for.
+
+     Compact, on one 56px row: the wordmark and the gameweek status on the left,
+     whose team this is on the right. The left and right groups are flattened with
+     `display: contents` so the gameweek badge can sit beside the wordmark without
+     a second copy of it in the DOM (two copies is two things to announce, and
+     `Navigation.test.tsx` would find "GW4" twice). */
+  .masthead { min-height: 56px; gap: 10px; align-items: center; padding: 0 8px 0 0; border-bottom-color: var(--chrome-hair); }
+  .masthead-left, .masthead-right { display: contents; }
+  .masthead-mark { order: 0; padding: 0 0 0 16px; font: 600 17px/1 var(--font-display); letter-spacing: .14em; }
   .masthead-nav { display: none; }
-  .masthead-gw { padding: 0 10px; }
+  .masthead-live, .masthead-gw { order: 1; padding: 0; border-left: 0; font: 600 12px/1 var(--font-display); letter-spacing: 0; }
+  .masthead-live { gap: 5px; }
+  .masthead-team { order: 3; margin-left: auto; min-width: 0; border-left: 0; }
   .masthead-team > a,
-  .masthead-team-plain { padding: 0 11px; }
+  .masthead-team-plain { justify-items: end; align-content: center; min-height: 44px; min-width: 44px; padding: 0 8px; text-align: right; }
+  .masthead-team strong { font-size: 13px; font-weight: 600; max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .masthead-team span { font-family: var(--font-display); font-size: 11px; }
+  .masthead-team .masthead-opens { display: inline; }
 }
+.masthead-opens { display: none; }
 
 /* /players: the research table (16 columns) beside its 300px detail pane. Stack
    the pane under the table on a phone, and let the table scroll inside its own
@@ -547,43 +563,46 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Installable mobile shell */
-/* The phone bottom nav's height, defined once. Two 42px rows, 7px padding top
-   and bottom, a 1px border, plus the home-indicator inset. `body` padding, the
-   nav and anything that floats above it (the install card, an offline banner)
-   read this rather than restating the arithmetic. Zero where the nav is hidden. */
+/* The phone bottom nav's height, defined once. One row of five 52px targets
+   (the 48px minimum plus room for the 2px active rule), 4px of padding above them
+   and a 1px top border, plus the home-indicator inset. `body` padding, the nav
+   and the update bar read this rather than restating the arithmetic. Zero where
+   the nav is hidden. */
 :root { --bottom-nav-h: 0px; }
 @media (max-width: 767px) {
-  :root { --bottom-nav-h: calc((2 * 42px) + 15px + env(safe-area-inset-bottom)); }
+  :root { --bottom-nav-h: calc(57px + env(safe-area-inset-bottom)); }
 }
 .mobile-bottom-nav { display: none; }
-.pwa-install-card {
+/* The install prompt, as a bottom sheet over a scrim (components/PwaManager.tsx).
+   It is modal, so it deliberately sits ABOVE the bottom nav rather than offset by
+   it: nothing behind the scrim is reachable, and the sheet's own padding carries
+   the home-indicator inset. */
+.pwa-install-scrim { position: fixed; inset: 0; z-index: 74; background: rgba(20, 23, 28, 0.45); }
+.pwa-install-sheet {
   position: fixed;
-  right: 18px;
-  bottom: 18px;
+  left: 0; right: 0; bottom: 0;
   z-index: 75;
-  display: grid;
-  grid-template-columns: 34px minmax(150px, 1fr) auto 24px;
-  align-items: center;
-  gap: 9px;
-  width: min(390px, calc(100vw - 36px));
-  padding: 11px;
-  color: var(--chrome-ink);
-  /* A rule and the chrome surface, not a hardcoded slab. This was
-     `rgba(7, 19, 15, .96)` — a near-black panel from the era when the chrome was
-     ink — and it survived the palette change as dark ink on a dark card, which
-     is to say an unreadable one. The border does the lifting off the page that
-     the dark fill used to. */
-  border: 1px solid var(--border-strong);
-  border-radius: 0;
-  background: var(--chrome);
+  box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 16px;
+  width: 100%; max-width: 480px; margin: 0 auto;
+  padding: 12px 20px calc(20px + env(safe-area-inset-bottom));
+  color: var(--text-1);
+  border-top: 1px solid var(--border-strong);
+  background: var(--surface);
 }
-.pwa-install-icon { display: grid; place-items: center; width: 34px; height: 34px; color: var(--chrome); border-radius: 0; background: var(--chrome-accent); }
-.pwa-install-card > div { display: grid; gap: 2px; }
-.pwa-install-card strong { font-size: 12px; }
-.pwa-install-card span { color: var(--chrome-ink-2); font-size: 11px; }
-.pwa-install-action { padding: 7px 9px; color: var(--chrome); border-radius: 0; background: var(--chrome-accent); font-size: 11px; font-weight: 800; }
-.pwa-share-icon { color: var(--chrome-accent); }
-.pwa-dismiss { display: grid; place-items: center; color: var(--chrome-ink-3); }
+.pwa-sheet-grip { align-self: center; width: 40px; height: 4px; background: var(--text-4); }
+.pwa-sheet-head { display: flex; gap: 14px; align-items: center; }
+.pwa-sheet-icon { display: grid; place-items: center; flex: none; width: 56px; height: 56px; background: var(--brand); color: var(--surface); font-size: 15px; font-weight: 700; letter-spacing: .1em; }
+.pwa-sheet-title { margin: 0; font-size: 20px; font-weight: 600; line-height: 1.2; }
+.pwa-sheet-host { font-size: 13px; color: var(--text-2); }
+.pwa-sheet-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+.pwa-sheet-list li { display: flex; gap: 10px; }
+.pwa-sheet-list svg { flex: none; margin-top: 1px; color: var(--accent-text); }
+.pwa-sheet-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.pwa-sheet-actions > :only-child { grid-column: 1 / -1; }
+.pwa-sheet-btn { min-height: 48px; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; border: 1px solid var(--brand-border); background: transparent; color: var(--text-1); }
+.pwa-sheet-btn.primary { border-color: var(--brand); background: var(--brand); color: var(--surface); }
+.pwa-sheet-hint { font-size: 12px; color: var(--text-2); }
 .offline-page { display: grid; place-items: center; min-height: 75vh; }
 .offline-page > section { max-width: 540px; padding: 38px; text-align: center; }
 .offline-icon { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 18px; color: var(--accent-text); border-radius: 0; background: var(--accent-muted); }
@@ -592,21 +611,7 @@ input[type="range"]::-moz-range-thumb {
 .offline-page p { margin: 10px 0 20px; color: var(--text-3); font-size: 12px; line-height: 1.6; }
 
 @media (max-width: 767px) {
-  /* Reserve the bar's REAL height, which is 99px and not 70px.
-   *
-   * Six destinations in a four-column grid is always two rows; each row is a 42px
-   * touch target (`min-height` below, and the icon-plus-label content needs exactly
-   * that anyway); the bar adds 7px of padding top and bottom and a 1px border.
-   * 2*42 + 14 + 1 = 99. `body` reserved 70, so the last 29px of every page on a phone
-   * sat behind a fixed bar.
-   *
-   * Measured on `/` at a phone width: the closing sentence of "Week by week" ended 9px
-   * below the bar's top edge. This is pre-existing and the 7px-to-11px label raise did
-   * not cause it — the row height comes from `min-height`, not from the type — but
-   * checking the raise is what surfaced it.
-   *
-   * Written as the arithmetic rather than as `99px` so the next person changing the
-   * column count or the touch target can see what depends on it. */
+  /* Reserve the bar's REAL height, from the one definition above. */
   body { padding-bottom: var(--bottom-nav-h); }
   .mobile-bottom-nav {
     position: fixed;
@@ -615,19 +620,38 @@ input[type="range"]::-moz-range-thumb {
     box-sizing: border-box;
     min-height: var(--bottom-nav-h);
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 7px 7px calc(7px + env(safe-area-inset-bottom));
-    border-top: 1px solid rgba(255, 255, 255, .08);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: 4px 4px env(safe-area-inset-bottom);
+    border-top: 1px solid var(--chrome-hair);
     background: var(--chrome);
   }
-  /* 7px was the smallest text in the app, in the one place a phone user navigates
-     from, and `rgba(255,255,255,.38)` measured 3.55:1 on this bar's own ground —
-     failing 1.4.3 for normal text. The chrome tier is 5.48:1 here and is the token
-     the rest of this bar already uses. */
-  .mobile-bottom-nav a { display: grid; place-items: center; gap: 3px; min-height: 42px; color: var(--chrome-ink-3); font-size: 11px; font-weight: 700; }
-  .mobile-bottom-nav a.active { color: var(--chrome-accent); }
-  .pwa-install-card { bottom: calc(var(--bottom-nav-h) + 8px); }
-}/* The call board: pitch beside rail, stacking under it when the rail can no
+  /* 11px labels on --chrome-ink-3 (5.48:1 on this bar's ground). Each tab is a
+     52px target. Active is ink, a heavier label and a 2px rule along the TOP edge:
+     weight and a rule carry the state, not a hue. */
+  .mobile-bottom-nav a {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; min-height: 52px; min-width: 0;
+    color: var(--chrome-ink-3); font-size: 11px; font-weight: 600;
+    box-sizing: border-box; border-top: 2px solid transparent;
+  }
+  .mobile-bottom-nav a.active { color: var(--chrome-ink); font-weight: 700; border-top-color: var(--chrome-ink); }
+}
+/* The call, at phone width (components/call/CallCard.tsx). The desktop tiles stay
+   in the DOM and are hidden here, because they are the same figures in the
+   desktop arrangement; the phone card is the same figures in a phone one. */
+.deadline-clock { display: flex; align-items: center; justify-content: flex-end; gap: 12px; text-align: right; }
+.call-phone-only { display: none; }
+@media (max-width: 767px) {
+  .call-desktop-only { display: none !important; }
+  .call-phone-only { display: block; }
+  .call-page-head > :first-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .call-page-head { display: block !important; }
+  .deadline-clock { justify-content: space-between; text-align: left; }
+  .deadline-clock strong { font-size: 17px; font-weight: 600; }
+  .call-anchor { scroll-margin-top: 72px; }
+  .call-page.space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 14px; }
+}
+/* The call board: pitch beside rail, stacking under it when the rail can no
    longer hold its eight-column horizon table. The breakpoint is the rail's own
    minimum plus the pitch's — a 150px tile does not shrink, so squeezing the
    pitch to keep the rail alongside would break the tiles rather than the

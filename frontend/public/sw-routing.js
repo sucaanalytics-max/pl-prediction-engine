@@ -14,6 +14,8 @@
  *               Network-first with a timeout, stamped with `x-sw-cached-at`; a
  *               stored copy is served only when the network fails or stalls.
  *   "live"      `GET /api/fpl/state` and nothing else. Network-first, last-good fallback.
+ *   "asset"     the installed shell's own icons and manifest, named exactly in
+ *               SHELL_ASSETS. Cache-first from the shell cache, network fallback.
  *   "bypass"    everything else. The worker does not answer it.
  *
  * The bypass list is the safety property. Every non-GET is bypassed, so
@@ -25,6 +27,21 @@
 (function (root) {
   var SUPABASE_PUBLIC_PREDICTIONS = "/storage/v1/object/public/predictions/";
 
+  /**
+   * The exact same-origin paths the shell precaches as assets. Exact matches,
+   * never a prefix: an unlisted file under the site root must stay "bypass".
+   * Keep in step with the asset entries of SHELL_ROUTES in sw.js.
+   */
+  var SHELL_ASSETS = [
+    "/icon.svg",
+    "/icon-maskable.svg",
+    "/icon-192.png",
+    "/icon-512.png",
+    "/icon-maskable-512.png",
+    "/apple-touch-icon.png",
+    "/manifest.webmanifest"
+  ];
+
   function isDataFile(pathname) {
     return /\.jsonl?$/.test(pathname);
   }
@@ -34,7 +51,7 @@
    * @param {string} method
    * @param {string} mode  `Request.mode`; only "navigate" is distinguished
    * @param {string} origin the worker's own origin, `self.location.origin`
-   * @returns {"navigate" | "static" | "data" | "live" | "bypass"}
+   * @returns {"navigate" | "static" | "data" | "live" | "asset" | "bypass"}
    */
   function classify(urlLike, method, mode, origin) {
     if (String(method).toUpperCase() !== "GET") return "bypass";
@@ -70,10 +87,11 @@
     if (mode === "navigate") return "navigate";
     if (path.indexOf("/_next/static/") === 0) return "static";
     if (path.indexOf("/predictions/") === 0 && isDataFile(path)) return "data";
+    if (SHELL_ASSETS.indexOf(path) !== -1) return "asset";
     return "bypass";
   }
 
-  var api = { classify: classify };
+  var api = { classify: classify, SHELL_ASSETS: SHELL_ASSETS };
   if (typeof module === "object" && module && module.exports) module.exports = api;
   root.SwRouting = api;
 })(typeof self !== "undefined" ? self : this);

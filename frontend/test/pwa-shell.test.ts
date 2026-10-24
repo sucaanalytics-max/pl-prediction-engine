@@ -18,14 +18,34 @@ describe("bottom nav height", () => {
   it("is defined once, as --bottom-nav-h, from the nav's own arithmetic", () => {
     const defs = css.match(/--bottom-nav-h:\s*calc\([^;]+\);/g) ?? [];
     expect(defs).toHaveLength(1);
-    expect(defs[0]).toContain("2 * 42px");
+    // One row: a 52px target, 4px of padding and a 1px rule. Not two rows.
+    expect(defs[0]).toContain("57px");
+    expect(defs[0]).not.toContain("2 *");
     expect(defs[0]).toContain("env(safe-area-inset-bottom)");
   });
 
-  it("is what body padding, the nav and the install card read", () => {
+  it("is what body padding and the nav read", () => {
     expect(css).toMatch(/body\s*\{\s*padding-bottom:\s*var\(--bottom-nav-h\)/);
     expect(css).toMatch(/\.mobile-bottom-nav\s*\{[^}]*min-height:\s*var\(--bottom-nav-h\)/);
-    expect(css).toMatch(/\.pwa-install-card\s*\{\s*bottom:\s*calc\(var\(--bottom-nav-h\)\s*\+\s*8px\)/);
+  });
+
+  it("is what the update bar floats above, and no component restates 99px", () => {
+    const manager = readFileSync(join(__dirname, "..", "components", "PwaManager.tsx"), "utf8");
+    expect(manager).toContain("var(--bottom-nav-h)");
+    expect(manager).not.toMatch(/99px/);
+  });
+
+  it("gives every phone tab a 48px-or-larger target", () => {
+    const rule = css.match(/\.mobile-bottom-nav a\s*\{[^}]*\}/)?.[0] ?? "";
+    const px = Number(/min-height:\s*(\d+)px/.exec(rule)?.[1]);
+    expect(px).toBeGreaterThanOrEqual(48);
+  });
+
+  it("puts the install sheet over the nav and carries the home-indicator inset itself", () => {
+    // A modal sheet is not offset by the nav: the scrim makes the nav unreachable.
+    const sheet = css.match(/\.pwa-install-sheet\s*\{[^}]*\}/)?.[0] ?? "";
+    expect(sheet).toContain("env(safe-area-inset-bottom)");
+    expect(Number(/z-index:\s*(\d+)/.exec(sheet)?.[1])).toBeGreaterThan(65);
   });
 
   it("no longer hard-codes the old 76px offset", () => {

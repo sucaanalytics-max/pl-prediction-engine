@@ -81,7 +81,18 @@
 //     deadline would be shown as the old call, unlabelled. Network-first means a
 //     stored copy is only ever served when the network has failed or stalled,
 //     which are exactly the cases `SW_SERVED_CACHED` announces.
-// Bumping evicts the v10 shell cache. The data and static caches carry their own
+// v12 adds `/more` and makes the precached assets actually reachable. `/more` is
+// the fifth phone tab (Call, Players, Fixtures, Stats, More) and the way into
+// `/capture`, `/evidence` and `/review`, so a v11 cache holds an installed app
+// whose last tab cannot open offline. The page and this list ship in one commit
+// because `cache.addAll` is atomic: a route that 404s precaches NOTHING, shell
+// included. Separately, measured with the network off: `/icon.svg` and
+// `/manifest.webmanifest` failed offline, because `classify` answered "bypass" for
+// them, so the icon entries below were precached and never served. They now
+// classify as "asset" and are answered cache-first from this cache;
+// `/manifest.webmanifest` and `/icon-maskable-512.png` join the list for the same
+// reason.
+// Bumping evicts the v11 shell cache. The data and static caches carry their own
 // version keys and are NOT evicted by a shell bump: a stored artifact is worth
 // more than the one precache list it is unrelated to.
 /**
@@ -104,7 +115,7 @@
 const LOCAL_HOSTS = ["localhost", "127.0.0.1", "[::1]", "::1"];
 const IS_LOCAL = LOCAL_HOSTS.indexOf(self.location.hostname) !== -1;
 
-const CACHE_NAME = "suca-fpl-shell-v11";
+const CACHE_NAME = "suca-fpl-shell-v12";
 // Versioned independently of the shell. Neither holds anything the shell list
 // decides, and a shell bump should not throw away the only offline copy of the
 // data. Bump these only if the SHAPE of what is stored in them changes.
@@ -130,8 +141,9 @@ importScripts("/sw-routing.js");
 const SHELL_ROUTES = [
   // Every route the app has, which is still a short enough list to precache
   // whole: the call, the projections, the fixture phases, the player stats, the
-  // evidence, the review of what last week cost, the position, and the page
-  // shown when a fetch fails.
+  // evidence, the review of what last week cost, the position, the More tab, and
+  // the page shown when a fetch fails — plus the icons and manifest, served by
+  // `handleAsset`.
   "/",
   "/players",
   "/phases",
@@ -139,11 +151,14 @@ const SHELL_ROUTES = [
   "/evidence",
   "/review",
   "/capture",
+  "/more",
   "/offline",
+  "/manifest.webmanifest",
   "/icon.svg",
   "/icon-maskable.svg",
   "/icon-192.png",
   "/icon-512.png",
+  "/icon-maskable-512.png",
   "/apple-touch-icon.png",
 ];
 
@@ -290,6 +305,20 @@ async function handleStatic(event) {
   return response;
 }
 
+async function handleAsset(event) {
+  const request = event.request;
+  const cache = await caches.open(CACHE_NAME);
+  const cached = await cache.match(request, { ignoreSearch: true });
+  if (cached) return cached;
+  // Not precached (an install that predates this entry): fetch, and keep it.
+  const response = await fetch(request);
+  if (storable(response)) {
+    const copy = response.clone();
+    event.waitUntil(cache.put(request, copy));
+  }
+  return response;
+}
+
 async function handleData(event) {
   const request = event.request;
   const cache = await caches.open(DATA_CACHE);
@@ -380,6 +409,7 @@ self.addEventListener("fetch", (event) => {
   else if (kind === "static") event.respondWith(handleStatic(event));
   else if (kind === "data") event.respondWith(handleData(event));
   else if (kind === "live") event.respondWith(handleLive(event));
+  else if (kind === "asset") event.respondWith(handleAsset(event));
   // "bypass": no respondWith, the browser handles it. Every non-GET and every
   // other /api route lands here.
 });

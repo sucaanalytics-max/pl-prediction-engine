@@ -23,6 +23,16 @@
  * decision it constrains. `app/page.test.tsx` asserts the count, not just the
  * presence.
  *
+ * ## The countdown is this component's, and only derived
+ *
+ * The strip carries "7d 3h left". It is computed here from the SAME `deadline`
+ * string the date beside it prints, against the device clock, once a minute — it
+ * is never the stamped `secondsToDeadline`, which is the frozen duration that
+ * disagreed with a live one last time. Two numbers over one instant came from two
+ * sources then; here the date and the countdown share one source, in one
+ * component, so they cannot drift apart. Before mount there is no `now`, so the
+ * server render and the first client render both omit it and nothing mismatches.
+ *
  * ## Where the time comes from
  *
  * `agent_status.deadline`, which the phase resolver writes and republishes every
@@ -31,6 +41,8 @@
  * this component holds no timer and no client-clock arithmetic, which is what keeps
  * it from becoming the second clock itself.
  */
+
+import { useEffect, useState } from "react";
 
 import { proven } from "@/lib/data/artifact";
 import { AGENT_STATUS, type AgentStatus } from "@/lib/data/agent-status";
@@ -50,7 +62,31 @@ function Unknown({ why }: { why: string }) {
   );
 }
 
+/** "7d 3h left", "3h 12m left", "42m left", or "Deadline passed". */
+export function countdownLabel(deadlineMs: number, nowMs: number): string {
+  const ms = deadlineMs - nowMs;
+  if (ms <= 0) return "Deadline passed";
+  const minutes = Math.floor(ms / 60_000);
+  const days = Math.floor(minutes / 1440);
+  const hours = Math.floor((minutes % 1440) / 60);
+  if (days > 0) return `${days}d ${hours}h left`;
+  if (hours > 0) return `${hours}h ${minutes % 60}m left`;
+  return `${Math.max(minutes, 1)}m left`;
+}
+
+/** Null until mounted, then the device time, refreshed each minute. */
+function useNowMs(): number | null {
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => {
+    setNow(Date.now());
+    const timer = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(timer);
+  }, []);
+  return now;
+}
+
 export function DeadlineClock() {
+  const nowMs = useNowMs();
   const { artifact } = useArtifact<AgentStatus>(AGENT_STATUS);
   const status = proven(artifact);
 
@@ -72,20 +108,35 @@ export function DeadlineClock() {
     );
   }
 
+  const left = nowMs === null ? null : countdownLabel(parsed.getTime(), nowMs);
+
   return (
-    <div className="text-right" data-testid="deadline-clock">
-      <span
-        className="block text-xs uppercase"
-        style={{ color: "var(--text-3)", letterSpacing: ".08em" }}
-      >
-        {status.gameweek === null ? "Next deadline" : `GW${status.gameweek} deadline`}
-      </span>
-      <strong
-        className="block text-sm mt-0.5"
-        style={{ color: "var(--text-1)", fontFamily: "var(--font-mono)" }}
-      >
-        {compactIstDeadline(deadline)}
-      </strong>
-    </div>
+    <section aria-label="Deadline" className="deadline-clock" data-testid="deadline-clock">
+      <div>
+        <span
+          className="block text-xs uppercase font-semibold"
+          style={{ color: "var(--text-3)", letterSpacing: ".08em" }}
+        >
+          {status.gameweek === null ? "Next deadline" : `GW${status.gameweek} deadline`}
+        </span>
+        <strong
+          className="block text-sm mt-0.5"
+          style={{ color: "var(--text-1)", fontFamily: "var(--font-mono)" }}
+        >
+          {compactIstDeadline(deadline)}
+        </strong>
+      </div>
+      {left === null ? null : (
+        <span
+          data-testid="deadline-countdown"
+          style={{
+            padding: "6px 10px", background: "var(--brand)", color: "var(--surface)",
+            fontSize: 13, fontWeight: 600, whiteSpace: "nowrap",
+          }}
+        >
+          {left}
+        </span>
+      )}
+    </section>
   );
 }

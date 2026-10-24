@@ -176,10 +176,15 @@ export default function Navigation() {
                 rel="noreferrer"
               >
                 <strong>{live.entry.teamName ?? "My FPL team"}</strong>
-                <span>{live.entry.id}</span>
-                {/* Appended to the visible text, not replacing it: an
-                    aria-label that omits the visible name fails WCAG 2.5.3. */}
-                <span className="sr-only">, opens the official FPL team page</span>
+                {/* The id, and on a phone the words "opens FPL" beside it. Both
+                    stay in the link's text, so the accessible name always
+                    contains what is visible (WCAG 2.5.3); `.masthead-opens` is
+                    display:none above 767px, which also drops it from the name. */}
+                <span>
+                  {live.entry.id}
+                  <span className="masthead-opens"> · opens FPL</span>
+                </span>
+                <span className="sr-only">, official FPL team page, opens in a new tab</span>
               </a>
             ) : (
               <span className="masthead-team-plain">

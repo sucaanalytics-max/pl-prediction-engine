@@ -120,3 +120,21 @@ describe("OfflineBanner", () => {
     }
   });
 });
+
+describe("OfflineBanner, as drawn", () => {
+  it("adds the second line only when there is a time for it to be true about", () => {
+    setOnline(false);
+    render(<OfflineBanner />);
+    expect(region()).toHaveTextContent(/^Offline$/);
+    act(() => noteCachedAt(STAMP));
+    expect(region()).toHaveTextContent("Nothing below has refreshed since then");
+  });
+
+  it("sits on the warm band", () => {
+    setOnline(false);
+    act(() => noteCachedAt(STAMP));
+    render(<OfflineBanner />);
+    const band = region().firstElementChild as HTMLElement;
+    expect(band.style.background).toBe("var(--warm)");
+  });
+});

@@ -39,6 +39,7 @@ const ALLOWED: Record<string, string> = {
   stats: "the detail behind a transfer, on players owned and not owned",
   evidence: "what moved, and whether to believe it",
   review: "what last week's calls cost, judged only against the sealed forecast",
+  more: "the fifth phone tab: the record screens, data freshness, install",
   capture: "the position: squad, bank, purchase prices — reached from /, not the nav",
   offline: "served by the service worker when a fetch fails; not a destination",
 };
@@ -111,11 +112,27 @@ describe("route allow-list", () => {
     expect(destinations(NAV)).toEqual([...IN_NAV].sort());
   });
 
-  it("the phone nav lists the same destinations as the sidebar", () => {
-    // Not "three items" — the same SET. Two navs over one route surface may differ
-    // in order, icon and label; a destination one of them can reach and the other
-    // cannot is a defect in whichever is wrong, and there is no way to tell which.
-    expect(destinations(BOTTOM_NAV)).toEqual(destinations(NAV));
+  it("the phone nav reaches every destination the sidebar does", () => {
+    // Five tabs, one of them More. A destination the masthead reaches and the
+    // phone cannot is a defect; it may be a tab or one of More's routes, and
+    // `MORE_ROUTES` is where the phone nav says which.
+    const phone = new Set(destinations(BOTTOM_NAV));
+    const source = readFileSync(BOTTOM_NAV, "utf8");
+    const more = new Set(
+      [...(/MORE_ROUTES = \[([^\]]*)\]/.exec(source)?.[1] ?? "").matchAll(/"(\/[^"]*)"/g)]
+        .map((m) => m[1]),
+    );
+    expect(phone.size).toBe(5);
+    expect(phone.has("/more")).toBe(true);
+    for (const href of destinations(NAV)) {
+      expect(phone.has(href) || more.has(href), `${href} is unreachable on a phone`)
+        .toBe(true);
+    }
+    // And /more itself must list the record screens it claims to.
+    const page = readFileSync(join(APP, "more", "page.tsx"), "utf8");
+    for (const href of ["/capture", "/evidence", "/review"]) {
+      expect(page, `/more must link ${href}`).toContain(`"${href}"`);
+    }
   });
 
   it("neither nav links a route outside the allow-list", () => {

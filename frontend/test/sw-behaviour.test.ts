@@ -244,16 +244,40 @@ describe("public/sw.js", () => {
     sw.state.network = async () => new Response("<html>fresh</html>");
     const res = await sw.fetchEvent(`${ORIGIN}/players`, { mode: "navigate" });
     expect(await res!.text()).toContain("fresh");
-    expect(await sw.stores.get("suca-fpl-shell-v11")!.match(`${ORIGIN}/players`)).toBeDefined();
+    expect(await sw.stores.get("suca-fpl-shell-v12")!.match(`${ORIGIN}/players`)).toBeDefined();
   });
 
   it("navigation: offline serves the stored page, then /offline", async () => {
-    const shell = await sw.caches.open("suca-fpl-shell-v11");
+    const shell = await sw.caches.open("suca-fpl-shell-v12");
     await shell.put(`${ORIGIN}/players`, new Response("<html>stored</html>"));
     await shell.put("/offline", new Response("<html>offline</html>"));
     sw.state.network = null;
     expect(await (await sw.fetchEvent(`${ORIGIN}/players`, { mode: "navigate" }))!.text()).toContain("stored");
     expect(await (await sw.fetchEvent(`${ORIGIN}/unknown`, { mode: "navigate" }))!.text()).toContain("offline");
+  });
+
+  it("assets: answered cache-first from the shell cache, with the network gone", async () => {
+    const shell = await sw.caches.open("suca-fpl-shell-v12");
+    await shell.put(`${ORIGIN}/icon.svg`, new Response("<svg>stored</svg>"));
+    sw.state.network = null;
+    const res = await sw.fetchEvent(`${ORIGIN}/icon.svg`);
+    expect(res).not.toBeNull();
+    expect(await res!.text()).toContain("stored");
+  });
+
+  it("assets: not precached means network, and the 200 is kept for next time", async () => {
+    sw.state.network = async () => new Response("manifest-body");
+    const url = `${ORIGIN}/manifest.webmanifest`;
+    expect(await (await sw.fetchEvent(url))!.text()).toBe("manifest-body");
+    expect(await sw.stores.get("suca-fpl-shell-v12")!.match(url)).toBeDefined();
+    sw.state.network = null;
+    expect(await (await sw.fetchEvent(url))!.text()).toBe("manifest-body");
+  });
+
+  it("assets: a failed fetch with nothing stored is the browser's to report, and nothing else is answered", async () => {
+    sw.state.network = null;
+    await expect(sw.fetchEvent(`${ORIGIN}/icon-192.png`)).rejects.toThrow();
+    expect(await sw.fetchEvent(`${ORIGIN}/og.png`)).toBeNull();
   });
 
   it("install: activates at once only when no worker is active", () => {
@@ -271,14 +295,14 @@ describe("public/sw.js", () => {
   });
 
   it("activate: keeps the data and static caches, evicts older shells", async () => {
-    for (const name of ["suca-fpl-shell-v10", "suca-fpl-shell-v11", "suca-fpl-data-v1", "suca-fpl-static-v1"]) {
+    for (const name of ["suca-fpl-shell-v10", "suca-fpl-shell-v11", "suca-fpl-shell-v12", "suca-fpl-data-v1", "suca-fpl-static-v1"]) {
       await sw.caches.open(name);
     }
     const waits: Promise<unknown>[] = [];
     sw.handlers.activate({ waitUntil: (p: Promise<unknown>) => waits.push(p) });
     await Promise.all(waits);
     expect([...sw.stores.keys()].sort()).toEqual(
-      ["suca-fpl-data-v1", "suca-fpl-shell-v11", "suca-fpl-static-v1"],
+      ["suca-fpl-data-v1", "suca-fpl-shell-v12", "suca-fpl-static-v1"],
     );
     expect(sw.state.claimed).toBe(1);
   });

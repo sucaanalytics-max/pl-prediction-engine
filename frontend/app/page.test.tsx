@@ -23,6 +23,7 @@
 
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import type { PublicDecision } from "@/lib/data/narrow";
 
 
 
@@ -411,6 +412,9 @@ describe("the transfer tile reports the agent's plan when one is published", () 
   const BUY = {
     ...PROJECTIONS[6], elementId: 68, name: "Tavernier", position: "MID", xp: 5.12,
   };
+  // Typed as the narrower's output, so a field the narrower always supplies can
+  // never again be missing here: the phone CallCard reads `probAtLeast` and the
+  // quantiles, and an untyped fixture without them crashed the board in test only.
   const decisionWith = (transfersIn: number[], transfersOut: number[]) => ({
     gameweek: 1, entry_label: "owner", objective: null,
     generated_at: "2026-09-11T19:50:11Z", deadline: "2026-09-12T10:00:00Z",
@@ -421,7 +425,10 @@ describe("the transfer tile reports the agent's plan when one is published", () 
     },
     mean_points: 55, optimism_gap: null, credible_margin: false, sealed: false,
     warnings: [], xp_snapshot: {}, horizon: null,
-  });
+    points_sd: null, points_q10: null, points_q25: null, points_q50: null,
+    points_q75: null, points_q90: null, points_mode: null,
+    probAtLeast: [], autosubProb: null, nDraws: null,
+  }) satisfies PublicDecision;
   const tile = (container: HTMLElement) =>
     container.querySelector("[data-testid='tile-transfer']")?.textContent ?? "";
 

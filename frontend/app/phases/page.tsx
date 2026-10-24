@@ -17,19 +17,26 @@
  */
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { FixtureRunsPhone } from "@/components/phases/FixtureRunsPhone";
 import { PhaseMatrix } from "@/components/phases/PhaseMatrix";
 import { TeamStrength } from "@/components/phases/TeamStrength";
 import { proven } from "@/lib/data/artifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
+import { useIsPhone } from "@/lib/phone";
 
 export default function PhasesPage() {
   const { artifact } = useHeuristics();
   const live = proven(artifact);
   const fixtures = live?.fixtureMatrix ?? [];
+  const phone = useIsPhone();
 
   return (
     <ErrorBoundary pageName="Phases">
       <div className="space-y-6">
+        {/* On a phone the grid carries its own header (title, warrant, legend),
+            so this one steps aside — but only when there IS a grid. With no
+            fixture list the one-line reason below needs a heading above it. */}
+        {phone && fixtures.length > 0 ? null : (
         <header>
           <h1
             className="text-3xl font-extrabold tracking-tight"
@@ -41,6 +48,7 @@ export default function PhasesPage() {
             Runs of three or more kind fixtures — where to hop on, and when to hop off
           </p>
         </header>
+        )}
 
         {fixtures.length === 0 ? (
           // One line, not a panel: there is no other substance on this page for a
@@ -49,6 +57,8 @@ export default function PhasesPage() {
             {artifact.reason
               ?? "FPL's fixture list could not be read, so there is no matrix to draw."}
           </p>
+        ) : phone ? (
+          <FixtureRunsPhone fixtures={fixtures} />
         ) : (
           <PhaseMatrix fixtures={fixtures} />
         )}

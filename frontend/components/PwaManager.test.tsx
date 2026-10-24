@@ -122,3 +122,57 @@ describe("PwaManager update flow", () => {
     expect(reload).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("PwaManager install sheet", () => {
+  async function openFromMore() {
+    install({ controller: true });
+    render(<PwaManager />);
+    await flush();
+    act(() => { window.dispatchEvent(new Event("suca:install-sheet")); });
+  }
+
+  it("stays closed until asked, even with the dismissal stored", async () => {
+    install({ controller: true });
+    render(<PwaManager />);
+    await flush();
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("opens as a modal dialog with a label when /more asks for it", async () => {
+    await openFromMore();
+    const dialog = screen.getByRole("dialog", { name: "Put Suca on your home screen" });
+    expect(dialog.getAttribute("aria-modal")).toBe("true");
+    expect(dialog.textContent).toContain("Keeps the last call readable offline");
+  });
+
+  it("moves focus into the sheet, and Escape closes it", async () => {
+    await openFromMore();
+    const dialog = screen.getByRole("dialog");
+    expect(dialog.contains(document.activeElement)).toBe(true);
+    fireEvent.keyDown(dialog, { key: "Escape" });
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("with no install event offers Got it and the by-hand instruction, not a dead Install", async () => {
+    await openFromMore();
+    expect(screen.queryByRole("button", { name: "Install" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Got it" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog").textContent).toMatch(/Add to Home Screen/);
+  });
+
+  it("persists the dismissal on Not now, as the old card's close did", async () => {
+    const setItem = vi.fn();
+    vi.stubGlobal("localStorage", { getItem: () => null, setItem });
+    install({ controller: true });
+    render(<PwaManager />);
+    await flush();
+    const event = Object.assign(new Event("beforeinstallprompt", { cancelable: true }), {
+      prompt: vi.fn(async () => undefined),
+      userChoice: Promise.resolve({ outcome: "dismissed" as const }),
+    });
+    act(() => { window.dispatchEvent(event); });
+    fireEvent.click(screen.getByRole("button", { name: "Not now" }));
+    expect(setItem).toHaveBeenCalledWith("suca-pwa-dismissed", "1");
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+});
