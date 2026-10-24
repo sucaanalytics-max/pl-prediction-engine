@@ -4,6 +4,7 @@ Enhances Dixon-Coles with non-linear feature interactions.
 Output: predicted xG (lambda/mu) fed into Poisson simulation.
 """
 import logging
+import math
 import pickle
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -11,7 +12,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
-from pipeline.config import XGBOOST, DATA_PROCESSED
+from pipeline.config import XGBOOST, DATA_PROCESSED, PARAM_REGISTRY
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +62,53 @@ FEATURE_COLS = [
 ]
 
 
+def holdout_settings() -> Dict[str, float]:
+    """Registered early-stopping holdout: fraction, minimum rows, refit flag."""
+    return {
+        "fraction": float(PARAM_REGISTRY["xgboost.holdout_fraction"]["value"]),
+        "min_rows": int(PARAM_REGISTRY["xgboost.holdout_min_rows"]["value"]),
+        "refit_all": bool(PARAM_REGISTRY["xgboost.refit_on_all_rows"]["value"]),
+    }
+
+
+def temporal_holdout_split(
+    df: pd.DataFrame, fraction: float, min_rows: int
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Split played matches into (train, holdout) by kickoff date.
+
+    The holdout is the chronologically last ``max(ceil(fraction * n), min_rows)``
+    matches, extended backwards to include every match sharing the cut-off date,
+    so every holdout match is STRICTLY later than every training match — no
+    same-day row on both sides. Seasons play no part: the holdout may span a
+    season boundary, and in-season rows sit in training whenever they precede
+    the cut.
+
+    Raises ValueError when fewer than ``min_rows`` rows would remain for
+    training. Early stopping on a handful of matches selects the tree count by
+    noise, and that is the failure this function exists to prevent, so it
+    refuses rather than shrinking the holdout.
+    """
+    if not 0.0 < fraction < 1.0:
+        raise ValueError(f"holdout fraction must be in (0, 1), got {fraction}")
+    df = df.sort_values("Date", kind="stable")
+    n = len(df)
+    n_hold = max(int(math.ceil(fraction * n)), int(min_rows))
+    if n - n_hold < min_rows:
+        raise ValueError(
+            f"{n} played matches cannot support a {n_hold}-row early-stopping "
+            f"holdout plus at least {min_rows} training rows"
+        )
+    cutoff = df["Date"].iloc[n - n_hold]
+    train = df[df["Date"] < cutoff]
+    holdout = df[df["Date"] >= cutoff]
+    if len(train) < min_rows:
+        raise ValueError(
+            f"only {len(train)} matches precede the holdout cut-off {cutoff}"
+        )
+    return train, holdout
+
+
 class XGBoostGoalModel:
     """
     XGBoost regression model predicting home and away goals.
@@ -71,109 +119,120 @@ class XGBoostGoalModel:
         self.model_away = None
         self.feature_cols = []
 
-    def fit(self, features: pd.DataFrame) -> Dict:
-        """
-        Train XGBoost models for home and away goals.
-
-        Args:
-            features: Feature-engineered match DataFrame
-
-        Returns:
-            Dict with training metrics
-        """
+    def _regressor(self, n_estimators: int, early_stopping: bool):
+        """One Poisson goals regressor. Separate so tests can substitute it."""
         try:
             import xgboost as xgb
         except ImportError:
             logger.error("XGBoost not installed.")
             raise
 
+        return xgb.XGBRegressor(
+            objective="count:poisson",
+            n_estimators=n_estimators,
+            max_depth=XGBOOST["max_depth"],
+            learning_rate=XGBOOST["learning_rate"],
+            subsample=XGBOOST["subsample"],
+            colsample_bytree=XGBOOST["colsample_bytree"],
+            reg_alpha=XGBOOST["reg_alpha"],
+            reg_lambda=XGBOOST["reg_lambda"],
+            early_stopping_rounds=XGBOOST["early_stopping_rounds"] if early_stopping else None,
+            random_state=42,
+        )
+
+    def fit(self, features: pd.DataFrame) -> Dict:
+        """
+        Train XGBoost models for home and away goals.
+
+        Tree count is chosen by early stopping on a time-ordered holdout — the
+        chronologically last ``xgboost.holdout_fraction`` of played matches, at
+        least ``xgboost.holdout_min_rows``, strictly later than every training
+        match (``temporal_holdout_split``). With ``xgboost.refit_on_all_rows``
+        the models are then refitted on EVERY played match at the selected tree
+        count, so the most recent results — the in-season ones that matter most
+        for the next fixture — are in the model that predicts it.
+
+        This replaces a season split (train on every season but the last,
+        early-stop on the last), which once the in-progress season joined the
+        training data early-stopped on that season's 10-80 rows and kept every
+        in-season match out of training. Evidence: PARAM_REGISTRY "xgboost.*".
+
+        Args:
+            features: Feature-engineered match DataFrame
+
+        Returns:
+            Dict with training metrics. ``mae_*`` are measured on the holdout by
+            the early-stopped models, before any refit, so they stay
+            out-of-sample.
+        """
+        settings = holdout_settings()
+
         # Select available features
         self.feature_cols = [c for c in FEATURE_COLS if c in features.columns]
         logger.info(f"XGBoost using {len(self.feature_cols)} features: {self.feature_cols}")
 
-        # Filter to matches with all features
         df = features.dropna(subset=["FTHG", "FTAG"]).copy()
-
-        # Season-aware temporal split: train on all seasons except last,
-        # validate on the most recent season. This prevents data leakage
-        # (future matches leaking into training set via naive row split).
-        if "season" in df.columns and df["season"].nunique() > 1:
-            seasons = sorted(df["season"].unique())
-            last_season = seasons[-1]
-            train = df[df["season"] != last_season]
-            val = df[df["season"] == last_season]
-            logger.info(
-                f"Temporal split: train seasons {seasons[:-1]}, "
-                f"val season {last_season}"
-            )
-        else:
-            # Fallback: 80/20 chronological split
-            n_train = int(len(df) * 0.8)
-            train = df.iloc[:n_train]
-            val = df.iloc[n_train:]
+        train, val = temporal_holdout_split(df, settings["fraction"], settings["min_rows"])
+        logger.info(
+            f"Temporal holdout: train {len(train)} matches to "
+            f"{train['Date'].max().date()}, early-stop on {len(val)} from "
+            f"{val['Date'].min().date()} to {val['Date'].max().date()}"
+        )
 
         # Fill missing values with column medians instead of 0.
         # Zero is a meaningful value for features like referee_avg_yellows
-        # or pass_completion, so fillna(0) introduces bias.
+        # or pass_completion, so fillna(0) introduces bias. Medians come from
+        # the rows being fitted, never from the holdout.
         col_medians = train[self.feature_cols].median()
         X_train = train[self.feature_cols].fillna(col_medians)
         X_val = val[self.feature_cols].fillna(col_medians)
-        self._col_medians = col_medians  # Store for prediction time
 
-        # Home goals model
-        logger.info("Training home goals model...")
-        self.model_home = xgb.XGBRegressor(
-            objective="count:poisson",
-            n_estimators=XGBOOST["n_estimators"],
-            max_depth=XGBOOST["max_depth"],
-            learning_rate=XGBOOST["learning_rate"],
-            subsample=XGBOOST["subsample"],
-            colsample_bytree=XGBOOST["colsample_bytree"],
-            reg_alpha=XGBOOST["reg_alpha"],
-            reg_lambda=XGBOOST["reg_lambda"],
-            early_stopping_rounds=XGBOOST["early_stopping_rounds"],
-            random_state=42,
-        )
-        self.model_home.fit(
-            X_train, train["FTHG"],
-            eval_set=[(X_val, val["FTHG"])],
-            verbose=False,
-        )
+        n_max = XGBOOST["n_estimators"]
+        best = {}
+        for side, target in (("home", "FTHG"), ("away", "FTAG")):
+            logger.info(f"Training {side} goals model...")
+            model = self._regressor(n_max, early_stopping=True)
+            model.fit(X_train, train[target], eval_set=[(X_val, val[target])], verbose=False)
+            setattr(self, f"model_{side}", model)
+            best[side] = int(getattr(model, "best_iteration", n_max - 1)) + 1
 
-        # Away goals model
-        logger.info("Training away goals model...")
-        self.model_away = xgb.XGBRegressor(
-            objective="count:poisson",
-            n_estimators=XGBOOST["n_estimators"],
-            max_depth=XGBOOST["max_depth"],
-            learning_rate=XGBOOST["learning_rate"],
-            subsample=XGBOOST["subsample"],
-            colsample_bytree=XGBOOST["colsample_bytree"],
-            reg_alpha=XGBOOST["reg_alpha"],
-            reg_lambda=XGBOOST["reg_lambda"],
-            early_stopping_rounds=XGBOOST["early_stopping_rounds"],
-            random_state=42,
-        )
-        self.model_away.fit(
-            X_train, train["FTAG"],
-            eval_set=[(X_val, val["FTAG"])],
-            verbose=False,
-        )
-
-        # Validation metrics
+        # Validation metrics, from the early-stopped models on the holdout
         pred_home = self.model_home.predict(X_val)
         pred_away = self.model_away.predict(X_val)
         mae_home = np.mean(np.abs(pred_home - val["FTHG"]))
         mae_away = np.mean(np.abs(pred_away - val["FTAG"]))
+
+        self._col_medians = col_medians  # Store for prediction time
+        refit = settings["refit_all"]
+        if refit:
+            # Same tree count, all played rows. The holdout has done its one
+            # job (choosing the tree count); leaving it out of the final model
+            # would leave out exactly the most recent matches.
+            all_medians = df[self.feature_cols].median()
+            X_all = df[self.feature_cols].fillna(all_medians)
+            for side, target in (("home", "FTHG"), ("away", "FTAG")):
+                model = self._regressor(best[side], early_stopping=False)
+                model.fit(X_all, df[target], verbose=False)
+                setattr(self, f"model_{side}", model)
+            self._col_medians = all_medians
 
         metrics = {
             "mae_home": float(mae_home),
             "mae_away": float(mae_away),
             "n_train": len(train),
             "n_val": len(val),
+            "n_fit": len(df) if refit else len(train),
+            "n_trees_home": best["home"],
+            "n_trees_away": best["away"],
+            "refit_on_all_rows": refit,
+            "holdout_start": str(val["Date"].min().date()),
             "n_features": len(self.feature_cols),
         }
-        logger.info(f"XGBoost validation: MAE home={mae_home:.3f}, MAE away={mae_away:.3f}")
+        logger.info(
+            f"XGBoost holdout: MAE home={mae_home:.3f}, MAE away={mae_away:.3f}; "
+            f"trees home={best['home']}, away={best['away']}; "
+            f"final fit on {metrics['n_fit']} matches"
+        )
 
         return metrics
 

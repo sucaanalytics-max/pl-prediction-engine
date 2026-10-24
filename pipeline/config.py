@@ -1008,6 +1008,106 @@ PARAM_REGISTRY = {
             "merely does not contradict, and it is not refit-eligible."
         ),
     },
+    # ── XGBoost early stopping and the Elo promoted-club start ───────────
+    # XGBoost is 30% of the value-bet ensemble; elo_diff is its top feature.
+    # Read by pipeline/models/xgboost_model.py and pipeline/features/engineer.py.
+    #
+    # Shared evidence base: walk-forward over 2020-21..2025-26 plus 2026-27 to
+    # GW8 (2,350 matches), production-faithful: each test season predicted by
+    # models trained on its three preceding seasons plus its own results before
+    # the refit week, refitted weekly, the week's fixtures engineered as
+    # UPCOMING rows exactly as run_pipeline does, Football-Data features only
+    # (no FBref/availability, which have no history). "Ensemble" = the 60/30/10
+    # DC/XGB/PB blend of goal rates scored with the DC rho, DC being a MAP
+    # replica of the c62126be prior. Differences are paired against HEAD (season
+    # split + 1500 Elo start), 95% CIs from a bootstrap over (season, week)
+    # clusters, 2,000 reps. Scratch: wf_xgb.py / analyse_wf.py.
+    "xgboost.holdout_fraction": {
+        "value": 0.15,
+        "bounds": (0.05, 0.40),
+        "tier": "C",
+        "source": (
+            "Share of played matches, chronologically last, that XGBoost early-"
+            "stops on (temporal_holdout_split); with xgboost.holdout_min_rows the "
+            "holdout is ~190-230 matches, about half a season.\n\n"
+            "Replaces a season split — train on every season but the last, "
+            "early-stop on the last — which, once TRAINING_SEASONS included the "
+            "in-progress season, early-stopped on that season's played rows: "
+            "under 50 in 13% and under 100 in 28% of walk-forward refits (10 at "
+            "GW1), and kept every in-season match out of the model.\n\n"
+            "Not identified by the data, hence tier C: with refit on all rows, "
+            "0.10 / 0.15 / 0.20 / 0.30 (min 190) give XGB 1X2 log-loss "
+            "-0.0113 / -0.0117 / -0.0112 / -0.0115 vs HEAD and ensemble 1X2 "
+            "-0.0025 / -0.0026 / -0.0023 / -0.0024 (all with the Elo fix). 0.15 "
+            "is a middle value of a flat curve, not an optimum."
+        ),
+    },
+    "xgboost.holdout_min_rows": {
+        "value": 190,
+        "bounds": (100, 760),
+        "tier": "C",
+        "source": (
+            "Floor on the early-stopping holdout (half a season). It binds "
+            "whenever 15% of the played matches is fewer, i.e. below ~1,270 "
+            "rows, so at the start of a season the holdout is the last 190 "
+            "matches of the previous one rather than a handful of new ones. "
+            "temporal_holdout_split refuses (ValueError) rather than shrink "
+            "below it, and also needs this many rows before the cut-off. "
+            "Human-set; the walk-forward's holdout size was 190-234 throughout."
+        ),
+    },
+    "xgboost.refit_on_all_rows": {
+        "value": 1.0,
+        "bounds": (0.0, 1.0),
+        "tier": "C",
+        "source": (
+            "1 = after early stopping picks the tree count on the holdout, refit "
+            "both goal models on EVERY played match at that count, so the most "
+            "recent results (the holdout) are in the model that predicts the "
+            "next fixture. 0 = keep the early-stopped models.\n\n"
+            "The refit is what carries the gain. Walk-forward, HEAD Elo, holdout "
+            "0.15: without refit XGB 1X2 log-loss +0.0002 [-0.0048, +0.0047] and "
+            "goals NLL -0.0083 [-0.0170, +0.0002] vs HEAD; with refit -0.0075 "
+            "[-0.0126, -0.0026] and -0.0153 [-0.0262, -0.0053], ensemble 1X2 "
+            "-0.0017 [-0.0031, -0.0003]. Refit wins at every holdout fraction "
+            "tried. Median tree count 59 home / 49 away (10-90%: 34-116 / "
+            "29-84) on a median 1,118 rows, reused on a median 1,317."
+        ),
+    },
+    "elo.promoted_start_offset": {
+        "value": -110.0,
+        "bounds": (-250.0, 0.0),
+        "tier": "F",
+        "source": (
+            "Elo points below 1500 at which a club promoted into the league "
+            "starts (engineer.EloRating), and the target toward which every "
+            "non-established club — relegated/absent, or returning via promotion "
+            "— regresses at a season boundary; established clubs still regress "
+            "toward 1500. 0 reproduces the old rule bit-for-bit (tested), under "
+            "which every promoted club started average and a relegated club "
+            "drifted back toward 1500 while out of the league.\n\n"
+            "MEASURED on 24 promoted club-seasons, 2018-19..2025-26, with the "
+            "production Elo (k 20, HA 50, reversion 1/3) run from 2017-18. Under "
+            "the old rule promoted clubs finished their first season at 1500-87 "
+            "(SE 15; -107 vs the league mean) and relegated clubs left at "
+            "1500-120. The offset minimising the cross-entropy of Elo expected "
+            "score on promoted clubs' matches is -110 (club-season bootstrap 90% "
+            "CI -160 to -60); league-wide it is also -110 (0.6224 -> 0.6192 per "
+            "match). Leave-future-out argmins by season were -90 to -120. Split "
+            "by kind: clubs new to the data -80 (-120 to -30); returning clubs "
+            "-190 (-250 to -100), i.e. regressing them toward the anchor is if "
+            "anything too generous — toward 1500 it was worse.\n\n"
+            "Consistent with dixon_coles.promoted_*: attack -0.30 / defence -0.24 "
+            "at 1.42 goals per side imply expected score 0.335 vs an average "
+            "club, an Elo gap of -120; with the 0.5 new-club shrink, -60.\n\n"
+            "WALK-FORWARD (leave-future-out offsets, HEAD XGB): XGB 1X2 log-loss "
+            "-0.0061 [-0.0111, -0.0008]; on fixtures with a promoted club -0.0100 "
+            "[-0.0201, +0.0006]; ensemble -0.0013 [-0.0028, +0.0002]. Combined "
+            "with the XGB holdout fix: XGB -0.0117 [-0.0180, -0.0056], ensemble "
+            "1X2 -0.0026 [-0.0044, -0.0009]. Not significant at GW1-6 (ensemble "
+            "+0.0005 [-0.0035, +0.0046]) or on clubs new to the window."
+        ),
+    },
     "events.recency_half_life_fixtures": {
         "value": 40.0,
         "bounds": (1.0, 80.0),
