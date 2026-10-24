@@ -201,9 +201,14 @@ class Plan:
     # would make the objective's banked value unrecoverable from it.
     free_transfers_banked: int
     free_transfers_after: int
+    # The chip played this week, e.g. "wildcard", or None. Only the horizon sets
+    # it, and only on a human-pinned week. A reader needs it to tell a thirteen-
+    # transfer rebuild from thirteen routine moves: `hits` is 0 in a chip week,
+    # and without the label that reads as a planner that forgot to charge them.
+    chip: Optional[str] = None
 
     def as_dict(self) -> Dict[str, Any]:
-        return {
+        out = {
             "squad": sorted(self.squad), "xi": sorted(self.xi),
             "captain": self.captain, "vice": self.vice,
             "transfers_in": sorted(self.transfers_in),
@@ -213,6 +218,11 @@ class Plan:
             "free_transfers_banked": self.free_transfers_banked,
             "free_transfers_after": self.free_transfers_after,
         }
+        # Emitted only when set, so a chip-free plan publishes exactly the
+        # bytes it did before chips existed.
+        if self.chip is not None:
+            out["chip"] = self.chip
+        return out
 
 
 def ft_value(banked: int) -> float:

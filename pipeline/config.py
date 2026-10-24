@@ -533,8 +533,33 @@ FPL_ENTRIES: Dict[str, Dict[str, Any]] = {
         "bank": None,
         "free_transfers": 1,
         "purchase_prices": None,
+        # The gameweek a wildcard is pinned to, as an ABSOLUTE gameweek number,
+        # or None for no chip. A human input, never chosen by the agent — see
+        # the horizon.py docstring on why chips are not free variables.
+        #
+        # Absolute rather than an offset because this file is static and the
+        # agent re-solves every few hours: an offset of 0 here would mean
+        # "wildcard this week" every week forever. `_decide_for_entries` turns
+        # it into the offset the solver takes, and ignores it once the
+        # gameweek has passed or while it lies beyond the transfer horizon.
+        # None reproduces the chip-free plan exactly.
+        "wildcard_gameweek": None,
     },
 }
+
+# Per-move cost charged on a pinned wildcard week's transfers, in expected
+# points. A normal week charges FT_USE_COST (horizon.py) for each free transfer
+# consumed; a wildcard consumes none, so without this its moves are free.
+#
+# STATED, not measured: no backtest of chip-week selection bias exists. What it
+# would price is that a free move's gain is the projection's error as much as
+# its signal — the solver buys the players whose xp happens to be overstated —
+# and thirteen free moves compound that. Measured sensitivity on the live GW9
+# solve (2026-10-25 prototype): a GW9 wildcard gained +24.2 over GW9-16 at 0.0
+# per move and +13.0 at 1.0, and WC9 > WC10 > WC11 held at both, so the WEEK
+# choice is robust across [0, 1] while the move count is not. Default 0 so the
+# chip week is planned on the projection alone until this is measured.
+FPL_WILDCARD_MOVE_FRICTION = 0.0
 
 # ── FPL agent: learnable parameters ────────────────────────────────────────
 # Every parameter the learning loop may touch is declared here with a tier,

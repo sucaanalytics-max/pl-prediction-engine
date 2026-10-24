@@ -129,7 +129,12 @@ def decision_messages(
             body=(
                 f"{len(plan.get('transfers_in') or [])} transfer(s), "
                 f"{plan.get('hits', 0)} hit(s) taken."
-                f"{deadline_note} Nothing has been submitted for you — the agent "
+                # A chip week's hits are 0 only BECAUSE the chip is played.
+                # Without saying so, a thirteen-move rebuild reads as free
+                # routine moves, and made without the chip it costs -48.
+                + (f" Plays the {plan['chip'].upper()} chip — make these "
+                   f"transfers only with it active." if plan.get("chip") else "")
+                + f"{deadline_note} Nothing has been submitted for you — the agent "
                 f"has no write access to FPL by design."
             ),
             created_at=created_at,

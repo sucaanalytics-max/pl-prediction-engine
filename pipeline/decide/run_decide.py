@@ -27,7 +27,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence
 
 from pipeline.decide.field import REQUIRED_CALIBRATED_GAMEWEEKS, field_is_usable
-from pipeline.decide.horizon import solve_horizon
+from pipeline.decide.horizon import TRANSFER_HORIZON, solve_horizon
 from pipeline.decide.milp import Plan, solve
 from pipeline.decide.plan_eval import PlanEvaluation, adjudicate, evaluate_plan
 from pipeline.decide.pool import PoolReport, build_pool, positions_of, xp_of
@@ -194,6 +194,7 @@ def decide(
     transfer_horizon: Optional[int] = None,
     field_calibrated_gameweeks: int = 0,
     deadline: Optional[str] = None,
+    wildcard_week: Optional[int] = None,
 ) -> Decision:
     """
     Produce one entry's proposal.
@@ -206,6 +207,11 @@ def decide(
     defaults to None rather than to "now plus something" because a fabricated
     deadline is worse than an absent one: a consumer can refuse to act on advice
     with no deadline, but it will act on advice with a wrong one.
+
+    ``wildcard_week`` is a human-pinned wildcard, as an offset from
+    ``gameweek`` (0 = this gameweek), or None. One that falls past the weeks
+    this solve may transfer in is not yet plannable and is left out, logged
+    rather than warned: it is the expected state for a chip pinned weeks ahead.
     """
     warnings: List[str] = []
 
@@ -258,13 +264,31 @@ def decide(
                 f"are mostly zeros and the horizon will avoid them for the wrong reason"
             )
 
+        if wildcard_week is not None:
+            if wildcard_week < 0:
+                raise ValueError(
+                    f"wildcard_week {wildcard_week} is in the past; the caller "
+                    f"must drop a pinned chip once its gameweek has gone"
+                )
+            window = min(
+                TRANSFER_HORIZON if transfer_horizon is None else transfer_horizon,
+                len(aligned),
+            )
+            if wildcard_week >= window:
+                logger.info(
+                    "wildcard pinned to GW%d is beyond this solve's %d transfer "
+                    "week(s); planning without it until it comes into range",
+                    int(gameweek) + wildcard_week, window,
+                )
+                wildcard_week = None
+
         # Plan over the horizon, act on week 0. A one-week solve cannot buy a
         # player whose run starts in three weeks, nor decline a marginal upgrade
         # now to hold the cash for a better one later.
         horizon_plans = solve_horizon(
             candidates, aligned, rules, current_squad=held, bank=bank,
             free_transfers=free_transfers, top_k=shortlist_size,
-            transfer_horizon=transfer_horizon,
+            transfer_horizon=transfer_horizon, wildcard_week=wildcard_week,
         )
         plans: List[Plan] = [p.now for p in horizon_plans]
     else:
@@ -279,6 +303,13 @@ def decide(
             "no multi-gameweek projection available; this decision is myopic and "
             "cannot see a fixture swing beyond the current gameweek"
         )
+        if wildcard_week is not None:
+            # Only the horizon models a chip. The single-week solve would charge
+            # a wildcard's moves as hits, so its plan is a chip-free one.
+            warnings.append(
+                f"a wildcard is pinned to GW{int(gameweek) + int(wildcard_week)} "
+                f"but this myopic solve cannot plan it; the proposal ignores the chip"
+            )
     if len(plans) < shortlist_size:
         warnings.append(
             f"MILP returned {len(plans)} distinct plans, fewer than the "
@@ -327,6 +358,13 @@ def decide(
             "transfer_horizon": horizon_plans[0].transfer_horizon,
             "provisional": provisional_for(horizon_plans, chosen.plan),
         }
+        # Recorded only when the chip was actually planned, and as an absolute
+        # gameweek so no reader has to know the offset convention. The week
+        # itself also carries `chip` on its plan.
+        if horizon_plans[0].wildcard_week is not None:
+            horizon_meta["wildcard_gameweek"] = (
+                int(gameweek) + horizon_plans[0].wildcard_week
+            )
         # Checked before it ships. A tail that does not follow from week 0 is
         # invisible in the artifact — every field is well formed and the squads
         # simply disagree — so it went unnoticed until the weeks were reconciled

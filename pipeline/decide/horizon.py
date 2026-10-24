@@ -40,7 +40,9 @@ Two simplifications, both stated rather than buried:
   exceed the effect being modelled.
 * **Chips are not free variables.** No defensible reserve-price estimator
   exists — a discounted max-of-expectations under-prices by Jensen and
-  guarantees burning them early — so they stay pinned human inputs.
+  guarantees burning them early — so they stay pinned human inputs. A wildcard
+  is pinned with ``wildcard_week``: the solver plans around the week it is
+  told, it never chooses one.
 """
 from __future__ import annotations
 
@@ -50,6 +52,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
+from pipeline.config import FPL_WILDCARD_MOVE_FRICTION
 from pipeline.decide.milp import (
     BENCH_WEIGHT,
     FT_MARGINAL_VALUE,
@@ -92,6 +95,16 @@ EVAL_HORIZON = 8
 # Hits are exempt. A hit already costs its full -4 and is not a free transfer
 # being consumed, so charging both would price it at -5.75.
 FT_USE_COST = FT_MARGINAL_VALUE[0]
+
+# Per-move tie-break in a wildcard week, in expected points. Solver mechanics,
+# not a model parameter — the modelled cost is FPL_WILDCARD_MOVE_FRICTION.
+#
+# With the move cost at zero every swap between two equally projected players
+# is a tie, and the solver settles ties arbitrarily: the published plan grows
+# moves that change nothing and differ run to run. A thousandth of a point per
+# move breaks every such tie toward NOT moving while staying far below any
+# difference the projection can resolve — thirteen moves cost 0.013.
+WILDCARD_TIE_BREAK = 1e-3
 
 
 @dataclass
@@ -193,6 +206,8 @@ class HorizonPlan:
     objective: float = 0.0
     transfer_horizon: int = 0
     eval_horizon: int = 0
+    # Offset of the pinned wildcard week within the horizon, or None.
+    wildcard_week: Optional[int] = None
 
     @property
     def now(self) -> Plan:
@@ -200,7 +215,7 @@ class HorizonPlan:
         return self.weeks[0]
 
     def as_dict(self) -> Dict[str, Any]:
-        return {
+        out = {
             "objective": round(self.objective, 6),
             "transfer_horizon": self.transfer_horizon,
             "eval_horizon": self.eval_horizon,
@@ -210,6 +225,9 @@ class HorizonPlan:
             # move before any of them is acted on.
             "provisional": [p.as_dict() for p in self.weeks[1:]],
         }
+        if self.wildcard_week is not None:
+            out["wildcard_week"] = self.wildcard_week
+        return out
 
 
 def build_horizon(
@@ -222,6 +240,9 @@ def build_horizon(
     transfer_horizon: Optional[int] = None,
     bench_weight: float = BENCH_WEIGHT,
     vice_weight: float = VICE_WEIGHT,
+    *,
+    wildcard_week: Optional[int] = None,
+    wildcard_friction: float = FPL_WILDCARD_MOVE_FRICTION,
 ) -> Tuple[np.ndarray, List[np.ndarray], List[float], List[float], HorizonIndex]:
     """
     Assemble the horizon MILP.
@@ -231,6 +252,13 @@ def build_horizon(
     ``TRANSFER_HORIZON``) sets how many of those weeks may contain transfers.
     Weeks past the transfer horizon are scored on the squad already held, which
     is what gives the terminal squad a price.
+
+    ``wildcard_week`` pins a wildcard to that week offset (0 = this gameweek).
+    In that week, as FPL scores it and as ``entry_api.replay_free_transfers``
+    replays it: transfers are unlimited and cost no hits, they do not spend the
+    free-transfer bank, and the week's +1 still accrues. Each move is charged
+    ``wildcard_friction`` in place of ``FT_USE_COST``. None builds exactly the
+    chip-free model, row for row.
 
     Returns ``(objective, rows, lower, upper, index)`` for maximisation; the
     caller negates once for scipy's minimise convention.
@@ -249,6 +277,21 @@ def build_horizon(
 
     transfer_horizon = TRANSFER_HORIZON if transfer_horizon is None else transfer_horizon
     transfer_horizon = min(transfer_horizon, weeks)
+
+    if wildcard_week is not None:
+        # A pinned chip that cannot be played is a caller error, not something
+        # to drop quietly: the plan would be published as though the chip had
+        # been honoured.
+        if isinstance(wildcard_week, bool) or not isinstance(wildcard_week, (int, np.integer)):
+            raise TypeError(f"wildcard_week must be an int offset, got {wildcard_week!r}")
+        if not 0 <= wildcard_week < transfer_horizon:
+            raise ValueError(
+                f"wildcard_week {wildcard_week} is outside the {transfer_horizon} "
+                f"week(s) in which this horizon may transfer"
+            )
+        if wildcard_friction < 0:
+            raise ValueError(f"wildcard_friction must be >= 0, got {wildcard_friction}")
+        wildcard_week = int(wildcard_week)
 
     held = set(current_squad)
     missing = held - {c.element_id for c in candidates}
@@ -282,6 +325,7 @@ def build_horizon(
         wi = index.week(w)
         xp = np.asarray(xp_by_week[w], dtype=float)
         can_transfer = w < transfer_horizon
+        chip = w == wildcard_week
 
         # ── Objective for this week ──────────────────────────────────────
         c[wi.squad] = bench_weight * xp
@@ -298,7 +342,14 @@ def build_horizon(
         # spent. Written as (buy - hits) so that a HIT pays -4 and nothing more:
         # the -FT_USE_COST on the purchase and the +FT_USE_COST on the hit
         # cancel, leaving a hit at exactly its face value.
-        c[wi.buy] -= FT_USE_COST
+        #
+        # A wildcard week consumes no free transfer, so its moves are exempt in
+        # the same way a hit is, and pay the stated friction instead. Its hits
+        # are pinned to zero below, so their coefficient never contributes.
+        if chip:
+            c[wi.buy] -= wildcard_friction + WILDCARD_TIE_BREAK
+        else:
+            c[wi.buy] -= FT_USE_COST
         c[wi.hits] += FT_USE_COST
 
         # The terminal bank still carries value: transfers held past the end of
@@ -382,42 +433,67 @@ def build_horizon(
             r[vi.sell] -= sell_price
         rows.append(r); lo.append(-np.inf); hi.append(float(bank))
 
-        # hits >= transfers - free_transfers_held
-        r = row()
-        r[wi.buy] = 1.0
-        r[wi.hits] = -1.0
-        r[wi.free_transfers] = -1.0
-        rows.append(r); lo.append(-np.inf); hi.append(slots)
+        if chip:
+            # Wildcard week. Three rows replace the three below.
+            #
+            # No hits: transfers are unlimited, so the hits row is dropped and
+            # hits pinned to zero rather than left free at a -4 the solver
+            # would simply never choose — a pinned zero cannot be misread.
+            r = row(); r[wi.hits] = 1.0
+            rows.append(r); lo.append(0.0); hi.append(0.0)
 
-        # remaining <= held - transfers + hits.
-        # The +hits term keeps this feasible once a hit is taken, exactly as in
-        # the single-week model: without it the bound goes negative while
-        # `remaining` is bounded below by zero, and the model becomes infeasible
-        # precisely when a hit is worth taking.
-        r = row()
-        r[wi.remaining] = 1.0
-        r[wi.buy] = 1.0
-        r[wi.free_transfers] = -1.0
-        r[wi.hits] = -1.0
-        rows.append(r); lo.append(-np.inf); hi.append(slots)
+            # The bank is untouched: what was held entering the week is what
+            # is left after it. Next week's accrual row then adds the +1 as in
+            # any other week, which is the rule `replay_free_transfers`
+            # applies to a chip week (`used = 0`).
+            r = row(); r[wi.remaining] = 1.0; r[wi.free_transfers] = -1.0
+            rows.append(r); lo.append(0.0); hi.append(0.0)
 
-        # remaining >= held - transfers, the matching LOWER bound.
-        #
-        # Without it `remaining` is only capped from above, and in any week where
-        # it does not bind the objective the solver is free to leave it slack.
-        # Measured: a five-week plan starting on a full bank reported [3,3,4,5]
-        # banked transfers when the true chain is [3,4,5,5]. The decision was
-        # still correct — the chain is pulled tight from the valued final week —
-        # but a plan that understates the bank misinforms whoever reads it and
-        # feeds a wrong starting position into next week's solve.
-        #
-        # Non-binding when a hit is taken (the right-hand side goes negative and
-        # the variable's own zero lower bound takes over), which is exactly right.
-        r = row()
-        r[wi.remaining] = 1.0
-        r[wi.buy] = 1.0
-        r[wi.free_transfers] = -1.0
-        rows.append(r); lo.append(slots); hi.append(np.inf)
+            # Never buy and sell the same player in one week. With moves at or
+            # near zero cost the solver otherwise sells and rebuys a held
+            # player whenever his selling and buying prices match — observed
+            # in the prototype — which changes nothing and inflates the move
+            # count the plan publishes.
+            for i in range(n):
+                r = row(); r[wi.buy.start + i] = 1.0; r[wi.sell.start + i] = 1.0
+                rows.append(r); lo.append(-np.inf); hi.append(1.0)
+        else:
+            # hits >= transfers - free_transfers_held
+            r = row()
+            r[wi.buy] = 1.0
+            r[wi.hits] = -1.0
+            r[wi.free_transfers] = -1.0
+            rows.append(r); lo.append(-np.inf); hi.append(slots)
+
+            # remaining <= held - transfers + hits.
+            # The +hits term keeps this feasible once a hit is taken, exactly as in
+            # the single-week model: without it the bound goes negative while
+            # `remaining` is bounded below by zero, and the model becomes infeasible
+            # precisely when a hit is worth taking.
+            r = row()
+            r[wi.remaining] = 1.0
+            r[wi.buy] = 1.0
+            r[wi.free_transfers] = -1.0
+            r[wi.hits] = -1.0
+            rows.append(r); lo.append(-np.inf); hi.append(slots)
+
+            # remaining >= held - transfers, the matching LOWER bound.
+            #
+            # Without it `remaining` is only capped from above, and in any week where
+            # it does not bind the objective the solver is free to leave it slack.
+            # Measured: a five-week plan starting on a full bank reported [3,3,4,5]
+            # banked transfers when the true chain is [3,4,5,5]. The decision was
+            # still correct — the chain is pulled tight from the valued final week —
+            # but a plan that understates the bank misinforms whoever reads it and
+            # feeds a wrong starting position into next week's solve.
+            #
+            # Non-binding when a hit is taken (the right-hand side goes negative and
+            # the variable's own zero lower bound takes over), which is exactly right.
+            r = row()
+            r[wi.remaining] = 1.0
+            r[wi.buy] = 1.0
+            r[wi.free_transfers] = -1.0
+            rows.append(r); lo.append(slots); hi.append(np.inf)
 
         # Entering week 0 we hold what we hold; later weeks accrue one, capped.
         if w == 0:
@@ -451,6 +527,9 @@ def solve_horizon(
     mip_gap: float = 0.0,
     bench_weight: float = BENCH_WEIGHT,
     top_k: int = 1,
+    *,
+    wildcard_week: Optional[int] = None,
+    wildcard_friction: float = FPL_WILDCARD_MOVE_FRICTION,
 ) -> List[HorizonPlan]:
     """
     Solve the horizon. Returns ``top_k`` plans, best first.
@@ -464,12 +543,15 @@ def solve_horizon(
     squad, which is exactly the shortlist the simulator should adjudicate: the
     horizon decides which squads are worth considering given the future, and the
     simulator picks among them on the true objective for the week being played.
+
+    ``wildcard_week`` and ``wildcard_friction`` are as in ``build_horizon``.
     """
     from scipy.optimize import Bounds, LinearConstraint, milp
 
     c, rows, lo, hi, index = build_horizon(
         candidates, xp_by_week, rules, current_squad, bank, free_transfers,
         transfer_horizon, bench_weight,
+        wildcard_week=wildcard_week, wildcard_friction=wildcard_friction,
     )
     weeks = index.weeks
     bank_value = rules.budget_tenths if bank is None else int(bank)
@@ -534,6 +616,7 @@ def solve_horizon(
                 len(current_squad),
                 TRANSFER_HORIZON if transfer_horizon is None else transfer_horizon,
                 -result.fun,
+                wildcard_week=wildcard_week,
             )
         )
 
@@ -557,6 +640,7 @@ def _extract_horizon(
     owned_count: int,
     transfer_horizon: int,
     objective: float,
+    wildcard_week: Optional[int] = None,
 ) -> HorizonPlan:
     """Turn a horizon solution into one Plan per week."""
     by_id = {c.element_id: c for c in candidates}
@@ -596,18 +680,30 @@ def _extract_horizon(
 
         slots = rules.squad_size - owned_count if w == 0 else 0
         transfers = len(ins) - slots
-        remaining = max(0, held_ft - transfers)
+        chip = "wildcard" if w == wildcard_week else None
+        if chip:
+            # A wildcard spends nothing from the bank and costs no hits, so
+            # the chain carries straight through it. Deriving hits as
+            # transfers - free transfers here published a thirteen-move
+            # rebuild as -48 — and week 0's `hits` is what the simulator
+            # charges, so it would also have ranked the chip week out.
+            remaining = held_ft
+            hits = 0
+        else:
+            remaining = max(0, held_ft - transfers)
+            hits = max(0, transfers - held_ft)
         after = min(rules.max_banked_free_transfers, remaining + 1)
 
         plans.append(
             Plan(
                 squad=squad, xi=xi, captain=captain[0], vice=vice[0],
                 transfers_in=ins, transfers_out=outs,
-                hits=max(0, transfers - held_ft),
+                hits=hits,
                 bank_after=int(running_bank),
                 objective=0.0,
                 free_transfers_banked=remaining,
                 free_transfers_after=after,
+                chip=chip,
             )
         )
         held_ft = after
@@ -617,4 +713,5 @@ def _extract_horizon(
         objective=float(objective),
         transfer_horizon=min(transfer_horizon, index.weeks),
         eval_horizon=index.weeks,
+        wildcard_week=wildcard_week,
     )

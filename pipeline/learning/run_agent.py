@@ -1241,6 +1241,39 @@ def _field_calibrated_gameweeks(predictions_dir: Path) -> int:
     return 0
 
 
+def _wildcard_offset(
+    config: Mapping[str, Any], gameweek: int, label: str,
+) -> Optional[int]:
+    """
+    The pinned wildcard as an offset from ``gameweek``, or None.
+
+    Config pins an ABSOLUTE gameweek, because it is static and the agent
+    re-solves every few hours. Once that gameweek has passed the pin is stale
+    — the chip was played or the owner changed their mind — and planning
+    around a week that is gone would be wrong either way, so it is dropped and
+    logged for the human to clear.
+    """
+    pinned = config.get("wildcard_gameweek")
+    if pinned is None:
+        return None
+    if isinstance(pinned, bool) or not isinstance(pinned, int):
+        # Raised from inside the seal's decision step this would lose the
+        # proposal, not the seal; dropping it loudly keeps the proposal.
+        logger.error(
+            "[%s] wildcard_gameweek must be a gameweek number, got %r; "
+            "planning without the chip", label, pinned,
+        )
+        return None
+    offset = pinned - int(gameweek)
+    if offset < 0:
+        logger.warning(
+            "[%s] wildcard_gameweek %s is before GW%d; ignoring the stale pin. "
+            "Clear it in FPL_ENTRIES.", label, pinned, int(gameweek),
+        )
+        return None
+    return offset
+
+
 def _decide_for_entries(
     predictions_dir: Path,
     state: ScheduleState,
@@ -1323,6 +1356,7 @@ def _decide_for_entries(
             # this looked correct and would still look correct at GW7 when it no
             # longer was.
             field_calibrated_gameweeks=_field_calibrated_gameweeks(predictions_dir),
+            wildcard_week=_wildcard_offset(config, entry.gameweek, label),
         )
         for warning in decision.warnings:
             logger.warning("[%s] %s", label, warning)
