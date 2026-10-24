@@ -16,7 +16,8 @@ from typing import Dict, List, Optional, Tuple
 import pandas as pd
 
 from pipeline.config import (
-    DATA_RAW, FOOTBALL_DATA_URL, FOOTBALL_DATA_SEASONS, SEASONS, CURRENT_SEASON
+    DATA_RAW, FOOTBALL_DATA_URL, FOOTBALL_DATA_SEASONS, SEASONS, CURRENT_SEASON,
+    TRAINING_SEASONS,
 )
 from pipeline.data.team_mapping import normalize_team_name
 from pipeline.utils import fetch_with_retry
@@ -167,14 +168,21 @@ def load_all_seasons(seasons: Optional[list] = None, force: bool = False) -> pd.
     Load and merge all seasons into a single DataFrame.
 
     Args:
-        seasons: List of season codes, e.g. ["2324", "2425", "2526"]
+        seasons: List of season codes, e.g. ["2324", "2425", "2526"]. Defaults
+            to TRAINING_SEASONS, which always includes the in-progress season.
         force: Force re-download
 
     Returns:
         Combined DataFrame sorted by date
+
+    A completed season that fails to load is logged and skipped. The CURRENT
+    season is not: without it every rating silently reverts to last May's, which
+    is the exact failure TRAINING_SEASONS exists to prevent, and nothing
+    downstream would notice. ``fetch_season_csv`` already falls back to a stale
+    cache, so reaching the raise means no copy of the season exists at all.
     """
     if seasons is None:
-        seasons = SEASONS
+        seasons = TRAINING_SEASONS
 
     frames = []
     for season in seasons:
@@ -185,6 +193,11 @@ def load_all_seasons(seasons: Optional[list] = None, force: bool = False) -> pd.
             frames.append(cleaned)
             logger.info(f"Season {season}: {len(cleaned)} matches loaded")
         except Exception as e:
+            if season == CURRENT_SEASON:
+                raise RuntimeError(
+                    f"Current season {season} failed to load ({e}); refusing to "
+                    "train on completed seasons only"
+                ) from e
             logger.error(f"Failed to load season {season}: {e}")
 
     if not frames:

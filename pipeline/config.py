@@ -27,6 +27,26 @@ SEASON_LABELS = {
 CURRENT_SEASON = os.environ.get("PL_CURRENT_SEASON", "2627")
 CURRENT_SEASON_LABEL = SEASON_LABELS.get(CURRENT_SEASON, CURRENT_SEASON)
 
+
+def training_seasons(completed=None, current=None) -> list:
+    """
+    Seasons the match models train on: every completed season, plus the
+    in-progress one whenever it is not already among them.
+
+    SEASONS alone froze every team rating at May 2026. It was never rolled
+    forward, so Dixon-Coles, PenaltyBlog and XGBoost carried zero 2026-27
+    matches eight gameweeks into the season — the best defence in the league
+    was rated on last season's form. Deriving the list here, rather than
+    remembering to append a string each August, is what stops it recurring;
+    a test asserts CURRENT_SEASON is always in the result.
+    """
+    completed = list(SEASONS if completed is None else completed)
+    current = CURRENT_SEASON if current is None else current
+    return completed if current in completed else completed + [current]
+
+
+TRAINING_SEASONS = training_seasons()
+
 # ── Data Sources ───────────────────────────────────────────────────────────
 FOOTBALL_DATA_URL = "https://www.football-data.co.uk/mmz4281/{season}/E0.csv"
 FOOTBALL_DATA_SEASONS = {
@@ -337,6 +357,8 @@ FPL_ARCHIVE_SEASONS = ["2526", "2425"]
 # Extended in team_mapping.py with FBref + FPL mappings
 
 # ── Model Hyperparameters ──────────────────────────────────────────────────
+# The Dixon-Coles team-effect prior (sigma, promoted-club offsets) is NOT here:
+# it lives in PARAM_REGISTRY under "dixon_coles.*", with its evidence.
 DIXON_COLES = {
     "xi_decay": 0.003,              # Time decay parameter
     "rho_bounds": (-0.3, 0.3),      # Low-score correlation bounds
@@ -833,9 +855,10 @@ PARAM_REGISTRY = {
         "source": (
             "Weight floor on the market anchor for a fixture involving a club the "
             "posterior has never seen — a promoted side. For those the posterior's "
-            "rate IS the hierarchical league prior, carrying no club-specific "
-            "information at all, so there is nothing to blend and the market is "
-            "the only evidence available.\n\n"
+            "rate IS a prior (since dixon_coles.promoted_*: the promoted-club mean, "
+            "no longer the league average), carrying no club-specific information "
+            "at all, so there is nothing to blend and the market is the only "
+            "evidence available.\n\n"
             "Constant, not fitted: a handful of promoted clubs a season cannot "
             "identify it, and the measured consequence of getting this wrong is "
             "already on record — a flat rate for every fixture predicted "
@@ -870,6 +893,119 @@ PARAM_REGISTRY = {
             "substitute appearances against a real 4.14, a 28% shortfall. One "
             "aggregate against 760 observations is comfortably identifiable, "
             "unlike the per-player conditional it stands in for."
+        ),
+    },
+    # ── Dixon-Coles team-strength prior ──────────────────────────────────
+    # Read by pipeline/models/dixon_coles.py and nowhere else. These move the
+    # posterior that is 60% of the value-bet ensemble, so a change here changes
+    # real-money edges: the walk-forward below is what licenses each value.
+    #
+    # Shared evidence base: walk-forward over 2020-21..2025-26, 4,560
+    # team-fixtures, each test season trained on its three predecessors plus its
+    # own results to date (as production now does), on the REAL PyMC model at CI
+    # sampling (1000 draws, 500 tune, 2 chains), refitted every five weeks. A MAP
+    # replica (fixed sigma, same likelihood) ran the same design weekly and every
+    # five weeks; on the final configuration replica and real model agree to
+    # within 0.0005 nats on both scores, so replica-only sweeps are labelled.
+    "dixon_coles.team_effect_sigma": {
+        "value": 0.30,
+        "bounds": (0.10, 0.50),
+        "tier": "F",
+        "source": (
+            "Prior SD of every club's attack and defence effect (log scale), FIXED. "
+            "Replaces a HalfNormal(1) hyperprior on two learned sigmas.\n\n"
+            "WHY NOT LEARN IT. The learned sigma over-shrank and was unstable. On "
+            "2023-26 it was 0.16 / 0.14 (att / def; 90% CI 0.08-0.25 / 0.05-0.24) "
+            "and on 2023-27 0.16 / 0.12, leaving posterior-mean defence effects "
+            "with an SD of 0.06: Arsenal, the best defence of 2026-27 (0.95 npxG "
+            "against, 5 clean sheets in 8), projected 1.72 clean sheets over "
+            "GW9-14. Across the 52 walk-forward windows the learned values ranged "
+            "0.16-0.37 / 0.08-0.22, one fit failed outright (R-hat 2.24, 1000 "
+            "divergences — the funnel) and another reached R-hat 1.10 at bulk ESS "
+            "30. Fixed, all 260 fits stayed at R-hat <= 1.02, bulk ESS >= 1,752, "
+            "at most 2 divergences, and sampling is faster. A plausible mechanism "
+            "(not separately tested): the time-decay weights make the likelihood "
+            "claim variance 1/sum(w*lambda) where the weighted estimator's is "
+            "sum(w^2*lambda)/sum(w*lambda)^2, about half at xi 0.003, so a learned "
+            "sigma attributes too much of the between-club spread to noise.\n\n"
+            "SELECTION (real PyMC). Swept 0.20/0.25/0.30/0.35/0.40. Clean-sheet "
+            "log-loss and goals-against NLL bottom out at 0.30 (flat 0.25-0.35; "
+            "0.20 is worse on GA by +0.0011 [+0.0001, +0.0022]). 1X2 log-loss "
+            "keeps improving to 0.40 but flattens: 0.30 beats 0.25 by -0.0016 "
+            "[-0.0025, -0.0006], 0.35/0.40 add only -0.0006/-0.0008 while the GA "
+            "calibration slope falls through 1 (0.97 at 0.30, 0.94, 0.91). 0.30 is "
+            "the optimum for the FPL-facing rates and most of the 1X2 gain.\n\n"
+            "EFFECT vs the HEAD model at the same refit cadence (root causes 2+3 "
+            "only, with the promoted-club prior): CS log-loss -0.0024 [-0.0042, "
+            "-0.0006], GA NLL -0.0045 [-0.0074, -0.0015], 1X2 log-loss -0.0082 "
+            "[-0.0122, -0.0044], RPS -0.0027 [-0.0039, -0.0014]; over 2.5 "
+            "unchanged (+0.0008 [-0.0015, +0.0032]). Calibration slopes CS "
+            "1.22 -> 1.06 (+/-0.13), GA 1.12 -> 0.97 (+/-0.08), home win 1.47 -> "
+            "1.17, away 1.38 -> 1.12. The 1X2 slopes remain above 1, so the "
+            "wider spread does not make staking probabilities over-confident; "
+            "what remains is likely the independent attack/defence priors "
+            "ignoring their correlation, not sigma.\n\n"
+            "xi_decay was tested alongside (replica only): 0.005 is worse than "
+            "0.003 by 0.0013-0.0018 nats GA at sigma 0.25-0.30, so "
+            "DIXON_COLES['xi_decay'] stays 0.003."
+        ),
+    },
+    "dixon_coles.promoted_attack_offset": {
+        "value": -0.30,
+        "bounds": (-0.60, 0.0),
+        "tier": "F",
+        "source": (
+            "Prior MEAN of attack_raw for a club promoted into the current season "
+            "(log scale; every other club's prior mean is 0). Measured: per-season "
+            "unshrunk Dixon-Coles MLE (no decay) of each newly promoted club, "
+            "relative to that season's 20-club mean — -0.30 (SE 0.05), n = 24 "
+            "club-seasons, 2018-19..2025-26.\n\n"
+            "Previously 0 in fit and exactly 0 for an unseen club at predict time, "
+            "i.e. every promoted club was assumed average until its own results "
+            "outweighed the prior.\n\n"
+            "Frame: the model centres over every club in its window, not one "
+            "season's 20; latest-season clubs sit 0.03-0.04 above that centre on "
+            "2023-27, and a prior expressed against the established clubs instead "
+            "moved walk-forward NLL by under 0.001 (replica), so the measured "
+            "value is used directly. The walk-forward used leave-future-out "
+            "offsets (only seasons before each test season)."
+        ),
+    },
+    "dixon_coles.promoted_defence_offset": {
+        "value": -0.24,
+        "bounds": (-0.60, 0.0),
+        "tier": "F",
+        "source": (
+            "As dixon_coles.promoted_attack_offset, for defence_raw: -0.24 "
+            "(SE 0.04), n = 24 promoted club-seasons, 2018-19..2025-26. Negative "
+            "defence means more goals conceded."
+        ),
+    },
+    "dixon_coles.promoted_new_club_shrink": {
+        "value": 0.5,
+        "bounds": (0.0, 1.0),
+        "tier": "C",
+        "source": (
+            "Multiplier on both promoted-club offsets for a club with NO Premier "
+            "League match anywhere in the training window — in fit, and for any "
+            "club the posterior has never seen at predict time (e.g. a promoted "
+            "side before its first match). A promoted club returning within the "
+            "window gets the offsets in full.\n\n"
+            "Why two cases: the full offset overshoots for clubs new to the "
+            "window. Replica, sigma 0.25: their opponents were predicted to "
+            "concede 1.10 against 1.22 +/-0.14 actual (n = 228), while for "
+            "returning clubs the full offset was if anything too generous "
+            "(opponents 1.00 predicted, 0.95 actual, n = 456). Over all 18 "
+            "promoted club-seasons the NLL-minimising multiplier is 1.0; over the "
+            "6 new-to-window ones it is 0.5 (bootstrap over club-seasons: 85% of "
+            "argmins in [0, 0.6], 1.5% at 1.0).\n\n"
+            "Confirmed on the real PyMC model at sigma 0.30: GA NLL on fixtures "
+            "involving a new-to-window club is 1.5054 / 1.5029 / 1.5025 / 1.5025 / "
+            "1.5049 at 0 / 0.25 / 0.5 / 0.75 / 1.0; whole-sample point "
+            "differences are under 0.0005 and every interval spans zero.\n\n"
+            "Tier C, not F: six club-seasons cannot identify it — the curve is "
+            "flat between 0.5 and 0.75 — so it is a human-set value the data "
+            "merely does not contradict, and it is not refit-eligible."
         ),
     },
     "events.recency_half_life_fixtures": {

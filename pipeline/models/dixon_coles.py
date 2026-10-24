@@ -8,14 +8,18 @@ Mathematical specification:
   log(μ_ij) = α_j + β_i        (away attack + home defence)
   Low-score correction: ρ adjusts P(0-0), P(1-0), P(0-1), P(1-1)
   Time decay: weight(t) = exp(-ξ * days_since_match)
+  Team effects: attack_raw_i ~ Normal(m_i, σ), defence_raw_i ~ Normal(d_i, σ), centred.
+    σ is FIXED (PARAM_REGISTRY "dixon_coles.team_effect_sigma"); m_i = d_i = 0 except
+    for clubs promoted into the current season, whose prior means are the measured
+    promoted-club offsets (see ``promoted_prior_means``).
 """
 import logging
-from typing import Dict, Optional, Tuple
+from typing import Dict, Iterable, Optional, Set, Tuple
 
 import numpy as np
 import pandas as pd
 
-from pipeline.config import DIXON_COLES, MAX_GOALS
+from pipeline.config import CURRENT_SEASON, DIXON_COLES, MAX_GOALS, PARAM_REGISTRY
 
 logger = logging.getLogger(__name__)
 
@@ -71,6 +75,103 @@ def _log_tau_vectorized(home_goals, away_goals, lambda_h, mu_a, rho):
     return log_tau
 
 
+def _registry_value(name: str) -> float:
+    """The one place the model reads its registered hyperparameters from."""
+    return float(PARAM_REGISTRY[name]["value"])
+
+
+def promoted_prior_settings() -> Dict[str, float]:
+    """Registered promoted-club prior: offsets (log scale) and the new-club shrink."""
+    return {
+        "attack_offset": _registry_value("dixon_coles.promoted_attack_offset"),
+        "defence_offset": _registry_value("dixon_coles.promoted_defence_offset"),
+        "new_club_shrink": _registry_value("dixon_coles.promoted_new_club_shrink"),
+    }
+
+
+def _season_order(matches: pd.DataFrame) -> list:
+    """Season labels ordered by their first match date (not by string)."""
+    firsts = matches.groupby("season")["Date"].min().sort_values()
+    return list(firsts.index)
+
+
+def classify_promoted_clubs(
+    matches: pd.DataFrame, season: Optional[str] = None
+) -> Tuple[Set[str], Set[str]]:
+    """
+    Clubs promoted into ``season``, and which of them are new to the window.
+
+    ``season`` defaults to ``CURRENT_SEASON``. Promoted means: plays in ``season``
+    but not in the season immediately before it (by date order). "New" means a
+    promoted club with no match in ``matches`` outside ``season`` at all — no
+    Premier League data anywhere in the training window.
+
+    Returns ``(set(), set())`` — no promoted-club prior, every prior mean 0 —
+    when ``season``
+    has no played rows (pre-season: its promoted clubs are then simply unseen,
+    and ``unseen_prior`` covers them) or when the previous season is absent, in
+    which case every club would wrongly look promoted.
+    """
+    season = CURRENT_SEASON if season is None else season
+    if "season" not in matches.columns or matches.empty:
+        return set(), set()
+    played = matches.dropna(subset=["FTHG", "FTAG"])
+    order = _season_order(played)
+    if season not in order:
+        return set(), set()
+    pos = order.index(season)
+    if pos == 0:
+        logger.warning(
+            f"No season before {season} in the training data; promoted clubs "
+            "cannot be identified, so no promoted-club prior is applied."
+        )
+        return set(), set()
+
+    def clubs(frame: pd.DataFrame) -> Set[str]:
+        return set(frame["HomeTeam"]) | set(frame["AwayTeam"])
+
+    current = clubs(played[played["season"] == season])
+    previous = clubs(played[played["season"] == order[pos - 1]])
+    elsewhere = clubs(played[played["season"] != season])
+    promoted = current - previous
+    return promoted, promoted - elsewhere
+
+
+def promoted_prior_means(
+    teams: Iterable[str],
+    promoted: Iterable[str],
+    new_clubs: Iterable[str],
+    attack_offset: float,
+    defence_offset: float,
+    new_club_shrink: float,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Prior means for ``attack_raw`` / ``defence_raw``, aligned with ``teams``.
+
+    Zero for every club except those promoted into the current season, which get
+    the measured promoted-club offsets: in full for a club with Premier League
+    data elsewhere in the window, scaled by ``new_club_shrink`` for one with none.
+
+    The offsets were measured against a single season's 20-club mean, while the
+    model centres over every club in the window. Those frames differ by about
+    0.03-0.04 (latest-season clubs sit that far above the window mean in 2023-27);
+    evaluating the prior in both frames moved walk-forward NLL by under 0.001,
+    so the offsets are used as-is rather than via a prior that depends on the
+    other clubs' parameters.
+    """
+    teams = list(teams)
+    promoted = set(promoted)
+    new_clubs = set(new_clubs)
+    att = np.zeros(len(teams))
+    dfc = np.zeros(len(teams))
+    for i, team in enumerate(teams):
+        if team in promoted:
+            k = new_club_shrink if team in new_clubs else 1.0
+            att[i] = k * attack_offset
+            dfc[i] = k * defence_offset
+    return att, dfc
+
+
 class BayesianDixonColes:
     """
     Full Bayesian Dixon-Coles model with PyMC NUTS sampling.
@@ -82,13 +183,32 @@ class BayesianDixonColes:
         self.team_index = {}
         self.teams = []
         self.n_teams = 0
+        # (attack, defence) used for a club the posterior has never seen. Set at
+        # fit time; a model pickled before it existed has no attribute and falls
+        # back to (0, 0), i.e. exactly its old behaviour.
+        self.unseen_prior = (0.0, 0.0)
+        self.promoted_clubs: Set[str] = set()
+        self.new_promoted_clubs: Set[str] = set()
+        self.team_effect_sigma: Optional[float] = None
 
-    def fit(self, matches: pd.DataFrame) -> None:
+    def fit(
+        self,
+        matches: pd.DataFrame,
+        promoted_clubs: Optional[Iterable[str]] = None,
+        new_promoted_clubs: Optional[Iterable[str]] = None,
+    ) -> None:
         """
         Fit the Bayesian Dixon-Coles model.
 
         Args:
-            matches: DataFrame with HomeTeam, AwayTeam, FTHG, FTAG, Date
+            matches: DataFrame with HomeTeam, AwayTeam, FTHG, FTAG, Date, season
+            promoted_clubs: override for the clubs promoted into the current
+                season. Default: derived from the ``season`` column by
+                ``classify_promoted_clubs`` for ``CURRENT_SEASON``.
+            new_promoted_clubs: override for the subset with no other data in the
+                window. Default: derived alongside ``promoted_clubs``; when
+                ``promoted_clubs`` is given without it, a promoted club whose
+                every row is in the latest season of ``matches`` is new.
         """
         try:
             import pymc as pm
@@ -106,6 +226,8 @@ class BayesianDixonColes:
         self.team_index = {team: i for i, team in enumerate(self.teams)}
         self.n_teams = len(self.teams)
 
+        att_mu, def_mu, sigma = self._configure_prior(df, promoted_clubs, new_promoted_clubs)
+
         home_idx = df["HomeTeam"].map(self.team_index).values
         away_idx = df["AwayTeam"].map(self.team_index).values
         home_goals = df["FTHG"].values
@@ -122,13 +244,16 @@ class BayesianDixonColes:
         with pm.Model() as model:
             import pytensor.tensor as pt
 
-            # Hyperpriors
-            sigma_att = pm.HalfNormal("sigma_att", sigma=1.0)
-            sigma_def = pm.HalfNormal("sigma_def", sigma=1.0)
-
-            # Team-level parameters (sum-to-zero constraint via centering)
-            attack_raw = pm.Normal("attack_raw", mu=0, sigma=sigma_att, shape=self.n_teams)
-            defence_raw = pm.Normal("defence_raw", mu=0, sigma=sigma_def, shape=self.n_teams)
+            # Team-level parameters (sum-to-zero constraint via centering).
+            #
+            # sigma is FIXED, not learned. The HalfNormal(1) hyperprior it replaces
+            # learned 0.16 / 0.12 (att / def) on 2023-27, leaving posterior-mean
+            # defence effects with an SD of 0.06 — the best defence in the league
+            # rated barely above average — and its funnel cost convergence (one
+            # walk-forward fit in 52 at R-hat 2.24). Evidence and the out-of-sample
+            # selection are in PARAM_REGISTRY["dixon_coles.team_effect_sigma"].
+            attack_raw = pm.Normal("attack_raw", mu=att_mu, sigma=sigma, shape=self.n_teams)
+            defence_raw = pm.Normal("defence_raw", mu=def_mu, sigma=sigma, shape=self.n_teams)
 
             # Center parameters (identifiability)
             attack = pm.Deterministic("attack", attack_raw - attack_raw.mean())
@@ -204,6 +329,66 @@ class BayesianDixonColes:
 
         if max_rhat > 1.05:
             logger.warning(f"Convergence issue: max R-hat = {max_rhat:.4f} > 1.05")
+
+    def _configure_prior(
+        self,
+        df: pd.DataFrame,
+        promoted_clubs: Optional[Iterable[str]] = None,
+        new_promoted_clubs: Optional[Iterable[str]] = None,
+    ) -> Tuple[np.ndarray, np.ndarray, float]:
+        """
+        Team-effect prior for ``fit``: (attack means, defence means, sigma).
+
+        Separate from ``fit`` so it can be tested without PyMC. Requires
+        ``self.teams`` / ``self.team_index`` to be built from ``df`` already.
+        Also sets ``promoted_clubs``, ``new_promoted_clubs``, ``unseen_prior``
+        and ``team_effect_sigma`` on the instance, so a fitted model records
+        which prior it was fitted under.
+        """
+        if promoted_clubs is None:
+            promoted, new = classify_promoted_clubs(df)
+        else:
+            promoted = set(promoted_clubs)
+            if new_promoted_clubs is None:
+                # Override without the "new" subset: a promoted club is new when
+                # every one of its rows is in the latest season of the data.
+                played = df.dropna(subset=["FTHG", "FTAG"])
+                order = _season_order(played) if "season" in played.columns else []
+                if order:
+                    other = played[played["season"] != order[-1]]
+                    seen = set(other["HomeTeam"]) | set(other["AwayTeam"])
+                else:
+                    seen = set()
+                new = promoted - seen
+            else:
+                new = set(new_promoted_clubs)
+        self.promoted_clubs = promoted & set(self.teams)
+        self.new_promoted_clubs = new & self.promoted_clubs
+
+        prior = promoted_prior_settings()
+        sigma = _registry_value("dixon_coles.team_effect_sigma")
+        self.team_effect_sigma = sigma
+        att_mu, def_mu = promoted_prior_means(
+            self.teams, self.promoted_clubs, self.new_promoted_clubs,
+            prior["attack_offset"], prior["defence_offset"], prior["new_club_shrink"],
+        )
+        # A club absent from the data entirely has no Premier League data in the
+        # window by definition, so the predict-time fallback is the shrunk offset.
+        self.unseen_prior = (
+            prior["new_club_shrink"] * prior["attack_offset"],
+            prior["new_club_shrink"] * prior["defence_offset"],
+        )
+        if self.promoted_clubs:
+            logger.info(
+                "Promoted-club prior: %s",
+                ", ".join(
+                    f"{t} (att {att_mu[self.team_index[t]]:+.3f}, "
+                    f"def {def_mu[self.team_index[t]]:+.3f}"
+                    f"{', new to window' if t in self.new_promoted_clubs else ''})"
+                    for t in sorted(self.promoted_clubs)
+                ),
+            )
+        return att_mu, def_mu, sigma
 
     def get_team_params(self, team: str) -> Dict:
         """Get posterior mean and CI for a team's parameters."""
@@ -391,20 +576,24 @@ class BayesianDixonColes:
 
         h_idx = self.team_index.get(home)
         a_idx = self.team_index.get(away)
-        neutral = np.zeros_like(inter)
+        # A club the posterior has never seen — at the start of a season, one
+        # promoted from outside the window — gets the promoted-club prior mean
+        # rather than the league average, while known opponents retain their
+        # posterior strength. ``getattr`` keeps models pickled before this
+        # attribute existed on their original (0, 0).
+        unseen_att, unseen_def = getattr(self, "unseen_prior", (0.0, 0.0))
+        unseen_att = np.full_like(inter, unseen_att)
+        unseen_def = np.full_like(inter, unseen_def)
 
-        # Promoted/unseen clubs use the hierarchical league-average prior
-        # (attack=defence=0) while known opponents retain their posterior
-        # strength. This is materially more informative than replacing the
-        # entire fixture with fixed 1.4/1.1 rates.
-        att_h = attack[:, :, h_idx].flatten() if h_idx is not None else neutral
-        att_a = attack[:, :, a_idx].flatten() if a_idx is not None else neutral
-        def_h = defence[:, :, h_idx].flatten() if h_idx is not None else neutral
-        def_a = defence[:, :, a_idx].flatten() if a_idx is not None else neutral
+        att_h = attack[:, :, h_idx].flatten() if h_idx is not None else unseen_att
+        att_a = attack[:, :, a_idx].flatten() if a_idx is not None else unseen_att
+        def_h = defence[:, :, h_idx].flatten() if h_idx is not None else unseen_def
+        def_a = defence[:, :, a_idx].flatten() if a_idx is not None else unseen_def
 
         if h_idx is None or a_idx is None:
             logger.info(
-                f"Using neutral promoted-team prior for {home} vs {away} "
+                f"Using promoted-club prior (att {unseen_att[0]:+.3f}, def "
+                f"{unseen_def[0]:+.3f}) for {home} vs {away} "
                 f"(unknown: {[t for t, idx in ((home, h_idx), (away, a_idx)) if idx is None]})"
             )
 
