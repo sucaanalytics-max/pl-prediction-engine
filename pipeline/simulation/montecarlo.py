@@ -29,6 +29,39 @@ logger = logging.getLogger(__name__)
 DC_SAMPLING_MAX_GOALS = 10
 
 
+def resolve_rng(rng: Optional[np.random.Generator]) -> np.random.Generator:
+    """
+    ``rng`` if supplied, else a Generator seeded FROM numpy's legacy global state.
+
+    The previous fallback was ``np.random.default_rng()`` with no argument: fresh
+    OS entropy on every call. That made ``simulate_from_posterior`` — which called
+    ``sample_dixon_coles`` without a Generator — irreproducible even though the
+    pipeline seeded ``np.random`` per fixture, so identical replays of the GW8
+    card moved 1X2 and totals by 1-2pp and flipped value bets. Deriving the
+    fallback from the global state means a caller that seeds ``np.random`` gets
+    what it asked for, and no path in this module ever draws unseeded entropy.
+
+    The production value-bet path does not rely on this: it passes an explicit
+    Generator (see ``pipeline/simulation/fixture_sim.py``).
+    """
+    if rng is not None:
+        return rng
+    return np.random.default_rng(int(np.random.randint(0, 2**32, dtype=np.uint64)))
+
+
+def _streams(rng: np.random.Generator, n: int) -> List[np.random.Generator]:
+    """
+    ``n`` independent child Generators, one per random component.
+
+    One stream per component keeps common random numbers intact across a model
+    change: numpy's Poisson, binomial and negative-binomial samplers consume a
+    variable number of uniforms per draw, so on a single shared stream a change
+    to the goal rates would shift every later draw — corners and cards would
+    re-draw even though their models did not change.
+    """
+    return list(rng.spawn(n))
+
+
 def sample_dixon_coles(
     lam: np.ndarray,
     mu: np.ndarray,
@@ -56,7 +89,7 @@ def sample_dixon_coles(
     """
     from scipy.stats import poisson
 
-    generator = rng if rng is not None else np.random.default_rng()
+    generator = resolve_rng(rng)
     n = len(lam)
     goals = np.arange(max_goals + 1)
 
@@ -111,6 +144,7 @@ class MonteCarloSimulator:
         away_team: str = "",
         referee: Optional[str] = None,
         is_derby: bool = False,
+        rng: Optional[np.random.Generator] = None,
     ) -> Dict:
         """
         Simulate a single match n_simulations times.
@@ -118,43 +152,40 @@ class MonteCarloSimulator:
         If corners_model/cards_model are provided, uses them for correlated
         simulation (conditioned on goal results).
         Falls back to uncorrelated sampling if models not available.
+
+        ``rng`` makes the draw reproducible and gives each component its own
+        child stream (see ``_streams``). Without it the draws come from numpy's
+        legacy global state, exactly as before — ``gameweek_sim`` seeds that
+        state and relies on it, so the legacy path is kept bit-for-bit.
         """
-        # Goals simulation
-        home_goals = np.random.poisson(lambda_home, self.n_sims)
-        away_goals = np.random.poisson(mu_away, self.n_sims)
+        if rng is not None:
+            goal_h, goal_a, ht_rng, corner_rng, card_rng = _streams(rng, 5)
+            home_goals = goal_h.poisson(lambda_home, self.n_sims)
+            away_goals = goal_a.poisson(mu_away, self.n_sims)
+        else:
+            ht_rng = corner_rng = card_rng = None
+            home_goals = np.random.poisson(lambda_home, self.n_sims)
+            away_goals = np.random.poisson(mu_away, self.n_sims)
         total_goals = home_goals + away_goals
 
         # Allocate simulated full-time goals to the first half. This preserves
         # HT <= FT for each team while retaining the full-time goal samples.
-        ht_home = np.random.binomial(home_goals, 0.45)
-        ht_away = np.random.binomial(away_goals, 0.45)
+        ht_home, ht_away = self._split_half_time(home_goals, away_goals, ht_rng)
 
         # Goal sims array for match-state conditioning
         goal_sims = np.column_stack([home_goals, away_goals])
 
         # Corners simulation (correlated with goals)
-        if corners_model is not None and home_team and away_team:
-            corners_pred = corners_model.predict(home_team, away_team, goal_sims=goal_sims)
-            home_corners = np.array(corners_pred["simulated_home"])
-            away_corners = np.array(corners_pred["simulated_away"])
-        else:
-            home_corners = np.random.poisson(5.5, self.n_sims)
-            away_corners = np.random.poisson(4.5, self.n_sims)
+        home_corners, away_corners = self._draw_corners(
+            corners_model, home_team, away_team, goal_sims, self.n_sims, corner_rng
+        )
         total_corners = home_corners + away_corners
 
         # Cards simulation (correlated with goals, referee-adjusted)
-        if cards_model is not None and home_team and away_team:
-            cards_pred = cards_model.predict(
-                home_team, away_team,
-                referee=referee,
-                is_derby=is_derby,
-                goal_sims=goal_sims,
-            )
-            home_yellows = np.array(cards_pred["simulated_home"])
-            away_yellows = np.array(cards_pred["simulated_away"])
-        else:
-            home_yellows = np.random.poisson(1.5, self.n_sims)
-            away_yellows = np.random.poisson(1.8, self.n_sims)
+        home_yellows, away_yellows = self._draw_cards(
+            cards_model, home_team, away_team, referee, is_derby,
+            goal_sims, self.n_sims, card_rng,
+        )
         total_cards = home_yellows + away_yellows
 
         return {
@@ -170,6 +201,53 @@ class MonteCarloSimulator:
             "away_yellows": away_yellows,
             "total_cards": total_cards,
         }
+
+    # ── Component draws shared by both simulation paths ────────────────────
+    # Each takes an optional Generator. ``None`` means numpy's legacy global
+    # state, which reproduces the pre-Generator draw order exactly.
+
+    @staticmethod
+    def _split_half_time(home_goals, away_goals, rng):
+        if rng is None:
+            return (
+                np.random.binomial(home_goals, 0.45),
+                np.random.binomial(away_goals, 0.45),
+            )
+        return rng.binomial(home_goals, 0.45), rng.binomial(away_goals, 0.45)
+
+    @staticmethod
+    def _draw_corners(model, home_team, away_team, goal_sims, n, rng):
+        if model is not None and home_team and away_team:
+            kwargs = {"goal_sims": goal_sims}
+            if rng is not None:
+                kwargs["rng"] = rng
+            pred = model.predict(home_team, away_team, **kwargs)
+            return (
+                np.array(pred["simulated_home"])[:n],
+                np.array(pred["simulated_away"])[:n],
+            )
+        if rng is None:
+            return np.random.poisson(5.5, n), np.random.poisson(4.5, n)
+        return rng.poisson(5.5, n), rng.poisson(4.5, n)
+
+    @staticmethod
+    def _draw_cards(model, home_team, away_team, referee, is_derby, goal_sims, n, rng):
+        if model is not None and home_team and away_team:
+            kwargs = {
+                "referee": referee,
+                "is_derby": is_derby,
+                "goal_sims": goal_sims,
+            }
+            if rng is not None:
+                kwargs["rng"] = rng
+            pred = model.predict(home_team, away_team, **kwargs)
+            return (
+                np.array(pred["simulated_home"])[:n],
+                np.array(pred["simulated_away"])[:n],
+            )
+        if rng is None:
+            return np.random.poisson(1.5, n), np.random.poisson(1.8, n)
+        return rng.poisson(1.5, n), rng.poisson(1.8, n)
 
     # ── Player-level extension ─────────────────────────────────────────────
     # Additive: simulate_match above is untouched, returns the same keys, and
@@ -203,8 +281,11 @@ class MonteCarloSimulator:
         hour; the model used is recorded as ``goal_minute_model`` so the
         assumption travels with the output rather than living only here.
         """
+        # simulate_match deliberately stays on the legacy global state here:
+        # gameweek_sim seeds it per fixture and the FPL artifacts are pinned to
+        # that draw order. Only the goal-minute draws use ``rng``.
         sims = self.simulate_match(lambda_home, mu_away, **kwargs)
-        generator = rng if rng is not None else np.random.default_rng()
+        generator = resolve_rng(rng)
 
         sims["home_goal_minutes"] = self._goal_minutes(
             sims["home_goals"], generator, max_goals
@@ -245,10 +326,18 @@ class MonteCarloSimulator:
         referee: Optional[str] = None,
         is_derby: bool = False,
         rho_samples: Optional[np.ndarray] = None,
+        rng: Optional[np.random.Generator] = None,
     ) -> Dict:
         """
         Simulate using posterior samples of lambda/mu (from PyMC).
         This properly propagates parameter uncertainty.
+
+        ``rng`` is what makes the published card reproducible: pass one and every
+        draw — posterior indices, rho indices, scorelines, half-time split,
+        corners, cards — comes from its own child stream of it. Without one the
+        draws fall back to numpy's legacy global state (never unseeded entropy).
+        The production value-bet path always passes one; see
+        ``pipeline/simulation/fixture_sim.py``.
 
         ## The Dixon-Coles correction
 
@@ -274,50 +363,52 @@ class MonteCarloSimulator:
         selection whose true edge sits within about 2pp of the line.
         """
         n = min(len(lambda_samples), self.n_sims)
-        indices = np.random.choice(len(lambda_samples), size=n, replace=True)
+        if rng is not None:
+            index_rng, rho_rng, goal_rng, ht_rng, corner_rng, card_rng = _streams(rng, 6)
+            indices = index_rng.choice(len(lambda_samples), size=n, replace=True)
+        else:
+            rho_rng = goal_rng = ht_rng = corner_rng = card_rng = None
+            indices = np.random.choice(len(lambda_samples), size=n, replace=True)
 
         lam = lambda_samples[indices]
         mu = mu_samples[indices]
 
         if rho_samples is not None and len(rho_samples) > 0:
-            # Paired to the same posterior draws as lambda and mu, so the
-            # correction carries its own uncertainty rather than a point value.
-            rho = np.asarray(rho_samples)[
-                np.random.choice(len(rho_samples), size=n, replace=True)
-            ]
-            home_goals, away_goals = sample_dixon_coles(lam, mu, rho)
+            # NOTE: drawn with its own indices, so rho is NOT paired to the same
+            # posterior draw as lambda and mu — the joint posterior correlation
+            # between rho and the strength parameters is not carried. Recorded,
+            # not changed here: pairing them moves every published probability.
+            if rho_rng is not None:
+                rho_idx = rho_rng.choice(len(rho_samples), size=n, replace=True)
+            else:
+                rho_idx = np.random.choice(len(rho_samples), size=n, replace=True)
+            rho = np.asarray(rho_samples)[rho_idx]
+            # Without an explicit rng this used to fall through to an UNSEEDED
+            # default_rng() inside sample_dixon_coles — the leak that made the
+            # value-bet card irreproducible. resolve_rng now covers that case too.
+            home_goals, away_goals = sample_dixon_coles(lam, mu, rho, rng=goal_rng)
+        elif goal_rng is not None:
+            home_goals = goal_rng.poisson(lam)
+            away_goals = goal_rng.poisson(mu)
         else:
             home_goals = np.random.poisson(lam)
             away_goals = np.random.poisson(mu)
         total_goals = home_goals + away_goals
 
-        ht_home = np.random.binomial(home_goals, 0.45)
-        ht_away = np.random.binomial(away_goals, 0.45)
+        ht_home, ht_away = self._split_half_time(home_goals, away_goals, ht_rng)
 
         goal_sims = np.column_stack([home_goals, away_goals])
 
         # Correlated corners
-        if corners_model is not None and home_team and away_team:
-            corners_pred = corners_model.predict(home_team, away_team, goal_sims=goal_sims)
-            home_corners = np.array(corners_pred["simulated_home"])[:n]
-            away_corners = np.array(corners_pred["simulated_away"])[:n]
-        else:
-            home_corners = np.random.poisson(5.5, n)
-            away_corners = np.random.poisson(4.5, n)
+        home_corners, away_corners = self._draw_corners(
+            corners_model, home_team, away_team, goal_sims, n, corner_rng
+        )
 
         # Correlated cards
-        if cards_model is not None and home_team and away_team:
-            cards_pred = cards_model.predict(
-                home_team, away_team,
-                referee=referee,
-                is_derby=is_derby,
-                goal_sims=goal_sims,
-            )
-            home_yellows = np.array(cards_pred["simulated_home"])[:n]
-            away_yellows = np.array(cards_pred["simulated_away"])[:n]
-        else:
-            home_yellows = np.random.poisson(1.5, n)
-            away_yellows = np.random.poisson(1.8, n)
+        home_yellows, away_yellows = self._draw_cards(
+            cards_model, home_team, away_team, referee, is_derby,
+            goal_sims, n, card_rng,
+        )
 
         return {
             "home_goals": home_goals,

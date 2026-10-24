@@ -371,10 +371,20 @@ class BayesianDixonColes:
             raise RuntimeError("Model not fitted")
         return self.trace.posterior["rho"].values.flatten()
 
-    def get_lambda_mu_samples(self, home: str, away: str, n_samples: int = 10000) -> Tuple[np.ndarray, np.ndarray]:
+    def get_lambda_mu_samples(
+        self,
+        home: str,
+        away: str,
+        n_samples: int = 10000,
+        rng: Optional[np.random.Generator] = None,
+    ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Get posterior samples of (lambda, mu) for Monte Carlo simulation.
         Used by the simulation engine.
+
+        ``rng`` selects which posterior draws are resampled. The value-bet path
+        passes one so the card is reproducible; ``None`` keeps numpy's legacy
+        global state (the FPL ``fixture_rates`` export still relies on that).
 
         Returns:
             (lambda_home, mu_away) arrays of posterior samples.
@@ -409,7 +419,8 @@ class BayesianDixonColes:
             )
 
         n_total = len(inter)
-        indices = np.random.choice(n_total, size=n_samples, replace=True)
+        source = rng if rng is not None else np.random
+        indices = source.choice(n_total, size=n_samples, replace=True)
 
         lambda_h = np.exp(inter[indices] + att_h[indices] - def_a[indices] + ha[indices])
         mu_a = np.exp(inter[indices] + att_a[indices] - def_h[indices])

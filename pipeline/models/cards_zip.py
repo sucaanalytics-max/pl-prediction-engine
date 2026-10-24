@@ -205,6 +205,7 @@ class CardsZIPModel:
         referee: Optional[str] = None,
         is_derby: bool = False,
         goal_sims: Optional[np.ndarray] = None,
+        rng: Optional[np.random.Generator] = None,
     ) -> Dict:
         """
         Predict card distributions for a match.
@@ -216,6 +217,8 @@ class CardsZIPModel:
             is_derby: Whether this is a derby match
             goal_sims: Optional (n_sims, 2) array of [home_goals, away_goals]
                         for match-state correlation (trailing teams foul more)
+            rng: Optional Generator for the ZIP draws. ``None`` keeps numpy's
+                 legacy global state, in the same draw order as before.
 
         Returns:
             Probabilities for over/under card lines + distributions.
@@ -235,15 +238,16 @@ class CardsZIPModel:
         # Simulate
         n_sims = len(goal_sims) if goal_sims is not None else N_SIMULATIONS
         # ZIP sampling: with prob p_zero, emit 0; otherwise sample Poisson
+        source = rng if rng is not None else np.random
         sim_home = np.where(
-            np.random.random(n_sims) < p0_h,
+            source.random(n_sims) < p0_h,
             0,
-            np.random.poisson(lam_h, n_sims),
+            source.poisson(lam_h, n_sims),
         )
         sim_away = np.where(
-            np.random.random(n_sims) < p0_a,
+            source.random(n_sims) < p0_a,
             0,
-            np.random.poisson(lam_a, n_sims),
+            source.poisson(lam_a, n_sims),
         )
 
         # Match-state correlation: trailing teams foul more → more cards

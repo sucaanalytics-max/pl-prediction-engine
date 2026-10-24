@@ -748,6 +748,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
     # ── Step 9: Monte Carlo Simulation ───────────────────────────────
     logger.info("\n[9/12] Running Monte Carlo simulation (correlated)...")
+    from pipeline.simulation.fixture_sim import simulate_fixture
     from pipeline.simulation.montecarlo import MonteCarloSimulator
 
     # In CI, reduce simulations for speed
@@ -781,46 +782,17 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             upcoming_features["match_id"] == match_id
         ]
 
-        # Make unchanged inputs reproducible across daily runs.
-        fixture_seed = int(
-            hashlib.sha256(f"{match_id}_{PIPELINE_VERSION}".encode()).hexdigest()[:8],
-            16,
-        )
-        np.random.seed(fixture_seed)
-
         logger.info(f"  Simulating: {home} vs {away} (derby={derby}, ref={match_referee})...")
 
-        # Get lambda/mu from available models
-        lambda_h, mu_a = 1.4, 1.1  # Default
-        dc_lam_samples = None
-        dc_mu_samples = None
-        dc_rho_samples = None
-
-        if dc_model is not None:
-            try:
-                # Fitted, and until now discarded: the whole reason to prefer
-                # Dixon-Coles over independent Poisson is this parameter.
-                dc_rho_samples = dc_model.get_rho_samples()
-                dc_lam_samples, dc_mu_samples = dc_model.get_lambda_mu_samples(
-                    home, away, n_sims
-                )
-                lambda_h = float(np.mean(dc_lam_samples))
-                mu_a = float(np.mean(dc_mu_samples))
-            except Exception as e:
-                logger.warning(f"  DC prediction failed for {home} vs {away}: {e}")
-
-        # Gather per-model lambdas for ensemble blending
-        model_lambdas = {}
-        if dc_lam_samples is not None and dc_mu_samples is not None:
-            model_lambdas["dixon_coles"] = (lambda_h, mu_a)
-
+        # Point rates from the non-DC models. Neither draws random numbers.
+        other_lambdas = {}
         if xgb_model is not None:
             try:
                 if len(match_feature_row) > 0:
                     xgb_lam, xgb_mu = xgb_model.predict_single(
                         match_feature_row.iloc[0].to_dict()
                     )
-                    model_lambdas["xgboost"] = (xgb_lam, xgb_mu)
+                    other_lambdas["xgboost"] = (xgb_lam, xgb_mu)
                 else:
                     logger.warning(f"  No upcoming feature row found for {match_id}")
             except Exception as e:
@@ -831,41 +803,34 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             pb_lam = pb_pred.get("expected_goals", {}).get("home")
             pb_mu = pb_pred.get("expected_goals", {}).get("away")
             if pb_lam is not None and pb_mu is not None:
-                model_lambdas["penaltyblog"] = (pb_lam, pb_mu)
+                other_lambdas["penaltyblog"] = (pb_lam, pb_mu)
 
-        # Blend using stacking weights if available, else static weights
-        weights = stacking_weights if stacking_weights else ENSEMBLE_WEIGHTS
-        total_w = sum(weights.get(m, 0) for m in model_lambdas)
-        if total_w > 0 and len(model_lambdas) > 0:
-            lambda_h = sum(weights.get(m, 0) * lam for m, (lam, _) in model_lambdas.items()) / total_w
-            mu_a = sum(weights.get(m, 0) * mu for m, (_, mu) in model_lambdas.items()) / total_w
-
-        # Simulate (correlated corners/cards)
-        sim_kwargs = dict(
-            corners_model=corners_model,
-            cards_model=cards_model,
-            home_team=home,
-            away_team=away,
-            referee=match_referee,
-            is_derby=derby,
+        # DC posterior draw, blend, simulate (correlated corners/cards), derive
+        # markets. Every draw comes from a Generator seeded by the fixture alone
+        # (common random numbers: unchanged inputs reproduce bit-for-bit, and a
+        # model change moves the card by its own effect, not by fresh noise).
+        # See pipeline/simulation/fixture_sim.py for the seed design and the
+        # unseeded-Generator leak this closes.
+        fixture_sim = simulate_fixture(
+            simulator,
+            match_id=match_id,
+            home=home,
+            away=away,
+            dc_model=dc_model,
+            other_lambdas=other_lambdas,
+            weights=stacking_weights if stacking_weights else ENSEMBLE_WEIGHTS,
+            sim_kwargs=dict(
+                corners_model=corners_model,
+                cards_model=cards_model,
+                home_team=home,
+                away_team=away,
+                referee=match_referee,
+                is_derby=derby,
+            ),
         )
-
-        if dc_lam_samples is not None and dc_mu_samples is not None:
-            # Preserve the Bayesian posterior's relative uncertainty while
-            # centring it on the actual ensemble-blended goal rates.
-            lam_mean = max(float(np.mean(dc_lam_samples)), 1e-6)
-            mu_mean = max(float(np.mean(dc_mu_samples)), 1e-6)
-            blended_lam_samples = dc_lam_samples * (lambda_h / lam_mean)
-            blended_mu_samples = dc_mu_samples * (mu_a / mu_mean)
-            sims = simulator.simulate_from_posterior(
-                blended_lam_samples, blended_mu_samples,
-                rho_samples=dc_rho_samples, **sim_kwargs
-            )
-        else:
-            sims = simulator.simulate_match(lambda_h, mu_a, **sim_kwargs)
-
-        # Derive markets
-        markets = simulator.derive_all_markets(sims)
+        markets = fixture_sim.markets
+        lambda_h, mu_a = fixture_sim.lambda_h, fixture_sim.mu_a
+        model_lambdas = fixture_sim.model_lambdas
 
         # Player booking predictions
         player_bookings_pred = {}
@@ -1036,6 +1001,13 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     try:
         from pipeline.decide.horizon import EVAL_HORIZON
         from pipeline.models.fixture_rates import export_fixture_xg
+
+        # export_fixture_xg resamples the posterior through numpy's legacy
+        # global state. It used to inherit whatever the last fixture of the
+        # Step 9 loop left there; that loop now runs on explicit Generators and
+        # leaves the global state alone, so seed it here explicitly or these
+        # rates would vary run to run.
+        np.random.seed(stable_seed_entropy(CURRENT_SEASON, gameweek, stream="fixture_xg"))
 
         export_fixture_xg(
             dc_model, bootstrap, fixtures_raw, PREDICTIONS_DIR,

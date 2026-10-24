@@ -42,6 +42,7 @@ from pipeline.fpl.rules import POSITIONS, Rules, load_rules
 from pipeline.fpl.scoring import score_arrays
 from pipeline.models.minutes import RoleProbabilities
 from pipeline.models.player_events import PlayerEventRates, PlayerRates
+from pipeline.simulation.montecarlo import resolve_rng
 
 logger = logging.getLogger(__name__)
 
@@ -670,7 +671,10 @@ def simulate_fixture_players(
     so the goal minutes are present.
     """
     rules = rules or load_rules()
-    generator = rng if rng is not None else np.random.default_rng()
+    # Never unseeded: without ``rng`` this derives from numpy's global state, so
+    # a caller that seeds np.random still gets a reproducible draw.
+    # gameweek_sim always passes one.
+    generator = resolve_rng(rng)
 
     for required in ("home_goal_minutes", "away_goal_minutes"):
         if required not in sims:
