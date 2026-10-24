@@ -159,10 +159,13 @@ class TotalExposureTests(unittest.TestCase):
         self.assertAlmostEqual(exposure(predictions), 0.20, places=6)
 
     def test_a_card_already_inside_the_cap_is_untouched(self):
-        # The caps must not be a tax on a modest card.
-        predictions = card(("A", "B", [bet("Home Win", "1x2")]))
+        # The caps must not be a tax on a modest card. Both clubs established and
+        # the model close to the market, so the 1X2 hold guards stay out of it —
+        # this test is about the caps, see test_kelly_guards.py for the guards.
+        predictions = card(("A", "B", [{**bet("Home Win", "1x2"), "market_gap_1x2": 0.02}]))
         before = exposure(predictions)
-        apply_portfolio_limits(predictions, bankroll=BANK)
+        apply_portfolio_limits(predictions, bankroll=BANK,
+                               team_match_counts={"A": 114, "B": 114})
         self.assertAlmostEqual(exposure(predictions), before, places=9)
 
 

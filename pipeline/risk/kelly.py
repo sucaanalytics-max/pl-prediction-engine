@@ -15,7 +15,7 @@ Phase 3 upgrade:
 import logging
 import re
 from collections import defaultdict
-from typing import Dict, List, Optional
+from typing import Dict, Iterable, List, Mapping, Optional, Tuple
 
 import numpy as np
 
@@ -77,6 +77,14 @@ PORTFOLIO_LIMITS = {
     "max_per_direction_pct": RISK.get("max_per_direction_pct", 0.10),
 }
 
+#: Thresholds for the 1X2 hold guards. Read with `RISK[...]`, not `.get` with a
+#: default: a missing key should fail at import rather than quietly fall back to
+#: a number nobody chose.
+ONE_X_TWO_GUARDS = {
+    "min_matches_in_window": RISK["min_matches_in_window_1x2"],
+    "max_market_gap": RISK["max_market_gap_1x2"],
+}
+
 #: Totals lines on the same match, in the same direction, are NESTED rather than
 #: merely correlated: `Under 2.5` winning implies `Under 3.5` winning. Betting
 #: both is one directional view at the combined stake, so they are charged
@@ -130,6 +138,44 @@ def nesting_key(bet: Dict) -> Optional[str]:
     if _totals_line(bet) is None:
         return None
     return f"{bet.get('match', '')}|{direction}"
+
+
+#: One view, two markets. On a single fixture a draw, an underdog win and an
+#: UNDER all win together when the favourite underdelivers — a goalless or 1-0
+#: afternoon pays every one of them, and the favourite scoring twice loses every
+#: one of them. Measured case (2026-10-24 card): Hull v Brentford carried `Home
+#: Win` (the market's underdog) AND `Under 2.5` at 2.5% each — 5% on "Brentford
+#: do not turn up", the whole per-bet cap twice over on one view.
+#:
+#: Charged against ONE per-bet cap, by the same mechanism as `nesting_key`.
+_UNDERDELIVERS = "favourite_underdelivers"
+
+
+def correlation_key(bet: Dict) -> Optional[str]:
+    """
+    Groups same-fixture 1X2 and goals-totals selections that share one direction.
+
+    In the group: every goals UNDER, every Draw, and a win for the side that is
+    NOT the market favourite. A 1X2 win whose favourite is unknown is grouped
+    too — when the side cannot be placed, the shared cap is the safe reading.
+    Corners and cards totals are a different factor and are not grouped.
+
+    The favourite comes from the de-vigged price (`market_favourite`, set by
+    `find_value_bets`). Using the price here is allowed under the value-bet
+    firewall because it can only ever group, i.e. only reduce a stake; it does
+    not touch the edge or the lambda.
+    """
+    direction = bet_direction(bet)
+    if direction is None:
+        return None
+    key = f"{bet.get('match', '')}|{_UNDERDELIVERS}"
+    if direction == "over_under:under" or direction == "1x2:draw":
+        return key
+    if direction in ("1x2:home", "1x2:away"):
+        favourite = bet.get("market_favourite")
+        if favourite not in ("home", "away") or direction != f"1x2:{favourite}":
+            return key
+    return None
 
 
 def devig_implied_prob(odds_dict: Dict[str, float]) -> Dict[str, float]:
@@ -226,6 +272,7 @@ def check_portfolio_exposure(
     current_bets: List[Dict],
     new_bet: Dict,
     bankroll: float,
+    correlated_cap: bool = True,
 ) -> Dict:
     """
     Check if a new bet would violate portfolio-level risk limits.
@@ -344,6 +391,25 @@ def check_portfolio_exposure(
                 f"({current_nest + new_stake:.0f} > {max_single:.0f})"
             )
 
+    # 3d. Same-fixture 1X2 + totals in the "favourite underdelivers" direction
+    # are one view, so they share the single-bet cap exactly as 3c does.
+    # `correlated_cap=False` exists only so `apply_portfolio_limits` can compute
+    # the unguarded baseline it clamps every stake to; it is never the default.
+    new_corr = correlation_key(new_bet) if correlated_cap else None
+    if new_corr is not None:
+        max_single = RISK["max_stake_pct"] * bankroll / 2  # half-Kelly basis
+        current_corr = sum(
+            bet.get("stake", 0) for bet in current_bets
+            if correlation_key(bet) == new_corr
+        )
+        if current_corr + new_stake > max_single:
+            allowed = max(0, max_single - current_corr)
+            adjusted_stake = min(adjusted_stake, allowed)
+            violations.append(
+                f"correlated_{new_corr} "
+                f"({current_corr + new_stake:.0f} > {max_single:.0f})"
+            )
+
     # 4. Correlation check (home win concentration)
     if new_market_type == "1x2" and new_bet.get("market", "").lower().startswith("home"):
         if home_win_count >= PORTFOLIO_LIMITS["max_correlated_bets"]:
@@ -457,6 +523,38 @@ def kelly_stake(
     }
 
 
+def _one_x_two_market_context(
+    model_1x2: Dict, h2h_odds: Dict[str, float],
+) -> Tuple[Optional[float], Optional[str]]:
+    """
+    Fixture-level max |model - de-vigged market| over home/draw/away, and which
+    side the market favours. Either is None when it cannot be measured — fewer
+    than three priced outcomes, or a model probability missing — and the guards
+    read None as "hold", never as "pass".
+
+    Fixture-level rather than per-selection: a model that has a club's strength
+    wrong has every outcome of that fixture wrong, so a Draw at a modest edge on
+    a fixture whose away price is 20pp adrift inherits the same error.
+    """
+    devigged = devig_implied_prob(h2h_odds)
+    outcomes = ("home", "draw", "away")
+    if not all(k in devigged for k in outcomes):
+        return None, None
+    try:
+        gap = max(abs(float(model_1x2[k]) - devigged[k]) for k in outcomes)
+    except (KeyError, TypeError, ValueError):
+        gap = None
+    if gap is not None and not np.isfinite(gap):
+        gap = None
+    if devigged["home"] > devigged["away"]:
+        favourite = "home"
+    elif devigged["away"] > devigged["home"]:
+        favourite = "away"
+    else:
+        favourite = None
+    return (float(gap) if gap is not None else None), favourite
+
+
 def _confidence_tier(edge: float, market: str) -> str:
     """
     Assign confidence tier based on edge magnitude relative to market threshold.
@@ -517,6 +615,14 @@ def find_value_bets(
             key = "home" if "Home" in label else ("draw" if "Draw" in label else "away")
             h2h_odds_for_devig[key] = o
 
+    # Two READ-ONLY annotations for the guards in `apply_portfolio_limits`.
+    # Computed after, and separately from, the edge: nothing below feeds
+    # `kelly_stake`, so the price can veto or group a selection but can never
+    # move its edge, its model probability or the lambda behind it.
+    market_gap_1x2, market_favourite = _one_x_two_market_context(
+        probs.get("1x2", {}), h2h_odds_for_devig,
+    )
+
     for market_name, model_prob, odds_key_1, odds_key_2 in markets_1x2:
         odds = odds_benchmark.get(odds_key_1) or odds_benchmark.get(odds_key_2)
         if odds and odds > 1 and model_prob > 0:
@@ -533,6 +639,9 @@ def find_value_bets(
                     "confidence_tier": _confidence_tier(stake["edge"], "1x2"),
                     "bookmaker": odds_benchmark.get(f"bookmaker_{outcome_key}"),
                     **stake,
+                    # Fraction (probability points), not a stake.
+                    "market_gap_1x2": market_gap_1x2,
+                    "market_favourite": market_favourite,
                 })
 
     # ── Over/Under Goals ─────────────────────────────────────────────────
@@ -863,9 +972,117 @@ def check_drawdown(
         }
 
 
+def matches_in_window(frame, teams: Iterable[str]) -> Dict[str, int]:
+    """
+    How many matches each club has in the frame the models were trained on.
+
+    Counted from the same `HomeTeam`/`AwayTeam` columns Dixon-Coles indexes, so a
+    club absent from the frame is a club the posterior has never seen and counts
+    0 — which is the answer, not a gap. A frame that cannot be read returns {},
+    and `one_x_two_hold_reasons` reads a missing team as "unknown → hold".
+
+    A spelling mismatch between the fixture list and the training frame also
+    lands on 0, and so on a hold. That is the safe side to fail on.
+    """
+    teams = [t for t in teams if t]
+    if frame is None or not hasattr(frame, "columns"):
+        return {}
+    if "HomeTeam" not in frame.columns or "AwayTeam" not in frame.columns:
+        return {}
+    home = frame["HomeTeam"].value_counts()
+    away = frame["AwayTeam"].value_counts()
+    return {
+        team: int(home.get(team, 0)) + int(away.get(team, 0))
+        for team in teams
+    }
+
+
+def one_x_two_hold_reasons(
+    bet: Dict,
+    home_team: Optional[str],
+    away_team: Optional[str],
+    team_match_counts: Optional[Mapping[str, int]],
+) -> List[str]:
+    """
+    Why a 1X2 selection must not be staked, or [] when nothing holds it.
+
+    Two guards, both one-way:
+
+    * **New to the training window.** Either club with fewer than
+      `RISK["min_matches_in_window_1x2"]` matches in the training frame. The
+      posterior for such a club is the league prior plus a handful of games, so
+      a 1X2 "edge" on its fixture is mostly a measurement of that prior.
+    * **Model adrift from the market.** Fixture-level max |model - de-vigged
+      price| above `RISK["max_market_gap_1x2"]`. The price VETOES here and does
+      nothing else — it never enters the edge, the model probability or lambda.
+
+    Unknown is a hold, never a pass: no count supplied, a club missing from the
+    counts, a non-numeric count, or no measurable gap all hold the selection.
+    Non-1X2 markets are not guarded here.
+    """
+    if str(bet.get("market_type") or "") != "1x2":
+        return []
+
+    reasons: List[str] = []
+    min_n = ONE_X_TWO_GUARDS["min_matches_in_window"]
+    for team in (home_team, away_team):
+        count = None
+        if team_match_counts is not None and team:
+            count = team_match_counts.get(team)
+        try:
+            count = None if count is None or isinstance(count, bool) else float(count)
+        except (TypeError, ValueError):
+            count = None
+        if count is None or not np.isfinite(count):
+            reasons.append(f"matches_in_window_unknown:{team}")
+        elif count < min_n:
+            reasons.append(f"new_to_training_window:{team} ({int(count)} < {min_n})")
+
+    max_gap = ONE_X_TWO_GUARDS["max_market_gap"]
+    gap = bet.get("market_gap_1x2")
+    try:
+        gap = None if gap is None or isinstance(gap, bool) else float(gap)
+    except (TypeError, ValueError):
+        gap = None
+    if gap is None or not np.isfinite(gap):
+        reasons.append("market_gap_unknown")
+    elif gap > max_gap:
+        reasons.append(f"model_market_gap_1x2 ({gap:.3f} > {max_gap:.2f})")
+    return reasons
+
+
+#: The four stake fields `latest.json` carries per bet: two CURRENCY
+#: (`full_kelly`, `half_kelly`) and two FRACTION (`*_pct`). See
+#: frontend/lib/data/units.ts. A held selection publishes all four at 0.0.
+_STAKE_FIELDS = ("full_kelly", "half_kelly", "full_kelly_pct", "half_kelly_pct")
+
+
+def _portfolio_pass(
+    scored: List[Dict], bankroll: float, skip: set, correlated_cap: bool,
+) -> Dict[int, Tuple[float, List[str]]]:
+    """One greedy pass over the card in `scored` order. Returns id(bet) -> (allowed, violations)."""
+    accepted: List[Dict] = []
+    out: Dict[int, Tuple[float, List[str]]] = {}
+    for row in scored:
+        bet, context = row["bet"], row["context"]
+        if id(bet) in skip:
+            continue
+        verdict = check_portfolio_exposure(
+            accepted, context, bankroll, correlated_cap=correlated_cap,
+        )
+        allowed = float(verdict.get("adjusted_stake") or 0.0)
+        out[id(bet)] = (
+            allowed, list(verdict.get("violations") or [verdict.get("reason")]),
+        )
+        if allowed > 0:
+            accepted.append({**context, "stake": allowed})
+    return out
+
+
 def apply_portfolio_limits(
     all_predictions: List[Dict],
     bankroll: float = 1000.0,
+    team_match_counts: Optional[Mapping[str, int]] = None,
 ) -> Dict:
     """
     Enforce the portfolio caps across every match, in place.
@@ -890,12 +1107,28 @@ def apply_portfolio_limits(
     portfolio — a staking recommendation that reshuffles on re-run is not one that
     can be checked.
 
+    ## The 1X2 hold guards, and why no stake can grow
+
+    `one_x_two_hold_reasons` holds a 1X2 selection on a fixture with a club new
+    to the training window, or where the model is adrift from the market. A held
+    selection is not dropped: it moves to `prediction["held_bets"]` with all four
+    stake fields at 0.0 and its `hold_reasons`, so the card says what it refused.
+    `team_match_counts` comes from `matches_in_window`; omitting it holds every
+    1X2 selection, because "unknown" must not read as "established".
+
+    Holding one selection frees room under the total and direction caps, and a
+    greedy pass would hand that room to the next selection down — a guard that
+    INCREASES a stake. So the card is run twice: once exactly as before the
+    guards existed (the baseline), once with holds removed and the correlated
+    same-fixture cap on. Every kept selection gets the MIN of the two. That is
+    within every guarded cap (stakes only fell) and never above the baseline.
+
     ## What it reports
 
-    Returns a summary, and **logs every reduction**. A cap that quietly deletes six
-    selections looks identical to a model that found eight — the reason the news
-    view now names its own truncation, and the same principle applies here with
-    money attached.
+    Returns a summary, and **logs every reduction and every hold**. A cap that
+    quietly deletes six selections looks identical to a model that found eight —
+    the reason the news view now names its own truncation, and the same principle
+    applies here with money attached.
     """
     scored: List[Dict] = []
     for prediction in all_predictions:
@@ -919,26 +1152,60 @@ def apply_portfolio_limits(
         str(row["bet"].get("market") or ""),
     ))
 
-    accepted: List[Dict] = []
-    kept_ids, reductions = set(), []
-
     # A zero or negative bankroll approves nothing, and must not divide. Reported
     # as a percentage of bank everywhere below, so the guard has to come before
     # the first ratio rather than inside `check_portfolio_exposure` alone.
     def as_pct(amount: float) -> float:
         return amount / bankroll if bankroll > 0 else 0.0
 
+    held_reasons: Dict[int, List[str]] = {}
+    for row in scored:
+        reasons = one_x_two_hold_reasons(
+            row["bet"], row["context"]["home_team"], row["context"]["away_team"],
+            team_match_counts,
+        )
+        if reasons:
+            held_reasons[id(row["bet"])] = reasons
+
+    baseline = _portfolio_pass(scored, bankroll, skip=set(), correlated_cap=False)
+    guarded = _portfolio_pass(
+        scored, bankroll, skip=set(held_reasons), correlated_cap=True,
+    )
+
+    accepted: List[Dict] = []
+    kept_ids, held_ids, reductions, held = set(), set(), [], []
+
     for row in scored:
         bet, context = row["bet"], row["context"]
         proposed = float(bet.get("half_kelly") or 0.0)
-        verdict = check_portfolio_exposure(accepted, context, bankroll)
-        allowed = float(verdict.get("adjusted_stake") or 0.0)
+
+        if id(bet) in held_reasons:
+            reasons = held_reasons[id(bet)]
+            held.append({
+                "match": context["match"], "market": bet.get("market"),
+                "edge": float(bet.get("edge") or 0.0),
+                "was_pct": as_pct(proposed), "reasons": list(reasons),
+            })
+            for field in _STAKE_FIELDS:
+                bet[field] = 0.0
+            bet["recommendation"] = "hold_for_review"
+            bet["hold_reasons"] = list(reasons)
+            held_ids.add(id(bet))
+            continue
+
+        base_allowed, base_violations = baseline[id(bet)]
+        guard_allowed, guard_violations = guarded[id(bet)]
+        if guard_allowed <= base_allowed:
+            allowed, violations = guard_allowed, guard_violations
+        else:
+            allowed = base_allowed
+            violations = base_violations + ["room freed by held selections is not redeployed"]
 
         if allowed <= 0:
             reductions.append({
                 "match": context["match"], "market": bet.get("market"),
                 "was_pct": as_pct(proposed), "now_pct": 0.0,
-                "reason": (verdict.get("violations") or [verdict.get("reason")])[:1],
+                "reason": violations[:1],
             })
             continue
 
@@ -950,7 +1217,7 @@ def apply_portfolio_limits(
             reductions.append({
                 "match": context["match"], "market": bet.get("market"),
                 "was_pct": as_pct(proposed), "now_pct": as_pct(allowed),
-                "reason": (verdict.get("violations") or [verdict.get("reason")])[:1],
+                "reason": violations[:1],
             })
             bet["half_kelly"] = allowed
             bet["full_kelly"] = float(bet.get("full_kelly") or 0.0) * factor
@@ -960,32 +1227,46 @@ def apply_portfolio_limits(
         accepted.append({**context, "stake": allowed})
         kept_ids.add(id(bet))
 
-    # Drop what the caps refused, so nothing is published at a stake of zero.
+    # Drop what the caps refused, so nothing is published at a stake of zero in
+    # `value_bets`. What the GUARDS refused is published, at zero, in its own
+    # list — a hold is a decision someone should be able to read and review.
     for prediction in all_predictions:
         existing = prediction.get("value_bets") or []
         prediction["value_bets"] = [b for b in existing if id(b) in kept_ids]
+        prediction["held_bets"] = [b for b in existing if id(b) in held_ids]
 
     total = sum(row["stake"] for row in accepted)
     summary = {
         "bankroll": float(bankroll),
         "n_bets_before": len(scored),
         "n_bets_after": len(accepted),
+        "n_held": len(held),
         "total_exposure_pct": as_pct(total),
         "limits": dict(PORTFOLIO_LIMITS),
+        "guards": dict(ONE_X_TWO_GUARDS),
         "max_stake_pct": RISK["max_stake_pct"],
         "reductions": reductions,
+        "held": held,
     }
 
-    if reductions:
-        # What the card would have staked before any cap bound: every selection
-        # that survived, plus the full original size of everything reduced.
+    for entry in held:
+        logger.warning(
+            "  HELD %s %s (edge %.3f, would have been %.2f%% before caps): %s",
+            entry["match"], entry["market"], entry["edge"],
+            entry["was_pct"] * 100, "; ".join(entry["reasons"]),
+        )
+
+    if reductions or held:
+        # What the card would have staked before any cap or hold bound: every
+        # selection that survived, plus the full original size of everything
+        # reduced or held.
         before = as_pct(total) + sum(
             r["was_pct"] - r["now_pct"] for r in reductions
-        )
+        ) + sum(h["was_pct"] for h in held)
         logger.warning(
-            "portfolio limits reduced %d of %d selections; "
+            "portfolio limits reduced %d and held %d of %d selections; "
             "exposure %.1f%% -> %.1f%% of bank",
-            len(reductions), len(scored), before * 100, as_pct(total) * 100,
+            len(reductions), len(held), len(scored), before * 100, as_pct(total) * 100,
         )
         for reduction in reductions:
             logger.info(
