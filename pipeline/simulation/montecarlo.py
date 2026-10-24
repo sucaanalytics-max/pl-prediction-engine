@@ -357,6 +357,7 @@ class MonteCarloSimulator:
         is_derby: bool = False,
         rho_samples: Optional[np.ndarray] = None,
         rng: Optional[np.random.Generator] = None,
+        rho_paired: bool = False,
     ) -> Dict:
         """
         Simulate using posterior samples of lambda/mu (from PyMC).
@@ -368,6 +369,29 @@ class MonteCarloSimulator:
         draws fall back to numpy's legacy global state (never unseeded entropy).
         The production value-bet path always passes one; see
         ``pipeline/simulation/fixture_sim.py``.
+
+        ## Pairing rho with the goal rates
+
+        ``rho_paired`` is the caller's explicit statement that ``rho_samples[k]``
+        comes from the same posterior draw as ``lambda_samples[k]`` and
+        ``mu_samples[k]`` (see ``BayesianDixonColes.get_paired_posterior_samples``).
+        Then rho is resampled with the SAME indices as lambda and mu, and the
+        scoreline is drawn from the joint posterior predictive. The lengths must
+        match or this raises — but equal length alone is never taken as
+        pairing: an unrelated rho array that happens to have ``n_sims`` entries
+        stays unpaired unless the caller says otherwise.
+
+        With ``rho_paired=False`` (the default) rho is drawn with its own
+        indices over the whole array, which integrates over the product of the
+        marginals ``p(lambda, mu) p(rho)``. That is what this function did
+        before pairing was wired, and it is kept bit-for-bit for callers that
+        hold only the raw rho trace.
+
+        Either way the Generator is split into the same six child streams in the
+        same order, so pairing changes the rho values and nothing else: the
+        posterior indices, scoreline uniforms, half-time, corners and cards
+        streams are identical (common random numbers across the change). On the
+        paired path the rho stream is spawned and left unused.
 
         ## The Dixon-Coles correction
 
@@ -403,16 +427,29 @@ class MonteCarloSimulator:
         lam = lambda_samples[indices]
         mu = mu_samples[indices]
 
+        if rho_paired and (rho_samples is None or len(rho_samples) != len(lambda_samples)):
+            raise ValueError(
+                "rho_paired=True needs one rho per (lambda, mu) sample: got "
+                f"{0 if rho_samples is None else len(rho_samples)} rho for "
+                f"{len(lambda_samples)} rate samples"
+            )
+
         if rho_samples is not None and len(rho_samples) > 0:
-            # NOTE: drawn with its own indices, so rho is NOT paired to the same
-            # posterior draw as lambda and mu — the joint posterior correlation
-            # between rho and the strength parameters is not carried. Recorded,
-            # not changed here: pairing them moves every published probability.
-            if rho_rng is not None:
-                rho_idx = rho_rng.choice(len(rho_samples), size=n, replace=True)
+            if rho_paired:
+                # Same posterior draw as lambda and mu: the joint posterior,
+                # including any correlation between rho and the strength
+                # parameters, is carried into the scoreline. No draw is taken
+                # from rho_rng (or from np.random on the legacy path).
+                rho = np.asarray(rho_samples)[indices]
             else:
-                rho_idx = np.random.choice(len(rho_samples), size=n, replace=True)
-            rho = np.asarray(rho_samples)[rho_idx]
+                # Unpaired: rho drawn with its own indices over the raw trace,
+                # i.e. from the product of the marginals. Kept for callers that
+                # hold no draw indices; the value-bet path pairs (fixture_sim).
+                if rho_rng is not None:
+                    rho_idx = rho_rng.choice(len(rho_samples), size=n, replace=True)
+                else:
+                    rho_idx = np.random.choice(len(rho_samples), size=n, replace=True)
+                rho = np.asarray(rho_samples)[rho_idx]
             # Without an explicit rng this used to fall through to an UNSEEDED
             # default_rng() inside sample_dixon_coles — the leak that made the
             # value-bet card irreproducible. resolve_rng now covers that case too.

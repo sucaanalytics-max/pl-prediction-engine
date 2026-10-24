@@ -189,7 +189,7 @@ class ProbabilityContractTests(unittest.TestCase):
         self.assertEqual(result.markets["n_simulations"], 300)
         self.assertEqual(result.markets["goal_markets"]["method"], METHOD_POSTERIOR_GRID)
         self.assertEqual(result.markets["goal_markets"]["n_posterior_draws"], 1200)
-        self.assertEqual(result.markets["goal_markets"]["rho"], "independent")
+        self.assertEqual(result.markets["goal_markets"]["rho"], "paired")
 
 
 def _run(n_sims=500, base_seed=None, dc=None):

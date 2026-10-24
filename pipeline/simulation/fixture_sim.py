@@ -36,7 +36,9 @@ posterior). Two designs were on the table:
   so a higher home rate moves individual draws monotonically rather than
   reshuffling them, and each component has its own child stream (posterior
   indices, rho, scorelines, half-time, corners, cards) so a change in one does
-  not shift the draws of the others.
+  not shift the draws of the others. (Since rho was paired to the posterior
+  draw of lambda and mu, the rho stream is still spawned but unused, so the
+  other five keep their identity.)
 
 Neither design reduces the Monte Carlo error itself: a fixed seed is a fixed
 draw of noise, so a published probability is still ``p_hat`` with standard error
@@ -82,7 +84,7 @@ from pipeline.simulation.exact_markets import (
     apply_exact_goal_markets,
     goal_markets_from_grid,
     independent_poisson_grid,
-    independent_rho_scoreline_grid,
+    scoreline_grid_mixture,
 )
 
 logger = logging.getLogger(__name__)
@@ -161,7 +163,13 @@ def simulate_fixture(
     on ``simulator.n_sims``.
 
     The DC posterior's relative uncertainty is kept and recentred on the blended
-    rates (``lam_k * lambda_blend / mean(lam)``) on both paths.
+    rates (``lam_k * lambda_blend / mean(lam)``) on both paths. rho is paired to
+    the same posterior draw as each (lambda, mu) on both paths: the simulation
+    via ``get_paired_posterior_samples`` with ``rho_paired=True``, the exact grid
+    by averaging over the aligned full-posterior triples. Measured on the GW8
+    card (2026-10-25): pairing moves any 1X2, O/U 1.5 or BTTS probability by
+    <= 0.013pp (O/U 2.5 and 3.5 cannot move: tau only redistributes mass among
+    0-0, 1-0, 0-1, 1-1). A correctness fix, not a re-tune.
     """
     generator = rng if rng is not None else fixture_rng(match_id)
     posterior_rng, simulation_rng = generator.spawn(2)
@@ -169,24 +177,44 @@ def simulate_fixture(
 
     lambda_h, mu_a = DEFAULT_RATES
     dc_lam_samples = dc_mu_samples = dc_rho_samples = None
-    dc_lam_post = dc_mu_post = None
+    dc_lam_post = dc_mu_post = dc_rho_post = None
 
     if dc_model is not None:
         try:
-            # Fitted, and until now discarded: the whole reason to prefer
-            # Dixon-Coles over independent Poisson is this parameter.
-            dc_rho_samples = dc_model.get_rho_samples()
-            # Every posterior draw, for the exact grid and the point rate.
+            # rho is the whole reason to prefer Dixon-Coles over independent
+            # Poisson, and it is taken from the SAME posterior draw as each
+            # (lambda, mu): the predictive integrates over the joint posterior,
+            # not the product of its marginals.
+            # Every posterior draw, aligned with the rho trace, for the exact
+            # grid and the point rate.
             dc_lam_post, dc_mu_post = dc_model.get_lambda_mu_posterior(home, away)
-            # n resampled draws, only to drive the corners/cards simulation.
-            dc_lam_samples, dc_mu_samples = dc_model.get_lambda_mu_samples(
-                home, away, simulator.n_sims, rng=posterior_rng
+            dc_rho_post = dc_model.get_rho_samples()
+            if dc_rho_post is None or np.shape(dc_rho_post) != np.shape(dc_lam_post):
+                # A fitted posterior with no (or misaligned) rho is a broken
+                # fit, not a missing prediction: raise rather than fall back
+                # to the Poisson grid below.
+                raise ExactMarketsError(
+                    f"{home} vs {away}: Dixon-Coles posterior has "
+                    f"{0 if dc_rho_post is None else np.size(dc_rho_post)} rho draws "
+                    f"for {np.size(dc_lam_post)} rate draws; the exact goals "
+                    "markets cannot be computed"
+                )
+            # n paired resampled draws, only to drive the corners/cards
+            # simulation. The draw indices consume posterior_rng exactly as
+            # get_lambda_mu_samples always has.
+            dc_lam_samples, dc_mu_samples, dc_rho_samples = (
+                dc_model.get_paired_posterior_samples(
+                    home, away, simulator.n_sims, rng=posterior_rng
+                )
             )
             lambda_h = float(np.mean(dc_lam_post))
             mu_a = float(np.mean(dc_mu_post))
+        except ExactMarketsError:
+            raise
         except Exception as e:
             logger.warning(f"  DC prediction failed for {home} vs {away}: {e}")
-            dc_lam_samples = dc_mu_samples = dc_lam_post = dc_mu_post = None
+            dc_lam_samples = dc_mu_samples = dc_rho_samples = None
+            dc_lam_post = dc_mu_post = dc_rho_post = None
 
     from_posterior = dc_lam_post is not None and dc_mu_post is not None
 
@@ -202,23 +230,19 @@ def simulate_fixture(
         mu_a = sum(weights.get(m, 0) * mu for m, (_, mu) in model_lambdas.items()) / total_w
 
     if from_posterior:
-        if dc_rho_samples is None or len(dc_rho_samples) == 0:
-            raise ExactMarketsError(
-                f"{home} vs {away}: Dixon-Coles posterior has no rho draws; "
-                "the exact goals markets cannot be computed"
-            )
         # Preserve the Bayesian posterior's relative uncertainty while
-        # centring it on the actual ensemble-blended goal rates.
+        # centring it on the actual ensemble-blended goal rates. The rescale is
+        # one scalar per side for the fixture, so it keeps sample order (and
+        # hence the rho pairing) and leaves corr(rho, log lambda) unchanged.
         post_lam_mean = max(float(np.mean(dc_lam_post)), 1e-6)
         post_mu_mean = max(float(np.mean(dc_mu_post)), 1e-6)
-        # rho independent of the (lambda, mu) draw: the simulator's semantics
-        # today, which resamples rho with its own indices. Pairing them is a
-        # caller-side change of triples (exact_markets.scoreline_grid_mixture
-        # on the aligned posterior arrays), not a change to the grid code.
-        grid = independent_rho_scoreline_grid(
+        # Paired: (lam[k], mu[k], rho[k]) is one joint posterior draw, the same
+        # semantics as the simulation's rho_paired=True. scoreline_grid_mixture
+        # raises ExactMarketsError if the arrays are not aligned.
+        grid = scoreline_grid_mixture(
             dc_lam_post * (lambda_h / post_lam_mean),
             dc_mu_post * (mu_a / post_mu_mean),
-            dc_rho_samples,
+            dc_rho_post,
         )
         method, n_post = METHOD_POSTERIOR_GRID, int(len(dc_lam_post))
 
@@ -228,6 +252,7 @@ def simulate_fixture(
             dc_lam_samples * (lambda_h / lam_mean),
             dc_mu_samples * (mu_a / mu_mean),
             rho_samples=dc_rho_samples,
+            rho_paired=True,
             rng=simulation_rng,
             **sim_kwargs,
         )
@@ -244,7 +269,7 @@ def simulate_fixture(
     provenance = {
         "method": method,
         "n_posterior_draws": n_post,
-        "rho": "independent" if from_posterior else None,
+        "rho": "paired" if from_posterior else None,
     }
     markets = apply_exact_goal_markets(
         simulator.derive_all_markets(sims), goal_markets_from_grid(grid), provenance

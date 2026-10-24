@@ -40,10 +40,11 @@ optional weights and returns the weighted mean of their grids. Whether rho is
 paired with the lambda/mu draw or independent of it is purely the caller's
 choice of triples:
 
-* paired: ``scoreline_grid_mixture(lam, mu, rho)`` with the three posterior
-  arrays in the same order;
-* independent (today's production semantics, where the simulator resamples rho
-  with its own indices): :func:`independent_rho_scoreline_grid`, the mean over
+* paired (production semantics since #6, matching the simulator's
+  ``rho_paired=True``): ``scoreline_grid_mixture(lam, mu, rho)`` with the three
+  posterior arrays in the same order;
+* independent (the simulator's ``rho_paired=False``, which resamples rho with
+  its own indices): :func:`independent_rho_scoreline_grid`, the mean over
   the full Cartesian product of (lambda, mu) draws and rho draws.
 
 The independent case would be ``S * R`` grids done naively. It collapses because
@@ -180,8 +181,8 @@ def independent_rho_scoreline_grid(
     """
     Mean grid over every (lambda, mu) draw crossed with every rho draw.
 
-    This is the expectation of today's simulator, which resamples rho with its
-    own indices, independently of the lambda/mu draw. See the module docstring
+    This is the expectation of the simulator with ``rho_paired=False``, which
+    resamples rho with its own indices, independently of the lambda/mu draw. See the module docstring
     for why it collapses to one grid per (lambda, mu) draw at the mean rho
     wherever the zero floor cannot bind; draws where it can are expanded over
     every rho draw.

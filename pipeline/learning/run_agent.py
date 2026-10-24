@@ -395,7 +395,11 @@ def refresh_expected_points(
         load_exported_rates,
         resolve_rates,
     )
-    from pipeline.models.fpl_inputs import build_fpl_inputs, load_current_season_rows
+    from pipeline.models.fpl_inputs import (
+        build_fpl_inputs,
+        load_current_season_rows,
+        with_deadline_availability_if_used,
+    )
     from pipeline.run_pipeline import stable_seed_entropy
     from pipeline.simulation.gameweek_sim import FixtureSpec, simulate_gameweek
 
@@ -451,9 +455,20 @@ def refresh_expected_points(
     # This season's settled minutes. Without them the minutes model, whose
     # 1.5-fixture half-life was only ever validated with them present, projects
     # every player from his last three matches of last season.
+    #
+    # The deadline flags each settled row was played under, read from the sealed
+    # bootstraps, let the minutes model stop charging a match missed injured to a
+    # player who is fit again (minutes.fit_now_absence_credit). Non-fatal: any
+    # failure leaves the rows as they were and the projection as it always was.
+    current_season = with_deadline_availability_if_used(
+        load_current_season_rows(bootstrap), bootstrap, Path(predictions_dir)
+    )
     inputs = build_fpl_inputs(
         bootstrap, archive, priors, rules, evidence=evidence_view,
-        current_season=load_current_season_rows(bootstrap),
+        current_season=current_season,
+    )
+    deadline_availability = _deadline_availability_provenance(
+        current_season, inputs.diagnostics
     )
 
     # Per-fixture goal rates, best source first. A flat rate for every fixture
@@ -608,7 +623,42 @@ def refresh_expected_points(
         # change at FPL, which otherwise degrades silently to the old behaviour,
         # is visible in the run and in the seal.
         "availability_evidence": evidence,
+        # Whether the sealed deadline flags actually reached the minutes fit, and
+        # from which gameweeks. The parameter VALUE is already in
+        # artifact_metadata.parameters; this says whether it took effect, because
+        # the join is non-fatal and a degraded run would otherwise seal a header
+        # claiming fit_now_absence_credit = 1.0 for a forecast made as if 0.0.
+        "deadline_availability": deadline_availability,
     }
+
+
+def _deadline_availability_provenance(
+    rows: Any, diagnostics: Mapping[str, Any]
+) -> Optional[Dict[str, Any]]:
+    """
+    A JSON-safe record of the deadline-flag join, for the seal header. Never raises.
+
+    Returned already round-tripped through ``json`` so nothing that reaches
+    ``seal_forecast``'s header can fail to serialise there: a TypeError at that
+    point would cost the seal. Any failure here returns None instead, which costs
+    only this record.
+    """
+    try:
+        column = "availability_at_deadline"
+        attached = rows is not None and column in getattr(rows, "columns", ())
+        gameweeks = (
+            sorted(int(g) for g in rows.loc[rows[column].notna(), "GW"].unique())
+            if attached else []
+        )
+        record = {
+            "attached": bool(attached),
+            "gameweeks_with_sealed_flags": gameweeks,
+            "minutes_fit": dict((diagnostics or {}).get("deadline_availability") or {}),
+        }
+        return json.loads(json.dumps(record, default=str))
+    except Exception as exc:  # noqa: BLE001 - provenance must never cost the seal
+        logger.warning("deadline availability provenance not recorded: %s", exc)
+        return None
 
 
 def _project_horizon(
@@ -867,6 +917,9 @@ def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
             # priced weeks 2-8 are gone by the time the results arrive.
             "horizon": outcome.get("horizon_diagnostics"),
             "availability_evidence": outcome.get("availability_evidence"),
+            # Which sealed gameweeks' flags fed the minutes fit, and whether the
+            # join took effect at all; see _deadline_availability_provenance.
+            "deadline_availability": outcome.get("deadline_availability"),
         },
         dry_run=dry_run,
     )
