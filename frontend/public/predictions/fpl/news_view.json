@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-24T01:34:44.850926Z",
-  "n_dropped": 163,
+  "generated_at": "2026-10-24T06:28:34.271313Z",
+  "n_dropped": 162,
   "dropped_by_source": {
-    "bbc_football": 45,
+    "bbc_football": 44,
     "hayters": 29,
     "sky_football": 89
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 253,
+  "n_articles": 252,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -36,6 +36,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "4bd765d3dd546a14",
+      "headline": "Why Tottenham v Arsenal could define their seasons - live on BBC One",
+      "summary": "With Tottenham stuttering and Arsenal floundering, these fierce rivals both need a victory in Saturday's showdown, live on BBC One.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck240l3n774zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-24T06:02:44Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "69fc8f1c441d313c",
@@ -1406,24 +1424,6 @@
           "element_id": 655,
           "name": "Gboho",
           "club": "COV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a24505b914c2a133",
-      "headline": "Football Daily",
-      "summary": "Andy Mitten & Jay Motty join Rick & Lloyd to dissect Man United's disastrous night.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/m0033tlq?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-22T15:16:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
