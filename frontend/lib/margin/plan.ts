@@ -334,8 +334,10 @@ export function heldSquadHorizon(
       hits: 0,
       bank_after: 0,
       free_transfers_after: null,
+      chip: null,
       planned: false,
     })),
+    wildcardGameweek: null,
   };
 }
 

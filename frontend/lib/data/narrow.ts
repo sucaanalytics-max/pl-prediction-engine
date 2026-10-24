@@ -776,6 +776,17 @@ export interface DecisionPlan {
    * a gap where the producer had supplied a number.
    */
   readonly free_transfers_after: number | null;
+  /**
+   * The chip this week's transfers were planned under, or null.
+   *
+   * The producer writes `"chip": "wildcard"` on the one week a human pinned the
+   * wildcard to (`FPL_ENTRIES["owner"]["wildcard_gameweek"]`) and leaves the key
+   * ABSENT on every other week — so absence is the ordinary case, not a gap.
+   * It matters because that week publishes `hits: 0` beside ten-plus transfers,
+   * which reads as free routine moves; made without the chip they would cost
+   * four points apiece past the free ones. See {@link chipLabel}.
+   */
+  readonly chip: string | null;
 }
 
 export interface PublicDecision {
@@ -897,6 +908,7 @@ export function narrowHorizon(
       captain: number | null; vice: number | null;
       transfers_in: readonly number[]; transfers_out: readonly number[];
       hits: number; bank_after: number; free_transfers_after: number | null;
+      chip: string | null;
     },
     offset: number,
   ): HorizonWeek => {
@@ -913,6 +925,7 @@ export function narrowHorizon(
       hits: plan.hits,
       bank_after: plan.bank_after,
       free_transfers_after: plan.free_transfers_after,
+      chip: plan.chip,
       planned: offset < transferHorizon,
     };
   };
@@ -937,6 +950,7 @@ export function narrowHorizon(
       hits: countOr0(entry.hits),
       bank_after: countOr0(entry.bank_after),
       free_transfers_after: optNumber(entry.free_transfers_after),
+      chip: optChip(entry.chip),
     }, i + 1));
   });
 
@@ -944,7 +958,35 @@ export function narrowHorizon(
   // is the honest state for a run that solved one gameweek.
   return weeks.length === 0
     ? null
-    : { evalHorizon, transferHorizon, weeks };
+    : {
+      evalHorizon,
+      transferHorizon,
+      weeks,
+      // Present only when the chip was planned. Absent and null both read as
+      // "no wildcard in this horizon", which is what the producer means by both.
+      wildcardGameweek: optNumber(raw.wildcard_gameweek),
+    };
+}
+
+/**
+ * A chip name, or null.
+ *
+ * `optString` alone would let `""` through as a chip, and an empty label over a
+ * hits-free week is the misreading this field exists to prevent. Lower-cased so
+ * a producer writing `"Wildcard"` still lands on the label.
+ */
+function optChip(raw: unknown): string | null {
+  const chip = optString(raw)?.trim().toLowerCase();
+  return chip ? chip : null;
+}
+
+/**
+ * How a chip is named on screen. `wildcard` is the one the producer plans; any
+ * other name is printed as published rather than dropped, because an unlabelled
+ * chip week is exactly the hits-free misreading.
+ */
+export function chipLabel(chip: string): string {
+  return chip === "wildcard" ? "Wildcard" : chip.replace(/_/g, " ");
 }
 
 /**
@@ -975,6 +1017,13 @@ export interface HorizonWeek {
   readonly bank_after: number;
   readonly free_transfers_after: number | null;
   /**
+   * The chip this week's transfers assume, or null. `"wildcard"` on the week the
+   * owner pinned it to; null on every other week, where the producer omits the
+   * key. When set, `hits` is 0 because the chip waives them, not because the
+   * moves fit inside the free transfers.
+   */
+  readonly chip: string | null;
+  /**
    * Whether transfers were planned into this week.
    *
    * The tail of the horizon feeds the objective but is never transferred into —
@@ -989,6 +1038,12 @@ export interface Horizon {
   readonly evalHorizon: number;
   readonly transferHorizon: number;
   readonly weeks: readonly HorizonWeek[];
+  /**
+   * The absolute gameweek the wildcard was planned into, or null when the solve
+   * planned none. Published beside the per-week `chip` so a reader can say
+   * "wildcard GW9" without scanning the weeks.
+   */
+  readonly wildcardGameweek: number | null;
 }
 
 /** One published `P(total ≥ threshold)`. */
@@ -1037,6 +1092,7 @@ function narrowPlan(raw: unknown): DecisionPlan | null {
     hits: countOr0(raw.hits),
     bank_after: countOr0(raw.bank_after),
     free_transfers_after: optNumber(raw.free_transfers_after),
+    chip: optChip(raw.chip),
   };
 }
 

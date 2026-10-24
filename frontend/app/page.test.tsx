@@ -428,7 +428,7 @@ describe("the transfer tile reports the agent's plan when one is published", () 
     plan: {
       squad: [], xi: [], captain: 5, vice: 9,
       transfers_in: transfersIn, transfers_out: transfersOut,
-      hits: 0, bank_after: 4.1, free_transfers_after: 2,
+      hits: 0, bank_after: 4.1, free_transfers_after: 2, chip: null,
     },
     mean_points: 55, optimism_gap: null, credible_margin: false, sealed: false,
     warnings: [], xp_snapshot: {}, horizon: null,
@@ -464,13 +464,13 @@ describe("the transfer tile reports the agent's plan when one is published", () 
       gameweek: 1, squad: [...squad, 68], xi: [1, 2, 3, 4, 5, 6, 68, 8, 9, 10, 11],
       bench: [12, 13, 14, 15], captain: 5, vice: 9,
       transfers_in: [68], transfers_out: [7], hits: 0, bank_after: 4.1,
-      free_transfers_after: 1, planned: true,
+      free_transfers_after: 1, chip: null, planned: true,
     };
     const { container } = await mountPage({
       projections: [...PROJECTIONS, BUY],
       decision: {
         ...decisionWith([68], [7]),
-        horizon: { evalHorizon: 1, transferHorizon: 1, weeks: [week0] },
+        horizon: { evalHorizon: 1, transferHorizon: 1, weeks: [week0], wildcardGameweek: null },
       },
       playerStats: [...PLAYER_STATS, { elementId: 68, fpl_price: 6.2 }],
       livePrices: new Map([[68, 6.3]]),
@@ -487,13 +487,13 @@ describe("the transfer tile reports the agent's plan when one is published", () 
       gameweek: 1, squad: [...squad, 68], xi: [1, 2, 3, 4, 5, 6, 68, 8, 9, 10, 11],
       bench: [12, 13, 14, 15], captain: 5, vice: 9,
       transfers_in: [68], transfers_out: [7], hits: 0, bank_after: 4.1,
-      free_transfers_after: 1, planned: true,
+      free_transfers_after: 1, chip: null, planned: true,
     };
     const { container } = await mountPage({
       projections: [...PROJECTIONS, BUY],
       decision: {
         ...decisionWith([68], [7]),
-        horizon: { evalHorizon: 1, transferHorizon: 1, weeks: [week0] },
+        horizon: { evalHorizon: 1, transferHorizon: 1, weeks: [week0], wildcardGameweek: null },
       },
       playerStats: [...PLAYER_STATS, { elementId: 68, fpl_price: 6.2 }],
     });

@@ -32,6 +32,7 @@
  * text for when no decision has been published.
  */
 
+import { chipLabel } from "@/lib/data/narrow";
 import { DISPLAY, SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
 import { EYEBROW } from "@/lib/margin/type";
 
@@ -99,6 +100,12 @@ export interface AgentTransfer {
   readonly out: readonly string[];
   readonly in: readonly string[];
   readonly sealed: boolean;
+  /**
+   * The chip the decided week's moves assume, off `DecisionPlan.chip`. A
+   * wildcard week lists ten-plus moves with no hits, and without this the tile
+   * reads them as an ordinary transfer.
+   */
+  readonly chip: string | null;
 }
 
 /**
@@ -113,6 +120,12 @@ export function agentTransferNote(plan: AgentTransfer): string {
   const moved = plan.out.length > 0 || plan.in.length > 0;
   // The eleven and totals on this board are the squad BEFORE the move, so the
   // note says so rather than let the two be read as one plan.
+  if (moved && plan.chip !== null) {
+    const n = Math.max(plan.out.length, plan.in.length);
+    return `the agent's plan plays the ${chipLabel(plan.chip).toLowerCase()} · ` +
+      `${n} transfer${n === 1 ? "" : "s"} assume the chip is active · ${status} · ` +
+      "not applied to the eleven below";
+  }
   return moved
     ? `the agent's plan · ${status} · not applied to the eleven below`
     : `the agent's plan makes no transfer this week · ${status}`;

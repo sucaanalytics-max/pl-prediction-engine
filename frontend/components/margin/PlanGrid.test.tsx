@@ -46,19 +46,20 @@ const HORIZON: Horizon = {
     {
       gameweek: 3, squad: [1, 2, 3, 4], xi: [1, 2, 3, 4], bench: [],
       captain: 4, vice: 3, transfers_in: [], transfers_out: [],
-      hits: 0, bank_after: 8, free_transfers_after: null, planned: true,
+      hits: 0, bank_after: 8, free_transfers_after: null, chip: null, planned: true,
     },
     {
       gameweek: 4, squad: [1, 2, 3, 5], xi: [1, 2, 3], bench: [5],
       captain: 3, vice: 1, transfers_in: [5], transfers_out: [4],
-      hits: 1, bank_after: 3, free_transfers_after: 1, planned: true,
+      hits: 1, bank_after: 3, free_transfers_after: 1, chip: null, planned: true,
     },
     {
       gameweek: 5, squad: [1, 2, 3, 5], xi: [1, 2, 5], bench: [3],
       captain: 5, vice: 1, transfers_in: [], transfers_out: [],
-      hits: 0, bank_after: 3, free_transfers_after: 2, planned: false,
+      hits: 0, bank_after: 3, free_transfers_after: 2, chip: null, planned: false,
     },
   ],
+  wildcardGameweek: null,
 };
 
 function draw(projections: readonly Projection[] = NAMES) {
@@ -731,5 +732,51 @@ describe("narrow screens", () => {
     expect(within(box).getByText("Starts")).toBeInTheDocument();
     // And the board has a floor: 152 + 38 + 3 weeks * 58 + 4 gaps * 3.
     expect((box.firstElementChild as HTMLElement).style.minWidth).toBe("376px");
+  });
+});
+
+describe("a wildcard week", () => {
+  afterEach(cleanup);
+
+  /** GW4 rebuilt under the wildcard: three moves, `hits: 0` because the chip waives them. */
+  const WILDCARD: Horizon = {
+    ...HORIZON,
+    wildcardGameweek: 4,
+    weeks: HORIZON.weeks.map((week) => week.gameweek !== 4 ? week : {
+      ...week,
+      squad: [1, 2, 3, 5], transfers_in: [5, 2, 3], transfers_out: [4, 6, 7],
+      hits: 0, chip: "wildcard",
+    }),
+  };
+
+  it("labels the column the chip is played in, and only that one", () => {
+    render(<PlanGrid horizon={WILDCARD} projections={NAMES} />);
+    const marks = screen.getAllByTestId("plan-chip");
+    expect(marks).toHaveLength(1);
+    expect(marks[0].textContent).toBe("Wildcard");
+    expect(marks[0].parentElement?.textContent).toContain("GW4");
+    expect(screen.getByText(/wildcard GW4/)).toBeInTheDocument();
+  });
+
+  it("prints the chip, not 'free', beside a hits-free wildcard week, and says the moves assume it", () => {
+    render(<PlanGrid horizon={WILDCARD} projections={NAMES} />);
+    const row = screen.getAllByTestId("plan-move").find((r) => r.textContent?.startsWith("GW4"));
+    expect(row).toHaveAttribute("data-chip", "wildcard");
+    const note = within(row!).getByTestId("plan-chip-note").textContent ?? "";
+    expect(note).toMatch(/Wildcard played in GW4: these 3 transfers assume the chip is active/);
+    // The row's own cells, without the note — which says "free transfers" on purpose.
+    const cells = (row?.textContent ?? "").replace(note, "");
+    expect(cells).toContain("Wildcard");
+    expect(cells).not.toContain("free");
+  });
+
+  it("renders a horizon without the chip exactly as before", () => {
+    draw();
+    expect(screen.queryByTestId("plan-chip")).toBeNull();
+    expect(screen.queryByTestId("plan-chip-note")).toBeNull();
+    expect(screen.queryByText(/wildcard/i)).toBeNull();
+    for (const row of screen.getAllByTestId("plan-move")) {
+      expect(row).not.toHaveAttribute("data-chip");
+    }
   });
 });

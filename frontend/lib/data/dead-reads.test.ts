@@ -129,6 +129,13 @@ const ALLOWED: Record<string, string> = {
   "projections:q25": "computed and carried now; the committed artifact predates the change",
   "projections:q75": "computed and carried now; the committed artifact predates the change",
 
+  // The pinned-wildcard week. The producer half lands on
+  // `claude/hungry-mendeleev-51113b` (`run_decide.py` writing
+  // `horizon.wildcard_gameweek`), which was unmerged when the reader shipped.
+  // Delete this line once that branch is on main: the Python scan will then
+  // find the key and the allowance becomes a note about nothing.
+  "decisionPublic:wildcard_gameweek": "producer on an unmerged branch; reader shipped first",
+
   // Fallback behind goals_scored, kept for the same reason.
   "playerStats:goals": "legacy fallback behind goals_scored",
   "playerStats:xg": "first choice, with expected_goals as the working fallback",

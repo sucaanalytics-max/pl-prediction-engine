@@ -61,7 +61,7 @@ describe("the call card", () => {
 
   it("reads a plan that holds the squad as None with the plan's note, never an empty arrow", () => {
     setOnline(true);
-    const note = agentTransferNote({ out: [], in: [], sealed: false });
+    const note = agentTransferNote({ out: [], in: [], sealed: false, chip: null });
     render(<CallCard {...BASE} transfer={{ out: [], in: [], note }} />);
     const row = screen.getByTestId("call-transfer");
     expect(row.textContent).toContain("None");
@@ -71,11 +71,26 @@ describe("the call card", () => {
 
   it("prints the same note as the desktop Transfer tile for a two-move plan", () => {
     setOnline(true);
-    const plan = { out: ["Palestra", "Foden"], in: ["Hill", "Tavernier"], sealed: false };
+    const plan = { out: ["Palestra", "Foden"], in: ["Hill", "Tavernier"], sealed: false, chip: null };
     render(<CallCard {...BASE} transfer={{ ...plan, note: agentTransferNote(plan) }} />);
     const row = screen.getByTestId("call-transfer");
     expect(row.textContent).toMatch(/Palestra, Foden\s*→\s*Hill, Tavernier/);
     expect(row.textContent).toContain(
+      "the agent's plan · provisional, re-solved until the deadline · not applied to the eleven below",
+    );
+  });
+
+  it("says a wildcard week's moves assume the chip, rather than reading as an ordinary transfer", () => {
+    const plan = {
+      out: ["Palestra", "Foden", "Thiaw"], in: ["Hill", "Tavernier", "Keane"],
+      sealed: false, chip: "wildcard",
+    };
+    expect(agentTransferNote(plan)).toBe(
+      "the agent's plan plays the wildcard · 3 transfers assume the chip is active · " +
+        "provisional, re-solved until the deadline · not applied to the eleven below",
+    );
+    // No chip, no change: the note every published plan already prints.
+    expect(agentTransferNote({ ...plan, chip: null })).toBe(
       "the agent's plan · provisional, re-solved until the deadline · not applied to the eleven below",
     );
   });

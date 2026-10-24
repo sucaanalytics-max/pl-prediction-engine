@@ -123,6 +123,7 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
       out: named(plan.transfers_out),
       in: named(plan.transfers_in),
       sealed: decision.sealed,
+      chip: plan.chip,
     };
   }, [decision, gameweek, players, squad]);
 

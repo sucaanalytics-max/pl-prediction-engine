@@ -14,9 +14,8 @@
  */
 
 import { useMemo } from "react";
-import type { HorizonWeek } from "@/lib/data/narrow";
+import { chipLabel, type Horizon, type HorizonWeek } from "@/lib/data/narrow";
 import type { Projection } from "@/lib/data/projections";
-import type { Horizon } from "@/lib/data/narrow";
 import {
   buildPlanGrid, type Cell, type PlanRow, type WeekTotal,
 } from "@/lib/margin/plan";
@@ -289,6 +288,9 @@ export function PlanGrid(
         {!solved ? null : (
           <Eyebrow surface={S} style={{ letterSpacing: 0, textTransform: "none", fontSize: 11 }}>
             transfers planned {model.transferHorizon} of {model.evalHorizon} weeks
+            {horizon.wildcardGameweek === null
+              ? null
+              : ` · wildcard GW${horizon.wildcardGameweek}`}
           </Eyebrow>
         )}
       </div>
@@ -347,6 +349,7 @@ export function PlanGrid(
                 {week.planned ? "planned" : "eval only"}
               </div>
             )}
+            {week.chip === null ? null : <ChipMark chip={week.chip} />}
           </div>
         ))}
         <div style={{ padding: "2px 0", textAlign: "right", fontFamily: MONO, fontSize: 11, textTransform: "uppercase", color: S.ink3 }}>
@@ -572,6 +575,7 @@ function Transfers(
           {moved.length} {moved.length === 1 ? "move" : "moves"}
           {" · "}
           {hits === 0 ? "no hits" : `−${hits * 4} in hits`}
+          {moved.map((w) => (w.chip === null ? "" : ` · ${chipLabel(w.chip)} GW${w.gameweek}`)).join("")}
         </span>
       </div>
 
@@ -579,6 +583,7 @@ function Transfers(
         <div
           key={week.gameweek}
           data-testid="plan-move"
+          data-chip={week.chip ?? undefined}
           style={{
             display: "grid",
             gridTemplateColumns: "52px minmax(0, 1fr) 18px minmax(0, 1fr) 60px 124px",
@@ -598,16 +603,32 @@ function Transfers(
           <span style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px" }}>
             {priced(week.transfers_in, S.agree)}
           </span>
+          {/* A chip week publishes `hits: 0` because the chip waives them, and
+              "free" there would say the moves fit inside the free transfers. */}
           <span style={{
             fontFamily: MONO, fontSize: 12,
-            color: week.hits === 0 ? S.ink3 : S.conflict,
+            fontWeight: week.chip === null ? undefined : 600,
+            color: week.chip !== null ? S.ink : week.hits === 0 ? S.ink3 : S.conflict,
           }}>
-            {week.hits === 0 ? "free" : `−${week.hits * 4}`}
+            {week.chip !== null
+              ? chipLabel(week.chip)
+              : week.hits === 0 ? "free" : `−${week.hits * 4}`}
           </span>
           <span style={{ fontFamily: MONO, fontSize: 11, color: S.ink3, textAlign: "right" }}>
             &pound;{(week.bank_after / 10).toFixed(1)} left
             {week.free_transfers_after === null ? null : ` · ${week.free_transfers_after} FT`}
           </span>
+          {week.chip === null ? null : (
+            <p
+              data-testid="plan-chip-note"
+              style={{
+                gridColumn: "1 / -1", margin: 0,
+                fontFamily: SANS, fontSize: 11.5, lineHeight: 1.5, color: S.ink2,
+              }}
+            >
+              {chipNote(week, week.chip)}
+            </p>
+          )}
         </div>
       ))}
 
@@ -622,6 +643,45 @@ function Transfers(
       )}
     </div>
   );
+}
+
+/**
+ * A chip week's column label.
+ *
+ * Weight, case and a rule rather than a hue: the coloured tokens on this surface
+ * are all quantities or verdicts, and a chip is neither — it is a condition the
+ * week's numbers were solved under.
+ */
+function ChipMark({ chip }: { chip: string }) {
+  return (
+    <div
+      data-testid="plan-chip"
+      title={`${chipLabel(chip)} played this week — the planned transfers assume it is active`}
+      style={{
+        display: "inline-block", marginTop: 2, padding: "0 4px",
+        border: `1px solid ${S.ink}`, borderRadius: 2,
+        fontFamily: MONO, fontSize: 11, fontWeight: 600,
+        letterSpacing: ".04em", textTransform: "uppercase", color: S.ink,
+      }}
+    >
+      {chipLabel(chip)}
+    </div>
+  );
+}
+
+/**
+ * The sentence under a chip week's moves.
+ *
+ * The cost of making the same moves without the chip is deliberately not
+ * computed: it needs the free transfers held going INTO the week, and the
+ * producer publishes only the count after it.
+ */
+function chipNote(week: HorizonWeek, chip: string): string {
+  const label = chipLabel(chip);
+  const n = Math.max(week.transfers_in.length, week.transfers_out.length);
+  return `${label} played in GW${week.gameweek}: these ${n} transfer${n === 1 ? "" : "s"} ` +
+    `assume the chip is active, which is why no hits are charged. Made without ` +
+    `it, every move past the free transfers costs 4 points.`;
 }
 
 /** The four lines, in the order every FPL surface reads them. */
