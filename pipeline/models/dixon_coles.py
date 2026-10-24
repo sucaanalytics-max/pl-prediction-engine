@@ -545,16 +545,61 @@ class BayesianDixonColes:
 
     def get_rho_samples(self) -> np.ndarray:
         """
-        Posterior samples of the low-score dependence parameter.
+        Posterior samples of the low-score dependence parameter, one per
+        posterior draw of the trace.
 
-        Flattened in the same order as the arrays `get_lambda_mu_samples`
-        builds, so a caller can pair them elementwise and the correction carries
-        the same parameter uncertainty as the goal rates. Returning a mean would
-        throw that away, and rho's posterior is wide enough that it matters.
+        Flattened in the same (chain, draw) order as the per-draw parameter
+        arrays `get_lambda_mu_samples` builds its rates from — NOT in the order
+        of the rates it returns, which are a resample of those draws. To pair rho
+        with (lambda, mu) elementwise, index this array with the draw indices
+        (``get_lambda_mu_samples(..., return_indices=True)``) or call
+        :meth:`get_paired_posterior_samples`, which does exactly that. Returning
+        a mean would throw the parameter uncertainty away, and rho's posterior is
+        wide enough that it matters.
         """
         if self.trace is None:
             raise RuntimeError("Model not fitted")
         return self.trace.posterior["rho"].values.flatten()
+
+    def get_paired_posterior_samples(
+        self,
+        home: str,
+        away: str,
+        n_samples: int = 10000,
+        rng: Optional[np.random.Generator] = None,
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """
+        (lambda, mu, rho) drawn from the JOINT posterior: element ``k`` of each
+        array comes from the same posterior draw.
+
+        The predictive the value-bet card wants is
+        ``p(score) = E_{theta ~ p(theta | data)}[DC(score | lambda(theta), mu(theta), rho(theta))]``
+        with ``theta = (attack, defence, home_adv, intercept, rho)``. Drawing rho
+        with its own indices instead integrates over ``p(lambda, mu) p(rho)`` —
+        the product of the marginals — which is a different distribution
+        whenever rho is correlated with the strength parameters. The tau
+        correction depends on ``lambda * mu * rho`` (0-0) and ``mu * rho`` /
+        ``lambda * rho`` (1-0, 0-1), so that covariance is exactly what the
+        product of marginals drops.
+
+        The draw indices consume ``rng`` exactly as :meth:`get_lambda_mu_samples`
+        does, so lambda and mu are bit-for-bit those of that method under the
+        same Generator.
+        """
+        lambda_h, mu_a, indices = self.get_lambda_mu_samples(
+            home, away, n_samples, rng=rng, return_indices=True
+        )
+        rho_all = self.get_rho_samples()
+        n_draws = self.trace.posterior["intercept"].values.size
+        if rho_all.shape != (n_draws,):
+            # Pairing by index is only meaningful if rho has one value per
+            # posterior draw, in the same flattening. Fail loudly rather than
+            # pair unrelated arrays.
+            raise ValueError(
+                f"rho trace has shape {rho_all.shape}, expected ({n_draws},) "
+                "to align with the per-draw rate parameters"
+            )
+        return lambda_h, mu_a, rho_all[indices]
 
     def get_lambda_mu_samples(
         self,
@@ -562,7 +607,8 @@ class BayesianDixonColes:
         away: str,
         n_samples: int = 10000,
         rng: Optional[np.random.Generator] = None,
-    ) -> Tuple[np.ndarray, np.ndarray]:
+        return_indices: bool = False,
+    ):
         """
         Get posterior samples of (lambda, mu) for Monte Carlo simulation.
         Used by the simulation engine.
@@ -571,8 +617,14 @@ class BayesianDixonColes:
         passes one so the card is reproducible; ``None`` keeps numpy's legacy
         global state (the FPL ``fixture_rates`` export still relies on that).
 
+        ``return_indices=True`` also returns the flattened posterior draw index
+        behind each sample, so a caller can take any other per-draw quantity
+        (rho, via ``get_rho_samples()[indices]``) from the SAME draw. It changes
+        nothing about which draws are taken.
+
         Returns:
-            (lambda_home, mu_away) arrays of posterior samples.
+            (lambda_home, mu_away) arrays of posterior samples, or
+            (lambda_home, mu_away, indices) with ``return_indices=True``.
         """
         if self.trace is None:
             raise RuntimeError("Model not fitted")
@@ -614,6 +666,8 @@ class BayesianDixonColes:
         lambda_h = np.exp(inter[indices] + att_h[indices] - def_a[indices] + ha[indices])
         mu_a = np.exp(inter[indices] + att_a[indices] - def_h[indices])
 
+        if return_indices:
+            return lambda_h, mu_a, indices
         return lambda_h, mu_a
 
     def get_rho_mean(self) -> float:
