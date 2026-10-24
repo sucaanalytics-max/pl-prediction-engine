@@ -15,17 +15,36 @@ from typing import Optional, Tuple
 import numpy as np
 import pandas as pd
 
-from pipeline.config import ROLLING_WINDOWS, ELO, DERBIES, CURRENT_SEASON
+from pipeline.config import ROLLING_WINDOWS, ELO, DERBIES, CURRENT_SEASON, PARAM_REGISTRY
 
 logger = logging.getLogger(__name__)
 
 
 # ── Elo Rating System ──────────────────────────────────────────────────────
 
+def promoted_elo_offset() -> float:
+    """Registered Elo start offset for promoted clubs (PARAM_REGISTRY)."""
+    return float(PARAM_REGISTRY["elo.promoted_start_offset"]["value"])
+
+
 class EloRating:
     """
     Elo rating system for Premier League teams.
     Updates after each match; regresses toward mean at season boundaries.
+
+    Promoted clubs. A club entering the league after the first season of the
+    data is promoted by construction, and starts at the promoted-club anchor
+    ``initial + promoted_offset`` rather than at the league-average 1500.
+    At each season boundary a club that played in both the ended and the new
+    season (an established club) regresses toward ``initial``; every other
+    rated club — one relegated or absent, or one returning via promotion —
+    regresses toward the anchor instead, so a relegated club is not lifted
+    back toward league average while it is out of the league. With
+    ``promoted_offset == 0`` both rules collapse to the original behaviour
+    exactly. Evidence for the offset: PARAM_REGISTRY["elo.promoted_start_offset"].
+
+    The first season of the data has no previous season, so its promoted
+    clubs cannot be identified and every club starts at ``initial``.
     """
 
     def __init__(
@@ -34,15 +53,30 @@ class EloRating:
         home_advantage: int = ELO["home_advantage"],
         initial_rating: int = ELO["initial_rating"],
         mean_reversion: float = ELO["mean_reversion"],
+        promoted_offset: Optional[float] = None,
     ):
         self.k = k_factor
         self.home_adv = home_advantage
         self.initial = initial_rating
         self.mean_reversion = mean_reversion
+        self.promoted_offset = (
+            promoted_elo_offset() if promoted_offset is None else float(promoted_offset)
+        )
         self.ratings = {}
+        # False until the first season boundary: clubs first seen in the first
+        # season of the data cannot be told apart from established ones.
+        self.past_first_season = False
+
+    @property
+    def promoted_anchor(self) -> float:
+        return self.initial + self.promoted_offset
+
+    def entry_rating(self) -> float:
+        """Rating for a club with no rating yet: average in the first season, else promoted."""
+        return self.promoted_anchor if self.past_first_season else self.initial
 
     def get_rating(self, team: str) -> float:
-        return self.ratings.get(team, self.initial)
+        return self.ratings.get(team, self.entry_rating())
 
     def expected_score(self, rating_a: float, rating_b: float) -> float:
         """Expected score for team A vs team B."""
@@ -69,23 +103,55 @@ class EloRating:
         self.ratings[home] = self.get_rating(home) + self.k * gd_mult * (s_home - e_home)
         self.ratings[away] = self.get_rating(away) + self.k * gd_mult * (s_away - e_away)
 
-    def season_reset(self):
-        """Regress all ratings toward neutral (1500) at start of new season.
+    def season_reset(self, new_season_clubs=None, ended_season_clubs=None):
+        """Regress ratings toward a fixed target at the start of a new season.
 
-        Using a fixed neutral point (1500) rather than the current mean prevents
-        a downward spiral for strong teams: if only promoted teams lower the mean,
-        all teams would regress down. Fixed target preserves the Elo zero-sum property.
+        A fixed target rather than the current mean prevents a downward spiral
+        for strong teams: if only promoted teams lower the mean, all teams would
+        regress down.
+
+        Established clubs (in both ``ended_season_clubs`` and
+        ``new_season_clubs``) regress toward ``initial`` (1500). Every other
+        rated club regresses toward the promoted-club anchor. Without the two
+        club sets every club regresses toward ``initial``, the original rule.
         """
+        know_clubs = new_season_clubs is not None and ended_season_clubs is not None
+        new_season_clubs = set(new_season_clubs or ())
+        ended_season_clubs = set(ended_season_clubs or ())
         for team in self.ratings:
+            established = (
+                not know_clubs
+                or (team in new_season_clubs and team in ended_season_clubs)
+            )
+            target = self.initial if established else self.promoted_anchor
             self.ratings[team] = (
                 self.ratings[team] * (1 - self.mean_reversion)
-                + self.initial * self.mean_reversion
+                + target * self.mean_reversion
             )
+        self.past_first_season = True
 
 
-def compute_elo_ratings(matches: pd.DataFrame) -> pd.DataFrame:
-    """Compute Elo ratings for all teams across all matches."""
-    elo = EloRating()
+def _season_clubs(matches: pd.DataFrame) -> dict:
+    """Season label -> clubs with any row in it (played or upcoming)."""
+    if "season" not in matches.columns:
+        return {}
+    clubs = {}
+    for season, frame in matches.groupby("season", sort=False):
+        clubs[season] = set(frame["HomeTeam"]) | set(frame["AwayTeam"])
+    return clubs
+
+
+def compute_elo_ratings(
+    matches: pd.DataFrame, promoted_offset: Optional[float] = None
+) -> pd.DataFrame:
+    """Compute pre-match Elo ratings for all teams across all matches.
+
+    Each row's rating is read BEFORE that row's result updates it, so a row
+    never sees its own outcome. ``promoted_offset`` defaults to the registered
+    value; 0 reproduces the pre-offset behaviour exactly.
+    """
+    elo = EloRating(promoted_offset=promoted_offset)
+    clubs = _season_clubs(matches)
     elo_home = []
     elo_away = []
 
@@ -93,7 +159,7 @@ def compute_elo_ratings(matches: pd.DataFrame) -> pd.DataFrame:
     for _, row in matches.iterrows():
         season = row.get("season", "")
         if prev_season and season != prev_season:
-            elo.season_reset()
+            elo.season_reset(clubs.get(season), clubs.get(prev_season))
         prev_season = season
 
         h, a = row["HomeTeam"], row["AwayTeam"]
