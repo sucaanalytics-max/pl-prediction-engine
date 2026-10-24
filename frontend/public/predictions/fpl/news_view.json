@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-24T20:19:14.701219Z",
-  "n_dropped": 193,
+  "generated_at": "2026-10-24T22:38:52.829122Z",
+  "n_dropped": 200,
   "dropped_by_source": {
-    "bbc_football": 53,
-    "fantasyfootballscout": 1,
-    "hayters": 36,
-    "sky_football": 103
+    "bbc_football": 52,
+    "fantasyfootballscout": 2,
+    "hayters": 38,
+    "sky_football": 108
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 283,
+  "n_articles": 290,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -39,6 +39,150 @@
       "touches_squad": true
     },
     {
+      "digest": "74f80c3cac18c883",
+      "headline": "Spurs latest: Maddison injury to be assessed - 'we need him'",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-24T22:23:00Z",
+      "players": [
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "490583281088ef34",
+      "headline": "FPL notes: Pedro injury latest + why Palmer isn\u2019t flagged",
+      "summary": "Plus, an update on James Maddison after Spurs beat Chelsea The post FPL notes: Pedro injury latest + why Palmer isn't flagged appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/24/fpl-notes-pedro-injury-latest-why-palmer-isnt-flagged",
+      "claimed_at": "2026-10-24T22:00:00Z",
+      "players": [
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "987ece10d3d1c368",
+      "headline": "Chelsea latest: Why Palmer will be able to play vs Man Utd after red card",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-24T21:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "67215a1c23d50ef0",
+      "headline": "Man Utd not an unmanageable club - Carrick",
+      "summary": "Michael Carrick says it is possible to manage Manchester United effectively as he clings on to his job with Bournemouth visiting Old Trafford on Sunday.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c9ly0dxxgp7lo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-24T21:34:19Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9495d7fc413c671c",
+      "headline": "The candid meeting that 'changed' Spurs - are they finally on way back?",
+      "summary": "Tottenham end Saturday's Premier League action in 12th place, their highest league position since 2 January. Are they finally on their way back?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqev38dz34vxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-24T21:14:42Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5d39631ebc192f2d",
+      "headline": "Alonso 'out-coached', 'petulant' Palmer and Penders howler: Chelsea's horror night",
+      "summary": "They say bad things come in threes. That was certainly the case for Chelsea on a miserable evening at Stamford Bridge as they lost 2-0 to Tottenham and were described as \"awful\" by Gary Neville.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13603342/chelsea-cole-palmer-red-card-mike-penders-howler-and-out-coached-by-roberto-de-zerbi-on-horror-night-for-xabi-alonso",
+      "claimed_at": "2026-10-24T21:14:00Z",
+      "players": [
+        {
+          "element_id": 560,
+          "name": "Penders",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2cb3db5be1508847",
+      "headline": "\u2018I think we changed something in ourselves\u2019 \u2013 De Zerbi on beating Chelsea and another Maddison injury worry",
+      "summary": "Roberto De Zerbi is hopeful James Maddison has avoided a serious injury after the midfielder was forced off during Tottenham\u2019s 2-0 win over Chelsea. Maddison will undergo further medical check",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/i-think-we-changed-something-in-ourselves-de-zerbi-on-beating-chelsea-and-another-maddison-injury-worry/",
+      "claimed_at": "2026-10-24T20:54:50Z",
+      "players": [
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a3d0232befb3c81d",
+      "headline": "Alonso on Joao Pedro\u2019s injury, Cole Palmer\u2019s red card and Mike Penders\u2019 mistake in defeat to Spurs",
+      "summary": "Xabi Alonso has revealed Chelsea are waiting to discover the extent of Joao Pedro\u2019s injury after the forward missed the 2-0 defeat to Tottenham. The Chelsea boss said further tests are required before",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/alonso-on-joao-pedros-injury-cole-palmers-red-card-and-mike-penders-mistake-in-defeat-to-spurs/",
+      "claimed_at": "2026-10-24T20:46:32Z",
+      "players": [
+        {
+          "element_id": 560,
+          "name": "Penders",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "ade9ab1d01c6abf8",
       "headline": "Arteta collating evidence of other managers stepping out of technical area",
       "summary": "Arsenal boss Mikel Arteta says he is compiling footage of rival Premier League managers repeatedly leaving their technical areas after receiving his second yellow card of the season in his side's 2-0 win over Everton.",
@@ -57,6 +201,24 @@
       "touches_squad": false
     },
     {
+      "digest": "15505290f0b333a2",
+      "headline": "Liverpool among clubs keen on Vuskovic - Sunday's gossip",
+      "summary": "Brighton defender Luka Vuskovic is being looked at by high-profile clubs, Liverpool do not intend to bring Trent Alexander-Arnold back, AC Milan are targeting Manchester United's Leny Yoro, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqvgr87py7zvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-24T20:20:30Z",
+      "players": [
+        {
+          "element_id": 504,
+          "name": "Vuskovic",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "760df8b3b268a5d5",
       "headline": "Spurs latest: De Zerbi hails 'complete team' after Stamford Bridge history",
       "summary": null,
@@ -64,6 +226,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-10-24T20:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "00d2edd58e89e637",
+      "headline": "Spurs pick up rare win at Stamford Bridge in chaotic end to game",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Chelsea and Tottenham Hotspur.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13603351/chelsea-0-2-tottenham-hotspur-premier-league-highlights",
+      "claimed_at": "2026-10-24T19:54:00Z",
       "players": [
         {
           "element_id": 0,
@@ -114,6 +294,24 @@
       "digest": "191980e6d2bae28b",
       "headline": "Spurs earn deserved win at Chelsea after Penders error and Palmer red",
       "summary": "Chelsea goalkeeper Mike Penders punched the ball into his own net before Mathys Tel struck a wonderful second to earn Tottenham a rare but deserved 2-0 victory at Stamford Bridge in which Cole Palmer was sent off.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/chelsea-vs-tottenham-hotspur/report/559516",
+      "claimed_at": "2026-10-24T19:30:00Z",
+      "players": [
+        {
+          "element_id": 560,
+          "name": "Penders",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b1c3cbb7517ace80",
+      "headline": "Spurs earn deserved win at Chelsea after Penders error and Palmer red",
+      "summary": "Chelsea goalkeeper Mike Penders punched the ball into his own net before Mathys Tel struck a wonderful second to give Tottenham a rare but deserved 2-0 victory at Stamford Bridge in which Cole Palmer was sent off.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/chelsea-vs-tottenham-hotspur/report/559516",
@@ -411,6 +609,24 @@
       "touches_squad": false
     },
     {
+      "digest": "4104c428ec9454ca",
+      "headline": "Bobb stunner secures Fulham back-to-back PL wins",
+      "summary": "Highlights from the Premier League match between Coventry City and Fulham.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13603205/coventry-city-0-1-fulham-premier-league-highlights",
+      "claimed_at": "2026-10-24T17:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "65da4d7eb4a2e3c6",
       "headline": "Villa end Man City's perfect start with Jackson double",
       "summary": "FREE TO WATCH: Highlights from the Premier League match between Aston Villa and Manchester City.",
@@ -561,24 +777,6 @@
       "touches_squad": false
     },
     {
-      "digest": "25cd42cfc857225e",
-      "headline": "Moment of magic from Bobb wins it for Fulham at Coventry",
-      "summary": "A late moment of magic from Oscar Bobb secured a narrow 1-0 victory for Fulham at Coventry to make it back-to-back Premier League wins for Alvaro Arbeloa's side.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/coventry-city-vs-fulham/report/559517",
-      "claimed_at": "2026-10-24T16:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "dc57f6953517a356",
       "headline": "Emery hails Jackson after scoring brace in win over Man City \u2013 and gives update on Garnacho",
       "summary": "Unai Emery praised Nicolas Jackson\u2019s growing maturity after the striker scored twice in Aston Villa\u2019s 2-1 win over Manchester City. Jackson joined Villa in a \u00a365m deal this summer having previously worked wit",
@@ -627,24 +825,6 @@
           "element_id": 164,
           "name": "Quenda",
           "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "877d04f8198b2a5b",
-      "headline": "Maddison limps off with Spurs on top vs Chelsea LIVE! & highlights",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-vs-tottenham-hotspur/live/559516",
-      "claimed_at": "2026-10-24T16:00:00Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
           "held": false
         }
       ],
@@ -717,24 +897,6 @@
       "touches_squad": false
     },
     {
-      "digest": "7b6ee366cc6b77ae",
-      "headline": "Aston Villa latest: Cash hails 'genius' Emery after win over Man City",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-24T15:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f12e864e7937db61",
       "headline": "Arsenal get much needed win in north London derby",
       "summary": "Arsenal claimed a 2-1 victory in the first north London derby of the season after turning around an early 1-0 deficit. Cathinka Tandberg put the hosts ahead when she headed home from a superb Victoria Pelova cross after 13 minutes. However, Arsenal l",
@@ -771,24 +933,6 @@
           "element_id": 26,
           "name": "Havertz",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4f2f62b1c3b13632",
-      "headline": "King hits the post as Fulham chase opener at Coventry LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/coventry-city-vs-fulham/live/559517",
-      "claimed_at": "2026-10-24T13:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -879,24 +1023,6 @@
       "touches_squad": false
     },
     {
-      "digest": "70045867a6b6383c",
-      "headline": "Villa vs Man City: Can Premier League leaders maintain winning start? LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/aston-villa-vs-manchester-city/live/559515",
-      "claimed_at": "2026-10-24T11:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "50f8e9c0af1447c7",
       "headline": "Neco Williams injury latest after Nottingham Forest defender is forced off against Ipswich",
       "summary": "Neco Williams has played down fears over the injury he suffered during Nottingham Forest\u2019s 1-1 draw with Ipswich Town. The Wales international gave Forest the lead at Portman Road but was forced off late on af",
@@ -957,24 +1083,6 @@
           "element_id": 398,
           "name": "Foden",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "053fe0c9b7e7fa87",
-      "headline": "Lammens: We're united and behind Carrick",
-      "summary": "It has been another eventful week at Manchester United.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13602864/senne-lammens-manchester-united-players-are-united-and-behind-under-pressure-boss-michael-carrick",
-      "claimed_at": "2026-10-24T09:00:00Z",
-      "players": [
-        {
-          "element_id": 412,
-          "name": "Lammens",
-          "club": "MUN",
           "held": false
         }
       ],
@@ -1060,24 +1168,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/c9ly0dgy2r2eo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-23T21:54:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "081e3550b71b107a",
-      "headline": "Villa could reconsider Garnacho deal - Saturday's gossip",
-      "summary": "Aston Villa have doubts on making Alejandro Garnacho deal a permanent move, Brighton to stand firm on Diego Gomez amid interest, Manchester United managerial candidates concern over players, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwn73kzzr8veo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-23T21:32:04Z",
       "players": [
         {
           "element_id": 0,
@@ -1323,24 +1413,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a0c8bb6430cc753a",
-      "headline": "Derby day - when Chelsea and Spurs meet, is chaos guaranteed?",
-      "summary": "Chelsea face Tottenham Hotspur in the Premier League this weekend - and BBC Sport looks back at five memorable matches between the London rivals.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c50mex301jjno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-23T14:49:59Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "dbfff0680394cd91",
       "headline": "Newcastle United handed big boost ahead of Crystal Palace clash",
       "summary": "Matthias Jaissle has confirmed Anthony Elanga is closing in on a return for Newcastle, while Jacob Ramsey is also stepping up his recovery. Elanga has trained this week and could be involved in the squad to face Crystal Palace, although",
@@ -1377,24 +1449,6 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f553952b9b6af35f",
-      "headline": "Arsenal fear Saka could be out for two months",
-      "summary": "Arsenal forward Bukayo Saka could be sidelined for up to eight weeks with the quadriceps injury he suffered against Bayern Munich.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmwyql6v5q82o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-23T14:09:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1557,24 +1611,6 @@
       "touches_squad": false
     },
     {
-      "digest": "8ea27ea7643062f5",
-      "headline": "Rooney criticises Man Utd players following recent run",
-      "summary": "Wayne Rooney has launched a scathing attack on Manchester United\u2019s players, accusing them of being \u201cselfish\u201d and failing to take responsibility for the club\u2019s problems. The former United striker said players must stop deflecting blame and instea",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/rooney-criticises-man-utd-players-following-recent-run/",
-      "claimed_at": "2026-10-23T10:46:39Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "da595d5a1a4f91e6",
       "headline": "Gross + De Cuyper: Bench or start in FPL Gameweek 8?",
       "summary": "Brighton's in-form pair have tricky fixtures in the next two Gameweeks The post Gross + De Cuyper: Bench or start in FPL Gameweek 8? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1587,24 +1623,6 @@
           "element_id": 115,
           "name": "De Cuyper",
           "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cb0daa5ef49d6fa5",
-      "headline": "Rose \u2018really proud\u2019 as Bournemouth beat AC Milan on historic night for club",
-      "summary": "AFC Bournemouth continued their winning start in Europe with a 3-0 win over AC Milan on a historic night for the club at the Vitality Stadium. After a lively start from Bournemouth, the home side were awarded a penalty for h",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/rose-really-proud-as-bournemouth-beat-ac-milan-on-historic-night-for-club/",
-      "claimed_at": "2026-10-22T22:37:40Z",
-      "players": [
-        {
-          "element_id": 70,
-          "name": "Kluivert",
-          "club": "BOU",
           "held": false
         }
       ],
@@ -1731,30 +1749,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6f34adb5ceebb9c8",
-      "headline": "FPL notes: Haaland \u201cOK to start\u201d, key rests + Gvardiol injury update",
-      "summary": "Fantasy takeaways from Man City 5-1 AEK Athens The post FPL notes: Haaland &#8220;OK to start&#8221;, key rests + Gvardiol injury update appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/21/fpl-notes-haaland-ok-to-start-key-rests-gvardiol-injury-update",
-      "claimed_at": "2026-10-21T10:05:00Z",
-      "players": [
-        {
-          "element_id": 391,
-          "name": "Gvardiol",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ff0956710b1e1ef7",
       "headline": "Illness - 75% chance of playing",
       "summary": null,
@@ -1773,6 +1767,12 @@
           "element_id": 634,
           "name": "Fernandez-Pardo",
           "club": "NEW",
+          "held": false
+        },
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
           "held": false
         }
       ],
