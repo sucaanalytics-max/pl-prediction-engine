@@ -174,10 +174,12 @@ export default function Navigation() {
                 href={`https://fantasy.premierleague.com/en/entry/${live.entry.id}/history`}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Open official FPL team"
               >
                 <strong>{live.entry.teamName ?? "My FPL team"}</strong>
                 <span>{live.entry.id}</span>
+                {/* Appended to the visible text, not replacing it: an
+                    aria-label that omits the visible name fails WCAG 2.5.3. */}
+                <span className="sr-only">, opens the official FPL team page</span>
               </a>
             ) : (
               <span className="masthead-team-plain">

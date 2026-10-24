@@ -84,6 +84,17 @@ export interface Provenance {
   readonly ageMs: number | null;
   /** The budget this artifact was judged against, or null if it has none. */
   readonly freshnessBudgetMs: number | null;
+  /**
+   * When the service worker stored the copy this was read from, or null/absent
+   * when the bytes came straight off the network.
+   *
+   * A separate clock from {@link producedAt}: that one is the writer's, this one
+   * is when THIS DEVICE last held a fresh copy. A cached artifact can be
+   * recently produced and long cached, or the reverse, and a surface that shows
+   * only one of them misreports the other. Optional so artifacts built by hand
+   * (`present`, fixtures) need not name it.
+   */
+  readonly cachedAt?: string | null;
 }
 
 /**
@@ -218,6 +229,8 @@ export interface ClassifyInput<T> {
   readonly now: Date;
   /** Set when the fetch itself failed, to distinguish 404 from network error. */
   readonly fetchError?: string | null;
+  /** `x-sw-cached-at` from the response, when the service worker served a stored copy. */
+  readonly cachedAt?: string | null;
 }
 
 /**
@@ -232,7 +245,7 @@ export function classify<T>(input: ClassifyInput<T>): Artifact<T> {
   const {
     path, source, raw, narrow, producedAtOf, producedAtOfRaw, producerVersionOf,
     isEmpty,
-    freshnessBudgetMs = null, now, fetchError = null,
+    freshnessBudgetMs = null, now, fetchError = null, cachedAt = null,
   } = input;
 
   const fetchedAt = now.toISOString();
@@ -245,6 +258,7 @@ export function classify<T>(input: ClassifyInput<T>): Artifact<T> {
     producerVersion: null,
     ageMs: null,
     freshnessBudgetMs,
+    cachedAt,
     ...over,
   });
 

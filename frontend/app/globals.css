@@ -531,7 +531,30 @@ input[type="range"]::-moz-range-thumb {
   .masthead-team-plain { padding: 0 11px; }
 }
 
+/* /players: the research table (16 columns) beside its 300px detail pane. Stack
+   the pane under the table on a phone, and let the table scroll inside its own
+   box below the width it needs. */
+.research-scroll-inner { min-width: 880px; }
+@media (max-width: 1280px) { .research-scroll { overflow-x: auto; } }
+@media (max-width: 900px) {
+  .research-layout { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+/* Visually hidden, still in the accessibility tree. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
 /* Installable mobile shell */
+/* The phone bottom nav's height, defined once. Two 42px rows, 7px padding top
+   and bottom, a 1px border, plus the home-indicator inset. `body` padding, the
+   nav and anything that floats above it (the install card, an offline banner)
+   read this rather than restating the arithmetic. Zero where the nav is hidden. */
+:root { --bottom-nav-h: 0px; }
+@media (max-width: 767px) {
+  :root { --bottom-nav-h: calc((2 * 42px) + 15px + env(safe-area-inset-bottom)); }
+}
 .mobile-bottom-nav { display: none; }
 .pwa-install-card {
   position: fixed;
@@ -584,11 +607,13 @@ input[type="range"]::-moz-range-thumb {
    *
    * Written as the arithmetic rather than as `99px` so the next person changing the
    * column count or the touch target can see what depends on it. */
-  body { padding-bottom: calc((2 * 42px) + 15px + env(safe-area-inset-bottom)); }
+  body { padding-bottom: var(--bottom-nav-h); }
   .mobile-bottom-nav {
     position: fixed;
     inset: auto 0 0;
     z-index: 65;
+    box-sizing: border-box;
+    min-height: var(--bottom-nav-h);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     padding: 7px 7px calc(7px + env(safe-area-inset-bottom));
@@ -601,7 +626,7 @@ input[type="range"]::-moz-range-thumb {
      the rest of this bar already uses. */
   .mobile-bottom-nav a { display: grid; place-items: center; gap: 3px; min-height: 42px; color: var(--chrome-ink-3); font-size: 11px; font-weight: 700; }
   .mobile-bottom-nav a.active { color: var(--chrome-accent); }
-  .pwa-install-card { bottom: calc(76px + env(safe-area-inset-bottom)); }
+  .pwa-install-card { bottom: calc(var(--bottom-nav-h) + 8px); }
 }/* The call board: pitch beside rail, stacking under it when the rail can no
    longer hold its eight-column horizon table. The breakpoint is the rail's own
    minimum plus the pitch's — a 150px tile does not shrink, so squeezing the

@@ -27,6 +27,7 @@
  */
 
 import { PlanGrid } from "@/components/margin/PlanGrid";
+import type { ComponentProps } from "react";
 import { heldSquadHorizon } from "@/lib/margin/plan";
 import { useMemo } from "react";
 
@@ -36,21 +37,20 @@ import { projectionsDescriptor } from "@/lib/data/projections";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
 
-export function PlanGridSection({ gameweek }: { gameweek: number }) {
-  const { artifact: decision } = useArtifact(decisionDescriptor(gameweek));
-  const { artifact: projections } = useArtifact(projectionsDescriptor(gameweek));
-  const { artifact: live } = useHeuristics();
+/**
+ * The grid, plus the one artifact that only its transfer section reads.
+ *
+ * `player_stats.json` (413KB decoded) prices the "who to sell, who to buy"
+ * block, and that block renders only for a week the plan moves in. Fetching it
+ * from `PlanGridSection` loaded it on every visit to `/`, including every one
+ * where the plan holds and nothing consumed it. A hook cannot be conditional,
+ * so the fetch lives in this child and the parent mounts it only when a priced
+ * transfer will actually be drawn.
+ */
+function PricedPlanGrid(props: Omit<ComponentProps<typeof PlanGrid>, "prices">) {
   const { artifact: playerRows } = useArtifact<readonly PlayerRow[]>(REGISTRY.playerStats);
-
-  const horizon = proven(decision)?.horizon ?? null;
-  const players = proven(projections)?.players ?? [];
-  // Off the SAME artifact as `players`, so the decided week's number and the
-  // later weeks' numbers can never come from two different runs.
-  const xpHorizon = proven(projections)?.horizon ?? null;
-  const fixtures = proven(live)?.fixtureMatrix ?? [];
-  // A fourth read, and the cheapest of them — `playerStats` is already fetched
-  // by /capture. It only prices the transfer section; a miss renders no price
-  // rather than a zero, so this never gates the grid.
+  // It only prices the transfer section; a miss renders no price rather than a
+  // zero, so this never gates the grid.
   const prices = useMemo(() => {
     const byId = new Map<number, number | null>();
     for (const row of proven(playerRows) ?? []) {
@@ -58,6 +58,20 @@ export function PlanGridSection({ gameweek }: { gameweek: number }) {
     }
     return byId;
   }, [playerRows]);
+  return <PlanGrid {...props} prices={prices} />;
+}
+
+export function PlanGridSection({ gameweek }: { gameweek: number }) {
+  const { artifact: decision } = useArtifact(decisionDescriptor(gameweek));
+  const { artifact: projections } = useArtifact(projectionsDescriptor(gameweek));
+  const { artifact: live } = useHeuristics();
+
+  const horizon = proven(decision)?.horizon ?? null;
+  const players = proven(projections)?.players ?? [];
+  // Off the SAME artifact as `players`, so the decided week's number and the
+  // later weeks' numbers can never come from two different runs.
+  const xpHorizon = proven(projections)?.horizon ?? null;
+  const fixtures = proven(live)?.fixtureMatrix ?? [];
   // Absent means sealed — see the narrower. Most solves are provisional now
   // that the agent decides on every refresh, and the grid says which it has.
   const sealed = proven(decision)?.sealed ?? true;
@@ -93,15 +107,20 @@ export function PlanGridSection({ gameweek }: { gameweek: number }) {
     );
   }
 
+  // Mirrors `Transfers` in PlanGrid: it draws only for a week with a move.
+  const pricesNeeded = drawn.weeks.some(
+    (w) => w.transfers_in.length > 0 || w.transfers_out.length > 0,
+  );
+  const Grid = pricesNeeded ? PricedPlanGrid : PlanGrid;
+
   return (
-    <PlanGrid
+    <Grid
       horizon={drawn}
       projections={players}
       fixtures={fixtures}
       xpHorizon={xpHorizon}
       sealed={sealed}
       solvedAt={solvedAt}
-      prices={prices}
     />
   );
 }

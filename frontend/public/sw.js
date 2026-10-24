@@ -52,6 +52,38 @@
 // missing. Bumping evicts it. Same reason this is one commit with the routes:
 // `cache.addAll` rejects atomically, so a list naming a route that 404s
 // precaches NOTHING.
+//
+// v11 is a change of what the worker DOES, not of the list, and it is the first
+// bump where the answer to "what does an offline reload show" changes. Measured
+// on the live site on 2026-10-24: an offline reload of `/` rendered the shell and
+// then failed every data section ("Neither the agent's status nor FPL's own state
+// could be read"), because v10 cached navigations and `/_next/static` and nothing
+// else. `/predictions/*.json` and `GET /api/fpl/state` were never stored, so the
+// page that loaded offline had nothing to draw. v11 stores both, each stamped
+// `x-sw-cached-at` so the page can say how old what it is showing is (the
+// offline banner and `provenance.cachedAt` read it) rather than presenting a
+// stored copy as live. Three further changes ride the same bump:
+//   - `/_next/static` moved to its own capped cache. It grew without bound across
+//     deploys, because the only eviction was a CACHE_NAME bump.
+//   - the worker no longer calls skipWaiting() on an UPDATE. v10 took over every
+//     open tab the moment it installed, with no way for the page to know. v11
+//     waits for a `SKIP_WAITING` message, which PwaManager sends when the person
+//     taps "Reload". A FIRST install still activates at once: there is no
+//     previous version to disrupt and no page open that expects one.
+//   - navigations race a 4s timeout against the network, then prefer a cached
+//     page. v10 waited for the browser's own, much longer, connection timeout, so
+//     a flaky signal looked like a hung app rather than an offline one.
+//   - prediction JSON is NETWORK-FIRST with a 3s timeout, not stale-while-
+//     revalidate. SWR was the first draft and it was wrong for this app: online,
+//     it hands the page the PREVIOUS copy of a decision file and refreshes behind
+//     it, and nothing on screen says so, because the banner only speaks when the
+//     network has failed. A call that changed on team news an hour before the
+//     deadline would be shown as the old call, unlabelled. Network-first means a
+//     stored copy is only ever served when the network has failed or stalled,
+//     which are exactly the cases `SW_SERVED_CACHED` announces.
+// Bumping evicts the v10 shell cache. The data and static caches carry their own
+// version keys and are NOT evicted by a shell bump: a stored artifact is worth
+// more than the one precache list it is unrelated to.
 /**
  * On a dev server this worker is a liability, and it removes itself.
  *
@@ -72,7 +104,29 @@
 const LOCAL_HOSTS = ["localhost", "127.0.0.1", "[::1]", "::1"];
 const IS_LOCAL = LOCAL_HOSTS.indexOf(self.location.hostname) !== -1;
 
-const CACHE_NAME = "suca-fpl-shell-v10";
+const CACHE_NAME = "suca-fpl-shell-v11";
+// Versioned independently of the shell. Neither holds anything the shell list
+// decides, and a shell bump should not throw away the only offline copy of the
+// data. Bump these only if the SHAPE of what is stored in them changes.
+const STATIC_CACHE = "suca-fpl-static-v1";
+const DATA_CACHE = "suca-fpl-data-v1";
+const KEEP_CACHES = [CACHE_NAME, STATIC_CACHE, DATA_CACHE];
+
+// Content-hashed chunks, oldest evicted first. Roughly four to five builds of the
+// app's chunks, which is as far back as an installed tab realistically lags.
+const STATIC_CACHE_MAX_ENTRIES = 150;
+// Long enough that a slow-but-working connection still wins, short enough that a
+// dead one hands over to the cache while the person is still looking at the screen.
+const NAV_TIMEOUT_MS = 4000;
+// The same trade for artifacts, a little shorter: by the time data is asked for,
+// the page is already on screen and waiting on it.
+const DATA_TIMEOUT_MS = 3000;
+const CACHED_AT_HEADER = "x-sw-cached-at";
+
+// `classify` is the routing decision, kept in a file vitest can import. It is
+// loaded before anything can fetch, and a worker whose imported script cannot be
+// fetched fails to install, which leaves the previous worker in place.
+importScripts("/sw-routing.js");
 const SHELL_ROUTES = [
   // Every route the app has, which is still a short enough list to precache
   // whole: the call, the projections, the fixture phases, the player stats, the
@@ -101,7 +155,19 @@ self.addEventListener("install", (event) => {
       caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_ROUTES))
     );
   }
-  self.skipWaiting();
+  // Activate at once only when there is nothing to take over from. With an
+  // active worker already running, this one waits for the page to say so (the
+  // `message` handler below), so an update never swaps code under an open tab.
+  // Locally the worker must reach `activate` to remove itself, so it never waits.
+  if (IS_LOCAL || !self.registration.active) {
+    self.skipWaiting();
+  }
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener("activate", (event) => {
@@ -125,55 +191,195 @@ self.addEventListener("activate", (event) => {
       .keys()
       .then((keys) =>
         Promise.all(
-          keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+          keys
+            .filter((key) => KEEP_CACHES.indexOf(key) === -1)
+            .map((key) => caches.delete(key))
         )
       )
   );
   self.clients.claim();
 });
 
+/**
+ * A stored copy of `response` with the time it was stored added as a header.
+ *
+ * A new Response rather than a mutated one: headers on a fetched response are
+ * immutable. The body is the clone's, so the original stays readable by the page.
+ */
+function stamped(response) {
+  const headers = new Headers(response.headers);
+  headers.set(CACHED_AT_HEADER, new Date().toISOString());
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
+/**
+ * Only a plain 200 is worth keeping. A missing artifact answers with 30KB of
+ * Next.js 404 HTML, and a stored 404 would replace the last good copy with it;
+ * a 206 cannot be stored at all.
+ */
+function storable(response) {
+  return response.status === 200 && response.type !== "opaque";
+}
+
+/**
+ * Tell open pages that a stored copy was served in place of the network, and how
+ * old it is. This is what lets the banner say "showing data as of 14:05" even for
+ * fetches the page's own code never inspects for a header.
+ */
+async function announceCached(kind, url, cachedAt) {
+  const clients = await self.clients.matchAll({ type: "window" });
+  for (const client of clients) {
+    client.postMessage({ type: "SW_SERVED_CACHED", kind, url, cachedAt });
+  }
+}
+
+async function trimCache(cache, max) {
+  // `keys()` is in insertion order, so the front of the list is the oldest.
+  const keys = await cache.keys();
+  for (let i = 0; i < keys.length - max; i++) await cache.delete(keys[i]);
+}
+
+async function handleNavigate(event) {
+  const request = event.request;
+  const network = fetch(request).then((response) => {
+    // A redirected response cannot answer a navigation from the cache, and a
+    // non-200 is not a page worth replaying offline.
+    if (storable(response) && !response.redirected) {
+      const copy = response.clone();
+      event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.put(request, copy)));
+    }
+    return response;
+  });
+  // The loser of the race must not surface as an unhandled rejection.
+  network.catch(() => {});
+  const timeout = new Promise((resolve) => setTimeout(() => resolve(null), NAV_TIMEOUT_MS));
+  try {
+    const first = await Promise.race([network, timeout]);
+    if (first) return first;
+    // Slow, not dead: prefer a stored page, but with nothing stored keep waiting.
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    return await network;
+  } catch (error) {
+    return (
+      (await caches.match(request)) ??
+      (await caches.match("/offline")) ??
+      Response.error()
+    );
+  }
+}
+
+async function handleStatic(event) {
+  const request = event.request;
+  const cache = await caches.open(STATIC_CACHE);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+  const response = await fetch(request);
+  if (storable(response)) {
+    const copy = response.clone();
+    event.waitUntil(
+      cache
+        .put(request, copy)
+        .then(() => trimCache(cache, STATIC_CACHE_MAX_ENTRIES))
+    );
+  }
+  return response;
+}
+
+async function handleData(event) {
+  const request = event.request;
+  const cache = await caches.open(DATA_CACHE);
+
+  // Stored whether it wins the race or not: a slow answer still refreshes the
+  // copy the NEXT offline read will get.
+  const network = fetch(request).then((response) => {
+    if (storable(response)) {
+      const copy = response.clone();
+      event.waitUntil(cache.put(request, stamped(copy)));
+    }
+    return response;
+  });
+  network.catch(() => {});
+
+  // The stored copy, announced, so the banner can say how old it is. Never served
+  // silently: that is the whole reason this is not stale-while-revalidate.
+  async function storedCopy() {
+    const cached = await cache.match(request, { ignoreVary: true });
+    if (cached) {
+      event.waitUntil(announceCached("data", request.url, cached.headers.get(CACHED_AT_HEADER)));
+    }
+    return cached;
+  }
+
+  const timeout = new Promise((resolve) => setTimeout(() => resolve(null), DATA_TIMEOUT_MS));
+  try {
+    const first = await Promise.race([network, timeout]);
+    if (first) return first;
+    // Stalled, not dead: the stored copy if there is one, else keep waiting.
+    return (await storedCopy()) ?? (await network);
+  } catch (error) {
+    // Nothing stored: a failure is the caller's to handle (`load()` turns it
+    // into an `absent`/`unreadable` state).
+    const cached = await storedCopy();
+    if (cached) return cached;
+    throw error;
+  }
+}
+
+/**
+ * `/api/fpl/state` answers 200-shaped JSON for success AND failure, and only the
+ * `data` key separates them. Storing on `response.ok` alone would let one upstream
+ * failure replace the last good state with `{error: ...}`.
+ */
+async function carriesData(response) {
+  try {
+    const body = await response.json();
+    return typeof body === "object" && body !== null && body.data != null;
+  } catch (error) {
+    return false;
+  }
+}
+
+async function handleLive(event) {
+  const request = event.request;
+  const cache = await caches.open(DATA_CACHE);
+  try {
+    const response = await fetch(request);
+    if (storable(response)) {
+      const copy = response.clone();
+      event.waitUntil(
+        carriesData(copy.clone()).then((ok) => (ok ? cache.put(request, stamped(copy)) : undefined))
+      );
+    }
+    return response;
+  } catch (error) {
+    // Network failure only. A 5xx or an error-shaped 200 is the server's real
+    // answer and is passed through: replaying an old state under a live label
+    // because the server was unhappy would hide the outage.
+    const cached = await cache.match(request, { ignoreVary: true });
+    if (cached) {
+      event.waitUntil(announceCached("live", request.url, cached.headers.get(CACHED_AT_HEADER)));
+      return cached;
+    }
+    return Response.error();
+  }
+}
+
 self.addEventListener("fetch", (event) => {
   // Locally the worker answers nothing while it is on its way out.
   if (IS_LOCAL) return;
   const request = event.request;
-  if (request.method !== "GET") return;
-
-  const url = new URL(request.url);
-  if (url.origin !== self.location.origin || url.pathname.startsWith("/api/")) {
-    return;
-  }
-
-  if (url.pathname.startsWith("/_next/static/")) {
-    event.respondWith(
-      caches.match(request).then((cached) => {
-        return (
-          cached ??
-          fetch(request).then((response) => {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-            return response;
-          })
-        );
-      })
-    );
-    return;
-  }
-
-  if (request.mode === "navigate") {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-          return response;
-        })
-        .catch(async () => {
-          return (
-            (await caches.match(request)) ??
-            (await caches.match("/offline")) ??
-            Response.error()
-          );
-        })
-    );
-  }
+  const kind = self.SwRouting.classify(
+    request.url, request.method, request.mode, self.location.origin
+  );
+  if (kind === "navigate") event.respondWith(handleNavigate(event));
+  else if (kind === "static") event.respondWith(handleStatic(event));
+  else if (kind === "data") event.respondWith(handleData(event));
+  else if (kind === "live") event.respondWith(handleLive(event));
+  // "bypass": no respondWith, the browser handles it. Every non-GET and every
+  // other /api route lands here.
 });

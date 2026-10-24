@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import PwaManager from "@/components/PwaManager";
+import OfflineBanner from "@/components/OfflineBanner";
 import { Providers } from "./providers";
 
 /**
@@ -130,6 +131,9 @@ export default function RootLayout({
               projection grid is players across eight gameweeks. */}
           <div className="flex min-h-screen flex-col">
             <Navigation />
+            {/* Under the masthead and in flow, so it can never sit behind the
+                fixed mobile bottom nav. Empty unless the device is offline. */}
+            <OfflineBanner />
             <main id="main-content" className="w-full min-w-0 flex-1">
               <div className="max-w-[1680px] mx-auto px-4 sm:px-5 lg:px-6 py-5 lg:py-6">
                 {children}

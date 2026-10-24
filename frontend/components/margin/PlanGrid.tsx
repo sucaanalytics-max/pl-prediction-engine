@@ -44,6 +44,17 @@ function columns(weeks: number): string {
   return `152px repeat(${weeks}, minmax(58px, 1fr)) 38px`;
 }
 
+/**
+ * The narrowest the board can be before its 58px tiles collide: the fixed
+ * 152px name and 38px starts columns, `weeks` tiles, and the gaps between.
+ * The scroll box below gives the board this width and lets the box, not the
+ * page, scroll sideways on a phone. Measured on /: without it the layout
+ * viewport grew to 697px on a 390px screen.
+ */
+function boardMinWidth(weeks: number): number {
+  return 152 + 38 + weeks * 58 + (weeks + 1) * 3;
+}
+
 /** The gap between tiles. It is the only separator on the board. */
 const GAP = 3;
 
@@ -309,6 +320,11 @@ export function PlanGrid(
         </span>
       </div>
 
+      <div
+        data-testid="plan-grid-scroll"
+        style={{ overflowX: "auto", maxWidth: "100%" }}
+      >
+      <div style={{ minWidth: boardMinWidth(weeks.length) }}>
       {/* Header */}
       <div
         style={{
@@ -402,6 +418,8 @@ export function PlanGrid(
             56px of the vertical budget the grid needs to fit a screen. The
             eval-only tail keeps its column label, and the weeks the solve
             declined to transfer into are named in words down there. */}
+      </div>
+      </div>
       </div>
 
       <Transfers
@@ -563,7 +581,7 @@ function Transfers(
           data-testid="plan-move"
           style={{
             display: "grid",
-            gridTemplateColumns: "52px 1fr 18px 1fr 60px 124px",
+            gridTemplateColumns: "52px minmax(0, 1fr) 18px minmax(0, 1fr) 60px 124px",
             alignItems: "center", gap: 12,
             padding: "10px 0", borderBottom: `1px solid ${ink(.06)}`,
           }}

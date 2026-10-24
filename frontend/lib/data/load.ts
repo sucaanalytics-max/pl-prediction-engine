@@ -34,6 +34,14 @@ import {
   classify, type Artifact, type ClassifyInput,
 } from "@/lib/data/artifact";
 import type { Descriptor } from "@/lib/data/registry";
+import { noteCachedAt, parseCachedAt } from "@/lib/sw-cache-age";
+
+/**
+ * Set by the service worker on a copy it stored itself (`public/sw.js`). Absent
+ * on anything that came straight from the network, so its presence is the
+ * signal that this response may be older than the page is implying.
+ */
+export const CACHED_AT_HEADER = "x-sw-cached-at";
 
 /** Milliseconds before the remote is abandoned for the local copy. */
 export const REMOTE_TIMEOUT_MS = 5_000;
@@ -75,6 +83,8 @@ interface Fetched {
   readonly raw: unknown;
   readonly source: "supabase" | "local" | "none";
   readonly error: string | null;
+  /** When the service worker stored the winning copy; null if it was live. */
+  readonly cachedAt: string | null;
 }
 
 /**
@@ -89,28 +99,35 @@ async function attempt(
   format: "json" | "jsonl",
   fetchImpl: Fetcher,
   signal?: AbortSignal,
-): Promise<{ raw: unknown; error: string | null }> {
+): Promise<{ raw: unknown; error: string | null; cachedAt: string | null }> {
   let response: Response;
   try {
     response = await fetchImpl(url, { cache: "no-store", signal });
   } catch (error) {
-    return { raw: undefined, error: describeError(error) };
+    return { raw: undefined, error: describeError(error), cachedAt: null };
   }
+  // Read before the status branches below, but only RETURNED with a body that
+  // parsed: a stamp on a 404 or a corrupt body describes nothing on screen.
+  const cachedAt = parseCachedAt(response.headers?.get(CACHED_AT_HEADER));
 
   // Status first. A 404 here serves 30KB of HTML, and reading the body before
   // checking would report a missing file as a corrupt one.
   if (response.status === 404) {
-    return { raw: undefined, error: null };
+    return { raw: undefined, error: null, cachedAt: null };
   }
   if (!response.ok) {
-    return { raw: undefined, error: `HTTP ${response.status}` };
+    return { raw: undefined, error: `HTTP ${response.status}`, cachedAt: null };
   }
 
   try {
     const raw = format === "jsonl" ? await response.text() : await response.json();
-    return { raw, error: null };
+    return { raw, error: null, cachedAt };
   } catch (error) {
-    return { raw: undefined, error: `unparseable body: ${describeError(error)}` };
+    return {
+      raw: undefined,
+      error: `unparseable body: ${describeError(error)}`,
+      cachedAt: null,
+    };
   }
 }
 
@@ -128,11 +145,11 @@ async function fetchArtifact(
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), REMOTE_TIMEOUT_MS);
     try {
-      const { raw, error } = await attempt(
+      const { raw, error, cachedAt } = await attempt(
         `${remote}/${path}`, format, fetchImpl, controller.signal,
       );
       if (error === null && raw !== undefined) {
-        return { raw, source: "supabase", error: null };
+        return { raw, source: "supabase", error: null, cachedAt };
       }
       // A 404 upstream still falls through to local: the remote may simply not
       // have this artifact yet, and the committed copy is a real answer.
@@ -141,13 +158,13 @@ async function fetchArtifact(
     }
   }
 
-  const { raw, error } = await attempt(
+  const { raw, error, cachedAt } = await attempt(
     `${LOCAL_BASE}/${path}`, format, fetchImpl, options.signal,
   );
   if (raw === undefined) {
-    return { raw: undefined, source: "none", error };
+    return { raw: undefined, source: "none", error, cachedAt: null };
   }
-  return { raw, source: "local", error: null };
+  return { raw, source: "local", error: null, cachedAt };
 }
 
 /**
@@ -162,9 +179,12 @@ export async function load<T>(
   options: LoadOptions = {},
 ): Promise<Artifact<T>> {
   const now = options.now ?? new Date();
-  const { raw, source, error } = await fetchArtifact(
+  const { raw, source, error, cachedAt } = await fetchArtifact(
     descriptor.path, descriptor.format ?? "json", options,
   );
+  // Tell the offline banner how old a stored copy on screen is. Only a copy the
+  // worker stamped reaches here; a live response leaves the store untouched.
+  noteCachedAt(cachedAt);
 
   const input: ClassifyInput<T> = {
     path: descriptor.path,
@@ -178,6 +198,7 @@ export async function load<T>(
     freshnessBudgetMs: descriptor.freshnessBudgetMs,
     now,
     fetchError: error,
+    cachedAt,
   };
   return classify<T>(input);
 }

@@ -395,7 +395,7 @@ export function WatchView({ gameweek }: { gameweek: number }) {
       <div
         style={{
           display: "grid", gap: 1, background: S.hair,
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
         }}
       >
         <Decay rows={aged} conflicts={conflicts} />

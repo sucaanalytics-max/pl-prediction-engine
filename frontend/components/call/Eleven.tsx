@@ -209,8 +209,12 @@ export function Eleven(props: ElevenProps) {
     [bench, sort]);
 
   const header = (
+    // Plain markup, no ARIA table roles. The rows below are <button>s, which
+    // cannot be `role="row"` children of a table, so a `role="row"` header
+    // failed aria-required-parent (no table/grid above it) and
+    // aria-required-children (it holds buttons, not cells).
     <div
-      role="row"
+      data-testid="eleven-header"
       style={{
         display: "grid", gridTemplateColumns: TEMPLATE, alignItems: "center",
         background: S.bar, borderBottom: `1px solid ${S.rule}`, height: 30,
@@ -289,7 +293,9 @@ export function Eleven(props: ElevenProps) {
         className="dense-row"
         data-player={row.player.name}
         data-swap={coming ? "in" : going ? "out" : undefined}
-        aria-label={`${benched ? "Start" : "Bench"} ${row.player.name}`}
+        // No aria-label: WCAG 2.5.3 wants the accessible name to contain the
+        // visible text ("GKP Raya 3.06 ..."), and "Bench Raya" did not. The name
+        // now comes from the content, with the action appended as hidden text.
         style={{
           display: "grid", gridTemplateColumns: TEMPLATE, alignItems: "center",
           width: "100%", height: 34, padding: 0, textAlign: "left",
@@ -398,6 +404,9 @@ export function Eleven(props: ElevenProps) {
 
         <span data-cell="ownership" style={{ textAlign: "right", padding: "0 6px" }}>
           <Figure value={row.player.ownership ?? null} places={0} dim />
+        </span>
+        <span className="sr-only">
+          {`, ${benched ? "start" : "bench"} ${row.player.name}`}
         </span>
       </button>
     );

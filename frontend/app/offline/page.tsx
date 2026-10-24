@@ -9,8 +9,10 @@ export default function OfflinePage() {
         <div className="eyebrow"><ShieldCheck size={13} /> Offline-safe shell</div>
         <h1>You are offline</h1>
         <p>
-          Previously opened portal pages remain available, but live FPL prices,
-          fixtures and squad recommendations need a connection to refresh.
+          Pages open offline and show the data last fetched on this device, with
+          a banner giving its age. Nothing is live until the connection returns,
+          and data this device has never fetched cannot load. You are seeing this
+          page because the one you asked for is not stored here.
         </p>
         <Link href="/" className="primary-action">
           <ArrowLeft size={15} /> Return to overview

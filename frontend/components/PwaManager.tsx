@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Download, Share2, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Download, RefreshCw, Share2, X } from "lucide-react";
+import { SANS, SIGNAL } from "@/lib/margin/tokens";
 
 interface InstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -20,10 +21,19 @@ function isStandalone() {
   );
 }
 
+/** How often a long-lived tab asks the browser whether `/sw.js` has changed. */
+export const UPDATE_CHECK_MS = 30 * 60_000;
+
 export default function PwaManager() {
   const [prompt, setPrompt] = useState<InstallPromptEvent | null>(null);
   const [showIosHint, setShowIosHint] = useState(false);
   const [dismissed, setDismissed] = useState(true);
+  // A worker that has installed and is waiting for the page's word to take over.
+  const [waiting, setWaiting] = useState<ServiceWorker | null>(null);
+  // Set only by a tap on "Reload". `controllerchange` also fires when a FIRST
+  // install claims the page, and reloading then would be a pointless flash; and
+  // a flag that is spent once is what keeps a controller flip-flop from looping.
+  const reloadRequested = useRef(false);
 
   useEffect(() => {
     /**
@@ -53,9 +63,59 @@ export default function PwaManager() {
       })();
       return;
     }
-    if ("serviceWorker" in navigator) {
-      void navigator.serviceWorker.register("/sw.js");
-    }
+    if (!("serviceWorker" in navigator)) return;
+
+    let cancelled = false;
+    let reloaded = false;
+    let interval: ReturnType<typeof setInterval> | undefined;
+    let registration: ServiceWorkerRegistration | undefined;
+    const container = navigator.serviceWorker;
+
+    /* A waiting worker only counts as an UPDATE when something already controls
+       the page. With no controller this is the first install, which the worker
+       activates by itself, and an "update available" bar would be noise. */
+    const watch = (worker: ServiceWorker) => {
+      const consider = () => {
+        if (worker.state === "installed" && container.controller) setWaiting(worker);
+      };
+      worker.addEventListener("statechange", consider);
+      consider();
+    };
+    const onUpdateFound = () => {
+      if (registration?.installing) watch(registration.installing);
+    };
+    const onControllerChange = () => {
+      if (!reloadRequested.current || reloaded) return;
+      reloaded = true;
+      window.location.reload();
+    };
+    const check = () => {
+      if (document.visibilityState === "visible") void registration?.update().catch(() => {});
+    };
+
+    container.addEventListener("controllerchange", onControllerChange);
+    void navigator.serviceWorker.register("/sw.js").then((reg) => {
+      if (cancelled) return;
+      registration = reg;
+      if (reg.waiting && container.controller) setWaiting(reg.waiting);
+      if (reg.installing) watch(reg.installing);
+      reg.addEventListener("updatefound", onUpdateFound);
+      document.addEventListener("visibilitychange", check);
+      interval = setInterval(check, UPDATE_CHECK_MS);
+    }).catch(() => {
+      // A registration that fails leaves the app working without a worker.
+    });
+    return () => {
+      cancelled = true;
+      container.removeEventListener("controllerchange", onControllerChange);
+      registration?.removeEventListener("updatefound", onUpdateFound);
+      document.removeEventListener("visibilitychange", check);
+      if (interval) clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") return;
     if (isStandalone() || localStorage.getItem("suca-pwa-dismissed") === "1") {
       return;
     }
@@ -70,6 +130,12 @@ export default function PwaManager() {
     return () => window.removeEventListener("beforeinstallprompt", onInstallPrompt);
   }, []);
 
+  function applyUpdate() {
+    if (!waiting) return;
+    reloadRequested.current = true;
+    waiting.postMessage({ type: "SKIP_WAITING" });
+  }
+
   function dismiss() {
     localStorage.setItem("suca-pwa-dismissed", "1");
     setDismissed(true);
@@ -83,9 +149,50 @@ export default function PwaManager() {
     setPrompt(null);
   }
 
-  if (dismissed || (!prompt && !showIosHint)) return null;
+  const updateBar = waiting ? (
+    <>
+      {/* Above the mobile bottom nav, which is fixed and 99px plus the
+          safe-area inset tall at 767px and below; a media query cannot live in
+          an inline style, so the offset is a scoped rule. */}
+      <style>{`
+        .sw-update-bar { bottom: 16px; }
+        @media (max-width: 767px) {
+          .sw-update-bar { bottom: calc(99px + env(safe-area-inset-bottom) + 8px); }
+        }
+      `}</style>
+      <div
+        className="sw-update-bar"
+        role="status"
+        aria-live="polite"
+        style={{
+          position: "fixed", left: 16, right: 16, margin: "0 auto", maxWidth: 420,
+          zIndex: 70, display: "flex", alignItems: "center", gap: 12,
+          padding: "10px 12px", background: SIGNAL.ink, color: SIGNAL.shell,
+          fontFamily: SANS, fontSize: 13, fontWeight: 600,
+          boxShadow: "0 2px 12px rgba(20,23,28,.25)",
+        }}
+      >
+        <RefreshCw size={15} aria-hidden="true" />
+        <span style={{ flex: 1 }}>Update available</span>
+        <button
+          type="button"
+          onClick={applyUpdate}
+          style={{
+            background: SIGNAL.shell, color: SIGNAL.ink, border: 0, cursor: "pointer",
+            padding: "6px 12px", fontFamily: SANS, fontSize: 13, fontWeight: 700,
+          }}
+        >
+          Reload
+        </button>
+      </div>
+    </>
+  ) : null;
+
+  if (dismissed || (!prompt && !showIosHint)) return updateBar;
 
   return (
+    <>
+    {updateBar}
     <aside className="pwa-install-card" aria-label="Install Suca FPL app">
       <span className="pwa-install-icon"><Download size={17} /></span>
       <div>
@@ -107,5 +214,6 @@ export default function PwaManager() {
         <X size={14} />
       </button>
     </aside>
+    </>
   );
 }

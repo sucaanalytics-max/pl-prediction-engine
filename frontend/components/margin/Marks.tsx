@@ -187,7 +187,8 @@ export function Distribution(
   }: {
     of: DistributionInput;
     surface: MarginSurface;
-    width?: number;
+    /** Pixels, or a CSS length such as "100%" — every mark inside is positioned in percent. */
+    width?: number | string;
     height?: number;
     /** Scale floor. `SQUAD_SCALE_LO` for a squad total. */
     lo?: number;

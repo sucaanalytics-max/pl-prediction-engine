@@ -102,7 +102,7 @@ function mount() {
  * wrapper would appear as a phantom column between the real ones.
  */
 function headerLabels(): string[] {
-  const row = screen.getAllByRole("row")[0];
+  const row = screen.getByTestId("eleven-header");
   return [...row.querySelectorAll("button, span")]
     .filter((el) => el.querySelector("button, span") === null)
     .map((el) => (el.textContent ?? "").trim())
@@ -209,7 +209,7 @@ describe("the values land under the labels", () => {
     // Two separate 9-column grids sharing one TEMPLATE constant. If they ever stop
     // sharing it, no ordering assertion in this file means anything: the labels and
     // the values would be laid out on different tracks.
-    const header = screen.getAllByRole("row")[0] as HTMLElement;
+    const header = screen.getByTestId("eleven-header");
     const row = screen.getAllByTestId("eleven-row")[0] as HTMLElement;
     expect(row.style.gridTemplateColumns).toBe(header.style.gridTemplateColumns);
     expect(header.style.gridTemplateColumns).not.toBe("");
@@ -243,5 +243,38 @@ describe("the club rule is painted, for every club", () => {
     const rows = screen.getAllByTestId("eleven-row");
     const unknown = rows[rows.length - 1] as HTMLElement;
     expect(unknown.style.backgroundImage).toBe("");
+  });
+});
+
+/**
+ * Lighthouse (mobile, 2026-10-24) failed three accessibility audits here.
+ * `role="row"` on the header had no table above it and held buttons rather than
+ * cells; and the rows' `aria-label="Bench Raya"` did not contain their visible
+ * text ("GKP Raya 2.84 ..."), which WCAG 2.5.3 requires of the accessible name.
+ */
+describe("accessibility structure", () => {
+  it("uses no ARIA table roles, which the button rows could not satisfy", () => {
+    const { container } = mount();
+    expect(container.querySelector("[role='row'], [role='table'], [role='rowgroup']"))
+      .toBeNull();
+  });
+
+  it("names a row from its visible text, with the action appended", () => {
+    mount();
+    const row = screen.getAllByTestId("eleven-row")[0];
+    expect(row.hasAttribute("aria-label")).toBe(false);
+    const visible = (row.textContent ?? "").replace(/\s+/g, " ").trim();
+    expect(visible).toContain("GKP");
+    expect(visible).toContain("Raya");
+    expect(row.querySelector(".sr-only")?.textContent).toMatch(/bench Raya/);
+  });
+
+  it("offers 'start' on a bench row", () => {
+    render(
+      <Eleven starters={[]} bench={[ROW]} captainId={null} bringIn={[]}
+        sitDown={[]} onToggle={vi.fn()} />,
+    );
+    expect(screen.getByTestId("eleven-bench-row").querySelector(".sr-only")?.textContent)
+      .toMatch(/start Raya/);
   });
 });

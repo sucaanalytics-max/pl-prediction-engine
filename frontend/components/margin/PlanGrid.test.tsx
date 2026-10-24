@@ -718,3 +718,18 @@ describe("the eleven you are being told to field", () => {
     expect(started?.getAttribute("title")).toMatch(/starts/i);
   });
 });
+
+describe("narrow screens", () => {
+  it("keeps the board inside its own scroll box, so the page never scrolls sideways", () => {
+    // Measured on a 390px phone: the GW cells ran to 656px with no overflow
+    // container above them and stretched the layout viewport to 697px.
+    draw();
+    const box = screen.getByTestId("plan-grid-scroll");
+    expect(box.style.overflowX).toBe("auto");
+    // Header, every row and the summaries are all inside it.
+    expect(within(box).getAllByTestId("plan-row")).toHaveLength(5);
+    expect(within(box).getByText("Starts")).toBeInTheDocument();
+    // And the board has a floor: 152 + 38 + 3 weeks * 58 + 4 gaps * 3.
+    expect((box.firstElementChild as HTMLElement).style.minWidth).toBe("376px");
+  });
+});

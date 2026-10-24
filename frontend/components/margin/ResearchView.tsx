@@ -274,20 +274,24 @@ function Twins({ players }: { players: readonly Projection[] }) {
       <span style={{ fontFamily: MONO, fontSize: 13, fontWeight: 600, textAlign: "right", color: S.ink }}>
         {p.xp?.toFixed(1)}
       </span>
-      <Distribution
-        of={{
-          q10: p.q10, q25: p.q25, q50: p.q50, q75: p.q75, q90: p.q90,
-          mean: p.xp, mode: p.mode,
-        }}
-        surface={S}
-        width={220}
-        height={18}
-      />
+      {/* 220px at most, shrinking with the pane: a fixed 220 pushed this row to
+          410px on a 390px phone and widened the whole page. */}
+      <div style={{ minWidth: 0, maxWidth: 220 }}>
+        <Distribution
+          of={{
+            q10: p.q10, q25: p.q25, q50: p.q50, q75: p.q75, q90: p.q90,
+            mean: p.xp, mode: p.mode,
+          }}
+          surface={S}
+          width="100%"
+          height={18}
+        />
+      </div>
     </div>
   );
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 22 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 22 }}>
       <div>
         <Eyebrow surface={S} style={{ fontSize: 11, letterSpacing: ".04em", marginBottom: 8 }}>
           Same mean, different asset
@@ -497,6 +501,7 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
         background: S.shell, color: S.ink,
       }}
       data-testid="margin-research"
+      className="research-layout"
     >
       <div style={{ borderRight: `1px solid ${S.hair}`, minWidth: 0 }}>
         <div
@@ -560,6 +565,10 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
                   />
                 </div>
               ) : null}
+              {/* The sixteen-column table has a floor of its own; narrower than
+                  that the box scrolls, not the page (globals.css, `.research-scroll`). */}
+              <div className="research-scroll" data-testid="research-scroll">
+              <div className="research-scroll-inner">
               <Header sort={sort} onSort={setSort} />
               {shown.map((player) => (
                 <Row
@@ -571,6 +580,8 @@ export function ResearchView({ gameweek }: { gameweek: number }) {
                   onPin={() => togglePin(player.elementId)}
                 />
               ))}
+              </div>
+              </div>
 
               {/* Never a list that quietly ends. */}
               <div style={{ padding: "12px 18px", borderBottom: `1px solid ${S.hair}`, display: "flex", gap: 12, alignItems: "baseline", flexWrap: "wrap" }}>

@@ -193,7 +193,12 @@ describe("the shell caches the app that exists now", () => {
      * bump cannot happen silently — you must come here and say why — but it
      * cannot tell whether a bump was NEEDED. That judgement stays human.
      *
-     * v9 -> v10 is for the list: `/phases` and `/stats` are new. A v9 cache holds
+     * v10 -> v11 is for behaviour, not the list: the worker now stores
+     * `/predictions/*.json` and `GET /api/fpl/state` (stamped `x-sw-cached-at`),
+     * caps `/_next/static`, and waits for the page before taking over on an
+     * update. A v10 install would otherwise keep running the old strategy.
+     *
+     * The earlier v9 -> v10 bump is for the list: `/phases` and `/stats` are new. A v9 cache holds
      * an app whose nav links two pages it cannot open, which offline reads as the
      * app being broken rather than as pages missing.
      *
@@ -213,7 +218,7 @@ describe("the shell caches the app that exists now", () => {
      * redirect. Neither bump explains the once-reported stale `/` — the navigation
      * handler is and was network-first — and that report was never diagnosed.
      */
-    expect(swSource).toContain("suca-fpl-shell-v10");
+    expect(swSource).toContain("suca-fpl-shell-v11");
   });
 });
 

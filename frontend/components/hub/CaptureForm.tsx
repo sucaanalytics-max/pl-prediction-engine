@@ -225,7 +225,7 @@ export default function CaptureForm({
         Capturing for entry {entryId} — the one team this repo decides for.
       </p>
 
-      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(4, 1fr)" }}>
+      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit, minmax(min(150px, 100%), 1fr))" }}>
         <div>
           <label style={label} htmlFor="capture-gw">Gameweek</label>
           <input id="capture-gw" style={field} value={week}
