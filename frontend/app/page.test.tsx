@@ -175,6 +175,10 @@ async function mountPage(
     // the fixture stays because a distinct date is still the clearer evidence.
     deadline = "2026-09-12T10:00:00Z" as string | null,
     agentStatusAbsent = false,
+    // The agent's published decision. Absent by default, which is the only state
+    // the page was ever tested in — and the reason a tile reading "No transfer is
+    // suggested" shipped above a grid printing the agent's Foden → Tavernier.
+    decision = null as Record<string, unknown> | null,
   } = {},
 ) {
   vi.resetModules();
@@ -214,6 +218,7 @@ async function mountPage(
         );
       }
       if (key === "playerStats") return ok(PLAYER_STATS);
+      if (key.startsWith("decision:")) return ok(decision);
       // Everything else absent, which is Rule 2: it must cost one line, not the page.
       return ok(null);
     },
@@ -389,6 +394,56 @@ describe("one captain, not two and not seven", () => {
     expect(text).not.toContain("over 4 GW");
     expect(text).not.toContain("elite ownership");
     expect(text).not.toContain("Gabriel");
+  });
+});
+
+/**
+ * The transfer tile does not contradict the agent's own published plan.
+ *
+ * Live on 2026-10-24: the tile read "None — No transfer is suggested" while
+ * `decision_public_gw09_owner.json`, rendered further down the SAME page by
+ * `PlanGridSection`, planned Foden → Tavernier for GW9. The tile's premise — that
+ * one published week cannot price a sale — is true of `xp_public`, which is all
+ * `CallBoard` reads; it is not true of the decision, which solves eight weeks.
+ * Every test above serves the decision as absent, so none could see it.
+ */
+describe("the transfer tile reports the agent's plan when one is published", () => {
+  const BUY = {
+    ...PROJECTIONS[6], elementId: 68, name: "Tavernier", position: "MID", xp: 5.12,
+  };
+  const decisionWith = (transfersIn: number[], transfersOut: number[]) => ({
+    gameweek: 1, entry_label: "owner", objective: null,
+    generated_at: "2026-09-11T19:50:11Z", deadline: "2026-09-12T10:00:00Z",
+    plan: {
+      squad: [], xi: [], captain: 5, vice: 9,
+      transfers_in: transfersIn, transfers_out: transfersOut,
+      hits: 0, bank_after: 4.1, free_transfers_after: 2,
+    },
+    mean_points: 55, optimism_gap: null, credible_margin: false, sealed: false,
+    warnings: [], xp_snapshot: {}, horizon: null,
+  });
+  const tile = (container: HTMLElement) =>
+    container.querySelector("[data-testid='tile-transfer']")?.textContent ?? "";
+
+  it("names the sale and the buy the decision plans for this week", async () => {
+    const { container } = await mountPage({
+      projections: [...PROJECTIONS, BUY],
+      decision: decisionWith([68], [7]),
+    });
+    const text = tile(container);
+    expect(text).not.toContain("No transfer is suggested");
+    expect(text).toContain("Semenyo");
+    expect(text).toContain("Tavernier");
+    // Provisional until sealed, and the tile must say so: the plan is re-solved
+    // every few hours and the reader acts on it before the deadline.
+    expect(text).toMatch(/provisional/i);
+  });
+
+  it("says the plan makes no move, rather than that none can be priced", async () => {
+    const { container } = await mountPage({ decision: decisionWith([], []) });
+    const text = tile(container);
+    expect(text).not.toContain("cannot price a sale");
+    expect(text).toMatch(/no transfer/i);
   });
 });
 

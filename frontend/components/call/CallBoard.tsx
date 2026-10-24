@@ -22,9 +22,12 @@
  *
  * ## What it refuses to do
  *
- * Suggest a transfer. `xp_public` covers one gameweek, so a swap's gain is
+ * Price a transfer. `xp_public` covers one gameweek, so a swap's gain is
  * computable for this week alone, and a sale priced on one week is the most
- * confident wrong number this app could print. The transfer tile says so.
+ * confident wrong number this app could print. What the transfer tile shows is
+ * the agent's decision for this week, relayed by name and computed on nothing
+ * here — the same artifact `PlanGridSection` draws below, read through the same
+ * coalesced descriptor, so the tile and the grid cannot name different moves.
  *
  * Claim a future eleven. The rail's horizon table draws per-player projections
  * for the weeks the file carries; the solved plan for the weeks that were
@@ -34,6 +37,7 @@
 import { useMemo, useState } from "react";
 
 import { proven } from "@/lib/data/artifact";
+import { decisionDescriptor } from "@/lib/data/narrow";
 import { projectionsDescriptor } from "@/lib/data/projections";
 import { useArtifact } from "@/lib/data/useArtifact";
 import { useHeuristics } from "@/lib/data/useHeuristics";
@@ -47,7 +51,7 @@ import { calloutsFor, shapeOf, swapFrom, swapSentence } from "@/lib/call/board";
 import { Eleven } from "@/components/call/Eleven";
 import { Pitch, type PitchMode } from "@/components/call/Pitch";
 import { Rail, type HorizonScale } from "@/components/call/Rail";
-import { Tiles } from "@/components/call/Tiles";
+import { Tiles, type AgentTransfer } from "@/components/call/Tiles";
 
 const S = SIGNAL;
 
@@ -66,9 +70,11 @@ function Line({ children }: { children: React.ReactNode }) {
 export function CallBoard({ gameweek }: { readonly gameweek: number }) {
   const { artifact: liveArtifact } = useHeuristics();
   const { artifact: projectionsArtifact } = useArtifact(projectionsDescriptor(gameweek));
+  const { artifact: decisionArtifact } = useArtifact(decisionDescriptor(gameweek));
 
   const live = proven(liveArtifact);
   const projections = proven(projectionsArtifact);
+  const decision = proven(decisionArtifact);
 
   const [benched, setBenched] = useState<ReadonlySet<number>>(new Set());
   const [mode, setMode] = useState<PitchMode>("xp");
@@ -96,6 +102,28 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
    * The lint rule that flagged this reads as a style warning and was not one.
    */
   const players = useMemo(() => projections?.players ?? [], [projections]);
+
+  // The agent's moves for THIS week, named off FPL's element id. `xp_public`
+  // carries the whole pool, so a buy from outside the squad still resolves; an id
+  // that does not is printed as an id rather than dropped, because a tile that
+  // silently lost half a transfer would read as a different move.
+  const agentTransfer = useMemo<AgentTransfer | null>(() => {
+    const plan = decision?.plan ?? null;
+    if (decision === null || plan === null || decision.gameweek !== gameweek) return null;
+    const nameOf = new Map<number, string>();
+    for (const player of players) {
+      if (player.name !== null) nameOf.set(player.elementId, player.name);
+    }
+    for (const player of squad?.players ?? []) {
+      if (player.elementId !== undefined) nameOf.set(player.elementId, player.name);
+    }
+    const named = (ids: readonly number[]) => ids.map((id) => nameOf.get(id) ?? `#${id}`);
+    return {
+      out: named(plan.transfers_out),
+      in: named(plan.transfers_in),
+      sealed: decision.sealed,
+    };
+  }, [decision, gameweek, players, squad]);
 
   const solved = useMemo(() => {
     if (squad === null || players.length === 0) return null;
@@ -218,6 +246,7 @@ export function CallBoard({ gameweek }: { readonly gameweek: number }) {
         /* This component called `projectedTotal`, so this component states how it
            counted. `Tiles` renders the words and asserts nothing about them. */
         countingRule={COUNTING_RULE}
+        agentTransfer={agentTransfer}
       />
 
       <div style={{

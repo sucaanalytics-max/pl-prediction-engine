@@ -19,13 +19,17 @@
  * tile is the one place a doubled number appears, and it shows both halves so the
  * doubling is visible rather than assumed.
  *
- * ## The transfer tile is usually empty, and says why
+ * ## The transfer tile relays the agent's plan, and computes none of its own
  *
- * Nothing on this screen recommends a transfer. `xp_public` covers one gameweek,
- * so the gain from a swap is computable for this week only, and a sale priced on
- * one week of projection is the most confident wrong number this app could print.
- * The tile states that rather than leaving a reader to wonder whether the absence
- * means "no move needed".
+ * Nothing on this screen PRICES a transfer. `xp_public` covers one gameweek, so
+ * a swap's gain is computable for this week only, and a sale priced on one week
+ * of projection is the most confident wrong number this app could print.
+ *
+ * The agent's decision is a different warranty: it solves eight weeks and
+ * publishes this week's moves. When it has, the tile names them — it said "No
+ * transfer is suggested" above a grid printing the agent's Foden → Tavernier,
+ * because it only ever knew about `xp_public`. The one-week refusal is now the
+ * text for when no decision has been published.
  */
 
 import { DISPLAY, SIGNAL, MONO, SANS } from "@/lib/margin/tokens";
@@ -84,12 +88,61 @@ export interface TilesProps {
    * rule must sit with the arithmetic, not with the typography.
    */
   readonly countingRule: string;
+  /**
+   * This week's moves from the agent's published decision, already named.
+   * Null when no decision for this gameweek could be read.
+   */
+  readonly agentTransfer: AgentTransfer | null;
+}
+
+export interface AgentTransfer {
+  readonly out: readonly string[];
+  readonly in: readonly string[];
+  readonly sealed: boolean;
+}
+
+function TransferTile({ plan }: { readonly plan: AgentTransfer | null }) {
+  if (plan === null) {
+    return (
+      <Tile
+        label="Transfer"
+        testId="tile-transfer"
+        note="No transfer is suggested: one published week cannot price a sale."
+      >
+        <span style={{ fontFamily: DISPLAY, fontSize: 22, lineHeight: 1.1, color: S.ink2 }}>
+          None
+        </span>
+      </Tile>
+    );
+  }
+  const status = plan.sealed
+    ? "sealed"
+    : "provisional, re-solved until the deadline";
+  const moved = plan.out.length > 0 || plan.in.length > 0;
+  return (
+    <Tile
+      label="Transfer"
+      testId="tile-transfer"
+      note={moved
+        // The eleven and totals on this board are the squad BEFORE the move, so
+        // the tile says so rather than let the two be read as one plan.
+        ? <>the agent&apos;s plan · {status} · not applied to the eleven below</>
+        : <>the agent&apos;s plan makes no transfer this week · {status}</>}
+    >
+      <span style={{
+        fontFamily: DISPLAY, fontSize: 22, lineHeight: 1.1,
+        color: moved ? S.ink : S.ink2,
+      }}>
+        {moved ? `${plan.out.join(", ")} → ${plan.in.join(", ")}` : "None"}
+      </span>
+    </Tile>
+  );
 }
 
 export function Tiles(props: TilesProps) {
   const {
     total, asPicked, shape, captainName, captainXp, captainHaul,
-    squadValue, bank, freeTransfers, countingRule,
+    squadValue, bank, freeTransfers, countingRule, agentTransfer,
   } = props;
 
   const delta = total !== null && asPicked !== null ? total - asPicked : null;
@@ -170,15 +223,7 @@ export function Tiles(props: TilesProps) {
         <Big>{squadValue === null ? "—" : `£${squadValue.toFixed(1)}`}</Big>
       </Tile>
 
-      <Tile
-        label="Transfer"
-        testId="tile-transfer"
-        note="No transfer is suggested: one published week cannot price a sale."
-      >
-        <span style={{ fontFamily: DISPLAY, fontSize: 22, lineHeight: 1.1, color: S.ink2 }}>
-          None
-        </span>
-      </Tile>
+      <TransferTile plan={agentTransfer} />
     </div>
   );
 }
