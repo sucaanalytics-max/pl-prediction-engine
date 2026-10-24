@@ -28,6 +28,12 @@ logger = logging.getLogger(__name__)
 #: 1e-4 per side.
 DC_SAMPLING_MAX_GOALS = 10
 
+#: Share of full-time goals allocated to the first half. Each team's half-time
+#: score is Binomial(full-time goals, HT_GOAL_SHARE), independently. Named so
+#: the exact HT/FT market (``exact_markets.py``) uses the value the simulator
+#: draws with.
+HT_GOAL_SHARE = 0.45
+
 
 def resolve_rng(rng: Optional[np.random.Generator]) -> np.random.Generator:
     """
@@ -87,9 +93,40 @@ def sample_dixon_coles(
     0-0 correction can go negative, and flooring is what keeps tau positivity
     from needing a hard constraint on the prior.
     """
+    generator = resolve_rng(rng)
+    n = len(lam)
+    flat = dc_joint_flat(lam, mu, rho, max_goals)
+
+    cdf = np.cumsum(flat, axis=1)
+    draws = generator.random(n)[:, None]
+    index = (cdf < draws).sum(axis=1)
+    index = np.minimum(index, flat.shape[1] - 1)
+    width = max_goals + 1
+    return (index // width).astype(np.int64), (index % width).astype(np.int64)
+
+
+def dc_joint_flat(
+    lam: np.ndarray,
+    mu: np.ndarray,
+    rho: np.ndarray,
+    max_goals: int = DC_SAMPLING_MAX_GOALS,
+) -> np.ndarray:
+    """
+    The per-draw Dixon-Coles scoreline distribution that the sampler draws from.
+
+    Returns ``(n, (max_goals + 1) ** 2)``, row ``k`` being the joint for
+    ``(lam[k], mu[k], rho[k])`` flattened home-major (cell ``i * width + j`` is
+    home ``i``, away ``j``). Each row is the 0..max_goals truncation of the
+    corrected joint, floored at zero and renormalised to sum to 1.
+
+    It is shared, not copied, by :func:`sample_dixon_coles` and by the exact
+    goals-market path (``pipeline/simulation/exact_markets.py``). That makes the
+    exact path the expectation of what the sampler draws by construction rather
+    than by a parallel implementation that could drift: same truncation, same
+    floor, same renormalisation and same degenerate-row fallback.
+    """
     from scipy.stats import poisson
 
-    generator = resolve_rng(rng)
     n = len(lam)
     goals = np.arange(max_goals + 1)
 
@@ -114,14 +151,7 @@ def sample_dixon_coles(
         fallback = (pmf_home[degenerate][:, :, None] * pmf_away[degenerate][:, None, :])
         flat[degenerate] = fallback.reshape(degenerate.sum(), -1)
         totals[degenerate, 0] = flat[degenerate].sum(axis=1)
-    flat = flat / totals
-
-    cdf = np.cumsum(flat, axis=1)
-    draws = generator.random(n)[:, None]
-    index = (cdf < draws).sum(axis=1)
-    index = np.minimum(index, flat.shape[1] - 1)
-    width = max_goals + 1
-    return (index // width).astype(np.int64), (index % width).astype(np.int64)
+    return flat / totals
 
 
 class MonteCarloSimulator:
@@ -210,10 +240,10 @@ class MonteCarloSimulator:
     def _split_half_time(home_goals, away_goals, rng):
         if rng is None:
             return (
-                np.random.binomial(home_goals, 0.45),
-                np.random.binomial(away_goals, 0.45),
+                np.random.binomial(home_goals, HT_GOAL_SHARE),
+                np.random.binomial(away_goals, HT_GOAL_SHARE),
             )
-        return rng.binomial(home_goals, 0.45), rng.binomial(away_goals, 0.45)
+        return rng.binomial(home_goals, HT_GOAL_SHARE), rng.binomial(away_goals, HT_GOAL_SHARE)
 
     @staticmethod
     def _draw_corners(model, home_team, away_team, goal_sims, n, rng):

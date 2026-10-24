@@ -44,6 +44,28 @@ draw of noise, so a published probability is still ``p_hat`` with standard error
 ``PIPELINE_VERSION`` is no longer in the seed for the same CRN reason; the base
 seed in ``PARAM_REGISTRY["simulation.value_path_seed"]`` is the one knob for
 re-drawing.
+
+## Goals markets are exact; only corners and cards are simulated
+
+Determinism alone left a fixed draw of noise the size of the decision margin
+(0.69pp SE at 5,000 sims against a 5pp minimum edge; see
+``pipeline/simulation/exact_markets.py``). So 1X2, totals, BTTS and every other
+goals-only market are now computed exactly: the Dixon-Coles scoreline grid
+averaged over EVERY posterior draw, recentred on the blended rates exactly as
+the simulated draws are. The Dixon-Coles point rate that enters the blend is the
+full-posterior mean, not the mean of ``n`` resampled draws, so it carries no
+resampling noise either.
+
+Corners and cards are conditioned on simulated goals, so the simulation still
+runs, on the same seeded child streams as before, and only those fields are
+taken from it. Its goal draws are recentred on the same blended rates as the
+exact grid.
+
+If the exact computation fails it raises ``ExactMarketsError``; there is no
+fallback to simulated goals markets. Without a Dixon-Coles posterior the goals
+markets are the exact independent-Poisson grid at the blended rates, which is
+the expectation of the ``simulate_match`` fallback this path has always used,
+and that is logged and recorded in ``goal_markets.method``.
 """
 import hashlib
 import logging
@@ -53,6 +75,15 @@ from typing import Any, Dict, Mapping, Optional, Tuple
 import numpy as np
 
 from pipeline.config import PARAM_REGISTRY
+from pipeline.simulation.exact_markets import (
+    METHOD_POISSON_GRID,
+    METHOD_POSTERIOR_GRID,
+    ExactMarketsError,
+    apply_exact_goal_markets,
+    goal_markets_from_grid,
+    independent_poisson_grid,
+    independent_rho_scoreline_grid,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -97,8 +128,12 @@ class FixtureSimulation:
     mu_a: float
     #: Per-model (lambda, mu) that entered the blend, in blend order.
     model_lambdas: Dict[str, Tuple[float, float]]
-    #: True when the scoreline was drawn from the Dixon-Coles posterior.
+    #: True when the scoreline distribution came from the Dixon-Coles posterior.
     from_posterior: bool
+    #: How the goals markets were computed (``exact_markets.METHOD_*``).
+    goal_markets_method: str = METHOD_POSTERIOR_GRID
+    #: Posterior draws the exact grid averaged over (0 without a posterior).
+    n_posterior_draws: int = 0
 
 
 def simulate_fixture(
@@ -114,17 +149,19 @@ def simulate_fixture(
     rng: Optional[np.random.Generator] = None,
 ) -> FixtureSimulation:
     """
-    Blend, simulate and derive markets for one fixture, reproducibly.
+    Blend, compute the goals markets exactly, simulate corners and cards, for
+    one fixture, reproducibly.
 
     ``other_lambdas`` are the non-DC models' point rates (XGBoost, PenaltyBlog),
     in the order they should enter the blend; Dixon-Coles always enters first,
     which is the order run_pipeline has always summed in. ``rng`` defaults to
     :func:`fixture_rng` of ``match_id``; pass one only to override the seed
-    (e.g. to measure Monte Carlo error across seeds).
+    (e.g. to measure Monte Carlo error across seeds). It affects only the
+    simulated fields (corners, cards); the goals markets do not depend on it or
+    on ``simulator.n_sims``.
 
-    Probability semantics are unchanged from the inline code this replaced: the
-    DC posterior's relative uncertainty is kept and recentred on the blended
-    rates, and ``derive_all_markets`` is untouched.
+    The DC posterior's relative uncertainty is kept and recentred on the blended
+    rates (``lam_k * lambda_blend / mean(lam)``) on both paths.
     """
     generator = rng if rng is not None else fixture_rng(match_id)
     posterior_rng, simulation_rng = generator.spawn(2)
@@ -132,23 +169,29 @@ def simulate_fixture(
 
     lambda_h, mu_a = DEFAULT_RATES
     dc_lam_samples = dc_mu_samples = dc_rho_samples = None
+    dc_lam_post = dc_mu_post = None
 
     if dc_model is not None:
         try:
             # Fitted, and until now discarded: the whole reason to prefer
             # Dixon-Coles over independent Poisson is this parameter.
             dc_rho_samples = dc_model.get_rho_samples()
+            # Every posterior draw, for the exact grid and the point rate.
+            dc_lam_post, dc_mu_post = dc_model.get_lambda_mu_posterior(home, away)
+            # n resampled draws, only to drive the corners/cards simulation.
             dc_lam_samples, dc_mu_samples = dc_model.get_lambda_mu_samples(
                 home, away, simulator.n_sims, rng=posterior_rng
             )
-            lambda_h = float(np.mean(dc_lam_samples))
-            mu_a = float(np.mean(dc_mu_samples))
+            lambda_h = float(np.mean(dc_lam_post))
+            mu_a = float(np.mean(dc_mu_post))
         except Exception as e:
             logger.warning(f"  DC prediction failed for {home} vs {away}: {e}")
-            dc_lam_samples = dc_mu_samples = None
+            dc_lam_samples = dc_mu_samples = dc_lam_post = dc_mu_post = None
+
+    from_posterior = dc_lam_post is not None and dc_mu_post is not None
 
     model_lambdas: Dict[str, Tuple[float, float]] = {}
-    if dc_lam_samples is not None and dc_mu_samples is not None:
+    if from_posterior:
         model_lambdas["dixon_coles"] = (lambda_h, mu_a)
     for name, rates in other_lambdas.items():
         model_lambdas[name] = rates
@@ -158,10 +201,27 @@ def simulate_fixture(
         lambda_h = sum(weights.get(m, 0) * lam for m, (lam, _) in model_lambdas.items()) / total_w
         mu_a = sum(weights.get(m, 0) * mu for m, (_, mu) in model_lambdas.items()) / total_w
 
-    from_posterior = dc_lam_samples is not None and dc_mu_samples is not None
     if from_posterior:
+        if dc_rho_samples is None or len(dc_rho_samples) == 0:
+            raise ExactMarketsError(
+                f"{home} vs {away}: Dixon-Coles posterior has no rho draws; "
+                "the exact goals markets cannot be computed"
+            )
         # Preserve the Bayesian posterior's relative uncertainty while
         # centring it on the actual ensemble-blended goal rates.
+        post_lam_mean = max(float(np.mean(dc_lam_post)), 1e-6)
+        post_mu_mean = max(float(np.mean(dc_mu_post)), 1e-6)
+        # rho independent of the (lambda, mu) draw: the simulator's semantics
+        # today, which resamples rho with its own indices. Pairing them is a
+        # caller-side change of triples (exact_markets.scoreline_grid_mixture
+        # on the aligned posterior arrays), not a change to the grid code.
+        grid = independent_rho_scoreline_grid(
+            dc_lam_post * (lambda_h / post_lam_mean),
+            dc_mu_post * (mu_a / post_mu_mean),
+            dc_rho_samples,
+        )
+        method, n_post = METHOD_POSTERIOR_GRID, int(len(dc_lam_post))
+
         lam_mean = max(float(np.mean(dc_lam_samples)), 1e-6)
         mu_mean = max(float(np.mean(dc_mu_samples)), 1e-6)
         sims = simulator.simulate_from_posterior(
@@ -172,12 +232,30 @@ def simulate_fixture(
             **sim_kwargs,
         )
     else:
+        logger.warning(
+            f"  {home} vs {away}: no Dixon-Coles posterior; goals markets are the "
+            f"exact independent-Poisson grid at the blended rates "
+            f"({lambda_h:.3f}, {mu_a:.3f}), with no low-score correction"
+        )
+        grid = independent_poisson_grid(lambda_h, mu_a)
+        method, n_post = METHOD_POISSON_GRID, 0
         sims = simulator.simulate_match(lambda_h, mu_a, rng=simulation_rng, **sim_kwargs)
 
+    provenance = {
+        "method": method,
+        "n_posterior_draws": n_post,
+        "rho": "independent" if from_posterior else None,
+    }
+    markets = apply_exact_goal_markets(
+        simulator.derive_all_markets(sims), goal_markets_from_grid(grid), provenance
+    )
+
     return FixtureSimulation(
-        markets=simulator.derive_all_markets(sims),
+        markets=markets,
         lambda_h=float(lambda_h),
         mu_a=float(mu_a),
         model_lambdas=model_lambdas,
         from_posterior=from_posterior,
+        goal_markets_method=method,
+        n_posterior_draws=n_post,
     )
