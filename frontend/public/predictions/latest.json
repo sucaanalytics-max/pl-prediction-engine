@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-10-23T10:41:12.192076Z",
+    "generated_at": "2026-10-24T09:59:32.809954Z",
     "season": "2026-27",
     "gameweek": 8,
     "pipeline_version": "4.1.0",
@@ -20,7 +20,7 @@
     "portfolio": {
       "total_exposure_pct": 0.2,
       "n_bets_before_limits": 12,
-      "n_bets_after_limits": 8,
+      "n_bets_after_limits": 9,
       "n_reduced_by_limits": 4,
       "limits": {
         "max_per_match_pct": 0.15,
@@ -39,781 +39,6 @@
   },
   "predictions": [
     {
-      "match_id": "20261023_Ipswich_Nott'm_Forest",
-      "fixture": {
-        "date": "2026-10-23T19:00:00Z",
-        "home_team": "Ipswich",
-        "away_team": "Nott'm Forest",
-        "gameweek": 8,
-        "referee": null,
-        "is_derby": false
-      },
-      "probabilities": {
-        "1x2": {
-          "home": 0.335,
-          "draw": 0.269,
-          "away": 0.396
-        },
-        "over_under": {
-          "0.5": {
-            "over": 0.92,
-            "under": 0.08
-          },
-          "1.5": {
-            "over": 0.7664,
-            "under": 0.2336
-          },
-          "2.5": {
-            "over": 0.5316,
-            "under": 0.4684
-          },
-          "3.5": {
-            "over": 0.3136,
-            "under": 0.6864
-          },
-          "4.5": {
-            "over": 0.1554,
-            "under": 0.8446
-          }
-        },
-        "btts": {
-          "yes": 0.5592,
-          "no": 0.44079999999999997
-        },
-        "clean_sheet": {
-          "home": 0.246,
-          "away": 0.2748
-        },
-        "correct_score": {
-          "0-0": 0.08,
-          "0-1": 0.0812,
-          "0-2": 0.0594,
-          "0-3": 0.0358,
-          "0-4": 0.014,
-          "0-5": 0.0032,
-          "0-6": 0.0008,
-          "1-0": 0.0724,
-          "1-1": 0.1204,
-          "1-2": 0.083,
-          "1-3": 0.0466,
-          "1-4": 0.0134,
-          "1-5": 0.0066,
-          "1-6": 0.0014,
-          "2-0": 0.055,
-          "2-1": 0.073,
-          "2-2": 0.0556,
-          "2-3": 0.027,
-          "2-4": 0.0112,
-          "2-5": 0.0032,
-          "2-6": 0.0008,
-          "3-0": 0.0262,
-          "3-1": 0.0332,
-          "3-2": 0.0294,
-          "3-3": 0.0118,
-          "3-4": 0.0034,
-          "3-5": 0.002,
-          "3-6": 0.0004,
-          "4-0": 0.0088,
-          "4-1": 0.0118,
-          "4-2": 0.0082,
-          "4-3": 0.004,
-          "4-4": 0.0012,
-          "4-5": 0.0004,
-          "4-6": 0.0,
-          "5-0": 0.0026,
-          "5-1": 0.0028,
-          "5-2": 0.0024,
-          "5-3": 0.0006,
-          "5-4": 0.0006,
-          "5-5": 0.0,
-          "5-6": 0.0,
-          "6-0": 0.0008,
-          "6-1": 0.0008,
-          "6-2": 0.0008,
-          "6-3": 0.0008,
-          "6-4": 0.0002,
-          "6-5": 0.0,
-          "6-6": 0.0
-        },
-        "asian_handicap": {
-          "home_-2.5": 0.0584,
-          "home_-1.5": 0.1556,
-          "home_-1.0": 0.1556,
-          "home_-0.5": 0.335,
-          "home_0": 0.335,
-          "home_0.5": 0.604,
-          "home_1.0": 0.604,
-          "home_1.5": 0.799,
-          "home_2.5": 0.9182
-        },
-        "ht_ft": {
-          "H/H": 0.204,
-          "H/D": 0.054,
-          "H/A": 0.024,
-          "D/H": 0.1088,
-          "D/D": 0.165,
-          "D/A": 0.1354,
-          "A/H": 0.0222,
-          "A/D": 0.05,
-          "A/A": 0.2366
-        },
-        "corners": {
-          "7.5": {
-            "over": 0.7238,
-            "under": 0.2762
-          },
-          "8.5": {
-            "over": 0.6212,
-            "under": 0.3788
-          },
-          "9.5": {
-            "over": 0.5212,
-            "under": 0.4788
-          },
-          "10.5": {
-            "over": 0.426,
-            "under": 0.574
-          },
-          "11.5": {
-            "over": 0.341,
-            "under": 0.659
-          },
-          "12.5": {
-            "over": 0.2568,
-            "under": 0.7432
-          }
-        },
-        "cards": {
-          "1.5": {
-            "over": 0.8162,
-            "under": 0.1838
-          },
-          "2.5": {
-            "over": 0.6168,
-            "under": 0.3832
-          },
-          "3.5": {
-            "over": 0.3948,
-            "under": 0.6052
-          },
-          "4.5": {
-            "over": 0.2376,
-            "under": 0.7624
-          },
-          "5.5": {
-            "over": 0.1278,
-            "under": 0.8722
-          },
-          "6.5": {
-            "over": 0.0644,
-            "under": 0.9356
-          }
-        }
-      },
-      "expected_goals": {
-        "home": 1.3246,
-        "away": 1.471
-      },
-      "expected_corners": 10.1426,
-      "expected_cards": 3.2676,
-      "distributions": {
-        "goals_home": [
-          0.2748,
-          0.3448,
-          0.2264,
-          0.1066,
-          0.0344,
-          0.009,
-          0.0034,
-          0.0006
-        ],
-        "goals_away": [
-          0.246,
-          0.3234,
-          0.239,
-          0.1266,
-          0.044,
-          0.0154,
-          0.0034,
-          0.0014
-        ],
-        "corners": [
-          0.0002,
-          0.0046,
-          0.0084,
-          0.0212,
-          0.0376,
-          0.049,
-          0.0688,
-          0.0864,
-          0.1026,
-          0.1,
-          0.0952,
-          0.085,
-          0.0842,
-          0.0598,
-          0.0524,
-          0.0362,
-          0.0324,
-          0.024,
-          0.0168,
-          0.0106,
-          0.0088
-        ],
-        "cards": [
-          0.0428,
-          0.141,
-          0.1994,
-          0.222,
-          0.1572,
-          0.1098,
-          0.0634,
-          0.033,
-          0.0184,
-          0.0086,
-          0.0022,
-          0.001,
-          0.0008
-        ]
-      },
-      "confidence": {
-        "entropy": 1.0864041620510707,
-        "home_goals_ci": [
-          0.0,
-          3.0
-        ],
-        "away_goals_ci": [
-          0.0,
-          4.0
-        ]
-      },
-      "n_simulations": 5000,
-      "player_bookings": {
-        "top_bookings": [],
-        "adjustments": {}
-      },
-      "goalscorer": {
-        "home_scorers": [
-          {
-            "player_id": 316,
-            "name": "Emersonn Correia da Silva",
-            "web_name": "Emersonn",
-            "team": "Ipswich",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.3453871372684874,
-            "anytime_prob": 0.2920537719598204,
-            "two_plus_prob": 0.04753825091699901,
-            "first_scorer_prob": 0.07706707807014038,
-            "xg_per_90": 0.48103448275862065,
-            "goals_scored": 2,
-            "xg_share": 0.2630624285329391,
-            "minutes": 464
-          },
-          {
-            "player_id": 305,
-            "name": "Leif Davis",
-            "web_name": "Davis",
-            "team": "Ipswich",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.22840117141948357,
-            "anytime_prob": 0.20419505840899055,
-            "two_plus_prob": 0.022432277528190298,
-            "first_scorer_prob": 0.03563226821576261,
-            "xg_per_90": 0.23428571428571426,
-            "goals_scored": 2,
-            "xg_share": 0.1739606382233952,
-            "minutes": 630
-          },
-          {
-            "player_id": 591,
-            "name": "Julio Enciso",
-            "web_name": "Enciso",
-            "team": "Ipswich",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.18522777926092265,
-            "anytime_prob": 0.16908500290878214,
-            "two_plus_prob": 0.01517646324297986,
-            "first_scorer_prob": 0.02392826023105229,
-            "xg_per_90": 0.21375,
-            "goals_scored": 0,
-            "xg_share": 0.1410778346567778,
-            "minutes": 560
-          },
-          {
-            "player_id": 562,
-            "name": "Daizen Maeda",
-            "web_name": "Maeda",
-            "team": "Ipswich",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.15458859772904074,
-            "anytime_prob": 0.1432324188826285,
-            "two_plus_prob": 0.010785919937991884,
-            "first_scorer_prob": 0.01691681881885268,
-            "xg_per_90": 0.2442542787286064,
-            "goals_scored": 1,
-            "xg_share": 0.11774165148046871,
-            "minutes": 409
-          },
-          {
-            "player_id": 619,
-            "name": "Exequiel Palacios",
-            "web_name": "Palacios",
-            "team": "Ipswich",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.12199965009967538,
-            "anytime_prob": 0.11485132178361723,
-            "two_plus_prob": 0.006863492755028386,
-            "first_scorer_prob": 0.01070519288572184,
-            "xg_per_90": 0.0,
-            "goals_scored": 0,
-            "xg_share": 0.0929204384656672,
-            "minutes": 392
-          },
-          {
-            "player_id": 315,
-            "name": "Abdul Fatawu",
-            "web_name": "Fatawu",
-            "team": "Ipswich",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.11364211699181977,
-            "anytime_prob": 0.10742266300914072,
-            "two_plus_prob": 0.005988284854578543,
-            "first_scorer_prob": 0.00932685325400222,
-            "xg_per_90": 0.04123989218328842,
-            "goals_scored": 0,
-            "xg_share": 0.08655496413652942,
-            "minutes": 371
-          },
-          {
-            "player_id": 304,
-            "name": "Dara O'Shea",
-            "web_name": "O'Shea",
-            "team": "Ipswich",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.04083367284158085,
-            "anytime_prob": 0.04001121112300898,
-            "two_plus_prob": 0.0008113429864205074,
-            "first_scorer_prob": 0.0012482456360104611,
-            "xg_per_90": 0.04285714285714286,
-            "goals_scored": 1,
-            "xg_share": 0.03110076776042651,
-            "minutes": 630
-          },
-          {
-            "player_id": 306,
-            "name": "Jacob Greaves",
-            "web_name": "Greaves",
-            "team": "Ipswich",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.0402877383342855,
-            "anytime_prob": 0.03948697703082438,
-            "two_plus_prob": 0.0007900796947686722,
-            "first_scorer_prob": 0.001215420868576909,
-            "xg_per_90": 0.004026845637583892,
-            "goals_scored": 0,
-            "xg_share": 0.03068495940564864,
-            "minutes": 447
-          }
-        ],
-        "away_scorers": [
-          {
-            "player_id": 167,
-            "name": "Liam Delap",
-            "web_name": "Delap",
-            "team": "Nott'm Forest",
-            "position": "FWD",
-            "side": "away",
-            "lambda_player": 0.2791642434000031,
-            "anytime_prob": 0.24358434326728307,
-            "two_plus_prob": 0.032420138759577666,
-            "first_scorer_prob": 0.04567783197826629,
-            "xg_per_90": 0.44589041095890414,
-            "goals_scored": 1,
-            "xg_share": 0.18720691764931607,
-            "minutes": 438
-          },
-          {
-            "player_id": 483,
-            "name": "Dan Ndoye",
-            "web_name": "Ndoye",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.2662995317225837,
-            "anytime_prob": 0.23379041095235642,
-            "two_plus_prob": 0.029749156187615644,
-            "first_scorer_prob": 0.04182090422978908,
-            "xg_per_90": 0.40588235294117647,
-            "goals_scored": 2,
-            "xg_share": 0.17857987075303425,
-            "minutes": 459
-          },
-          {
-            "player_id": 480,
-            "name": "Morgan Gibbs-White",
-            "web_name": "Gibbs-White",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.21226774267742174,
-            "anytime_prob": 0.1912518678143751,
-            "two_plus_prob": 0.019580727400751397,
-            "first_scorer_prob": 0.027270054654399817,
-            "xg_per_90": 0.27499999999999997,
-            "goals_scored": 1,
-            "xg_share": 0.14234627378865047,
-            "minutes": 540
-          },
-          {
-            "player_id": 558,
-            "name": "Xaver Schlager",
-            "web_name": "Schlager",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.13353982391935115,
-            "anytime_prob": 0.12500737735187462,
-            "two_plus_prob": 0.008161016592712678,
-            "first_scorer_prob": 0.0112135407242079,
-            "xg_per_90": 0.05423728813559322,
-            "goals_scored": 0,
-            "xg_share": 0.08955150743841236,
-            "minutes": 531
-          },
-          {
-            "player_id": 201,
-            "name": "Daniel Mu\u00f1oz Mej\u00eda",
-            "web_name": "Mu\u00f1oz",
-            "team": "Nott'm Forest",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.12993358794193696,
-            "anytime_prob": 0.12184625101820568,
-            "two_plus_prob": 0.007744583648338063,
-            "first_scorer_prob": 0.010634814620174486,
-            "xg_per_90": 0.20800915331807782,
-            "goals_scored": 0,
-            "xg_share": 0.08713317365244666,
-            "minutes": 437
-          },
-          {
-            "player_id": 472,
-            "name": "Murillo Costa dos Santos",
-            "web_name": "Murillo",
-            "team": "Nott'm Forest",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.11835534743225941,
-            "anytime_prob": 0.1116196871437597,
-            "two_plus_prob": 0.006475126563680059,
-            "first_scorer_prob": 0.00887411407352751,
-            "xg_per_90": 0.131637519872814,
-            "goals_scored": 0,
-            "xg_share": 0.079368831445793,
-            "minutes": 629
-          },
-          {
-            "player_id": 469,
-            "name": "Neco Williams",
-            "web_name": "N.Williams",
-            "team": "Nott'm Forest",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.08490709707096872,
-            "anytime_prob": 0.08140237915302906,
-            "two_plus_prob": 0.003406921790614373,
-            "first_scorer_prob": 0.004642772599022802,
-            "xg_per_90": 0.09428571428571429,
-            "goals_scored": 0,
-            "xg_share": 0.0569385095154602,
-            "minutes": 630
-          },
-          {
-            "player_id": 486,
-            "name": "James McAtee",
-            "web_name": "McAtee",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.06946944305806531,
-            "anytime_prob": 0.06711136082699232,
-            "two_plus_prob": 0.0023041066284470307,
-            "first_scorer_prob": 0.0031317434937558814,
-            "xg_per_90": 0.08237288135593221,
-            "goals_scored": 0,
-            "xg_share": 0.04658605323992198,
-            "minutes": 590
-          }
-        ],
-        "top_scorers": [
-          {
-            "player_id": 316,
-            "name": "Emersonn Correia da Silva",
-            "web_name": "Emersonn",
-            "team": "Ipswich",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.3453871372684874,
-            "anytime_prob": 0.2920537719598204,
-            "two_plus_prob": 0.04753825091699901,
-            "first_scorer_prob": 0.07706707807014038,
-            "xg_per_90": 0.48103448275862065,
-            "goals_scored": 2,
-            "xg_share": 0.2630624285329391,
-            "minutes": 464
-          },
-          {
-            "player_id": 167,
-            "name": "Liam Delap",
-            "web_name": "Delap",
-            "team": "Nott'm Forest",
-            "position": "FWD",
-            "side": "away",
-            "lambda_player": 0.2791642434000031,
-            "anytime_prob": 0.24358434326728307,
-            "two_plus_prob": 0.032420138759577666,
-            "first_scorer_prob": 0.04567783197826629,
-            "xg_per_90": 0.44589041095890414,
-            "goals_scored": 1,
-            "xg_share": 0.18720691764931607,
-            "minutes": 438
-          },
-          {
-            "player_id": 483,
-            "name": "Dan Ndoye",
-            "web_name": "Ndoye",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.2662995317225837,
-            "anytime_prob": 0.23379041095235642,
-            "two_plus_prob": 0.029749156187615644,
-            "first_scorer_prob": 0.04182090422978908,
-            "xg_per_90": 0.40588235294117647,
-            "goals_scored": 2,
-            "xg_share": 0.17857987075303425,
-            "minutes": 459
-          },
-          {
-            "player_id": 305,
-            "name": "Leif Davis",
-            "web_name": "Davis",
-            "team": "Ipswich",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.22840117141948357,
-            "anytime_prob": 0.20419505840899055,
-            "two_plus_prob": 0.022432277528190298,
-            "first_scorer_prob": 0.03563226821576261,
-            "xg_per_90": 0.23428571428571426,
-            "goals_scored": 2,
-            "xg_share": 0.1739606382233952,
-            "minutes": 630
-          },
-          {
-            "player_id": 480,
-            "name": "Morgan Gibbs-White",
-            "web_name": "Gibbs-White",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.21226774267742174,
-            "anytime_prob": 0.1912518678143751,
-            "two_plus_prob": 0.019580727400751397,
-            "first_scorer_prob": 0.027270054654399817,
-            "xg_per_90": 0.27499999999999997,
-            "goals_scored": 1,
-            "xg_share": 0.14234627378865047,
-            "minutes": 540
-          },
-          {
-            "player_id": 591,
-            "name": "Julio Enciso",
-            "web_name": "Enciso",
-            "team": "Ipswich",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.18522777926092265,
-            "anytime_prob": 0.16908500290878214,
-            "two_plus_prob": 0.01517646324297986,
-            "first_scorer_prob": 0.02392826023105229,
-            "xg_per_90": 0.21375,
-            "goals_scored": 0,
-            "xg_share": 0.1410778346567778,
-            "minutes": 560
-          },
-          {
-            "player_id": 562,
-            "name": "Daizen Maeda",
-            "web_name": "Maeda",
-            "team": "Ipswich",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.15458859772904074,
-            "anytime_prob": 0.1432324188826285,
-            "two_plus_prob": 0.010785919937991884,
-            "first_scorer_prob": 0.01691681881885268,
-            "xg_per_90": 0.2442542787286064,
-            "goals_scored": 1,
-            "xg_share": 0.11774165148046871,
-            "minutes": 409
-          },
-          {
-            "player_id": 558,
-            "name": "Xaver Schlager",
-            "web_name": "Schlager",
-            "team": "Nott'm Forest",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.13353982391935115,
-            "anytime_prob": 0.12500737735187462,
-            "two_plus_prob": 0.008161016592712678,
-            "first_scorer_prob": 0.0112135407242079,
-            "xg_per_90": 0.05423728813559322,
-            "goals_scored": 0,
-            "xg_share": 0.08955150743841236,
-            "minutes": 531
-          }
-        ],
-        "match_xg": {
-          "home": 1.3129474216240655,
-          "away": 1.491206879026476
-        }
-      },
-      "odds_comparison": {
-        "h2h": {
-          "betfred_uk": {
-            "home": 3.1,
-            "away": 2.25,
-            "draw": 3.5
-          },
-          "unibet_uk": {
-            "home": 3.1,
-            "away": 2.35,
-            "draw": 3.5
-          },
-          "leovegas": {
-            "home": 2.95,
-            "away": 2.25,
-            "draw": 3.35
-          },
-          "paddypower": {
-            "home": 3.0,
-            "away": 2.25,
-            "draw": 3.3
-          },
-          "skybet": {
-            "home": 3.0,
-            "away": 2.25,
-            "draw": 3.4
-          },
-          "betfair_ex_uk": {
-            "home": 3.25,
-            "away": 2.4,
-            "draw": 3.55
-          },
-          "sport888": {
-            "home": 3.0,
-            "away": 2.25,
-            "draw": 3.3
-          },
-          "williamhill": {
-            "home": 3.1,
-            "away": 2.25,
-            "draw": 3.3
-          },
-          "coral": {
-            "home": 3.0,
-            "away": 2.3,
-            "draw": 3.5
-          },
-          "ladbrokes_uk": {
-            "home": 2.9,
-            "away": 2.3,
-            "draw": 3.5
-          },
-          "betway": {
-            "home": 3.0,
-            "away": 2.3,
-            "draw": 3.4
-          },
-          "smarkets": {
-            "home": 3.25,
-            "away": 2.4,
-            "draw": 3.55
-          },
-          "virginbet": {
-            "home": 3.1,
-            "away": 2.25,
-            "draw": 3.35
-          },
-          "livescorebet": {
-            "home": 3.1,
-            "away": 2.25,
-            "draw": 3.35
-          },
-          "grosvenor": {
-            "home": 3.05,
-            "away": 2.25,
-            "draw": 3.35
-          },
-          "casumo": {
-            "home": 3.1,
-            "away": 2.28,
-            "draw": 3.4
-          },
-          "betano_uk": {
-            "home": 3.0,
-            "away": 2.2,
-            "draw": 3.5
-          },
-          "betvictor": {
-            "home": 3.0,
-            "away": 2.2,
-            "draw": 3.5
-          },
-          "boylesports": {
-            "home": 3.0,
-            "away": 2.3,
-            "draw": 3.4
-          },
-          "matchbook": {
-            "home": 3.25,
-            "away": 2.4,
-            "draw": 3.55
-          },
-          "betfair_sb_uk": {
-            "home": 3.1,
-            "away": 2.3,
-            "draw": 3.4
-          }
-        },
-        "totals": {
-          "2.5": {
-            "over": 1.74,
-            "bookmaker_over": "grosvenor",
-            "under": 2.06,
-            "bookmaker_under": "grosvenor"
-          }
-        },
-        "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfair_ex_uk",
-        "bookmaker_away": "betfair_ex_uk"
-      },
-      "model_disagreement": 0.08121181719355293,
-      "shap_features": [],
-      "value_bets": [],
-      "narrative": "Ipswich vs Nott'm Forest \u2014 Matchweek 8\n\nOur model rates Nott'm Forest as 40% favorites (fair odds: 2.53), driven primarily by form and recent results. Ipswich's expected goals stand at 1.3 while Nott'm Forest are projected for 1.5 xG.\n\nThe match has a 53% chance of going over 2.5 goals, with both teams to score probability at 56%. We expect around 10 total corners and 3 cards."
-    },
-    {
       "match_id": "20261024_Aston_Villa_Man_City",
       "fixture": {
         "date": "2026-10-24T11:30:00Z",
@@ -825,137 +50,137 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.3318,
-          "draw": 0.2618,
-          "away": 0.4064
+          "home": 0.3256,
+          "draw": 0.2648,
+          "away": 0.4096
         },
         "over_under": {
           "0.5": {
-            "over": 0.9296,
-            "under": 0.0704
+            "over": 0.9406,
+            "under": 0.0594
           },
           "1.5": {
-            "over": 0.78,
-            "under": 0.22
+            "over": 0.8002,
+            "under": 0.1998
           },
           "2.5": {
-            "over": 0.5468,
-            "under": 0.4532
+            "over": 0.5644,
+            "under": 0.4356
           },
           "3.5": {
-            "over": 0.3336,
-            "under": 0.6664
+            "over": 0.3454,
+            "under": 0.6546
           },
           "4.5": {
-            "over": 0.1866,
-            "under": 0.8134
+            "over": 0.174,
+            "under": 0.826
           }
         },
         "btts": {
-          "yes": 0.5826,
-          "no": 0.4174
+          "yes": 0.5992,
+          "no": 0.40080000000000005
         },
         "clean_sheet": {
-          "home": 0.2236,
-          "away": 0.2642
+          "home": 0.2042,
+          "away": 0.256
         },
         "correct_score": {
-          "0-0": 0.0704,
-          "0-1": 0.0782,
+          "0-0": 0.0594,
+          "0-1": 0.0762,
           "0-2": 0.0634,
-          "0-3": 0.0328,
-          "0-4": 0.0118,
-          "0-5": 0.0052,
-          "0-6": 0.0014,
-          "1-0": 0.0714,
-          "1-1": 0.1182,
-          "1-2": 0.083,
-          "1-3": 0.0442,
-          "1-4": 0.0156,
-          "1-5": 0.0056,
-          "1-6": 0.0016,
-          "2-0": 0.0516,
-          "2-1": 0.0766,
-          "2-2": 0.0534,
-          "2-3": 0.034,
-          "2-4": 0.013,
-          "2-5": 0.0044,
-          "2-6": 0.0008,
-          "3-0": 0.0208,
-          "3-1": 0.0318,
-          "3-2": 0.0298,
-          "3-3": 0.0164,
-          "3-4": 0.0072,
-          "3-5": 0.0012,
-          "3-6": 0.0002,
-          "4-0": 0.0058,
-          "4-1": 0.0116,
-          "4-2": 0.011,
-          "4-3": 0.0054,
-          "4-4": 0.0028,
-          "4-5": 0.0006,
-          "4-6": 0.0002,
-          "5-0": 0.0026,
-          "5-1": 0.003,
-          "5-2": 0.0028,
-          "5-3": 0.0018,
-          "5-4": 0.001,
-          "5-5": 0.0006,
+          "0-3": 0.0342,
+          "0-4": 0.0158,
+          "0-5": 0.004,
+          "0-6": 0.0024,
+          "1-0": 0.0642,
+          "1-1": 0.1244,
+          "1-2": 0.0832,
+          "1-3": 0.0462,
+          "1-4": 0.02,
+          "1-5": 0.007,
+          "1-6": 0.0014,
+          "2-0": 0.048,
+          "2-1": 0.079,
+          "2-2": 0.0646,
+          "2-3": 0.027,
+          "2-4": 0.0126,
+          "2-5": 0.0036,
+          "2-6": 0.0016,
+          "3-0": 0.0226,
+          "3-1": 0.0368,
+          "3-2": 0.0252,
+          "3-3": 0.0146,
+          "3-4": 0.0066,
+          "3-5": 0.001,
+          "3-6": 0.0004,
+          "4-0": 0.008,
+          "4-1": 0.0118,
+          "4-2": 0.0114,
+          "4-3": 0.0034,
+          "4-4": 0.0016,
+          "4-5": 0.0012,
+          "4-6": 0.0004,
+          "5-0": 0.0016,
+          "5-1": 0.0056,
+          "5-2": 0.0026,
+          "5-3": 0.0008,
+          "5-4": 0.0012,
+          "5-5": 0.0002,
           "5-6": 0.0,
-          "6-0": 0.0004,
-          "6-1": 0.002,
-          "6-2": 0.0006,
-          "6-3": 0.0,
+          "6-0": 0.0002,
+          "6-1": 0.0012,
+          "6-2": 0.0008,
+          "6-3": 0.0002,
           "6-4": 0.0,
-          "6-5": 0.0002,
+          "6-5": 0.0,
           "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.0512,
-          "home_-1.5": 0.1474,
-          "home_-1.0": 0.1474,
-          "home_-0.5": 0.3318,
-          "home_0": 0.3318,
-          "home_0.5": 0.5936,
-          "home_1.0": 0.5936,
-          "home_1.5": 0.7968,
-          "home_2.5": 0.9188
+          "home_-2.5": 0.0556,
+          "home_-1.5": 0.1526,
+          "home_-1.0": 0.1526,
+          "home_-0.5": 0.3256,
+          "home_0": 0.3256,
+          "home_0.5": 0.5904,
+          "home_1.0": 0.5904,
+          "home_1.5": 0.7846,
+          "home_2.5": 0.9082
         },
         "ht_ft": {
-          "H/H": 0.1872,
-          "H/D": 0.0548,
-          "H/A": 0.0246,
-          "D/H": 0.1198,
-          "D/D": 0.154,
-          "D/A": 0.1318,
-          "A/H": 0.0248,
-          "A/D": 0.053,
-          "A/A": 0.25
+          "H/H": 0.1924,
+          "H/D": 0.0554,
+          "H/A": 0.0266,
+          "D/H": 0.1112,
+          "D/D": 0.1526,
+          "D/A": 0.1302,
+          "A/H": 0.022,
+          "A/D": 0.0568,
+          "A/A": 0.2528
         },
         "corners": {
           "7.5": {
-            "over": 0.7194,
-            "under": 0.2806
+            "over": 0.7198,
+            "under": 0.2802
           },
           "8.5": {
-            "over": 0.621,
-            "under": 0.379
+            "over": 0.6202,
+            "under": 0.3798
           },
           "9.5": {
-            "over": 0.5316,
-            "under": 0.4684
+            "over": 0.5284,
+            "under": 0.4716
           },
           "10.5": {
-            "over": 0.4312,
-            "under": 0.5688
+            "over": 0.4316,
+            "under": 0.5684
           },
           "11.5": {
-            "over": 0.3492,
-            "under": 0.6508
+            "over": 0.3542,
+            "under": 0.6458
           },
           "12.5": {
-            "over": 0.2738,
-            "under": 0.7262
+            "over": 0.273,
+            "under": 0.727
           }
         },
         "cards": {
@@ -972,87 +197,87 @@
             "under": 0.487
           },
           "4.5": {
-            "over": 0.3328,
-            "under": 0.6672
+            "over": 0.3338,
+            "under": 0.6662
           },
           "5.5": {
             "over": 0.197,
             "under": 0.803
           },
           "6.5": {
-            "over": 0.1088,
-            "under": 0.8912
+            "over": 0.109,
+            "under": 0.891
           }
         }
       },
       "expected_goals": {
-        "home": 1.3714,
-        "away": 1.5494
+        "home": 1.3754,
+        "away": 1.581
       },
-      "expected_corners": 10.2038,
-      "expected_cards": 3.84,
+      "expected_corners": 10.204,
+      "expected_cards": 3.8372,
       "distributions": {
         "goals_home": [
-          0.2642,
-          0.34,
-          0.234,
+          0.256,
+          0.3466,
+          0.2368,
           0.1074,
-          0.0376,
-          0.0118,
-          0.0034,
-          0.0014
+          0.0378,
+          0.012,
+          0.0024,
+          0.0006
         ],
         "goals_away": [
-          0.2236,
-          0.3218,
-          0.2444,
-          0.1346,
-          0.0516,
-          0.0178,
-          0.0042,
-          0.0018
+          0.2042,
+          0.3354,
+          0.2516,
+          0.1264,
+          0.0578,
+          0.017,
+          0.0062,
+          0.0014
         ],
         "corners": [
           0.0008,
           0.004,
           0.0098,
-          0.022,
+          0.0214,
           0.0396,
-          0.0514,
-          0.0724,
-          0.0806,
-          0.0984,
-          0.0894,
-          0.1004,
-          0.082,
-          0.0754,
-          0.0614,
-          0.0532,
-          0.044,
-          0.0362,
-          0.0246,
-          0.0178,
-          0.011,
-          0.0086
+          0.0494,
+          0.071,
+          0.0842,
+          0.0996,
+          0.0918,
+          0.0968,
+          0.0774,
+          0.0812,
+          0.0666,
+          0.0516,
+          0.0398,
+          0.0334,
+          0.0254,
+          0.0186,
+          0.012,
+          0.0098
         ],
         "cards": [
           0.0222,
           0.0868,
           0.165,
           0.213,
-          0.1802,
-          0.1358,
-          0.0882,
-          0.0558,
-          0.0274,
+          0.1792,
+          0.1368,
+          0.088,
+          0.0574,
+          0.0272,
           0.015,
-          0.0076,
-          0.0018,
-          0.001
+          0.0064,
+          0.002,
+          0.0008
         ]
       },
       "confidence": {
-        "entropy": 1.0828366475608175,
+        "entropy": 1.0828105449002092,
         "home_goals_ci": [
           0.0,
           4.0
@@ -1466,19 +691,19 @@
       "odds_comparison": {
         "h2h": {
           "leovegas": {
-            "home": 4.6,
-            "away": 1.64,
-            "draw": 4.1
+            "home": 4.5,
+            "away": 1.6,
+            "draw": 4.5
           },
           "betfred_uk": {
-            "home": 5.0,
+            "home": 4.6,
             "away": 1.62,
-            "draw": 4.33
+            "draw": 4.5
           },
           "unibet_uk": {
             "home": 4.75,
             "away": 1.65,
-            "draw": 4.35
+            "draw": 4.6
           },
           "paddypower": {
             "home": 4.75,
@@ -1491,74 +716,74 @@
             "draw": 4.33
           },
           "sport888": {
-            "home": 4.5,
-            "away": 1.65,
+            "home": 4.6,
+            "away": 1.61,
             "draw": 4.0
           },
           "williamhill": {
             "home": 4.6,
-            "away": 1.67,
-            "draw": 4.0
+            "away": 1.62,
+            "draw": 4.2
           },
           "betfair_ex_uk": {
             "home": 5.2,
-            "away": 1.68,
-            "draw": 4.6
+            "away": 1.67,
+            "draw": 4.7
           },
           "skybet": {
             "home": 4.75,
             "away": 1.57,
-            "draw": 4.33
+            "draw": 4.5
           },
           "coral": {
-            "home": 4.5,
+            "home": 4.33,
             "away": 1.67,
-            "draw": 4.2
+            "draw": 4.5
           },
           "ladbrokes_uk": {
-            "home": 4.4,
-            "away": 1.67,
-            "draw": 4.2
+            "home": 4.2,
+            "away": 1.65,
+            "draw": 4.5
           },
           "smarkets": {
             "home": 5.2,
-            "away": 1.68,
-            "draw": 4.5
+            "away": 1.67,
+            "draw": 4.7
           },
           "casumo": {
-            "home": 5.0,
-            "away": 1.6,
-            "draw": 4.5
-          },
-          "livescorebet": {
-            "home": 4.75,
-            "away": 1.52,
-            "draw": 4.2
-          },
-          "virginbet": {
-            "home": 4.8,
-            "away": 1.54,
-            "draw": 4.2
-          },
-          "grosvenor": {
             "home": 4.9,
-            "away": 1.57,
+            "away": 1.61,
             "draw": 4.4
           },
-          "betano_uk": {
+          "livescorebet": {
+            "home": 4.8,
+            "away": 1.61,
+            "draw": 4.3
+          },
+          "virginbet": {
             "home": 4.75,
             "away": 1.6,
-            "draw": 4.2
+            "draw": 4.25
+          },
+          "grosvenor": {
+            "home": 4.8,
+            "away": 1.6,
+            "draw": 4.3
+          },
+          "betano_uk": {
+            "home": 4.5,
+            "away": 1.61,
+            "draw": 4.33
           },
           "betvictor": {
-            "home": 4.75,
-            "away": 1.6,
-            "draw": 4.2
+            "home": 4.5,
+            "away": 1.61,
+            "draw": 4.33
           },
           "boylesports": {
             "home": 4.75,
             "away": 1.62,
-            "draw": 4.2
+            "draw": 4.33
           },
           "betfair_sb_uk": {
             "home": 5.0,
@@ -1568,15 +793,15 @@
         },
         "totals": {
           "3.5": {
-            "over": 2.25,
+            "over": 2.1,
             "bookmaker_over": "casumo",
-            "under": 1.62,
-            "bookmaker_under": "casumo"
+            "under": 1.8,
+            "bookmaker_under": "leovegas"
           },
           "2.5": {
-            "over": 1.5,
+            "over": 1.4,
             "bookmaker_over": "williamhill",
-            "under": 2.45,
+            "under": 2.8,
             "bookmaker_under": "williamhill"
           }
         },
@@ -1597,11 +822,11 @@
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.14043708399366084,
-          "model_prob": 0.3318,
-          "implied_prob": 0.19136291600633915,
+          "edge": 0.1340348229321749,
+          "model_prob": 0.3256,
+          "implied_prob": 0.1915651770678251,
           "raw_implied_prob": 0.1923076923076923,
-          "expected_value": 0.7253599999999999,
+          "expected_value": 0.6931200000000001,
           "recommendation": "bet",
           "decimal_odds": 5.2
         },
@@ -1610,21 +835,39 @@
           "market_type": "over_under",
           "confidence": "medium",
           "confidence_tier": "medium",
-          "bookmaker": "casumo",
+          "bookmaker": "leovegas",
           "full_kelly": 50.0,
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.08500465116279066,
-          "model_prob": 0.6664,
-          "implied_prob": 0.5813953488372093,
-          "raw_implied_prob": 0.6172839506172839,
-          "expected_value": 0.07956800000000008,
+          "edge": 0.11613846153846141,
+          "model_prob": 0.6546,
+          "implied_prob": 0.5384615384615385,
+          "raw_implied_prob": 0.5555555555555556,
+          "expected_value": 0.17828,
           "recommendation": "bet",
-          "decimal_odds": 1.62
+          "decimal_odds": 1.8
+        },
+        {
+          "market": "Draw",
+          "market_type": "1x2",
+          "confidence": "low",
+          "confidence_tier": "low",
+          "bookmaker": "betfair_ex_uk",
+          "full_kelly": 12.666666666666515,
+          "half_kelly": 6.3333333333332575,
+          "full_kelly_pct": 0.012666666666666515,
+          "half_kelly_pct": 0.006333333333333258,
+          "edge": 0.05285554877602325,
+          "model_prob": 0.2648,
+          "implied_prob": 0.21194445122397673,
+          "raw_implied_prob": 0.2127659574468085,
+          "expected_value": 0.2445599999999999,
+          "recommendation": "bet",
+          "decimal_odds": 4.7
         }
       ],
-      "narrative": "Aston Villa vs Man City \u2014 Matchweek 8\n\nOur model rates Man City as 41% favorites (fair odds: 2.46), driven primarily by form and recent results. Aston Villa's expected goals stand at 1.4 while Man City are projected for 1.5 xG.\n\nThe match has a 55% chance of going over 2.5 goals, with both teams to score probability at 58%. We expect around 10 total corners and 4 cards."
+      "narrative": "Aston Villa vs Man City \u2014 Matchweek 8\n\nOur model rates Man City as 41% favorites (fair odds: 2.44), driven primarily by form and recent results. Aston Villa's expected goals stand at 1.4 while Man City are projected for 1.6 xG.\n\nThe match has a 56% chance of going over 2.5 goals, with both teams to score probability at 60%. We expect around 10 total corners and 4 cards."
     },
     {
       "match_id": "20261024_Arsenal_Everton",
@@ -1638,137 +881,137 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.564,
-          "draw": 0.2494,
-          "away": 0.1866
+          "home": 0.567,
+          "draw": 0.2482,
+          "away": 0.1848
         },
         "over_under": {
           "0.5": {
-            "over": 0.9142,
-            "under": 0.0858
+            "over": 0.9206,
+            "under": 0.0794
           },
           "1.5": {
-            "over": 0.7508,
-            "under": 0.2492
+            "over": 0.7582,
+            "under": 0.2418
           },
           "2.5": {
-            "over": 0.4964,
-            "under": 0.5036
+            "over": 0.5086,
+            "under": 0.4914
           },
           "3.5": {
-            "over": 0.2754,
-            "under": 0.7246
+            "over": 0.2896,
+            "under": 0.7104
           },
           "4.5": {
-            "over": 0.1332,
-            "under": 0.8668
+            "over": 0.1386,
+            "under": 0.8614
           }
         },
         "btts": {
-          "yes": 0.4898,
-          "no": 0.5102
+          "yes": 0.5098,
+          "no": 0.49019999999999997
         },
         "clean_sheet": {
-          "home": 0.4124,
-          "away": 0.1836
+          "home": 0.4006,
+          "away": 0.169
         },
         "correct_score": {
-          "0-0": 0.0858,
-          "0-1": 0.0518,
-          "0-2": 0.0326,
-          "0-3": 0.0098,
-          "0-4": 0.0032,
+          "0-0": 0.0794,
+          "0-1": 0.0548,
+          "0-2": 0.0258,
+          "0-3": 0.0066,
+          "0-4": 0.0022,
           "0-5": 0.0002,
-          "0-6": 0.0002,
-          "1-0": 0.1116,
-          "1-1": 0.1106,
-          "1-2": 0.05,
-          "1-3": 0.0134,
-          "1-4": 0.004,
-          "1-5": 0.0006,
-          "1-6": 0.0002,
-          "2-0": 0.1112,
-          "2-1": 0.1008,
-          "2-2": 0.0442,
-          "2-3": 0.0138,
-          "2-4": 0.0036,
+          "0-6": 0.0,
+          "1-0": 0.1076,
+          "1-1": 0.1152,
+          "1-2": 0.0532,
+          "1-3": 0.015,
+          "1-4": 0.0046,
+          "1-5": 0.0004,
+          "1-6": 0.0,
+          "2-0": 0.1086,
+          "2-1": 0.0952,
+          "2-2": 0.0438,
+          "2-3": 0.0144,
+          "2-4": 0.0038,
           "2-5": 0.0004,
-          "2-6": 0.0,
-          "3-0": 0.0604,
-          "3-1": 0.0526,
-          "3-2": 0.0254,
-          "3-3": 0.008,
-          "3-4": 0.0022,
-          "3-5": 0.0002,
+          "2-6": 0.0002,
+          "3-0": 0.064,
+          "3-1": 0.0624,
+          "3-2": 0.0266,
+          "3-3": 0.0086,
+          "3-4": 0.002,
+          "3-5": 0.0004,
           "3-6": 0.0002,
-          "4-0": 0.0288,
-          "4-1": 0.0222,
-          "4-2": 0.0118,
-          "4-3": 0.0036,
-          "4-4": 0.0008,
-          "4-5": 0.0002,
+          "4-0": 0.0276,
+          "4-1": 0.026,
+          "4-2": 0.0128,
+          "4-3": 0.0026,
+          "4-4": 0.0012,
+          "4-5": 0.0006,
           "4-6": 0.0,
-          "5-0": 0.0098,
-          "5-1": 0.0104,
+          "5-0": 0.0096,
+          "5-1": 0.0084,
           "5-2": 0.004,
-          "5-3": 0.001,
-          "5-4": 0.0,
+          "5-3": 0.0008,
+          "5-4": 0.0008,
           "5-5": 0.0,
           "5-6": 0.0,
-          "6-0": 0.0042,
+          "6-0": 0.0026,
           "6-1": 0.0024,
-          "6-2": 0.0012,
-          "6-3": 0.0004,
+          "6-2": 0.0014,
+          "6-3": 0.0008,
           "6-4": 0.0,
           "6-5": 0.0,
           "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.146,
-          "home_-1.5": 0.3226,
-          "home_-1.0": 0.3226,
-          "home_-0.5": 0.564,
-          "home_0": 0.564,
-          "home_0.5": 0.8134,
-          "home_1.0": 0.8134,
-          "home_1.5": 0.9314,
-          "home_2.5": 0.9812
+          "home_-2.5": 0.1496,
+          "home_-1.5": 0.3342,
+          "home_-1.0": 0.3342,
+          "home_-0.5": 0.567,
+          "home_0": 0.567,
+          "home_0.5": 0.8152,
+          "home_1.0": 0.8152,
+          "home_1.5": 0.9402,
+          "home_2.5": 0.9852
         },
         "ht_ft": {
-          "H/H": 0.3544,
-          "H/D": 0.0442,
-          "H/A": 0.0122,
+          "H/H": 0.3568,
+          "H/D": 0.0416,
+          "H/A": 0.0142,
           "D/H": 0.1826,
-          "D/D": 0.1618,
-          "D/A": 0.0668,
-          "A/H": 0.027,
-          "A/D": 0.0434,
-          "A/A": 0.1076
+          "D/D": 0.1564,
+          "D/A": 0.0708,
+          "A/H": 0.0276,
+          "A/D": 0.0502,
+          "A/A": 0.0998
         },
         "corners": {
           "7.5": {
-            "over": 0.5946,
-            "under": 0.4054
+            "over": 0.5928,
+            "under": 0.4072
           },
           "8.5": {
-            "over": 0.4758,
-            "under": 0.5242
+            "over": 0.4826,
+            "under": 0.5174
           },
           "9.5": {
-            "over": 0.374,
-            "under": 0.626
+            "over": 0.3736,
+            "under": 0.6264
           },
           "10.5": {
-            "over": 0.286,
-            "under": 0.714
+            "over": 0.2824,
+            "under": 0.7176
           },
           "11.5": {
-            "over": 0.2144,
-            "under": 0.7856
+            "over": 0.2112,
+            "under": 0.7888
           },
           "12.5": {
-            "over": 0.1514,
-            "under": 0.8486
+            "over": 0.1516,
+            "under": 0.8484
           }
         },
         "cards": {
@@ -1785,87 +1028,87 @@
             "under": 0.5148
           },
           "4.5": {
-            "over": 0.3314,
-            "under": 0.6686
+            "over": 0.332,
+            "under": 0.668
           },
           "5.5": {
-            "over": 0.219,
-            "under": 0.781
+            "over": 0.2154,
+            "under": 0.7846
           },
           "6.5": {
-            "over": 0.1208,
-            "under": 0.8792
+            "over": 0.1226,
+            "under": 0.8774
           }
         }
       },
       "expected_goals": {
-        "home": 1.7472,
-        "away": 0.9082
+        "home": 1.7862,
+        "away": 0.9192
       },
-      "expected_corners": 8.6438,
-      "expected_cards": 3.7298,
+      "expected_corners": 8.6368,
+      "expected_cards": 3.7258,
       "distributions": {
         "goals_home": [
-          0.1836,
-          0.2904,
-          0.274,
-          0.149,
-          0.0674,
-          0.0252,
-          0.0082,
-          0.0012
+          0.169,
+          0.296,
+          0.2664,
+          0.1642,
+          0.0708,
+          0.0236,
+          0.0072,
+          0.002
         ],
         "goals_away": [
-          0.4124,
-          0.3522,
-          0.1692,
-          0.05,
-          0.014,
-          0.0016,
-          0.0006,
+          0.4006,
+          0.3656,
+          0.1676,
+          0.0492,
+          0.0146,
+          0.002,
+          0.0004,
           0.0
         ],
         "corners": [
           0.0004,
           0.0062,
           0.02,
-          0.0382,
-          0.0534,
-          0.0782,
-          0.0964,
-          0.1126,
-          0.1188,
-          0.1018,
-          0.088,
-          0.0716,
-          0.063,
-          0.053,
-          0.0354,
-          0.0226,
-          0.0154,
-          0.0116,
-          0.0064,
+          0.0384,
+          0.0556,
+          0.0786,
+          0.0942,
+          0.1138,
+          0.1102,
+          0.109,
+          0.0912,
+          0.0712,
+          0.0596,
+          0.0512,
+          0.035,
+          0.0254,
+          0.0164,
+          0.0102,
+          0.0066,
           0.0034,
-          0.002
+          0.0024
         ],
         "cards": [
           0.0486,
           0.1078,
           0.1696,
           0.1888,
-          0.1538,
-          0.1124,
-          0.0982,
-          0.0644,
-          0.029,
-          0.014,
-          0.0084,
-          0.003,
-          0.0018
+          0.1532,
+          0.1166,
+          0.0928,
+          0.0646,
+          0.0332,
+          0.013,
+          0.007,
+          0.0032,
+          0.0012
         ]
       },
       "confidence": {
-        "entropy": 0.9826063116277841,
+        "entropy": 0.9796165937253004,
         "home_goals_ci": [
           0.0,
           4.0
@@ -1883,35 +1126,19 @@
       "goalscorer": {
         "home_scorers": [
           {
-            "player_id": 12,
-            "name": "Bukayo Saka",
-            "web_name": "Saka",
-            "team": "Arsenal",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.49343485193245246,
-            "anytime_prob": 0.3894742769570091,
-            "two_plus_prob": 0.08821960720633737,
-            "first_scorer_prob": 0.10912129325428692,
-            "xg_per_90": 0.5481543624161074,
-            "goals_scored": 3,
-            "xg_share": 0.27971428765170064,
-            "minutes": 596
-          },
-          {
             "player_id": 26,
             "name": "Kai Havertz",
             "web_name": "Havertz",
             "team": "Arsenal",
             "position": "FWD",
             "side": "home",
-            "lambda_player": 0.29089547744778194,
-            "anytime_prob": 0.25240618565198636,
-            "two_plus_prob": 0.03493452609021247,
-            "first_scorer_prob": 0.04169057325489419,
+            "lambda_player": 0.4543598449480503,
+            "anytime_prob": 0.3651457569542367,
+            "two_plus_prob": 0.07669348151935179,
+            "first_scorer_prob": 0.09420841900840661,
             "xg_per_90": 0.3414893617021277,
             "goals_scored": 2,
-            "xg_share": 0.1649004340426004,
+            "xg_share": 0.2575637692989283,
             "minutes": 564
           },
           {
@@ -1921,13 +1148,13 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.25827168558447927,
-            "anytime_prob": 0.22761464236904705,
-            "two_plus_prob": 0.028129374132929985,
-            "first_scorer_prob": 0.03337935167931004,
+            "lambda_player": 0.40340360065481096,
+            "anytime_prob": 0.3319575774528223,
+            "two_plus_prob": 0.0624668588071281,
+            "first_scorer_prob": 0.07604065887986552,
             "xg_per_90": 0.30755395683453235,
             "goals_scored": 2,
-            "xg_share": 0.14640692742100034,
+            "xg_share": 0.228678112928955,
             "minutes": 556
           },
           {
@@ -1937,14 +1164,30 @@
             "team": "Arsenal",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.16583760863845512,
-            "anytime_prob": 0.15281620165002552,
-            "two_plus_prob": 0.01232126645442258,
-            "first_scorer_prob": 0.014389752726893143,
+            "lambda_player": 0.2590275751572996,
+            "anytime_prob": 0.22819825980412412,
+            "two_plus_prob": 0.028280326539002226,
+            "first_scorer_prob": 0.03356462834791425,
             "xg_per_90": 0.18705281090289608,
             "goals_scored": 1,
-            "xg_share": 0.09400865865980022,
+            "xg_share": 0.14683541988069743,
             "minutes": 587
+          },
+          {
+            "player_id": 4,
+            "name": "Gabriel dos Santos Magalh\u00e3es",
+            "web_name": "Gabriel",
+            "team": "Arsenal",
+            "position": "DEF",
+            "side": "home",
+            "lambda_player": 0.19745544663630218,
+            "anytime_prob": 0.17918329004151656,
+            "two_plus_prob": 0.017108559970124115,
+            "first_scorer_prob": 0.020090471946189223,
+            "xg_per_90": 0.13285714285714287,
+            "goals_scored": 0,
+            "xg_share": 0.1119319184336464,
+            "minutes": 630
           },
           {
             "player_id": 7,
@@ -1953,13 +1196,13 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.16088259838428381,
-            "anytime_prob": 0.14860797996128627,
-            "two_plus_prob": 0.011633819533813788,
-            "first_scorer_prob": 0.013575383475645728,
+            "lambda_player": 0.1671262900329662,
+            "anytime_prob": 0.1539072484918158,
+            "two_plus_prob": 0.012502905908468614,
+            "first_scorer_prob": 0.01460586765363729,
             "xg_per_90": 0.048648648648648644,
             "goals_scored": 0,
-            "xg_share": 0.09119980322908953,
+            "xg_share": 0.09473917576223832,
             "minutes": 333
           },
           {
@@ -1969,30 +1212,30 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.15529033672904938,
-            "anytime_prob": 0.14383343520528147,
-            "two_plus_prob": 0.010879041062156147,
-            "first_scorer_prob": 0.012682509264790368,
+            "lambda_player": 0.16301581965997822,
+            "anytime_prob": 0.15042225172282142,
+            "two_plus_prob": 0.01192763872253852,
+            "first_scorer_prob": 0.013924042877410664,
             "xg_per_90": 0.042639593908629446,
             "goals_scored": 0,
-            "xg_share": 0.08802970796903693,
+            "xg_share": 0.09240906614839381,
             "minutes": 591
           },
           {
-            "player_id": 4,
-            "name": "Gabriel dos Santos Magalh\u00e3es",
-            "web_name": "Gabriel",
+            "player_id": 31,
+            "name": "Ezri Konsa Ngoyo",
+            "web_name": "Konsa",
             "team": "Arsenal",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.12641719347029776,
-            "anytime_prob": 0.1187528804619431,
-            "two_plus_prob": 0.007348092856157951,
-            "first_scorer_prob": 0.008524152304342855,
-            "xg_per_90": 0.13285714285714287,
+            "lambda_player": 0.058679087751248804,
+            "anytime_prob": 0.05699065614633059,
+            "two_plus_prob": 0.001655728108093564,
+            "first_scorer_prob": 0.0018989368622475433,
+            "xg_per_90": 0.044902386117136664,
             "goals_scored": 0,
-            "xg_share": 0.07166233815870017,
-            "minutes": 630
+            "xg_share": 0.0332635183066458,
+            "minutes": 461
           },
           {
             "player_id": 10,
@@ -2001,13 +1244,13 @@
             "team": "Arsenal",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.05509560342860989,
-            "anytime_prob": 0.05360533494648212,
-            "two_plus_prob": 0.0014631497937414098,
-            "first_scorer_prob": 0.0016769721941404456,
+            "lambda_player": 0.058001794337517835,
+            "anytime_prob": 0.0563517457881868,
+            "two_plus_prob": 0.0016184538204354615,
+            "first_scorer_prob": 0.001855975840550768,
             "xg_per_90": 0.036651583710407235,
             "goals_scored": 0,
-            "xg_share": 0.031232142207668512,
+            "xg_share": 0.03287957979072824,
             "minutes": 442
           }
         ],
@@ -2143,20 +1386,36 @@
         ],
         "top_scorers": [
           {
-            "player_id": 12,
-            "name": "Bukayo Saka",
-            "web_name": "Saka",
+            "player_id": 26,
+            "name": "Kai Havertz",
+            "web_name": "Havertz",
+            "team": "Arsenal",
+            "position": "FWD",
+            "side": "home",
+            "lambda_player": 0.4543598449480503,
+            "anytime_prob": 0.3651457569542367,
+            "two_plus_prob": 0.07669348151935179,
+            "first_scorer_prob": 0.09420841900840661,
+            "xg_per_90": 0.3414893617021277,
+            "goals_scored": 2,
+            "xg_share": 0.2575637692989283,
+            "minutes": 564
+          },
+          {
+            "player_id": 15,
+            "name": "Martin \u00d8degaard",
+            "web_name": "\u00d8degaard",
             "team": "Arsenal",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.49343485193245246,
-            "anytime_prob": 0.3894742769570091,
-            "two_plus_prob": 0.08821960720633737,
-            "first_scorer_prob": 0.10912129325428692,
-            "xg_per_90": 0.5481543624161074,
-            "goals_scored": 3,
-            "xg_share": 0.27971428765170064,
-            "minutes": 596
+            "lambda_player": 0.40340360065481096,
+            "anytime_prob": 0.3319575774528223,
+            "two_plus_prob": 0.0624668588071281,
+            "first_scorer_prob": 0.07604065887986552,
+            "xg_per_90": 0.30755395683453235,
+            "goals_scored": 2,
+            "xg_share": 0.228678112928955,
+            "minutes": 556
           },
           {
             "player_id": 249,
@@ -2175,52 +1434,36 @@
             "minutes": 592
           },
           {
-            "player_id": 26,
-            "name": "Kai Havertz",
-            "web_name": "Havertz",
-            "team": "Arsenal",
-            "position": "FWD",
-            "side": "home",
-            "lambda_player": 0.29089547744778194,
-            "anytime_prob": 0.25240618565198636,
-            "two_plus_prob": 0.03493452609021247,
-            "first_scorer_prob": 0.04169057325489419,
-            "xg_per_90": 0.3414893617021277,
-            "goals_scored": 2,
-            "xg_share": 0.1649004340426004,
-            "minutes": 564
-          },
-          {
-            "player_id": 15,
-            "name": "Martin \u00d8degaard",
-            "web_name": "\u00d8degaard",
-            "team": "Arsenal",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.25827168558447927,
-            "anytime_prob": 0.22761464236904705,
-            "two_plus_prob": 0.028129374132929985,
-            "first_scorer_prob": 0.03337935167931004,
-            "xg_per_90": 0.30755395683453235,
-            "goals_scored": 2,
-            "xg_share": 0.14640692742100034,
-            "minutes": 556
-          },
-          {
             "player_id": 8,
             "name": "Riccardo Calafiori",
             "web_name": "Calafiori",
             "team": "Arsenal",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.16583760863845512,
-            "anytime_prob": 0.15281620165002552,
-            "two_plus_prob": 0.01232126645442258,
-            "first_scorer_prob": 0.014389752726893143,
+            "lambda_player": 0.2590275751572996,
+            "anytime_prob": 0.22819825980412412,
+            "two_plus_prob": 0.028280326539002226,
+            "first_scorer_prob": 0.03356462834791425,
             "xg_per_90": 0.18705281090289608,
             "goals_scored": 1,
-            "xg_share": 0.09400865865980022,
+            "xg_share": 0.14683541988069743,
             "minutes": 587
+          },
+          {
+            "player_id": 4,
+            "name": "Gabriel dos Santos Magalh\u00e3es",
+            "web_name": "Gabriel",
+            "team": "Arsenal",
+            "position": "DEF",
+            "side": "home",
+            "lambda_player": 0.19745544663630218,
+            "anytime_prob": 0.17918329004151656,
+            "two_plus_prob": 0.017108559970124115,
+            "first_scorer_prob": 0.020090471946189223,
+            "xg_per_90": 0.13285714285714287,
+            "goals_scored": 0,
+            "xg_share": 0.1119319184336464,
+            "minutes": 630
           },
           {
             "player_id": 7,
@@ -2229,13 +1472,13 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.16088259838428381,
-            "anytime_prob": 0.14860797996128627,
-            "two_plus_prob": 0.011633819533813788,
-            "first_scorer_prob": 0.013575383475645728,
+            "lambda_player": 0.1671262900329662,
+            "anytime_prob": 0.1539072484918158,
+            "two_plus_prob": 0.012502905908468614,
+            "first_scorer_prob": 0.01460586765363729,
             "xg_per_90": 0.048648648648648644,
             "goals_scored": 0,
-            "xg_share": 0.09119980322908953,
+            "xg_share": 0.09473917576223832,
             "minutes": 333
           },
           {
@@ -2245,29 +1488,29 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.15529033672904938,
-            "anytime_prob": 0.14383343520528147,
-            "two_plus_prob": 0.010879041062156147,
-            "first_scorer_prob": 0.012682509264790368,
+            "lambda_player": 0.16301581965997822,
+            "anytime_prob": 0.15042225172282142,
+            "two_plus_prob": 0.01192763872253852,
+            "first_scorer_prob": 0.013924042877410664,
             "xg_per_90": 0.042639593908629446,
             "goals_scored": 0,
-            "xg_share": 0.08802970796903693,
+            "xg_share": 0.09240906614839381,
             "minutes": 591
           },
           {
-            "player_id": 4,
-            "name": "Gabriel dos Santos Magalh\u00e3es",
-            "web_name": "Gabriel",
-            "team": "Arsenal",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.12641719347029776,
-            "anytime_prob": 0.1187528804619431,
-            "two_plus_prob": 0.007348092856157951,
-            "first_scorer_prob": 0.008524152304342855,
-            "xg_per_90": 0.13285714285714287,
-            "goals_scored": 0,
-            "xg_share": 0.07166233815870017,
+            "player_id": 236,
+            "name": "Kiernan Dewsbury-Hall",
+            "web_name": "Dewsbury-Hall",
+            "team": "Everton",
+            "position": "MID",
+            "side": "away",
+            "lambda_player": 0.09340508242566263,
+            "anytime_prob": 0.08917553342762319,
+            "two_plus_prob": 0.004099899052120132,
+            "first_scorer_prob": 0.009231735193384006,
+            "xg_per_90": 0.19857142857142857,
+            "goals_scored": 2,
+            "xg_share": 0.10338674138676873,
             "minutes": 630
           }
         ],
@@ -2279,84 +1522,84 @@
       "odds_comparison": {
         "h2h": {
           "betfred_uk": {
-            "home": 1.4,
-            "away": 8.0,
-            "draw": 4.33
+            "home": 1.44,
+            "away": 7.0,
+            "draw": 4.5
           },
           "leovegas": {
             "home": 1.42,
             "away": 6.75,
-            "draw": 4.5
+            "draw": 4.6
           },
           "unibet_uk": {
             "home": 1.45,
             "away": 7.0,
-            "draw": 4.6
+            "draw": 4.75
           },
           "paddypower": {
             "home": 1.4,
-            "away": 8.0,
+            "away": 7.5,
             "draw": 4.5
           },
           "skybet": {
             "home": 1.4,
             "away": 7.5,
-            "draw": 4.33
+            "draw": 4.75
           },
           "betway": {
             "home": 1.44,
-            "away": 7.5,
-            "draw": 4.33
+            "away": 7.0,
+            "draw": 4.5
           },
           "sport888": {
             "home": 1.44,
             "away": 7.0,
-            "draw": 4.2
+            "draw": 4.33
           },
           "coral": {
-            "home": 1.44,
-            "away": 7.0,
+            "home": 1.48,
+            "away": 6.5,
             "draw": 4.6
           },
           "ladbrokes_uk": {
-            "home": 1.44,
-            "away": 7.0,
+            "home": 1.48,
+            "away": 6.5,
             "draw": 4.6
           },
           "williamhill": {
             "home": 1.44,
             "away": 7.0,
-            "draw": 4.2
+            "draw": 4.33
           },
           "betfair_ex_uk": {
             "home": 1.46,
-            "away": 8.8,
-            "draw": 4.8
+            "away": 8.2,
+            "draw": 5.0
           },
           "smarkets": {
-            "home": 1.45,
-            "away": 8.6,
-            "draw": 4.8
+            "home": 1.46,
+            "away": 8.2,
+            "draw": 5.0
           },
           "casumo": {
-            "home": 1.4,
-            "away": 8.5,
-            "draw": 4.7
+            "home": 1.43,
+            "away": 7.5,
+            "draw": 4.6
           },
           "livescorebet": {
-            "home": 1.35,
-            "away": 7.5,
-            "draw": 4.35
+            "home": 1.43,
+            "away": 7.0,
+            "draw": 4.5
           },
           "virginbet": {
-            "home": 1.36,
-            "away": 8.0,
-            "draw": 4.4
+            "home": 1.41,
+            "away": 7.0,
+            "draw": 4.5
           },
           "grosvenor": {
-            "home": 1.38,
-            "away": 8.0,
-            "draw": 4.6
+            "home": 1.42,
+            "away": 7.0,
+            "draw": 4.5
           },
           "boylesports": {
             "home": 1.4,
@@ -2365,36 +1608,36 @@
           },
           "betvictor": {
             "home": 1.4,
-            "away": 7.5,
+            "away": 7.0,
             "draw": 4.4
           },
           "betano_uk": {
             "home": 1.4,
-            "away": 7.5,
+            "away": 7.0,
             "draw": 4.4
           },
           "matchbook": {
             "home": 1.46,
-            "away": 8.8,
-            "draw": 4.8
+            "away": 8.4,
+            "draw": 5.0
           },
           "betfair_sb_uk": {
             "home": 1.4,
-            "away": 8.5,
-            "draw": 4.6
+            "away": 7.5,
+            "draw": 4.75
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.93,
-            "bookmaker_over": "matchbook",
-            "under": 2.04,
-            "bookmaker_under": "matchbook"
+            "over": 1.77,
+            "bookmaker_over": "casumo",
+            "under": 2.02,
+            "bookmaker_under": "leovegas"
           }
         },
-        "bookmaker_home": "betfair_ex_uk",
+        "bookmaker_home": "coral",
         "bookmaker_draw": "betfair_ex_uk",
-        "bookmaker_away": "betfair_ex_uk"
+        "bookmaker_away": "matchbook"
       },
       "model_disagreement": 0.03394066679881421,
       "shap_features": [],
@@ -2404,21 +1647,21 @@
           "market_type": "1x2",
           "confidence": "low",
           "confidence_tier": "low",
-          "bookmaker": "betfair_ex_uk",
+          "bookmaker": "matchbook",
           "full_kelly": 50.0,
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.0737424890492141,
-          "model_prob": 0.1866,
-          "implied_prob": 0.11285751095078589,
-          "raw_implied_prob": 0.11363636363636363,
-          "expected_value": 0.6420800000000001,
+          "edge": 0.06512086945271056,
+          "model_prob": 0.1848,
+          "implied_prob": 0.11967913054728943,
+          "raw_implied_prob": 0.11904761904761904,
+          "expected_value": 0.55232,
           "recommendation": "bet",
-          "decimal_odds": 8.8
+          "decimal_odds": 8.4
         }
       ],
-      "narrative": "Arsenal vs Everton \u2014 Matchweek 8\n\nOur model rates Arsenal as 56% favorites (fair odds: 1.77), driven primarily by form and recent results. Arsenal's expected goals stand at 1.7 while Everton are projected for 0.9 xG.\n\nThe match has a 50% chance of going over 2.5 goals, with both teams to score probability at 49%. We expect around 9 total corners and 4 cards."
+      "narrative": "Arsenal vs Everton \u2014 Matchweek 8\n\nOur model rates Arsenal as 57% favorites (fair odds: 1.76), driven primarily by form and recent results. Arsenal's expected goals stand at 1.8 while Everton are projected for 0.9 xG.\n\nThe match has a 51% chance of going over 2.5 goals, with both teams to score probability at 51%. We expect around 9 total corners and 4 cards."
     },
     {
       "match_id": "20261024_Coventry_City_Fulham",
@@ -2432,9 +1675,9 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.43,
-          "draw": 0.2706,
-          "away": 0.2994
+          "home": 0.4294,
+          "draw": 0.2734,
+          "away": 0.2972
         },
         "over_under": {
           "0.5": {
@@ -2442,102 +1685,102 @@
             "under": 0.078
           },
           "1.5": {
-            "over": 0.7682,
-            "under": 0.2318
+            "over": 0.7632,
+            "under": 0.2368
           },
           "2.5": {
-            "over": 0.509,
-            "under": 0.491
+            "over": 0.505,
+            "under": 0.495
           },
           "3.5": {
-            "over": 0.2966,
-            "under": 0.7034
+            "over": 0.2868,
+            "under": 0.7132
           },
           "4.5": {
-            "over": 0.1428,
-            "under": 0.8572
+            "over": 0.1448,
+            "under": 0.8552
           }
         },
         "btts": {
-          "yes": 0.5534,
-          "no": 0.4466
+          "yes": 0.5466,
+          "no": 0.4534
         },
         "clean_sheet": {
-          "home": 0.2988,
-          "away": 0.2258
+          "home": 0.3008,
+          "away": 0.2306
         },
         "correct_score": {
           "0-0": 0.078,
-          "0-1": 0.065,
-          "0-2": 0.0548,
-          "0-3": 0.0188,
-          "0-4": 0.0066,
-          "0-5": 0.0014,
-          "0-6": 0.0008,
-          "1-0": 0.0888,
-          "1-1": 0.126,
-          "1-2": 0.0698,
-          "1-3": 0.0352,
-          "1-4": 0.0092,
-          "1-5": 0.0016,
+          "0-1": 0.0692,
+          "0-2": 0.0546,
+          "0-3": 0.0216,
+          "0-4": 0.0044,
+          "0-5": 0.0022,
+          "0-6": 0.0006,
+          "1-0": 0.0896,
+          "1-1": 0.1276,
+          "1-2": 0.0682,
+          "1-3": 0.0298,
+          "1-4": 0.0116,
+          "1-5": 0.0022,
           "1-6": 0.0,
-          "2-0": 0.0784,
-          "2-1": 0.0894,
-          "2-2": 0.0568,
-          "2-3": 0.0228,
-          "2-4": 0.0058,
-          "2-5": 0.0014,
-          "2-6": 0.0002,
-          "3-0": 0.0344,
-          "3-1": 0.0418,
-          "3-2": 0.0284,
-          "3-3": 0.0088,
-          "3-4": 0.0036,
-          "3-5": 0.0008,
-          "3-6": 0.0,
-          "4-0": 0.0134,
-          "4-1": 0.0174,
-          "4-2": 0.0126,
-          "4-3": 0.0052,
-          "4-4": 0.001,
+          "2-0": 0.076,
+          "2-1": 0.0902,
+          "2-2": 0.0548,
+          "2-3": 0.0192,
+          "2-4": 0.007,
+          "2-5": 0.0024,
+          "2-6": 0.0,
+          "3-0": 0.0382,
+          "3-1": 0.0404,
+          "3-2": 0.025,
+          "3-3": 0.0114,
+          "3-4": 0.0022,
+          "3-5": 0.001,
+          "3-6": 0.0002,
+          "4-0": 0.0126,
+          "4-1": 0.017,
+          "4-2": 0.0116,
+          "4-3": 0.0044,
+          "4-4": 0.0012,
           "4-5": 0.0006,
-          "4-6": 0.0002,
-          "5-0": 0.003,
-          "5-1": 0.0046,
-          "5-2": 0.004,
-          "5-3": 0.0026,
-          "5-4": 0.0004,
-          "5-5": 0.0,
+          "4-6": 0.0,
+          "5-0": 0.0054,
+          "5-1": 0.007,
+          "5-2": 0.0042,
+          "5-3": 0.002,
+          "5-4": 0.0,
+          "5-5": 0.0004,
           "5-6": 0.0,
-          "6-0": 0.0028,
-          "6-1": 0.0008,
-          "6-2": 0.0004,
-          "6-3": 0.0006,
+          "6-0": 0.0008,
+          "6-1": 0.0032,
+          "6-2": 0.0012,
+          "6-3": 0.0,
           "6-4": 0.0002,
           "6-5": 0.0,
           "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.0822,
-          "home_-1.5": 0.2178,
-          "home_-1.0": 0.2178,
-          "home_-0.5": 0.43,
-          "home_0": 0.43,
-          "home_0.5": 0.7006,
-          "home_1.0": 0.7006,
-          "home_1.5": 0.8624,
-          "home_2.5": 0.9592
+          "home_-2.5": 0.09,
+          "home_-1.5": 0.2202,
+          "home_-1.0": 0.2202,
+          "home_-0.5": 0.4294,
+          "home_0": 0.4294,
+          "home_0.5": 0.7028,
+          "home_1.0": 0.7028,
+          "home_1.5": 0.8622,
+          "home_2.5": 0.9546
         },
         "ht_ft": {
-          "H/H": 0.2596,
-          "H/D": 0.0488,
-          "H/A": 0.0214,
-          "D/H": 0.1474,
-          "D/D": 0.1644,
-          "D/A": 0.0998,
-          "A/H": 0.023,
-          "A/D": 0.0574,
-          "A/A": 0.1782
+          "H/H": 0.2546,
+          "H/D": 0.0566,
+          "H/A": 0.0186,
+          "D/H": 0.1468,
+          "D/D": 0.1664,
+          "D/A": 0.0994,
+          "A/H": 0.028,
+          "A/D": 0.0504,
+          "A/A": 0.1792
         },
         "corners": {
           "7.5": {
@@ -2545,24 +1788,24 @@
             "under": 0.2638
           },
           "8.5": {
-            "over": 0.6324,
-            "under": 0.3676
+            "over": 0.6352,
+            "under": 0.3648
           },
           "9.5": {
-            "over": 0.5258,
-            "under": 0.4742
+            "over": 0.5226,
+            "under": 0.4774
           },
           "10.5": {
-            "over": 0.4194,
-            "under": 0.5806
+            "over": 0.423,
+            "under": 0.577
           },
           "11.5": {
-            "over": 0.3128,
-            "under": 0.6872
+            "over": 0.3138,
+            "under": 0.6862
           },
           "12.5": {
-            "over": 0.2246,
-            "under": 0.7754
+            "over": 0.2264,
+            "under": 0.7736
           }
         },
         "cards": {
@@ -2579,87 +1822,87 @@
             "under": 0.5606
           },
           "4.5": {
-            "over": 0.279,
-            "under": 0.721
+            "over": 0.2774,
+            "under": 0.7226
           },
           "5.5": {
-            "over": 0.162,
-            "under": 0.838
+            "over": 0.1614,
+            "under": 0.8386
           },
           "6.5": {
-            "over": 0.089,
-            "under": 0.911
+            "over": 0.0878,
+            "under": 0.9122
           }
         }
       },
       "expected_goals": {
-        "home": 1.503,
-        "away": 1.231
+        "home": 1.5034,
+        "away": 1.2162
       },
-      "expected_corners": 9.9378,
-      "expected_cards": 3.4634,
+      "expected_corners": 9.9366,
+      "expected_cards": 3.4596,
       "distributions": {
         "goals_home": [
-          0.2258,
-          0.331,
-          0.2548,
-          0.1178,
-          0.0504,
-          0.0146,
-          0.0048,
-          0.0008
+          0.2306,
+          0.3292,
+          0.2496,
+          0.1184,
+          0.0474,
+          0.019,
+          0.0054,
+          0.0004
         ],
         "goals_away": [
-          0.2988,
-          0.3452,
-          0.2274,
-          0.094,
-          0.0268,
-          0.0058,
-          0.0012,
-          0.0008
+          0.3008,
+          0.3546,
+          0.2196,
+          0.0886,
+          0.0266,
+          0.0088,
+          0.0008,
+          0.0002
         ],
         "corners": [
           0.0,
           0.002,
           0.008,
           0.0184,
-          0.0262,
-          0.0498,
-          0.0712,
-          0.0882,
-          0.1038,
-          0.1066,
-          0.1064,
-          0.1066,
-          0.0882,
-          0.065,
-          0.0482,
-          0.0412,
-          0.0234,
-          0.0166,
-          0.0134,
-          0.0076,
-          0.0024
+          0.025,
+          0.0516,
+          0.0724,
+          0.0864,
+          0.101,
+          0.1126,
+          0.0996,
+          0.1092,
+          0.0874,
+          0.07,
+          0.0466,
+          0.0382,
+          0.0282,
+          0.0156,
+          0.01,
+          0.0074,
+          0.0028
         ],
         "cards": [
           0.0466,
           0.123,
           0.1878,
           0.2032,
-          0.1604,
-          0.117,
-          0.073,
-          0.0476,
-          0.0234,
-          0.012,
-          0.004,
+          0.162,
+          0.116,
+          0.0736,
+          0.0452,
+          0.0248,
+          0.0134,
+          0.0024,
           0.0018,
-          0.0002
+          0.0
         ]
       },
       "confidence": {
-        "entropy": 1.0776809176556508,
+        "entropy": 1.0781583508942272,
         "home_goals_ci": [
           0.0,
           4.0
@@ -3073,7 +2316,7 @@
       "odds_comparison": {
         "h2h": {
           "leovegas": {
-            "home": 2.95,
+            "home": 3.0,
             "away": 2.25,
             "draw": 3.4
           },
@@ -3090,12 +2333,12 @@
           "paddypower": {
             "home": 3.1,
             "away": 2.2,
-            "draw": 3.3
+            "draw": 3.4
           },
           "skybet": {
             "home": 3.1,
             "away": 2.2,
-            "draw": 3.3
+            "draw": 3.5
           },
           "sport888": {
             "home": 3.0,
@@ -3108,48 +2351,48 @@
             "draw": 3.4
           },
           "betway": {
-            "home": 3.0,
-            "away": 2.2,
-            "draw": 3.5
-          },
-          "coral": {
             "home": 3.1,
             "away": 2.2,
-            "draw": 3.6
+            "draw": 3.4
+          },
+          "coral": {
+            "home": 3.0,
+            "away": 2.3,
+            "draw": 3.5
           },
           "ladbrokes_uk": {
             "home": 3.0,
-            "away": 2.2,
+            "away": 2.25,
             "draw": 3.5
           },
           "betfair_ex_uk": {
             "home": 3.35,
-            "away": 2.34,
-            "draw": 3.55
+            "away": 2.32,
+            "draw": 3.6
           },
           "smarkets": {
             "home": 3.35,
-            "away": 2.34,
-            "draw": 3.55
+            "away": 2.32,
+            "draw": 3.6
           },
           "livescorebet": {
-            "home": 2.95,
-            "away": 2.18,
-            "draw": 3.3
+            "home": 3.15,
+            "away": 2.23,
+            "draw": 3.45
           },
           "virginbet": {
-            "home": 3.0,
+            "home": 3.15,
             "away": 2.2,
-            "draw": 3.3
+            "draw": 3.4
           },
           "casumo": {
-            "home": 3.1,
-            "away": 2.28,
+            "home": 3.2,
+            "away": 2.23,
             "draw": 3.45
           },
           "grosvenor": {
-            "home": 3.05,
-            "away": 2.25,
+            "home": 3.15,
+            "away": 2.2,
             "draw": 3.4
           },
           "boylesports": {
@@ -3169,11 +2412,11 @@
           },
           "matchbook": {
             "home": 3.35,
-            "away": 2.34,
-            "draw": 3.55
+            "away": 2.32,
+            "draw": 3.6
           },
           "betfair_sb_uk": {
-            "home": 3.25,
+            "home": 3.2,
             "away": 2.25,
             "draw": 3.4
           }
@@ -3203,16 +2446,16 @@
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.13257387988560537,
-          "model_prob": 0.43,
-          "implied_prob": 0.2974261201143946,
+          "edge": 0.1330616520011354,
+          "model_prob": 0.4294,
+          "implied_prob": 0.2963383479988646,
           "raw_implied_prob": 0.29850746268656714,
-          "expected_value": 0.4404999999999999,
+          "expected_value": 0.43849000000000005,
           "recommendation": "bet",
           "decimal_odds": 3.35
         }
       ],
-      "narrative": "Coventry City vs Fulham \u2014 Matchweek 8\n\nOur model rates Coventry City as 43% favorites (fair odds: 2.33), driven primarily by form and recent results. Coventry City's expected goals stand at 1.5 while Fulham are projected for 1.2 xG.\n\nThe match has a 51% chance of going over 2.5 goals, with both teams to score probability at 55%. We expect around 10 total corners and 3 cards."
+      "narrative": "Coventry City vs Fulham \u2014 Matchweek 8\n\nOur model rates Coventry City as 43% favorites (fair odds: 2.33), driven primarily by form and recent results. Coventry City's expected goals stand at 1.5 while Fulham are projected for 1.2 xG.\n\nThe match has a 50% chance of going over 2.5 goals, with both teams to score probability at 55%. We expect around 10 total corners and 3 cards."
     },
     {
       "match_id": "20261024_Chelsea_Tottenham",
@@ -3226,137 +2469,137 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.4856,
-          "draw": 0.2466,
-          "away": 0.2678
+          "home": 0.4826,
+          "draw": 0.2572,
+          "away": 0.2602
         },
         "over_under": {
           "0.5": {
-            "over": 0.9354,
-            "under": 0.0646
+            "over": 0.9338,
+            "under": 0.0662
           },
           "1.5": {
-            "over": 0.8006,
-            "under": 0.1994
+            "over": 0.8088,
+            "under": 0.1912
           },
           "2.5": {
-            "over": 0.5762,
-            "under": 0.4238
+            "over": 0.563,
+            "under": 0.437
           },
           "3.5": {
-            "over": 0.35,
-            "under": 0.65
+            "over": 0.3496,
+            "under": 0.6504
           },
           "4.5": {
-            "over": 0.1904,
-            "under": 0.8096
+            "over": 0.181,
+            "under": 0.819
           }
         },
         "btts": {
-          "yes": 0.5902,
-          "no": 0.40980000000000005
+          "yes": 0.5852,
+          "no": 0.41479999999999995
         },
         "clean_sheet": {
-          "home": 0.2924,
-          "away": 0.182
+          "home": 0.3014,
+          "away": 0.1796
         },
         "correct_score": {
-          "0-0": 0.0646,
-          "0-1": 0.056,
-          "0-2": 0.0392,
-          "0-3": 0.0174,
-          "0-4": 0.0032,
-          "0-5": 0.0012,
-          "0-6": 0.0004,
+          "0-0": 0.0662,
+          "0-1": 0.0462,
+          "0-2": 0.0456,
+          "0-3": 0.0172,
+          "0-4": 0.0038,
+          "0-5": 0.0006,
+          "0-6": 0.0,
           "1-0": 0.0788,
-          "1-1": 0.1108,
-          "1-2": 0.0682,
-          "1-3": 0.027,
-          "1-4": 0.0092,
-          "1-5": 0.0018,
-          "1-6": 0.0006,
-          "2-0": 0.0744,
-          "2-1": 0.0948,
-          "2-2": 0.0556,
-          "2-3": 0.0262,
-          "2-4": 0.0094,
-          "2-5": 0.0016,
-          "2-6": 0.0004,
-          "3-0": 0.0458,
-          "3-1": 0.0556,
-          "3-2": 0.0344,
-          "3-3": 0.012,
-          "3-4": 0.004,
-          "3-5": 0.0012,
-          "3-6": 0.0004,
-          "4-0": 0.0182,
-          "4-1": 0.0254,
-          "4-2": 0.015,
-          "4-3": 0.0074,
-          "4-4": 0.0036,
-          "4-5": 0.0004,
+          "1-1": 0.1192,
+          "1-2": 0.064,
+          "1-3": 0.0316,
+          "1-4": 0.0076,
+          "1-5": 0.0022,
+          "1-6": 0.0004,
+          "2-0": 0.081,
+          "2-1": 0.088,
+          "2-2": 0.0562,
+          "2-3": 0.0238,
+          "2-4": 0.0084,
+          "2-5": 0.0024,
+          "2-6": 0.0006,
+          "3-0": 0.0442,
+          "3-1": 0.0552,
+          "3-2": 0.0356,
+          "3-3": 0.0132,
+          "3-4": 0.0036,
+          "3-5": 0.0014,
+          "3-6": 0.0002,
+          "4-0": 0.0218,
+          "4-1": 0.0236,
+          "4-2": 0.016,
+          "4-3": 0.0044,
+          "4-4": 0.0024,
+          "4-5": 0.0002,
           "4-6": 0.0,
-          "5-0": 0.0076,
-          "5-1": 0.011,
-          "5-2": 0.0058,
-          "5-3": 0.0018,
+          "5-0": 0.007,
+          "5-1": 0.0086,
+          "5-2": 0.0054,
+          "5-3": 0.0028,
           "5-4": 0.0004,
           "5-5": 0.0,
           "5-6": 0.0,
-          "6-0": 0.0016,
-          "6-1": 0.0026,
-          "6-2": 0.0012,
+          "6-0": 0.002,
+          "6-1": 0.0032,
+          "6-2": 0.0018,
           "6-3": 0.0,
-          "6-4": 0.0004,
+          "6-4": 0.0002,
           "6-5": 0.0,
           "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.1226,
-          "home_-1.5": 0.2698,
-          "home_-1.0": 0.2698,
-          "home_-0.5": 0.4856,
-          "home_0": 0.4856,
-          "home_0.5": 0.7322,
-          "home_1.0": 0.7322,
-          "home_1.5": 0.887,
-          "home_2.5": 0.9638
+          "home_-2.5": 0.1202,
+          "home_-1.5": 0.2754,
+          "home_-1.0": 0.2754,
+          "home_-0.5": 0.4826,
+          "home_0": 0.4826,
+          "home_0.5": 0.7398,
+          "home_1.0": 0.7398,
+          "home_1.5": 0.8776,
+          "home_2.5": 0.9646
         },
         "ht_ft": {
-          "H/H": 0.3056,
-          "H/D": 0.0528,
-          "H/A": 0.0198,
-          "D/H": 0.1488,
-          "D/D": 0.1418,
-          "D/A": 0.095,
-          "A/H": 0.0312,
-          "A/D": 0.052,
-          "A/A": 0.153
+          "H/H": 0.3014,
+          "H/D": 0.0508,
+          "H/A": 0.0172,
+          "D/H": 0.153,
+          "D/D": 0.1512,
+          "D/A": 0.0904,
+          "A/H": 0.0282,
+          "A/D": 0.0552,
+          "A/A": 0.1526
         },
         "corners": {
           "7.5": {
-            "over": 0.5418,
-            "under": 0.4582
+            "over": 0.5358,
+            "under": 0.4642
           },
           "8.5": {
-            "over": 0.4204,
-            "under": 0.5796
+            "over": 0.4224,
+            "under": 0.5776
           },
           "9.5": {
-            "over": 0.3104,
-            "under": 0.6896
+            "over": 0.3136,
+            "under": 0.6864
           },
           "10.5": {
-            "over": 0.2244,
-            "under": 0.7756
+            "over": 0.2176,
+            "under": 0.7824
           },
           "11.5": {
-            "over": 0.1512,
-            "under": 0.8488
+            "over": 0.146,
+            "under": 0.854
           },
           "12.5": {
-            "over": 0.0956,
-            "under": 0.9044
+            "over": 0.0946,
+            "under": 0.9054
           }
         },
         "cards": {
@@ -3373,67 +2616,67 @@
             "under": 0.1556
           },
           "4.5": {
-            "over": 0.7378,
-            "under": 0.2622
+            "over": 0.7366,
+            "under": 0.2634
           },
           "5.5": {
-            "over": 0.612,
-            "under": 0.388
+            "over": 0.6122,
+            "under": 0.3878
           },
           "6.5": {
-            "over": 0.4894,
-            "under": 0.5106
+            "over": 0.4872,
+            "under": 0.5128
           }
         }
       },
       "expected_goals": {
-        "home": 1.7542,
-        "away": 1.2368
+        "home": 1.7422,
+        "away": 1.2256
       },
-      "expected_corners": 8.0284,
-      "expected_cards": 6.5838,
+      "expected_corners": 8.0228,
+      "expected_cards": 6.577,
       "distributions": {
         "goals_home": [
-          0.182,
-          0.2964,
-          0.2624,
+          0.1796,
+          0.3042,
+          0.2604,
           0.1534,
-          0.07,
-          0.0266,
-          0.0058,
-          0.0024
+          0.0684,
+          0.0242,
+          0.0072,
+          0.002
         ],
         "goals_away": [
-          0.2924,
-          0.3572,
-          0.2198,
-          0.0922,
-          0.0304,
-          0.0062,
-          0.0018,
-          0.0
+          0.3014,
+          0.3452,
+          0.2252,
+          0.0934,
+          0.0264,
+          0.0068,
+          0.0012,
+          0.0002
         ],
         "corners": [
           0.003,
           0.0072,
           0.0268,
-          0.0474,
-          0.0674,
-          0.0916,
-          0.1056,
-          0.1092,
-          0.1214,
-          0.11,
-          0.086,
-          0.0732,
-          0.0556,
-          0.0346,
-          0.0224,
-          0.0148,
-          0.0088,
-          0.0052,
-          0.004,
-          0.0014,
+          0.0472,
+          0.0678,
+          0.0866,
+          0.1106,
+          0.115,
+          0.1134,
+          0.1088,
+          0.096,
+          0.0716,
+          0.0514,
+          0.0324,
+          0.0216,
+          0.0154,
+          0.0112,
+          0.005,
+          0.0024,
+          0.0024,
           0.002
         ],
         "cards": [
@@ -3441,19 +2684,19 @@
           0.023,
           0.05,
           0.0776,
-          0.1066,
-          0.1258,
-          0.1226,
-          0.1204,
-          0.117,
-          0.082,
-          0.0686,
-          0.0402,
-          0.029
+          0.1078,
+          0.1244,
+          0.125,
+          0.1236,
+          0.1108,
+          0.087,
+          0.0624,
+          0.0438,
+          0.027
         ]
       },
       "confidence": {
-        "entropy": 1.048850330661503,
+        "entropy": 1.0511671921227097,
         "home_goals_ci": [
           0.0,
           4.0
@@ -3477,13 +2720,13 @@
             "team": "Chelsea",
             "position": "FWD",
             "side": "home",
-            "lambda_player": 0.43781345230833,
-            "anytime_prob": 0.3545538218781581,
-            "two_plus_prob": 0.0719688023554172,
-            "first_scorer_prob": 0.08912528407039617,
+            "lambda_player": 0.4521057249098366,
+            "anytime_prob": 0.3637131052057506,
+            "two_plus_prob": 0.07604415738416759,
+            "first_scorer_prob": 0.0944123071180783,
             "xg_per_90": 0.5268714011516314,
             "goals_scored": 5,
-            "xg_share": 0.2513730739053321,
+            "xg_share": 0.25957906318682067,
             "minutes": 521
           },
           {
@@ -3493,13 +2736,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.2971389659928666,
-            "anytime_prob": 0.2570592383126492,
-            "two_plus_prob": 0.03630258859091706,
-            "first_scorer_prob": 0.04385533960149405,
+            "lambda_player": 0.3068389673978235,
+            "anytime_prob": 0.26423092582341645,
+            "two_plus_prob": 0.038468302859820946,
+            "first_scorer_prob": 0.0465504424635323,
             "xg_per_90": 0.30540983606557376,
             "goals_scored": 4,
-            "xg_share": 0.1706040206505041,
+            "xg_share": 0.17617333140876026,
             "minutes": 610
           },
           {
@@ -3509,13 +2752,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.2067053676472116,
-            "anytime_prob": 0.18674077282822832,
-            "two_plus_prob": 0.018635725283200094,
-            "first_scorer_prob": 0.022162592461828282,
+            "lambda_player": 0.21345319471152946,
+            "anytime_prob": 0.19221003189176933,
+            "two_plus_prob": 0.019784682543143,
+            "first_scorer_prob": 0.02355636984247448,
             "xg_per_90": 0.20936995153473342,
             "goals_scored": 2,
-            "xg_share": 0.11868105784382894,
+            "xg_share": 0.12255536098000716,
             "minutes": 619
           },
           {
@@ -3525,13 +2768,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.17368992698133748,
-            "anytime_prob": 0.15944250854647446,
-            "two_plus_prob": 0.013446139232295401,
-            "first_scorer_prob": 0.01590041302172144,
+            "lambda_player": 0.17935997611177126,
+            "anytime_prob": 0.16419502458768587,
+            "two_plus_prob": 0.014285064163633648,
+            "first_scorer_prob": 0.01690889334475878,
             "xg_per_90": 0.21607142857142858,
             "goals_scored": 3,
-            "xg_share": 0.09972505554932846,
+            "xg_share": 0.1029805463790338,
             "minutes": 504
           },
           {
@@ -3541,13 +2784,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.14221099621497435,
-            "anytime_prob": 0.13256178900360394,
-            "two_plus_prob": 0.009202536862871327,
-            "first_scorer_prob": 0.010823835657478754,
+            "lambda_player": 0.1462735450804024,
+            "anytime_prob": 0.13607865057557733,
+            "two_plus_prob": 0.009709812124621964,
+            "first_scorer_prob": 0.01142840007370131,
             "xg_per_90": 0.12333333333333334,
             "goals_scored": 2,
-            "xg_share": 0.0816512491181338,
+            "xg_share": 0.08398378456401609,
             "minutes": 270
           },
           {
@@ -3557,13 +2800,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.10765904564958935,
-            "anytime_prob": 0.10206630135503802,
-            "two_plus_prob": 0.005395616302315456,
-            "first_scorer_prob": 0.006309029486991115,
+            "lambda_player": 0.11117353891225491,
+            "anytime_prob": 0.10521654429289473,
+            "two_plus_prob": 0.00574030096179895,
+            "first_scorer_prob": 0.006716068524419075,
             "xg_per_90": 0.24368231046931407,
             "goals_scored": 1,
-            "xg_share": 0.06181305096032757,
+            "xg_share": 0.06383091717708705,
             "minutes": 277
           },
           {
@@ -3573,13 +2816,13 @@
             "team": "Chelsea",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.05479988968958298,
-            "anytime_prob": 0.053325431657899824,
-            "two_plus_prob": 0.0014477697408191506,
-            "first_scorer_prob": 0.0016778136303315682,
+            "lambda_player": 0.056399077447113005,
+            "anytime_prob": 0.05483813216950617,
+            "two_plus_prob": 0.0015318747856761655,
+            "first_scorer_prob": 0.001775760160507838,
             "xg_per_90": 0.0661764705882353,
             "goals_scored": 0,
-            "xg_share": 0.03146366711281954,
+            "xg_share": 0.032381849823384115,
             "minutes": 544
           },
           {
@@ -3589,13 +2832,13 @@
             "team": "Chelsea",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.054145322692033475,
-            "anytime_prob": 0.052705566878662014,
-            "two_plus_prob": 0.001414004112940244,
-            "first_scorer_prob": 0.001638502428563177,
+            "lambda_player": 0.05567570828725726,
+            "anytime_prob": 0.054154183879519646,
+            "two_plus_prob": 0.0014935481364730177,
+            "first_scorer_prob": 0.0017311209819839857,
             "xg_per_90": 0.0,
             "goals_scored": 0,
-            "xg_share": 0.031087843762980745,
+            "xg_share": 0.031966523322285195,
             "minutes": 312
           }
         ],
@@ -3737,13 +2980,13 @@
             "team": "Chelsea",
             "position": "FWD",
             "side": "home",
-            "lambda_player": 0.43781345230833,
-            "anytime_prob": 0.3545538218781581,
-            "two_plus_prob": 0.0719688023554172,
-            "first_scorer_prob": 0.08912528407039617,
+            "lambda_player": 0.4521057249098366,
+            "anytime_prob": 0.3637131052057506,
+            "two_plus_prob": 0.07604415738416759,
+            "first_scorer_prob": 0.0944123071180783,
             "xg_per_90": 0.5268714011516314,
             "goals_scored": 5,
-            "xg_share": 0.2513730739053321,
+            "xg_share": 0.25957906318682067,
             "minutes": 521
           },
           {
@@ -3769,13 +3012,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.2971389659928666,
-            "anytime_prob": 0.2570592383126492,
-            "two_plus_prob": 0.03630258859091706,
-            "first_scorer_prob": 0.04385533960149405,
+            "lambda_player": 0.3068389673978235,
+            "anytime_prob": 0.26423092582341645,
+            "two_plus_prob": 0.038468302859820946,
+            "first_scorer_prob": 0.0465504424635323,
             "xg_per_90": 0.30540983606557376,
             "goals_scored": 4,
-            "xg_share": 0.1706040206505041,
+            "xg_share": 0.17617333140876026,
             "minutes": 610
           },
           {
@@ -3801,13 +3044,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.2067053676472116,
-            "anytime_prob": 0.18674077282822832,
-            "two_plus_prob": 0.018635725283200094,
-            "first_scorer_prob": 0.022162592461828282,
+            "lambda_player": 0.21345319471152946,
+            "anytime_prob": 0.19221003189176933,
+            "two_plus_prob": 0.019784682543143,
+            "first_scorer_prob": 0.02355636984247448,
             "xg_per_90": 0.20936995153473342,
             "goals_scored": 2,
-            "xg_share": 0.11868105784382894,
+            "xg_share": 0.12255536098000716,
             "minutes": 619
           },
           {
@@ -3817,13 +3060,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.17368992698133748,
-            "anytime_prob": 0.15944250854647446,
-            "two_plus_prob": 0.013446139232295401,
-            "first_scorer_prob": 0.01590041302172144,
+            "lambda_player": 0.17935997611177126,
+            "anytime_prob": 0.16419502458768587,
+            "two_plus_prob": 0.014285064163633648,
+            "first_scorer_prob": 0.01690889334475878,
             "xg_per_90": 0.21607142857142858,
             "goals_scored": 3,
-            "xg_share": 0.09972505554932846,
+            "xg_share": 0.1029805463790338,
             "minutes": 504
           },
           {
@@ -3867,152 +3110,133 @@
       "odds_comparison": {
         "h2h": {
           "leovegas": {
-            "home": 1.73,
-            "away": 4.1,
-            "draw": 4.0
+            "home": 1.9,
+            "away": 3.55,
+            "draw": 3.85
           },
           "betfred_uk": {
-            "home": 1.67,
-            "away": 4.33,
-            "draw": 4.2
+            "home": 1.91,
+            "away": 3.6,
+            "draw": 4.0
           },
           "unibet_uk": {
-            "home": 1.75,
-            "away": 4.25,
-            "draw": 4.2
+            "home": 1.93,
+            "away": 3.8,
+            "draw": 3.8
           },
           "paddypower": {
-            "home": 1.7,
-            "away": 4.33,
-            "draw": 4.0
+            "home": 1.9,
+            "away": 3.75,
+            "draw": 3.75
           },
           "skybet": {
-            "home": 1.7,
-            "away": 4.2,
-            "draw": 4.0
+            "home": 1.9,
+            "away": 3.75,
+            "draw": 3.8
           },
           "sport888": {
-            "home": 1.7,
-            "away": 4.2,
-            "draw": 4.0
+            "home": 1.91,
+            "away": 3.6,
+            "draw": 3.7
           },
           "coral": {
-            "home": 1.7,
-            "away": 4.33,
-            "draw": 4.2
+            "home": 1.91,
+            "away": 3.6,
+            "draw": 4.0
           },
           "ladbrokes_uk": {
-            "home": 1.7,
-            "away": 4.2,
-            "draw": 4.2
+            "home": 1.91,
+            "away": 3.5,
+            "draw": 3.9
           },
           "williamhill": {
-            "home": 1.7,
-            "away": 4.2,
-            "draw": 4.0
+            "home": 1.91,
+            "away": 3.6,
+            "draw": 3.75
           },
           "betway": {
-            "home": 1.75,
-            "away": 4.0,
-            "draw": 4.2
+            "home": 1.91,
+            "away": 3.6,
+            "draw": 3.8
           },
           "betfair_ex_uk": {
-            "home": 1.78,
-            "away": 4.6,
-            "draw": 4.3
+            "home": 1.99,
+            "away": 4.0,
+            "draw": 3.95
           },
           "smarkets": {
-            "home": 1.77,
-            "away": 4.6,
-            "draw": 4.3
+            "home": 1.97,
+            "away": 3.95,
+            "draw": 3.95
           },
           "virginbet": {
-            "home": 1.65,
-            "away": 4.2,
-            "draw": 4.0
+            "home": 1.85,
+            "away": 3.7,
+            "draw": 3.8
           },
           "livescorebet": {
-            "home": 1.64,
-            "away": 4.2,
-            "draw": 4.0
+            "home": 1.87,
+            "away": 3.8,
+            "draw": 3.9
           },
           "casumo": {
-            "home": 1.7,
-            "away": 4.4,
-            "draw": 4.2
+            "home": 1.85,
+            "away": 3.85,
+            "draw": 3.95
           },
           "grosvenor": {
-            "home": 1.68,
-            "away": 4.3,
-            "draw": 4.1
+            "home": 1.83,
+            "away": 3.75,
+            "draw": 3.9
           },
           "boylesports": {
-            "home": 1.7,
-            "away": 4.33,
-            "draw": 4.2
+            "home": 1.87,
+            "away": 3.75,
+            "draw": 4.0
           },
           "betvictor": {
-            "home": 1.7,
-            "away": 4.2,
-            "draw": 4.0
+            "home": 1.9,
+            "away": 3.5,
+            "draw": 3.8
           },
           "betano_uk": {
-            "home": 1.7,
-            "away": 4.2,
-            "draw": 4.0
+            "home": 1.9,
+            "away": 3.5,
+            "draw": 3.8
           },
           "matchbook": {
-            "home": 1.78,
-            "away": 4.6,
-            "draw": 4.3
+            "home": 1.99,
+            "away": 4.0,
+            "draw": 3.95
           },
           "betfair_sb_uk": {
-            "home": 1.73,
-            "away": 4.4,
-            "draw": 4.2
+            "home": 1.91,
+            "away": 3.9,
+            "draw": 3.8
           }
         },
         "totals": {
-          "3.5": {
-            "over": 2.4,
-            "bookmaker_over": "matchbook",
-            "under": 1.7,
-            "bookmaker_under": "matchbook"
-          },
           "2.5": {
-            "over": 1.5,
-            "bookmaker_over": "williamhill",
-            "under": 2.5,
+            "over": 1.55,
+            "bookmaker_over": "leovegas",
+            "under": 2.4,
             "bookmaker_under": "williamhill"
+          },
+          "3.5": {
+            "over": 2.35,
+            "bookmaker_over": "casumo",
+            "under": 1.57,
+            "bookmaker_under": "casumo"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_draw": "betfred_uk",
         "bookmaker_away": "betfair_ex_uk"
       },
       "model_disagreement": 0.015431503431237925,
       "shap_features": [],
-      "value_bets": [
-        {
-          "market": "Under 3.5 Goals",
-          "market_type": "over_under",
-          "confidence": "low",
-          "confidence_tier": "low",
-          "bookmaker": "matchbook",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.06463414634146336,
-          "model_prob": 0.65,
-          "implied_prob": 0.5853658536585367,
-          "raw_implied_prob": 0.5882352941176471,
-          "expected_value": 0.10499999999999998,
-          "recommendation": "bet",
-          "decimal_odds": 1.7
-        }
-      ],
-      "narrative": "Chelsea vs Tottenham \u2014 Matchweek 8\n\nOur model rates Chelsea as 49% favorites (fair odds: 2.06), driven primarily by form and recent results. Chelsea's expected goals stand at 1.8 while Tottenham are projected for 1.2 xG.\n\nThe match has a 58% chance of going over 2.5 goals, with both teams to score probability at 59%. We expect around 8 total corners and 7 cards."
+      "value_bets": [],
+      "narrative": "Chelsea vs Tottenham \u2014 Matchweek 8\n\nOur model rates Chelsea as 48% favorites (fair odds: 2.07), driven primarily by form and recent results. Chelsea's expected goals stand at 1.7 while Tottenham are projected for 1.2 xG.\n\nThe match has a 56% chance of going over 2.5 goals, with both teams to score probability at 59%. We expect around 8 total corners and 7 cards."
     },
     {
       "match_id": "20261025_Crystal_Palace_Newcastle",
@@ -4026,137 +3250,137 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.3908,
-          "draw": 0.2726,
-          "away": 0.3366
+          "home": 0.3616,
+          "draw": 0.2742,
+          "away": 0.3642
         },
         "over_under": {
           "0.5": {
-            "over": 0.9216,
-            "under": 0.0784
+            "over": 0.9258,
+            "under": 0.0742
           },
           "1.5": {
-            "over": 0.7632,
-            "under": 0.2368
+            "over": 0.7706,
+            "under": 0.2294
           },
           "2.5": {
-            "over": 0.5224,
-            "under": 0.4776
+            "over": 0.53,
+            "under": 0.47
           },
           "3.5": {
-            "over": 0.3086,
-            "under": 0.6914
+            "over": 0.3132,
+            "under": 0.6868
           },
           "4.5": {
-            "over": 0.1544,
-            "under": 0.8456
+            "over": 0.1606,
+            "under": 0.8394
           }
         },
         "btts": {
-          "yes": 0.558,
-          "no": 0.44199999999999995
+          "yes": 0.5816,
+          "no": 0.4184
         },
         "clean_sheet": {
-          "home": 0.274,
-          "away": 0.2464
+          "home": 0.2414,
+          "away": 0.2512
         },
         "correct_score": {
-          "0-0": 0.0784,
-          "0-1": 0.0788,
-          "0-2": 0.05,
-          "0-3": 0.0274,
-          "0-4": 0.0088,
-          "0-5": 0.0018,
-          "0-6": 0.0012,
-          "1-0": 0.0796,
-          "1-1": 0.1214,
-          "1-2": 0.0714,
-          "1-3": 0.035,
-          "1-4": 0.0138,
-          "1-5": 0.0022,
-          "1-6": 0.0012,
-          "2-0": 0.0694,
-          "2-1": 0.0844,
-          "2-2": 0.0584,
-          "2-3": 0.025,
+          "0-0": 0.0742,
+          "0-1": 0.0832,
+          "0-2": 0.0548,
+          "0-3": 0.023,
+          "0-4": 0.0122,
+          "0-5": 0.0036,
+          "0-6": 0.0002,
+          "1-0": 0.072,
+          "1-1": 0.1316,
+          "1-2": 0.0836,
+          "1-3": 0.0382,
+          "1-4": 0.0132,
+          "1-5": 0.0036,
+          "1-6": 0.0008,
+          "2-0": 0.0542,
+          "2-1": 0.0842,
+          "2-2": 0.0546,
+          "2-3": 0.0282,
           "2-4": 0.0098,
-          "2-5": 0.0024,
-          "2-6": 0.0006,
-          "3-0": 0.0306,
-          "3-1": 0.0402,
-          "3-2": 0.0292,
-          "3-3": 0.0128,
-          "3-4": 0.0038,
-          "3-5": 0.0014,
-          "3-6": 0.0008,
-          "4-0": 0.0118,
-          "4-1": 0.015,
-          "4-2": 0.0098,
-          "4-3": 0.005,
-          "4-4": 0.0014,
-          "4-5": 0.0006,
+          "2-5": 0.0018,
+          "2-6": 0.0002,
+          "3-0": 0.026,
+          "3-1": 0.0368,
+          "3-2": 0.0266,
+          "3-3": 0.0122,
+          "3-4": 0.0056,
+          "3-5": 0.0012,
+          "3-6": 0.0002,
+          "4-0": 0.0108,
+          "4-1": 0.0142,
+          "4-2": 0.0126,
+          "4-3": 0.0046,
+          "4-4": 0.0016,
+          "4-5": 0.0002,
           "4-6": 0.0,
           "5-0": 0.0032,
-          "5-1": 0.0034,
-          "5-2": 0.0028,
-          "5-3": 0.002,
-          "5-4": 0.0006,
+          "5-1": 0.0056,
+          "5-2": 0.003,
+          "5-3": 0.0016,
+          "5-4": 0.0008,
           "5-5": 0.0,
-          "5-6": 0.0,
+          "5-6": 0.0002,
           "6-0": 0.0008,
-          "6-1": 0.0016,
-          "6-2": 0.0012,
-          "6-3": 0.0,
+          "6-1": 0.002,
+          "6-2": 0.001,
+          "6-3": 0.0004,
           "6-4": 0.0,
           "6-5": 0.0,
-          "6-6": 0.0002
+          "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.0706,
-          "home_-1.5": 0.192,
-          "home_-1.0": 0.192,
-          "home_-0.5": 0.3908,
-          "home_0": 0.3908,
-          "home_0.5": 0.6634,
-          "home_1.0": 0.6634,
-          "home_1.5": 0.843,
-          "home_2.5": 0.9392
+          "home_-2.5": 0.0682,
+          "home_-1.5": 0.1734,
+          "home_-1.0": 0.1734,
+          "home_-0.5": 0.3616,
+          "home_0": 0.3616,
+          "home_0.5": 0.6358,
+          "home_1.0": 0.6358,
+          "home_1.5": 0.8368,
+          "home_2.5": 0.9408
         },
         "ht_ft": {
-          "H/H": 0.2382,
-          "H/D": 0.0534,
-          "H/A": 0.0194,
-          "D/H": 0.1284,
-          "D/D": 0.1594,
-          "D/A": 0.1162,
-          "A/H": 0.0242,
-          "A/D": 0.0598,
-          "A/A": 0.201
+          "H/H": 0.214,
+          "H/D": 0.055,
+          "H/A": 0.0252,
+          "D/H": 0.124,
+          "D/D": 0.1624,
+          "D/A": 0.1186,
+          "A/H": 0.0236,
+          "A/D": 0.0568,
+          "A/A": 0.2204
         },
         "corners": {
           "7.5": {
-            "over": 0.649,
-            "under": 0.351
+            "over": 0.6418,
+            "under": 0.3582
           },
           "8.5": {
-            "over": 0.5496,
-            "under": 0.4504
+            "over": 0.5526,
+            "under": 0.4474
           },
           "9.5": {
-            "over": 0.4556,
-            "under": 0.5444
+            "over": 0.4558,
+            "under": 0.5442
           },
           "10.5": {
-            "over": 0.3752,
-            "under": 0.6248
+            "over": 0.3762,
+            "under": 0.6238
           },
           "11.5": {
-            "over": 0.3074,
-            "under": 0.6926
+            "over": 0.3066,
+            "under": 0.6934
           },
           "12.5": {
-            "over": 0.2432,
-            "under": 0.7568
+            "over": 0.2462,
+            "under": 0.7538
           }
         },
         "cards": {
@@ -4173,87 +3397,87 @@
             "under": 0.4876
           },
           "4.5": {
-            "over": 0.358,
-            "under": 0.642
+            "over": 0.3556,
+            "under": 0.6444
           },
           "5.5": {
-            "over": 0.2198,
-            "under": 0.7802
+            "over": 0.2206,
+            "under": 0.7794
           },
           "6.5": {
-            "over": 0.129,
-            "under": 0.871
+            "over": 0.1314,
+            "under": 0.8686
           }
         }
       },
       "expected_goals": {
-        "home": 1.441,
-        "away": 1.3352
+        "home": 1.417,
+        "away": 1.3938
       },
-      "expected_corners": 9.7374,
-      "expected_cards": 3.8914,
+      "expected_corners": 9.7408,
+      "expected_cards": 3.8892,
       "distributions": {
         "goals_home": [
-          0.2464,
-          0.3246,
-          0.2504,
-          0.119,
-          0.0436,
-          0.012,
-          0.0038,
-          0.0002
+          0.2512,
+          0.3432,
+          0.2332,
+          0.1086,
+          0.044,
+          0.0144,
+          0.0042,
+          0.0012
         ],
         "goals_away": [
-          0.274,
-          0.3448,
-          0.2228,
-          0.1072,
-          0.0382,
-          0.0084,
-          0.004,
+          0.2414,
+          0.3578,
+          0.2368,
+          0.1084,
+          0.0432,
+          0.0104,
+          0.0016,
           0.0004
         ],
         "corners": [
           0.0014,
           0.007,
           0.0194,
-          0.0394,
-          0.054,
-          0.0688,
-          0.0776,
-          0.0834,
-          0.0994,
-          0.094,
-          0.0804,
-          0.0678,
-          0.0642,
-          0.053,
+          0.0382,
+          0.0532,
+          0.0708,
+          0.0782,
+          0.09,
+          0.0892,
+          0.0968,
+          0.0796,
+          0.0696,
+          0.0604,
+          0.0566,
           0.0424,
-          0.0322,
-          0.0246,
-          0.0212,
-          0.0146,
-          0.014,
-          0.0102
+          0.0342,
+          0.0256,
+          0.0184,
+          0.0132,
+          0.0136,
+          0.01
         ],
         "cards": [
           0.0348,
           0.0984,
           0.1654,
           0.189,
-          0.1544,
-          0.1382,
-          0.0908,
-          0.0544,
-          0.0386,
-          0.0186,
-          0.0108,
-          0.004,
-          0.0018
+          0.1568,
+          0.135,
+          0.0892,
+          0.0584,
+          0.0366,
+          0.0196,
+          0.0106,
+          0.0042,
+          0.0014
         ]
       },
       "confidence": {
-        "entropy": 1.0880018569899912,
+        "entropy": 1.0904732176351688,
         "home_goals_ci": [
           0.0,
           4.0
@@ -4667,64 +3891,64 @@
       "odds_comparison": {
         "h2h": {
           "betfred_uk": {
-            "home": 2.88,
+            "home": 2.8,
             "away": 2.3,
-            "draw": 3.6
+            "draw": 3.75
           },
           "unibet_uk": {
-            "home": 2.9,
-            "away": 2.3,
+            "home": 2.85,
+            "away": 2.35,
             "draw": 3.7
           },
           "leovegas": {
-            "home": 2.8,
+            "home": 2.75,
             "away": 2.3,
-            "draw": 3.55
+            "draw": 3.5
           },
           "paddypower": {
-            "home": 3.0,
-            "away": 2.25,
+            "home": 2.88,
+            "away": 2.3,
             "draw": 3.5
           },
           "skybet": {
-            "home": 2.9,
-            "away": 2.25,
+            "home": 2.8,
+            "away": 2.3,
             "draw": 3.4
           },
           "sport888": {
-            "home": 2.88,
+            "home": 2.8,
             "away": 2.3,
             "draw": 3.4
           },
           "williamhill": {
-            "home": 2.88,
+            "home": 2.8,
             "away": 2.3,
             "draw": 3.4
           },
           "betfair_ex_uk": {
-            "home": 3.1,
-            "away": 2.4,
-            "draw": 3.7
+            "home": 3.0,
+            "away": 2.46,
+            "draw": 3.75
           },
           "smarkets": {
-            "home": 3.05,
-            "away": 2.38,
+            "home": 3.0,
+            "away": 2.46,
             "draw": 3.7
           },
           "betway": {
-            "home": 2.9,
-            "away": 2.2,
+            "home": 2.88,
+            "away": 2.3,
             "draw": 3.6
           },
           "virginbet": {
-            "home": 2.8,
-            "away": 2.25,
-            "draw": 3.45
+            "home": 2.88,
+            "away": 2.28,
+            "draw": 3.55
           },
           "livescorebet": {
-            "home": 2.75,
-            "away": 2.23,
-            "draw": 3.4
+            "home": 2.88,
+            "away": 2.28,
+            "draw": 3.55
           },
           "casumo": {
             "home": 2.9,
@@ -4737,9 +3961,9 @@
             "draw": 3.55
           },
           "boylesports": {
-            "home": 2.9,
+            "home": 2.88,
             "away": 2.25,
-            "draw": 3.75
+            "draw": 3.8
           },
           "betano_uk": {
             "home": 2.9,
@@ -4762,28 +3986,28 @@
             "draw": 3.6
           },
           "matchbook": {
-            "home": 3.1,
-            "away": 2.4,
-            "draw": 3.7
+            "home": 3.0,
+            "away": 2.46,
+            "draw": 3.75
           },
           "betfair_sb_uk": {
-            "home": 3.0,
-            "away": 2.3,
+            "home": 2.9,
+            "away": 2.38,
             "draw": 3.5
           }
         },
         "totals": {
           "3.5": {
-            "over": 2.3,
+            "over": 2.25,
             "bookmaker_over": "leovegas",
-            "under": 1.55,
+            "under": 1.6,
             "bookmaker_under": "leovegas"
           },
           "2.5": {
-            "over": 1.63,
-            "bookmaker_over": "matchbook",
-            "under": 2.52,
-            "bookmaker_under": "matchbook"
+            "over": 1.57,
+            "bookmaker_over": "casumo",
+            "under": 2.38,
+            "bookmaker_under": "williamhill"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
@@ -4803,16 +4027,16 @@
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.09399740259740264,
-          "model_prob": 0.6914,
-          "implied_prob": 0.5974025974025974,
-          "raw_implied_prob": 0.6451612903225806,
-          "expected_value": 0.07167000000000007,
+          "edge": 0.10238441558441558,
+          "model_prob": 0.6868,
+          "implied_prob": 0.5844155844155844,
+          "raw_implied_prob": 0.625,
+          "expected_value": 0.09888000000000002,
           "recommendation": "bet",
-          "decimal_odds": 1.55
+          "decimal_odds": 1.6
         }
       ],
-      "narrative": "Crystal Palace vs Newcastle \u2014 Matchweek 8\n\nOur model rates Crystal Palace as 39% favorites (fair odds: 2.56), driven primarily by form and recent results. Crystal Palace's expected goals stand at 1.4 while Newcastle are projected for 1.3 xG.\n\nThe match has a 52% chance of going over 2.5 goals, with both teams to score probability at 56%. We expect around 10 total corners and 4 cards."
+      "narrative": "Crystal Palace vs Newcastle \u2014 Matchweek 8\n\nOur model rates Newcastle as 36% favorites (fair odds: 2.75), driven primarily by form and recent results. Crystal Palace's expected goals stand at 1.4 while Newcastle are projected for 1.4 xG.\n\nThe match has a 53% chance of going over 2.5 goals, with both teams to score probability at 58%. We expect around 10 total corners and 4 cards."
     },
     {
       "match_id": "20261025_Hull_City_Brentford",
@@ -4826,133 +4050,133 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.4078,
-          "draw": 0.2538,
-          "away": 0.3384
+          "home": 0.4216,
+          "draw": 0.269,
+          "away": 0.3094
         },
         "over_under": {
           "0.5": {
-            "over": 0.9342,
-            "under": 0.0658
+            "over": 0.924,
+            "under": 0.076
           },
           "1.5": {
-            "over": 0.799,
-            "under": 0.201
+            "over": 0.7702,
+            "under": 0.2298
           },
           "2.5": {
-            "over": 0.5562,
-            "under": 0.4438
+            "over": 0.5326,
+            "under": 0.4674
           },
           "3.5": {
-            "over": 0.3252,
-            "under": 0.6748
+            "over": 0.3204,
+            "under": 0.6796
           },
           "4.5": {
-            "over": 0.1658,
-            "under": 0.8342
+            "over": 0.1602,
+            "under": 0.8398
           }
         },
         "btts": {
-          "yes": 0.5852,
-          "no": 0.41479999999999995
+          "yes": 0.5728,
+          "no": 0.4272
         },
         "clean_sheet": {
-          "home": 0.264,
-          "away": 0.2166
+          "home": 0.2818,
+          "away": 0.2214
         },
         "correct_score": {
-          "0-0": 0.0658,
-          "0-1": 0.0666,
-          "0-2": 0.0512,
-          "0-3": 0.0226,
-          "0-4": 0.0076,
-          "0-5": 0.002,
-          "0-6": 0.0008,
-          "1-0": 0.0686,
-          "1-1": 0.121,
-          "1-2": 0.083,
-          "1-3": 0.0392,
-          "1-4": 0.0078,
-          "1-5": 0.0062,
-          "1-6": 0.0002,
-          "2-0": 0.0706,
-          "2-1": 0.086,
-          "2-2": 0.0524,
-          "2-3": 0.0298,
-          "2-4": 0.0112,
-          "2-5": 0.0026,
-          "2-6": 0.0006,
-          "3-0": 0.0394,
-          "3-1": 0.046,
-          "3-2": 0.0284,
-          "3-3": 0.0124,
-          "3-4": 0.0048,
-          "3-5": 0.0006,
+          "0-0": 0.076,
+          "0-1": 0.0686,
+          "0-2": 0.0446,
+          "0-3": 0.0216,
+          "0-4": 0.0074,
+          "0-5": 0.0028,
+          "0-6": 0.0002,
+          "1-0": 0.0852,
+          "1-1": 0.1232,
+          "1-2": 0.0686,
+          "1-3": 0.037,
+          "1-4": 0.0126,
+          "1-5": 0.0026,
+          "1-6": 0.0004,
+          "2-0": 0.0698,
+          "2-1": 0.087,
+          "2-2": 0.0558,
+          "2-3": 0.0224,
+          "2-4": 0.0104,
+          "2-5": 0.003,
+          "2-6": 0.0004,
+          "3-0": 0.035,
+          "3-1": 0.0492,
+          "3-2": 0.0292,
+          "3-3": 0.0114,
+          "3-4": 0.0052,
+          "3-5": 0.0004,
           "3-6": 0.0002,
-          "4-0": 0.0142,
-          "4-1": 0.0154,
-          "4-2": 0.014,
-          "4-3": 0.0068,
-          "4-4": 0.0018,
-          "4-5": 0.0002,
-          "4-6": 0.0002,
-          "5-0": 0.0036,
-          "5-1": 0.0064,
-          "5-2": 0.0022,
-          "5-3": 0.0012,
-          "5-4": 0.0002,
-          "5-5": 0.0004,
+          "4-0": 0.0108,
+          "4-1": 0.0182,
+          "4-2": 0.012,
+          "4-3": 0.005,
+          "4-4": 0.0026,
+          "4-5": 0.0,
+          "4-6": 0.0004,
+          "5-0": 0.004,
+          "5-1": 0.0048,
+          "5-2": 0.0024,
+          "5-3": 0.0022,
+          "5-4": 0.0004,
+          "5-5": 0.0,
           "5-6": 0.0,
-          "6-0": 0.0014,
-          "6-1": 0.0014,
-          "6-2": 0.0008,
-          "6-3": 0.0002,
-          "6-4": 0.0,
+          "6-0": 0.001,
+          "6-1": 0.0006,
+          "6-2": 0.0016,
+          "6-3": 0.0004,
+          "6-4": 0.0002,
           "6-5": 0.0,
           "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.086,
-          "home_-1.5": 0.2178,
-          "home_-1.0": 0.2178,
-          "home_-0.5": 0.4078,
-          "home_0": 0.4078,
-          "home_0.5": 0.6616,
-          "home_1.0": 0.6616,
-          "home_1.5": 0.846,
-          "home_2.5": 0.9484
+          "home_-2.5": 0.0814,
+          "home_-1.5": 0.2148,
+          "home_-1.0": 0.2148,
+          "home_-0.5": 0.4216,
+          "home_0": 0.4216,
+          "home_0.5": 0.6906,
+          "home_1.0": 0.6906,
+          "home_1.5": 0.8554,
+          "home_2.5": 0.9482
         },
         "ht_ft": {
-          "H/H": 0.2552,
-          "H/D": 0.0528,
-          "H/A": 0.0214,
-          "D/H": 0.1308,
-          "D/D": 0.153,
-          "D/A": 0.1208,
-          "A/H": 0.0218,
-          "A/D": 0.048,
-          "A/A": 0.1962
+          "H/H": 0.2574,
+          "H/D": 0.0508,
+          "H/A": 0.0206,
+          "D/H": 0.1406,
+          "D/D": 0.1646,
+          "D/A": 0.1028,
+          "A/H": 0.0236,
+          "A/D": 0.0536,
+          "A/A": 0.186
         },
         "corners": {
           "7.5": {
-            "over": 0.8146,
-            "under": 0.1854
+            "over": 0.815,
+            "under": 0.185
           },
           "8.5": {
-            "over": 0.7412,
-            "under": 0.2588
+            "over": 0.7332,
+            "under": 0.2668
           },
           "9.5": {
-            "over": 0.6482,
-            "under": 0.3518
+            "over": 0.6532,
+            "under": 0.3468
           },
           "10.5": {
             "over": 0.565,
             "under": 0.435
           },
           "11.5": {
-            "over": 0.48,
-            "under": 0.52
+            "over": 0.4792,
+            "under": 0.5208
           },
           "12.5": {
             "over": 0.3974,
@@ -4973,94 +4197,94 @@
             "under": 0.4932
           },
           "4.5": {
-            "over": 0.334,
-            "under": 0.666
+            "over": 0.3362,
+            "under": 0.6638
           },
           "5.5": {
-            "over": 0.2006,
-            "under": 0.7994
+            "over": 0.198,
+            "under": 0.802
           },
           "6.5": {
-            "over": 0.1106,
-            "under": 0.8894
+            "over": 0.108,
+            "under": 0.892
           }
         }
       },
       "expected_goals": {
-        "home": 1.5396,
-        "away": 1.3568
+        "home": 1.5254,
+        "away": 1.2986
       },
-      "expected_corners": 11.7756,
-      "expected_cards": 3.8184,
+      "expected_corners": 11.7344,
+      "expected_cards": 3.8202,
       "distributions": {
         "goals_home": [
-          0.2166,
-          0.3264,
-          0.2538,
-          0.1318,
-          0.0526,
-          0.014,
+          0.2214,
+          0.33,
+          0.2488,
+          0.1306,
+          0.049,
+          0.0138,
           0.0038,
-          0.001
+          0.0026
         ],
         "goals_away": [
-          0.264,
-          0.3434,
-          0.232,
-          0.1122,
-          0.0334,
-          0.012,
-          0.002,
-          0.0008
+          0.2818,
+          0.3524,
+          0.2152,
+          0.1004,
+          0.0392,
+          0.0088,
+          0.0016,
+          0.0006
         ],
         "corners": [
           0.0004,
           0.0008,
           0.0056,
-          0.0106,
-          0.0186,
-          0.0324,
-          0.0488,
-          0.0682,
-          0.0734,
-          0.093,
-          0.0832,
-          0.085,
-          0.0826,
-          0.0688,
-          0.0666,
-          0.0574,
-          0.0466,
-          0.0402,
-          0.0294,
-          0.0252,
-          0.0178
+          0.011,
+          0.019,
+          0.0316,
+          0.0518,
+          0.0648,
+          0.0818,
+          0.08,
+          0.0882,
+          0.0858,
+          0.0818,
+          0.0764,
+          0.064,
+          0.0554,
+          0.0482,
+          0.0376,
+          0.0302,
+          0.022,
+          0.0202
         ],
         "cards": [
           0.028,
           0.0946,
           0.163,
           0.2076,
-          0.1728,
-          0.1334,
+          0.1706,
+          0.1382,
           0.09,
-          0.055,
-          0.0284,
-          0.0152,
-          0.0072,
+          0.0508,
+          0.0276,
+          0.0164,
+          0.0082,
           0.0028,
-          0.0012
+          0.002
         ]
       },
       "confidence": {
-        "entropy": 1.0804659928778317,
+        "entropy": 1.0803074379780788,
         "home_goals_ci": [
           0.0,
           4.0
         ],
         "away_goals_ci": [
           0.0,
-          3.0
+          4.0
         ]
       },
       "n_simulations": 5000,
@@ -5472,13 +4696,13 @@
             "draw": 4.0
           },
           "leovegas": {
-            "away": 1.67,
-            "home": 4.5,
-            "draw": 3.9
+            "away": 1.7,
+            "home": 4.4,
+            "draw": 3.8
           },
           "unibet_uk": {
             "away": 1.7,
-            "home": 4.75,
+            "home": 4.6,
             "draw": 4.0
           },
           "paddypower": {
@@ -5493,8 +4717,8 @@
           },
           "sport888": {
             "away": 1.7,
-            "home": 4.4,
-            "draw": 3.8
+            "home": 4.5,
+            "draw": 3.75
           },
           "williamhill": {
             "away": 1.73,
@@ -5502,13 +4726,13 @@
             "draw": 3.8
           },
           "betfair_ex_uk": {
-            "away": 1.74,
-            "home": 5.2,
-            "draw": 4.2
+            "away": 1.77,
+            "home": 5.1,
+            "draw": 4.1
           },
           "smarkets": {
-            "away": 1.74,
-            "home": 5.2,
+            "away": 1.76,
+            "home": 5.1,
             "draw": 4.1
           },
           "betway": {
@@ -5517,24 +4741,24 @@
             "draw": 4.0
           },
           "virginbet": {
-            "away": 1.63,
-            "home": 4.6,
-            "draw": 3.75
+            "away": 1.68,
+            "home": 4.5,
+            "draw": 3.95
           },
           "casumo": {
-            "away": 1.68,
-            "home": 4.8,
+            "away": 1.7,
+            "home": 4.7,
             "draw": 4.0
           },
           "livescorebet": {
-            "away": 1.62,
+            "away": 1.68,
             "home": 4.5,
-            "draw": 3.7
+            "draw": 3.95
           },
           "grosvenor": {
-            "away": 1.67,
-            "home": 4.7,
-            "draw": 3.9
+            "away": 1.68,
+            "home": 4.6,
+            "draw": 3.95
           },
           "boylesports": {
             "away": 1.67,
@@ -5552,32 +4776,32 @@
             "draw": 4.0
           },
           "betano_uk": {
-            "away": 1.67,
+            "away": 1.65,
             "home": 4.6,
-            "draw": 3.9
+            "draw": 4.0
           },
           "betvictor": {
-            "away": 1.67,
+            "away": 1.65,
             "home": 4.6,
-            "draw": 3.9
+            "draw": 4.0
           },
           "matchbook": {
-            "away": 1.74,
-            "home": 5.2,
-            "draw": 4.2
+            "away": 1.77,
+            "home": 5.1,
+            "draw": 4.1
           },
           "betfair_sb_uk": {
             "away": 1.7,
-            "home": 5.0,
-            "draw": 4.0
+            "home": 4.75,
+            "draw": 3.9
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.72,
-            "bookmaker_over": "matchbook",
-            "under": 2.32,
-            "bookmaker_under": "matchbook"
+            "over": 1.67,
+            "bookmaker_over": "williamhill",
+            "under": 2.23,
+            "bookmaker_under": "casumo"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
@@ -5597,16 +4821,16 @@
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.21647106503298777,
-          "model_prob": 0.4078,
-          "implied_prob": 0.19132893496701223,
-          "raw_implied_prob": 0.1923076923076923,
-          "expected_value": 1.12056,
+          "edge": 0.22648788514276494,
+          "model_prob": 0.4216,
+          "implied_prob": 0.19511211485723504,
+          "raw_implied_prob": 0.19607843137254904,
+          "expected_value": 1.1501599999999996,
           "recommendation": "bet",
-          "decimal_odds": 5.2
+          "decimal_odds": 5.1
         }
       ],
-      "narrative": "Hull City vs Brentford \u2014 Matchweek 8\n\nOur model rates Hull City as 41% favorites (fair odds: 2.45), driven primarily by form and recent results. Hull City's expected goals stand at 1.5 while Brentford are projected for 1.4 xG.\n\nThe match has a 56% chance of going over 2.5 goals, with both teams to score probability at 59%. We expect around 12 total corners and 4 cards."
+      "narrative": "Hull City vs Brentford \u2014 Matchweek 8\n\nOur model rates Hull City as 42% favorites (fair odds: 2.37), driven primarily by form and recent results. Hull City's expected goals stand at 1.5 while Brentford are projected for 1.3 xG.\n\nThe match has a 53% chance of going over 2.5 goals, with both teams to score probability at 57%. We expect around 12 total corners and 4 cards."
     },
     {
       "match_id": "20261025_Liverpool_Brighton",
@@ -5620,137 +4844,137 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.4808,
-          "draw": 0.2576,
-          "away": 0.2616
+          "home": 0.4826,
+          "draw": 0.2426,
+          "away": 0.2748
         },
         "over_under": {
           "0.5": {
-            "over": 0.9388,
-            "under": 0.0612
+            "over": 0.94,
+            "under": 0.06
           },
           "1.5": {
-            "over": 0.8036,
-            "under": 0.1964
+            "over": 0.8082,
+            "under": 0.1918
           },
           "2.5": {
-            "over": 0.569,
-            "under": 0.431
+            "over": 0.5858,
+            "under": 0.4142
           },
           "3.5": {
-            "over": 0.356,
-            "under": 0.644
+            "over": 0.361,
+            "under": 0.639
           },
           "4.5": {
-            "over": 0.189,
-            "under": 0.811
+            "over": 0.1952,
+            "under": 0.8048
           }
         },
         "btts": {
-          "yes": 0.583,
-          "no": 0.41700000000000004
+          "yes": 0.5882,
+          "no": 0.41180000000000005
         },
         "clean_sheet": {
-          "home": 0.2922,
-          "away": 0.186
+          "home": 0.2934,
+          "away": 0.1784
         },
         "correct_score": {
-          "0-0": 0.0612,
-          "0-1": 0.0594,
-          "0-2": 0.0374,
-          "0-3": 0.0194,
-          "0-4": 0.0076,
+          "0-0": 0.06,
+          "0-1": 0.0566,
+          "0-2": 0.042,
+          "0-3": 0.0134,
+          "0-4": 0.0058,
           "0-5": 0.0006,
-          "0-6": 0.0004,
-          "1-0": 0.0758,
-          "1-1": 0.1178,
-          "1-2": 0.0576,
-          "1-3": 0.0222,
-          "1-4": 0.009,
-          "1-5": 0.0024,
-          "1-6": 0.0006,
-          "2-0": 0.0794,
-          "2-1": 0.0922,
-          "2-2": 0.0598,
-          "2-3": 0.026,
-          "2-4": 0.0096,
-          "2-5": 0.0008,
-          "2-6": 0.0004,
-          "3-0": 0.0438,
-          "3-1": 0.0558,
-          "3-2": 0.0306,
-          "3-3": 0.0152,
-          "3-4": 0.0052,
-          "3-5": 0.0014,
-          "3-6": 0.0006,
-          "4-0": 0.0216,
-          "4-1": 0.0286,
-          "4-2": 0.0132,
-          "4-3": 0.0052,
-          "4-4": 0.0036,
-          "4-5": 0.0006,
-          "4-6": 0.0,
-          "5-0": 0.0078,
-          "5-1": 0.0076,
-          "5-2": 0.0062,
+          "0-6": 0.0,
+          "1-0": 0.0752,
+          "1-1": 0.1052,
+          "1-2": 0.069,
+          "1-3": 0.0304,
+          "1-4": 0.0096,
+          "1-5": 0.002,
+          "1-6": 0.0004,
+          "2-0": 0.0752,
+          "2-1": 0.0914,
+          "2-2": 0.0578,
+          "2-3": 0.0286,
+          "2-4": 0.0084,
+          "2-5": 0.0016,
+          "2-6": 0.0002,
+          "3-0": 0.051,
+          "3-1": 0.0522,
+          "3-2": 0.0324,
+          "3-3": 0.0168,
+          "3-4": 0.0046,
+          "3-5": 0.0006,
+          "3-6": 0.0,
+          "4-0": 0.0196,
+          "4-1": 0.0242,
+          "4-2": 0.0168,
+          "4-3": 0.0078,
+          "4-4": 0.0024,
+          "4-5": 0.0002,
+          "4-6": 0.0004,
+          "5-0": 0.0092,
+          "5-1": 0.0086,
+          "5-2": 0.0048,
           "5-3": 0.0028,
-          "5-4": 0.0012,
-          "5-5": 0.0,
+          "5-4": 0.0004,
+          "5-5": 0.0004,
           "5-6": 0.0,
-          "6-0": 0.0022,
-          "6-1": 0.0014,
-          "6-2": 0.0018,
-          "6-3": 0.0008,
+          "6-0": 0.0026,
+          "6-1": 0.003,
+          "6-2": 0.001,
+          "6-3": 0.001,
           "6-4": 0.0002,
-          "6-5": 0.0002,
+          "6-5": 0.0,
           "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.1242,
-          "home_-1.5": 0.2756,
-          "home_-1.0": 0.2756,
-          "home_-0.5": 0.4808,
-          "home_0": 0.4808,
-          "home_0.5": 0.7384,
-          "home_1.0": 0.7384,
-          "home_1.5": 0.8872,
-          "home_2.5": 0.9578
+          "home_-2.5": 0.1282,
+          "home_-1.5": 0.2754,
+          "home_-1.0": 0.2754,
+          "home_-0.5": 0.4826,
+          "home_0": 0.4826,
+          "home_0.5": 0.7252,
+          "home_1.0": 0.7252,
+          "home_1.5": 0.8842,
+          "home_2.5": 0.966
         },
         "ht_ft": {
-          "H/H": 0.305,
-          "H/D": 0.0542,
-          "H/A": 0.0186,
-          "D/H": 0.1476,
-          "D/D": 0.1518,
-          "D/A": 0.093,
-          "A/H": 0.0282,
-          "A/D": 0.0516,
-          "A/A": 0.15
+          "H/H": 0.3036,
+          "H/D": 0.0504,
+          "H/A": 0.019,
+          "D/H": 0.1532,
+          "D/D": 0.1466,
+          "D/A": 0.0976,
+          "A/H": 0.0258,
+          "A/D": 0.0456,
+          "A/A": 0.1582
         },
         "corners": {
           "7.5": {
-            "over": 0.7846,
-            "under": 0.2154
+            "over": 0.783,
+            "under": 0.217
           },
           "8.5": {
-            "over": 0.695,
-            "under": 0.305
+            "over": 0.6998,
+            "under": 0.3002
           },
           "9.5": {
-            "over": 0.6,
-            "under": 0.4
+            "over": 0.5986,
+            "under": 0.4014
           },
           "10.5": {
-            "over": 0.5008,
-            "under": 0.4992
+            "over": 0.5002,
+            "under": 0.4998
           },
           "11.5": {
-            "over": 0.4022,
-            "under": 0.5978
+            "over": 0.4006,
+            "under": 0.5994
           },
           "12.5": {
-            "over": 0.3108,
-            "under": 0.6892
+            "over": 0.313,
+            "under": 0.687
           }
         },
         "cards": {
@@ -5767,87 +4991,87 @@
             "under": 0.5832
           },
           "4.5": {
-            "over": 0.261,
-            "under": 0.739
+            "over": 0.254,
+            "under": 0.746
           },
           "5.5": {
-            "over": 0.1476,
-            "under": 0.8524
+            "over": 0.1458,
+            "under": 0.8542
           },
           "6.5": {
-            "over": 0.0762,
-            "under": 0.9238
+            "over": 0.0744,
+            "under": 0.9256
           }
         }
       },
       "expected_goals": {
-        "home": 1.7574,
-        "away": 1.245
+        "home": 1.7784,
+        "away": 1.2572
       },
-      "expected_corners": 10.7386,
-      "expected_cards": 3.3744,
+      "expected_corners": 10.7488,
+      "expected_cards": 3.3638,
       "distributions": {
         "goals_home": [
-          0.186,
-          0.2854,
-          0.2684,
-          0.1528,
-          0.0728,
-          0.0256,
-          0.0066,
-          0.0018
+          0.1784,
+          0.2918,
+          0.2636,
+          0.1576,
+          0.0714,
+          0.0262,
+          0.0078,
+          0.0024
         ],
         "goals_away": [
-          0.2922,
-          0.3634,
-          0.2076,
-          0.092,
-          0.0364,
-          0.006,
-          0.002,
+          0.2934,
+          0.3424,
+          0.2248,
+          0.101,
+          0.0316,
+          0.0054,
+          0.001,
           0.0004
         ],
         "corners": [
           0.0,
           0.002,
           0.006,
-          0.0122,
-          0.022,
-          0.0416,
-          0.0574,
-          0.0742,
-          0.0896,
-          0.095,
-          0.0992,
-          0.0986,
-          0.0914,
-          0.0778,
-          0.0626,
-          0.0506,
-          0.041,
-          0.0274,
+          0.013,
+          0.0218,
+          0.0396,
+          0.0566,
+          0.078,
+          0.0832,
+          0.1012,
+          0.0984,
+          0.0996,
+          0.0876,
+          0.0772,
+          0.066,
+          0.0472,
+          0.0442,
+          0.0252,
           0.0186,
-          0.009,
-          0.0102
+          0.012,
+          0.0092
         ],
         "cards": [
           0.0434,
           0.1258,
           0.1976,
           0.2164,
-          0.1558,
-          0.1134,
+          0.1628,
+          0.1082,
           0.0714,
-          0.0426,
-          0.0208,
-          0.0088,
-          0.0028,
-          0.0008,
+          0.041,
+          0.0202,
+          0.0094,
+          0.0022,
+          0.0014,
           0.0002
         ]
       },
       "confidence": {
-        "entropy": 1.0522763269328579,
+        "entropy": 1.050173270315196,
         "home_goals_ci": [
           0.0,
           4.0
@@ -6261,7 +5485,7 @@
       "odds_comparison": {
         "h2h": {
           "unibet_uk": {
-            "away": 3.1,
+            "away": 3.2,
             "home": 2.15,
             "draw": 3.75
           },
@@ -6276,8 +5500,8 @@
             "draw": 3.7
           },
           "leovegas": {
-            "away": 3.0,
-            "home": 2.12,
+            "away": 3.05,
+            "home": 2.1,
             "draw": 3.65
           },
           "betfred_uk": {
@@ -6287,7 +5511,7 @@
           },
           "paddypower": {
             "away": 3.1,
-            "home": 2.1,
+            "home": 2.05,
             "draw": 3.75
           },
           "skybet": {
@@ -6296,39 +5520,39 @@
             "draw": 3.75
           },
           "betfair_ex_uk": {
-            "away": 3.3,
-            "home": 2.2,
+            "away": 3.4,
+            "home": 2.18,
             "draw": 4.0
           },
           "smarkets": {
-            "away": 3.3,
+            "away": 3.35,
             "home": 2.18,
-            "draw": 3.95
+            "draw": 4.0
           },
           "betway": {
-            "away": 3.0,
+            "away": 3.1,
             "home": 2.05,
             "draw": 3.8
           },
           "livescorebet": {
-            "away": 2.95,
-            "home": 2.04,
-            "draw": 3.55
+            "away": 3.2,
+            "home": 2.05,
+            "draw": 3.7
           },
           "grosvenor": {
-            "away": 3.1,
-            "home": 2.1,
+            "away": 3.2,
+            "home": 2.05,
             "draw": 3.75
           },
           "casumo": {
-            "away": 3.15,
-            "home": 2.12,
+            "away": 3.25,
+            "home": 2.07,
             "draw": 3.8
           },
           "virginbet": {
-            "away": 3.0,
-            "home": 2.07,
-            "draw": 3.55
+            "away": 3.2,
+            "home": 2.05,
+            "draw": 3.7
           },
           "boylesports": {
             "away": 3.1,
@@ -6356,8 +5580,8 @@
             "draw": 3.75
           },
           "matchbook": {
-            "away": 3.3,
-            "home": 2.2,
+            "away": 3.4,
+            "home": 2.18,
             "draw": 4.0
           },
           "betfair_sb_uk": {
@@ -6368,16 +5592,16 @@
         },
         "totals": {
           "2.5": {
-            "over": 1.55,
-            "bookmaker_over": "grosvenor",
-            "under": 2.45,
-            "bookmaker_under": "williamhill"
+            "over": 1.53,
+            "bookmaker_over": "williamhill",
+            "under": 2.48,
+            "bookmaker_under": "grosvenor"
           },
           "3.5": {
-            "over": 2.5,
-            "bookmaker_over": "matchbook",
-            "under": 1.66,
-            "bookmaker_under": "matchbook"
+            "over": 2.25,
+            "bookmaker_over": "leovegas",
+            "under": 1.6,
+            "bookmaker_under": "leovegas"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
@@ -6386,8 +5610,27 @@
       },
       "model_disagreement": 0.008299766148437521,
       "shap_features": [],
-      "value_bets": [],
-      "narrative": "Liverpool vs Brighton \u2014 Matchweek 8\n\nOur model rates Liverpool as 48% favorites (fair odds: 2.08), driven primarily by form and recent results. Liverpool's expected goals stand at 1.8 while Brighton are projected for 1.2 xG.\n\nThe match has a 57% chance of going over 2.5 goals, with both teams to score probability at 58%. We expect around 11 total corners and 3 cards."
+      "value_bets": [
+        {
+          "market": "Under 3.5 Goals",
+          "market_type": "over_under",
+          "confidence": "low",
+          "confidence_tier": "low",
+          "bookmaker": "leovegas",
+          "full_kelly": 37.33333333333348,
+          "half_kelly": 18.66666666666674,
+          "full_kelly_pct": 0.037333333333333475,
+          "half_kelly_pct": 0.018666666666666738,
+          "edge": 0.054584415584415624,
+          "model_prob": 0.639,
+          "implied_prob": 0.5844155844155844,
+          "raw_implied_prob": 0.625,
+          "expected_value": 0.022400000000000087,
+          "recommendation": "bet",
+          "decimal_odds": 1.6
+        }
+      ],
+      "narrative": "Liverpool vs Brighton \u2014 Matchweek 8\n\nOur model rates Liverpool as 48% favorites (fair odds: 2.07), driven primarily by form and recent results. Liverpool's expected goals stand at 1.8 while Brighton are projected for 1.3 xG.\n\nThe match has a 59% chance of going over 2.5 goals, with both teams to score probability at 59%. We expect around 11 total corners and 3 cards."
     },
     {
       "match_id": "20261025_Man_United_Bournemouth",
@@ -6401,137 +5644,137 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.4612,
-          "draw": 0.2598,
-          "away": 0.279
+          "home": 0.4498,
+          "draw": 0.2652,
+          "away": 0.285
         },
         "over_under": {
           "0.5": {
-            "over": 0.9418,
-            "under": 0.0582
+            "over": 0.93,
+            "under": 0.07
           },
           "1.5": {
-            "over": 0.8058,
-            "under": 0.1942
+            "over": 0.7912,
+            "under": 0.2088
           },
           "2.5": {
-            "over": 0.5658,
-            "under": 0.4342
+            "over": 0.55,
+            "under": 0.45
           },
           "3.5": {
-            "over": 0.3466,
-            "under": 0.6534
+            "over": 0.3416,
+            "under": 0.6584
           },
           "4.5": {
-            "over": 0.1818,
-            "under": 0.8182
+            "over": 0.1836,
+            "under": 0.8164
           }
         },
         "btts": {
-          "yes": 0.5922,
-          "no": 0.40780000000000005
+          "yes": 0.584,
+          "no": 0.41600000000000004
         },
         "clean_sheet": {
-          "home": 0.2838,
-          "away": 0.1822
+          "home": 0.2888,
+          "away": 0.1972
         },
         "correct_score": {
-          "0-0": 0.0582,
-          "0-1": 0.053,
-          "0-2": 0.0418,
-          "0-3": 0.0194,
-          "0-4": 0.007,
-          "0-5": 0.0024,
-          "0-6": 0.0004,
-          "1-0": 0.083,
-          "1-1": 0.1228,
-          "1-2": 0.0678,
-          "1-3": 0.0308,
+          "0-0": 0.07,
+          "0-1": 0.0592,
+          "0-2": 0.0454,
+          "0-3": 0.014,
+          "0-4": 0.0066,
+          "0-5": 0.0014,
+          "0-6": 0.0002,
+          "1-0": 0.0796,
+          "1-1": 0.1238,
+          "1-2": 0.0676,
+          "1-3": 0.0326,
           "1-4": 0.0094,
-          "1-5": 0.0032,
-          "1-6": 0.0008,
-          "2-0": 0.0754,
-          "2-1": 0.0912,
-          "2-2": 0.0594,
-          "2-3": 0.0224,
-          "2-4": 0.0092,
-          "2-5": 0.0028,
-          "2-6": 0.0006,
-          "3-0": 0.0408,
-          "3-1": 0.0502,
-          "3-2": 0.0314,
-          "3-3": 0.017,
-          "3-4": 0.0058,
-          "3-5": 0.0008,
-          "3-6": 0.0004,
-          "4-0": 0.0174,
-          "4-1": 0.0208,
-          "4-2": 0.014,
-          "4-3": 0.006,
-          "4-4": 0.0022,
-          "4-5": 0.0006,
-          "4-6": 0.0002,
-          "5-0": 0.0066,
-          "5-1": 0.009,
-          "5-2": 0.0056,
-          "5-3": 0.0016,
-          "5-4": 0.0006,
-          "5-5": 0.0002,
-          "5-6": 0.0,
+          "1-5": 0.0022,
+          "1-6": 0.002,
+          "2-0": 0.072,
+          "2-1": 0.0874,
+          "2-2": 0.0548,
+          "2-3": 0.024,
+          "2-4": 0.0104,
+          "2-5": 0.0022,
+          "2-6": 0.0012,
+          "3-0": 0.0394,
+          "3-1": 0.0468,
+          "3-2": 0.0334,
+          "3-3": 0.0144,
+          "3-4": 0.0042,
+          "3-5": 0.0014,
+          "3-6": 0.0002,
+          "4-0": 0.0172,
+          "4-1": 0.0218,
+          "4-2": 0.0144,
+          "4-3": 0.005,
+          "4-4": 0.0018,
+          "4-5": 0.0,
+          "4-6": 0.0,
+          "5-0": 0.0076,
+          "5-1": 0.0084,
+          "5-2": 0.0032,
+          "5-3": 0.0014,
+          "5-4": 0.0012,
+          "5-5": 0.0004,
+          "5-6": 0.0002,
           "6-0": 0.0022,
-          "6-1": 0.002,
-          "6-2": 0.0012,
-          "6-3": 0.001,
-          "6-4": 0.0,
+          "6-1": 0.0022,
+          "6-2": 0.0032,
+          "6-3": 0.0008,
+          "6-4": 0.0002,
           "6-5": 0.0,
           "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.1078,
-          "home_-1.5": 0.249,
-          "home_-1.0": 0.249,
-          "home_-0.5": 0.4612,
-          "home_0": 0.4612,
-          "home_0.5": 0.721,
-          "home_1.0": 0.721,
-          "home_1.5": 0.8706,
-          "home_2.5": 0.9534
+          "home_-2.5": 0.1084,
+          "home_-1.5": 0.2432,
+          "home_-1.0": 0.2432,
+          "home_-0.5": 0.4498,
+          "home_0": 0.4498,
+          "home_0.5": 0.715,
+          "home_1.0": 0.715,
+          "home_1.5": 0.8702,
+          "home_2.5": 0.96
         },
         "ht_ft": {
-          "H/H": 0.2808,
-          "H/D": 0.0546,
-          "H/A": 0.0198,
-          "D/H": 0.151,
-          "D/D": 0.1516,
-          "D/A": 0.0968,
+          "H/H": 0.2782,
+          "H/D": 0.0512,
+          "H/A": 0.0214,
+          "D/H": 0.1422,
+          "D/D": 0.1576,
+          "D/A": 0.0936,
           "A/H": 0.0294,
-          "A/D": 0.0536,
-          "A/A": 0.1624
+          "A/D": 0.0564,
+          "A/A": 0.17
         },
         "corners": {
           "7.5": {
-            "over": 0.713,
-            "under": 0.287
+            "over": 0.7156,
+            "under": 0.2844
           },
           "8.5": {
-            "over": 0.6052,
-            "under": 0.3948
+            "over": 0.6032,
+            "under": 0.3968
           },
           "9.5": {
-            "over": 0.4954,
-            "under": 0.5046
+            "over": 0.4946,
+            "under": 0.5054
           },
           "10.5": {
-            "over": 0.3944,
-            "under": 0.6056
+            "over": 0.3936,
+            "under": 0.6064
           },
           "11.5": {
-            "over": 0.2936,
-            "under": 0.7064
+            "over": 0.2982,
+            "under": 0.7018
           },
           "12.5": {
-            "over": 0.2126,
-            "under": 0.7874
+            "over": 0.2138,
+            "under": 0.7862
           }
         },
         "cards": {
@@ -6548,87 +5791,87 @@
             "under": 0.4284
           },
           "4.5": {
-            "over": 0.3898,
-            "under": 0.6102
+            "over": 0.3882,
+            "under": 0.6118
           },
           "5.5": {
-            "over": 0.2456,
-            "under": 0.7544
+            "over": 0.244,
+            "under": 0.756
           },
           "6.5": {
-            "over": 0.143,
-            "under": 0.857
+            "over": 0.139,
+            "under": 0.861
           }
         }
       },
       "expected_goals": {
-        "home": 1.689,
-        "away": 1.2898
+        "home": 1.6638,
+        "away": 1.2744
       },
-      "expected_corners": 9.7322,
-      "expected_cards": 4.1502,
+      "expected_corners": 9.7328,
+      "expected_cards": 4.1436,
       "distributions": {
         "goals_home": [
-          0.1822,
-          0.3178,
-          0.2612,
-          0.1464,
-          0.0612,
-          0.0236,
-          0.0064,
-          0.0012
+          0.1972,
+          0.3172,
+          0.252,
+          0.1398,
+          0.0604,
+          0.0224,
+          0.0086,
+          0.0014
         ],
         "goals_away": [
-          0.2838,
-          0.3498,
-          0.2214,
-          0.0982,
-          0.0342,
-          0.01,
-          0.0024,
-          0.0002
+          0.2888,
+          0.35,
+          0.2222,
+          0.093,
+          0.034,
+          0.0076,
+          0.0038,
+          0.0006
         ],
         "corners": [
           0.0002,
           0.0032,
           0.0094,
-          0.0216,
-          0.0358,
-          0.0514,
-          0.0708,
-          0.0946,
-          0.1078,
-          0.1098,
+          0.021,
+          0.0366,
+          0.049,
+          0.0686,
+          0.0964,
+          0.1124,
+          0.1086,
           0.101,
-          0.1008,
-          0.081,
-          0.0604,
-          0.043,
-          0.0356,
-          0.0268,
-          0.0172,
-          0.0096,
-          0.0094,
-          0.0052
+          0.0954,
+          0.0844,
+          0.063,
+          0.0444,
+          0.0334,
+          0.0248,
+          0.0206,
+          0.0108,
+          0.008,
+          0.0042
         ],
         "cards": [
           0.0172,
           0.071,
           0.1436,
           0.1966,
-          0.1818,
+          0.1834,
           0.1442,
-          0.1026,
-          0.0666,
-          0.0396,
-          0.0206,
-          0.0106,
-          0.004,
-          0.0008
+          0.105,
+          0.062,
+          0.0394,
+          0.022,
+          0.01,
+          0.0042,
+          0.0006
         ]
       },
       "confidence": {
-        "entropy": 1.0632588063656039,
+        "entropy": 1.069111830122865,
         "home_goals_ci": [
           0.0,
           4.0
@@ -7042,127 +6285,127 @@
       "odds_comparison": {
         "h2h": {
           "betfred_uk": {
-            "away": 3.2,
-            "home": 2.1,
+            "away": 3.0,
+            "home": 2.2,
             "draw": 3.75
           },
           "unibet_uk": {
-            "away": 3.2,
-            "home": 2.15,
-            "draw": 3.7
-          },
-          "leovegas": {
             "away": 3.1,
-            "home": 2.12,
+            "home": 2.2,
             "draw": 3.6
           },
+          "leovegas": {
+            "away": 2.95,
+            "home": 2.2,
+            "draw": 3.5
+          },
           "paddypower": {
-            "away": 3.1,
-            "home": 2.15,
+            "away": 2.9,
+            "home": 2.2,
             "draw": 3.6
           },
           "skybet": {
+            "away": 2.9,
+            "home": 2.2,
+            "draw": 3.6
+          },
+          "sport888": {
+            "away": 3.0,
+            "home": 2.15,
+            "draw": 3.5
+          },
+          "williamhill": {
             "away": 3.1,
             "home": 2.15,
             "draw": 3.5
           },
-          "sport888": {
-            "away": 3.25,
-            "home": 2.05,
-            "draw": 3.5
-          },
-          "williamhill": {
-            "away": 3.25,
-            "home": 2.1,
-            "draw": 3.5
-          },
           "betfair_ex_uk": {
-            "away": 3.35,
-            "home": 2.26,
-            "draw": 3.8
+            "away": 3.3,
+            "home": 2.32,
+            "draw": 3.75
           },
           "betway": {
-            "away": 3.2,
-            "home": 2.05,
+            "away": 3.1,
+            "home": 2.15,
             "draw": 3.6
           },
           "smarkets": {
-            "away": 3.35,
-            "home": 2.22,
-            "draw": 3.8
+            "away": 3.3,
+            "home": 2.32,
+            "draw": 3.75
           },
           "livescorebet": {
             "away": 3.15,
-            "home": 2.0,
+            "home": 2.12,
             "draw": 3.5
           },
           "casumo": {
-            "away": 3.35,
-            "home": 2.06,
-            "draw": 3.75
+            "away": 3.25,
+            "home": 2.14,
+            "draw": 3.6
           },
           "virginbet": {
             "away": 3.15,
-            "home": 2.0,
+            "home": 2.12,
             "draw": 3.5
           },
           "grosvenor": {
-            "away": 3.3,
-            "home": 2.04,
-            "draw": 3.65
+            "away": 3.2,
+            "home": 2.12,
+            "draw": 3.55
           },
           "boylesports": {
-            "away": 3.25,
-            "home": 2.1,
+            "away": 3.0,
+            "home": 2.15,
             "draw": 3.75
           },
           "coral": {
-            "away": 3.3,
-            "home": 2.05,
+            "away": 3.1,
+            "home": 2.15,
             "draw": 3.7
           },
           "ladbrokes_uk": {
-            "away": 3.3,
-            "home": 2.05,
+            "away": 3.1,
+            "home": 2.15,
             "draw": 3.7
           },
           "betano_uk": {
-            "away": 3.12,
-            "home": 2.05,
-            "draw": 3.7
+            "away": 3.0,
+            "home": 2.15,
+            "draw": 3.6
           },
           "betvictor": {
-            "away": 3.12,
-            "home": 2.05,
-            "draw": 3.7
+            "away": 3.0,
+            "home": 2.15,
+            "draw": 3.6
           },
           "matchbook": {
-            "away": 3.35,
-            "home": 2.26,
-            "draw": 3.8
+            "away": 3.3,
+            "home": 2.32,
+            "draw": 3.75
           },
           "betfair_sb_uk": {
-            "away": 3.25,
-            "home": 2.2,
-            "draw": 3.6
+            "away": 3.0,
+            "home": 2.25,
+            "draw": 3.75
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.67,
-            "bookmaker_over": "matchbook",
-            "under": 2.46,
-            "bookmaker_under": "matchbook"
+            "over": 1.64,
+            "bookmaker_over": "casumo",
+            "under": 2.25,
+            "bookmaker_under": "leovegas"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_draw": "betfred_uk",
         "bookmaker_away": "betfair_ex_uk"
       },
       "model_disagreement": 0.0030359705741424318,
       "shap_features": [],
       "value_bets": [],
-      "narrative": "Man United vs Bournemouth \u2014 Matchweek 8\n\nOur model rates Man United as 46% favorites (fair odds: 2.17), driven primarily by form and recent results. Man United's expected goals stand at 1.7 while Bournemouth are projected for 1.3 xG.\n\nThe match has a 57% chance of going over 2.5 goals, with both teams to score probability at 59%. We expect around 10 total corners and 4 cards."
+      "narrative": "Man United vs Bournemouth \u2014 Matchweek 8\n\nOur model rates Man United as 45% favorites (fair odds: 2.22), driven primarily by form and recent results. Man United's expected goals stand at 1.7 while Bournemouth are projected for 1.3 xG.\n\nThe match has a 55% chance of going over 2.5 goals, with both teams to score probability at 58%. We expect around 10 total corners and 4 cards."
     },
     {
       "match_id": "20261025_Sunderland_Leeds",
@@ -7176,137 +6419,137 @@
       },
       "probabilities": {
         "1x2": {
-          "home": 0.406,
-          "draw": 0.288,
-          "away": 0.306
+          "home": 0.3966,
+          "draw": 0.2886,
+          "away": 0.3148
         },
         "over_under": {
           "0.5": {
-            "over": 0.8986,
-            "under": 0.1014
+            "over": 0.9074,
+            "under": 0.0926
           },
           "1.5": {
-            "over": 0.724,
-            "under": 0.276
+            "over": 0.723,
+            "under": 0.277
           },
           "2.5": {
-            "over": 0.4622,
-            "under": 0.5378
+            "over": 0.4684,
+            "under": 0.5316
           },
           "3.5": {
-            "over": 0.2546,
-            "under": 0.7454
+            "over": 0.263,
+            "under": 0.737
           },
           "4.5": {
-            "over": 0.1152,
-            "under": 0.8848
+            "over": 0.1234,
+            "under": 0.8766
           }
         },
         "btts": {
-          "yes": 0.5096,
-          "no": 0.49039999999999995
+          "yes": 0.5252,
+          "no": 0.4748
         },
         "clean_sheet": {
-          "home": 0.3214,
-          "away": 0.2704
+          "home": 0.3064,
+          "away": 0.261
         },
         "correct_score": {
-          "0-0": 0.1014,
-          "0-1": 0.0788,
-          "0-2": 0.0572,
-          "0-3": 0.024,
+          "0-0": 0.0926,
+          "0-1": 0.0858,
+          "0-2": 0.05,
+          "0-3": 0.0244,
           "0-4": 0.0064,
-          "0-5": 0.0018,
-          "0-6": 0.0008,
-          "1-0": 0.0958,
-          "1-1": 0.1262,
-          "1-2": 0.0708,
-          "1-3": 0.0246,
-          "1-4": 0.0074,
-          "1-5": 0.0024,
-          "1-6": 0.001,
-          "2-0": 0.0784,
-          "2-1": 0.0828,
-          "2-2": 0.0522,
-          "2-3": 0.0198,
-          "2-4": 0.0054,
-          "2-5": 0.002,
+          "0-5": 0.001,
+          "0-6": 0.0004,
+          "1-0": 0.0986,
+          "1-1": 0.1348,
+          "1-2": 0.0686,
+          "1-3": 0.032,
+          "1-4": 0.0094,
+          "1-5": 0.0026,
+          "1-6": 0.0006,
+          "2-0": 0.0698,
+          "2-1": 0.0824,
+          "2-2": 0.0494,
+          "2-3": 0.0194,
+          "2-4": 0.007,
+          "2-5": 0.0012,
           "2-6": 0.0002,
           "3-0": 0.03,
-          "3-1": 0.044,
-          "3-2": 0.026,
-          "3-3": 0.0072,
-          "3-4": 0.0028,
-          "3-5": 0.0002,
-          "3-6": 0.0002,
-          "4-0": 0.0122,
-          "4-1": 0.0124,
-          "4-2": 0.0102,
-          "4-3": 0.0026,
-          "4-4": 0.001,
-          "4-5": 0.0002,
-          "4-6": 0.0,
-          "5-0": 0.0032,
-          "5-1": 0.0034,
+          "3-1": 0.0406,
+          "3-2": 0.0246,
+          "3-3": 0.0104,
+          "3-4": 0.0034,
+          "3-5": 0.0006,
+          "3-6": 0.0,
+          "4-0": 0.0112,
+          "4-1": 0.0146,
+          "4-2": 0.0074,
+          "4-3": 0.0038,
+          "4-4": 0.0014,
+          "4-5": 0.0012,
+          "4-6": 0.0002,
+          "5-0": 0.0026,
+          "5-1": 0.0032,
           "5-2": 0.0018,
-          "5-3": 0.0004,
+          "5-3": 0.0014,
           "5-4": 0.0002,
           "5-5": 0.0,
           "5-6": 0.0,
-          "6-0": 0.0004,
-          "6-1": 0.0014,
-          "6-2": 0.0006,
+          "6-0": 0.0006,
+          "6-1": 0.0008,
+          "6-2": 0.0008,
           "6-3": 0.0,
           "6-4": 0.0002,
-          "6-5": 0.0,
+          "6-5": 0.0002,
           "6-6": 0.0
         },
         "asian_handicap": {
-          "home_-2.5": 0.0654,
-          "home_-1.5": 0.1986,
-          "home_-1.0": 0.1986,
-          "home_-0.5": 0.406,
-          "home_0": 0.406,
-          "home_0.5": 0.694,
-          "home_1.0": 0.694,
-          "home_1.5": 0.8664,
-          "home_2.5": 0.9538
+          "home_-2.5": 0.0674,
+          "home_-1.5": 0.1868,
+          "home_-1.0": 0.1868,
+          "home_-0.5": 0.3966,
+          "home_0": 0.3966,
+          "home_0.5": 0.6852,
+          "home_1.0": 0.6852,
+          "home_1.5": 0.8636,
+          "home_2.5": 0.9534
         },
         "ht_ft": {
-          "H/H": 0.2354,
-          "H/D": 0.0484,
-          "H/A": 0.0198,
-          "D/H": 0.1524,
-          "D/D": 0.1922,
-          "D/A": 0.1118,
-          "A/H": 0.0182,
-          "A/D": 0.0474,
-          "A/A": 0.1744
+          "H/H": 0.234,
+          "H/D": 0.0532,
+          "H/A": 0.0192,
+          "D/H": 0.1418,
+          "D/D": 0.1866,
+          "D/A": 0.112,
+          "A/H": 0.0208,
+          "A/D": 0.0488,
+          "A/A": 0.1836
         },
         "corners": {
           "7.5": {
-            "over": 0.5396,
-            "under": 0.4604
+            "over": 0.5394,
+            "under": 0.4606
           },
           "8.5": {
-            "over": 0.4114,
-            "under": 0.5886
+            "over": 0.4174,
+            "under": 0.5826
           },
           "9.5": {
-            "over": 0.2998,
-            "under": 0.7002
+            "over": 0.3016,
+            "under": 0.6984
           },
           "10.5": {
-            "over": 0.2162,
-            "under": 0.7838
+            "over": 0.212,
+            "under": 0.788
           },
           "11.5": {
-            "over": 0.1412,
-            "under": 0.8588
+            "over": 0.1382,
+            "under": 0.8618
           },
           "12.5": {
-            "over": 0.093,
-            "under": 0.907
+            "over": 0.0922,
+            "under": 0.9078
           }
         },
         "cards": {
@@ -7323,87 +6566,87 @@
             "under": 0.4446
           },
           "4.5": {
-            "over": 0.3704,
-            "under": 0.6296
+            "over": 0.3724,
+            "under": 0.6276
           },
           "5.5": {
-            "over": 0.2298,
-            "under": 0.7702
+            "over": 0.2336,
+            "under": 0.7664
           },
           "6.5": {
-            "over": 0.1346,
-            "under": 0.8654
+            "over": 0.1298,
+            "under": 0.8702
           }
         }
       },
       "expected_goals": {
-        "home": 1.356,
-        "away": 1.1622
+        "home": 1.3684,
+        "away": 1.2002
       },
-      "expected_corners": 8.039,
-      "expected_cards": 4.037,
+      "expected_corners": 8.0352,
+      "expected_cards": 4.0396,
       "distributions": {
         "goals_home": [
-          0.2704,
-          0.3282,
-          0.2408,
-          0.1104,
-          0.0386,
-          0.009,
+          0.261,
+          0.3466,
+          0.2294,
+          0.1096,
+          0.0398,
+          0.0092,
           0.0026,
-          0.0
+          0.0012
         ],
         "goals_away": [
-          0.3214,
-          0.349,
-          0.2188,
-          0.0786,
-          0.0234,
-          0.0066,
-          0.0022,
-          0.0
+          0.3064,
+          0.3626,
+          0.2028,
+          0.0916,
+          0.028,
+          0.0068,
+          0.0014,
+          0.0004
         ],
         "corners": [
           0.0006,
           0.0088,
           0.0182,
           0.0432,
-          0.0638,
-          0.0866,
-          0.117,
-          0.1222,
-          0.1282,
-          0.1116,
-          0.0836,
-          0.075,
-          0.0482,
+          0.0606,
+          0.0908,
+          0.1166,
+          0.1218,
+          0.122,
+          0.1158,
+          0.0896,
+          0.0738,
+          0.046,
           0.0336,
-          0.0244,
-          0.0146,
-          0.0098,
-          0.0036,
-          0.0036,
-          0.0012,
-          0.001
+          0.024,
+          0.016,
+          0.0076,
+          0.0042,
+          0.004,
+          0.0014,
+          0.0006
         ],
         "cards": [
           0.0212,
           0.0784,
           0.1562,
           0.1888,
-          0.185,
-          0.1406,
-          0.0952,
-          0.0676,
-          0.032,
-          0.0198,
-          0.011,
-          0.0026,
-          0.0012
+          0.183,
+          0.1388,
+          0.1038,
+          0.064,
+          0.0296,
+          0.0206,
+          0.0104,
+          0.0034,
+          0.0014
         ]
       },
       "confidence": {
-        "entropy": 1.0868262367072525,
+        "entropy": 1.0892849991410778,
         "home_goals_ci": [
           0.0,
           4.0
@@ -7817,111 +7060,116 @@
       "odds_comparison": {
         "h2h": {
           "sport888": {
-            "away": 2.3,
-            "home": 3.0,
+            "away": 2.45,
+            "home": 2.9,
             "draw": 3.1
           },
           "unibet_uk": {
-            "away": 2.35,
-            "home": 3.1,
+            "away": 2.55,
+            "home": 2.88,
             "draw": 3.25
           },
           "leovegas": {
-            "away": 2.3,
-            "home": 3.05,
-            "draw": 3.2
+            "away": 2.5,
+            "home": 2.75,
+            "draw": 3.15
           },
           "betfred_uk": {
-            "away": 2.3,
-            "home": 3.1,
+            "away": 2.5,
+            "home": 2.88,
             "draw": 3.3
           },
           "williamhill": {
-            "away": 2.3,
-            "home": 3.1,
+            "away": 2.45,
+            "home": 2.9,
             "draw": 3.1
           },
           "paddypower": {
-            "away": 2.3,
-            "home": 3.1,
+            "away": 2.5,
+            "home": 3.0,
             "draw": 3.1
           },
           "skybet": {
-            "away": 2.3,
-            "home": 3.1,
+            "away": 2.45,
+            "home": 2.9,
             "draw": 3.1
           },
           "betfair_ex_uk": {
-            "away": 2.5,
-            "home": 3.3,
+            "away": 2.6,
+            "home": 3.15,
             "draw": 3.3
           },
           "smarkets": {
-            "away": 2.48,
-            "home": 3.3,
+            "away": 2.6,
+            "home": 3.15,
             "draw": 3.3
           },
           "betway": {
-            "away": 2.3,
-            "home": 3.1,
-            "draw": 3.1
-          },
-          "virginbet": {
-            "away": 2.3,
-            "home": 3.0,
-            "draw": 3.1
-          },
-          "livescorebet": {
-            "away": 2.25,
-            "home": 2.95,
-            "draw": 3.05
-          },
-          "casumo": {
-            "away": 2.38,
-            "home": 3.15,
+            "away": 2.4,
+            "home": 2.9,
             "draw": 3.2
           },
+          "virginbet": {
+            "away": 2.45,
+            "home": 2.88,
+            "draw": 3.15
+          },
+          "livescorebet": {
+            "away": 2.45,
+            "home": 2.85,
+            "draw": 3.15
+          },
+          "casumo": {
+            "away": 2.5,
+            "home": 2.95,
+            "draw": 3.25
+          },
           "grosvenor": {
-            "away": 2.35,
-            "home": 3.1,
+            "away": 2.48,
+            "home": 2.88,
             "draw": 3.15
           },
           "boylesports": {
-            "away": 2.38,
-            "home": 3.2,
+            "away": 2.4,
+            "home": 3.0,
             "draw": 3.2
           },
           "ladbrokes_uk": {
-            "away": 2.37,
-            "home": 3.0,
-            "draw": 3.3
+            "away": 2.45,
+            "home": 2.8,
+            "draw": 3.25
           },
           "coral": {
-            "away": 2.37,
-            "home": 3.0,
+            "away": 2.5,
+            "home": 2.87,
             "draw": 3.3
           },
           "betano_uk": {
-            "away": 2.3,
-            "home": 3.0,
-            "draw": 3.25
+            "away": 2.4,
+            "home": 2.88,
+            "draw": 3.2
           },
           "betvictor": {
-            "away": 2.3,
-            "home": 3.0,
-            "draw": 3.25
+            "away": 2.4,
+            "home": 2.88,
+            "draw": 3.2
           },
           "matchbook": {
-            "away": 2.5,
-            "home": 3.3,
+            "away": 2.6,
+            "home": 3.15,
             "draw": 3.3
+          },
+          "betfair_sb_uk": {
+            "away": 2.5,
+            "home": 3.0,
+            "draw": 3.2
           }
         },
         "totals": {
           "2.5": {
-            "over": 2.2,
+            "over": 2.24,
             "bookmaker_over": "matchbook",
-            "under": 1.81,
+            "under": 1.79,
             "bookmaker_under": "matchbook"
           }
         },
@@ -7942,16 +7190,16 @@
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.10479518072289162,
-          "model_prob": 0.406,
-          "implied_prob": 0.3012048192771084,
-          "raw_implied_prob": 0.30303030303030304,
-          "expected_value": 0.3398,
+          "edge": 0.080752401987852,
+          "model_prob": 0.3966,
+          "implied_prob": 0.315847598012148,
+          "raw_implied_prob": 0.31746031746031744,
+          "expected_value": 0.24929,
           "recommendation": "bet",
-          "decimal_odds": 3.3
+          "decimal_odds": 3.15
         }
       ],
-      "narrative": "Sunderland vs Leeds \u2014 Matchweek 8\n\nOur model rates Sunderland as 41% favorites (fair odds: 2.46), driven primarily by form and recent results. Sunderland's expected goals stand at 1.4 while Leeds are projected for 1.2 xG.\n\nThe match has a 46% chance of going over 2.5 goals, with both teams to score probability at 51%. We expect around 8 total corners and 4 cards."
+      "narrative": "Sunderland vs Leeds \u2014 Matchweek 8\n\nOur model rates Sunderland as 40% favorites (fair odds: 2.52), driven primarily by form and recent results. Sunderland's expected goals stand at 1.4 while Leeds are projected for 1.2 xG.\n\nThe match has a 47% chance of going over 2.5 goals, with both teams to score probability at 53%. We expect around 8 total corners and 4 cards."
     }
   ]
 }
