@@ -184,6 +184,16 @@ export interface FplLiveState {
   };
   /** Every club's next eight fixtures, easiest run first. */
   fixtureMatrix: FplFixtureMatrixRow[];
+  /**
+   * Every player's current FPL price in £m, keyed by element id.
+   *
+   * A map rather than the ~600 ranked rows that were dropped for having no
+   * reader: the plan grid prices its transfers, and `player_stats.json` is
+   * written once a day, so after FPL's overnight price moves the grid showed
+   * yesterday's price for a buy (Tavernier £6.2m against FPL's £6.3m on
+   * 2026-10-24) on the morning the reader acts on it.
+   */
+  prices: Record<string, number>;
   squad: {
     source: FplSquadSource;
     sourceLabel: string;

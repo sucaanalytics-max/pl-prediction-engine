@@ -51,13 +51,22 @@ function PricedPlanGrid(props: Omit<ComponentProps<typeof PlanGrid>, "prices">) 
   const { artifact: playerRows } = useArtifact<readonly PlayerRow[]>(REGISTRY.playerStats);
   // It only prices the transfer section; a miss renders no price rather than a
   // zero, so this never gates the grid.
+  //
+  // The live route's price wins where it has one. `player_stats.json` is written
+  // once a day and FPL moves prices overnight, so on deadline morning the daily
+  // file can be a rise behind for the very buy the plan names — Tavernier read
+  // £6.2m here while FPL charged £6.3m. The daily file stays as the fallback
+  // because the live route has returned 503 in production. `useHeuristics` is
+  // the same coalesced read the parent already makes, so this costs no fetch.
+  const { artifact: live } = useHeuristics();
   const prices = useMemo(() => {
     const byId = new Map<number, number | null>();
     for (const row of proven(playerRows) ?? []) {
       if (row.elementId !== null) byId.set(row.elementId, row.fpl_price);
     }
+    for (const [id, price] of proven(live)?.prices ?? []) byId.set(id, price);
     return byId;
-  }, [playerRows]);
+  }, [playerRows, live]);
   return <PlanGrid {...props} prices={prices} />;
 }
 

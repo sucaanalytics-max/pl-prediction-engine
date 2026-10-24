@@ -619,6 +619,9 @@ export async function buildFplLiveState(): Promise<FplLiveState> {
       phase,
     },
     fixtureMatrix: fixtureMatrix(planningId, fixtures, teamById, FIXTURE_HORIZON),
+    prices: Object.fromEntries(
+      bootstrap.elements.map((element) => [String(element.id), element.now_cost / 10]),
+    ),
     squad: {
       source,
       sourceLabel: picks ? "Official public GW picks" : "Captured authenticated preseason draft",

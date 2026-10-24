@@ -325,6 +325,14 @@ export interface HeuristicView {
    */
   readonly fixtureMatrix: readonly FixtureMatrixRow[];
   /**
+   * FPL's current price for every player, £m by element id.
+   *
+   * Empty rather than null when absent: snapshots stored before the route
+   * emitted it carry none, and a consumer then falls back to the daily
+   * `player_stats.json` price rather than printing nothing.
+   */
+  readonly prices: ReadonlyMap<number, number>;
+  /**
    * `fplreview_csv_snapshot` when a paid export was on disk, `fallback` when it
    * was not. The second is now the normal case; see `lib/fplreview-projections.ts`.
    */
@@ -622,6 +630,25 @@ function narrowCaptainWeek(raw: unknown): HeuristicCaptainWeek | null {
  * malformed rows are dropped and counted, because a single bad player must not
  * blank a shortlist.
  */
+/**
+ * `{ "68": 6.3, ... }` into a map on the numeric id.
+ *
+ * A key that is not an integer, or a price that is not a positive finite number,
+ * is skipped: one bad entry must not cost every other player's price, and a
+ * zero would print as a free player rather than as an unknown one.
+ */
+function narrowPrices(raw: unknown): ReadonlyMap<number, number> {
+  const prices = new Map<number, number>();
+  if (!isRecord(raw)) return prices;
+  for (const [key, value] of Object.entries(raw)) {
+    const id = Number(key);
+    if (!Number.isInteger(id)) continue;
+    if (typeof value !== "number" || !Number.isFinite(value) || value <= 0) continue;
+    prices.set(id, value);
+  }
+  return prices;
+}
+
 export function narrowHeuristics(raw: unknown): NarrowResult<HeuristicView> {
   const problems = new Problems();
   const root = reqRecord(raw, "state", problems);
@@ -682,6 +709,7 @@ export function narrowHeuristics(raw: unknown): NarrowResult<HeuristicView> {
     notices: optArray(root.notices).filter((n): n is string => typeof n === "string"),
     squad: narrowSquad(root.squad),
     fixtureMatrix: narrowFixtureMatrix(root.fixtureMatrix),
+    prices: narrowPrices(root.prices),
     projectionSource: optString(projections.source) ?? "unknown",
     projectionSourceLabel: optString(projections.sourceLabel) ?? "unknown source",
     transfers,

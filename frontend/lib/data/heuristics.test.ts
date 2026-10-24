@@ -280,3 +280,28 @@ describe("the gameweek that is being played", () => {
       .toBeNull();
   });
 });
+
+describe("live prices", () => {
+  /**
+   * The plan grid priced its transfers from `player_stats.json`, written once a
+   * day. FPL moves prices overnight, so on 2026-10-24 the grid printed Tavernier
+   * at £6.2m while FPL charged £6.3m. The route now publishes every price.
+   */
+
+  it("reads every price, keyed on the numeric element id", () => {
+    const prices = narrowOk(state({ prices: { "68": 6.3, "60": 5.5 } })).prices;
+    expect(prices.get(68)).toBe(6.3);
+    expect(prices.get(60)).toBe(5.5);
+  });
+
+  it("is empty, not a failure, when a stored snapshot predates the field", () => {
+    expect(narrowOk(state()).prices.size).toBe(0);
+  });
+
+  it("skips a bad entry without losing the rest", () => {
+    const prices = narrowOk(state({
+      prices: { "68": 6.3, "x": 5, "60": 0, "152": "5.3", "398": Number.NaN },
+    })).prices;
+    expect([...prices.entries()]).toEqual([[68, 6.3]]);
+  });
+});

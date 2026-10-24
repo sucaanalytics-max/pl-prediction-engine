@@ -180,6 +180,10 @@ async function mountPage(
     // the page was ever tested in — and the reason a tile reading "No transfer is
     // suggested" shipped above a grid printing the agent's Foden → Tavernier.
     decision = null as Record<string, unknown> | null,
+    // The live route's price map, as the narrower hands it on. Absent by default,
+    // which is what every snapshot stored before the route emitted it looks like.
+    livePrices = undefined as ReadonlyMap<number, number> | undefined,
+    playerStats = PLAYER_STATS as readonly { elementId: number; fpl_price: number }[],
   } = {},
 ) {
   vi.resetModules();
@@ -198,7 +202,10 @@ async function mountPage(
     useHeuristics: () => ok(
       squad === null
         ? null
-        : { ...VIEW, squad, event: { id: eventId, deadlineTime: null } },
+        : {
+          ...VIEW, squad, event: { id: eventId, deadlineTime: null },
+          ...(livePrices === undefined ? {} : { prices: livePrices }),
+        },
     ),
   }));
   vi.doMock("@/lib/data/useArtifact", () => ({
@@ -218,7 +225,7 @@ async function mountPage(
             },
         );
       }
-      if (key === "playerStats") return ok(PLAYER_STATS);
+      if (key === "playerStats") return ok(playerStats);
       if (key.startsWith("decision:")) return ok(decision);
       // Everything else absent, which is Rule 2: it must cost one line, not the page.
       return ok(null);
@@ -444,6 +451,54 @@ describe("the transfer tile reports the agent's plan when one is published", () 
     // Provisional until sealed, and the tile must say so: the plan is re-solved
     // every few hours and the reader acts on it before the deadline.
     expect(text).toMatch(/provisional/i);
+  });
+
+  it("prices the plan's buy at FPL's live price, not the daily file's", async () => {
+    /**
+     * 2026-10-24: `player_stats.json` (written 23 Oct 10:41Z) had Tavernier at
+     * £6.2m; FPL had moved him to £6.3m overnight. The grid printed £6.2m on
+     * the morning the reader acts on it. The live route's price wins.
+     */
+    const squad = SQUAD.players.map((p) => p.elementId).filter((id) => id !== 7);
+    const week0 = {
+      gameweek: 1, squad: [...squad, 68], xi: [1, 2, 3, 4, 5, 6, 68, 8, 9, 10, 11],
+      bench: [12, 13, 14, 15], captain: 5, vice: 9,
+      transfers_in: [68], transfers_out: [7], hits: 0, bank_after: 4.1,
+      free_transfers_after: 1, planned: true,
+    };
+    const { container } = await mountPage({
+      projections: [...PROJECTIONS, BUY],
+      decision: {
+        ...decisionWith([68], [7]),
+        horizon: { evalHorizon: 1, transferHorizon: 1, weeks: [week0] },
+      },
+      playerStats: [...PLAYER_STATS, { elementId: 68, fpl_price: 6.2 }],
+      livePrices: new Map([[68, 6.3]]),
+    });
+    const move = container.querySelector("[data-testid='plan-move']")?.textContent ?? "";
+    expect(move).toContain("Tavernier");
+    expect(move).toContain("6.3");
+    expect(move).not.toContain("6.2");
+  });
+
+  it("falls back to the daily price when the live route has none", async () => {
+    const squad = SQUAD.players.map((p) => p.elementId).filter((id) => id !== 7);
+    const week0 = {
+      gameweek: 1, squad: [...squad, 68], xi: [1, 2, 3, 4, 5, 6, 68, 8, 9, 10, 11],
+      bench: [12, 13, 14, 15], captain: 5, vice: 9,
+      transfers_in: [68], transfers_out: [7], hits: 0, bank_after: 4.1,
+      free_transfers_after: 1, planned: true,
+    };
+    const { container } = await mountPage({
+      projections: [...PROJECTIONS, BUY],
+      decision: {
+        ...decisionWith([68], [7]),
+        horizon: { evalHorizon: 1, transferHorizon: 1, weeks: [week0] },
+      },
+      playerStats: [...PLAYER_STATS, { elementId: 68, fpl_price: 6.2 }],
+    });
+    const move = container.querySelector("[data-testid='plan-move']")?.textContent ?? "";
+    expect(move).toContain("6.2");
   });
 
   it("says the plan makes no move, rather than that none can be priced", async () => {
