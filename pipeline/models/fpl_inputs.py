@@ -78,6 +78,10 @@ CURRENT_SEASON_COLUMNS = (
     # carried only so a row can be joined to the flags FPL showed at that
     # gameweek's deadline, which are keyed by it.
     "element",
+    # Sent off in THIS fixture (0/1). Read only to keep a red card out of the
+    # injury-exit class (minutes.injury_exit_p60_strength): a ban produces the
+    # same "flagged at the next deadline" signature as an injury.
+    "red_cards",
 )
 
 
@@ -135,21 +139,17 @@ def current_season_rows(
             played = [
                 (
                     fixture.get("fixture"),
-                    int(next(
-                        (
-                            stat.get("value") or 0
-                            for stat in fixture.get("stats") or []
-                            if stat.get("identifier") == "minutes"
-                        ),
-                        0,
-                    )),
+                    _explain_stat(fixture, "minutes"),
+                    # `explain` lists only stats that scored, so a red card is
+                    # present exactly when he was sent off in this fixture.
+                    _explain_stat(fixture, "red_cards"),
                 )
                 for fixture in fixtures
             ]
             starts = int((element.get("stats") or {}).get("starts") or 0)
             longest_first = sorted(range(len(played)), key=lambda i: -played[i][1])
             started = set(longest_first[:starts])
-            for index, (fixture_id, minutes) in enumerate(played):
+            for index, (fixture_id, minutes, red_cards) in enumerate(played):
                 rows.append({
                     "name_key": who[0],
                     "position_norm": who[1],
@@ -159,8 +159,21 @@ def current_season_rows(
                     "fixture": fixture_id,
                     "season": season,
                     "element": int(element["id"]),
+                    "red_cards": red_cards,
                 })
     return pd.DataFrame(rows, columns=list(CURRENT_SEASON_COLUMNS))
+
+
+def _explain_stat(fixture: Mapping[str, Any], identifier: str) -> int:
+    """One stat's value from an ``explain`` entry; 0 when it is not listed."""
+    return int(next(
+        (
+            stat.get("value") or 0
+            for stat in fixture.get("stats") or []
+            if stat.get("identifier") == identifier
+        ),
+        0,
+    ))
 
 
 def _parse_utc(value: Any) -> Optional[datetime]:
@@ -353,6 +366,7 @@ def deadline_availability_in_use() -> bool:
     return (
         float(PARAM_REGISTRY["minutes.fit_now_absence_credit"]["value"]) > 0.0
         or float(PARAM_REGISTRY["minutes.unavailable_fixture_retention"]["value"]) < 1.0
+        or float(PARAM_REGISTRY["minutes.injury_exit_p60_strength"]["value"]) > 0.0
     )
 
 

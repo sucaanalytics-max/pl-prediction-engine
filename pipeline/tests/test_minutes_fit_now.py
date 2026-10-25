@@ -229,7 +229,11 @@ class LiveWiringTests(unittest.TestCase):
         self.assertTrue(fpl_inputs.deadline_availability_in_use())
 
     def test_off_means_the_ledger_is_never_read(self):
-        with _credit(0.0), mock.patch.object(
+        # Every consumer of the flags off: the injury-exit P(60) fit reads them
+        # too (minutes.injury_exit_p60_strength).
+        with _credit(0.0), mock.patch.dict(
+            PARAM_REGISTRY["minutes.injury_exit_p60_strength"], {"value": 0.0}
+        ), mock.patch.object(
             fpl_inputs, "with_deadline_availability"
         ) as join:
             out = fpl_inputs.with_deadline_availability_if_used(

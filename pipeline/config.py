@@ -918,7 +918,13 @@ PARAM_REGISTRY = {
             "It saturates below 0.5 rather than reaching the pool mean, which is "
             "the substantive point: a nailed starter is still a far better bet "
             "than an average squad member nine weeks out, and a model reverting "
-            "fully would erase the distinction the optimiser is buying."
+            "fully would erase the distinction the optimiser is buying.\n\n"
+            "INACTIVE while minutes.horizon_start_target_half_life > 0 (from "
+            "2026-10-25), which replaces the pool target with the player's own "
+            "long-run rate. Kept because setting that parameter to 0 restores this "
+            "path exactly. Its measurement anchored on players who started "
+            "gameweek g and read g+1 as h=1; at the next deadline g+1 is h=0, so "
+            "the first step of reversion was counted twice — see that entry."
         ),
     },
     "minutes.horizon_start_reversion_rho": {
@@ -932,6 +938,169 @@ PARAM_REGISTRY = {
             "value encodes a steep-then-flat shape: most of the churn in who "
             "starts happens within two gameweeks, after which the estimate is "
             "about as informative as it is going to get."
+        ),
+    },
+    # ── Horizon churn: reversion toward the player's OWN long-run rate ────
+    # Supersedes the pool-target reversion above (cap/rho), which is then
+    # inactive. 0.0 restores it exactly.
+    "minutes.horizon_start_target_half_life": {
+        # 0.0 = OFF: revert toward the position pool with cap/rho above, bit for
+        # bit. Horizon weeks only (h >= 1); the sealed h=0 row cannot move.
+        "value": 12.0,
+        "bounds": (0.0, 40.0),
+        "tier": "S",
+        "source": (
+            "Half-life in fixtures of the long-memory start rate a player's horizon "
+            "start probability reverts TOWARD, as p_h = L + (p_0 - L) * rho^h, "
+            "where L is his own start rate on this half-life, shrunk toward the "
+            "same target as p_0 with minutes.start_shrinkage. A player with no "
+            "history keeps his prior (L = p_0). Tier S, not F: it is a structural "
+            "switch with 0 = off, and rho was selected jointly with it.\n\n"
+            "WHY THE POOL TARGET WAS WRONG IN KIND. The position pool includes "
+            "every registered squad member, so a nailed keeper was pulled toward "
+            "a 0.25 GK start rate that is mostly second and third choices: "
+            "archive nailed GKs (h=0 p_start >= 0.85) fell 0.927 -> 0.671 by h=3 "
+            "on reversion alone, then x0.878 availability -> 0.589, against a "
+            "realised 0.867. Of the 0.338 modelled drop, reversion is 0.256 (76%) "
+            "and availability 0.082 (24%). And the cap/rho fit was "
+            "off by one: it anchored on players who STARTED gameweek g and read "
+            "g+1 as h=1, but at the next deadline g is already in the fit, so "
+            "g+1 is h=0 — whose drop the h=0 model already predicts (anchors who "
+            "started their latest fixture: model p_0 0.80 DEF / 0.86 GK against "
+            "realised 0.805 / 0.914). The first step was counted twice.\n\n"
+            "MEASURED 2026-10-25, start-probability space, h=1..5 (h=0 unchanged "
+            "by construction). Archive walk-forward, 2024-25 and 2025-26, refit "
+            "at every GW 4-38, 244,109 player-fixtures, 1,138 players, deltas "
+            "this minus pool target, player-clustered bootstrap 95% CI. "
+            "Out-of-fold (rho fitted on one season, scored on the other) Brier: "
+            "start -0.0118 [-0.0134, -0.0102], appear -0.0116 [-0.0131, -0.0103], "
+            "60+ -0.0107 [-0.0123, -0.0093]; log-loss start -0.041 [-0.046, "
+            "-0.036]. Every position improves with CIs excluding zero (GK start "
+            "-0.0166, DEF -0.0120, MID -0.0109, FWD -0.0105), nailed GKs -0.064 "
+            "[-0.084, -0.041] (pred 0.617 -> 0.797 vs realised 0.871). Gains grow "
+            "with h: -0.0042 at h=1, -0.0170 at h=5. Sealed 2026-27 walk-forward "
+            "(seals GW1/3-7, real deadline flags, fully out of sample), 9,561 "
+            "rows, 667 players, Brier start -0.0051 [-0.0089, -0.0012], appear "
+            "-0.0069 [-0.0096, -0.0040], 60+ -0.0047 [-0.0083, -0.0009]; "
+            "log-loss point estimates favourable, CIs span zero (start -0.002 "
+            "[-0.015, +0.012]); nailed GKs -0.057 [-0.089, -0.008] (20 "
+            "players).\n\n"
+            "Flat in the half-life: 8 / 12 / 16 / 24 score -0.0118 / -0.0118 / "
+            "-0.0117 / -0.0116, so 12 is a non-boundary value inside the noise, "
+            "not an argmin.\n\n"
+            "REJECTED. (a) Per-position cap/rho on the pool target: -0.0072 "
+            "out of fold at h=1-5, about 60% of this, with the GK cap fitted at "
+            "~0 (the pool target is useless for keepers) and unstable outfield "
+            "folds (MID rho 0.23 vs 0.61). (b) A regulars-only target (start rate "
+            "of players with a long-run rate >= 0.5): on h=1-9 start Brier, "
+            "fold-averaged, -0.0089 applied to everyone and -0.0084 applied to "
+            "regulars only, against -0.0078 for a refitted pool target and "
+            "-0.0141 for this own-rate target; it is a discrete special case of "
+            "this one, and worse. "
+            "Per-position rho with this target: -0.0117, no gain for 3 more "
+            "parameters. A free cap: indistinguishable (-0.0120), so the full "
+            "reversion (cap 1) is kept for interpretability. (c) Jointly "
+            "refitting horizon_availability_floor/rho with it (floor 0.875, rho "
+            "0.725): -0.0004 more overall and nailed GKs -0.0041, but nailed "
+            "midfielders WORSE, start +0.0020 [+0.0002, +0.0039], because nailed "
+            "outfielders are already over-predicted at h=0 (0.92 vs 0.85-0.88). "
+            "Not adopted; see the residual below.\n\n"
+            "RESIDUAL. Nailed keepers are still under-predicted by ~0.08 at h=3 "
+            "(0.786 vs 0.867), now entirely from horizon_availability_factor, "
+            "which is shared across positions while keepers rarely get injured or "
+            "rotated. A GK-only availability floor fits ~0.70-0.80 with rho "
+            "0.93-0.96 depending on the fold — poorly identified — and is left "
+            "for a separate measurement.\n\n"
+            "TOP-TEN CHECK. The cap/rho docstring compared an h=8/h=0 xP ratio of "
+            "0.710 with an 'archive anchor' of 0.692. That anchor cannot be "
+            "reproduced (no script survives) and, like the cap fit, appears to "
+            "condition on a realised start at g. Selecting at PREDICTION time "
+            "instead (top ten by season-to-date points among p_0 >= 0.5, 530 "
+            "archive anchors), realised h=8/h=0 is 0.861 in minutes and 0.820 in "
+            "points; the model's expected-minutes ratio is 0.586 under the pool "
+            "target and 0.784 under this. On GW9 2026-27 through the simulator "
+            "(same fixtures, roles re-derived at h=8), the top ten's xP ratio "
+            "moves 0.722 -> 0.789: closer to the honest anchor, still below it."
+        ),
+    },
+    "minutes.horizon_start_target_rho": {
+        "value": 0.80,
+        "bounds": (0.30, 0.98),
+        "tier": "S",
+        "source": (
+            "Weekly persistence of a player's deviation from his own long-run "
+            "start rate: p_h = L + (p_0 - L) * rho^h. Read only while "
+            "minutes.horizon_start_target_half_life > 0; see that entry for the "
+            "measurement. Least squares on start Brier over h=1..9 with the "
+            "availability factor held at its registry values: 0.797 on both "
+            "archive seasons together, 0.820 fitted on 2024-25 and 0.773 on "
+            "2025-26. Per position 0.857 GK / 0.787 DEF / 0.774 MID / 0.851 FWD "
+            "scored no better than one shared value (-0.0117 vs -0.0118). At 0.80 "
+            "half the gap between today's form and the long-run rate is gone "
+            "after three gameweeks."
+        ),
+    },
+    "minutes.injury_exit_p60_strength": {
+        # 0.0 = OFF: P(60 | start) exactly as before. SEAL PATH: this moves h=0
+        # p_60 (13 players by > 0.01 at GW9, all-player mean -0.0003), and makes
+        # the live callers join deadline flags (fpl_inputs.deadline_availability_in_use).
+        "value": 1.0,
+        "bounds": (0.0, 1.0),
+        "tier": "S",
+        "source": (
+            "Weight removed from a start cut short by injury in the P(60 | start) "
+            "fit ONLY (role, start rate and minutes-if-start untouched), with the "
+            "population risk restored:\n"
+            "  P(60|start) = (1 - r_pos) * shrink(n60, n_starts - s*n_exit, "
+            "P(60|start, no exit)_pos)\n"
+            "r_pos is s * the position's exit share of starts and the prior is the "
+            "position's P(60 | start) on the same exit-free rows, both over every "
+            "fitted row. At s = 1, (1 - e/n) * n60/(n - e) = n60/n: the position "
+            "rate is reproduced exactly, so the exclusion cannot inflate anyone. "
+            "Simply deleting a player's exits would — a player whose only short "
+            "start was an injury would be projected as if exits never happen.\n\n"
+            "WHAT COUNTS (MinutesModel._injury_exit_rows): a start under 60 "
+            "minutes, not an own red card, followed by an injury signal in his "
+            "next gameweek — availability_at_deadline < 1.0 where a seal recorded "
+            "it, else (archive, unsealed weeks) a regular (started >= 3 of his "
+            "previous 4) who played 0 minutes in it. The latest start has no next "
+            "gameweek and is never labelled.\n\n"
+            "RED CARDS are not injury exits: a ban produces the same 'flagged / "
+            "missed the next match' signature (35 of the archive's 311 regulars' "
+            "short starts followed by a zero were sendings-off). They stay in the "
+            "fit as ordinary short starts — the conservative choice for a "
+            "partly player-specific event too rare to measure on its own (67 "
+            "short-start reds in three seasons; after one, regulars reached 60 "
+            "in 94% of their next starts, n = 35).\n\n"
+            "Sizes: 276 proxy exits in 25,080 archive starts over 2023-26 — 1.2% "
+            "of DEF and MID starts, 0.9% FWD, 0.35% GK. This season's seals label "
+            "12 by GW7 (e.g. Porro GW5, 18 minutes).\n\n"
+            "MEASURED 2026-10-25 (deltas this at 1.0 minus 0.0, player-clustered "
+            "95% CI). TARGET = an exit-labelled start among his last 6 fixtures. "
+            "P(60 | start) among starters, Brier: sealed 2026-27 h=0 -0.049 "
+            "[-0.069, -0.035] (31 starts, 17 players; pred 0.782 -> 0.925 vs "
+            "realised 0.968); archive h=0 -0.026 [-0.036, -0.015] (276, 101; "
+            "0.788 -> 0.944 vs 0.924); archive h=1-5 -0.046 [-0.057, -0.034]. "
+            "Unconditional 60+, targets: sealed h=0 -0.0075 [-0.025, +0.011]; "
+            "archive h=1-5 -0.017 [-0.024, -0.010]; archive h=0 WORSE, +0.019 "
+            "[+0.013, +0.024] — but entirely on targets who had not played their "
+            "previous fixture (+0.038), i.e. still injured, whom the flagless "
+            "archive predicts to start 0.37 against a realised 0.17. Those who "
+            "had played it improve, -0.015 [-0.022, -0.008]. In production a "
+            "flag gates the still-injured, as the sealed rows show. "
+            "NON-TARGET rows: P(60|start) better, -0.0004 [-0.0005, -0.0004] "
+            "archive (0.948 -> 0.940 vs realised 0.930); unconditional 60+ h=0 "
+            "-0.0001 [-0.0002, -0.0001], h=1-5 +0.0004 [+0.0003, +0.0005] under "
+            "the pool reversion, +0.0001 [+0.0000, +0.0001] archive and -0.0000 "
+            "[-0.0002, +0.0001] sealed with "
+            "minutes.horizon_start_target_half_life on — the residual is the "
+            "start model's horizon under-prediction leaking through a correctly "
+            "lowered P(60|start). Monotone: 0.5 sits between 0 and 1 on every "
+            "target metric.\n\n"
+            "NOT CHANGED: minutes_if_start. Targets' starts run 2.3 min (archive) "
+            "to 6.6 min (sealed, small n) longer than predicted and non-targets' "
+            "0.8 min shorter, so the same correction is directionally supported, "
+            "but it is a separate estimand and was not measured as a change."
         ),
     },
     # ── Market anchor ────────────────────────────────────────────────────

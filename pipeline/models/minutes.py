@@ -508,28 +508,56 @@ def horizon_start_reversion(horizon: int) -> float:
     sampling is invariant to a common scaling of *odds*, not of probabilities, so
     a nailed player loses and a fringe player gains.
 
-    So both mechanisms contribute and the delivered calibration needs both.
-    Measured h=8/h=0 expected-points ratio over the top ten starters: 0.710 with
-    both, 0.755 with reversion alone, 0.892 with the availability factor alone,
-    against an archive anchor of 0.692. Dropping either overstates the far horizon.
-
-    That also explains why the old design was wrong in kind rather than degree. It
-    multiplied finished expected points by the availability factor — a quantity the
+    So both mechanisms contribute and the delivered calibration needs both. The
+    multiplied-totals design was wrong in kind rather than degree: it scaled
+    finished expected points by the availability factor — a quantity the
     simulator cannot produce from any input, since handed a uniform haircut it
     returns almost the original club total.
 
-    The real phenomenon is churn in WHO starts, and it is a reversion toward the
-    base rate rather than a decay. Measured over 16,548 anchors across 2024-25
-    and 2025-26: players who started gameweek g average 82.4 minutes that week,
-    68.7 at g+1, 62.4 at g+3 and 56.1 at g+9, against a pool mean of 26.1 across
-    all player-gameweeks. As a fraction of the gap to that pool mean, the
-    reversion is 0.243 at h=1, 0.356 at h=3 and 0.467 at h=9 — steep then flat.
-    Fitting ``cap * (1 - rho^h)`` gives cap 0.447, rho 0.541, RMSE 0.0174.
+    **Which target.** The real phenomenon is churn in WHO starts, and it is a
+    reversion — but toward the PLAYER'S OWN long-run start rate, not toward his
+    position's pool. With ``minutes.horizon_start_target_half_life`` > 0 (the
+    default since 2026-10-25) ``predict`` uses ``p_h = L + (p_0 - L) * rho^h``,
+    where ``L`` is his start rate on that longer half-life, and this function
+    (the pool path) is not called. The pool path below is kept only so that
+    setting the half-life to 0 restores it exactly.
 
-    It saturates below 0.5 rather than converging on the pool mean, which is the
-    substantive finding: a nailed starter is still a much better bet than an
-    average squad member nine weeks out. A model that reverted fully would erase
-    the very distinction the optimiser is buying.
+    Why the pool target failed, measured on 2024-25 and 2025-26 in
+    start-probability space:
+
+    * **The pool is the wrong population.** It counts every registered squad
+      member, so a nailed keeper was pulled toward a 0.25 GK start rate made of
+      second and third choices. Archive keepers with h=0 p_start >= 0.85 fell
+      0.927 -> 0.671 by h=3 from this reversion alone, and to 0.589 after the
+      availability factor, against a realised 0.867 — reversion is 76% of the
+      modelled drop. A per-position cap fitted the GK cap at ~0.
+    * **Its fit was off by one.** The 16,548-anchor measurement below anchored
+      on players who STARTED gameweek g and read g+1 as h=1. At the next
+      deadline g is already in the fit, so g+1 is h=0 — whose drop the h=0 model
+      already predicts. The first step of reversion was counted twice.
+
+    Out of fold at h=1-5 the own-rate target improves start Brier by 0.0118
+    [0.0102, 0.0134] overall and in every position, and the sealed 2026-27
+    seals agree (0.0051 [0.0012, 0.0089]); h=0, and so the sealed row, is
+    untouched by construction. The registry entry carries the full table.
+
+    The availability factor still decays a nailed player. That residual is what
+    remains for keepers (0.786 predicted vs 0.867 realised at h=3); refitting the
+    factor jointly helped keepers but hurt nailed midfielders, so it is unchanged.
+
+    On the top-ten-starters check this docstring used to quote (h=8/h=0 xP 0.710
+    against an "archive anchor" of 0.692): that anchor cannot be reproduced and
+    appears to condition on a realised start at g, the same off-by-one. Selected
+    at prediction time, the archive's top ten keep 0.861 of their minutes and
+    0.820 of their points from h=0 to h=8; the model's expected-minutes ratio
+    is 0.586 on the pool path and 0.784 on the own-rate path, and GW9 2026-27's
+    simulated top-ten xP ratio moves 0.722 -> 0.789.
+
+    Pool-path measurement, as originally recorded: players who started gameweek
+    g average 82.4 minutes that week, 68.7 at g+1, 62.4 at g+3 and 56.1 at g+9,
+    against a pool mean of 26.1; as a fraction of the gap to that mean the
+    reversion is 0.243 / 0.356 / 0.467 at "h" = 1 / 3 / 9, and ``cap * (1 -
+    rho^h)`` fits cap 0.447, rho 0.541, RMSE 0.0174.
     """
     cap = _param("minutes.horizon_start_reversion_cap")
     rho = _param("minutes.horizon_start_reversion_rho")
@@ -677,6 +705,19 @@ class MinutesModel:
         started = frame["starts"] > 0
         appeared = frame["minutes"] > 0
 
+        # Long-memory weights for the horizon reversion TARGET (his own long-run
+        # start rate); see `horizon_start_reversion`. Absent when the parameter
+        # is 0, which leaves every stat and prediction exactly as before.
+        long_half_life = _param("minutes.horizon_start_target_half_life")
+        if long_half_life > 0:
+            frame["_w_long"] = 0.5 ** (age / long_half_life)
+
+        # Starts cut short by injury; see `_injury_exit_rows`. Absent when the
+        # parameter is 0, so the P(60 | start) fit is exactly what it was.
+        exit_strength = _param("minutes.injury_exit_p60_strength")
+        if exit_strength > 0:
+            frame["_injury_exit"] = self._injury_exit_rows(frame, key)
+
         # Position-level priors first: they are what individual players shrink
         # toward, so they must be computed over everyone.
         for position in POSITIONS:
@@ -708,6 +749,20 @@ class MinutesModel:
                 if len(rows_not_started)
                 else 0.3,
             }
+            if exit_strength > 0 and len(rows_started):
+                # The p60 prior WITHOUT injury exits, and the population rate of
+                # them, from the same rows. Their product reproduces the plain
+                # prior exactly at strength 1 — (1 - e/n) * n60/(n - e) = n60/n —
+                # which is what stops the exclusion inflating anyone's P(60).
+                exits = rows_started["_injury_exit"].astype(float) * exit_strength
+                kept = float(len(rows_started) - exits.sum())
+                self.by_position[position]["p_60_if_start_clean"] = (
+                    float((rows_started["minutes"] >= 60).sum()) / kept
+                    if kept > 0 else 0.8
+                )
+                self.by_position[position]["injury_exit_rate"] = float(
+                    exits.sum() / len(rows_started)
+                )
 
         # The weight each row carries as evidence about his ROLE. Equal to `_w`
         # unless the row is a non-appearance at a deadline where he was flagged;
@@ -715,6 +770,10 @@ class MinutesModel:
         frame["_w_role"], self.availability_diagnostics = self._discount_unavailable(
             frame, key
         )
+        if "_injury_exit" in frame.columns:
+            self.availability_diagnostics["injury_exit_starts"] = int(
+                frame["_injury_exit"].sum()
+            )
 
         for player_key, rows in frame.groupby(key, dropna=True):
             self.by_player[player_key] = self._player_stats(rows, "_w_role")
@@ -751,7 +810,23 @@ class MinutesModel:
         not_started = ~started
         bench = not_started & (rows["minutes"] > 0)
         positions = rows["_position"].dropna()
+        extra: Dict[str, Any] = {}
+        if "_w_long" in rows.columns:
+            # Same row discounts as `weight` (the fit-now credit, the
+            # unavailable-fixture retention), on a long half-life instead of the
+            # 1.5-fixture one. `_w` is a positive power of 0.5, never 0.
+            long_w = rows["_w_long"] * (w / rows["_w"])
+            extra["n_fixtures_long"] = float(long_w.sum())
+            extra["n_starts_long"] = float(long_w[started].sum())
+        if "_injury_exit" in rows.columns:
+            # P(60 | start) is fitted on starts NOT cut short by injury; the
+            # population exit rate is multiplied back in `predict`.
+            strength = _param("minutes.injury_exit_p60_strength")
+            p60_w = w * (1.0 - strength * rows["_injury_exit"].astype(float))
+            extra["n_started_rows_p60"] = float(p60_w[started].sum())
+            extra["injury_exit_starts"] = float(rows.loc[started, "_injury_exit"].sum())
         return {
+            **extra,
             "n_fixtures": float(w.sum()),
             "n_starts": float(w[started].sum()),
             "n_not_started": float(w[not_started].sum()),
@@ -819,6 +894,94 @@ class MinutesModel:
                 )
                 n_players += 1
         self.availability_diagnostics["players_with_fit_now_fit"] = n_players
+
+    @staticmethod
+    def _injury_exit_rows(frame: pd.DataFrame, key: str) -> pd.Series:
+        """
+        1.0 for each start cut short by injury, else 0.0. Read ONLY by the
+        P(60 | start) fit (``minutes.injury_exit_p60_strength``).
+
+        A start counts when it lasted under 60 minutes, the player was NOT sent
+        off in it, and the next gameweek shows he was hurt:
+
+        * **Flag, where known.** His ``availability_at_deadline`` at the next
+          gameweek he has a row in is below 1.0 — FPL marked him doubtful or
+          out at the very next deadline. This season's rows carry it from the
+          sealed bootstraps.
+        * **Proxy, where not** (the archive; a gameweek with no seal). He was a
+          regular — started at least 3 of his previous 4 fixtures — and played
+          no minutes at all in his next gameweek, within the same season. A
+          regular who goes off early and then disappears is hurt far more often
+          than dropped.
+
+        Own red cards are excluded because the suspension that follows produces
+        exactly the "flagged / missed the next match" signature: in the archive,
+        35 of the 311 regulars' short starts followed by a zero were sendings
+        off. They stay in the fit as ordinary starts — see the registry entry.
+
+        The latest start of every player has no next gameweek yet and is never
+        labelled, which is the old behaviour for that row.
+        """
+        started = frame["starts"] > 0
+        short = started & (frame["minutes"] < 60)
+        if "red_cards" in frame.columns:
+            short &= pd.to_numeric(frame["red_cards"], errors="coerce").fillna(0) <= 0
+        if not short.any():
+            return pd.Series(0.0, index=frame.index)
+
+        work = pd.DataFrame({
+            "row": np.arange(len(frame)),
+            "key": frame[key].to_numpy(),
+            "idx": frame["_fixture_index"].astype(float).to_numpy(),
+            "season": (
+                frame["season"].astype(str).to_numpy()
+                if "season" in frame.columns else np.full(len(frame), "")
+            ),
+            "started": started.astype(int).to_numpy(),
+            "played": (frame["minutes"] > 0).astype(float).to_numpy(),
+            "short": short.to_numpy(),
+            "avail": (
+                pd.to_numeric(frame[AVAILABILITY_AT_DEADLINE], errors="coerce").to_numpy()
+                if AVAILABILITY_AT_DEADLINE in frame.columns
+                else np.full(len(frame), np.nan)
+            ),
+        })
+        work = work[pd.notna(work["key"])]
+        # Stable sort: rows sharing a gameweek keep their input order.
+        work = work.sort_values(["key", "idx"], kind="mergesort").reset_index(drop=True)
+
+        # Regular: started >= 3 of his previous 4 fixtures (rows), before this one.
+        work["prev4"] = work.groupby("key", sort=False)["started"].transform(
+            lambda s: s.shift(1).rolling(4, min_periods=4).sum()
+        )
+
+        # His NEXT GAMEWEEK (strictly later index, so the second fixture of a
+        # double gameweek does not answer for the first): did he play at all,
+        # and what was his availability at its deadline.
+        per_gw = work.groupby(["key", "idx"], sort=True).agg(
+            season=("season", "first"), played=("played", "max"), avail=("avail", "min"),
+        ).reset_index()
+        nxt = per_gw.groupby("key", sort=False)[["season", "played", "avail"]].shift(-1)
+        per_gw["next_season"] = nxt["season"]
+        per_gw["next_played"] = nxt["played"]
+        per_gw["next_avail"] = nxt["avail"]
+        work = work.merge(
+            per_gw[["key", "idx", "next_season", "next_played", "next_avail"]],
+            on=["key", "idx"], how="left",
+        )
+
+        flagged = work["next_avail"].notna() & (work["next_avail"] < 1.0)
+        proxy = (
+            work["next_avail"].isna()
+            & work["next_played"].notna()
+            & (work["next_season"] == work["season"])
+            & (work["next_played"] == 0.0)
+            & (work["prev4"] >= 3)
+        )
+        label = np.zeros(len(frame))
+        hit = work.loc[work["short"] & (flagged | proxy), "row"].to_numpy()
+        label[hit] = 1.0
+        return pd.Series(label, index=frame.index)
 
     def _discount_unavailable(
         self, frame: pd.DataFrame, key: str
@@ -998,10 +1161,21 @@ class MinutesModel:
                 stats["sum_minutes_if_bench"], stats["n_bench_appearances"],
                 prior["minutes_if_bench"], _param("minutes.minutes_shrinkage"),
             )
-            p_60_if_start = _shrink(
-                stats["n_60_starts"], stats["n_started_rows"],
-                prior["p_60_if_start"], _param("minutes.p60_shrinkage"),
-            )
+            if "n_started_rows_p60" in stats and "p_60_if_start_clean" in prior:
+                # P(60 | start) = P(no injury exit) * P(60 | start, no exit):
+                # his rate on starts not cut short by injury, shrunk toward the
+                # position's rate on the same footing, times the POSITION's
+                # exit-free rate. Fitting the second factor without the first
+                # would inflate everyone who had an exit; see the registry entry.
+                p_60_if_start = (1.0 - prior["injury_exit_rate"]) * _shrink(
+                    stats["n_60_starts"], stats["n_started_rows_p60"],
+                    prior["p_60_if_start_clean"], _param("minutes.p60_shrinkage"),
+                )
+            else:
+                p_60_if_start = _shrink(
+                    stats["n_60_starts"], stats["n_started_rows"],
+                    prior["p_60_if_start"], _param("minutes.p60_shrinkage"),
+                )
         else:
             p_start = start_prior
             p_bench_given_not_start = prior["bench_appear_rate"]
@@ -1009,16 +1183,37 @@ class MinutesModel:
             minutes_if_bench = prior["minutes_if_bench"]
             p_60_if_start = prior["p_60_if_start"]
 
-        # Horizon churn in WHO starts. Reverts toward the POSITION base rate, not
-        # toward any player-specific fallback: the target is the pool, which is
-        # what the measured reversion was measured against. A nailed starter
-        # drifts down and a fringe player drifts up, so roughly eleven still
-        # start — which is what the exact-count sampler enforces anyway, and why
-        # this survives it where a uniform availability multiplier does not.
+        # Horizon churn in WHO starts. With minutes.horizon_start_target_half_life
+        # > 0 (the default) he reverts toward HIS OWN long-run start rate, fully,
+        # at rate rho^h: today's form fades into his long-run role, not into the
+        # position pool, which for a keeper is mostly second and third choices.
+        # A regular whose form dipped drifts up, a player who just broke in drifts
+        # down, and a nailed starter barely moves. See `horizon_start_reversion`.
+        #
+        # At 0 the old path: a pull toward the POSITION base rate by
+        # cap*(1-rho^h), under which a nailed starter drifts down and a fringe
+        # player drifts up. (A model fitted with the parameter off carries no
+        # long-memory stats and keeps that path even if it is switched on later.)
+        own_target = _param("minutes.horizon_start_target_half_life") > 0 and (
+            not stats or "n_fixtures_long" in stats
+        )
         if horizon > 0:
-            toward = prior["start_rate"]
-            pull = horizon_start_reversion(horizon)
-            p_start = p_start + (toward - p_start) * pull
+            if own_target:
+                if stats:
+                    toward = _shrink(
+                        stats["n_starts_long"], stats["n_fixtures_long"],
+                        start_prior, _param("minutes.start_shrinkage"),
+                    )
+                else:
+                    # No history: p_start already IS the prior, and the prior
+                    # is a long-run rate, so there is nothing to revert toward.
+                    toward = p_start
+                keep = _param("minutes.horizon_start_target_rho") ** int(horizon)
+                p_start = toward + (p_start - toward) * keep
+            else:
+                toward = prior["start_rate"]
+                pull = horizon_start_reversion(horizon)
+                p_start = p_start + (toward - p_start) * pull
 
         # Availability is projected forward through the horizon path, which knows
         # how this player's absence is expected to END. Applied to the AVAILABILITY
