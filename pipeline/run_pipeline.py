@@ -805,12 +805,14 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             if pb_lam is not None and pb_mu is not None:
                 other_lambdas["penaltyblog"] = (pb_lam, pb_mu)
 
-        # DC posterior draw, blend, simulate (correlated corners/cards), derive
-        # markets. Every draw comes from a Generator seeded by the fixture alone
-        # (common random numbers: unchanged inputs reproduce bit-for-bit, and a
-        # model change moves the card by its own effect, not by fresh noise).
-        # See pipeline/simulation/fixture_sim.py for the seed design and the
-        # unseeded-Generator leak this closes.
+        # Blend, then goals markets (1X2, totals, BTTS, ...) computed EXACTLY
+        # from the DC scoreline grid averaged over every posterior draw, so they
+        # carry no Monte Carlo error and do not depend on n_sims. Only corners
+        # and cards, conditioned on simulated goals, are simulated, from a
+        # Generator seeded by the fixture alone (common random numbers). A
+        # failure of the exact path raises ExactMarketsError; there is no
+        # fallback to simulated goals markets. See
+        # pipeline/simulation/fixture_sim.py and exact_markets.py.
         fixture_sim = simulate_fixture(
             simulator,
             match_id=match_id,

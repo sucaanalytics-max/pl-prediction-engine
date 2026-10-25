@@ -90,6 +90,11 @@ ALLOWED: Dict[str, Dict[str, str]] = {
         "find_value_bets_multi_match": "value-bet surface remnant — deletion candidate",
         "risk_of_ruin": "value-bet surface remnant — deletion candidate",
     },
+    "pipeline.simulation.exact_markets": {
+        "independent_rho_scoreline_grid": "unpaired-rho reference for the exact grid; "
+        "production pairs rho since #6, kept so the paired-vs-independent effect "
+        "stays measurable and tested",
+    },
     "pipeline.data.odds_api": {
         "PREFERRED_BOOKMAKERS": "value-bet surface remnant — deletion candidate",
         "build_odds_comparison": "value-bet surface remnant — deletion candidate",

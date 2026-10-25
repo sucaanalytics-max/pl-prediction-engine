@@ -713,3 +713,43 @@ class BayesianDixonColes:
             "scoreline_matrix": matrix.tolist(),
             "model": "dixon_coles_pymc",
         }
+
+    def get_lambda_mu_posterior(self, home: str, away: str) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Every posterior draw of (lambda, mu), in flattened chain-major order,
+        with no resampling.
+
+        The same rate formula and promoted-club prior as
+        :meth:`get_lambda_mu_samples`, which draws ``n_samples`` indices from
+        exactly these arrays; a test pins that the two agree draw for draw. The
+        order matches :meth:`get_rho_samples`, so ``(lam[k], mu[k], rho[k])`` is
+        one joint posterior draw.
+
+        Used by the exact goals-market path
+        (``pipeline/simulation/exact_markets.py``), which averages the scoreline
+        grid over the whole posterior. Averaging over all draws deterministically
+        is what removes posterior-resampling noise from the 1X2, totals and BTTS
+        probabilities and from the Dixon-Coles point rate entering the blend.
+        """
+        if self.trace is None:
+            raise RuntimeError("Model not fitted")
+
+        attack = self.trace.posterior["attack"].values
+        defence = self.trace.posterior["defence"].values
+        ha = self.trace.posterior["home_adv"].values.flatten()
+        inter = self.trace.posterior["intercept"].values.flatten()
+
+        h_idx = self.team_index.get(home)
+        a_idx = self.team_index.get(away)
+        unseen_att, unseen_def = getattr(self, "unseen_prior", (0.0, 0.0))
+        unseen_att = np.full_like(inter, unseen_att)
+        unseen_def = np.full_like(inter, unseen_def)
+
+        att_h = attack[:, :, h_idx].flatten() if h_idx is not None else unseen_att
+        att_a = attack[:, :, a_idx].flatten() if a_idx is not None else unseen_att
+        def_h = defence[:, :, h_idx].flatten() if h_idx is not None else unseen_def
+        def_a = defence[:, :, a_idx].flatten() if a_idx is not None else unseen_def
+
+        lambda_h = np.exp(inter + att_h - def_a + ha)
+        mu_a = np.exp(inter + att_a - def_h)
+        return lambda_h, mu_a
