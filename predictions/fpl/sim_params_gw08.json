@@ -2,10 +2,30 @@
   "schema_version": 1,
   "season": "2627",
   "gameweek": 8,
-  "generated_at": "2026-10-24T09:59:40.271488Z",
+  "generated_at": "2026-10-25T10:19:13.029826Z",
   "seed_entropy": 2304987566,
   "n_draws": 5000,
   "parameters": {
+    "dixon_coles.promoted_attack_offset": {
+      "value": -0.3,
+      "tier": "F"
+    },
+    "dixon_coles.promoted_defence_offset": {
+      "value": -0.24,
+      "tier": "F"
+    },
+    "dixon_coles.promoted_new_club_shrink": {
+      "value": 0.5,
+      "tier": "C"
+    },
+    "dixon_coles.team_effect_sigma": {
+      "value": 0.3,
+      "tier": "F"
+    },
+    "elo.promoted_start_offset": {
+      "value": -110.0,
+      "tier": "F"
+    },
     "events.rate_shrinkage_per90": {
       "value": 450.0,
       "tier": "F"
@@ -26,6 +46,10 @@
       "value": 0.75,
       "tier": "S"
     },
+    "minutes.fit_now_absence_credit": {
+      "value": 1.0,
+      "tier": "S"
+    },
     "minutes.horizon_availability_floor": {
       "value": 0.8,
       "tier": "F"
@@ -42,6 +66,14 @@
       "value": 0.541,
       "tier": "F"
     },
+    "minutes.horizon_start_target_half_life": {
+      "value": 12.0,
+      "tier": "S"
+    },
+    "minutes.horizon_start_target_rho": {
+      "value": 0.8,
+      "tier": "S"
+    },
     "minutes.impairment_persistence_graded": {
       "value": 0.45,
       "tier": "S"
@@ -52,6 +84,10 @@
     },
     "minutes.injured_default": {
       "value": 0.1,
+      "tier": "S"
+    },
+    "minutes.injury_exit_p60_strength": {
+      "value": 1.0,
       "tier": "S"
     },
     "minutes.minutes_shrinkage": {
@@ -85,6 +121,26 @@
     "minutes.substitutes_per_fixture": {
       "value": 4.14,
       "tier": "F"
+    },
+    "minutes.unavailable_fixture_retention": {
+      "value": 1.0,
+      "tier": "S"
+    },
+    "simulation.value_path_seed": {
+      "value": 20261025,
+      "tier": "C"
+    },
+    "xgboost.holdout_fraction": {
+      "value": 0.15,
+      "tier": "C"
+    },
+    "xgboost.holdout_min_rows": {
+      "value": 190,
+      "tier": "C"
+    },
+    "xgboost.refit_on_all_rows": {
+      "value": 1.0,
+      "tier": "C"
     }
   },
   "fixtures": [
@@ -93,8 +149,8 @@
       "gameweek": 8,
       "home_team": "Ipswich",
       "away_team": "Nott'm Forest",
-      "lambda_home": 1.359484,
-      "mu_away": 1.477091,
+      "lambda_home": 1.237732,
+      "mu_away": 1.707562,
       "rate_source": "dixon_coles_posterior+level"
     },
     {
@@ -102,44 +158,44 @@
       "gameweek": 8,
       "home_team": "Aston Villa",
       "away_team": "Man City",
-      "lambda_home": 1.3159,
-      "mu_away": 1.877316,
-      "rate_source": "market_blend"
+      "lambda_home": 1.230388,
+      "mu_away": 1.780725,
+      "rate_source": "dixon_coles_posterior+level"
     },
     {
       "match_id": "71",
       "gameweek": 8,
       "home_team": "Arsenal",
       "away_team": "Everton",
-      "lambda_home": 1.890674,
-      "mu_away": 0.859292,
-      "rate_source": "market_blend"
+      "lambda_home": 1.697758,
+      "mu_away": 0.724164,
+      "rate_source": "dixon_coles_posterior+level"
     },
     {
       "match_id": "74",
       "gameweek": 8,
       "home_team": "Coventry City",
       "away_team": "Fulham",
-      "lambda_home": 1.29981,
-      "mu_away": 1.517656,
-      "rate_source": "market_blend"
+      "lambda_home": 1.2175,
+      "mu_away": 1.387924,
+      "rate_source": "dixon_coles_posterior+level"
     },
     {
       "match_id": "73",
       "gameweek": 8,
       "home_team": "Chelsea",
       "away_team": "Tottenham",
-      "lambda_home": 1.746866,
-      "mu_away": 1.265355,
-      "rate_source": "market_blend"
+      "lambda_home": 2.04535,
+      "mu_away": 1.231096,
+      "rate_source": "dixon_coles_posterior+level"
     },
     {
       "match_id": "75",
       "gameweek": 8,
       "home_team": "Crystal Palace",
       "away_team": "Newcastle",
-      "lambda_home": 1.448105,
-      "mu_away": 1.509274,
+      "lambda_home": 1.494091,
+      "mu_away": 1.577756,
       "rate_source": "market_blend"
     },
     {
@@ -147,8 +203,8 @@
       "gameweek": 8,
       "home_team": "Hull City",
       "away_team": "Brentford",
-      "lambda_home": 1.124347,
-      "mu_away": 1.838944,
+      "lambda_home": 1.145993,
+      "mu_away": 1.654021,
       "rate_source": "market_blend"
     },
     {
@@ -156,8 +212,8 @@
       "gameweek": 8,
       "home_team": "Liverpool",
       "away_team": "Brighton",
-      "lambda_home": 1.770353,
-      "mu_away": 1.339883,
+      "lambda_home": 1.696068,
+      "mu_away": 1.434058,
       "rate_source": "market_blend"
     },
     {
@@ -165,8 +221,8 @@
       "gameweek": 8,
       "home_team": "Man United",
       "away_team": "Bournemouth",
-      "lambda_home": 1.654322,
-      "mu_away": 1.33049,
+      "lambda_home": 1.6094,
+      "mu_away": 1.315755,
       "rate_source": "market_blend"
     },
     {
@@ -174,8 +230,8 @@
       "gameweek": 8,
       "home_team": "Sunderland",
       "away_team": "Leeds",
-      "lambda_home": 1.26036,
-      "mu_away": 1.244292,
+      "lambda_home": 1.164984,
+      "mu_away": 1.24721,
       "rate_source": "market_blend"
     }
   ]
