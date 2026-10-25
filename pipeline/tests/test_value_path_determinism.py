@@ -380,13 +380,62 @@ class GoalMethodStakeGuardTests(unittest.TestCase):
         with self.assertLogs("pipeline.risk.kelly", level="ERROR"):
             self.assertEqual(self._bets(bare, METHOD_POSTERIOR_GRID), [])
 
-    def test_run_pipeline_requires_the_posterior_grid_when_dc_is_fitted(self):
+    def test_run_pipeline_always_requires_the_posterior_grid(self):
         import pipeline.run_pipeline as rp
 
         src = inspect.getsource(rp.run_pipeline)
-        self.assertIn(
-            "require_goal_method=METHOD_POSTERIOR_GRID if dc_model is not None else None", src
+        self.assertIn("require_goal_method=METHOD_POSTERIOR_GRID,", src)
+        # The old conditional let a DC-less run stake the Poisson grid.
+        self.assertNotIn("if dc_model is not None else None", src)
+
+    def _poisson_card(self):
+        from pipeline.simulation.exact_markets import METHOD_POISSON_GRID
+
+        result = simulate_fixture(
+            MonteCarloSimulator(N),
+            match_id=MATCH_ID, home="Arsenal", away="Everton",
+            dc_model=None,
+            other_lambdas={"xgboost": (1.9, 1.0), "penaltyblog": (1.7, 1.05)},
+            weights=ENSEMBLE_WEIGHTS,
+            sim_kwargs=dict(
+                corners_model=CornersNegBinModel(), cards_model=CardsZIPModel(),
+                home_team="Arsenal", away_team="Everton", referee=None, is_derby=False,
+            ),
         )
+        self.assertEqual(result.goal_markets_method, METHOD_POISSON_GRID)
+        predictions = dict(result.markets)
+        predictions["goalscorer_probabilities"] = {}
+        return predictions
+
+    def test_dc_less_card_publishes_probabilities_but_no_stakes(self):
+        from pipeline.simulation.exact_markets import METHOD_POSTERIOR_GRID
+
+        predictions = self._poisson_card()
+        self.assertTrue(
+            self._bets(predictions, None),
+            "the Poisson card must flag bets unguarded or the refusal is vacuous",
+        )
+        with self.assertLogs("pipeline.risk.kelly", level="ERROR"):
+            self.assertEqual(self._bets(predictions, METHOD_POSTERIOR_GRID), [])
+        self.assertIn("1x2", predictions["probabilities"])
+
+    def test_staking_metadata_names_a_withheld_card(self):
+        from pipeline.run_pipeline import _staking_metadata
+        from pipeline.simulation.exact_markets import METHOD_POSTERIOR_GRID
+
+        poisson = self._poisson_card()
+        withheld = _staking_metadata(False, [poisson, poisson], METHOD_POSTERIOR_GRID)
+        self.assertEqual(withheld, {
+            "required_goal_method": METHOD_POSTERIOR_GRID,
+            "withheld": True,
+            "withheld_reason": "dixon_coles_unavailable",
+            "n_fixtures_withheld": 2,
+        })
+
+        fitted = _staking_metadata(True, [self.predictions], METHOD_POSTERIOR_GRID)
+        self.assertFalse(fitted["withheld"])
+        self.assertIsNone(fitted["withheld_reason"])
+        self.assertEqual(fitted["n_fixtures_withheld"], 0)
 
 
 if __name__ == "__main__":

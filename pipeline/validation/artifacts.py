@@ -122,6 +122,23 @@ def validate_prediction_output(output: Dict) -> List[str]:
         if n_bets:
             errors.append("value bets must be empty when current odds are unavailable")
 
+    # The goal-method stake gate, checked on the artifact rather than trusted
+    # from find_value_bets: a fixture priced by anything but the required
+    # method, or any fixture on a withheld card, must carry no bets.
+    staking = metadata.get("staking")
+    if isinstance(staking, dict):
+        required = staking.get("required_goal_method")
+        for index, prediction in enumerate(predictions):
+            if not prediction.get("value_bets"):
+                continue
+            method = (prediction.get("goal_markets") or {}).get("method")
+            if staking.get("withheld") or method != required:
+                errors.append(
+                    f"predictions[{index}].value_bets must be empty: goals priced by "
+                    f"{method!r}, staking requires {required!r}"
+                    + (" and the card is withheld" if staking.get("withheld") else "")
+                )
+
     return errors
 
 

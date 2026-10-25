@@ -259,6 +259,28 @@ def _uncovered_fixtures(expected: Dict, specs) -> list:
     return [label for key, label in sorted(expected.items()) if key not in covered]
 
 
+def _staking_metadata(dc_fitted: bool, predictions: list, required_method: str) -> Dict:
+    """
+    What the goal-method stake gate did, named in latest.json.
+
+    Stakes are only sized on the Dixon-Coles posterior grid. Without a fitted
+    model every fixture is priced on the independent-Poisson grid, which
+    understates draws, so the whole card publishes probabilities and no bets.
+    An empty card from a withheld run must not read as a model that found no
+    edge, any more than `odds_source: "unavailable"` may.
+    """
+    n_withheld = sum(
+        1 for p in predictions
+        if (p.get("goal_markets") or {}).get("method") != required_method
+    )
+    return {
+        "required_goal_method": required_method,
+        "withheld": not dc_fitted,
+        "withheld_reason": None if dc_fitted else "dixon_coles_unavailable",
+        "n_fixtures_withheld": n_withheld,
+    }
+
+
 def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     """
     Execute the full prediction pipeline.
@@ -761,6 +783,18 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     simulator = MonteCarloSimulator(n_sims)
     all_predictions = []
 
+    # Stakes are sized on the Dixon-Coles posterior grid or not at all. With no
+    # fitted model (Step 5 failed, its cache was unreadable, or CI auto-skipped
+    # it) every fixture lands on the Poisson grid and find_value_bets refuses
+    # each one below. Said once here, at run level, because a card with no bets
+    # otherwise looks like a model that found no edge.
+    if dc_model is None:
+        logger.error(
+            "  Dixon-Coles unavailable: the whole card is priced on the "
+            "independent-Poisson grid. Publishing probabilities, withholding "
+            "ALL stakes this run."
+        )
+
     for _, row in upcoming.iterrows():
         home, away = row["home_team"], row["away_team"]
         key = f"{home}_vs_{away}"
@@ -952,11 +986,11 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             cards_odds=cards_odds_match if cards_odds_match else None,
             player_bookings=player_booking_probs if player_booking_probs else None,
             player_booking_odds=player_booking_odds_dict if player_booking_odds_dict else None,
-            # With a fitted Dixon-Coles model every fixture must be priced on
-            # its posterior grid. simulate_fixture raises rather than falling
-            # back, so this should never bite; it is the second lock, so a
-            # future fallback cannot stake real money on the Poisson grid.
-            require_goal_method=METHOD_POSTERIOR_GRID if dc_model is not None else None,
+            # Unconditional. With a fitted model simulate_fixture raises rather
+            # than falling back, so this is the second lock behind it; without
+            # one, every fixture is on the Poisson grid (which understates
+            # draws) and this withholds the whole card. Only ever removes bets.
+            require_goal_method=METHOD_POSTERIOR_GRID,
         )
 
         # Narrative
@@ -1109,6 +1143,9 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 "limits": portfolio["limits"],
                 "guards": portfolio["guards"],
             },
+            "staking": _staking_metadata(
+                dc_model is not None, all_predictions, METHOD_POSTERIOR_GRID
+            ),
             "calibrated": False,
             "odds_source": "the_odds_api" if parsed_main else "unavailable",
             "referee_profiles_count": len(referee_profiles),
@@ -1778,11 +1815,20 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     source_report = sources.report()
     for line in annotations_for(source_report):
         print(line, flush=True)
+    # The same reason, for the stake gate: an empty card is otherwise a quiet
+    # "success" with n_value_bets 0, indistinguishable from no edge found.
+    if dc_model is None:
+        print(
+            "::warning::Dixon-Coles unavailable: card priced on the Poisson grid, "
+            "all stakes withheld",
+            flush=True,
+        )
 
     return {
         "status": "success",
         "n_predictions": len(all_predictions),
         "n_value_bets": total_value_bets,
+        "stakes_withheld": dc_model is None,
         "gameweek": gameweek,
         "output_path": str(latest_path),
         "elapsed_seconds": elapsed,
