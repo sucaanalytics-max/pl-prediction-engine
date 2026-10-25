@@ -1,19 +1,361 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T05:20:00.876657Z",
-  "n_dropped": 203,
+  "generated_at": "2026-10-25T10:00:12.097554Z",
+  "n_dropped": 206,
   "dropped_by_source": {
-    "bbc_football": 56,
-    "fantasyfootballscout": 1,
-    "hayters": 38,
+    "bbc_football": 59,
+    "fantasyfootballscout": 2,
+    "hayters": 37,
     "sky_football": 108
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 293,
+  "n_articles": 296,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "3f4207ef5938f74a",
+      "headline": "Villa v Man City team news: Haaland + Manzambi start, Foden sub",
+      "summary": "Both sides make four changes from midweek The post Villa v Man City team news: Haaland + Manzambi start, Foden sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/24/villa-v-man-city-team-news-haaland-manzambi-start-foden-sub",
+      "claimed_at": "2026-10-24T11:20:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "f1f1943a1da556f9",
+      "headline": "Man City latest: Maresca confirms Haaland return vs Villa",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-22T11:15:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "d9e2adbaf7a96c30",
+      "headline": "Man City trio doubts for Aston Villa game",
+      "summary": "Enzo Maresca has confirmed Erling Haaland is fully fit to face Aston Villa on Saturday, but Manchester City are still waiting to make decisions on Nico O\u2019Reilly, Mateo Kovacic and Matheus Nunes. All four players have been dealing with fitness concerns, with",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-trio-doubts-for-aston-villa-game/",
+      "claimed_at": "2026-10-22T09:47:28Z",
+      "players": [
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 406,
+          "name": "Kova\u010di\u0107",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "1e70b0c249156d58",
+      "headline": "Liverpool latest: Van Dijk on Iraola's style and Salah's impact on Ngumoha",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-21T12:19:00Z",
+      "players": [
+        {
+          "element_id": 356,
+          "name": "Virgil",
+          "club": "LIV",
+          "held": true
+        },
+        {
+          "element_id": 369,
+          "name": "Ngumoha",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "8288436e6d1f39a6",
+      "headline": "Van Dijk admits he had \u2018bad day at the office\u2019 despite Liverpool win",
+      "summary": "Virgil van Dijk admitted that he had a &#8220;bad day at the office&#8221; after making an early mistake in Liverpool's 4-3 win over Villarreal at Anfield. The defender was at fault for the Spanish side's first goal of the night wh",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/van-dijk-admits-he-had-bad-day-at-the-office-despite-liverpool-win/",
+      "claimed_at": "2026-10-21T11:00:00Z",
+      "players": [
+        {
+          "element_id": 356,
+          "name": "Virgil",
+          "club": "LIV",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "6f34adb5ceebb9c8",
+      "headline": "FPL notes: Haaland \u201cOK to start\u201d, key rests + Gvardiol injury update",
+      "summary": "Fantasy takeaways from Man City 5-1 AEK Athens The post FPL notes: Haaland &#8220;OK to start&#8221;, key rests + Gvardiol injury update appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/21/fpl-notes-haaland-ok-to-start-key-rests-gvardiol-injury-update",
+      "claimed_at": "2026-10-21T10:05:00Z",
+      "players": [
+        {
+          "element_id": 391,
+          "name": "Gvardiol",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "944903379281c4e6",
+      "headline": "No Haaland, no problem - can Foden be Man City's alternative goalscorer?",
+      "summary": "Phil Foden's magnificent man-of-the-match display in Manchester City's Champions League win against AEK Athens serves as a reminder of his talent and ability to influence games.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqx2vjdnwkyyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-20T22:35:32Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "3f5bb0ca740c54ae",
+      "headline": "Man City latest: Haaland fit to play Aston Villa, says Maresca",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-20T22:30:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "48239610f1155e18",
+      "headline": "Man City boss Maresca backs hat-trick hero Foden to build on recent form \u2013 and gives update on Haaland",
+      "summary": "Enzo Maresca has confirmed Erling Haaland will be fit to start against Aston Villa on Saturday following Manchester City\u2019s 5-1 Champions League win over AEK Athens. The striker was rested against t",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-boss-maresca-backs-hat-trick-hero-foden-to-build-on-recent-form-and-gives-update-on-haaland/",
+      "claimed_at": "2026-10-20T21:40:19Z",
+      "players": [
+        {
+          "element_id": 398,
+          "name": "Foden",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "272ca370dc269621",
+      "headline": "Liverpool continue winning Champions League run with comeback victory over Villarreal",
+      "summary": "Liverpool came from two goals down to edge Villarreal 4-3 in a thrilling Champions League clash at Anfield. Andoni Iraola\u2019s side made a nightmare start and were behind inside four minutes when Georges Mikautadze pu",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/liverpool-continue-winning-champions-league-run-with-comeback-victory-over-villarreal/",
+      "claimed_at": "2026-10-20T21:05:21Z",
+      "players": [
+        {
+          "element_id": 356,
+          "name": "Virgil",
+          "club": "LIV",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "e34c259656111958",
+      "headline": "Webb backs Botman decision despite pundits' calls for red card",
+      "summary": "Referees' chief Howard Webb believes there was nothing \"clearly wrong\" with the decision not to send off Newcastle defender Sven Botman for his tackle on Aston Villa striker Nicolas Jackson.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13601311/sven-botman-tackle-howard-webb-says-nothing-clearly-wrong-with-var-decision-to-not-send-newcastle-defender-off",
+      "claimed_at": "2026-10-20T17:00:00Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 447,
+          "name": "Botman",
+          "club": "NEW",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "c49930d3cb7d27fe",
+      "headline": "Chelsea latest: Alonso unaware of reports Pedro injury was leaked through FPL",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-25T09:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "128a277254a043d7",
+      "headline": "FPL notes: Calafiori injury, Saka latest + Everton fitness updates",
+      "summary": "Mikel Arteta also discusses rotation after Arsenal see off Everton The post FPL notes: Calafiori injury, Saka latest + Everton fitness updates appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/25/fpl-notes-calafiori-injury-saka-latest-everton-fitness-updates",
+      "claimed_at": "2026-10-25T07:45:00Z",
+      "players": [
+        {
+          "element_id": 8,
+          "name": "Calafiori",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "80299d5e83c4f046",
+      "headline": "What Man Utd need now is stability, not more changes - Pulis",
+      "summary": "BBC Sport columnist Tony Pulis explains why Bruno Fernandes' comments after Manchester United's defeat by Como showed how hard it must be to run the club at the moment.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck78p37y5508o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-25T06:34:07Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "852e2024d0b77b97",
+      "headline": "Why are Liverpool struggling for Premier League goals?",
+      "summary": "Liverpool have scored 15 goals in four cup games this season, but have managed only nine goals in seven Premier League matches.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c94g1p32gyrro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-25T06:26:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5ae3c93af7faf22a",
+      "headline": "When is Premier League 'sacking season' - and who should be worried?",
+      "summary": "As pressure builds on Manchester United manager Michael Carrick, BBC Sport looks at when the Premier League 'sacking season' begins.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmy83vg66zngo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-25T06:17:46Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "a12c92864887e308",
       "headline": "Should Palmer have been sent off earlier than he was?",
@@ -693,42 +1035,6 @@
       "touches_squad": false
     },
     {
-      "digest": "75501ead67218951",
-      "headline": "Bobb stunner earns Fulham back-to-back PL wins",
-      "summary": "Highlights from the Premier League match between Coventry City and Fulham.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13603205/coventry-city-0-1-fulham-premier-league-highlights",
-      "claimed_at": "2026-10-24T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ca73fab3c19fe874",
-      "headline": "Konsa and Gabriel on target as Arsenal top Everton",
-      "summary": "Highlights from the Premier League match between Arsenal and Everton.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13603221/arsenal-2-0-everton-premier-league-highlights",
-      "claimed_at": "2026-10-24T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "072e1628adb82454",
       "headline": "Arteta 'delighted' with Arsenal win after 'tough week'",
       "summary": "Arsenal manager Mikel Arteta is \"delighted\" with his sides performance after making five changes in their 2-0 victory over Everton.",
@@ -736,42 +1042,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/ck05486e1l53o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-24T17:00:15Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "17ed782618ac5d7d",
-      "headline": "Spurs latest: Maddison limps off vs Chelsea | Nev: He just can't stay fit",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-24T17:00:00Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f79f8c06975e53a0",
-      "headline": "Chelsea latest: Joao Pedro to have tests on injury",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-24T17:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -801,24 +1071,6 @@
           "element_id": 166,
           "name": "N.Jackson",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "18d264efc987bb5b",
-      "headline": "Arsenal beat Everton to move level on points with leaders Man City",
-      "summary": "Champions Arsenal capitalised on Manchester City's defeat at Aston Villa to move level on points with the Premier League leaders by comfortably beating Everton 2-0 at a rain-soaked Emirates Stadium.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/arsenal-vs-everton/report/559514",
-      "claimed_at": "2026-10-24T16:58:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -879,72 +1131,6 @@
       "touches_squad": false
     },
     {
-      "digest": "12c2d3337202d0c5",
-      "headline": "Donnarumma & Guehi highlight Man City issues as solid Arsenal move level",
-      "summary": "Manchester City's 100% winning start to the Premier League season comes to an abrupt end against Aston Villa - leaving Enzo Maresca with glaring defensive issues to resolve.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6kg7z700k7jo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T15:05:45Z",
-      "players": [
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 388,
-          "name": "Gu\u00e9hi",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b0123fc810bb37c0",
-      "headline": "Man City's leaky defence highlights Donnarumma & Guehi struggles",
-      "summary": "Manchester City's 100% winning start to the Premier League season comes to an abrupt end against Aston Villa - leaving Enzo Maresca with glaring defensive issues to resolve.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6kg7z700k7jo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T15:05:45Z",
-      "players": [
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 388,
-          "name": "Gu\u00e9hi",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b5e82bf223e89eb9",
-      "headline": "'It's harsh' - was Arsenal's winning penalty a controversial decision?",
-      "summary": "Following Arsenal's 2-1 win at rivals Tottenham Hotspur, former England footballers Ellen White, Fara Williams and Alex Scott discuss whether the away side were fortunate to be given a penalty, which proved to be the winning mome",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cw62ylp68m4po?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T15:03:37Z",
-      "players": [
-        {
-          "element_id": 10,
-          "name": "White",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f12e864e7937db61",
       "headline": "Arsenal get much needed win in north London derby",
       "summary": "Arsenal claimed a 2-1 victory in the first north London derby of the season after turning around an early 1-0 deficit. Cathinka Tandberg put the hosts ahead when she headed home from a superb Victoria Pelova cross after 13 minutes. However, Arsenal l",
@@ -987,24 +1173,6 @@
       "touches_squad": false
     },
     {
-      "digest": "693a182c2dec1604",
-      "headline": "Jackson stars with two goals - player ratings for Aston Villa v Man City",
-      "summary": "How Aston Villa and Man City players rated following their Premier League match.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck4g14j85y9xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T13:25:59Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0c17a668554a7d41",
       "headline": "Arsenal 2-0 Everton LIVE \u2013 Arsenal move level on points with Manchester City with win",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 2-0 Everton LIVE - Arsenal move level on points with Manchester City with win appeared first on Hayters.",
@@ -1035,36 +1203,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3f4207ef5938f74a",
-      "headline": "Villa v Man City team news: Haaland + Manzambi start, Foden sub",
-      "summary": "Both sides make four changes from midweek The post Villa v Man City team news: Haaland + Manzambi start, Foden sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/24/villa-v-man-city-team-news-haaland-manzambi-start-foden-sub",
-      "claimed_at": "2026-10-24T11:20:00Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
           "held": false
         }
       ],
@@ -1131,24 +1269,6 @@
           "element_id": 398,
           "name": "Foden",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4bd765d3dd546a14",
-      "headline": "Why Tottenham v Arsenal could define their seasons - live on BBC One",
-      "summary": "With Tottenham stuttering and Arsenal floundering, these fierce rivals both need a victory in Saturday's showdown, live on BBC One.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck240l3n774zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T06:02:44Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1479,96 +1599,6 @@
       "touches_squad": false
     },
     {
-      "digest": "fb5ad3d998653e86",
-      "headline": "Iraola provides latest updates on Liverpool trio ahead of Brighton game",
-      "summary": "Andoni Iraola has confirmed Bradley Barcola is available for Liverpool\u2019s clash with Brighton, but Victor Munoz remains a major doubt while Dominik Szoboszlai will miss out. Barcola was absent from training on Thursday but return",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/iraola-provides-latest-updates-on-liverpool-trio-ahead-of-brighton-game/",
-      "claimed_at": "2026-10-23T13:49:12Z",
-      "players": [
-        {
-          "element_id": 360,
-          "name": "Bradley",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 368,
-          "name": "Szoboszlai",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f9a91c98082ac018",
-      "headline": "Porro back for Spurs but De Zerbi raises doubts over duo\u2019s involvement against Chelsea",
-      "summary": "Pedro Porro is back available for Tottenham, but Roberto De Zerbi has raised doubts over the fitness of James Maddison and Dejan Kulusevski for the clash with Chelsea. Porro has not played since before the last in",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/porro-back-for-spurs-but-de-zerbi-raises-doubts-over-duos-involvement-against-chelsea/",
-      "claimed_at": "2026-10-23T13:39:24Z",
-      "players": [
-        {
-          "element_id": 401,
-          "name": "Marmoush",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 502,
-          "name": "Robertson",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 521,
-          "name": "Kulusevski",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e7094c9a359b2e85",
-      "headline": "Birmingham City appoint former Man Utd chief as new director of football",
-      "summary": "Birmingham City have appointed former Manchester United football director John Murtough as their new director of football. Murtough, who most recently served as director of global development at Atalanta, brings almost three de",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/birmingham-city-appoint-former-man-utd-chief-as-new-director-of-football/",
-      "claimed_at": "2026-10-23T11:41:58Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5f81c45a42624edf",
       "headline": "Knock - 75% chance of playing",
       "summary": null,
@@ -1689,60 +1719,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7b9a8d288d02ff59",
-      "headline": "FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury",
-      "summary": "FPL lessons from Liverpool's 4-3 win over Villarreal The post FPL notes: Why Isak, Wirtz + Barcola were benched, Munoz injury appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/21/fpl-notes-why-isak-wirtz-barcola-were-benched-munoz-injury",
-      "claimed_at": "2026-10-21T12:50:00Z",
-      "players": [
-        {
-          "element_id": 366,
-          "name": "Wirtz",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6f34adb5ceebb9c8",
-      "headline": "FPL notes: Haaland \u201cOK to start\u201d, key rests + Gvardiol injury update",
-      "summary": "Fantasy takeaways from Man City 5-1 AEK Athens The post FPL notes: Haaland &#8220;OK to start&#8221;, key rests + Gvardiol injury update appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/21/fpl-notes-haaland-ok-to-start-key-rests-gvardiol-injury-update",
-      "claimed_at": "2026-10-21T10:05:00Z",
-      "players": [
-        {
-          "element_id": 391,
-          "name": "Gvardiol",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
           "held": false
         }
       ],
