@@ -598,11 +598,11 @@ def find_value_bets(
             whose goals markets came from any other method, or that records
             none, gets NO bets at all — not just in the goals markets, since
             corners, cards and goalscorer probabilities are all conditioned on
-            the same goals. run_pipeline passes the posterior-grid method
-            whenever a Dixon-Coles model was fitted, so a fixture that slipped
-            onto the independent-Poisson grid (which understates draws) can
-            never be staked as if it had the low-score correction. This only
-            ever removes bets.
+            the same goals. run_pipeline always passes the posterior-grid
+            method, so a fixture on the independent-Poisson grid (which
+            understates draws) is never staked as if it had the low-score
+            correction, and a run with no fitted Dixon-Coles model publishes
+            probabilities with no stakes at all. This only ever removes bets.
 
     Returns:
         List of value bet opportunities sorted by edge.

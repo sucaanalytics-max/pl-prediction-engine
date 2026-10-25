@@ -291,6 +291,31 @@ class ArtifactContractTests(unittest.TestCase):
         errors = validate_prediction_output(output)
         self.assertTrue(any("current odds" in error for error in errors))
 
+    def _staked_output(self, method, withheld):
+        output = self._output()
+        output["metadata"]["odds_source"] = "the_odds_api"
+        output["metadata"]["staking"] = {
+            "required_goal_method": "exact_dc_posterior_grid",
+            "withheld": withheld,
+        }
+        output["predictions"][0]["goal_markets"] = {"method": method}
+        output["predictions"][0]["value_bets"] = [{"market": "Home Win"}]
+        return output
+
+    def test_bets_on_the_required_method_pass(self):
+        output = self._staked_output("exact_dc_posterior_grid", withheld=False)
+        self.assertEqual(validate_prediction_output(output), [])
+
+    def test_bets_on_a_withheld_card_are_rejected(self):
+        output = self._staked_output("exact_independent_poisson_grid", withheld=True)
+        errors = validate_prediction_output(output)
+        self.assertTrue(any("card is withheld" in error for error in errors))
+
+    def test_bets_on_the_wrong_goal_method_are_rejected(self):
+        output = self._staked_output("exact_independent_poisson_grid", withheld=False)
+        errors = validate_prediction_output(output)
+        self.assertTrue(any("staking requires" in error for error in errors))
+
 
 class ForwardValidationTests(unittest.TestCase):
     def test_ledger_scores_completed_fpl_fixture(self):
