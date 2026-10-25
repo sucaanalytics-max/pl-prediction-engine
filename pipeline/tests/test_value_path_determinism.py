@@ -340,5 +340,54 @@ class SeedDerivationTests(unittest.TestCase):
         self.assertGreater(int((high > low).sum()), 0)
 
 
+class GoalMethodStakeGuardTests(unittest.TestCase):
+    """find_value_bets(require_goal_method=...) is the second lock behind
+    simulate_fixture's fail-loud: a fixture priced by any method other than
+    the one run_pipeline expects gets no stake at all."""
+
+    def setUp(self):
+        result, self.bets = _run_fixture()
+        self.predictions = dict(result.markets)
+        self.predictions["goalscorer_probabilities"] = {}
+
+    def _bets(self, predictions, method):
+        return find_value_bets(
+            predictions=predictions, odds_benchmark=ODDS,
+            corners_odds=CORNERS_ODDS, cards_odds=CARDS_ODDS,
+            require_goal_method=method,
+        )
+
+    def test_matching_method_stakes_as_before(self):
+        from pipeline.simulation.exact_markets import METHOD_POSTERIOR_GRID
+
+        self.assertTrue(self.bets, "fixture must flag bets or the refusal test is vacuous")
+        self.assertEqual(self._bets(self.predictions, METHOD_POSTERIOR_GRID), self.bets)
+
+    def test_poisson_grid_is_refused_when_posterior_was_required(self):
+        from pipeline.simulation.exact_markets import METHOD_POISSON_GRID, METHOD_POSTERIOR_GRID
+
+        poisson = dict(self.predictions)
+        poisson["goal_markets"] = dict(poisson["goal_markets"], method=METHOD_POISSON_GRID)
+        with self.assertLogs("pipeline.risk.kelly", level="ERROR"):
+            self.assertEqual(self._bets(poisson, METHOD_POSTERIOR_GRID), [])
+        # Corners and cards go too: they are conditioned on the same goals.
+        self.assertTrue(any(b["market_type"] in ("corners", "cards") for b in self.bets))
+
+    def test_missing_provenance_is_refused(self):
+        from pipeline.simulation.exact_markets import METHOD_POSTERIOR_GRID
+
+        bare = {k: v for k, v in self.predictions.items() if k != "goal_markets"}
+        with self.assertLogs("pipeline.risk.kelly", level="ERROR"):
+            self.assertEqual(self._bets(bare, METHOD_POSTERIOR_GRID), [])
+
+    def test_run_pipeline_requires_the_posterior_grid_when_dc_is_fitted(self):
+        import pipeline.run_pipeline as rp
+
+        src = inspect.getsource(rp.run_pipeline)
+        self.assertIn(
+            "require_goal_method=METHOD_POSTERIOR_GRID if dc_model is not None else None", src
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

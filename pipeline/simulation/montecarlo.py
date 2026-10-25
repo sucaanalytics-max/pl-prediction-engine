@@ -34,6 +34,41 @@ DC_SAMPLING_MAX_GOALS = 10
 #: draws with.
 HT_GOAL_SHARE = 0.45
 
+#: Home handicap lines exported under ``probabilities.asian_handicap``. Shared
+#: with the exact grid path and the ensemble so the three agree on the keys.
+AH_LINES = (-2.5, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.5)
+
+
+def asian_handicap_no_push(p_win: float, p_push: float) -> float:
+    """
+    P(the home side wins the handicap | the bet is not a push).
+
+    On a whole line (-1, 0, +1) a goal difference that lands exactly on the
+    handicap refunds the stake: it is neither a win nor a loss. Exporting
+    ``P(home goals + line > away goals)`` alone silently counted that refund as
+    a LOSS, understating the home side and overstating the away side by the
+    whole push mass (about a quarter at ``home_0``, the draw probability).
+
+    Conditioning on resolution is the form a two-way handicap price is quoted
+    in, so ``1 - value`` is the away side at the mirrored line and the pair
+    devigs like any other two-way market. It is also exactly the probability
+    whose Kelly fraction is optimal when a push returns the stake: maximising
+    ``p_w log(1 + b f) + p_l log(1 - f)`` gives ``f = (b q - (1 - q)) / b``
+    with ``q = p_w / (p_w + p_l)``. The unconditional expected return per unit
+    staked is ``(1 - p_push)`` times the conditional edge, so a pricer that
+    compares the conditional edge with a minimum edge must scale it by
+    ``1 - p_push`` (exported alongside as ``asian_handicap_push``) or it will
+    accept whole-line bets that clear the bar only on resolved outcomes.
+
+    Half lines cannot push, so there ``value == p_win``. A line that ALWAYS
+    pushes has no resolved outcome and no bet; it reports 0.5, which keeps the
+    export monotonic in the line.
+    """
+    resolved = 1.0 - p_push
+    if resolved <= 1e-12:
+        return 0.5
+    return float(min(max(p_win / resolved, 0.0), 1.0))
+
 
 def resolve_rng(rng: Optional[np.random.Generator]) -> np.random.Generator:
     """
@@ -527,12 +562,19 @@ class MonteCarloSimulator:
                 correct_score[f"{i}-{j}"] = float(np.mean((hg == i) & (ag == j)))
 
         # ── Asian Handicap ──
+        # The quoted line is applied to the home score: the home side wins
+        # when home goals + handicap > away goals, and a whole line that lands
+        # exactly on the goal difference is a push (stake refunded), not a
+        # loss. See ``asian_handicap_no_push``.
         asian_handicap = {}
-        for line in [-2.5, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.5]:
-            gd = hg.astype(float) - ag.astype(float)
-            # The quoted line is applied to the home score:
-            # home goals + handicap > away goals.
-            asian_handicap[f"home_{line}"] = float(np.mean(gd + line > 0))
+        asian_handicap_push = {}
+        gd = hg.astype(float) - ag.astype(float)
+        for line in AH_LINES:
+            p_push = float(np.mean(gd + line == 0))
+            asian_handicap[f"home_{line}"] = asian_handicap_no_push(
+                float(np.mean(gd + line > 0)), p_push
+            )
+            asian_handicap_push[f"home_{line}"] = p_push
 
         # ── HT/FT ──
         ht_h, ht_a = sims["ht_home"], sims["ht_away"]
@@ -587,6 +629,7 @@ class MonteCarloSimulator:
                 "clean_sheet": {"home": p_home_cs, "away": p_away_cs},
                 "correct_score": correct_score,
                 "asian_handicap": asian_handicap,
+                "asian_handicap_push": asian_handicap_push,
                 "ht_ft": ht_ft,
                 "corners": corners_ou,
                 "cards": cards_ou,

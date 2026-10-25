@@ -30,7 +30,7 @@ model. The per-draw grid is :func:`pipeline.simulation.montecarlo.dc_joint_flat`
 the function ``sample_dixon_coles`` draws from: the same 0..10 truncation, the
 same zero floor on the four corrected cells, the same per-draw renormalisation
 and the same degenerate-row fallback. Market definitions (line semantics, the 7x7
-correct-score export, the "home goals + line > away goals" handicap, the
+correct-score export, the push-aware "home goals + line > away goals" handicap, the
 Binomial(FT, 0.45) half-time split) mirror ``derive_all_markets``.
 
 ## The rho contract: aligned triples
@@ -63,8 +63,10 @@ from typing import Dict, Optional
 import numpy as np
 
 from pipeline.simulation.montecarlo import (
+    AH_LINES,
     DC_SAMPLING_MAX_GOALS,
     HT_GOAL_SHARE,
+    asian_handicap_no_push,
     dc_joint_flat,
 )
 
@@ -84,7 +86,6 @@ _GRID_TOTAL_TOL = 1e-9
 
 #: Lines and labels shared with ``MonteCarloSimulator.derive_all_markets``.
 OU_GOAL_LINES = (0.5, 1.5, 2.5, 3.5, 4.5)
-AH_LINES = (-2.5, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.5)
 CORRECT_SCORE_MAX = 6      # 0..6 per side: the 7x7 export grid
 GOALS_DIST_LEN = 8
 
@@ -284,8 +285,16 @@ def goal_markets_from_grid(grid: np.ndarray) -> Dict:
         for j in range(CORRECT_SCORE_MAX + 1)
     }
 
+    # Push-aware: a whole line landing on the goal difference refunds the
+    # stake (``asian_handicap_no_push``), it does not lose.
+    asian_handicap_push = {
+        f"home_{line}": float(grid[(gd + line) == 0].sum()) for line in AH_LINES
+    }
     asian_handicap = {
-        f"home_{line}": float(grid[(gd + line) > 0].sum()) for line in AH_LINES
+        f"home_{line}": asian_handicap_no_push(
+            float(grid[(gd + line) > 0].sum()), asian_handicap_push[f"home_{line}"]
+        )
+        for line in AH_LINES
     }
 
     ht_ft = _ht_ft(grid)
@@ -311,6 +320,7 @@ def goal_markets_from_grid(grid: np.ndarray) -> Dict:
             "clean_sheet": {"home": float(marg_away[0]), "away": float(marg_home[0])},
             "correct_score": correct_score,
             "asian_handicap": asian_handicap,
+            "asian_handicap_push": asian_handicap_push,
             "ht_ft": ht_ft,
         },
         "expected_goals": {"home": e_home, "away": e_away},

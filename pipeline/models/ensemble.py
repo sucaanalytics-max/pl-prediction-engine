@@ -327,14 +327,23 @@ class EnsemblePredictor:
             for j in range(min(6, n)):
                 correct_score[f"{i}-{j}"] = float(matrix[i, j])
 
-        # Asian Handicap
+        # Asian Handicap, push-aware: a whole line that lands exactly on the
+        # goal difference refunds the stake rather than losing it.
+        from pipeline.simulation.montecarlo import AH_LINES, asian_handicap_no_push
+
         asian_handicap = {}
-        for line in [-2.5, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.5]:
+        asian_handicap_push = {}
+        for line in AH_LINES:
             p_cover = sum(
                 matrix[i, j] for i in range(n) for j in range(n)
                 if (i - j) + line > 0
             )
-            asian_handicap[f"home_{line}"] = float(p_cover)
+            p_push = sum(
+                matrix[i, j] for i in range(n) for j in range(n)
+                if (i - j) + line == 0
+            )
+            asian_handicap[f"home_{line}"] = asian_handicap_no_push(float(p_cover), float(p_push))
+            asian_handicap_push[f"home_{line}"] = float(p_push)
 
         # Half-Time / Full-Time (approximate: assume goals uniformly in halves)
         # HT goals ~ Poisson(lambda * 0.45)
@@ -352,6 +361,7 @@ class EnsemblePredictor:
                 "clean_sheet": {"home": float(p_home_cs), "away": float(p_away_cs)},
                 "correct_score": correct_score,
                 "asian_handicap": asian_handicap,
+                "asian_handicap_push": asian_handicap_push,
                 "ht_ft": ht_ft,
             },
             "expected_goals": {"home": float(e_home), "away": float(e_away)},

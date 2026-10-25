@@ -748,6 +748,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
     # ── Step 9: Monte Carlo Simulation ───────────────────────────────
     logger.info("\n[9/12] Running Monte Carlo simulation (correlated)...")
+    from pipeline.simulation.exact_markets import METHOD_POSTERIOR_GRID
     from pipeline.simulation.fixture_sim import simulate_fixture
     from pipeline.simulation.montecarlo import MonteCarloSimulator
 
@@ -951,6 +952,11 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             cards_odds=cards_odds_match if cards_odds_match else None,
             player_bookings=player_booking_probs if player_booking_probs else None,
             player_booking_odds=player_booking_odds_dict if player_booking_odds_dict else None,
+            # With a fitted Dixon-Coles model every fixture must be priced on
+            # its posterior grid. simulate_fixture raises rather than falling
+            # back, so this should never bite; it is the second lock, so a
+            # future fallback cannot stake real money on the Poisson grid.
+            require_goal_method=METHOD_POSTERIOR_GRID if dc_model is not None else None,
         )
 
         # Narrative

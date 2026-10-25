@@ -48,7 +48,10 @@ from pipeline.tests.test_value_path_determinism import MATCH_ID, _fake_dc
 from pipeline.validation.artifacts import validate_prediction_output
 
 WIDTH = DC_SAMPLING_MAX_GOALS + 1
-GOAL_KEYS = ("1x2", "over_under", "btts", "clean_sheet", "correct_score", "asian_handicap", "ht_ft")
+GOAL_KEYS = (
+    "1x2", "over_under", "btts", "clean_sheet", "correct_score",
+    "asian_handicap", "asian_handicap_push", "ht_ft",
+)
 
 
 def _goal_probability_cells(markets):
@@ -58,7 +61,7 @@ def _goal_probability_cells(markets):
     for line, d in p["over_under"].items():
         cells[("ou", line)] = d["over"]
     cells[("btts", "yes")] = p["btts"]["yes"]
-    for key in ("clean_sheet", "correct_score", "asian_handicap", "ht_ft"):
+    for key in ("clean_sheet", "correct_score", "asian_handicap", "asian_handicap_push", "ht_ft"):
         cells.update({(key, k): v for k, v in p[key].items()})
     return cells
 
@@ -168,7 +171,11 @@ class ProbabilityContractTests(unittest.TestCase):
 
     def test_internally_consistent_with_one_grid(self):
         """1X2, totals and BTTS are functionals of the same grid."""
-        self.assertAlmostEqual(self.p["asian_handicap"]["home_0"], self.p["1x2"]["home"], places=12)
+        # home_0 is draw-no-bet: the draw is a push, so it is P(H | not D).
+        h, d = self.p["1x2"]["home"], self.p["1x2"]["draw"]
+        self.assertAlmostEqual(self.p["asian_handicap"]["home_0"], h / (1 - d), places=12)
+        self.assertAlmostEqual(self.p["asian_handicap_push"]["home_0"], d, places=12)
+        self.assertAlmostEqual(self.p["asian_handicap"]["home_-0.5"], h, places=12)
         self.assertAlmostEqual(
             sum(v for k, v in self.p["ht_ft"].items() if k.endswith("/D")), self.p["1x2"]["draw"], places=12
         )
@@ -312,6 +319,43 @@ class FailLoudlyTests(unittest.TestCase):
         with self.assertRaises(ExactMarketsError):
             _run(200, dc=dc)
 
+    def test_a_cached_trace_with_no_rho_variable_raises(self):
+        # The DC cache is keyed on the data hash alone, so it can serve a
+        # pickle whose trace predates (or lost) the rho variable. That raised
+        # KeyError inside get_rho_samples, which the old broad except turned
+        # into a warning and a silent switch to the independent-Poisson grid.
+        dc = _fake_dc()
+        del dc.trace.posterior["rho"]
+        with self.assertRaises(ExactMarketsError) as caught:
+            _run(200, dc=dc)
+        self.assertIsInstance(caught.exception.__cause__, KeyError)
+        self.assertIn("Arsenal vs Everton", str(caught.exception))
+
+    def test_an_unfitted_model_raises(self):
+        dc = _fake_dc()
+        dc.trace = None
+        with self.assertRaises(ExactMarketsError) as caught:
+            _run(200, dc=dc)
+        self.assertIsInstance(caught.exception.__cause__, RuntimeError)
+
+    def test_a_misshapen_trace_raises(self):
+        dc = _fake_dc()
+        dc.team_index["Everton"] = 99  # out of range for the attack array
+        with self.assertRaises(ExactMarketsError) as caught:
+            _run(200, dc=dc)
+        self.assertIsInstance(caught.exception.__cause__, IndexError)
+
+    def test_an_unseen_club_is_not_a_failure(self):
+        """The one legitimate 'no posterior for this club' case is handled
+        inside the accessors by the promoted-club prior, without raising, so
+        failing loudly above costs no fixture."""
+        result = simulate_fixture(
+            MonteCarloSimulator(200), match_id=MATCH_ID, home="Arsenal", away="Promoted FC",
+            dc_model=_fake_dc(), other_lambdas={}, weights=ENSEMBLE_WEIGHTS,
+        )
+        self.assertTrue(result.from_posterior)
+        self.assertEqual(result.goal_markets_method, METHOD_POSTERIOR_GRID)
+
     def test_no_posterior_is_logged_and_recorded(self):
         with self.assertLogs("pipeline.simulation.fixture_sim", level="WARNING") as logs:
             result = simulate_fixture(
@@ -324,6 +368,97 @@ class FailLoudlyTests(unittest.TestCase):
         self.assertEqual(result.markets["goal_markets"]["method"], METHOD_POISSON_GRID)
         expected = goal_markets_from_grid(independent_poisson_grid(1.6, 1.1))
         self.assertEqual(result.markets["probabilities"]["1x2"], expected["probabilities"]["1x2"])
+
+
+class AsianHandicapPushTests(unittest.TestCase):
+    """A whole line landing on the goal difference refunds the stake. Before
+    this, every derivation counted that refund as a loss."""
+
+    def setUp(self):
+        lam, mu, rho = _synthetic_posterior()
+        self.grid = scoreline_grid_mixture(lam, mu, rho)
+        self.p = goal_markets_from_grid(self.grid)["probabilities"]
+        i = np.arange(self.grid.shape[0])[:, None]
+        j = np.arange(self.grid.shape[1])[None, :]
+        self.gd = i - j
+
+    def _mass(self, cond):
+        return float(self.grid[cond].sum())
+
+    def test_whole_lines_condition_on_no_push(self):
+        for line in (-1.0, 0, 1.0):
+            win = self._mass(self.gd + line > 0)
+            push = self._mass(self.gd + line == 0)
+            lose = self._mass(self.gd + line < 0)
+            self.assertGreater(push, 0.05, line)
+            self.assertAlmostEqual(self.p["asian_handicap"][f"home_{line}"], win / (win + lose), places=12)
+            self.assertAlmostEqual(self.p["asian_handicap_push"][f"home_{line}"], push, places=12)
+            # The old export, P(win) alone, sat below the push-aware value by
+            # the push share: that was the push counted as a loss.
+            self.assertGreater(self.p["asian_handicap"][f"home_{line}"], win, line)
+
+    def test_half_lines_cannot_push(self):
+        for line in (-2.5, -1.5, -0.5, 0.5, 1.5, 2.5):
+            self.assertEqual(self.p["asian_handicap_push"][f"home_{line}"], 0.0)
+            self.assertAlmostEqual(
+                self.p["asian_handicap"][f"home_{line}"], self._mass(self.gd + line > 0), places=12
+            )
+
+    def test_mirrored_lines_are_complementary(self):
+        """home -1 resolved is a two-way market with away +1: the pair must sum
+        to 1, which P(win) alone never did on a whole line."""
+        grid_t = self.grid.T  # swap sides: the away team as 'home'
+        away_p = goal_markets_from_grid(grid_t)["probabilities"]["asian_handicap"]
+        for line in (-1.0, 0, 1.0, -0.5, 1.5):
+            home_side = self.p["asian_handicap"][f"home_{line}"]
+            mirrored = -line if line != 0 else 0
+            self.assertAlmostEqual(home_side + away_p[f"home_{mirrored}"], 1.0, places=12, msg=str(line))
+
+    def test_monte_carlo_matches_the_definition(self):
+        sims = {
+            # goal differences: +1, +1, 0, -1, +2
+            "home_goals": np.array([1, 2, 1, 0, 2]),
+            "away_goals": np.array([0, 1, 1, 1, 0]),
+            "total_goals": np.array([1, 3, 2, 1, 2]),
+            "ht_home": np.array([0, 1, 0, 0, 1]),
+            "ht_away": np.array([0, 0, 0, 0, 0]),
+            "total_corners": np.full(5, 10),
+            "total_cards": np.full(5, 3),
+        }
+        p = MonteCarloSimulator(5).derive_all_markets(sims)["probabilities"]
+        # home -1: wins on +2 (1), pushes on +1 (2), loses on 0/-1 (2).
+        self.assertAlmostEqual(p["asian_handicap"]["home_-1.0"], 1 / 3, places=12)
+        self.assertAlmostEqual(p["asian_handicap_push"]["home_-1.0"], 2 / 5, places=12)
+        # home 0 (draw no bet): wins 3, pushes 1, loses 1.
+        self.assertAlmostEqual(p["asian_handicap"]["home_0"], 3 / 4, places=12)
+        # home +1: wins on 0/+1/+2 (4), pushes on -1 (1), loses never.
+        self.assertAlmostEqual(p["asian_handicap"]["home_1.0"], 1.0, places=12)
+        self.assertAlmostEqual(p["asian_handicap_push"]["home_1.0"], 1 / 5, places=12)
+        self.assertEqual(p["asian_handicap_push"]["home_-0.5"], 0.0)
+        self.assertAlmostEqual(p["asian_handicap"]["home_-0.5"], 3 / 5, places=12)
+
+    def test_a_line_that_always_pushes_stays_monotonic(self):
+        from pipeline.simulation.montecarlo import asian_handicap_no_push
+
+        self.assertEqual(asian_handicap_no_push(0.0, 1.0), 0.5)
+        self.assertEqual(asian_handicap_no_push(0.3, 0.0), 0.3)
+
+    def test_ensemble_derivation_agrees(self):
+        from pipeline.models.ensemble import EnsemblePredictor
+
+        from pipeline.config import MAX_GOALS
+
+        markets = EnsemblePredictor()._derive_all_markets(self.grid)["probabilities"]
+        # The ensemble reads the grid up to MAX_GOALS per side.
+        n = MAX_GOALS + 1
+        grid, gd = self.grid[:n, :n], self.gd[:n, :n]
+        for line in (-1.0, 0, 1.0, -0.5):
+            win = float(grid[gd + line > 0].sum())
+            push = float(grid[gd + line == 0].sum())
+            self.assertAlmostEqual(markets["asian_handicap_push"][f"home_{line}"], push, places=12)
+            self.assertAlmostEqual(
+                markets["asian_handicap"][f"home_{line}"], win / (1 - push), places=12, msg=str(line)
+            )
 
 
 if __name__ == "__main__":

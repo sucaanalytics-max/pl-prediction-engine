@@ -64,10 +64,14 @@ taken from it. Its goal draws are recentred on the same blended rates as the
 exact grid.
 
 If the exact computation fails it raises ``ExactMarketsError``; there is no
-fallback to simulated goals markets. Without a Dixon-Coles posterior the goals
-markets are the exact independent-Poisson grid at the blended rates, which is
-the expectation of the ``simulate_match`` fallback this path has always used,
-and that is logged and recorded in ``goal_markets.method``.
+fallback to simulated goals markets. Without a Dixon-Coles posterior
+(``dc_model=None``) the goals markets are the exact independent-Poisson grid at
+the blended rates, which is the expectation of the ``simulate_match`` fallback
+this path has always used, and that is logged and recorded in
+``goal_markets.method``. A ``dc_model`` that is supplied but cannot be read is
+NOT that case: it raises ``ExactMarketsError`` rather than quietly pricing the
+fixture on the Poisson grid, and ``find_value_bets(require_goal_method=...)``
+refuses to stake a fixture whose method is not the one run_pipeline expected.
 """
 import hashlib
 import logging
@@ -212,9 +216,20 @@ def simulate_fixture(
         except ExactMarketsError:
             raise
         except Exception as e:
-            logger.warning(f"  DC prediction failed for {home} vs {away}: {e}")
-            dc_lam_samples = dc_mu_samples = dc_rho_samples = None
-            dc_lam_post = dc_mu_post = dc_rho_post = None
+            # No exception here means "no Dixon-Coles prediction for this
+            # fixture": a club the posterior has never seen gets the
+            # promoted-club prior inside the accessors, without raising. What
+            # does raise is a broken model — a cached trace with no ``rho``
+            # (KeyError), an unfitted model (RuntimeError), a misshapen trace
+            # (IndexError, ValueError). This used to log a warning and fall
+            # through to the independent-Poisson grid, which understates
+            # draws, and Kelly staked those markets with nothing recording
+            # the switch beyond ``goal_markets.method``. Fail loudly instead.
+            raise ExactMarketsError(
+                f"{home} vs {away}: Dixon-Coles model was supplied but its "
+                f"posterior could not be read ({type(e).__name__}: {e}); the "
+                "exact goals markets cannot be computed"
+            ) from e
 
     from_posterior = dc_lam_post is not None and dc_mu_post is not None
 

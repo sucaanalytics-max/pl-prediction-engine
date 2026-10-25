@@ -580,6 +580,7 @@ def find_value_bets(
     cards_odds: Optional[Dict] = None,
     player_bookings: Optional[Dict] = None,
     player_booking_odds: Optional[Dict] = None,
+    require_goal_method: Optional[str] = None,
 ) -> List[Dict]:
     """
     Identify value bets where model edge exceeds market-specific threshold.
@@ -592,10 +593,29 @@ def find_value_bets(
         cards_odds: Dict with card line odds {line: {over: odds, under: odds}}
         player_bookings: Dict with player booking probs from PlayerCardsModel
         player_booking_odds: Dict with bookmaker odds for player to be booked
+        require_goal_method: When set, the ``goal_markets.method`` the
+            prediction must carry (``exact_markets.METHOD_*``). A prediction
+            whose goals markets came from any other method, or that records
+            none, gets NO bets at all — not just in the goals markets, since
+            corners, cards and goalscorer probabilities are all conditioned on
+            the same goals. run_pipeline passes the posterior-grid method
+            whenever a Dixon-Coles model was fitted, so a fixture that slipped
+            onto the independent-Poisson grid (which understates draws) can
+            never be staked as if it had the low-score correction. This only
+            ever removes bets.
 
     Returns:
         List of value bet opportunities sorted by edge.
     """
+    if require_goal_method is not None:
+        recorded = (predictions.get("goal_markets") or {}).get("method")
+        if recorded != require_goal_method:
+            logger.error(
+                f"  Refusing to stake: goals markets were computed by "
+                f"{recorded!r}, expected {require_goal_method!r}"
+            )
+            return []
+
     value_bets = []
     probs = predictions.get("probabilities", {})
 
