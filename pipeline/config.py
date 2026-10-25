@@ -47,6 +47,13 @@ def training_seasons(completed=None, current=None) -> list:
 
 TRAINING_SEASONS = training_seasons()
 
+# League structure, used only as plausibility checks on a club roster (never as a
+# roster): a Premier League season has 20 clubs, 3 of them promoted. A roster
+# that fails either check is treated as garbled — see
+# pipeline/models/dixon_coles.py ``classify_promoted_clubs``.
+PL_CLUBS_PER_SEASON = 20
+PL_PROMOTED_PER_SEASON = 3
+
 # ── Data Sources ───────────────────────────────────────────────────────────
 FOOTBALL_DATA_URL = "https://www.football-data.co.uk/mmz4281/{season}/E0.csv"
 FOOTBALL_DATA_SEASONS = {

@@ -25,7 +25,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Optional
 
 import numpy as np
 import pandas as pd
@@ -106,6 +106,94 @@ def _data_hash(df: pd.DataFrame) -> str:
     """Quick hash of DataFrame shape + last few rows for cache invalidation."""
     sig = f"{len(df)}_{df.columns.tolist()}_{df.tail(3).to_json()}"
     return hashlib.md5(sig.encode()).hexdigest()[:12]
+
+
+# The only columns BayesianDixonColes.fit reads. Hashed in full, not by tail:
+# a corrected score three months back changes the fit as surely as a new row.
+_DC_FIT_COLUMNS = ["season", "Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG"]
+
+
+def _dc_fit_signature() -> Dict:
+    """
+    Everything other than the data that decides what a Dixon-Coles fit returns.
+
+    Keyed on the data alone, a pickle fitted under the old prior (or the old
+    code) was served for up to 12h after a change to either — the 2026-10-25
+    ratings fix could have shipped and still published the frozen ratings. So
+    the key carries the training window, every ``dixon_coles.*`` registry value,
+    the sampler settings actually used, and a hash of the model's source file.
+    The source hash is automatic on purpose: a hand-bumped version constant is
+    one more thing to forget, and a spurious invalidation costs one refit.
+    """
+    from pipeline import config
+    from pipeline.models import dixon_coles
+
+    return {
+        "training_seasons": list(config.TRAINING_SEASONS),
+        "current_season": config.CURRENT_SEASON,
+        "dixon_coles_config": dict(config.DIXON_COLES),
+        "registry": {
+            name: entry["value"]
+            for name, entry in sorted(config.PARAM_REGISTRY.items())
+            if name.startswith("dixon_coles.")
+        },
+        "model_source": hashlib.sha256(
+            Path(dixon_coles.__file__).read_bytes()
+        ).hexdigest(),
+    }
+
+
+def _dc_cache_key(training: pd.DataFrame, fit_inputs: Dict = None) -> str:
+    """
+    Cache key for a fitted Dixon-Coles model: data, config, code, and any extra
+    ``fit`` arguments (``fit_inputs``) — each of which changes the posterior.
+    """
+    cols = [c for c in _DC_FIT_COLUMNS if c in training.columns]
+    data = hashlib.sha256(
+        pd.util.hash_pandas_object(training[cols], index=False).values.tobytes()
+    ).hexdigest()
+    payload = {
+        "data": data,
+        "columns": cols,
+        "fit": _dc_fit_signature(),
+        "fit_inputs": {
+            k: sorted(v) if isinstance(v, (set, frozenset)) else v
+            for k, v in (fit_inputs or {}).items()
+        },
+    }
+    digest = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, default=str).encode()
+    ).hexdigest()
+    return f"dixon_coles_{digest[:16]}"
+
+
+def _dc_cache_defect(model) -> Optional[str]:
+    """
+    Why a cached Dixon-Coles model cannot serve the value-bet path, or None.
+
+    The value-bet simulator raises rather than falling back to a Poisson grid
+    when the posterior it was handed is unreadable, so a broken pickle would
+    abort the run and leave yesterday's card live. Checked on load so that a
+    defect costs a refit instead.
+    """
+    trace = getattr(model, "trace", None)
+    posterior = getattr(trace, "posterior", None)
+    if posterior is None:
+        return "no posterior trace"
+    if not getattr(model, "teams", None):
+        return "no team index"
+    try:
+        for var in ("attack", "defence", "intercept", "home_adv", "rho"):
+            if var not in posterior:
+                return f"posterior has no {var!r}"
+        n = posterior["intercept"].values.size
+        if n == 0:
+            return "posterior has no draws"
+        if posterior["rho"].values.size != n:
+            return f"rho has {posterior['rho'].values.size} draws, intercept {n}"
+    except Exception as exc:  # an unreadable trace is exactly the defect
+        return f"posterior unreadable ({exc!r})"
+    return None
 
 
 def _save_model_cache(key: str, obj):
@@ -501,6 +589,12 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
 
     # ── Step 5: Fit PyMC Dixon-Coles ─────────────────────────────────
     dc_model = None
+    # The published current-season roster, canonicalised, so the promoted-club
+    # prior applies from a club's first fixture rather than its first played
+    # match. None (malformed bootstrap) or an implausible roster falls back, with
+    # a WARNING, to classifying from played rows. Part of the fit cache key.
+    from pipeline.models.dixon_coles import current_clubs_from_bootstrap
+    dc_current_clubs = current_clubs_from_bootstrap(bootstrap)
 
     # Auto-detect: skip PyMC in CI if we're constrained
     ci_env = os.environ.get("CI", "false").lower() == "true"
@@ -520,30 +614,37 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
     if not skip_pymc:
         logger.info("\n[5/12] Fitting PyMC Dixon-Coles...")
         try:
-            # Try loading cached model first
-            data_sig = _data_hash(matches)
-            cache_key = f"dixon_coles_{data_sig}"
+            # In CI, use reduced sampling for reliability. Set before the cache
+            # key is taken, so the key names the sampler settings actually used.
+            if ci_env:
+                from pipeline.config import DIXON_COLES
+                original_draws = DIXON_COLES.get("pymc_draws", 2000)
+                original_tune = DIXON_COLES.get("pymc_tune", 1000)
+                DIXON_COLES["pymc_draws"] = min(original_draws, 1000)
+                DIXON_COLES["pymc_tune"] = min(original_tune, 500)
+                logger.info(
+                    f"  CI mode: reduced sampling to "
+                    f"{DIXON_COLES['pymc_draws']} draws, "
+                    f"{DIXON_COLES['pymc_tune']} tune"
+                )
+
+            # Try loading cached model first. The key covers data, config and
+            # model code, so a prior or code change refits rather than reusing
+            # a pickle fitted under the old one.
+            cache_key = _dc_cache_key(features, {"current_clubs": dc_current_clubs})
             dc_model = _load_model_cache(cache_key, max_age_hours=12)
+            if dc_model is not None:
+                defect = _dc_cache_defect(dc_model)
+                if defect:
+                    logger.warning(f"  Cached Dixon-Coles unusable ({defect}); refitting")
+                    dc_model = None
 
             if dc_model is None:
                 from pipeline.models.dixon_coles import BayesianDixonColes
 
-                # In CI, use reduced sampling for reliability
-                if ci_env:
-                    from pipeline.config import DIXON_COLES
-                    original_draws = DIXON_COLES.get("pymc_draws", 2000)
-                    original_tune = DIXON_COLES.get("pymc_tune", 1000)
-                    DIXON_COLES["pymc_draws"] = min(original_draws, 1000)
-                    DIXON_COLES["pymc_tune"] = min(original_tune, 500)
-                    logger.info(
-                        f"  CI mode: reduced sampling to "
-                        f"{DIXON_COLES['pymc_draws']} draws, "
-                        f"{DIXON_COLES['pymc_tune']} tune"
-                    )
-
                 dc_model = BayesianDixonColes()
                 with step_timeout(480, "PyMC Dixon-Coles fitting"):
-                    dc_model.fit(features)
+                    dc_model.fit(features, current_clubs=dc_current_clubs)
                     _save_model_cache(cache_key, dc_model)
                 logger.info("  PyMC Dixon-Coles fitted successfully")
             else:

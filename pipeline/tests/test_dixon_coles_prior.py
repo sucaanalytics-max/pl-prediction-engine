@@ -22,11 +22,15 @@ Two things kept the best defence in the league rated near average.
 * The model reads all four values from ``PARAM_REGISTRY`` and nowhere else.
 * An unseen club at predict time gets the shrunk offset, while a model pickled
   before ``unseen_prior`` existed keeps its old (0, 0).
+* With the published roster (``current_clubs``), a promoted club is classified
+  from its first fixture — pre-season, and in-season before its own first
+  match — and an implausible roster falls back loudly to played rows.
 * ``predict_scoreline`` on a one-draw trace equals ``scoreline_matrix``, so the
   vectorised path the pipeline uses and the single-fixture forward model agree.
 """
 from __future__ import annotations
 
+import sys
 import unittest
 from types import SimpleNamespace
 from unittest import mock
@@ -38,6 +42,7 @@ from pipeline.config import PARAM_REGISTRY
 from pipeline.models.dixon_coles import (
     BayesianDixonColes,
     classify_promoted_clubs,
+    current_clubs_from_bootstrap,
     promoted_prior_means,
     promoted_prior_settings,
 )
@@ -186,6 +191,173 @@ class ConfigurePriorTests(unittest.TestCase):
         model = _model_for(frame)
         model._configure_prior(frame, promoted_clubs={"Ghost"}, new_promoted_clubs={"Ghost"})
         self.assertEqual(model.promoted_clubs, set())
+
+
+# ── Roster-based classification (``current_clubs``) ─────────────────────────
+#
+# 20-club seasons, because the roster is checked for plausibility (20 clubs,
+# 3 promoted). "Ret" was relegated after season "x" and returns in "w"; "New1"
+# and "New2" have never appeared in the window.
+CORE = [f"C{i:02d}" for i in range(16)]
+X20 = _season("x", "2020-08-01", CORE + ["Ret", "D1", "D2", "D3"])
+Y20 = _season("y", "2021-08-01", CORE + ["D1", "D2", "D3", "E1"])
+ROSTER = set(CORE) | {"E1", "Ret", "New1", "New2"}
+W_UNPLAYED = _season("w", "2022-08-01", sorted(ROSTER), played=False)
+PRE_SEASON = pd.concat([X20, Y20, W_UNPLAYED])
+# In-season: New1 has played; Ret and New2 have not (postponements).
+W_PARTIAL = _season("w", "2022-08-01", CORE[:4] + ["E1", "New1"])
+IN_SEASON = pd.concat([X20, Y20, W_PARTIAL])
+
+
+class RosterClassificationTests(unittest.TestCase):
+    def test_pre_season_roster_finds_returning_and_new_promoted_clubs(self):
+        self.assertEqual(
+            classify_promoted_clubs(PRE_SEASON, season="w", current_clubs=ROSTER),
+            ({"Ret", "New1", "New2"}, {"New1", "New2"}),
+        )
+        # Without the roster the same frame applies nothing: the bug.
+        self.assertEqual(classify_promoted_clubs(PRE_SEASON, season="w"), (set(), set()))
+
+    def test_in_season_club_without_a_played_match_is_still_promoted(self):
+        self.assertEqual(
+            classify_promoted_clubs(IN_SEASON, season="w", current_clubs=ROSTER),
+            ({"Ret", "New1", "New2"}, {"New1", "New2"}),
+        )
+        # Played rows alone only see the club that has played.
+        self.assertEqual(
+            classify_promoted_clubs(IN_SEASON, season="w"), ({"New1"}, {"New1"})
+        )
+
+    def test_roster_agrees_with_played_rows_once_everyone_has_played(self):
+        full = pd.concat([X20, Y20, _season("w", "2022-08-01", sorted(ROSTER))])
+        self.assertEqual(
+            classify_promoted_clubs(full, season="w", current_clubs=ROSTER),
+            classify_promoted_clubs(full, season="w"),
+        )
+
+    def test_without_roster_behaviour_is_unchanged(self):
+        frame = pd.concat([OLD, PREV, CUR])
+        for season in ("b", "m", "absent"):
+            self.assertEqual(
+                classify_promoted_clubs(frame, season=season, current_clubs=None),
+                classify_promoted_clubs(frame, season=season),
+            )
+
+
+class RosterFallbackTests(unittest.TestCase):
+    """An implausible roster must not make clubs look promoted: warn, fall back."""
+
+    def _assert_falls_back(self, frame, roster, expected):
+        with self.assertLogs("pipeline.models.dixon_coles", level="WARNING"):
+            got = classify_promoted_clubs(frame, season="w", current_clubs=roster)
+        self.assertEqual(got, expected)
+
+    def test_wrong_club_count(self):
+        self._assert_falls_back(PRE_SEASON, ROSTER - {"New2"}, (set(), set()))
+
+    def test_mis_mapped_name_makes_too_many_clubs_look_promoted(self):
+        # A raw provider spelling of an established club ("Spurs" for C00).
+        garbled = (ROSTER - {"C00"}) | {"Spurs"}
+        self._assert_falls_back(PRE_SEASON, garbled, (set(), set()))
+
+    def test_stale_roster_from_last_season(self):
+        stale = set(CORE) | {"D1", "D2", "D3", "E1"}
+        self._assert_falls_back(PRE_SEASON, stale, (set(), set()))
+
+    def test_roster_missing_a_club_that_has_played_this_season(self):
+        frame = pd.concat([X20, Y20, _season("w", "2022-08-01", CORE[:4] + ["D1"])])
+        # D1 has played "w" but is not on the roster: the roster is wrong. The
+        # played-rows fallback still sees D1 as a non-promoted continuing club.
+        self._assert_falls_back(frame, ROSTER, (set(), set()))
+
+    def test_no_earlier_season(self):
+        self._assert_falls_back(W_UNPLAYED, ROSTER, (set(), set()))
+
+    def test_fallback_in_season_keeps_played_row_classification(self):
+        self._assert_falls_back(IN_SEASON, ROSTER | {"Extra"}, ({"New1"}, {"New1"}))
+
+
+class RosterPriorTests(unittest.TestCase):
+    def test_returning_club_gets_full_offset_pre_season(self):
+        model = _model_for(PRE_SEASON)
+        with mock.patch("pipeline.models.dixon_coles.CURRENT_SEASON", "w"):
+            att, dfc, _ = model._configure_prior(PRE_SEASON, current_clubs=ROSTER)
+        prior = promoted_prior_settings()
+        i = model.team_index["Ret"]
+        self.assertAlmostEqual(att[i], prior["attack_offset"])
+        self.assertAlmostEqual(dfc[i], prior["defence_offset"])
+        # Only Ret is in the fit; the new clubs have no rows and no parameter.
+        self.assertEqual(model.promoted_clubs, {"Ret"})
+        self.assertNotIn("New1", model.team_index)
+        self.assertEqual(np.count_nonzero(att), 1)
+
+    def test_new_club_gets_shrunk_offset_pre_season_via_unseen_prior(self):
+        model = _model_for(PRE_SEASON)
+        with mock.patch("pipeline.models.dixon_coles.CURRENT_SEASON", "w"):
+            model._configure_prior(PRE_SEASON, current_clubs=ROSTER)
+        prior = promoted_prior_settings()
+        k = prior["new_club_shrink"]
+        self.assertEqual(
+            model.unseen_prior, (k * prior["attack_offset"], k * prior["defence_offset"])
+        )
+
+    def test_in_season_new_club_with_rows_is_shrunk_and_unplayed_returner_full(self):
+        model = _model_for(IN_SEASON)
+        with mock.patch("pipeline.models.dixon_coles.CURRENT_SEASON", "w"):
+            att, _, _ = model._configure_prior(IN_SEASON, current_clubs=ROSTER)
+        prior = promoted_prior_settings()
+        self.assertEqual(model.promoted_clubs, {"Ret", "New1"})
+        self.assertEqual(model.new_promoted_clubs, {"New1"})
+        self.assertAlmostEqual(att[model.team_index["Ret"]], prior["attack_offset"])
+        self.assertAlmostEqual(
+            att[model.team_index["New1"]], prior["new_club_shrink"] * prior["attack_offset"]
+        )
+
+    def test_without_roster_pre_season_prior_is_all_zero(self):
+        model = _model_for(PRE_SEASON)
+        with mock.patch("pipeline.models.dixon_coles.CURRENT_SEASON", "w"):
+            att, dfc, _ = model._configure_prior(PRE_SEASON)
+        self.assertFalse(att.any() or dfc.any())
+
+    def test_explicit_promoted_override_wins_over_roster(self):
+        model = _model_for(PRE_SEASON)
+        with mock.patch("pipeline.models.dixon_coles.CURRENT_SEASON", "w"):
+            model._configure_prior(PRE_SEASON, promoted_clubs={"E1"}, current_clubs=ROSTER)
+        self.assertEqual(model.promoted_clubs, {"E1"})
+
+    def test_fit_forwards_current_clubs(self):
+        class Stop(Exception):
+            pass
+
+        model = BayesianDixonColes()
+        # Stand-in PyMC/arviz: fit stops at the prior, before any sampling.
+        fake = {"pymc": mock.MagicMock(), "arviz": mock.MagicMock()}
+        with mock.patch.dict(sys.modules, fake), mock.patch.object(
+            BayesianDixonColes, "_configure_prior", side_effect=Stop
+        ) as configure:
+            with self.assertRaises(Stop):
+                model.fit(PRE_SEASON, current_clubs=ROSTER)
+        self.assertEqual(configure.call_args.kwargs["current_clubs"], ROSTER)
+
+
+class CurrentClubsFromBootstrapTests(unittest.TestCase):
+    def test_names_are_canonicalised(self):
+        bootstrap = {"teams": [
+            {"id": 1, "name": "Ipswich Town"},
+            {"id": 2, "name": "Man Utd"},
+            {"id": 3, "name": "Spurs"},
+            {"id": 4, "name": "Coventry City"},
+        ]}
+        self.assertEqual(
+            current_clubs_from_bootstrap(bootstrap),
+            {"Ipswich", "Man United", "Tottenham", "Coventry City"},
+        )
+
+    def test_malformed_bootstrap_gives_none(self):
+        for bad in ({}, {"teams": None}, {"teams": [{"name": "Arsenal"}]}, None,
+                    {"teams": []}):
+            with self.subTest(bad=bad), self.assertLogs("pipeline.models.dixon_coles", "WARNING"):
+                self.assertIsNone(current_clubs_from_bootstrap(bad))
 
 
 def _fake_trace(teams, attack, defence, intercept=0.2, home_adv=0.25, rho=-0.08):

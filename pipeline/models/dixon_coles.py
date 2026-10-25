@@ -19,7 +19,14 @@ from typing import Dict, Iterable, Optional, Set, Tuple
 import numpy as np
 import pandas as pd
 
-from pipeline.config import CURRENT_SEASON, DIXON_COLES, MAX_GOALS, PARAM_REGISTRY
+from pipeline.config import (
+    CURRENT_SEASON,
+    DIXON_COLES,
+    MAX_GOALS,
+    PARAM_REGISTRY,
+    PL_CLUBS_PER_SEASON,
+    PL_PROMOTED_PER_SEASON,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -95,8 +102,83 @@ def _season_order(matches: pd.DataFrame) -> list:
     return list(firsts.index)
 
 
+def current_clubs_from_bootstrap(bootstrap) -> Optional[Set[str]]:
+    """
+    Canonical names of the clubs in the FPL bootstrap ``teams`` list.
+
+    The authoritative current-season roster: FPL publishes it before a ball is
+    kicked, whereas the match data only knows a club once it has played. Names
+    go through ``team_mapping`` (never raw provider strings). Returns ``None``
+    for a missing or malformed list; plausibility (20 clubs, 3 promoted) is
+    judged by ``classify_promoted_clubs``, which logs and falls back.
+    """
+    from pipeline.data.team_mapping import update_fpl_team_map
+
+    try:
+        names = set(update_fpl_team_map(bootstrap["teams"]).values())
+    except (KeyError, TypeError, AttributeError) as exc:
+        logger.warning(f"FPL bootstrap has no usable teams list ({exc!r}); no club roster.")
+        return None
+    names = {str(n) for n in names if n}
+    if not names:
+        # An empty list is a broken fetch, not a league with no clubs.
+        logger.warning("FPL bootstrap teams list is empty; no club roster.")
+        return None
+    return names
+
+
+def _clubs(frame: pd.DataFrame) -> Set[str]:
+    return set(frame["HomeTeam"]) | set(frame["AwayTeam"])
+
+
+def _classify_from_roster(
+    played: pd.DataFrame, season: str, roster: Set[str]
+) -> Optional[Tuple[Set[str], Set[str]]]:
+    """
+    Promoted / new clubs from the published roster, or ``None`` (with a warning)
+    when the roster or the data cannot support a trustworthy answer.
+
+    "Previous season" is the season before ``season`` by date when ``season``
+    has played rows, else the latest season with played rows (pre-season).
+    """
+    def reject(why: str) -> None:
+        logger.warning(
+            f"Club roster not used for promoted-club detection in {season}: {why}. "
+            "Falling back to played rows, so a promoted club with no played "
+            f"{season} match gets no promoted-club prior."
+        )
+        return None
+
+    if len(roster) != PL_CLUBS_PER_SEASON:
+        return reject(f"{len(roster)} clubs, expected {PL_CLUBS_PER_SEASON}")
+    order = _season_order(played)
+    before = order[: order.index(season)] if season in order else order
+    if not before:
+        return reject("no earlier season in the training data")
+    previous_label = before[-1]
+    previous = _clubs(played[played["season"] == previous_label])
+    promoted = roster - previous
+    if len(promoted) != PL_PROMOTED_PER_SEASON:
+        return reject(
+            f"{len(promoted)} clubs absent from {previous_label} "
+            f"({', '.join(sorted(promoted)) or 'none'}), expected "
+            f"{PL_PROMOTED_PER_SEASON} — stale roster, mis-mapped names, or a "
+            "missing season"
+        )
+    current_played = _clubs(played[played["season"] == season])
+    if not current_played <= roster:
+        return reject(
+            f"clubs with played {season} matches missing from the roster: "
+            f"{', '.join(sorted(current_played - roster))}"
+        )
+    elsewhere = _clubs(played[played["season"] != season])
+    return promoted, promoted - elsewhere
+
+
 def classify_promoted_clubs(
-    matches: pd.DataFrame, season: Optional[str] = None
+    matches: pd.DataFrame,
+    season: Optional[str] = None,
+    current_clubs: Optional[Iterable[str]] = None,
 ) -> Tuple[Set[str], Set[str]]:
     """
     Clubs promoted into ``season``, and which of them are new to the window.
@@ -106,16 +188,35 @@ def classify_promoted_clubs(
     promoted club with no match in ``matches`` outside ``season`` at all — no
     Premier League data anywhere in the training window.
 
-    Returns ``(set(), set())`` — no promoted-club prior, every prior mean 0 —
-    when ``season``
-    has no played rows (pre-season: its promoted clubs are then simply unseen,
-    and ``unseen_prior`` covers them) or when the previous season is absent, in
-    which case every club would wrongly look promoted.
+    ``current_clubs`` is the published roster of ``season`` (canonical names,
+    e.g. from ``current_clubs_from_bootstrap``). When given and plausible —
+    exactly ``PL_CLUBS_PER_SEASON`` clubs, exactly ``PL_PROMOTED_PER_SEASON`` of
+    them absent from the previous season, every club already playing in
+    ``season`` on it — it decides who plays in ``season``, so a promoted club is
+    classified from the first fixture: pre-season (previous season = latest
+    season with played rows) and when its own first match is still unplayed.
+    An implausible roster is logged at WARNING and ignored.
+
+    Without a usable roster, "plays in ``season``" means "has a played row in
+    ``season``", and this returns ``(set(), set())`` — no promoted-club prior,
+    every prior mean 0 — when ``season`` has no played rows (pre-season: a club
+    new to the window is then unseen and ``unseen_prior`` covers it, but a
+    returning promoted club gets no offset) or when the previous season is
+    absent, in which case every club would wrongly look promoted.
     """
     season = CURRENT_SEASON if season is None else season
     if "season" not in matches.columns or matches.empty:
+        if current_clubs is not None:
+            logger.warning(
+                "No season-labelled played rows; promoted clubs cannot be identified "
+                "from the roster, so no promoted-club prior is applied."
+            )
         return set(), set()
     played = matches.dropna(subset=["FTHG", "FTAG"])
+    if current_clubs is not None:
+        result = _classify_from_roster(played, season, {c for c in current_clubs if c})
+        if result is not None:
+            return result
     order = _season_order(played)
     if season not in order:
         return set(), set()
@@ -127,9 +228,7 @@ def classify_promoted_clubs(
         )
         return set(), set()
 
-    def clubs(frame: pd.DataFrame) -> Set[str]:
-        return set(frame["HomeTeam"]) | set(frame["AwayTeam"])
-
+    clubs = _clubs
     current = clubs(played[played["season"] == season])
     previous = clubs(played[played["season"] == order[pos - 1]])
     elsewhere = clubs(played[played["season"] != season])
@@ -196,6 +295,7 @@ class BayesianDixonColes:
         matches: pd.DataFrame,
         promoted_clubs: Optional[Iterable[str]] = None,
         new_promoted_clubs: Optional[Iterable[str]] = None,
+        current_clubs: Optional[Iterable[str]] = None,
     ) -> None:
         """
         Fit the Bayesian Dixon-Coles model.
@@ -209,6 +309,12 @@ class BayesianDixonColes:
                 window. Default: derived alongside ``promoted_clubs``; when
                 ``promoted_clubs`` is given without it, a promoted club whose
                 every row is in the latest season of ``matches`` is new.
+            current_clubs: canonical names of the clubs in ``CURRENT_SEASON``
+                (the FPL bootstrap roster, ``current_clubs_from_bootstrap``).
+                Lets the default classification apply the promoted-club prior
+                before a club's first played match — see
+                ``classify_promoted_clubs``. Ignored when ``promoted_clubs`` is
+                given. Changes the prior, so it belongs in any fit cache key.
         """
         try:
             import pymc as pm
@@ -226,7 +332,9 @@ class BayesianDixonColes:
         self.team_index = {team: i for i, team in enumerate(self.teams)}
         self.n_teams = len(self.teams)
 
-        att_mu, def_mu, sigma = self._configure_prior(df, promoted_clubs, new_promoted_clubs)
+        att_mu, def_mu, sigma = self._configure_prior(
+            df, promoted_clubs, new_promoted_clubs, current_clubs=current_clubs
+        )
 
         home_idx = df["HomeTeam"].map(self.team_index).values
         away_idx = df["AwayTeam"].map(self.team_index).values
@@ -335,6 +443,7 @@ class BayesianDixonColes:
         df: pd.DataFrame,
         promoted_clubs: Optional[Iterable[str]] = None,
         new_promoted_clubs: Optional[Iterable[str]] = None,
+        current_clubs: Optional[Iterable[str]] = None,
     ) -> Tuple[np.ndarray, np.ndarray, float]:
         """
         Team-effect prior for ``fit``: (attack means, defence means, sigma).
@@ -346,7 +455,7 @@ class BayesianDixonColes:
         which prior it was fitted under.
         """
         if promoted_clubs is None:
-            promoted, new = classify_promoted_clubs(df)
+            promoted, new = classify_promoted_clubs(df, current_clubs=current_clubs)
         else:
             promoted = set(promoted_clubs)
             if new_promoted_clubs is None:
@@ -364,6 +473,15 @@ class BayesianDixonColes:
                 new = set(new_promoted_clubs)
         self.promoted_clubs = promoted & set(self.teams)
         self.new_promoted_clubs = new & self.promoted_clubs
+        unseen = promoted - self.promoted_clubs
+        if unseen:
+            # Promoted but absent from the data (new to the window, nothing played
+            # yet): no fit parameter exists, so predict-time ``unseen_prior`` —
+            # the shrunk offset — is what they get.
+            logger.info(
+                "Promoted clubs with no played rows (predicted via unseen_prior): %s",
+                ", ".join(sorted(unseen)),
+            )
 
         prior = promoted_prior_settings()
         sigma = _registry_value("dixon_coles.team_effect_sigma")
