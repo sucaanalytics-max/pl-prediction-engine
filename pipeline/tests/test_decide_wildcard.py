@@ -360,10 +360,17 @@ class TestWildcardOffsetFromConfig(unittest.TestCase):
         )[0].body
         self.assertNotIn("chip", plain)
 
-    def test_the_owner_default_is_no_chip(self):
+    def test_the_owner_pin_is_none_or_an_absolute_gameweek(self):
+        # The owner pins a week by hand (GW9 on 2026-10-25), so the shipped
+        # value is not always None — but it must never be an offset-looking 0,
+        # a bool, or out of season range.
         from pipeline.config import FPL_ENTRIES
 
-        self.assertIsNone(FPL_ENTRIES["owner"]["wildcard_gameweek"])
+        pinned = FPL_ENTRIES["owner"]["wildcard_gameweek"]
+        if pinned is not None:
+            self.assertIs(type(pinned), int)
+            self.assertGreaterEqual(pinned, 1)
+            self.assertLessEqual(pinned, 38)
 
 
 if __name__ == "__main__":

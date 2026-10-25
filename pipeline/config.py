@@ -543,7 +543,11 @@ FPL_ENTRIES: Dict[str, Dict[str, Any]] = {
         # it into the offset the solver takes, and ignores it once the
         # gameweek has passed or while it lies beyond the transfer horizon.
         # None reproduces the chip-free plan exactly.
-        "wildcard_gameweek": None,
+        #
+        # 9: owner's GW9 wildcard (deadline 2026-10-31 11:00 UTC), set
+        # 2026-10-25. Stale after GW9 — `_wildcard_offset` then ignores it
+        # with a warning; reset to None.
+        "wildcard_gameweek": 9,
     },
 }
 
