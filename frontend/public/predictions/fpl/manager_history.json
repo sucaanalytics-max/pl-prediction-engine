@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-20T18:45:58.632183+00:00",
+  "generated_at": "2026-10-26T17:22:57.573097+00:00",
   "entry_id": 20945,
-  "settled_through": 7,
+  "settled_through": 8,
   "names": {
     "12": "Saka",
     "106": "Thiago",
@@ -14,6 +14,7 @@
     "569": "Gonzalo",
     "368": "Szoboszlai",
     "379": "Isak",
+    "398": "Foden",
     "418": "Maguire",
     "426": "B.Fernandes",
     "427": "Mbeumo",
@@ -834,6 +835,130 @@
           "minutes": 90
         }
       ]
+    },
+    {
+      "event": 8,
+      "points": 31,
+      "gross_points": 31,
+      "transfer_cost": 0,
+      "transfers_made": 1,
+      "bench_points": 1,
+      "average_entry_score": 45,
+      "highest_score": 120,
+      "rank": 10045703,
+      "overall_rank": 6121927,
+      "value": 1002,
+      "bank": 31,
+      "chip": null,
+      "captain": {
+        "element": 154,
+        "multiplier": 2,
+        "points": -1
+      },
+      "auto_subs": [
+        {
+          "element_in": 464,
+          "element_out": 426,
+          "points_gained": 1
+        },
+        {
+          "element_in": 445,
+          "element_out": 165,
+          "points_gained": 1
+        }
+      ],
+      "picks": [
+        {
+          "element": 1,
+          "multiplier": 1,
+          "points": 7,
+          "minutes": 90
+        },
+        {
+          "element": 152,
+          "multiplier": 1,
+          "points": 0,
+          "minutes": 25
+        },
+        {
+          "element": 4,
+          "multiplier": 1,
+          "points": 17,
+          "minutes": 90
+        },
+        {
+          "element": 173,
+          "multiplier": 1,
+          "points": 1,
+          "minutes": 59
+        },
+        {
+          "element": 445,
+          "multiplier": 1,
+          "points": 1,
+          "minutes": 1
+        },
+        {
+          "element": 542,
+          "multiplier": 1,
+          "points": 3,
+          "minutes": 78
+        },
+        {
+          "element": 124,
+          "multiplier": 1,
+          "points": 0,
+          "minutes": 90
+        },
+        {
+          "element": 154,
+          "multiplier": 2,
+          "points": -1,
+          "minutes": 79
+        },
+        {
+          "element": 398,
+          "multiplier": 1,
+          "points": 1,
+          "minutes": 45
+        },
+        {
+          "element": 464,
+          "multiplier": 1,
+          "points": 1,
+          "minutes": 13
+        },
+        {
+          "element": 569,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 73
+        },
+        {
+          "element": 497,
+          "multiplier": 0,
+          "points": 0,
+          "minutes": 0
+        },
+        {
+          "element": 426,
+          "multiplier": 0,
+          "points": 0,
+          "minutes": 0
+        },
+        {
+          "element": 165,
+          "multiplier": 0,
+          "points": 0,
+          "minutes": 0
+        },
+        {
+          "element": 113,
+          "multiplier": 0,
+          "points": 1,
+          "minutes": 5
+        }
+      ]
     }
   ],
   "transfers": [
@@ -849,21 +974,24 @@
         "4": 2,
         "5": 4,
         "6": 0,
-        "7": 1
+        "7": 1,
+        "8": 1
       },
       "out_points_by_gw": {
         "3": 2,
         "4": 1,
         "5": 2,
         "6": 2,
-        "7": 4
+        "7": 4,
+        "8": 0
       },
       "in_multiplier_by_gw": {
         "3": 1,
         "4": 1,
         "5": 1,
         "6": 0,
-        "7": 0
+        "7": 0,
+        "8": 1
       }
     },
     {
@@ -877,19 +1005,22 @@
         "4": 5,
         "5": 2,
         "6": 8,
-        "7": 2
+        "7": 2,
+        "8": -1
       },
       "out_points_by_gw": {
         "4": 2,
         "5": 2,
         "6": 8,
-        "7": 8
+        "7": 8,
+        "8": 2
       },
       "in_multiplier_by_gw": {
         "4": 1,
         "5": 1,
         "6": 1,
-        "7": 1
+        "7": 1,
+        "8": 2
       }
     },
     {
@@ -903,19 +1034,22 @@
         "4": 2,
         "5": 0,
         "6": 2,
-        "7": 1
+        "7": 1,
+        "8": 1
       },
       "out_points_by_gw": {
         "4": 1,
         "5": 5,
         "6": 4,
-        "7": 4
+        "7": 4,
+        "8": 5
       },
       "in_multiplier_by_gw": {
         "4": 1,
         "5": 1,
         "6": 1,
-        "7": 1
+        "7": 1,
+        "8": 1
       }
     },
     {
@@ -927,15 +1061,18 @@
       "element_out_cost": 69,
       "in_points_by_gw": {
         "6": 2,
-        "7": 3
+        "7": 3,
+        "8": 0
       },
       "out_points_by_gw": {
         "6": 0,
-        "7": 1
+        "7": 1,
+        "8": 0
       },
       "in_multiplier_by_gw": {
         "6": 2,
-        "7": 1
+        "7": 1,
+        "8": null
       }
     },
     {
@@ -947,15 +1084,35 @@
       "element_out_cost": 90,
       "in_points_by_gw": {
         "6": 2,
-        "7": 2
+        "7": 2,
+        "8": 2
       },
       "out_points_by_gw": {
         "6": 0,
-        "7": 9
+        "7": 9,
+        "8": 9
       },
       "in_multiplier_by_gw": {
         "6": 1,
-        "7": 1
+        "7": 1,
+        "8": 1
+      }
+    },
+    {
+      "event": 8,
+      "time": "2026-10-22T21:21:38.560266Z",
+      "element_in": 398,
+      "element_in_cost": 68,
+      "element_out": 12,
+      "element_out_cost": 96,
+      "in_points_by_gw": {
+        "8": 1
+      },
+      "out_points_by_gw": {
+        "8": 0
+      },
+      "in_multiplier_by_gw": {
+        "8": 1
       }
     }
   ]

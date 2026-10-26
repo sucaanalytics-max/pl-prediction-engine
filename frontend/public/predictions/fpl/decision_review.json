@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "producer_version": 1,
-  "generated_at": "2026-10-20T18:45:56.894300+00:00",
+  "generated_at": "2026-10-26T17:22:55.547949+00:00",
   "season": "2627",
-  "observations": 6,
+  "observations": 7,
   "minimum_observations": 6,
   "aggregate": {
-    "gameweeks": 6,
-    "points_forgone_on_bench": 39,
+    "gameweeks": 7,
+    "points_forgone_on_bench": 41,
     "foreseeable_bench_errors": 6,
-    "captain_agreement_rate": 0.5,
-    "captain_points_vs_engine": -14
+    "captain_agreement_rate": 0.4286,
+    "captain_points_vs_engine": -16
   },
   "aggregate_reason": null,
   "gameweeks": [
@@ -492,6 +492,86 @@
         "agreed": false,
         "points_delta": 2
       }
+    },
+    {
+      "gameweek": 8,
+      "sealed_at": "2026-10-23T13:32:43.783855+00:00",
+      "seconds_before_deadline": 14236.216145,
+      "sealed_universe": 508,
+      "points": 31,
+      "fpl_points_on_bench": 1,
+      "transfers": 1,
+      "hit_cost": 0,
+      "submitted_eleven": [
+        1,
+        4,
+        124,
+        152,
+        154,
+        165,
+        173,
+        398,
+        426,
+        542,
+        569
+      ],
+      "submitted_bench": [
+        445,
+        464,
+        497,
+        113
+      ],
+      "selection": {
+        "worst_starter": 152,
+        "best_bench": 464,
+        "bench_rated_higher": [
+          445,
+          464,
+          113
+        ],
+        "gap": 3.4838,
+        "misordered": true
+      },
+      "bench": [
+        {
+          "bench_element": 445,
+          "starter_element": 165,
+          "kind": "rescued",
+          "points_forgone": 0,
+          "verdict": "defensible",
+          "is_lesson": false
+        },
+        {
+          "bench_element": 464,
+          "starter_element": 426,
+          "kind": "rescued",
+          "points_forgone": 0,
+          "verdict": "defensible",
+          "is_lesson": false
+        },
+        {
+          "bench_element": 497,
+          "starter_element": null,
+          "kind": "no_claim",
+          "points_forgone": 0,
+          "verdict": null,
+          "is_lesson": false
+        },
+        {
+          "bench_element": 113,
+          "starter_element": 154,
+          "kind": "cost",
+          "points_forgone": 2,
+          "verdict": "defensible",
+          "is_lesson": false
+        }
+      ],
+      "captain": {
+        "chosen": 165,
+        "sealed_best": 154,
+        "agreed": false,
+        "points_delta": -2
+      }
     }
   ],
   "entry_id": 20945,
@@ -510,6 +590,7 @@
     "569": "Gonzalo",
     "368": "Szoboszlai",
     "379": "Isak",
+    "398": "Foden",
     "418": "Maguire",
     "426": "B.Fernandes",
     "427": "Mbeumo",
