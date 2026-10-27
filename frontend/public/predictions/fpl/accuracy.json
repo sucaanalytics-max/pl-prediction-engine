@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-26T11:06:41.021959Z",
+  "generated_at": "2026-10-27T00:54:24.037880Z",
   "season": "2627",
-  "gameweeks_sealed": 6,
-  "observations": 3008,
-  "perfect_model_rmse": 1.9831,
+  "gameweeks_sealed": 7,
+  "observations": 3516,
+  "perfect_model_rmse": 2.0013,
   "perfect_model_basis": "Root-mean-square of the simulated per-player standard deviations. A forecaster that knew each player's true distribution would still incur this, because the outcome is random.",
   "measured": {
     "overall": {
-      "n": 3008,
-      "rmse": 2.5721,
-      "bias": 0.0474,
-      "bias_radius": 0.1946
+      "n": 3516,
+      "rmse": 2.5426,
+      "bias": 0.0502,
+      "bias_radius": 0.1788
     },
     "by_position": {},
     "by_band": {
       "blank": {
-        "n": 1946,
-        "rmse": 1.5336,
-        "bias": -0.983,
-        "bias_radius": 0.1094
+        "n": 2272,
+        "rmse": 1.5287,
+        "bias": -0.9584,
+        "bias_radius": 0.1029
       },
       "return": {
-        "n": 979,
-        "rmse": 2.814,
-        "bias": 1.3187,
-        "bias_radius": 0.3191
+        "n": 1146,
+        "rmse": 2.7871,
+        "bias": 1.2859,
+        "bias_radius": 0.2948
       },
       "haul": {
-        "n": 83,
-        "rmse": 9.5507,
-        "bias": 9.2106,
-        "bias_radius": 1.0365
+        "n": 98,
+        "rmse": 9.3227,
+        "bias": 8.9838,
+        "bias_radius": 0.9444
       }
     },
     "by_horizon": {}
   },
-  "excess_over_ceiling": 0.589,
+  "excess_over_ceiling": 0.5413,
   "predicted_xi": {
     "ours": null,
     "benchmark": 0.84,
