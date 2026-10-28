@@ -1,14 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-28T19:45:24.714345Z",
-  "n_dropped": 61,
+  "generated_at": "2026-10-28T23:53:54.603451Z",
+  "n_dropped": 72,
   "dropped_by_source": {
-    "bbc_football": 25,
-    "sky_football": 36
+    "bbc_football": 27,
+    "hayters": 1,
+    "sky_football": 44
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 151,
+  "n_articles": 162,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -41,6 +42,348 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "32e1e16368a07c03",
+      "headline": "Iraola admits he did not want to draw Bournemouth in Carabao Cup quarters",
+      "summary": "Liverpool boss Andoni Iraola admitted Bournemouth were the one team he wanted to avoid in the Carabao Cup quarter-final draw after his side edged past Chelsea on penalties. Iraola will now face his former club in the last eigh",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/iraola-admits-he-did-not-want-to-draw-bournemouth-in-carabao-cup-quarters/",
+      "claimed_at": "2026-10-28T23:20:26Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7dafa3b161d6857f",
+      "headline": "Papers: Liverpool make contact with Monaco midfielder Camara",
+      "summary": "The top stories and transfer rumours from Thursday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13605140/liverpool-transfer-news-reds-make-contact-with-lamine-camara-camp-ahead-of-proposed-january-move-for-monaco-midfielder-paper-talk",
+      "claimed_at": "2026-10-28T23:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "798db1eda40012ef",
+      "headline": "'He knows his role' - Rulli provides heroics but no worries for Donnarumma",
+      "summary": "Geronimo Rulli's penalty shootout heroics may have put the pressure on Gianluigi Donnarumma at Manchester City, but manager Enzo Maresca has no doubt about his number one.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/articles/cqrky1jnpy1no?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T23:10:06Z",
+      "players": [
+        {
+          "element_id": 384,
+          "name": "Donnarumma",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 587,
+          "name": "Rulli",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "88412e62267f32bc",
+      "headline": "Alonso on Estevao\u2019s lack of game time and Lacroix injury worry after Chelsea\u2019s Carabao Cup exit",
+      "summary": "Chelsea boss Xabi Alonso insists Estevao will get his chance despite the Brazilian failing to feature in the Carabao Cup defeat to Liverpool. Chelsea supporters were heard singing Estevao\u2019s name during th",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/alonso-on-estevaos-lack-of-game-time-and-lacroix-injury-worry-after-chelseas-carabao-cup-exit/",
+      "claimed_at": "2026-10-28T23:07:41Z",
+      "players": [
+        {
+          "element_id": 200,
+          "name": "Lacroix",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cd5176955f4799ab",
+      "headline": "Fleetwood to face Everton or Newcastle in last eight",
+      "summary": "League Two Fleetwood Town will face Everton or Newcastle United at Highbury in the quarter-finals of the EFL Cup.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmp3glnle0wdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T22:45:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2aabc440670034f1",
+      "headline": "Carabao Cup quarter-final draw in full: Fleetwood handed another home tie",
+      "summary": "Fleetwood Town have been handed another home tie in the Carabao Cup after being drawn against either Everton or Newcastle United in the quarter-finals. The League Two side produced a huge upset to knock Arsenal out on penaltie",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/carabao-cup-quarter-final-draw-in-full-fleetwood-handed-another-home-tie/",
+      "claimed_at": "2026-10-28T22:43:58Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d794cd688856ddf8",
+      "headline": "Maresca shuts down Man City goalkeeper debate despite Rulli heroics",
+      "summary": "Enzo Maresca has insisted there is \u201cabsolutely no doubt\u201d over Gianluigi Donnarumma\u2019s position as Manchester City\u2019s number one despite Ger\u00f3nimo Rulli impressing in the Carabao Cup shoot-out win over Brighton. Rulli helped City progre",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/maresca-shuts-down-man-city-goalkeeper-debate-despite-rulli-heroics/",
+      "claimed_at": "2026-10-28T22:39:10Z",
+      "players": [
+        {
+          "element_id": 384,
+          "name": "Donnarumma",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 587,
+          "name": "Rulli",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6d5f6d90170053db",
+      "headline": "Palace latest: Sage clarifies kisses were for his wife - not the fans",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-28T22:38:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "115aef1f65123b15",
+      "headline": "Liverpool knock Chelsea out of Carabao Cup to reach last eight",
+      "summary": "Liverpool booked their place in the Carabao Cup quarter-finals after beating Chelsea 6-5 on penalties following a 1-1 draw at Anfield. Morgan Rogers put Chelsea ahead from the penalty spot five minutes before half-time before Cody Gakpo",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/liverpool-knock-chelsea-out-of-carabao-cup-to-reach-last-eight/",
+      "claimed_at": "2026-10-28T22:19:58Z",
+      "players": [
+        {
+          "element_id": 40,
+          "name": "Rogers",
+          "club": "CHE",
+          "held": false
+        },
+        {
+          "element_id": 367,
+          "name": "Gakpo",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "13b58881e0544ba5",
+      "headline": "Liverpool beat Chelsea on penalties to reach last eight",
+      "summary": "Wesley Fofana missed the decisive spot kick as Liverpool beat Chelsea on penalties to set up a Carabao Cup quarter-final against Andoni Iraola's former side Bournemouth.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/liverpool-vs-chelsea/report/578612",
+      "claimed_at": "2026-10-28T21:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d5063682b02de06d",
+      "headline": "Sunderland return to winning ways to progress in Carabao Cup",
+      "summary": "Sunderland progressed to the last eight of the Carabao Cup with a 3-2 win over Brentford. The Black Cats were three up after 40 minutes, and even though Brentford then scored before the interval, and right at the death, Sunderland always l",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/sunderland-return-to-winning-ways-to-progress-in-carabao-cup/",
+      "claimed_at": "2026-10-28T21:49:40Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8d1d0985b83d9b79",
+      "headline": "Man City edge past Brighton on penalties to reach Carabao Cup quarter-finals",
+      "summary": "Manchester City's defence of their Carabao Cup crown continues after they progressed past Brighton on penalties. The Seagulls twice led during the tie, but with the score level at 2-2 at the end of 90 minutes, it was decide",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-edge-past-brighton-on-penalties-to-reach-carabao-cup-quarter-finals/",
+      "claimed_at": "2026-10-28T21:45:20Z",
+      "players": [
+        {
+          "element_id": 587,
+          "name": "Rulli",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "34b653a8c8152ec9",
+      "headline": "Sancho rejects Getafe - Thursday's gossip",
+      "summary": "Free agent Jadon Sancho turns down a move to La Liga, Desire Doue is in talks with Paris St-Germain about a contract extension, and Everton are considering a move for Marcus Rashford.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckyvr1q72v84o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T21:34:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "86f8dfd41498d80b",
+      "headline": "In-form Bournemouth beat Aston Villa to reach Carabao Cup quarters",
+      "summary": "Bournemouth recorded a fifth consecutive win across all competitions to reach the Carabao Cup quarter-finals with a 3-0 home win over Aston Villa.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/bournemouth-vs-aston-villa/report/578607",
+      "claimed_at": "2026-10-28T21:33:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b223364a42347a26",
+      "headline": "Bompastor on Potter injury worry and Chelsea\u2019s win over Roma",
+      "summary": "Sonia Bompastor says Chelsea will assess Lexi Potter after the midfielder suffered a knee injury during their 2-0 Champions League win over Roma. Potter was forced off after receiving treatment on the pitch, with Bompastor confirming the 2",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/bompastor-on-potter-injury-worry-and-chelseas-win-over-roma/",
+      "claimed_at": "2026-10-28T21:27:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4569318621b5bb2f",
+      "headline": "Man City dump Brighton out of Carabao Cup after shoot-out victory",
+      "summary": "Carabao Cup holders Manchester City needed penalties to progress past Brighton and into the quarter-finals after battling from behind to draw the game 2-2 at the Etihad.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-brighton-and-hove-albion/report/578614",
+      "claimed_at": "2026-10-28T21:19:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bfb74ff7dd3c171e",
+      "headline": "Nketiah steers Palace past Fulham to boost boss Sage",
+      "summary": "Eddie Nketiah steered Crystal Palace into the quarter-finals of the Carabao Cup as they won 1-0 at Fulham.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/fulham-vs-crystal-palace/report/578611",
+      "claimed_at": "2026-10-28T21:19:00Z",
+      "players": [
+        {
+          "element_id": 224,
+          "name": "Nketiah",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "88a64bd6b2247ae9",
+      "headline": "Sesko ruled out until January with shin injury",
+      "summary": "Manchester United striker Benjamin Sesko is expected to be out until at least January with a shin injury.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq33xl50vyj2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T19:57:04Z",
+      "players": [
+        {
+          "element_id": 439,
+          "name": "\u0160e\u0161ko",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "8e49549a1f0f48ab",
@@ -122,6 +465,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
       "claimed_at": "2026-10-28T16:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "394a05fb35cbdb6e",
+      "headline": "Liverpool draw Bournemouth in Carabao Cup quarters",
+      "summary": "Liverpool will play Bournemouth in the Carabao Cup quarter-finals while League One Bradford City will host Manchester City.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604920/carabao-cup-quarter-final-draw-liverpool-host-bournemouth-as-bradford-and-fleetwood-get-home-ties-against-premier-league-opposition",
+      "claimed_at": "2026-10-28T16:11:00Z",
       "players": [
         {
           "element_id": 0,
@@ -433,6 +794,24 @@
       "touches_squad": false
     },
     {
+      "digest": "1f6529b1cf9f17de",
+      "headline": "Liverpool latest: Iraola gives verdict on young stars against Chelsea",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-28T09:53:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "638bd88ab57d4c35",
       "headline": "Liverpool latest: Reds icon to face former club in Champions League",
       "summary": null,
@@ -721,24 +1100,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e84f2fac0f42fee4",
-      "headline": "Arsenal dumped out of Carabao Cup by League Two Fleetwood",
-      "summary": "Fleetwood Town produced one of the biggest shocks in Carabao Cup history as the League Two team dumped out Premier League champions Arsenal on penalties to reach the quarter-finals.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/fleetwood-town-vs-arsenal/report/578610",
-      "claimed_at": "2026-10-27T22:20:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "914cae7a4b1f4601",
       "headline": "Arsenal STUNNED as they are knocked out of Carabao Cup by League Two side Fleetwood on penalties \u2013 live reaction",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal STUNNED as they are knocked out of Carabao Cup by League Two side Fleetwood on penalties - live reaction appeared first on Hayters.",
@@ -746,24 +1107,6 @@
       "tier": 2,
       "url": "https://hayters.com/fleetwood-v-arsenal-live-team-news-updates-and-reaction/",
       "claimed_at": "2026-10-27T22:13:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "11ed0510d5665221",
-      "headline": "Carabao Cup: Who will go strong as Liverpool host Chelsea?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13603943/arsenal-should-unleash-max-dowman-liverpool-and-chelsea-clash-in-battle-of-the-basques-and-man-city-continue-defence-carabao-cup-talking-points",
-      "claimed_at": "2026-10-27T22:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -847,24 +1190,6 @@
       "touches_squad": false
     },
     {
-      "digest": "670fd908a5925b45",
-      "headline": "'Delaying the inevitable' or right call? Key questions as Carrick stays",
-      "summary": "Michael Carrick has been given the chance to turn Manchester United's form around - a shock decision that has divided supporters and Sky Sports pundits.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13604361/michael-carrick-why-man-utd-head-coach-will-stay-on-and-could-bruno-fernandes-play-vs-chelsea-plus-other-key-questions",
-      "claimed_at": "2026-10-27T14:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a5d89af702e5c2c3",
       "headline": "Sage reveals Crystal Palace boost ahead of Fulham game as he provides updates on trio",
       "summary": "Crystal Palace boss Pierre Sage has offered a positive update on Dean Henderson ahead of Wednesday\u2019s Carabao Cup tie against Fulham. The Palace captain is expected to be available for the trip to Craven Cottage, wi",
@@ -901,24 +1226,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f6116947ecf620e6",
-      "headline": "Carrick to remain in charge of Man Utd for Chelsea trip",
-      "summary": "Michael Carrick will remain in charge of Manchester United for their game against Chelsea on Saturday.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13604347/man-utd-boss-michael-carrick-to-remain-in-charge-vs-chelsea-and-given-chance-to-turn-situation-around",
-      "claimed_at": "2026-10-27T12:03:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a0aed4dbfe43b462",
       "headline": "FPL Gameweek 9 early Scout Picks: Villa triple-up",
       "summary": "Our \u2018bus team\u2019 for the upcoming Gameweek The post FPL Gameweek 9 early Scout Picks: Villa triple-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -926,66 +1233,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/10/26/fpl-gameweek-9-early-scout-picks",
       "claimed_at": "2026-10-26T19:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0a7f88ceb5e968c1",
-      "headline": "Ex-Magpie Wilson starts for Brentford at Sunderland LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/sunderland-vs-brentford/live/578613",
-      "claimed_at": "2026-10-26T16:02:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2aea0e7004bb4c6a",
-      "headline": "Madjo and Goretzka start for Aston Villa at Bournemouth LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/bournemouth-vs-aston-villa/live/578607",
-      "claimed_at": "2026-10-26T15:54:00Z",
-      "players": [
-        {
-          "element_id": 582,
-          "name": "Madjo",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 618,
-          "name": "Goretzka",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "695b7b6efdd6b030",
-      "headline": "Fulham and Palace ring the changes for Carabao Cup fourth round LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/fulham-vs-crystal-palace/live/578611",
-      "claimed_at": "2026-10-26T15:42:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1087,96 +1334,6 @@
       "touches_squad": false
     },
     {
-      "digest": "8a1402e96412851b",
-      "headline": "Malard and Baltimore inspire Chelsea in comeback win over Palace",
-      "summary": "Chelsea required the help of super-sub Sandy Baltimore to avoid a first-ever defeat to Crystal Palace as they came from behind to win 3-1 at the 360 Engage Stadium.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/crystal-palace-women-vs-chelsea-women/report/575799",
-      "claimed_at": "2026-10-25T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f5baefa3361cf3a5",
-      "headline": "Fernandes dropped to Man Utd bench - was Carrick right?",
-      "summary": "Manchester United skipper Bruno Fernandes is dropped from the starting XI for Sunday's game against Bournemouth following his criticism of manager Michael Carrick.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmrlye5w3p79o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-25T13:26:13Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "67956baffa6d2af0",
-      "headline": "Palace have early chance for opener against Newcastle LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/crystal-palace-vs-newcastle-united/live/559518",
-      "claimed_at": "2026-10-25T12:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a64953f41fbf5a67",
-      "headline": "Man Utd make nervous start against Bournemouth LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-united-vs-bournemouth/live/559522",
-      "claimed_at": "2026-10-25T12:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "996e72fc3cc64635",
-      "headline": "Hull and Brentford probing to find opener LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/hull-city-vs-brentford/live/559519",
-      "claimed_at": "2026-10-25T12:25:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5959433e8137ccab",
       "headline": "Crystal Palace 0-0 Newcastle LIVE \u2013 Palace on top in early stages",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Crystal Palace 0-0 Newcastle LIVE - Palace on top in early stages appeared first on Hayters.",
@@ -1243,96 +1400,6 @@
           "element_id": 8,
           "name": "Calafiori",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "80299d5e83c4f046",
-      "headline": "What Man Utd need now is stability, not more changes - Pulis",
-      "summary": "BBC Sport columnist Tony Pulis explains why Bruno Fernandes' comments after Manchester United's defeat by Como showed how hard it must be to run the club at the moment.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck78p37y5508o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-25T06:34:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "852e2024d0b77b97",
-      "headline": "Why are Liverpool struggling for Premier League goals?",
-      "summary": "Liverpool have scored 15 goals in four cup games this season, but have managed only nine goals in seven Premier League matches.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c94g1p32gyrro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-25T06:26:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5ae3c93af7faf22a",
-      "headline": "When is Premier League 'sacking season' - and who should be worried?",
-      "summary": "As pressure builds on Manchester United manager Michael Carrick, BBC Sport looks at when the Premier League 'sacking season' begins.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmy83vg66zngo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-25T06:17:46Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a12c92864887e308",
-      "headline": "Should Palmer have been sent off earlier than he was?",
-      "summary": "Match of the Day pundit Martin Keown looks at the red card shown to Cole Palmer during Chelsea's 2-0 defeat to Tottenham, with the former Arsenal defender agreeing with the decision and suggesting Palmer was lucky not to receive a straight red fo",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmd93enq4z20o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T22:43:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "775b1972f4693528",
-      "headline": "How 'special talent' Jackson inspired Villa to victory over Man City",
-      "summary": "Match of the Day pundits Martin Keown and Steph Houghton look at the impact Aston Villa forward Nicolas Jackson had with his two goals in their 2-1 victory over Manchester City, with Keown describing him as a \"special talent\".",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmzxj1r8j7p2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T22:43:17Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
           "held": false
         }
       ],
@@ -1621,72 +1688,6 @@
           "element_id": 166,
           "name": "N.Jackson",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ec32a84f517e982f",
-      "headline": "Aston Villa v Man City LIVE \u2013 No Nunes for City with Foden on bench, Manzambi starts for hosts",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Aston Villa v Man City LIVE - No Nunes for City with Foden on bench, Manzambi starts for hosts appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/aston-villa-v-man-city-live-team-news-updates-and-reaction-2/",
-      "claimed_at": "2026-10-24T09:50:06Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b35baed60856dc9f",
-      "headline": "De Zerbi defends staff amid Spurs\u2019 persistent injury issues",
-      "summary": "Roberto De Zerbi defended Tottenham\u2019s medical staff, despite his squad continuing to suffer from a long injury list. Spurs have several players in the treatment room at present, including summer signings S\u00e1vio and Mykhailo Mudryk. Speaking",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-defends-staff-amid-spurs-persistent-injury-issues/",
-      "claimed_at": "2026-10-23T21:30:00Z",
-      "players": [
-        {
-          "element_id": 578,
-          "name": "Mudryk",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bf5ace39294149cb",
-      "headline": "Arteta confirms Saka is expected to miss at least a few weeks for Arsenal",
-      "summary": "Mikel Arteta says he expects Bukayo Saka to be sidelined for at least a few weeks in a major blow for Arsenal. The winger is still set to undergo further scans before a proper assessment can be made on his injury, but he is ex",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-confirms-saka-is-expected-to-miss-at-least-a-few-weeks-for-arsenal/",
-      "claimed_at": "2026-10-23T21:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
