@@ -1,16 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T14:22:05.067609Z",
-  "n_dropped": 210,
+  "generated_at": "2026-10-28T14:21:35.643626Z",
+  "n_dropped": 61,
   "dropped_by_source": {
-    "bbc_football": 59,
-    "fantasyfootballscout": 3,
-    "hayters": 37,
-    "sky_football": 111
+    "bbc_football": 30,
+    "sky_football": 31
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 300,
+  "n_articles": 151,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -45,226 +43,784 @@
       "touches_squad": true
     },
     {
-      "digest": "f1f1943a1da556f9",
-      "headline": "Man City latest: Maresca confirms Haaland return vs Villa",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-22T11:15:00Z",
-      "players": [
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "d9e2adbaf7a96c30",
-      "headline": "Man City trio doubts for Aston Villa game",
-      "summary": "Enzo Maresca has confirmed Erling Haaland is fully fit to face Aston Villa on Saturday, but Manchester City are still waiting to make decisions on Nico O\u2019Reilly, Mateo Kovacic and Matheus Nunes. All four players have been dealing with fitness concerns, with",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-trio-doubts-for-aston-villa-game/",
-      "claimed_at": "2026-10-22T09:47:28Z",
-      "players": [
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 406,
-          "name": "Kova\u010di\u0107",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "1e70b0c249156d58",
-      "headline": "Liverpool latest: Van Dijk on Iraola's style and Salah's impact on Ngumoha",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-21T12:19:00Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": true
-        },
-        {
-          "element_id": 369,
-          "name": "Ngumoha",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "8288436e6d1f39a6",
-      "headline": "Van Dijk admits he had \u2018bad day at the office\u2019 despite Liverpool win",
-      "summary": "Virgil van Dijk admitted that he had a &#8220;bad day at the office&#8221; after making an early mistake in Liverpool's 4-3 win over Villarreal at Anfield. The defender was at fault for the Spanish side's first goal of the night wh",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/van-dijk-admits-he-had-bad-day-at-the-office-despite-liverpool-win/",
-      "claimed_at": "2026-10-21T11:00:00Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "6f34adb5ceebb9c8",
-      "headline": "FPL notes: Haaland \u201cOK to start\u201d, key rests + Gvardiol injury update",
-      "summary": "Fantasy takeaways from Man City 5-1 AEK Athens The post FPL notes: Haaland &#8220;OK to start&#8221;, key rests + Gvardiol injury update appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
+      "digest": "55ba911c34e35231",
+      "headline": "FPL notes: Calafiori + Rice injury updates as Arsenal crash out",
+      "summary": "FPL takeaways from Arsenal's shock EFL Cup exit The post FPL notes: Calafiori + Rice injury updates as Arsenal crash out appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
       "source": "fantasyfootballscout",
       "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/21/fpl-notes-haaland-ok-to-start-key-rests-gvardiol-injury-update",
-      "claimed_at": "2026-10-21T10:05:00Z",
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/28/fpl-notes-calafiori-rice-injury-updates-as-arsenal-crash-out",
+      "claimed_at": "2026-10-28T14:00:00Z",
       "players": [
         {
-          "element_id": 391,
-          "name": "Gvardiol",
-          "club": "MCI",
+          "element_id": 8,
+          "name": "Calafiori",
+          "club": "ARS",
           "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
-      "digest": "944903379281c4e6",
-      "headline": "No Haaland, no problem - can Foden be Man City's alternative goalscorer?",
-      "summary": "Phil Foden's magnificent man-of-the-match display in Manchester City's Champions League win against AEK Athens serves as a reminder of his talent and ability to influence games.",
+      "digest": "3a4c4ba2c34ea484",
+      "headline": "Ref Watch: Arsenal's red card appeal will fail - Dowman was aggressive",
+      "summary": "Former Premier League referee Dermot Gallagher believes Arsenal's appeal against Max Dowman's red card in their shock Carabao Cup defeat to Fleetwood Town will fail.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604803/max-dowman-red-card-arsenals-appeal-against-decision-will-fail-says-former-premier-league-referee-dermot-gallagher",
+      "claimed_at": "2026-10-28T13:15:00Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "76ccf7b3135f5f56",
+      "headline": "'Relax, I love Kane and Lamine Yamal' - Henry defends his Ballon d'Or hosting",
+      "summary": "Former Arsenal forward Thierry Henry responds to criticism of a number of comments he made during Monday's Ballon d'Or ceremony and claims they were \"jokes\".",
       "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqx2vjdnwkyyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-20T22:35:32Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm369r0n0zk5o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T12:13:23Z",
       "players": [
         {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
-      "digest": "3f5bb0ca740c54ae",
-      "headline": "Man City latest: Haaland fit to play Aston Villa, says Maresca",
+      "digest": "969fc13654fe209d",
+      "headline": "Arsenal to appeal Max Dowman\u2019s red card after Fleetwood defeat",
+      "summary": "Arsenal will appeal the red card shown to Max Dowman during their shock Carabao Cup exit against Fleetwood Town. The 16-year-old was sent off late in Tuesday\u2019s fourth-round tie after lashing out at Fleetwood midfielder Harrison Neal foll",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-to-appeal-max-dowmans-red-card-after-fleetwood-defeat/",
+      "claimed_at": "2026-10-28T12:03:40Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "54503dfc906dbb53",
+      "headline": "Arsenal to appeal against Dowman red card",
+      "summary": "Arsenal will appeal against Max Dowman's sending-off during Tuesday's Carabao Cup defeat at Fleetwood Town.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c3dxwdnjqj17o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T11:55:21Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e5a4dad59e8cbb58",
+      "headline": "Carrick and Fernandes hold clear-the-air talks",
+      "summary": "Manchester United head coach Michael Carrick and captain Bruno Fernandes hold clear-the-air talks at the club's training ground.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cje36dn5nx36o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T11:48:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b09344921b70173e",
+      "headline": "Why did Fleetwood have to lose player for Arsenal penalty shootout?",
+      "summary": "Fleetwood Town had to remove a player for their penalty shootout against Arsenal - BBC Sport's Ask Me Anything team explains why.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c8040xn769xgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T11:23:20Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e9bff86fab228bbc",
+      "headline": "Arteta explains reaction to Dowman red card amid criticism",
+      "summary": "Mikel Arteta has explained his reaction to Max Dowman as the 16-year-old went down the tunnel after being sent off in Arsenal's shock Carabao Cup exit to Fleetwood Town.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604637/max-dowman-red-card-mikel-arteta-explains-what-he-said-to-16-year-old-after-sending-off-in-carabao-cup-exit-to-fleetwood-town",
+      "claimed_at": "2026-10-28T11:21:00Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "90df23bcd3f67e21",
+      "headline": "Arsenal latest: Gunners to appeal Dowman red card",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-20T22:30:00Z",
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-28T11:19:00Z",
       "players": [
         {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
-      "digest": "48239610f1155e18",
-      "headline": "Man City boss Maresca backs hat-trick hero Foden to build on recent form \u2013 and gives update on Haaland",
-      "summary": "Enzo Maresca has confirmed Erling Haaland will be fit to start against Aston Villa on Saturday following Manchester City\u2019s 5-1 Champions League win over AEK Athens. The striker was rested against t",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-boss-maresca-backs-hat-trick-hero-foden-to-build-on-recent-form-and-gives-update-on-haaland/",
-      "claimed_at": "2026-10-20T21:40:19Z",
+      "digest": "6a389e850658c1d6",
+      "headline": "Jackson v Manzambi: How do the two Villa picks compare?",
+      "summary": "The Villans have an excellent run of fixtures coming up The post Jackson v Manzambi: How do the two Villa picks compare? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/28/jackson-v-manzambi-how-do-the-two-villa-picks-compare",
+      "claimed_at": "2026-10-28T11:00:00Z",
       "players": [
         {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
           "held": false
         },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "272ca370dc269621",
-      "headline": "Liverpool continue winning Champions League run with comeback victory over Villarreal",
-      "summary": "Liverpool came from two goals down to edge Villarreal 4-3 in a thrilling Champions League clash at Anfield. Andoni Iraola\u2019s side made a nightmare start and were behind inside four minutes when Georges Mikautadze pu",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-continue-winning-champions-league-run-with-comeback-victory-over-villarreal/",
-      "claimed_at": "2026-10-20T21:05:21Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "e34c259656111958",
-      "headline": "Webb backs Botman decision despite pundits' calls for red card",
-      "summary": "Referees' chief Howard Webb believes there was nothing \"clearly wrong\" with the decision not to send off Newcastle defender Sven Botman for his tackle on Aston Villa striker Nicolas Jackson.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13601311/sven-botman-tackle-howard-webb-says-nothing-clearly-wrong-with-var-decision-to-not-send-newcastle-defender-off",
-      "claimed_at": "2026-10-20T17:00:00Z",
-      "players": [
         {
           "element_id": 166,
           "name": "N.Jackson",
           "club": "AVL",
           "held": false
-        },
-        {
-          "element_id": 447,
-          "name": "Botman",
-          "club": "NEW",
-          "held": true
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "f4f32385c80ba1b8",
+      "headline": "Man Utd latest: Should Fernandes start at Chelsea? VOTE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-28T11:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4c4fc7e692d8d307",
+      "headline": "Carrick and Fernandes hold clear-the-air talks ahead of Chelsea fixture",
+      "summary": "Manchester United head coach Michael Carrick and captain Bruno Fernandes have met face to face to clear the air, with both vowing to refocus on turning the club's season around.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604738/bruno-fernandes-man-utd-head-coach-michael-carrick-and-club-captain-hold-clear-the-air-talks-ahead-of-chelsea-fixture",
+      "claimed_at": "2026-10-28T10:39:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fb5e379e50c636fc",
+      "headline": "Kuyt named Fenerbahce interim boss before Liverpool tie",
+      "summary": "Former Netherlands forward Dirk Kuyt is appointed Fenerbahce\u2019s interim coach a week before they face his former club Liverpool in the Champions League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c5398300x0nyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T09:41:34Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "785c4ed3a11cfc39",
+      "headline": "Police seize drone after Fleetwood vs Arsenal was halted",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/12507208/football-latest-news-gossip",
+      "claimed_at": "2026-10-28T09:39:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4cef6eff321ff084",
+      "headline": "Expectation vs reality: What if Man Utd have become a mid-table team?",
+      "summary": "Michael Carrick has been given a stay of execution by Manchester United after the club considered making a fourth managerial change in four years following their defeat by Bournemouth.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604280/michael-carrick-is-latest-man-utd-manager-under-pressure-but-has-poor-recruitment-made-them-a-mid-table-team-between-the-lines",
+      "claimed_at": "2026-10-28T09:35:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3e0709dfa7072280",
+      "headline": "Can clubs stop team news leaking out through FPL picks?",
+      "summary": "Chelsea striker Joao Pedro's injury was leaked through the Fantasy Premier League game, but is there anything clubs can do?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwly0myd08reo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T08:36:46Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ec538a12ebbf0fce",
+      "headline": "Liverpool gambled on Jacquet and it is paying off",
+      "summary": "Liverpool beat Chelsea to the signing of Jeremy Jacquet and the defender is thriving at Anfield. Things could have been very different...",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqgkv216dx2no?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T08:36:34Z",
+      "players": [
+        {
+          "element_id": 362,
+          "name": "Jacquet",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6131b28e1dabc807",
+      "headline": "Lawlor delighted after beating 'best team in the country'",
+      "summary": "Fleetwood Town manager Matt Lawlor could not hide his delight after seeing his team knock Premier League champions Arsenal out of the EFL Cup on penalties.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cr93z7p02743o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T07:28:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9dc5f448f551cd77",
+      "headline": "Best Pedro replacements in FPL \u2013 and is he a definite \u2018sell\u2019?",
+      "summary": "The Chelsea forward is ruled out for a \"few weeks\" The post Best Pedro replacements in FPL - and is he a definite 'sell'? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/28/best-pedro-replacements-in-fpl-and-is-he-a-definite-sell",
+      "claimed_at": "2026-10-28T04:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f37e742abdab65e5",
+      "headline": "'Biggest night in club's history' for fearless Fleetwood",
+      "summary": "A whopping 83 league places separated Fleetwood from Arsenal, yet the hosts booked their place in the Carabao Cup quarter-final thanks to their penalty shootout win over the Gunners.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqgkv2vxeengo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T00:39:30Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "af443d815b892b92",
+      "headline": "Dowman sees red as Arsenal dumped out, but did Arteta go too far?",
+      "summary": "A shocking defeat, a red card card, a penalty-shootout and a drone tell the story of Arsenal's dramatic loss to League Two Fleetwood Town in the last-16 of the Carabao Cup.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmg47g7dngxlo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-28T00:34:31Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d12da1ce3bbe4f01",
+      "headline": "Fleetwood-Arsenal halted for eight minutes because of drone",
+      "summary": "Arsenal's match with Fleetwood Town in the last-16 of the Carabao Cup is delayed for more than eight minutes after a drone is spotted above the stadium during the match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmqlngxw6lv3o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-27T23:54:14Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b24a989d135c0b34",
+      "headline": "Where does Fleetwood beating Arsenal rank in biggest cup upsets?",
+      "summary": "BBC Sport looks at the history of the biggest FA Cup and League Cup upsets after Fleetwood Town's shock win against Arsenal.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq62y7yzjdmzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-27T23:35:11Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f648ee52ec669c8f",
+      "headline": "Arteta defends Arsenal players\u2019 attitude after shock Carabao Cup exit to Fleetwood",
+      "summary": "Mikel Arteta refused to criticise his players\u2019 attitude after Arsenal\u2019s shock Carabao Cup exit to Fleetwood Town, insisting the defeat had nothing to do with a lack of effort or application. The Premier League champio",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-defends-arsenal-players-attitude-after-shock-carabao-cup-exit-to-fleetwood/",
+      "claimed_at": "2026-10-27T23:16:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "801fbd6af6f9f263",
+      "headline": "Blackpool beat Villa and Vale thrash Man City in Trophy",
+      "summary": "Blackpool beat Aston Villa and Port Vale put five past Manchester City's youngsters, plus Tuesday's EFL Trophy round-up.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmly0zyd15jqo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-27T22:31:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a5c99d7fb62f421c",
+      "headline": "Arsenal OUT on pens to League Two Fleetwood!",
+      "summary": "Highlights of the Carabao Cup fourth round match between Fleetwood Town and Arsenal.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13604607/fleetwood-1-1-arsenal-5-3-pens-carabao-cup-highlights",
+      "claimed_at": "2026-10-27T22:22:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e84f2fac0f42fee4",
+      "headline": "Arsenal dumped out of Carabao Cup by League Two Fleetwood",
+      "summary": "Fleetwood Town produced one of the biggest shocks in Carabao Cup history as the League Two team dumped out Premier League champions Arsenal on penalties to reach the quarter-finals.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/fleetwood-town-vs-arsenal/report/578610",
+      "claimed_at": "2026-10-27T22:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "914cae7a4b1f4601",
+      "headline": "Arsenal STUNNED as they are knocked out of Carabao Cup by League Two side Fleetwood on penalties \u2013 live reaction",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal STUNNED as they are knocked out of Carabao Cup by League Two side Fleetwood on penalties - live reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/fleetwood-v-arsenal-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-10-27T22:13:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "11ed0510d5665221",
+      "headline": "Carabao Cup: Who will go strong as Liverpool host Chelsea?",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13603943/arsenal-should-unleash-max-dowman-liverpool-and-chelsea-clash-in-battle-of-the-basques-and-man-city-continue-defence-carabao-cup-talking-points",
+      "claimed_at": "2026-10-27T22:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5ad5278f6f40acf4",
+      "headline": "Liverpool keen on Stuttgart defender Jeltsch - Wednesday's gossip",
+      "summary": "Liverpool are keen on Stuttgart's promising defender Finn Jeltsch, Chelsea still want to sign Bournemouth's Alex Scott; Arsenal, Tottenham and Newcastle are among the clubs keeping tabs on Germany striker Nicolo Tresoldi, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck7vpjqyd4pmo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-27T21:10:47Z",
+      "players": [
+        {
+          "element_id": 69,
+          "name": "Scott",
+          "club": "BOU",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a83355fa8fb6807a",
+      "headline": "Man Utd stick with Carrick - inside a turbulent 48 hours at Old Trafford",
+      "summary": "BBC Sport looks at the 48 hours that led to Manchester United deciding to keep under-pressure Michael Carrick as their head coach for Saturday's trip to Chelsea.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwz0vgj35k7mo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-27T18:56:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "88b6799107ac58e0",
+      "headline": "Newcastle United duo could miss Carabao Cup clash",
+      "summary": "Newcastle boss Matthias Jaissle says Lewis Miley and Fernandez-Pardo remain doubts for Thursday night\u2019s Carabao Cup clash with Everton. The pair will be assessed over the next two days before a decision is made on whether they can be included in the",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-united-duo-could-miss-carabao-cup-clash/",
+      "claimed_at": "2026-10-27T17:43:18Z",
+      "players": [
+        {
+          "element_id": 634,
+          "name": "Fernandez-Pardo",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "54e3956986c9539d",
+      "headline": "Rooney says Man Utd squad \u2018a million miles away\u2019 from competing at the top",
+      "summary": "Wayne Rooney has claimed Manchester United are \u201ca million miles away\u201d from where they need to be and says Michael Carrick\u2019s early success gave the club \u201cfalse hope\u201d. The former United striker believes United's third-place fin",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/rooney-says-man-utd-squad-a-million-miles-away-from-competing-at-the-top/",
+      "claimed_at": "2026-10-27T17:27:59Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "670fd908a5925b45",
+      "headline": "'Delaying the inevitable' or right call? Key questions as Carrick stays",
+      "summary": "Michael Carrick has been given the chance to turn Manchester United's form around - a shock decision that has divided supporters and Sky Sports pundits.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604361/michael-carrick-why-man-utd-head-coach-will-stay-on-and-could-bruno-fernandes-play-vs-chelsea-plus-other-key-questions",
+      "claimed_at": "2026-10-27T14:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a5d89af702e5c2c3",
+      "headline": "Sage reveals Crystal Palace boost ahead of Fulham game as he provides updates on trio",
+      "summary": "Crystal Palace boss Pierre Sage has offered a positive update on Dean Henderson ahead of Wednesday\u2019s Carabao Cup tie against Fulham. The Palace captain is expected to be available for the trip to Craven Cottage, wi",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/sage-reveals-crystal-palace-boost-ahead-of-fulham-game-as-he-provides-updates-on-trio/",
+      "claimed_at": "2026-10-27T14:03:50Z",
+      "players": [
+        {
+          "element_id": 222,
+          "name": "Strand Larsen",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "04cb09ea3e7489b8",
+      "headline": "Unattached Coleman 'edging towards' retirement",
+      "summary": "Former Everton defender Seamus Coleman says he is contemplating retiring from football but does not \"want to completely draw a line in the sand\" on his career.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmy83lyz32yjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-27T12:05:10Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f6116947ecf620e6",
+      "headline": "Carrick to remain in charge of Man Utd for Chelsea trip",
+      "summary": "Michael Carrick will remain in charge of Manchester United for their game against Chelsea on Saturday.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604347/man-utd-boss-michael-carrick-to-remain-in-charge-vs-chelsea-and-given-chance-to-turn-situation-around",
+      "claimed_at": "2026-10-27T12:03:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a0aed4dbfe43b462",
+      "headline": "FPL Gameweek 9 early Scout Picks: Villa triple-up",
+      "summary": "Our \u2018bus team\u2019 for the upcoming Gameweek The post FPL Gameweek 9 early Scout Picks: Villa triple-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/26/fpl-gameweek-9-early-scout-picks",
+      "claimed_at": "2026-10-26T19:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "508c46311d4d1338",
+      "headline": "Why is Wilcox in line of fire from Man Utd fans?",
+      "summary": "With Michael Carrick's position as Man Utd boss under scrutiny, focus has also turned to director of football Jason Wilcox.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck5yn5j37en0o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-26T15:24:12Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "413b784517a2eb5a",
+      "headline": "Which game will Chelsea's Palmer miss after red card?",
+      "summary": "BBC Sport's Ask Me Anything team explains why Cole Palmer's red card suspension will not rule him out of Chelsea's Premier League match against Manchester United.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm4g1q54pj20o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-26T14:12:43Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "16dca575aab833e8",
+      "headline": "Man Utd lacked intensity & fight - Alderweireld",
+      "summary": "Match of the Day pundits Toby Alderweireld and Ashley Williams analyse Manchester United's 3-0 defeat by Bournemouth, with Alderweireld suggesting there is no \"togetherness\" amongst the United squad.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6wyrg2vwjmgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-25T23:51:22Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "805b71097671faff",
+      "headline": "How Liverpool's attack impressed against Brighton",
+      "summary": "Match of the Day pundits Toby Alderweireld and Ashley Williams analyse Liverpool's impressive attacking display in their 2-0 win against Brighton at Anfield.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ckq6nvp2ldz5o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-25T23:49:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d822be83a7a02aa8",
+      "headline": "Carrick 'saddened' by Man Utd situation after Bournemouth loss",
+      "summary": "Manchester United manager Michael Carrick reflects on a \"tough day\" after his side lost 3-0 at home to Bournemouth, with his future in doubt.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cr5ynqy55l68o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-25T17:02:59Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "8a1402e96412851b",
@@ -501,96 +1057,6 @@
       "touches_squad": false
     },
     {
-      "digest": "852e2024d0b77b97",
-      "headline": "Why are Liverpool struggling for Premier League goals?",
-      "summary": "Liverpool have scored 15 goals in four cup games this season, but have managed only nine goals in seven Premier League matches.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c94g1p32gyrro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-25T06:26:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5ae3c93af7faf22a",
-      "headline": "When is Premier League 'sacking season' - and who should be worried?",
-      "summary": "As pressure builds on Manchester United manager Michael Carrick, BBC Sport looks at when the Premier League 'sacking season' begins.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmy83vg66zngo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-25T06:17:46Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a12c92864887e308",
-      "headline": "Should Palmer have been sent off earlier than he was?",
-      "summary": "Match of the Day pundit Martin Keown looks at the red card shown to Cole Palmer during Chelsea's 2-0 defeat to Tottenham, with the former Arsenal defender agreeing with the decision and suggesting Palmer was lucky not to receive a straight red fo",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmd93enq4z20o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T22:43:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "775b1972f4693528",
-      "headline": "How 'special talent' Jackson inspired Villa to victory over Man City",
-      "summary": "Match of the Day pundits Martin Keown and Steph Houghton look at the impact Aston Villa forward Nicolas Jackson had with his two goals in their 2-1 victory over Manchester City, with Keown describing him as a \"special talent\".",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmzxj1r8j7p2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T22:43:17Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f404aa3b83c70884",
-      "headline": "Watch Match of the Day on iPlayer",
-      "summary": "With Chelsea v Spurs, Arsenal v Everton, Villa v Man City and Coventry v Fulham",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/iplayer/episode/m0033jlx?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T22:40:55Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "74f80c3cac18c883",
       "headline": "Spurs latest: Maddison injury to be assessed - 'we need him'",
       "summary": null,
@@ -634,42 +1100,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-10-24T21:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "67215a1c23d50ef0",
-      "headline": "Man Utd not an unmanageable club - Carrick",
-      "summary": "Michael Carrick says it is possible to manage Manchester United effectively as he clings on to his job with Bournemouth visiting Old Trafford on Sunday.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c9ly0dxxgp7lo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T21:34:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9495d7fc413c671c",
-      "headline": "The candid meeting that 'changed' Spurs - are they finally on way back?",
-      "summary": "Tottenham end Saturday's Premier League action in 12th place, their highest league position since 2 January. Are they finally on their way back?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqev38dz34vxo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T21:14:42Z",
       "players": [
         {
           "element_id": 0,
@@ -753,258 +1183,6 @@
       "touches_squad": false
     },
     {
-      "digest": "15505290f0b333a2",
-      "headline": "Liverpool among clubs keen on Vuskovic - Sunday's gossip",
-      "summary": "Brighton defender Luka Vuskovic is being looked at by high-profile clubs, Liverpool do not intend to bring Trent Alexander-Arnold back, AC Milan are targeting Manchester United's Leny Yoro, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqvgr87py7zvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T20:20:30Z",
-      "players": [
-        {
-          "element_id": 504,
-          "name": "Vuskovic",
-          "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "760df8b3b268a5d5",
-      "headline": "Spurs latest: De Zerbi hails 'complete team' after Stamford Bridge history",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-24T20:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "00d2edd58e89e637",
-      "headline": "Spurs pick up rare win at Stamford Bridge in chaotic end to game",
-      "summary": "FREE TO WATCH: Highlights from the Premier League match between Chelsea and Tottenham Hotspur.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13603351/chelsea-0-2-tottenham-hotspur-premier-league-highlights",
-      "claimed_at": "2026-10-24T19:54:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f26179bd2c3dcb54",
-      "headline": "Spurs earn rare win at Stamford Bridge in chaotic end to game",
-      "summary": "FREE TO WATCH: Highlights from the Premier League match between Chelsea and Tottenham Hotspur.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13603351/chelsea-0-2-tottenham-hotspur-premier-league-highlights",
-      "claimed_at": "2026-10-24T19:54:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "dcce643710171e72",
-      "headline": "Chelsea latest: The stats behind horror show vs Spurs",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-24T19:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "191980e6d2bae28b",
-      "headline": "Spurs earn deserved win at Chelsea after Penders error and Palmer red",
-      "summary": "Chelsea goalkeeper Mike Penders punched the ball into his own net before Mathys Tel struck a wonderful second to earn Tottenham a rare but deserved 2-0 victory at Stamford Bridge in which Cole Palmer was sent off.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-vs-tottenham-hotspur/report/559516",
-      "claimed_at": "2026-10-24T19:30:00Z",
-      "players": [
-        {
-          "element_id": 560,
-          "name": "Penders",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b1c3cbb7517ace80",
-      "headline": "Spurs earn deserved win at Chelsea after Penders error and Palmer red",
-      "summary": "Chelsea goalkeeper Mike Penders punched the ball into his own net before Mathys Tel struck a wonderful second to give Tottenham a rare but deserved 2-0 victory at Stamford Bridge in which Cole Palmer was sent off.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-vs-tottenham-hotspur/report/559516",
-      "claimed_at": "2026-10-24T19:30:00Z",
-      "players": [
-        {
-          "element_id": 560,
-          "name": "Penders",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a669f41125fcb339",
-      "headline": "'We could have played better' - Alonso disappointed after defeat",
-      "summary": "Chelsea manager Xabi Alonso admitted he was disappointed by his side's performance, saying they \"could have played better\" following their 2-0 defeat by Tottenham at Stamford Bridge.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/ckvg6j1p51xdo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T19:25:04Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "95cc6ac20464eef0",
-      "headline": "'Lost his head!' - Disaster for Chelsea as Palmer sent off for second yellow",
-      "summary": "Cole Palmer was shown a second yellow card and sent off in Chelsea's Premier League clash with Tottenham Hotspur.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13603330/off-c-palmer-80-chelsea-0-1-tottenham-hotspur",
-      "claimed_at": "2026-10-24T19:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "877565b1b2d1c985",
-      "headline": "Spurs clinch rare Stamford Bridge win as Palmer sent off",
-      "summary": "Tottenham claim just their second victory over Chelsea at Stamford Bridge in 36 years, winning 2-0 as the hosts finish with 10 men after a red card for Cole Palmer.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/ckly0dnqz0r7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T19:17:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "38b6fc1d7af801fc",
-      "headline": "'Best performance since I arrived' - De Zerbi praises Spurs after win",
-      "summary": "Tottenham manager Roberto De Zerbi describes his side's 2-0 victory over Chelsea at Stamford Bridge as \"the best since he arrived at the club\", adding the win was special given it was against their local rivals.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cqkg5m3lnr5zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T19:12:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cd39cfce7cf1cbe5",
-      "headline": "Arsenal beat Everton to go level on points with leaders Man City",
-      "summary": "Goals from Ezri Konsa, his first for the club, and Gabriel Magalhaes helped Arsenal beat Everton 2-0 at the Emirates to move level on points with league leaders Manchester City.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cm79pxqdlwelo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T18:59:30Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d92913ae2a205a42",
-      "headline": "Jackson scores twice as Aston Villa end Man City's perfect start",
-      "summary": "Nicolas Jackson scores twice as Aston Villa beat Manchester City 2-1 at Villa Park to end their 100% start to the Premier League season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c6j47qe970x7o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T18:59:27Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9b5d5ecebfdcbf9d",
-      "headline": "Bobb's late strike secures Fulham win at Coventry",
-      "summary": "Fulham's Oscar Bobb scores in the 80th minute against Coventry to earn back-to-back victories in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cx7vpmrzr04do?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T18:59:22Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "55845f311ed8e977",
       "headline": "Palmer sent off as Spurs secure rare win at Stamford Bridge",
       "summary": "Tottenham secured their first victory at Stamford Bridge since 2018 with a dramatic 2-0 win over Chelsea, courtesy of a Mike Penders own goal and a stunning solo effort from Mathys Tel. Spurs broke the deadlock in the 77th minute through a",
@@ -1029,60 +1207,6 @@
       "touches_squad": false
     },
     {
-      "digest": "cc8d479a9b5cc6c1",
-      "headline": "Penders error & Palmer sees red - player ratings for Chelsea v Spurs",
-      "summary": "Goalkeeper Mike Penders endures a difficult first Premier League start, scoring an own goal in Spurs' 2-0 win at Chelsea. Here's how we - and you - rated the players.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqwy7x6e672eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T18:26:29Z",
-      "players": [
-        {
-          "element_id": 560,
-          "name": "Penders",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "aa4b665458c3690f",
-      "headline": "'A massive storage of images': Arteta has technical area receipts",
-      "summary": "Wandering Premier League managers beware, Arsenal's Mikel Arteta has compiled a dossier of bosses leaving their technical area.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwgkv8yx4dg8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T17:59:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fcb805f821596f9b",
-      "headline": "'A massive storage of images' - Arteta has technical area receipts",
-      "summary": "Wandering Premier League managers beware, Arsenal's Mikel Arteta has compiled a dossier of bosses leaving their technical area.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwgkv8yx4dg8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T17:59:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "05f6b6fd373ebbdf",
       "headline": "Arteta lauds defensive duo and his side\u2019s mentality after \u2018terrible schedule\u2019 of games",
       "summary": "Mikel Arteta hailed the mentality of his Arsenal players after they ended a challenging week with a 2-0 win over Everton. The Gunners played Bayern Munich in Germany on Wednesday, drawing 2-2, which followed last",
@@ -1090,24 +1214,6 @@
       "tier": 2,
       "url": "https://hayters.com/arteta-lauds-defensive-duo-and-his-sides-mentality-after-terrible-schedule-of-games/",
       "claimed_at": "2026-10-24T17:35:56Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "072e1628adb82454",
-      "headline": "Arteta 'delighted' with Arsenal win after 'tough week'",
-      "summary": "Arsenal manager Mikel Arteta is \"delighted\" with his sides performance after making five changes in their 2-0 victory over Everton.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/ck05486e1l53o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-24T17:00:15Z",
       "players": [
         {
           "element_id": 0,
@@ -1551,170 +1657,14 @@
       "touches_squad": false
     },
     {
-      "digest": "dbfff0680394cd91",
-      "headline": "Newcastle United handed big boost ahead of Crystal Palace clash",
-      "summary": "Matthias Jaissle has confirmed Anthony Elanga is closing in on a return for Newcastle, while Jacob Ramsey is also stepping up his recovery. Elanga has trained this week and could be involved in the squad to face Crystal Palace, although",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/newcastle-united-handed-big-boost-ahead-of-crystal-palace-clash/",
-      "claimed_at": "2026-10-23T14:21:22Z",
-      "players": [
-        {
-          "element_id": 454,
-          "name": "Elanga",
-          "club": "NEW",
-          "held": false
-        },
-        {
-          "element_id": 456,
-          "name": "J.Ramsey",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "06e5d207f7581053",
-      "headline": "Emery provides latest update on Aston Villa star ahead of Man City",
-      "summary": "Johan Manzambi faces a late fitness test ahead of Aston Villa\u2019s Premier League clash with Manchester City on Saturday. The attacking midfielder missed Wednesday\u2019s Champions League win over Viking with a \u201csmall injury\u201d and will be ass",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/emery-provides-latest-update-on-aston-villa-star-ahead-of-man-city/",
-      "claimed_at": "2026-10-23T14:15:47Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5f81c45a42624edf",
-      "headline": "Knock - 75% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-10-23T11:30:09.310090Z",
-      "players": [
-        {
-          "element_id": 262,
-          "name": "Smith Rowe",
-          "club": "FUL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "da595d5a1a4f91e6",
-      "headline": "Gross + De Cuyper: Bench or start in FPL Gameweek 8?",
-      "summary": "Brighton's in-form pair have tricky fixtures in the next two Gameweeks The post Gross + De Cuyper: Bench or start in FPL Gameweek 8? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/23/gross-de-cuyper-bench-or-start-in-fpl-gameweek-8",
-      "claimed_at": "2026-10-23T01:15:00Z",
-      "players": [
-        {
-          "element_id": 115,
-          "name": "De Cuyper",
-          "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a1571816da771059",
-      "headline": "FPL notes: Bruno rant, Manzambi latest + \u00a35.9m mid on pens",
-      "summary": "FPL takeaways from Wednesday's European ties involving Aston Villa and Man Utd The post FPL notes: Bruno rant, Manzambi latest + \u00a35.9m mid on pens appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/22/fpl-notes-bruno-rant-manzambi-latest-5-9m-mid-on-pens",
-      "claimed_at": "2026-10-22T17:45:00Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2a908b6b4f602b8b",
-      "headline": "Best Arsenal attacker to buy + keep or sell Bruno? FPL Q&A",
-      "summary": "Five-time top 1k finisher Tom Freeman answers your questions The post Best Arsenal attacker to buy + keep or sell Bruno? FPL Q&A appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/22/best-arsenal-attacker-to-buy-keep-or-sell-bruno-fpl-qa",
-      "claimed_at": "2026-10-22T15:05:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "281c02c49fbbe040",
-      "headline": "FPL notes: Saka injury \u201cdoesn\u2019t look good\u201d + not much rotation",
-      "summary": "Eberechi Eze and Declan Rice score as Arsenal draw with Bayern The post FPL notes: Saka injury &#8220;doesn't look good&#8221; + not much rotation appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foo",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/22/fpl-notes-saka-injury-doesnt-look-good-not-much-rotation",
-      "claimed_at": "2026-10-22T02:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4e528b6ca2de45d0",
-      "headline": "does not look good at all",
-      "summary": null,
-      "source": "manual:Arteta post-match via BBC Sport",
-      "tier": 2,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckg5j1zdn4m3o",
-      "claimed_at": "2026-10-21T22:51:56Z",
-      "players": [
-        {
-          "element_id": 12,
-          "name": "Saka",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ff0956710b1e1ef7",
       "headline": "Illness - 75% chance of playing",
       "summary": null,
       "source": "fpl_news_parse",
       "tier": 1,
       "url": null,
-      "claimed_at": "2026-10-20T20:00:09.902224Z",
+      "claimed_at": "2026-10-23T14:30:10.429365Z",
       "players": [
-        {
-          "element_id": 421,
-          "name": "Heaven",
-          "club": "MUN",
-          "held": false
-        },
         {
           "element_id": 634,
           "name": "Fernandez-Pardo",
@@ -1725,6 +1675,12 @@
           "element_id": 238,
           "name": "Grealish",
           "club": "EVE",
+          "held": false
+        },
+        {
+          "element_id": 598,
+          "name": "Elvedi",
+          "club": "LEE",
           "held": false
         }
       ],
