@@ -62,6 +62,10 @@ def _publish_evidence_view(
             int(e["id"]): (str(e.get("web_name") or ""), teams.get(e.get("team"), ""))
             for e in bootstrap.get("elements") or []
         }
+        live = {
+            int(e["id"]): (e.get("status"), e.get("chance_of_playing_next_round"))
+            for e in bootstrap.get("elements") or []
+        }
         view = view_module.build(
             claims=claims,
             resolutions=resolutions,
@@ -70,6 +74,7 @@ def _publish_evidence_view(
             generated_at=datetime.now(timezone.utc)
             .isoformat().replace("+00:00", "Z"),
             names=names,
+            live=live,
         )
         view_module.write(view, Path(FPL_PUBLIC_DIR))
     except Exception as exc:  # noqa: BLE001
@@ -559,6 +564,7 @@ def refresh_expected_points(
     # costs the forecast, which is irreplaceable.
     evidence: Dict[str, Any] = {}
     try:
+        from pipeline.learning.availability_conflicts import live_overrides
         from pipeline.learning.availability_evidence import (
             claims_from_bootstrap, parse_coverage, record as record_claims,
         )
@@ -572,11 +578,19 @@ def refresh_expected_points(
         evidence = parse_coverage(claims)
         evidence["resolution"] = evidence_summary
         # Every unresolved conflict, verbatim, so _deliver can surface it. The
-        # projection was still made — conservatively — and the human needs to know
-        # on what basis.
+        # projection was still made and the human needs to know on what basis —
+        # including when the basis was NOT the escalated value, because the live
+        # bootstrap outranked it (`live_overrides`, the same test the model ran).
+        live = {
+            int(e["id"]): (e.get("status"), e.get("chance_of_playing_next_round"))
+            for e in bootstrap.get("elements") or []
+        }
         evidence["escalations"] = [
             {"element_id": r.element_id, "claim_type": r.claim_type,
-             "value": r.value, "detail": r.escalation}
+             "value": r.value, "detail": r.escalation,
+             "applied": r.claim_type in live_overrides(
+                 {r.claim_type: r}, *live.get(int(r.element_id), (None, None))
+             )}
             for r in escalations
         ]
         logger.info("availability evidence: %s", evidence)
@@ -1062,13 +1076,23 @@ def _deliver(
     # a conflict on a player nobody owns is neither. Inflating it would devalue the
     # one severity that is supposed to stop you scrolling.
     for item in (evidence or {}).get("escalations", []) or []:
+        # Absent on records written before the live bootstrap became the
+        # authority, when every escalated value was applied.
+        if item.get("applied", True):
+            basis = (
+                "The projection used the more conservative reading, so this "
+                "player may be understated rather than overstated."
+            )
+        else:
+            basis = (
+                "Neither stored reading was used: the projection took FPL's live "
+                "fields, which outrank stored claims."
+            )
         messages.append(
             status_message(
                 state.gameweek,
                 f"GW{state.gameweek} — sources disagree on a player's availability",
-                f"{item.get('detail') or 'Sources disagreed.'} The projection used "
-                f"the more conservative reading, so this player may be understated "
-                f"rather than overstated.",
+                f"{item.get('detail') or 'Sources disagreed.'} {basis}",
                 created_at,
                 severity="warning",
                 kind="warning",

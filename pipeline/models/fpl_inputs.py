@@ -481,6 +481,7 @@ def build_fpl_inputs(
         frame, key=key, position_column="position_norm", rules=rules
     )
 
+    from pipeline.learning.availability_conflicts import live_overrides
     from pipeline.learning.backfill import _normalise_name
 
     prior_starts: Dict[str, float] = {}
@@ -525,22 +526,22 @@ def build_fpl_inputs(
             no_history += 1
 
         element_id_raw = int(element["id"])
-        # Resolved evidence, where any exists, replaces the raw bootstrap values.
-        #
-        # Safe by construction rather than by care: tier-1 claims are DERIVED from
-        # this same bootstrap, so a player with only tier-1 evidence resolves to
-        # exactly what the bootstrap said. Only a manual tier-2/3 claim can change
-        # anything, and rule R4 lets one move availability down but never up. So
-        # the worst case of a resolution bug is an over-cautious projection.
+        # Resolved evidence may LOWER the live bootstrap's values, never replace
+        # them wholesale. Tier-1 claims are copies of an EARLIER bootstrap — the
+        # store is resolved before this run's bootstrap is recorded — so letting
+        # them win put a stale flag over a fresh one (Joao Pedro, live i/0,
+        # projected from a stored d/75). Only a tier-2/3 claim applies, and only
+        # where it is no more optimistic than the live field: see
+        # `live_overrides`. So the worst case of a resolution bug is an
+        # over-cautious projection, and a stored copy can never out-vote FPL.
         resolved = (evidence or {}).get(element_id_raw, {})
         status_value = element.get("status", "a")
         chance_value = element.get("chance_of_playing_next_round")
-        if "status" in resolved and resolved["status"].value is not None:
-            status_value = resolved["status"].value
-        if "chance_of_playing" in resolved:
-            resolved_chance = resolved["chance_of_playing"].value
-            if resolved_chance is not None:
-                chance_value = resolved_chance
+        applied = live_overrides(resolved, status_value, chance_value)
+        if "status" in applied:
+            status_value = applied["status"].value
+        if "chance_of_playing" in applied:
+            chance_value = applied["chance_of_playing"].value
 
         # Classified once. `news` is used only to decide HOW an absence ends;
         # the availability number itself comes from the fields above.
@@ -551,17 +552,19 @@ def build_fpl_inputs(
             news=element.get("news"),
             news_added=element.get("news_added"),
         )
-        if resolved:
+        # Only the resolutions that actually set a field: an id here says "this
+        # claim moved the number", which a tier-1 copy no longer does.
+        if applied:
             state = replace(
                 state,
                 evidence_claim_ids=tuple(
-                    r.winning_claim_id for r in resolved.values()
+                    r.winning_claim_id for r in applied.values()
                     if r.winning_claim_id
                 ),
                 # Recorded on the state so the artifact shows the projection was
                 # made under an unresolved conflict, rather than that fact living
                 # only in a log line nobody reads.
-                conflict=any(r.unresolved for r in resolved.values()),
+                conflict=any(r.unresolved for r in applied.values()),
             )
             if state.conflict:
                 conflicted += 1

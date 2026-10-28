@@ -30,10 +30,13 @@ from __future__ import annotations
 
 import json
 import logging
+from dataclasses import replace
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
-from pipeline.learning.availability_conflicts import Resolution
+from pipeline.learning.availability_conflicts import (
+    OVERRIDABLE_FIELDS, RULE_LIVE, Resolution, live_overrides,
+)
 from pipeline.learning.availability_evidence import AvailabilityClaim
 
 logger = logging.getLogger(__name__)
@@ -61,7 +64,10 @@ def _is_notable(resolutions: Mapping[str, Resolution]) -> bool:
     for claim_type, resolution in resolutions.items():
         if claim_type == "status" and str(resolution.value).lower() != UNREMARKABLE_STATUS:
             return True
-        if claim_type == "chance_of_playing":
+        # A live "no chance published" is FPL's usual all-clear, not a gap.
+        if claim_type == "chance_of_playing" and not (
+            resolution.value is None and resolution.rule == RULE_LIVE
+        ):
             try:
                 if float(resolution.value) < FULL_CHANCE:
                     return True
@@ -100,6 +106,51 @@ def _claim_row(claim: AvailabilityClaim, verdict: str, beaten_by: str = "") -> D
     }
 
 
+def _as_projected(
+    per_type: Dict[str, Resolution],
+    live_status: Optional[str],
+    live_chance: Optional[Any],
+) -> Dict[str, Resolution]:
+    """
+    Relabel every entry whose resolution did NOT set the projected number.
+
+    The model takes ``status`` and ``chance_of_playing`` from the live bootstrap
+    unless ``live_overrides`` lets a resolution through. Showing the stored
+    winner's value as "resolved" would tell the reader a stale copy priced the
+    player when it did not, so such an entry shows the live value under
+    ``RULE_LIVE``, and the stored winner is listed among the losers.
+    """
+    applied = live_overrides(per_type, live_status, live_chance)
+    live_values = {"status": live_status, "chance_of_playing": live_chance}
+    shown = dict(per_type)
+    for claim_type in OVERRIDABLE_FIELDS:
+        resolution = per_type.get(claim_type)
+        if resolution is None or claim_type in applied:
+            continue
+        live = live_values[claim_type]
+        if claim_type == "status":
+            live = str(live or "a").strip().lower()
+            if str(resolution.value).strip().lower() == live:
+                continue
+        elif resolution.value == live:
+            continue
+        stored = (resolution.winning_claim_id,) if resolution.winning_claim_id else ()
+        shown[claim_type] = replace(
+            resolution,
+            value=live,
+            rule=RULE_LIVE,
+            winning_claim_id=None,
+            winning_tier=None,
+            conflicts=stored + resolution.conflicts,
+            escalation=(
+                f"{resolution.escalation} Not applied: the projection used FPL's "
+                f"live {claim_type} ({live!r})."
+                if resolution.escalation else None
+            ),
+        )
+    return shown
+
+
 def build(
     claims: Sequence[AvailabilityClaim],
     resolutions: Mapping[Tuple[int, str], Resolution],
@@ -107,20 +158,27 @@ def build(
     gameweek: int,
     generated_at: str,
     names: Optional[Mapping[int, Tuple[str, str]]] = None,
+    live: Optional[Mapping[int, Tuple[Optional[str], Optional[Any]]]] = None,
 ) -> Dict[str, Any]:
     """
     Assemble the view. Pure — takes what the agent already computed.
 
     Kept free of I/O and of the bootstrap so it can be tested against fabricated
-    resolutions without a network or a solver.
+    resolutions without a network or a solver. ``live`` is the bootstrap's own
+    ``(status, chance_of_playing_next_round)`` per element, which is what the
+    model priced from wherever no resolution was allowed to override it.
     """
     names = names or {}
+    live = live or {}
 
     by_player: Dict[int, Dict[str, Resolution]] = {}
     for (element_id, claim_type), resolution in resolutions.items():
         if claim_type not in AVAILABILITY_TYPES:
             continue
         by_player.setdefault(element_id, {})[claim_type] = resolution
+    for element_id, per_type in by_player.items():
+        if element_id in live:
+            by_player[element_id] = _as_projected(per_type, *live[element_id])
 
     claims_by_id = {claim.claim_id: claim for claim in claims}
     claims_by_player: Dict[int, List[AvailabilityClaim]] = {}

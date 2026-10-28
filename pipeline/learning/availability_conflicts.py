@@ -56,6 +56,9 @@ RULE_ASYMMETRIC_REFUSED = "asymmetric_override_refused"
 RULE_PERMANENCE = "permanence_beats_gradation"
 RULE_UNRESOLVED = "unresolved_conservative"
 RULE_STALE = "fresher_claim_beats_stale"
+# Not a resolution rule: the label the evidence view puts on an entry whose
+# resolution did NOT set the projected number, because the live bootstrap did.
+RULE_LIVE = "live_bootstrap_authority"
 
 # Claim types that assert something about whether he can play at all. Anything
 # outside this set — notably `predicted_start` — never touches availability.
@@ -63,6 +66,11 @@ AVAILABILITY_TYPES = (
     "status", "chance_of_playing", "return_date", "unavailable_until",
     "permanent_exit",
 )
+
+# The only bootstrap fields a resolution can replace in the projection. Return
+# dates and exits reach the model through `minutes.availability_state`'s parse
+# of the LIVE news string, never through a resolution.
+OVERRIDABLE_FIELDS = ("status", "chance_of_playing")
 
 
 def _param(name: str) -> float:
@@ -88,6 +96,9 @@ class Resolution:
     value: Any
     rule: str
     winning_claim_id: Optional[str] = None
+    # The winning claim's tier. `live_overrides` needs it: a tier-1 winner is a
+    # stored copy of an earlier bootstrap and must never replace the live one.
+    winning_tier: Optional[int] = None
     # Every claim that lost, by id. This is what makes "never silently pick a
     # side" a property of the record rather than a promise in a docstring.
     conflicts: Tuple[str, ...] = ()
@@ -104,6 +115,7 @@ class Resolution:
             "value": self.value,
             "rule": self.rule,
             "winning_claim_id": self.winning_claim_id,
+            "winning_tier": self.winning_tier,
             "conflicts": list(self.conflicts),
             "dropped": list(self.dropped),
             "unresolved": self.unresolved,
@@ -305,7 +317,7 @@ def _resolve_one(
         return Resolution(
             element_id=element_id, claim_type=claim_type, value=ordered[0].value,
             rule=RULE_ONLY_CLAIM, winning_claim_id=ordered[0].claim_id,
-            dropped=dropped,
+            winning_tier=ordered[0].source_tier, dropped=dropped,
         )
 
     # R1: fresh claims outrank stale ones outright. If everything is stale, fall
@@ -331,6 +343,7 @@ def _resolve_one(
         return Resolution(
             element_id=element_id, claim_type=claim_type, value=winner.value,
             rule=rule, winning_claim_id=winner.claim_id,
+            winning_tier=winner.source_tier,
             conflicts=tuple(superseded) + stale_losers, dropped=dropped,
         )
 
@@ -364,6 +377,7 @@ def _resolve_one(
             element_id=element_id, claim_type=claim_type,
             value=conservative.value, rule=RULE_UNRESOLVED,
             winning_claim_id=conservative.claim_id,
+            winning_tier=conservative.source_tier,
             conflicts=tuple(
                 c.claim_id for c in [winner] + rivals
                 if c.claim_id != conservative.claim_id
@@ -389,6 +403,7 @@ def _resolve_one(
                 element_id=element_id, claim_type=claim_type,
                 value=challenger.value, rule=RULE_ASYMMETRIC,
                 winning_claim_id=challenger.claim_id,
+                winning_tier=challenger.source_tier,
                 conflicts=tuple(
                     c.claim_id for c in contenders
                     if c.claim_id != challenger.claim_id
@@ -401,6 +416,7 @@ def _resolve_one(
         return Resolution(
             element_id=element_id, claim_type=claim_type, value=winner.value,
             rule=RULE_ASYMMETRIC_REFUSED, winning_claim_id=winner.claim_id,
+            winning_tier=winner.source_tier,
             conflicts=tuple(c.claim_id for c in losers) + tuple(superseded)
             + stale_losers,
             dropped=dropped,
@@ -415,7 +431,7 @@ def _resolve_one(
     return Resolution(
         element_id=element_id, claim_type=claim_type, value=winner.value,
         rule=rule if len(contenders) == 1 else RULE_TIER,
-        winning_claim_id=winner.claim_id,
+        winning_claim_id=winner.claim_id, winning_tier=winner.source_tier,
         conflicts=tuple(c.claim_id for c in losers) + tuple(superseded)
         + stale_losers,
         dropped=dropped,
@@ -429,20 +445,79 @@ def _apply_permanence(resolutions: Dict[Tuple[int, str], Resolution]) -> None:
     Cross-type, so it cannot be decided inside a single (player, type) group. FPL
     sometimes leaves a stale ``chance_of_playing`` on a player who has left, and a
     departed player at 75% would be bought.
+
+    The EXIT claim is the winner, and the chance it displaced is named as a loser
+    (R8). Crediting the displaced chance claim would also hand the exit's 0 that
+    claim's tier — a manual tier-2 departure on a player whose chance came from
+    FPL would then read as tier 1, and `live_overrides` would drop a real exit.
     """
     exits = {
-        element_id for (element_id, claim_type), resolution in resolutions.items()
+        element_id: resolution
+        for (element_id, claim_type), resolution in resolutions.items()
         if claim_type == "permanent_exit" and resolution.value is not None
     }
     for (element_id, claim_type), resolution in list(resolutions.items()):
         if element_id not in exits or claim_type != "chance_of_playing":
             continue
+        departure = exits[element_id]
+        displaced = (
+            (resolution.winning_claim_id,) if resolution.winning_claim_id else ()
+        )
         resolutions[(element_id, claim_type)] = Resolution(
             element_id=element_id, claim_type=claim_type, value=0,
             rule=RULE_PERMANENCE,
-            winning_claim_id=resolution.winning_claim_id,
-            conflicts=resolution.conflicts, dropped=resolution.dropped,
+            winning_claim_id=departure.winning_claim_id,
+            winning_tier=departure.winning_tier,
+            conflicts=displaced + resolution.conflicts, dropped=resolution.dropped,
         )
+
+
+def live_overrides(
+    resolved: Mapping[str, Any],
+    live_status: Optional[str],
+    live_chance: Optional[Any],
+) -> Dict[str, Resolution]:
+    """
+    The resolutions allowed to replace the LIVE bootstrap's own fields.
+
+    **Tier 1 never.** A stored tier-1 claim is a copy of an EARLIER bootstrap: the
+    agent resolves the store before it records the bootstrap it has just fetched.
+    So on the first refresh after FPL changes a flag, the copy outranked the live
+    value. Measured on the 2026-10-27 refresh: Joao Pedro was i/0 live and
+    resolved to 75 from his stored d/75, and was published at 2.78 xP. The live
+    bootstrap is the authority for tier-1 data; its copies only feed the record.
+
+    **Tier 2+ only downward against the live field.** R4 already lets a
+    lower-tier claim move availability down but never up, but it tests direction
+    against the STORED tier-1 claim, which can be stale or not yet recorded. This
+    is R4's own direction test, applied against the authority instead.
+
+    Never raises. Every caller is on the seal path, and the fallback — no
+    overrides — is the live bootstrap, exactly the behaviour before the evidence
+    layer existed. The failure is logged rather than defaulted silently.
+    """
+    applied: Dict[str, Resolution] = {}
+    try:
+        for claim_type in OVERRIDABLE_FIELDS:
+            resolution = resolved.get(claim_type)
+            if resolution is None or resolution.value is None:
+                continue
+            tier = getattr(resolution, "winning_tier", None)
+            if tier is None or tier < 2:
+                continue
+            proposed = _optimism(claim_type, resolution.value)
+            if claim_type == "chance_of_playing" and live_chance is not None:
+                live = _optimism(claim_type, live_chance)
+            else:
+                # No published chance: FPL's status letter is its whole statement.
+                live = _optimism("status", live_status or "a")
+            if proposed is None or live is None or proposed > live:
+                continue
+            applied[claim_type] = resolution
+    except Exception as exc:  # noqa: BLE001 - see the never-raises note above
+        logger.warning("evidence not applied, live bootstrap used (%s)", exc)
+        return {}
+    return applied
 
 
 def availability_view(
