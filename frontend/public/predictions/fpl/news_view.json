@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-28T23:53:54.603451Z",
-  "n_dropped": 72,
+  "generated_at": "2026-10-29T04:38:45.714075Z",
+  "n_dropped": 74,
   "dropped_by_source": {
-    "bbc_football": 27,
-    "hayters": 1,
+    "bbc_football": 28,
+    "hayters": 2,
     "sky_football": 44
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 162,
+  "n_articles": 164,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -42,6 +42,42 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "8c506fd26d562b15",
+      "headline": "'Stutter' penalty back in the spotlight after Barco miss costs Chelsea",
+      "summary": "The stuttering run-up for penalties has been called 'naive' as players continue to try to deceive goalkeepers with a stop-start approach - but why?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmp3g8vxd258o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-29T00:17:48Z",
+      "players": [
+        {
+          "element_id": 568,
+          "name": "Barco",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9be1aa9949d14fcd",
+      "headline": "'He could be happier' - why is Estevao becoming Chelsea's forgotten man?",
+      "summary": "Estevao faces limited opportunities at Chelsea as Pedro Neto\u2019s form and competition for places in attack leave him struggling for game time under Xabi Alonso.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cv5ynwkndw61o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-29T00:05:21Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "32e1e16368a07c03",
@@ -1316,24 +1352,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d822be83a7a02aa8",
-      "headline": "Carrick 'saddened' by Man Utd situation after Bournemouth loss",
-      "summary": "Manchester United manager Michael Carrick reflects on a \"tough day\" after his side lost 3-0 at home to Bournemouth, with his future in doubt.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cr5ynqy55l68o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-25T17:02:59Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5959433e8137ccab",
       "headline": "Crystal Palace 0-0 Newcastle LIVE \u2013 Palace on top in early stages",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Crystal Palace 0-0 Newcastle LIVE - Palace on top in early stages appeared first on Hayters.",
@@ -1670,24 +1688,6 @@
           "element_id": 469,
           "name": "N.Williams",
           "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9c6319fa83a69b6f",
-      "headline": "Aston Villa 2-1 Man City LIVE \u2013 Jackson brace sees City beaten for first time this season",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Aston Villa 2-1 Man City LIVE - Jackson brace sees City beaten for first time this season appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/aston-villa-v-man-city-live-team-news-updates-and-reaction-2/",
-      "claimed_at": "2026-10-24T09:50:06Z",
-      "players": [
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
           "held": false
         }
       ],
