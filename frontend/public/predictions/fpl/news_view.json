@@ -1,17 +1,41 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-29T17:25:38.633878Z",
-  "n_dropped": 78,
+  "generated_at": "2026-10-29T21:55:57.118955Z",
+  "n_dropped": 60,
   "dropped_by_source": {
-    "bbc_football": 31,
-    "sky_football": 47
+    "bbc_football": 21,
+    "sky_football": 39
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 168,
+  "n_articles": 150,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "67ed158a2cc999ab",
+      "headline": "Chelsea linked with Alexander-Arnold - Friday's gossip",
+      "summary": "Trent Alexander-Arnold may become a target for Chelsea, Bournemouth's Alex Scott could also be heading to Stamford Bridge and Manchester United are looking at Leeds United striker Dominic Calvert-Lewin.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck1l396jqv4zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-29T21:40:24Z",
+      "players": [
+        {
+          "element_id": 69,
+          "name": "Scott",
+          "club": "BOU",
+          "held": false
+        },
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "327bce84626f31ac",
       "headline": "Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9",
@@ -77,6 +101,186 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "5e592ea777b8db71",
+      "headline": "Fleetwood to face Everton in EFL Cup quarters",
+      "summary": "League Two Fleetwood Town will face Everton at Highbury in the quarter-finals of the EFL Cup.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmp3glnle0wdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-29T21:42:29Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "472469d78a0248ba",
+      "headline": "FPL notes: Evanilson, Jackson + Manzambi rested for Gameweek 9",
+      "summary": "EFL Cup wins for Sunderland and Bournemouth dissected The post FPL notes: Evanilson, Jackson + Manzambi rested for Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/29/fpl-notes-evanilson-jackson-manzambi-rested-for-gameweek-9",
+      "claimed_at": "2026-10-29T21:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1a8a4e76c04df98b",
+      "headline": "Everton see off Newcastle to reach Carabao Cup quarter-final",
+      "summary": "Everton are through to the quarter-finals of the Carabao Cup after seeing off Newcastle 3-1.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-newcastle-united/report/578609",
+      "claimed_at": "2026-10-29T19:34:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9f8cd6126d5a8f03",
+      "headline": "Grealish dropped by Everton after 'breach of club discipline'",
+      "summary": "Jack Grealish is left out of Everton's Carabao Cup tie with Newcastle United on Thursday \"due to a breach of club discipline\".",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmwy4vyl9nplo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-29T19:31:36Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "93555fbcafbaf373",
+      "headline": "Grealish dropped by Everton after breaching club discipline",
+      "summary": "Everton said Jack Grealish was unavailable for their Carabao Cup fourth-round tie against Newcastle 'due to a breach of club discipline'.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13605512/jack-grealish-dropped-by-everton-after-breaching-club-discipline-ahead-of-newcastle-carabao-cup-tie",
+      "claimed_at": "2026-10-29T18:45:00Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a6b75f3e507d45d6",
+      "headline": "Everton latest: Branthwaite misses Newcastle cup visit due to concussion",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-29T18:45:00Z",
+      "players": [
+        {
+          "element_id": 230,
+          "name": "Branthwaite",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5f81c45a42624edf",
+      "headline": "Knock - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-10-29T18:30:09.458031Z",
+      "players": [
+        {
+          "element_id": 533,
+          "name": "Mukiele",
+          "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b0d717a5c21b872e",
+      "headline": "WCL: PSG hit back immediately vs Man City LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-women-vs-paris-saint-germain-women/live/578257",
+      "claimed_at": "2026-10-29T18:07:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9679d644e6cf578e",
+      "headline": "Arsenal latest: Arteta sweating on fitness of duo after Dowman appeal rejected",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-29T18:00:00Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b2080cab2d47eb60",
+      "headline": "Arsenal have Dowman red card appeal rejected with youngster handed three-game ban",
+      "summary": "Arsenal have had their appeal against Max Dowman\u2019s red card in the Carabao Cup defeat to Fleetwood Town rejected, with the teenager handed a three-match suspension. The 16-year-old was sent off for reacting angrily to",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arsenal-have-dowman-red-card-appeal-rejected-with-youngster-handed-three-game-ban/",
+      "claimed_at": "2026-10-29T17:53:35Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "fef2db214ccc1d9c",
@@ -1075,78 +1279,6 @@
       "touches_squad": false
     },
     {
-      "digest": "09dbe18485cf03f1",
-      "headline": "WCL: Game over! Chelsea double their lead vs Roma LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-women-vs-roma-women/live/578251",
-      "claimed_at": "2026-10-28T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "66e885f7bef27e8b",
-      "headline": "Liverpool start the young guns vs Chelsea LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/liverpool-vs-chelsea/live/578612",
-      "claimed_at": "2026-10-28T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c7e46264c1d2d265",
-      "headline": "Man City vs Brighton LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-brighton-and-hove-albion/live/578614",
-      "claimed_at": "2026-10-28T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6bb7082ca6ecf398",
-      "headline": "Transfer Centre LIVE! The stats behind Man Utd's poor recruitment...",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
-      "claimed_at": "2026-10-28T16:45:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b9afe89a359028e9",
       "headline": "72+: The EFL Podcast",
       "summary": "Fleetwood Town manager Matt Lawlor chats after knocking Arsenal out of the League Cup.",
@@ -1154,24 +1286,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sounds/play/p0pk3kv2?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-28T16:32:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "44bd11e0629c70b8",
-      "headline": "Arsenal's Reid out until new year after setback from ACL return",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13208899/wsl-news-transfers-rumours-gossip-and-womens-football-latest",
-      "claimed_at": "2026-10-28T16:15:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1405,42 +1519,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f37e742abdab65e5",
-      "headline": "'Biggest night in club's history' for fearless Fleetwood",
-      "summary": "A whopping 83 league places separated Fleetwood from Arsenal, yet the hosts booked their place in the Carabao Cup quarter-final thanks to their penalty shootout win over the Gunners.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqgkv2vxeengo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-28T00:39:30Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "af443d815b892b92",
-      "headline": "Dowman sees red as Arsenal dumped out, but did Arteta go too far?",
-      "summary": "A shocking defeat, a red card card, a penalty-shootout and a drone tell the story of Arsenal's dramatic loss to League Two Fleetwood Town in the last-16 of the Carabao Cup.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmg47g7dngxlo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-28T00:34:31Z",
-      "players": [
-        {
-          "element_id": 20,
-          "name": "Dowman",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f648ee52ec669c8f",
       "headline": "Arteta defends Arsenal players\u2019 attitude after shock Carabao Cup exit to Fleetwood",
       "summary": "Mikel Arteta refused to criticise his players\u2019 attitude after Arsenal\u2019s shock Carabao Cup exit to Fleetwood Town, insisting the defeat had nothing to do with a lack of effort or application. The Premier League champio",
@@ -1651,84 +1729,6 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2cb3db5be1508847",
-      "headline": "\u2018I think we changed something in ourselves\u2019 \u2013 De Zerbi on beating Chelsea and another Maddison injury worry",
-      "summary": "Roberto De Zerbi is hopeful James Maddison has avoided a serious injury after the midfielder was forced off during Tottenham\u2019s 2-0 win over Chelsea. Maddison will undergo further medical check",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/i-think-we-changed-something-in-ourselves-de-zerbi-on-beating-chelsea-and-another-maddison-injury-worry/",
-      "claimed_at": "2026-10-24T20:54:50Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a3d0232befb3c81d",
-      "headline": "Alonso on Joao Pedro\u2019s injury, Cole Palmer\u2019s red card and Mike Penders\u2019 mistake in defeat to Spurs",
-      "summary": "Xabi Alonso has revealed Chelsea are waiting to discover the extent of Joao Pedro\u2019s injury after the forward missed the 2-0 defeat to Tottenham. The Chelsea boss said further tests are required before",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/alonso-on-joao-pedros-injury-cole-palmers-red-card-and-mike-penders-mistake-in-defeat-to-spurs/",
-      "claimed_at": "2026-10-24T20:46:32Z",
-      "players": [
-        {
-          "element_id": 560,
-          "name": "Penders",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "55845f311ed8e977",
-      "headline": "Palmer sent off as Spurs secure rare win at Stamford Bridge",
-      "summary": "Tottenham secured their first victory at Stamford Bridge since 2018 with a dramatic 2-0 win over Chelsea, courtesy of a Mike Penders own goal and a stunning solo effort from Mathys Tel. Spurs broke the deadlock in the 77th minute through a",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/palmer-sent-off-as-spurs-secure-rare-win-at-stamford-bridge/",
-      "claimed_at": "2026-10-24T18:38:24Z",
-      "players": [
-        {
-          "element_id": 525,
-          "name": "Fernandes",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 560,
-          "name": "Penders",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "05f6b6fd373ebbdf",
-      "headline": "Arteta lauds defensive duo and his side\u2019s mentality after \u2018terrible schedule\u2019 of games",
-      "summary": "Mikel Arteta hailed the mentality of his Arsenal players after they ended a challenging week with a 2-0 win over Everton. The Gunners played Bayern Munich in Germany on Wednesday, drawing 2-2, which followed last",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-lauds-defensive-duo-and-his-sides-mentality-after-terrible-schedule-of-games/",
-      "claimed_at": "2026-10-24T17:35:56Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
