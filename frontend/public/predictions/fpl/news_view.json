@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-30T19:43:16.586715Z",
-  "n_dropped": 90,
+  "generated_at": "2026-10-30T23:16:49.846641Z",
+  "n_dropped": 96,
   "dropped_by_source": {
-    "bbc_football": 28,
-    "hayters": 9,
-    "sky_football": 53
+    "bbc_football": 30,
+    "hayters": 11,
+    "sky_football": 55
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 180,
+  "n_articles": 186,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -120,6 +120,114 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "d72ff61d514b1344",
+      "headline": "Man Utd target Barcelona's Lopez - Saturday's gossip",
+      "summary": "Manchester United target Barcelona's Fermin Lopez, Lisandro Martinez is attracting interest from the La Liga side, Arsenal eye Club Brugge striker Nicolo Tresoldi, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck3r52vn758xo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-30T23:08:16Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "db269a416baee795",
+      "headline": "Villa to sue Carragher over 'unacceptable insults'",
+      "summary": "Aston Villa say they will initiate legal action against Jamie Carragher over what the club branded as \"unacceptable insults\".",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqd09p3kppyvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-30T23:05:45Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c32082650864655b",
+      "headline": "\u2018Nobody wants to be dribbled past by a 15 or 16-year-old\u2019 \u2013 Arteta on the challenge facing Max Dowman",
+      "summary": "Mikel Arteta is confident Max Dowman can cope with the physical treatment that comes his way, insisting the Arsenal youngster has been dealing with opponents trying to stop him since he was eight ye",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-on-the-challenge-facing-max-dowman/",
+      "claimed_at": "2026-10-30T22:30:00Z",
+      "players": [
+        {
+          "element_id": 20,
+          "name": "Dowman",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c83600486cff427f",
+      "headline": "\u2018Two weeks ago, he was a disaster signing\u2019 \u2013 De Zerbi responds to recent Fernandes praise",
+      "summary": "Roberto De Zerbi has backed Mateus Fernandes to become one of the best midfielders in Europe but hit back at the rapidly changing narrative surrounding the Tottenham midfielder. Fernandes impressed in Spurs\u2019 re",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/two-weeks-ago-he-was-a-disaster-signing-de-zerbi-responds-to-recent-fernandes-praise/",
+      "claimed_at": "2026-10-30T22:30:00Z",
+      "players": [
+        {
+          "element_id": 525,
+          "name": "Fernandes",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "eb8c1fd262e80a1f",
+      "headline": "Man Utd latest: Carrick admits to 'hard truths' in conversation with board",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-30T22:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c053fa440200bc22",
+      "headline": "Papers: Martinez seeking summer Man Utd departure",
+      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13605928/lisandro-martinez-wants-to-leave-man-utd-in-the-summer-with-atletico-madrid-interested-paper-talk",
+      "claimed_at": "2026-10-30T22:17:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "5a6c4c93a94779b0",
@@ -1208,24 +1316,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9679d644e6cf578e",
-      "headline": "Arsenal latest: Arteta sweating on fitness of duo after Dowman appeal rejected",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-29T18:00:00Z",
-      "players": [
-        {
-          "element_id": 20,
-          "name": "Dowman",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b2080cab2d47eb60",
       "headline": "Arsenal have Dowman red card appeal rejected with youngster handed three-game ban",
       "summary": "Arsenal have had their appeal against Max Dowman\u2019s red card in the Carabao Cup defeat to Fleetwood Town rejected, with the teenager handed a three-match suspension. The 16-year-old was sent off for reacting angrily to",
@@ -1400,24 +1490,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e8cee543da82325e",
-      "headline": "Sage on finding solutions at Palace and visiting De Zerbi for ideas",
-      "summary": "The pressure has been on for Pierre Sage - but out of adversity he is aiming to improve his skills as a coach and bond together a Crystal Palace squad to go and achieve future success.&#160;",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13605441/crystal-palace-pierre-sage-on-finding-solutions-visiting-roberto-de-zerbi-and-building-foundations-for-future-success",
-      "claimed_at": "2026-10-29T16:27:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "edbf49572e7804e5",
       "headline": "Sage hopeful of triple Crystal Palace boost for Spurs",
       "summary": "Crystal Palace boss Pierre Sage has confirmed Jean-Philippe Mateta is ready to return to the starting line-up for Saturday\u2019s trip to Tottenham. The striker was left out of Wednesday\u2019s win over Fulham as Palace carefully managed his workload follo",
@@ -1586,42 +1658,6 @@
       "touches_squad": false
     },
     {
-      "digest": "9be1aa9949d14fcd",
-      "headline": "'He could be happier' - why is Estevao becoming Chelsea's forgotten man?",
-      "summary": "Estevao faces limited opportunities at Chelsea as Pedro Neto\u2019s form and competition for places in attack leave him struggling for game time under Xabi Alonso.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cv5ynwkndw61o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-29T00:05:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f3d4ccaf7d20970f",
-      "headline": "'He could be happier' - why is Estevao becoming Chelsea's forgotten man?",
-      "summary": "Estevao plays no part as Chelsea lose on penalties to Liverpool in the Carabao Cup - so where does this leave the exciting Brazilian with Xabi Alonso?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cv5ynwkndw61o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-29T00:05:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "32e1e16368a07c03",
       "headline": "Iraola admits he did not want to draw Bournemouth in Carabao Cup quarters",
       "summary": "Liverpool boss Andoni Iraola admitted Bournemouth were the one team he wanted to avoid in the Carabao Cup quarter-final draw after his side edged past Chelsea on penalties. Iraola will now face his former club in the last eigh",
@@ -1670,54 +1706,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d794cd688856ddf8",
-      "headline": "Maresca shuts down Man City goalkeeper debate despite Rulli heroics",
-      "summary": "Enzo Maresca has insisted there is \u201cabsolutely no doubt\u201d over Gianluigi Donnarumma\u2019s position as Manchester City\u2019s number one despite Ger\u00f3nimo Rulli impressing in the Carabao Cup shoot-out win over Brighton. Rulli helped City progre",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/maresca-shuts-down-man-city-goalkeeper-debate-despite-rulli-heroics/",
-      "claimed_at": "2026-10-28T22:39:10Z",
-      "players": [
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 587,
-          "name": "Rulli",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "115aef1f65123b15",
-      "headline": "Liverpool knock Chelsea out of Carabao Cup to reach last eight",
-      "summary": "Liverpool booked their place in the Carabao Cup quarter-finals after beating Chelsea 6-5 on penalties following a 1-1 draw at Anfield. Morgan Rogers put Chelsea ahead from the penalty spot five minutes before half-time before Cody Gakpo",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-knock-chelsea-out-of-carabao-cup-to-reach-last-eight/",
-      "claimed_at": "2026-10-28T22:19:58Z",
-      "players": [
-        {
-          "element_id": 40,
-          "name": "Rogers",
-          "club": "CHE",
-          "held": false
-        },
-        {
-          "element_id": 367,
-          "name": "Gakpo",
-          "club": "LIV",
           "held": false
         }
       ],
