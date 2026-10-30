@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-29T21:55:57.118955Z",
-  "n_dropped": 60,
+  "generated_at": "2026-10-30T01:39:32.852464Z",
+  "n_dropped": 65,
   "dropped_by_source": {
     "bbc_football": 21,
-    "sky_football": 39
+    "sky_football": 44
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 150,
+  "n_articles": 155,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -103,6 +103,96 @@
       "touches_squad": true
     },
     {
+      "digest": "94e9cc23ae3b006a",
+      "headline": "Jaissle on Newcastle injury worry and Carabao Cup exit",
+      "summary": "Newcastle boss Matthias Jaissle has confirmed Will Osula suffered an ankle injury during their 3-1 Carabao Cup defeat to Everton. Osula was unable to continue after twisting his ankle while taking a shot, with Jaissle admitting it is too early t",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/jaissle-on-newcastle-injury-worry-and-carabao-cup-exit/",
+      "claimed_at": "2026-10-29T23:34:21Z",
+      "players": [
+        {
+          "element_id": 465,
+          "name": "Osula",
+          "club": "NEW",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4fd8f242d97a65c1",
+      "headline": "Moyes stands by club decision on Grealish as Everton reach Carabao Cup quarter-finals without him",
+      "summary": "David Moyes has backed Everton\u2019s decision to leave Jack Grealish out of the squad for their 3-1 Carabao Cup win over Newcastle, while refusing to go into detail over the reasons behind it. Everton said",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/moyes-stands-by-club-decision-on-grealish-as-everton-reach-carabao-cup-quarter-finals-without-him/",
+      "claimed_at": "2026-10-29T23:28:58Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "00216d5b0b84612c",
+      "headline": "Everton latest: Moyes praises squad's values after Grealish absence",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-29T23:00:00Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bad8a79f830c07d8",
+      "headline": "Papers: Chelsea, Arsenal and Man Utd eye Como defender",
+      "summary": "The top stories and transfer rumours from Friday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13605595/chelsea-arsenal-and-man-utd-eye-como-defender-paper-talk",
+      "claimed_at": "2026-10-29T22:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cd2216971669ac8f",
+      "headline": "Everton beat Newcastle to book place in Carabao Cup quarter-finals",
+      "summary": "Highlights of the fourth-round Carabao Cup match between Everton and Newcastle United.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13605603/everton-3-1-newcastle-united-carabao-cup-highlights",
+      "claimed_at": "2026-10-29T22:13:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "5e592ea777b8db71",
       "headline": "Fleetwood to face Everton in EFL Cup quarters",
       "summary": "League Two Fleetwood Town will face Everton at Highbury in the quarter-finals of the EFL Cup.",
@@ -157,6 +247,24 @@
       "touches_squad": false
     },
     {
+      "digest": "7a298f1b7ed812d5",
+      "headline": "Everton see off Newcastle to reach Carabao Cup quarter-finals",
+      "summary": "Everton are through to the quarter-finals of the Carabao Cup after seeing off Newcastle 3-1.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-newcastle-united/report/578609",
+      "claimed_at": "2026-10-29T19:34:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "9f8cd6126d5a8f03",
       "headline": "Grealish dropped by Everton after 'breach of club discipline'",
       "summary": "Jack Grealish is left out of Everton's Carabao Cup tie with Newcastle United on Thursday \"due to a breach of club discipline\".",
@@ -164,6 +272,42 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cmwy4vyl9nplo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-29T19:31:36Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d7fac4f551c0ef8e",
+      "headline": "Grealish dropped over 'breach of club discipline' - what now?",
+      "summary": "Jack Grealish is left out of Everton's EFL Cup win over Newcastle United on Thursday because of \"a breach of club discipline\".",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmwy4vyl9nplo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-29T19:31:36Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "38fd4aca95595b51",
+      "headline": "Moyes backs 'club decision' to drop Grealish",
+      "summary": "David Moyes backed Everton's decision to drop Jack Grealish for Thursday's Carabao Cup win over Newcastle.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13605512/jack-grealish-dropped-by-everton-after-breaching-club-discipline-ahead-of-newcastle-carabao-cup-tie",
+      "claimed_at": "2026-10-29T18:45:00Z",
       "players": [
         {
           "element_id": 238,
@@ -1153,78 +1297,6 @@
       "touches_squad": false
     },
     {
-      "digest": "4569318621b5bb2f",
-      "headline": "Man City dump Brighton out of Carabao Cup after shoot-out victory",
-      "summary": "Carabao Cup holders Manchester City needed penalties to progress past Brighton and into the quarter-finals after battling from behind to draw the game 2-2 at the Etihad.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-brighton-and-hove-albion/report/578614",
-      "claimed_at": "2026-10-28T21:19:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bfb74ff7dd3c171e",
-      "headline": "Nketiah steers Palace past Fulham to boost boss Sage",
-      "summary": "Eddie Nketiah steered Crystal Palace into the quarter-finals of the Carabao Cup as they won 1-0 at Fulham.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/fulham-vs-crystal-palace/report/578611",
-      "claimed_at": "2026-10-28T21:19:00Z",
-      "players": [
-        {
-          "element_id": 224,
-          "name": "Nketiah",
-          "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d687b27e67af09b7",
-      "headline": "'Lucky' Man City dump Brighton out of Carabao Cup after shoot-out victory",
-      "summary": "Carabao Cup holders Manchester City needed penalties to progress past Brighton and into the quarter-finals after battling from behind to draw the game 2-2 at the Etihad.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-brighton-and-hove-albion/report/578614",
-      "claimed_at": "2026-10-28T21:19:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f11cb1136c712b1c",
-      "headline": "Chelsea latest: Martinez aiming for earlier return from injury",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-28T21:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "47944cddd6744c37",
       "headline": "Man Utd's Sesko ruled out until January with shin injury",
       "summary": "Manchester United striker Benjamin Sesko is expected to be out until at least January with a shin injury.",
@@ -1250,24 +1322,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cq33xl50vyj2o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-28T19:57:04Z",
-      "players": [
-        {
-          "element_id": 439,
-          "name": "\u0160e\u0161ko",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8e49549a1f0f48ab",
-      "headline": "Man Utd latest: Sesko set to be out until at least January",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-28T19:15:00Z",
       "players": [
         {
           "element_id": 439,
@@ -1454,42 +1508,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cwly0myd08reo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-28T08:36:46Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ec538a12ebbf0fce",
-      "headline": "Liverpool gambled on Jacquet and it is paying off",
-      "summary": "Liverpool beat Chelsea to the signing of Jeremy Jacquet and the defender is thriving at Anfield. Things could have been very different...",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqgkv216dx2no?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-28T08:36:34Z",
-      "players": [
-        {
-          "element_id": 362,
-          "name": "Jacquet",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6131b28e1dabc807",
-      "headline": "Lawlor delighted after beating 'best team in the country'",
-      "summary": "Fleetwood Town manager Matt Lawlor could not hide his delight after seeing his team knock Premier League champions Arsenal out of the EFL Cup on penalties.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cr93z7p02743o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-28T07:28:41Z",
       "players": [
         {
           "element_id": 0,
@@ -1711,24 +1729,6 @@
           "element_id": 8,
           "name": "Calafiori",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "490583281088ef34",
-      "headline": "FPL notes: Pedro injury latest + why Palmer isn\u2019t flagged",
-      "summary": "Plus, an update on James Maddison after Spurs beat Chelsea The post FPL notes: Pedro injury latest + why Palmer isn't flagged appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/24/fpl-notes-pedro-injury-latest-why-palmer-isnt-flagged",
-      "claimed_at": "2026-10-24T22:00:00Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
           "held": false
         }
       ],
