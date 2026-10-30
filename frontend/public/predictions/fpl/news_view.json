@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-30T01:39:32.852464Z",
-  "n_dropped": 65,
+  "generated_at": "2026-10-30T07:43:43.659077Z",
+  "n_dropped": 63,
   "dropped_by_source": {
-    "bbc_football": 21,
+    "bbc_football": 19,
     "sky_football": 44
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 155,
+  "n_articles": 153,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -101,6 +101,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "1aef68481053926a",
+      "headline": "How talking about Man Utd's cycle of doom became an industry",
+      "summary": "Manchester United's struggles are pored over more than ever before - not least by former players.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cjn5v3pl0159o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-30T06:14:19Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "94e9cc23ae3b006a",
@@ -1490,24 +1508,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/c5398300x0nyo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-28T09:41:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3e0709dfa7072280",
-      "headline": "Can clubs stop team news leaking out through FPL picks?",
-      "summary": "Chelsea striker Joao Pedro's injury was leaked through the Fantasy Premier League game, but is there anything clubs can do?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwly0myd08reo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-28T08:36:46Z",
       "players": [
         {
           "element_id": 0,
