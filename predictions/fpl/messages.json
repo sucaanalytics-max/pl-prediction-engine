@@ -1,7 +1,849 @@
 {
-  "generated_at": "2026-10-26T17:22:52.942355Z",
-  "n_messages": 116,
+  "generated_at": "2026-10-31T07:03:40.696736Z",
+  "n_messages": 140,
   "messages": [
+    {
+      "id": "gw09-decision-owner",
+      "gameweek": 9,
+      "kind": "decision",
+      "severity": "info",
+      "title": "GW9 \u2014 owner team ready",
+      "body": "11 transfer(s), 0 hit(s) taken. Plays the WILDCARD chip \u2014 make these transfers only with it active. Deadline in 3.9 hours. Nothing has been submitted for you \u2014 the agent has no write access to FPL by design.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "gameweek": 9,
+        "entry_label": "owner",
+        "objective": "season",
+        "generated_at": "2026-10-31T07:03:40.632093Z",
+        "deadline": "2026-10-31T11:00:00Z",
+        "xp_snapshot": {
+          "1": 3.2845,
+          "4": 4.3515,
+          "57": 3.6544,
+          "60": 4.5644,
+          "68": 4.9443,
+          "112": 4.9926,
+          "113": 1.3673,
+          "124": 3.6371,
+          "127": 3.7729,
+          "152": 1.3218,
+          "154": 5.7283,
+          "165": 0.0,
+          "173": 1.2859,
+          "295": 4.7807,
+          "332": 3.5584,
+          "346": 4.1001,
+          "356": 3.9892,
+          "398": 2.8713,
+          "411": 6.3047,
+          "426": 2.4544,
+          "445": 3.588,
+          "464": 2.9208,
+          "497": 0.0365,
+          "542": 4.9944,
+          "569": 3.7809,
+          "597": 3.6649
+        },
+        "decision": {
+          "plan": {
+            "squad": [
+              4,
+              57,
+              60,
+              68,
+              112,
+              124,
+              127,
+              154,
+              295,
+              332,
+              346,
+              356,
+              411,
+              542,
+              597
+            ],
+            "xi": [
+              4,
+              60,
+              68,
+              112,
+              154,
+              295,
+              346,
+              356,
+              411,
+              542,
+              597
+            ],
+            "captain": 411,
+            "vice": 154,
+            "transfers_in": [
+              57,
+              60,
+              68,
+              112,
+              127,
+              295,
+              332,
+              346,
+              356,
+              411,
+              597
+            ],
+            "transfers_out": [
+              1,
+              113,
+              152,
+              165,
+              173,
+              398,
+              426,
+              445,
+              464,
+              497,
+              569
+            ],
+            "hits": 0,
+            "bank_after": 3,
+            "objective": 0.0,
+            "free_transfers_banked": 2,
+            "free_transfers_after": 3,
+            "chip": "wildcard"
+          },
+          "n_draws": 10000,
+          "mean_points": 58.6441,
+          "sd_points": 14.7073,
+          "objective": 61.7441,
+          "quantiles": {
+            "q10": 40.0,
+            "q25": 48.0,
+            "q50": 58.0,
+            "q75": 68.0,
+            "q90": 78.0,
+            "q99": 95.0
+          },
+          "tails": {
+            "p_ge_40": 0.912,
+            "p_ge_50": 0.7155,
+            "p_ge_60": 0.447,
+            "p_ge_70": 0.2269,
+            "p_ge_80": 0.0896,
+            "p_ge_90": 0.0257
+          },
+          "autosub_rate": 0.0471,
+          "vice_rate": 0.0
+        },
+        "optimism_gap": 0.2866,
+        "credible_margin": true,
+        "pool": {
+          "n_candidates": 563,
+          "n_excluded": 106,
+          "excluded_by_reason": {
+            "status_u": 106
+          },
+          "held_missing_purchase_price": [],
+          "price_uncertain": false,
+          "n_zero_xp": 67
+        },
+        "horizon": {
+          "eval_horizon": 8,
+          "transfer_horizon": 6,
+          "provisional": [
+            {
+              "squad": [
+                4,
+                57,
+                60,
+                68,
+                112,
+                124,
+                127,
+                154,
+                295,
+                332,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "xi": [
+                4,
+                57,
+                60,
+                68,
+                124,
+                127,
+                154,
+                346,
+                356,
+                411,
+                542
+              ],
+              "captain": 4,
+              "vice": 411,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 3,
+              "objective": 0.0,
+              "free_transfers_banked": 3,
+              "free_transfers_after": 4
+            },
+            {
+              "squad": [
+                4,
+                57,
+                60,
+                68,
+                112,
+                124,
+                127,
+                154,
+                295,
+                332,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "xi": [
+                4,
+                60,
+                68,
+                112,
+                127,
+                154,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "captain": 411,
+              "vice": 154,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 3,
+              "objective": 0.0,
+              "free_transfers_banked": 4,
+              "free_transfers_after": 5
+            },
+            {
+              "squad": [
+                4,
+                57,
+                60,
+                68,
+                112,
+                124,
+                127,
+                154,
+                295,
+                332,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "xi": [
+                4,
+                68,
+                124,
+                127,
+                154,
+                332,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "captain": 346,
+              "vice": 332,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 3,
+              "objective": 0.0,
+              "free_transfers_banked": 5,
+              "free_transfers_after": 5
+            },
+            {
+              "squad": [
+                4,
+                57,
+                60,
+                68,
+                112,
+                124,
+                127,
+                154,
+                295,
+                332,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "xi": [
+                4,
+                68,
+                112,
+                124,
+                127,
+                154,
+                295,
+                356,
+                411,
+                542,
+                597
+              ],
+              "captain": 154,
+              "vice": 411,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 3,
+              "objective": 0.0,
+              "free_transfers_banked": 5,
+              "free_transfers_after": 5
+            },
+            {
+              "squad": [
+                4,
+                57,
+                60,
+                68,
+                112,
+                124,
+                127,
+                154,
+                295,
+                332,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "xi": [
+                4,
+                57,
+                60,
+                68,
+                124,
+                127,
+                154,
+                332,
+                346,
+                411,
+                542
+              ],
+              "captain": 346,
+              "vice": 411,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 3,
+              "objective": 0.0,
+              "free_transfers_banked": 5,
+              "free_transfers_after": 5
+            },
+            {
+              "squad": [
+                4,
+                57,
+                60,
+                68,
+                112,
+                124,
+                127,
+                154,
+                295,
+                332,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "xi": [
+                4,
+                112,
+                124,
+                127,
+                154,
+                295,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "captain": 411,
+              "vice": 4,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 3,
+              "objective": 0.0,
+              "free_transfers_banked": 5,
+              "free_transfers_after": 5
+            },
+            {
+              "squad": [
+                4,
+                57,
+                60,
+                68,
+                112,
+                124,
+                127,
+                154,
+                295,
+                332,
+                346,
+                356,
+                411,
+                542,
+                597
+              ],
+              "xi": [
+                4,
+                57,
+                60,
+                68,
+                124,
+                127,
+                154,
+                346,
+                356,
+                411,
+                542
+              ],
+              "captain": 411,
+              "vice": 68,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 3,
+              "objective": 0.0,
+              "free_transfers_banked": 5,
+              "free_transfers_after": 5
+            }
+          ],
+          "wildcard_gameweek": 9
+        },
+        "field_model": "uncalibrated",
+        "warnings": [],
+        "execution": "propose_only",
+        "evidence": {
+          "measured_on": {
+            "seasons": [
+              "2023-24",
+              "2024-25",
+              "2025-26"
+            ],
+            "gameweeks": "8-38 each, 93 paired observations",
+            "harness": "pipeline/learning/backtest_decisions.py",
+            "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+          },
+          "beats_doing_nothing": {
+            "verdict": "established",
+            "margin_2023_24": 411,
+            "margin_2024_25": 560,
+            "margin_2025_26": 184,
+            "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+          },
+          "beats_greedy_transfers": {
+            "verdict": "not established",
+            "margin_2023_24": 67,
+            "margin_2024_25": 60,
+            "margin_2025_26": -66,
+            "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+          },
+          "projection_calibration": {
+            "verdict": "established",
+            "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+          }
+        },
+        "sealed": true
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-454",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-14T20:00:09.505598Z) while fpl_news_parse says 75 (2026-09-14T20:00:09.505598Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 454,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-14T20:00:09.505598Z) while fpl_news_parse says 75 (2026-09-14T20:00:09.505598Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-515",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-24T19:00:10.113555Z) while fpl_news_parse says 75 (2026-10-24T19:00:10.113555Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 515,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-24T19:00:10.113555Z) while fpl_news_parse says 75 (2026-10-24T19:00:10.113555Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-469",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-24T00:00:10.181593Z) while fpl_news_parse says 75 (2026-10-24T00:00:10.181593Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 469,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-24T00:00:10.181593Z) while fpl_news_parse says 75 (2026-10-24T00:00:10.181593Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-26",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says 'Arsenal striker dilemma: Should Arteta keep faith in Havertz?' (2026-10-29T15:13:00Z) while fantasyfootballscout says '3pm team news: Calafiori + Havertz benched\\nArsenal v Everton and Coventry v Fulham are the only two 3pm BST games The post 3pm team news: Calafiori + Havertz benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-24T13:35:00Z). Used the more conservative 'Arsenal striker dilemma: Should Arteta keep faith in Havertz?'. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 26,
+        "claim_type": "unparsed_news",
+        "value": "Arsenal striker dilemma: Should Arteta keep faith in Havertz?",
+        "detail": "unparsed_news: sky_football says 'Arsenal striker dilemma: Should Arteta keep faith in Havertz?' (2026-10-29T15:13:00Z) while fantasyfootballscout says '3pm team news: Calafiori + Havertz benched\\nArsenal v Everton and Coventry v Fulham are the only two 3pm BST games The post 3pm team news: Calafiori + Havertz benched appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-24T13:35:00Z). Used the more conservative 'Arsenal striker dilemma: Should Arteta keep faith in Havertz?'.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-165",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-24T16:30:09.687729Z) while fpl_news_parse says 75 (2026-10-24T16:30:09.687729Z). Used the more conservative 0. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 165,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-24T16:30:09.687729Z) while fpl_news_parse says 75 (2026-10-24T16:30:09.687729Z). Used the more conservative 0.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-233",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-24T19:00:09.907289Z) while fpl_news_parse says 75 (2026-10-24T19:00:09.907289Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 233,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-24T19:00:09.907289Z) while fpl_news_parse says 75 (2026-10-24T19:00:09.907289Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-366",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-25T17:00:09.888666Z) while fpl_news_parse says 75 (2026-10-25T17:00:09.888666Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 366,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-25T17:00:09.888666Z) while fpl_news_parse says 75 (2026-10-25T17:00:09.888666Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-122",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-08-14T18:00:06.418033Z) while fpl_news_parse says 75 (2026-08-14T18:00:06.418033Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 122,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-08-14T18:00:06.418033Z) while fpl_news_parse says 75 (2026-08-14T18:00:06.418033Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-130",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-04T09:30:08.612904Z) while fpl_news_parse says 75 (2026-09-04T09:30:08.612904Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 130,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-04T09:30:08.612904Z) while fpl_news_parse says 75 (2026-09-04T09:30:08.612904Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-198",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-09-12T14:00:09.378740Z) while fpl_news_parse says 75 (2026-09-12T14:00:09.378740Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 198,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-09-12T14:00:09.378740Z) while fpl_news_parse says 75 (2026-09-12T14:00:09.378740Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-208",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-27T10:30:09.385934Z) while fpl_news_parse says 75 (2026-10-27T10:30:09.385934Z). Used the more conservative 0. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 208,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-27T10:30:09.385934Z) while fpl_news_parse says 75 (2026-10-27T10:30:09.385934Z). Used the more conservative 0.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-328",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-16T17:30:09.428175Z) while fpl_news_parse says 50 (2026-10-16T17:30:09.428175Z). Used the more conservative 0. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 328,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-16T17:30:09.428175Z) while fpl_news_parse says 50 (2026-10-16T17:30:09.428175Z). Used the more conservative 0.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-69",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Chelsea linked with Alexander-Arnold - Friday's gossip\\nTrent Alexander-Arnold may become a target for Chelsea, Bournemouth's Alex Scott could also be heading to Stamford Bridge and Manchester United are looking at Leeds United striker Dominic Calvert-Lewin.\" (2026-10-29T21:40:24Z) while fantasyfootballscout says 'Tavernier, Kroupi, Scott: Bournemouth injury latest for FPL Gameweek 9\\nMarco Rose gave updates on Thursday The post Tavernier, Kroupi, Scott: Bournemouth injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-29T16:47:52Z). Used the more conservative \"Chelsea linked with Alexander-Arnold - Friday's gossip\\nTrent Alexander-Arnold may become a target for Chelsea, Bournemouth's Alex Scott could also be heading to Stamford Bridge and Manchester United are looking at Leeds United striker Dominic Calvert-Lewin.\". Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 69,
+        "claim_type": "unparsed_news",
+        "value": "Chelsea linked with Alexander-Arnold - Friday's gossip\nTrent Alexander-Arnold may become a target for Chelsea, Bournemouth's Alex Scott could also be heading to Stamford Bridge and Manchester United are looking at Leeds United striker Dominic Calvert-Lewin.",
+        "detail": "unparsed_news: bbc_football says \"Chelsea linked with Alexander-Arnold - Friday's gossip\\nTrent Alexander-Arnold may become a target for Chelsea, Bournemouth's Alex Scott could also be heading to Stamford Bridge and Manchester United are looking at Leeds United striker Dominic Calvert-Lewin.\" (2026-10-29T21:40:24Z) while fantasyfootballscout says 'Tavernier, Kroupi, Scott: Bournemouth injury latest for FPL Gameweek 9\\nMarco Rose gave updates on Thursday The post Tavernier, Kroupi, Scott: Bournemouth injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-29T16:47:52Z). Used the more conservative \"Chelsea linked with Alexander-Arnold - Friday's gossip\\nTrent Alexander-Arnold may become a target for Chelsea, Bournemouth's Alex Scott could also be heading to Stamford Bridge and Manchester United are looking at Leeds United striker Dominic Calvert-Lewin.\".",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-439",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9\\nMichael Carrick spoke about club captain Bruno Fernandes The post Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal' (2026-10-29T16:30:03Z) while bbc_football says \"Man Utd's Sesko ruled out until January with shin injury\\nManchester United striker Benjamin Sesko is expected to be out until at least January with a shin injury.\" (2026-10-28T19:57:04Z), sky_football says 'Man Utd latest: Sesko set to be out until at least January' (2026-10-28T19:15:00Z). Used the more conservative 'Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9\\nMichael Carrick spoke about club captain Bruno Fernandes The post Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal'. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 439,
+        "claim_type": "unparsed_news",
+        "value": "Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9\nMichael Carrick spoke about club captain Bruno Fernandes The post Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
+        "detail": "unparsed_news: fantasyfootballscout says 'Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9\\nMichael Carrick spoke about club captain Bruno Fernandes The post Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal' (2026-10-29T16:30:03Z) while bbc_football says \"Man Utd's Sesko ruled out until January with shin injury\\nManchester United striker Benjamin Sesko is expected to be out until at least January with a shin injury.\" (2026-10-28T19:57:04Z), sky_football says 'Man Utd latest: Sesko set to be out until at least January' (2026-10-28T19:15:00Z). Used the more conservative 'Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9\\nMichael Carrick spoke about club captain Bruno Fernandes The post Fernandes, Sesko, Mainoo: Man United injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal'.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-200",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-28T23:00:10.088612Z) while fpl_news_parse says 50 (2026-10-28T23:00:10.088612Z). Used the more conservative 0. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 200,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-28T23:00:10.088612Z) while fpl_news_parse says 50 (2026-10-28T23:00:10.088612Z). Used the more conservative 0.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-650",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-29T08:30:08.436091Z) while fpl_news_parse says 75 (2026-10-29T08:30:08.436091Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 650,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-29T08:30:08.436091Z) while fpl_news_parse says 75 (2026-10-29T08:30:08.436091Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-346",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says 'Calvert-Lewin set for new Leeds deal\\nEngland striker Dominic Calvert-Lewin is set to sign a new contract at Leeds United.' (2026-10-30T10:26:53Z) while fantasyfootballscout says 'Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9\\nPlus, a \"good training week\" for Dominic Calvert-Lewin The post Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-29T17:09:47Z). Used the more conservative 'Calvert-Lewin set for new Leeds deal\\nEngland striker Dominic Calvert-Lewin is set to sign a new contract at Leeds United.'. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 346,
+        "claim_type": "unparsed_news",
+        "value": "Calvert-Lewin set for new Leeds deal\nEngland striker Dominic Calvert-Lewin is set to sign a new contract at Leeds United.",
+        "detail": "unparsed_news: bbc_football says 'Calvert-Lewin set for new Leeds deal\\nEngland striker Dominic Calvert-Lewin is set to sign a new contract at Leeds United.' (2026-10-30T10:26:53Z) while fantasyfootballscout says 'Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9\\nPlus, a \"good training week\" for Dominic Calvert-Lewin The post Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-10-29T17:09:47Z). Used the more conservative 'Calvert-Lewin set for new Leeds deal\\nEngland striker Dominic Calvert-Lewin is set to sign a new contract at Leeds United.'.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-147",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-29T17:00:09.335810Z) while fpl_news_parse says 75 (2026-10-29T17:00:09.335810Z). Used the more conservative 0. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 147,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-29T17:00:09.335810Z) while fpl_news_parse says 75 (2026-10-29T17:00:09.335810Z). Used the more conservative 0.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-144",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-29T22:00:09.886054Z) while fpl_news_parse says 75 (2026-10-29T22:00:09.886054Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 144,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-29T22:00:09.886054Z) while fpl_news_parse says 75 (2026-10-29T22:00:09.886054Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-148",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-10-29T22:00:09.909621Z) while fpl_news_parse says 75 (2026-10-29T22:00:09.909621Z). Used the more conservative 0. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 148,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-10-29T22:00:09.909621Z) while fpl_news_parse says 75 (2026-10-29T22:00:09.909621Z). Used the more conservative 0.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-159",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-10-29T22:00:09.933708Z) while fpl_news_parse says 75 (2026-10-29T22:00:09.933708Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 159,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-10-29T22:00:09.933708Z) while fpl_news_parse says 75 (2026-10-29T22:00:09.933708Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-16",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says \"Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9\\nAn update on the Italian left-back's availability The post Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\" (2026-10-30T16:10:53Z) while sky_football says 'Arsenal latest: Arteta quizzed on Rice, Madueke and Calafiori fitness' (2026-10-30T10:00:00Z). Used the more conservative \"Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9\\nAn update on the Italian left-back's availability The post Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\". Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 16,
+        "claim_type": "unparsed_news",
+        "value": "Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9\nAn update on the Italian left-back's availability The post Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says \"Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9\\nAn update on the Italian left-back's availability The post Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\" (2026-10-30T16:10:53Z) while sky_football says 'Arsenal latest: Arteta quizzed on Rice, Madueke and Calafiori fitness' (2026-10-30T10:00:00Z). Used the more conservative \"Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9\\nAn update on the Italian left-back's availability The post Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.\".",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw09-warning-availability-conflict-419",
+      "gameweek": 9,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW9 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Man Utd target Barcelona's Lopez - Saturday's gossip\\nManchester United target Barcelona's Fermin Lopez, Lisandro Martinez is attracting interest from the La Liga side, Arsenal eye Club Brugge striker Nicolo Tresoldi, plus more.\" (2026-10-30T23:08:16Z) while sky_football says \"Papers: Martinez seeking summer Man Utd departure\\nThe top stories and transfer rumours from Saturday's newspapers...\" (2026-10-30T22:17:00Z). Used the more conservative \"Man Utd target Barcelona's Lopez - Saturday's gossip\\nManchester United target Barcelona's Fermin Lopez, Lisandro Martinez is attracting interest from the La Liga side, Arsenal eye Club Brugge striker Nicolo Tresoldi, plus more.\". Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-10-31T07:03:40.696736Z",
+      "detail": {
+        "element_id": 419,
+        "claim_type": "unparsed_news",
+        "value": "Man Utd target Barcelona's Lopez - Saturday's gossip\nManchester United target Barcelona's Fermin Lopez, Lisandro Martinez is attracting interest from the La Liga side, Arsenal eye Club Brugge striker Nicolo Tresoldi, plus more.",
+        "detail": "unparsed_news: bbc_football says \"Man Utd target Barcelona's Lopez - Saturday's gossip\\nManchester United target Barcelona's Fermin Lopez, Lisandro Martinez is attracting interest from the La Liga side, Arsenal eye Club Brugge striker Nicolo Tresoldi, plus more.\" (2026-10-30T23:08:16Z) while sky_football says \"Papers: Martinez seeking summer Man Utd departure\\nThe top stories and transfer rumours from Saturday's newspapers...\" (2026-10-30T22:17:00Z). Used the more conservative \"Man Utd target Barcelona's Lopez - Saturday's gossip\\nManchester United target Barcelona's Fermin Lopez, Lisandro Martinez is attracting interest from the La Liga side, Arsenal eye Club Brugge striker Nicolo Tresoldi, plus more.\".",
+        "applied": false
+      }
+    },
     {
       "id": "gw08-status-settled",
       "gameweek": 8,
