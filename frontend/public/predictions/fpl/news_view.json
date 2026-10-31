@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-30T23:16:49.846641Z",
+  "generated_at": "2026-10-31T02:38:39.707704Z",
   "n_dropped": 96,
   "dropped_by_source": {
-    "bbc_football": 30,
+    "bbc_football": 29,
     "hayters": 11,
-    "sky_football": 55
+    "sky_football": 56
   },
   "window_days": 5,
   "squad_known": true,
@@ -13,6 +13,24 @@
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "62a0afc6b2df2395",
+      "headline": "How Suzuki has wowed Villa fans since replacing Martinez",
+      "summary": "Aston Villa fans still sing about having the world's number one goalkeeper. But what started as a chant for Emiliano Martinez and morphed into defiant support for young Japanese goalkeeper Zion Suzuki has become something else. They actually b",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13605254/zion-suzuki-analysis-how-emi-martinezs-aston-villa-replacement-now-looks-like-a-potential-upgrade-given-his-range-of-skills",
+      "claimed_at": "2026-10-30T14:30:00Z",
+      "players": [
+        {
+          "element_id": 597,
+          "name": "Suzuki",
+          "club": "AVL",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "627b0ccf0812f810",
       "headline": "Calvert-Lewin set for new Leeds deal",
@@ -614,6 +632,30 @@
       "touches_squad": false
     },
     {
+      "digest": "b455399a53550e34",
+      "headline": "Aston Villa latest: Emery's cryptic answer on availability of Jackson and Manzambi",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-30T14:33:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "3c278211cc7c3b36",
       "headline": "Knock - Expected back 23 Nov",
       "summary": null,
@@ -632,24 +674,6 @@
       "touches_squad": false
     },
     {
-      "digest": "62a0afc6b2df2395",
-      "headline": "How Suzuki has wowed Villa fans since replacing Martinez",
-      "summary": "Aston Villa fans still sing about having the world's number one goalkeeper. But what started as a chant for Emiliano Martinez and morphed into defiant support for young Japanese goalkeeper Zion Suzuki has become something else. They actually b",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13605254/zion-suzuki-analysis-how-emi-martinezs-aston-villa-replacement-now-looks-like-a-potential-upgrade-given-his-range-of-skills",
-      "claimed_at": "2026-10-30T14:30:00Z",
-      "players": [
-        {
-          "element_id": 597,
-          "name": "Suzuki",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "95e4e20aa2d99dd2",
       "headline": "Manchester City set to welcome players back for Brighton game",
       "summary": "Enzo Maresca says that almost all of his senior players are available for selection as Manchester City prepare to face Brighton for the second time in the space of a few days. Antoine Semenyo is still sidelined through a knee injury and i",
@@ -662,6 +686,24 @@
           "element_id": 397,
           "name": "Semenyo",
           "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "967dfc1e7d716f39",
+      "headline": "Spurs latest: De Zerbi confirms 'special' Maddison available to face Palace",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-30T14:17:00Z",
+      "players": [
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
           "held": false
         }
       ],
@@ -1298,24 +1340,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b0d717a5c21b872e",
-      "headline": "WCL: PSG hit back immediately vs Man City LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-women-vs-paris-saint-germain-women/live/578257",
-      "claimed_at": "2026-10-29T18:07:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b2080cab2d47eb60",
       "headline": "Arsenal have Dowman red card appeal rejected with youngster handed three-game ban",
       "summary": "Arsenal have had their appeal against Max Dowman\u2019s red card in the Carabao Cup defeat to Fleetwood Town rejected, with the teenager handed a three-match suspension. The 16-year-old was sent off for reacting angrily to",
@@ -1634,24 +1658,6 @@
           "element_id": 334,
           "name": "Muharemovi\u0107",
           "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8c506fd26d562b15",
-      "headline": "'Stutter' penalty back in the spotlight after Barco miss costs Chelsea",
-      "summary": "The stuttering run-up for penalties has been called 'naive' as players continue to try to deceive goalkeepers with a stop-start approach - but why?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmp3g8vxd258o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-29T00:17:48Z",
-      "players": [
-        {
-          "element_id": 568,
-          "name": "Barco",
-          "club": "CHE",
           "held": false
         }
       ],
