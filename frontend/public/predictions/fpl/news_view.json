@@ -1,31 +1,97 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T08:54:07.544493Z",
-  "n_dropped": 107,
+  "generated_at": "2026-10-31T15:05:35.667602Z",
+  "n_dropped": 122,
   "dropped_by_source": {
-    "bbc_football": 30,
-    "fantasyfootballscout": 7,
-    "hayters": 12,
-    "sky_football": 58
+    "bbc_football": 32,
+    "fantasyfootballscout": 8,
+    "hayters": 13,
+    "sky_football": 69
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 197,
+  "n_articles": 212,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
     {
-      "digest": "62a0afc6b2df2395",
-      "headline": "How Suzuki has wowed Villa fans since replacing Martinez",
-      "summary": "Aston Villa fans still sing about having the world's number one goalkeeper. But what started as a chant for Emiliano Martinez and morphed into defiant support for young Japanese goalkeeper Zion Suzuki has become something else. They actually b",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13605254/zion-suzuki-analysis-how-emi-martinezs-aston-villa-replacement-now-looks-like-a-potential-upgrade-given-his-range-of-skills",
-      "claimed_at": "2026-10-30T14:30:00Z",
+      "digest": "9bcc7b387599036c",
+      "headline": "Man City 0-0 Brighton LIVE \u2013 Cherki benched as Haaland returns",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 0-0 Brighton LIVE - Cherki benched as Haaland returns appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-v-brighton-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-10-31T13:45:01Z",
       "players": [
         {
-          "element_id": 597,
-          "name": "Suzuki",
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "11633979dfbd0d53",
+      "headline": "Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9",
+      "summary": "Enzo Maresca also spoke about Gianluigi Donnarumma The post Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/semenyo-ndiaye-nunes-man-city-injury-latest-for-fpl-gameweek-9",
+      "claimed_at": "2026-10-30T16:37:24Z",
+      "players": [
+        {
+          "element_id": 237,
+          "name": "Ndiaye",
+          "club": "MCI",
+          "held": true
+        },
+        {
+          "element_id": 384,
+          "name": "Donnarumma",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 397,
+          "name": "Semenyo",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "b455399a53550e34",
+      "headline": "Aston Villa latest: Emery's cryptic answer on availability of Jackson and Manzambi",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-30T14:33:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
           "club": "AVL",
           "held": true
         }
@@ -33,79 +99,19 @@
       "touches_squad": true
     },
     {
-      "digest": "627b0ccf0812f810",
-      "headline": "Calvert-Lewin set for new Leeds deal",
-      "summary": "England striker Dominic Calvert-Lewin is set to sign a new contract at Leeds United.",
-      "source": "bbc_football",
+      "digest": "05e27862040d754c",
+      "headline": "Why Aston Villa was the perfect destination for Jackson",
+      "summary": "Nicolas Jackson's career was at a crossroads. Aston Villa were in a state of flux. The move was mutually beneficial - but the early success has exceeded expectations.",
+      "source": "sky_football",
       "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6x2w1epxx8yo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T10:26:53Z",
+      "url": "https://www.skysports.com/football/news/11095/13605328/nicolas-jackson-why-aston-villa-is-perfect-club-for-senegal-striker-to-thrive-at-after-unai-emery-reunion",
+      "claimed_at": "2026-10-30T10:00:00Z",
       "players": [
         {
-          "element_id": 346,
-          "name": "Calvert-Lewin",
-          "club": "LEE",
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
           "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "67ed158a2cc999ab",
-      "headline": "Chelsea linked with Alexander-Arnold - Friday's gossip",
-      "summary": "Trent Alexander-Arnold may become a target for Chelsea, Bournemouth's Alex Scott could also be heading to Stamford Bridge and Manchester United are looking at Leeds United striker Dominic Calvert-Lewin.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck1l396jqv4zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-29T21:40:24Z",
-      "players": [
-        {
-          "element_id": 69,
-          "name": "Scott",
-          "club": "BOU",
-          "held": false
-        },
-        {
-          "element_id": 346,
-          "name": "Calvert-Lewin",
-          "club": "LEE",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "327bce84626f31ac",
-      "headline": "Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9",
-      "summary": "Plus, a \"good training week\" for Dominic Calvert-Lewin The post Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/29/stach-elvedi-rodon-leeds-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-29T17:09:47Z",
-      "players": [
-        {
-          "element_id": 329,
-          "name": "Rodon",
-          "club": "LEE",
-          "held": false
-        },
-        {
-          "element_id": 335,
-          "name": "Stach",
-          "club": "LEE",
-          "held": false
-        },
-        {
-          "element_id": 346,
-          "name": "Calvert-Lewin",
-          "club": "LEE",
-          "held": true
-        },
-        {
-          "element_id": 598,
-          "name": "Elvedi",
-          "club": "LEE",
-          "held": false
         }
       ],
       "touches_squad": true
@@ -139,6 +145,294 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "6a389e850658c1d6",
+      "headline": "Jackson v Manzambi: How do the two Villa picks compare?",
+      "summary": "The Villans have an excellent run of fixtures coming up The post Jackson v Manzambi: How do the two Villa picks compare? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/28/jackson-v-manzambi-how-do-the-two-villa-picks-compare",
+      "claimed_at": "2026-10-28T11:00:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "a9bbf409e51f1064",
+      "headline": "Man Utd\u2019s winless run continues as Chelsea bounce back with victory",
+      "summary": "Chelsea increased the pressure on Manchester United boss Michael Carrick with a 2-0 victory over their visitors at Stamford Bridge. Morgan Rogers broke the deadlock five minutes after half-time before Cole Palmer doubled Chelsea\u2019s a",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-utds-winless-run-continues-as-chelsea-bounce-back-with-victory/",
+      "claimed_at": "2026-10-31T14:37:39Z",
+      "players": [
+        {
+          "element_id": 40,
+          "name": "Rogers",
+          "club": "CHE",
+          "held": false
+        },
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "35d7feea55d53b23",
+      "headline": "Rogers shines, 3/10 for sent-off Martinez - player ratings for Chelsea v Man Utd",
+      "summary": "Player ratings as Morgan Rogers and Cole Palmer score second-half goals in Chelsea's home win over Manchester United, who have Lisandro Martinez sent off.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c3j47prvlz04o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T14:35:50Z",
+      "players": [
+        {
+          "element_id": 40,
+          "name": "Rogers",
+          "club": "CHE",
+          "held": false
+        },
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "eefd4ceb9177c8ee",
+      "headline": "Bournemouth vs Leeds LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/bournemouth-vs-leeds-united/live/559525",
+      "claimed_at": "2026-10-31T14:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b623d1322a84e98c",
+      "headline": "Carragher apologises to Villa for 'wrong' language",
+      "summary": "Jamie Carragher apologises for \"clumsy and wrong\" language when linking manager Unai Emery with becoming Manchester United head coach, after Aston Villa threatened to sue him.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqj6jp63k87zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T13:51:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ff0956710b1e1ef7",
+      "headline": "Illness - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-10-31T13:30:08.172741Z",
+      "players": [
+        {
+          "element_id": 101,
+          "name": "Henderson",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0e3721faff093213",
+      "headline": "Coventry vs Sunderland LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/coventry-city-vs-sunderland/live/559528",
+      "claimed_at": "2026-10-31T13:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4ea9c27d8e9027e6",
+      "headline": "Man City vs Brighton LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-city-vs-brighton-and-hove-albion/live/559531",
+      "claimed_at": "2026-10-31T13:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b73ef3dccfe9e50c",
+      "headline": "Martinez sent off as Man Utd implode against Chelsea",
+      "summary": "Lisandro Martinez was sent off as Manchester United sunk to a 2-0 loss to Chelsea to plunge Michael Carrick further into trouble.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/chelsea-vs-manchester-united/report/559527",
+      "claimed_at": "2026-10-31T13:28:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "21651a81c534b07f",
+      "headline": "Hull City vs Ipswich LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/hull-city-vs-ipswich-town/live/559529",
+      "claimed_at": "2026-10-31T13:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "84d1aa687eec8ca2",
+      "headline": "Brentford vs Nottingham Forest LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/brentford-vs-nottingham-forest/live/559526",
+      "claimed_at": "2026-10-31T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a67c2aa805baff30",
+      "headline": "PL Predictions: Spurs set for statement win over Palace",
+      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight for a busy weekend of Premier League action.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604412/premier-league-predictions-jones-knows-best-bets-liverpool-vs-arsenal-crystal-palace-vs-tottenham-and-much-more",
+      "claimed_at": "2026-10-31T12:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b9454ec7747830bb",
+      "headline": "Chelsea v Man Utd team news: Bruno + Cunha return to XI",
+      "summary": "Four changes for Chelsea, three for United The post Chelsea v Man Utd team news: Bruno + Cunha return to XI appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/chelsea-v-man-utd-team-news-bruno-cunha-return-to-xi",
+      "claimed_at": "2026-10-31T11:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8651a45c309e1a81",
+      "headline": "Transfer Centre LIVE! 'Man Utd considering Lopez swoop in January'",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
+      "claimed_at": "2026-10-31T10:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "29b034882e67b1f9",
+      "headline": "Man Utd one point above relegation zone after Chelsea defeat LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/chelsea-vs-manchester-united/live/559527",
+      "claimed_at": "2026-10-31T10:35:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "d2115e48fec276e9",
@@ -375,6 +669,24 @@
       "touches_squad": false
     },
     {
+      "digest": "3de4e9d5cb424f3a",
+      "headline": "Man Utd latest: Chelsea defeat confirms worst run for 42 years",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-30T22:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "c32082650864655b",
       "headline": "\u2018Nobody wants to be dribbled past by a 15 or 16-year-old\u2019 \u2013 Arteta on the challenge facing Max Dowman",
       "summary": "Mikel Arteta is confident Max Dowman can cope with the physical treatment that comes his way, insisting the Arsenal youngster has been dealing with opponents trying to stop him since he was eight ye",
@@ -561,42 +873,6 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "11633979dfbd0d53",
-      "headline": "Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9",
-      "summary": "Enzo Maresca also spoke about Gianluigi Donnarumma The post Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/semenyo-ndiaye-nunes-man-city-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:37:24Z",
-      "players": [
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
           "held": false
         }
       ],
@@ -831,30 +1107,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b455399a53550e34",
-      "headline": "Aston Villa latest: Emery's cryptic answer on availability of Jackson and Manzambi",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-30T14:33:00Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "3c278211cc7c3b36",
       "headline": "Knock - Expected back 23 Nov",
       "summary": null,
@@ -867,6 +1119,24 @@
           "element_id": 100,
           "name": "Carvalho",
           "club": "BRE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "62a0afc6b2df2395",
+      "headline": "How Suzuki has wowed Villa fans since replacing Martinez",
+      "summary": "Aston Villa fans still sing about having the world's number one goalkeeper. But what started as a chant for Emiliano Martinez and morphed into defiant support for young Japanese goalkeeper Zion Suzuki has become something else. They actually b",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13605254/zion-suzuki-analysis-how-emi-martinezs-aston-villa-replacement-now-looks-like-a-potential-upgrade-given-his-range-of-skills",
+      "claimed_at": "2026-10-30T14:30:00Z",
+      "players": [
+        {
+          "element_id": 597,
+          "name": "Suzuki",
+          "club": "AVL",
           "held": false
         }
       ],
@@ -1005,48 +1275,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e12da3ab9a631318",
-      "headline": "Chelsea latest: Alonso says Estevao 'will have his games' this season",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-30T13:35:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "31df10562427d7d5",
-      "headline": "Liverpool latest: Iraola gives update on Szoboszlai & Munoz fitness LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-30T13:00:00Z",
-      "players": [
-        {
-          "element_id": 368,
-          "name": "Szoboszlai",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "d8ebac833e26fe75",
       "headline": "Everton star expected to return for Newcastle clash",
       "summary": "Everton boss David Moyes has confirmed Jarrad Branthwaite should be available to face Newcastle after recovering from concussion. The defender has completed the required recovery period and is expected to be back in contention for the Premier Leagu",
@@ -1137,42 +1365,18 @@
       "touches_squad": false
     },
     {
-      "digest": "05e27862040d754c",
-      "headline": "Why Aston Villa was the perfect destination for Jackson",
-      "summary": "Nicolas Jackson's career was at a crossroads. Aston Villa were in a state of flux. The move was mutually beneficial - but the early success has exceeded expectations.",
-      "source": "sky_football",
+      "digest": "627b0ccf0812f810",
+      "headline": "Calvert-Lewin set for new Leeds deal",
+      "summary": "England striker Dominic Calvert-Lewin is set to sign a new contract at Leeds United.",
+      "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13605328/nicolas-jackson-why-aston-villa-is-perfect-club-for-senegal-striker-to-thrive-at-after-unai-emery-reunion",
-      "claimed_at": "2026-10-30T10:00:00Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6x2w1epxx8yo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-30T10:26:53Z",
       "players": [
         {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "992f87f68de5f1a7",
-      "headline": "Arsenal latest: Arteta quizzed on Rice, Madueke and Calafiori fitness",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-30T10:00:00Z",
-      "players": [
-        {
-          "element_id": 8,
-          "name": "Calafiori",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 16,
-          "name": "Madueke",
-          "club": "ARS",
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
           "held": false
         }
       ],
@@ -1186,42 +1390,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/cqj34pjxp7xdo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-30T09:58:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4a12a566967458a3",
-      "headline": "Why keeping Isak fit and firing is key to Iraola's Liverpool revival",
-      "summary": "Liverpool's patience with Alexander Isak is starting to be rewarded, with the record-breaking &#163;125m purchase finally resembling the most expensive striker in Premier League history.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13605451/alexander-isak-why-keeping-sweden-striker-fit-and-firing-is-key-to-andoni-iraolas-liverpool-revival",
-      "claimed_at": "2026-10-30T08:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a442635115ae8ee2",
-      "headline": "Merson: Liverpool must beat Arsenal to be in the title race",
-      "summary": "In his latest Sky Sports column, Paul Merson believes Liverpool have to beat Arsenal at Anfield on Sunday to be contenders for the Premier League title.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13604012/liverpool-vs-arsenal-andoni-iraolas-side-must-beat-the-premier-league-champions-to-be-in-the-title-race-says-paul-merson",
-      "claimed_at": "2026-10-30T08:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1305,60 +1473,6 @@
       "touches_squad": false
     },
     {
-      "digest": "00216d5b0b84612c",
-      "headline": "Everton latest: Moyes praises squad's values after Grealish absence",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-29T23:00:00Z",
-      "players": [
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bad8a79f830c07d8",
-      "headline": "Papers: Chelsea, Arsenal and Man Utd eye Como defender",
-      "summary": "The top stories and transfer rumours from Friday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13605595/chelsea-arsenal-and-man-utd-eye-como-defender-paper-talk",
-      "claimed_at": "2026-10-29T22:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cd2216971669ac8f",
-      "headline": "Everton beat Newcastle to book place in Carabao Cup quarter-finals",
-      "summary": "Highlights of the fourth-round Carabao Cup match between Everton and Newcastle United.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13605603/everton-3-1-newcastle-united-carabao-cup-highlights",
-      "claimed_at": "2026-10-29T22:13:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5e592ea777b8db71",
       "headline": "Fleetwood to face Everton in EFL Cup quarters",
       "summary": "League Two Fleetwood Town will face Everton at Highbury in the quarter-finals of the EFL Cup.",
@@ -1377,6 +1491,30 @@
       "touches_squad": false
     },
     {
+      "digest": "67ed158a2cc999ab",
+      "headline": "Chelsea linked with Alexander-Arnold - Friday's gossip",
+      "summary": "Trent Alexander-Arnold may become a target for Chelsea, Bournemouth's Alex Scott could also be heading to Stamford Bridge and Manchester United are looking at Leeds United striker Dominic Calvert-Lewin.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck1l396jqv4zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-29T21:40:24Z",
+      "players": [
+        {
+          "element_id": 69,
+          "name": "Scott",
+          "club": "BOU",
+          "held": false
+        },
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "472469d78a0248ba",
       "headline": "FPL notes: Evanilson, Jackson + Manzambi rested for Gameweek 9",
       "summary": "EFL Cup wins for Sunderland and Bournemouth dissected The post FPL notes: Evanilson, Jackson + Manzambi rested for Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1384,42 +1522,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/10/29/fpl-notes-evanilson-jackson-manzambi-rested-for-gameweek-9",
       "claimed_at": "2026-10-29T21:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1a8a4e76c04df98b",
-      "headline": "Everton see off Newcastle to reach Carabao Cup quarter-final",
-      "summary": "Everton are through to the quarter-finals of the Carabao Cup after seeing off Newcastle 3-1.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/everton-vs-newcastle-united/report/578609",
-      "claimed_at": "2026-10-29T19:34:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7a298f1b7ed812d5",
-      "headline": "Everton see off Newcastle to reach Carabao Cup quarter-finals",
-      "summary": "Everton are through to the quarter-finals of the Carabao Cup after seeing off Newcastle 3-1.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/everton-vs-newcastle-united/report/578609",
-      "claimed_at": "2026-10-29T19:34:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1456,24 +1558,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cmwy4vyl9nplo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-29T19:31:36Z",
-      "players": [
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "38fd4aca95595b51",
-      "headline": "Moyes backs 'club decision' to drop Grealish",
-      "summary": "David Moyes backed Everton's decision to drop Jack Grealish for Thursday's Carabao Cup win over Newcastle.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13605512/jack-grealish-dropped-by-everton-after-breaching-club-discipline-ahead-of-newcastle-carabao-cup-tie",
-      "claimed_at": "2026-10-29T18:45:00Z",
       "players": [
         {
           "element_id": 238,
@@ -1539,6 +1623,42 @@
       "touches_squad": false
     },
     {
+      "digest": "327bce84626f31ac",
+      "headline": "Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9",
+      "summary": "Plus, a \"good training week\" for Dominic Calvert-Lewin The post Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/29/stach-elvedi-rodon-leeds-injury-latest-for-fpl-gameweek-9",
+      "claimed_at": "2026-10-29T17:09:47Z",
+      "players": [
+        {
+          "element_id": 329,
+          "name": "Rodon",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 335,
+          "name": "Stach",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 598,
+          "name": "Elvedi",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "b3ab5c5037ecb73a",
       "headline": "Thomas, Amenda, Wright: Coventry injury latest for FPL Gameweek 9",
       "summary": "Popular FPL asset Thomas came off injured against Fulham The post Thomas, Amenda, Wright: Coventry injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1551,54 +1671,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ef0d504e648f1539",
-      "headline": "Williams, Ndoye, Jesus: Nott\u2019m Forest injury latest for FPL Gameweek 9",
-      "summary": "Wing-back Williams suffered an elbow injury last week The post Williams, Ndoye, Jesus: Nott'm Forest injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/29/williams-ndoye-jesus-nottm-forest-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-29T16:54:21Z",
-      "players": [
-        {
-          "element_id": 469,
-          "name": "N.Williams",
-          "club": "NFO",
-          "held": false
-        },
-        {
-          "element_id": 483,
-          "name": "Ndoye",
-          "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "80a823e6d5c0b9ce",
-      "headline": "Kostoulas, Minteh, Kadioglu: Brighton injury latest for FPL Gameweek 9",
-      "summary": "The Seagulls revisit Man City just three days after their EFL Cup clash The post Kostoulas, Minteh, Kadioglu: Brighton injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics fro",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/29/kostoulas-minteh-kadioglu-brighton-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-29T16:39:14Z",
-      "players": [
-        {
-          "element_id": 122,
-          "name": "Minteh",
-          "club": "BHA",
-          "held": false
-        },
-        {
-          "element_id": 138,
-          "name": "Kostoulas",
-          "club": "BHA",
           "held": false
         }
       ],
@@ -1677,60 +1749,6 @@
       "touches_squad": false
     },
     {
-      "digest": "1add68d461853a06",
-      "headline": "'Fully committed' Fernandes to remain Man Utd captain",
-      "summary": "Manchester United head coach Michael Carrick confirms Bruno Fernandes will remain captain, and addresses his own future before Saturday's trip to Chelsea.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckz7x8z1e9y9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-29T14:31:52Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "284366ce7d1cf08f",
-      "headline": "Sometimes managers needs sacking for own good - Neville",
-      "summary": "Gary Neville says managers sometimes need to be sacked \"for their own good\" as Manchester United persist with under-pressure boss Michael Carrick.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cjvgx0ek6rz2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-29T11:00:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e7c0a4727d60f01d",
-      "headline": "Sometimes managers need sacking for own good - Neville",
-      "summary": "Gary Neville says managers sometimes need to be sacked \"for their own good\" as Manchester United persist with under-pressure boss Michael Carrick.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cjvgx0ek6rz2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-29T11:00:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "32e1e16368a07c03",
       "headline": "Iraola admits he did not want to draw Bournemouth in Carabao Cup quarters",
       "summary": "Liverpool boss Andoni Iraola admitted Bournemouth were the one team he wanted to avoid in the Carabao Cup quarter-final draw after his side edged past Chelsea on penalties. Iraola will now face his former club in the last eigh",
@@ -1743,24 +1761,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "88412e62267f32bc",
-      "headline": "Alonso on Estevao\u2019s lack of game time and Lacroix injury worry after Chelsea\u2019s Carabao Cup exit",
-      "summary": "Chelsea boss Xabi Alonso insists Estevao will get his chance despite the Brazilian failing to feature in the Carabao Cup defeat to Liverpool. Chelsea supporters were heard singing Estevao\u2019s name during th",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/alonso-on-estevaos-lack-of-game-time-and-lacroix-injury-worry-after-chelseas-carabao-cup-exit/",
-      "claimed_at": "2026-10-28T23:07:41Z",
-      "players": [
-        {
-          "element_id": 200,
-          "name": "Lacroix",
-          "club": "CHE",
           "held": false
         }
       ],
