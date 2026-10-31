@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-10-30T11:50:39.406099Z",
+    "generated_at": "2026-10-31T11:24:08.159552Z",
     "season": "2026-27",
     "gameweek": 9,
     "pipeline_version": "4.1.0",
@@ -18,10 +18,10 @@
     "n_simulations": 5000,
     "n_simulations_requested": 5000,
     "portfolio": {
-      "total_exposure_pct": 0.125,
-      "n_bets_before_limits": 10,
-      "n_bets_after_limits": 5,
-      "n_reduced_by_limits": 3,
+      "total_exposure_pct": 0.09845937637944113,
+      "n_bets_before_limits": 6,
+      "n_bets_after_limits": 4,
+      "n_reduced_by_limits": 0,
       "n_held_by_guards": 2,
       "limits": {
         "max_per_match_pct": 0.15,
@@ -328,13 +328,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.4778298840379645,
-            "anytime_prob": 0.3798723183734266,
-            "two_plus_prob": 0.08355678017306928,
-            "first_scorer_prob": 0.09976701345758696,
+            "lambda_player": 0.5029736811060979,
+            "anytime_prob": 0.39527028999824243,
+            "two_plus_prob": 0.09110716168443539,
+            "first_scorer_prob": 0.1092736499939461,
             "xg_per_90": 0.27385714285714285,
             "goals_scored": 4,
-            "xg_share": 0.2626330180750701,
+            "xg_share": 0.2764529810586877,
             "minutes": 700
           },
           {
@@ -344,13 +344,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.3364999183365947,
-            "anytime_prob": 0.28573405809446184,
-            "two_plus_prob": 0.04538362697263734,
-            "first_scorer_prob": 0.052847322566328125,
+            "lambda_player": 0.35420681768035056,
+            "anytime_prob": 0.29827017778744225,
+            "two_plus_prob": 0.049712690590134,
+            "first_scorer_prob": 0.0580687885987628,
             "xg_per_90": 0.19340974212034384,
             "goals_scored": 2,
-            "xg_share": 0.18495282963033105,
+            "xg_share": 0.1946851979286533,
             "minutes": 698
           },
           {
@@ -360,13 +360,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.30733659208075653,
-            "anytime_prob": 0.26459697159140727,
-            "two_plus_prob": 0.038580711034442605,
-            "first_scorer_prob": 0.04469666886146836,
+            "lambda_player": 0.32350889348138684,
+            "anytime_prob": 0.2763944774784802,
+            "two_plus_prob": 0.04230165557052262,
+            "first_scorer_prob": 0.0491463877129133,
             "xg_per_90": 0.2086294416243655,
             "goals_scored": 3,
-            "xg_share": 0.16892358439570238,
+            "xg_share": 0.1778124807748367,
             "minutes": 591
           },
           {
@@ -376,13 +376,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.16824995916829735,
-            "anytime_prob": 0.15485744285029757,
-            "two_plus_prob": 0.012662242118469724,
-            "first_scorer_prob": 0.014320661122239908,
+            "lambda_player": 0.17710340884017528,
+            "anytime_prob": 0.1623068448336481,
+            "two_plus_prob": 0.013948531491605298,
+            "first_scorer_prob": 0.015799370105807,
             "xg_per_90": 0.24368231046931407,
             "goals_scored": 1,
-            "xg_share": 0.09247641481516553,
+            "xg_share": 0.09734259896432665,
             "minutes": 277
           },
           {
@@ -392,30 +392,14 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.16353357631289164,
-            "anytime_prob": 0.1508620123998271,
-            "two_plus_prob": 0.01199944050443899,
-            "first_scorer_prob": 0.01356009861576079,
+            "lambda_player": 0.16417060951303034,
+            "anytime_prob": 0.15140276923111295,
+            "two_plus_prob": 0.012088044624715105,
+            "first_scorer_prob": 0.013661715786358839,
             "xg_per_90": 0.12,
             "goals_scored": 2,
-            "xg_share": 0.08988411595506682,
+            "xg_share": 0.09023425301755567,
             "minutes": 360
-          },
-          {
-            "player_id": 200,
-            "name": "Maxence Lacroix",
-            "web_name": "Lacroix",
-            "team": "Chelsea",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.06625907725326441,
-            "anytime_prob": 0.06411163450708013,
-            "two_plus_prob": 0.002100534997453392,
-            "first_scorer_prob": 0.00233484604625241,
-            "xg_per_90": 0.05678233438485805,
-            "goals_scored": 0,
-            "xg_share": 0.03641844517307639,
-            "minutes": 634
           },
           {
             "player_id": 145,
@@ -424,13 +408,13 @@
             "team": "Chelsea",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.0603905186774742,
-            "anytime_prob": 0.05860317125342218,
-            "two_plus_prob": 0.0017517284840869937,
-            "first_scorer_prob": 0.0019452073175010322,
+            "lambda_player": 0.060073476278587466,
+            "anytime_prob": 0.05830466122686495,
+            "two_plus_prob": 0.0017337486314206382,
+            "first_scorer_prob": 0.0019251388450851519,
             "xg_per_90": 0.0,
             "goals_scored": 0,
-            "xg_share": 0.033192867824323416,
+            "xg_share": 0.033018609568699606,
             "minutes": 312
           },
           {
@@ -440,14 +424,30 @@
             "team": "Chelsea",
             "position": "DEF",
             "side": "home",
-            "lambda_player": 0.0603905186774742,
-            "anytime_prob": 0.05860317125342218,
-            "two_plus_prob": 0.0017517284840869937,
-            "first_scorer_prob": 0.0019452073175010322,
+            "lambda_player": 0.060073476278587466,
+            "anytime_prob": 0.05830466122686495,
+            "two_plus_prob": 0.0017337486314206382,
+            "first_scorer_prob": 0.0019251388450851519,
             "xg_per_90": 0.0,
             "goals_scored": 0,
-            "xg_share": 0.033192867824323416,
+            "xg_share": 0.033018609568699606,
             "minutes": 491
+          },
+          {
+            "player_id": 149,
+            "name": "Levi Samuels Colwill",
+            "web_name": "Colwill",
+            "team": "Chelsea",
+            "position": "DEF",
+            "side": "home",
+            "lambda_player": 0.059784915791117194,
+            "anytime_prob": 0.058032885950942914,
+            "two_plus_prob": 0.001717461359518349,
+            "first_scorer_prob": 0.0019069609821385186,
+            "xg_per_90": 0.0014729950900163667,
+            "goals_scored": 0,
+            "xg_share": 0.032860006027453724,
+            "minutes": 611
           }
         ],
         "away_scorers": [
@@ -604,13 +604,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.4778298840379645,
-            "anytime_prob": 0.3798723183734266,
-            "two_plus_prob": 0.08355678017306928,
-            "first_scorer_prob": 0.09976701345758696,
+            "lambda_player": 0.5029736811060979,
+            "anytime_prob": 0.39527028999824243,
+            "two_plus_prob": 0.09110716168443539,
+            "first_scorer_prob": 0.1092736499939461,
             "xg_per_90": 0.27385714285714285,
             "goals_scored": 4,
-            "xg_share": 0.2626330180750701,
+            "xg_share": 0.2764529810586877,
             "minutes": 700
           },
           {
@@ -620,13 +620,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.3364999183365947,
-            "anytime_prob": 0.28573405809446184,
-            "two_plus_prob": 0.04538362697263734,
-            "first_scorer_prob": 0.052847322566328125,
+            "lambda_player": 0.35420681768035056,
+            "anytime_prob": 0.29827017778744225,
+            "two_plus_prob": 0.049712690590134,
+            "first_scorer_prob": 0.0580687885987628,
             "xg_per_90": 0.19340974212034384,
             "goals_scored": 2,
-            "xg_share": 0.18495282963033105,
+            "xg_share": 0.1946851979286533,
             "minutes": 698
           },
           {
@@ -652,13 +652,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.30733659208075653,
-            "anytime_prob": 0.26459697159140727,
-            "two_plus_prob": 0.038580711034442605,
-            "first_scorer_prob": 0.04469666886146836,
+            "lambda_player": 0.32350889348138684,
+            "anytime_prob": 0.2763944774784802,
+            "two_plus_prob": 0.04230165557052262,
+            "first_scorer_prob": 0.0491463877129133,
             "xg_per_90": 0.2086294416243655,
             "goals_scored": 3,
-            "xg_share": 0.16892358439570238,
+            "xg_share": 0.1778124807748367,
             "minutes": 591
           },
           {
@@ -668,13 +668,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.16824995916829735,
-            "anytime_prob": 0.15485744285029757,
-            "two_plus_prob": 0.012662242118469724,
-            "first_scorer_prob": 0.014320661122239908,
+            "lambda_player": 0.17710340884017528,
+            "anytime_prob": 0.1623068448336481,
+            "two_plus_prob": 0.013948531491605298,
+            "first_scorer_prob": 0.015799370105807,
             "xg_per_90": 0.24368231046931407,
             "goals_scored": 1,
-            "xg_share": 0.09247641481516553,
+            "xg_share": 0.09734259896432665,
             "minutes": 277
           },
           {
@@ -684,13 +684,13 @@
             "team": "Chelsea",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.16353357631289164,
-            "anytime_prob": 0.1508620123998271,
-            "two_plus_prob": 0.01199944050443899,
-            "first_scorer_prob": 0.01356009861576079,
+            "lambda_player": 0.16417060951303034,
+            "anytime_prob": 0.15140276923111295,
+            "two_plus_prob": 0.012088044624715105,
+            "first_scorer_prob": 0.013661715786358839,
             "xg_per_90": 0.12,
             "goals_scored": 2,
-            "xg_share": 0.08988411595506682,
+            "xg_share": 0.09023425301755567,
             "minutes": 360
           },
           {
@@ -718,147 +718,132 @@
       "odds_comparison": {
         "h2h": {
           "sport888": {
-            "home": 1.8,
-            "away": 3.9,
-            "draw": 3.7
+            "home": 2.2,
+            "away": 3.0,
+            "draw": 3.5
           },
           "unibet_uk": {
-            "home": 1.8,
-            "away": 4.0,
-            "draw": 3.9
-          },
-          "betfred_uk": {
-            "home": 1.83,
-            "away": 3.75,
-            "draw": 4.0
-          },
-          "leovegas": {
-            "home": 1.75,
-            "away": 3.95,
-            "draw": 3.9
-          },
-          "williamhill": {
-            "home": 1.83,
-            "away": 4.0,
-            "draw": 3.75
-          },
-          "paddypower": {
-            "home": 1.83,
-            "away": 4.0,
-            "draw": 3.8
-          },
-          "ladbrokes_uk": {
-            "home": 1.8,
-            "away": 3.9,
-            "draw": 3.9
-          },
-          "coral": {
-            "home": 1.83,
-            "away": 4.0,
-            "draw": 3.9
-          },
-          "skybet": {
-            "home": 1.83,
-            "away": 4.0,
-            "draw": 3.75
-          },
-          "betway": {
-            "home": 1.8,
-            "away": 4.0,
-            "draw": 3.8
-          },
-          "betfair_ex_uk": {
-            "home": 1.91,
-            "away": 4.3,
-            "draw": 4.0
-          },
-          "smarkets": {
-            "home": 1.91,
-            "away": 4.3,
-            "draw": 4.0
-          },
-          "boylesports": {
-            "home": 1.8,
-            "away": 4.0,
-            "draw": 4.0
-          },
-          "betano_uk": {
-            "home": 1.75,
-            "away": 4.0,
-            "draw": 3.9
-          },
-          "betvictor": {
-            "home": 1.75,
-            "away": 4.0,
-            "draw": 3.9
-          },
-          "casumo": {
-            "home": 1.8,
-            "away": 4.25,
-            "draw": 3.85
-          },
-          "livescorebet": {
-            "home": 1.77,
-            "away": 4.1,
-            "draw": 3.65
-          },
-          "grosvenor": {
-            "home": 1.78,
-            "away": 4.2,
-            "draw": 3.75
-          },
-          "virginbet": {
-            "home": 1.77,
-            "away": 4.1,
+            "home": 2.25,
+            "away": 3.1,
             "draw": 3.7
           },
+          "betfred_uk": {
+            "home": 2.2,
+            "away": 3.25,
+            "draw": 3.5
+          },
+          "leovegas": {
+            "home": 2.2,
+            "away": 2.95,
+            "draw": 3.6
+          },
+          "williamhill": {
+            "home": 2.2,
+            "away": 3.0,
+            "draw": 3.5
+          },
+          "paddypower": {
+            "home": 2.2,
+            "away": 3.0,
+            "draw": 3.5
+          },
+          "ladbrokes_uk": {
+            "home": 2.15,
+            "away": 3.0,
+            "draw": 3.7
+          },
+          "coral": {
+            "home": 2.2,
+            "away": 3.0,
+            "draw": 3.7
+          },
+          "skybet": {
+            "home": 2.05,
+            "away": 3.3,
+            "draw": 3.7
+          },
+          "betway": {
+            "home": 2.25,
+            "away": 3.0,
+            "draw": 3.6
+          },
+          "betfair_ex_uk": {
+            "home": 2.34,
+            "away": 3.25,
+            "draw": 3.7
+          },
+          "smarkets": {
+            "home": 2.34,
+            "away": 3.3,
+            "draw": 3.7
+          },
+          "boylesports": {
+            "home": 2.15,
+            "away": 3.1,
+            "draw": 3.75
+          },
+          "betano_uk": {
+            "home": 2.2,
+            "away": 3.0,
+            "draw": 3.5
+          },
+          "betvictor": {
+            "home": 2.2,
+            "away": 3.0,
+            "draw": 3.5
+          },
+          "casumo": {
+            "home": 2.28,
+            "away": 3.05,
+            "draw": 3.55
+          },
+          "livescorebet": {
+            "home": 2.28,
+            "away": 3.0,
+            "draw": 3.5
+          },
+          "grosvenor": {
+            "home": 2.23,
+            "away": 3.0,
+            "draw": 3.5
+          },
+          "virginbet": {
+            "home": 2.25,
+            "away": 2.95,
+            "draw": 3.5
+          },
           "matchbook": {
-            "home": 1.91,
-            "away": 4.4,
-            "draw": 4.0
+            "home": 2.34,
+            "away": 3.25,
+            "draw": 3.7
           },
           "betfair_sb_uk": {
-            "home": 1.85,
-            "away": 4.1,
-            "draw": 3.9
+            "home": 2.25,
+            "away": 3.1,
+            "draw": 3.5
           }
         },
         "totals": {
-          "2.5": {
-            "over": 1.58,
+          "3.5": {
+            "over": 2.3,
             "bookmaker_over": "leovegas",
-            "under": 2.33,
-            "bookmaker_under": "casumo"
+            "under": 1.57,
+            "bookmaker_under": "leovegas"
+          },
+          "2.5": {
+            "over": 1.6,
+            "bookmaker_over": "casumo",
+            "under": 2.3,
+            "bookmaker_under": "williamhill"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfred_uk",
-        "bookmaker_away": "matchbook"
+        "bookmaker_draw": "boylesports",
+        "bookmaker_away": "skybet"
       },
       "model_disagreement": 0.002421778686637288,
       "shap_features": [],
-      "value_bets": [
-        {
-          "market": "Away Win",
-          "market_type": "1x2",
-          "confidence": "medium",
-          "confidence_tier": "medium",
-          "bookmaker": "matchbook",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.07535690705100212,
-          "model_prob": 0.30244048807585056,
-          "implied_prob": 0.22708358102484844,
-          "raw_implied_prob": 0.22727272727272727,
-          "expected_value": 0.33073814753374264,
-          "recommendation": "bet",
-          "decimal_odds": 4.4,
-          "market_gap_1x2": 0.07535690705100212,
-          "market_favourite": "home"
-        }
-      ],
+      "value_bets": [],
       "narrative": "Chelsea vs Man United \u2014 Matchweek 9\n\nOur model rates Chelsea as 46% favorites (fair odds: 2.20), driven primarily by form and recent results. Chelsea's expected goals stand at 1.8 while Man United are projected for 1.4 xG.\n\nThe match has a 63% chance of going over 2.5 goals, with both teams to score probability at 64%. We expect around 10 total corners and 5 cards.",
       "held_bets": []
     },
@@ -1531,116 +1516,116 @@
       "odds_comparison": {
         "h2h": {
           "leovegas": {
-            "home": 2.12,
-            "away": 3.2,
-            "draw": 3.35
+            "home": 2.08,
+            "away": 3.5,
+            "draw": 3.3
           },
           "betfred_uk": {
-            "home": 2.15,
-            "away": 3.3,
+            "home": 2.05,
+            "away": 3.5,
             "draw": 3.5
           },
           "williamhill": {
-            "home": 2.1,
-            "away": 3.4,
+            "home": 2.05,
+            "away": 3.6,
             "draw": 3.3
           },
           "sport888": {
-            "home": 2.1,
-            "away": 3.4,
-            "draw": 3.3
+            "home": 2.05,
+            "away": 3.5,
+            "draw": 3.25
           },
           "unibet_uk": {
-            "home": 2.15,
-            "away": 3.4,
+            "home": 2.1,
+            "away": 3.7,
             "draw": 3.4
           },
           "paddypower": {
-            "home": 2.1,
-            "away": 3.4,
-            "draw": 3.3
+            "home": 2.05,
+            "away": 3.6,
+            "draw": 3.25
           },
           "ladbrokes_uk": {
             "home": 2.1,
-            "away": 3.4,
-            "draw": 3.4
+            "away": 3.5,
+            "draw": 3.3
           },
           "coral": {
             "home": 2.1,
-            "away": 3.4,
+            "away": 3.5,
             "draw": 3.4
           },
           "skybet": {
-            "home": 2.1,
-            "away": 3.4,
+            "home": 2.05,
+            "away": 3.6,
             "draw": 3.3
           },
           "betway": {
             "home": 2.1,
-            "away": 3.4,
-            "draw": 3.4
+            "away": 3.5,
+            "draw": 3.3
           },
           "betfair_ex_uk": {
-            "home": 2.22,
-            "away": 3.7,
-            "draw": 3.5
+            "home": 2.18,
+            "away": 3.9,
+            "draw": 3.45
           },
           "smarkets": {
-            "home": 2.2,
-            "away": 3.65,
-            "draw": 3.5
+            "home": 2.16,
+            "away": 3.85,
+            "draw": 3.4
           },
           "boylesports": {
             "home": 2.1,
-            "away": 3.5,
-            "draw": 3.4
+            "away": 3.6,
+            "draw": 3.3
           },
           "betano_uk": {
             "home": 2.05,
-            "away": 3.3,
+            "away": 3.4,
             "draw": 3.4
           },
           "betvictor": {
             "home": 2.05,
-            "away": 3.3,
+            "away": 3.4,
             "draw": 3.4
           },
           "virginbet": {
-            "home": 2.05,
-            "away": 3.4,
-            "draw": 3.35
+            "home": 2.07,
+            "away": 3.5,
+            "draw": 3.3
           },
           "casumo": {
             "home": 2.1,
-            "away": 3.5,
-            "draw": 3.5
+            "away": 3.6,
+            "draw": 3.4
           },
           "grosvenor": {
             "home": 2.07,
-            "away": 3.4,
-            "draw": 3.45
+            "away": 3.5,
+            "draw": 3.3
           },
           "livescorebet": {
-            "home": 2.05,
-            "away": 3.4,
+            "home": 2.08,
+            "away": 3.55,
             "draw": 3.35
           },
           "matchbook": {
-            "home": 2.22,
-            "away": 3.7,
-            "draw": 3.5
+            "home": 2.18,
+            "away": 3.9,
+            "draw": 3.45
           },
           "betfair_sb_uk": {
-            "home": 2.15,
-            "away": 3.5,
-            "draw": 3.4
+            "home": 2.1,
+            "away": 3.75,
+            "draw": 3.3
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.94,
+            "over": 2.04,
             "bookmaker_over": "matchbook",
-            "under": 2.04,
+            "under": 1.93,
             "bookmaker_under": "matchbook"
           }
         },
@@ -2323,126 +2308,145 @@
       "odds_comparison": {
         "h2h": {
           "leovegas": {
-            "home": 2.08,
+            "home": 2.1,
             "away": 3.2,
-            "draw": 3.45
+            "draw": 3.6
           },
           "sport888": {
-            "home": 2.0,
-            "away": 3.3,
+            "home": 2.05,
+            "away": 3.25,
             "draw": 3.5
           },
           "betfred_uk": {
-            "home": 2.05,
-            "away": 3.3,
+            "home": 2.1,
+            "away": 3.25,
             "draw": 3.75
           },
           "unibet_uk": {
-            "home": 2.08,
-            "away": 3.4,
+            "home": 2.15,
+            "away": 3.3,
             "draw": 3.6
           },
           "williamhill": {
             "home": 2.05,
-            "away": 3.4,
+            "away": 3.3,
             "draw": 3.5
           },
           "paddypower": {
-            "home": 2.0,
-            "away": 3.4,
+            "home": 2.1,
+            "away": 3.25,
             "draw": 3.6
           },
           "ladbrokes_uk": {
-            "home": 2.0,
-            "away": 3.4,
-            "draw": 3.7
-          },
-          "coral": {
-            "home": 2.05,
-            "away": 3.4,
-            "draw": 3.7
-          },
-          "skybet": {
-            "home": 2.05,
-            "away": 3.4,
+            "home": 2.1,
+            "away": 3.2,
             "draw": 3.6
           },
+          "coral": {
+            "home": 2.1,
+            "away": 3.25,
+            "draw": 3.6
+          },
+          "skybet": {
+            "home": 2.1,
+            "away": 3.25,
+            "draw": 3.7
+          },
           "betway": {
-            "home": 2.05,
-            "away": 3.3,
+            "home": 2.1,
+            "away": 3.2,
             "draw": 3.6
           },
           "betfair_ex_uk": {
-            "home": 2.14,
-            "away": 3.6,
-            "draw": 3.85
-          },
-          "smarkets": {
-            "home": 2.12,
-            "away": 3.55,
-            "draw": 3.8
-          },
-          "boylesports": {
-            "home": 2.0,
+            "home": 2.2,
             "away": 3.5,
             "draw": 3.75
           },
-          "betano_uk": {
-            "home": 2.0,
+          "smarkets": {
+            "home": 2.18,
+            "away": 3.45,
+            "draw": 3.7
+          },
+          "boylesports": {
+            "home": 2.05,
             "away": 3.3,
+            "draw": 3.75
+          },
+          "betano_uk": {
+            "home": 2.05,
+            "away": 3.2,
             "draw": 3.6
           },
           "betvictor": {
-            "home": 2.0,
-            "away": 3.3,
+            "home": 2.05,
+            "away": 3.2,
             "draw": 3.6
           },
           "virginbet": {
-            "home": 2.0,
-            "away": 3.35,
+            "home": 2.1,
+            "away": 3.25,
             "draw": 3.45
           },
           "casumo": {
-            "home": 2.04,
-            "away": 3.5,
+            "home": 2.12,
+            "away": 3.35,
             "draw": 3.6
           },
           "grosvenor": {
-            "home": 2.02,
-            "away": 3.4,
-            "draw": 3.55
+            "home": 2.1,
+            "away": 3.3,
+            "draw": 3.5
           },
           "livescorebet": {
-            "home": 2.0,
-            "away": 3.35,
-            "draw": 3.45
+            "home": 2.12,
+            "away": 3.3,
+            "draw": 3.5
           },
           "matchbook": {
-            "home": 2.14,
-            "away": 3.6,
-            "draw": 3.85
+            "home": 2.2,
+            "away": 3.5,
+            "draw": 3.75
           },
           "betfair_sb_uk": {
-            "home": 2.05,
-            "away": 3.5,
-            "draw": 3.7
+            "home": 2.15,
+            "away": 3.3,
+            "draw": 3.6
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.75,
+            "over": 1.73,
             "bookmaker_over": "casumo",
-            "under": 2.1,
+            "under": 2.15,
             "bookmaker_under": "leovegas"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_draw": "betfred_uk",
         "bookmaker_away": "betfair_ex_uk"
       },
       "model_disagreement": 0.0019292997359110174,
       "shap_features": [],
-      "value_bets": [],
+      "value_bets": [
+        {
+          "market": "Under 2.5 Goals",
+          "market_type": "over_under",
+          "confidence": "low",
+          "confidence_tier": "low",
+          "bookmaker": "leovegas",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.056323469475414334,
+          "model_prob": 0.5021997581352081,
+          "implied_prob": 0.4458762886597938,
+          "raw_implied_prob": 0.46511627906976744,
+          "expected_value": 0.07972947999069746,
+          "recommendation": "bet",
+          "decimal_odds": 2.15
+        }
+      ],
       "narrative": "Brentford vs Nott'm Forest \u2014 Matchweek 9\n\nOur model rates Brentford as 47% favorites (fair odds: 2.11), driven primarily by form and recent results. Brentford's expected goals stand at 1.6 while Nott'm Forest are projected for 1.1 xG.\n\nThe match has a 50% chance of going over 2.5 goals, with both teams to score probability at 53%. We expect around 9 total corners and 3 cards.",
       "held_bets": []
     },
@@ -3116,33 +3120,33 @@
         "h2h": {
           "leovegas": {
             "home": 2.95,
-            "away": 2.3,
-            "draw": 3.3
+            "away": 2.35,
+            "draw": 3.25
           },
           "unibet_uk": {
             "home": 3.1,
-            "away": 2.35,
+            "away": 2.38,
             "draw": 3.4
           },
           "betfred_uk": {
             "home": 3.0,
-            "away": 2.3,
-            "draw": 3.5
+            "away": 2.38,
+            "draw": 3.4
           },
           "sport888": {
-            "home": 2.9,
+            "home": 3.0,
             "away": 2.3,
-            "draw": 3.25
+            "draw": 3.1
           },
           "williamhill": {
-            "home": 2.9,
-            "away": 2.3,
-            "draw": 3.25
+            "home": 3.0,
+            "away": 2.38,
+            "draw": 3.2
           },
           "paddypower": {
-            "home": 3.1,
-            "away": 2.25,
-            "draw": 3.25
+            "home": 3.0,
+            "away": 2.3,
+            "draw": 3.2
           },
           "ladbrokes_uk": {
             "home": 3.0,
@@ -3150,29 +3154,29 @@
             "draw": 3.3
           },
           "coral": {
-            "home": 3.1,
+            "home": 3.0,
             "away": 2.3,
-            "draw": 3.3
+            "draw": 3.4
           },
           "betway": {
             "home": 3.0,
             "away": 2.3,
-            "draw": 3.3
+            "draw": 3.25
           },
           "skybet": {
-            "home": 3.1,
-            "away": 2.25,
-            "draw": 3.2
+            "home": 3.0,
+            "away": 2.3,
+            "draw": 3.3
           },
           "betfair_ex_uk": {
-            "home": 3.35,
-            "away": 2.4,
-            "draw": 3.45
+            "home": 3.25,
+            "away": 2.5,
+            "draw": 3.4
           },
           "smarkets": {
-            "home": 3.35,
-            "away": 2.4,
-            "draw": 3.45
+            "home": 3.25,
+            "away": 2.48,
+            "draw": 3.4
           },
           "boylesports": {
             "home": 3.1,
@@ -3181,17 +3185,17 @@
           },
           "betano_uk": {
             "home": 3.0,
-            "away": 2.25,
+            "away": 2.3,
             "draw": 3.3
           },
           "betvictor": {
             "home": 3.0,
-            "away": 2.25,
+            "away": 2.3,
             "draw": 3.3
           },
           "virginbet": {
-            "home": 3.0,
-            "away": 2.25,
+            "home": 3.05,
+            "away": 2.28,
             "draw": 3.3
           },
           "casumo": {
@@ -3205,31 +3209,31 @@
             "draw": 3.3
           },
           "livescorebet": {
-            "home": 3.0,
-            "away": 2.25,
-            "draw": 3.3
+            "home": 3.05,
+            "away": 2.3,
+            "draw": 3.35
           },
           "matchbook": {
-            "home": 3.35,
-            "away": 2.4,
-            "draw": 3.45
+            "home": 3.25,
+            "away": 2.5,
+            "draw": 3.4
           },
           "betfair_sb_uk": {
-            "home": 3.2,
-            "away": 2.3,
+            "home": 3.1,
+            "away": 2.4,
             "draw": 3.3
           }
         },
         "totals": {
           "2.5": {
-            "over": 2.06,
+            "over": 2.04,
             "bookmaker_over": "matchbook",
-            "under": 1.91,
+            "under": 1.94,
             "bookmaker_under": "matchbook"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfred_uk",
+        "bookmaker_draw": "unibet_uk",
         "bookmaker_away": "betfair_ex_uk"
       },
       "model_disagreement": 0.01418376104076266,
@@ -3245,13 +3249,13 @@
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.06775812542761339,
+          "edge": 0.07408699901469218,
           "model_prob": 0.586649813085044,
-          "implied_prob": 0.5188916876574307,
-          "raw_implied_prob": 0.5235602094240838,
-          "expected_value": 0.12050114299243408,
+          "implied_prob": 0.5125628140703519,
+          "raw_implied_prob": 0.5154639175257733,
+          "expected_value": 0.13810063738498546,
           "recommendation": "bet",
-          "decimal_odds": 1.91
+          "decimal_odds": 1.94
         }
       ],
       "narrative": "Coventry City vs Sunderland \u2014 Matchweek 9\n\nOur model rates Sunderland as 38% favorites (fair odds: 2.66), driven primarily by form and recent results. Coventry City's expected goals stand at 1.1 while Sunderland are projected for 1.2 xG.\n\nThe match has a 41% chance of going over 2.5 goals, with both teams to score probability at 47%. We expect around 7 total corners and 3 cards.",
@@ -3666,13 +3670,13 @@
             "team": "Ipswich",
             "position": "FWD",
             "side": "away",
-            "lambda_player": 0.24878885911601278,
-            "anytime_prob": 0.22025540803233545,
-            "two_plus_prob": 0.026263640594819282,
-            "first_scorer_prob": 0.05557549389878959,
+            "lambda_player": 0.2276009360830709,
+            "anytime_prob": 0.20355797229842654,
+            "two_plus_prob": 0.022287021257649337,
+            "first_scorer_prob": 0.04697602114529533,
             "xg_per_90": 0.42676864244741874,
             "goals_scored": 2,
-            "xg_share": 0.25154083978532205,
+            "xg_share": 0.23011854631145026,
             "minutes": 523
           },
           {
@@ -3682,13 +3686,13 @@
             "team": "Ipswich",
             "position": "DEF",
             "side": "away",
-            "lambda_player": 0.1645216648992988,
-            "anytime_prob": 0.15170062157535302,
-            "two_plus_prob": 0.012136995503889803,
-            "first_scorer_prob": 0.025312572111312163,
+            "lambda_player": 0.15051029644203073,
+            "anytime_prob": 0.13973112774676244,
+            "two_plus_prob": 0.010251804764076194,
+            "first_scorer_prob": 0.021324234251973762,
             "xg_per_90": 0.205,
             "goals_scored": 2,
-            "xg_share": 0.166341523083842,
+            "xg_share": 0.15217516772208806,
             "minutes": 720
           },
           {
@@ -3698,13 +3702,13 @@
             "team": "Ipswich",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.1645216648992988,
-            "anytime_prob": 0.15170062157535302,
-            "two_plus_prob": 0.012136995503889803,
-            "first_scorer_prob": 0.025312572111312163,
+            "lambda_player": 0.15051029644203073,
+            "anytime_prob": 0.13973112774676244,
+            "two_plus_prob": 0.010251804764076194,
+            "first_scorer_prob": 0.021324234251973762,
             "xg_per_90": 0.22883720930232557,
             "goals_scored": 1,
-            "xg_share": 0.166341523083842,
+            "xg_share": 0.15217516772208806,
             "minutes": 645
           },
           {
@@ -3714,13 +3718,13 @@
             "team": "Ipswich",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.1113530780720864,
-            "anytime_prob": 0.10537717854226292,
-            "two_plus_prob": 0.00575817365940931,
-            "first_scorer_prob": 0.011900757740251825,
+            "lambda_player": 0.10186977381137448,
+            "anytime_prob": 0.09685284257688476,
+            "two_plus_prob": 0.004849445931806182,
+            "first_scorer_prob": 0.01000395622766274,
             "xg_per_90": 0.23450704225352115,
             "goals_scored": 1,
-            "xg_share": 0.11258481135552724,
+            "xg_share": 0.10299660742165717,
             "minutes": 426
           },
           {
@@ -3730,14 +3734,30 @@
             "team": "Ipswich",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.09197162340224214,
-            "anytime_prob": 0.0878689676467368,
-            "two_plus_prob": 0.003978795845644131,
-            "first_scorer_prob": 0.008196250027066549,
+            "lambda_player": 0.0843591856643382,
+            "anytime_prob": 0.08089893112860058,
+            "two_plus_prob": 0.0033643134153865106,
+            "first_scorer_prob": 0.006919731316270678,
             "xg_per_90": 0.0,
             "goals_scored": 0,
-            "xg_share": 0.0929889685141868,
+            "xg_share": 0.08529232571350204,
             "minutes": 482
+          },
+          {
+            "player_id": 267,
+            "name": "Sa\u0161a Luki\u0107",
+            "web_name": "Luki\u0107",
+            "team": "Ipswich",
+            "position": "MID",
+            "side": "away",
+            "lambda_player": 0.08353394872189507,
+            "anytime_prob": 0.08014014192535024,
+            "two_plus_prob": 0.003300615709612764,
+            "first_scorer_prob": 0.006787771092904961,
+            "xg_per_90": 0.003673469387755102,
+            "goals_scored": 0,
+            "xg_share": 0.0844579604036502,
+            "minutes": 490
           },
           {
             "player_id": 315,
@@ -3746,13 +3766,13 @@
             "team": "Ipswich",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.08478082282908256,
-            "anytime_prob": 0.08128637661094573,
-            "two_plus_prob": 0.003397079675733841,
-            "first_scorer_prob": 0.0069894212181055605,
+            "lambda_player": 0.07775875851792916,
+            "anytime_prob": 0.07481240674988732,
+            "two_plus_prob": 0.0028709681025677475,
+            "first_scorer_prob": 0.005898437933904698,
             "xg_per_90": 0.040632054176072234,
             "goals_scored": 0,
-            "xg_share": 0.08571862682232717,
+            "xg_share": 0.07861888787046999,
             "minutes": 443
           },
           {
@@ -3762,30 +3782,14 @@
             "team": "Ipswich",
             "position": "DEF",
             "side": "away",
-            "lambda_player": 0.03057294060653067,
-            "anytime_prob": 0.030110314854822184,
-            "two_plus_prob": 0.00045793511599193093,
-            "first_scorer_prob": 0.0009336375949752335,
+            "lambda_player": 0.028031624966618218,
+            "anytime_prob": 0.027642384462136738,
+            "two_plus_prob": 0.0003856204499442101,
+            "first_scorer_prob": 0.0007856657960613694,
             "xg_per_90": 0.0375,
             "goals_scored": 1,
-            "xg_share": 0.030911123521360787,
+            "xg_share": 0.028341697090874748,
             "minutes": 720
-          },
-          {
-            "player_id": 306,
-            "name": "Jacob Greaves",
-            "web_name": "Greaves",
-            "team": "Ipswich",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.030370699340410555,
-            "anytime_prob": 0.0299141433005784,
-            "two_plus_prob": 0.0004519574123756677,
-            "first_scorer_prob": 0.0009214190438496899,
-            "xg_per_90": 0.004026845637583892,
-            "goals_scored": 0,
-            "xg_share": 0.030706645161277236,
-            "minutes": 447
           }
         ],
         "top_scorers": [
@@ -3828,46 +3832,14 @@
             "team": "Ipswich",
             "position": "FWD",
             "side": "away",
-            "lambda_player": 0.24878885911601278,
-            "anytime_prob": 0.22025540803233545,
-            "two_plus_prob": 0.026263640594819282,
-            "first_scorer_prob": 0.05557549389878959,
+            "lambda_player": 0.2276009360830709,
+            "anytime_prob": 0.20355797229842654,
+            "two_plus_prob": 0.022287021257649337,
+            "first_scorer_prob": 0.04697602114529533,
             "xg_per_90": 0.42676864244741874,
             "goals_scored": 2,
-            "xg_share": 0.25154083978532205,
+            "xg_share": 0.23011854631145026,
             "minutes": 523
-          },
-          {
-            "player_id": 305,
-            "name": "Leif Davis",
-            "web_name": "Davis",
-            "team": "Ipswich",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.1645216648992988,
-            "anytime_prob": 0.15170062157535302,
-            "two_plus_prob": 0.012136995503889803,
-            "first_scorer_prob": 0.025312572111312163,
-            "xg_per_90": 0.205,
-            "goals_scored": 2,
-            "xg_share": 0.166341523083842,
-            "minutes": 720
-          },
-          {
-            "player_id": 591,
-            "name": "Julio Enciso",
-            "web_name": "Enciso",
-            "team": "Ipswich",
-            "position": "MID",
-            "side": "away",
-            "lambda_player": 0.1645216648992988,
-            "anytime_prob": 0.15170062157535302,
-            "two_plus_prob": 0.012136995503889803,
-            "first_scorer_prob": 0.025312572111312163,
-            "xg_per_90": 0.22883720930232557,
-            "goals_scored": 1,
-            "xg_share": 0.166341523083842,
-            "minutes": 645
           },
           {
             "player_id": 279,
@@ -3884,6 +3856,38 @@
             "goals_scored": 1,
             "xg_share": 0.08361415866420047,
             "minutes": 693
+          },
+          {
+            "player_id": 305,
+            "name": "Leif Davis",
+            "web_name": "Davis",
+            "team": "Ipswich",
+            "position": "DEF",
+            "side": "away",
+            "lambda_player": 0.15051029644203073,
+            "anytime_prob": 0.13973112774676244,
+            "two_plus_prob": 0.010251804764076194,
+            "first_scorer_prob": 0.021324234251973762,
+            "xg_per_90": 0.205,
+            "goals_scored": 2,
+            "xg_share": 0.15217516772208806,
+            "minutes": 720
+          },
+          {
+            "player_id": 591,
+            "name": "Julio Enciso",
+            "web_name": "Enciso",
+            "team": "Ipswich",
+            "position": "MID",
+            "side": "away",
+            "lambda_player": 0.15051029644203073,
+            "anytime_prob": 0.13973112774676244,
+            "two_plus_prob": 0.010251804764076194,
+            "first_scorer_prob": 0.021324234251973762,
+            "xg_per_90": 0.22883720930232557,
+            "goals_scored": 1,
+            "xg_share": 0.15217516772208806,
+            "minutes": 645
           },
           {
             "player_id": 289,
@@ -3926,121 +3930,121 @@
       "odds_comparison": {
         "h2h": {
           "leovegas": {
-            "home": 2.55,
-            "away": 2.6,
-            "draw": 3.35
+            "home": 2.7,
+            "away": 2.5,
+            "draw": 3.3
           },
           "betfred_uk": {
-            "home": 2.62,
-            "away": 2.6,
-            "draw": 3.5
+            "home": 2.75,
+            "away": 2.5,
+            "draw": 3.4
           },
           "williamhill": {
-            "home": 2.62,
-            "away": 2.62,
+            "home": 2.75,
+            "away": 2.45,
             "draw": 3.3
           },
           "sport888": {
-            "home": 2.6,
-            "away": 2.6,
+            "home": 2.75,
+            "away": 2.45,
             "draw": 3.25
           },
           "unibet_uk": {
-            "home": 2.65,
-            "away": 2.65,
+            "home": 2.8,
+            "away": 2.55,
             "draw": 3.4
           },
           "paddypower": {
-            "home": 2.6,
-            "away": 2.7,
+            "home": 2.75,
+            "away": 2.5,
             "draw": 3.3
           },
           "skybet": {
-            "home": 2.5,
-            "away": 2.63,
-            "draw": 3.25
-          },
-          "ladbrokes_uk": {
-            "home": 2.6,
+            "home": 2.75,
             "away": 2.5,
-            "draw": 3.5
-          },
-          "coral": {
-            "home": 2.62,
-            "away": 2.6,
-            "draw": 3.5
-          },
-          "betway": {
-            "home": 2.6,
-            "away": 2.62,
             "draw": 3.4
           },
+          "ladbrokes_uk": {
+            "home": 2.75,
+            "away": 2.45,
+            "draw": 3.4
+          },
+          "coral": {
+            "home": 2.8,
+            "away": 2.45,
+            "draw": 3.4
+          },
+          "betway": {
+            "home": 2.8,
+            "away": 2.5,
+            "draw": 3.25
+          },
           "smarkets": {
-            "home": 2.72,
-            "away": 2.86,
+            "home": 2.92,
+            "away": 2.66,
             "draw": 3.5
           },
           "betfair_ex_uk": {
-            "home": 2.72,
-            "away": 2.86,
+            "home": 2.94,
+            "away": 2.66,
             "draw": 3.5
           },
           "boylesports": {
-            "home": 2.6,
-            "away": 2.62,
-            "draw": 3.6
+            "home": 2.8,
+            "away": 2.4,
+            "draw": 3.5
           },
           "betano_uk": {
-            "home": 2.5,
-            "away": 2.62,
+            "home": 2.7,
+            "away": 2.45,
             "draw": 3.4
           },
           "betvictor": {
-            "home": 2.5,
-            "away": 2.62,
+            "home": 2.7,
+            "away": 2.45,
             "draw": 3.4
           },
           "livescorebet": {
-            "home": 2.55,
-            "away": 2.65,
-            "draw": 3.15
+            "home": 2.85,
+            "away": 2.45,
+            "draw": 3.3
           },
           "casumo": {
-            "home": 2.63,
-            "away": 2.75,
-            "draw": 3.25
+            "home": 2.85,
+            "away": 2.48,
+            "draw": 3.35
           },
           "virginbet": {
-            "home": 2.55,
-            "away": 2.65,
-            "draw": 3.15
+            "home": 2.85,
+            "away": 2.43,
+            "draw": 3.25
           },
           "grosvenor": {
-            "home": 2.6,
-            "away": 2.7,
-            "draw": 3.2
+            "home": 2.8,
+            "away": 2.45,
+            "draw": 3.25
           },
           "matchbook": {
-            "home": 2.72,
-            "away": 2.86,
+            "home": 2.92,
+            "away": 2.66,
             "draw": 3.5
           },
           "betfair_sb_uk": {
-            "home": 2.63,
-            "away": 2.7,
+            "home": 2.8,
+            "away": 2.55,
             "draw": 3.4
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.94,
+            "over": 1.95,
             "bookmaker_over": "matchbook",
-            "under": 2.04,
+            "under": 2.02,
             "bookmaker_under": "matchbook"
           }
         },
-        "bookmaker_home": "smarkets",
-        "bookmaker_draw": "boylesports",
+        "bookmaker_home": "betfair_ex_uk",
+        "bookmaker_draw": "smarkets",
         "bookmaker_away": "smarkets"
       },
       "model_disagreement": 0.00969232737068578,
@@ -4053,23 +4057,23 @@
           "market_type": "1x2",
           "confidence": "high",
           "confidence_tier": "high",
-          "bookmaker": "smarkets",
+          "bookmaker": "betfair_ex_uk",
           "full_kelly": 0.0,
           "half_kelly": 0.0,
           "full_kelly_pct": 0.0,
           "half_kelly_pct": 0.0,
-          "edge": 0.17735940263831962,
+          "edge": 0.20729778126431425,
           "model_prob": 0.5468260157174951,
-          "implied_prob": 0.3694666130791755,
-          "raw_implied_prob": 0.3676470588235294,
-          "expected_value": 0.48736676275158686,
+          "implied_prob": 0.33952823445318087,
+          "raw_implied_prob": 0.3401360544217687,
+          "expected_value": 0.6076684862094357,
           "recommendation": "hold_for_review",
-          "decimal_odds": 2.72,
-          "market_gap_1x2": 0.17735940263831962,
-          "market_favourite": "home",
+          "decimal_odds": 2.94,
+          "market_gap_1x2": 0.20729778126431425,
+          "market_favourite": "away",
           "hold_reasons": [
             "new_to_training_window:Hull City (8 < 10)",
-            "model_market_gap_1x2 (0.177 > 0.10)"
+            "model_market_gap_1x2 (0.207 > 0.10)"
           ]
         }
       ]
@@ -4743,151 +4747,132 @@
       "odds_comparison": {
         "h2h": {
           "unibet_uk": {
-            "away": 4.6,
-            "home": 1.62,
-            "draw": 4.5
+            "away": 4.35,
+            "home": 1.73,
+            "draw": 4.25
           },
           "betfred_uk": {
-            "away": 4.6,
-            "home": 1.67,
-            "draw": 4.33
+            "away": 4.2,
+            "home": 1.73,
+            "draw": 4.2
           },
           "williamhill": {
-            "away": 4.4,
-            "home": 1.65,
-            "draw": 4.2
+            "away": 4.2,
+            "home": 1.7,
+            "draw": 4.0
           },
           "sport888": {
-            "away": 4.4,
-            "home": 1.65,
-            "draw": 4.2
+            "away": 4.2,
+            "home": 1.67,
+            "draw": 4.0
           },
           "leovegas": {
-            "away": 4.4,
-            "home": 1.6,
-            "draw": 4.4
+            "away": 4.2,
+            "home": 1.68,
+            "draw": 4.2
           },
           "paddypower": {
-            "away": 4.75,
-            "home": 1.62,
-            "draw": 4.33
+            "away": 4.33,
+            "home": 1.67,
+            "draw": 4.0
           },
           "skybet": {
-            "away": 4.6,
-            "home": 1.6,
+            "away": 4.33,
+            "home": 1.67,
             "draw": 4.2
           },
           "betway": {
-            "away": 4.5,
-            "home": 1.61,
-            "draw": 4.5
+            "away": 4.33,
+            "home": 1.7,
+            "draw": 4.2
           },
           "ladbrokes_uk": {
-            "away": 4.5,
-            "home": 1.65,
-            "draw": 4.4
+            "away": 4.33,
+            "home": 1.7,
+            "draw": 4.2
           },
           "coral": {
-            "away": 4.5,
-            "home": 1.65,
-            "draw": 4.4
+            "away": 4.33,
+            "home": 1.7,
+            "draw": 4.2
           },
           "betfair_ex_uk": {
-            "away": 5.2,
-            "home": 1.67,
-            "draw": 4.7
+            "away": 4.8,
+            "home": 1.76,
+            "draw": 4.4
           },
           "smarkets": {
-            "away": 5.2,
-            "home": 1.67,
-            "draw": 4.7
+            "away": 4.8,
+            "home": 1.75,
+            "draw": 4.4
           },
           "boylesports": {
-            "away": 4.75,
-            "home": 1.62,
-            "draw": 4.33
+            "away": 4.5,
+            "home": 1.67,
+            "draw": 4.2
           },
           "betano_uk": {
-            "away": 4.6,
-            "home": 1.6,
-            "draw": 4.33
+            "away": 4.33,
+            "home": 1.67,
+            "draw": 4.1
           },
           "betvictor": {
-            "away": 4.6,
-            "home": 1.6,
-            "draw": 4.33
+            "away": 4.33,
+            "home": 1.67,
+            "draw": 4.1
           },
           "virginbet": {
             "away": 4.4,
-            "home": 1.61,
-            "draw": 4.3
+            "home": 1.67,
+            "draw": 4.1
           },
           "livescorebet": {
             "away": 4.4,
-            "home": 1.61,
-            "draw": 4.3
+            "home": 1.68,
+            "draw": 4.1
           },
           "grosvenor": {
-            "away": 4.5,
-            "home": 1.62,
-            "draw": 4.35
+            "away": 4.4,
+            "home": 1.67,
+            "draw": 4.1
           },
           "casumo": {
-            "away": 4.6,
-            "home": 1.64,
-            "draw": 4.4
+            "away": 4.5,
+            "home": 1.68,
+            "draw": 4.2
           },
           "matchbook": {
-            "away": 5.2,
-            "home": 1.67,
-            "draw": 4.7
+            "away": 4.8,
+            "home": 1.76,
+            "draw": 4.4
           },
           "betfair_sb_uk": {
-            "away": 4.75,
-            "home": 1.62,
-            "draw": 4.4
+            "away": 4.5,
+            "home": 1.7,
+            "draw": 4.2
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.4,
+            "over": 1.44,
             "bookmaker_over": "williamhill",
-            "under": 2.8,
+            "under": 2.62,
             "bookmaker_under": "williamhill"
           },
           "3.5": {
-            "over": 2.08,
+            "over": 2.36,
             "bookmaker_over": "matchbook",
-            "under": 1.89,
+            "under": 1.72,
             "bookmaker_under": "matchbook"
           }
         },
-        "bookmaker_home": "betfred_uk",
+        "bookmaker_home": "betfair_ex_uk",
         "bookmaker_draw": "betfair_ex_uk",
         "bookmaker_away": "betfair_ex_uk"
       },
       "model_disagreement": 0.004319863016017981,
       "shap_features": [],
-      "value_bets": [
-        {
-          "market": "Under 3.5 Goals",
-          "market_type": "over_under",
-          "confidence": "medium",
-          "confidence_tier": "medium",
-          "bookmaker": "matchbook",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.0944854421868242,
-          "model_prob": 0.6184149132195699,
-          "implied_prob": 0.5239294710327457,
-          "raw_implied_prob": 0.5291005291005292,
-          "expected_value": 0.16880418598498703,
-          "recommendation": "bet",
-          "decimal_odds": 1.89
-        }
-      ],
+      "value_bets": [],
       "narrative": "Man City vs Brighton \u2014 Matchweek 9\n\nOur model rates Man City as 53% favorites (fair odds: 1.90), driven primarily by form and recent results. Man City's expected goals stand at 1.9 while Brighton are projected for 1.2 xG.\n\nThe match has a 60% chance of going over 2.5 goals, with both teams to score probability at 59%. We expect around 13 total corners and 3 cards.",
       "held_bets": []
     },
@@ -5560,116 +5545,116 @@
       "odds_comparison": {
         "h2h": {
           "unibet_uk": {
-            "away": 5.25,
-            "home": 1.58,
-            "draw": 4.35
-          },
-          "sport888": {
             "away": 5.0,
-            "home": 1.53,
+            "home": 1.67,
             "draw": 4.2
           },
+          "sport888": {
+            "away": 4.8,
+            "home": 1.61,
+            "draw": 4.0
+          },
           "betfred_uk": {
-            "away": 5.5,
-            "home": 1.57,
-            "draw": 4.33
+            "away": 5.0,
+            "home": 1.67,
+            "draw": 4.0
           },
           "williamhill": {
-            "away": 5.5,
-            "home": 1.53,
-            "draw": 4.33
+            "away": 5.0,
+            "home": 1.62,
+            "draw": 4.0
           },
           "leovegas": {
-            "away": 5.2,
-            "home": 1.53,
-            "draw": 4.3
+            "away": 4.75,
+            "home": 1.64,
+            "draw": 4.0
           },
           "paddypower": {
-            "away": 5.5,
-            "home": 1.57,
-            "draw": 4.33
+            "away": 4.75,
+            "home": 1.62,
+            "draw": 4.0
           },
           "skybet": {
-            "away": 5.25,
-            "home": 1.55,
+            "away": 4.75,
+            "home": 1.62,
             "draw": 4.2
           },
           "ladbrokes_uk": {
-            "away": 5.25,
-            "home": 1.57,
-            "draw": 4.33
+            "away": 4.8,
+            "home": 1.65,
+            "draw": 4.0
           },
           "coral": {
-            "away": 5.25,
-            "home": 1.57,
-            "draw": 4.33
+            "away": 4.8,
+            "home": 1.65,
+            "draw": 4.2
           },
           "betway": {
-            "away": 5.0,
-            "home": 1.57,
-            "draw": 4.33
+            "away": 4.75,
+            "home": 1.67,
+            "draw": 4.0
           },
           "betfair_ex_uk": {
-            "away": 5.9,
-            "home": 1.62,
-            "draw": 4.6
+            "away": 5.3,
+            "home": 1.7,
+            "draw": 4.3
           },
           "smarkets": {
-            "away": 5.9,
-            "home": 1.62,
-            "draw": 4.6
+            "away": 5.3,
+            "home": 1.7,
+            "draw": 4.3
           },
           "boylesports": {
-            "away": 5.0,
-            "home": 1.55,
-            "draw": 4.33
+            "away": 4.75,
+            "home": 1.62,
+            "draw": 4.0
           },
           "betano_uk": {
-            "away": 5.5,
-            "home": 1.53,
-            "draw": 4.2
+            "away": 5.0,
+            "home": 1.61,
+            "draw": 4.0
           },
           "betvictor": {
-            "away": 5.5,
-            "home": 1.53,
-            "draw": 4.2
+            "away": 5.0,
+            "home": 1.61,
+            "draw": 4.0
           },
           "virginbet": {
-            "away": 5.3,
-            "home": 1.52,
-            "draw": 4.25
+            "away": 4.8,
+            "home": 1.63,
+            "draw": 4.0
           },
           "livescorebet": {
-            "away": 5.3,
-            "home": 1.52,
-            "draw": 4.25
+            "away": 5.0,
+            "home": 1.65,
+            "draw": 3.95
           },
           "casumo": {
-            "away": 5.6,
-            "home": 1.55,
-            "draw": 4.4
+            "away": 5.1,
+            "home": 1.65,
+            "draw": 4.1
           },
           "grosvenor": {
-            "away": 5.5,
-            "home": 1.53,
-            "draw": 4.35
+            "away": 4.9,
+            "home": 1.63,
+            "draw": 4.0
           },
           "matchbook": {
-            "away": 5.9,
-            "home": 1.62,
-            "draw": 4.6
+            "away": 5.3,
+            "home": 1.7,
+            "draw": 4.3
           },
           "betfair_sb_uk": {
-            "away": 5.5,
-            "home": 1.57,
-            "draw": 4.4
+            "away": 5.0,
+            "home": 1.65,
+            "draw": 4.2
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.68,
+            "over": 1.77,
             "bookmaker_over": "matchbook",
-            "under": 2.4,
+            "under": 2.28,
             "bookmaker_under": "matchbook"
           }
         },
@@ -5679,26 +5664,7 @@
       },
       "model_disagreement": 0.0014245230561140455,
       "shap_features": [],
-      "value_bets": [
-        {
-          "market": "Under 2.5 Goals",
-          "market_type": "over_under",
-          "confidence": "low",
-          "confidence_tier": "low",
-          "bookmaker": "matchbook",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.06674953429183822,
-          "model_prob": 0.4785142401741912,
-          "implied_prob": 0.411764705882353,
-          "raw_implied_prob": 0.4166666666666667,
-          "expected_value": 0.14843417641805878,
-          "recommendation": "bet",
-          "decimal_odds": 2.4
-        }
-      ],
+      "value_bets": [],
       "narrative": "Tottenham vs Crystal Palace \u2014 Matchweek 9\n\nOur model rates Tottenham as 46% favorites (fair odds: 2.17), driven primarily by form and recent results. Tottenham's expected goals stand at 1.6 while Crystal Palace are projected for 1.2 xG.\n\nThe match has a 52% chance of going over 2.5 goals, with both teams to score probability at 55%. We expect around 9 total corners and 4 cards.",
       "held_bets": [
         {
@@ -5711,17 +5677,17 @@
           "half_kelly": 0.0,
           "full_kelly_pct": 0.0,
           "half_kelly_pct": 0.0,
-          "edge": 0.10507512087947646,
+          "edge": 0.08695462385233257,
           "model_prob": 0.2738633428500314,
-          "implied_prob": 0.16878822197055493,
-          "raw_implied_prob": 0.1694915254237288,
-          "expected_value": 0.6157937228151853,
+          "implied_prob": 0.18690871899769881,
+          "raw_implied_prob": 0.18867924528301888,
+          "expected_value": 0.45147571710516643,
           "recommendation": "hold_for_review",
-          "decimal_odds": 5.9,
-          "market_gap_1x2": 0.15417848937051143,
+          "decimal_odds": 5.3,
+          "market_gap_1x2": 0.12217137061581856,
           "market_favourite": "home",
           "hold_reasons": [
-            "model_market_gap_1x2 (0.154 > 0.10)"
+            "model_market_gap_1x2 (0.122 > 0.10)"
           ]
         }
       ]
@@ -6395,116 +6361,116 @@
       "odds_comparison": {
         "h2h": {
           "leovegas": {
-            "home": 1.92,
-            "away": 3.5,
-            "draw": 3.6
-          },
-          "unibet_uk": {
-            "home": 1.95,
-            "away": 3.7,
-            "draw": 3.75
-          },
-          "sport888": {
-            "home": 1.95,
-            "away": 3.5,
+            "home": 2.12,
+            "away": 3.2,
             "draw": 3.5
           },
+          "unibet_uk": {
+            "home": 2.15,
+            "away": 3.3,
+            "draw": 3.6
+          },
+          "sport888": {
+            "home": 2.1,
+            "away": 3.3,
+            "draw": 3.4
+          },
           "betfred_uk": {
-            "home": 2.0,
-            "away": 3.5,
-            "draw": 3.75
+            "home": 2.15,
+            "away": 3.2,
+            "draw": 3.6
           },
           "williamhill": {
-            "home": 1.95,
-            "away": 3.6,
-            "draw": 3.6
+            "home": 2.1,
+            "away": 3.3,
+            "draw": 3.4
           },
           "paddypower": {
-            "home": 1.91,
-            "away": 3.75,
-            "draw": 3.6
+            "home": 2.1,
+            "away": 3.3,
+            "draw": 3.4
           },
           "skybet": {
-            "home": 1.91,
-            "away": 3.75,
-            "draw": 3.6
+            "home": 2.1,
+            "away": 3.3,
+            "draw": 3.5
           },
           "betway": {
-            "home": 1.95,
-            "away": 3.6,
-            "draw": 3.6
+            "home": 2.1,
+            "away": 3.25,
+            "draw": 3.5
           },
           "betfair_ex_uk": {
-            "home": 2.02,
-            "away": 4.0,
-            "draw": 3.85
+            "home": 2.2,
+            "away": 3.6,
+            "draw": 3.65
           },
           "ladbrokes_uk": {
-            "home": 1.95,
-            "away": 3.6,
-            "draw": 3.7
+            "home": 2.1,
+            "away": 3.25,
+            "draw": 3.5
           },
           "coral": {
-            "home": 1.95,
-            "away": 3.6,
-            "draw": 3.75
+            "home": 2.15,
+            "away": 3.3,
+            "draw": 3.5
           },
           "smarkets": {
-            "home": 2.0,
-            "away": 4.0,
-            "draw": 3.8
+            "home": 2.2,
+            "away": 3.6,
+            "draw": 3.65
           },
           "boylesports": {
-            "home": 1.91,
-            "away": 3.75,
-            "draw": 3.8
+            "home": 2.1,
+            "away": 3.3,
+            "draw": 3.6
           },
           "betano_uk": {
-            "home": 1.9,
-            "away": 3.6,
-            "draw": 3.7
+            "home": 2.1,
+            "away": 3.2,
+            "draw": 3.5
           },
           "betvictor": {
-            "home": 1.9,
-            "away": 3.6,
-            "draw": 3.7
+            "home": 2.1,
+            "away": 3.2,
+            "draw": 3.5
           },
           "livescorebet": {
-            "home": 1.85,
-            "away": 3.65,
-            "draw": 3.7
+            "home": 2.12,
+            "away": 3.25,
+            "draw": 3.55
           },
           "grosvenor": {
-            "home": 1.88,
-            "away": 3.7,
-            "draw": 3.75
+            "home": 2.1,
+            "away": 3.25,
+            "draw": 3.55
           },
           "virginbet": {
-            "home": 1.85,
-            "away": 3.65,
-            "draw": 3.7
+            "home": 2.08,
+            "away": 3.25,
+            "draw": 3.55
           },
           "casumo": {
-            "home": 1.89,
-            "away": 3.8,
-            "draw": 3.8
+            "home": 2.12,
+            "away": 3.3,
+            "draw": 3.6
           },
           "matchbook": {
-            "home": 2.02,
-            "away": 4.0,
-            "draw": 3.85
+            "home": 2.2,
+            "away": 3.6,
+            "draw": 3.65
           },
           "betfair_sb_uk": {
-            "home": 1.95,
-            "away": 3.9,
-            "draw": 3.7
+            "home": 2.1,
+            "away": 3.4,
+            "draw": 3.5
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.71,
+            "over": 1.77,
             "bookmaker_over": "grosvenor",
-            "under": 2.15,
+            "under": 2.02,
             "bookmaker_under": "leovegas"
           }
         },
@@ -6518,20 +6484,20 @@
         {
           "market": "Under 2.5 Goals",
           "market_type": "over_under",
-          "confidence": "medium",
-          "confidence_tier": "medium",
+          "confidence": "low",
+          "confidence_tier": "low",
           "bookmaker": "leovegas",
-          "full_kelly": 50.0,
-          "half_kelly": 25.0,
-          "full_kelly_pct": 0.05,
-          "half_kelly_pct": 0.025,
-          "edge": 0.07573597103604768,
+          "full_kelly": 46.918752758882285,
+          "half_kelly": 23.459376379441142,
+          "full_kelly_pct": 0.046918752758882284,
+          "half_kelly_pct": 0.023459376379441142,
+          "edge": 0.05172268272620595,
           "model_prob": 0.518741152383198,
-          "implied_prob": 0.4430051813471503,
-          "raw_implied_prob": 0.46511627906976744,
-          "expected_value": 0.11529347762387554,
+          "implied_prob": 0.467018469656992,
+          "raw_implied_prob": 0.49504950495049505,
+          "expected_value": 0.04785712781405993,
           "recommendation": "bet",
-          "decimal_odds": 2.15
+          "decimal_odds": 2.02
         }
       ],
       "narrative": "Aston Villa vs Fulham \u2014 Matchweek 9\n\nOur model rates Aston Villa as 47% favorites (fair odds: 2.12), driven primarily by form and recent results. Aston Villa's expected goals stand at 1.5 while Fulham are projected for 1.1 xG.\n\nThe match has a 48% chance of going over 2.5 goals, with both teams to score probability at 51%. We expect around 9 total corners and 4 cards.",
@@ -6816,14 +6782,46 @@
             "team": "Liverpool",
             "position": "FWD",
             "side": "home",
-            "lambda_player": 0.4207227590261056,
-            "anytime_prob": 0.3434278951316171,
-            "two_plus_prob": 0.06719306767181349,
-            "first_scorer_prob": 0.12585984561548705,
+            "lambda_player": 0.3615370872642268,
+            "anytime_prob": 0.3033952395684,
+            "two_plus_prob": 0.05154678350756481,
+            "first_scorer_prob": 0.09554557491229541,
             "xg_per_90": 0.6777777777777777,
             "goals_scored": 6,
-            "xg_share": 0.365858151568092,
+            "xg_share": 0.3143906233548792,
             "minutes": 567
+          },
+          {
+            "player_id": 368,
+            "name": "Dominik Szoboszlai",
+            "web_name": "Szoboszlai",
+            "team": "Liverpool",
+            "position": "MID",
+            "side": "home",
+            "lambda_player": 0.12869704277321423,
+            "anytime_prob": 0.12075970259785496,
+            "two_plus_prob": 0.007604076435157495,
+            "first_scorer_prob": 0.013537534097311336,
+            "xg_per_90": 0.29044585987261146,
+            "goals_scored": 1,
+            "xg_share": 0.1119142265806596,
+            "minutes": 471
+          },
+          {
+            "player_id": 371,
+            "name": "Ryan Gravenberch",
+            "web_name": "Gravenberch",
+            "team": "Liverpool",
+            "position": "MID",
+            "side": "home",
+            "lambda_player": 0.10757735003948725,
+            "anytime_prob": 0.10199294111713209,
+            "two_plus_prob": 0.005387721405759369,
+            "first_scorer_prob": 0.009557403431066975,
+            "xg_per_90": 0.04486803519061584,
+            "goals_scored": 0,
+            "xg_share": 0.09354866023208948,
+            "minutes": 341
           },
           {
             "player_id": 366,
@@ -6832,13 +6830,13 @@
             "team": "Liverpool",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.12119180178035362,
-            "anytime_prob": 0.1141359670013955,
-            "two_plus_prob": 0.0067765087098839855,
-            "first_scorer_prob": 0.012049010579178938,
+            "lambda_player": 0.10414300171779838,
+            "anytime_prob": 0.09890357013008955,
+            "two_plus_prob": 0.005060683086245479,
+            "first_scorer_prob": 0.008972036275671063,
             "xg_per_90": 0.1782608695652174,
             "goals_scored": 0,
-            "xg_share": 0.10538771110743635,
+            "xg_share": 0.09056217019356008,
             "minutes": 621
           },
           {
@@ -6848,30 +6846,14 @@
             "team": "Liverpool",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.11823590417595474,
-            "anytime_prob": 0.11151356976897897,
-            "two_plus_prob": 0.006462573342547878,
-            "first_scorer_prob": 0.011485045400127436,
+            "lambda_player": 0.10160292850516912,
+            "anytime_prob": 0.09661180983931661,
+            "two_plus_prob": 0.0048249241420065675,
+            "first_scorer_prob": 0.008550379771824509,
             "xg_per_90": 0.23478260869565218,
             "goals_scored": 1,
-            "xg_share": 0.10281727912920618,
+            "xg_share": 0.08835333677420494,
             "minutes": 460
-          },
-          {
-            "player_id": 371,
-            "name": "Ryan Gravenberch",
-            "web_name": "Gravenberch",
-            "team": "Liverpool",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.10874412284854938,
-            "anytime_prob": 0.10304010031854438,
-            "two_plus_prob": 0.0055009827973616365,
-            "first_scorer_prob": 0.009760401615106114,
-            "xg_per_90": 0.04486803519061584,
-            "goals_scored": 0,
-            "xg_share": 0.09456327932284539,
-            "minutes": 341
           },
           {
             "player_id": 627,
@@ -6880,13 +6862,13 @@
             "team": "Liverpool",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.08966222733343235,
-            "anytime_prob": 0.0857600616140175,
-            "two_plus_prob": 0.003787272421150359,
-            "first_scorer_prob": 0.006698078425998356,
+            "lambda_player": 0.07704888744975327,
+            "anytime_prob": 0.07415540968078749,
+            "two_plus_prob": 0.0028201140453195522,
+            "first_scorer_prob": 0.004976891485661989,
             "xg_per_90": 0.19453681710213777,
             "goals_scored": 0,
-            "xg_share": 0.07796977000631469,
+            "xg_share": 0.06700128038710543,
             "minutes": 421
           },
           {
@@ -6896,13 +6878,13 @@
             "team": "Liverpool",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.07586803851290429,
-            "anytime_prob": 0.07306148132566903,
-            "two_plus_prob": 0.002736474091790439,
-            "first_scorer_prob": 0.00482839676267258,
+            "lambda_player": 0.06519521245748354,
+            "anytime_prob": 0.06311544601127383,
+            "two_plus_prob": 0.0020350584658441265,
+            "first_scorer_prob": 0.0035842667336837193,
             "xg_per_90": 0.16305882352941176,
             "goals_scored": 2,
-            "xg_share": 0.06597442077457397,
+            "xg_share": 0.056693391096781516,
             "minutes": 425
           },
           {
@@ -6912,30 +6894,14 @@
             "team": "Liverpool",
             "position": "MID",
             "side": "home",
-            "lambda_player": 0.06207384969237624,
-            "anytime_prob": 0.06018652070807751,
-            "two_plus_prob": 0.0018486800556415592,
-            "first_scorer_prob": 0.003254344607799855,
+            "lambda_player": 0.0533415374652138,
+            "anytime_prob": 0.05194383951628101,
+            "two_plus_prob": 0.0013730663127119666,
+            "first_scorer_prob": 0.0024135068641197906,
             "xg_per_90": 0.0984375,
             "goals_scored": 0,
-            "xg_share": 0.05397907154283325,
+            "xg_share": 0.0463855018064576,
             "minutes": 576
-          },
-          {
-            "player_id": 579,
-            "name": "Ronald Araujo",
-            "web_name": "Araujo",
-            "team": "Liverpool",
-            "position": "DEF",
-            "side": "home",
-            "lambda_player": 0.03810112600102083,
-            "anytime_prob": 0.03738440949623312,
-            "two_plus_prob": 0.0007076715919020274,
-            "first_scorer_prob": 0.0012407490646624954,
-            "xg_per_90": 0.010953346855983773,
-            "goals_scored": 0,
-            "xg_share": 0.03313252547512293,
-            "minutes": 493
           }
         ],
         "away_scorers": [
@@ -6946,13 +6912,13 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.3106399508754398,
-            "anytime_prob": 0.2670222636425892,
-            "two_plus_prob": 0.03933009562773204,
-            "first_scorer_prob": 0.05931514058178051,
+            "lambda_player": 0.28210893602402254,
+            "anytime_prob": 0.24580847856778687,
+            "two_plus_prob": 0.03304431089820642,
+            "first_scorer_prob": 0.049581763431518856,
             "xg_per_90": 0.30092879256965943,
             "goals_scored": 2,
-            "xg_share": 0.22175789950917582,
+            "xg_share": 0.2013903392308381,
             "minutes": 646
           },
           {
@@ -6962,13 +6928,13 @@
             "team": "Arsenal",
             "position": "FWD",
             "side": "away",
-            "lambda_player": 0.3077636550340005,
-            "anytime_prob": 0.2649109679276703,
-            "two_plus_prob": 0.03867728064168452,
-            "first_scorer_prob": 0.058301274992843787,
+            "lambda_player": 0.2794968162460223,
+            "anytime_prob": 0.2438358647480905,
+            "two_plus_prob": 0.03249039638575518,
+            "first_scorer_prob": 0.04872846342260014,
             "xg_per_90": 0.3286689419795222,
             "goals_scored": 2,
-            "xg_share": 0.21970458562483158,
+            "xg_share": 0.19952561386758957,
             "minutes": 586
           },
           {
@@ -6978,13 +6944,13 @@
             "team": "Arsenal",
             "position": "DEF",
             "side": "away",
-            "lambda_player": 0.2114077443457854,
-            "anytime_prob": 0.19055604661032977,
-            "two_plus_prob": 0.01943332624988453,
-            "first_scorer_prob": 0.02880742291867049,
+            "lambda_player": 0.1919908036830153,
+            "anytime_prob": 0.17468554168984618,
+            "two_plus_prob": 0.016232755547667316,
+            "first_scorer_prob": 0.02397980541477087,
             "xg_per_90": 0.18375,
             "goals_scored": 1,
-            "xg_share": 0.15091857049930021,
+            "xg_share": 0.1370573141987648,
             "minutes": 720
           },
           {
@@ -6994,13 +6960,13 @@
             "team": "Arsenal",
             "position": "DEF",
             "side": "away",
-            "lambda_player": 0.17545404632779468,
-            "anytime_prob": 0.16092404509109048,
-            "two_plus_prob": 0.013704773625964117,
-            "first_scorer_prob": 0.02019040874291947,
+            "lambda_player": 0.1593393064580127,
+            "anytime_prob": 0.14729301910742665,
+            "two_plus_prob": 0.011423280160098137,
+            "first_scorer_prob": 0.01678082675548027,
             "xg_per_90": 0.18029556650246306,
             "goals_scored": 1,
-            "xg_share": 0.12525214694499745,
+            "xg_share": 0.11374824715815852,
             "minutes": 609
           },
           {
@@ -7010,14 +6976,30 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.13236368306802493,
-            "anytime_prob": 0.12397765735459354,
-            "two_plus_prob": 0.00802411363216822,
-            "first_scorer_prob": 0.011734728629056586,
+            "lambda_player": 0.12291643069753343,
+            "anytime_prob": 0.1156624370538436,
+            "two_plus_prob": 0.006962820284746762,
+            "first_scorer_prob": 0.010165074044904658,
             "xg_per_90": 0.040499999999999994,
             "goals_scored": 0,
-            "xg_share": 0.09449104098085984,
+            "xg_share": 0.08774688963809411,
             "minutes": 400
+          },
+          {
+            "player_id": 557,
+            "name": "Christos Tzolis",
+            "web_name": "Tzolis",
+            "team": "Arsenal",
+            "position": "MID",
+            "side": "away",
+            "lambda_player": 0.12249431214140859,
+            "anytime_prob": 0.1152890629601232,
+            "two_plus_prob": 0.006917005283442454,
+            "first_scorer_prob": 0.01009746368191585,
+            "xg_per_90": 0.047237569060773484,
+            "goals_scored": 0,
+            "xg_share": 0.08744555001939315,
+            "minutes": 362
           },
           {
             "player_id": 13,
@@ -7026,13 +7008,13 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.12739459437235442,
-            "anytime_prob": 0.11961379139541639,
-            "two_plus_prob": 0.007457347459220456,
-            "first_scorer_prob": 0.0108966509309386,
+            "lambda_player": 0.11819528541077583,
+            "anytime_prob": 0.11147747981434497,
+            "two_plus_prob": 0.006458306947099646,
+            "first_scorer_prob": 0.009420968741884172,
             "xg_per_90": 0.04298507462686567,
             "goals_scored": 0,
-            "xg_share": 0.09094373591426673,
+            "xg_share": 0.08437658501655876,
             "minutes": 670
           },
           {
@@ -7042,30 +7024,14 @@
             "team": "Arsenal",
             "position": "DEF",
             "side": "away",
-            "lambda_player": 0.08772702316389734,
-            "anytime_prob": 0.08398910764723466,
-            "two_plus_prob": 0.0036301988754213477,
-            "first_scorer_prob": 0.005268865856531396,
+            "lambda_player": 0.07966965322900635,
+            "anytime_prob": 0.07657865473416015,
+            "two_plus_prob": 0.003009996372568144,
+            "first_scorer_prob": 0.004362233682386672,
             "xg_per_90": 0.09963702359346643,
             "goals_scored": 1,
-            "xg_share": 0.06262607347249873,
+            "xg_share": 0.05687412357907926,
             "minutes": 551
-          },
-          {
-            "player_id": 10,
-            "name": "Benjamin White",
-            "web_name": "White",
-            "team": "Arsenal",
-            "position": "DEF",
-            "side": "away",
-            "lambda_player": 0.04567442744371883,
-            "anytime_prob": 0.04464705173478045,
-            "two_plus_prob": 0.001011852816097815,
-            "first_scorer_prob": 0.0014582321849904228,
-            "xg_per_90": 0.030451127819548868,
-            "goals_scored": 0,
-            "xg_share": 0.032605803157832486,
-            "minutes": 532
           }
         ],
         "top_scorers": [
@@ -7076,13 +7042,13 @@
             "team": "Liverpool",
             "position": "FWD",
             "side": "home",
-            "lambda_player": 0.4207227590261056,
-            "anytime_prob": 0.3434278951316171,
-            "two_plus_prob": 0.06719306767181349,
-            "first_scorer_prob": 0.12585984561548705,
+            "lambda_player": 0.3615370872642268,
+            "anytime_prob": 0.3033952395684,
+            "two_plus_prob": 0.05154678350756481,
+            "first_scorer_prob": 0.09554557491229541,
             "xg_per_90": 0.6777777777777777,
             "goals_scored": 6,
-            "xg_share": 0.365858151568092,
+            "xg_share": 0.3143906233548792,
             "minutes": 567
           },
           {
@@ -7092,13 +7058,13 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.3106399508754398,
-            "anytime_prob": 0.2670222636425892,
-            "two_plus_prob": 0.03933009562773204,
-            "first_scorer_prob": 0.05931514058178051,
+            "lambda_player": 0.28210893602402254,
+            "anytime_prob": 0.24580847856778687,
+            "two_plus_prob": 0.03304431089820642,
+            "first_scorer_prob": 0.049581763431518856,
             "xg_per_90": 0.30092879256965943,
             "goals_scored": 2,
-            "xg_share": 0.22175789950917582,
+            "xg_share": 0.2013903392308381,
             "minutes": 646
           },
           {
@@ -7108,13 +7074,13 @@
             "team": "Arsenal",
             "position": "FWD",
             "side": "away",
-            "lambda_player": 0.3077636550340005,
-            "anytime_prob": 0.2649109679276703,
-            "two_plus_prob": 0.03867728064168452,
-            "first_scorer_prob": 0.058301274992843787,
+            "lambda_player": 0.2794968162460223,
+            "anytime_prob": 0.2438358647480905,
+            "two_plus_prob": 0.03249039638575518,
+            "first_scorer_prob": 0.04872846342260014,
             "xg_per_90": 0.3286689419795222,
             "goals_scored": 2,
-            "xg_share": 0.21970458562483158,
+            "xg_share": 0.19952561386758957,
             "minutes": 586
           },
           {
@@ -7124,13 +7090,13 @@
             "team": "Arsenal",
             "position": "DEF",
             "side": "away",
-            "lambda_player": 0.2114077443457854,
-            "anytime_prob": 0.19055604661032977,
-            "two_plus_prob": 0.01943332624988453,
-            "first_scorer_prob": 0.02880742291867049,
+            "lambda_player": 0.1919908036830153,
+            "anytime_prob": 0.17468554168984618,
+            "two_plus_prob": 0.016232755547667316,
+            "first_scorer_prob": 0.02397980541477087,
             "xg_per_90": 0.18375,
             "goals_scored": 1,
-            "xg_share": 0.15091857049930021,
+            "xg_share": 0.1370573141987648,
             "minutes": 720
           },
           {
@@ -7140,14 +7106,30 @@
             "team": "Arsenal",
             "position": "DEF",
             "side": "away",
-            "lambda_player": 0.17545404632779468,
-            "anytime_prob": 0.16092404509109048,
-            "two_plus_prob": 0.013704773625964117,
-            "first_scorer_prob": 0.02019040874291947,
+            "lambda_player": 0.1593393064580127,
+            "anytime_prob": 0.14729301910742665,
+            "two_plus_prob": 0.011423280160098137,
+            "first_scorer_prob": 0.01678082675548027,
             "xg_per_90": 0.18029556650246306,
             "goals_scored": 1,
-            "xg_share": 0.12525214694499745,
+            "xg_share": 0.11374824715815852,
             "minutes": 609
+          },
+          {
+            "player_id": 368,
+            "name": "Dominik Szoboszlai",
+            "web_name": "Szoboszlai",
+            "team": "Liverpool",
+            "position": "MID",
+            "side": "home",
+            "lambda_player": 0.12869704277321423,
+            "anytime_prob": 0.12075970259785496,
+            "two_plus_prob": 0.007604076435157495,
+            "first_scorer_prob": 0.013537534097311336,
+            "xg_per_90": 0.29044585987261146,
+            "goals_scored": 1,
+            "xg_share": 0.1119142265806596,
+            "minutes": 471
           },
           {
             "player_id": 7,
@@ -7156,46 +7138,30 @@
             "team": "Arsenal",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.13236368306802493,
-            "anytime_prob": 0.12397765735459354,
-            "two_plus_prob": 0.00802411363216822,
-            "first_scorer_prob": 0.011734728629056586,
+            "lambda_player": 0.12291643069753343,
+            "anytime_prob": 0.1156624370538436,
+            "two_plus_prob": 0.006962820284746762,
+            "first_scorer_prob": 0.010165074044904658,
             "xg_per_90": 0.040499999999999994,
             "goals_scored": 0,
-            "xg_share": 0.09449104098085984,
+            "xg_share": 0.08774688963809411,
             "minutes": 400
           },
           {
-            "player_id": 13,
-            "name": "Declan Rice",
-            "web_name": "Rice",
+            "player_id": 557,
+            "name": "Christos Tzolis",
+            "web_name": "Tzolis",
             "team": "Arsenal",
             "position": "MID",
             "side": "away",
-            "lambda_player": 0.12739459437235442,
-            "anytime_prob": 0.11961379139541639,
-            "two_plus_prob": 0.007457347459220456,
-            "first_scorer_prob": 0.0108966509309386,
-            "xg_per_90": 0.04298507462686567,
+            "lambda_player": 0.12249431214140859,
+            "anytime_prob": 0.1152890629601232,
+            "two_plus_prob": 0.006917005283442454,
+            "first_scorer_prob": 0.01009746368191585,
+            "xg_per_90": 0.047237569060773484,
             "goals_scored": 0,
-            "xg_share": 0.09094373591426673,
-            "minutes": 670
-          },
-          {
-            "player_id": 366,
-            "name": "Florian Wirtz",
-            "web_name": "Wirtz",
-            "team": "Liverpool",
-            "position": "MID",
-            "side": "home",
-            "lambda_player": 0.12119180178035362,
-            "anytime_prob": 0.1141359670013955,
-            "two_plus_prob": 0.0067765087098839855,
-            "first_scorer_prob": 0.012049010579178938,
-            "xg_per_90": 0.1782608695652174,
-            "goals_scored": 0,
-            "xg_share": 0.10538771110743635,
-            "minutes": 621
+            "xg_share": 0.08744555001939315,
+            "minutes": 362
           }
         ],
         "match_xg": {
@@ -7206,48 +7172,48 @@
       "odds_comparison": {
         "h2h": {
           "unibet_uk": {
-            "away": 2.4,
-            "home": 2.9,
+            "away": 2.45,
+            "home": 2.85,
             "draw": 3.4
           },
           "sport888": {
             "away": 2.3,
-            "home": 2.9,
+            "home": 2.88,
             "draw": 3.3
           },
           "betfred_uk": {
-            "away": 2.3,
-            "home": 2.88,
+            "away": 2.4,
+            "home": 2.8,
             "draw": 3.5
           },
           "williamhill": {
-            "away": 2.3,
-            "home": 2.9,
-            "draw": 3.4
+            "away": 2.38,
+            "home": 2.88,
+            "draw": 3.3
           },
           "paddypower": {
-            "away": 2.4,
-            "home": 2.9,
+            "away": 2.45,
+            "home": 2.8,
             "draw": 3.3
           },
           "leovegas": {
-            "away": 2.35,
-            "home": 2.8,
+            "away": 2.4,
+            "home": 2.75,
             "draw": 3.35
           },
           "betfair_ex_uk": {
-            "away": 2.54,
-            "home": 3.05,
+            "away": 2.6,
+            "home": 2.98,
             "draw": 3.5
           },
           "skybet": {
-            "away": 2.38,
-            "home": 2.9,
+            "away": 2.45,
+            "home": 2.8,
             "draw": 3.25
           },
           "smarkets": {
-            "away": 2.52,
-            "home": 3.05,
+            "away": 2.58,
+            "home": 2.98,
             "draw": 3.5
           },
           "boylesports": {
@@ -7256,66 +7222,66 @@
             "draw": 3.5
           },
           "betway": {
-            "away": 2.3,
-            "home": 2.88,
+            "away": 2.4,
+            "home": 2.8,
             "draw": 3.4
           },
           "grosvenor": {
-            "away": 2.35,
+            "away": 2.43,
+            "home": 2.85,
+            "draw": 3.35
+          },
+          "casumo": {
+            "away": 2.45,
             "home": 2.88,
             "draw": 3.4
           },
-          "casumo": {
-            "away": 2.38,
-            "home": 2.9,
-            "draw": 3.5
-          },
           "livescorebet": {
-            "away": 2.3,
-            "home": 2.85,
-            "draw": 3.35
+            "away": 2.38,
+            "home": 2.8,
+            "draw": 3.3
           },
           "virginbet": {
-            "away": 2.3,
-            "home": 2.85,
-            "draw": 3.35
+            "away": 2.38,
+            "home": 2.8,
+            "draw": 3.3
           },
           "betano_uk": {
             "away": 2.3,
-            "home": 2.9,
+            "home": 2.88,
             "draw": 3.4
           },
           "betvictor": {
             "away": 2.3,
-            "home": 2.9,
+            "home": 2.88,
             "draw": 3.4
           },
           "ladbrokes_uk": {
-            "away": 2.3,
-            "home": 3.0,
+            "away": 2.4,
+            "home": 2.8,
             "draw": 3.4
           },
           "coral": {
-            "away": 2.3,
-            "home": 3.0,
-            "draw": 3.4
+            "away": 2.45,
+            "home": 2.8,
+            "draw": 3.5
           },
           "matchbook": {
-            "away": 2.54,
-            "home": 3.05,
+            "away": 2.6,
+            "home": 2.98,
             "draw": 3.5
           },
           "betfair_sb_uk": {
-            "away": 2.4,
-            "home": 3.0,
+            "away": 2.5,
+            "home": 2.88,
             "draw": 3.4
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.93,
+            "over": 1.96,
             "bookmaker_over": "matchbook",
-            "under": 2.06,
+            "under": 2.02,
             "bookmaker_under": "matchbook"
           }
         },
@@ -8034,7 +8000,7 @@
           },
           "betfair_ex_uk": {
             "away": 3.1,
-            "home": 2.44,
+            "home": 2.46,
             "draw": 3.6
           },
           "smarkets": {
@@ -8044,28 +8010,28 @@
           },
           "boylesports": {
             "away": 2.9,
-            "home": 2.3,
+            "home": 2.25,
             "draw": 3.75
           },
           "grosvenor": {
-            "away": 2.85,
+            "away": 2.9,
             "home": 2.32,
-            "draw": 3.55
+            "draw": 3.45
           },
           "livescorebet": {
-            "away": 2.75,
+            "away": 2.8,
             "home": 2.3,
-            "draw": 3.5
+            "draw": 3.35
           },
           "casumo": {
-            "away": 2.88,
+            "away": 2.95,
             "home": 2.35,
-            "draw": 3.65
+            "draw": 3.5
           },
           "virginbet": {
-            "away": 2.75,
+            "away": 2.8,
             "home": 2.3,
-            "draw": 3.5
+            "draw": 3.35
           },
           "betway": {
             "away": 2.8,
@@ -8089,20 +8055,20 @@
           },
           "ladbrokes_uk": {
             "away": 2.9,
-            "home": 2.25,
-            "draw": 3.6
+            "home": 2.3,
+            "draw": 3.5
           },
           "matchbook": {
             "away": 3.1,
-            "home": 2.44,
+            "home": 2.46,
             "draw": 3.6
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.8,
+            "over": 1.76,
             "bookmaker_over": "matchbook",
-            "under": 2.2,
+            "under": 2.26,
             "bookmaker_under": "matchbook"
           }
         },
@@ -8112,7 +8078,26 @@
       },
       "model_disagreement": 0.0005057954588002234,
       "shap_features": [],
-      "value_bets": [],
+      "value_bets": [
+        {
+          "market": "Under 2.5 Goals",
+          "market_type": "over_under",
+          "confidence": "low",
+          "confidence_tier": "low",
+          "bookmaker": "matchbook",
+          "full_kelly": 50.0,
+          "half_kelly": 25.0,
+          "full_kelly_pct": 0.05,
+          "half_kelly_pct": 0.025,
+          "edge": 0.06643946617714563,
+          "model_prob": 0.5042504114507775,
+          "implied_prob": 0.4378109452736319,
+          "raw_implied_prob": 0.4424778761061947,
+          "expected_value": 0.13960592987875708,
+          "recommendation": "bet",
+          "decimal_odds": 2.26
+        }
+      ],
       "narrative": "Newcastle vs Everton \u2014 Matchweek 9\n\nOur model rates Newcastle as 45% favorites (fair odds: 2.24), driven primarily by form and recent results. Newcastle's expected goals stand at 1.5 while Everton are projected for 1.2 xG.\n\nThe match has a 50% chance of going over 2.5 goals, with both teams to score probability at 53%. We expect around 10 total corners and 5 cards.",
       "held_bets": []
     }
