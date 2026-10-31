@@ -1,19 +1,85 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T19:17:27.992918Z",
-  "n_dropped": 145,
+  "generated_at": "2026-10-31T22:41:56.626107Z",
+  "n_dropped": 170,
   "dropped_by_source": {
-    "bbc_football": 39,
-    "fantasyfootballscout": 9,
-    "hayters": 21,
-    "sky_football": 76
+    "bbc_football": 54,
+    "fantasyfootballscout": 10,
+    "hayters": 26,
+    "sky_football": 80
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 235,
+  "n_articles": 260,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "b4a90a0f99aa53c0",
+      "headline": "Suzuki mistake gifts Fulham point at Villa",
+      "summary": "Aston Villa goalkeeper Zion Suzuki's second-half mistake sees Fulham secure a 1-1 draw at Villa Park after Nicolas Jackson had given the hosts the lead.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmwy9rylr0e6o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T22:29:02Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": true
+        },
+        {
+          "element_id": 597,
+          "name": "Suzuki",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "a45fa540a76accd0",
+      "headline": "Suzuki makes string of saves before conceding own goal in draw with Fulham",
+      "summary": "Nicolas Jackson scored his eighth goal in 10 games but an error from goalkeeper Zion Suzuki meant Aston Villa had to settle for a 1-1 draw at home to Fulham.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/aston-villa-vs-fulham/report/559524",
+      "claimed_at": "2026-10-31T21:45:00Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": true
+        },
+        {
+          "element_id": 597,
+          "name": "Suzuki",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "5b6719f05f58ccbd",
+      "headline": "Aston Villa v Fulham team news: Jackson starts",
+      "summary": "It's one change apiece for Villa and Fulham compared to last weekend The post Aston Villa v Fulham team news: Jackson starts appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/aston-villa-v-fulham-team-news-jackson-starts",
+      "claimed_at": "2026-10-31T19:25:00Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "63f75cb002bd059d",
       "headline": "Tottenham 2-0 Crystal Palace LIVE \u2013 Van Hecke doubles Spurs\u2019 lead",
@@ -57,42 +123,6 @@
       "touches_squad": true
     },
     {
-      "digest": "11633979dfbd0d53",
-      "headline": "Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9",
-      "summary": "Enzo Maresca also spoke about Gianluigi Donnarumma The post Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/semenyo-ndiaye-nunes-man-city-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:37:24Z",
-      "players": [
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": true
-        },
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": true
-    },
-    {
       "digest": "b455399a53550e34",
       "headline": "Aston Villa latest: Emery's cryptic answer on availability of Jackson and Manzambi",
       "summary": null,
@@ -105,7 +135,7 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": false
+          "held": true
         },
         {
           "element_id": 166,
@@ -177,7 +207,7 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": false
+          "held": true
         },
         {
           "element_id": 166,
@@ -187,6 +217,348 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "58dcb4c79a2f4f7d",
+      "headline": "Chelsea beat 10-man Man Utd to pile more pressure on Carrick",
+      "summary": "Lisandro Martinez is sent off for Manchester United as they suffer a 2-0 defeat against Chelsea at Stamford Bridge to pile more pressure on under-fire manager Michael Carrick.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ckn8w20nn9g7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T22:30:16Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "198b776dcdebf2b0",
+      "headline": "Brighton pick up first away league victory over Man City to go third",
+      "summary": "Brighton pick up their first away league victory at Manchester City after winning 1-0 at the Etihad to condemn City to back-to-back defeats in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqx28l2gdepxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T22:30:05Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7110d42d456a975c",
+      "headline": "Arteta discusses Arsenal star\u2019s long-term future at the club",
+      "summary": "Mikel Arteta is confident Declan Rice wants to remain at Arsenal for the long term and believes it is only a matter of time before his future is sorted. Rice has established himself as one of Arsenal's most important players since joining",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-discusses-arsenal-stars-long-term-future-at-the-club/",
+      "claimed_at": "2026-10-31T22:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7f6e86db4458cce1",
+      "headline": "Coventry out of bottom three after win over struggling Sunderland",
+      "summary": "Frank Lampard's Coventry City lift themselves out of the relegation zone after beating struggling Sunderland, who remain rooted to the bottom of the Premier League table.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cm93zv0zkjqlo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T22:29:50Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3eff442352ea9bdb",
+      "headline": "Spurs revival continues with victory over 10-man Crystal Palace",
+      "summary": "Jean-Philippe Mateta was shown an early red card as Crystal Palace lose 2-0 at Tottenham to increase the pressure on manager Pierre Sage.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cxvgdrg33m72o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T22:29:29Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "76f4438f8b73b1a4",
+      "headline": "Evanilson scores again as Bournemouth beat Leeds",
+      "summary": "Forward Evanilson continues his fine goalscoring form by netting in a fourth Premier League match in a row to help Bournemouth defeat Leeds United at the Vitality Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6zxj1vzwx1xo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T22:29:21Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0e43e052dc989d4d",
+      "headline": "Thiago on target as Brentford beat Forest",
+      "summary": "Igor Thiago's second-half goal helps Brentford to their first win in five as they beat Nottingham Forest 2-0 at the Gtech Community Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ck1l3z063n8vo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T22:29:11Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "57004bb335494d52",
+      "headline": "Man Utd enquire about Toney - Sunday's gossip",
+      "summary": "Manchester United enquire about Ivan Toney's availability, Barcelona are tracking Chelsea winger Estevao Willian, Jean-Philippe Mateta is set to leave Crystal Palace in January, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/crz98lwn3pvzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T22:14:36Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6f4052c271ea3579",
+      "headline": "Are De Zerbi's Spurs finding elusive consistency?",
+      "summary": "Are Spurs finally finding elusive consistency under Roberto de Zerbi after a third successive Premier League win, asks chief football writer Phil McNulty?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6n04v897qe4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T21:16:11Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6705b1c4607d433b",
+      "headline": "Sage issues defiant message as pressure grows following another Crystal Palace loss",
+      "summary": "Pierre Sage insists he will \u201cnever give up\u201d as pressure grows following Crystal Palace\u2019s difficult start to the season. Ten-man Palace were beaten by Tottenham after Jean-Philippe Mateta had been sent off, but Sage a",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/sage-issues-defiant-message-as-pressure-grows-following-another-crystal-palace-loss/",
+      "claimed_at": "2026-10-31T20:59:04Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "be4638b94bdef84e",
+      "headline": "De Zerbi: Tonali was like \u2018two players\u2019 in Crystal Palace win",
+      "summary": "Roberto De Zerbi hailed an \u201cunbelievable\u201d Sandro Tonali performance in Tottenham\u2019s 2-0 win over Crystal Palace, saying the midfielder was like having \u201ctwo players\u201d on the pitch. Tonali impressed at the heart of the Spurs midfield as De Ze",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-tonali-was-like-two-players-in-crystal-palace-win/",
+      "claimed_at": "2026-10-31T20:50:51Z",
+      "players": [
+        {
+          "element_id": 455,
+          "name": "Tonali",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8a2d945077caa799",
+      "headline": "Palace latest: Under-fire Sage vows to fight on and has 'rage to train more'",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-31T20:48:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b64b12563bcb1732",
+      "headline": "Verbruggen spreads belief as impressive Brighton beat Man City",
+      "summary": "Goalkeeper Bart Verbruggen was the man of the moment on Saturday afternoon as he produced an impressive individual display to help Brighton beat Manchester City",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6d7qwnz1jnjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T20:36:26Z",
+      "players": [
+        {
+          "element_id": 109,
+          "name": "Verbruggen",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "26618cc38f8e31a7",
+      "headline": "Glasner fears he will be next Forest sacking if wins don't follow",
+      "summary": "Nottingham Forest head coach Oliver Glasner warns he will be the fifth sacking in just over a year by the club, unless results improve soon.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvn067174knjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T20:26:15Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8819673da5ef55f8",
+      "headline": "Tottenham mood 'totally different' - De Zerbi",
+      "summary": "Tottenham manager Roberto De Zerbi said the mood at the club is \"totally different\" after picking up a third straight league victory with a 2-0 win over Crystal Palace.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c9203ymmn1m3o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T20:13:33Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cf9b2ac2c14fa210",
+      "headline": "Sage looking for solutions to Palace form",
+      "summary": "Crystal Palace manger Pierre Sage reacts as his side loses a third consecutive league game following their 2-0 defeat by Tottenham.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6r7yx55n3gjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T20:13:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "977601832e007a43",
+      "headline": "Sunderland's paradox - San Siro trip amid relegation battle",
+      "summary": "Sunderland were last season's surprise package in the Premier League, but this time they are struggling after Coventry handed them their sixth defeat.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmrry892zpkro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T20:03:10Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1a2fbc6e6dbb5e96",
+      "headline": "Tottenham 2-0 Crystal Palace LIVE \u2013 Spurs win their third Premier League match in a row",
+      "summary": "{rsn-live-v2} The post Tottenham 2-0 Crystal Palace LIVE - Spurs win their third Premier League match in a row appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/tottenham-vs-crystal-palace-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-10-31T19:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1f4065d3efab520c",
+      "headline": "Spurs beat 10-man Palace to keep up Sage pressure as Eagles fall into drop zone",
+      "summary": "Tottenham beat 10-man Crystal Palace 2-0 at home to record a third straight win and maintain the pressure on Eagles boss Pierre Sage, with his side dropping into the relegation zone.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/tottenham-hotspur-vs-crystal-palace/report/559533",
+      "claimed_at": "2026-10-31T19:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "42653f8a86ff567a",
@@ -214,6 +586,24 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/c5vgj1gx3r77o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-10-31T18:55:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f86ac83e74f1b053",
+      "headline": "'The same s*** situation' - ANGRY Glasner vows to change - or be sacked",
+      "summary": "There is no more Mr Nice Guy at Nottingham Forest, according to Oliver Glasner. The Austrian has said he will change things at the club and if the players don't buy into it, they will be looking for their sixth manager in just o",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13606410/oliver-glasner-nottingham-forest-head-coach-reveals-anger-desire-to-change-growing-pattern-at-club-amid-poor-start-to-season",
+      "claimed_at": "2026-10-31T18:55:00Z",
       "players": [
         {
           "element_id": 0,
@@ -591,9 +981,9 @@
       "touches_squad": false
     },
     {
-      "digest": "df328f2e8cc6bef6",
-      "headline": "Carrick bemoans Man Utd defending in Chelsea loss",
-      "summary": "Manchester United manager Michael Carrick takes issue with his side's defending, particularly for the first goal they conceded in their 2-0 defeat to Chelsea in the Premier League.",
+      "digest": "3ae936fc4664e93a",
+      "headline": "Carrick bemoans Man Utd defending in loss to Chelsea",
+      "summary": "Manchester United manager Michael Carrick takes issue with his side's defending, particularly for the first goal they conceded in their 2-0 defeat by Chelsea in the Premier League.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/cqrlywrdjdzyo?at_medium=RSS&at_campaign=rss",
@@ -651,30 +1041,6 @@
       "touches_squad": false
     },
     {
-      "digest": "35d7feea55d53b23",
-      "headline": "Rogers shines, 3/10 for sent-off Martinez - player ratings for Chelsea v Man Utd",
-      "summary": "Player ratings as Morgan Rogers and Cole Palmer score second-half goals in Chelsea's home win over Manchester United, who have Lisandro Martinez sent off.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c3j47prvlz04o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T14:35:50Z",
-      "players": [
-        {
-          "element_id": 40,
-          "name": "Rogers",
-          "club": "CHE",
-          "held": false
-        },
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "eefd4ceb9177c8ee",
       "headline": "Bournemouth vs Leeds LIVE!",
       "summary": null,
@@ -682,24 +1048,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/bournemouth-vs-leeds-united/live/559525",
       "claimed_at": "2026-10-31T14:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b623d1322a84e98c",
-      "headline": "Carragher apologises to Villa for 'wrong' language",
-      "summary": "Jamie Carragher apologises for \"clumsy and wrong\" language when linking manager Unai Emery with becoming Manchester United head coach, after Aston Villa threatened to sue him.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqj6jp63k87zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T13:51:00Z",
       "players": [
         {
           "element_id": 0,
@@ -855,42 +1203,6 @@
       "touches_squad": false
     },
     {
-      "digest": "84d1aa687eec8ca2",
-      "headline": "Brentford vs Nottingham Forest LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/brentford-vs-nottingham-forest/live/559526",
-      "claimed_at": "2026-10-31T13:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a67c2aa805baff30",
-      "headline": "PL Predictions: Spurs set for statement win over Palace",
-      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight for a busy weekend of Premier League action.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13604412/premier-league-predictions-jones-knows-best-bets-liverpool-vs-arsenal-crystal-palace-vs-tottenham-and-much-more",
-      "claimed_at": "2026-10-31T12:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b9454ec7747830bb",
       "headline": "Chelsea v Man Utd team news: Bruno + Cunha return to XI",
       "summary": "Four changes for Chelsea, three for United The post Chelsea v Man Utd team news: Bruno + Cunha return to XI appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -898,24 +1210,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/chelsea-v-man-utd-team-news-bruno-cunha-return-to-xi",
       "claimed_at": "2026-10-31T11:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8651a45c309e1a81",
-      "headline": "Transfer Centre LIVE! 'Man Utd considering Lopez swoop in January'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
-      "claimed_at": "2026-10-31T10:45:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1089,60 +1383,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f0d7ed90b2602a80",
-      "headline": "Shearer discusses scoring record, MOTD & a brush with Cardiff",
-      "summary": "Alan Shearer discusses his love of Newcastle, almost continuing his managerial career and swapping the pitch for the commentary box in The Football Interview.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwkg5l822k3no?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T06:23:58Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d72ff61d514b1344",
-      "headline": "Man Utd target Barcelona's Lopez - Saturday's gossip",
-      "summary": "Manchester United target Barcelona's Fermin Lopez, Lisandro Martinez is attracting interest from the La Liga side, Arsenal eye Club Brugge striker Nicolo Tresoldi, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck3r52vn758xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T23:08:16Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "db269a416baee795",
-      "headline": "Villa to sue Carragher over 'unacceptable insults'",
-      "summary": "Aston Villa say they will initiate legal action against Jamie Carragher over what the club branded as \"unacceptable insults\".",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqd09p3kppyvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T23:05:45Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "c32082650864655b",
       "headline": "\u2018Nobody wants to be dribbled past by a 15 or 16-year-old\u2019 \u2013 Arteta on the challenge facing Max Dowman",
       "summary": "Mikel Arteta is confident Max Dowman can cope with the physical treatment that comes his way, insisting the Arsenal youngster has been dealing with opponents trying to stop him since he was eight ye",
@@ -1245,6 +1485,42 @@
       "touches_squad": false
     },
     {
+      "digest": "11633979dfbd0d53",
+      "headline": "Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9",
+      "summary": "Enzo Maresca also spoke about Gianluigi Donnarumma The post Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/semenyo-ndiaye-nunes-man-city-injury-latest-for-fpl-gameweek-9",
+      "claimed_at": "2026-10-30T16:37:24Z",
+      "players": [
+        {
+          "element_id": 237,
+          "name": "Ndiaye",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 384,
+          "name": "Donnarumma",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 397,
+          "name": "Semenyo",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "6a404824de1592ee",
       "headline": "Szoboszlai, Wirtz, Munoz: Liverpool injury latest for FPL Gameweek 9",
       "summary": "Andoni Iraola gave updates on Friday The post Szoboszlai, Wirtz, Munoz: Liverpool injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1269,24 +1545,6 @@
           "element_id": 377,
           "name": "Munoz",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "95c1a5d8110a718a",
-      "headline": "What Howe could bring to Man Utd - and what are the challenges?",
-      "summary": "Eddie Howe is being linked with the Manchester United job, but what are some of the considerations for him and the club?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cr74pd99vwq3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T16:27:13Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1329,24 +1587,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b32f72e64975cb1d",
-      "headline": "Fears Chelsea's Lacroix could be out until January",
-      "summary": "Chelsea fear Maxence Lacroix will have a lengthy lay-off having suffered a serious hamstring injury.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmkgkpexjzneo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T16:21:10Z",
-      "players": [
-        {
-          "element_id": 200,
-          "name": "Lacroix",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a381592374e4f87c",
       "headline": "Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9",
       "summary": "An update on the Italian left-back's availability The post Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1365,24 +1605,6 @@
           "element_id": 16,
           "name": "Madueke",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b1bad359626cfccf",
-      "headline": "Spurs' Maddison fit to face Palace - De Zerbi",
-      "summary": "Tottenham midfielder James Maddison is available to face Crystal Palace on Saturday says manager Roberto De Zerbi, despite an injury scare last week.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cke8rp00m87lo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T15:49:28Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
           "held": false
         }
       ],
@@ -1509,210 +1731,6 @@
       "touches_squad": false
     },
     {
-      "digest": "863901f76d6286e5",
-      "headline": "Chelsea handed another significant injury blow",
-      "summary": "Chelsea boss Xabi Alonso has confirmed Maxence Lacroix will be sidelined for a few weeks after suffering a hamstring injury in the Carabao Cup defeat to Liverpool. The defender was forced off at Anfield and is not expected to return before the internati",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/chelsea-handed-another-significant-injury-blow/",
-      "claimed_at": "2026-10-30T14:16:56Z",
-      "players": [
-        {
-          "element_id": 200,
-          "name": "Lacroix",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b9fff42f20e38595",
-      "headline": "Arsenal forward could return against Liverpool as Arteta reveals triple boost",
-      "summary": "Mikel Arteta has confirmed that Riccardo Calafiori, Declan Rice and Christos Tzolis all took part in training on Friday, handing Arsenal a triple fitness boost ahead of their game against Liverpool. Tzolis has been out sin",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-forward-could-return-against-liverpool-as-arteta-reveals-triple-boost/",
-      "claimed_at": "2026-10-30T14:08:23Z",
-      "players": [
-        {
-          "element_id": 8,
-          "name": "Calafiori",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 557,
-          "name": "Tzolis",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d56e15884abdb42d",
-      "headline": "Newcastle sweating on trio\u2019s fitness ahead of Everton game",
-      "summary": "Newcastle boss Matthias Jaissle says Matias Fernandez-Pardo and Lewis Miley remain doubts for the clash with Everton on Monday. Jaissle was unable to give a firm update on either player but is hopeful they can make enough progress to be invo",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/newcastle-sweating-on-trios-fitness-ahead-of-everton-game/",
-      "claimed_at": "2026-10-30T14:00:00Z",
-      "players": [
-        {
-          "element_id": 634,
-          "name": "Fernandez-Pardo",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a2a14ad2c71e6083",
-      "headline": "Britain's first \u00a3100m man facing defining moment",
-      "summary": "Is it 'now or never' for Jack Grealish after he was dropped by Everton for a breach of club discipline, asks chief football writer Phil McNulty?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmzxj2e2e5p2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T13:42:15Z",
-      "players": [
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d8ebac833e26fe75",
-      "headline": "Everton star expected to return for Newcastle clash",
-      "summary": "Everton boss David Moyes has confirmed Jarrad Branthwaite should be available to face Newcastle after recovering from concussion. The defender has completed the required recovery period and is expected to be back in contention for the Premier Leagu",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/everton-star-expected-to-return-for-newcastle-clash/",
-      "claimed_at": "2026-10-30T12:30:00Z",
-      "players": [
-        {
-          "element_id": 230,
-          "name": "Branthwaite",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "10396400a8b70099",
-      "headline": "Forest Green launch \u00a32m lawsuit over Savage approach",
-      "summary": "Forest Green chairman Dale Vince announces the club is taking legal action against Peterborough United following their approach for manager Robbie Savage.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq4g148z2xp2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T12:18:28Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "103bbf82dc2993d9",
-      "headline": "Forest Green launch legal action over Savage approach",
-      "summary": "Forest Green chairman Dale Vince announces the club is taking legal action against Peterborough United.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq4g148z2xp2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T12:18:28Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "43e4ea2056b2b780",
-      "headline": "Arbeloa says Smith-Rowe frustration \u2018normal\u2019 as Fulham boss urges patience",
-      "summary": "Fulham boss Alvaro Arbeloa has told Emile Smith-Rowe that he must remain patient in his pursuit of more game time. The midfielder has struggled for minutes of late and was left out of the squad completely in Wednesday's Carab",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arbeloa-says-smith-rowe-frustration-normal-as-fulham-boss-urges-patience/",
-      "claimed_at": "2026-10-30T11:58:43Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d5f346013ef58f5e",
-      "headline": "Items stolen from Man Utd Munich air disaster memorial",
-      "summary": "The foundation has urged the return of stolen items, saying they mean so much to bereaved families.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/news/articles/cxly4pqndz57o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T11:23:55Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "627b0ccf0812f810",
-      "headline": "Calvert-Lewin set for new Leeds deal",
-      "summary": "England striker Dominic Calvert-Lewin is set to sign a new contract at Leeds United.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6x2w1epxx8yo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-30T10:26:53Z",
-      "players": [
-        {
-          "element_id": 346,
-          "name": "Calvert-Lewin",
-          "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "472469d78a0248ba",
-      "headline": "FPL notes: Evanilson, Jackson + Manzambi rested for Gameweek 9",
-      "summary": "EFL Cup wins for Sunderland and Bournemouth dissected The post FPL notes: Evanilson, Jackson + Manzambi rested for Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/29/fpl-notes-evanilson-jackson-manzambi-rested-for-gameweek-9",
-      "claimed_at": "2026-10-29T21:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5f81c45a42624edf",
       "headline": "Knock - 75% chance of playing",
       "summary": null,
@@ -1725,42 +1743,6 @@
           "element_id": 533,
           "name": "Mukiele",
           "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "327bce84626f31ac",
-      "headline": "Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9",
-      "summary": "Plus, a \"good training week\" for Dominic Calvert-Lewin The post Stach, Elvedi, Rodon: Leeds injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/29/stach-elvedi-rodon-leeds-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-29T17:09:47Z",
-      "players": [
-        {
-          "element_id": 329,
-          "name": "Rodon",
-          "club": "LEE",
-          "held": false
-        },
-        {
-          "element_id": 335,
-          "name": "Stach",
-          "club": "LEE",
-          "held": false
-        },
-        {
-          "element_id": 346,
-          "name": "Calvert-Lewin",
-          "club": "LEE",
-          "held": false
-        },
-        {
-          "element_id": 598,
-          "name": "Elvedi",
-          "club": "LEE",
           "held": false
         }
       ],
