@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-01T14:00:23.694799Z",
+  "generated_at": "2026-11-01T22:35:26.970442Z",
   "gameweek": 10,
   "players": [
     {
@@ -132,6 +132,76 @@
               "value": "d",
               "claimed_at": "2026-10-31T17:30:08.280248Z",
               "observed_at": "2026-10-31T21:54:09.225183Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 543,
+      "player_name": "Diarra",
+      "club": "Sunderland",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f23ee07c479c906c",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-01T08:30:09.264068Z",
+              "observed_at": "2026-11-01T14:01:02.916492Z",
+              "quote": "Muscular injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "2d472344bd7785c4",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-01T08:30:09.264068Z",
+              "observed_at": "2026-11-01T14:01:02.916492Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "7db22ab49bd8ef12",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-01T08:30:09.264068Z",
+              "observed_at": "2026-11-01T14:01:02.916492Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -607,10 +677,10 @@
     }
   ],
   "counts": {
-    "n_claims": 131,
-    "n_players_with_claims": 31,
-    "n_players_shown": 8,
+    "n_claims": 167,
+    "n_players_with_claims": 40,
+    "n_players_shown": 9,
     "n_escalations": 2,
-    "n_players_resolved": 16
+    "n_players_resolved": 17
   }
 }
