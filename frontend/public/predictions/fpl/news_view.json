@@ -1,43 +1,19 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-01T08:02:03.321732Z",
-  "n_dropped": 180,
+  "generated_at": "2026-11-01T15:08:35.689751Z",
+  "n_dropped": 183,
   "dropped_by_source": {
     "bbc_football": 60,
-    "fantasyfootballscout": 10,
-    "hayters": 26,
-    "sky_football": 84
+    "fantasyfootballscout": 11,
+    "hayters": 27,
+    "sky_football": 85
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 270,
+  "n_articles": 273,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
-    {
-      "digest": "2e1444ed2e3d054a",
-      "headline": "FPL notes: Gross on cusp of ban + Maresca on benching Cherki",
-      "summary": "Maxim De Cuyper returns to the FPL summit as Brighton beat Man City The post FPL notes: Gross on cusp of ban + Maresca on benching Cherki appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/fpl-notes-gross-on-cusp-of-ban-maresca-on-benching-cherki",
-      "claimed_at": "2026-10-31T23:55:00Z",
-      "players": [
-        {
-          "element_id": 115,
-          "name": "De Cuyper",
-          "club": "BHA",
-          "held": true
-        },
-        {
-          "element_id": 399,
-          "name": "Cherki",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": true
-    },
     {
       "digest": "b4a90a0f99aa53c0",
       "headline": "Suzuki mistake gifts Fulham point at Villa",
@@ -147,42 +123,6 @@
       "touches_squad": true
     },
     {
-      "digest": "11633979dfbd0d53",
-      "headline": "Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9",
-      "summary": "Enzo Maresca also spoke about Gianluigi Donnarumma The post Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/semenyo-ndiaye-nunes-man-city-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:37:24Z",
-      "players": [
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": true
-        },
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": true
-    },
-    {
       "digest": "b455399a53550e34",
       "headline": "Aston Villa latest: Emery's cryptic answer on availability of Jackson and Manzambi",
       "summary": null,
@@ -195,7 +135,7 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": false
+          "held": true
         },
         {
           "element_id": 166,
@@ -267,7 +207,7 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": false
+          "held": true
         },
         {
           "element_id": 166,
@@ -277,6 +217,96 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "24a6084d13881473",
+      "headline": "Russo rescues frustrated Arsenal as Man City beat London City",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13605750/wsl-round-up-alessia-russo-scores-late-equaliser-to-salvage-draw-for-arsenal-as-man-city-hold-on-to-beat-london-city",
+      "claimed_at": "2026-11-01T14:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f003ad9300626a05",
+      "headline": "Man Utd latest: Solskjaer reveals conversation with club after Amorim's exit",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-01T14:13:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "84c56c18b11829a7",
+      "headline": "Liverpool v Arsenal LIVE \u2013 team news, updates and reaction",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Liverpool v Arsenal LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/liverpool-v-arsenal-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-11-01T14:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "859048c322a83353",
+      "headline": "Liverpool vs Arsenal LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/liverpool-vs-arsenal/live/559530",
+      "claimed_at": "2026-11-01T14:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f408365db79b7e77",
+      "headline": "Parlour says Arsenal are better equipped than ever for Anfield trip",
+      "summary": "Ray Parlour believes Arsenal are ready to &#8220;go again&#8221; in their title defence have the experience and confidence to win at Liverpool on Sunday. But he insists Manchester City remain their main Premier League title rivals,",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/parlour-says-arsenal-are-better-equipped-than-ever-for-anfield-trip/",
+      "claimed_at": "2026-11-01T11:27:37Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "00de1d4cf28b57ba",
@@ -327,6 +357,48 @@
           "element_id": 419,
           "name": "Martinez",
           "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2e1444ed2e3d054a",
+      "headline": "FPL notes: Gross on cusp of ban + Maresca on benching Cherki",
+      "summary": "Maxim De Cuyper returns to the FPL summit as Brighton beat Man City The post FPL notes: Gross on cusp of ban + Maresca on benching Cherki appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/fpl-notes-gross-on-cusp-of-ban-maresca-on-benching-cherki",
+      "claimed_at": "2026-10-31T23:55:00Z",
+      "players": [
+        {
+          "element_id": 115,
+          "name": "De Cuyper",
+          "club": "BHA",
+          "held": false
+        },
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "85a4527f305488af",
+      "headline": "Are Manchester United really at risk of a relegation scrap?",
+      "summary": "Manchester United's current tally of seven points from nine games would not even get them 30 points if it was continued for the full season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c8g47wl06vkqo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T23:52:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -801,24 +873,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b55b9dc893d6d099",
-      "headline": "Man Utd held to goalless draw at Everton",
-      "summary": "Watch highlights as Manchester United make it 10 matches unbeaten in all competitions, but were held by Everton to a drab goalless draw at Goodison Park.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c5vgj1gx3r77o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T18:55:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f86ac83e74f1b053",
       "headline": "'The same s*** situation' - ANGRY Glasner vows to change - or be sacked",
       "summary": "There is no more Mr Nice Guy at Nottingham Forest, according to Oliver Glasner. The Austrian has said he will change things at the club and if the players don't buy into it, they will be looking for their sixth manager in just o",
@@ -1023,6 +1077,24 @@
       "touches_squad": false
     },
     {
+      "digest": "a0b73eb3836e6e9e",
+      "headline": "PL Predictions: Can Liverpool catapult into the title race?",
+      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight for a busy weekend of Premier League action.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604412/premier-league-predictions-jones-knows-best-bets-liverpool-vs-arsenal-crystal-palace-vs-tottenham-and-much-more",
+      "claimed_at": "2026-10-31T17:00:00Z",
+      "players": [
+        {
+          "element_id": 373,
+          "name": "C.Jones",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "c031af31694ca1da",
       "headline": "Man City fall to back-to-back defeats as Brighton's rise continues",
       "summary": "Manchester City fell to back-to-back Premier League losses for the first time under Enzo Maresca after being undone by buoyant Brighton 1-0 at the Etihad.",
@@ -1155,24 +1227,6 @@
       "touches_squad": false
     },
     {
-      "digest": "eefd4ceb9177c8ee",
-      "headline": "Bournemouth vs Leeds LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/bournemouth-vs-leeds-united/live/559525",
-      "claimed_at": "2026-10-31T14:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "3f70440d13d39f34",
       "headline": "Man City 0-1 Brighton LIVE \u2013 Back-to-back league defeats for City",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 0-1 Brighton LIVE - Back-to-back league defeats for City appeared first on Hayters.",
@@ -1203,42 +1257,6 @@
           "element_id": 101,
           "name": "Henderson",
           "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0e3721faff093213",
-      "headline": "Coventry vs Sunderland LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/coventry-city-vs-sunderland/live/559528",
-      "claimed_at": "2026-10-31T13:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4ea9c27d8e9027e6",
-      "headline": "Man City vs Brighton LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-brighton-and-hove-albion/live/559531",
-      "claimed_at": "2026-10-31T13:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1527,6 +1545,42 @@
       "touches_squad": false
     },
     {
+      "digest": "11633979dfbd0d53",
+      "headline": "Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9",
+      "summary": "Enzo Maresca also spoke about Gianluigi Donnarumma The post Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/semenyo-ndiaye-nunes-man-city-injury-latest-for-fpl-gameweek-9",
+      "claimed_at": "2026-10-30T16:37:24Z",
+      "players": [
+        {
+          "element_id": 237,
+          "name": "Ndiaye",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 384,
+          "name": "Donnarumma",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 397,
+          "name": "Semenyo",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "6a404824de1592ee",
       "headline": "Szoboszlai, Wirtz, Munoz: Liverpool injury latest for FPL Gameweek 9",
       "summary": "Andoni Iraola gave updates on Friday The post Szoboszlai, Wirtz, Munoz: Liverpool injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1593,30 +1647,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a381592374e4f87c",
-      "headline": "Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9",
-      "summary": "An update on the Italian left-back's availability The post Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/calafiori-rice-madueke-arsenal-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:10:53Z",
-      "players": [
-        {
-          "element_id": 8,
-          "name": "Calafiori",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 16,
-          "name": "Madueke",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f44fd9671dee9641",
       "headline": "Concussion - 75% chance of playing",
       "summary": null,
@@ -1629,6 +1659,12 @@
           "element_id": 230,
           "name": "Branthwaite",
           "club": "EVE",
+          "held": false
+        },
+        {
+          "element_id": 533,
+          "name": "Mukiele",
+          "club": "SUN",
           "held": false
         }
       ],
@@ -1677,30 +1713,6 @@
       "touches_squad": false
     },
     {
-      "digest": "219a2e4c48438313",
-      "headline": "De Zerbi confirms Spurs double boost for Crystal Palace",
-      "summary": "Tottenham boss Roberto De Zerbi has confirmed James Maddison and Destiny Udogie are available for Saturday\u2019s clash with Crystal Palace. Maddison has recovered from the knock which forced him off against Chelsea last weekend, while Udogie can al",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-confirms-spurs-double-boost-for-crystal-palace/",
-      "claimed_at": "2026-10-30T14:45:40Z",
-      "players": [
-        {
-          "element_id": 506,
-          "name": "Udogie",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "3c278211cc7c3b36",
       "headline": "Knock - Expected back 23 Nov",
       "summary": null,
@@ -1713,24 +1725,6 @@
           "element_id": 100,
           "name": "Carvalho",
           "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "95e4e20aa2d99dd2",
-      "headline": "Manchester City set to welcome players back for Brighton game",
-      "summary": "Enzo Maresca says that almost all of his senior players are available for selection as Manchester City prepare to face Brighton for the second time in the space of a few days. Antoine Semenyo is still sidelined through a knee injury and i",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/manchester-city-set-to-welcome-players-back-for-brighton-game/",
-      "claimed_at": "2026-10-30T14:29:06Z",
-      "players": [
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
           "held": false
         }
       ],
