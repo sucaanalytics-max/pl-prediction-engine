@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T22:41:56.626107Z",
-  "n_dropped": 170,
+  "generated_at": "2026-11-01T01:29:28.191227Z",
+  "n_dropped": 178,
   "dropped_by_source": {
-    "bbc_football": 54,
-    "fantasyfootballscout": 10,
+    "bbc_football": 58,
+    "fantasyfootballscout": 11,
     "hayters": 26,
-    "sky_football": 80
+    "sky_football": 83
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 260,
+  "n_articles": 268,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -219,6 +219,120 @@
       "touches_squad": true
     },
     {
+      "digest": "03cfd6c3574b04f8",
+      "headline": "How 'brave & balanced' Brighton beat Man City",
+      "summary": "Match of the Day pundits Danny Murphy and Stephan Warnock analyse Brighton's impressive 1-0 victory over Manchester City, with Warnock praising the balance of the Seagulls squad.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmx23wyk769eo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T23:59:24Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ac51410c56a22d99",
+      "headline": "Has Martinez become a liability for Man Utd?",
+      "summary": "Match of the Day pundits Danny Murphy and Stephan Warnock analyse Lisandro Martinez's performance in Manchester United's 2-0 defeat to Chelsea, where the Argentinian defender was sent off.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c9vgrjej28dvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T23:59:22Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2e1444ed2e3d054a",
+      "headline": "FPL notes: Gross on cusp of ban + Maresca on benching Cherki",
+      "summary": "Maxim De Cuyper returns to the FPL summit as Brighton beat Man City The post FPL notes: Gross on cusp of ban + Maresca on benching Cherki appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/fpl-notes-gross-on-cusp-of-ban-maresca-on-benching-cherki",
+      "claimed_at": "2026-10-31T23:55:00Z",
+      "players": [
+        {
+          "element_id": 115,
+          "name": "De Cuyper",
+          "club": "BHA",
+          "held": false
+        },
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e1cf3f333df07e34",
+      "headline": "Are Manchester United really at risk of a relegation scrap?",
+      "summary": "Manchester United's current tally of nine points from seven games would not even get them 30 points if it was continued for the full season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c8g47wl06vkqo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T23:52:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4daf8708dc7e8bf9",
+      "headline": "Aston Villa latest: Emery admits work to do ahead of Barcelona and Man Utd",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-10-31T23:01:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b4af6559637cf7e4",
+      "headline": "Fulham latest: We can beat anyone, says Arbeloa",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-10-31T22:51:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "58dcb4c79a2f4f7d",
       "headline": "Chelsea beat 10-man Man Utd to pile more pressure on Carrick",
       "summary": "Lisandro Martinez is sent off for Manchester United as they suffer a 2-0 defeat against Chelsea at Stamford Bridge to pile more pressure on under-fire manager Michael Carrick.",
@@ -240,6 +354,24 @@
       "digest": "198b776dcdebf2b0",
       "headline": "Brighton pick up first away league victory over Man City to go third",
       "summary": "Brighton pick up their first away league victory at Manchester City after winning 1-0 at the Etihad to condemn City to back-to-back defeats in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqx28l2gdepxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-10-31T22:30:05Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "aefc53cf81855451",
+      "headline": "Brighton pick up first away league victory over Man City",
+      "summary": "Brighton pick up their first away league victory at Manchester City, winning 1-0 to condemn City to a second successive Premier League defeat.",
       "source": "bbc_football",
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/cqx28l2gdepxo?at_medium=RSS&at_campaign=rss",
@@ -357,6 +489,24 @@
           "element_id": 223,
           "name": "Mateta",
           "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c81360e8a305dc50",
+      "headline": "Papers: Carrick to be given at least two more games in charge at Man Utd",
+      "summary": "The top stories and transfer rumours from Sunday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13606527/manchester-united-michael-carrick-to-be-given-at-least-two-more-matches-in-charge-despite-overseeing-worst-run-in-nearly-40-years-paper-talk",
+      "claimed_at": "2026-10-31T22:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -747,24 +897,6 @@
       "touches_squad": false
     },
     {
-      "digest": "0a1cfffe55ef55ad",
-      "headline": "Martinez's 'inexplicable' 83 seconds cost Man Utd and Carrick",
-      "summary": "Manchester United defender Lisandro Martinez condemned for costly red card in 2-0 defeat to Chelsea at Stamford Bridge.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckvg64xp1e1eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T17:27:06Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "51ff2fea7bb929d7",
       "headline": "Brighton condemn Man City to back-to-back PL defeats",
       "summary": "FREE TO WATCH: Highlights from Manchester City's match against Brighton in the Premier League.",
@@ -873,24 +1005,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f8decad416297eec",
-      "headline": "Returning Estevao brings X-factor to strikerless Chelsea",
-      "summary": "Morgan Rogers swings the match in Chelsea's favour as Estevao Willian dazzles, making a mystery of his limited action under Xabi Alonso this season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwnv0p143qzyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T16:34:42Z",
-      "players": [
-        {
-          "element_id": 40,
-          "name": "Rogers",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "3f54937db265e6f2",
       "headline": "\u2018The best response\u2019 \u2013 Alonso delighted for Chelsea duo in win over Man Utd",
       "summary": "Chelsea boss Xabi Alonso says Estevao's performance against Manchester United was the \u201cbest response\u201d to his recent lack of hame time. The Brazilian has struggled for game time of late but was handed a start at Stamford Bridg",
@@ -945,24 +1059,6 @@
       "touches_squad": false
     },
     {
-      "digest": "3d2f549705e7ffdc",
-      "headline": "Alonso praises Estevao response to lack of gametime",
-      "summary": "Chelsea manager Xabi Alonso praises the performance and response of winger Estevao in his side's 2-0 win over struggling Manchester United in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cr5ynzdpjnn9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T15:20:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "fd983fa4e36c08b3",
       "headline": "Man Utd latest: Are Carrick's side in a relegation battle? Have your say",
       "summary": null,
@@ -970,24 +1066,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-10-31T15:16:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3ae936fc4664e93a",
-      "headline": "Carrick bemoans Man Utd defending in loss to Chelsea",
-      "summary": "Manchester United manager Michael Carrick takes issue with his side's defending, particularly for the first goal they conceded in their 2-0 defeat by Chelsea in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cqrlywrdjdzyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T15:13:43Z",
       "players": [
         {
           "element_id": 0,
@@ -1138,60 +1216,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/brentford-vs-nottingham-forest/report/559526",
       "claimed_at": "2026-10-31T13:29:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "05e8d86f97230ef7",
-      "headline": "Martinez sent off as Man Utd implode against Chelsea",
-      "summary": "Lisandro Martinez was sent off as Manchester United sank to a 2-0 loss at Chelsea to plunge Michael Carrick further into trouble.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-vs-manchester-united/report/559527",
-      "claimed_at": "2026-10-31T13:28:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b73ef3dccfe9e50c",
-      "headline": "Martinez sent off as Man Utd implode against Chelsea",
-      "summary": "Lisandro Martinez was sent off as Manchester United sunk to a 2-0 loss to Chelsea to plunge Michael Carrick further into trouble.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-vs-manchester-united/report/559527",
-      "claimed_at": "2026-10-31T13:28:00Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "21651a81c534b07f",
-      "headline": "Hull City vs Ipswich LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/hull-city-vs-ipswich-town/live/559529",
-      "claimed_at": "2026-10-31T13:20:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1581,30 +1605,6 @@
           "element_id": 200,
           "name": "Lacroix",
           "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a381592374e4f87c",
-      "headline": "Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9",
-      "summary": "An update on the Italian left-back's availability The post Calafiori, Rice, Madueke: Arsenal injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/calafiori-rice-madueke-arsenal-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:10:53Z",
-      "players": [
-        {
-          "element_id": 8,
-          "name": "Calafiori",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 16,
-          "name": "Madueke",
-          "club": "ARS",
           "held": false
         }
       ],
