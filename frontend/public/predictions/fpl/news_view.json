@@ -1,19 +1,43 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-01T15:08:35.689751Z",
-  "n_dropped": 183,
+  "generated_at": "2026-11-01T19:40:08.759177Z",
+  "n_dropped": 199,
   "dropped_by_source": {
-    "bbc_football": 60,
-    "fantasyfootballscout": 11,
+    "bbc_football": 64,
+    "fantasyfootballscout": 12,
     "hayters": 27,
-    "sky_football": 85
+    "sky_football": 96
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 273,
+  "n_articles": 289,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "2682f16a9210e4a6",
+      "headline": "FPL notes: McGinn pen miss, Jackson nets again + Cash ban",
+      "summary": "Notes from Aston Villa 1-1 Fulham The post FPL notes: McGinn pen miss, Jackson nets again + Cash ban appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/01/fpl-notes-mcginn-pen-miss-jackson-nets-again-cash-ban",
+      "claimed_at": "2026-11-01T18:30:00Z",
+      "players": [
+        {
+          "element_id": 45,
+          "name": "McGinn",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "b4a90a0f99aa53c0",
       "headline": "Suzuki mistake gifts Fulham point at Villa",
@@ -219,6 +243,288 @@
       "touches_squad": true
     },
     {
+      "digest": "c24936ea2fff9918",
+      "headline": "'Everyone saw it' - Iraola confused by Isak penalty decision",
+      "summary": "Liverpool manager Andoni Iraola reacts to his side's defeat at home to league-leaders Arsenal, saying he \"doesn't understand\" why Alexander Isak was not awarded a penalty.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cjdx3dpvevngo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-01T19:37:44Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "498c9818139915d2",
+      "headline": "Arteta credits Fleetwood loss for spirited win at Anfield",
+      "summary": "Arsenal manager Mikel Arteta believes their loss in the League Cup to Fleetwood spurred his side on to their first victory at Anfield in 14 years.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cx2d2yxv84zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-01T19:21:49Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7abf981ade908e0e",
+      "headline": "Liverpool latest: Unwanted piece of history made in Arsenal defeat",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-01T19:18:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e53ffdd49ff522f6",
+      "headline": "Rice rewarded, Wirtz must do more - Liverpool and Arsenal player ratings",
+      "summary": "How Liverpool and Arsenal's players rated in their Premier League match at Anfield, as the champions of the past two seasons went head to head.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqj9kgyww478o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-01T18:38:45Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "041406a9c8da4d58",
+      "headline": "Arsenal triumphant in long-awaited Anfield victory",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Liverpool and Arsenal.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13606781/liverpool-0-1-arsenal-premier-league-highlights",
+      "claimed_at": "2026-11-01T18:34:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5951869508000bb9",
+      "headline": "Arsenal win at Anfield for first time in 14 years to move top",
+      "summary": "Arsenal won at Anfield for the first time in 14 years after Kai Havertz's strike sealed a gritty 1-0 victory - but Liverpool were denied what looked to be a clear penalty.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/liverpool-vs-arsenal/report/559530",
+      "claimed_at": "2026-11-01T18:30:00Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4f6af75af82bbbad",
+      "headline": "PL Predictions: Can Everton beat unconvincing Newcastle?",
+      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight for an intriguing Monday Night Football.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13604412/premier-league-predictions-jones-knows-best-bets-liverpool-vs-arsenal-crystal-palace-vs-tottenham-and-much-more",
+      "claimed_at": "2026-11-01T18:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ca3da0ff73e15f1e",
+      "headline": "Chelsea flex title-winning credentials but Man City following closely",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13606734/wsl-talking-points-chelsea-flex-title-winning-credentials-with-dominant-win-at-charlton-but-man-city-are-keeping-up",
+      "claimed_at": "2026-11-01T17:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "451af72195f92e4d",
+      "headline": "Russo rescues late point for Arsenal against Villa",
+      "summary": "Chastity Grant's first-half strike for Aston Villa is cancelled out by a late header from Alessia Russo, as Arsenal record another draw at home in a frustrating afternoon.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c678pe84l97go?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-01T17:54:40Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a288e69af72e3b86",
+      "headline": "Why Man Utd fans continue to stick by Carrick",
+      "summary": "The last time Manchester United won a league game, schools were closed for the summer and the transfer window was still open.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13606693/michael-carricks-man-utd-support-explained-as-fans-believe-reason-for-worst-start-in-40-years-goes-beyond-dugout",
+      "claimed_at": "2026-11-01T17:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "072fa43db7b2948c",
+      "headline": "Erik ten Hag doubles down on Cristiano Ronaldo criticism",
+      "summary": "Erik ten Hag has criticised Cristiano Ronaldo once again, claiming the Portuguese international has failed to &#8220;deliver&#8221; for seven or eight years. Ten Hag, who was in charge of Manchester United from April 2022 until October 2024, f",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/erik-ten-hag-doubles-down-on-cristiano-ronaldo-criticism/",
+      "claimed_at": "2026-11-01T17:20:49Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "77785ad6efa97066",
+      "headline": "Neville: Man Utd stuck in a rut - and it's really worrying",
+      "summary": "Gary Neville says Manchester United are stuck in a rut and that a difficult run of fixtures ahead makes for &#8220;really worrying&#8221; times at Old Trafford.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13606708/manchester-united-gary-neville-says-club-are-in-a-rut-and-is-unimpressed-with-lisandro-martinez-amid-tough-run-of-games-for-michael-carricks-side",
+      "claimed_at": "2026-11-01T16:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bd730550b0cf74c4",
+      "headline": "Defeat for London City - but is Europe a real possibility?",
+      "summary": "London City Lionesses suffer defeat by Manchester City but their performance suggests they are closer to Champions League qualification than expected.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cj93z2nk2694o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-01T15:49:47Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cc9b028187889a59",
+      "headline": "Neville critical of Martinez as Man Utd worries deepen",
+      "summary": "Sky Sports' Gary Neville has his say on the current situation at Manchester United and admits he is finding the poor run of form 'really worrying '.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13606686/man-utd-latest-gary-neville-concerns-grow-over-plight-of-for-club",
+      "claimed_at": "2026-11-01T15:31:00Z",
+      "players": [
+        {
+          "element_id": 419,
+          "name": "Martinez",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b6ca2410b5b7d18c",
+      "headline": "Liverpool v Arsenal team news: Calafiori + Tzolis start",
+      "summary": "Dominik Szoboszlai is back on the bench for Liverpool The post Liverpool v Arsenal team news: Calafiori + Tzolis start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/01/liverpool-v-arsenal-team-news-calafiori-tzolis-start",
+      "claimed_at": "2026-11-01T15:30:00Z",
+      "players": [
+        {
+          "element_id": 8,
+          "name": "Calafiori",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 557,
+          "name": "Tzolis",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "24a6084d13881473",
       "headline": "Russo rescues frustrated Arsenal as Man City beat London City",
       "summary": null,
@@ -244,6 +550,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-11-01T14:13:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3662a1fe83bfefce",
+      "headline": "Liverpool 0-1 Arsenal LIVE \u2013 Arsenal move top and end long wait for Anfield win",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Liverpool 0-1 Arsenal LIVE - Arsenal move top and end long wait for Anfield win appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/liverpool-v-arsenal-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-11-01T14:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -285,6 +609,24 @@
           "element_id": 0,
           "name": null,
           "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cfaf1e07dd171525",
+      "headline": "Reaction as Havertz goal secures victory for Arsenal at Liverpool LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/liverpool-vs-arsenal/live/559530",
+      "claimed_at": "2026-11-01T14:00:00Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
           "held": false
         }
       ],
@@ -747,78 +1089,6 @@
       "touches_squad": false
     },
     {
-      "digest": "26618cc38f8e31a7",
-      "headline": "Glasner fears he will be next Forest sacking if wins don't follow",
-      "summary": "Nottingham Forest head coach Oliver Glasner warns he will be the fifth sacking in just over a year by the club, unless results improve soon.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvn067174knjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T20:26:15Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8819673da5ef55f8",
-      "headline": "Tottenham mood 'totally different' - De Zerbi",
-      "summary": "Tottenham manager Roberto De Zerbi said the mood at the club is \"totally different\" after picking up a third straight league victory with a 2-0 win over Crystal Palace.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c9203ymmn1m3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T20:13:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cf9b2ac2c14fa210",
-      "headline": "Sage looking for solutions to Palace form",
-      "summary": "Crystal Palace manger Pierre Sage reacts as his side loses a third consecutive league game following their 2-0 defeat by Tottenham.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c6r7yx55n3gjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T20:13:28Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "977601832e007a43",
-      "headline": "Sunderland's paradox - San Siro trip amid relegation battle",
-      "summary": "Sunderland were last season's surprise package in the Premier League, but this time they are struggling after Coventry handed them their sixth defeat.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmrry892zpkro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T20:03:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "1a2fbc6e6dbb5e96",
       "headline": "Tottenham 2-0 Crystal Palace LIVE \u2013 Spurs win their third Premier League match in a row",
       "summary": "{rsn-live-v2} The post Tottenham 2-0 Crystal Palace LIVE - Spurs win their third Premier League match in a row appeared first on Hayters.",
@@ -844,24 +1114,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/tottenham-hotspur-vs-crystal-palace/report/559533",
       "claimed_at": "2026-10-31T19:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "42653f8a86ff567a",
-      "headline": "Maresca's big test is to address mounting Man City issues",
-      "summary": "Enzo Maresca enjoyed a flawless start as Manchester City manager, winning his first seven Premier League games in charge, but the honeymoon period is now over.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cve8rkd8r302o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T19:05:41Z",
       "players": [
         {
           "element_id": 0,
@@ -903,24 +1155,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "49e6e92078762255",
-      "headline": "Goretzka starts for Aston Villa vs Fulham LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/aston-villa-vs-fulham/live/559524",
-      "claimed_at": "2026-10-31T18:41:00Z",
-      "players": [
-        {
-          "element_id": 618,
-          "name": "Goretzka",
-          "club": "AVL",
           "held": false
         }
       ],
@@ -987,42 +1221,6 @@
       "touches_squad": false
     },
     {
-      "digest": "51ff2fea7bb929d7",
-      "headline": "Brighton condemn Man City to back-to-back PL defeats",
-      "summary": "FREE TO WATCH: Highlights from Manchester City's match against Brighton in the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13606301/manchester-city-0-1-brighton-premier-league-highlights",
-      "claimed_at": "2026-10-31T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "635b1ed8a67c1495",
-      "headline": "Chelsea capitalise on second-half implosion to defeat 10-man Man Utd",
-      "summary": "FREE TO WATCH: Highlights from Chelsea's match against Manchester United in the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13606146/chelsea-2-0-manchester-united-premier-league-highlights",
-      "claimed_at": "2026-10-31T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "0e22c2be9d559921",
       "headline": "Spurs v Crystal Palace team news: Maddison a sub, Solanke in",
       "summary": "One change for Spurs from last weekend, two for Palace The post Spurs v Crystal Palace team news: Maddison a sub, Solanke in appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1035,78 +1233,6 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3aed71471b23e595",
-      "headline": "Coventry cruise past Sunderland to climb out of drop zone",
-      "summary": "Coventry climbed out of the Premier League relegation zone as they cruised to victory over bottom side Sunderland.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/coventry-city-vs-sunderland/report/559528",
-      "claimed_at": "2026-10-31T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "736e996140bf388c",
-      "headline": "Bournemouth punish Trafford horror error to sink Leeds",
-      "summary": "Bournemouth made it six wins on the spin in all competitions without conceding as they beat toothless Leeds 2-0.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/bournemouth-vs-leeds-united/report/559525",
-      "claimed_at": "2026-10-31T17:00:00Z",
-      "players": [
-        {
-          "element_id": 385,
-          "name": "Trafford",
-          "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a0b73eb3836e6e9e",
-      "headline": "PL Predictions: Can Liverpool catapult into the title race?",
-      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight for a busy weekend of Premier League action.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13604412/premier-league-predictions-jones-knows-best-bets-liverpool-vs-arsenal-crystal-palace-vs-tottenham-and-much-more",
-      "claimed_at": "2026-10-31T17:00:00Z",
-      "players": [
-        {
-          "element_id": 373,
-          "name": "C.Jones",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c031af31694ca1da",
-      "headline": "Man City fall to back-to-back defeats as Brighton's rise continues",
-      "summary": "Manchester City fell to back-to-back Premier League losses for the first time under Enzo Maresca after being undone by buoyant Brighton 1-0 at the Etihad.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-brighton-and-hove-albion/report/559531",
-      "claimed_at": "2026-10-31T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1143,60 +1269,6 @@
           "element_id": 40,
           "name": "Rogers",
           "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1d24a8b78b4a02cf",
-      "headline": "Tottenham finally double lead vs 10-man Palace LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/tottenham-hotspur-vs-crystal-palace/live/559533",
-      "claimed_at": "2026-10-31T15:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fd983fa4e36c08b3",
-      "headline": "Man Utd latest: Are Carrick's side in a relegation battle? Have your say",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-31T15:16:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fa3a67b984954844",
-      "headline": "Worst run for 42 years but Carrick not expecting Man Utd sack before Roma",
-      "summary": "Michael Carrick expects to remain in charge of Manchester United despite the 2-0 defeat at Chelsea confirming the club's worst winless run for 42 years.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13606140/man-utd-boss-michael-carrick-expects-to-remain-in-charge-vs-roma-despite-winless-run-stretching-to-nine-matches",
-      "claimed_at": "2026-10-31T14:42:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1629,24 +1701,6 @@
       "touches_squad": false
     },
     {
-      "digest": "446b01a63ad0d60e",
-      "headline": "Joao Pedro, Lacroix, Martinez: Chelsea injury latest for FPL Gameweek 9",
-      "summary": "Xabi Alonso gave further updates on Friday afternoon The post Joao Pedro, Lacroix, Martinez: Chelsea injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footbal",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/joao-pedro-lacroix-martinez-chelsea-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:21:39Z",
-      "players": [
-        {
-          "element_id": 200,
-          "name": "Lacroix",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f44fd9671dee9641",
       "headline": "Concussion - 75% chance of playing",
       "summary": null,
@@ -1665,48 +1719,6 @@
           "element_id": 533,
           "name": "Mukiele",
           "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "af73d59781fa1351",
-      "headline": "Leeds midfielder could miss Bournemouth game but defender set to return",
-      "summary": "Leeds boss Daniel Farke says Anton Stach is a doubt for Saturday\u2019s trip to Bournemouth because of a foot injury. Stach was a doubt for last weekend's draw with Sunderland before managing to feature off the bench, but will be ass",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/leeds-midfielder-could-miss-bournemouth-game-but-defender-set-to-return/",
-      "claimed_at": "2026-10-30T15:24:52Z",
-      "players": [
-        {
-          "element_id": 335,
-          "name": "Stach",
-          "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "030a308efa891f81",
-      "headline": "Iraola not ruling out Liverpool duo from featuring against Arsenal",
-      "summary": "Andoni Iraola says both Dominik Szoboszlai and Victor Munoz \u201chave a chance\u201d of featuring against Arsenal this weekend. Both players were absent in midweek as Liverpool beat Chelsea on penalties in the EFL Cup to reach the quarter-fin",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/iraola-not-ruling-out-liverpool-duo-from-featuring-against-arsenal/",
-      "claimed_at": "2026-10-30T15:10:47Z",
-      "players": [
-        {
-          "element_id": 368,
-          "name": "Szoboszlai",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
           "held": false
         }
       ],
