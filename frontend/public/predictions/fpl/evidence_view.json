@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-01T06:52:44.544716Z",
+  "generated_at": "2026-11-01T14:00:23.694799Z",
   "gameweek": 10,
   "players": [
     {
@@ -141,6 +141,87 @@
         }
       ],
       "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 32,
+      "player_name": "Cash",
+      "club": "Aston Villa",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "45e235fe703005c3",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-10-31T22:00:07.593621Z",
+              "observed_at": "2026-11-01T06:53:24.279670Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "s",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "ec0c6d6d785dc5ca",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "s",
+              "claimed_at": "2026-10-31T22:00:07.593621Z",
+              "observed_at": "2026-11-01T06:53:24.279670Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "unavailable_until",
+          "resolved_value": "2026-11-21",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "903462d10c599b8f",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "unavailable_until",
+              "value": "2026-11-21",
+              "claimed_at": "2026-10-31T22:00:07.593621Z",
+              "observed_at": "2026-11-01T06:53:24.279670Z",
+              "quote": "Suspended until 21 Nov",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
       "needs_attention": false
     },
     {
@@ -526,10 +607,10 @@
     }
   ],
   "counts": {
-    "n_claims": 124,
-    "n_players_with_claims": 29,
-    "n_players_shown": 7,
+    "n_claims": 131,
+    "n_players_with_claims": 31,
+    "n_players_shown": 8,
     "n_escalations": 2,
-    "n_players_resolved": 14
+    "n_players_resolved": 16
   }
 }
