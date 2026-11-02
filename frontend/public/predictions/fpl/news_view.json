@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-02T02:31:32.012353Z",
-  "n_dropped": 209,
+  "generated_at": "2026-11-02T09:58:56.961804Z",
+  "n_dropped": 205,
   "dropped_by_source": {
-    "bbc_football": 70,
-    "fantasyfootballscout": 13,
+    "bbc_football": 68,
+    "fantasyfootballscout": 12,
     "hayters": 28,
-    "sky_football": 98
+    "sky_football": 97
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 299,
+  "n_articles": 295,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -241,6 +241,60 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "e6568bbbab8c6f4d",
+      "headline": "Man Utd latest: Relegation certainly possible, says former boss Ten Hag",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-02T07:55:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ac5c250cd6e801b6",
+      "headline": "No Grealish, no cry - the rise of Everton's youngsters",
+      "summary": "BBC Sport examines the growing influence of Everton's youngsters on their chances of success this season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm70pv70jwrjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-02T07:19:35Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cff4a7a05f09ddea",
+      "headline": "Football Daily",
+      "summary": "Rick Edwards is joined by Luke Kempner to reflect on Arsenal\u2019s 1-0 win at Anfield.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0pks2xb?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-02T00:59:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "0fdb5b7f16ef863d",
@@ -548,6 +602,24 @@
         {
           "element_id": 26,
           "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "659b6c6bf2809277",
+      "headline": "Arsenal latest: Mac Allister tried to bait me into red card, says Madueke",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-01T19:39:00Z",
+      "players": [
+        {
+          "element_id": 16,
+          "name": "Madueke",
           "club": "ARS",
           "held": false
         }
@@ -1053,42 +1125,6 @@
       "touches_squad": false
     },
     {
-      "digest": "03cfd6c3574b04f8",
-      "headline": "How 'brave & balanced' Brighton beat Man City",
-      "summary": "Match of the Day pundits Danny Murphy and Stephan Warnock analyse Brighton's impressive 1-0 victory over Manchester City, with Warnock praising the balance of the Seagulls squad.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmx23wyk769eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T23:59:24Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ac51410c56a22d99",
-      "headline": "Has Martinez become a liability for Man Utd?",
-      "summary": "Match of the Day pundits Danny Murphy and Stephan Warnock analyse Lisandro Martinez's performance in Manchester United's 2-0 defeat to Chelsea, where the Argentinian defender was sent off.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c9vgrjej28dvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-10-31T23:59:22Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "2e1444ed2e3d054a",
       "headline": "FPL notes: Gross on cusp of ban + Maresca on benching Cherki",
       "summary": "Maxim De Cuyper returns to the FPL summit as Brighton beat Man City The post FPL notes: Gross on cusp of ban + Maresca on benching Cherki appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout",
@@ -1107,42 +1143,6 @@
           "element_id": 399,
           "name": "Cherki",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4daf8708dc7e8bf9",
-      "headline": "Aston Villa latest: Emery admits work to do ahead of Barcelona and Man Utd",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-31T23:01:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b4af6559637cf7e4",
-      "headline": "Fulham latest: We can beat anyone, says Arbeloa",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279313/fulham-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-10-31T22:51:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
