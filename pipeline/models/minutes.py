@@ -646,12 +646,13 @@ def settled_gameweeks_in_season(current_season: Optional[pd.DataFrame]) -> Optio
     Counted from the rows, not from bootstrap events: a double gameweek is one,
     and a fully void gameweek has no rows and is not counted. No season labels
     are compared, so a missed season roll-over cannot break it. ``None`` when
-    the caller passed no rows at all, which keeps the gate off; an empty frame
+    the caller passed no rows at all, or rows without a ``GW`` column, which
+    keeps the gate off and records that the count is unknown; an empty frame
     (GW1) is 0, also off.
     """
-    if current_season is None:
+    if current_season is None or "GW" not in current_season.columns:
         return None
-    if "GW" not in current_season.columns or current_season.empty:
+    if current_season.empty:
         return 0
     gameweeks = pd.to_numeric(current_season["GW"], errors="coerce").dropna()
     return int(gameweeks.nunique())
@@ -849,6 +850,9 @@ class MinutesModel:
             self.by_player[player_key] = self._player_stats(rows, "_w_role")
 
         self._fit_now_stats(frame, key)
+        # kappa is bound here, with the record that says it applied; rho is
+        # still read at predict time, as before. Nothing patches the registry
+        # between fit and predict in production, so the two cannot disagree.
         self.h0_start_gate = h0_start_gate_state(settled_gameweeks_in_season)
 
         self.fitted = True

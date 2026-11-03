@@ -463,6 +463,7 @@ def build_fpl_inputs(
     now: Optional[pd.Timestamp] = None,
     evidence: Optional[Mapping[int, Mapping[str, Any]]] = None,
     current_season: Optional[pd.DataFrame] = None,
+    settled_gameweeks: Optional[int] = None,
 ) -> FplInputs:
     """
     Fit the player models and assemble one squad per club.
@@ -477,6 +478,11 @@ def build_fpl_inputs(
     alone it projects each player from his last three matches of LAST season.
     They feed the minutes model only: the scoring model is the calibrated one,
     and these rows carry no event columns to fit it on.
+
+    ``settled_gameweeks`` overrides the count of this season's settled gameweeks
+    that drives the minutes model's h=0 gate, for a caller whose ``archive``
+    already IS the season being predicted (``walk_forward``). Otherwise it is
+    counted from ``current_season``; see :func:`settled_gameweeks_in_season`.
 
     Rows passed through :func:`with_deadline_availability` carry the flags in
     force at each settled deadline, which lets the minutes model stop charging a
@@ -514,7 +520,10 @@ def build_fpl_inputs(
     # is all last season, and "gameweeks of the latest season" would read 38.
     minutes_model = MinutesModel().fit(
         minutes_frame, key=key, position_column="position_norm",
-        settled_gameweeks_in_season=settled_gameweeks_in_season(current_season),
+        settled_gameweeks_in_season=(
+            settled_gameweeks if settled_gameweeks is not None
+            else settled_gameweeks_in_season(current_season)
+        ),
     )
     events = PlayerEventRates().fit(
         frame, key=key, position_column="position_norm", rules=rules

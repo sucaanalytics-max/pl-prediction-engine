@@ -165,6 +165,37 @@ class GateBoundaryTests(unittest.TestCase):
         self.assertEqual(on.h0_start_gate["kappa_effective"], 1.0)
         self.assertEqual(_all_roles(on), today)
 
+    def test_a_player_fit_again_after_a_flagged_absence_reverts_on_his_fit_now_rates(self):
+        """The fit-now role fit carries its own long-memory stats; kappa uses them."""
+        from pipeline.models.minutes import AVAILABILITY_AT_DEADLINE
+
+        rows = []
+        for gw in range(1, 15):
+            for name, started in (("regular", True), ("filler", False)):
+                rows.append({**_row(name, "2627", gw, started, "DEF"),
+                             AVAILABILITY_AT_DEADLINE: 1.0})
+            injured = gw in (12, 13)
+            rows.append({**_row("back", "2627", gw, not injured and gw > 6, "DEF"),
+                         AVAILABILITY_AT_DEADLINE: 0.0 if injured else 1.0})
+        frame = pd.DataFrame(rows)
+        off, on = _fit(9, frame), _fit(10, frame)
+        stats = off.by_player["back"]
+        self.assertIn("fit_now", stats)
+        stats = stats["fit_now"]
+        long_run = _shrink(
+            stats["n_starts_long"], stats["n_fixtures_long"],
+            off.by_position["DEF"]["start_rate"],
+            PARAM_REGISTRY["minutes.start_shrinkage"]["value"],
+        )
+        today = off.predict("DEF", "back", availability_override=FIT, horizon=0)
+        reverted = on.predict("DEF", "back", availability_override=FIT, horizon=0)
+        self.assertGreater(abs(today.p_start - long_run), 0.05, "fixture has no gap")
+        self.assertAlmostEqual(
+            reverted.p_start,
+            long_run + (today.p_start - long_run) * PARAM_REGISTRY[KAPPA]["value"],
+            places=12,
+        )
+
     def test_a_player_with_no_history_is_untouched(self):
         unknown = (("new_signing", "MID"),)
         self.assertEqual(_all_roles(_fit(38), unknown), _all_roles(_fit(None), unknown))
@@ -193,7 +224,6 @@ class SeasonPhaseCountTests(unittest.TestCase):
     def test_gw1_is_zero_however_much_last_season_the_frame_holds(self):
         """The trap: the fit frame at GW1 is 38 gameweeks of last season."""
         self.assertEqual(settled_gameweeks_in_season(pd.DataFrame({"GW": []})), 0)
-        self.assertEqual(settled_gameweeks_in_season(pd.DataFrame()), 0)
         last_season_only = _frame(current_gameweeks=0)
         self.assertEqual(last_season_only["GW"].nunique(), 38)
         model = _fit(settled_gameweeks_in_season(last_season_only[
@@ -201,6 +231,10 @@ class SeasonPhaseCountTests(unittest.TestCase):
         ]), frame=last_season_only)
         self.assertEqual(model.h0_start_gate["settled_gameweeks"], 0)
         self.assertFalse(model.h0_start_gate["active"])
+
+    def test_rows_without_a_gameweek_column_are_unknown_not_gw1(self):
+        self.assertIsNone(settled_gameweeks_in_season(pd.DataFrame()))
+        self.assertIsNone(settled_gameweeks_in_season(pd.DataFrame({"minutes": [90]})))
 
     def test_a_double_gameweek_counts_once(self):
         rows = pd.DataFrame({"GW": [1, 1, 2, 2, 2, 3]})
@@ -305,6 +339,28 @@ class BacktestCountTests(unittest.TestCase):
             backtest.backtest_minutes(season="2526", prior_season="2425")
 
         self.assertEqual(seen, list(range(0, 12)))
+
+
+class WalkForwardCountTests(unittest.TestCase):
+    def test_the_calibration_harness_passes_the_predicted_seasons_count(self):
+        """Without it the gate is off at every k, unlike production from GW11."""
+        from pipeline.learning.backfill import load_archive_season
+        from pipeline.learning.walk_forward import project_gameweek
+
+        class Captured(Exception):
+            pass
+
+        seen = {}
+
+        def stub(*args, **kwargs):
+            seen.update(kwargs)
+            raise Captured
+
+        archive = load_archive_season("2526")
+        with mock.patch("pipeline.models.fpl_inputs.build_fpl_inputs", stub):
+            with self.assertRaises(Captured):
+                project_gameweek(archive, 12, use_fitted_rates=False)
+        self.assertEqual(seen["settled_gameweeks"], 11)
 
 
 class ProvenanceTests(unittest.TestCase):

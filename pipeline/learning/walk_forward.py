@@ -190,6 +190,7 @@ def project_gameweek(
     """
     from pipeline.models.fixture_rates import TeamStrengths
     from pipeline.models.fpl_inputs import build_fpl_inputs
+    from pipeline.models.minutes import settled_gameweeks_in_season
     from pipeline.simulation.gameweek_sim import simulate_gameweek
 
     rules = rules or load_rules()
@@ -206,7 +207,14 @@ def project_gameweek(
             logger.warning("GW%s: strengths unfittable (%s); using flat rates", gameweek, exc)
 
     bootstrap = synthetic_bootstrap(archive, gameweek)
-    inputs = build_fpl_inputs(bootstrap, train, None, rules)
+    # `train` is the predicted season itself, GW < k, so its gameweeks are the
+    # settled count the minutes model's h=0 gate reads; production counts the
+    # same rows. Without it the gate is off at every k and this harness would
+    # score a model production does not run from GW11 on.
+    inputs = build_fpl_inputs(
+        bootstrap, train, None, rules,
+        settled_gameweeks=settled_gameweeks_in_season(train),
+    )
     specs = fixture_specs(archive, gameweek, strengths)
     if not specs:
         return [], [], 0
