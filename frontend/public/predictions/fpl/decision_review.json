@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "producer_version": 1,
-  "generated_at": "2026-10-26T17:22:55.547949+00:00",
+  "generated_at": "2026-11-03T16:35:18.825463+00:00",
   "season": "2627",
-  "observations": 7,
+  "observations": 8,
   "minimum_observations": 6,
   "aggregate": {
-    "gameweeks": 7,
-    "points_forgone_on_bench": 41,
+    "gameweeks": 8,
+    "points_forgone_on_bench": 51,
     "foreseeable_bench_errors": 6,
-    "captain_agreement_rate": 0.4286,
+    "captain_agreement_rate": 0.5,
     "captain_points_vs_engine": -16
   },
   "aggregate_reason": null,
@@ -572,6 +572,84 @@
         "agreed": false,
         "points_delta": -2
       }
+    },
+    {
+      "gameweek": 9,
+      "sealed_at": "2026-10-31T07:02:24.037540+00:00",
+      "seconds_before_deadline": 14255.96246,
+      "sealed_universe": 511,
+      "points": 76,
+      "fpl_points_on_bench": 13,
+      "transfers": 0,
+      "hit_cost": 0,
+      "submitted_eleven": [
+        4,
+        40,
+        53,
+        112,
+        166,
+        237,
+        249,
+        411,
+        427,
+        496,
+        566
+      ],
+      "submitted_bench": [
+        1,
+        173,
+        124,
+        504
+      ],
+      "selection": {
+        "worst_starter": 496,
+        "best_bench": 124,
+        "bench_rated_higher": [
+          124
+        ],
+        "gap": 0.1597,
+        "misordered": true
+      },
+      "bench": [
+        {
+          "bench_element": 1,
+          "starter_element": 427,
+          "kind": "cost",
+          "points_forgone": 4,
+          "verdict": "defensible",
+          "is_lesson": false
+        },
+        {
+          "bench_element": 173,
+          "starter_element": null,
+          "kind": "no_claim",
+          "points_forgone": 0,
+          "verdict": null,
+          "is_lesson": false
+        },
+        {
+          "bench_element": 124,
+          "starter_element": 427,
+          "kind": "cost",
+          "points_forgone": 1,
+          "verdict": "defensible",
+          "is_lesson": false
+        },
+        {
+          "bench_element": 504,
+          "starter_element": 427,
+          "kind": "cost",
+          "points_forgone": 5,
+          "verdict": "defensible",
+          "is_lesson": false
+        }
+      ],
+      "captain": {
+        "chosen": 411,
+        "sealed_best": 411,
+        "agreed": true,
+        "points_delta": 0
+      }
     }
   ],
   "entry_id": 20945,
@@ -580,22 +658,32 @@
     "1": "Raya",
     "4": "Gabriel",
     "12": "Saka",
+    "53": "Manzambi",
+    "166": "N.Jackson",
+    "566": "Silva",
     "106": "Thiago",
     "113": "F.Kad\u0131o\u011flu",
     "124": "Gro\u00df",
+    "504": "Vuskovic",
+    "40": "Rogers",
     "152": "Palestra",
     "154": "Palmer",
     "165": "Jo\u00e3o Pedro",
     "173": "Thomas",
+    "249": "Barry",
     "569": "Gonzalo",
     "368": "Szoboszlai",
     "379": "Isak",
+    "237": "Ndiaye",
     "398": "Foden",
+    "411": "Haaland",
     "418": "Maguire",
     "426": "B.Fernandes",
     "427": "Mbeumo",
     "445": "Thiaw",
     "464": "Wissa",
+    "112": "Van Hecke",
+    "496": "Kinsky",
     "497": "Dubravka",
     "542": "E.Le F\u00e9e"
   }
