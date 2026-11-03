@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-03T01:35:35.936119Z",
+  "generated_at": "2026-11-03T08:35:17.313467Z",
   "gameweek": 10,
   "players": [
     {
@@ -595,6 +595,87 @@
       "needs_attention": false
     },
     {
+      "element_id": 456,
+      "player_name": "J.Ramsey",
+      "club": "Newcastle",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "db9753104e5d682f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 0,
+              "claimed_at": "2026-11-02T22:00:09.813234Z",
+              "observed_at": "2026-11-03T01:36:16.489902Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "s",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "21f0bc110abd4d65",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "s",
+              "claimed_at": "2026-11-02T22:00:09.813234Z",
+              "observed_at": "2026-11-03T01:36:16.489902Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "unavailable_until",
+          "resolved_value": "2026-11-21",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "ce1557b423ac37fd",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "unavailable_until",
+              "value": "2026-11-21",
+              "claimed_at": "2026-11-02T22:00:09.813234Z",
+              "observed_at": "2026-11-03T01:36:16.489902Z",
+              "quote": "Suspended until 21 Nov",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 535,
       "player_name": "Alderete",
       "club": "Sunderland",
@@ -677,10 +758,10 @@
     }
   ],
   "counts": {
-    "n_claims": 211,
-    "n_players_with_claims": 48,
-    "n_players_shown": 9,
+    "n_claims": 214,
+    "n_players_with_claims": 49,
+    "n_players_shown": 10,
     "n_escalations": 2,
-    "n_players_resolved": 25
+    "n_players_resolved": 26
   }
 }
