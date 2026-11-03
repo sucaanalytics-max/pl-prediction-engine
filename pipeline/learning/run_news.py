@@ -368,8 +368,9 @@ def _report_minutes_conflicts(
         logger.info("minutes conflicts: no %s yet; skipping", xp_path.name)
         return
     try:
+        xp = json.loads(xp_path.read_text(encoding="utf-8"))
         conflicts, ambiguous = minutes_conflicts.find_conflicts(
-            json.loads(xp_path.read_text(encoding="utf-8")), inbox_text, bootstrap,
+            xp, inbox_text, bootstrap,
         )
         payload = minutes_conflicts.to_artifact(
             conflicts, ambiguous, generated_at=observed_at,
@@ -379,6 +380,8 @@ def _report_minutes_conflicts(
             feed=minutes_conflicts.evidence_feed_health(
                 minutes_conflicts.inbox_rows(inbox_text)
             ),
+            # Whether the h=0 gate fired; it shifts who reads as nailed.
+            gate=minutes_conflicts.h0_start_gate(xp),
         )
         name = f"minutes_conflicts_gw{gameweek:02d}.json"
         minutes_conflicts.write_artifact(payload, predictions_dir / "fpl" / name)

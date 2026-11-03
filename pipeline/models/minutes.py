@@ -538,8 +538,20 @@ def horizon_start_reversion(horizon: int) -> float:
 
     Out of fold at h=1-5 the own-rate target improves start Brier by 0.0118
     [0.0102, 0.0134] overall and in every position, and the sealed 2026-27
-    seals agree (0.0051 [0.0012, 0.0089]); h=0, and so the sealed row, is
-    untouched by construction. The registry entry carries the full table.
+    seals agree (0.0051 [0.0012, 0.0089]). That measurement left h=0
+    untouched; the registry entry carries the full table.
+
+    **h=0 is no longer untouched.** "Already predicts" above holds for the
+    pooled anchors, not for nailed outfielders once ``L`` is mostly THIS
+    season: their h=0 start is over-stated, and reverting part of the way
+    toward ``L`` at h=0 as well helps (archive k11-38, simulated start Brier
+    -0.0015). So for outfield players, once the predicted season has
+    ``minutes.h0_start_target_min_settled_gw`` settled gameweeks, ``keep`` is
+    ``kappa * rho^h`` at EVERY h, and the sealed h=0 row moves. Before that
+    point, for keepers, and with ``minutes.h0_start_target_keep`` = 1, it is
+    ``rho^h`` and h=0 is untouched, bit for bit. Early in a season ``L`` is
+    mostly LAST season's rate, and an always-on kappa measured harmful at
+    GW2-10. The registry entries carry the gate and its evidence.
 
     The availability factor still decays a nailed player. That residual is what
     remains for keepers (0.786 predicted vs 0.867 realised at h=3); refitting the
@@ -626,6 +638,56 @@ def unavailability_posterior(
     return np.clip(share, 0.0, 1.0)
 
 
+def settled_gameweeks_in_season(current_season: Optional[pd.DataFrame]) -> Optional[int]:
+    """
+    How many distinct gameweeks of THIS season have settled rows.
+
+    The season-phase input to the h=0 gate; see :func:`h0_start_gate_state`.
+    Counted from the rows, not from bootstrap events: a double gameweek is one,
+    and a fully void gameweek has no rows and is not counted. No season labels
+    are compared, so a missed season roll-over cannot break it. ``None`` when
+    the caller passed no rows at all, which keeps the gate off; an empty frame
+    (GW1) is 0, also off.
+    """
+    if current_season is None:
+        return None
+    if "GW" not in current_season.columns or current_season.empty:
+        return 0
+    gameweeks = pd.to_numeric(current_season["GW"], errors="coerce").dropna()
+    return int(gameweeks.nunique())
+
+
+def h0_start_gate_state(settled_gameweeks: Optional[int]) -> Dict[str, Any]:
+    """
+    Whether a fit reverts outfield starts toward the own long-run rate at h=0.
+
+    ``settled_gameweeks`` is how many distinct gameweeks of the PREDICTED season
+    have settled rows in the fit, counted by the caller from those rows. It is
+    passed in rather than read off the frame because the frame cannot say which
+    season is being predicted: at GW1 it holds only last season, and "gameweeks
+    of the latest season" would read 38 and switch the gate on. ``None`` (the
+    caller did not say) is off, which is the behaviour before the gate existed.
+
+    Returned JSON-safe because it rides into the seal header: the registry value
+    of kappa says what the gate WOULD do, and only this says whether it fired.
+    """
+    minimum = int(_param("minutes.h0_start_target_min_settled_gw"))
+    settled = None if settled_gameweeks is None else int(settled_gameweeks)
+    # The own-rate target must be on too: with its half-life at 0 there is no
+    # long-run rate to revert toward, and the pool path never touches h=0.
+    active = (
+        settled is not None
+        and settled >= minimum
+        and _param("minutes.horizon_start_target_half_life") > 0
+    )
+    return {
+        "settled_gameweeks": settled,
+        "min_settled": minimum,
+        "active": bool(active),
+        "kappa_effective": _param("minutes.h0_start_target_keep") if active else 1.0,
+    }
+
+
 class MinutesModel:
     """
     Fitted role and minutes model.
@@ -642,6 +704,7 @@ class MinutesModel:
         self.by_player: Dict[Any, Dict[str, float]] = {}
         self.by_position: Dict[str, Dict[str, float]] = {}
         self.availability_diagnostics: Dict[str, Any] = {}
+        self.h0_start_gate: Dict[str, Any] = h0_start_gate_state(None)
         self.fitted = False
 
     @staticmethod
@@ -667,6 +730,7 @@ class MinutesModel:
         history: pd.DataFrame,
         key: str = "code",
         position_column: str = "position_current",
+        settled_gameweeks_in_season: Optional[int] = None,
     ) -> "MinutesModel":
         """
         Fit from settled per-fixture rows.
@@ -675,6 +739,12 @@ class MinutesModel:
         historical one: FPL reclassifies players between seasons, and a position
         prior built from stale labels is wrong for exactly the players whose
         role changed.
+
+        ``settled_gameweeks_in_season`` drives the outfield h=0 reversion gate;
+        see :func:`h0_start_gate_state`. Count distinct ``GW`` values among the
+        predicted season's settled rows: a double gameweek counts once, matching
+        the gameweek-unit ages of the weights, and a fully void week has no rows
+        and does not count. ``None`` leaves the gate off.
         """
         required = {"minutes", "starts", key, position_column}
         missing = required - set(history.columns)
@@ -779,15 +849,17 @@ class MinutesModel:
             self.by_player[player_key] = self._player_stats(rows, "_w_role")
 
         self._fit_now_stats(frame, key)
+        self.h0_start_gate = h0_start_gate_state(settled_gameweeks_in_season)
 
         self.fitted = True
         logger.info(
             "MinutesModel fitted on %d rows: %d players, position start rates %s, "
-            "deadline availability %s",
+            "deadline availability %s, h0 start gate %s",
             len(frame),
             len(self.by_player),
             {p: round(v["start_rate"], 3) for p, v in self.by_position.items()},
             self.availability_diagnostics,
+            self.h0_start_gate,
         )
         return self
 
@@ -1194,10 +1266,19 @@ class MinutesModel:
         # cap*(1-rho^h), under which a nailed starter drifts down and a fringe
         # player drifts up. (A model fitted with the parameter off carries no
         # long-memory stats and keeps that path even if it is switched on later.)
+        #
+        # Once the season has enough settled weeks (see `h0_start_gate_state`),
+        # an outfield player's keep is kappa * rho^h at EVERY h, so h=0 reverts
+        # too. Keepers are left alone: B was fitted and measured on outfielders,
+        # and keepers' starts come from a separate draw. kappa <= 1 by its bounds,
+        # so p_start stays a convex combination of two rates in [0, 1].
         own_target = _param("minutes.horizon_start_target_half_life") > 0 and (
             not stats or "n_fixtures_long" in stats
         )
-        if horizon > 0:
+        h0_keep = (
+            float(self.h0_start_gate["kappa_effective"]) if canonical != "GKP" else 1.0
+        )
+        if horizon > 0 or (own_target and h0_keep < 1.0):
             if own_target:
                 if stats:
                     toward = _shrink(
@@ -1208,7 +1289,7 @@ class MinutesModel:
                     # No history: p_start already IS the prior, and the prior
                     # is a long-run rate, so there is nothing to revert toward.
                     toward = p_start
-                keep = _param("minutes.horizon_start_target_rho") ** int(horizon)
+                keep = h0_keep * _param("minutes.horizon_start_target_rho") ** int(horizon)
                 p_start = toward + (p_start - toward) * keep
             else:
                 toward = prior["start_rate"]

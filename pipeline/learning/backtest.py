@@ -30,7 +30,7 @@ import numpy as np
 import pandas as pd
 
 from pipeline.fpl.rules import POSITIONS, normalise_position
-from pipeline.models.minutes import MinutesModel
+from pipeline.models.minutes import MinutesModel, settled_gameweeks_in_season
 from pipeline.validation.metrics import (
     brier_score,
     calibration_curve_data,
@@ -170,7 +170,14 @@ def backtest_minutes(
         if past.empty:
             continue
 
-        model = MinutesModel().fit(past, key=key, position_column="position_norm")
+        # The h=0 gate counts settled gameweeks of the season being predicted.
+        # Read from `current`, not `past`: `past` leads with whole earlier
+        # seasons, so "gameweeks of its latest season" would be 38 at GW1.
+        settled = current[current["GW"] < gameweek]
+        model = MinutesModel().fit(
+            past, key=key, position_column="position_norm",
+            settled_gameweeks_in_season=settled_gameweeks_in_season(settled),
+        )
 
         # Rolling last-5 appearance rate per player, from the same past-only data.
         #

@@ -402,6 +402,7 @@ def refresh_expected_points(
     )
     from pipeline.models.fpl_inputs import (
         build_fpl_inputs,
+        h0_start_gate_provenance,
         load_current_season_rows,
         with_deadline_availability_if_used,
     )
@@ -475,6 +476,9 @@ def refresh_expected_points(
     deadline_availability = _deadline_availability_provenance(
         current_season, inputs.diagnostics
     )
+    # Whether outfield h=0 starts reverted toward the own long-run rate. When it
+    # fired, the sealed h=0 row moved; see minutes.h0_start_target_keep.
+    h0_start_gate = h0_start_gate_provenance(inputs.diagnostics)
 
     # Per-fixture goal rates, best source first. A flat rate for every fixture
     # gives a promoted side and the champions identical clean-sheet
@@ -605,6 +609,7 @@ def refresh_expected_points(
         predictions_dir,
         seed,
         specs,
+        extra_metadata={"h0_start_gate": h0_start_gate},
     )
 
     # The display projection. Separate from the artifact above because that one
@@ -643,6 +648,10 @@ def refresh_expected_points(
         # the join is non-fatal and a degraded run would otherwise seal a header
         # claiming fit_now_absence_credit = 1.0 for a forecast made as if 0.0.
         "deadline_availability": deadline_availability,
+        # Whether the minutes model's h=0 gate fired for this fit. Same reason as
+        # above: the registry carries kappa's value whether or not it applied, and
+        # the confirm-or-rollback rule scores only rows whose seal says it did.
+        "h0_start_gate": h0_start_gate,
     }
 
 
@@ -934,6 +943,10 @@ def _seal(predictions_dir: Path, state: ScheduleState, dry_run: bool) -> int:
             # Which sealed gameweeks' flags fed the minutes fit, and whether the
             # join took effect at all; see _deadline_availability_provenance.
             "deadline_availability": outcome.get("deadline_availability"),
+            # Whether outfield h=0 starts reverted toward the own long-run rate
+            # (settled gameweeks, threshold, active, kappa applied); see
+            # fpl_inputs.h0_start_gate_provenance. Already JSON round-tripped.
+            "h0_start_gate": outcome.get("h0_start_gate"),
         },
         dry_run=dry_run,
     )

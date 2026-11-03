@@ -17,6 +17,7 @@ defensive-contribution counted set.
 """
 from __future__ import annotations
 
+import json
 import logging
 from dataclasses import dataclass, field, replace
 from datetime import datetime, timezone
@@ -28,7 +29,12 @@ import pandas as pd
 from pipeline.config import CURRENT_SEASON
 from pipeline.data.team_mapping import normalize_team_name
 from pipeline.fpl.rules import POSITIONS, Rules, load_rules, normalise_position
-from pipeline.models.minutes import AvailabilityState, MinutesModel, availability_state
+from pipeline.models.minutes import (
+    AvailabilityState,
+    MinutesModel,
+    availability_state,
+    settled_gameweeks_in_season,
+)
 from pipeline.models.player_events import PlayerEventRates
 from pipeline.simulation.player_sim import PlayerInput
 
@@ -418,6 +424,36 @@ def load_current_season_rows(
     return current_season_rows(bootstrap, {gw: fetch(gw) for gw in settled})
 
 
+def h0_start_gate_provenance(
+    diagnostics: Optional[Mapping[str, Any]],
+) -> Optional[Dict[str, Any]]:
+    """
+    The minutes model's h=0 gate record, JSON-safe, for artifacts and the seal.
+
+    Takes :func:`build_fpl_inputs` diagnostics. Both producers of the xp
+    artifact stamp it, and the agent also puts it in the seal header, because
+    ``artifact_metadata.parameters`` only says what kappa IS. When the gate is
+    active the sealed h=0 row has moved for outfielders, and scoring stratifies
+    on this record, never on the gameweek number.
+
+    Never raises, and returns the record already round-tripped through ``json``:
+    anything unserialisable reaching ``seal_forecast``'s header would cost the
+    seal. A failure returns None, which costs only this record.
+    """
+    try:
+        record = (diagnostics or {}).get("h0_start_gate")
+        if record is None:
+            return None
+        # numpy scalars to native values, so a count stays a number; only what
+        # has no native form falls back to its string.
+        return json.loads(json.dumps(
+            dict(record), default=lambda o: o.item() if hasattr(o, "item") else str(o),
+        ))
+    except Exception as exc:  # noqa: BLE001 - provenance must never cost the seal
+        logger.warning("h0 start gate provenance not recorded: %s", exc)
+        return None
+
+
 def build_fpl_inputs(
     bootstrap: Dict[str, Any],
     archive: pd.DataFrame,
@@ -474,8 +510,11 @@ def build_fpl_inputs(
             "n_rows": int(len(current_season)),
         }
 
+    # From this season's rows, never from the combined frame: at GW1 that frame
+    # is all last season, and "gameweeks of the latest season" would read 38.
     minutes_model = MinutesModel().fit(
-        minutes_frame, key=key, position_column="position_norm"
+        minutes_frame, key=key, position_column="position_norm",
+        settled_gameweeks_in_season=settled_gameweeks_in_season(current_season),
     )
     events = PlayerEventRates().fit(
         frame, key=key, position_column="position_norm", rules=rules
@@ -614,6 +653,9 @@ def build_fpl_inputs(
         # means the join to the sealed bootstraps has broken, and every knock is
         # being charged to the player's role a second time.
         "deadline_availability": dict(minutes_model.availability_diagnostics),
+        # Whether outfield h=0 starts reverted toward the own long-run rate.
+        # The registry says what kappa IS; only this says whether it applied.
+        "h0_start_gate": dict(minutes_model.h0_start_gate),
     }
     logger.info("FPL inputs assembled: %s", diagnostics)
 

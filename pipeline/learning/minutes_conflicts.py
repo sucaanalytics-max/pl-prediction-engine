@@ -241,10 +241,25 @@ def evidence_feed_health(rows: Sequence[Mapping[str, Any]]) -> Dict[str, Any]:
     return {"newest_claim_at": newest_raw, "rows": len(list(rows))}
 
 
+def h0_start_gate(xp: Mapping[str, Any]) -> Optional[Dict[str, Any]]:
+    """
+    The minutes model's h=0 gate state, as the projection artifact recorded it.
+
+    None when the artifact predates the field or is malformed. Never raises:
+    like the rest of this report, losing it costs a label, not a projection.
+    """
+    try:
+        record = (xp.get("metadata") or {}).get("h0_start_gate")
+        return dict(record) if isinstance(record, Mapping) else None
+    except Exception:  # noqa: BLE001 - a label, never worth the report
+        return None
+
+
 def to_artifact(conflicts: Sequence[Conflict],
                 ambiguous: Mapping[str, Tuple[int, ...]],
                 *, generated_at: str,
-                feed: Optional[Mapping[str, Any]] = None) -> Dict[str, Any]:
+                feed: Optional[Mapping[str, Any]] = None,
+                gate: Optional[Mapping[str, Any]] = None) -> Dict[str, Any]:
     """The publishable shape. Aggregates and quotes only — no derived values."""
     return {
         "schema_version": 1,
@@ -253,6 +268,13 @@ def to_artifact(conflicts: Sequence[Conflict],
             "fringe_minutes": FRINGE_MINUTES,
             "nailed_minutes": NAILED_MINUTES,
         },
+        # Beside the thresholds because it moves who crosses them. Once active,
+        # outfield h=0 starts revert part of the way toward each player's own
+        # long-run rate, so fewer players project above NAILED_MINUTES (about
+        # 11% fewer on the archive). The threshold still means the same thing;
+        # a shorter list from that gameweek on is the model, not a stale feed.
+        # Always present, null when the projection predates the field.
+        "h0_start_gate": dict(gate) if gate else None,
         # A reader needs to know that -1 is not a count.
         "evidence_fixtures_note": (
             "Fixtures of the player's own history behind the minutes estimate. "
@@ -310,8 +332,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     # let the two disagree if the poller wrote between them.
     inbox_text = inbox.read_text(encoding="utf-8") if inbox.is_file() else ""
 
+    xp = json.loads(xp_path.read_text(encoding="utf-8"))
     conflicts, ambiguous = find_conflicts(
-        json.loads(xp_path.read_text(encoding="utf-8")),
+        xp,
         inbox_text,
         json.loads(Path(args.bootstrap).read_text(encoding="utf-8")),
     )
@@ -332,6 +355,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         payload = to_artifact(
             conflicts, ambiguous, generated_at=stamp,
             feed=evidence_feed_health(inbox_rows(inbox_text)),
+            gate=h0_start_gate(xp),
         )
         name = f"minutes_conflicts_gw{args.gameweek:02d}.json"
         # Both copies, as the poller does. A local run that wrote only the private

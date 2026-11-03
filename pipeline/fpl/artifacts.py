@@ -748,9 +748,14 @@ def export_gameweek_xp(
     predictions_dir: Path,
     seed_entropy: int,
     fixture_specs: Optional[List[Any]] = None,
+    extra_metadata: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Path]:
     """
     Validate, then write ``xp_gw{NN}.json`` and ``sim_params_gw{NN}.json``.
+
+    ``extra_metadata`` is merged into the artifact's metadata; it carries model
+    state that a parameter value cannot, such as whether the minutes model's
+    h=0 gate fired.
 
     Raises before writing anything if the artifact fails its contract. Callers in
     the daily pipeline are expected to catch that and record it in health.json
@@ -758,7 +763,7 @@ def export_gameweek_xp(
     yet load-bearing, and it must not be able to take the betting pages down.
     """
     artifact = build_xp_artifact(
-        draws, season, generated_at, rules, fixture_specs
+        draws, season, generated_at, rules, fixture_specs, extra_metadata
     )
     assert_valid_xp_artifact(artifact)
 

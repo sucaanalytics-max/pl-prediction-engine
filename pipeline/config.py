@@ -945,7 +945,10 @@ PARAM_REGISTRY = {
     # inactive. 0.0 restores it exactly.
     "minutes.horizon_start_target_half_life": {
         # 0.0 = OFF: revert toward the position pool with cap/rho above, bit for
-        # bit. Horizon weeks only (h >= 1); the sealed h=0 row cannot move.
+        # bit. On its own this moves horizon weeks only (h >= 1). The sealed h=0
+        # row CAN move, through minutes.h0_start_target_keep below: outfield
+        # only, once the season has enough settled gameweeks. That gate needs
+        # this target, so 0 here also turns it off.
         "value": 12.0,
         "bounds": (0.0, 40.0),
         "tier": "S",
@@ -1037,7 +1040,85 @@ PARAM_REGISTRY = {
             "2025-26. Per position 0.857 GK / 0.787 DEF / 0.774 MID / 0.851 FWD "
             "scored no better than one shared value (-0.0117 vs -0.0118). At 0.80 "
             "half the gap between today's form and the long-run rate is gone "
-            "after three gameweeks."
+            "after three gameweeks.\n\n"
+            "minutes.h0_start_target_keep and its gate were fitted with rho at "
+            "0.80. Refitting rho means refitting both of them: with kappa = rho "
+            "the gated keep is rho^(h+1), and that equivalence holds only while "
+            "the two stay equal."
+        ),
+    },
+    # ── Outfield h=0 reversion, gated on the season's settled gameweeks ───
+    # SEAL PATH: when the gate is active this moves the sealed h=0 row for
+    # outfielders (p_appears, p_60, e_minutes, xP). Whether it fired is recorded
+    # in the seal header (h0_start_gate), not inferable from these values.
+    "minutes.h0_start_target_keep": {
+        # 1.0 = OFF: keep = rho^h and h=0 is untouched, bit for bit.
+        "value": 0.8,
+        "bounds": (0.5, 1.0),
+        "tier": "S",
+        "source": (
+            "kappa in keep_h = kappa * rho^h, applied to OUTFIELD players only "
+            "and only while the gate below is active (the predicted season has at "
+            "least minutes.h0_start_target_min_settled_gw settled gameweeks). "
+            "When it is inactive, keep_h = rho^h exactly as before. The point "
+            "is that h=0 reverts part of the way toward the player's own "
+            "long-run start rate too. The bound at 1.0 keeps p_start a convex "
+            "combination of two rates in [0, 1].\n\n"
+            "WHY. Nailed outfielders' h=0 start is over-stated twice. The "
+            "minutes-model marginal over-predicts them (archive 0.920 against "
+            "0.865 realised; sealed 0.935 against 0.892), because a 1.5-fixture "
+            "recency rate reads 0.92-0.94 after about three starts. The "
+            "simulator then lifts them further (+0.025). Fix A, a pooled "
+            "outfield lineup draw, removes the formation part of that lift. This "
+            "parameter acts on the marginal. Keepers are excluded: on the "
+            "archive, kappa on keepers is +0.0008 [+0.0002, +0.0014].\n\n"
+            "MEASURED 2026-10-25 (fix-b-kappa-study), simulated h=0 outfield "
+            "start Brier, player-clustered 95% CI, fitted on fix A's pooled "
+            "draw as baseline. Archive 2024-26 at k11-38: -0.0015 [-0.0017, "
+            "-0.0012], positive on both folds. Always on, it is HARMFUL at "
+            "GW2-10: archive +0.0006, sealed seals 3-7 +0.0007, rotation subset "
+            "+0.0042. Early in a season the long-run rate is mostly LAST "
+            "season's, so reverting toward it at h=0 pulls the wrong way; hence "
+            "the gate. Without fix A, sealed h=0 start is -0.0008 [-0.0021, "
+            "+0.0006], so A lands first or in the same release. No sealed "
+            "out-of-sample evidence yet at k >= 11; the pre-registered "
+            "confirm-or-rollback rule is in the findings for this change.\n\n"
+            "Coupled to rho = 0.80 and target half-life 12: with kappa = rho the "
+            "keep is rho^(h+1), so the GW11 fixture gets keep 0.8 whether it is "
+            "seen as h1 at the GW10 deadline (gate off) or as h0 at the GW11 "
+            "deadline (gate on), and the gate opens without a jump in any "
+            "fixture's treatment. Refit kappa whenever rho, the half-life, or "
+            "minutes.h0_start_target_min_settled_gw is refit. When bench credit "
+            "(beta) lands it must be refitted jointly with this, because both "
+            "lower nailed players through the 10-starter normalisation and the "
+            "effects are not additive."
+        ),
+    },
+    "minutes.h0_start_target_min_settled_gw": {
+        "value": 10,
+        "bounds": (1, 38),
+        "tier": "C",
+        "source": (
+            "Settled gameweeks of the PREDICTED season needed before "
+            "minutes.h0_start_target_keep applies, counted as distinct GW values "
+            "among the current season's settled (finished AND data_checked) rows. "
+            "A double gameweek counts once, matching the gameweek-unit ages of "
+            "the long-memory weights. A fully void gameweek has no rows and does "
+            "not count. The count is passed to MinutesModel.fit explicitly and "
+            "never read off the fit frame: at GW1 that frame is all last season "
+            "and would read 38.\n\n"
+            "10 means the gate opens at the GW11 deadline when GW1-10 have "
+            "settled, matching the archive's 'k >= 11', where the fit uses "
+            "GW < k. A slow data_checked can leave 9 settled at the GW11 seal; "
+            "the gate then stays off, which is correct, and is why scoring "
+            "stratifies on the RECORDED gate state, never on the gameweek "
+            "number.\n\n"
+            "Tier C: weakly identified (out-of-fold picks 8 and 11). A ramp in "
+            "the current-season share of the long weights, s = 1 - 0.5^(n/12), "
+            "was rejected because it gives the least reversion at k11-15, which "
+            "is the archive's STRONGEST band (-0.0024, against -0.0001 to "
+            "-0.0020 later). Tied to target half-life 12: retuning that "
+            "invalidates this."
         ),
     },
     "minutes.injury_exit_p60_strength": {

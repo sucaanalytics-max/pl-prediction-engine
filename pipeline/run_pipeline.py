@@ -1530,6 +1530,7 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
             build_fpl_inputs,
             fixture_specs_from_fixture_xg,
             fixture_specs_from_predictions,
+            h0_start_gate_provenance,
             load_current_season_rows,
             with_deadline_availability_if_used,
         )
@@ -1677,6 +1678,11 @@ def run_pipeline(force_refresh: bool = False, skip_pymc: bool = False) -> Dict:
                 PREDICTIONS_DIR,
                 stable_seed_entropy(CURRENT_SEASON, gameweek),
                 fpl_specs,
+                # Stamped by both producers of this artifact, so the conflicts
+                # report reads the same gate state whichever wrote it last.
+                extra_metadata={
+                    "h0_start_gate": h0_start_gate_provenance(fpl_inputs.diagnostics),
+                },
             )
 
             # ── Publish the display copy, from HERE rather than from the agent
