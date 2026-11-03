@@ -2,7 +2,7 @@
   "gameweek": 10,
   "entry_label": "owner",
   "objective": "season",
-  "generated_at": "2026-11-02T19:07:52.440645Z",
+  "generated_at": "2026-11-03T01:38:13.389251Z",
   "deadline": "2026-11-06T18:30:00Z",
   "xp_snapshot": {
     "1": 4.6478,
@@ -470,6 +470,79 @@
         "squad": [
           1,
           4,
+          53,
+          68,
+          112,
+          124,
+          166,
+          173,
+          249,
+          356,
+          411,
+          427,
+          496,
+          542,
+          566
+        ],
+        "xi": [
+          1,
+          4,
+          68,
+          124,
+          166,
+          249,
+          356,
+          411,
+          427,
+          542,
+          566
+        ],
+        "captain": 4,
+        "vice": 411,
+        "transfers_in": [
+          68,
+          356,
+          542
+        ],
+        "transfers_out": [
+          40,
+          237,
+          504
+        ],
+        "hits": 0,
+        "bank_after": 5,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      "n_draws": 10000,
+      "mean_points": 60.7757,
+      "sd_points": 15.7446,
+      "objective": 60.7757,
+      "quantiles": {
+        "q10": 41.0,
+        "q25": 50.0,
+        "q50": 60.0,
+        "q75": 71.0,
+        "q90": 81.0,
+        "q99": 100.01
+      },
+      "tails": {
+        "p_ge_40": 0.9208,
+        "p_ge_50": 0.7536,
+        "p_ge_60": 0.5103,
+        "p_ge_70": 0.2767,
+        "p_ge_80": 0.1226,
+        "p_ge_90": 0.0433
+      },
+      "autosub_rate": 0.0707,
+      "vice_rate": 0.0022
+    },
+    {
+      "plan": {
+        "squad": [
+          1,
+          4,
           68,
           112,
           124,
@@ -536,79 +609,6 @@
         "p_ge_90": 0.0433
       },
       "autosub_rate": 0.0707,
-      "vice_rate": 0.0022
-    },
-    {
-      "plan": {
-        "squad": [
-          1,
-          4,
-          60,
-          68,
-          112,
-          124,
-          127,
-          166,
-          237,
-          249,
-          411,
-          427,
-          496,
-          504,
-          566
-        ],
-        "xi": [
-          1,
-          4,
-          60,
-          68,
-          124,
-          127,
-          166,
-          249,
-          411,
-          427,
-          566
-        ],
-        "captain": 4,
-        "vice": 411,
-        "transfers_in": [
-          60,
-          68,
-          127
-        ],
-        "transfers_out": [
-          40,
-          53,
-          173
-        ],
-        "hits": 0,
-        "bank_after": 12,
-        "objective": 0.0,
-        "free_transfers_banked": 0,
-        "free_transfers_after": 1
-      },
-      "n_draws": 10000,
-      "mean_points": 60.6425,
-      "sd_points": 16.2976,
-      "objective": 60.6425,
-      "quantiles": {
-        "q10": 40.0,
-        "q25": 49.0,
-        "q50": 60.0,
-        "q75": 71.0,
-        "q90": 82.0,
-        "q99": 102.0
-      },
-      "tails": {
-        "p_ge_40": 0.9108,
-        "p_ge_50": 0.7433,
-        "p_ge_60": 0.5035,
-        "p_ge_70": 0.2855,
-        "p_ge_80": 0.1251,
-        "p_ge_90": 0.0485
-      },
-      "autosub_rate": 0.0858,
       "vice_rate": 0.0022
     },
     {
@@ -693,7 +693,7 @@
     },
     "held_missing_purchase_price": [],
     "price_uncertain": false,
-    "n_zero_xp": 69
+    "n_zero_xp": 70
   },
   "horizon": {
     "eval_horizon": 8,
