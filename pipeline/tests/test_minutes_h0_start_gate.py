@@ -15,6 +15,9 @@ What these pin, from the design review of 2026-10-31:
 * the count comes from THIS season's rows. At GW1 the fit frame is all last
   season, and "gameweeks of the latest season" would read 38 and switch it on;
 * whether it fired reaches the seal header and the conflicts report as JSON.
+
+kappa ships at 1.0 (off) until fix A lands, so the behaviour tests set the
+fitted 0.8 explicitly rather than reading the registry default.
 """
 from __future__ import annotations
 
@@ -43,6 +46,8 @@ RHO = "minutes.horizon_start_target_rho"
 HALF_LIFE = "minutes.horizon_start_target_half_life"
 FIT = availability_state("a", None)
 HORIZONS = range(0, 6)
+#: The fitted value, switched on in fix A's release. Shipped at 1.0 until then.
+KAPPA_ON = 0.8
 
 
 def _patched(name, value):
@@ -102,6 +107,7 @@ def _all_roles(model, players=PLAYERS):
     }
 
 
+@mock.patch.dict(PARAM_REGISTRY[KAPPA], {"value": KAPPA_ON})
 class GateBoundaryTests(unittest.TestCase):
     def test_one_short_of_the_threshold_is_bit_identical_to_no_gate(self):
         today = _all_roles(_fit(None))
@@ -111,7 +117,7 @@ class GateBoundaryTests(unittest.TestCase):
     def test_at_the_threshold_keep_is_kappa_times_rho_to_the_h(self):
         off, on = _fit(9), _fit(10)
         self.assertTrue(on.h0_start_gate["active"])
-        kappa = PARAM_REGISTRY[KAPPA]["value"]
+        kappa = KAPPA_ON
         rho = PARAM_REGISTRY[RHO]["value"]
         self.assertLess(kappa, 1.0)
 
@@ -192,7 +198,7 @@ class GateBoundaryTests(unittest.TestCase):
         self.assertGreater(abs(today.p_start - long_run), 0.05, "fixture has no gap")
         self.assertAlmostEqual(
             reverted.p_start,
-            long_run + (today.p_start - long_run) * PARAM_REGISTRY[KAPPA]["value"],
+            long_run + (today.p_start - long_run) * KAPPA_ON,
             places=12,
         )
 
@@ -253,6 +259,17 @@ class SeasonPhaseCountTests(unittest.TestCase):
 
 
 class RegistryTests(unittest.TestCase):
+    def test_kappa_ships_off_and_only_the_owner_can_switch_it_on(self):
+        """Landed at 1.0 (2026-11-03); 0.8 waits for fix A. Tier C: no refit."""
+        self.assertEqual(PARAM_REGISTRY[KAPPA]["value"], 1.0)
+        self.assertEqual(PARAM_REGISTRY[KAPPA]["tier"], "C")
+        self.assertEqual(h0_start_gate_state(38)["kappa_effective"], 1.0)
+
+    def test_shipped_off_the_open_gate_changes_nothing(self):
+        on = _fit(38)
+        self.assertTrue(on.h0_start_gate["active"])
+        self.assertEqual(_all_roles(on), _all_roles(_fit(None)))
+
     def test_kappa_cannot_exceed_one(self):
         """keep <= 1 keeps p_start a convex combination, so no clip fires silently."""
         low, high = PARAM_REGISTRY[KAPPA]["bounds"]

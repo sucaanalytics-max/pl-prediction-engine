@@ -1048,15 +1048,26 @@ PARAM_REGISTRY = {
         ),
     },
     # ── Outfield h=0 reversion, gated on the season's settled gameweeks ───
-    # SEAL PATH: when the gate is active this moves the sealed h=0 row for
-    # outfielders (p_appears, p_60, e_minutes, xP). Whether it fired is recorded
-    # in the seal header (h0_start_gate), not inferable from these values.
+    # SEAL PATH: when the gate is active and kappa < 1 this moves the sealed h=0
+    # row for outfielders (p_appears, p_60, e_minutes, xP). Whether it fired is
+    # recorded in the seal header (h0_start_gate), not inferable from these values.
     "minutes.h0_start_target_keep": {
         # 1.0 = OFF: keep = rho^h and h=0 is untouched, bit for bit.
-        "value": 0.8,
+        # SHIPPED OFF (2026-11-03, owner's decision). The gate opens from GW11
+        # but changes nothing at 1.0. The fitted value is 0.8; switch to it in
+        # fix A's release, since kappa was fitted on A's pooled draw. The
+        # pre-registered rule's clock starts at that switch.
+        "value": 1.0,
         "bounds": (0.5, 1.0),
-        "tier": "S",
+        # C, not S, while it ships off: switching it on is the owner's decision
+        # (with fix A), and a refit must not make it for them.
+        "tier": "C",
         "source": (
+            "SHIPPED OFF at 1.0 on 2026-11-03. The gate below opens from GW11 and "
+            "is recorded in every seal, but at 1.0 it changes nothing. The "
+            "fitted value is 0.8; it is switched on in fix A's release, by the "
+            "owner, because it was fitted on A's pooled draw. Everything below "
+            "describes the 0.8 setting.\n\n"
             "kappa in keep_h = kappa * rho^h, applied to OUTFIELD players only "
             "and only while the gate below is active (the predicted season has at "
             "least minutes.h0_start_target_min_settled_gw settled gameweeks). "

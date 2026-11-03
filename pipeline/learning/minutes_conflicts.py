@@ -268,8 +268,9 @@ def to_artifact(conflicts: Sequence[Conflict],
             "fringe_minutes": FRINGE_MINUTES,
             "nailed_minutes": NAILED_MINUTES,
         },
-        # Beside the thresholds because it moves who crosses them. Once active,
-        # outfield h=0 starts revert part of the way toward each player's own
+        # Beside the thresholds because it moves who crosses them. Once active
+        # with kappa_effective < 1 (shipped at 1.0, so not before fix A's
+        # release), outfield h=0 starts revert part of the way toward each player's own
         # long-run rate, so fewer players project above NAILED_MINUTES (about
         # 11% fewer on the archive). The threshold still means the same thing;
         # a shorter list from that gameweek on is the model, not a stale feed.

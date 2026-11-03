@@ -2,8 +2,21 @@
 
 Written 2026-11-03, before any seal has been made with the gate active. The git
 timestamp of the commit that adds this file is the evidence that the rule
-predates the outcomes it judges. Do not edit the rule after the first active
+predates the outcomes it judges. Do not edit the rule after the first scored
 seal; add a dated note under **Decisions** instead.
+
+## Status at landing: shipped OFF
+
+The gate landed on 2026-11-03 with `minutes.h0_start_target_keep` = **1.0**.
+That was the owner's decision, because fix A has not been built.
+- From GW11 the gate opens and every seal records `active: true`.
+- At κ = 1.0 that record changes nothing: `kappa_effective` is 1.0 and every
+  sealed row is bit for bit what it would have been without the gate.
+- **The clock starts at the switch, not at this landing.** The rule below
+  counts only seals made after κ is switched to 0.8. The owner makes that
+  switch in fix A's release. Seals made at κ = 1.0 are not in the population
+  and do not count toward either look.
+- Record the switching commit under **Decisions** when it lands.
 
 ## What is being tested
 
@@ -28,7 +41,10 @@ only the h=0 row is sealed.
 ## Population
 
 - **Rows:** sealed forecast rows for outfield players (DEF, MID, FWD) from every
-  seal whose header records `h0_start_gate.active == true`.
+  seal whose header records `h0_start_gate.active == true` AND
+  `h0_start_gate.kappa_effective < 1`. A seal with `active` true at
+  `kappa_effective` 1.0 was made while κ was shipped off. It is not in the
+  population and starts no count.
 - **Strata:** stratify on the RECORDED gate state, never on the gameweek number.
   - A seal with `active == false` is not in the population. One example is a
     slow `data_checked` that left 9 settled gameweeks at the GW11 seal. Report
@@ -37,13 +53,14 @@ only the h=0 row is sealed.
     reported.
 - **Fix A stratum.** Whether fix A (the pooled outfield lineup draw) is live at
   a seal is read from the sealing commit. Each configuration has its own count
-  of active seals:
+  of scored seals (seals in the population above):
   - **A + B** is the configuration the evidence above supports, and the only
     one this rule can confirm.
   - **B without A** is reported, and the rollback tests apply to it at the
-    same looks, but it can never be confirmed.
-  - If A lands after the first active seal, the A + B count starts at A's
-    first active seal.
+    same looks, but it can never be confirmed. It arises only if κ is ever
+    switched on without A, which is not the plan of record.
+  - If A lands after the first scored seal, the A + B count starts at A's
+    first scored seal.
 - **Double gameweeks:** both fixture rows are included.
 
 ## Comparison
@@ -110,8 +127,8 @@ look 2, so confirming early takes stronger evidence. Rollback uses several
 tests on purpose, because rollback (κ = 1.0) is the safe default and a false
 rollback costs only the archive gain.
 
-**Look 1: after four active seals in the A + B stratum have settled**
-(nominally GW11–14).
+**Look 1: after four scored seals in the A + B stratum have settled**
+(the first four after the switch to 0.8).
 - **Rollback** (set κ to 1.0) if EITHER 95% interval lies wholly above 0:
   - Δ outfield `p_60` Brier;
   - Δ rotation-subset start Brier.
@@ -124,14 +141,14 @@ about 0.0009. A start-Brier-sized gain of −0.0013 to −0.0015 is only
 marginally detectable, so an inconclusive result is the likely outcome and is
 not evidence of harm.
 
-**Look 2: after eight active seals in the A + B stratum have settled**
-(nominally GW11–18).
+**Look 2: after eight scored seals in the A + B stratum have settled**
+(the first eight after the switch).
 - **Rollback:** the same tests as look 1.
 - **Confirm** if the 95% interval of Δ `p_60` Brier lies wholly below 0.
 - **Otherwise:** keep κ only if the point estimates of Δ `p_60` Brier and
   Δ `p_appears` Brier are both ≤ 0. Else roll back.
 
-**Safety check after every active seal**, including B without A. It can only
+**Safety check after every scored seal**, including B without A. It can only
 roll back. Roll back immediately if the 99% interval of Δ rotation-subset start
 Brier lies wholly above 0.
 
@@ -149,7 +166,7 @@ they were sealed under. Count the new configuration from zero.
 - The threshold is changed.
 - Bench credit β lands. The registry entry for κ says κ must then be refit
   jointly.
-- Fix A lands after the first active seal.
+- Fix A lands after the first scored seal.
 
 ## Known limitation
 
