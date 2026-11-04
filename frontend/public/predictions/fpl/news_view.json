@@ -1,18 +1,90 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T17:49:29.443751Z",
-  "n_dropped": 118,
+  "generated_at": "2026-11-04T23:16:09.021800Z",
+  "n_dropped": 128,
   "dropped_by_source": {
-    "bbc_football": 53,
-    "hayters": 13,
-    "sky_football": 52
+    "bbc_football": 59,
+    "hayters": 15,
+    "sky_football": 54
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 208,
+  "n_articles": 218,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "9846f7fef552d31e",
+      "headline": "Haaland scores winner as Man City beat Leipzig",
+      "summary": "Erling Haaland scores the winning goal as Manchester City overcome being pegged back twice to beat RB Leipzig 3-2 on match day four of the UEFA Champions League group phase.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ckz65ey5q29zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T22:15:31Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "e585a727713575b4",
+      "headline": "Man City return to winning ways with narrow victory over Leipzig",
+      "summary": "Erling Haaland struck late to earn Manchester City a dramatic 3-2 Champions League victory over RB Leipzig. City went ahead in the 37th minute when Nico O\u2019Reilly\u2019s low ball across goal was turned into his own net by Castello Lukeba. Le",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-city-return-to-winning-ways-with-narrow-victory-over-leipzig/",
+      "claimed_at": "2026-11-04T22:10:29Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "b1e70b05fdc76a61",
+      "headline": "Haaland nets Man City winner to haunt RB Leipzig again",
+      "summary": "Erling Haaland haunted RB Leipzig again to earn Manchester City a thrilling 3-2 victory in the Champions League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/rb-leipzig-vs-manchester-city/report/577666",
+      "claimed_at": "2026-11-04T22:00:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "056e757184a26a5d",
+      "headline": "Man City latest: 'We need to step up' - Skipper Haaland demands more",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-04T21:00:00Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "27811e88ed3d6d91",
       "headline": "Jaissle unhappy with 'clear foul' before Barry goal",
@@ -186,6 +258,312 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "aead076fe0970450",
+      "headline": "Another 'miracle' in Istanbul - but this one hurt Liverpool",
+      "summary": "Liverpool conceded \"cheap\" and \"messy\" goals in their defeat by Fenerbahce, says boss Andoni Iraola, as former Reds hero Dirk Kuyt celebrates a \"miracle\" in Istanbul.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwx28z712rd8o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T22:38:24Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7ceea8e947acc91c",
+      "headline": "Arsenal survive late Slavia scare for hard-fought win",
+      "summary": "Arsenal earn their third win from four in the Champions League as goals from Noni Madueke and Victor Gyokeres are too much for Slavia Prague, despite a valiant late fight from the hosts to get back into the game.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cq4g1jwnzmyro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T22:10:07Z",
+      "players": [
+        {
+          "element_id": 16,
+          "name": "Madueke",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 25,
+          "name": "Gy\u00f6keres",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ed7d74c7d96c90e2",
+      "headline": "Madueke and Gyokeres goals give Arsenal win in Prague",
+      "summary": "Arsenal held off a late Slavia Prague fightback to secure a 2-1 Champions League victory in the Czech Republic. Noni Madueke gave Mikel Arteta\u2019s side the perfect start after nine minutes, racing onto Viktor Gyokeres\u2019 pass before finishing past Na",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/madueke-and-gyokeres-goals-give-arsenal-win-in-prague/",
+      "claimed_at": "2026-11-04T22:06:48Z",
+      "players": [
+        {
+          "element_id": 16,
+          "name": "Madueke",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 25,
+          "name": "Gy\u00f6keres",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "10fa2162e655136a",
+      "headline": "Liverpool crumble at Kuyt's Fenerbahce",
+      "summary": "Liverpool are defeated by Turkish side Fenerbahce, who twice fought back from behind to seal a famous victory, ending the Reds' perfect start to this year's Champions League after four games.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqy7ljmzx6d6o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T22:04:16Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7693284dfa114960",
+      "headline": "Manchester United beat Roma in epic second-half comeback",
+      "summary": "Manchester United drag themselves up off the canvas to come from two goals down to record a sensational Champions League victory against Roma at Old Trafford.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqrmy8lrz0wno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T22:04:05Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "375c38c965620f31",
+      "headline": "Raphinha scores twice as Barcelona beat Aston Villa",
+      "summary": "Barcelona end Aston Villa's perfect Champions League start with an enthralling win at the Spotify Nou Camp.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmlylzndw52ko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T22:04:02Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ba149222b14c3d2f",
+      "headline": "'Sloppy' Arsenal survive second-half scare to beat Slavia Prague",
+      "summary": "Arsenal held off a second-half fightback from Slavia Prague to win 2-1 at the Fortuna Arena and continue their unbeaten start to the season in the Champions League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/slavia-prague-vs-arsenal/report/577667",
+      "claimed_at": "2026-11-04T22:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "edb11e29c41c1c02",
+      "headline": "Iraola explains Liverpool attacking changes in defeat to Fenerbahce",
+      "summary": "Andoni Iraola explained his decision to reshuffle his Liverpool attack in their 3-2 defeat to Fenerbahce, including starting Bradley Barcola through the middle. The Liverpool boss opted to start Barcola centrally while Victor Munoz",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/iraola-explains-liverpool-attacking-changes-in-defeat-to-fenerbahce/",
+      "claimed_at": "2026-11-04T21:52:14Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 369,
+          "name": "Ngumoha",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 377,
+          "name": "Munoz",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7936120082f9aa1f",
+      "headline": "Emery in line for new Villa deal - Thursday's gossip",
+      "summary": "Manager Unai Emery is in line for a new contract with Aston Villa, Trey Nyoni to stay with Liverpool and Leeds target Harvey Elliott, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwkgjv582vj0o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T21:41:04Z",
+      "players": [
+        {
+          "element_id": 375,
+          "name": "Nyoni",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 383,
+          "name": "Elliott",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fc7a755e03230dad",
+      "headline": "Liverpool latest: Iraola bemoans cheap and messy goals in Fenerbahce defeat",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-04T20:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5a9e5faa3ab87bde",
+      "headline": "Liverpool handed first defeat of Champions League campaign",
+      "summary": "Liverpool twice surrendered the lead as Fenerbahce inflicted a 3-2 Champions League defeat on Andoni Iraola\u2019s side in Istanbul. Trey Nyoni put Liverpool ahead after 25 minutes with his first senior goal, finishing from the edge of the box af",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/liverpool-handed-first-defeat-of-champions-league-campaign/",
+      "claimed_at": "2026-11-04T19:54:09Z",
+      "players": [
+        {
+          "element_id": 375,
+          "name": "Nyoni",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b9e05ff2f361945f",
+      "headline": "Liverpool suffer first CL defeat of season after stunning Fenerbahce comeback",
+      "summary": "Liverpool's perfect start to their Champions League campaign came to a sudden halt as they lost two leads in a 3-2 defeat to Fenerbahce in Istanbul.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/fenerbahce-vs-liverpool/report/577663",
+      "claimed_at": "2026-11-04T19:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3c63aee6b53a42b7",
+      "headline": "Aston Villa latest: Club hold 'positive discussions' over Emery contract extension",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-04T19:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "83f9a1e6e831514d",
+      "headline": "Bournemouth hit with double injury blow ahead of Sparta Prague visit",
+      "summary": "Marco Rose has confirmed Juanlu S\u00e1nchez and Alex T\u00f3th will be absent for prolonged periods after suffering injuries. Juanlu sustained an ankle injury while featuring for the under-21s, with the Cherries still evaluating the extent",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/bournemouth-hit-with-double-injury-blow-ahead-of-sparta-prague-visit/",
+      "claimed_at": "2026-11-04T18:55:16Z",
+      "players": [
+        {
+          "element_id": 573,
+          "name": "Sanchez",
+          "club": "BOU",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ccf01b4f5006d6bf",
+      "headline": "How landmark Everton compensation prevented Burnley record loss",
+      "summary": "Burnley have published promising financial results, but under the hood is a payment from Everton which makes the picture look far less positive.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c893zeq4eln1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T17:48:19Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "69f0510c3b81ea05",
@@ -962,24 +1340,6 @@
       "touches_squad": false
     },
     {
-      "digest": "3cd301b8df9696c6",
-      "headline": "Liverpool's unwanted record highlights creativity issue",
-      "summary": "Liverpool set an unwanted record against Arsenal as they failed to register a shot on target for the first time in 442 Premier League home games, dating back to when records began in 2003.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13607467/liverpools-unwanted-record-against-arsenal-shows-creativity-problem-under-andoni-iraola-between-the-lines",
-      "claimed_at": "2026-11-03T12:55:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "290091a650207e3a",
       "headline": "Saliba takes part in team training ahead of Arsenal\u2019s Champions League clash",
       "summary": "Arsenal have been handed a major injury boost with William Saliba back in first-team training ahead of their Champions League clash with Slavia Prague. The defender took part in team training on Tuesday as Mikel Arteta\u2019s si",
@@ -1016,246 +1376,6 @@
       "touches_squad": false
     },
     {
-      "digest": "c213c27a27948613",
-      "headline": "Liverpool latest: Iraola trusts Nyoni in Gravenberch's absence",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-03T10:15:00Z",
-      "players": [
-        {
-          "element_id": 371,
-          "name": "Gravenberch",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 375,
-          "name": "Nyoni",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "55159b810a9f78e5",
-      "headline": "Mee and Kenny handed first Northern Ireland call-ups",
-      "summary": "Manchester United goalkeeper Dermot Mee and Portsmouth's Eoin Kenny are handed their first Northern Ireland call-ups for November's Nations League games with Ukraine and Hungary.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwkg5dl4d3l8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-03T10:07:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "56705e5621518e4b",
-      "headline": "Boy arrested following Bradley Lowery taunt",
-      "summary": "Police are investigating an incident at Coventry's Premier League match with Sunderland on Saturday.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/news/articles/ck5ynr531xlvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-03T09:21:56Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1dc8d18def1127e1",
-      "headline": "How Arteta is getting the best from Rice",
-      "summary": "Declan Rice was a key cog in Arsenal winning the Premier League title - so how is Mikel Arteta getting even more from him this season?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckeq3erv529po?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-03T08:18:04Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cc6cd32a0a0ea85c",
-      "headline": "Jeers again as home woes continue - Jaissle has big problems at Newcastle",
-      "summary": "Three months into a four-year contract, the problems are mounting for Newcastle boss Matthias Jaissle as his side are booed off the pitch by fans following another defeat.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmly05n114gjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T23:53:46Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0df050208c759cc2",
-      "headline": "'He's unavailable' - Moyes tight-lipped on Grealish",
-      "summary": "Everton manager David Moyes' post-match reaction to his side's one-goal win against struggling Newcastle United, as well as the availability of Jack Grealish following disciplinary action.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/ckjwex4v4gq1o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T22:54:52Z",
-      "players": [
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c55e3af461460ccc",
-      "headline": "Carragher: Boring Newcastle face a tough season ahead",
-      "summary": "Jamie Carragher described Newcastle as 'flat and boring' following their defeat to Everton on Monday Night Football and reckons Matthias Jaissle's side face a difficult season.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13607320/newcastle-are-flat-and-boring-8211-jamie-carragher-warns-magpies-face-tough-premier-league-season-after-everton-defeat",
-      "claimed_at": "2026-11-02T22:35:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8fd463094914d448",
-      "headline": "Cunha completes wild Man Utd comeback win over Roma from two down",
-      "summary": "Manchester United produced an extraordinary comeback from two down to beat Roma 3-2 at Old Trafford and pick up their first win in 10 games.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-united-vs-roma/report/577657",
-      "claimed_at": "2026-11-02T16:59:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c35da5c1e6f8c024",
-      "headline": "Barcola: People are starting to understand me better - but I'm not Mo Salah",
-      "summary": "Big money signings can take time to get going at their new club. There are plenty at Liverpool who can testify to that.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13607009/bradley-barcola-interview-liverpool-winger-discusses-leaving-psg-settling-in-at-anfield-overcoming-the-price-tag-and-mohamed-salah-pressure",
-      "claimed_at": "2026-11-02T10:40:00Z",
-      "players": [
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a949ffadafdfbc91",
-      "headline": "Which Premier League players are set for yellow card suspensions?",
-      "summary": "Hull City's Matt Crooks and Aston Villa's Matty Cash are the first players to receive a one-match ban for accumulating five yellow cards in the 2025-26 Premier League season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/articles/cr3wj7wg35pxo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T09:58:42Z",
-      "players": [
-        {
-          "element_id": 289,
-          "name": "Crooks",
-          "club": "HUL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e6568bbbab8c6f4d",
-      "headline": "Man Utd latest: Relegation certainly possible, says former boss Ten Hag",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-02T07:55:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ac5c250cd6e801b6",
-      "headline": "No Grealish, no cry - the rise of Everton's youngsters",
-      "summary": "BBC Sport examines the growing influence of Everton's youngsters on their chances of success this season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm70pv70jwrjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T07:19:35Z",
-      "players": [
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cff4a7a05f09ddea",
-      "headline": "Football Daily",
-      "summary": "Rick Edwards is joined by Luke Kempner to reflect on Arsenal\u2019s 1-0 win at Anfield.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0pks2xb?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T00:59:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "2d54d7e6f86d4a47",
       "headline": "FPL notes: Arsenal clean sheet, Rice\u2019s assists + Szoboszlai returns",
       "summary": "Fantasy takeaways from Liverpool 0-1 Arsenal The post FPL notes: Arsenal clean sheet, Rice\u2019s assists + Szoboszlai returns appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1268,24 +1388,6 @@
           "element_id": 368,
           "name": "Szoboszlai",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "356d9c20228ce4ab",
-      "headline": "Defensive 'masterclass' and elite Rice - how Arsenal ended Anfield torment",
-      "summary": "Not since 2012 - when current boss Mikel Arteta was commanding Arsenal's midfield on the pitch - had the Gunners won on Liverpool's patch. That curse has finally been broken.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13606815/arsenals-defensive-masterclass-praised-in-liverpool-win-as-jamie-carragher-salutes-world-class-declan-rice",
-      "claimed_at": "2026-11-01T23:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1394,60 +1496,6 @@
       "touches_squad": false
     },
     {
-      "digest": "3662a1fe83bfefce",
-      "headline": "Liverpool 0-1 Arsenal LIVE \u2013 Arsenal move top and end long wait for Anfield win",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Liverpool 0-1 Arsenal LIVE - Arsenal move top and end long wait for Anfield win appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-v-arsenal-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-11-01T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "84c56c18b11829a7",
-      "headline": "Liverpool v Arsenal LIVE \u2013 team news, updates and reaction",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Liverpool v Arsenal LIVE - team news, updates and reaction appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-v-arsenal-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-11-01T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f408365db79b7e77",
-      "headline": "Parlour says Arsenal are better equipped than ever for Anfield trip",
-      "summary": "Ray Parlour believes Arsenal are ready to &#8220;go again&#8221; in their title defence have the experience and confidence to win at Liverpool on Sunday. But he insists Manchester City remain their main Premier League title rivals,",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/parlour-says-arsenal-are-better-equipped-than-ever-for-anfield-trip/",
-      "claimed_at": "2026-11-01T11:27:37Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "2e1444ed2e3d054a",
       "headline": "FPL notes: Gross on cusp of ban + Maresca on benching Cherki",
       "summary": "Maxim De Cuyper returns to the FPL summit as Brighton beat Man City The post FPL notes: Gross on cusp of ban + Maresca on benching Cherki appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout",
@@ -1466,24 +1514,6 @@
           "element_id": 399,
           "name": "Cherki",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7110d42d456a975c",
-      "headline": "Arteta discusses Arsenal star\u2019s long-term future at the club",
-      "summary": "Mikel Arteta is confident Declan Rice wants to remain at Arsenal for the long term and believes it is only a matter of time before his future is sorted. Rice has established himself as one of Arsenal's most important players since joining",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-discusses-arsenal-stars-long-term-future-at-the-club/",
-      "claimed_at": "2026-10-31T22:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
