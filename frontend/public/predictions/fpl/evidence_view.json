@@ -1,8 +1,270 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T02:19:45.619688Z",
+  "generated_at": "2026-11-04T09:37:45.558057Z",
   "gameweek": 10,
   "players": [
+    {
+      "element_id": 431,
+      "player_name": "Amad",
+      "club": "Man Utd",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 100,
+          "rule": "live_bootstrap_authority",
+          "n_conflicts": 3,
+          "n_dropped": 0,
+          "unresolved": true,
+          "escalation": "chance_of_playing: fpl_bootstrap says 100 (2026-10-31T17:30:08.280248Z) while fpl_news_parse says 75 (2026-10-31T17:30:08.280248Z). Used the more conservative 75. Not applied: the projection used FPL's live chance_of_playing (100).",
+          "claims": [
+            {
+              "claim_id": "fe6f5e25fa2ca62e",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-31T17:30:08.280248Z",
+              "observed_at": "2026-10-31T21:54:09.225183Z",
+              "quote": "Calf injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            },
+            {
+              "claim_id": "dcfe333e152c61b7",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-10-31T17:30:08.280248Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            },
+            {
+              "claim_id": "40baf9aeda07cf3f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-10-31T17:30:08.280248Z",
+              "observed_at": "2026-10-31T21:54:09.225183Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "a",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "025da934c4617ced",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-10-31T17:30:08.280248Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "607c0cb9168329dd",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-10-31T17:30:08.280248Z",
+              "observed_at": "2026-10-31T21:54:09.225183Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 4,
+      "needs_attention": true
+    },
+    {
+      "element_id": 6,
+      "player_name": "Saliba",
+      "club": "Arsenal",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 3,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "bf059c7e487f6363",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-07-23T12:01:23.289376Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "90463bbdf88e9a2d",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-07-23T12:01:23.289376Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": "Back injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "bf059c7e487f6363",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-07-23T12:01:23.289376Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "90463bbdf88e9a2d",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-07-23T12:01:23.289376Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": "Back injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "b009f6f0bf5758f3",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-07-23T12:01:23.289376Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
+    },
+    {
+      "element_id": 131,
+      "player_name": "Baleba",
+      "club": "Man Utd",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "live_bootstrap_authority",
+          "n_conflicts": 2,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "d1d89d8044e8b133",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-03T22:00:07.995956Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            },
+            {
+              "claim_id": "2e40956071726856",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-03T22:00:07.995956Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": "Hamstring injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "0b6f27ca373b0bdb",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-03T22:00:07.995956Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 2,
+      "needs_attention": false
+    },
     {
       "element_id": 336,
       "player_name": "Okafor",
@@ -62,6 +324,76 @@
               "value": "d",
               "claimed_at": "2026-10-31T20:00:10.014132Z",
               "observed_at": "2026-10-31T21:54:09.225183Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 371,
+      "player_name": "Gravenberch",
+      "club": "Liverpool",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "ab61c126303121a2",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-03T17:00:09.626695Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "9f619a3010072d04",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-03T17:00:09.626695Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
+              "quote": "Foot injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "bae368510b53f2a2",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-03T17:00:09.626695Z",
+              "observed_at": "2026-11-04T02:20:12.844599Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -688,10 +1020,10 @@
     }
   ],
   "counts": {
-    "n_claims": 247,
-    "n_players_with_claims": 60,
-    "n_players_shown": 9,
-    "n_escalations": 2,
-    "n_players_resolved": 26
+    "n_claims": 273,
+    "n_players_with_claims": 61,
+    "n_players_shown": 13,
+    "n_escalations": 4,
+    "n_players_resolved": 29
   }
 }
