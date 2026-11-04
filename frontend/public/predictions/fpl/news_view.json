@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-03T22:31:05.227469Z",
-  "n_dropped": 137,
+  "generated_at": "2026-11-04T02:43:16.428736Z",
+  "n_dropped": 144,
   "dropped_by_source": {
-    "bbc_football": 56,
+    "bbc_football": 60,
     "fantasyfootballscout": 3,
     "hayters": 21,
-    "sky_football": 57
+    "sky_football": 60
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 227,
+  "n_articles": 234,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,6 +189,42 @@
       "touches_squad": true
     },
     {
+      "digest": "11633979dfbd0d53",
+      "headline": "Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9",
+      "summary": "Enzo Maresca also spoke about Gianluigi Donnarumma The post Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/semenyo-ndiaye-nunes-man-city-injury-latest-for-fpl-gameweek-9",
+      "claimed_at": "2026-10-30T16:37:24Z",
+      "players": [
+        {
+          "element_id": 237,
+          "name": "Ndiaye",
+          "club": "MCI",
+          "held": true
+        },
+        {
+          "element_id": 384,
+          "name": "Donnarumma",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 389,
+          "name": "Matheus N.",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 397,
+          "name": "Semenyo",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
+    {
       "digest": "b455399a53550e34",
       "headline": "Aston Villa latest: Emery's cryptic answer on availability of Jackson and Manzambi",
       "summary": null,
@@ -201,7 +237,7 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": true
+          "held": false
         },
         {
           "element_id": 166,
@@ -229,6 +265,186 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "83d50e8e25024f8b",
+      "headline": "Fernandes critical of media 'lies' about Carrick relationship",
+      "summary": "Bruno Fernandes says \"a lot of lies\" have been reported about his relationship with Manchester United head coach Michael Carrick.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqkg5dgvygr1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T00:45:33Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "dc697c4ff8937d62",
+      "headline": "A half-time speech, a retaken penalty - and a win to save Carrick's job?",
+      "summary": "At 2-0 down Michael Carrick's position as Manchester United head coach looked terminal - but will the win over Roma prove a turning point?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6q8n98y4023o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T00:27:37Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4e94f263441d4756",
+      "headline": "Emery takes positives, but Villa 'have work to do' to reach Barca level",
+      "summary": "Aston Villa boss Unai Emery says his team have \"work to do\" to reach Barcelona's level after a 3-0 Champions League defeat at the Nou Camp.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cjwy9496qe7ko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-03T23:58:22Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "07a4433a6bebf670",
+      "headline": "Man Utd latest: Carrick refusing to get carried away after 'important' win",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-03T23:33:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3d56d1393ddc4f88",
+      "headline": "Carrick hails Man Utd supporters after long-awaited win \u2013 and gives update on Baleba injury worry",
+      "summary": "Manchester United boss Michael Carrick says he is &#8220;delighted&#8221; for the fans after the support they have given him, following his side's 3-2 win over Roma. United ended a nine-game winless run",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/carrick-hails-man-utd-supporters-after-long-awaited-win-and-gives-update-on-baleba-injury-worry/",
+      "claimed_at": "2026-11-03T23:25:23Z",
+      "players": [
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "00f4fb3847e35e1e",
+      "headline": "Man Utd beat Roma - the other great Champions League comebacks",
+      "summary": "Manchester United come from two goals down to beat Roma 3-2 - but what are the other best fightbacks in Champions League history?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c64g1dg0d84ko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-03T23:25:20Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3da472d748ece24f",
+      "headline": "Papers: Man Utd keen on signing Man City defender Ait-Nouri",
+      "summary": "The top stories and transfer rumours from Wednesday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13607697/manchester-united-keen-on-signing-manchester-city-defender-rayan-ait-nouri-who-is-open-to-crossing-divide-in-january-paper-talk",
+      "claimed_at": "2026-11-03T23:10:00Z",
+      "players": [
+        {
+          "element_id": 392,
+          "name": "A\u00eft-Nouri",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6b7efc41daf475d3",
+      "headline": "\u2018A lot of lies\u2019 \u2013 Bruno Fernandes says Michael Carrick was \u2018right\u2019 to drop him against Bournemouth and denies rift",
+      "summary": "Manchester United captain Bruno Fernandes insists there are no issues between him and boss Michael Carrick - and hopes his side's win over Roma can be the start of a turnaround this sea",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/a-lot-of-lies-bruno-fernandes-says-michael-carrick-was-right-to-drop-him/",
+      "claimed_at": "2026-11-03T23:03:06Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2c47ad046df3ebe3",
+      "headline": "Aston Villa latest: 'Be ruthless and avoid mistakes,' says Emery after Barca",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-03T22:54:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1c5cee31606f84c3",
+      "headline": "Fernandes claims players don't need to save Carrick's job, but did they?",
+      "summary": "Manchester United captain Bruno Fernandes has come out in support of head coach Michael Carrick, but reiterated that the players didn't need to save his job in their 3-2 comeback win against Roma.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13607700/manchester-united-3-2-roma-bruno-fernandes-claims-players-dont-need-to-save-michael-carricks-job-after-first-win-in-10-games",
+      "claimed_at": "2026-11-03T22:28:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "de0ea4994cdf4572",
@@ -879,24 +1095,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b1e08481596ca57a",
-      "headline": "Man Utd eye Barcelona's Balde - Monday's gossip",
-      "summary": "Alejandro Balde could leave Barcelona, sparking interest from Manchester United, Liverpool shortlist want Murillo and Nico Schlotterbeck, Real Madrid eye Bart Verbruggen, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqkgk0l3zpnyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-01T23:00:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "356d9c20228ce4ab",
       "headline": "Defensive 'masterclass' and elite Rice - how Arsenal ended Anfield torment",
       "summary": "Not since 2012 - when current boss Mikel Arteta was commanding Arsenal's midfield on the pitch - had the Gunners won on Liverpool's patch. That curse has finally been broken.",
@@ -904,60 +1102,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/news/11095/13606815/arsenals-defensive-masterclass-praised-in-liverpool-win-as-jamie-carragher-salutes-world-class-declan-rice",
       "claimed_at": "2026-11-01T23:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c81e0cd58c4e3bf0",
-      "headline": "Rice relishing title race 'anxiety' after win at Liverpool",
-      "summary": "Declan Rice joins BBC Sport's Kelly Cates, Danny Murphy and Micah Richards to analyse how Arsenal earned their first Premier League victory at Liverpool in 14 years.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cxly47pyy8j6o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-01T22:50:05Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f7e5bc7661608d31",
-      "headline": "I'll tell my players to dive in future - Iraola",
-      "summary": "Andoni Iraola says that he will tell his players to go down in future after Liverpool were denied a penalty in Sunday's defeat by Arsenal.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvp8grpjk4leo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-01T21:00:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f61a86078b7914c7",
-      "headline": "Warnock hid seizures from Liverpool as a youngster",
-      "summary": "Former Premier League footballer Stephen Warnock says he hid seizures from Liverpool as a youngster because he feared he would be released.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6rry8pxwkdpo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-01T20:32:44Z",
       "players": [
         {
           "element_id": 0,
@@ -1090,78 +1234,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-11-01T19:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7bb5d6726db7335d",
-      "headline": "Liverpool latest: Iraola 'will tell players to dive' after Isak controversy",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-01T19:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "041406a9c8da4d58",
-      "headline": "Arsenal triumphant in long-awaited Anfield victory",
-      "summary": "FREE TO WATCH: Highlights from the Premier League match between Liverpool and Arsenal.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13606781/liverpool-0-1-arsenal-premier-league-highlights",
-      "claimed_at": "2026-11-01T18:34:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5951869508000bb9",
-      "headline": "Arsenal win at Anfield for first time in 14 years to move top",
-      "summary": "Arsenal won at Anfield for the first time in 14 years after Kai Havertz's strike sealed a gritty 1-0 victory - but Liverpool were denied what looked to be a clear penalty.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/liverpool-vs-arsenal/report/559530",
-      "claimed_at": "2026-11-01T18:30:00Z",
-      "players": [
-        {
-          "element_id": 26,
-          "name": "Havertz",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4f6af75af82bbbad",
-      "headline": "PL Predictions: Can Everton beat unconvincing Newcastle?",
-      "summary": "Our top tipster Lewis Jones, aka Jones Knows, provides his analysis and betting insight for an intriguing Monday Night Football.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13604412/premier-league-predictions-jones-knows-best-bets-liverpool-vs-arsenal-crystal-palace-vs-tottenham-and-much-more",
-      "claimed_at": "2026-11-01T18:15:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1347,42 +1419,6 @@
           "element_id": 455,
           "name": "Tonali",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1a2fbc6e6dbb5e96",
-      "headline": "Tottenham 2-0 Crystal Palace LIVE \u2013 Spurs win their third Premier League match in a row",
-      "summary": "{rsn-live-v2} The post Tottenham 2-0 Crystal Palace LIVE - Spurs win their third Premier League match in a row appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/tottenham-vs-crystal-palace-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-10-31T19:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "28a84734ead12dc7",
-      "headline": "Glasner admits his \u2018patience has gone\u2019 after another Nottingham Forest defeat",
-      "summary": "Oliver Glasner warned his Nottingham Forest players that his \u201cpatience has gone\u201d after their 2-0 defeat to Brentford extended a poor run of form. Forest have now lost four of their last five games and Glasner admitted he m",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/glasner-admits-his-patience-has-gone-after-another-nottingham-forest-defeat/",
-      "claimed_at": "2026-10-31T18:47:55Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1665,42 +1701,6 @@
           "element_id": 515,
           "name": "Maddison",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "11633979dfbd0d53",
-      "headline": "Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9",
-      "summary": "Enzo Maresca also spoke about Gianluigi Donnarumma The post Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/semenyo-ndiaye-nunes-man-city-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:37:24Z",
-      "players": [
-        {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
           "held": false
         }
       ],
