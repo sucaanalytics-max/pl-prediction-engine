@@ -1,18 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-03T22:00:16.336810Z",
-  "phase": "refit",
-  "gameweek": 9,
-  "deadline": null,
-  "seconds_to_deadline": null,
-  "reason": "GW9 is settled but not scored",
+  "generated_at": "2026-11-04T02:18:33.393670Z",
+  "phase": "refresh",
+  "gameweek": 10,
+  "deadline": "2026-11-06T18:30:00+00:00",
+  "seconds_to_deadline": 231087.340312,
+  "reason": "GW10 deadline in 64.2h; keeping the projection warm",
   "needs_work": true,
-  "outstanding": [
-    {
-      "gameweek": 9,
-      "action": "score"
-    }
-  ],
+  "outstanding": [],
   "agent_ran": true,
   "explains_absence": "The agent computes projections, the evidence view and the message feed. It self-gates on phase, so those artifacts are absent \u2014 not broken \u2014 whenever nothing is due."
 }
