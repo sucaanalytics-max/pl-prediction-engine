@@ -2,7 +2,7 @@
   "schema_version": 1,
   "season": "2627",
   "gameweek": 10,
-  "generated_at": "2026-11-03T13:13:38.489941Z",
+  "generated_at": "2026-11-04T13:26:21.028309Z",
   "seed_entropy": 1108638600,
   "n_draws": 5000,
   "parameters": {
@@ -49,6 +49,14 @@
     "minutes.fit_now_absence_credit": {
       "value": 1.0,
       "tier": "S"
+    },
+    "minutes.h0_start_target_keep": {
+      "value": 1.0,
+      "tier": "C"
+    },
+    "minutes.h0_start_target_min_settled_gw": {
+      "value": 10,
+      "tier": "C"
     },
     "minutes.horizon_availability_floor": {
       "value": 0.8,
@@ -149,8 +157,8 @@
       "gameweek": 10,
       "home_team": "Everton",
       "away_team": "Coventry City",
-      "lambda_home": 1.717748,
-      "mu_away": 0.985393,
+      "lambda_home": 1.721802,
+      "mu_away": 0.989181,
       "rate_source": "market_blend"
     },
     {
@@ -158,8 +166,8 @@
       "gameweek": 10,
       "home_team": "Leeds",
       "away_team": "Tottenham",
-      "lambda_home": 1.39544,
-      "mu_away": 1.19724,
+      "lambda_home": 1.39751,
+      "mu_away": 1.195589,
       "rate_source": "market_blend"
     },
     {
@@ -167,8 +175,8 @@
       "gameweek": 10,
       "home_team": "Arsenal",
       "away_team": "Hull City",
-      "lambda_home": 2.315785,
-      "mu_away": 0.631064,
+      "lambda_home": 2.310605,
+      "mu_away": 0.630443,
       "rate_source": "market_blend"
     },
     {
@@ -176,8 +184,8 @@
       "gameweek": 10,
       "home_team": "Fulham",
       "away_team": "Newcastle",
-      "lambda_home": 1.558048,
-      "mu_away": 1.267441,
+      "lambda_home": 1.560063,
+      "mu_away": 1.264606,
       "rate_source": "market_blend"
     },
     {
@@ -185,8 +193,8 @@
       "gameweek": 10,
       "home_team": "Nott'm Forest",
       "away_team": "Man City",
-      "lambda_home": 1.094385,
-      "mu_away": 1.783462,
+      "lambda_home": 1.09133,
+      "mu_away": 1.779813,
       "rate_source": "market_blend"
     },
     {
@@ -194,8 +202,8 @@
       "gameweek": 10,
       "home_team": "Brighton",
       "away_team": "Brentford",
-      "lambda_home": 1.806881,
-      "mu_away": 1.240195,
+      "lambda_home": 1.799722,
+      "mu_away": 1.235431,
       "rate_source": "market_blend"
     },
     {
@@ -203,8 +211,8 @@
       "gameweek": 10,
       "home_team": "Crystal Palace",
       "away_team": "Liverpool",
-      "lambda_home": 1.162242,
-      "mu_away": 1.895775,
+      "lambda_home": 1.155934,
+      "mu_away": 1.901383,
       "rate_source": "market_blend"
     },
     {
@@ -212,8 +220,8 @@
       "gameweek": 10,
       "home_team": "Ipswich",
       "away_team": "Bournemouth",
-      "lambda_home": 1.252927,
-      "mu_away": 1.832168,
+      "lambda_home": 1.248017,
+      "mu_away": 1.826016,
       "rate_source": "market_blend"
     },
     {
@@ -221,8 +229,8 @@
       "gameweek": 10,
       "home_team": "Sunderland",
       "away_team": "Chelsea",
-      "lambda_home": 1.210167,
-      "mu_away": 1.569661,
+      "lambda_home": 1.204421,
+      "mu_away": 1.575023,
       "rate_source": "market_blend"
     },
     {
@@ -230,8 +238,8 @@
       "gameweek": 10,
       "home_team": "Man United",
       "away_team": "Aston Villa",
-      "lambda_home": 1.630696,
-      "mu_away": 1.372903,
+      "lambda_home": 1.637399,
+      "mu_away": 1.366405,
       "rate_source": "market_blend"
     }
   ]
