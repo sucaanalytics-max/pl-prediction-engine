@@ -1,16 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T02:43:16.428736Z",
-  "n_dropped": 144,
+  "generated_at": "2026-11-04T17:49:29.443751Z",
+  "n_dropped": 118,
   "dropped_by_source": {
-    "bbc_football": 60,
-    "fantasyfootballscout": 3,
-    "hayters": 21,
-    "sky_football": 60
+    "bbc_football": 53,
+    "hayters": 13,
+    "sky_football": 52
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 234,
+  "n_articles": 208,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -189,82 +188,334 @@
       "touches_squad": true
     },
     {
-      "digest": "11633979dfbd0d53",
-      "headline": "Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9",
-      "summary": "Enzo Maresca also spoke about Gianluigi Donnarumma The post Semenyo, Ndiaye, Nunes: Man City injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
+      "digest": "69f0510c3b81ea05",
+      "headline": "Hearts record \u00a32.4m loss in Bloom's first year",
+      "summary": "Heart of Midlothian record a loss of \u00a32.4m for the year ending 30 June, despite a turnover of more than \u00a323m the first 12 months of Brighton owner Tony Bloom's involvement.",
+      "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/semenyo-ndiaye-nunes-man-city-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:37:24Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckqxnve3jplxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T17:00:49Z",
       "players": [
         {
-          "element_id": 237,
-          "name": "Ndiaye",
-          "club": "MCI",
-          "held": true
-        },
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 389,
-          "name": "Matheus N.",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
-      "digest": "b455399a53550e34",
-      "headline": "Aston Villa latest: Emery's cryptic answer on availability of Jackson and Manzambi",
+      "digest": "c3d0ab89d8a6f8d9",
+      "headline": "Fenerbahce vs Liverpool LIVE!",
       "summary": null,
       "source": "sky_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-10-30T14:33:00Z",
+      "url": "https://www.skysports.com/football/fenerbahce-vs-liverpool/live/577663",
+      "claimed_at": "2026-11-04T16:15:00Z",
       "players": [
         {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "33a7643226cf09c0",
+      "headline": "Why Man Utd's Roma comeback has echoes of Mourinho and Solskjaer",
+      "summary": "After their memorable comeback victory against Roma, can Manchester United avoid a repeat of the past and follow that up with a successive victory?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqx28zjxdxxzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T16:12:46Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "75836db71272a2e2",
+      "headline": "Everton latest: Dewsbury-Hall dreaming of England call this week",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-11-04T16:00:00Z",
+      "players": [
+        {
+          "element_id": 236,
+          "name": "Dewsbury-Hall",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8a810796f232d1a3",
+      "headline": "Sage boosted by return of duo from injury ahead of Hoffenheim clash",
+      "summary": "Crystal Palace head coach Pierre Sage has been boosted by the return of Quinten Timber and J\u00f8rgen Strand Larsen from injury. The duo have been absent from the side since both getting injured during Palace\u2019s last European match away",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/sage-boosted-by-return-of-duo-from-injury-ahead-of-hoffenheim-clash/",
+      "claimed_at": "2026-11-04T15:40:18Z",
+      "players": [
+        {
+          "element_id": 222,
+          "name": "Strand Larsen",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2f5341c730db23eb",
+      "headline": "Should Man Utd teenager JJ Gabriel leave for Real Madrid?",
+      "summary": "Sky Sports' Kaveh Solhekol looks at whether JJ Gabriel should leave Manchester United for Real Madrid.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13607990/jj-gabriel-should-the-manchester-united-teenager-leave-for-real-madrid",
+      "claimed_at": "2026-11-04T15:22:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "69463774d8ca29c8",
+      "headline": "Lampard happy with increased output from Coventry\u2019s summer signings",
+      "summary": "Frank Lampard says he is pleased with the increased contributions shown by Coventry City's summer signings. Coventry claimed their third win of the season last weekend against Sunderland, with five summer signings starting, having s",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/lampard-happy-with-increased-output-from-coventrys-summer-signings/",
+      "claimed_at": "2026-11-04T15:19:09Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b1c8c348f1d5f23b",
+      "headline": "Crystal Palace latest: Henderson backing 'brilliant' Sage to come good",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-11-04T14:48:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "50a1437e4b199407",
+      "headline": "Le Bris calls for Sunderland consistency as league struggles continue",
+      "summary": "Regis Le Bris has called on his Sunderland players to show more consistency as they manage both domestic and European campaigns. The Black Cats are currently ninth in the league phase of the Europa League after an unbeaten start i",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/le-bris-calls-for-sunderland-consistency-as-league-struggles-continue/",
+      "claimed_at": "2026-11-04T14:44:17Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "525b49df7765d6fb",
+      "headline": "Liverpool latest: Riise's thunderbolt revisited 25 years on",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-04T12:38:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e9e6549c93042471",
+      "headline": "Emery insists Aston Villa will learn from Barcelona defeat",
+      "summary": "Unai Emery says Aston Villa will use their 3-0 Champions League defeat to Barcelona as a learning experience as they look to improve in Europe. Villa\u2019s winning start in the competition came to an end at Camp Nou, but Emery felt his side show",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/emery-insists-aston-villa-will-learn-from-barcelona-defeat/",
+      "claimed_at": "2026-11-04T12:08:20Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d2f7c1c803b222ad",
+      "headline": "Man Utd latest: Baleba injured, Lacey in? Pick your team to face Aston Villa",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-04T11:55:00Z",
+      "players": [
+        {
+          "element_id": 131,
+          "name": "Baleba",
+          "club": "MUN",
           "held": false
         },
         {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": true
+          "element_id": 435,
+          "name": "Lacey",
+          "club": "MUN",
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
-      "digest": "05e27862040d754c",
-      "headline": "Why Aston Villa was the perfect destination for Jackson",
-      "summary": "Nicolas Jackson's career was at a crossroads. Aston Villa were in a state of flux. The move was mutually beneficial - but the early success has exceeded expectations.",
-      "source": "sky_football",
+      "digest": "906a5ea5562caaad",
+      "headline": "Real Madrid reach verbal agreement to sign Gabriel",
+      "summary": "Real Madrid are confident of winning the race to sign Manchester United forward JJ Gabriel after reaching a verbal agreement with the teenager.",
+      "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13605328/nicolas-jackson-why-aston-villa-is-perfect-club-for-senegal-striker-to-thrive-at-after-unai-emery-reunion",
-      "claimed_at": "2026-10-30T10:00:00Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq146dnrn541o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T11:49:23Z",
       "players": [
         {
-          "element_id": 166,
-          "name": "N.Jackson",
-          "club": "AVL",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "8f62a8b576db0a01",
+      "headline": "Palace lose appeal against Mateta red card",
+      "summary": "Crystal Palace lose their appeal against Jean-Philippe Mateta's red card in the defeat by Tottenham on Saturday.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqp9gelp4em2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T10:23:14Z",
+      "players": [
+        {
+          "element_id": 223,
+          "name": "Mateta",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2c43809f86b5e2eb",
+      "headline": "Real Madrid reach verbal agreement with Man Utd teen star JJ Gabriel",
+      "summary": "Real Madrid have reached a verbal agreement with 16-year-old JJ Gabriel over a potential move to the Santiago Bernabeu.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13607845/jj-gabriel-real-madrid-reach-verbal-agreement-with-man-utd-teenager-who-requested-to-leave-old-trafford",
+      "claimed_at": "2026-11-04T09:28:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ee8ff32250005217",
+      "headline": "From Derby to Champions League - Brown's journey to face Reds",
+      "summary": "Fenerbahce's Archie Brown on his unorthodox journey to Istanbul, the moment of madness against Galatasaray and what Liverpool can expect in Turkey on Wednesday evening.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwp8g7gjy6mro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T08:58:24Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "84bc335475ffa10a",
+      "headline": "Why is it going so wrong for Le Bris at Sunderland?",
+      "summary": "Will qualifying for the Europa League end up costing Sunderland their place in the Premier League at the end of the season?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm4g1jx8ylveo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-04T08:27:25Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bc6f6dc11c569fcf",
+      "headline": "Fernandes hits back at 'lies' and claims players don't need to save Carrick's job",
+      "summary": "Manchester United captain Bruno Fernandes has come out in support of head coach Michael Carrick, but reiterated that the players didn't need to save his job in their 3-2 comeback win against Roma.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13607700/manchester-united-3-2-roma-bruno-fernandes-claims-players-dont-need-to-save-michael-carricks-job-after-first-win-in-10-games",
+      "claimed_at": "2026-11-04T07:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "83d50e8e25024f8b",
@@ -1005,60 +1256,6 @@
       "touches_squad": false
     },
     {
-      "digest": "0fdb5b7f16ef863d",
-      "headline": "Rice is a rounded midfielder, but could be more selfish - Murphy",
-      "summary": "BBC Sport's Kelly Cates and Micah Richards discuss how rounded Declan Rice has become in Arsenal's midfield, while Danny Murphy argues that if he was more selfish he would score more goals.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/ck9dz227v751o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T00:00:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "150d68065b18a47c",
-      "headline": "'He's been fantastic' - how Konsa has fitted in seamlessly at Arsenal",
-      "summary": "BBC Sport's Kelly Cates, Danny Murphy and Micah Richards analyse how good Ezri Konsa has been for Arsenal after signing from Aston Villa in the summer, especially in their 1-0 Premier League win against Liverpool at Anfield.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmwy4000q97ro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T00:00:11Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5b23c80b9d19ae2f",
-      "headline": "Were Arsenal 'lucky' not to concede penalty at Liverpool?",
-      "summary": "BBC Sport's Kelly Cates, Danny Murphy and Micah Richards discuss Liverpool's denied penalty claim for a pull on Alexander Isak's shirt by Arsenal defender Jurrien Timber and whether the Reds can feel hard done by.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cw7vpy99y606o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T00:00:03Z",
-      "players": [
-        {
-          "element_id": 361,
-          "name": "Lucky",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "2d54d7e6f86d4a47",
       "headline": "FPL notes: Arsenal clean sheet, Rice\u2019s assists + Szoboszlai returns",
       "summary": "Fantasy takeaways from Liverpool 0-1 Arsenal The post FPL notes: Arsenal clean sheet, Rice\u2019s assists + Szoboszlai returns appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1071,24 +1268,6 @@
           "element_id": 368,
           "name": "Szoboszlai",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "098b03ab71f672fc",
-      "headline": "Watch: Match of the Day",
-      "summary": "Highlights of Sunday\u2019s only Premier League game as Liverpool take on champions Arsenal.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/iplayer/live/bbcone?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-01T23:12:25Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1131,30 +1310,6 @@
       "touches_squad": false
     },
     {
-      "digest": "32a4988a301840b4",
-      "headline": "Isak's non-penalty and Madueke-Mac Allister 'headbutt' - were big calls right?",
-      "summary": "There were two big flashpoints during Arsenal's 1-0 win over Liverpool, demonstrating the good and bad sides of VAR.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13606793/liverpool-0-1-arsenal-alexander-isak-jurrien-timber-shirt-pull-and-noni-madueke-alexis-mac-allister-headbutt-show-good-and-bad-sides-of-var",
-      "claimed_at": "2026-11-01T20:05:00Z",
-      "players": [
-        {
-          "element_id": 16,
-          "name": "Madueke",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 372,
-          "name": "Mac Allister",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "5b481c40c0b6fb90",
       "headline": "Liverpool 0-1 Arsenal LIVE \u2013 Arteta \u2018extremely proud\u2019 as Arsenal end long wait for Anfield win",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Liverpool 0-1 Arsenal LIVE - Arteta 'extremely proud' as Arsenal end long wait for Anfield win appeared first on Hayters.",
@@ -1185,60 +1340,6 @@
           "element_id": 26,
           "name": "Havertz",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "659b6c6bf2809277",
-      "headline": "Arsenal latest: Mac Allister tried to bait me into red card, says Madueke",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-01T19:39:00Z",
-      "players": [
-        {
-          "element_id": 16,
-          "name": "Madueke",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9cf11dfeba8eced6",
-      "headline": "Arsenal latest: Ending long waits motivates me, says Arteta",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-01T19:39:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7abf981ade908e0e",
-      "headline": "Liverpool latest: Unwanted piece of history made in Arsenal defeat",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-01T19:18:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1383,42 +1484,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6705b1c4607d433b",
-      "headline": "Sage issues defiant message as pressure grows following another Crystal Palace loss",
-      "summary": "Pierre Sage insists he will \u201cnever give up\u201d as pressure grows following Crystal Palace\u2019s difficult start to the season. Ten-man Palace were beaten by Tottenham after Jean-Philippe Mateta had been sent off, but Sage a",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/sage-issues-defiant-message-as-pressure-grows-following-another-crystal-palace-loss/",
-      "claimed_at": "2026-10-31T20:59:04Z",
-      "players": [
-        {
-          "element_id": 223,
-          "name": "Mateta",
-          "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "be4638b94bdef84e",
-      "headline": "De Zerbi: Tonali was like \u2018two players\u2019 in Crystal Palace win",
-      "summary": "Roberto De Zerbi hailed an \u201cunbelievable\u201d Sandro Tonali performance in Tottenham\u2019s 2-0 win over Crystal Palace, saying the midfielder was like having \u201ctwo players\u201d on the pitch. Tonali impressed at the heart of the Spurs midfield as De Ze",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/de-zerbi-tonali-was-like-two-players-in-crystal-palace-win/",
-      "claimed_at": "2026-10-31T20:50:51Z",
-      "players": [
-        {
-          "element_id": 455,
-          "name": "Tonali",
-          "club": "TOT",
           "held": false
         }
       ],
@@ -1635,108 +1700,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b24bef172b0209f4",
-      "headline": "FPL Gameweek 9 Scout Picks: Villa triple-up",
-      "summary": "Our final team ahead of Saturday\u2019s deadline The post FPL Gameweek 9 Scout Picks: Villa triple-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/fpl-gameweek-9-scout-picks-villa-triple-up",
-      "claimed_at": "2026-10-30T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "59c3617f86a62d33",
-      "headline": "Grealish + Branthwaite: Everton injury latest for FPL Gameweek 9",
-      "summary": "The Toffees meet Newcastle just four days after their EFL Cup meeting The post Grealish + Branthwaite: Everton injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Foot",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/grealish-branthwaite-everton-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:59:54Z",
-      "players": [
-        {
-          "element_id": 230,
-          "name": "Branthwaite",
-          "club": "EVE",
-          "held": false
-        },
-        {
-          "element_id": 238,
-          "name": "Grealish",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "95f99756a140fbc1",
-      "headline": "Maddison + Udogie: Tottenham injury latest for FPL Gameweek 9",
-      "summary": "Roberto De Zerbi spoke on Friday The post Maddison + Udogie: Tottenham injury latest for FPL Gameweek 9 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/30/maddison-udogie-tottenham-injury-latest-for-fpl-gameweek-9",
-      "claimed_at": "2026-10-30T16:44:47Z",
-      "players": [
-        {
-          "element_id": 506,
-          "name": "Udogie",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f44fd9671dee9641",
-      "headline": "Concussion - 75% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-10-30T15:30:09.601963Z",
-      "players": [
-        {
-          "element_id": 230,
-          "name": "Branthwaite",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3c278211cc7c3b36",
-      "headline": "Knock - Expected back 23 Nov",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-10-30T14:30:09.456391Z",
-      "players": [
-        {
-          "element_id": 100,
-          "name": "Carvalho",
-          "club": "BRE",
           "held": false
         }
       ],
