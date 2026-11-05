@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T03:37:01.795259Z",
-  "n_dropped": 131,
+  "generated_at": "2026-11-05T11:30:56.683488Z",
+  "n_dropped": 129,
   "dropped_by_source": {
-    "bbc_football": 58,
+    "bbc_football": 56,
     "hayters": 16,
     "sky_football": 57
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 221,
+  "n_articles": 219,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -39,6 +39,24 @@
       "tier": 2,
       "url": "https://hayters.com/man-city-return-to-winning-ways-with-narrow-victory-over-leipzig/",
       "claimed_at": "2026-11-04T22:10:29Z",
+      "players": [
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "48c7bca35452782a",
+      "headline": "Haaland calls on Man City to 'step up' despite late winner at RB Leipzig",
+      "summary": "Erling Haaland called on his side to \"step up\" after he haunted RB Leipzig again to earn Manchester City a thrilling 3-2 victory in the Champions League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/rb-leipzig-vs-manchester-city/report/577666",
+      "claimed_at": "2026-11-04T22:00:00Z",
       "players": [
         {
           "element_id": 411,
@@ -258,6 +276,162 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "a7709ed157b14cce",
+      "headline": "Maresca backs goalkeeper Donnarumma after Leipzig error",
+      "summary": "Manchester City boss Enzo Maresca admitted Gianluigi Donnarumma made a mistake in their 3-2 Champions League victory over RB Leipzig but defended the goalkeeper following his error. City secured all three points in Germany despite twice concedi",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/maresca-backs-goalkeeper-donnarumma-after-leipzig-error/",
+      "claimed_at": "2026-11-05T11:04:50Z",
+      "players": [
+        {
+          "element_id": 384,
+          "name": "Donnarumma",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a2b5363c2a841585",
+      "headline": "\u2018It is not easy not playing\u2019 \u2013 Raya delighted for \u2018top goalscorer\u2019 Gyokeres",
+      "summary": "David Raya has hailed Viktor Gyokeres\u2019 response to losing his place in the Arsenal starting line-up, insisting the striker\u2019s recent return to form will give him plenty of confidence. Gyokeres has found himself behind Kai Hav",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/it-is-not-easy-not-playing-raya-delighted-for-top-goalscorer-gyokeres/",
+      "claimed_at": "2026-11-05T10:26:01Z",
+      "players": [
+        {
+          "element_id": 25,
+          "name": "Gy\u00f6keres",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "16933b1553d55c91",
+      "headline": "Man Utd unlikely to appoint interim should they sack Carrick",
+      "summary": "Manchester United are unlikely to appoint another interim head coach, Sky Sports News has been told, if they decide to replace Michael Carrick in the coming weeks.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13608290/manchester-united-manager-latest-no-interim-planned-should-club-decide-to-sack-michael-carrick",
+      "claimed_at": "2026-11-05T10:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7deca5615c5cc32e",
+      "headline": "Liverpool latest: Iraola bemoans 'cheap' and 'messy' goals in Fenerbahce defeat",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-05T09:48:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f182472da12d2944",
+      "headline": "Carra: Young guns starring shows Liverpool haven't spent money well enough",
+      "summary": "Jamie Carragher called Liverpool's recruitment into question after their 3-2 defeat to Fenerbahce in the Champions League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13608280/liverpool-trey-nyoni-and-rio-ngumoha-starring-shows-reds-havent-spent-money-well-enough-says-jamie-carragher",
+      "claimed_at": "2026-11-05T09:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b1d56a4587cede75",
+      "headline": "Is it time to buy Declan Rice in FPL?",
+      "summary": "Only Pascal Gross has more FPL assists than the Arsenal midfielder The post Is it time to buy Declan Rice in FPL? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/05/is-it-time-to-buy-declan-rice-in-fpl",
+      "claimed_at": "2026-11-05T08:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f0af5520eea26a68",
+      "headline": "Meet the people set for key role in deciding Man City fate",
+      "summary": "The five individuals at the Premier League set to play a key role in the fate of Manchester City.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cw62ym8r113vo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-05T06:26:11Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a8d6c987fc298c28",
+      "headline": "FPL notes: Konsa injury update, Calafiori rest + Rice\u2019s 90 mins",
+      "summary": "William Saliba remains unused as Arsenal edge Slavia Prague The post FPL notes: Konsa injury update, Calafiori rest + Rice's 90 mins appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/05/fpl-notes-konsa-injury-update-calafiori-rest-rices-90-mins",
+      "claimed_at": "2026-11-05T04:10:00Z",
+      "players": [
+        {
+          "element_id": 6,
+          "name": "Saliba",
+          "club": "ARS",
+          "held": false
+        },
+        {
+          "element_id": 8,
+          "name": "Calafiori",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "785c181f425f8fe1",
@@ -542,6 +716,24 @@
           "element_id": 375,
           "name": "Nyoni",
           "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "10f01c96721e444b",
+      "headline": "Liverpool suffer first CL defeat of season as Kuyt savours 'miracle' in Istanbul",
+      "summary": "Liverpool's perfect start to their Champions League campaign came to a sudden halt as they lost two leads in a 3-2 defeat to Fenerbahce in Istanbul.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/fenerbahce-vs-liverpool/report/577663",
+      "claimed_at": "2026-11-04T19:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -1130,42 +1322,6 @@
       "touches_squad": false
     },
     {
-      "digest": "1c5cee31606f84c3",
-      "headline": "Fernandes claims players don't need to save Carrick's job, but did they?",
-      "summary": "Manchester United captain Bruno Fernandes has come out in support of head coach Michael Carrick, but reiterated that the players didn't need to save his job in their 3-2 comeback win against Roma.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13607700/manchester-united-3-2-roma-bruno-fernandes-claims-players-dont-need-to-save-michael-carricks-job-after-first-win-in-10-games",
-      "claimed_at": "2026-11-03T22:28:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "de0ea4994cdf4572",
-      "headline": "Aston Villa latest: William and Prince George support Villa in Barcelona",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-03T21:50:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "76160713102cabbc",
       "headline": "Man Utd eye Man City's Ait-Nouri - Wednesday's gossip",
       "summary": "Manchester City defender Rayan Ait-Nouri a surprise target for Manchester United, Crystal Palace could turn to England assistant boss Anthony Barry if they sack Pierre Sage, Barcelona keen on Arsenal centre-back Piero Hincapie, plus more.",
@@ -1394,6 +1550,24 @@
       "touches_squad": false
     },
     {
+      "digest": "55159b810a9f78e5",
+      "headline": "Mee and Kenny handed first Northern Ireland call-ups",
+      "summary": "Manchester United goalkeeper Dermot Mee and Portsmouth's Eoin Kenny are handed their first Northern Ireland call-ups for November's Nations League games with Ukraine and Hungary.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwkg5dl4d3l8o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-03T10:07:54Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "2d54d7e6f86d4a47",
       "headline": "FPL notes: Arsenal clean sheet, Rice\u2019s assists + Szoboszlai returns",
       "summary": "Fantasy takeaways from Liverpool 0-1 Arsenal The post FPL notes: Arsenal clean sheet, Rice\u2019s assists + Szoboszlai returns appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1563,168 +1737,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/chelsea-v-man-utd-team-news-bruno-cunha-return-to-xi",
       "claimed_at": "2026-10-31T11:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d2115e48fec276e9",
-      "headline": "Chelsea v Man United predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Chelsea v Man United predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/chelsea-v-man-united-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-10-31T08:42:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3a1d0b5e844aa5f2",
-      "headline": "Bournemouth v Leeds predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Bournemouth v Leeds predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/bournemouth-v-leeds-predicted-line-ups-fpl-team-news",
-      "claimed_at": "2026-10-31T08:41:24Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "664602a54760dff2",
-      "headline": "Brentford v Nott\u2019m Forest predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Brentford v Nott'm Forest predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/brentford-v-nottm-forest-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-10-31T08:39:47Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2550332665181970",
-      "headline": "Coventry v Sunderland predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Coventry v Sunderland predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/coventry-v-sunderland-predicted-line-ups-fpl-team-news",
-      "claimed_at": "2026-10-31T08:39:43Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "aeca6077ded4af9c",
-      "headline": "Man City v Brighton predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Man City v Brighton predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/man-city-v-brighton-predicted-line-ups-fpl-team-news",
-      "claimed_at": "2026-10-31T08:21:35Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c568b102431430cf",
-      "headline": "Tottenham v Crystal Palace predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Tottenham v Crystal Palace predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/tottenham-v-crystal-palace-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-10-31T08:20:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "694c4c71ed0f2cf8",
-      "headline": "Aston Villa v Fulham predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Aston Villa v Fulham predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/aston-villa-v-fulham-predicted-line-ups-fpl-team-news",
-      "claimed_at": "2026-10-31T08:19:47Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cc8123a02259c0c9",
-      "headline": "Liverpool v Arsenal predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Liverpool v Arsenal predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/liverpool-v-arsenal-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-10-31T08:19:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "660d7d43f54821c5",
-      "headline": "Newcastle v Everton predicted line-ups + FPL team news",
-      "summary": "Team form, absentees and our predicted XIs The post Newcastle v Everton predicted line-ups + FPL team news appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/newcastle-v-everton-predicted-line-ups-fpl-team-news-2",
-      "claimed_at": "2026-10-31T08:19:04Z",
       "players": [
         {
           "element_id": 0,
