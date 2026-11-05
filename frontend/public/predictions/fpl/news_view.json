@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T11:30:56.683488Z",
-  "n_dropped": 129,
+  "generated_at": "2026-11-05T18:59:05.374061Z",
+  "n_dropped": 102,
   "dropped_by_source": {
-    "bbc_football": 56,
-    "hayters": 16,
-    "sky_football": 57
+    "bbc_football": 48,
+    "hayters": 9,
+    "sky_football": 45
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 219,
+  "n_articles": 192,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -236,46 +236,298 @@
       "touches_squad": true
     },
     {
-      "digest": "63f75cb002bd059d",
-      "headline": "Tottenham 2-0 Crystal Palace LIVE \u2013 Van Hecke doubles Spurs\u2019 lead",
-      "summary": "{rsn-live-v2} The post Tottenham 2-0 Crystal Palace LIVE - Van Hecke doubles Spurs' lead appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/tottenham-vs-crystal-palace-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-10-31T15:42:13Z",
+      "digest": "8fcd0b44f71d6f74",
+      "headline": "Tottenham latest: 'Xavi return to training date set' after ACL injury",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-05T17:37:00Z",
       "players": [
         {
-          "element_id": 112,
-          "name": "Van Hecke",
-          "club": "TOT",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
-      "digest": "9bcc7b387599036c",
-      "headline": "Man City 0-0 Brighton LIVE \u2013 Cherki benched as Haaland returns",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 0-0 Brighton LIVE - Cherki benched as Haaland returns appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/man-city-v-brighton-live-team-news-updates-and-reaction-2/",
-      "claimed_at": "2026-10-31T13:45:01Z",
+      "digest": "1989970c0de10324",
+      "headline": "Crystal Palace latest: Sage gives cryptic response over Disasi absence vs Hoffenheim",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-11-05T17:30:00Z",
       "players": [
+        {
+          "element_id": 153,
+          "name": "Disasi",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a534a2a5d5bca249",
+      "headline": "Good to feel club are committed to me - Jaissle",
+      "summary": "Newcastle United manager Matthias Jaissle says he has \"got more of a feeling from within the club\" about how \"committed\" they are to him amid his side's struggling form.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c8y56z50k95xo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-05T17:25:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c4bddef40a30ab1c",
+      "headline": "Transfer Centre LIVE! Spurs still have matching rights clause for Kane",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
+      "claimed_at": "2026-11-05T17:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "87847699d67aee81",
+      "headline": "FPL notes: 90 mins for Cherki + Szoboszlai, Isak rest and goal",
+      "summary": "Takeaways from the Champions League trips for Man City and Liverpool The post FPL notes: 90 mins for Cherki + Szoboszlai, Isak rest and goal appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/05/fpl-notes-90-mins-for-cherki-szoboszlai-isak-rest-and-goal",
+      "claimed_at": "2026-11-05T17:00:00Z",
+      "players": [
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        },
         {
           "element_id": 399,
           "name": "Cherki",
           "club": "MCI",
           "held": false
-        },
-        {
-          "element_id": 411,
-          "name": "Haaland",
-          "club": "MCI",
-          "held": true
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "4bba88ec0f0f1ef9",
+      "headline": "Europa League LIVE! Palace and Bournemouth both behind",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/crystal-palace-vs-tsg-hoffenheim/live/577801",
+      "claimed_at": "2026-11-05T16:25:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6fbe8385eb2989dd",
+      "headline": "\u2018This is not a Playstation game\u2019 \u2013 Jaissle on his Newcastle side\u2019s struggles",
+      "summary": "Matthias Jaissle has urged his Newcastle players to take greater responsibility for their decision-making on the pitch, insisting they cannot be coached through every moment of a game. The Newcastle United head coach made c",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/this-is-not-a-playstation-game-jaissle-on-his-newcastle-sides-struggles/",
+      "claimed_at": "2026-11-05T16:14:54Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "74dd9f36da9f541e",
+      "headline": "Palmer to return? Mainoo recall? Tuchel's England squad dilemmas",
+      "summary": "Cole Palmer's form for Chelsea ought to make him a shoo-in for England's final international squad of 2026. The question is whether Thomas Tuchel has lost patience with him.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13608436/england-squad-cole-palmer-to-return-kobbie-mainoo-recall-thomas-tuchels-big-selection-dilemmas-analysed",
+      "claimed_at": "2026-11-05T16:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "eff7019d3f1c7d49",
+      "headline": "Emery close to agreeing new Aston Villa contract",
+      "summary": "Aston Villa manager Unai Emery is close to agreeing a contract extension at the club.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cw99zde82nmno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-05T15:45:22Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6641899fb158677c",
+      "headline": "Newcastle United star set for another spell out",
+      "summary": "Newcastle United boss Matthias Jaissle says Joelinton is facing another spell on the sidelines after suffering a fresh injury setback. The Brazilian midfielder has picked up another problem and Newcastle are now working to determine the extent of the i",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/newcastle-united-star-set-for-another-spell-out/",
+      "claimed_at": "2026-11-05T15:42:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a26d2e1f2da076e8",
+      "headline": "Nottingham Forest star set for two months out \u2013 but striker back in contention",
+      "summary": "Nottingham Forest boss Oliver Glasner has revealed Nicolas Dominguez is facing up to eight weeks on the sidelines after suffering a setback in his recovery from injury. Dominguez had returned to training but has now suffe",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/nottingham-forest-star-set-for-two-months-out-but-striker-back-in-contention/",
+      "claimed_at": "2026-11-05T15:36:32Z",
+      "players": [
+        {
+          "element_id": 487,
+          "name": "Dominguez",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4b4f1069b2c524a7",
+      "headline": "Everton's Grealish unavailable again after 'breach of discipline'",
+      "summary": "Jack Grealish remains unavailable for Everton's Premier League clash with Coventry on Friday, manager David Moyes confirms.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm79p020d9yvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-05T15:28:37Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "936fae631580067e",
+      "headline": "Glasner wanted to 'shake things up' with outburst",
+      "summary": "Oliver Glasner says he meant for his post-Brentford outburst to be positive and a catalyst for change at Nottingham Forest.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13608424/oliver-glasner-nottingham-forest-head-coach-says-post-brentford-outburst-was-meant-positively",
+      "claimed_at": "2026-11-05T15:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "683cf8af332c4f52",
+      "headline": "Everton latest: Grealish remains unavailable, says Moyes",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-11-05T13:45:00Z",
+      "players": [
+        {
+          "element_id": 238,
+          "name": "Grealish",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "dc0950ab9ff110f7",
+      "headline": "Junior Kroupi: When will he start + whose spot will he take?",
+      "summary": "The young Bournemouth attacker is back from injury - and on FPL radars The post Junior Kroupi: When will he start + whose spot will he take? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/05/junior-kroupi-when-will-he-start-whose-spot-will-he-take",
+      "claimed_at": "2026-11-05T12:10:00Z",
+      "players": [
+        {
+          "element_id": 78,
+          "name": "Kroupi.Jr",
+          "club": "BOU",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "628e37f917d824f7",
+      "headline": "'Carrick needs Bruno \u2013 but Villa could expose United'",
+      "summary": "Paul Merson says Michael Carrick needs Bruno Fernandes in his side and has challenged Matheus Cunha to find greater consistency after Manchester United's dramatic 3-2 comeback win over Roma.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13607957/man-utd-paul-merson-says-michael-carrick-needs-bruno-fernandes-on-side-and-matheus-cunha-to-be-consistent",
+      "claimed_at": "2026-11-05T11:45:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "a7709ed157b14cce",
@@ -974,24 +1226,6 @@
       "touches_squad": false
     },
     {
-      "digest": "525b49df7765d6fb",
-      "headline": "Liverpool latest: Riise's thunderbolt revisited 25 years on",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-04T12:38:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "e9e6549c93042471",
       "headline": "Emery insists Aston Villa will learn from Barcelona defeat",
       "summary": "Unai Emery says Aston Villa will use their 3-0 Champions League defeat to Barcelona as a learning experience as they look to improve in Europe. Villa\u2019s winning start in the competition came to an end at Camp Nou, but Emery felt his side show",
@@ -1004,30 +1238,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d2f7c1c803b222ad",
-      "headline": "Man Utd latest: Baleba injured, Lacey in? Pick your team to face Aston Villa",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-04T11:55:00Z",
-      "players": [
-        {
-          "element_id": 131,
-          "name": "Baleba",
-          "club": "MUN",
-          "held": false
-        },
-        {
-          "element_id": 435,
-          "name": "Lacey",
-          "club": "MUN",
           "held": false
         }
       ],
@@ -1070,24 +1280,6 @@
       "touches_squad": false
     },
     {
-      "digest": "2c43809f86b5e2eb",
-      "headline": "Real Madrid reach verbal agreement with Man Utd teen star JJ Gabriel",
-      "summary": "Real Madrid have reached a verbal agreement with 16-year-old JJ Gabriel over a potential move to the Santiago Bernabeu.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13607845/jj-gabriel-real-madrid-reach-verbal-agreement-with-man-utd-teenager-who-requested-to-leave-old-trafford",
-      "claimed_at": "2026-11-04T09:28:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ee8ff32250005217",
       "headline": "From Derby to Champions League - Brown's journey to face Reds",
       "summary": "Fenerbahce's Archie Brown on his unorthodox journey to Istanbul, the moment of madness against Galatasaray and what Liverpool can expect in Turkey on Wednesday evening.",
@@ -1113,24 +1305,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cm4g1jx8ylveo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-11-04T08:27:25Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bc6f6dc11c569fcf",
-      "headline": "Fernandes hits back at 'lies' and claims players don't need to save Carrick's job",
-      "summary": "Manchester United captain Bruno Fernandes has come out in support of head coach Michael Carrick, but reiterated that the players didn't need to save his job in their 3-2 comeback win against Roma.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13607700/manchester-united-3-2-roma-bruno-fernandes-claims-players-dont-need-to-save-michael-carricks-job-after-first-win-in-10-games",
-      "claimed_at": "2026-11-04T07:20:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1196,24 +1370,6 @@
       "touches_squad": false
     },
     {
-      "digest": "07a4433a6bebf670",
-      "headline": "Man Utd latest: Carrick refusing to get carried away after 'important' win",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-03T23:33:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "3d56d1393ddc4f88",
       "headline": "Carrick hails Man Utd supporters after long-awaited win \u2013 and gives update on Baleba injury worry",
       "summary": "Manchester United boss Michael Carrick says he is &#8220;delighted&#8221; for the fans after the support they have given him, following his side's 3-2 win over Roma. United ended a nine-game winless run",
@@ -1250,42 +1406,6 @@
       "touches_squad": false
     },
     {
-      "digest": "3da472d748ece24f",
-      "headline": "Papers: Man Utd keen on signing Man City defender Ait-Nouri",
-      "summary": "The top stories and transfer rumours from Wednesday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13607697/manchester-united-keen-on-signing-manchester-city-defender-rayan-ait-nouri-who-is-open-to-crossing-divide-in-january-paper-talk",
-      "claimed_at": "2026-11-03T23:10:00Z",
-      "players": [
-        {
-          "element_id": 392,
-          "name": "A\u00eft-Nouri",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "baedf5299950ed3e",
-      "headline": "Papers: Arteta using NASA to help fix Arsenal's injury woes",
-      "summary": "The top stories and transfer rumours from Thursday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13608204/mikel-arteta-is-using-nasa-to-help-fix-arsenals-injury-woes-with-google-and-apple-helping-too-paper-talk",
-      "claimed_at": "2026-11-03T23:10:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "6b7efc41daf475d3",
       "headline": "\u2018A lot of lies\u2019 \u2013 Bruno Fernandes says Michael Carrick was \u2018right\u2019 to drop him against Bournemouth and denies rift",
       "summary": "Manchester United captain Bruno Fernandes insists there are no issues between him and boss Michael Carrick - and hopes his side's win over Roma can be the start of a turnaround this sea",
@@ -1293,24 +1413,6 @@
       "tier": 2,
       "url": "https://hayters.com/a-lot-of-lies-bruno-fernandes-says-michael-carrick-was-right-to-drop-him/",
       "claimed_at": "2026-11-03T23:03:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2c47ad046df3ebe3",
-      "headline": "Aston Villa latest: 'Be ruthless and avoid mistakes,' says Emery after Barca",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-03T22:54:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1478,24 +1580,6 @@
       "touches_squad": false
     },
     {
-      "digest": "fa3f58ee266a6b2a",
-      "headline": "Palace launch Mateta red card appeal",
-      "summary": "Crystal Palace are appealing against Jean-Philippe Mateta's red card in the defeat by Tottenham on Saturday.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqp9gelp4em2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-03T14:54:55Z",
-      "players": [
-        {
-          "element_id": 223,
-          "name": "Mateta",
-          "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "644ac546979754b4",
       "headline": "FPL notes: Dewsbury-Hall unlucky, Barry\u2019s xG + poor Newcastle",
       "summary": "Plus updates on Jarrad Branthwaite, Mathias Fernandez-Pardo and Jack Grealish The post FPL notes: Dewsbury-Hall unlucky, Barry's xG + poor Newcastle appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Fo",
@@ -1544,24 +1628,6 @@
           "element_id": 465,
           "name": "Osula",
           "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "55159b810a9f78e5",
-      "headline": "Mee and Kenny handed first Northern Ireland call-ups",
-      "summary": "Manchester United goalkeeper Dermot Mee and Portsmouth's Eoin Kenny are handed their first Northern Ireland call-ups for November's Nations League games with Ukraine and Hungary.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwkg5dl4d3l8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-03T10:07:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1622,24 +1688,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5a2b537ef64d599f",
-      "headline": "Arteta reveals fresh injury blow after Anfield victory",
-      "summary": "Arsenal manager Mikel Arteta has revealed a fresh injury concern following the Gunners\u2019 1-0 victory against Liverpool at Anfield. The win came courtesy of a Kai Havertz goal, and was their first league victory at Anfield since 2012. However, Ebe",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-reveals-fresh-injury-blow-after-anfield-victory/",
-      "claimed_at": "2026-11-01T19:48:31Z",
-      "players": [
-        {
-          "element_id": 26,
-          "name": "Havertz",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b6ca2410b5b7d18c",
       "headline": "Liverpool v Arsenal team news: Calafiori + Tzolis start",
       "summary": "Dominik Szoboszlai is back on the bench for Liverpool The post Liverpool v Arsenal team news: Calafiori + Tzolis start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1688,60 +1736,6 @@
           "element_id": 399,
           "name": "Cherki",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0e22c2be9d559921",
-      "headline": "Spurs v Crystal Palace team news: Maddison a sub, Solanke in",
-      "summary": "One change for Spurs from last weekend, two for Palace The post Spurs v Crystal Palace team news: Maddison a sub, Solanke in appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/spurs-v-crystal-palace-team-news-maddison-a-sub-solanke-in",
-      "claimed_at": "2026-10-31T17:00:00Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ff0956710b1e1ef7",
-      "headline": "Illness - 75% chance of playing",
-      "summary": null,
-      "source": "fpl_news_parse",
-      "tier": 1,
-      "url": null,
-      "claimed_at": "2026-10-31T13:30:08.172741Z",
-      "players": [
-        {
-          "element_id": 101,
-          "name": "Henderson",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b9454ec7747830bb",
-      "headline": "Chelsea v Man Utd team news: Bruno + Cunha return to XI",
-      "summary": "Four changes for Chelsea, three for United The post Chelsea v Man Utd team news: Bruno + Cunha return to XI appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/10/31/chelsea-v-man-utd-team-news-bruno-cunha-return-to-xi",
-      "claimed_at": "2026-10-31T11:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
