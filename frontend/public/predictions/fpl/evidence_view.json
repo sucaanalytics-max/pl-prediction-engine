@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T10:51:40.914381Z",
+  "generated_at": "2026-11-05T18:29:21.050653Z",
   "gameweek": 10,
   "players": [
     {
@@ -354,6 +354,133 @@
         }
       ],
       "total_conflicts": 3,
+      "needs_attention": false
+    },
+    {
+      "element_id": 230,
+      "player_name": "Branthwaite",
+      "club": "Everton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "live_bootstrap_authority",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "174055666c3be9e1",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-10-30T15:30:09.601963Z",
+              "observed_at": "2026-11-02T19:06:20.471423Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "live_bootstrap_authority",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "30e8f3db8a5dbef8",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-10-30T15:30:09.601963Z",
+              "observed_at": "2026-11-02T19:06:20.471423Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 2,
+      "needs_attention": false
+    },
+    {
+      "element_id": 104,
+      "player_name": "Onyeka",
+      "club": "Coventry City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 50,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f1328956fb6fc705",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-11-05T09:00:09.236330Z",
+              "observed_at": "2026-11-05T10:52:08.620689Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "62f0eeabb9b614b9",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 50,
+              "claimed_at": "2026-11-05T09:00:09.236330Z",
+              "observed_at": "2026-11-05T10:52:08.620689Z",
+              "quote": "Groin injury - 50% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "96011d9f8e83300f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-05T09:00:09.236330Z",
+              "observed_at": "2026-11-05T10:52:08.620689Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
       "needs_attention": false
     },
     {
@@ -1111,10 +1238,10 @@
     }
   ],
   "counts": {
-    "n_claims": 326,
-    "n_players_with_claims": 71,
-    "n_players_shown": 13,
+    "n_claims": 344,
+    "n_players_with_claims": 72,
+    "n_players_shown": 15,
     "n_escalations": 5,
-    "n_players_resolved": 29
+    "n_players_resolved": 30
   }
 }
