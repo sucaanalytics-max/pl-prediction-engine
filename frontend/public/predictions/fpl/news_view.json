@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-06T00:03:44.418125Z",
-  "n_dropped": 80,
+  "generated_at": "2026-11-06T06:45:59.661785Z",
+  "n_dropped": 81,
   "dropped_by_source": {
-    "bbc_football": 30,
+    "bbc_football": 31,
     "hayters": 7,
     "sky_football": 43
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 170,
+  "n_articles": 171,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -168,6 +168,24 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "e30453c3ca6d1e5d",
+      "headline": "'Putting his doubters in their place' - Rooney lands pundit of year award",
+      "summary": "Former Manchester United and England captain Wayne Rooney is named pundit of the year at the prestigious Broadcast Sport Awards.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck4g1l4nj85zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-06T06:22:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "bd825259b4fff339",
@@ -1466,24 +1484,6 @@
           "element_id": 131,
           "name": "Baleba",
           "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "00f4fb3847e35e1e",
-      "headline": "Man Utd beat Roma - the other great Champions League comebacks",
-      "summary": "Manchester United come from two goals down to beat Roma 3-2 - but what are the other best fightbacks in Champions League history?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c64g1dg0d84ko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-03T23:25:20Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
