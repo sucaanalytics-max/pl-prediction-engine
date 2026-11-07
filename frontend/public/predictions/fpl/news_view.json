@@ -1,18 +1,72 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-06T20:42:06.689939Z",
-  "n_dropped": 92,
+  "generated_at": "2026-11-07T00:23:21.431373Z",
+  "n_dropped": 99,
   "dropped_by_source": {
-    "bbc_football": 26,
-    "hayters": 14,
-    "sky_football": 52
+    "bbc_football": 25,
+    "hayters": 17,
+    "sky_football": 57
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 182,
+  "n_articles": 189,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "4c914a9ddd8f62d2",
+      "headline": "Barry scores twice as Everton fight back to beat Coventry",
+      "summary": "In-form Thierno Barry scores twice as Everton came from behind to beat Coventry as the Toffees move into fifth in the Premier League table.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c62l44geqvlyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-06T22:30:12Z",
+      "players": [
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "6aa08fac59af50cf",
+      "headline": "Barry shines with four-minute double as Everton come back to beat Coventry",
+      "summary": "FREE TO WATCH: Highlights from Everton's match against Coventry in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13609101/everton-3-1-coventry-premier-league-highlights",
+      "claimed_at": "2026-11-06T22:02:00Z",
+      "players": [
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "6313f579a85393f7",
+      "headline": "Barry leads Everton comeback win vs Coventry - who suffer triple VAR woe",
+      "summary": "Thierno Barry continued his fine form as his two goals and an assist fired Everton to a comeback 3-1 win over Coventry - who had three big VAR calls go against them on Merseyside.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/everton-vs-coventry-city/report/559537",
+      "claimed_at": "2026-11-06T22:00:00Z",
+      "players": [
+        {
+          "element_id": 249,
+          "name": "Barry",
+          "club": "EVE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "9846f7fef552d31e",
       "headline": "Haaland scores winner as Man City beat Leipzig",
@@ -146,6 +200,186 @@
       "touches_squad": true
     },
     {
+      "digest": "db10073ce788bfb1",
+      "headline": "England 'disappointment' fuels Dewsbury-Hall's Everton heroics",
+      "summary": "Kiernan Dewsbury-Hall responds to his England omission by scoring a stunning goal to inspire Everton's 3-1 comeback victory over Coventry City.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm4g114p9e7go?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-06T23:53:06Z",
+      "players": [
+        {
+          "element_id": 236,
+          "name": "Dewsbury-Hall",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4fe6558da5c6e373",
+      "headline": "Lampard feels hair pull should have led to Coventry penalty",
+      "summary": "Coventry had a trio of decisions go against them in defeat at Everton, with Frank Lampard suggesting a hair pull should have been a penalty.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cr15jj0yy8xeo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-06T23:22:21Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9f89e975d5d9d03b",
+      "headline": "Lampard: VAR didn't do its job",
+      "summary": "Coventry boss Frank Lampard says VAR 'didn't do its job' in his side's defeat to Everton as three reviews controversially went against his side.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13609067/everton-3-1-coventry-frank-lampard-says-var-didnt-do-its-job-after-three-incidents-went-against-sky-blues-in-premier-league-defeat",
+      "claimed_at": "2026-11-06T23:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f1c0c73ee27559fb",
+      "headline": "'Big decisions' affected the game - Lampard",
+      "summary": "Coventry City head coach Frank Lampard is frustrated after three \"big decisions\" went against his side in their 3-1 defeat by Everton at the Hill Dickinson Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cm74ppwz9yewo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-06T22:40:58Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4113810a16b4f390",
+      "headline": "Not a good performance, but we got a result - Moyes",
+      "summary": "Everton manager David Moyes is pleased with his side's reaction to turn around a one goal deficit to win 3-1 against Coventry, but isn't pleased with their overall performance.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmreyy2ndd95o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-06T22:40:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2c39e528e583f55f",
+      "headline": "Arteta shares more detail on Saka\u2019s injury and dismisses Declan Rice concern",
+      "summary": "Arsenal boss Mikel Arteta admits there is still significant uncertainty over Bukayo Saka\u2019s injury, including exactly what caused it and when the winger will be ready to return. Saka is expected to be sidelined for several w",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/arteta-shares-more-detail-on-sakas-injury-and-dismisses-declan-rice-concern/",
+      "claimed_at": "2026-11-06T22:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "640e8e2a0056eb28",
+      "headline": "De Zerbi tells young players to \u2018remove social media\u2019",
+      "summary": "Roberto De Zerbi insists that young players must &#8220;remove social media&#8221; in order to keep their feet on the ground. 18-year-old Luca Williams-Barnett made his Premier League debut for Spurs in their 3-1 win over Crystal Palace last week",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-insists-young-players-must-remove-social-media/",
+      "claimed_at": "2026-11-06T22:30:00Z",
+      "players": [
+        {
+          "element_id": 601,
+          "name": "Williams-Barnett",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b01e1e97b5b589a4",
+      "headline": "Papers: Man Utd handed boost in pursuit of Barcelona left-back Alejandro Balde",
+      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13609030/man-utd-handed-boost-in-pursuit-of-barcelona-left-back-paper-talk",
+      "claimed_at": "2026-11-06T22:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5a9f0272014ae2e6",
+      "headline": "Real Madrid and PSG keen on Suzuki - Saturday's gossip",
+      "summary": "Paris St-Germain and Real Madrid interested in Aston Villa keeper Zion Suzuki, Inter Milan weighing up move for Crystal Palace's Chris Richards, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c98rzz0rjjvdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-06T21:08:04Z",
+      "players": [
+        {
+          "element_id": 597,
+          "name": "Suzuki",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "88dcd4a87898467e",
+      "headline": "Should hair pull have resulted in penalty or red card?",
+      "summary": "Should Tarkowski have seen red for a hair pull during Everton's Premier League match against Coventry.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13609059/block-j-tarkowski-everton-0-0-coventry",
+      "claimed_at": "2026-11-06T20:48:00Z",
+      "players": [
+        {
+          "element_id": 229,
+          "name": "Tarkowski",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "4c5570b3132ba7b8",
       "headline": "Everton v Coventry team news: Branthwaite fit, no Thomas",
       "summary": "One change for Everton, none for Coventry The post Everton v Coventry team news: Branthwaite fit, no Thomas appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -158,6 +392,42 @@
           "element_id": 230,
           "name": "Branthwaite",
           "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "edd0c33db7ae108f",
+      "headline": "Everton latest: Dewsbury-Hall 'sad' over England snub",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-11-06T17:00:00Z",
+      "players": [
+        {
+          "element_id": 236,
+          "name": "Dewsbury-Hall",
+          "club": "EVE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b595a64744796906",
+      "headline": "Alonso on Cole Palmer\u2019s omission from England squad",
+      "summary": "Chelsea manager Xabi Alonso has reacted after Cole Palmer was omitted from Thomas Tuchel\u2019s latest England squad. The squad for November\u2019s international break included first-time call-ups for youngsters Jobe Bellingham and Fulham\u2019s Josh King, but th",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/alonso-on-cole-palmers-omission-from-england-squad/",
+      "claimed_at": "2026-11-06T15:48:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -194,6 +464,24 @@
           "element_id": 200,
           "name": "Lacroix",
           "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "796a9314645b79fd",
+      "headline": "Spurs latest: De Zerbi - 'It's great our CEO wants us to win the league'",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-06T15:02:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
@@ -884,24 +1172,6 @@
       "touches_squad": false
     },
     {
-      "digest": "230a5150eca23df3",
-      "headline": "Moyes talks trophy as Everton boss reflects on career before landmark game",
-      "summary": "Everton are seventh in the Premier League table with the chance to move above Liverpool into fifth if they can beat Coventry at home. They are also into a Carabao Cup quarter-final against Fleetwood. This has been a promising",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13605773/david-moyes-interview-everton-manager-targeting-trophies-as-he-equals-harry-cattericks-record-for-games-managed",
-      "claimed_at": "2026-11-06T11:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a689080e6d52398a",
       "headline": "FPL Gameweek 10 Scout Picks: Arsenal triple-up",
       "summary": "Our final selection ahead of Friday's deadline The post FPL Gameweek 10 Scout Picks: Arsenal triple-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -909,84 +1179,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/11/06/fpl-gameweek-10-scout-picks-arsenal-triple-up",
       "claimed_at": "2026-11-06T11:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "eab4342fb20628ad",
-      "headline": "Man City latest: Maresca reacts to O'Reilly and Foden England omissions",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-06T10:57:00Z",
-      "players": [
-        {
-          "element_id": 387,
-          "name": "O'Reilly",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 398,
-          "name": "Foden",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "64f8083e361811cc",
-      "headline": "Palmer left out of England squad as Jobe and King called up",
-      "summary": "Thomas Tuchel has left Cole Palmer out of the England squad, along with Phil Foden and Kobbie Mainoo, but Jude Bellingham's brother Jobe and Fulham midfielder Josh King have earned their first senior call-ups.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13608698/england-squad-cole-palmer-phil-foden-and-kobbie-mainoo-left-out-as-jobe-bellingham-and-josh-king-called-up",
-      "claimed_at": "2026-11-06T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8b0b6a07df6c6232",
-      "headline": "Lacey and Man Utd's next generation can rescue Carrick",
-      "summary": "Being at Old Trafford on Tuesday night was quite incredible.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13608473/manchester-united-reporter-notebook-shea-lacey-and-old-trafford-young-guns-offer-michael-carrick-hope-of-unlikely-revival",
-      "claimed_at": "2026-11-06T09:00:00Z",
-      "players": [
-        {
-          "element_id": 435,
-          "name": "Lacey",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8f795e4c410588a4",
-      "headline": "Man Utd's next generation can rescue Carrick",
-      "summary": "Being at Old Trafford on Tuesday night was quite incredible.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13608473/manchester-united-reporter-notebook-shea-lacey-and-old-trafford-young-guns-offer-michael-carrick-hope-of-unlikely-revival",
-      "claimed_at": "2026-11-06T09:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1041,24 +1233,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/news/articles/cmwy4edrdp02o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-11-06T06:17:13Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bd825259b4fff339",
-      "headline": "Papers: Deschamps turns down Man Utd offer to replace Carrick",
-      "summary": "The top stories and transfer rumours from Friday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13608662/didier-deschamps-turns-down-manchester-united-offer-to-replace-michael-carrick-paper-talk",
-      "claimed_at": "2026-11-05T23:05:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1490,30 +1664,6 @@
       "touches_squad": false
     },
     {
-      "digest": "ed7d74c7d96c90e2",
-      "headline": "Madueke and Gyokeres goals give Arsenal win in Prague",
-      "summary": "Arsenal held off a late Slavia Prague fightback to secure a 2-1 Champions League victory in the Czech Republic. Noni Madueke gave Mikel Arteta\u2019s side the perfect start after nine minutes, racing onto Viktor Gyokeres\u2019 pass before finishing past Na",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/madueke-and-gyokeres-goals-give-arsenal-win-in-prague/",
-      "claimed_at": "2026-11-04T22:06:48Z",
-      "players": [
-        {
-          "element_id": 16,
-          "name": "Madueke",
-          "club": "ARS",
-          "held": false
-        },
-        {
-          "element_id": 25,
-          "name": "Gy\u00f6keres",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "10fa2162e655136a",
       "headline": "Liverpool crumble at Kuyt's Fenerbahce",
       "summary": "Liverpool are defeated by Turkish side Fenerbahce, who twice fought back from behind to seal a famous victory, ending the Reds' perfect start to this year's Champions League after four games.",
@@ -1521,174 +1671,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/cqy7ljmzx6d6o?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-11-04T22:04:16Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7693284dfa114960",
-      "headline": "Manchester United beat Roma in epic second-half comeback",
-      "summary": "Manchester United drag themselves up off the canvas to come from two goals down to record a sensational Champions League victory against Roma at Old Trafford.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cqrmy8lrz0wno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-04T22:04:05Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "375c38c965620f31",
-      "headline": "Raphinha scores twice as Barcelona beat Aston Villa",
-      "summary": "Barcelona end Aston Villa's perfect Champions League start with an enthralling win at the Spotify Nou Camp.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmlylzndw52ko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-04T22:04:02Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "edb11e29c41c1c02",
-      "headline": "Iraola explains Liverpool attacking changes in defeat to Fenerbahce",
-      "summary": "Andoni Iraola explained his decision to reshuffle his Liverpool attack in their 3-2 defeat to Fenerbahce, including starting Bradley Barcola through the middle. The Liverpool boss opted to start Barcola centrally while Victor Munoz",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/iraola-explains-liverpool-attacking-changes-in-defeat-to-fenerbahce/",
-      "claimed_at": "2026-11-04T21:52:14Z",
-      "players": [
-        {
-          "element_id": 360,
-          "name": "Bradley",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 369,
-          "name": "Ngumoha",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 377,
-          "name": "Munoz",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 627,
-          "name": "Barcola",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7936120082f9aa1f",
-      "headline": "Emery in line for new Villa deal - Thursday's gossip",
-      "summary": "Manager Unai Emery is in line for a new contract with Aston Villa, Trey Nyoni to stay with Liverpool and Leeds target Harvey Elliott, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwkgjv582vj0o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-04T21:41:04Z",
-      "players": [
-        {
-          "element_id": 375,
-          "name": "Nyoni",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 383,
-          "name": "Elliott",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5a9e5faa3ab87bde",
-      "headline": "Liverpool handed first defeat of Champions League campaign",
-      "summary": "Liverpool twice surrendered the lead as Fenerbahce inflicted a 3-2 Champions League defeat on Andoni Iraola\u2019s side in Istanbul. Trey Nyoni put Liverpool ahead after 25 minutes with his first senior goal, finishing from the edge of the box af",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-handed-first-defeat-of-champions-league-campaign/",
-      "claimed_at": "2026-11-04T19:54:09Z",
-      "players": [
-        {
-          "element_id": 375,
-          "name": "Nyoni",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ccf01b4f5006d6bf",
-      "headline": "How landmark Everton compensation prevented Burnley record loss",
-      "summary": "Burnley have published promising financial results, but under the hood is a payment from Everton which makes the picture look far less positive.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c893zeq4eln1o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-04T17:48:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "69f0510c3b81ea05",
-      "headline": "Hearts record \u00a32.4m loss in Bloom's first year",
-      "summary": "Heart of Midlothian record a loss of \u00a32.4m for the year ending 30 June, despite a turnover of more than \u00a323m the first 12 months of Brighton owner Tony Bloom's involvement.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckqxnve3jplxo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-04T17:00:49Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "33a7643226cf09c0",
-      "headline": "Why Man Utd's Roma comeback has echoes of Mourinho and Solskjaer",
-      "summary": "After their memorable comeback victory against Roma, can Manchester United avoid a repeat of the past and follow that up with a successive victory?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqx28zjxdxxzo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-04T16:12:46Z",
       "players": [
         {
           "element_id": 0,
@@ -1730,24 +1712,6 @@
           "element_id": 634,
           "name": "Fernandez-Pardo",
           "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2d54d7e6f86d4a47",
-      "headline": "FPL notes: Arsenal clean sheet, Rice\u2019s assists + Szoboszlai returns",
-      "summary": "Fantasy takeaways from Liverpool 0-1 Arsenal The post FPL notes: Arsenal clean sheet, Rice\u2019s assists + Szoboszlai returns appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/01/fpl-notes-arsenal-clean-sheet-rices-assists-szoboszlai-returns",
-      "claimed_at": "2026-11-01T23:55:00Z",
-      "players": [
-        {
-          "element_id": 368,
-          "name": "Szoboszlai",
-          "club": "LIV",
           "held": false
         }
       ],
