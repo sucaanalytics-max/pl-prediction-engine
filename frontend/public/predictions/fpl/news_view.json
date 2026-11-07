@@ -1,18 +1,42 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-07T13:24:47.184153Z",
-  "n_dropped": 108,
+  "generated_at": "2026-11-07T18:10:33.168846Z",
+  "n_dropped": 130,
   "dropped_by_source": {
-    "bbc_football": 27,
-    "hayters": 19,
-    "sky_football": 62
+    "bbc_football": 31,
+    "hayters": 26,
+    "sky_football": 73
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 198,
+  "n_articles": 220,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "43c8549578ef2be0",
+      "headline": "Okafor the difference despite Van Hecke defiance - Leeds v Spurs ratings",
+      "summary": "How Leeds United and Tottenham Hotspurs' players rated in their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq70p2w3j00jo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-07T14:35:23Z",
+      "players": [
+        {
+          "element_id": 112,
+          "name": "Van Hecke",
+          "club": "TOT",
+          "held": true
+        },
+        {
+          "element_id": 336,
+          "name": "Okafor",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "4c914a9ddd8f62d2",
       "headline": "Barry scores twice as Everton fight back to beat Coventry",
@@ -200,6 +224,366 @@
       "touches_squad": true
     },
     {
+      "digest": "e775e34a3ff37fc4",
+      "headline": "Delap doubles Forest's lead over City with glorious goal",
+      "summary": "Man City sloppy as Liam Delap doubles Forest's lead",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13609474/goal-l-delap-18-nottm-forest-2-0-manchester-city",
+      "claimed_at": "2026-11-07T17:56:00Z",
+      "players": [
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "97804737469b5dd3",
+      "headline": "Nottingham Forest 2-0 Man City LIVE \u2013 Delap doubles the lead",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Nottingham Forest 2-0 Man City LIVE - Delap doubles the lead appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/nottingham-forest-v-man-city-live-team-news-updates-and-reaction-3/",
+      "claimed_at": "2026-11-07T17:50:00Z",
+      "players": [
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "467427183e776200",
+      "headline": "'Cool finish' from Cunha gives Forest an early lead vs Man City",
+      "summary": "Jair Cunha puts Forest ahead after six minutes as they face Manchester City in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13609457/goal-j-cunha-6-nottm-forest-1-0-manchester-city",
+      "claimed_at": "2026-11-07T17:43:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "38a543faae4307b8",
+      "headline": "Nottm Forest v Man City team news: Cherki + Guehi start",
+      "summary": "Forest make two changes from last weekend, City three from midweek The post Nottm Forest v Man City team news: Cherki + Guehi start appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/07/nottm-forest-v-man-city-team-news-cherki-guehi-start",
+      "claimed_at": "2026-11-07T17:20:00Z",
+      "players": [
+        {
+          "element_id": 388,
+          "name": "Gu\u00e9hi",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b20f4d5749d5ccd0",
+      "headline": "Odegaard earns Arsenal narrow win over Hull to extend gap at the top",
+      "summary": "FREE TO WATCH: Highlights from Arsenal's match against Hull in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13609399/arsenal-1-0-hull-premier-league-highlights",
+      "claimed_at": "2026-11-07T17:16:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "59d4cf20d8f7780a",
+      "headline": "Leeds end Spurs\u2019 winning run in VAR controversy filled match",
+      "summary": "FREE TO WATCH: Highlights from Leeds's match against Tottenham Hotspur in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13609257/leeds-1-0-tottenham-hotspur-premier-league-highlights",
+      "claimed_at": "2026-11-07T17:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3f56b8b5b07a6a18",
+      "headline": "Late goals as Fulham draw with Newcastle",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Fulham and Newcastle United.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13609384/fulham-1-1-newcastle-premier-league-highlights",
+      "claimed_at": "2026-11-07T17:10:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9cbf85bfc65a866c",
+      "headline": "Odegaard secures victory for Arsenal as champions edge past stubborn Hull",
+      "summary": "Arsenal captain Martin Odegaard's 72nd-minute strike secured an ugly win over Hull and sent the champions six points clear at the top of the Premier League. Newly promoted Hull were expected to be comfortably declawed. Instead",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/odegaard-rescues-arsenal-as-champions-edge-past-stubborn-hull/",
+      "claimed_at": "2026-11-07T17:08:10Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "87d8b8d7d73784f8",
+      "headline": "Goal caps eye-catching Odegaard display - player ratings for Arsenal v Hull",
+      "summary": "How Arsenal and Hull City's players rated following their Premier League match at Emirates Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq62yp4lg831o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-07T17:00:38Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "81c8a520a1e458a3",
+      "headline": "Arsenal go six points clear with Hull win amid VAR drama",
+      "summary": "Martin Odegaard's goal clinched a 1-0 win over Hull to send Arsenal six points clear at the top of the Premier League table.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/arsenal-vs-hull-city/report/559534",
+      "claimed_at": "2026-11-07T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fdab490460781429",
+      "headline": "Fulham deny Newcastle boss Jaissle of pressure-relieving victory",
+      "summary": "Rodrigo Muniz's unorthodox equaliser denied Matthias Jaissle a pressure-relieving victory but his Newcastle side were still much improved in a deserved 1-1 draw at Fulham.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/fulham-vs-newcastle-united/report/559538",
+      "claimed_at": "2026-11-07T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e1430e2eb0f31892",
+      "headline": "Muniz rescues point for Fulham against Newcastle following Murphy\u2019s stunner",
+      "summary": "Rodrigo Muniz rescued a point for Fulham moments after Jacob Murphy had given Newcastle the lead with a stunning strike as both sides shared the points at Craven Cottage. Murphy broke the deadlock in a game which had until t",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/muniz-rescues-point-for-fulham-against-newcastle-following-murphys-stunner/",
+      "claimed_at": "2026-11-07T16:56:44Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c5f4e142ea153336",
+      "headline": "Tottenham set to complain to Pro Ref - but should Bogle have seen red?",
+      "summary": "Tottenham are set to submit a formal complaint about the decision not to send off Jayden Bogle for his challenge on Mathys Tel during the defeat by Leeds.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c39wz9llg255o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-07T16:35:26Z",
+      "players": [
+        {
+          "element_id": 330,
+          "name": "Bogle",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cd2ddc367b5e5481",
+      "headline": "Farke hails Leeds\u2019 second-half performance \u2013 and gives update on Gudmundsson",
+      "summary": "Leeds United boss Daniel Farke believes his side were the only team pushing to win the game in the second half as they secured a 1-0 victory over Tottenham Hotspur at Elland Road. After a relatively even opening 45 minutes,",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/farke-hails-leeds-second-half-performance-and-gives-update-on-gudmundsson/",
+      "claimed_at": "2026-11-07T16:04:42Z",
+      "players": [
+        {
+          "element_id": 331,
+          "name": "Gudmundsson",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 336,
+          "name": "Okafor",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "516478d4b96281a9",
+      "headline": "De Zerbi fears \u2018bad injury\u2019 for Tel \u2013 and insists Spurs\u2019 defeat to Leeds \u2018part of the journey\u2019",
+      "summary": "Tottenham boss Roberto De Zerbi says Mathys Tel may have suffered a \u201cbad injury\u201d during his side\u2019s 1-0 defeat to Leeds United. Tel will undergo further medical checks to determine the extent of the problem",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-fears-bad-injury-for-tel-and-insists-spurs-defeat-to-leeds-part-of-the-journey/",
+      "claimed_at": "2026-11-07T15:54:28Z",
+      "players": [
+        {
+          "element_id": 330,
+          "name": "Bogle",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1fc28b5804e55d16",
+      "headline": "Delap doubles Forest lead vs Man City LIVE! & highlights",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/nottingham-forest-vs-manchester-city/live/559542",
+      "claimed_at": "2026-11-07T15:49:00Z",
+      "players": [
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4583fee438ed0dac",
+      "headline": "Leeds latest: Farke says 'butterfly' Bogle is 'softest player' in PL",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-07T15:24:00Z",
+      "players": [
+        {
+          "element_id": 330,
+          "name": "Bogle",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "47999f241acf2269",
+      "headline": "Arsenal v Hull + Fulham v Newcastle team news: Konsa starts",
+      "summary": "Mikel Arteta explain William Saliba's absence ahead of kick-off The post Arsenal v Hull + Fulham v Newcastle team news: Konsa starts appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/07/arsenal-v-hull-fulham-v-newcastle-team-news-konsa-starts",
+      "claimed_at": "2026-11-07T14:40:00Z",
+      "players": [
+        {
+          "element_id": 6,
+          "name": "Saliba",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "baed86d2b9c9ac01",
+      "headline": "Leeds deservedly beat Spurs after Bogle escapes red card",
+      "summary": "Substitute Noah Okafor's late winner gave Leeds a 1-0 home victory over Tottenham after Whites defender Jayden Bogle controversially escaped a first-half red card.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/leeds-united-vs-tottenham-hotspur/report/559540",
+      "claimed_at": "2026-11-07T14:30:00Z",
+      "players": [
+        {
+          "element_id": 330,
+          "name": "Bogle",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 336,
+          "name": "Okafor",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "92229e446aded756",
       "headline": "My dream is to win Ballon d'Or - Gabriel",
       "summary": "Manchester United forward JJ Gabriel says his \"dream is to win the Ballon d'Or\", as he closes in on a move to Real Madrid.",
@@ -267,6 +651,24 @@
       "tier": 2,
       "url": "https://hayters.com/newcastle-must-adapt-before-jaissles-problems-deepen/",
       "claimed_at": "2026-11-07T10:52:09Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "307b34d3b3caac6d",
+      "headline": "Leeds 1-0 Tottenham LIVE \u2013 Leeds end Spurs\u2019 winning run",
+      "summary": "{rsn-live-v2} The post Leeds 1-0 Tottenham LIVE - Leeds end Spurs' winning run appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/leeds-vs-tottenham-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-11-07T10:45:00Z",
       "players": [
         {
           "element_id": 0,
@@ -656,24 +1058,6 @@
       "touches_squad": false
     },
     {
-      "digest": "edd0c33db7ae108f",
-      "headline": "Everton latest: Dewsbury-Hall 'sad' over England snub",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279303/everton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-11-06T17:00:00Z",
-      "players": [
-        {
-          "element_id": 236,
-          "name": "Dewsbury-Hall",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "b595a64744796906",
       "headline": "Alonso on Cole Palmer\u2019s omission from England squad",
       "summary": "Chelsea manager Xabi Alonso has reacted after Cole Palmer was omitted from Thomas Tuchel\u2019s latest England squad. The squad for November\u2019s international break included first-time call-ups for youngsters Jobe Bellingham and Fulham\u2019s Josh King, but th",
@@ -681,24 +1065,6 @@
       "tier": 2,
       "url": "https://hayters.com/alonso-on-cole-palmers-omission-from-england-squad/",
       "claimed_at": "2026-11-06T15:48:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "765bb875c1ced9f7",
-      "headline": "Carrick: 'Not impossible' Man Utd can achieve Ferguson success again",
-      "summary": "Michael Carrick believes Manchester United can reach the heights achieved under Sir Alex Ferguson but is not expecting the same level of patience.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13608887/michael-carrick-manchester-united-boss-says-its-possible-the-club-can-emulate-sir-alex-fergusons-success-at-old-trafford",
-      "claimed_at": "2026-11-06T15:40:00Z",
       "players": [
         {
           "element_id": 0,
@@ -722,60 +1088,6 @@
           "element_id": 200,
           "name": "Lacroix",
           "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "796a9314645b79fd",
-      "headline": "Spurs latest: De Zerbi - 'It's great our CEO wants us to win the league'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-06T15:02:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c49a06404e29fa36",
-      "headline": "Spurs latest: De Zerbi says teenager Williams-Barnett ready to start",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-06T15:02:00Z",
-      "players": [
-        {
-          "element_id": 601,
-          "name": "Williams-Barnett",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0b07ea5910ee3eaa",
-      "headline": "Iraola: We must sacrifice control for creativity to fix scoring woes",
-      "summary": "Liverpool must sacrifice control in games in order to fix their creativity problems, Andoni Iraola has demanded ahead of their weekend trip to Crystal Palace, live on Sky Sports.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13608882/liverpool-andoni-iraola-demands-creativity-over-control-to-solve-premier-league-scoring-problems",
-      "claimed_at": "2026-11-06T15:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -812,24 +1124,6 @@
           "element_id": 230,
           "name": "Branthwaite",
           "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "29308973497bfa1d",
-      "headline": "Sunderland latest: Le Bris admits Black Cats have gone 'soft'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-06T14:43:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -962,42 +1256,6 @@
       "touches_squad": false
     },
     {
-      "digest": "96accdb3fa3aa965",
-      "headline": "Newcastle latest: Bow and arrows seized after Dedic stopped by police",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-06T14:27:00Z",
-      "players": [
-        {
-          "element_id": 593,
-          "name": "Dedi\u0107",
-          "club": "NEW",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "dc7105e5945cf0e6",
-      "headline": "Aston Villa latest: Emery confirms further contract talks to be held next week",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-06T14:25:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "1276a49b5fbe2676",
       "headline": "Iraola not ruling out Liverpool midfielder\u2019s return against Crystal Palace",
       "summary": "Andoni Iraola has not ruled out the possibility of Ryan Gravenberch returning to the squad when Liverpool travel to Selhurst Park to face Crystal Palace. The midfielder was not involved in the midweek defeat by Fenerbahce, wh",
@@ -1016,24 +1274,6 @@
           "element_id": 375,
           "name": "Nyoni",
           "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6b5f1534899091c5",
-      "headline": "Palace latest: Tuchel not surprised to see No 2 Barry linked with Eagles",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-11-06T14:17:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1082,24 +1322,6 @@
           "element_id": 578,
           "name": "Mudryk",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "db80eb35ea3b58d8",
-      "headline": "Chelsea latest: Alonso reacts to Palmer's England snub",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-06T14:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1394,114 +1616,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d441fe6181fe63e9",
-      "headline": "Deschamps not interested in Man Utd job - Friday's gossip",
-      "summary": "Didier Deschamps is not interested in becoming Manchester United's manager, Arsenal are interested in Club Brugge striker Nicolo Tresoldi, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c9rky3g7e8zro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-05T22:49:23Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fb206bcfe42a6b3e",
-      "headline": "Forest need balance between Woodstock and military - Glasner",
-      "summary": "Oliver Glasner insists his Nottingham Forest side cannot survive on \"flower power\" as he tries to strike a balance between trust and respect at the club.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwg5jj6nvmnyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-05T22:30:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7383e5fecb592024",
-      "headline": "Sunderland beaten at home by Dinamo Zagreb",
-      "summary": "Sunderland were beaten for the first time in the Europa League this season as Dinamo Zagreb outplayed their Premier League opponents on Wearside. The Black Cats were poor in the first half, and even a more spirited second period could not prevent them from",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/sunderland-beaten-at-home-by-dinamo-zagreb/",
-      "claimed_at": "2026-11-05T22:09:39Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d586b548480ee326",
-      "headline": "Rose delighted with super subs in Bournemouth\u2019s comeback as they make it seven wins in a row",
-      "summary": "Marco Rose highlighted the quality he had on the bench after Bournemouth came from a goal down to run out 1-3 victors over Sparta Prague. The Cherries maintained a perfect start to their debut European campa",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/rose-delighted-with-super-subs-in-bournemouths-comeback-as-they-make-it-seven-wins-in-a-row/",
-      "claimed_at": "2026-11-05T21:58:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c6b9bbac07f75f33",
-      "headline": "Crystal Palace boss Sage expects Disasi to be available for weekend after missing Hoffenheim draw due to \u2018internal decision\u2019",
-      "summary": "Crystal Palace boss Pierre Sage says Axel Disasi\u2019s absence from the squad against Hoffenheim was an \u201cinternal decision\u201d but expects the defender to be available this weekend a",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/crystal-palace-boss-sage-expects-disasi-to-be-available-for-weekend-after-missing-hoffenheim-draw-due-to-internal-decision/",
-      "claimed_at": "2026-11-05T21:54:00Z",
-      "players": [
-        {
-          "element_id": 153,
-          "name": "Disasi",
-          "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a534a2a5d5bca249",
-      "headline": "Good to feel club are committed to me - Jaissle",
-      "summary": "Newcastle United manager Matthias Jaissle says he has \"got more of a feeling from within the club\" about how \"committed\" they are to him amid his side's struggling form.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c8y56z50k95xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-05T17:25:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "87847699d67aee81",
       "headline": "FPL notes: 90 mins for Cherki + Szoboszlai, Isak rest and goal",
       "summary": "Takeaways from the Champions League trips for Man City and Liverpool The post FPL notes: 90 mins for Cherki + Szoboszlai, Isak rest and goal appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football",
@@ -1526,78 +1640,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6fbe8385eb2989dd",
-      "headline": "\u2018This is not a Playstation game\u2019 \u2013 Jaissle on his Newcastle side\u2019s struggles",
-      "summary": "Matthias Jaissle has urged his Newcastle players to take greater responsibility for their decision-making on the pitch, insisting they cannot be coached through every moment of a game. The Newcastle United head coach made c",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/this-is-not-a-playstation-game-jaissle-on-his-newcastle-sides-struggles/",
-      "claimed_at": "2026-11-05T16:14:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "eff7019d3f1c7d49",
-      "headline": "Emery close to agreeing new Aston Villa contract",
-      "summary": "Aston Villa manager Unai Emery is close to agreeing a contract extension at the club.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cw99zde82nmno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-05T15:45:22Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6641899fb158677c",
-      "headline": "Newcastle United star set for another spell out",
-      "summary": "Newcastle United boss Matthias Jaissle says Joelinton is facing another spell on the sidelines after suffering a fresh injury setback. The Brazilian midfielder has picked up another problem and Newcastle are now working to determine the extent of the i",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/newcastle-united-star-set-for-another-spell-out/",
-      "claimed_at": "2026-11-05T15:42:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a26d2e1f2da076e8",
-      "headline": "Nottingham Forest star set for two months out \u2013 but striker back in contention",
-      "summary": "Nottingham Forest boss Oliver Glasner has revealed Nicolas Dominguez is facing up to eight weeks on the sidelines after suffering a setback in his recovery from injury. Dominguez had returned to training but has now suffe",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/nottingham-forest-star-set-for-two-months-out-but-striker-back-in-contention/",
-      "claimed_at": "2026-11-05T15:36:32Z",
-      "players": [
-        {
-          "element_id": 487,
-          "name": "Dominguez",
-          "club": "NFO",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "dc0950ab9ff110f7",
       "headline": "Junior Kroupi: When will he start + whose spot will he take?",
       "summary": "The young Bournemouth attacker is back from injury - and on FPL radars The post Junior Kroupi: When will he start + whose spot will he take? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Sc",
@@ -1610,24 +1652,6 @@
           "element_id": 78,
           "name": "Kroupi.Jr",
           "club": "BOU",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a7709ed157b14cce",
-      "headline": "Maresca backs goalkeeper Donnarumma after Leipzig error",
-      "summary": "Manchester City boss Enzo Maresca admitted Gianluigi Donnarumma made a mistake in their 3-2 Champions League victory over RB Leipzig but defended the goalkeeper following his error. City secured all three points in Germany despite twice concedi",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/maresca-backs-goalkeeper-donnarumma-after-leipzig-error/",
-      "claimed_at": "2026-11-05T11:04:50Z",
-      "players": [
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
           "held": false
         }
       ],
