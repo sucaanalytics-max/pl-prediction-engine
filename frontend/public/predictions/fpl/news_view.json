@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-07T21:51:22.619431Z",
-  "n_dropped": 153,
+  "generated_at": "2026-11-08T01:07:24.978045Z",
+  "n_dropped": 155,
   "dropped_by_source": {
-    "bbc_football": 40,
+    "bbc_football": 42,
     "hayters": 31,
     "sky_football": 82
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 243,
+  "n_articles": 245,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -200,46 +200,124 @@
       "touches_squad": true
     },
     {
-      "digest": "27811e88ed3d6d91",
-      "headline": "Jaissle unhappy with 'clear foul' before Barry goal",
-      "summary": "Newcastle United head coach Matthias Jaissle takes issue with referee John Brooks' decision not to call a \"clear foul\" on Fabian Schar in the build-up to Thierno Barry's goal in their loss to Everton in the Premier League.",
+      "digest": "ae79382f372ae6d2",
+      "headline": "Was Leeds' Bogle lucky to escape red card?",
+      "summary": "Match of the Day's Steph Houghton and Danny Murphy assess whether a challenge from Leeds United's Jayden Bogle on Tottenham's Mathys Tel was worthy of a red card.",
       "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c680zn5y19lgo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T23:01:13Z",
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6lyl7qvq8ejo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-08T00:00:26Z",
       "players": [
         {
-          "element_id": 249,
-          "name": "Barry",
-          "club": "EVE",
-          "held": true
-        },
-        {
-          "element_id": 446,
-          "name": "Sch\u00e4r",
-          "club": "NEW",
+          "element_id": 330,
+          "name": "Bogle",
+          "club": "LEE",
           "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
-      "digest": "6dbd0d5304895d07",
-      "headline": "Everton hold off Newcastle to move into seventh",
-      "summary": "Thierno Barry scores against Newcastle United for the second time in five days as his Everton side earn a narrow win at St James' Park in the Premier League.",
+      "digest": "6beedd5108a81889",
+      "headline": "Forest win over Man City 'a turning point' - Murphy",
+      "summary": "Match of the Day's Danny Murphy breaks down Nottingham Forest's impressive 3-1 win over Manchester City, a victory that he believes could be \"a turning point\" in Forest's first season under Oliver Glasner.",
       "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cq5ynd70vlx3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-02T22:44:30Z",
+      "url": "https://www.bbc.co.uk/sport/football/videos/c893zr4rlzp1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-08T00:00:14Z",
       "players": [
         {
-          "element_id": 249,
-          "name": "Barry",
-          "club": "EVE",
-          "held": true
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
+    },
+    {
+      "digest": "708528cd2eeda7c8",
+      "headline": "Arsenal should have been awarded penalty against Hull - Cann",
+      "summary": "Former Premier League assistant referee Darren Cann explains why Arsenal should have been awarded a penalty for a foul on Kai Havertz in the Premier League champions' 1-0 win over Hull City.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cr4g1n21vgp3o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-08T00:00:09Z",
+      "players": [
+        {
+          "element_id": 26,
+          "name": "Havertz",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "42cd027584575380",
+      "headline": "'Bruno's as good as ever' - Carrick backs Man Utd captain",
+      "summary": "Manchester United head coach Michael Carrick says captain Bruno Fernandes' commitment to the club is \"undoubted\" and the midfielder is \"as good as ever\".",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckj0l542v7pvo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-07T22:44:20Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "586310e1108bc770",
+      "headline": "Liverpool considering Verbruggen move - Sunday's gossip",
+      "summary": "Liverpool consider move for Brighton keeper Bart Verbruggen, Bayern Munich remain in talks with Rio Ngumoha's camp, Tottenham midfielder Conor Gallagher monitored by rival Premier League clubs, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c54g1nepgr28o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-07T22:05:40Z",
+      "players": [
+        {
+          "element_id": 109,
+          "name": "Verbruggen",
+          "club": "BHA",
+          "held": false
+        },
+        {
+          "element_id": 369,
+          "name": "Ngumoha",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 519,
+          "name": "Gallagher",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f3995dc6eb37d2d4",
+      "headline": "Glasner glee and Delap double - win could be lift-off for Forest",
+      "summary": "Oliver Glasner's celebrations and two goals for Liam Delap bode well for a Nottingham Forest team looking to kick on after their first home Premier League win of the season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvy0red8yl69o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-07T21:42:59Z",
+      "players": [
+        {
+          "element_id": 167,
+          "name": "Delap",
+          "club": "NFO",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "ceae4a241d5989c5",
@@ -260,6 +338,24 @@
           "element_id": 391,
           "name": "Gvardiol",
           "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "42807c7054b72391",
+      "headline": "'A different Noni?' Madueke finding a new level for Arsenal",
+      "summary": "Noni Madueke lay sprawled on the turf, head in his hands, following his one-on-one miss late in Arsenal's 1-0 victory over Hull. His frustration continued to show even after the final whistle.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13609559/noni-madueke-has-become-a-different-player-says-mikel-arteta-as-winger-finds-new-level-of-creativity-and-efficiency",
+      "claimed_at": "2026-11-07T20:55:00Z",
+      "players": [
+        {
+          "element_id": 16,
+          "name": "Madueke",
+          "club": "ARS",
           "held": false
         }
       ],
@@ -1040,24 +1136,6 @@
       "touches_squad": false
     },
     {
-      "digest": "be87e8766cb3fe1e",
-      "headline": "Bogle escapes red as Leeds host Tottenham LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/leeds-united-vs-tottenham-hotspur/live/559540",
-      "claimed_at": "2026-11-07T10:55:00Z",
-      "players": [
-        {
-          "element_id": 330,
-          "name": "Bogle",
-          "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "2dee2a1b17d8c81d",
       "headline": "Newcastle must adapt before Jaissle\u2019s problems deepen",
       "summary": "On a warm summer\u2019s evening at Murrayfield, Newcastle United were given an early warning of the problems that would follow. Newcastle had just been shown up physically and tactically by Everton in pre-season. The discussion afterwards revolved aro",
@@ -1160,78 +1238,6 @@
           "element_id": 385,
           "name": "Trafford",
           "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fa8f3322340aac70",
-      "headline": "Can we play you every week? The day Southend toppled Man United",
-      "summary": "Southend United's heroes remember their famous victory against Manchester United 20 years on.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/news/articles/cwm266zkz8ggo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-07T06:22:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "db10073ce788bfb1",
-      "headline": "England 'disappointment' fuels Dewsbury-Hall's Everton heroics",
-      "summary": "Kiernan Dewsbury-Hall responds to his England omission by scoring a stunning goal to inspire Everton's 3-1 comeback victory over Coventry City.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm4g114p9e7go?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-06T23:53:06Z",
-      "players": [
-        {
-          "element_id": 236,
-          "name": "Dewsbury-Hall",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4fe6558da5c6e373",
-      "headline": "Lampard feels hair pull should have led to Coventry penalty",
-      "summary": "Coventry had a trio of decisions go against them in defeat at Everton, with Frank Lampard suggesting a hair pull should have been a penalty.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cr15jj0yy8xeo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-06T23:22:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f1c0c73ee27559fb",
-      "headline": "'Big decisions' affected the game - Lampard",
-      "summary": "Coventry City head coach Frank Lampard is frustrated after three \"big decisions\" went against his side in their 3-1 defeat by Everton at the Hill Dickinson Stadium.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cm74ppwz9yewo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-06T22:40:58Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
