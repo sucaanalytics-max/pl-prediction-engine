@@ -38,9 +38,9 @@
     "assessable": false,
     "note": "90 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
   },
-  "last_updated": "2026-11-08T12:23:36.473207Z",
-  "gameweek": 10,
-  "n_predictions": 5,
+  "last_updated": "2026-11-09T14:35:57.449491Z",
+  "gameweek": 11,
+  "n_predictions": 10,
   "status": "healthy",
   "sources": {
     "bootstrap": {
@@ -53,52 +53,52 @@
     }
   },
   "degraded": [],
-  "forecast_validation_status": "collecting",
+  "forecast_validation_status": "evaluated",
   "model_metrics": {
-    "n_evaluated_matches": 90,
-    "brier_1x2_home": 0.2264607018622039,
-    "brier_1x2_draw": 0.20000151362977597,
-    "brier_1x2_away": 0.20462307777238425,
-    "log_loss_home": 0.645035389305213,
-    "rps_mean": 0.2155418898172941,
-    "ece": 0.07833768582437572,
-    "brier_ou25": 0.24783944188245716,
-    "brier_btts": 0.2580805403550806
+    "n_evaluated_matches": 100,
+    "brier_1x2_home": 0.2283309649098504,
+    "brier_1x2_draw": 0.19597231758359734,
+    "brier_1x2_away": 0.19761347133378376,
+    "log_loss_home": 0.6493013296864173,
+    "rps_mean": 0.21297221812181705,
+    "ece": 0.07729618229238196,
+    "brier_ou25": 0.2466051441503851,
+    "brier_btts": 0.25509778595873
   },
   "calibration": {
     "bins": [
       {
         "bin_center": 0.25,
-        "predicted_mean": 0.29037940795230033,
-        "actual_mean": 0.0,
-        "count": 4
+        "predicted_mean": 0.27398211856065974,
+        "actual_mean": 0.14285714285714285,
+        "count": 7
       },
       {
         "bin_center": 0.35000000000000003,
-        "predicted_mean": 0.358058135057068,
-        "actual_mean": 0.3076923076923077,
-        "count": 26
+        "predicted_mean": 0.35612240249395566,
+        "actual_mean": 0.3333333333333333,
+        "count": 27
       },
       {
         "bin_center": 0.45,
-        "predicted_mean": 0.44280516137981923,
-        "actual_mean": 0.391304347826087,
-        "count": 46
+        "predicted_mean": 0.44177373335595915,
+        "actual_mean": 0.3877551020408163,
+        "count": 49
       },
       {
         "bin_center": 0.55,
-        "predicted_mean": 0.5478980648131414,
-        "actual_mean": 0.6923076923076923,
-        "count": 13
+        "predicted_mean": 0.5426513410809085,
+        "actual_mean": 0.7333333333333333,
+        "count": 15
       },
       {
         "bin_center": 0.6500000000000001,
-        "predicted_mean": 0.667,
+        "predicted_mean": 0.6553521431257981,
         "actual_mean": 1.0,
-        "count": 1
+        "count": 2
       }
     ],
-    "ece": 0.07833768582437572
+    "ece": 0.07729618229238196
   },
   "pipeline_version": "4.1.0",
   "models": {
@@ -113,7 +113,7 @@
     },
     "goalscorer": {
       "status": "active",
-      "n_players": 264
+      "n_players": 273
     }
   },
   "ensemble_method": "weighted_average",
@@ -124,8 +124,8 @@
   "referee_profiles_count": 28,
   "fpl": {
     "status": "ok",
-    "gameweek": 10,
-    "n_players": 671,
+    "gameweek": 11,
+    "n_players": 672,
     "n_draws": 5000,
     "rules_source": "bootstrap+signed_yaml",
     "rules_degraded": false,
@@ -134,18 +134,18 @@
     "fixtures_missing": [],
     "diagnostics": {
       "n_clubs": 20,
-      "n_players": 671,
-      "n_without_history": 1,
-      "n_availability_gated": 171,
+      "n_players": 672,
+      "n_without_history": 2,
+      "n_availability_gated": 168,
       "n_with_prior_start_fallback": 365,
       "archive_rows_fitted": 29747,
       "availability_persistence": {
-        "none": 482,
-        "open_ended": 49,
+        "none": 489,
+        "open_ended": 48,
         "permanent": 106,
-        "dated_eligibility": 5,
+        "dated_eligibility": 3,
         "dated_fitness": 11,
-        "graded": 18
+        "graded": 15
       },
       "n_evidence_conflicts": 0,
       "current_season": {
@@ -182,10 +182,10 @@
       "n_fixtures": 10,
       "n_fixtures_skipped": 0,
       "skipped_fixtures": [],
-      "n_players": 671,
+      "n_players": 672,
       "n_double_gameweek_players": 0,
       "n_blank_gameweek_players": 0,
-      "seed_entropy": 1108638600,
+      "seed_entropy": 3307647685,
       "dgw_rotation_correlation_modelled": false
     }
   }
