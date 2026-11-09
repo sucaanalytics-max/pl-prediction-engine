@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "producer_version": 1,
-  "generated_at": "2026-11-03T16:35:18.825463+00:00",
+  "generated_at": "2026-11-09T17:49:34.798212+00:00",
   "season": "2627",
-  "observations": 8,
+  "observations": 9,
   "minimum_observations": 6,
   "aggregate": {
-    "gameweeks": 8,
-    "points_forgone_on_bench": 51,
-    "foreseeable_bench_errors": 6,
-    "captain_agreement_rate": 0.5,
+    "gameweeks": 9,
+    "points_forgone_on_bench": 53,
+    "foreseeable_bench_errors": 7,
+    "captain_agreement_rate": 0.5556,
     "captain_points_vs_engine": -16
   },
   "aggregate_reason": null,
@@ -647,6 +647,85 @@
       "captain": {
         "chosen": 411,
         "sealed_best": 411,
+        "agreed": true,
+        "points_delta": 0
+      }
+    },
+    {
+      "gameweek": 10,
+      "sealed_at": "2026-11-06T14:35:36.373510+00:00",
+      "seconds_before_deadline": 14063.62649,
+      "sealed_universe": 511,
+      "points": 82,
+      "fpl_points_on_bench": 8,
+      "transfers": 0,
+      "hit_cost": 0,
+      "submitted_eleven": [
+        1,
+        4,
+        40,
+        53,
+        124,
+        166,
+        249,
+        411,
+        427,
+        504,
+        566
+      ],
+      "submitted_bench": [
+        496,
+        237,
+        112,
+        173
+      ],
+      "selection": {
+        "worst_starter": 53,
+        "best_bench": 237,
+        "bench_rated_higher": [
+          237,
+          112
+        ],
+        "gap": 0.6301,
+        "misordered": true
+      },
+      "bench": [
+        {
+          "bench_element": 496,
+          "starter_element": null,
+          "kind": "correct",
+          "points_forgone": 0,
+          "verdict": null,
+          "is_lesson": false
+        },
+        {
+          "bench_element": 237,
+          "starter_element": null,
+          "kind": "correct",
+          "points_forgone": 0,
+          "verdict": null,
+          "is_lesson": false
+        },
+        {
+          "bench_element": 112,
+          "starter_element": 53,
+          "kind": "cost",
+          "points_forgone": 2,
+          "verdict": "foreseeable",
+          "is_lesson": true
+        },
+        {
+          "bench_element": 173,
+          "starter_element": null,
+          "kind": "no_claim",
+          "points_forgone": 0,
+          "verdict": null,
+          "is_lesson": false
+        }
+      ],
+      "captain": {
+        "chosen": 4,
+        "sealed_best": 4,
         "agreed": true,
         "points_delta": 0
       }

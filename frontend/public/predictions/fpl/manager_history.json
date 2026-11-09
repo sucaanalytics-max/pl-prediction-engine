@@ -1,9 +1,10 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-03T16:35:20.847449+00:00",
+  "generated_at": "2026-11-09T17:49:37.037735+00:00",
   "entry_id": 20945,
-  "settled_through": 9,
+  "settled_through": 10,
   "names": {
+    "4": "Gabriel",
     "12": "Saka",
     "13": "Rice",
     "53": "Manzambi",
@@ -1085,6 +1086,119 @@
           "minutes": 90
         }
       ]
+    },
+    {
+      "event": 10,
+      "points": 82,
+      "gross_points": 82,
+      "transfer_cost": 0,
+      "transfers_made": 0,
+      "bench_points": 8,
+      "average_entry_score": 55,
+      "highest_score": 139,
+      "rank": 209239,
+      "overall_rank": 2962217,
+      "value": 1009,
+      "bank": 3,
+      "chip": null,
+      "captain": {
+        "element": 4,
+        "multiplier": 2,
+        "points": 8
+      },
+      "auto_subs": [],
+      "picks": [
+        {
+          "element": 1,
+          "multiplier": 1,
+          "points": 6,
+          "minutes": 90
+        },
+        {
+          "element": 504,
+          "multiplier": 1,
+          "points": 12,
+          "minutes": 90
+        },
+        {
+          "element": 4,
+          "multiplier": 2,
+          "points": 8,
+          "minutes": 90
+        },
+        {
+          "element": 566,
+          "multiplier": 1,
+          "points": 3,
+          "minutes": 90
+        },
+        {
+          "element": 40,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 427,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 82
+        },
+        {
+          "element": 124,
+          "multiplier": 1,
+          "points": 10,
+          "minutes": 90
+        },
+        {
+          "element": 53,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 77
+        },
+        {
+          "element": 411,
+          "multiplier": 1,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 166,
+          "multiplier": 1,
+          "points": 11,
+          "minutes": 85
+        },
+        {
+          "element": 249,
+          "multiplier": 1,
+          "points": 16,
+          "minutes": 90
+        },
+        {
+          "element": 496,
+          "multiplier": 0,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 237,
+          "multiplier": 0,
+          "points": 2,
+          "minutes": 90
+        },
+        {
+          "element": 112,
+          "multiplier": 0,
+          "points": 4,
+          "minutes": 90
+        },
+        {
+          "element": 173,
+          "multiplier": 0,
+          "points": 0,
+          "minutes": 0
+        }
+      ]
     }
   ],
   "transfers": [
@@ -1102,7 +1216,8 @@
         "6": 0,
         "7": 1,
         "8": 1,
-        "9": 0
+        "9": 0,
+        "10": 2
       },
       "out_points_by_gw": {
         "3": 2,
@@ -1111,7 +1226,8 @@
         "6": 2,
         "7": 4,
         "8": 0,
-        "9": 0
+        "9": 0,
+        "10": 0
       },
       "in_multiplier_by_gw": {
         "3": 1,
@@ -1120,7 +1236,8 @@
         "6": 0,
         "7": 0,
         "8": 1,
-        "9": null
+        "9": null,
+        "10": null
       }
     },
     {
@@ -1136,7 +1253,8 @@
         "6": 8,
         "7": 2,
         "8": -1,
-        "9": 8
+        "9": 8,
+        "10": 2
       },
       "out_points_by_gw": {
         "4": 2,
@@ -1144,7 +1262,8 @@
         "6": 8,
         "7": 8,
         "8": 2,
-        "9": 1
+        "9": 1,
+        "10": 2
       },
       "in_multiplier_by_gw": {
         "4": 1,
@@ -1152,7 +1271,8 @@
         "6": 1,
         "7": 1,
         "8": 2,
-        "9": null
+        "9": null,
+        "10": null
       }
     },
     {
@@ -1168,7 +1288,8 @@
         "6": 2,
         "7": 1,
         "8": 1,
-        "9": 1
+        "9": 1,
+        "10": 2
       },
       "out_points_by_gw": {
         "4": 1,
@@ -1176,7 +1297,8 @@
         "6": 4,
         "7": 4,
         "8": 5,
-        "9": 9
+        "9": 9,
+        "10": -2
       },
       "in_multiplier_by_gw": {
         "4": 1,
@@ -1184,7 +1306,8 @@
         "6": 1,
         "7": 1,
         "8": 1,
-        "9": null
+        "9": null,
+        "10": null
       }
     },
     {
@@ -1198,19 +1321,22 @@
         "6": 2,
         "7": 3,
         "8": 0,
-        "9": 0
+        "9": 0,
+        "10": 0
       },
       "out_points_by_gw": {
         "6": 0,
         "7": 1,
         "8": 0,
-        "9": 1
+        "9": 1,
+        "10": 7
       },
       "in_multiplier_by_gw": {
         "6": 2,
         "7": 1,
         "8": null,
-        "9": null
+        "9": null,
+        "10": null
       }
     },
     {
@@ -1224,19 +1350,22 @@
         "6": 2,
         "7": 2,
         "8": 2,
-        "9": 2
+        "9": 2,
+        "10": 2
       },
       "out_points_by_gw": {
         "6": 0,
         "7": 9,
         "8": 9,
-        "9": 2
+        "9": 2,
+        "10": 8
       },
       "in_multiplier_by_gw": {
         "6": 1,
         "7": 1,
         "8": 1,
-        "9": null
+        "9": null,
+        "10": null
       }
     },
     {
@@ -1248,15 +1377,18 @@
       "element_out_cost": 96,
       "in_points_by_gw": {
         "8": 1,
-        "9": 1
+        "9": 1,
+        "10": 1
       },
       "out_points_by_gw": {
         "8": 0,
-        "9": 0
+        "9": 0,
+        "10": 0
       },
       "in_multiplier_by_gw": {
         "8": 1,
-        "9": null
+        "9": null,
+        "10": null
       }
     },
     {
@@ -1267,13 +1399,16 @@
       "element_out": 497,
       "element_out_cost": 40,
       "in_points_by_gw": {
-        "9": 6
+        "9": 6,
+        "10": 2
       },
       "out_points_by_gw": {
-        "9": 0
+        "9": 0,
+        "10": 0
       },
       "in_multiplier_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 0
       }
     },
     {
@@ -1284,13 +1419,16 @@
       "element_out": 113,
       "element_out_cost": 44,
       "in_points_by_gw": {
-        "9": 15
+        "9": 15,
+        "10": 4
       },
       "out_points_by_gw": {
-        "9": 0
+        "9": 0,
+        "10": 0
       },
       "in_multiplier_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 0
       }
     },
     {
@@ -1301,13 +1439,16 @@
       "element_out": 152,
       "element_out_cost": 53,
       "in_points_by_gw": {
-        "9": 8
+        "9": 8,
+        "10": 3
       },
       "out_points_by_gw": {
-        "9": 6
+        "9": 6,
+        "10": 2
       },
       "in_multiplier_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 1
       }
     },
     {
@@ -1318,13 +1459,16 @@
       "element_out": 445,
       "element_out_cost": 50,
       "in_points_by_gw": {
-        "9": 6
+        "9": 6,
+        "10": 12
       },
       "out_points_by_gw": {
-        "9": 0
+        "9": 0,
+        "10": 2
       },
       "in_multiplier_by_gw": {
-        "9": 0
+        "9": 0,
+        "10": 1
       }
     },
     {
@@ -1335,13 +1479,16 @@
       "element_out": 154,
       "element_out_cost": 97,
       "in_points_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 2
       },
       "out_points_by_gw": {
-        "9": 8
+        "9": 8,
+        "10": 2
       },
       "in_multiplier_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 1
       }
     },
     {
@@ -1352,13 +1499,16 @@
       "element_out": 398,
       "element_out_cost": 68,
       "in_points_by_gw": {
-        "9": 8
+        "9": 8,
+        "10": 3
       },
       "out_points_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 1
       },
       "in_multiplier_by_gw": {
-        "9": null
+        "9": null,
+        "10": null
       }
     },
     {
@@ -1369,13 +1519,16 @@
       "element_out": 426,
       "element_out_cost": 117,
       "in_points_by_gw": {
-        "9": 7
+        "9": 7,
+        "10": 2
       },
       "out_points_by_gw": {
-        "9": 2
+        "9": 2,
+        "10": 10
       },
       "in_multiplier_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 1
       }
     },
     {
@@ -1386,13 +1539,16 @@
       "element_out": 464,
       "element_out_cost": 61,
       "in_points_by_gw": {
-        "9": 2
+        "9": 2,
+        "10": 2
       },
       "out_points_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 2
       },
       "in_multiplier_by_gw": {
-        "9": 2
+        "9": 2,
+        "10": 1
       }
     },
     {
@@ -1403,13 +1559,16 @@
       "element_out": 569,
       "element_out_cost": 60,
       "in_points_by_gw": {
-        "9": 9
+        "9": 9,
+        "10": 16
       },
       "out_points_by_gw": {
-        "9": 2
+        "9": 2,
+        "10": 2
       },
       "in_multiplier_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 1
       }
     },
     {
@@ -1420,13 +1579,16 @@
       "element_out": 165,
       "element_out_cost": 77,
       "in_points_by_gw": {
-        "9": 9
+        "9": 9,
+        "10": 11
       },
       "out_points_by_gw": {
-        "9": 0
+        "9": 0,
+        "10": 0
       },
       "in_multiplier_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 1
       }
     },
     {
@@ -1437,13 +1599,16 @@
       "element_out": 13,
       "element_out_cost": 74,
       "in_points_by_gw": {
-        "9": 9
+        "9": 9,
+        "10": 2
       },
       "out_points_by_gw": {
-        "9": 8
+        "9": 8,
+        "10": 3
       },
       "in_multiplier_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 1
       }
     },
     {
@@ -1454,13 +1619,16 @@
       "element_out": 542,
       "element_out_cost": 57,
       "in_points_by_gw": {
-        "9": 2
+        "9": 2,
+        "10": 2
       },
       "out_points_by_gw": {
-        "9": 8
+        "9": 8,
+        "10": 11
       },
       "in_multiplier_by_gw": {
-        "9": 1
+        "9": 1,
+        "10": 0
       }
     }
   ]
