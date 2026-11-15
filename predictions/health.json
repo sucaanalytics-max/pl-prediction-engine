@@ -1,7 +1,7 @@
 {
-  "validated_at": "2026-11-08T16:35:33.616654+00:00",
+  "validated_at": "2026-11-15T16:57:57.772176+00:00",
   "artifact_contract": "valid",
-  "prediction_age_hours": 4.199179595555556,
+  "prediction_age_hours": 3.861142081944444,
   "ledger_integrity": {
     "gw01": "verified",
     "gw03": "verified",
@@ -15,7 +15,7 @@
   },
   "ledger_integrity_ok": true,
   "missing_seals": {
-    "expected_through": 9,
+    "expected_through": 10,
     "sealed": [
       1,
       3,
@@ -33,12 +33,27 @@
     "note": "A gameweek below the current one with no sealed forecast is permanently unscoreable. A seal is only meaningful if it provably predated the deadline, so this is never repaired by writing one now."
   },
   "eval_targets": {
-    "n_evaluated_matches": 90,
+    "n_evaluated_matches": 100,
     "backtest_min_matches": 100,
-    "assessable": false,
-    "note": "90 matches evaluated, below the 100 the targets are stated for \u2014 the metrics are reported but not judged"
+    "assessable": true,
+    "brier": {
+      "actual": 0.228331,
+      "target": 0.22,
+      "meets_target": false
+    },
+    "log_loss": {
+      "actual": 0.649301,
+      "target": 1.0,
+      "meets_target": true
+    },
+    "calibration_error": {
+      "actual": 0.077296,
+      "target": 0.05,
+      "meets_target": false
+    },
+    "all_targets_met": false
   },
-  "last_updated": "2026-11-15T13:06:23.438987Z",
+  "last_updated": "2026-11-15T13:06:17.495875Z",
   "gameweek": 11,
   "n_predictions": 10,
   "status": "healthy",
