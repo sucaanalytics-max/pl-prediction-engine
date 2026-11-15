@@ -1,8 +1,104 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-14T20:01:17.616589Z",
+  "generated_at": "2026-11-15T04:31:45.061160Z",
   "gameweek": 11,
   "players": [
+    {
+      "element_id": 415,
+      "player_name": "Dorgu",
+      "club": "Man Utd",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 2,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f2ecde0aa9518d9b",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-14T10:00:05.646862Z",
+              "observed_at": "2026-11-14T20:01:57.071114Z",
+              "quote": "Hamstring injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "201dad2f11e62a1b",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-14T10:00:05.646862Z",
+              "observed_at": "2026-11-14T20:01:57.071114Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "62799f1831e8e7a2",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-09-27T21:30:07.831640Z",
+              "observed_at": "2026-11-13T21:39:24.980251Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "fresher_claim_beats_stale",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "f6ddb1a3fb7675d6",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-14T10:00:05.646862Z",
+              "observed_at": "2026-11-14T20:01:57.071114Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "ab441596be8f618d",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-09-27T21:30:07.831640Z",
+              "observed_at": "2026-11-13T21:39:24.980251Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "fresher_claim_beats_stale"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
+    },
     {
       "element_id": 611,
       "player_name": "Wan-Bissaka",
@@ -73,63 +169,6 @@
         }
       ],
       "total_conflicts": 3,
-      "needs_attention": false
-    },
-    {
-      "element_id": 415,
-      "player_name": "Dorgu",
-      "club": "Man Utd",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 75,
-          "rule": "live_bootstrap_authority",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "62799f1831e8e7a2",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 100,
-              "claimed_at": "2026-09-27T21:30:07.831640Z",
-              "observed_at": "2026-11-13T21:39:24.980251Z",
-              "quote": null,
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "live_bootstrap_authority"
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "live_bootstrap_authority",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "ab441596be8f618d",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "a",
-              "claimed_at": "2026-09-27T21:30:07.831640Z",
-              "observed_at": "2026-11-13T21:39:24.980251Z",
-              "quote": null,
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "live_bootstrap_authority"
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 2,
       "needs_attention": false
     },
     {
@@ -973,6 +1012,146 @@
       "needs_attention": false
     },
     {
+      "element_id": 614,
+      "player_name": "Hadjam",
+      "club": "Brighton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8d7211e8525fa9cf",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-14T15:00:05.225678Z",
+              "observed_at": "2026-11-14T20:01:57.071114Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "8c52d2dbd451ccc0",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-14T15:00:05.225678Z",
+              "observed_at": "2026-11-14T20:01:57.071114Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "9de0c382797cf99d",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-14T15:00:05.225678Z",
+              "observed_at": "2026-11-14T20:01:57.071114Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 639,
+      "player_name": "Andr\u00e9s",
+      "club": "Brighton",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "89f19b822e07eb0e",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-14T15:00:05.235535Z",
+              "observed_at": "2026-11-14T20:01:57.071114Z",
+              "quote": "Hip injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "6952bc02974320e7",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-14T15:00:05.235535Z",
+              "observed_at": "2026-11-14T20:01:57.071114Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "651cc3bd3807449f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-14T15:00:05.235535Z",
+              "observed_at": "2026-11-14T20:01:57.071114Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
       "element_id": 106,
       "player_name": "Thiago",
       "club": "Brentford",
@@ -1121,10 +1300,10 @@
     }
   ],
   "counts": {
-    "n_claims": 218,
-    "n_players_with_claims": 64,
-    "n_players_shown": 17,
+    "n_claims": 230,
+    "n_players_with_claims": 66,
+    "n_players_shown": 19,
     "n_escalations": 3,
-    "n_players_resolved": 38
+    "n_players_resolved": 40
   }
 }
