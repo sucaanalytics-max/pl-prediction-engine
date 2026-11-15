@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-11-14T12:40:30.464344Z",
+    "generated_at": "2026-11-15T13:06:17.495875Z",
     "season": "2026-27",
     "gameweek": 11,
     "pipeline_version": "4.1.0",
@@ -19,9 +19,9 @@
     "n_simulations_requested": 5000,
     "portfolio": {
       "total_exposure_pct": 0.1,
-      "n_bets_before_limits": 9,
+      "n_bets_before_limits": 8,
       "n_bets_after_limits": 4,
-      "n_reduced_by_limits": 3,
+      "n_reduced_by_limits": 2,
       "n_held_by_guards": 2,
       "limits": {
         "max_per_match_pct": 0.15,
@@ -325,7 +325,7 @@
             "position": "DEF",
             "side": "away",
             "base_prob": 0.2591817793182821,
-            "adjusted_prob": 0.38931190035185065,
+            "adjusted_prob": 0.3893119003518506,
             "yellows_per_90": 0.3,
             "yellow_cards": 3,
             "minutes": 900,
@@ -780,8 +780,8 @@
       "odds_comparison": {
         "h2h": {
           "livescorebet": {
-            "away": 6.25,
-            "home": 1.41,
+            "away": 6.5,
+            "home": 1.4,
             "draw": 4.7
           },
           "betfred_uk": {
@@ -790,13 +790,13 @@
             "draw": 5.0
           },
           "smarkets": {
-            "away": 7.0,
-            "home": 1.43,
-            "draw": 5.2
+            "away": 7.4,
+            "home": 1.42,
+            "draw": 5.3
           },
           "virginbet": {
-            "away": 6.25,
-            "home": 1.41,
+            "away": 6.5,
+            "home": 1.4,
             "draw": 4.7
           },
           "williamhill": {
@@ -816,12 +816,12 @@
           },
           "leovegas": {
             "away": 6.75,
-            "home": 1.36,
+            "home": 1.35,
             "draw": 5.2
           },
           "grosvenor": {
-            "away": 6.4,
-            "home": 1.43,
+            "away": 6.75,
+            "home": 1.41,
             "draw": 4.8
           },
           "boylesports": {
@@ -850,9 +850,9 @@
             "draw": 5.0
           },
           "betfair_ex_uk": {
-            "away": 7.2,
-            "home": 1.45,
-            "draw": 5.3
+            "away": 7.6,
+            "home": 1.44,
+            "draw": 5.4
           },
           "coral": {
             "away": 7.0,
@@ -865,9 +865,9 @@
             "draw": 5.0
           },
           "betvictor": {
-            "away": 5.75,
+            "away": 6.0,
             "home": 1.33,
-            "draw": 4.8
+            "draw": 5.0
           },
           "casumo": {
             "away": 6.5,
@@ -875,9 +875,14 @@
             "draw": 4.75
           },
           "betano_uk": {
-            "away": 5.75,
+            "away": 6.0,
             "home": 1.33,
             "draw": 5.0
+          },
+          "matchbook": {
+            "away": 7.8,
+            "home": 1.44,
+            "draw": 5.4
           }
         },
         "totals": {
@@ -888,21 +893,21 @@
             "bookmaker_under": "williamhill"
           },
           "3.5": {
-            "over": 2.18,
-            "bookmaker_over": "leovegas",
-            "under": 1.67,
+            "over": 2.22,
+            "bookmaker_over": "matchbook",
+            "under": 1.68,
             "bookmaker_under": "grosvenor"
           },
           "3.25": {
-            "over": 1.95,
+            "over": 1.91,
             "bookmaker_over": "casumo",
-            "under": 1.73,
+            "under": 1.75,
             "bookmaker_under": "casumo"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
         "bookmaker_draw": "betfair_ex_uk",
-        "bookmaker_away": "betfair_ex_uk"
+        "bookmaker_away": "matchbook"
       },
       "model_disagreement": 0.01104516396800411,
       "shap_features": [],
@@ -917,13 +922,13 @@
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.11692191498831084,
+          "edge": 0.11392491199130794,
           "model_prob": 0.6831556812220771,
-          "implied_prob": 0.5662337662337663,
-          "raw_implied_prob": 0.5988023952095809,
-          "expected_value": 0.14086998764086878,
+          "implied_prob": 0.5692307692307692,
+          "raw_implied_prob": 0.5952380952380952,
+          "expected_value": 0.14770154445308958,
           "recommendation": "bet",
-          "decimal_odds": 1.67
+          "decimal_odds": 1.68
         }
       ],
       "narrative": "Man City vs Fulham \u2014 Matchweek 11\n\nOur model rates Man City as 62% favorites (fair odds: 1.62), driven primarily by form and recent results. Man City's expected goals stand at 2.0 while Fulham are projected for 0.9 xG.\n\nThe match has a 53% chance of going over 2.5 goals, with both teams to score probability at 49%. We expect around 12 total corners and 3 cards.",
@@ -1637,9 +1642,9 @@
             "draw": 3.75
           },
           "livescorebet": {
-            "home": 1.74,
-            "away": 4.25,
-            "draw": 3.7
+            "home": 1.75,
+            "away": 4.2,
+            "draw": 3.65
           },
           "sport888": {
             "home": 1.73,
@@ -1647,9 +1652,9 @@
             "draw": 3.75
           },
           "virginbet": {
-            "home": 1.74,
-            "away": 4.25,
-            "draw": 3.7
+            "home": 1.75,
+            "away": 4.2,
+            "draw": 3.65
           },
           "williamhill": {
             "home": 1.73,
@@ -1667,8 +1672,8 @@
             "draw": 3.75
           },
           "grosvenor": {
-            "home": 1.75,
-            "away": 4.35,
+            "home": 1.77,
+            "away": 4.3,
             "draw": 3.75
           },
           "boylesports": {
@@ -1677,9 +1682,9 @@
             "draw": 3.75
           },
           "smarkets": {
-            "home": 1.83,
+            "home": 1.85,
             "away": 4.6,
-            "draw": 3.9
+            "draw": 3.85
           },
           "betway": {
             "home": 1.73,
@@ -1687,9 +1692,9 @@
             "draw": 3.8
           },
           "paddypower": {
-            "home": 1.73,
-            "away": 4.33,
-            "draw": 3.8
+            "home": 1.75,
+            "away": 4.4,
+            "draw": 3.75
           },
           "ladbrokes_uk": {
             "home": 1.75,
@@ -1702,24 +1707,24 @@
             "draw": 3.8
           },
           "skybet": {
-            "home": 1.73,
+            "home": 1.75,
             "away": 4.33,
-            "draw": 3.8
+            "draw": 3.75
           },
           "betfair_ex_uk": {
-            "home": 1.84,
+            "home": 1.86,
             "away": 4.7,
             "draw": 3.95
           },
           "betfair_sb_uk": {
-            "home": 1.73,
-            "away": 4.33,
-            "draw": 3.8
+            "home": 1.75,
+            "away": 4.4,
+            "draw": 3.75
           },
           "betvictor": {
             "home": 1.65,
-            "away": 4.0,
-            "draw": 3.8
+            "away": 3.9,
+            "draw": 3.75
           },
           "casumo": {
             "home": 1.73,
@@ -1728,16 +1733,21 @@
           },
           "betano_uk": {
             "home": 1.65,
-            "away": 4.0,
-            "draw": 3.8
+            "away": 3.9,
+            "draw": 3.75
+          },
+          "matchbook": {
+            "home": 1.86,
+            "away": 4.7,
+            "draw": 3.95
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.78,
-            "bookmaker_over": "grosvenor",
-            "under": 2.02,
-            "bookmaker_under": "grosvenor"
+            "over": 1.83,
+            "bookmaker_over": "matchbook",
+            "under": 2.12,
+            "bookmaker_under": "matchbook"
           },
           "2.75": {
             "over": 1.91,
@@ -2032,7 +2042,7 @@
             "position": "DEF",
             "side": "home",
             "base_prob": 0.3296799539643607,
-            "adjusted_prob": 0.37746458734596766,
+            "adjusted_prob": 0.3774645873459676,
             "yellows_per_90": 0.4,
             "yellow_cards": 4,
             "minutes": 900,
@@ -2046,7 +2056,7 @@
             "position": "DEF",
             "side": "home",
             "base_prob": 0.09516258196404048,
-            "adjusted_prob": 0.10895568353457268,
+            "adjusted_prob": 0.10895568353457265,
             "yellows_per_90": 0.1,
             "yellow_cards": 1,
             "minutes": 900,
@@ -2512,8 +2522,8 @@
             "draw": 3.6
           },
           "leovegas": {
-            "home": 2.0,
-            "away": 3.35,
+            "home": 2.02,
+            "away": 3.4,
             "draw": 3.45
           },
           "unibet_uk": {
@@ -2572,9 +2582,9 @@
             "draw": 3.5
           },
           "betvictor": {
-            "home": 1.87,
-            "away": 3.2,
-            "draw": 3.6
+            "home": 1.9,
+            "away": 3.12,
+            "draw": 3.5
           },
           "casumo": {
             "home": 1.95,
@@ -2582,17 +2592,22 @@
             "draw": 3.4
           },
           "betano_uk": {
-            "home": 1.87,
-            "away": 3.2,
-            "draw": 3.6
+            "home": 1.9,
+            "away": 3.12,
+            "draw": 3.5
+          },
+          "matchbook": {
+            "home": 2.08,
+            "away": 3.9,
+            "draw": 3.65
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.83,
-            "bookmaker_over": "grosvenor",
-            "under": 1.95,
-            "bookmaker_under": "williamhill"
+            "over": 1.88,
+            "bookmaker_over": "matchbook",
+            "under": 2.02,
+            "bookmaker_under": "matchbook"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
@@ -2881,7 +2896,7 @@
             "position": "MID",
             "side": "away",
             "base_prob": 0.3296799539643607,
-            "adjusted_prob": 0.46298508419978096,
+            "adjusted_prob": 0.4629850841997808,
             "yellows_per_90": 0.4,
             "yellow_cards": 4,
             "minutes": 900,
@@ -2895,7 +2910,7 @@
             "position": "DEF",
             "side": "away",
             "base_prob": 0.09516258196404048,
-            "adjusted_prob": 0.12294999151149026,
+            "adjusted_prob": 0.12294999151149025,
             "yellows_per_90": 0.1,
             "yellow_cards": 1,
             "minutes": 900,
@@ -3347,9 +3362,9 @@
             "draw": 3.75
           },
           "leovegas": {
-            "home": 1.83,
-            "away": 3.7,
-            "draw": 3.6
+            "home": 1.85,
+            "away": 3.75,
+            "draw": 3.65
           },
           "unibet_uk": {
             "home": 1.88,
@@ -3368,7 +3383,7 @@
           },
           "smarkets": {
             "home": 1.95,
-            "away": 4.0,
+            "away": 4.1,
             "draw": 3.8
           },
           "betway": {
@@ -3398,7 +3413,7 @@
           },
           "betfair_ex_uk": {
             "home": 1.96,
-            "away": 4.1,
+            "away": 4.2,
             "draw": 3.85
           },
           "betfair_sb_uk": {
@@ -3412,22 +3427,27 @@
             "draw": 3.7
           },
           "casumo": {
-            "home": 1.8,
-            "away": 3.6,
-            "draw": 3.6
+            "home": 1.85,
+            "away": 3.75,
+            "draw": 3.5
           },
           "betano_uk": {
             "home": 1.75,
             "away": 3.5,
             "draw": 3.7
+          },
+          "matchbook": {
+            "home": 1.97,
+            "away": 4.2,
+            "draw": 3.85
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.73,
-            "bookmaker_over": "williamhill",
-            "under": 2.12,
-            "bookmaker_under": "grosvenor"
+            "over": 1.81,
+            "bookmaker_over": "matchbook",
+            "under": 2.14,
+            "bookmaker_under": "matchbook"
           },
           "2.75": {
             "over": 1.85,
@@ -3436,7 +3456,7 @@
             "bookmaker_under": "casumo"
           }
         },
-        "bookmaker_home": "betfair_ex_uk",
+        "bookmaker_home": "matchbook",
         "bookmaker_draw": "betfair_ex_uk",
         "bookmaker_away": "betfred_uk"
       },
@@ -3722,7 +3742,7 @@
             "position": "DEF",
             "side": "away",
             "base_prob": 0.09516258196404048,
-            "adjusted_prob": 0.10695649668072728,
+            "adjusted_prob": 0.10695649668072726,
             "yellows_per_90": 0.1,
             "yellow_cards": 1,
             "minutes": 900,
@@ -4154,9 +4174,9 @@
             "draw": 3.6
           },
           "smarkets": {
-            "home": 2.54,
-            "away": 2.88,
-            "draw": 3.6
+            "home": 2.52,
+            "away": 2.9,
+            "draw": 3.55
           },
           "livescorebet": {
             "home": 2.35,
@@ -4176,7 +4196,7 @@
           "leovegas": {
             "home": 2.3,
             "away": 2.75,
-            "draw": 3.5
+            "draw": 3.55
           },
           "virginbet": {
             "home": 2.35,
@@ -4214,9 +4234,9 @@
             "draw": 3.4
           },
           "betfair_ex_uk": {
-            "home": 2.56,
-            "away": 2.9,
-            "draw": 3.65
+            "home": 2.54,
+            "away": 2.94,
+            "draw": 3.6
           },
           "betfair_sb_uk": {
             "home": 2.45,
@@ -4241,30 +4261,35 @@
           "casumo": {
             "home": 2.3,
             "away": 2.75,
-            "draw": 3.5
+            "draw": 3.4
           },
           "betano_uk": {
             "home": 2.15,
             "away": 2.55,
             "draw": 3.6
+          },
+          "matchbook": {
+            "home": 2.54,
+            "away": 2.94,
+            "draw": 3.6
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.71,
-            "bookmaker_over": "grosvenor",
-            "under": 2.15,
-            "bookmaker_under": "williamhill"
+            "over": 1.72,
+            "bookmaker_over": "matchbook",
+            "under": 2.22,
+            "bookmaker_under": "matchbook"
           },
           "2.75": {
-            "over": 1.8,
+            "over": 1.83,
             "bookmaker_over": "casumo",
             "under": 1.85,
             "bookmaker_under": "casumo"
           }
         },
         "bookmaker_home": "betfair_ex_uk",
-        "bookmaker_draw": "betfair_ex_uk",
+        "bookmaker_draw": "unibet_uk",
         "bookmaker_away": "betfair_ex_uk"
       },
       "model_disagreement": 0.0025821162026368424,
@@ -4549,7 +4574,7 @@
             "position": "DEF",
             "side": "away",
             "base_prob": 0.18126924692201818,
-            "adjusted_prob": 0.24752818511526606,
+            "adjusted_prob": 0.24752818511526598,
             "yellows_per_90": 0.2,
             "yellow_cards": 2,
             "minutes": 900,
@@ -4563,7 +4588,7 @@
             "position": "DEF",
             "side": "away",
             "base_prob": 0.18126924692201818,
-            "adjusted_prob": 0.24752818511526606,
+            "adjusted_prob": 0.24752818511526598,
             "yellows_per_90": 0.2,
             "yellow_cards": 2,
             "minutes": 900,
@@ -4577,7 +4602,7 @@
             "position": "DEF",
             "side": "home",
             "base_prob": 0.18126924692201818,
-            "adjusted_prob": 0.19231035920493744,
+            "adjusted_prob": 0.1923103592049374,
             "yellows_per_90": 0.2,
             "yellow_cards": 2,
             "minutes": 900,
@@ -5018,7 +5043,7 @@
       "odds_comparison": {
         "h2h": {
           "smarkets": {
-            "away": 5.9,
+            "away": 6.0,
             "home": 1.57,
             "draw": 4.5
           },
@@ -5043,7 +5068,7 @@
             "draw": 4.2
           },
           "leovegas": {
-            "away": 5.2,
+            "away": 5.25,
             "home": 1.52,
             "draw": 4.3
           },
@@ -5093,7 +5118,7 @@
             "draw": 4.33
           },
           "betfair_ex_uk": {
-            "away": 6.0,
+            "away": 6.2,
             "home": 1.58,
             "draw": 4.6
           },
@@ -5103,7 +5128,7 @@
             "draw": 4.5
           },
           "betvictor": {
-            "away": 4.8,
+            "away": 4.75,
             "home": 1.47,
             "draw": 4.33
           },
@@ -5113,17 +5138,22 @@
             "draw": 4.2
           },
           "betano_uk": {
-            "away": 4.8,
+            "away": 4.75,
             "home": 1.47,
             "draw": 4.33
+          },
+          "matchbook": {
+            "away": 6.2,
+            "home": 1.58,
+            "draw": 4.6
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.6,
-            "bookmaker_over": "williamhill",
-            "under": 2.4,
-            "bookmaker_under": "grosvenor"
+            "over": 1.65,
+            "bookmaker_over": "matchbook",
+            "under": 2.42,
+            "bookmaker_under": "matchbook"
           },
           "3.0": {
             "over": 1.85,
@@ -5134,7 +5164,7 @@
         },
         "bookmaker_home": "betfair_ex_uk",
         "bookmaker_draw": "betfair_ex_uk",
-        "bookmaker_away": "betfred_uk"
+        "bookmaker_away": "betfair_ex_uk"
       },
       "model_disagreement": 0.009620740952382597,
       "shap_features": [],
@@ -5874,7 +5904,7 @@
             "draw": 4.0
           },
           "leovegas": {
-            "away": 1.55,
+            "away": 1.57,
             "home": 5.0,
             "draw": 4.1
           },
@@ -5895,7 +5925,7 @@
           },
           "unibet_uk": {
             "away": 1.58,
-            "home": 5.5,
+            "home": 5.25,
             "draw": 4.25
           },
           "boylesports": {
@@ -5905,7 +5935,7 @@
           },
           "smarkets": {
             "away": 1.62,
-            "home": 5.7,
+            "home": 5.9,
             "draw": 4.2
           },
           "betway": {
@@ -5930,7 +5960,7 @@
           },
           "betfair_ex_uk": {
             "away": 1.63,
-            "home": 5.9,
+            "home": 6.0,
             "draw": 4.4
           },
           "ladbrokes_uk": {
@@ -5944,9 +5974,9 @@
             "draw": 4.2
           },
           "betvictor": {
-            "away": 1.5,
-            "home": 4.75,
-            "draw": 4.0
+            "away": 1.53,
+            "home": 4.6,
+            "draw": 4.1
           },
           "casumo": {
             "away": 1.55,
@@ -5954,17 +5984,22 @@
             "draw": 4.0
           },
           "betano_uk": {
-            "away": 1.5,
-            "home": 4.75,
+            "away": 1.53,
+            "home": 4.6,
             "draw": 4.1
+          },
+          "matchbook": {
+            "away": 1.64,
+            "home": 6.0,
+            "draw": 4.4
           }
         },
         "totals": {
           "2.5": {
-            "over": 1.67,
-            "bookmaker_over": "williamhill",
-            "under": 2.2,
-            "bookmaker_under": "grosvenor"
+            "over": 1.77,
+            "bookmaker_over": "matchbook",
+            "under": 2.22,
+            "bookmaker_under": "matchbook"
           },
           "2.75": {
             "over": 1.8,
@@ -5975,7 +6010,7 @@
         },
         "bookmaker_home": "betfair_ex_uk",
         "bookmaker_draw": "betfair_ex_uk",
-        "bookmaker_away": "betfair_ex_uk"
+        "bookmaker_away": "matchbook"
       },
       "model_disagreement": 0.024240401697417785,
       "shap_features": [],
@@ -5985,18 +6020,18 @@
           "market_type": "over_under",
           "confidence": "medium",
           "confidence_tier": "medium",
-          "bookmaker": "grosvenor",
+          "bookmaker": "matchbook",
           "full_kelly": 50.0,
           "half_kelly": 25.0,
           "full_kelly_pct": 0.05,
           "half_kelly_pct": 0.025,
-          "edge": 0.09382341043659587,
+          "edge": 0.08173893568382246,
           "model_prob": 0.5253479582402134,
-          "implied_prob": 0.43152454780361754,
-          "raw_implied_prob": 0.45454545454545453,
-          "expected_value": 0.15576550812846957,
+          "implied_prob": 0.44360902255639095,
+          "raw_implied_prob": 0.4504504504504504,
+          "expected_value": 0.16627246729327383,
           "recommendation": "bet",
-          "decimal_odds": 2.2
+          "decimal_odds": 2.22
         }
       ],
       "narrative": "Newcastle vs Arsenal \u2014 Matchweek 11\n\nOur model rates Arsenal as 51% favorites (fair odds: 1.95), driven primarily by form and recent results. Newcastle's expected goals stand at 1.0 while Arsenal are projected for 1.6 xG.\n\nThe match has a 47% chance of going over 2.5 goals, with both teams to score probability at 49%. We expect around 8 total corners and 6 cards.",
@@ -6741,7 +6776,7 @@
           },
           "smarkets": {
             "away": 1.53,
-            "home": 6.6,
+            "home": 6.4,
             "draw": 4.4
           },
           "betway": {
@@ -6756,7 +6791,7 @@
           },
           "betfair_ex_uk": {
             "away": 1.54,
-            "home": 6.8,
+            "home": 6.6,
             "draw": 4.5
           },
           "skybet": {
@@ -6786,13 +6821,13 @@
           },
           "sport888": {
             "away": 1.5,
-            "home": 6.0,
+            "home": 5.75,
             "draw": 4.2
           },
           "williamhill": {
             "away": 1.5,
-            "home": 6.0,
-            "draw": 4.2
+            "home": 5.8,
+            "draw": 4.33
           },
           "casumo": {
             "away": 1.48,
@@ -6857,17 +6892,17 @@
           "half_kelly": 0.0,
           "full_kelly_pct": 0.0,
           "half_kelly_pct": 0.0,
-          "edge": 0.12874122488263298,
+          "edge": 0.12501429977625664,
           "model_prob": 0.2731102095082736,
-          "implied_prob": 0.1443689846256406,
-          "raw_implied_prob": 0.14705882352941177,
-          "expected_value": 0.8571494246562603,
+          "implied_prob": 0.14809590973201694,
+          "raw_implied_prob": 0.15151515151515152,
+          "expected_value": 0.8025273827546056,
           "recommendation": "hold_for_review",
-          "decimal_odds": 6.8,
-          "market_gap_1x2": 0.18585583862084676,
+          "decimal_odds": 6.6,
+          "market_gap_1x2": 0.18307915600848035,
           "market_favourite": "away",
           "hold_reasons": [
-            "model_market_gap_1x2 (0.186 > 0.10)"
+            "model_market_gap_1x2 (0.183 > 0.10)"
           ]
         },
         {
@@ -6880,17 +6915,17 @@
           "half_kelly": 0.0,
           "full_kelly_pct": 0.0,
           "half_kelly_pct": 0.0,
-          "edge": 0.057114613738213665,
+          "edge": 0.058064856232223516,
           "model_prob": 0.27527219050584834,
-          "implied_prob": 0.21815757676763467,
+          "implied_prob": 0.21720733427362482,
           "raw_implied_prob": 0.2222222222222222,
           "expected_value": 0.23872485727631754,
           "recommendation": "hold_for_review",
           "decimal_odds": 4.5,
-          "market_gap_1x2": 0.18585583862084676,
+          "market_gap_1x2": 0.18307915600848035,
           "market_favourite": "away",
           "hold_reasons": [
-            "model_market_gap_1x2 (0.186 > 0.10)"
+            "model_market_gap_1x2 (0.183 > 0.10)"
           ]
         }
       ]
@@ -7171,7 +7206,7 @@
             "position": "DEF",
             "side": "home",
             "base_prob": 0.2591817793182821,
-            "adjusted_prob": 0.3893119003518506,
+            "adjusted_prob": 0.38931190035185054,
             "yellows_per_90": 0.3,
             "yellow_cards": 3,
             "minutes": 900,
@@ -7627,43 +7662,43 @@
             "draw": 4.2
           },
           "paddypower": {
-            "home": 1.75,
-            "away": 4.0,
+            "home": 1.73,
+            "away": 4.2,
             "draw": 4.0
           },
           "skybet": {
-            "home": 1.75,
-            "away": 4.0,
+            "home": 1.73,
+            "away": 4.2,
             "draw": 4.0
           },
           "betfair_ex_uk": {
-            "home": 1.82,
-            "away": 4.4,
+            "home": 1.81,
+            "away": 4.5,
             "draw": 4.3
           },
           "smarkets": {
-            "home": 1.8,
+            "home": 1.79,
             "away": 4.4,
             "draw": 4.2
           },
           "leovegas": {
-            "home": 1.7,
-            "away": 3.95,
-            "draw": 3.95
+            "home": 1.73,
+            "away": 3.9,
+            "draw": 4.0
           },
           "unibet_uk": {
             "home": 1.75,
-            "away": 4.25,
+            "away": 4.0,
             "draw": 4.0
           },
           "betano_uk": {
             "home": 1.61,
-            "away": 3.7,
+            "away": 3.6,
             "draw": 4.0
           },
           "betvictor": {
             "home": 1.61,
-            "away": 3.7,
+            "away": 3.6,
             "draw": 4.0
           },
           "virginbet": {
@@ -7687,8 +7722,8 @@
             "draw": 4.0
           },
           "betfair_sb_uk": {
-            "home": 1.75,
-            "away": 4.0,
+            "home": 1.73,
+            "away": 4.2,
             "draw": 4.0
           },
           "betway": {
@@ -8018,7 +8053,7 @@
             "position": "DEF",
             "side": "home",
             "base_prob": 0.2591817793182821,
-            "adjusted_prob": 0.29947069257834663,
+            "adjusted_prob": 0.2994706925783465,
             "yellows_per_90": 0.3,
             "yellow_cards": 3,
             "minutes": 900,
@@ -8032,7 +8067,7 @@
             "position": "DEF",
             "side": "away",
             "base_prob": 0.18126924692201818,
-            "adjusted_prob": 0.15422909995643497,
+            "adjusted_prob": 0.15422909995643494,
             "yellows_per_90": 0.2,
             "yellow_cards": 2,
             "minutes": 900,
@@ -8495,7 +8530,7 @@
           "leovegas": {
             "home": 2.05,
             "away": 3.25,
-            "draw": 3.4
+            "draw": 3.45
           },
           "grosvenor": {
             "home": 1.95,
@@ -8553,9 +8588,9 @@
             "draw": 3.7
           },
           "betvictor": {
-            "home": 1.91,
+            "home": 1.93,
             "away": 3.0,
-            "draw": 3.6
+            "draw": 3.5
           },
           "casumo": {
             "home": 1.95,
@@ -8563,9 +8598,9 @@
             "draw": 3.5
           },
           "betano_uk": {
-            "home": 1.91,
+            "home": 1.93,
             "away": 3.0,
-            "draw": 3.6
+            "draw": 3.5
           }
         },
         "totals": {
