@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-15T12:17:16.047950Z",
+  "generated_at": "2026-11-15T23:23:35.706981Z",
   "gameweek": 11,
   "players": [
     {
@@ -179,12 +179,25 @@
         {
           "claim_type": "chance_of_playing",
           "resolved_value": 75,
-          "rule": "live_bootstrap_authority",
+          "rule": "recency_within_source",
           "n_conflicts": 1,
           "n_dropped": 0,
           "unresolved": false,
           "escalation": null,
           "claims": [
+            {
+              "claim_id": "283a58819a22df9f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-15T10:30:05.648897Z",
+              "observed_at": "2026-11-15T12:17:55.618228Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
             {
               "claim_id": "e1daa280a0037265",
               "source": "fpl_bootstrap",
@@ -196,19 +209,32 @@
               "quote": null,
               "url": null,
               "verdict": "lost",
-              "beaten_by": "live_bootstrap_authority"
+              "beaten_by": "recency_within_source"
             }
           ]
         },
         {
           "claim_type": "status",
           "resolved_value": "d",
-          "rule": "live_bootstrap_authority",
+          "rule": "recency_within_source",
           "n_conflicts": 1,
           "n_dropped": 0,
           "unresolved": false,
           "escalation": null,
           "claims": [
+            {
+              "claim_id": "605424dcdf8be73b",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-15T10:30:05.648897Z",
+              "observed_at": "2026-11-15T12:17:55.618228Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
             {
               "claim_id": "7e511f5b6824d66a",
               "source": "fpl_bootstrap",
@@ -220,7 +246,7 @@
               "quote": null,
               "url": null,
               "verdict": "lost",
-              "beaten_by": "live_bootstrap_authority"
+              "beaten_by": "recency_within_source"
             }
           ]
         }
@@ -1357,7 +1383,7 @@
     }
   ],
   "counts": {
-    "n_claims": 230,
+    "n_claims": 233,
     "n_players_with_claims": 66,
     "n_players_shown": 20,
     "n_escalations": 3,
