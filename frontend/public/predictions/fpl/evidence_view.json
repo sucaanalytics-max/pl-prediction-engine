@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-15T23:23:35.706981Z",
+  "generated_at": "2026-11-16T10:36:51.929011Z",
   "gameweek": 11,
   "players": [
     {
@@ -1095,6 +1095,76 @@
       "needs_attention": false
     },
     {
+      "element_id": 558,
+      "player_name": "Schlager",
+      "club": "Nott'm Forest",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "8ed56374b8e40e00",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-15T17:00:06.045512Z",
+              "observed_at": "2026-11-15T23:23:56.083624Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "42110ff1e15c84f0",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-15T17:00:06.045512Z",
+              "observed_at": "2026-11-15T23:23:56.083624Z",
+              "quote": "Thigh injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "bd8c7cc1b652b6c1",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-15T17:00:06.045512Z",
+              "observed_at": "2026-11-15T23:23:56.083624Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
       "element_id": 614,
       "player_name": "Hadjam",
       "club": "Brighton",
@@ -1383,10 +1453,10 @@
     }
   ],
   "counts": {
-    "n_claims": 233,
-    "n_players_with_claims": 66,
-    "n_players_shown": 20,
+    "n_claims": 237,
+    "n_players_with_claims": 67,
+    "n_players_shown": 21,
     "n_escalations": 3,
-    "n_players_resolved": 40
+    "n_players_resolved": 41
   }
 }
