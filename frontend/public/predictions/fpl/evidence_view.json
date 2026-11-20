@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-20T00:19:35.850305Z",
+  "generated_at": "2026-11-20T07:37:13.372828Z",
   "gameweek": 11,
   "players": [
     {
@@ -98,6 +98,174 @@
       ],
       "total_conflicts": 4,
       "needs_attention": true
+    },
+    {
+      "element_id": 159,
+      "player_name": "Caicedo",
+      "club": "Chelsea",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 2,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "29dc99a0202a01ff",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-19T20:30:06.307481Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "0fc47796a28b30d8",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-19T20:30:06.307481Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            },
+            {
+              "claim_id": "b7aa213e6092030e",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-11-06T15:30:09.180442Z",
+              "observed_at": "2026-11-13T21:39:24.980251Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "recency_within_source",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "84c80203fe762384",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-19T20:30:06.307481Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "7845d13d59fc1d2e",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-11-06T15:30:09.180442Z",
+              "observed_at": "2026-11-13T21:39:24.980251Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
+    },
+    {
+      "element_id": 208,
+      "player_name": "Sarr",
+      "club": "Crystal Palace",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-11-29",
+          "rule": "recency_within_source",
+          "n_conflicts": 3,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "9e4d4a1026476b27",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-29",
+              "claimed_at": "2026-10-27T10:30:09.385934Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": "Groin injury - Expected back 29 Nov",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "eda2c7a771d68dae",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-21",
+              "claimed_at": "2026-10-27T10:30:09.385934Z",
+              "observed_at": "2026-11-13T21:39:24.980251Z",
+              "quote": "Groin injury - Expected back 21 Nov",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            },
+            {
+              "claim_id": "9e4d4a1026476b27",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-29",
+              "claimed_at": "2026-10-27T10:30:09.385934Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": "Groin injury - Expected back 29 Nov",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            },
+            {
+              "claim_id": "eda2c7a771d68dae",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-21",
+              "claimed_at": "2026-10-27T10:30:09.385934Z",
+              "observed_at": "2026-11-13T21:39:24.980251Z",
+              "quote": "Groin injury - Expected back 21 Nov",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
     },
     {
       "element_id": 415,
@@ -388,6 +556,78 @@
       "needs_attention": true
     },
     {
+      "element_id": 577,
+      "player_name": "Tomiyasu",
+      "club": "Crystal Palace",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-11-29",
+          "rule": "recency_within_source",
+          "n_conflicts": 3,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "3810dac1a299f390",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-29",
+              "claimed_at": "2026-09-21T13:30:09.030724Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": "Calf injury - Expected back 29 Nov",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "c4c5a8488f3d4ef6",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-21",
+              "claimed_at": "2026-09-21T13:30:09.030724Z",
+              "observed_at": "2026-11-13T21:39:24.980251Z",
+              "quote": "Calf injury - Expected back 21 Nov",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            },
+            {
+              "claim_id": "3810dac1a299f390",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-29",
+              "claimed_at": "2026-09-21T13:30:09.030724Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": "Calf injury - Expected back 29 Nov",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            },
+            {
+              "claim_id": "c4c5a8488f3d4ef6",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-11-21",
+              "claimed_at": "2026-09-21T13:30:09.030724Z",
+              "observed_at": "2026-11-13T21:39:24.980251Z",
+              "quote": "Calf injury - Expected back 21 Nov",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "recency_within_source"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
+    },
+    {
       "element_id": 611,
       "player_name": "Wan-Bissaka",
       "club": "Aston Villa",
@@ -535,63 +775,6 @@
               "url": null,
               "verdict": "lost",
               "beaten_by": "recency_within_source"
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 2,
-      "needs_attention": false
-    },
-    {
-      "element_id": 159,
-      "player_name": "Caicedo",
-      "club": "Chelsea",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 75,
-          "rule": "live_bootstrap_authority",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "b7aa213e6092030e",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 100,
-              "claimed_at": "2026-11-06T15:30:09.180442Z",
-              "observed_at": "2026-11-13T21:39:24.980251Z",
-              "quote": null,
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "live_bootstrap_authority"
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "live_bootstrap_authority",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "7845d13d59fc1d2e",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "a",
-              "claimed_at": "2026-11-06T15:30:09.180442Z",
-              "observed_at": "2026-11-13T21:39:24.980251Z",
-              "quote": null,
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "live_bootstrap_authority"
             }
           ]
         }
@@ -984,6 +1167,76 @@
               "value": "d",
               "claimed_at": "2026-11-08T15:00:09.230933Z",
               "observed_at": "2026-11-13T21:39:24.980251Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
+      "element_id": 186,
+      "player_name": "Mason-Clark",
+      "club": "Coventry City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "b0b25c132241b0aa",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-19T19:00:05.701445Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "999de5f11d3105e0",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-19T19:00:05.701445Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": "Knee injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "5d7dc8724e012c72",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-19T19:00:05.701445Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -1626,6 +1879,76 @@
       "needs_attention": false
     },
     {
+      "element_id": 575,
+      "player_name": "Yirenkyi",
+      "club": "Coventry City",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "tier_precedence",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "a31fb24ea7720bf4",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-19T19:00:05.972580Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
+            {
+              "claim_id": "0b4bcf7d647421a5",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-19T19:00:05.972580Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": "Unspecified injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "tier_precedence"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "233efcb63f49807b",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-19T19:00:05.972580Z",
+              "observed_at": "2026-11-20T00:20:14.990978Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 1,
+      "needs_attention": false
+    },
+    {
       "element_id": 586,
       "player_name": "Mendy",
       "club": "Hull City",
@@ -1917,39 +2240,6 @@
       "needs_attention": false
     },
     {
-      "element_id": 208,
-      "player_name": "Sarr",
-      "club": "Crystal Palace",
-      "entries": [
-        {
-          "claim_type": "return_date",
-          "resolved_value": "2026-11-21",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "eda2c7a771d68dae",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "return_date",
-              "value": "2026-11-21",
-              "claimed_at": "2026-10-27T10:30:09.385934Z",
-              "observed_at": "2026-11-13T21:39:24.980251Z",
-              "quote": "Groin injury - Expected back 21 Nov",
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 0,
-      "needs_attention": false
-    },
-    {
       "element_id": 482,
       "player_name": "Hudson-Odoi",
       "club": "Nott'm Forest",
@@ -2005,46 +2295,13 @@
       ],
       "total_conflicts": 0,
       "needs_attention": false
-    },
-    {
-      "element_id": 577,
-      "player_name": "Tomiyasu",
-      "club": "Crystal Palace",
-      "entries": [
-        {
-          "claim_type": "return_date",
-          "resolved_value": "2026-11-21",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "c4c5a8488f3d4ef6",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "return_date",
-              "value": "2026-11-21",
-              "claimed_at": "2026-09-21T13:30:09.030724Z",
-              "observed_at": "2026-11-13T21:39:24.980251Z",
-              "quote": "Calf injury - Expected back 21 Nov",
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 0,
-      "needs_attention": false
     }
   ],
   "counts": {
-    "n_claims": 344,
-    "n_players_with_claims": 85,
-    "n_players_shown": 29,
+    "n_claims": 363,
+    "n_players_with_claims": 87,
+    "n_players_shown": 31,
     "n_escalations": 6,
-    "n_players_resolved": 49
+    "n_players_resolved": 51
   }
 }
