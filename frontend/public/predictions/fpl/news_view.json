@@ -1,17 +1,185 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-20T19:11:36.161140Z",
-  "n_dropped": 25,
+  "generated_at": "2026-11-21T00:48:39.340394Z",
+  "n_dropped": 33,
   "dropped_by_source": {
-    "bbc_football": 3,
-    "sky_football": 22
+    "bbc_football": 7,
+    "sky_football": 26
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 115,
+  "n_articles": 123,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "6d45b687c38c937d",
+      "headline": "Papers: Osimhen ready to listen to Man Utd offers",
+      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13614555/x-paper-talk",
+      "claimed_at": "2026-11-20T23:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a6174dca31faa9d1",
+      "headline": "Cost of Man Utd hiring and firing managers nears \u00a3100m",
+      "summary": "Manchester United borrowed \u00a310m three days after confirming Mauricio Pochettino would be their new head coach, which will cost them \u00a37.5m in compensation to US Soccer.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwd01n9z23x5o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-20T23:18:16Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c2ca4fd1c76ed91d",
+      "headline": "NFL great Brady could buy Chelsea stake",
+      "summary": "American football great Tom Brady is looking to invest in Chelsea through ownership group Clearlake Capital.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmg46k97k92do?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-20T22:36:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0ea782eb73953e56",
+      "headline": "De Zerbi on Kulusevski\u2019s fitness and Maddison\u2019s limited training time",
+      "summary": "Roberto De Zerbi says he is not sure whether Dejan Kulusevski will be ready to start matches soon and explained why James Maddison's training has been limited. Kulusevski has not started a game for Spurs since May 2025 against Cry",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/de-zerbi-on-kulusevskis-fitness-and-maddisons-limited-training-time/",
+      "claimed_at": "2026-11-20T22:30:00Z",
+      "players": [
+        {
+          "element_id": 515,
+          "name": "Maddison",
+          "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 521,
+          "name": "Kulusevski",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4497f56e6784914a",
+      "headline": "\u2018Maybe it\u2019s three, maybe it\u2019s five\u2019 \u2013 Arteta cautious over Saka return",
+      "summary": "Mikel Arteta stressed that Bukayo Saka still has several steps to take before a firm date can be set for his return. The Arsenal winger remains sidelined with a quadriceps injury which he suffered in the 2-2 draw with Bayern Muni",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/maybe-its-three-maybe-its-five-arteta-cautious-over-saka-return/",
+      "claimed_at": "2026-11-20T22:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e1aed1ff37a80890",
+      "headline": "Lampard calls for fairness after Coventry penalty row",
+      "summary": "Coventry boss Frank Lampard wants officials to spend time ensuring they get decisions correct in the wake of his side being denied a penalty at Everton.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c678299n1018o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-20T22:04:19Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9b2b19c7b7e1c5e8",
+      "headline": "Van Dijk uncertain on Liverpool future",
+      "summary": "Liverpool captain Virgil van Dijk believes he can keeping playing for \"many more years\" - but says he does not yet know whether that will be at Anfield next season.&#160;",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13614508/liverpool-virgil-van-dijk-uncertain-on-anfield-future-beyond-the-summer-but-believes-he-can-play-for-many-more-years",
+      "claimed_at": "2026-11-20T20:15:00Z",
+      "players": [
+        {
+          "element_id": 356,
+          "name": "Virgil",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7ac019a5ad57a447",
+      "headline": "Osimhen keen on Man Utd move - Saturday's gossip",
+      "summary": "Victor Osimhen is keen on a move to Manchester United, Aston Villa are interested in Amad Diallo and Ivan Toney is a target for Crystal Palace, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c60qj1924wyeo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-20T20:06:51Z",
+      "players": [
+        {
+          "element_id": 431,
+          "name": "Amad",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a6a4e14beb313192",
+      "headline": "Drones, data and Bruno - Pochettino on his early Man Utd challenges",
+      "summary": "Mauricio Pochettino has questioned what could have been gained from the drone footage of a Manchester United training session ahead of his first game in charge against Liverpool.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13614363/mauricio-pochettino-manchester-united-head-coach-discusses-drone-footage-his-approach-to-data-and-bruno-fernandes-ahead-of-first-game",
+      "claimed_at": "2026-11-20T20:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
     {
       "digest": "efe675c62608a8f9",
       "headline": "Sarr focused on Palace return after Liverpool interest",
@@ -1285,60 +1453,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e8e18b005868b7c7",
-      "headline": "Seven years on from the sack at Spurs what sort of coach is Pochettino now?",
-      "summary": "What Mauricio Pochettino achieved with Tottenham Hotspur in the previous decade looks even more impressive now than it did at the time. Manchester United really should have turned to the popular Argentine coach years ago.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13612583/mauricio-pochettino-at-man-utd-seven-years-on-from-the-sack-at-spurs-what-sort-of-coach-is-he-now-we-will-soon-find-out",
-      "claimed_at": "2026-11-19T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8adb7cf2da5fd463",
-      "headline": "Man City have problems - is Fernandez their most obvious?",
-      "summary": "Enzo Maresca is being forced to work within an unprecedented set of circumstances this season. Up until recently, his fixation on football matters served to quieten the noise around the club. But now the anomalous nature of Manchester City's",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13613559/man-city-vs-fulham-has-enzo-fernandez-given-enzo-maresca-a-problem-in-midfield-and-how-does-he-fix-the-imbalance",
-      "claimed_at": "2026-11-19T09:00:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6c2cb71e712c9d7e",
-      "headline": "Premier League talking points: Trial by Anfield as Poch begins Man Utd tenure",
-      "summary": "The Premier League is back after the recent international break and the Sky Sports football writers dissect all the major talking points ahead of another busy weekend's action.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13613208/mauricio-pochettino-begins-man-utd-tenure-with-testing-trip-to-liverpool-premier-league-talking-points",
-      "claimed_at": "2026-11-19T08:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "117a64a4ce0ec47f",
       "headline": "From Forest fringes to Glasner's go-to guy - the rise of McAtee",
       "summary": "How has Nottingham Forest midfielder James McAtee gone from the bench to indispensable at the City Ground?",
@@ -1369,24 +1483,6 @@
           "element_id": 431,
           "name": "Amad",
           "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a00a97e4e601e50a",
-      "headline": "Chelsea snatch late winner vs PSG to move top of WCL table",
-      "summary": "Veerle Buurman's late winner snatched a late 1-0 win for Chelsea against Paris Saint-Germain to move them to the top of the Champions League table.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-women-vs-paris-saint-germain-women/report/578268",
-      "claimed_at": "2026-11-18T22:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1591,42 +1687,6 @@
       "touches_squad": false
     },
     {
-      "digest": "a4762d20bfa8c6eb",
-      "headline": "Manchester won't always be blue - Pochettino",
-      "summary": "New boss Mauricio Pochettino says he will restore Manchester United to being the most successful footballing side in the city.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm782wnwzvq3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-18T08:42:28Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a5eb4dc4bbcae77b",
-      "headline": "Liverpool lead Chelsea in Camara race - Wednesday's gossip",
-      "summary": "Liverpool leading Chelsea in race for Monaco's Lamine Camara, Barcelona rule out moves for Virgil van Dijk and Bruno Fernandes, and ex-Crystal Palace winger Wilfried Zaha could rejoin the club.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvx2xwx604y0o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-17T22:25:16Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "22bd01f005cd6010",
       "headline": "Arsenal set to secure the futures of several key players \u2013 reports",
       "summary": "Arsenal are close to finalising new contracts for David Raya, Jurrien Timber, Piero Hincapie and Declan Rice as the Premier League champions continue to secure the long-term futures of key players. The Athletic first reported that a",
@@ -1639,42 +1699,6 @@
           "element_id": 9,
           "name": "Hincapie",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "535c974040bd716e",
-      "headline": "Madrid-bound Gabriel posts farewell Man Utd message",
-      "summary": "TeenagerJJ Gabriel posts a farewell message saying Manchester United will always be part of his story, as he prepares for a likely move to Real Madrid.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqvg2e4208zmo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-17T19:35:06Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8858af4b9ef7b526",
-      "headline": "Arsenal Double winner Storey dies aged 81",
-      "summary": "Former Arsenal and England midfielder Peter Storey - who helped the Gunners win the Double in 1970-71 - has died at the age of 81.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c63eg3ekxnpyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-17T17:33:41Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1699,24 +1723,6 @@
           "element_id": 53,
           "name": "Manzambi",
           "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2b55f11bc4640e03",
-      "headline": "Rooney says he considered taking his own life at Man Utd",
-      "summary": "Wayne Rooney says he considered taking his own life during his playing days at Manchester United and was \"speaking to a therapist to try and figure out what was up\".",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cx1l0n3v003eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-17T14:09:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
