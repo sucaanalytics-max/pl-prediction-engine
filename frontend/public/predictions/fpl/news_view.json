@@ -1,17 +1,48 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-21T16:08:40.682170Z",
-  "n_dropped": 51,
+  "generated_at": "2026-11-21T21:39:04.764064Z",
+  "n_dropped": 95,
   "dropped_by_source": {
-    "bbc_football": 13,
-    "sky_football": 38
+    "bbc_football": 33,
+    "hayters": 6,
+    "sky_football": 56
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 141,
+  "n_articles": 185,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "d873c7774edd1393",
+      "headline": "Farke revels in historic Leeds victory at Stamford Bridge",
+      "summary": "Leeds United boss Daniel Farke hailed his side\u2019s 4-1 win over Chelsea as a historic result after securing the club\u2019s first victory at Stamford Bridge since 1999. Noah Okafor's double along with goals from Dominic Calvert-Lewin and Brenden Aar",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/farke-revels-in-historic-leeds-victory-at-stamford-bridge/",
+      "claimed_at": "2026-11-21T19:42:10Z",
+      "players": [
+        {
+          "element_id": 336,
+          "name": "Okafor",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 337,
+          "name": "Aaronson",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "eae4d26d79255584",
       "headline": "'It's quite clear' - Maresca believes Haaland goal should have stood",
@@ -31,52 +62,748 @@
       "touches_squad": true
     },
     {
-      "digest": "5ca9eb1012a60fa9",
-      "headline": "Manzambi, Cash, Wan-Bissaka: Aston Villa injury latest for FPL Gameweek 11",
-      "summary": "The Swiss attacker pulled out of international action The post Manzambi, Cash, Wan-Bissaka: Aston Villa injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
-      "source": "fantasyfootballscout",
+      "digest": "01269f0a74042c34",
+      "headline": "Raya set to have scan on injury - how much would Arsenal miss him?",
+      "summary": "Arsenal goalkeeper David Raya is set to have a scan on his shoulder after going off injured during Saturday's 2-2 draw with Newcastle.",
+      "source": "bbc_football",
       "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/manzambi-cash-wan-bissaka-aston-villa-injury-latest-for-fpl-gameweek-11",
-      "claimed_at": "2026-11-20T16:01:11Z",
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckx28w9ree9vo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T21:14:08Z",
       "players": [
         {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": true
-        },
-        {
-          "element_id": 611,
-          "name": "Wan-Bissaka",
-          "club": "AVL",
+          "element_id": 0,
+          "name": null,
+          "club": null,
           "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
-      "digest": "f56703ad5e053b1e",
-      "headline": "\u00ad\u00ad\u00adMcGinn v Manzambi: How do the two Villa midfielders compare?",
-      "summary": "A superb run of fixtures awaits the Villans The post \u00ad\u00ad\u00adMcGinn v Manzambi: How do the two Villa midfielders compare? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/17/mcginn-v-manzambi-how-do-the-two-villa-midfielders-compare",
-      "claimed_at": "2026-11-17T17:30:00Z",
+      "digest": "36d6b651cbcb0259",
+      "headline": "Jaissle on Hall injury worry and Newcastle\u2019s draw with Arsenal",
+      "summary": "Newcastle United boss Matthias Jaissle is hopeful Lewis Hall did not suffer a serious injury during the 2-2 draw with Arsenal. Hall was forced off in the closing stages at St James\u2019 Park but Jaissle believes the issue may only have been",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/jaissle-on-hall-injury-worry-and-newcastles-draw-with-arsenal/",
+      "claimed_at": "2026-11-21T21:10:07Z",
       "players": [
         {
-          "element_id": 45,
-          "name": "McGinn",
-          "club": "AVL",
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5aa34ee88fa0523c",
+      "headline": "Raya set to undergo scan after being forced off injured against Newcastle",
+      "summary": "Mikel Arteta says Arsenal will have to wait for further tests to discover the extent of David Raya\u2019s injury after the goalkeeper was forced off during the 2-2 draw with Newcastle. Raya was unable to finish the game at St James",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/raya-set-to-undergo-scan-after-being-forced-off-injured-against-newcastle/",
+      "claimed_at": "2026-11-21T21:00:14Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "05f09c50f301c921",
+      "headline": "Chelsea latest: 'He was in pain' - Alonso gives update on Caicedo injury",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-21T20:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ed74ef3bf6b86e61",
+      "headline": "AC Milan monitoring Man Utd's Fernandes - Sunday's gossip",
+      "summary": "AC Milan monitoring Manchester United midfielder Bruno Fernandes, Arsenal pair yet to start talks on new deals and Trabzonspor renew interest in Tottenham forward Richarlison, plus more.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq8j4e8nlvm1o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T20:35:12Z",
+      "players": [
+        {
+          "element_id": 525,
+          "name": "Fernandes",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "58513b08fe977446",
+      "headline": "Arsenal latest: Arteta gives update on Raya injury",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-21T20:33:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2d2c8946356bda2c",
+      "headline": "'We lost two points' - Arteta on 'unacceptable' Newcastle draw",
+      "summary": "Arsenal manager Mikel Arteta says his side squandered the chance to take all three points after their 2-2 draw against Newcastle United at St James' Park. The result sees the reigning Premier League champions go six points clear at the t",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ck1wrdd9ew11o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T20:30:50Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2b30ad951b0519ab",
+      "headline": "How 'complacent' Arsenal unravelled at Newcastle - and their key lesson",
+      "summary": "From \"exceptional\" to \"complacent\" - Arsenal's drop-off in the second half at Newcastle was extraordinary.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13615040/arsenal-escape-with-2-2-draw-at-newcastle-after-complacent-second-half-almost-proves-costly-for-defending-champions",
+      "claimed_at": "2026-11-21T20:21:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9842c36239de2a87",
+      "headline": "Marco Rose hails Evanilson after record-breaking Bournemouth win",
+      "summary": "Marco Rose was full of praise for his star marksman Evanilson after Bournemouth claimed a 2-0 win over Nottingham Forest in the Premier League. Rose\u2019s squad made history on Saturday afternoon, earning their ninth consecutive victory in",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/marco-rose-hails-evanilson-after-record-breaking-bournemouth-win/",
+      "claimed_at": "2026-11-21T20:12:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b31844b6653faa98",
+      "headline": "Glasner hints at January additions after Nottingham Forest\u2019s defeat to Bournemouth",
+      "summary": "Nottingham Forest boss Oliver Glasner admitted his side are struggling to cope with more physical opponents after their 2-0 defeat to Bournemouth. Glasner believes Forest have performed well in more tactical matches b",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/glasner-hints-at-january-additions-after-nottingham-forests-defeat-to-bournemouth/",
+      "claimed_at": "2026-11-21T20:08:13Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "36cbeada657e505d",
+      "headline": "Nine wins in a row - Bournemouth & Evanilson continue to make history",
+      "summary": "With a ninth successive win, Bournemouth continue to make history under new manager Marco Rose.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6p9d102k4mdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T20:07:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "cc96a7c6d7d8f493",
+      "headline": "Arsenal go six points clear after lively draw at Newcastle",
+      "summary": "Noni Madueke's second-half goal earns Arsenal a 2-2 draw against Newcastle United at St James' Park, as the reigning champions move six points clear at the top of the Premier League table.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cm702zzl66l6o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:59:35Z",
+      "players": [
+        {
+          "element_id": 16,
+          "name": "Madueke",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f6ed4ccb69538534",
+      "headline": "Evanilson strikes again as Bournemouth beat Forest",
+      "summary": "Evanilson scores in his sixth consecutive Premier League game, as Bournemouth defeat Nottingham Forest 2-0 at the Vitality Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cm4gn997yry2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:59:17Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "27d4bf06ba4621eb",
+      "headline": "Leeds dominate Chelsea for first Stamford Bridge win since 1999",
+      "summary": "Noah Okafor scores twice to deliver Leeds United's first win at Chelsea in 27 years, in an impressive 4-1 victory at Stamford Bridge. They move up to sixth in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c3ewvkk4qgxjo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:59:13Z",
+      "players": [
+        {
+          "element_id": 336,
+          "name": "Okafor",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b0531e9584a425ee",
+      "headline": "Man City drop points to Fulham despite superb Anderson volley",
+      "summary": "Elliot Anderson's fantastic volley earns Manchester City a first Premier League point in over a month as they come from behind to hold Fulham.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c30rkq9xyk8eo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:59:08Z",
+      "players": [
+        {
+          "element_id": 481,
+          "name": "Anderson",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "94e5e361cb6bd61a",
+      "headline": "Teenager Williams-Barnett shines as Spurs beat Ipswich",
+      "summary": "Tottenham Hotspur teenager Luca Williams-Barnett starres for Roberto de Zerbi's side as they comfortably beat Ipswich Town.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c3174qq2j82zo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:59:02Z",
+      "players": [
+        {
+          "element_id": 601,
+          "name": "Williams-Barnett",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0c688b77b45aecf8",
+      "headline": "Villa's home woes continue as Sunderland earn point",
+      "summary": "Aston Villa's struggles at home this season continue as they are held to a goalless draw by Sunderland in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c5j9m227l42do?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:58:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c5109cc5d8c2c522",
+      "headline": "Coventry beat Palace in Frank's first game after late own goal",
+      "summary": "A Dwight McNeil own goal in the 85th minute gives Coventry City a 3-2 win to move three points clear of the relegation zone, as Thomas Frank's first game in charge at Crystal Palace ends in defeat in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c8wy5ddky5n9o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:58:52Z",
+      "players": [
+        {
+          "element_id": 241,
+          "name": "McNeil",
+          "club": "CRY",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fbf452ec899c94c6",
+      "headline": "Arsenal rescue a draw at Newcastle",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Newcastle and Arsenal.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13615004/newcastle-2-2-arsenal-premier-league-highlights",
+      "claimed_at": "2026-11-21T19:35:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "70e3a5d396112310",
+      "headline": "Who was 'a consistent threat'? Newcastle v Arsenal player ratings",
+      "summary": "BBC Sport's Alex Howell shares his player ratings for Newcastle and Arsenal's 2-2 draw in the Premier League - and you can rate the players too.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq4gn97e8ee4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:29:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "76acba9a22f9969f",
+      "headline": "'The world got to see today' - who is new Spurs star Williams-Barnett?",
+      "summary": "BBC Sport looks at Tottenham's new teenage star after Luca Williams-Barnett makes a superb full Premier League debut for Spurs",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm9d7jg50e12o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:21:01Z",
+      "players": [
+        {
+          "element_id": 601,
+          "name": "Williams-Barnett",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d4720c3b1b39e9c6",
+      "headline": "Alonso: Chelsea are fragile and need to be tougher",
+      "summary": "Chelsea manager Xabi Alonso said his side are \"fragile\" and need to be \"tougher\" after being embarrassed by Leeds United.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13614992/chelsea-are-fragile-and-need-to-toughen-up-says-manager-xabi-alonso-after-humiliating-defeat-to-leeds-united",
+      "claimed_at": "2026-11-21T19:13:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a3f9919b41edaf29",
+      "headline": "'Fragile' and 'miles off it' - Alonso's Chelsea honeymoon is over",
+      "summary": "The honeymoon period is over for Chelsea manager Xabi Alonso, who is now in firefighting mode after a 4-1 defeat by Leeds at Stamford Bridge.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwe8944d004yo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T19:04:09Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1ff07df74b371504",
+      "headline": "Williams-Barnett's talent bigger than performance - De Zerbi",
+      "summary": "Tottenham Hotspur head coach Roberto De Zerbi is full of praise for teenager Luca Williams-Barnett who was at the heart of a 2-0 win over Ipswich Town.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6wy4gg24vlno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T18:32:27Z",
+      "players": [
+        {
+          "element_id": 601,
+          "name": "Williams-Barnett",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f19e559dd37817dd",
+      "headline": "'Officials can't use common sense' - was Rogers handball correct?",
+      "summary": "The decision to give Leeds a crucial penalty in their win at Chelsea reopens the Premier League handball debate around intent.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c50md981n277o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T18:30:22Z",
+      "players": [
+        {
+          "element_id": 40,
+          "name": "Rogers",
+          "club": "CHE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "deb6af30dcd58235",
+      "headline": "'It's a deserved defeat' - Glasner on Bournemouth loss",
+      "summary": "Nottingham Forest manager Oliver Glasner believes his side \"deserved\" to lose against Bournemouth as a 2-0 defeat leaves them above the drop zone on goal difference.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c63dg88zdzxko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T18:16:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ad2cf74f9169bd5d",
+      "headline": "Arsenal's winning run ended by Newcastle in thrilling draw",
+      "summary": "Arsenal's four-game winning Premier League run without conceding was ended by Newcastle in a frantic 2-2 draw.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/newcastle-united-vs-arsenal/report/559552",
+      "claimed_at": "2026-11-21T18:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6c91f10a2e38272c",
+      "headline": "Leeds 'created piece of history' in Chelsea win - Farke",
+      "summary": "Leeds United manager Daniel Farke is delighted his side \"created a piece of history\" following their 4-1 win against Chelsea, their first at Stamford Bridge since 1999.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmwy5ddwnygqo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T17:42:14Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "db1e6a5b4c5fcca7",
+      "headline": "Leeds run riot at Stamford Bridge as Chelsea crumble",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Chelsea and Leeds United.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13614901/chelsea-1-4-leeds-united-premier-league-highlights",
+      "claimed_at": "2026-11-21T17:23:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4a9079069d5194be",
+      "headline": "Eighteen-year-old Williams-Barnett shines as Spurs beat Ipswich",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Tottenham Hotspur and Ipswich Town.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13614870/tottenham-hotspur-2-0-ipswich-town-premier-league-highlights",
+      "claimed_at": "2026-11-21T17:15:00Z",
+      "players": [
+        {
+          "element_id": 601,
+          "name": "Williams-Barnett",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5ec1a2427c67c7bc",
+      "headline": "Fulham earn point at the Etihad as Man City's poor run continues",
+      "summary": "Highlights from the Premier League match between Manchester City and Fulham.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13614722/manchester-city-1-1-fulham-premier-league-highlights",
+      "claimed_at": "2026-11-21T17:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "922c8cecd346e88a",
+      "headline": "Sunderland frustrate uninspiring Villa in goalless draw",
+      "summary": "Highlights from the Premier League match between Aston Villa and Sunderland.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13614863/aston-villa-0-0-sunderland-premier-league-highlights",
+      "claimed_at": "2026-11-21T17:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5239a4d0df7fac31",
+      "headline": "Evanilson strikes again as Bournemouth dominate lacklustre Forest",
+      "summary": "Highlights from the Premier League match between Bournemouth and Nottingham Forest.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13614873/bournemouth-2-0-nottingham-forest-premier-league-highlights",
+      "claimed_at": "2026-11-21T17:14:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "91df4452e3c660c3",
+      "headline": "Late OG gives Coventry points in five-goal thriller",
+      "summary": "Highlights from the match between Coventry and Crystal Palace in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13614869/coventry-3-2-crystal-palace-premier-league-highlights",
+      "claimed_at": "2026-11-21T17:10:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b12a611ddf00c29e",
+      "headline": "Bournemouth make more history with comfortable win against Forest",
+      "summary": "Bournemouth continued their unstoppable form with a comfortable 2-0 victory against Nottingham Forest and created two bits of history in the process.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/bournemouth-vs-nottingham-forest/report/559545",
+      "claimed_at": "2026-11-21T17:05:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "06767af7b55ea9e1",
+      "headline": "Ineligible to face parent club - Expected back 2 Dec",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-11-21T17:00:05.766153Z",
+      "players": [
+        {
+          "element_id": 501,
+          "name": "Danso",
+          "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "306db42411a77744",
+      "headline": "Villa held to frustrating draw against Sunderland",
+      "summary": "Aston Villa were held to a frustrating 0-0 draw against Sunderland as Regis Le Bris' side soaked up the pressure to secure a point away at Villa Park.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/aston-villa-vs-sunderland/report/559544",
+      "claimed_at": "2026-11-21T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ef38ba706f324066",
+      "headline": "Leeds dismantle Chelsea as pressure grows on Alonso",
+      "summary": "Leeds dismantled Chelsea and increased the pressure on manager Xabi Alonso with an outstanding performance in a stunning 4-1 win.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/chelsea-vs-leeds-united/report/559547",
+      "claimed_at": "2026-11-21T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f0bc32b90a7ff25d",
+      "headline": "Newcastle v Arsenal team news: Konsa starts, Saliba a sub",
+      "summary": "Two changes for Newcastle, one for Arsenal The post Newcastle v Arsenal team news: Konsa starts, Saliba a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/21/newcastle-v-arsenal-team-news-konsa-starts-saliba-a-sub",
+      "claimed_at": "2026-11-21T17:00:00Z",
+      "players": [
+        {
+          "element_id": 6,
+          "name": "Saliba",
+          "club": "ARS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7f16847107b77667",
+      "headline": "'Special' teen Williams-Barnett scores to dazzle in Spurs' win over Ipswich",
+      "summary": "Teenager Luca Williams-Barnett scored on his first Tottenham start to make history in Spurs' 2-0 home win over Ipswich.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/tottenham-hotspur-vs-ipswich-town/report/559553",
+      "claimed_at": "2026-11-21T16:45:00Z",
+      "players": [
+        {
+          "element_id": 601,
+          "name": "Williams-Barnett",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "79303dc01492bda1",
+      "headline": "Fernandez dropped, Anderson scores - Man City's \u00a3327m midfield dilemma",
+      "summary": "Manchester City spent \u00a3327m overhauling their midfield in the summer - but how does Enzo Maresca find the right balance?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cxe8944j188yo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-21T16:07:19Z",
+      "players": [
+        {
+          "element_id": 155,
+          "name": "Enzo",
+          "club": "MCI",
           "held": false
         },
         {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": true
+          "element_id": 481,
+          "name": "Anderson",
+          "club": "MCI",
+          "held": false
         }
       ],
-      "touches_squad": true
+      "touches_squad": false
     },
     {
       "digest": "a0677291ea54965f",
@@ -109,6 +836,30 @@
           "element_id": 481,
           "name": "Anderson",
           "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ff0956710b1e1ef7",
+      "headline": "Illness - 75% chance of playing",
+      "summary": null,
+      "source": "fpl_news_parse",
+      "tier": 1,
+      "url": null,
+      "claimed_at": "2026-11-21T14:30:05.829063Z",
+      "players": [
+        {
+          "element_id": 37,
+          "name": "Lindel\u00f6f",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 455,
+          "name": "Tonali",
+          "club": "TOT",
           "held": false
         }
       ],
@@ -325,6 +1076,24 @@
       "touches_squad": false
     },
     {
+      "digest": "cfafb3a7815724b9",
+      "headline": "Hits and misses: Problems for passive Man City as Chelsea bullied again",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13614659/problems-for-passive-man-city-as-chelsea-are-bullied-by-leeds-premier-league-hits-and-misses",
+      "claimed_at": "2026-11-21T11:23:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "cd15ab372b3d8b60",
       "headline": "Man City 1-1 Fulham LIVE \u2013 Anderson salvages a point for City, who go four without a win",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Man City 1-1 Fulham LIVE - Anderson salvages a point for City, who go four without a win appeared first on Hayters.",
@@ -475,132 +1244,6 @@
       "touches_squad": false
     },
     {
-      "digest": "e1aed1ff37a80890",
-      "headline": "Lampard calls for fairness after Coventry penalty row",
-      "summary": "Coventry boss Frank Lampard wants officials to spend time ensuring they get decisions correct in the wake of his side being denied a penalty at Everton.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c678299n1018o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T22:04:19Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9b2b19c7b7e1c5e8",
-      "headline": "Van Dijk uncertain on Liverpool future",
-      "summary": "Liverpool captain Virgil van Dijk believes he can keeping playing for \"many more years\" - but says he does not yet know whether that will be at Anfield next season.&#160;",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13614508/liverpool-virgil-van-dijk-uncertain-on-anfield-future-beyond-the-summer-but-believes-he-can-play-for-many-more-years",
-      "claimed_at": "2026-11-20T20:15:00Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7ac019a5ad57a447",
-      "headline": "Osimhen keen on Man Utd move - Saturday's gossip",
-      "summary": "Victor Osimhen is keen on a move to Manchester United, Aston Villa are interested in Amad Diallo and Ivan Toney is a target for Crystal Palace, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c60qj1924wyeo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T20:06:51Z",
-      "players": [
-        {
-          "element_id": 431,
-          "name": "Amad",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a6a4e14beb313192",
-      "headline": "Drones, data and Bruno - Pochettino on his early Man Utd challenges",
-      "summary": "Mauricio Pochettino has questioned what could have been gained from the drone footage of a Manchester United training session ahead of his first game in charge against Liverpool.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13614363/mauricio-pochettino-manchester-united-head-coach-discusses-drone-footage-his-approach-to-data-and-bruno-fernandes-ahead-of-first-game",
-      "claimed_at": "2026-11-20T20:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "efe675c62608a8f9",
-      "headline": "Sarr focused on Palace return after Liverpool interest",
-      "summary": "Crystal Palace forward Ismaila Sarr says he has moved on from Liverpool's interest in signing him and is keen for a \"fresh start\" under Thomas Frank.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cvj6l7pd1yd0o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T18:41:33Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d5e97c7f34f7769b",
-      "headline": "Chelsea fined \u00a3150,000 for discriminatory chanting",
-      "summary": "Chelsea are fined \u00a3150,000 by the FA for anti-Catholic and anti-Irish chants during their FA Cup third-round win at Charlton in January.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwyvde0n8zqyo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T17:52:50Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "50c298a1bf180425",
-      "headline": "Brighton latest: In-form midfielder signs new contract",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-11-20T17:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "871c8bce20f8c6a8",
       "headline": "FPL Gameweek 11 Scout Picks: Arsenal triple-up",
       "summary": "Our final team ahead of Saturday\u2019s deadline The post FPL Gameweek 11 Scout Picks: Arsenal triple-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -619,42 +1262,6 @@
       "touches_squad": false
     },
     {
-      "digest": "0d7f6ec2f0c62029",
-      "headline": "Man Utd fan criticism has gone too far at times - Berrada",
-      "summary": "Manchester United chief executive Omar Berrada says some of the recent criticism of the club's hierarchy has \"crossed a line\".",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwz0k32j9kr9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T16:55:11Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d7b798d20c9bf9ea",
-      "headline": "Football Daily",
-      "summary": "The team look at Mauricio Pochettino's opening match as Manchester United head coach",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/m003471n?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T16:53:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "05352a8710726f5b",
       "headline": "Man Utd CEO insists club are on the right track \u2013 despite sitting in relegation zone",
       "summary": "Manchester United CEO Omar Berrada insists the club are heading in the right direction despite sitting in the Premier League relegation zone. United are 18th in the table following a poor start to the season, which",
@@ -662,24 +1269,6 @@
       "tier": 2,
       "url": "https://hayters.com/man-utd-ceo-insists-club-are-on-the-right-track-despite-sitting-in-relegation-zone/",
       "claimed_at": "2026-11-20T16:19:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b3d5f81164fee63b",
-      "headline": "Chelsea latest: 'Tom Brady in discussions over Blues investment'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-20T16:11:00Z",
       "players": [
         {
           "element_id": 0,
@@ -715,6 +1304,30 @@
           "element_id": 439,
           "name": "\u0160e\u0161ko",
           "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5ca9eb1012a60fa9",
+      "headline": "Manzambi, Cash, Wan-Bissaka: Aston Villa injury latest for FPL Gameweek 11",
+      "summary": "The Swiss attacker pulled out of international action The post Manzambi, Cash, Wan-Bissaka: Aston Villa injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/manzambi-cash-wan-bissaka-aston-villa-injury-latest-for-fpl-gameweek-11",
+      "claimed_at": "2026-11-20T16:01:11Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 611,
+          "name": "Wan-Bissaka",
+          "club": "AVL",
           "held": false
         }
       ],
@@ -769,42 +1382,6 @@
           "element_id": 586,
           "name": "Mendy",
           "club": "HUL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "20dc8157cb3206d2",
-      "headline": "Why injured Joao Pedro may be Chelsea's most important player",
-      "summary": "With Joao Pedro missing again for Chelsea on Saturday, BBC Sport looks at the importance of the Brazilian to the Blues.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cr62p7x23vg3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T15:18:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "89bf89655f59f2d2",
-      "headline": "Filming training by drones should be illegal - Iraola",
-      "summary": "Liverpool head coach Andoni Iraola says filming with drones around training grounds should be illegal.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqdr1xmekmg5o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T15:08:51Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -883,84 +1460,6 @@
       "touches_squad": false
     },
     {
-      "digest": "5e733e80bfdd0e5c",
-      "headline": "Berrada on Carrick, Poch, defending club leadership and transfers",
-      "summary": "In a turbulent time at Manchester United, chief executive Omar Berrada has sat down exclusively with Sky Sports about United's start to the season, the decision to change head coach and facing fan criticism about the club's leadership",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13614312/omar-berrada-interview-manchester-united-chief-executive-on-michael-carrick-mauricio-pochettino-recent-transfer-activity-and-the-club-hierarchy",
-      "claimed_at": "2026-11-20T14:36:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "573d9296000d2f0e",
-      "headline": "Man Utd latest: Poch addresses Bruno future and wants say on squad decisions",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-20T14:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "82a18b59060c3bd1",
-      "headline": "Arteta warns Arsenal players over FPL team news leak",
-      "summary": "Mikel Arteta says his Arsenal players have been warned against inadvertently leaking team news via Fantasy Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck62pz5r16pro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T14:08:55Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0cd0ba75aa958a84",
-      "headline": "Man City latest: Maresca backs Donnarumma, Fernandez and reveals injury doubts",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-20T13:30:00Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 384,
-          "name": "Donnarumma",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "10fdefb21625175c",
       "headline": "Mitoma, Minteh, Yohanna: Brighton injury latest for FPL Gameweek 11",
       "summary": "Fabian Hurzeler spoke on Friday morning The post Mitoma, Minteh, Yohanna: Brighton injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -979,30 +1478,6 @@
           "element_id": 135,
           "name": "Yohanna",
           "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "659fb20054187fac",
-      "headline": "Spurs latest: De Zerbi on Tel, Maddison and Mudryk's podcast comments",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-20T13:00:00Z",
-      "players": [
-        {
-          "element_id": 515,
-          "name": "Maddison",
-          "club": "TOT",
-          "held": false
-        },
-        {
-          "element_id": 578,
-          "name": "Mudryk",
-          "club": "TOT",
           "held": false
         }
       ],
@@ -1093,24 +1568,6 @@
       "touches_squad": false
     },
     {
-      "digest": "4f63acc2cae5b847",
-      "headline": "Will Frank turn things around at Crystal Palace?",
-      "summary": "One of the Premier League's most charismatic managers is back.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13613145/thomas-frank-what-should-crystal-palace-expect-from-their-new-manager-what-does-he-need-to-change-and-can-he-keep-the-eagles-up",
-      "claimed_at": "2026-11-20T10:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "228d373c20c9a7df",
       "headline": "Arsenal hit by fresh injury blow as Arteta gives update on Saka",
       "summary": "Arsenal boss Mikel Arteta has revealed Bukayo Saka is expected to remain sidelined for another four weeks. The England international has already been out for around a month, with further tests indicating his total recovery time is likel",
@@ -1118,96 +1575,6 @@
       "tier": 2,
       "url": "https://hayters.com/arsenal-hit-by-fresh-injury-blow-as-arteta-gives-update-on-saka/",
       "claimed_at": "2026-11-20T09:47:16Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5e038ea7d8f7f8bb",
-      "headline": "Guimaraes growing at Arsenal - but Arteta still wants more",
-      "summary": "It's all eyes on Bruno Guimaraes this Saturday. The Newcastle hero who captained the team to cup success returns in Arsenal colours. And he returns as a growing cog in the Gunners' system.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13612946/bruno-guimaraes-arsenal-midfielder-is-growing-in-stature-but-mikel-arteta-still-wants-more-from-brazilian-ahead-of-newcastle-return",
-      "claimed_at": "2026-11-20T09:38:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "79a4e1df039f565c",
-      "headline": "Transfer Centre LIVE! Cost to appoint Poch as Man Utd manager revealed...",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
-      "claimed_at": "2026-11-20T09:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a8c94df56fb40f5e",
-      "headline": "Transfer Centre LIVE! Mourinho responds to JJ Gabriel's impending Man Utd exit",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
-      "claimed_at": "2026-11-20T09:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "af2465ff142cf812",
-      "headline": "Transfer Centre LIVE! Will Fernandes stay? Man Utd CEO gives update...",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
-      "claimed_at": "2026-11-20T09:30:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "265a59fac3caffe2",
-      "headline": "Arsenal latest: Saka out for four more weeks with injury",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-20T09:28:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1237,96 +1604,6 @@
       "touches_squad": false
     },
     {
-      "digest": "28a22d45839f44a5",
-      "headline": "Drone operator takes down Man Utd footage and issues apology",
-      "summary": "The drone operator who posted footage of Mauricio Pochettino's first training session at Manchester United on YouTube has said he has now removed the video.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13614271/manchester-united-drone-operator-removes-training-footage-of-mauricio-pochettinos-first-training-session-and-apologises",
-      "claimed_at": "2026-11-20T09:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b45e4e107b035625",
-      "headline": "'Milan, Real & Man Utd eye Napoli's McTominay' - gossip",
-      "summary": "AC Milan, Manchester United and Real Madrid are reportedly interested in Napoli's Scott McTominay, while it is claimed Celtic would be interested in Aston Villa's John McGinn.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ckjwj2295640o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T08:07:48Z",
-      "players": [
-        {
-          "element_id": 45,
-          "name": "McGinn",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3f269ef4a8bc9088",
-      "headline": "From booed to beloved \u2013 how Hurzeler turned his Brighton fortunes around",
-      "summary": "Graham Potter set the tone. Roberto De Zerbi raised expectations. Fabian Hurzeler is blowing both out of the water.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13613485/fabian-hurzeler-how-brighton-boss-won-fans-over-as-seagulls-relish-in-more-controlled-football",
-      "claimed_at": "2026-11-20T08:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c70e32a776112197",
-      "headline": "Inside the rise of 'humble' Nyoni and why Iraola trusts him",
-      "summary": "Teenage midfielder Trey Nyoni backed himself in the summer to play regular football for Liverpool. He is doing exactly that and thriving under Andoni Iraola.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck24enjqvlyeo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T07:42:04Z",
-      "players": [
-        {
-          "element_id": 375,
-          "name": "Nyoni",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "82181cf4749dd1f8",
-      "headline": "Moore eyes Kane shirt as Spurs' past and future stars meet",
-      "summary": "Cologne loanee Mikey Moore says he hopes to exchange shirts with former Spurs team-mate Harry Kane when they face Bayern Munich on Friday.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq0k65pyp4jvo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-20T07:26:36Z",
-      "players": [
-        {
-          "element_id": 523,
-          "name": "Moore",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "cc0ae92e1346ca79",
       "headline": "Slegers admits \u2018ruthless\u2019 Lyon were the better side in Arsenal\u2019s UWCL loss",
       "summary": "Renee Slegers admitted that Lyon were the better side in Arsenal's loss against the French champions. Goals from Jule Brand and Melchie Dumornay were the difference at Meadow Park, but in truth two goals flattered the English",
@@ -1334,132 +1611,6 @@
       "tier": 2,
       "url": "https://hayters.com/slegers-admits-ruthless-lyon-were-the-better-side-in-uwcl-loss/",
       "claimed_at": "2026-11-20T00:06:52Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6a7ea845b0de6db3",
-      "headline": "Arsenal 'have ingredients' but Europe's elite on another level",
-      "summary": "In a difficult defeat by French giants Lyon, Arsenal were shown the gap they need to bridge to challenge for the Champions League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm4gnxz8dvx1o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-19T23:57:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f888f44a0f363a87",
-      "headline": "Barcelona target Man Utd's Martinez - Friday's gossip",
-      "summary": "Barcelona interested in Lisandro Martinez, while Manchester United target Fulham defensive pair and Liverpool scout Serie A top scorer, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cj5y14g2wppko?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-19T21:57:22Z",
-      "players": [
-        {
-          "element_id": 419,
-          "name": "Martinez",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4d76dea9cf19704b",
-      "headline": "Man Utd latest: Drone footage 'a significant tactical advantage to Liverpool'",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-19T21:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6211c30a3c810b3e",
-      "headline": "Shevchenko accuses Mudryk camp of 'baseless slander'",
-      "summary": "Ukraine great Andriy Shevchenko accuses Mykhailo Mudryk of a \"baseless slander\" after the on-loan Tottenham winger blamed his failed drugs test on the nation's football association.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmgqx908lk44o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-19T20:44:11Z",
-      "players": [
-        {
-          "element_id": 578,
-          "name": "Mudryk",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "23525855c5c6027a",
-      "headline": "Drone footage of Pochettino's first Man Utd training session leaked online",
-      "summary": "Mauricio Pochettino's first Manchester United training session today has been leaked online in a major security breach.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13614159/manchester-united-drone-footage-of-mauricio-pochettinos-first-training-session-leaked-online",
-      "claimed_at": "2026-11-19T20:28:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "151b2b9118dddcf8",
-      "headline": "Frank happy to be 'back in the circus' at Palace",
-      "summary": "Thomas Frank is happy to be \"back in the circus\" after speaking at his first news conference as Crystal Palace manager.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cje3900n0vvro?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-19T20:16:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c97d30a71e5654c7",
-      "headline": "Pochettino's first Man Utd training session filmed by drone operator",
-      "summary": "Mauricio Pochettino's first Manchester United training session has been filmed by fan with a drone from outside the club's Carrington training ground.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6wy9d7wqy7wo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-19T18:45:56Z",
       "players": [
         {
           "element_id": 0,
@@ -1561,60 +1712,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d37af82a5f5fa1b7",
-      "headline": "Culture, defence, Fernandes - Pochettino's priorities at Man Utd",
-      "summary": "Culture, defence and Bruno Fernandes - the key issues facing Mauricio Pochettino as he takes over as Manchester United boss.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cxlylzyg38l8o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-19T15:05:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "98a4f3317c3a3ad3",
-      "headline": "Premier League clubs to cover legal costs if Man City sponsors sue",
-      "summary": "Premier League clubs vote to provide legal cover to the organisation's five board directors in the event Manchester City's sponsors sue them.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqy4jvdw7jdlo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-19T13:29:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f85e558dbb46d1c6",
-      "headline": "Premier League clubs to cover legal costs if Man City sponsors sue",
-      "summary": "Manchester City charges: Premier League clubs to cover legal costs if sponsors sue.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqy4jvdw7jdlo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-19T13:29:42Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "615da40092a3b68c",
       "headline": "What can FPL managers expect from Thomas Frank at Crystal Palace?",
       "summary": "Can the former Brentford boss reawaken dormant picks like Ismaila Sarr? The post What can FPL managers expect from Thomas Frank at Crystal Palace? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
@@ -1633,108 +1730,24 @@
       "touches_squad": false
     },
     {
-      "digest": "31e42440d01f58b6",
-      "headline": "Assessing Newcastle\u2019s season so far: What has worked, what needs to improve, and rest of the season predictions",
-      "summary": "Did we all get too ahead of ourselves? Were the last five years simply a mirage of what Newcastle United could be? Are we now back to that familiar mediocrity synonymous with generations p",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/assessing-newcastles-season-so-far-what-has-worked-what-needs-to-improve-and-rest-of-the-season-predictions/",
-      "claimed_at": "2026-11-18T17:00:00Z",
+      "digest": "f56703ad5e053b1e",
+      "headline": "\u00ad\u00ad\u00adMcGinn v Manzambi: How do the two Villa midfielders compare?",
+      "summary": "A superb run of fixtures awaits the Villans The post \u00ad\u00ad\u00adMcGinn v Manzambi: How do the two Villa midfielders compare? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/17/mcginn-v-manzambi-how-do-the-two-villa-midfielders-compare",
+      "claimed_at": "2026-11-17T17:30:00Z",
       "players": [
         {
-          "element_id": 0,
-          "name": null,
-          "club": null,
+          "element_id": 45,
+          "name": "McGinn",
+          "club": "AVL",
           "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e63045cb9ef0e8de",
-      "headline": "Assessing Spurs\u2019 season so far: What has worked, what needs to improve, and rest of the season predictions",
-      "summary": "With over \u00a3300 million spent, a full pre-season under Roberto De Zerbi and renewed optimism within the club, many expected Spurs to skyrocket back up the table. However, it has not been that si",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/assessing-spurs-season-so-far-what-has-worked-what-needs-to-improve-and-rest-of-the-season-predictions/",
-      "claimed_at": "2026-11-18T15:00:00Z",
-      "players": [
+        },
         {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7900607e96ffbc4b",
-      "headline": "\u2018It\u2019s not important if you run or not\u2019 \u2013 Pochettino ahead of Man Utd arrival",
-      "summary": "Incoming Manchester United manager Mauricio Pochettino has answered on his new team\u2019s poor running statistics. Pochettino concluded his time with the USA with a comfortable victory and will now travel to Manchester to take",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/its-not-important-if-you-run-or-not-pochettino-ahead-of-man-utd-arrival/",
-      "claimed_at": "2026-11-18T13:02:39Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a96cd7e0c2568470",
-      "headline": "Ex-Man Utd captain thinks Pochettino can turn things around with time",
-      "summary": "Former Manchester United captain Ashley Young thinks Mauricio Pochettino can be the manager to turn things around at Old Trafford, if he is given time. Following his final game in charge of the USA, Pochettino is expected to arriv",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/ex-man-utd-captain-thinks-pochettino-can-turn-things-around-with-time/",
-      "claimed_at": "2026-11-18T11:54:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ba8b743a5dfbfd9d",
-      "headline": "Assessing Arsenal\u2019s season so far: What has worked, what needs to improve, and rest of the season predictions",
-      "summary": "he champions have made a formidable start to their title defence. But with goals at a premium and another demanding second half of the season ahead, there is still work for Mikel Arteta to d",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/assessing-arsenals-season-so-far-what-has-worked-what-needs-to-improve-and-rest-of-the-season-predictions/",
-      "claimed_at": "2026-11-18T11:52:56Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "22bd01f005cd6010",
-      "headline": "Arsenal set to secure the futures of several key players \u2013 reports",
-      "summary": "Arsenal are close to finalising new contracts for David Raya, Jurrien Timber, Piero Hincapie and Declan Rice as the Premier League champions continue to secure the long-term futures of key players. The Athletic first reported that a",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-set-to-secure-the-futures-of-several-key-players-reports/",
-      "claimed_at": "2026-11-17T21:49:47Z",
-      "players": [
-        {
-          "element_id": 9,
-          "name": "Hincapie",
-          "club": "ARS",
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
           "held": false
         }
       ],
