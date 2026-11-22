@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-22T16:54:51.289179Z",
-  "n_dropped": 115,
+  "generated_at": "2026-11-22T22:18:14.218248Z",
+  "n_dropped": 142,
   "dropped_by_source": {
-    "bbc_football": 40,
-    "hayters": 10,
-    "sky_football": 65
+    "bbc_football": 51,
+    "hayters": 13,
+    "sky_football": 78
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 205,
+  "n_articles": 232,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -80,12 +80,534 @@
       "touches_squad": true
     },
     {
+      "digest": "bbc5b680dadb9282",
+      "headline": "'World's best could've lost 4-0' - but should Man Utd have done more at Anfield?",
+      "summary": "Mauricio Pochettino believes even the best team in the world could have conceded four goals at Liverpool in Manchester United's circumstances - but should the Red Devils have done more in defeat?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm782j80yypwo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T21:36:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fae68e4b4d3fd541",
+      "headline": "Chaotic week, nightmare start and huge reality check for Pochettino",
+      "summary": "Mauricio Pochettino's reign as Manchester United boss could barely have got off to a more chastening start, writes Simon Stone.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cwd012903kvgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T21:22:10Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8097fb4fc06156b7",
+      "headline": "Man Utd plotting Toney move - Monday's gossip",
+      "summary": "Manchester United eye move for Al-Ahli striker Ivan Toney, Fulham hold contract talks with Calvin Bassey and PSG could step up pursuit of Eli Junior Kroupi.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ck053nyl6399o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T21:04:15Z",
+      "players": [
+        {
+          "element_id": 257,
+          "name": "Bassey",
+          "club": "FUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ce92882111c1aeb0",
+      "headline": "\u2018That back four will get you relegated\u2019 \u2013 Neville\u2019s stark Man Utd warning after Anfield demolition",
+      "summary": "Gary Neville admits he was baffled by Mauricio Pochettino\u2019s decision to start Matthijs de Ligt against Liverpool and warned Manchester United\u2019s current defence could get them relegated. De Ligt had onl",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/that-back-four-will-get-you-relegated-nevilles-stark-man-utd-warning-after-anfield-demolition/",
+      "claimed_at": "2026-11-22T20:50:13Z",
+      "players": [
+        {
+          "element_id": 416,
+          "name": "De Ligt",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "11024438f89f1a0c",
+      "headline": "Gary Neville on De Ligt selection and 'negligent' Man Utd",
+      "summary": "Gary Neville accused Manchester United's hierarchy of negligence for failing to strengthen their back line as their 4-0 loss to Liverpool left them with the worst defensive record in Europe.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13615413/liverpool-4-0-man-utd-gary-neville-on-matthijs-de-ligt-selection-and-negligent-red-devils",
+      "claimed_at": "2026-11-22T20:25:00Z",
+      "players": [
+        {
+          "element_id": 416,
+          "name": "De Ligt",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ddbba2f8ccac47d7",
+      "headline": "Slegers takes responsibility as Arsenal boss faces more questions on future",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13208899/wsl-news-transfers-rumours-gossip-and-womens-football-latest",
+      "claimed_at": "2026-11-22T20:20:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e7b0b9ae3ebb57b9",
+      "headline": "Iraola delighted to repay Liverpool fans with huge win over Man Utd",
+      "summary": "Liverpool boss Andoni Iraola was delighted to deliver a huge home win for the supporters as his side thrashed rivals Manchester United 4-0 at Anfield. United were reduced to ten men early on after Leny Yoro was sent off, but Iraola",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/iraola-delighted-to-repay-liverpool-fans-with-huge-win-over-man-utd/",
+      "claimed_at": "2026-11-22T20:03:41Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "04c0860a5cc692a7",
+      "headline": "McBurnie stoppage-time double earns Hull win over 10-man Brighton",
+      "summary": "Oli McBurnie's stoppage-time double earns victory for Hull City against second-placed Brighton in the Premier League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ck62pzzezqz2o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T19:59:38Z",
+      "players": [
+        {
+          "element_id": 295,
+          "name": "McBurnie",
+          "club": "HUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ac4b05af1f7c9c1a",
+      "headline": "Ngumoha stars as Liverpool thrash 10-man Man Utd",
+      "summary": "Mauricio Pochettino's reign as Manchester United head coach begins in desperate fashion as his team are thrashed by rivals Liverpool to remain in the Premier League relegation zone.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c933g77knz00o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T19:59:35Z",
+      "players": [
+        {
+          "element_id": 369,
+          "name": "Ngumoha",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "03871806f6ba18de",
+      "headline": "'Wake up, wake up!' - Gary Neville's plea to Man Utd's defenders",
+      "summary": "Gary Neville makes a passionate plea to Manchester United's defenders after their 4-0 defeat at Liverpool.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13615415/liverpool-4-0-man-utd-gary-nevilles-passionate-plea-to-man-utds-defending",
+      "claimed_at": "2026-11-22T19:51:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "32ea5f63b7f2073b",
+      "headline": "\u2018Do you think that it\u2019s easy?\u2019 \u2013 Pochettino defends Man Utd players after Liverpool thrashing",
+      "summary": "Mauricio Pochettino insisted even the best team in the world could have conceded four goals in Manchester United\u2019s circumstances after their 4-0 defeat to Liverpool. United were reduced to ten men after jus",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/do-you-think-that-its-easy-pochettino-defends-man-utd-players-after-liverpool-thrashing/",
+      "claimed_at": "2026-11-22T19:50:49Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9e731a7de45fcdd6",
+      "headline": "Iraola 'enjoyed' big win over Man Utd",
+      "summary": "Liverpool head coach Andoni Iraola is pleased with his side's performance in their dominant win over Manchester United although he says that his side can still play better.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c3y0x55ey81yo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T19:25:21Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c834a74cf9edd20f",
+      "headline": "From conceding seven to Hull heroics - how Tzolakis recovered to defy Brighton",
+      "summary": "Nine days after playing for Greece in a nightmare 7-0 loss, keeper Konstantinos Tzolakis plays a pivotal role in Hull's Premier League win against Brighton.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm4gn7npqe8yo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T19:03:32Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d9b837a785b2de38",
+      "headline": "Pochettino on 'painful' defeat in first game as Man Utd boss",
+      "summary": "Manchester United's new head coach Mauricio Pochettino says his side must transform \"anger\" from their thumping at the hands of Liverpool into \"energy\" to improve under his reign.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c8p3vyyg4d6vo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T19:03:24Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0345ac3459986772",
+      "headline": "'No chance!' - Poch and Mainoo fume at 'unfair' Yoro red card",
+      "summary": "Mauricio Pochettino felt Manchester United were given an \"unfair\" red card in their 4-0 defeat at Liverpool - with Kobbie Mainoo replying \"no chance\" when asked whether Leny Yoro should have been sent off.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13615402/leny-yoro-red-card-man-utd-boss-mauricio-pochettino-and-kobbie-mainoo-angry-at-sending-off-for-foul-on-liverpools-alexander-isak",
+      "claimed_at": "2026-11-22T18:58:00Z",
+      "players": [
+        {
+          "element_id": 432,
+          "name": "Mainoo",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c4ce6d6c32003d4c",
+      "headline": "Liverpool latest: Carra praises 'outstanding' Wirtz in man-of-match display",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-22T18:52:00Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3d6239462644e5cd",
+      "headline": "Liverpool's fab four as they thrash 10-man Man Utd",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Liverpool and Manchester United.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13615396/liverpool-4-0-manchester-united-premier-league-highlights",
+      "claimed_at": "2026-11-22T18:43:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0f0066f10a9f1ca9",
+      "headline": "'I feel like swearing!' - Keane on Man Utd's heavy loss to Liverpool",
+      "summary": "Roy Keane shares his thoughts on Manchester United after their 4-0 loss to Liverpool and his disbelief at their 'lack of fight'.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13615388/roy-keanes-post-match-takedown-of-man-utd-after-4-0-defeat-at-liverpool",
+      "claimed_at": "2026-11-22T18:35:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0ca7721b73d469d0",
+      "headline": "FPL notes: Villa attack toils + \u00a34.4m midfielder impresses again",
+      "summary": "Unai Emery's side fail to make their possession count The post FPL notes: Villa attack toils + \u00a34.4m midfielder impresses again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/22/fpl-notes-villa-attack-toils-4-4m-midfielder-impresses-again",
+      "claimed_at": "2026-11-22T18:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "83e52b731fb04a31",
+      "headline": "Yoro sees red as Ngumoha shines - Liverpool v Man Utd player ratings",
+      "summary": "How Liverpool and Manchester United's players rated following their Premier League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c933gzxk66yyo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T18:28:51Z",
+      "players": [
+        {
+          "element_id": 369,
+          "name": "Ngumoha",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2048f108931a89b9",
+      "headline": "Nightmare start for Pochettino as Liverpool rout 10-man Man Utd",
+      "summary": "Mauricio Pochettino endured a horror start to his Manchester United tenure as his 10-man side were thrashed 4-0 by Liverpool at Anfield following Leny Yoro's early sending off.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/liverpool-vs-manchester-united/report/559550",
+      "claimed_at": "2026-11-22T18:25:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "583b5613fca18e67",
+      "headline": "Man Utd latest: Worst defence in Europe as Keane & Neville react to Liverpool loss",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-22T18:24:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ba1ca10d645423b0",
+      "headline": "The red card that changed Liverpool-Man Utd: correct call?",
+      "summary": "Leny Yoro's red card after eight minutes changed Liverpool v Manchester United - did officials make the correct call?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq7827p8emmxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T17:55:54Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "bdd2875a1917b7fe",
+      "headline": "Spurs deny Man City top spot with statement win",
+      "summary": "Despite taking an early lead through Khadija Shaw, Manchester City suffer a second consecutive defeat as Spurs earn an impressive victory and deny them the chance to return to the top of the table.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c9vg2112evvdo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T17:54:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f73e4aff03e88e25",
+      "headline": "Man Utd score dramatic late winner to extend record run",
+      "summary": "Simi Awujo's last-gasp winner caps a remarkable Manchester United comeback at Birmingham, securing a dramatic victory and stretching the club's record unbeaten run to 14 matches.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cm0rkzzyl2ego?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T17:54:32Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d678a24873740940",
+      "headline": "Jakirovic full of praise for Tzolakis performance",
+      "summary": "Hull head coach Sergej Jakirovic is pleased with his side's \"precise\" counter-attacking to earn a victory over Brighton, and describes goalkeeper Konstantinos Tzolakis' performance as \"unbelievable.\"",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqz0k335d0njo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T17:18:07Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0e5022399b99d703",
+      "headline": "Brighton latest: 'We weren't patient enough', says Hurzeler after Hull loss",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279295/brighton-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-11-22T17:17:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "fe27b17e878eb2c5",
+      "headline": "Late McBurnie double sees Hull stun in-form Brighton",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Hull City and Brighton.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13615325/hull-city-2-0-brighton-premier-league-highlights",
+      "claimed_at": "2026-11-22T16:31:00Z",
+      "players": [
+        {
+          "element_id": 295,
+          "name": "McBurnie",
+          "club": "HUL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "a35377e7f1f1c0e3",
       "headline": "McBurnie's late double stuns 10-man Brighton after Tzolakis heroics",
       "summary": "A Konstantinos Tzolakis goalkeeping masterclass teed up Oli McBurnie to score two late goals as Hull stunned dominant Brighton in a smash-and-grab 2-0 win at the MKM Stadium.",
       "source": "sky_football",
       "tier": 3,
       "url": "https://www.skysports.com/football/hull-city-vs-brighton-and-hove-albion/report/559549",
+      "claimed_at": "2026-11-22T16:15:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ee9a1ca8de14767c",
+      "headline": "Punishing start for Pochettino as size of Man Utd mess made clear",
+      "summary": "Well, they ran. They had to because there were only 10 of them for all but the first seven minutes. If running were the only problem then this mess might soon be solvable. But Manchester United's 4-0 defeat to Liverpool at Anfield hig",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13615315/mauricio-pochettino-made-mistakes-in-man-utds-4-0-defeat-to-liverpool-but-the-size-of-the-mess-he-has-inherited-is-clear",
       "claimed_at": "2026-11-22T16:15:00Z",
       "players": [
         {
@@ -185,6 +707,24 @@
       "digest": "6358e77aff410b3f",
       "headline": "Liverpool 2-0 Man Utd LIVE \u2013 Nightmare start for Pochettino as Yoro sent off in eight minutes",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Liverpool 2-0 Man Utd LIVE - Nightmare start for Pochettino as Yoro sent off in eight minutes appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/liverpool-v-man-utd-live-team-news-updates-and-reaction/",
+      "claimed_at": "2026-11-22T13:10:15Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "674f05798f54d4c4",
+      "headline": "Liverpool 4-0 Man Utd LIVE \u2013 Nightmare start for Pochettino as ten-man Utd destroyed",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Liverpool 4-0 Man Utd LIVE - Nightmare start for Pochettino as ten-man Utd destroyed appeared first on Hayters.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/liverpool-v-man-utd-live-team-news-updates-and-reaction/",
@@ -614,132 +1154,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f6ed4ccb69538534",
-      "headline": "Evanilson strikes again as Bournemouth beat Forest",
-      "summary": "Evanilson scores in his sixth consecutive Premier League game, as Bournemouth defeat Nottingham Forest 2-0 at the Vitality Stadium.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cm4gn997yry2o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:59:17Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "27d4bf06ba4621eb",
-      "headline": "Leeds dominate Chelsea for first Stamford Bridge win since 1999",
-      "summary": "Noah Okafor scores twice to deliver Leeds United's first win at Chelsea in 27 years, in an impressive 4-1 victory at Stamford Bridge. They move up to sixth in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c3ewvkk4qgxjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:59:13Z",
-      "players": [
-        {
-          "element_id": 336,
-          "name": "Okafor",
-          "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3a73ca487ede11a2",
-      "headline": "Leeds dominate Chelsea for first Stamford Bridge win since 1999",
-      "summary": "Noah Okafor scores twice to deliver Leeds United's first win at Chelsea in 27 years, in an impressive 4-1 victory at Stamford Bridge. Daniel Farke's side move up to sixth in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c3ewvkk4qgxjo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:59:13Z",
-      "players": [
-        {
-          "element_id": 336,
-          "name": "Okafor",
-          "club": "LEE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b0531e9584a425ee",
-      "headline": "Man City drop points to Fulham despite superb Anderson volley",
-      "summary": "Elliot Anderson's fantastic volley earns Manchester City a first Premier League point in over a month as they come from behind to hold Fulham.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c30rkq9xyk8eo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:59:08Z",
-      "players": [
-        {
-          "element_id": 481,
-          "name": "Anderson",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "94e5e361cb6bd61a",
-      "headline": "Teenager Williams-Barnett shines as Spurs beat Ipswich",
-      "summary": "Tottenham Hotspur teenager Luca Williams-Barnett starres for Roberto de Zerbi's side as they comfortably beat Ipswich Town.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c3174qq2j82zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:59:02Z",
-      "players": [
-        {
-          "element_id": 601,
-          "name": "Williams-Barnett",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "0c688b77b45aecf8",
-      "headline": "Villa's home woes continue as Sunderland earn point",
-      "summary": "Aston Villa's struggles at home this season continue as they are held to a goalless draw by Sunderland in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c5j9m227l42do?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:58:56Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c5109cc5d8c2c522",
-      "headline": "Coventry beat Palace in Frank's first game after late own goal",
-      "summary": "A Dwight McNeil own goal in the 85th minute gives Coventry City a 3-2 win to move three points clear of the relegation zone, as Thomas Frank's first game in charge at Crystal Palace ends in defeat in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c8wy5ddky5n9o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:58:52Z",
-      "players": [
-        {
-          "element_id": 241,
-          "name": "McNeil",
-          "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "fbf452ec899c94c6",
       "headline": "Arsenal rescue a draw at Newcastle",
       "summary": "FREE TO WATCH: Highlights from the Premier League match between Newcastle and Arsenal.",
@@ -747,276 +1161,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/watch/video/13615004/newcastle-2-2-arsenal-premier-league-highlights",
       "claimed_at": "2026-11-21T19:35:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4f6df5b288ed14f8",
-      "headline": "Madueke 'a consistent threat' - Newcastle v Arsenal player ratings",
-      "summary": "BBC Sport's Alex Howell shares his player ratings for Newcastle and Arsenal's 2-2 draw in the Premier League - and you can rate the players too.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq4gn97e8ee4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:29:48Z",
-      "players": [
-        {
-          "element_id": 16,
-          "name": "Madueke",
-          "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "70e3a5d396112310",
-      "headline": "Who was 'a consistent threat'? Newcastle v Arsenal player ratings",
-      "summary": "BBC Sport's Alex Howell shares his player ratings for Newcastle and Arsenal's 2-2 draw in the Premier League - and you can rate the players too.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq4gn97e8ee4o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:29:48Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "76acba9a22f9969f",
-      "headline": "'The world got to see today' - who is new Spurs star Williams-Barnett?",
-      "summary": "BBC Sport looks at Tottenham's new teenage star after Luca Williams-Barnett makes a superb full Premier League debut for Spurs",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm9d7jg50e12o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:21:01Z",
-      "players": [
-        {
-          "element_id": 601,
-          "name": "Williams-Barnett",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bb81b10722431a88",
-      "headline": "'The world got to see today' - Williams-Barnett announces himself as Spurs star",
-      "summary": "BBC Sport looks at Tottenham's new teenage star after Luca Williams-Barnett makes a superb full Premier League debut for Spurs",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm9d7jg50e12o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:21:01Z",
-      "players": [
-        {
-          "element_id": 601,
-          "name": "Williams-Barnett",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d4720c3b1b39e9c6",
-      "headline": "Alonso: Chelsea are fragile and need to be tougher",
-      "summary": "Chelsea manager Xabi Alonso said his side are \"fragile\" and need to be \"tougher\" after being embarrassed by Leeds United.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13614992/chelsea-are-fragile-and-need-to-toughen-up-says-manager-xabi-alonso-after-humiliating-defeat-to-leeds-united",
-      "claimed_at": "2026-11-21T19:13:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "a3f9919b41edaf29",
-      "headline": "'Fragile' and 'miles off it' - Alonso's Chelsea honeymoon is over",
-      "summary": "The honeymoon period is over for Chelsea manager Xabi Alonso, who is now in firefighting mode after a 4-1 defeat by Leeds at Stamford Bridge.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwe8944d004yo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:04:09Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1ff07df74b371504",
-      "headline": "Williams-Barnett's talent bigger than performance - De Zerbi",
-      "summary": "Tottenham Hotspur head coach Roberto De Zerbi is full of praise for teenager Luca Williams-Barnett who was at the heart of a 2-0 win over Ipswich Town.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c6wy4gg24vlno?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T18:32:27Z",
-      "players": [
-        {
-          "element_id": 601,
-          "name": "Williams-Barnett",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ad2cf74f9169bd5d",
-      "headline": "Arsenal's winning run ended by Newcastle in thrilling draw",
-      "summary": "Arsenal's four-game winning Premier League run without conceding was ended by Newcastle in a frantic 2-2 draw.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/newcastle-united-vs-arsenal/report/559552",
-      "claimed_at": "2026-11-21T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "db1e6a5b4c5fcca7",
-      "headline": "Leeds run riot at Stamford Bridge as Chelsea crumble",
-      "summary": "FREE TO WATCH: Highlights from the Premier League match between Chelsea and Leeds United.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13614901/chelsea-1-4-leeds-united-premier-league-highlights",
-      "claimed_at": "2026-11-21T17:23:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "4a9079069d5194be",
-      "headline": "Eighteen-year-old Williams-Barnett shines as Spurs beat Ipswich",
-      "summary": "FREE TO WATCH: Highlights from the Premier League match between Tottenham Hotspur and Ipswich Town.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13614870/tottenham-hotspur-2-0-ipswich-town-premier-league-highlights",
-      "claimed_at": "2026-11-21T17:15:00Z",
-      "players": [
-        {
-          "element_id": 601,
-          "name": "Williams-Barnett",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5ec1a2427c67c7bc",
-      "headline": "Fulham earn point at the Etihad as Man City's poor run continues",
-      "summary": "Highlights from the Premier League match between Manchester City and Fulham.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13614722/manchester-city-1-1-fulham-premier-league-highlights",
-      "claimed_at": "2026-11-21T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "922c8cecd346e88a",
-      "headline": "Sunderland frustrate uninspiring Villa in goalless draw",
-      "summary": "Highlights from the Premier League match between Aston Villa and Sunderland.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13614863/aston-villa-0-0-sunderland-premier-league-highlights",
-      "claimed_at": "2026-11-21T17:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5239a4d0df7fac31",
-      "headline": "Evanilson strikes again as Bournemouth dominate lacklustre Forest",
-      "summary": "Highlights from the Premier League match between Bournemouth and Nottingham Forest.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13614873/bournemouth-2-0-nottingham-forest-premier-league-highlights",
-      "claimed_at": "2026-11-21T17:14:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "91df4452e3c660c3",
-      "headline": "Late OG gives Coventry points in five-goal thriller",
-      "summary": "Highlights from the match between Coventry and Crystal Palace in the Premier League.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13614869/coventry-3-2-crystal-palace-premier-league-highlights",
-      "claimed_at": "2026-11-21T17:10:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b12a611ddf00c29e",
-      "headline": "Bournemouth make more history with comfortable win against Forest",
-      "summary": "Bournemouth continued their unstoppable form with a comfortable 2-0 victory against Nottingham Forest and created two bits of history in the process.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/bournemouth-vs-nottingham-forest/report/559545",
-      "claimed_at": "2026-11-21T17:05:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1046,42 +1190,6 @@
       "touches_squad": false
     },
     {
-      "digest": "306db42411a77744",
-      "headline": "Villa held to frustrating draw against Sunderland",
-      "summary": "Aston Villa were held to a frustrating 0-0 draw against Sunderland as Regis Le Bris' side soaked up the pressure to secure a point away at Villa Park.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/aston-villa-vs-sunderland/report/559544",
-      "claimed_at": "2026-11-21T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ef38ba706f324066",
-      "headline": "Leeds dismantle Chelsea as pressure grows on Alonso",
-      "summary": "Leeds dismantled Chelsea and increased the pressure on manager Xabi Alonso with an outstanding performance in a stunning 4-1 win.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-vs-leeds-united/report/559547",
-      "claimed_at": "2026-11-21T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f0bc32b90a7ff25d",
       "headline": "Newcastle v Arsenal team news: Konsa starts, Saliba a sub",
       "summary": "Two changes for Newcastle, one for Arsenal The post Newcastle v Arsenal team news: Konsa starts, Saliba a sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1094,24 +1202,6 @@
           "element_id": 6,
           "name": "Saliba",
           "club": "ARS",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7f16847107b77667",
-      "headline": "'Special' teen Williams-Barnett scores to dazzle in Spurs' win over Ipswich",
-      "summary": "Teenager Luca Williams-Barnett scored on his first Tottenham start to make history in Spurs' 2-0 home win over Ipswich.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/tottenham-hotspur-vs-ipswich-town/report/559553",
-      "claimed_at": "2026-11-21T16:45:00Z",
-      "players": [
-        {
-          "element_id": 601,
-          "name": "Williams-Barnett",
-          "club": "TOT",
           "held": false
         }
       ],
@@ -1640,78 +1730,6 @@
       "touches_squad": false
     },
     {
-      "digest": "228d373c20c9a7df",
-      "headline": "Arsenal hit by fresh injury blow as Arteta gives update on Saka",
-      "summary": "Arsenal boss Mikel Arteta has revealed Bukayo Saka is expected to remain sidelined for another four weeks. The England international has already been out for around a month, with further tests indicating his total recovery time is likel",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arsenal-hit-by-fresh-injury-blow-as-arteta-gives-update-on-saka/",
-      "claimed_at": "2026-11-20T09:47:16Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "825230d1ce5a2efa",
-      "headline": "Assessing Man City\u2019s season so far: What has worked, what needs to improve, and rest of the season predictions",
-      "summary": "Enzo Maresca\u2019s Manchester City tenure got off to a flying start, although that has since threatened to be a false dawn. The Italian became the first manager in Premier League history to win",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/assessing-man-citys-season-so-far-what-has-worked-what-needs-to-improve-and-rest-of-the-season-predictions/",
-      "claimed_at": "2026-11-20T09:24:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cc0ae92e1346ca79",
-      "headline": "Slegers admits \u2018ruthless\u2019 Lyon were the better side in Arsenal\u2019s UWCL loss",
-      "summary": "Renee Slegers admitted that Lyon were the better side in Arsenal's loss against the French champions. Goals from Jule Brand and Melchie Dumornay were the difference at Meadow Park, but in truth two goals flattered the English",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/slegers-admits-ruthless-lyon-were-the-better-side-in-uwcl-loss/",
-      "claimed_at": "2026-11-20T00:06:52Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ad0b25e4248ba491",
-      "headline": "Frank to be without duo for his Crystal Palace debut",
-      "summary": "Thomas Frank has confirmed Takehiro Tomiyasu and Isma\u00efla Sarr will both miss Crystal Palace\u2019s trip to Coventry City on Saturday. Speaking for the first time since becoming Palace manager, Frank revealed Tomiyasu is expected to return to training n",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/frank-to-be-without-duo-for-his-crystal-palace-debut/",
-      "claimed_at": "2026-11-19T17:21:03Z",
-      "players": [
-        {
-          "element_id": 577,
-          "name": "Tomiyasu",
-          "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "615da40092a3b68c",
       "headline": "What can FPL managers expect from Thomas Frank at Crystal Palace?",
       "summary": "Can the former Brentford boss reawaken dormant picks like Ismaila Sarr? The post What can FPL managers expect from Thomas Frank at Crystal Palace? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
@@ -1724,30 +1742,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "f56703ad5e053b1e",
-      "headline": "\u00ad\u00ad\u00adMcGinn v Manzambi: How do the two Villa midfielders compare?",
-      "summary": "A superb run of fixtures awaits the Villans The post \u00ad\u00ad\u00adMcGinn v Manzambi: How do the two Villa midfielders compare? appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/17/mcginn-v-manzambi-how-do-the-two-villa-midfielders-compare",
-      "claimed_at": "2026-11-17T17:30:00Z",
-      "players": [
-        {
-          "element_id": 45,
-          "name": "McGinn",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
           "held": false
         }
       ],
