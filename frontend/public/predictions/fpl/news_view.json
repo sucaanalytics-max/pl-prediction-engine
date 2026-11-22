@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-22T01:35:42.828708Z",
-  "n_dropped": 103,
+  "generated_at": "2026-11-22T08:51:29.360900Z",
+  "n_dropped": 106,
   "dropped_by_source": {
-    "bbc_football": 38,
+    "bbc_football": 39,
     "hayters": 7,
-    "sky_football": 58
+    "sky_football": 60
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 193,
+  "n_articles": 196,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -60,6 +60,60 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "2869083d9bfd76a8",
+      "headline": "'Not the right time' - Fernandes pauses Man Utd contract talks",
+      "summary": "Manchester United captain Bruno Fernandes says he has been offered a new contract by the club but feels it \"is not the right time\" for discussions about his future.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6x2e8devk1po?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T08:41:20Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1dc2d5b4a7a96582",
+      "headline": "Fernandes: Man Utd have offered new deal but now is not time for talks",
+      "summary": "Bruno Fernandes exclusively told Sky Sports that Manchester United have offered him a new contract but he has put discussions on hold as he insists the club's priority must be returning to winning ways.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13614990/bruno-fernandes-man-utd-captain-confirms-contract-offer-but-says-negotiations-are-on-hold",
+      "claimed_at": "2026-11-22T07:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7a98d353e552feba",
+      "headline": "'He will see what Man Utd are made of' - Pulis on Pochettino's first game",
+      "summary": "BBC Sport columnist Tony Pulis explains how new Manchester United boss Mauricio Pochettino will prepare for Sunday's game against Liverpool after only a few days with his squad.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/ckqx5w58dgv7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T06:21:55Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "8760ce6f3839a907",
@@ -692,24 +746,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6c91f10a2e38272c",
-      "headline": "Leeds 'created piece of history' in Chelsea win - Farke",
-      "summary": "Leeds United manager Daniel Farke is delighted his side \"created a piece of history\" following their 4-1 win against Chelsea, their first at Stamford Bridge since 1999.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cmwy5ddwnygqo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T17:42:14Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "db1e6a5b4c5fcca7",
       "headline": "Leeds run riot at Stamford Bridge as Chelsea crumble",
       "summary": "FREE TO WATCH: Highlights from the Premier League match between Chelsea and Leeds United.",
@@ -926,30 +962,6 @@
       "touches_squad": false
     },
     {
-      "digest": "79303dc01492bda1",
-      "headline": "Fernandez dropped, Anderson scores - Man City's \u00a3327m midfield dilemma",
-      "summary": "Manchester City spent \u00a3327m overhauling their midfield in the summer - but how does Enzo Maresca find the right balance?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cxe8944j188yo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T16:07:19Z",
-      "players": [
-        {
-          "element_id": 155,
-          "name": "Enzo",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 481,
-          "name": "Anderson",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a0677291ea54965f",
       "headline": "Newcastle v Arsenal LIVE \u2013 team news, updates and reaction",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Newcastle v Arsenal LIVE - team news, updates and reaction appeared first on Hayters.",
@@ -1148,24 +1160,6 @@
           "element_id": 601,
           "name": "Williams-Barnett",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c829350e4656da18",
-      "headline": "Chelsea booed off with Leeds dominating at Stamford Bridge LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/chelsea-vs-leeds-united/live/559547",
-      "claimed_at": "2026-11-21T13:03:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
