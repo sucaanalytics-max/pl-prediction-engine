@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-22T22:18:14.218248Z",
-  "n_dropped": 142,
+  "generated_at": "2026-11-23T02:57:51.373633Z",
+  "n_dropped": 145,
   "dropped_by_source": {
-    "bbc_football": 51,
-    "hayters": 13,
-    "sky_football": 78
+    "bbc_football": 54,
+    "hayters": 14,
+    "sky_football": 77
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 232,
+  "n_articles": 235,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -78,6 +78,96 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "49ad9e0e81cf1a15",
+      "headline": "Did Liverpool 'get lucky' with red card decision?",
+      "summary": "Match of the Day pundits Danny Murphy and Ashley Young believe that Liverpool were perhaps \"lucky\" when Manchester United's Leny Yoro was sent off in the 8th-minute at Anfield.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cq23jmklrj33o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T23:59:59Z",
+      "players": [
+        {
+          "element_id": 361,
+          "name": "Lucky",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1b71bab90a0e313e",
+      "headline": "How 'outstanding' Tzolakis kept Brighton at bay",
+      "summary": "Match of the Day pundit Danny Murphy looks at how Hull goalkeeper Konstantinos Tzolakis was able to thwart high-flying Brighton in their 2-0 win over the Seagulls at the MKM Stadium.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cm702nzyl8pzo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T23:59:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9b5523ce7ccc4836",
+      "headline": "A 'wow' player - why Ngumoha is already a Liverpool game-changer",
+      "summary": "Match of the Day pundit Danny Murphy explains how Rio Ngumoha showed everyone what he is capable of in Liverpool's 4-0 win over Manchester United.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmn80y5w84qqo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T23:20:16Z",
+      "players": [
+        {
+          "element_id": 369,
+          "name": "Ngumoha",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "870b56e23503bf44",
+      "headline": "Football Daily",
+      "summary": "Dale Johnson & Umir Irfan join Rick & Lloyd after Man Utd\u2019s 4-0 defeat at Liverpool.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sounds/play/p0ppcw2v?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-22T23:14:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4f2e1b31ced638c6",
+      "headline": "Luca Williams-Barnett \u2013 keeping the next Spurs superstar\u2019s feet on the ground.",
+      "summary": "We can all see he has so much ability. Now it's just about keeping him grounded, nurturing him, helping him. The post Luca Williams-Barnett - keeping the next Spurs superstar's feet on the ground. appeared first on Hayter",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/luca-williams-barnett-keeping-the-next-spurs-superstars-feet-on-the-ground/",
+      "claimed_at": "2026-11-22T22:40:14Z",
+      "players": [
+        {
+          "element_id": 601,
+          "name": "Williams-Barnett",
+          "club": "TOT",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "bbc5b680dadb9282",
@@ -1010,24 +1100,6 @@
       "touches_squad": false
     },
     {
-      "digest": "ed74ef3bf6b86e61",
-      "headline": "AC Milan monitoring Man Utd's Fernandes - Sunday's gossip",
-      "summary": "AC Milan monitoring Manchester United midfielder Bruno Fernandes, Arsenal pair yet to start talks on new deals and Trabzonspor renew interest in Tottenham forward Richarlison, plus more.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cq8j4e8nlvm1o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T20:35:12Z",
-      "players": [
-        {
-          "element_id": 525,
-          "name": "Fernandes",
-          "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "58513b08fe977446",
       "headline": "Arsenal latest: Arteta gives update on Raya injury",
       "summary": null,
@@ -1035,24 +1107,6 @@
       "tier": 3,
       "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
       "claimed_at": "2026-11-21T20:33:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2d2c8946356bda2c",
-      "headline": "'We lost two points' - Arteta on 'unacceptable' Newcastle draw",
-      "summary": "Arsenal manager Mikel Arteta says his side squandered the chance to take all three points after their 2-2 draw against Newcastle United at St James' Park. The result sees the reigning Premier League champions go six points clear at the t",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/ck1wrdd9ew11o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T20:30:50Z",
       "players": [
         {
           "element_id": 0,
@@ -1112,42 +1166,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "36cbeada657e505d",
-      "headline": "Nine wins in a row - Bournemouth & Evanilson continue to make history",
-      "summary": "With a ninth successive win, Bournemouth continue to make history under new manager Marco Rose.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6p9d102k4mdo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T20:07:56Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "cc96a7c6d7d8f493",
-      "headline": "Arsenal go six points clear after lively draw at Newcastle",
-      "summary": "Noni Madueke's second-half goal earns Arsenal a 2-2 draw against Newcastle United at St James' Park, as the reigning champions move six points clear at the top of the Premier League table.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cm702zzl66l6o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-21T19:59:35Z",
-      "players": [
-        {
-          "element_id": 16,
-          "name": "Madueke",
-          "club": "ARS",
           "held": false
         }
       ],
@@ -1706,24 +1724,6 @@
           "element_id": 552,
           "name": "Brobbey",
           "club": "SUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e99c1dea89694471",
-      "headline": "Arteta confirms Arsenal are \u2018quite close\u2019 to new Rice deal \u2013 and discusses Odegaard\u2019s future",
-      "summary": "Mikel Arteta has made clear he wants Martin Odegaard to remain at Arsenal long term, while also revealing Declan Rice is close to agreeing a new contract. Arteta says Rice\u2019s extension is nearing completion,",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/arteta-confirms-arsenal-are-quite-close-to-new-rice-deal-and-discusses-odegaards-future/",
-      "claimed_at": "2026-11-20T10:14:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
