@@ -1,13 +1,18 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-24T04:23:23.606073Z",
-  "phase": "refresh",
-  "gameweek": 12,
-  "deadline": "2026-11-27T18:30:00+00:00",
-  "seconds_to_deadline": 309996.619807,
-  "reason": "GW12 deadline in 86.1h; keeping the projection warm",
+  "generated_at": "2026-11-24T15:04:54.016387Z",
+  "phase": "settle_final",
+  "gameweek": 11,
+  "deadline": null,
+  "seconds_to_deadline": null,
+  "reason": "GW11 is confirmed by FPL and sealed but not settled",
   "needs_work": true,
-  "outstanding": [],
+  "outstanding": [
+    {
+      "gameweek": 11,
+      "action": "settle_final"
+    }
+  ],
   "agent_ran": true,
   "explains_absence": "The agent computes projections, the evidence view and the message feed. It self-gates on phase, so those artifacts are absent \u2014 not broken \u2014 whenever nothing is due."
 }
