@@ -2,20 +2,21 @@
   "gameweek": 12,
   "entry_label": "owner",
   "objective": "season",
-  "generated_at": "2026-11-23T19:34:14.604975Z",
+  "generated_at": "2026-11-24T04:28:55.959536Z",
   "deadline": "2026-11-27T18:30:00Z",
   "xp_snapshot": {
     "1": 1.7487,
     "4": 4.5632,
     "40": 3.5844,
     "53": 4.0102,
+    "68": 4.5293,
     "112": 4.3206,
     "124": 4.8371,
     "127": 5.075,
     "166": 4.9309,
     "173": 1.9562,
     "237": 3.3469,
-    "249": 4.02,
+    "249": 4.0096,
     "332": 4.9898,
     "346": 5.7796,
     "411": 4.312,
@@ -29,7 +30,7 @@
       "squad": [
         1,
         4,
-        53,
+        68,
         112,
         124,
         127,
@@ -45,6 +46,7 @@
       ],
       "xi": [
         4,
+        68,
         112,
         124,
         127,
@@ -53,31 +55,32 @@
         346,
         411,
         427,
-        496,
-        504
+        496
       ],
       "captain": 346,
       "vice": 427,
       "transfers_in": [
+        68,
         127,
         332,
         346
       ],
       "transfers_out": [
         40,
+        53,
         173,
         249
       ],
       "hits": 0,
-      "bank_after": 25,
+      "bank_after": 18,
       "objective": 0.0,
-      "free_transfers_banked": 2,
-      "free_transfers_after": 3
+      "free_transfers_banked": 1,
+      "free_transfers_after": 2
     },
     "n_draws": 10000,
-    "mean_points": 57.8272,
-    "sd_points": 15.5615,
-    "objective": 60.9272,
+    "mean_points": 58.1375,
+    "sd_points": 15.4658,
+    "objective": 59.8875,
     "quantiles": {
       "q10": 39.0,
       "q25": 47.0,
@@ -87,17 +90,17 @@
       "q99": 98.0
     },
     "tails": {
-      "p_ge_40": 0.8873,
-      "p_ge_50": 0.6804,
-      "p_ge_60": 0.4312,
-      "p_ge_70": 0.2216,
-      "p_ge_80": 0.0898,
-      "p_ge_90": 0.0298
+      "p_ge_40": 0.8939,
+      "p_ge_50": 0.69,
+      "p_ge_60": 0.4378,
+      "p_ge_70": 0.2245,
+      "p_ge_80": 0.0924,
+      "p_ge_90": 0.0305
     },
-    "autosub_rate": 0.119,
+    "autosub_rate": 0.0926,
     "vice_rate": 0.0034
   },
-  "optimism_gap": -0.0222,
+  "optimism_gap": -0.1152,
   "credible_margin": true,
   "pool": {
     "n_candidates": 567,
@@ -108,7 +111,7 @@
     },
     "held_missing_purchase_price": [],
     "price_uncertain": false,
-    "n_zero_xp": 71
+    "n_zero_xp": 72
   },
   "horizon": {
     "eval_horizon": 8,
@@ -148,15 +151,13 @@
         "captain": 411,
         "vice": 356,
         "transfers_in": [
-          68,
           356
         ],
         "transfers_out": [
-          53,
           504
         ],
         "hits": 0,
-        "bank_after": 7,
+        "bank_after": 6,
         "objective": 0.0,
         "free_transfers_banked": 1,
         "free_transfers_after": 2
@@ -166,7 +167,7 @@
           1,
           4,
           68,
-          112,
+          85,
           124,
           127,
           166,
@@ -194,20 +195,24 @@
         ],
         "captain": 346,
         "vice": 427,
-        "transfers_in": [],
-        "transfers_out": [],
+        "transfers_in": [
+          85
+        ],
+        "transfers_out": [
+          112
+        ],
         "hits": 0,
         "bank_after": 7,
         "objective": 0.0,
-        "free_transfers_banked": 2,
-        "free_transfers_after": 3
+        "free_transfers_banked": 1,
+        "free_transfers_after": 2
       },
       {
         "squad": [
           1,
           4,
           68,
-          112,
+          85,
           124,
           127,
           166,
@@ -223,7 +228,7 @@
         "xi": [
           1,
           4,
-          112,
+          85,
           124,
           127,
           166,
@@ -240,15 +245,15 @@
         "hits": 0,
         "bank_after": 7,
         "objective": 0.0,
-        "free_transfers_banked": 3,
-        "free_transfers_after": 4
+        "free_transfers_banked": 2,
+        "free_transfers_after": 3
       },
       {
         "squad": [
           1,
           4,
           68,
-          112,
+          85,
           124,
           127,
           138,
@@ -287,15 +292,15 @@
         "hits": 0,
         "bank_after": 0,
         "objective": 0.0,
-        "free_transfers_banked": 2,
-        "free_transfers_after": 3
+        "free_transfers_banked": 1,
+        "free_transfers_after": 2
       },
       {
         "squad": [
           1,
           4,
           68,
-          112,
+          85,
           124,
           127,
           138,
@@ -312,11 +317,52 @@
           1,
           4,
           68,
-          112,
+          85,
           124,
           127,
           154,
           237,
+          346,
+          356,
+          411
+        ],
+        "captain": 154,
+        "vice": 411,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 0,
+        "objective": 0.0,
+        "free_transfers_banked": 2,
+        "free_transfers_after": 3
+      },
+      {
+        "squad": [
+          1,
+          4,
+          68,
+          85,
+          124,
+          127,
+          138,
+          154,
+          237,
+          332,
+          346,
+          356,
+          411,
+          496,
+          566
+        ],
+        "xi": [
+          1,
+          4,
+          68,
+          85,
+          124,
+          127,
+          154,
+          332,
           346,
           356,
           411
@@ -336,7 +382,7 @@
           1,
           4,
           68,
-          112,
+          85,
           124,
           127,
           138,
@@ -353,49 +399,8 @@
           1,
           4,
           68,
+          85,
           124,
-          127,
-          138,
-          154,
-          332,
-          346,
-          356,
-          411
-        ],
-        "captain": 154,
-        "vice": 411,
-        "transfers_in": [],
-        "transfers_out": [],
-        "hits": 0,
-        "bank_after": 0,
-        "objective": 0.0,
-        "free_transfers_banked": 4,
-        "free_transfers_after": 5
-      },
-      {
-        "squad": [
-          1,
-          4,
-          68,
-          112,
-          124,
-          127,
-          138,
-          154,
-          237,
-          332,
-          346,
-          356,
-          411,
-          496,
-          566
-        ],
-        "xi": [
-          1,
-          4,
-          68,
-          124,
-          127,
           154,
           237,
           332,
@@ -410,7 +415,7 @@
         "hits": 0,
         "bank_after": 0,
         "objective": 0.0,
-        "free_transfers_banked": 5,
+        "free_transfers_banked": 4,
         "free_transfers_after": 5
       }
     ]
