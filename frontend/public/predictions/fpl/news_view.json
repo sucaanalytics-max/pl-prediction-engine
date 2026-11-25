@@ -1,18 +1,66 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-25T12:57:39.520180Z",
-  "n_dropped": 120,
+  "generated_at": "2026-11-25T22:19:15.464153Z",
+  "n_dropped": 119,
   "dropped_by_source": {
-    "bbc_football": 51,
-    "hayters": 11,
+    "bbc_football": 49,
+    "hayters": 12,
     "sky_football": 58
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 210,
+  "n_articles": 209,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "e2a15ce54253180b",
+      "headline": "Leeds latest: Calvert-Lewin on verge of new contract",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-25T20:10:00Z",
+      "players": [
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
+    {
+      "digest": "c2815937cff3b0cf",
+      "headline": "FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again",
+      "summary": "The Champions League action of Man City and Aston Villa The post FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footba",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/25/fpl-notes-haaland-jackson-quiet-cherki-90-city-defence-poor-again",
+      "claimed_at": "2026-11-25T20:00:00Z",
+      "players": [
+        {
+          "element_id": 166,
+          "name": "N.Jackson",
+          "club": "AVL",
+          "held": true
+        },
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": false
+        },
+        {
+          "element_id": 411,
+          "name": "Haaland",
+          "club": "MCI",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "88101581aa33c9cb",
       "headline": "'You question everything' - Haaland lays City's frustrations bare",
@@ -114,6 +162,480 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "c84e992708a4b0c8",
+      "headline": "Isak scores twice as clinical Liverpool beat Brugge",
+      "summary": "Liverpool defeat Club Brugge in a clinical performance thanks to goals from Alexander Isak and Florian Wirtz, bouncing back after a defeat in their last Champions League match.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cqvg28l0z8mro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T22:12:19Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "28199ad9c343ed52",
+      "headline": "Isak scores twice as Liverpool beat Club Brugge",
+      "summary": "Alexander Isak scored twice as Liverpool eased to a 3-0 Champions League win over Club Brugge in Belgium. The striker opened the scoring after 13 minutes, finishing from close range after Bradley Barcola intercepted Yann Sommer\u2019s pass and Dominik Szobo",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/isak-scores-twice-as-liverpool-beat-club-brugge/",
+      "claimed_at": "2026-11-25T22:08:03Z",
+      "players": [
+        {
+          "element_id": 360,
+          "name": "Bradley",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        },
+        {
+          "element_id": 627,
+          "name": "Barcola",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f82c1562a0d6e5df",
+      "headline": "Borussia Dortmund fight back to draw with Arsenal",
+      "summary": "Borussia Dortmund fight back from a goal behind to draw with Arsenal in the Champions League.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmedqg06d8vwo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T22:05:57Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7b4db3267155bb70",
+      "headline": "Blunt Villa beaten by late Galatasaray winner",
+      "summary": "Deniz Gul scores a late winner for Galatasaray as Aston Villa slip to successive Champions League defeats.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6r7g92p5k79o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T22:05:53Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7bc838c06e40a45c",
+      "headline": "Cherki rescues point for Man City against Napoli",
+      "summary": "Rayan Cherki's late equaliser rescues a point for Manchester City at home to Napoli in the Champions League, who have now won just one of their past seven games in all competitions.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cjy5xwygqg9do?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T22:05:49Z",
+      "players": [
+        {
+          "element_id": 399,
+          "name": "Cherki",
+          "club": "MCI",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9b68557a9f0b7b13",
+      "headline": "Lammens error and VAR controversy sees Man Utd denied first win under Pochettino as they draw with Sporting",
+      "summary": "Bruno Fernandes scored twice against his former club but Manchester United were denied victory as Sporting CP fought back to earn a 2-2 Champions League draw in Lisbon. Sporting took the lead",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/lammens-error-and-var-controversy-sees-man-utd-denied-first-win-under-pochettino-as-they-draw-with-sporting/",
+      "claimed_at": "2026-11-25T22:04:16Z",
+      "players": [
+        {
+          "element_id": 412,
+          "name": "Lammens",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "87eaf09c603fbaba",
+      "headline": "Poch denied first Man Utd win by Lammens howler at Sporting",
+      "summary": "Mauricio Pochettino was denied a first victory as Manchester United head coach by a goalkeeping howler from Senne Lammens in an incident-packed 2-2 draw with Sporting in the Champions League as Youri Tielemans was sent off late on.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/sporting-lisbon-vs-manchester-united/report/577686",
+      "claimed_at": "2026-11-25T22:00:00Z",
+      "players": [
+        {
+          "element_id": 43,
+          "name": "Tielemans",
+          "club": "MUN",
+          "held": false
+        },
+        {
+          "element_id": 412,
+          "name": "Lammens",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4f1c4c0732d098ad",
+      "headline": "Isak and Wirtz power Liverpool to easy victory at Club Brugge",
+      "summary": "Liverpool recovered from their shock defeat to Fenerbahce in their last Champions League outing to beat Club Brugge 3-0 and improve their chances of a top-eight league phase finish.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/club-brugge-vs-liverpool/report/577679",
+      "claimed_at": "2026-11-25T21:50:00Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "88b0478b7ac8272c",
+      "headline": "Ferguson's Glentoran reign hits early turbulence",
+      "summary": "Duncan Ferguson's short tenure at Glentoran is already proving anything but straightforward with just one win so far and the former Everton striker now suspended for seven games.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cxzd9v7457nro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T21:41:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3069256c54f339cc",
+      "headline": "Papers: Liverpool agree deal to sign Senegal teenager Ndiaye",
+      "summary": "The top stories and transfer rumours from Thursday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13616560/liverpool-transfer-news-sidy-barhama-ndiaye-agrees-deal-to-sign-for-reds-paper-talk",
+      "claimed_at": "2026-11-25T21:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c2b62f92ef9a102d",
+      "headline": "Regulator chief 'has stomach' to face Man City",
+      "summary": "The chair of English football's independent regulator tells MPs he \"has the stomach\" to take potential action against Manchester City.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c65y10z8k59jo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T21:27:35Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "41727e194ad4327d",
+      "headline": "Strangest goal ever?! Morrison reacts to BIZARRE Bruno goal!",
+      "summary": "Clinton Morrison watches as Manchester United go 2-1 against Sporting Liston thanks to a bizarre goal from Bruno Fernandes.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13616555/porting-lisbon-vs-manchester-united-clinton-morrison-reacts-to-bizarre-bruno-fernandes-goal",
+      "claimed_at": "2026-11-25T21:14:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f5967c5efa7b6467",
+      "headline": "Liverpool mull Quansah return - Thursday's gossip",
+      "summary": "Liverpool consider return for Jarrell Quansah, Tottenham scout Vangelis Pavlidis and Paris St-Germain target Estevao Willian, plus more",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6n831jk3x4mo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T20:57:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5bdaaf1d51a13fa9",
+      "headline": "'Where's he going?!' - Morrison reacts to Man Utd double penalty drama!",
+      "summary": "Clinton Morrison reacts to the two penalties in Manchester United's Champions League clash with Sporting Lisbon.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13616547/sporing-lisbon-vs-manchester-united-clinton-morrison-reacts-to-double-penalty-drama",
+      "claimed_at": "2026-11-25T20:43:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a59833e269ce2305",
+      "headline": "Rose insists Bournemouth will not change their style no matter who they play",
+      "summary": "Bournemouth boss Marco Rose has insisted that his side will not change their style no matter who they play this season. After a slow start to the season, the south coast side have picked up form and are on a run of nine win",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/rose-insists-bournemouth-will-not-change-their-style-no-matter-who-they-play/",
+      "claimed_at": "2026-11-25T19:42:40Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e3dc9eb00c907b50",
+      "headline": "Glasner criticises Forest players yet to learn English",
+      "summary": "Nottingham Forest manager Oliver Glasner has questioned why some of his squad cannot speak English after being in the country for a number of years.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cw20xr4d7x55o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T18:32:55Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "eb145fc17676e075",
+      "headline": "Poch denied first Man Utd win by Lammens howler at Sporting LIVE!",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/sporting-lisbon-vs-manchester-united/live/577686",
+      "claimed_at": "2026-11-25T17:51:00Z",
+      "players": [
+        {
+          "element_id": 412,
+          "name": "Lammens",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f80ce51eff300a04",
+      "headline": "Confusion and anger - Yoro red card rescinded, but row goes on",
+      "summary": "Leny Yoro's red card against Liverpool has prompted an unseemly difference of opinion between Man Utd and Pro Ref.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvze7y6n2redo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T16:28:10Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1c93e57a66a59ee2",
+      "headline": "Newcastle latest: Owners willing to sell stake to fund new stadium",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025496/newcastle-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-25T16:14:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ce74ca898555cc2e",
+      "headline": "Frank admits Palace star is still weeks away from return",
+      "summary": "Thomas Frank admitted that Isamaila Sarr is still a few weeks away from returning to the Crystal Palace matchday squad. The Senegal international has only managed to play in five matches for Palace this season so far because of a groin injury.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/frank-admits-palace-star-is-still-weeks-away-from-return/",
+      "claimed_at": "2026-11-25T15:42:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c695903affa70718",
+      "headline": "Forest latest: Glasner met Marinakis for transfer talks",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279316/nottingham-forest-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-11-25T15:39:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "852575200b453d21",
+      "headline": "Why wasn't Szoboszlai's free-kick ruled out vs Man Utd?",
+      "summary": "Mauricio Pochettino fumed over Leny Yoro's red card for Manchester United in their defeat to Liverpool, but also felt Dominik Szoboszlai's opener should not have stood - is he right?",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13616388/dominik-szoboszlai-free-kick-for-liverpool-vs-man-utd-reveals-grey-area-as-mauricio-pochettino-questions-decision",
+      "claimed_at": "2026-11-25T15:15:00Z",
+      "players": [
+        {
+          "element_id": 368,
+          "name": "Szoboszlai",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b1db97f6ba5d309c",
+      "headline": "Brighton star set to miss several weeks with a knee injury",
+      "summary": "Fabian Huerzeler confirmed that Malick Yalcouye is set to be out for several weeks with a knee injury. The forward suffered the injury on international duty with the Ivory Coast, and Huerzeler was asked for an update on his fitness. \u201cSeveral",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/brighton-star-set-to-miss-several-weeks-with-a-knee-injury/",
+      "claimed_at": "2026-11-25T15:12:21Z",
+      "players": [
+        {
+          "element_id": 605,
+          "name": "Yalcouy\u00e9",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "7ad147889ccd5979",
+      "headline": "Le Bris gives fitness updates on Xhaka and Brobbey",
+      "summary": "Regis Le Bris admitted that both Granit Xhaka and Brian Brobbey will not be available for selection this week. Xhaka picked up a calf injury in the warm-up ahead of Sunderland's 1-0 win over Chelsea earlier this month. However, that was not the end",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/le-bris-gives-fitness-updates-on-xhaka-and-brobbey/",
+      "claimed_at": "2026-11-25T14:46:34Z",
+      "players": [
+        {
+          "element_id": 544,
+          "name": "Xhaka",
+          "club": "SUN",
+          "held": false
+        },
+        {
+          "element_id": 552,
+          "name": "Brobbey",
+          "club": "SUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4246f2b102cb8381",
+      "headline": "Arsenal latest: Merson accuses Gunners of second-half complacency",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-25T13:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "1325acee90c496b7",
@@ -566,24 +1088,6 @@
       "touches_squad": false
     },
     {
-      "digest": "f338520736c6653f",
-      "headline": "Villa beaten late on at Galatasaray as winless run continues",
-      "summary": "Aston Villa's winless run extended to six games as a late Deniz Gul's header saw them beaten 1-0 by Galatasaray in the Champions League league phase.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/galatasaray-vs-aston-villa/report/577673",
-      "claimed_at": "2026-11-24T19:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9ff9dd25e39efef7",
       "headline": "Arsenal 1-1 Borussia Dortmund LIVE \u2013 Arsenal held by Dortmund",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 1-1 Borussia Dortmund LIVE - Arsenal held by Dortmund appeared first on Hayters.",
@@ -662,24 +1166,6 @@
       "touches_squad": false
     },
     {
-      "digest": "407bf51cfad2ee88",
-      "headline": "Liverpool latest: Wirtz enjoying life after finding top form",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-24T18:15:00Z",
-      "players": [
-        {
-          "element_id": 366,
-          "name": "Wirtz",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "92e023d4eac9cfb1",
       "headline": "Klopp advice and Iraola confidence boosts Wirtz",
       "summary": "Florian Wirtz opens up on why it's the best he has felt since joining Liverpool.",
@@ -698,24 +1184,6 @@
       "touches_squad": false
     },
     {
-      "digest": "d629e8e4a87a8267",
-      "headline": "How 'quick check' and unseen angle saw Timber's Isak shirt-pull go unpunished",
-      "summary": "Referees' chief Howard Webb admitted it was a &#8220;quick check&#8221; by VAR for Arsenal defender Jurrien Timber's unpunished shirt-pull on Liverpool striker Alexander Isak in the Gunners' win at Anfield.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13616058/jurrien-timbers-shirt-pull-on-alexander-isak-ref-chief-howard-webb-admits-quick-check-in-arsenals-win-at-liverpool",
-      "claimed_at": "2026-11-24T17:13:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "a717003cc263c490",
       "headline": "Yoro red card overturned, but refs' chief Webb backs decision",
       "summary": "Manchester United defender Leny Yoro is clear to face Brentford on Saturday as his red card at Anfield is overturned.",
@@ -728,42 +1196,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "170804d570a8326a",
-      "headline": "Man Utd to contact PL and refs over 'totally wrong' Yoro red card interpretation",
-      "summary": "Manchester United will contact ProRef and the Premier League directly over what they believe to be a 'totally wrong' interpretation of Leny Yoro's red card against Liverpool.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13616033/leny-yoro-red-card-ref-chief-howard-webb-backs-process-that-saw-man-utd-defender-sent-off-at-liverpool",
-      "claimed_at": "2026-11-24T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "beb3212f553df190",
-      "headline": "Transfer Centre LIVE! Heaven open to leaving Man Utd in January",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/12476234/transfer-centre-live-football-transfer-news-updates-and-rumours",
-      "claimed_at": "2026-11-24T16:55:00Z",
-      "players": [
-        {
-          "element_id": 421,
-          "name": "Heaven",
-          "club": "MUN",
           "held": false
         }
       ],
@@ -794,24 +1226,6 @@
           "element_id": 249,
           "name": "Barry",
           "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7aaf2c27dc25e853",
-      "headline": "Cherki salvages draw with Napoli but Man City frustrate",
-      "summary": "Rayan Cherki's late strike salvaged a 2-2 draw for Manchester City at home to Napoli in the Champions League but Enzo Maresca's side again struggled to find their fluency.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/manchester-city-vs-napoli/report/577674",
-      "claimed_at": "2026-11-24T12:09:00Z",
-      "players": [
-        {
-          "element_id": 399,
-          "name": "Cherki",
-          "club": "MCI",
           "held": false
         }
       ],
@@ -854,24 +1268,6 @@
           "element_id": 0,
           "name": null,
           "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5b5da65ecad8ba64",
-      "headline": "Arsenal latest: That's the Gyokeres we need, says Arteta",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-24T07:50:00Z",
-      "players": [
-        {
-          "element_id": 25,
-          "name": "Gy\u00f6keres",
-          "club": "ARS",
           "held": false
         }
       ],
@@ -945,24 +1341,6 @@
       "tier": 3,
       "url": "https://www.fantasyfootballscout.co.uk/2026/11/23/fpl-gameweek-12-early-scout-picks-leeds-triple-up-no-haaland",
       "claimed_at": "2026-11-23T22:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "637f5a3f958bd147",
-      "headline": "Man City latest: Maresca reveals key issue to fix ahead of Arsenal clash",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-23T21:10:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1064,78 +1442,6 @@
       "touches_squad": false
     },
     {
-      "digest": "49ad9e0e81cf1a15",
-      "headline": "Did Liverpool 'get lucky' with red card decision?",
-      "summary": "Match of the Day pundits Danny Murphy and Ashley Young believe that Liverpool were perhaps \"lucky\" when Manchester United's Leny Yoro was sent off in the 8th-minute at Anfield.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cq23jmklrj33o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-22T23:59:59Z",
-      "players": [
-        {
-          "element_id": 361,
-          "name": "Lucky",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1b71bab90a0e313e",
-      "headline": "How 'outstanding' Tzolakis kept Brighton at bay",
-      "summary": "Match of the Day pundit Danny Murphy looks at how Hull goalkeeper Konstantinos Tzolakis was able to thwart high-flying Brighton in their 2-0 win over the Seagulls at the MKM Stadium.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cm702nzyl8pzo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-22T23:59:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9b5523ce7ccc4836",
-      "headline": "A 'wow' player - why Ngumoha is already a Liverpool game-changer",
-      "summary": "Match of the Day pundit Danny Murphy explains how Rio Ngumoha showed everyone what he is capable of in Liverpool's 4-0 win over Manchester United.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmn80y5w84qqo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-22T23:20:16Z",
-      "players": [
-        {
-          "element_id": 369,
-          "name": "Ngumoha",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "870b56e23503bf44",
-      "headline": "Football Daily",
-      "summary": "Dale Johnson & Umir Irfan join Rick & Lloyd after Man Utd\u2019s 4-0 defeat at Liverpool.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0ppcw2v?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-22T23:14:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "4f2e1b31ced638c6",
       "headline": "Luca Williams-Barnett \u2013 keeping the next Spurs superstar\u2019s feet on the ground.",
       "summary": "We can all see he has so much ability. Now it's just about keeping him grounded, nurturing him, helping him. The post Luca Williams-Barnett - keeping the next Spurs superstar's feet on the ground. appeared first on Hayter",
@@ -1148,60 +1454,6 @@
           "element_id": 601,
           "name": "Williams-Barnett",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "bbc5b680dadb9282",
-      "headline": "'World's best could've lost 4-0' - but should Man Utd have done more at Anfield?",
-      "summary": "Mauricio Pochettino believes even the best team in the world could have conceded four goals at Liverpool in Manchester United's circumstances - but should the Red Devils have done more in defeat?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cm782j80yypwo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-22T21:36:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "fae68e4b4d3fd541",
-      "headline": "Chaotic week, nightmare start and huge reality check for Pochettino",
-      "summary": "Mauricio Pochettino's reign as Manchester United boss could barely have got off to a more chastening start, writes Simon Stone.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwd012903kvgo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-22T21:22:10Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "8097fb4fc06156b7",
-      "headline": "Man Utd plotting Toney move - Monday's gossip",
-      "summary": "Manchester United eye move for Al-Ahli striker Ivan Toney, Fulham hold contract talks with Calvin Bassey and PSG could step up pursuit of Eli Junior Kroupi.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/ck053nyl6399o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-22T21:04:15Z",
-      "players": [
-        {
-          "element_id": 257,
-          "name": "Bassey",
-          "club": "FUL",
           "held": false
         }
       ],
@@ -1412,78 +1664,6 @@
       "touches_squad": false
     },
     {
-      "digest": "36d6b651cbcb0259",
-      "headline": "Jaissle on Hall injury worry and Newcastle\u2019s draw with Arsenal",
-      "summary": "Newcastle United boss Matthias Jaissle is hopeful Lewis Hall did not suffer a serious injury during the 2-2 draw with Arsenal. Hall was forced off in the closing stages at St James\u2019 Park but Jaissle believes the issue may only have been",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/jaissle-on-hall-injury-worry-and-newcastles-draw-with-arsenal/",
-      "claimed_at": "2026-11-21T21:10:07Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5aa34ee88fa0523c",
-      "headline": "Raya set to undergo scan after being forced off injured against Newcastle",
-      "summary": "Mikel Arteta says Arsenal will have to wait for further tests to discover the extent of David Raya\u2019s injury after the goalkeeper was forced off during the 2-2 draw with Newcastle. Raya was unable to finish the game at St James",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/raya-set-to-undergo-scan-after-being-forced-off-injured-against-newcastle/",
-      "claimed_at": "2026-11-21T21:00:14Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9842c36239de2a87",
-      "headline": "Marco Rose hails Evanilson after record-breaking Bournemouth win",
-      "summary": "Marco Rose was full of praise for his star marksman Evanilson after Bournemouth claimed a 2-0 win over Nottingham Forest in the Premier League. Rose\u2019s squad made history on Saturday afternoon, earning their ninth consecutive victory in",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/marco-rose-hails-evanilson-after-record-breaking-bournemouth-win/",
-      "claimed_at": "2026-11-21T20:12:36Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b31844b6653faa98",
-      "headline": "Glasner hints at January additions after Nottingham Forest\u2019s defeat to Bournemouth",
-      "summary": "Nottingham Forest boss Oliver Glasner admitted his side are struggling to cope with more physical opponents after their 2-0 defeat to Bournemouth. Glasner believes Forest have performed well in more tactical matches b",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/glasner-hints-at-january-additions-after-nottingham-forests-defeat-to-bournemouth/",
-      "claimed_at": "2026-11-21T20:08:13Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "06767af7b55ea9e1",
       "headline": "Ineligible to face parent club - Expected back 2 Dec",
       "summary": null,
@@ -1562,192 +1742,6 @@
           "element_id": 399,
           "name": "Cherki",
           "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "871c8bce20f8c6a8",
-      "headline": "FPL Gameweek 11 Scout Picks: Arsenal triple-up",
-      "summary": "Our final team ahead of Saturday\u2019s deadline The post FPL Gameweek 11 Scout Picks: Arsenal triple-up appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/fpl-gameweek-11-scout-picks-arsenal-triple-up-2",
-      "claimed_at": "2026-11-20T17:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5740785c508dbda8",
-      "headline": "Dorgu, Maguire, Sesko: Man United injury latest for FPL Gameweek 11",
-      "summary": "Mauricio Pochettino is about to take charge of his first match The post Dorgu, Maguire, Sesko: Man United injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footb",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/dorgu-maguire-sesko-man-united-injury-latest-for-fpl-gameweek-11",
-      "claimed_at": "2026-11-20T16:02:12Z",
-      "players": [
-        {
-          "element_id": 415,
-          "name": "Dorgu",
-          "club": "MUN",
-          "held": false
-        },
-        {
-          "element_id": 418,
-          "name": "Maguire",
-          "club": "MUN",
-          "held": false
-        },
-        {
-          "element_id": 439,
-          "name": "\u0160e\u0161ko",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5ca9eb1012a60fa9",
-      "headline": "Manzambi, Cash, Wan-Bissaka: Aston Villa injury latest for FPL Gameweek 11",
-      "summary": "The Swiss attacker pulled out of international action The post Manzambi, Cash, Wan-Bissaka: Aston Villa injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/manzambi-cash-wan-bissaka-aston-villa-injury-latest-for-fpl-gameweek-11",
-      "claimed_at": "2026-11-20T16:01:11Z",
-      "players": [
-        {
-          "element_id": 53,
-          "name": "Manzambi",
-          "club": "AVL",
-          "held": false
-        },
-        {
-          "element_id": 611,
-          "name": "Wan-Bissaka",
-          "club": "AVL",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "edff43dfb92ba78d",
-      "headline": "Joao Pedro, Lacroix, Martinez: Chelsea injury latest for FPL Gameweek 11",
-      "summary": "The Brazilian forward hasn't played since Gameweek 7 The post Joao Pedro, Lacroix, Martinez: Chelsea injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footb",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/joao-pedro-lacroix-martinez-chelsea-injury-latest-for-fpl-gameweek-11",
-      "claimed_at": "2026-11-20T15:00:44Z",
-      "players": [
-        {
-          "element_id": 200,
-          "name": "Lacroix",
-          "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ad5d406a25738509",
-      "headline": "Gvardiol, Guehi, Semenyo: Man City injury latest for FPL Gameweek 11",
-      "summary": "Enzo Maresca spoke on Friday The post Gvardiol, Guehi, Semenyo: Man City injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/gvardiol-guehi-semenyo-man-city-injury-latest-for-fpl-gameweek-11",
-      "claimed_at": "2026-11-20T14:54:07Z",
-      "players": [
-        {
-          "element_id": 388,
-          "name": "Gu\u00e9hi",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 391,
-          "name": "Gvardiol",
-          "club": "MCI",
-          "held": false
-        },
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "00d0530a52a6ffcf",
-      "headline": "Szoboszlai + van Dijk: Liverpool injury latest for FPL Gameweek 11",
-      "summary": "Andoni Iraola spoke on Friday The post Szoboszlai + van Dijk: Liverpool injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/szoboszlai-van-dijk-liverpool-injury-latest-for-fpl-gameweek-11",
-      "claimed_at": "2026-11-20T14:49:03Z",
-      "players": [
-        {
-          "element_id": 356,
-          "name": "Virgil",
-          "club": "LIV",
-          "held": false
-        },
-        {
-          "element_id": 368,
-          "name": "Szoboszlai",
-          "club": "LIV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "10fdefb21625175c",
-      "headline": "Mitoma, Minteh, Yohanna: Brighton injury latest for FPL Gameweek 11",
-      "summary": "Fabian Hurzeler spoke on Friday morning The post Mitoma, Minteh, Yohanna: Brighton injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/mitoma-minteh-yohanna-brighton-injury-latest-for-fpl-gameweek-11",
-      "claimed_at": "2026-11-20T13:06:29Z",
-      "players": [
-        {
-          "element_id": 122,
-          "name": "Minteh",
-          "club": "BHA",
-          "held": false
-        },
-        {
-          "element_id": 135,
-          "name": "Yohanna",
-          "club": "BHA",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e7302a9a05b8c0aa",
-      "headline": "Saliba, Saka, Zubimendi: Arsenal injury latest for FPL Gameweek 11",
-      "summary": "Owners of Ezri Konsa will be nervous The post Saliba, Saka, Zubimendi: Arsenal injury latest for FPL Gameweek 11 appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
-      "source": "fantasyfootballscout",
-      "tier": 3,
-      "url": "https://www.fantasyfootballscout.co.uk/2026/11/20/saliba-saka-zubimendi-arsenal-injury-latest-for-fpl-gameweek-11",
-      "claimed_at": "2026-11-20T12:57:53Z",
-      "players": [
-        {
-          "element_id": 6,
-          "name": "Saliba",
-          "club": "ARS",
           "held": false
         }
       ],
