@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-25T06:43:16.449915Z",
+  "generated_at": "2026-11-26T01:11:11.604728Z",
   "gameweek": 12,
   "players": [
     {
@@ -196,6 +196,76 @@
       "needs_attention": true
     },
     {
+      "element_id": 367,
+      "player_name": "Gakpo",
+      "club": "Liverpool",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 0,
+          "rule": "live_bootstrap_authority",
+          "n_conflicts": 2,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "bb67f59cda6398c9",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-22T16:30:05.520808Z",
+              "observed_at": "2026-11-22T18:59:22.588330Z",
+              "quote": "Calf injury - 75% chance of playing",
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            },
+            {
+              "claim_id": "6040a21a1f10712f",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-22T16:30:05.520808Z",
+              "observed_at": "2026-11-22T18:59:22.588330Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "i",
+          "rule": "live_bootstrap_authority",
+          "n_conflicts": 1,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "062f5f63a723e616",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-22T16:30:05.520808Z",
+              "observed_at": "2026-11-22T18:59:22.588330Z",
+              "quote": null,
+              "url": null,
+              "verdict": "lost",
+              "beaten_by": "live_bootstrap_authority"
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 3,
+      "needs_attention": false
+    },
+    {
       "element_id": 420,
       "player_name": "Yoro",
       "club": "Man Utd",
@@ -203,12 +273,25 @@
         {
           "claim_type": "chance_of_playing",
           "resolved_value": 100,
-          "rule": "live_bootstrap_authority",
+          "rule": "recency_within_source",
           "n_conflicts": 1,
           "n_dropped": 0,
           "unresolved": false,
           "escalation": null,
           "claims": [
+            {
+              "claim_id": "f313531463e6dea8",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 100,
+              "claimed_at": "2026-11-22T17:00:05.657366Z",
+              "observed_at": "2026-11-25T06:43:55.660914Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
             {
               "claim_id": "1696d95ca918aab9",
               "source": "fpl_bootstrap",
@@ -220,19 +303,32 @@
               "quote": null,
               "url": null,
               "verdict": "lost",
-              "beaten_by": "live_bootstrap_authority"
+              "beaten_by": "recency_within_source"
             }
           ]
         },
         {
           "claim_type": "status",
           "resolved_value": "a",
-          "rule": "live_bootstrap_authority",
+          "rule": "recency_within_source",
           "n_conflicts": 1,
           "n_dropped": 0,
           "unresolved": false,
           "escalation": null,
           "claims": [
+            {
+              "claim_id": "f5e5ff876c8145be",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "a",
+              "claimed_at": "2026-11-22T17:00:05.657366Z",
+              "observed_at": "2026-11-25T06:43:55.660914Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            },
             {
               "claim_id": "5434f336e6d84474",
               "source": "fpl_bootstrap",
@@ -244,7 +340,7 @@
               "quote": null,
               "url": null,
               "verdict": "lost",
-              "beaten_by": "live_bootstrap_authority"
+              "beaten_by": "recency_within_source"
             }
           ]
         },
@@ -475,76 +571,6 @@
               "value": "d",
               "claimed_at": "2026-11-21T17:00:05.582448Z",
               "observed_at": "2026-11-21T18:39:07.896661Z",
-              "quote": null,
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            }
-          ]
-        }
-      ],
-      "total_conflicts": 1,
-      "needs_attention": false
-    },
-    {
-      "element_id": 367,
-      "player_name": "Gakpo",
-      "club": "Liverpool",
-      "entries": [
-        {
-          "claim_type": "chance_of_playing",
-          "resolved_value": 75,
-          "rule": "tier_precedence",
-          "n_conflicts": 1,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "bb67f59cda6398c9",
-              "source": "fpl_news_parse",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-11-22T16:30:05.520808Z",
-              "observed_at": "2026-11-22T18:59:22.588330Z",
-              "quote": "Calf injury - 75% chance of playing",
-              "url": null,
-              "verdict": "won",
-              "beaten_by": null
-            },
-            {
-              "claim_id": "6040a21a1f10712f",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "chance_of_playing",
-              "value": 75,
-              "claimed_at": "2026-11-22T16:30:05.520808Z",
-              "observed_at": "2026-11-22T18:59:22.588330Z",
-              "quote": null,
-              "url": null,
-              "verdict": "lost",
-              "beaten_by": "tier_precedence"
-            }
-          ]
-        },
-        {
-          "claim_type": "status",
-          "resolved_value": "d",
-          "rule": "only_claim",
-          "n_conflicts": 0,
-          "n_dropped": 0,
-          "unresolved": false,
-          "escalation": null,
-          "claims": [
-            {
-              "claim_id": "062f5f63a723e616",
-              "source": "fpl_bootstrap",
-              "source_tier": 1,
-              "claim_type": "status",
-              "value": "d",
-              "claimed_at": "2026-11-22T16:30:05.520808Z",
-              "observed_at": "2026-11-22T18:59:22.588330Z",
               "quote": null,
               "url": null,
               "verdict": "won",
@@ -1067,6 +1093,72 @@
       "needs_attention": false
     },
     {
+      "element_id": 360,
+      "player_name": "Bradley",
+      "club": "Liverpool",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-12-12",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "c83149a0df95859b",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-12-12",
+              "claimed_at": "2026-07-23T12:01:23.565711Z",
+              "observed_at": "2026-11-25T06:43:55.660914Z",
+              "quote": "Knee injury - Expected back 12 Dec",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
+      "element_id": 363,
+      "player_name": "Leoni",
+      "club": "Liverpool",
+      "entries": [
+        {
+          "claim_type": "return_date",
+          "resolved_value": "2026-12-12",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "e2b3123a930f14af",
+              "source": "fpl_news_parse",
+              "source_tier": 1,
+              "claim_type": "return_date",
+              "value": "2026-12-12",
+              "claimed_at": "2026-07-23T12:01:23.596909Z",
+              "observed_at": "2026-11-25T06:43:55.660914Z",
+              "quote": "Knee injury - Expected back 12 Dec",
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 501,
       "player_name": "Danso",
       "club": "Sunderland",
@@ -1182,10 +1274,10 @@
     }
   ],
   "counts": {
-    "n_claims": 287,
-    "n_players_with_claims": 70,
-    "n_players_shown": 16,
+    "n_claims": 342,
+    "n_players_with_claims": 80,
+    "n_players_shown": 18,
     "n_escalations": 9,
-    "n_players_resolved": 32
+    "n_players_resolved": 34
   }
 }
