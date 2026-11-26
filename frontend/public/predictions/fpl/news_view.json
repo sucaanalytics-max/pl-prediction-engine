@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-25T22:19:15.464153Z",
-  "n_dropped": 119,
+  "generated_at": "2026-11-26T04:15:38.272546Z",
+  "n_dropped": 124,
   "dropped_by_source": {
-    "bbc_football": 49,
+    "bbc_football": 52,
     "hayters": 12,
-    "sky_football": 58
+    "sky_football": 60
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 209,
+  "n_articles": 214,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
@@ -162,6 +162,168 @@
         }
       ],
       "touches_squad": true
+    },
+    {
+      "digest": "dd7fb3a7240701d1",
+      "headline": "Frustration reigns for Pochettino in chaotic start to Man Utd job",
+      "summary": "What are the findings for Mauricio Pochettino after his first two matches as Manchester United manager?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6vg24l724l4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-26T00:24:48Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "887c344ac3ff7b80",
+      "headline": "Divots, howlers and bad decisions - dissecting Man Utd's draw in Lisbon",
+      "summary": "BBC Sport breaks down the chaos amid Manchester United's rollercoaster Champions League draw against Sporting in Lisbon.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cvrlg074ld74o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-26T00:22:28Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "9cd833d3a5f273ee",
+      "headline": "Pochettino \u2018proud\u2019 and encouraged by draw with Sporting",
+      "summary": "Mauricio Pochettino says Manchester United showed the style and character he wants to establish during their 2-2 Champions League draw with Sporting CP. United trailed at half-time despite Pochettino feeling his side had controlled much of the",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/pochettino-proud-and-encouraged-by-draw-with-sporting/",
+      "claimed_at": "2026-11-25T23:46:09Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8a69d8a8178aecc5",
+      "headline": "Iraola gives update on Liverpool injury worry after beating Brugge",
+      "summary": "Liverpool head coach Andoni Iraola says winger Victor Mu\u00f1oz was \u201ca lot more positive\u201d after the 3-0 win at Club Brugge, offering a glimmer of hope following the first-half knee injury that forced him off. With Mu\u00f1oz now a doubt for t",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/iraola-gives-update-on-liverpool-injury-worry-after-beating-brugge/",
+      "claimed_at": "2026-11-25T23:38:56Z",
+      "players": [
+        {
+          "element_id": 377,
+          "name": "Munoz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1145125cbefc479e",
+      "headline": "How Isak and Wirtz are becoming Liverpool's 'big-game players'",
+      "summary": "Match of the Day's Stephen Warnock and Nedum Onuoha analyse the recent resurgence of Alexander Isak and Florian Wirtz for as they led Liverpool to victory against Club Brugge.debut seasons last year.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmqx527v3x19o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T23:38:42Z",
+      "players": [
+        {
+          "element_id": 366,
+          "name": "Wirtz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1b8636a748a676bf",
+      "headline": "'All coming together' - Isak repaying Liverpool faith",
+      "summary": "Alexander Isak's two goals against Club Brugge take his tally for the season to 10 as the striker continues to show why Liverpool last year paid \u00a3125m to bring him to the club.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cqm2l0gelkzxo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T23:25:30Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "880ab2b70e3b0135",
+      "headline": "Carra: Lammens confidence worrying but Poch will feel Man Utd were robbed",
+      "summary": "Jamie Carragher says Manchester United goalkeeper Senne Lammens' confidence is a cause for concern after his howler cost Mauricio Pochettino a first win since taking charge.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13616618/man-utd-goalkeeper-senne-lammens-criticised-for-howler-in-sporting-draw-by-jamie-carragher",
+      "claimed_at": "2026-11-25T23:10:00Z",
+      "players": [
+        {
+          "element_id": 412,
+          "name": "Lammens",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "8fbf4ce939fdebcb",
+      "headline": "Liverpool latest: Munoz adds to injury concern ahead of derby",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-25T22:59:00Z",
+      "players": [
+        {
+          "element_id": 377,
+          "name": "Munoz",
+          "club": "LIV",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6b5a29c518c6d25f",
+      "headline": "Lammens howler denies Man Utd victory against Sporting in incident-packed game",
+      "summary": "Goalkeeper Senne Lammens endures a topsy-turvy night as Manchester United draw with Sporting.controversial decisions.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6ly5145gg1do?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-25T22:32:51Z",
+      "players": [
+        {
+          "element_id": 412,
+          "name": "Lammens",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
     },
     {
       "digest": "c84e992708a4b0c8",
@@ -387,6 +549,24 @@
       "tier": 3,
       "url": "https://www.skysports.com/watch/video/13616555/porting-lisbon-vs-manchester-united-clinton-morrison-reacts-to-bizarre-bruno-fernandes-goal",
       "claimed_at": "2026-11-25T21:14:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "88bf2836e15a3530",
+      "headline": "Man Utd latest: Pochettino baffled by decision to disallow Amad goal",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-25T21:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1034,60 +1214,6 @@
       "touches_squad": false
     },
     {
-      "digest": "513a6a1855c738d4",
-      "headline": "Aston Villa latest: Emery's blunt response when asked about Garnacho absence",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-24T20:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "03831dda9c415af7",
-      "headline": "Man Utd latest: Fernandes 'not worried' about future",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-24T19:43:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e148f39315fbfed5",
-      "headline": "Man Utd latest: Should Szoboszlai's goal have stood? Vote!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-24T19:43:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "9ff9dd25e39efef7",
       "headline": "Arsenal 1-1 Borussia Dortmund LIVE \u2013 Arsenal held by Dortmund",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Arsenal 1-1 Borussia Dortmund LIVE - Arsenal held by Dortmund appeared first on Hayters.",
@@ -1256,84 +1382,6 @@
       "touches_squad": false
     },
     {
-      "digest": "66488e248bc2d2c7",
-      "headline": "Why Potts swapped West Ham for Club Brugge after 16 years",
-      "summary": "When Liverpool visit Club Brugge on Wendesday they are likely to come up against English midfelder Freddie Potts.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cxe89j8gj96jo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-24T08:36:50Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "80986aa19b2bd55a",
-      "headline": "Andrews praises 'versatile' Lewis-Potter",
-      "summary": "Brentford manager Keith Andrews praises the performance of Keane Lewis-Potter, who scored twice in his side's 4-0 win against Everton.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c6z0kdgz39p3o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-23T22:59:14Z",
-      "players": [
-        {
-          "element_id": 86,
-          "name": "Lewis-Potter",
-          "club": "BRE",
-          "held": false
-        },
-        {
-          "element_id": 231,
-          "name": "Keane",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b3d027fb3974b992",
-      "headline": "Moyes questions Tarkowski red in Brentford loss",
-      "summary": "Everton manager David Moyes questions whether the force of James Tarkowski's challenge was taken into consideration, after the defender was shown a red card in his side's 4-0 loss by Brentford.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cq4gnk062y8go?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-23T22:54:51Z",
-      "players": [
-        {
-          "element_id": 229,
-          "name": "Tarkowski",
-          "club": "EVE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "618b028712fc66df",
-      "headline": "Janelt scores stunner as Brentford beat 10-man Everton",
-      "summary": "Watch highlights as Brentford earn a comfortable 3-0 win against 10-man Everton in the Premier League, including a great goal by Vitaly Janelt.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/c5gm3jlw7l7xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-23T22:31:27Z",
-      "players": [
-        {
-          "element_id": 98,
-          "name": "Janelt",
-          "club": "BRE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "21f15b89aef05f92",
       "headline": "FPL Gameweek 12 early Scout Picks: Leeds triple-up, no Haaland",
       "summary": "Our \u2018bus team\u2019 for the upcoming Gameweek The post FPL Gameweek 12 early Scout Picks: Leeds triple-up, no Haaland appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1418,24 +1466,6 @@
           "element_id": 78,
           "name": "Kroupi.Jr",
           "club": "BOU",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "1f1e2020b8304164",
-      "headline": "One of football's most-hyped 16-year-olds - what next for JJ Gabriel?",
-      "summary": "BBC Sport looks at why JJ Gabriel's move from Manchester United to Real Madrid has caused such a stir.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6p9dym309nxo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-23T06:17:59Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1592,42 +1622,6 @@
       "touches_squad": false
     },
     {
-      "digest": "674f05798f54d4c4",
-      "headline": "Liverpool 4-0 Man Utd LIVE \u2013 Nightmare start for Pochettino as ten-man Utd destroyed",
-      "summary": "&#8220;{rsn-live-v2}&#8221; The post Liverpool 4-0 Man Utd LIVE - Nightmare start for Pochettino as ten-man Utd destroyed appeared first on Hayters.",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/liverpool-v-man-utd-live-team-news-updates-and-reaction/",
-      "claimed_at": "2026-11-22T13:10:15Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "03949ecd6a3d86d0",
-      "headline": "\u2018If I wanted more money, I wouldn\u2019t be here\u2019 \u2013 Bruno Fernandes discusses his Man Utd future",
-      "summary": "Bruno Fernandes has confirmed Manchester United have offered him a new contract but says he has put discussions on hold while the club focuses on returning to winning ways. The United captain\u2019s current deal e",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/if-i-wanted-more-money-i-wouldnt-be-here-bruno-fernandes-discusses-his-man-utd-future/",
-      "claimed_at": "2026-11-22T10:33:53Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "8760ce6f3839a907",
       "headline": "FPL notes: \u00a34.4m midfielder haul, Davis + Savio injury updates",
       "summary": "FPL notes from a comfortable 2-0 win for Spurs The post FPL notes: \u00a34.4m midfielder haul, Davis + Savio injury updates appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -1718,6 +1712,12 @@
           "element_id": 455,
           "name": "Tonali",
           "club": "TOT",
+          "held": false
+        },
+        {
+          "element_id": 114,
+          "name": "Boscagli",
+          "club": "BHA",
           "held": false
         }
       ],
