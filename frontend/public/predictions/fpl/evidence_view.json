@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-27T02:15:22.546972Z",
+  "generated_at": "2026-11-27T10:56:29.347294Z",
   "gameweek": 12,
   "players": [
     {
@@ -991,6 +991,63 @@
       "needs_attention": false
     },
     {
+      "element_id": 78,
+      "player_name": "Kroupi.Jr",
+      "club": "Bournemouth",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "52f8b9388f800a8b",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-26T21:00:05.979236Z",
+              "observed_at": "2026-11-27T02:16:02.582533Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "b01b65a982294d07",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-26T21:00:05.979236Z",
+              "observed_at": "2026-11-27T02:16:02.582533Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
+    },
+    {
       "element_id": 114,
       "player_name": "Boscagli",
       "club": "Brighton",
@@ -1583,13 +1640,70 @@
       ],
       "total_conflicts": 0,
       "needs_attention": false
+    },
+    {
+      "element_id": 612,
+      "player_name": "Methalie",
+      "club": "Sunderland",
+      "entries": [
+        {
+          "claim_type": "chance_of_playing",
+          "resolved_value": 75,
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "601750867d6a8ce3",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "chance_of_playing",
+              "value": 75,
+              "claimed_at": "2026-11-26T21:00:06.487816Z",
+              "observed_at": "2026-11-27T02:16:02.582533Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        },
+        {
+          "claim_type": "status",
+          "resolved_value": "d",
+          "rule": "only_claim",
+          "n_conflicts": 0,
+          "n_dropped": 0,
+          "unresolved": false,
+          "escalation": null,
+          "claims": [
+            {
+              "claim_id": "648814465b517d5b",
+              "source": "fpl_bootstrap",
+              "source_tier": 1,
+              "claim_type": "status",
+              "value": "d",
+              "claimed_at": "2026-11-26T21:00:06.487816Z",
+              "observed_at": "2026-11-27T02:16:02.582533Z",
+              "quote": null,
+              "url": null,
+              "verdict": "won",
+              "beaten_by": null
+            }
+          ]
+        }
+      ],
+      "total_conflicts": 0,
+      "needs_attention": false
     }
   ],
   "counts": {
-    "n_claims": 419,
-    "n_players_with_claims": 90,
-    "n_players_shown": 21,
-    "n_escalations": 12,
-    "n_players_resolved": 40
+    "n_claims": 427,
+    "n_players_with_claims": 91,
+    "n_players_shown": 23,
+    "n_escalations": 11,
+    "n_players_resolved": 42
   }
 }
