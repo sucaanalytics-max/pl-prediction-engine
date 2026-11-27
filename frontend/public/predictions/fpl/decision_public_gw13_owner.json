@@ -1,0 +1,453 @@
+{
+  "gameweek": 13,
+  "entry_label": "owner",
+  "objective": "season",
+  "generated_at": "2026-11-27T19:50:19.463057Z",
+  "deadline": "2026-12-01T18:30:00Z",
+  "xp_snapshot": {
+    "34": 3.2689,
+    "53": 3.1485,
+    "68": 4.8144,
+    "112": 4.6733,
+    "115": 3.9771,
+    "124": 4.0153,
+    "154": 6.1541,
+    "166": 4.6306,
+    "334": 2.6341,
+    "346": 3.8678,
+    "356": 5.5191,
+    "366": 5.452,
+    "379": 4.6436,
+    "385": 2.5959,
+    "427": 3.9301,
+    "465": 4.7464,
+    "480": 4.7314,
+    "496": 3.4535,
+    "504": 3.4229
+  },
+  "decision": {
+    "plan": {
+      "squad": [
+        34,
+        68,
+        112,
+        115,
+        124,
+        154,
+        166,
+        346,
+        356,
+        366,
+        385,
+        465,
+        480,
+        496,
+        504
+      ],
+      "xi": [
+        68,
+        112,
+        115,
+        124,
+        154,
+        166,
+        356,
+        366,
+        465,
+        480,
+        496
+      ],
+      "captain": 154,
+      "vice": 356,
+      "transfers_in": [
+        68,
+        154,
+        356,
+        465
+      ],
+      "transfers_out": [
+        53,
+        334,
+        379,
+        427
+      ],
+      "hits": 0,
+      "bank_after": 0,
+      "objective": 0.0,
+      "free_transfers_banked": 1,
+      "free_transfers_after": 2
+    },
+    "n_draws": 10000,
+    "mean_points": 59.0225,
+    "sd_points": 15.9646,
+    "objective": 60.7725,
+    "quantiles": {
+      "q10": 39.0,
+      "q25": 47.0,
+      "q50": 58.0,
+      "q75": 69.0,
+      "q90": 80.0,
+      "q99": 100.0
+    },
+    "tails": {
+      "p_ge_40": 0.8986,
+      "p_ge_50": 0.7014,
+      "p_ge_60": 0.4641,
+      "p_ge_70": 0.2458,
+      "p_ge_80": 0.1085,
+      "p_ge_90": 0.038
+    },
+    "autosub_rate": 0.1143,
+    "vice_rate": 0.0265
+  },
+  "optimism_gap": -0.1355,
+  "credible_margin": true,
+  "pool": {
+    "n_candidates": 567,
+    "n_excluded": 107,
+    "excluded_by_reason": {
+      "status_u": 106,
+      "status_n": 1
+    },
+    "held_missing_purchase_price": [],
+    "price_uncertain": false,
+    "n_zero_xp": 69
+  },
+  "horizon": {
+    "eval_horizon": 8,
+    "transfer_horizon": 6,
+    "provisional": [
+      {
+        "squad": [
+          34,
+          68,
+          115,
+          124,
+          154,
+          166,
+          332,
+          346,
+          356,
+          366,
+          385,
+          465,
+          480,
+          496,
+          504
+        ],
+        "xi": [
+          68,
+          115,
+          154,
+          166,
+          332,
+          346,
+          356,
+          366,
+          385,
+          465,
+          480
+        ],
+        "captain": 346,
+        "vice": 166,
+        "transfers_in": [
+          332
+        ],
+        "transfers_out": [
+          112
+        ],
+        "hits": 0,
+        "bank_after": 5,
+        "objective": 0.0,
+        "free_transfers_banked": 1,
+        "free_transfers_after": 2
+      },
+      {
+        "squad": [
+          4,
+          34,
+          68,
+          115,
+          124,
+          127,
+          154,
+          166,
+          332,
+          346,
+          356,
+          385,
+          465,
+          480,
+          496
+        ],
+        "xi": [
+          4,
+          115,
+          124,
+          127,
+          154,
+          166,
+          346,
+          356,
+          465,
+          480,
+          496
+        ],
+        "captain": 4,
+        "vice": 166,
+        "transfers_in": [
+          4,
+          127
+        ],
+        "transfers_out": [
+          366,
+          504
+        ],
+        "hits": 0,
+        "bank_after": 0,
+        "objective": 0.0,
+        "free_transfers_banked": 0,
+        "free_transfers_after": 1
+      },
+      {
+        "squad": [
+          4,
+          34,
+          68,
+          115,
+          124,
+          127,
+          154,
+          166,
+          332,
+          346,
+          356,
+          385,
+          465,
+          480,
+          496
+        ],
+        "xi": [
+          4,
+          68,
+          115,
+          124,
+          127,
+          154,
+          332,
+          346,
+          356,
+          385,
+          480
+        ],
+        "captain": 68,
+        "vice": 115,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 0,
+        "objective": 0.0,
+        "free_transfers_banked": 1,
+        "free_transfers_after": 2
+      },
+      {
+        "squad": [
+          4,
+          34,
+          68,
+          115,
+          124,
+          127,
+          154,
+          166,
+          332,
+          346,
+          356,
+          385,
+          465,
+          480,
+          496
+        ],
+        "xi": [
+          4,
+          68,
+          115,
+          124,
+          127,
+          154,
+          166,
+          346,
+          356,
+          385,
+          480
+        ],
+        "captain": 154,
+        "vice": 4,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 0,
+        "objective": 0.0,
+        "free_transfers_banked": 2,
+        "free_transfers_after": 3
+      },
+      {
+        "squad": [
+          4,
+          34,
+          68,
+          115,
+          124,
+          127,
+          154,
+          166,
+          332,
+          346,
+          356,
+          385,
+          465,
+          480,
+          496
+        ],
+        "xi": [
+          4,
+          68,
+          124,
+          127,
+          154,
+          166,
+          332,
+          346,
+          356,
+          385,
+          480
+        ],
+        "captain": 154,
+        "vice": 68,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 0,
+        "objective": 0.0,
+        "free_transfers_banked": 3,
+        "free_transfers_after": 4
+      },
+      {
+        "squad": [
+          4,
+          34,
+          68,
+          115,
+          124,
+          127,
+          154,
+          166,
+          332,
+          346,
+          356,
+          385,
+          465,
+          480,
+          496
+        ],
+        "xi": [
+          4,
+          68,
+          115,
+          124,
+          127,
+          154,
+          332,
+          346,
+          356,
+          385,
+          480
+        ],
+        "captain": 4,
+        "vice": 154,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 0,
+        "objective": 0.0,
+        "free_transfers_banked": 4,
+        "free_transfers_after": 5
+      },
+      {
+        "squad": [
+          4,
+          34,
+          68,
+          115,
+          124,
+          127,
+          154,
+          166,
+          332,
+          346,
+          356,
+          385,
+          465,
+          480,
+          496
+        ],
+        "xi": [
+          4,
+          68,
+          115,
+          124,
+          127,
+          154,
+          166,
+          346,
+          356,
+          385,
+          480
+        ],
+        "captain": 4,
+        "vice": 480,
+        "transfers_in": [],
+        "transfers_out": [],
+        "hits": 0,
+        "bank_after": 0,
+        "objective": 0.0,
+        "free_transfers_banked": 5,
+        "free_transfers_after": 5
+      }
+    ]
+  },
+  "field_model": "uncalibrated",
+  "warnings": [],
+  "execution": "propose_only",
+  "evidence": {
+    "measured_on": {
+      "seasons": [
+        "2023-24",
+        "2024-25",
+        "2025-26"
+      ],
+      "gameweeks": "8-38 each, 93 paired observations",
+      "harness": "pipeline/learning/backtest_decisions.py",
+      "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+    },
+    "beats_doing_nothing": {
+      "verdict": "established",
+      "margin_2023_24": 411,
+      "margin_2024_25": 560,
+      "margin_2025_26": 184,
+      "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+    },
+    "beats_greedy_transfers": {
+      "verdict": "not established",
+      "margin_2023_24": 67,
+      "margin_2024_25": 60,
+      "margin_2025_26": -66,
+      "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+    },
+    "projection_calibration": {
+      "verdict": "established",
+      "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+    }
+  },
+  "sealed": false
+}
