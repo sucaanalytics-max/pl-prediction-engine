@@ -1,7 +1,645 @@
 {
-  "generated_at": "2026-11-24T15:06:10.653334Z",
-  "n_messages": 173,
+  "generated_at": "2026-11-27T14:40:02.577790Z",
+  "n_messages": 185,
   "messages": [
+    {
+      "id": "gw12-decision-owner",
+      "gameweek": 12,
+      "kind": "decision",
+      "severity": "info",
+      "title": "GW12 \u2014 owner team ready",
+      "body": "4 transfer(s), 0 hit(s) taken. Deadline in 3.8 hours. Nothing has been submitted for you \u2014 the agent has no write access to FPL by design.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "gameweek": 12,
+        "entry_label": "owner",
+        "objective": "season",
+        "generated_at": "2026-11-27T14:40:02.492011Z",
+        "deadline": "2026-11-27T18:30:00Z",
+        "xp_snapshot": {
+          "1": 2.6344,
+          "4": 4.583,
+          "40": 3.6045,
+          "53": 3.3446,
+          "68": 4.5611,
+          "112": 4.3984,
+          "124": 4.9387,
+          "127": 5.2089,
+          "154": 4.6878,
+          "166": 5.072,
+          "173": 2.2977,
+          "237": 3.3779,
+          "249": 3.9038,
+          "346": 5.8493,
+          "411": 4.3202,
+          "427": 4.1348,
+          "496": 3.3383,
+          "504": 4.394,
+          "566": 3.6797
+        },
+        "decision": {
+          "plan": {
+            "squad": [
+              1,
+              4,
+              68,
+              112,
+              124,
+              127,
+              154,
+              166,
+              173,
+              237,
+              346,
+              411,
+              496,
+              504,
+              566
+            ],
+            "xi": [
+              4,
+              68,
+              112,
+              124,
+              127,
+              154,
+              166,
+              346,
+              411,
+              496,
+              504
+            ],
+            "captain": 346,
+            "vice": 127,
+            "transfers_in": [
+              68,
+              127,
+              154,
+              346
+            ],
+            "transfers_out": [
+              40,
+              53,
+              249,
+              427
+            ],
+            "hits": 0,
+            "bank_after": 3,
+            "objective": 0.0,
+            "free_transfers_banked": 1,
+            "free_transfers_after": 2
+          },
+          "n_draws": 10000,
+          "mean_points": 57.4627,
+          "sd_points": 15.6083,
+          "objective": 59.2127,
+          "quantiles": {
+            "q10": 38.0,
+            "q25": 46.0,
+            "q50": 56.0,
+            "q75": 67.0,
+            "q90": 78.0,
+            "q99": 98.0
+          },
+          "tails": {
+            "p_ge_40": 0.882,
+            "p_ge_50": 0.6723,
+            "p_ge_60": 0.4261,
+            "p_ge_70": 0.2134,
+            "p_ge_80": 0.086,
+            "p_ge_90": 0.0307
+          },
+          "autosub_rate": 0.0667,
+          "vice_rate": 0.0016
+        },
+        "optimism_gap": 0.0032,
+        "credible_margin": true,
+        "pool": {
+          "n_candidates": 567,
+          "n_excluded": 107,
+          "excluded_by_reason": {
+            "status_u": 106,
+            "status_n": 1
+          },
+          "held_missing_purchase_price": [],
+          "price_uncertain": false,
+          "n_zero_xp": 72
+        },
+        "horizon": {
+          "eval_horizon": 8,
+          "transfer_horizon": 6,
+          "provisional": [
+            {
+              "squad": [
+                1,
+                4,
+                68,
+                112,
+                124,
+                127,
+                154,
+                166,
+                173,
+                237,
+                280,
+                346,
+                356,
+                411,
+                496
+              ],
+              "xi": [
+                4,
+                68,
+                112,
+                124,
+                127,
+                154,
+                166,
+                237,
+                356,
+                411,
+                496
+              ],
+              "captain": 154,
+              "vice": 411,
+              "transfers_in": [
+                280,
+                356
+              ],
+              "transfers_out": [
+                504,
+                566
+              ],
+              "hits": 0,
+              "bank_after": 1,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                166,
+                173,
+                237,
+                280,
+                346,
+                356,
+                411,
+                496
+              ],
+              "xi": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                166,
+                346,
+                356,
+                411
+              ],
+              "captain": 346,
+              "vice": 166,
+              "transfers_in": [
+                85
+              ],
+              "transfers_out": [
+                112
+              ],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 0,
+              "free_transfers_after": 1
+            },
+            {
+              "squad": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                166,
+                173,
+                237,
+                280,
+                346,
+                356,
+                411,
+                496
+              ],
+              "xi": [
+                1,
+                4,
+                85,
+                124,
+                127,
+                154,
+                166,
+                237,
+                280,
+                356,
+                411
+              ],
+              "captain": 411,
+              "vice": 4,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 1,
+              "free_transfers_after": 2
+            },
+            {
+              "squad": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                166,
+                173,
+                237,
+                280,
+                346,
+                356,
+                411,
+                496
+              ],
+              "xi": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                166,
+                346,
+                356,
+                411
+              ],
+              "captain": 68,
+              "vice": 127,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 2,
+              "free_transfers_after": 3
+            },
+            {
+              "squad": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                166,
+                173,
+                237,
+                280,
+                346,
+                356,
+                411,
+                496
+              ],
+              "xi": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                154,
+                166,
+                237,
+                346,
+                356,
+                411
+              ],
+              "captain": 154,
+              "vice": 411,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 3,
+              "free_transfers_after": 4
+            },
+            {
+              "squad": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                166,
+                173,
+                237,
+                280,
+                346,
+                356,
+                411,
+                496
+              ],
+              "xi": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                166,
+                280,
+                346,
+                411
+              ],
+              "captain": 154,
+              "vice": 411,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 4,
+              "free_transfers_after": 5
+            },
+            {
+              "squad": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                166,
+                173,
+                237,
+                280,
+                346,
+                356,
+                411,
+                496
+              ],
+              "xi": [
+                1,
+                4,
+                68,
+                85,
+                124,
+                127,
+                154,
+                237,
+                346,
+                356,
+                411
+              ],
+              "captain": 4,
+              "vice": 411,
+              "transfers_in": [],
+              "transfers_out": [],
+              "hits": 0,
+              "bank_after": 2,
+              "objective": 0.0,
+              "free_transfers_banked": 5,
+              "free_transfers_after": 5
+            }
+          ]
+        },
+        "field_model": "uncalibrated",
+        "warnings": [],
+        "execution": "propose_only",
+        "evidence": {
+          "measured_on": {
+            "seasons": [
+              "2023-24",
+              "2024-25",
+              "2025-26"
+            ],
+            "gameweeks": "8-38 each, 93 paired observations",
+            "harness": "pipeline/learning/backtest_decisions.py",
+            "note": "transcribed by hand from a manual run; re-run the harness after any change to the projection or the optimiser, and update these figures with it. Seasons before 2022-23 are unusable: the archive has no `starts` column, and 2022-23 only populates it from GW16"
+          },
+          "beats_doing_nothing": {
+            "verdict": "established",
+            "margin_2023_24": 411,
+            "margin_2024_25": 560,
+            "margin_2025_26": 184,
+            "note": "positive in all three seasons; pooled +12.42/GW over 93 gameweeks, se 1.91, t=+6.49"
+          },
+          "beats_greedy_transfers": {
+            "verdict": "not established",
+            "margin_2023_24": 67,
+            "margin_2024_25": 60,
+            "margin_2025_26": -66,
+            "note": "pooled +0.66/GW over 93 gameweeks, se 1.20, t=+0.55 \u2014 positive in two seasons of three. At this effect size and variance, resolving it at t=2 would need roughly 1,200 gameweeks, about 30 seasons"
+          },
+          "projection_calibration": {
+            "verdict": "established",
+            "note": "31 gameweeks, 24,265 player-weeks, coverage 1.000: every published tail within 0.0024 of realised frequency"
+          }
+        },
+        "sealed": true
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-399",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Cherki rescues point for Man City against Napoli\\nRayan Cherki's late equaliser rescues a point for Manchester City at home to Napoli in the Champions League, who have now won just one of their past seven games in all competitions.\" (2026-11-25T22:05:49Z) while fantasyfootballscout says 'FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again\\nThe Champions League action of Man City and Aston Villa The post FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footba' (2026-11-25T20:00:00Z), sky_football says \"Cherki salvages draw with Napoli but Man City frustrate\\nRayan Cherki's late strike salvaged a 2-2 draw for Manchester City at home to Napoli in the Champions League but Enzo Maresca's side again struggled to find their fluency.\" (2026-11-24T12:09:00Z). Used the more conservative \"Cherki rescues point for Man City against Napoli\\nRayan Cherki's late equaliser rescues a point for Manchester City at home to Napoli in the Champions League, who have now won just one of their past seven games in all competitions.\". Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 399,
+        "claim_type": "unparsed_news",
+        "value": "Cherki rescues point for Man City against Napoli\nRayan Cherki's late equaliser rescues a point for Manchester City at home to Napoli in the Champions League, who have now won just one of their past seven games in all competitions.",
+        "detail": "unparsed_news: bbc_football says \"Cherki rescues point for Man City against Napoli\\nRayan Cherki's late equaliser rescues a point for Manchester City at home to Napoli in the Champions League, who have now won just one of their past seven games in all competitions.\" (2026-11-25T22:05:49Z) while fantasyfootballscout says 'FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again\\nThe Champions League action of Man City and Aston Villa The post FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footba' (2026-11-25T20:00:00Z), sky_football says \"Cherki salvages draw with Napoli but Man City frustrate\\nRayan Cherki's late strike salvaged a 2-2 draw for Manchester City at home to Napoli in the Champions League but Enzo Maresca's side again struggled to find their fluency.\" (2026-11-24T12:09:00Z). Used the more conservative \"Cherki rescues point for Man City against Napoli\\nRayan Cherki's late equaliser rescues a point for Manchester City at home to Napoli in the Champions League, who have now won just one of their past seven games in all competitions.\".",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-411",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Haaland considers Man City exit - Friday's gossip\\nErling Haaland considers Manchester City exit, Liverpool explore Jamal Musiala deal and Manchester United eye move for Maxi Araujo, plus more.\" (2026-11-26T21:25:06Z) while fantasyfootballscout says 'FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again\\nThe Champions League action of Man City and Aston Villa The post FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footba' (2026-11-25T20:00:00Z), sky_football says '\\'You question everything\\' - Haaland lays City\\'s frustrations bare\\nErling Haaland said Manchester City\\'s poor form is affecting the players, admitting \"when you don\\'t win, you question everything\" after they were held 2-2 at home by Napoli in the Champions League.' (2026-11-24T22:51:00Z). Used the more conservative \"Haaland considers Man City exit - Friday's gossip\\nErling Haaland considers Manchester City exit, Liverpool explore Jamal Musiala deal and Manchester United eye move for Maxi Araujo, plus more.\". Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 411,
+        "claim_type": "unparsed_news",
+        "value": "Haaland considers Man City exit - Friday's gossip\nErling Haaland considers Manchester City exit, Liverpool explore Jamal Musiala deal and Manchester United eye move for Maxi Araujo, plus more.",
+        "detail": "unparsed_news: bbc_football says \"Haaland considers Man City exit - Friday's gossip\\nErling Haaland considers Manchester City exit, Liverpool explore Jamal Musiala deal and Manchester United eye move for Maxi Araujo, plus more.\" (2026-11-26T21:25:06Z) while fantasyfootballscout says 'FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again\\nThe Champions League action of Man City and Aston Villa The post FPL notes: Haaland + Jackson quiet, Cherki 90, City defence poor again appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Footba' (2026-11-25T20:00:00Z), sky_football says '\\'You question everything\\' - Haaland lays City\\'s frustrations bare\\nErling Haaland said Manchester City\\'s poor form is affecting the players, admitting \"when you don\\'t win, you question everything\" after they were held 2-2 at home by Napoli in the Champions League.' (2026-11-24T22:51:00Z). Used the more conservative \"Haaland considers Man City exit - Friday's gossip\\nErling Haaland considers Manchester City exit, Liverpool explore Jamal Musiala deal and Manchester United eye move for Maxi Araujo, plus more.\".",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-159",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-11-21T16:30:05.451902Z) while fpl_news_parse says 75 (2026-11-21T16:30:05.451902Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 159,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-11-21T16:30:05.451902Z) while fpl_news_parse says 75 (2026-11-21T16:30:05.451902Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-207",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 100 (2026-11-21T17:30:05.672662Z) while fpl_news_parse says 75 (2026-11-21T17:30:05.672662Z). Used the more conservative 75. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 207,
+        "claim_type": "chance_of_playing",
+        "value": 75,
+        "detail": "chance_of_playing: fpl_bootstrap says 100 (2026-11-21T17:30:05.672662Z) while fpl_news_parse says 75 (2026-11-21T17:30:05.672662Z). Used the more conservative 75.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-492",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-11-21T16:30:05.778377Z) while fpl_news_parse says 75 (2026-11-21T16:30:05.778377Z). Used the more conservative 0. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 492,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-11-21T16:30:05.778377Z) while fpl_news_parse says 75 (2026-11-21T16:30:05.778377Z). Used the more conservative 0.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-369",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Man Utd target Collins - Wednesday's gossip\\nManchester United target Brentford defender Nathan Collins, Bournemouth price forward Eli Junior Kroupi at \u00a3100m and Liverpool close in on new Rio Ngumoha contract.\" (2026-11-24T20:51:44Z) while fantasyfootballscout says 'Liverpool v Man Utd team news: Ngumoha starts, no Gakpo\\nHow the sides line up at Anfield The post Liverpool v Man Utd team news: Ngumoha starts, no Gakpo appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-11-22T16:10:00Z). Used the more conservative \"Man Utd target Collins - Wednesday's gossip\\nManchester United target Brentford defender Nathan Collins, Bournemouth price forward Eli Junior Kroupi at \u00a3100m and Liverpool close in on new Rio Ngumoha contract.\". Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 369,
+        "claim_type": "unparsed_news",
+        "value": "Man Utd target Collins - Wednesday's gossip\nManchester United target Brentford defender Nathan Collins, Bournemouth price forward Eli Junior Kroupi at \u00a3100m and Liverpool close in on new Rio Ngumoha contract.",
+        "detail": "unparsed_news: bbc_football says \"Man Utd target Collins - Wednesday's gossip\\nManchester United target Brentford defender Nathan Collins, Bournemouth price forward Eli Junior Kroupi at \u00a3100m and Liverpool close in on new Rio Ngumoha contract.\" (2026-11-24T20:51:44Z) while fantasyfootballscout says 'Liverpool v Man Utd team news: Ngumoha starts, no Gakpo\\nHow the sides line up at Anfield The post Liverpool v Man Utd team news: Ngumoha starts, no Gakpo appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-11-22T16:10:00Z). Used the more conservative \"Man Utd target Collins - Wednesday's gossip\\nManchester United target Brentford defender Nathan Collins, Bournemouth price forward Eli Junior Kroupi at \u00a3100m and Liverpool close in on new Rio Ngumoha contract.\".",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-240",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-11-22T15:00:05.901794Z) while fpl_news_parse says 75 (2026-11-22T15:00:05.901794Z). Used the more conservative 0. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 240,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-11-22T15:00:05.901794Z) while fpl_news_parse says 75 (2026-11-22T15:00:05.901794Z). Used the more conservative 0.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-367",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "chance_of_playing: fpl_bootstrap says 0 (2026-11-22T16:30:05.520808Z) while fpl_news_parse says 75 (2026-11-22T16:30:05.520808Z). Used the more conservative 0. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 367,
+        "claim_type": "chance_of_playing",
+        "value": 0,
+        "detail": "chance_of_playing: fpl_bootstrap says 0 (2026-11-22T16:30:05.520808Z) while fpl_news_parse says 75 (2026-11-22T16:30:05.520808Z). Used the more conservative 0.",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-257",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: sky_football says \"Papers: Bassey seeking new Fulham deal rather than Man Utd move\\nThe top stories and transfer rumours from Monday's newspapers...\" (2026-11-23T08:00:00Z) while bbc_football says \"Man Utd plotting Toney move - Monday's gossip\\nManchester United eye move for Al-Ahli striker Ivan Toney, Fulham hold contract talks with Calvin Bassey and PSG could step up pursuit of Eli Junior Kroupi.\" (2026-11-22T21:04:15Z). Used the more conservative \"Papers: Bassey seeking new Fulham deal rather than Man Utd move\\nThe top stories and transfer rumours from Monday's newspapers...\". Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 257,
+        "claim_type": "unparsed_news",
+        "value": "Papers: Bassey seeking new Fulham deal rather than Man Utd move\nThe top stories and transfer rumours from Monday's newspapers...",
+        "detail": "unparsed_news: sky_football says \"Papers: Bassey seeking new Fulham deal rather than Man Utd move\\nThe top stories and transfer rumours from Monday's newspapers...\" (2026-11-23T08:00:00Z) while bbc_football says \"Man Utd plotting Toney move - Monday's gossip\\nManchester United eye move for Al-Ahli striker Ivan Toney, Fulham hold contract talks with Calvin Bassey and PSG could step up pursuit of Eli Junior Kroupi.\" (2026-11-22T21:04:15Z). Used the more conservative \"Papers: Bassey seeking new Fulham deal rather than Man Utd move\\nThe top stories and transfer rumours from Monday's newspapers...\".",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-295",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: bbc_football says \"Watch Scotland striker McBurnie's double sink Brighton\\nOli McBurnie's stoppage-time double earns victory for Hull City against second-placed Brighton in the Premier League.\" (2026-11-22T19:59:38Z) while sky_football says 'Late McBurnie double sees Hull stun in-form Brighton\\nFREE TO WATCH: Highlights from the Premier League match between Hull City and Brighton.' (2026-11-22T16:31:00Z). Used the more conservative \"Watch Scotland striker McBurnie's double sink Brighton\\nOli McBurnie's stoppage-time double earns victory for Hull City against second-placed Brighton in the Premier League.\". Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 295,
+        "claim_type": "unparsed_news",
+        "value": "Watch Scotland striker McBurnie's double sink Brighton\nOli McBurnie's stoppage-time double earns victory for Hull City against second-placed Brighton in the Premier League.",
+        "detail": "unparsed_news: bbc_football says \"Watch Scotland striker McBurnie's double sink Brighton\\nOli McBurnie's stoppage-time double earns victory for Hull City against second-placed Brighton in the Premier League.\" (2026-11-22T19:59:38Z) while sky_football says 'Late McBurnie double sees Hull stun in-form Brighton\\nFREE TO WATCH: Highlights from the Premier League match between Hull City and Brighton.' (2026-11-22T16:31:00Z). Used the more conservative \"Watch Scotland striker McBurnie's double sink Brighton\\nOli McBurnie's stoppage-time double earns victory for Hull City against second-placed Brighton in the Premier League.\".",
+        "applied": false
+      }
+    },
+    {
+      "id": "gw12-warning-availability-conflict-229",
+      "gameweek": 12,
+      "kind": "warning",
+      "severity": "warning",
+      "title": "GW12 \u2014 sources disagree on a player's availability",
+      "body": "unparsed_news: fantasyfootballscout says 'FPL notes: Barry early sub, Schade benched + Tarkowski ban\\nFantasy takeaways from Brentford 4-0 Everton The post FPL notes: Barry early sub, Schade benched + Tarkowski ban appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-11-24T15:45:00Z) while bbc_football says \"Moyes questions Tarkowski red in Brentford loss\\nEverton manager David Moyes questions whether the force of James Tarkowski's challenge was taken into consideration, after the defender was shown a red card in his side's 4-0 loss by Brentford.\" (2026-11-23T22:54:51Z). Used the more conservative 'FPL notes: Barry early sub, Schade benched + Tarkowski ban\\nFantasy takeaways from Brentford 4-0 Everton The post FPL notes: Barry early sub, Schade benched + Tarkowski ban appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'. Neither stored reading was used: the projection took FPL's live fields, which outrank stored claims.",
+      "created_at": "2026-11-27T14:40:02.577790Z",
+      "detail": {
+        "element_id": 229,
+        "claim_type": "unparsed_news",
+        "value": "FPL notes: Barry early sub, Schade benched + Tarkowski ban\nFantasy takeaways from Brentford 4-0 Everton The post FPL notes: Barry early sub, Schade benched + Tarkowski ban appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+        "detail": "unparsed_news: fantasyfootballscout says 'FPL notes: Barry early sub, Schade benched + Tarkowski ban\\nFantasy takeaways from Brentford 4-0 Everton The post FPL notes: Barry early sub, Schade benched + Tarkowski ban appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.' (2026-11-24T15:45:00Z) while bbc_football says \"Moyes questions Tarkowski red in Brentford loss\\nEverton manager David Moyes questions whether the force of James Tarkowski's challenge was taken into consideration, after the defender was shown a red card in his side's 4-0 loss by Brentford.\" (2026-11-23T22:54:51Z). Used the more conservative 'FPL notes: Barry early sub, Schade benched + Tarkowski ban\\nFantasy takeaways from Brentford 4-0 Everton The post FPL notes: Barry early sub, Schade benched + Tarkowski ban appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.'.",
+        "applied": false
+      }
+    },
     {
       "id": "gw11-status-settled",
       "gameweek": 11,
