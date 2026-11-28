@@ -1,18 +1,42 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-28T13:39:02.464678Z",
-  "n_dropped": 112,
+  "generated_at": "2026-11-28T21:22:41.736206Z",
+  "n_dropped": 143,
   "dropped_by_source": {
-    "bbc_football": 33,
-    "hayters": 17,
-    "sky_football": 62
+    "bbc_football": 44,
+    "hayters": 23,
+    "sky_football": 76
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 202,
+  "n_articles": 233,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "961c5d7ac614a715",
+      "headline": "Leeds fans can dream big but players must stay grounded, says Farke",
+      "summary": "Daniel Farke says Leeds United supporters are right to \u201cdream big\u201d after their 3-0 win over Coventry City, but insists his players must stay grounded. Leeds sit sixth in the Premier League table after another convincing win, thanks",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/leeds-fans-can-dream-big-but-players-must-stay-grounded-says-farke/",
+      "claimed_at": "2026-11-28T18:46:45Z",
+      "players": [
+        {
+          "element_id": 339,
+          "name": "Longstaff",
+          "club": "LEE",
+          "held": false
+        },
+        {
+          "element_id": 346,
+          "name": "Calvert-Lewin",
+          "club": "LEE",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "fa39add51e8c7e53",
       "headline": "FPL notes: Gibbs-White finally delivers + \u00a34.9m forward brace",
@@ -380,6 +404,540 @@
       "touches_squad": true
     },
     {
+      "digest": "92e5520e824e3351",
+      "headline": "\u2018Building for the future\u2019 \u2013 Emery remains positive after draw with Ipswich",
+      "summary": "Unai Emery says Aston Villa are getting \u201ccloser to winning\u201d on a more consistent basis despite being held to a 2-2 draw by Ipswich Town. Villa twice took the lead through Alysson and Joao Gomes but goals from Emersonn and Lei",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/building-for-the-future-emery-remains-positive-after-draw-with-ipswich/",
+      "claimed_at": "2026-11-28T20:25:42Z",
+      "players": [
+        {
+          "element_id": 54,
+          "name": "Gomes",
+          "club": "AVL",
+          "held": false
+        },
+        {
+          "element_id": 305,
+          "name": "Davis",
+          "club": "IPS",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "91161f4a0d6d2377",
+      "headline": "Pochettino's Man Utd in crisis after Brentford battering",
+      "summary": "Manchester United lose back-to-back league games by four goals after being thumped by Brentford in Mauricio Pochettino's first Premier League game in charge at Old Trafford.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/ckj05yl2lzgmo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T20:00:15Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "27881fc5d368389e",
+      "headline": "Longstaff scores twice as Leeds stay in hunt for Europe",
+      "summary": "Sean Longstaff scores two goals and sets up another as Leeds United cruises past Coventry City to boost their hopes of playing European football next season.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cq5y1pn7j72ro?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T20:00:12Z",
+      "players": [
+        {
+          "element_id": 339,
+          "name": "Longstaff",
+          "club": "LEE",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "167af7107bbe7c24",
+      "headline": "Ipswich and Villa extend winless runs with draw",
+      "summary": "Ipswich hold Aston Villa to a draw in their Premier League clash, leaving the Tractor Boys six games without a win while Villa have yet to take victory in seven.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/c65y1ee1qzx7o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T20:00:03Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1711ed328be3345c",
+      "headline": "Aston Villa latest: Villa heading in right direction, says Emery",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-28T20:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f2033836cb4260f6",
+      "headline": "Ipswich latest: 'Best mentality in the PL' - O'Neil hails players after Villa comeback",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279317/ipswich-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-11-28T20:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "23c31bec198772d5",
+      "headline": "Brentford aim for 'special things' after ending 89-year Old Trafford wait",
+      "summary": "Brentford have set their sights on Europe after ending 89-year wait for away victory against Manchester United.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm782446d9n6o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T19:39:15Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b59b626103ac3863",
+      "headline": "A defence fit for relegation - no Man Utd honeymoon for Pochettino",
+      "summary": "Mauricio Pochettino has suffered a nightmare start as Manchester United manager, conceding 10 goals in three matches. Is there a way out of this mess for the club?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cq62pz0ew2kno?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T19:36:59Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "093312e92c77596f",
+      "headline": "Ipswich come from behind TWICE to share points with Villa",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Ipswich Town and Aston Villa.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13617794/ipswich-town-2-2-aston-villa-premier-league-highlights",
+      "claimed_at": "2026-11-28T19:35:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "75776420219d0ba0",
+      "headline": "Ipswich twice fight back in exciting draw with Villa",
+      "summary": "Ipswich came from behind twice to pick up a 2-2 draw with Aston Villa, who extended their run of unbeaten Premier League games to eight.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/ipswich-town-vs-aston-villa/report/559559",
+      "claimed_at": "2026-11-28T19:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "c0a1b06787179f33",
+      "headline": "Pochettino admits Man Utd job is tougher than he expected",
+      "summary": "Manchester United boss Mauricio Pochettino has admitted the job he faces at Old Trafford is \"tougher than expected\" after a humiliating 4-0 defeat to Brentford left his side facing another difficult week.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13617771/mauricio-pochettino-admits-manchester-united-job-tougher-than-expected-after-second-successive-4-0-premier-league-thrashing",
+      "claimed_at": "2026-11-28T19:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1762f14081f55b2e",
+      "headline": "From jeers to European dreams - how Farke transformed Leeds",
+      "summary": "Leeds United fans are starting to dream of Europe after climbing to sixth in the Premier League - but what is behind the Whites' rise under boss Daniel Farke?",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c60rk07wp22vo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T18:51:44Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1101ffa25270eff8",
+      "headline": "Andrews hails Brentford\u2019s \u2018maturity\u2019 in dealing with Old Trafford atmosphere after thrashing Man Utd",
+      "summary": "Keith Andrews praised Brentford\u2019s maturity after securing an emphatic 4-0 victory over Manchester United at Old Trafford. The Bees boss was particularly pleased with the way his side handled the atmo",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/andrews-hails-brentfords-maturity-in-dealing-with-old-trafford-atmosphere-after-thrashing-man-utd/",
+      "claimed_at": "2026-11-28T18:41:56Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "62efd680462900e1",
+      "headline": "\u2018We need to change something in our minds\u2019 \u2013 Pochettino after Man Utd\u2019s heavy home defeat to Brentford",
+      "summary": "Mauricio Pochettino says Manchester United cannot rely on their \u201cbadge and history\u201d to turn things around after suffering a 4-0 home defeat to Brentford. United were comfortably beaten at Old Traff",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/we-need-to-change-something-in-our-minds-pochettino-after-man-utds-heavy-home-defeat-to-brentford/",
+      "claimed_at": "2026-11-28T18:34:08Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d76b8b63adbec17f",
+      "headline": "4-0 win over Man Utd a 'surreal' feeling - Andrews",
+      "summary": "Brentford head coach Keith Andrews is full of praise for his side after their massive 4-0 win at Old Trafford, highlighting their mentality to \"block out the noise\" and focus on their performance.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cq36gj9x0kn9o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T17:49:50Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1dca78053541731e",
+      "headline": "Lampard credits high-flying Leeds after 3-0 loss",
+      "summary": "Coventry City head coach Frank Lampard post match reaction to his sides disappointing loss to Leeds United that leaves them three points above the drop with the clubs below them still to play.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cm36gj95y3kgo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T17:45:10Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4d32d2e5f5b54294",
+      "headline": "Difficult to be positive after Brentford loss - Pochettino",
+      "summary": "Manchester United Mauricio Pochettino says it is \"difficult to be positive\" after their four-goal home thrashing at the hands of Brentford, but that \"it is only a matter of time\" before things improve for the club.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cmlyd70nd775o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T17:42:12Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "1eaf85384be545df",
+      "headline": "Leeds latest: Farke's incredible record one year on from back three switch",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13353569/leeds-united-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-28T17:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "6f399064a5f66abe",
+      "headline": "Man Utd latest: Pochettino says club must 'accept reality' over relegation",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025492/man-utd-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-28T17:30:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "528b414d5181103d",
+      "headline": "Ipswich v Aston Villa team news: Manzambi starts",
+      "summary": "Three changes for the hosts, one for Villa The post Ipswich v Aston Villa team news: Manzambi starts appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/28/ipswich-v-aston-villa-team-news-manzambi-starts",
+      "claimed_at": "2026-11-28T17:25:00Z",
+      "players": [
+        {
+          "element_id": 53,
+          "name": "Manzambi",
+          "club": "AVL",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "4c11340c41deb251",
+      "headline": "Europe-chasing Leeds can 'dream big' - Farke",
+      "summary": "Leeds United manager Daniel Farke post match reaction as his side got a strong three goal win to keep in the hunt for European football for the first time since 2003.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/videos/cwdr1k85kgexo?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T17:23:45Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "b0e06c0184e3ed02",
+      "headline": "'Not fit to wear the shirt!' - Poch leads Man Utd players in lap of angry Old Trafford",
+      "summary": "Mauricio Pochettino led his players in a lap of an Old Trafford as fans sang: 'You're not fit to wear the shirt' after Brentford's 4-0 win over Manchester United in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13617679/mauricio-pochettino-leads-man-utd-players-in-lap-of-old-trafford-after-4-0-brentford-defeat-not-fit-to-wear-the-shirt",
+      "claimed_at": "2026-11-28T17:14:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "0218d83cca59a30c",
+      "headline": "Brentford thump Man Utd for FOUR to condemn Poch to Old Trafford debut defeat",
+      "summary": "FREE TO WATCH: Highlights from Manchester United's match against Brentford in the Premier League.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13617677/manchester-united-0-4-brentford-premier-league-highlights",
+      "claimed_at": "2026-11-28T17:13:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5f5d8a5279fd129d",
+      "headline": "Leeds in control as win over Coventry see Farke's side move to sixth",
+      "summary": "FREE TO WATCH: Highlights from the Premier League match between Leeds United and Coventry City.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13617660/leeds-3-0-coventry-premier-league-highlights",
+      "claimed_at": "2026-11-28T17:09:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "17e1a03bba47dce7",
+      "headline": "Whose Man Utd days look numbered? Player ratings v Brentford",
+      "summary": "Callum Wilson scored twice as Brentford secured their first victory at Old Trafford since 1937 and kept Manchester United in relegation trouble - how they rated.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/c6x2wjegj9nko?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-28T17:04:43Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "02aa55db2c99d9b6",
+      "headline": "Poch suffers nightmare Old Trafford debut as brilliant Brentford pile on misery",
+      "summary": "Manchester United sank to another frightening low in Mauricio Pochettino's first home game in charge, thrashed 4-0 by Champions League-chasing Brentford at Old Trafford.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/manchester-united-vs-brentford/report/559561",
+      "claimed_at": "2026-11-28T17:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "3a3b131c5ff61282",
+      "headline": "Leeds climb into top six with dominant Coventry win",
+      "summary": "Leeds' European push continued in a dominant 3-0 victory over Coventry.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/leeds-united-vs-coventry-city/report/559560",
+      "claimed_at": "2026-11-28T16:50:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "5d413b5e630dc76c",
+      "headline": "'They're in trouble' - Merse reacts to Brentford's FOUR goals at Man Utd",
+      "summary": "Paul Merson reacts to all FOUR goals as Manchester United are beaten 4-0 in Mauricio Pochettino's first game in charge at Old Trafford.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/watch/video/13617579/manchester-utd-vs-brentford-paul-merson-reacts-to-both-goals-from-the-visitors",
+      "claimed_at": "2026-11-28T15:37:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "dac173d6ffbda6a1",
+      "headline": "3pm team news: Bruno starts, Mbeumo, Cunha + Schade subs",
+      "summary": "Man Utd v Brentford and Leeds v Coventry are our only two 3pm GMT kick-offs The post 3pm team news: Bruno starts, Mbeumo, Cunha + Schade subs appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout",
+      "source": "fantasyfootballscout",
+      "tier": 3,
+      "url": "https://www.fantasyfootballscout.co.uk/2026/11/28/3pm-team-news-bruno-starts-mbeumo-schade-subs",
+      "claimed_at": "2026-11-28T14:20:00Z",
+      "players": [
+        {
+          "element_id": 94,
+          "name": "Schade",
+          "club": "BRE",
+          "held": false
+        },
+        {
+          "element_id": 427,
+          "name": "Mbeumo",
+          "club": "MUN",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "713e41e96bd8d35d",
       "headline": "Pochettino arrives at Old Trafford for first home game in charge of Man Utd",
       "summary": "Mauricio Pochettino arrives at Old Trafford for his first home game in charge of Manchester United.",
@@ -398,9 +956,45 @@
       "touches_squad": false
     },
     {
+      "digest": "39b9898f597cb209",
+      "headline": "Merson: Chelsea must beat Palace, but are the players behind Alonso?",
+      "summary": "Crystal Palace's Premier League visit to Stamford Bridge on Wednesday is one of the biggest matches Chelsea have had for a long time, according to Sky Sports' Paul Merson.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13617492/chelsea-must-beat-crystal-palace-but-are-the-players-behind-under-fire-boss-xabi-alonso-asks-paul-merson",
+      "claimed_at": "2026-11-28T13:31:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "88190f433d3c0355",
       "headline": "Man Utd v Brentford LIVE \u2013 team news, updates and reaction",
       "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd v Brentford LIVE - team news, updates and reaction appeared first on Hayters.",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/man-utd-v-brentford-live-team-news-updates-and-reaction-2/",
+      "claimed_at": "2026-11-28T13:21:36Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "d2cfc6522440b9b8",
+      "headline": "Man Utd 0-4 Brentford LIVE \u2013 Pochettino thrashed in his first Old Trafford game",
+      "summary": "&#8220;{rsn-live-v2}&#8221; The post Man Utd 0-4 Brentford LIVE - Pochettino thrashed in his first Old Trafford game appeared first on Hayters.",
       "source": "hayters",
       "tier": 2,
       "url": "https://hayters.com/man-utd-v-brentford-live-team-news-updates-and-reaction-2/",
@@ -434,24 +1028,6 @@
       "touches_squad": false
     },
     {
-      "digest": "b80b157de9104aa4",
-      "headline": "Leeds vs Coventry team news LIVE!",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/leeds-united-vs-coventry-city/live/559560",
-      "claimed_at": "2026-11-28T13:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f5dcd1d2f09e1d4a",
       "headline": "Work in progress but Liverpool find belief again with Iraola",
       "summary": "With the attack finally firing and Liverpool looking more solid at the back, Andoni Iraola has got the fans believing again. Just in time for derby day.",
@@ -459,24 +1035,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/articles/cmn4k7vdqx4vo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-11-28T12:36:26Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "734a11c84763aa88",
-      "headline": "Merse: Are the Chelsea players playing for Alonso?",
-      "summary": "Paul Merson runs the rule over Chelsea's defeat to Nottingham Forest on Friday - is Xabi Alonso under increasing pressure?",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/watch/video/13617459/chelsea-latest-is-xabi-alonso-under-increasing-pressure-afgter-3-2-defeat-to-nottingham-forest",
-      "claimed_at": "2026-11-28T12:16:00Z",
       "players": [
         {
           "element_id": 0,
@@ -542,24 +1100,6 @@
       "touches_squad": false
     },
     {
-      "digest": "c7acd79fb07e3070",
-      "headline": "What went wrong for Alonso's Chelsea at Forest?",
-      "summary": "Xabi Alonso called for his Chelsea side to get back to the fundamentals before kick-off - and then watched on as they were outworked and outclassed on their way to a miserable 3-2 defeat at Nottingham Forest.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13617391/xabi-alonso-called-for-chelsea-to-get-back-to-fundamentals-before-slipping-to-new-low-at-nottingham-forest",
-      "claimed_at": "2026-11-27T23:40:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f15f8f01747a2039",
       "headline": "Alonso on Chelsea fans\u2019 Fofana chants and defeat to Nottingham Forest",
       "summary": "Xabi Alonso has called for Chelsea to stay united after supporters sang negatively about Wesley Fofana during their 3-2 defeat to Nottingham Forest. Chelsea suffered a third successive loss at the City Ground, with Alonso insistin",
@@ -567,42 +1107,6 @@
       "tier": 2,
       "url": "https://hayters.com/alonso-on-chelsea-fans-fofana-chants-and-defeat-to-nottingham-forest/",
       "claimed_at": "2026-11-27T23:35:45Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2fb7575f4eb298ab",
-      "headline": "Chelsea latest: Alonso urges fans to 'support everyone' after Fofana boos",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-27T23:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ac5afaeb36e29c8d",
-      "headline": "Papers: Man Utd in running for Paz, but Champions League key",
-      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13617280/manchester-united-transfer-news-red-devils-still-in-running-for-comos-nico-paz-paper-talk",
-      "claimed_at": "2026-11-27T23:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -639,24 +1143,6 @@
       "tier": 3,
       "url": "https://www.bbc.co.uk/sport/football/videos/ck7v2lpe2rpgo?at_medium=RSS&at_campaign=rss",
       "claimed_at": "2026-11-27T22:47:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "64e73bdbb8320cff",
-      "headline": "Chelsea must stick together in 'difficult moment' - Alonso",
-      "summary": "Chelsea manager Xabi Alonso's calls for togetherness after his side fall to a third defeat in a row against a Nottingham Forest side that has struggled for form this season in the Premier League.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/videos/cq3dgpj5xn0do?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T22:45:22Z",
       "players": [
         {
           "element_id": 0,
@@ -722,96 +1208,6 @@
       "touches_squad": false
     },
     {
-      "digest": "6c84c3b0d18e5b04",
-      "headline": "'You're not welcome here' - Chelsea's Fofana booed by own fans",
-      "summary": "Chelsea defender Wesley Fofana is booed by his own fans during the Premier League defeat at Nottingham Forest after a controversial interview.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmqlqeqd4wg5o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T21:31:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e36e9067bc65d05b",
-      "headline": "'You're not welcome here' - fans turn on Fofana as Chelsea lose again",
-      "summary": "Chelsea defender Wesley Fofana is booed by his own fans during the Premier League defeat at Nottingham Forest after a controversial interview.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmqlqeqd4wg5o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T21:31:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e8ca8660c4d1420d",
-      "headline": "'You're not welcome here' - Chelsea fans turn on Fofana",
-      "summary": "Chelsea defender Wesley Fofana is booed by his own fans during the Premier League defeat at Nottingham Forest after a controversial interview.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmqlqeqd4wg5o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T21:31:54Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "50c3d3d1fc37105e",
-      "headline": "Champions League to be a factor in Paz move - Saturday's gossip",
-      "summary": "Manchester United may lose the chance to sign Nico Paz without Champions League qualification, Arsenal also want the Como midfielder and Liverpool eye Lamine Camara.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cqvg23jg6x78o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T21:19:27Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "197df6bb3cf4aac5",
-      "headline": "Football Daily",
-      "summary": "Everton welcome Liverpool in the 249th derby and Steven Gerrard gives his thoughts.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sounds/play/p0pqb0nm?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T20:47:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "77c19e2bd1dca3b4",
       "headline": "Nottm Forest v Chelsea team news: Welbeck starts, Estevao sub",
       "summary": "Three changes for Chelsea, two for Forest The post Nottm Forest v Chelsea team news: Welbeck starts, Estevao sub appeared first on Best FPL Tips, Advice, Team News, Picks, and Statistics from Fantasy Football Scout.",
@@ -824,42 +1220,6 @@
           "element_id": 136,
           "name": "Welbeck",
           "club": "CHE",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "57f6a0f59114c7f4",
-      "headline": "Man City latest: 'We must go through these bumps to be a better team,' says Maresca",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-27T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "91592cdc54b69d83",
-      "headline": "Aston Villa latest: Club open to terminating Garnacho loan",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025491/aston-villa-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-27T18:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1028,78 +1388,6 @@
       "touches_squad": false
     },
     {
-      "digest": "0559e86ae8886151",
-      "headline": "Emery praises Garnacho attitude after Villa selection snub",
-      "summary": "Aston Villa boss Unai Emery praises Alejandro Garnacho's \"fantastic attitude\" but suggests other players rank ahead of him for selection.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cwp9d4eg4n2xo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T17:42:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7951b57cd43c9706",
-      "headline": "Arsenal latest: Arteta gives Raya update with Odegaard confident on new deal",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025486/arsenal-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-27T17:41:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c388e59cf6fabee6",
-      "headline": "VOTE: Were Arsenal right to sack Slegers?",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13208899/wsl-news-transfers-rumours-gossip-and-womens-football-latest",
-      "claimed_at": "2026-11-27T16:35:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "5bd75b8f51fd8652",
-      "headline": "Head coach Slegers leaves Arsenal 18 months after Champions League win",
-      "summary": "Arsenal part company with head coach Renee Slegers by mutual consent after a disappointing start to the season.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmy49d5kpw78o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T16:14:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "ed6c3aca7264edca",
       "headline": "Renee Slegers departs Arsenal",
       "summary": "Renee Slegers has departed her role as Arsenal head coach by mutual consent. Slegers took interim charge after Jonas Eidevall departed in October 2024, before being handed the role on a permanent basis in January 2025. Four months later in May, she went on to lead Arsen",
@@ -1107,42 +1395,6 @@
       "tier": 2,
       "url": "https://hayters.com/renee-slegers-departs-arsenal/",
       "claimed_at": "2026-11-27T16:13:21Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b0dcae87b8d84f10",
-      "headline": "Spurs' Savio to miss festive fixtures after injury setback",
-      "summary": "Tottenham winger Savio will miss the club's Christmas fixtures with injury and could be out for up to 80 days, manager Roberto de Zerbi confirms.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cw4gnm4p3zxlo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T16:05:30Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "b5971b4f2390c088",
-      "headline": "Where did it go wrong for Slegers at Arsenal?",
-      "summary": "Arsenal have parted company with Renee Slegers after less than two years permanently in charge, during which time the club celebrated unrivalled highs and endured dispiriting lows. The polarisation of the Dutchwoman's tenure is quite unusual.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13615727/renee-slegers-has-left-arsenal-by-mutual-consent-how-her-tenure-went-from-hero-to-zero-in-such-a-short-space-of-time",
-      "claimed_at": "2026-11-27T15:00:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1190,24 +1442,6 @@
       "touches_squad": false
     },
     {
-      "digest": "afa67f490decfdc5",
-      "headline": "Maresca: You can't compare Man City and Arsenal",
-      "summary": "Enzo Maresca said Premier League title rivals Manchester City and Arsenal couldn't be compared after his side's early-season form raised expectations.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13617231/arsenal-vs-man-city-enzo-maresca-says-two-teams-cannot-be-compared-due-to-being-in-different-stages-of-project",
-      "claimed_at": "2026-11-27T14:47:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "cf1880704d3fd9e5",
       "headline": "Spurs star set for another spell out as De Zerbi reveals doubt for Sunderland game",
       "summary": "Savio looks set for another spell on the sidelines after suffering a fresh injury setback. The winger was forced off in the win over Ipswich last weekend shortly after coming on, with De Zerbi confirming it is a reocc",
@@ -1215,42 +1449,6 @@
       "tier": 2,
       "url": "https://hayters.com/spurs-star-set-for-another-spell-out-as-de-zerbi-reveals-doubt-for-sunderland-game/",
       "claimed_at": "2026-11-27T14:40:12Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "d5df4b87bd1fce88",
-      "headline": "'I am not a magician' - what can Maresca's Man City learn from watertight Arsenal?",
-      "summary": "Manchester City's leaky defence faces one of the most difficult games of the season with a trip to watertight Arsenal, aiming to put right their patchy recent form.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cknv47dee54zo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T14:37:58Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "3a4b1471a43c35da",
-      "headline": "Man Utd trigger Fernandes' one-year contract extension",
-      "summary": "Manchester United activate an option on captain Bruno Fernandes' contract, extending it until 2028.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6d91j5geepqo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-27T14:37:07Z",
       "players": [
         {
           "element_id": 0,
@@ -1316,60 +1514,6 @@
       "touches_squad": false
     },
     {
-      "digest": "30adbcf50b88775c",
-      "headline": "Liverpool latest: Iraola gives injury update on trio ahead of Merseyside derby",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025501/liverpool-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-27T14:15:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "82803b2a3b2eec1f",
-      "headline": "Man Utd activate Fernandes contract extension clause",
-      "summary": "Manchester United have triggered their 12-month option to extend captain Bruno Fernandes' contract.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13617215/bruno-fernandes-man-utd-activate-captains-12-month-option-to-extend-contract-which-now-ends-in-2028",
-      "claimed_at": "2026-11-27T14:10:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "c4c8026473c55789",
-      "headline": "Spurs latest: De Zerbi confirms injured Savio to miss festive fixtures",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025489/tottenham-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-27T14:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "52877087b249ada0",
       "headline": "Man City star \u2018quite close\u2019 to a return",
       "summary": "Manchester City boss Enzo Maresca says Antoine Semenyo is \u201cquite close\u201d to returning from injury and could be available as early as next week. The forward has been sidelined in recent weeks but is now back working on the pitch in training as he steps up his re",
@@ -1377,24 +1521,6 @@
       "tier": 2,
       "url": "https://hayters.com/man-city-star-quite-close-to-a-return/",
       "claimed_at": "2026-11-27T13:56:40Z",
-      "players": [
-        {
-          "element_id": 397,
-          "name": "Semenyo",
-          "club": "MCI",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "715c131a5a2a5aef",
-      "headline": "Man City latest: Maresca on Arsenal, form and Semenyo injury",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13025499/man-city-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-27T13:11:00Z",
       "players": [
         {
           "element_id": 397,
@@ -1467,120 +1593,6 @@
       "tier": 2,
       "url": "https://hayters.com/le-bris-plays-down-concerns-after-sunderland-draw-at-home-to-jagiellonia-bialystok/",
       "claimed_at": "2026-11-26T22:51:22Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "2bf6c500dca1d8a1",
-      "headline": "Frank hopes comeback Crystal Palace win can be a turning point in season",
-      "summary": "Thomas Frank hopes Crystal Palace\u2019s 2-1 win over Real Sociedad can help turn their season around after admitting confidence has been low. Palace secured victory in Europe thanks to goals from Jean-Philippe Mateta and Dwight McN",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/frank-hopes-comeback-crystal-palace-win-can-be-a-turning-point-in-season/",
-      "claimed_at": "2026-11-26T22:44:28Z",
-      "players": [
-        {
-          "element_id": 223,
-          "name": "Mateta",
-          "club": "CRY",
-          "held": false
-        },
-        {
-          "element_id": 241,
-          "name": "McNeil",
-          "club": "CRY",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "e39d49690664114d",
-      "headline": "\u2018What a team\u2019 \u2013 Marco Rose after Bournemouth make it ten wins in a row with comeback Europa League victory",
-      "summary": "Marco Rose hailed Bournemouth\u2019s spirit and energy after they came from behind with 10 men to beat Celta Vigo 2-1 and make it ten wins in a row in all competitions. Bournemouth were a goal down",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/what-a-team-marco-rose-after-bournemouth-make-it-ten-wins-in-a-row-with-comeback-europa-league-victory/",
-      "claimed_at": "2026-11-26T22:38:01Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9b5c9a7658381419",
-      "headline": "Lampard confirms Coventry City star is set for spell out",
-      "summary": "Coventry City boss Frank Lampard has confirmed Taiwo Awoniyi is set for a spell out after suffering an ankle injury against Crystal Palace. The striker picked up the problem during last weekend\u2019s win, with Coventry still waiting to discover th",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/lampard-confirms-coventry-city-star-is-set-for-spell-out/",
-      "claimed_at": "2026-11-26T15:45:30Z",
-      "players": [
-        {
-          "element_id": 492,
-          "name": "Awoniyi",
-          "club": "COV",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "6989a5f083ad2dee",
-      "headline": "Farke gives update on Leeds star and confirms big boost ahead of Coventry clash",
-      "summary": "Leeds United boss Daniel Farke has confirmed he has a fully available squad ahead of Saturday\u2019s clash with Coventry City. The Whites came through this week without any fresh injury concerns, giving Farke a welcome select",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/farke-gives-update-on-leeds-star-and-confirms-big-boost-ahead-of-coventry-clash/",
-      "claimed_at": "2026-11-26T15:39:59Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "24cabe3e69d8d1ea",
-      "headline": "Alonso says Fofana has apologised over interview comments",
-      "summary": "Chelsea boss Xabi Alonso says Wesley Fofana has apologised after an interview released earlier this week and has been told the situation must not be repeated. Alonso confirmed the club had addressed the matter internally with the defender and",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/alonso-says-fofana-has-apologised-over-interview-comments/",
-      "claimed_at": "2026-11-26T15:32:57Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "294896a8b24ccb04",
-      "headline": "Chelsea handed boost ahead of Nottingham Forest clash \u2013 but Joao Pedro still out",
-      "summary": "Chelsea boss Xabi Alonso has confirmed Moises Caicedo is fit for Friday\u2019s Premier League clash with Nottingham Forest, but Joao Pedro remains sidelined. Caicedo was forced off after just 22 minutes of Saturday\u2019s 4-1 hom",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/chelsea-handed-boost-ahead-of-nottingham-forest-clash-but-joao-pedro-still-out/",
-      "claimed_at": "2026-11-26T14:28:34Z",
       "players": [
         {
           "element_id": 0,
