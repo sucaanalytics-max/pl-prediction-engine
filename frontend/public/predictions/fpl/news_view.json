@@ -1,18 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-27T22:59:30.205651Z",
-  "n_dropped": 108,
+  "generated_at": "2026-11-28T04:40:43.124232Z",
+  "n_dropped": 111,
   "dropped_by_source": {
-    "bbc_football": 31,
-    "hayters": 16,
-    "sky_football": 61
+    "bbc_football": 29,
+    "hayters": 17,
+    "sky_football": 65
   },
   "window_days": 5,
   "squad_known": true,
-  "n_articles": 198,
+  "n_articles": 201,
   "n_shown": 90,
   "basis": "Headlines the parser could not turn into an availability claim. None of this has moved a projection \u2014 the model uses FPL's own availability field and parsed tier-2/3 claims only. This is a reading list.",
   "items": [
+    {
+      "digest": "275e3d46bd00ae7d",
+      "headline": "Forest latest: We are sticking with Glasner, says Gibbs-White",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13279316/nottingham-forest-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
+      "claimed_at": "2026-11-27T23:00:00Z",
+      "players": [
+        {
+          "element_id": 480,
+          "name": "Gibbs-White",
+          "club": "NFO",
+          "held": true
+        }
+      ],
+      "touches_squad": true
+    },
     {
       "digest": "a2b5cba056e844f5",
       "headline": "Gibbs-White scores twice as Forest beat struggling Chelsea",
@@ -80,24 +98,6 @@
           "element_id": 480,
           "name": "Gibbs-White",
           "club": "NFO",
-          "held": true
-        }
-      ],
-      "touches_squad": true
-    },
-    {
-      "digest": "80bccec493fce291",
-      "headline": "Brighton's perfect blend: The duo key to Seagulls' rise",
-      "summary": "It was a painful Sunday afternoon at Hull, but by the time Brighton pair Luka Vuskovic&#160;and Pascal Gross arrived at the beachside restaurant on Tuesday, you got the impression they didn't need too much of the bracing near-frozen sea air to",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13616787/pascal-gross-and-luka-vuskovic-helping-drive-fabian-hurzelers-brighton-and-their-stunning-premier-league-start",
-      "claimed_at": "2026-11-27T10:00:00Z",
-      "players": [
-        {
-          "element_id": 504,
-          "name": "Vuskovic",
-          "club": "BHA",
           "held": true
         }
       ],
@@ -344,6 +344,96 @@
       "touches_squad": true
     },
     {
+      "digest": "c7acd79fb07e3070",
+      "headline": "What went wrong for Alonso's Chelsea at Forest?",
+      "summary": "Xabi Alonso called for his Chelsea side to get back to the fundamentals before kick-off - and then watched on as they were outworked and outclassed on their way to a miserable 3-2 defeat at Nottingham Forest.",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13617391/xabi-alonso-called-for-chelsea-to-get-back-to-fundamentals-before-slipping-to-new-low-at-nottingham-forest",
+      "claimed_at": "2026-11-27T23:40:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "f15f8f01747a2039",
+      "headline": "Alonso on Chelsea fans\u2019 Fofana chants and defeat to Nottingham Forest",
+      "summary": "Xabi Alonso has called for Chelsea to stay united after supporters sang negatively about Wesley Fofana during their 3-2 defeat to Nottingham Forest. Chelsea suffered a third successive loss at the City Ground, with Alonso insistin",
+      "source": "hayters",
+      "tier": 2,
+      "url": "https://hayters.com/alonso-on-chelsea-fans-fofana-chants-and-defeat-to-nottingham-forest/",
+      "claimed_at": "2026-11-27T23:35:45Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "2fb7575f4eb298ab",
+      "headline": "Chelsea latest: Alonso urges fans to 'support everyone' after Fofana boos",
+      "summary": null,
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/live-blog/11095/13025497/chelsea-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
+      "claimed_at": "2026-11-27T23:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "ac5afaeb36e29c8d",
+      "headline": "Papers: Man Utd in running for Paz, but Champions League key",
+      "summary": "The top stories and transfer rumours from Saturday's newspapers...",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13617280/manchester-united-transfer-news-red-devils-still-in-running-for-comos-nico-paz-paper-talk",
+      "claimed_at": "2026-11-27T23:00:00Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "a0ed31ed68e44b3d",
+      "headline": "Wilshere v Ramsey - Arsenal legends treading similar managerial paths",
+      "summary": "Eighteen years after making their Premier League debuts two minutes apart, Jack Wilshere and Aaron Ramsey meet as managers.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cm1dvn9w1px4o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-27T22:58:49Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "684fa5c4de103fa5",
       "headline": "Glasner praises 'smart' Igor Jesus after Chelsea win",
       "summary": "Nottingham Forest head coach Oliver Glasnerpraises the perfomance of striker Igor Thiago impressive 3-2 home win against a struggling Chelsea in the Premier League.",
@@ -436,6 +526,24 @@
     {
       "digest": "6c84c3b0d18e5b04",
       "headline": "'You're not welcome here' - Chelsea's Fofana booed by own fans",
+      "summary": "Chelsea defender Wesley Fofana is booed by his own fans during the Premier League defeat at Nottingham Forest after a controversial interview.",
+      "source": "bbc_football",
+      "tier": 3,
+      "url": "https://www.bbc.co.uk/sport/football/articles/cmqlqeqd4wg5o?at_medium=RSS&at_campaign=rss",
+      "claimed_at": "2026-11-27T21:31:54Z",
+      "players": [
+        {
+          "element_id": 0,
+          "name": null,
+          "club": null,
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
+      "digest": "e8ca8660c4d1420d",
+      "headline": "'You're not welcome here' - Chelsea fans turn on Fofana",
       "summary": "Chelsea defender Wesley Fofana is booed by his own fans during the Premier League defeat at Nottingham Forest after a controversial interview.",
       "source": "bbc_football",
       "tier": 3,
@@ -1172,6 +1280,24 @@
       "touches_squad": false
     },
     {
+      "digest": "80bccec493fce291",
+      "headline": "Brighton's perfect blend: The duo key to Seagulls' rise",
+      "summary": "It was a painful Sunday afternoon at Hull, but by the time Brighton pair Luka Vuskovic&#160;and Pascal Gross arrived at the beachside restaurant on Tuesday, you got the impression they didn't need too much of the bracing near-frozen sea air to",
+      "source": "sky_football",
+      "tier": 3,
+      "url": "https://www.skysports.com/football/news/11095/13616787/pascal-gross-and-luka-vuskovic-helping-drive-fabian-hurzelers-brighton-and-their-stunning-premier-league-start",
+      "claimed_at": "2026-11-27T10:00:00Z",
+      "players": [
+        {
+          "element_id": 504,
+          "name": "Vuskovic",
+          "club": "BHA",
+          "held": false
+        }
+      ],
+      "touches_squad": false
+    },
+    {
       "digest": "e366b1f676d53f88",
       "headline": "The English Lamine Yamal? Why Williams-Barnett is getting Spurs fans excited",
       "summary": "To earn comparisons to Lamine Yamal after just three Premier League appearances might seem a little far-fetched, but Roberto De Zerbi showed no hesitation.",
@@ -1184,42 +1310,6 @@
           "element_id": 601,
           "name": "Williams-Barnett",
           "club": "TOT",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "7fc34e6e1d6c7d36",
-      "headline": "'Man Utd being relegated would be biggest shock in history... but it won't happen'",
-      "summary": "In his latest Sky Sports column, Paul Merson previews a big weekend for Manchester United, before Arsenal take on Manchester City in a huge game live this Sunday.",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13616882/man-utd-being-relegated-would-be-the-biggest-shock-in-history-but-it-wont-happen-says-paul-merson",
-      "claimed_at": "2026-11-27T09:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "ac2d3efa8de5e93b",
-      "headline": "Papers: Liverpool interested in exploring Musiala deal",
-      "summary": "The top stories and transfer rumours from Friday's newspapers...",
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/news/11095/13617073/liverpool-transfer-news-reds-prepared-to-explore-jamal-musiala-deal-next-summer-if-he-can-prove-fitness-paper-talk",
-      "claimed_at": "2026-11-27T07:52:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
@@ -1244,24 +1334,6 @@
       "touches_squad": false
     },
     {
-      "digest": "3a17927bc1a7237b",
-      "headline": "Sunderland latest: Le Bris rues 'disjointed' performance as Black Cats held in Europe",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13375102/sunderland-transfer-news-rumours-and-gossip-live-updates-and-latest-on-deals-signings-loans-and-contracts",
-      "claimed_at": "2026-11-26T23:00:00Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "f18adb575bb967e9",
       "headline": "Le Bris plays down concerns after Sunderland draw at home to Jagiellonia Bialystok",
       "summary": "Sunderland boss Regis Le Bris insists he is not concerned after his side were held to a 1-1 draw by Jagiellonia Bialystok. Le Bris believes the result is simply part of the process as Sunderland continue to adapt to p",
@@ -1269,24 +1341,6 @@
       "tier": 2,
       "url": "https://hayters.com/le-bris-plays-down-concerns-after-sunderland-draw-at-home-to-jagiellonia-bialystok/",
       "claimed_at": "2026-11-26T22:51:22Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "60d80c230d54d94c",
-      "headline": "Palace latest: Frank hopes Europa win can be turning point in Eagles' season",
-      "summary": null,
-      "source": "sky_football",
-      "tier": 3,
-      "url": "https://www.skysports.com/football/live-blog/11095/13279298/crystal-palace-transfers-latest-news-rumours-and-gossip-live-updates-goals-and-highlights",
-      "claimed_at": "2026-11-26T22:45:00Z",
       "players": [
         {
           "element_id": 0,
@@ -1454,24 +1508,6 @@
       "touches_squad": false
     },
     {
-      "digest": "63e61f20e752fba5",
-      "headline": "Lammens - the Man Utd goalkeeper under scrutiny like never before",
-      "summary": "Manchester United goalkeeper Senne Lammens made two major mistakes in the 2-2 draw with Sporting - could Mauricio Pochettino drop his goalkeeper?",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/cmn4k7v93gvzo?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-26T14:56:30Z",
-      "players": [
-        {
-          "element_id": 412,
-          "name": "Lammens",
-          "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
       "digest": "294896a8b24ccb04",
       "headline": "Chelsea handed boost ahead of Nottingham Forest clash \u2013 but Joao Pedro still out",
       "summary": "Chelsea boss Xabi Alonso has confirmed Moises Caicedo is fit for Friday\u2019s Premier League clash with Nottingham Forest, but Joao Pedro remains sidelined. Caicedo was forced off after just 22 minutes of Saturday\u2019s 4-1 hom",
@@ -1479,24 +1515,6 @@
       "tier": 2,
       "url": "https://hayters.com/chelsea-handed-boost-ahead-of-nottingham-forest-clash-but-joao-pedro-still-out/",
       "claimed_at": "2026-11-26T14:28:34Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "393b6ed8c6ddaa0b",
-      "headline": "The American manager with a maths degree making history in La Liga",
-      "summary": "Real Sociedad boss Pellegrino Matarazzo made history as the first American manager in La Liga. His side face Crystal Palace in the Europa League on Thursday.",
-      "source": "bbc_football",
-      "tier": 3,
-      "url": "https://www.bbc.co.uk/sport/football/articles/c6r7g4v8vee5o?at_medium=RSS&at_campaign=rss",
-      "claimed_at": "2026-11-26T13:49:20Z",
       "players": [
         {
           "element_id": 0,
@@ -1526,24 +1544,6 @@
           "element_id": 440,
           "name": "Zirkzee",
           "club": "MUN",
-          "held": false
-        }
-      ],
-      "touches_squad": false
-    },
-    {
-      "digest": "9cd833d3a5f273ee",
-      "headline": "Pochettino \u2018proud\u2019 and encouraged by draw with Sporting",
-      "summary": "Mauricio Pochettino says Manchester United showed the style and character he wants to establish during their 2-2 Champions League draw with Sporting CP. United trailed at half-time despite Pochettino feeling his side had controlled much of the",
-      "source": "hayters",
-      "tier": 2,
-      "url": "https://hayters.com/pochettino-proud-and-encouraged-by-draw-with-sporting/",
-      "claimed_at": "2026-11-25T23:46:09Z",
-      "players": [
-        {
-          "element_id": 0,
-          "name": null,
-          "club": null,
           "held": false
         }
       ],
